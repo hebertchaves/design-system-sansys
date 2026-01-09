@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Link } from "react-router-dom";
-import { Copy, Check, Palette, Layers, Code, Sparkles, Shield, Zap, Eye, Grid3X3 } from "lucide-react";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Copy, Check, Palette, Layers, Code, Sparkles, Shield, Zap, Eye, Grid3X3, Sun, Droplets, Leaf } from "lucide-react";
 
 // ============================================
 // DADOS REAIS DO DSS - MARCAS
@@ -17,7 +18,8 @@ interface BrandData {
   name: string;
   key: string;
   description: string;
-  icon: string;
+  icon: React.ReactNode;
+  iconComponent: React.ElementType;
   colorScale: BrandColorScale;
   actionTokens: { token: string; value: string; description: string }[];
   brandTokens: { token: string; value: string; description: string }[];
@@ -40,7 +42,8 @@ const brandsData: BrandData[] = [
     name: "Sansys Hub",
     key: "hub",
     description: "Plataforma central de integração - Laranja/Marrom",
-    icon: "🔶",
+    icon: <Sun className="h-5 w-5" />,
+    iconComponent: Sun,
     colorScale: {
       "50": "#fff9ed",
       "100": "#fff1d1",
@@ -120,7 +123,8 @@ const brandsData: BrandData[] = [
     name: "Sansys Water",
     key: "water",
     description: "Gestão de recursos hídricos e saneamento - Azul",
-    icon: "💧",
+    icon: <Droplets className="h-5 w-5" />,
+    iconComponent: Droplets,
     colorScale: {
       "50": "#f0f7ff",
       "100": "#e0eefe",
@@ -200,7 +204,8 @@ const brandsData: BrandData[] = [
     name: "Sansys Waste",
     key: "waste",
     description: "Gestão de resíduos sólidos e reciclagem - Verde",
-    icon: "♻️",
+    icon: <Leaf className="h-5 w-5" />,
+    iconComponent: Leaf,
     colorScale: {
       "50": "#edfcf4",
       "100": "#d3f8e2",
@@ -330,29 +335,45 @@ function TokenRow({
 
   return (
     <div 
-      className="flex items-center gap-3 p-3 rounded-lg border border-border/50 hover:border-border transition-colors group"
-      style={{ borderLeftColor: brandColor, borderLeftWidth: 3 }}
+      className="flex items-center gap-3 p-3 rounded-lg transition-all duration-200 cursor-pointer group"
+      onClick={handleCopy}
+      style={{ 
+        backgroundColor: 'var(--jtech-card-bg)',
+        border: '1px solid var(--jtech-card-border)',
+        borderLeftWidth: 3,
+        borderLeftColor: brandColor
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = 'var(--jtech-card-hover-border)';
+        e.currentTarget.style.borderLeftColor = brandColor;
+        e.currentTarget.style.transform = 'translateX(4px)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = 'var(--jtech-card-border)';
+        e.currentTarget.style.borderLeftColor = brandColor;
+        e.currentTarget.style.transform = 'translateX(0)';
+      }}
     >
       {/* Preview visual */}
       <div className="flex-shrink-0">
         {isGradient ? (
           <div 
-            className="w-10 h-10 rounded-lg border border-border/30"
-            style={{ background: value }}
+            className="w-10 h-10 rounded-lg transition-transform duration-200 group-hover:scale-110"
+            style={{ background: value, boxShadow: '0 2px 8px rgba(0,0,0,0.4)' }}
           />
         ) : isColor ? (
           <div 
-            className="w-10 h-10 rounded-lg border border-border/30"
-            style={{ backgroundColor: value }}
+            className="w-10 h-10 rounded-lg transition-transform duration-200 group-hover:scale-110"
+            style={{ backgroundColor: value, boxShadow: '0 2px 8px rgba(0,0,0,0.4)' }}
           />
         ) : isShadow ? (
           <div 
-            className="w-10 h-10 rounded-lg bg-white"
+            className="w-10 h-10 rounded-lg bg-white transition-transform duration-200 group-hover:scale-110"
             style={{ boxShadow: value }}
           />
         ) : (
           <div 
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-xs font-mono"
+            className="w-10 h-10 rounded-lg flex items-center justify-center text-xs font-mono transition-transform duration-200 group-hover:scale-110"
             style={{ backgroundColor: brandColor + '20', color: brandColor }}
           >
             CSS
@@ -363,24 +384,37 @@ function TokenRow({
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <code className="text-xs font-mono text-foreground truncate">{token}</code>
-          <button 
-            onClick={handleCopy}
-            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-secondary rounded"
+          <code 
+            className="text-xs font-mono truncate"
+            style={{ color: 'var(--jtech-heading-secondary)' }}
           >
+            {token}
+          </code>
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity">
             {copied ? (
               <Check className="h-3 w-3 text-green-500" />
             ) : (
-              <Copy className="h-3 w-3 text-muted-foreground" />
+              <Copy className="h-3 w-3" style={{ color: 'var(--jtech-text-muted)' }} />
             )}
-          </button>
+          </div>
         </div>
-        <p className="text-xs text-muted-foreground truncate">{description}</p>
+        <p 
+          className="text-xs truncate"
+          style={{ color: 'var(--jtech-text-body)' }}
+        >
+          {description}
+        </p>
       </div>
 
       {/* Value */}
       <div className="flex-shrink-0 text-right">
-        <code className="text-[10px] font-mono text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded">
+        <code 
+          className="text-[10px] font-mono px-1.5 py-0.5 rounded"
+          style={{ 
+            backgroundColor: 'rgba(255,255,255,0.05)',
+            color: 'var(--jtech-text-muted)' 
+          }}
+        >
           {value.length > 30 ? value.substring(0, 30) + '...' : value}
         </code>
       </div>
@@ -399,7 +433,12 @@ function ColorScalePreview({ scale, brandName }: { scale: BrandColorScale; brand
 
   return (
     <div className="space-y-2">
-      <h4 className="text-sm font-medium text-foreground">Escala de Cores {brandName}</h4>
+      <h4 
+        className="text-sm font-medium"
+        style={{ color: 'var(--jtech-heading-secondary)' }}
+      >
+        Escala de Cores {brandName}
+      </h4>
       <div className="flex gap-1 flex-wrap">
         {Object.entries(scale).map(([step, color]) => (
           <button
@@ -409,8 +448,8 @@ function ColorScalePreview({ scale, brandName }: { scale: BrandColorScale; brand
             title={`${brandName}-${step}: ${color}`}
           >
             <div 
-              className="w-12 h-12 rounded-lg border border-border/30 transition-transform hover:scale-110 hover:z-10"
-              style={{ backgroundColor: color }}
+              className="w-12 h-12 rounded-lg transition-transform hover:scale-110 hover:z-10"
+              style={{ backgroundColor: color, boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               {copiedColor === step ? (
@@ -419,7 +458,12 @@ function ColorScalePreview({ scale, brandName }: { scale: BrandColorScale; brand
                 <Copy className="h-4 w-4 text-white drop-shadow-md" />
               )}
             </div>
-            <span className="block text-[10px] text-center text-muted-foreground mt-1">{step}</span>
+            <span 
+              className="block text-[10px] text-center mt-1"
+              style={{ color: 'var(--jtech-text-muted)' }}
+            >
+              {step}
+            </span>
           </button>
         ))}
       </div>
@@ -427,13 +471,17 @@ function ColorScalePreview({ scale, brandName }: { scale: BrandColorScale; brand
   );
 }
 
-function BrandCard({ brand, isActive }: { brand: BrandData; isActive: boolean }) {
+function BrandCard({ brand, isActive, onSelect }: { brand: BrandData; isActive: boolean; onSelect: () => void }) {
   const primaryColor = brand.colorScale["600"] || brand.colorScale["500"];
+  const Icon = brand.iconComponent;
   
   return (
     <Card 
-      className={`transition-all duration-300 ${isActive ? 'ring-2 ring-offset-2' : 'hover:shadow-lg'}`}
+      className={`transition-all duration-300 cursor-pointer ${isActive ? 'ring-2 ring-offset-2 ring-offset-background' : 'hover:shadow-lg'}`}
+      onClick={onSelect}
       style={{ 
+        backgroundColor: 'var(--jtech-card-bg)',
+        borderColor: isActive ? primaryColor : 'var(--jtech-card-border)',
         borderLeftWidth: 4, 
         borderLeftColor: primaryColor,
         ...(isActive && { ringColor: primaryColor })
@@ -442,15 +490,18 @@ function BrandCard({ brand, isActive }: { brand: BrandData; isActive: boolean })
       <CardHeader className="pb-4">
         <div className="flex items-center gap-4">
           <div 
-            className="h-14 w-14 rounded-xl flex items-center justify-center text-2xl"
+            className="h-14 w-14 rounded-xl flex items-center justify-center"
             style={{ 
               background: `linear-gradient(135deg, ${brand.colorScale["400"]} 0%, ${primaryColor} 100%)`,
             }}
           >
-            {brand.icon}
+            <Icon className="h-6 w-6 text-white" />
           </div>
           <div className="flex-1">
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle 
+              className="flex items-center gap-2"
+              style={{ color: 'var(--jtech-heading-secondary)' }}
+            >
               {brand.name}
               <Badge 
                 variant="outline" 
@@ -461,8 +512,24 @@ function BrandCard({ brand, isActive }: { brand: BrandData; isActive: boolean })
               >
                 {brand.key}
               </Badge>
+              {isActive && (
+                <Badge 
+                  className="ml-auto"
+                  style={{ 
+                    backgroundColor: primaryColor,
+                    color: 'white'
+                  }}
+                >
+                  Ativo
+                </Badge>
+              )}
             </CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">{brand.description}</p>
+            <p 
+              className="text-sm mt-1"
+              style={{ color: 'var(--jtech-text-body)' }}
+            >
+              {brand.description}
+            </p>
           </div>
         </div>
       </CardHeader>
@@ -473,23 +540,43 @@ function BrandCard({ brand, isActive }: { brand: BrandData; isActive: boolean })
         {/* Accessibility Info */}
         <div 
           className="p-4 rounded-lg"
-          style={{ backgroundColor: primaryColor + '10' }}
+          style={{ backgroundColor: primaryColor + '15' }}
         >
           <div className="flex items-center gap-2 mb-2">
             <Shield className="h-4 w-4" style={{ color: primaryColor }} />
-            <h4 className="text-sm font-medium">Acessibilidade WCAG</h4>
+            <h4 
+              className="text-sm font-medium"
+              style={{ color: 'var(--jtech-heading-secondary)' }}
+            >
+              Acessibilidade WCAG
+            </h4>
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div>
-              <span className="text-muted-foreground">Contraste branco:</span>
-              <span className="ml-1 font-mono">{brand.accessibilityInfo.contrastOnWhite}</span>
+              <span style={{ color: 'var(--jtech-text-muted)' }}>Contraste branco:</span>
+              <span 
+                className="ml-1 font-mono"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
+                {brand.accessibilityInfo.contrastOnWhite}
+              </span>
             </div>
             <div>
-              <span className="text-muted-foreground">Contraste escuro:</span>
-              <span className="ml-1 font-mono">{brand.accessibilityInfo.contrastOnDark}</span>
+              <span style={{ color: 'var(--jtech-text-muted)' }}>Contraste escuro:</span>
+              <span 
+                className="ml-1 font-mono"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
+                {brand.accessibilityInfo.contrastOnDark}
+              </span>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground mt-2">{brand.accessibilityInfo.notes}</p>
+          <p 
+            className="text-xs mt-2"
+            style={{ color: 'var(--jtech-text-body)' }}
+          >
+            {brand.accessibilityInfo.notes}
+          </p>
         </div>
       </CardContent>
     </Card>
@@ -502,86 +589,139 @@ function ComponentPreview({ brand }: { brand: BrandData }) {
   const lightBg = brand.colorScale["50"];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Buttons */}
-      <div className="flex flex-wrap gap-2">
-        <button
-          className="px-4 py-2 rounded-lg text-white font-medium transition-colors"
-          style={{ backgroundColor: primaryColor }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hoverColor}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = primaryColor}
+      <div>
+        <h4 
+          className="text-sm font-medium mb-3"
+          style={{ color: 'var(--jtech-heading-secondary)' }}
         >
-          Botão Primário
-        </button>
-        <button
-          className="px-4 py-2 rounded-lg font-medium border-2 transition-colors"
-          style={{ 
-            borderColor: primaryColor, 
-            color: primaryColor,
-            backgroundColor: 'transparent'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = lightBg;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-          }}
-        >
-          Botão Outline
-        </button>
-        <button
-          className="px-4 py-2 rounded-lg font-medium transition-colors"
-          style={{ 
-            backgroundColor: lightBg, 
-            color: primaryColor 
-          }}
-        >
-          Botão Flat
-        </button>
+          Botões
+        </h4>
+        <div className="flex flex-wrap gap-3">
+          <button
+            className="px-4 py-2 rounded-lg text-white font-medium transition-colors"
+            style={{ backgroundColor: primaryColor }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hoverColor}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = primaryColor}
+          >
+            Botão Primário
+          </button>
+          <button
+            className="px-4 py-2 rounded-lg font-medium border-2 transition-colors"
+            style={{ 
+              borderColor: primaryColor, 
+              color: primaryColor,
+              backgroundColor: 'transparent'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = lightBg;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
+          >
+            Botão Outline
+          </button>
+          <button
+            className="px-4 py-2 rounded-lg font-medium transition-colors"
+            style={{ 
+              backgroundColor: lightBg, 
+              color: primaryColor 
+            }}
+          >
+            Botão Flat
+          </button>
+        </div>
       </div>
 
       {/* Cards */}
-      <div 
-        className="p-4 rounded-lg border-l-4"
-        style={{ 
-          backgroundColor: lightBg,
-          borderLeftColor: primaryColor
-        }}
-      >
-        <h4 className="font-medium" style={{ color: brand.colorScale["900"] }}>
-          Card com Marca {brand.name.split(' ')[1]}
+      <div>
+        <h4 
+          className="text-sm font-medium mb-3"
+          style={{ color: 'var(--jtech-heading-secondary)' }}
+        >
+          Cards
         </h4>
-        <p className="text-sm text-muted-foreground mt-1">
-          Exemplo de card utilizando tokens da marca.
-        </p>
+        <div 
+          className="p-4 rounded-lg border-l-4"
+          style={{ 
+            backgroundColor: lightBg,
+            borderLeftColor: primaryColor
+          }}
+        >
+          <h4 className="font-medium" style={{ color: brand.colorScale["900"] }}>
+            Card com Marca {brand.name.split(' ')[1]}
+          </h4>
+          <p className="text-sm mt-1" style={{ color: 'var(--jtech-text-body)' }}>
+            Exemplo de card utilizando tokens da marca.
+          </p>
+        </div>
       </div>
 
-      {/* Badge */}
-      <div className="flex gap-2">
-        <span
-          className="px-2 py-0.5 rounded text-xs font-medium text-white"
-          style={{ backgroundColor: primaryColor }}
+      {/* Badges */}
+      <div>
+        <h4 
+          className="text-sm font-medium mb-3"
+          style={{ color: 'var(--jtech-heading-secondary)' }}
         >
-          Badge Filled
-        </span>
-        <span
-          className="px-2 py-0.5 rounded text-xs font-medium border"
-          style={{ borderColor: primaryColor, color: primaryColor }}
-        >
-          Badge Outline
-        </span>
+          Badges
+        </h4>
+        <div className="flex gap-2">
+          <span
+            className="px-2 py-0.5 rounded text-xs font-medium text-white"
+            style={{ backgroundColor: primaryColor }}
+          >
+            Badge Filled
+          </span>
+          <span
+            className="px-2 py-0.5 rounded text-xs font-medium border"
+            style={{ borderColor: primaryColor, color: primaryColor }}
+          >
+            Badge Outline
+          </span>
+          <span
+            className="px-2 py-0.5 rounded text-xs font-medium"
+            style={{ backgroundColor: lightBg, color: primaryColor }}
+          >
+            Badge Soft
+          </span>
+        </div>
       </div>
 
       {/* Progress */}
-      <div className="space-y-1">
-        <div className="h-2 rounded-full bg-secondary overflow-hidden">
+      <div>
+        <h4 
+          className="text-sm font-medium mb-3"
+          style={{ color: 'var(--jtech-heading-secondary)' }}
+        >
+          Progresso
+        </h4>
+        <div className="space-y-2">
           <div 
-            className="h-full rounded-full transition-all"
-            style={{ 
-              width: '65%',
-              background: `linear-gradient(90deg, ${brand.colorScale["400"]} 0%, ${primaryColor} 100%)`
-            }}
-          />
+            className="h-2 rounded-full overflow-hidden"
+            style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
+          >
+            <div 
+              className="h-full rounded-full transition-all"
+              style={{ 
+                width: '65%',
+                background: `linear-gradient(90deg, ${brand.colorScale["400"]} 0%, ${primaryColor} 100%)`
+              }}
+            />
+          </div>
+          <div 
+            className="h-3 rounded-full overflow-hidden"
+            style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
+          >
+            <div 
+              className="h-full rounded-full transition-all"
+              style={{ 
+                width: '45%',
+                background: `linear-gradient(90deg, ${brand.colorScale["400"]} 0%, ${primaryColor} 100%)`
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -600,303 +740,280 @@ export default function BrandabilityPage() {
   const primaryColor = selectedBrand.colorScale["600"] || selectedBrand.colorScale["500"];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section com gradiente da marca ativa */}
-      <div 
-        className="relative overflow-hidden"
-        style={{
-          background: `linear-gradient(135deg, ${selectedBrand.colorScale["50"]} 0%, ${selectedBrand.colorScale["100"]} 50%, ${selectedBrand.colorScale["200"]}40 100%)`
-        }}
-      >
-        <div className="absolute inset-0 opacity-30">
-          <div 
-            className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl"
-            style={{ backgroundColor: primaryColor + '30' }}
-          />
-          <div 
-            className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl"
-            style={{ backgroundColor: selectedBrand.colorScale["300"] + '40' }}
-          />
+    <div 
+      className="p-6 lg:p-8 max-w-6xl mx-auto space-y-10"
+      style={{ backgroundColor: 'var(--dss-page-bg)' }}
+    >
+      {/* Page Header - Jtech Style */}
+      <PageHeader
+        icon={Palette}
+        badge="Padrões"
+        badgeVariant="accent"
+        title="Sistema de"
+        titleAccent="Brandabilidade"
+        subtitle="O DSS suporta múltiplas marcas mantendo consistência estrutural e permitindo variação visual por produto. Cada marca possui escala de cores e tokens derivados."
+        subtitleHighlights={["múltiplas marcas", "escala de cores", "tokens derivados"]}
+        extraBadges={[
+          { label: "3 Marcas", variant: "info" },
+          { label: "50+ Tokens/Marca", variant: "success" }
+        ]}
+      />
+
+      {/* Marcas Disponíveis */}
+      <section>
+        <SectionHeader
+          icon={Sparkles}
+          title="Marcas"
+          titleAccent="Disponíveis"
+          badge="3 Opções"
+        />
+        
+        <div className="grid lg:grid-cols-3 gap-6">
+          {brandsData.map((brand) => (
+            <BrandCard 
+              key={brand.key} 
+              brand={brand} 
+              isActive={activeBrand === brand.key}
+              onSelect={() => setActiveBrand(brand.key)}
+            />
+          ))}
         </div>
+      </section>
 
-        <div className="relative max-w-7xl mx-auto px-6 py-12 lg:py-16">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link to="/" className="hover:text-foreground transition-colors">Início</Link>
-            <span>/</span>
-            <Link to="/padroes" className="hover:text-foreground transition-colors">Padrões</Link>
-            <span>/</span>
-            <span style={{ color: primaryColor }}>Brandabilidade</span>
-          </div>
-
-          {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-center gap-6">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-4">
-                <div 
-                  className="p-3 rounded-xl"
-                  style={{ 
-                    background: `linear-gradient(135deg, ${selectedBrand.colorScale["400"]} 0%, ${primaryColor} 100%)`
+      {/* Brand Selector + Component Preview */}
+      <section>
+        <SectionHeader
+          icon={Eye}
+          title="Preview de"
+          titleAccent="Componentes"
+          badge="Interativo"
+        />
+        
+        {/* Brand Selector - Agora antes do preview */}
+        <div 
+          className="mb-6 p-4 rounded-xl"
+          style={{ 
+            backgroundColor: 'var(--jtech-card-bg)',
+            border: '1px solid var(--jtech-card-border)'
+          }}
+        >
+          <p 
+            className="text-sm mb-3"
+            style={{ color: 'var(--jtech-text-body)' }}
+          >
+            Selecione uma marca para ver os componentes atualizados:
+          </p>
+          <div className="flex gap-2 flex-wrap">
+            {brandsData.map((brand) => {
+              const brandPrimary = brand.colorScale["600"] || brand.colorScale["500"];
+              const isActive = activeBrand === brand.key;
+              const Icon = brand.iconComponent;
+              return (
+                <button
+                  key={brand.key}
+                  onClick={() => setActiveBrand(brand.key)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all font-medium`}
+                  style={{
+                    borderColor: brandPrimary,
+                    backgroundColor: isActive ? brandPrimary : 'transparent',
+                    color: isActive ? 'white' : brandPrimary
                   }}
                 >
-                  <Palette className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    Brandabilidade
-                  </h1>
-                  <p className="text-muted-foreground">Sistema de tokens multi-marca do DSS</p>
-                </div>
-              </div>
-              
-              <p className="text-lg text-muted-foreground max-w-2xl">
-                O DSS suporta múltiplas marcas mantendo consistência estrutural 
-                e permitindo variação visual por produto. Cada marca possui sua própria 
-                escala de cores e tokens derivados.
-              </p>
-            </div>
-
-            {/* Brand Selector */}
-            <div className="flex gap-2">
-              {brandsData.map((brand) => {
-                const brandPrimary = brand.colorScale["600"] || brand.colorScale["500"];
-                const isActive = activeBrand === brand.key;
-                return (
-                  <button
-                    key={brand.key}
-                    onClick={() => setActiveBrand(brand.key)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${
-                      isActive ? 'text-white' : 'bg-white/50 hover:bg-white'
-                    }`}
-                    style={{
-                      borderColor: brandPrimary,
-                      backgroundColor: isActive ? brandPrimary : undefined,
-                      color: isActive ? 'white' : brandPrimary
-                    }}
-                  >
-                    <span>{brand.icon}</span>
-                    <span className="font-medium">{brand.key}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-            {[
-              { icon: Palette, label: "Marcas", value: "3" },
-              { icon: Layers, label: "Tokens/Marca", value: "50+" },
-              { icon: Grid3X3, label: "Escalas de Cor", value: "11 steps" },
-              { icon: Shield, label: "WCAG AA", value: "100%" },
-            ].map((stat, i) => (
-              <div 
-                key={i}
-                className="p-4 rounded-xl bg-white/60 backdrop-blur-sm border border-border/50"
-              >
-                <stat.icon className="h-5 w-5 mb-2" style={{ color: primaryColor }} />
-                <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
+                  <Icon className="h-4 w-4" />
+                  <span>{brand.name}</span>
+                  {isActive && (
+                    <Check className="h-4 w-4 ml-1" />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
-        
-        {/* Brand Cards */}
-        <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div 
-              className="p-2 rounded-lg"
-              style={{ backgroundColor: primaryColor + '15' }}
-            >
-              <Sparkles className="h-5 w-5" style={{ color: primaryColor }} />
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-foreground">Marcas Disponíveis</h2>
-              <p className="text-sm text-muted-foreground">Cada marca possui escala completa de cores e tokens derivados</p>
-            </div>
-          </div>
-          
-          <div className="grid lg:grid-cols-3 gap-6">
-            {brandsData.map((brand) => (
-              <BrandCard 
-                key={brand.key} 
-                brand={brand} 
-                isActive={activeBrand === brand.key}
-              />
-            ))}
-          </div>
-        </section>
 
         {/* Component Preview */}
-        <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div 
-              className="p-2 rounded-lg"
-              style={{ backgroundColor: primaryColor + '15' }}
+        <Card
+          style={{ 
+            backgroundColor: 'var(--jtech-card-bg)',
+            borderColor: 'var(--jtech-card-border)'
+          }}
+        >
+          <CardHeader>
+            <CardTitle 
+              className="flex items-center gap-2"
+              style={{ color: 'var(--jtech-heading-secondary)' }}
             >
-              <Eye className="h-5 w-5" style={{ color: primaryColor }} />
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-foreground">Preview de Componentes</h2>
-              <p className="text-sm text-muted-foreground">
-                Como os componentes aparecem com a marca <strong>{selectedBrand.name}</strong>
-              </p>
-            </div>
-          </div>
+              <div 
+                className="h-8 w-8 rounded-lg flex items-center justify-center"
+                style={{ backgroundColor: primaryColor }}
+              >
+                {selectedBrand.icon}
+              </div>
+              <span>Componentes {selectedBrand.name}</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ComponentPreview brand={selectedBrand} />
+          </CardContent>
+        </Card>
+      </section>
 
-          <Card>
-            <CardContent className="p-6">
-              <ComponentPreview brand={selectedBrand} />
-            </CardContent>
-          </Card>
-        </section>
+      {/* Tokens por Categoria */}
+      <section>
+        <SectionHeader
+          icon={Code}
+          title="Tokens da Marca"
+          titleAccent={selectedBrand.name.split(' ')[1]}
+          badge="8 Categorias"
+        />
 
-        {/* Tokens por Categoria */}
-        <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div 
-              className="p-2 rounded-lg"
-              style={{ backgroundColor: primaryColor + '15' }}
-            >
-              <Code className="h-5 w-5" style={{ color: primaryColor }} />
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-foreground">
-                Tokens da Marca {selectedBrand.name.split(' ')[1]}
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                Todos os tokens CSS disponíveis para a marca selecionada
-              </p>
-            </div>
-          </div>
+        <Card
+          style={{ 
+            backgroundColor: 'var(--jtech-card-bg)',
+            borderColor: 'var(--jtech-card-border)'
+          }}
+        >
+          <CardContent className="p-0">
+            <Tabs value={activeTokenTab} onValueChange={setActiveTokenTab}>
+              <div 
+                className="border-b"
+                style={{ borderColor: 'var(--jtech-card-border)' }}
+              >
+                <TabsList 
+                  className="w-full justify-start rounded-none bg-transparent p-0 flex-wrap"
+                >
+                  {[
+                    { id: "action", label: "Ações" },
+                    { id: "brand", label: "Marca" },
+                    { id: "surface", label: "Superfícies" },
+                    { id: "border", label: "Bordas" },
+                    { id: "shadow", label: "Sombras" },
+                    { id: "focus", label: "Foco" },
+                    { id: "gradient", label: "Gradientes" },
+                    { id: "component", label: "Componentes" },
+                  ].map((tab) => (
+                    <TabsTrigger 
+                      key={tab.id} 
+                      value={tab.id}
+                      className="rounded-none border-b-2 border-transparent data-[state=active]:border-current px-4 py-3 text-sm"
+                      style={{ 
+                        color: activeTokenTab === tab.id ? primaryColor : 'var(--jtech-text-body)',
+                        borderColor: activeTokenTab === tab.id ? primaryColor : 'transparent'
+                      }}
+                    >
+                      {tab.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
 
-          <Card>
-            <CardContent className="p-0">
-              <Tabs value={activeTokenTab} onValueChange={setActiveTokenTab}>
-                <div className="border-b border-border">
-                  <TabsList className="w-full justify-start rounded-none bg-transparent p-0">
-                    {[
-                      { id: "action", label: "Ações" },
-                      { id: "brand", label: "Marca" },
-                      { id: "surface", label: "Superfícies" },
-                      { id: "border", label: "Bordas" },
-                      { id: "shadow", label: "Sombras" },
-                      { id: "focus", label: "Foco" },
-                      { id: "gradient", label: "Gradientes" },
-                      { id: "component", label: "Componentes" },
-                    ].map((tab) => (
-                      <TabsTrigger 
-                        key={tab.id} 
-                        value={tab.id}
-                        className="rounded-none border-b-2 border-transparent data-[state=active]:border-current px-4 py-3"
-                        style={{ 
-                          color: activeTokenTab === tab.id ? primaryColor : undefined,
-                          borderColor: activeTokenTab === tab.id ? primaryColor : 'transparent'
-                        }}
-                      >
-                        {tab.label}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                </div>
+              <div className="p-4 space-y-2">
+                <TabsContent value="action" className="mt-0 space-y-2">
+                  {selectedBrand.actionTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
 
-                <div className="p-4">
-                  <TabsContent value="action" className="mt-0 space-y-2">
-                    {selectedBrand.actionTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
+                <TabsContent value="brand" className="mt-0 space-y-2">
+                  {selectedBrand.brandTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
 
-                  <TabsContent value="brand" className="mt-0 space-y-2">
-                    {selectedBrand.brandTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
+                <TabsContent value="surface" className="mt-0 space-y-2">
+                  {selectedBrand.surfaceTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
 
-                  <TabsContent value="surface" className="mt-0 space-y-2">
-                    {selectedBrand.surfaceTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
+                <TabsContent value="border" className="mt-0 space-y-2">
+                  {selectedBrand.borderTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
 
-                  <TabsContent value="border" className="mt-0 space-y-2">
-                    {selectedBrand.borderTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
+                <TabsContent value="shadow" className="mt-0 space-y-2">
+                  {selectedBrand.shadowTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
 
-                  <TabsContent value="shadow" className="mt-0 space-y-2">
-                    {selectedBrand.shadowTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
+                <TabsContent value="focus" className="mt-0 space-y-2">
+                  {selectedBrand.focusTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
 
-                  <TabsContent value="focus" className="mt-0 space-y-2">
-                    {selectedBrand.focusTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
+                <TabsContent value="gradient" className="mt-0 space-y-2">
+                  {selectedBrand.gradientTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
 
-                  <TabsContent value="gradient" className="mt-0 space-y-2">
-                    {selectedBrand.gradientTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
+                <TabsContent value="component" className="mt-0 space-y-2">
+                  {selectedBrand.componentTokens.map((token) => (
+                    <TokenRow 
+                      key={token.token} 
+                      {...token} 
+                      brandColor={primaryColor}
+                    />
+                  ))}
+                </TabsContent>
+              </div>
+            </Tabs>
+          </CardContent>
+        </Card>
+      </section>
 
-                  <TabsContent value="component" className="mt-0 space-y-2">
-                    {selectedBrand.componentTokens.map((token) => (
-                      <TokenRow 
-                        key={token.token} 
-                        {...token} 
-                        brandColor={primaryColor}
-                      />
-                    ))}
-                  </TabsContent>
-                </div>
-              </Tabs>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Classes e Mixins */}
-        <section className="grid lg:grid-cols-2 gap-6">
+      {/* Classes e Mixins */}
+      <section>
+        <SectionHeader
+          icon={Zap}
+          title="Classes e"
+          titleAccent="Mixins"
+          badge="Helpers"
+        />
+        
+        <div className="grid lg:grid-cols-2 gap-6">
           {/* CSS Classes */}
-          <Card>
+          <Card
+            style={{ 
+              backgroundColor: 'var(--jtech-card-bg)',
+              borderColor: 'var(--jtech-card-border)'
+            }}
+          >
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
+              <CardTitle 
+                className="flex items-center gap-2 text-lg"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
                 <Code className="h-5 w-5" style={{ color: primaryColor }} />
                 Classes CSS
               </CardTitle>
@@ -905,20 +1022,43 @@ export default function BrandabilityPage() {
               {brandClasses.map((cls) => (
                 <div 
                   key={cls.name}
-                  className="p-3 rounded-lg border border-border/50"
-                  style={{ borderLeftWidth: 3, borderLeftColor: primaryColor }}
+                  className="p-3 rounded-lg"
+                  style={{ 
+                    backgroundColor: 'rgba(255,255,255,0.03)',
+                    border: '1px solid var(--jtech-card-border)',
+                    borderLeftWidth: 3, 
+                    borderLeftColor: primaryColor 
+                  }}
                 >
-                  <code className="text-sm font-mono text-foreground">{cls.name}</code>
-                  <p className="text-xs text-muted-foreground mt-1">{cls.description}</p>
+                  <code 
+                    className="text-sm font-mono"
+                    style={{ color: 'var(--jtech-heading-secondary)' }}
+                  >
+                    {cls.name}
+                  </code>
+                  <p 
+                    className="text-xs mt-1"
+                    style={{ color: 'var(--jtech-text-body)' }}
+                  >
+                    {cls.description}
+                  </p>
                 </div>
               ))}
             </CardContent>
           </Card>
 
           {/* SCSS Mixins */}
-          <Card>
+          <Card
+            style={{ 
+              backgroundColor: 'var(--jtech-card-bg)',
+              borderColor: 'var(--jtech-card-border)'
+            }}
+          >
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
+              <CardTitle 
+                className="flex items-center gap-2 text-lg"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
                 <Zap className="h-5 w-5" style={{ color: primaryColor }} />
                 Mixins SCSS
               </CardTitle>
@@ -927,94 +1067,157 @@ export default function BrandabilityPage() {
               {scssMixins.map((mixin) => (
                 <div 
                   key={mixin.name}
-                  className="p-3 rounded-lg border border-border/50"
-                  style={{ borderLeftWidth: 3, borderLeftColor: primaryColor }}
+                  className="p-3 rounded-lg"
+                  style={{ 
+                    backgroundColor: 'rgba(255,255,255,0.03)',
+                    border: '1px solid var(--jtech-card-border)',
+                    borderLeftWidth: 3, 
+                    borderLeftColor: primaryColor 
+                  }}
                 >
-                  <code className="text-xs font-mono text-foreground">{mixin.name}</code>
-                  <p className="text-xs text-muted-foreground mt-1">{mixin.description}</p>
-                  <code className="text-[10px] text-muted-foreground/70">{mixin.params}</code>
+                  <code 
+                    className="text-xs font-mono"
+                    style={{ color: 'var(--jtech-heading-secondary)' }}
+                  >
+                    {mixin.name}
+                  </code>
+                  <p 
+                    className="text-xs mt-1"
+                    style={{ color: 'var(--jtech-text-body)' }}
+                  >
+                    {mixin.description}
+                  </p>
+                  <code 
+                    className="text-[10px]"
+                    style={{ color: 'var(--jtech-text-muted)' }}
+                  >
+                    {mixin.params}
+                  </code>
                 </div>
               ))}
             </CardContent>
           </Card>
-        </section>
+        </div>
+      </section>
 
-        {/* Funções SCSS */}
-        <section>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Code className="h-5 w-5" style={{ color: primaryColor }} />
-                Funções SCSS
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-2 gap-3">
-                {scssFunctions.map((fn) => (
-                  <div 
-                    key={fn.name}
-                    className="p-3 rounded-lg border border-border/50"
-                    style={{ borderLeftWidth: 3, borderLeftColor: primaryColor }}
-                  >
-                    <code className="text-sm font-mono text-foreground">{fn.name}</code>
-                    <p className="text-xs text-muted-foreground mt-1">{fn.description}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </section>
+      {/* Funções SCSS */}
+      <section>
+        <SectionHeader
+          icon={Code}
+          title="Funções"
+          titleAccent="SCSS"
+          badge="Utilities"
+        />
 
-        {/* Código de Configuração */}
-        <section>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Code className="h-5 w-5" style={{ color: primaryColor }} />
-                Configuração
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* HTML Attribute */}
-              <div>
-                <h4 className="text-sm font-medium mb-2">Via Atributo HTML</h4>
-                <pre 
-                  className="p-4 rounded-lg overflow-x-auto text-sm"
-                  style={{ backgroundColor: primaryColor + '08' }}
+        <Card
+          style={{ 
+            backgroundColor: 'var(--jtech-card-bg)',
+            borderColor: 'var(--jtech-card-border)'
+          }}
+        >
+          <CardContent className="p-6">
+            <div className="grid md:grid-cols-2 gap-3">
+              {scssFunctions.map((fn) => (
+                <div 
+                  key={fn.name}
+                  className="p-3 rounded-lg"
+                  style={{ 
+                    backgroundColor: 'rgba(255,255,255,0.03)',
+                    border: '1px solid var(--jtech-card-border)',
+                    borderLeftWidth: 3, 
+                    borderLeftColor: primaryColor 
+                  }}
                 >
-                  <code className="text-foreground">{`<!-- Definir marca no elemento root -->
+                  <code 
+                    className="text-sm font-mono"
+                    style={{ color: 'var(--jtech-heading-secondary)' }}
+                  >
+                    {fn.name}
+                  </code>
+                  <p 
+                    className="text-xs mt-1"
+                    style={{ color: 'var(--jtech-text-body)' }}
+                  >
+                    {fn.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Código de Configuração */}
+      <section>
+        <SectionHeader
+          icon={Layers}
+          title="Configuração e"
+          titleAccent="Uso"
+          badge="Exemplos"
+        />
+
+        <Card
+          style={{ 
+            backgroundColor: 'var(--jtech-card-bg)',
+            borderColor: 'var(--jtech-card-border)'
+          }}
+        >
+          <CardContent className="p-6 space-y-6">
+            {/* HTML Attribute */}
+            <div>
+              <h4 
+                className="text-sm font-medium mb-2"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
+                Via Atributo HTML
+              </h4>
+              <pre 
+                className="p-4 rounded-lg overflow-x-auto text-sm"
+                style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+              >
+                <code style={{ color: 'var(--jtech-text-body)' }}>{`<!-- Definir marca no elemento root -->
 <html data-brand="water">
   <!-- ou -->
 <div data-brand="hub">...</div>
 <div data-brand="waste">...</div>`}</code>
-                </pre>
-              </div>
+              </pre>
+            </div>
 
-              {/* CSS Class */}
-              <div>
-                <h4 className="text-sm font-medium mb-2">Via Classe CSS</h4>
-                <pre 
-                  className="p-4 rounded-lg overflow-x-auto text-sm"
-                  style={{ backgroundColor: primaryColor + '08' }}
-                >
-                  <code className="text-foreground">{`<!-- Forçar marca em elemento específico -->
+            {/* CSS Class */}
+            <div>
+              <h4 
+                className="text-sm font-medium mb-2"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
+                Via Classe CSS
+              </h4>
+              <pre 
+                className="p-4 rounded-lg overflow-x-auto text-sm"
+                style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+              >
+                <code style={{ color: 'var(--jtech-text-body)' }}>{`<!-- Forçar marca em elemento específico -->
 <div class="dss-brand-water">...</div>
 <button class="dss-brand-hub">Hub Button</button>
 <section class="dss-brand-waste">...</section>
 
 <!-- Forçar modo semântico (ignora marca) -->
 <div class="dss-mode-semantic">...</div>`}</code>
-                </pre>
-              </div>
+              </pre>
+            </div>
 
-              {/* SCSS */}
-              <div>
-                <h4 className="text-sm font-medium mb-2">Via SCSS Mixin</h4>
-                <pre 
-                  className="p-4 rounded-lg overflow-x-auto text-sm"
-                  style={{ backgroundColor: primaryColor + '08' }}
-                >
-                  <code className="text-foreground">{`// Aplicar contexto de marca
+            {/* SCSS */}
+            <div>
+              <h4 
+                className="text-sm font-medium mb-2"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
+                Via SCSS Mixin
+              </h4>
+              <pre 
+                className="p-4 rounded-lg overflow-x-auto text-sm"
+                style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+              >
+                <code style={{ color: 'var(--jtech-text-body)' }}>{`// Aplicar contexto de marca
 .my-component {
   @include dss-brand-context('water');
   
@@ -1024,28 +1227,31 @@ export default function BrandabilityPage() {
   // Usar gradiente de marca
   @include dss-brand-gradient('hub', 'diagonal');
 }`}</code>
-                </pre>
-              </div>
+              </pre>
+            </div>
 
-              {/* Arquivos */}
-              <div>
-                <h4 className="text-sm font-medium mb-2">Estrutura de Arquivos</h4>
-                <pre 
-                  className="p-4 rounded-lg overflow-x-auto text-sm font-mono"
-                  style={{ backgroundColor: primaryColor + '08' }}
-                >
-                  <code className="text-foreground">{`tokens/brand/
+            {/* Arquivos */}
+            <div>
+              <h4 
+                className="text-sm font-medium mb-2"
+                style={{ color: 'var(--jtech-heading-secondary)' }}
+              >
+                Estrutura de Arquivos
+              </h4>
+              <pre 
+                className="p-4 rounded-lg overflow-x-auto text-sm font-mono"
+                style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+              >
+                <code style={{ color: 'var(--jtech-text-body)' }}>{`tokens/brand/
 ├── _hub.scss      # Tokens da marca Hub (Laranja)
 ├── _water.scss    # Tokens da marca Water (Azul)
 ├── _waste.scss    # Tokens da marca Waste (Verde)
 └── index.scss     # Entry point com classes e mixins`}</code>
-                </pre>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-      </div>
+              </pre>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
     </div>
   );
 }
