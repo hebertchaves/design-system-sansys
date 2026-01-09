@@ -101,7 +101,7 @@ function CodeBlock({ code, className = "" }: { code: string; className?: string 
 export default function GettingStartedPage() {
   return (
     <div 
-      className="p-6 lg:p-8 max-w-4xl mx-auto space-y-10"
+      className="p-6 lg:p-8 max-w-6xl mx-auto space-y-10"
       style={{ backgroundColor: 'var(--dss-page-bg)' }}
     >
       {/* Header - Jtech Style */}
