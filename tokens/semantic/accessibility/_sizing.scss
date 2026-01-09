@@ -1,0 +1,214 @@
+/* ==========================================================================
+   DSS - TOKENS DE TAMANHOS (QUASAR-COMPATIBLE)
+   Escala xs/sm/md/lg/xl alinhada ao Quasar Framework
+   Acessibilidade WCAG 2.1 AA garantida via defaults, não nomenclatura
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. ÁREAS TOCÁVEIS (TOUCH TARGETS)
+     Escala compatível com Quasar: xs, sm, md, lg, xl
+     ✅ WCAG 2.1 AA (SC 2.5.5): Mínimo 44×44px - garantido em 'md' (padrão)
+     =========================================== */
+
+  --dss-touch-target-xs: 32px;   /* Componentes compactos (chips, badges) */
+  --dss-touch-target-sm: 36px;   /* Botões secundários densos */
+  --dss-touch-target-md: 44px;   /* ✅ Padrão - WCAG mínimo (44px) */
+  --dss-touch-target-lg: 52px;   /* Botões destacados */
+  --dss-touch-target-xl: 64px;   /* CTAs principais e ações primárias */
+
+  /* Espaçamento entre elementos tocáveis */
+  --dss-touch-spacing-xs: 4px;   /* Espaçamento mínimo */
+  --dss-touch-spacing-sm: 8px;   /* Espaçamento compacto */
+  --dss-touch-spacing-md: 12px;  /* ✅ Padrão - Evita toques acidentais */
+  --dss-touch-spacing-lg: 16px;  /* Espaçamento confortável */
+  --dss-touch-spacing-xl: 20px;  /* Espaçamento generoso */
+
+  /* ===========================================
+     2. FORM CONTROLS (Inputs, Selects, Textareas)
+     Escala genérica para TODOS os controles de formulário
+     ✅ WCAG 2.1 AA: Altura mínima 44px - garantido em 'md' (padrão)
+     =========================================== */
+
+  /* Alturas genéricas para form controls */
+  --dss-form-control-height-xs: 32px;   /* Controles compactos */
+  --dss-form-control-height-sm: 36px;   /* Controles densos */
+  --dss-form-control-height-md: 44px;   /* ✅ Padrão - WCAG mínimo */
+  --dss-form-control-height-lg: 52px;   /* Controles destacados */
+  --dss-form-control-height-xl: 64px;   /* Controles extra grandes */
+
+  /* Padding genérico para form controls */
+  --dss-form-control-padding-horizontal-xs: 8px;
+  --dss-form-control-padding-horizontal-sm: 10px;
+  --dss-form-control-padding-horizontal-md: 12px;  /* Padrão */
+  --dss-form-control-padding-horizontal-lg: 16px;
+  --dss-form-control-padding-horizontal-xl: 20px;
+
+  --dss-form-control-padding-vertical-xs: 4px;
+  --dss-form-control-padding-vertical-sm: 6px;
+  --dss-form-control-padding-vertical-md: 8px;   /* Padrão */
+  --dss-form-control-padding-vertical-lg: 12px;
+  --dss-form-control-padding-vertical-xl: 16px;
+
+  /* ⚠️ DEPRECATED: Mantidos para compatibilidade (remover em v3.0.0) */
+  --dss-input-height-xs: var(--dss-form-control-height-xs);
+  --dss-input-height-sm: var(--dss-form-control-height-sm);
+  --dss-input-height-md: var(--dss-form-control-height-md);
+  --dss-input-height-lg: var(--dss-form-control-height-lg);
+  --dss-input-height-xl: var(--dss-form-control-height-xl);
+
+  /* ===========================================
+     3. CHECKBOXES, RADIOS E CONTROLES
+     Escala size="xs|sm|md|lg|xl"
+     ✅ WCAG 2.1 AA: Área tocável mínima 44×44px via padding
+     =========================================== */
+
+  /* Tamanho visual do controle */
+  --dss-checkbox-size-xs: 16px;
+  --dss-checkbox-size-sm: 18px;
+  --dss-checkbox-size-md: 20px;  /* Padrão visual */
+  --dss-checkbox-size-lg: 24px;
+  --dss-checkbox-size-xl: 28px;
+
+  /* Área tocável total (controle + padding) */
+  --dss-checkbox-touch-area-xs: 36px;
+  --dss-checkbox-touch-area-sm: 40px;
+  --dss-checkbox-touch-area-md: 44px;  /* ✅ WCAG mínimo */
+  --dss-checkbox-touch-area-lg: 52px;
+  --dss-checkbox-touch-area-xl: 60px;
+
+  /* ===========================================
+     4. ÍCONES E GRÁFICOS
+     Escala size="xs|sm|md|lg|xl"
+     =========================================== */
+
+  --dss-icon-size-xs: 16px;   /* Ícones inline */
+  --dss-icon-size-sm: 20px;   /* Ícones secundários */
+  --dss-icon-size-md: 24px;   /* ✅ Padrão - Ícones interativos */
+  --dss-icon-size-lg: 32px;   /* Ícones destacados */
+  --dss-icon-size-xl: 48px;   /* Ícones grandes (avatares, etc) */
+
+  /* Espaço mínimo ao redor de ícones */
+  --dss-icon-spacing-xs: 4px;
+  --dss-icon-spacing-sm: 6px;
+  --dss-icon-spacing-md: 8px;   /* Padrão */
+  --dss-icon-spacing-lg: 12px;
+  --dss-icon-spacing-xl: 16px;
+
+  /* ===========================================
+     5. ❌ REMOVIDO: AVATARES (Component-Specific)
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 2
+   *
+   * Tokens removidos (5 tokens):
+   * - --dss-avatar-size-xs/sm/md/lg/xl
+   *
+   * CORREÇÃO: Componentes devem calcular tamanhos com:
+   * .dss-avatar--xs { width: var(--dss-icon-size-sm); height: var(--dss-icon-size-sm); }
+   * .dss-avatar--md { width: var(--dss-icon-size-xl); height: var(--dss-icon-size-xl); }
+   */
+
+  /* ===========================================
+     6. ❌ REMOVIDO: BADGES (Component-Specific)
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 2
+   *
+   * Tokens removidos (5 tokens):
+   * - --dss-badge-size-xs/sm/md/lg/xl
+   *
+   * CORREÇÃO: Badges devem usar tokens genéricos:
+   * .dss-badge--xs { height: calc(var(--dss-icon-size-xs) + 4px); }
+   * .dss-badge--md { height: var(--dss-icon-size-md); }
+   */
+
+  /* Chips mantidos - são genéricos de altura */
+  --dss-chip-height-xs: 20px;
+  --dss-chip-height-sm: 24px;
+  --dss-chip-height-md: 28px;  /* Padrão */
+  --dss-chip-height-lg: 32px;
+  --dss-chip-height-xl: 36px;
+
+  /* ===========================================
+     7. ESPAÇAMENTO DE COMPONENTES
+     Escala size="xs|sm|md|lg|xl"
+     =========================================== */
+
+  --dss-component-padding-xs: 8px;
+  --dss-component-padding-sm: 12px;
+  --dss-component-padding-md: 16px;   /* Padrão */
+  --dss-component-padding-lg: 20px;
+  --dss-component-padding-xl: 24px;
+
+  /* Margens entre componentes */
+  --dss-component-margin-xs: 8px;
+  --dss-component-margin-sm: 12px;
+  --dss-component-margin-md: 16px;    /* Padrão */
+  --dss-component-margin-lg: 24px;
+  --dss-component-margin-xl: 32px;
+
+  /* ===========================================
+     8. BREAKPOINTS PARA ACESSIBILIDADE
+     Suporte para zoom e reflow de conteúdo
+     ✅ WCAG 2.1 AA (SC 1.4.10): Reflow
+     =========================================== */
+
+  --dss-breakpoint-xs: 320px;   /* Mobile pequeno, zoom 300% */
+  --dss-breakpoint-sm: 640px;   /* Mobile, zoom 200% */
+  --dss-breakpoint-md: 768px;   /* Tablet */
+  --dss-breakpoint-lg: 1024px;  /* Desktop pequeno */
+  --dss-breakpoint-xl: 1280px;  /* Desktop padrão */
+  --dss-breakpoint-2xl: 1536px; /* Desktop grande */
+
+  /* Breakpoints específicos para zoom */
+  --dss-breakpoint-zoom-200: 800px;  /* Para usuários com zoom 200% */
+  --dss-breakpoint-zoom-300: 600px;  /* Para usuários com zoom 300% */
+  --dss-breakpoint-reflow: 320px;    /* Mínimo para reflow (WCAG) */
+
+  /* ===========================================
+     9. Z-INDEX PARA ELEMENTOS INTERATIVOS
+     Garantir que elementos focados fiquem visíveis
+     =========================================== */
+
+  --dss-z-index-base: 1;
+  --dss-z-index-dropdown: 1000;
+  --dss-z-index-sticky: 1020;
+  --dss-z-index-fixed: 1030;
+  --dss-z-index-backdrop: 1040;
+  --dss-z-index-modal: 1050;
+  --dss-z-index-popover: 1060;
+  --dss-z-index-tooltip: 1070;
+  --dss-z-index-notification: 1080;
+  --dss-z-index-focus: 9999;    /* Garantir que foco fique acima */
+
+  /* ===========================================
+     📚 DOCUMENTAÇÃO - WCAG 2.1 AA
+     =========================================== */
+
+  /*
+   * ✅ CONFORMIDADE WCAG 2.1 AA GARANTIDA VIA DEFAULTS:
+   *
+   * 1. SC 2.5.5 (Target Size)
+   *    - Mínimo: 44×44px
+   *    - Default: --dss-touch-target-md (44px)
+   *    - Uso: <DssButton size="md"> ou <DssButton> (md é padrão)
+   *
+   * 2. SC 1.4.10 (Reflow)
+   *    - Conteúdo deve refluir em 320px sem scroll horizontal
+   *    - Breakpoint: --dss-breakpoint-reflow (320px)
+   *
+   * 3. SC 1.4.12 (Text Spacing)
+   *    - Espaçamento adequado entre elementos
+   *    - Default: --dss-component-margin-md (16px)
+   *
+   * ⚠️ COMPONENTES QUE PODEM SER < 44px:
+   * - Badges: Não são ações primárias (apenas informação)
+   * - Chips: Podem ser removíveis mas não são touch targets principais
+   * - Ícones inline: Apenas decorativos, não interativos
+   * - Checkboxes: Tamanho visual 20px, mas área tocável 44px via padding
+   *
+   * 📖 Referências:
+   * - WCAG 2.1: https://www.w3.org/WAI/WCAG21/quickref/
+   * - Guia Veolia: Páginas 8-9 (Tipografia e Legibilidade)
+   * - Quasar Framework: https://quasar.dev/style/spacing
+   */
+}

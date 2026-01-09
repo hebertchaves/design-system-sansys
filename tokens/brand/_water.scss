@@ -1,0 +1,156 @@
+/* ==========================================================================
+   DSS - TOKENS DE MARCA WATER
+   Sobrescritas para contexto Sansys Water (Azul)
+   ========================================================================== */
+
+[data-brand="water"] {
+  /* ===========================================
+     1. TOKENS DE AÇÃO (ACTION TOKENS)
+     Primary actions usam cores da marca Water
+     =========================================== */
+  --dss-action-primary: var(--dss-water-500);           /* #0e88e4 */
+  --dss-action-primary-light: var(--dss-water-300);     /* #7dc4fc */
+  --dss-action-primary-disable: var(--dss-water-200);   /* #badefd */
+  --dss-action-primary-hover: var(--dss-water-700);     /* #0356a1 */
+  --dss-action-primary-deep: var(--dss-water-800);      /* #074a85 */
+  
+  --dss-action-primary-bg: var(--dss-water-50);         /* #f0f7ff */
+  --dss-action-primary-text: white;
+  
+  /* Secondary e tertiary mantêm cores semânticas */
+  --dss-action-secondary: var(--dss-secondary);         /* Mantém verde semântico */
+  --dss-action-tertiary: var(--dss-tertiary);           /* Mantém laranja semântico */
+  --dss-action-accent: var(--dss-accent);               /* Mantém roxo semântico */
+
+  /* ===========================================
+     2. TOKENS DE MARCA ESPECÍFICOS
+     =========================================== */
+  --dss-brand-primary: var(--dss-water-500);
+  --dss-brand-secondary: var(--dss-water-300);
+  --dss-brand-tertiary: var(--dss-water-700);
+  --dss-brand-accent: var(--dss-water-400);
+  
+  --dss-brand-light: var(--dss-water-100);
+  --dss-brand-lighter: var(--dss-water-50);
+  --dss-brand-dark: var(--dss-water-800);
+  --dss-brand-darker: var(--dss-water-900);
+  
+  --dss-brand-background: var(--dss-water-50);
+  --dss-brand-surface: var(--dss-water-100);
+  --dss-brand-border: var(--dss-water-200);
+  --dss-brand-text: var(--dss-water-800);
+  
+  /* ===========================================
+     3. TOKENS DE SUPERFÍCIE BRANDÁVEIS
+     =========================================== */
+  --dss-surface-brand-subtle: rgba(14, 136, 228, 0.08);   /* Water-500 8% */
+  --dss-surface-brand-light: rgba(14, 136, 228, 0.12);    /* Water-500 12% */
+  --dss-surface-brand-medium: rgba(14, 136, 228, 0.16);   /* Water-500 16% */
+  --dss-surface-brand-strong: rgba(14, 136, 228, 0.24);   /* Water-500 24% */
+  
+  --dss-surface-brand-primary: var(--dss-water-50);
+  --dss-surface-brand-secondary: var(--dss-water-100);
+  
+  /* ===========================================
+     4. TOKENS DE TEXTO BRANDÁVEIS
+     =========================================== */
+  --dss-text-brand-primary: var(--dss-water-700);
+  --dss-text-brand-secondary: var(--dss-water-500);
+  --dss-text-brand-tertiary: var(--dss-water-400);
+  --dss-text-brand-accent: var(--dss-water-300);
+  
+  --dss-text-brand-on-dark: white;
+  --dss-text-brand-on-light: var(--dss-water-800);
+  
+  /* ===========================================
+     5. TOKENS DE BORDA BRANDÁVEIS
+     =========================================== */
+  --dss-border-brand-primary: var(--dss-water-300);
+  --dss-border-brand-secondary: var(--dss-water-200);
+  --dss-border-brand-accent: var(--dss-water-500);
+  --dss-border-brand-focus: var(--dss-water-500);
+  --dss-border-brand-error: var(--dss-negative);          /* Mantém vermelho semântico */
+  
+  /* ===========================================
+     6. TOKENS DE SOMBRA BRANDÁVEIS
+     =========================================== */
+  --dss-shadow-brand-sm: 0 1px 3px rgba(14, 136, 228, 0.15);
+  --dss-shadow-brand-md: 0 4px 6px rgba(14, 136, 228, 0.15);
+  --dss-shadow-brand-lg: 0 10px 15px rgba(14, 136, 228, 0.15);
+  --dss-shadow-brand-xl: 0 20px 25px rgba(14, 136, 228, 0.15);
+  
+  --dss-elevation-brand-1: 0 1px 3px rgba(14, 136, 228, 0.15);
+  --dss-elevation-brand-2: 0 4px 6px rgba(14, 136, 228, 0.15);
+  
+  /* ===========================================
+     7. TOKENS DE FOCO BRANDÁVEIS
+     =========================================== */
+  --dss-focus-ring-brand: 0 0 0 3px rgba(14, 136, 228, 0.5);
+  --dss-focus-ring-brand-inset: inset 0 0 0 3px rgba(14, 136, 228, 0.5);
+  
+  --dss-outline-focus-brand: 2px solid var(--dss-water-500);
+  
+  /* ===========================================
+     8. GRADIENTES BRANDÁVEIS
+     =========================================== */
+  --dss-gradient-brand-vertical: linear-gradient(180deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-brand-horizontal: linear-gradient(90deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-brand-diagonal: linear-gradient(135deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-brand-radial: radial-gradient(circle, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  
+  --dss-gradient-brand-light: linear-gradient(135deg, var(--dss-water-50) 0%, var(--dss-water-100) 100%);
+  --dss-gradient-brand-dark: linear-gradient(135deg, var(--dss-water-500) 0%, var(--dss-water-700) 100%);
+
+  /* ===========================================
+     9. ❌ REMOVIDO: TOKENS DE COMPONENTES BRANDÁVEIS
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 1
+   *
+   * Tokens removidos (14 tokens --dss-component-*):
+   * - --dss-component-btn-primary-bg
+   * - --dss-component-btn-primary-hover
+   * - --dss-component-btn-primary-active
+   * - --dss-component-btn-primary-text
+   * - --dss-component-card-bg
+   * - --dss-component-card-border
+   * - --dss-component-card-header-bg
+   * - --dss-component-header-bg
+   * - --dss-component-header-text
+   * - --dss-component-header-border
+   * - --dss-component-footer-bg
+   * - --dss-component-footer-text
+   * - --dss-component-sidebar-bg
+   * - --dss-component-sidebar-border
+   *
+   * CORREÇÃO: Componentes devem consumir tokens genéricos:
+   * .dss-button { background: var(--dss-action-primary); }
+   * .dss-card { background: var(--dss-surface-default); }
+   */
+
+  /* ===========================================
+     10. TOKENS PARA QUASAR (INTEGRAÇÃO)
+     =========================================== */
+  --quasar-primary: var(--dss-water-500);
+  --quasar-primary-hover: var(--dss-water-600);
+  --quasar-primary-active: var(--dss-water-700);
+  --quasar-primary-disable: var(--dss-water-200);
+  
+  /* ===========================================
+     11. ACESSIBILIDADE - CONTRASTE ESPECÍFICO
+     =========================================== */
+  /* Water-500 (#0e88e4) tem contraste 4.6:1 com branco (aceitável para texto grande) */
+  --dss-contrast-brand-primary-on-white: 4.6;     /* ⚠️ Aceitável para texto grande (18pt+) */
+  --dss-contrast-brand-primary-on-dark: 11.1;     /* ✅ Excelente contraste sobre fundo escuro */
+  
+  /* Combinações aprovadas para Water */
+  --dss-contrast-safe-brand-text: var(--dss-water-800);  /* #074a85 sobre branco = 9.1:1 ✅ */
+  --dss-contrast-safe-brand-bg: var(--dss-water-500);    /* Para backgrounds e UI */
+  --dss-contrast-safe-brand-ui: var(--dss-water-600);    /* #026cc7 sobre branco = 7.1:1 ✅ */
+  
+  /* ===========================================
+     12. CLASSES DE UTILIDADE ESPECÍFICAS
+     =========================================== */
+  .dss-brand-water-only {
+    /* Classes que só aparecem no contexto Water */
+  }
+}

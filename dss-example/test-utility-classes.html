@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste - Classes Utilitárias DSS</title>
+
+  <!-- CSS do Design System Sansys -->
+  <link rel="stylesheet" href="/dss-full.css?v=2.1.0">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .test-section {
+      background: white;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .test-item {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px;
+    }
+
+    .test-box {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    code {
+      background: #f0f0f0;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Teste de Classes Utilitárias DSS</h1>
+  <p>Este teste verifica se as classes utilitárias <code>.bg-*</code> e <code>.text-*</code> funcionam corretamente.</p>
+
+  <!-- TESTE 1: Background Colors -->
+  <div class="test-section">
+    <h2>1. Background Colors (.bg-*)</h2>
+
+    <div class="test-item">
+      <div class="test-box bg-primary text-white">
+        PRIMARY
+      </div>
+      <code>.bg-primary</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-secondary text-white">
+        SECONDARY
+      </div>
+      <code>.bg-secondary</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-tertiary text-white">
+        TERTIARY
+      </div>
+      <code>.bg-tertiary</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-accent text-white">
+        ACCENT
+      </div>
+      <code>.bg-accent</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-positive text-white">
+        POSITIVE
+      </div>
+      <code>.bg-positive</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-negative text-white">
+        NEGATIVE
+      </div>
+      <code>.bg-negative</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-warning text-black">
+        WARNING
+      </div>
+      <code>.bg-warning</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-info text-black">
+        INFO
+      </div>
+      <code>.bg-info</code>
+    </div>
+  </div>
+
+  <!-- TESTE 2: Text Colors -->
+  <div class="test-section">
+    <h2>2. Text Colors (.text-*)</h2>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-primary" style="border: 1px solid #ddd;">
+        PRIMARY
+      </div>
+      <code>.text-primary</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-secondary" style="border: 1px solid #ddd;">
+        SECONDARY
+      </div>
+      <code>.text-secondary</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-tertiary" style="border: 1px solid #ddd;">
+        TERTIARY
+      </div>
+      <code>.text-tertiary</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-accent" style="border: 1px solid #ddd;">
+        ACCENT
+      </div>
+      <code>.text-accent</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-positive" style="border: 1px solid #ddd;">
+        POSITIVE
+      </div>
+      <code>.text-positive</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-negative" style="border: 1px solid #ddd;">
+        NEGATIVE
+      </div>
+      <code>.text-negative</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-warning" style="border: 1px solid #ddd;">
+        WARNING
+      </div>
+      <code>.text-warning</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box bg-white text-info" style="border: 1px solid #ddd;">
+        INFO
+      </div>
+      <code>.text-info</code>
+    </div>
+  </div>
+
+  <!-- TESTE 3: Tokens CSS -->
+  <div class="test-section">
+    <h2>3. Tokens CSS (var(--dss-*))</h2>
+
+    <div class="test-item">
+      <div class="test-box" style="background: var(--dss-primary); color: white;">
+        PRIMARY
+      </div>
+      <code>var(--dss-primary)</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box" style="background: var(--dss-secondary); color: white;">
+        SECONDARY
+      </div>
+      <code>var(--dss-secondary)</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box" style="background: var(--dss-tertiary); color: white;">
+        TERTIARY
+      </div>
+      <code>var(--dss-tertiary)</code>
+    </div>
+
+    <div class="test-item">
+      <div class="test-box" style="background: var(--dss-accent); color: white;">
+        ACCENT
+      </div>
+      <code>var(--dss-accent)</code>
+    </div>
+  </div>
+
+  <!-- TESTE 4: Botões DSS com classes aplicadas manualmente -->
+  <div class="test-section">
+    <h2>4. Botões DSS com Classes Aplicadas Manualmente</h2>
+    <p style="color: #666; margin-bottom: 20px;">
+      Aplicando <code>.bg-primary</code> diretamente em elementos <code>.dss-button</code>
+    </p>
+
+    <button class="dss-button dss-button--elevated bg-primary text-white dss-button--md">
+      PRIMARY (bg-primary)
+    </button>
+
+    <button class="dss-button dss-button--elevated bg-secondary text-white dss-button--md">
+      SECONDARY (bg-secondary)
+    </button>
+
+    <button class="dss-button dss-button--elevated bg-tertiary text-white dss-button--md">
+      TERTIARY (bg-tertiary)
+    </button>
+
+    <button class="dss-button dss-button--elevated bg-accent text-white dss-button--md">
+      ACCENT (bg-accent)
+    </button>
+  </div>
+
+  <div class="test-section" style="background: #fef3c7;">
+    <h2>✅ Resultados Esperados:</h2>
+    <ul>
+      <li><strong>Seção 1:</strong> 8 caixas coloridas (azul, verde-água, laranja, roxo, verde, vermelho, amarelo, ciano)</li>
+      <li><strong>Seção 2:</strong> 8 textos coloridos sobre fundo branco</li>
+      <li><strong>Seção 3:</strong> 4 caixas coloridas usando tokens CSS diretamente</li>
+      <li><strong>Seção 4:</strong> 4 botões DSS coloridos usando classes utilitárias</li>
+    </ul>
+
+    <p><strong>❌ Se as cores NÃO aparecerem:</strong> O problema é com o CSS compilado ou com a definição dos tokens.</p>
+    <p><strong>✅ Se as cores APARECEREM:</strong> O problema é com o componente Vue (computed property ou prop binding).</p>
+  </div>
+</body>
+</html>

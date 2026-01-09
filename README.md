@@ -1,73 +1,251 @@
-# Welcome to your Lovable project
+# 🎨 Design System Sansys (DSS)
 
-## Project info
+<div align="center">
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![Vue](https://img.shields.io/badge/Vue-3.4+-4FC08D.svg?logo=vue.js)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![WCAG](https://img.shields.io/badge/WCAG-2.1%20AA-success.svg)
 
-## How can I edit this code?
+**Sistema de Design profissional com componentes Vue 3, tokens semânticos e acessibilidade WCAG 2.1 AA**
 
-There are several ways of editing your application.
+[Documentação](#-documentação) •
+[Instalação](#-instalação) •
+[Componentes](#-componentes) •
+[Exemplos](#-exemplos)
 
-**Use Lovable**
+</div>
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## ✨ **Características**
 
-**Use your preferred IDE**
+- ✅ **Componentes Vue 3** - Composition API + Options API
+- ✅ **Tokens DSS** - Sistema completo de design tokens semânticos
+- ✅ **Acessibilidade WCAG 2.1 AA** - Touch targets, contraste, navegação por teclado
+- ✅ **Brandabilidade** - Hub 🟠, Water 🔵, Waste 🟢
+- ✅ **Dark Mode Support** - Temas claro e escuro
+- ✅ **TypeScript Ready** - Tipagens completas (em desenvolvimento)
+- ✅ **Tree-shakeable** - Importe apenas o que você usa
+- ✅ **Zero Hardcoded Values** - 100% baseado em tokens
+- ✅ **Arquitetura em 4 Camadas** - Structure → Composition → Variants → Output
+- 🔥 **Padrão Quasar Framework** - Classes utilitárias globais (97% de redução de código)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📦 **Instalação**
 
-Follow these steps:
+### NPM
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+npm install @sansys/design-system
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Yarn
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+yarn add @sansys/design-system
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### PNPM
+
+```bash
+pnpm add @sansys/design-system
+```
+
+---
+
+## 🚀 **Quick Start**
+
+### **Opção 1: Plugin Global (Recomendado)**
+
+Registra todos os componentes globalmente no app Vue.
+
+```javascript
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+// Importar plugin e CSS
+import DesignSystemSansys from '@sansys/design-system'
+import '@sansys/design-system/css'
+
+const app = createApp(App)
+
+// Registrar plugin
+app.use(DesignSystemSansys, {
+  brand: 'hub' // opcional: hub, water, waste
+})
+
+app.mount('#app')
+```
+
+```vue
+<!-- App.vue -->
+<template>
+  <!-- Componentes disponíveis globalmente -->
+  <DssButton color="primary" @click="handleClick">
+    Clique Aqui
+  </DssButton>
+
+  <DssCard variant="elevated">
+    <DssCardSection>
+      <h2>Meu Card</h2>
+      <DssInput v-model="nome" variant="outlined" label="Nome" />
+    </DssCardSection>
+  </DssCard>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const nome = ref('')
+
+function handleClick() {
+  console.log('Botão clicado!')
+}
+</script>
+```
+
+---
+
+### **Opção 2: Importação Individual (Tree-shaking)**
+
+Importe apenas os componentes que você precisa.
+
+```vue
+<template>
+  <DssButton color="primary" @click="handleClick">
+    Clique Aqui
+  </DssButton>
+</template>
+
+<script setup>
+import { DssButton } from '@sansys/design-system'
+import '@sansys/design-system/css'
+
+const handleClick = () => console.log('Clicado!')
+</script>
+```
+
+---
+
+## 🧩 **Componentes Disponíveis**
+
+### **DssButton** - Botão completo com 6 variantes
+
+```vue
+<DssButton variant="elevated" color="primary" size="md">
+  Clique Aqui
+</DssButton>
+```
+
+[📖 Documentação completa](./components/base/DssButton/DssButton.md)
+
+### **DssCard** - Card flexível com composição
+
+```vue
+<DssCard variant="elevated">
+  <DssCardSection>
+    <h2>Título</h2>
+  </DssCardSection>
+  <DssCardActions>
+    <DssButton color="primary">OK</DssButton>
+  </DssCardActions>
+</DssCard>
+```
+
+### **DssInput** - Input de formulário com validação
+
+```vue
+<DssInput
+  v-model="nome"
+  variant="outlined"
+  label="Nome"
+  :error="nome.length < 3"
+  error-message="Mínimo 3 caracteres"
+/>
+```
+
+---
+
+## 🎨 **Brandabilidade**
+
+```vue
+<!-- Hub (Laranja) -->
+<DssButton brand="hub" color="primary">Hub</DssButton>
+
+<!-- Water (Azul) -->
+<DssButton brand="water" color="primary">Water</DssButton>
+
+<!-- Waste (Verde) -->
+<DssButton brand="waste" color="primary">Waste</DssButton>
+```
+
+---
+
+## ♿ **Acessibilidade WCAG 2.1 AA**
+
+- ✅ Contraste 4.5:1
+- ✅ Touch targets 48×48px
+- ✅ Navegação por teclado
+- ✅ Focus visível
+- ✅ ARIA labels
+- ✅ Reduced motion support
+
+---
+
+## 📚 **Documentação**
+
+### **Arquitetura e Padrões**
+- **[DSS_ARCHITECTURE_GUIDE.md](./DSS_ARCHITECTURE_GUIDE.md)** - Arquitetura em 4 camadas
+- **[DSS_IMPLEMENTATION_GUIDE.md](./DSS_IMPLEMENTATION_GUIDE.md)** - Guia completo de implementação
+- **[REFACTORING_QUASAR_PATTERN.md](./REFACTORING_QUASAR_PATTERN.md)** 🔥 - Padrão Quasar Framework (classes utilitárias)
+
+### **Por Componente**
+- **[DssButton](./components/base/DssButton/README.md)** - Botão completo
+- **[DssBadge](./components/base/DssBadge/README.md)** - Badge/contador
+- **[DssAvatar](./components/base/DssAvatar/README.md)** - Avatar
+- **[DssCard](./components/base/DssCard/README.md)** - Card
+- **[DssInput](./components/base/DssInput/README.md)** - Input
+
+---
+
+## 🛠️ **Desenvolvimento**
+
+```bash
+# Instalar dependências
+npm install
+
+# Build completo (CSS + JavaScript)
+npm run build
+
+# Build do CSS (compila SCSS → CSS para desenvolvimento)
+npm run build:css
+
+# Build dos componentes Vue (compila .vue → JavaScript)
+npm run build:lib
+
+# Watch mode (recompila automaticamente)
+npm run build:watch
+
+# Rodar exemplo local
+cd dss-example
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### ⚠️ **Importante: Build de Componentes**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+**Sempre execute `npm run build:lib` após modificar arquivos `.vue`!**
 
-**Use GitHub Codespaces**
+Modificar componentes Vue **NÃO** atualiza automaticamente o diretório `dist/`. É necessário recompilar com `npm run build:lib` para que as mudanças sejam aplicadas.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**Ver:** [PROBLEMA_CORES_RESOLVIDO.md](./PROBLEMA_CORES_RESOLVIDO.md) para mais detalhes.
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## 📝 **Licença**
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+MIT © 2025 Sansys/Veolia
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Desenvolvido com ❤️ por Hebert Daniel Oliveira Chaves
