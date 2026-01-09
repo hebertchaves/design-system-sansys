@@ -1,0 +1,129 @@
+/* ==========================================================================
+   DSS - TOKENS DE TIPOGRAFIA ACESSÍVEL
+   Baseado na Página 8 do Guia Veolia (Tipografia e Legibilidade)
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. FAMÍLIAS DE FONTE (Página 8)
+     "Fontes sans-serif preferidas para melhor legibilidade em telas"
+     =========================================== */
+  --dss-font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 
+                         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --dss-font-family-mono: 'Roboto Mono', 'SF Mono', Monaco, 'Courier New', monospace;
+  --dss-font-family-system: -apple-system, BlinkMacSystemFont, 
+                           'Segoe UI', Roboto, sans-serif;
+  
+  /* Fallback seguro */
+  --dss-font-family-fallback: sans-serif;
+  
+  /* ===========================================
+     2. TAMANHOS DE FONTE (Página 8)
+     "Mínimo 16px para texto do corpo, 14px para texto secundário"
+     Escala compatível com Quasar: xs, sm, md, lg, xl
+     ✅ WCAG 2.1 AA: Mínimo 16px para corpo - garantido em 'md' (padrão)
+     =========================================== */
+  --dss-font-size-xs: 0.75rem;     /* 12px - Apenas para rótulos, não para corpo */
+  --dss-font-size-sm: 0.875rem;    /* 14px - Texto secundário mínimo */
+  --dss-font-size-md: 1rem;        /* 16px - ✅ Padrão Quasar - WCAG mínimo */
+  --dss-font-size-base: 1rem;      /* 16px - Alias para compatibilidade */
+  --dss-font-size-lg: 1.125rem;    /* 18px - Texto grande (3:1 contraste) */
+  --dss-font-size-xl: 1.25rem;     /* 20px */
+  --dss-font-size-2xl: 1.5rem;     /* 24px */
+  --dss-font-size-3xl: 1.875rem;   /* 30px */
+  --dss-font-size-4xl: 2.25rem;    /* 36px */
+  
+  /* ===========================================
+     3. PESOS DE FONTE (Página 8)
+     "Regular (400) para texto do corpo, Negrito (600+) para ênfase"
+     =========================================== */
+  --dss-font-weight-light: 300;
+  --dss-font-weight-normal: 400;      /* Texto corporal */
+  --dss-font-weight-medium: 500;
+  --dss-font-weight-semibold: 600;    /* Ênfase */
+  --dss-font-weight-bold: 700;        /* Títulos, forte ênfase */
+  --dss-font-weight-extrabold: 800;
+  
+  /* ===========================================
+     4. ALTURA DE LINHA E ESPAÇAMENTO (Página 8)
+     "1,4 a 1,6 vezes o tamanho da fonte para legibilidade ideal"
+     =========================================== */
+  --dss-line-height-tight: 1.25;
+  --dss-line-height-snug: 1.375;
+  --dss-line-height-normal: 1.5;      /* Ideal para corpo */
+  --dss-line-height-relaxed: 1.625;
+  --dss-line-height-loose: 1.75;      /* Para acessibilidade extra */
+  
+  /* Altura de linha por tamanho de fonte */
+  --dss-line-height-xs: 1.4;
+  --dss-line-height-sm: 1.45;
+  --dss-line-height-base: 1.5;
+  --dss-line-height-lg: 1.55;
+  --dss-line-height-xl: 1.6;
+  
+  /* ===========================================
+     5. ESPAÇAMENTO DE LETRAS (Página 8)
+     "Espaçamento normal, evitar fontes condensadas para texto do corpo"
+     =========================================== */
+  --dss-letter-spacing-tighter: -0.05em;
+  --dss-letter-spacing-tight: -0.025em;
+  --dss-letter-spacing-normal: 0;      /* Normal para corpo */
+  --dss-letter-spacing-wide: 0.025em;
+  --dss-letter-spacing-wider: 0.05em;
+  --dss-letter-spacing-widest: 0.1em;
+  
+  /* ===========================================
+     6. HIERARQUIA TIPOGRÁFICA SEMÂNTICA
+     =========================================== */
+  /* Títulos - Sempre use hierarquia semântica */
+  --dss-heading-font-family: var(--dss-font-family-sans);
+
+  /* H1 - Maior em tudo (size, weight, line-height) */
+  --dss-heading-1-size: var(--dss-font-size-4xl);
+  --dss-heading-1-weight: var(--dss-font-weight-bold);        /* 700 */
+  --dss-heading-1-line-height: 1.5;                           /* 150% - Maior */
+
+  /* H2 */
+  --dss-heading-2-size: var(--dss-font-size-3xl);
+  --dss-heading-2-weight: var(--dss-font-weight-semibold);    /* 600 */
+  --dss-heading-2-line-height: 1.4;                           /* 140% */
+
+  /* H3 */
+  --dss-heading-3-size: var(--dss-font-size-2xl);
+  --dss-heading-3-weight: var(--dss-font-weight-medium);      /* 500 */
+  --dss-heading-3-line-height: 1.3;                           /* 130% */
+
+  /* H4 */
+  --dss-heading-4-size: var(--dss-font-size-xl);
+  --dss-heading-4-weight: var(--dss-font-weight-medium);      /* 500 */
+  --dss-heading-4-line-height: 1.2;                           /* 120% */
+
+  /* H5 */
+  --dss-heading-5-size: var(--dss-font-size-lg);
+  --dss-heading-5-weight: var(--dss-font-weight-normal);      /* 400 */
+  --dss-heading-5-line-height: 1.15;                          /* 115% */
+
+  /* H6 - Menor em tudo (size, weight, line-height) */
+  --dss-heading-6-size: var(--dss-font-size-base);
+  --dss-heading-6-weight: var(--dss-font-weight-normal);      /* 400 */
+  --dss-heading-6-line-height: 1.1;                           /* 110% - Menor */
+  
+  /* ===========================================
+     7. UTILITÁRIOS PARA LEGIBILIDADE
+     =========================================== */
+  /* Para usuários com dislexia */
+  --dss-dyslexia-friendly-spacing: 0.075em;
+  --dss-dyslexia-friendly-weight: var(--dss-font-weight-normal);
+  
+  /* Para baixa visão */
+  --dss-low-vision-scale: 1.1;        /* Aumento base para baixa visão */
+  
+  /* Respeitar prefers-reduced-motion para texto */
+  @media (prefers-reduced-motion: reduce) {
+    --dss-text-transition-duration: 0ms;
+    --dss-text-transition-timing: linear;
+  }
+  
+  /* Suporte a zoom do navegador */
+  font-size: clamp(100%, 1rem + 0.5vw, 125%); /* Ajuste progressivo para zoom */
+}

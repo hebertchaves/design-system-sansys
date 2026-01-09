@@ -1,0 +1,122 @@
+/* ==========================================================================
+   DssInput - LAYER 4: OUTPUT - States
+
+   RESPONSABILIDADE: Estados especiais (dark mode, focus rings, a11y)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-input {
+    /* Filled variant in dark mode */
+    &--filled .dss-input__field {
+      background-color: var(--dss-gray-900);
+      border-bottom-color: var(--dss-gray-700);
+    }
+
+    &--filled.dss-input--focused .dss-input__field {
+      background-color: var(--dss-gray-800);
+    }
+
+    /* Outlined variant in dark mode */
+    &--outlined .dss-input__field {
+      border-color: var(--dss-gray-600);
+    }
+
+    /* Standout becomes lighter in dark mode */
+    &--standout .dss-input__field {
+      background-color: var(--dss-gray-700);
+    }
+
+    &--standout.dss-input--focused .dss-input__field {
+      background-color: var(--dss-gray-600);
+    }
+  }
+
+  /* Text colors in dark mode */
+  .dss-input__native {
+    color: var(--dss-text-inverse);
+
+    &::placeholder {
+      color: var(--dss-text-inverse-hint);
+    }
+  }
+
+  .dss-input__label {
+    color: var(--dss-text-inverse-secondary);
+  }
+
+  .dss-input__prepend,
+  .dss-input__append {
+    color: var(--dss-text-inverse-secondary);
+  }
+}
+
+/* ==========================================================================
+   FOCUS RINGS (A11Y)
+   ========================================================================== */
+
+.dss-input__field:focus-within {
+  /* Já aplicado em cada variante via box-shadow */
+  /* Este é um fallback para navegadores sem :focus-within */
+}
+
+/* Keyboard focus indicator (não mouse) */
+.dss-input:focus-within:not(:active) {
+  .dss-input__field {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline-offset: var(--dss-spacing-1);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE
+   ========================================================================== */
+
+@media (prefers-contrast: high) {
+  .dss-input__field {
+    border-width: var(--dss-border-width-md) !important;
+    border-color: currentColor !important;
+  }
+
+  .dss-input--focused .dss-input__field {
+    outline: var(--dss-border-width-thick) solid var(--dss-action-primary);
+    outline-offset: var(--dss-spacing-1);
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-input,
+  .dss-input__field,
+  .dss-input__label,
+  .dss-input__clear {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  .dss-input {
+    /* Remove backgrounds para economizar tinta */
+    &--filled .dss-input__field,
+    &--standout .dss-input__field {
+      background: none !important;
+      border: 1px solid #000 !important;
+    }
+
+    /* Remove clear button */
+    .dss-input__clear {
+      display: none;
+    }
+  }
+}

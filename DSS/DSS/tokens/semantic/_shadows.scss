@@ -1,0 +1,161 @@
+/* ==========================================================================
+   DSS - TOKENS DE SOMBRA E ELEVAÇÃO
+   Sistema de profundidade visual
+   ========================================================================== */
+
+/**
+ * ESTRATÉGIA DE OPACIDADE:
+ * Light Mode: Opacidades médias (25%-45%) para sombras visíveis mas sutis
+ * Dark Mode: Opacidades altas (50%-90%) para melhor contraste em fundo escuro
+ *
+ * Light Mode usa metade da opacidade do Dark Mode para manter proporção visual
+ */
+
+:root {
+  /* ===========================================
+     1. SOMBRAS BASE (ELEVAÇÃO) - LIGHT MODE
+     =========================================== */
+  --dss-shadow-xs: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);   /* Dark: 0.5 */
+  --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.30);   /* Dark: 0.6 */
+  --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.35); /* Dark: 0.7 */
+  --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.40); /* Dark: 0.8 */
+  --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.45); /* Dark: 0.9 */
+  
+  /* Sombras internas (inset) */
+  --dss-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  --dss-shadow-inner-lg: inset 0 4px 8px rgba(0, 0, 0, 0.08);
+  
+  /* ===========================================
+     2. SOMBRAS SEMÂNTICAS
+     =========================================== */
+  /* Foco (alternativa a outline) */
+  --dss-shadow-focus: 0 0 0 3px rgba(31, 134, 222, 0.5);
+  --dss-shadow-focus-error: 0 0 0 3px rgba(216, 24, 46, 0.5);
+  --dss-shadow-focus-success: 0 0 0 3px rgba(77, 210, 40, 0.5);
+  
+  /* Overlay/backdrop */
+  --dss-shadow-overlay: 0 10px 38px rgba(0, 0, 0, 0.2);
+  --dss-shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.3);
+  
+  /* ===========================================
+     3. SOMBRAS DE MARCA
+     =========================================== */
+  /* Hub (Laranja) */
+  --dss-shadow-hub-sm: 0 1px 3px rgba(245, 145, 26, 0.15);
+  --dss-shadow-hub-md: 0 4px 6px rgba(245, 145, 26, 0.15);
+  --dss-shadow-hub-lg: 0 10px 15px rgba(245, 145, 26, 0.15);
+  
+  /* Water (Azul) */
+  --dss-shadow-water-sm: 0 1px 3px rgba(14, 136, 228, 0.15);
+  --dss-shadow-water-md: 0 4px 6px rgba(14, 136, 228, 0.15);
+  --dss-shadow-water-lg: 0 10px 15px rgba(14, 136, 228, 0.15);
+  
+  /* Waste (Verde) */
+  --dss-shadow-waste-sm: 0 1px 3px rgba(24, 177, 115, 0.15);
+  --dss-shadow-waste-md: 0 4px 6px rgba(24, 177, 115, 0.15);
+  --dss-shadow-waste-lg: 0 10px 15px rgba(24, 177, 115, 0.15);
+  
+  /* ===========================================
+     4. ELEVAÇÃO SEMÂNTICA
+     =========================================== */
+  --dss-elevation-0: none;
+  --dss-elevation-1: var(--dss-shadow-sm);
+  --dss-elevation-2: var(--dss-shadow-md);
+  --dss-elevation-3: var(--dss-shadow-lg);
+  --dss-elevation-4: var(--dss-shadow-xl);
+  --dss-elevation-5: var(--dss-shadow-2xl);
+
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 3)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (5 tokens):
+   *
+   * === CARDS (2 tokens) ===
+   * --dss-elevation-card           → Use: var(--dss-elevation-1)
+   * --dss-elevation-card-hover     → Use: var(--dss-elevation-2)
+   *
+   * === MODAIS (1 token) ===
+   * --dss-elevation-modal          → Use: var(--dss-elevation-4)
+   *
+   * === TOOLTIPS (1 token) ===
+   * --dss-elevation-tooltip        → Use: var(--dss-elevation-2)
+   *
+   * === TOASTS (1 token) ===
+   * --dss-elevation-toast          → Use: var(--dss-elevation-3)
+   *
+   * ✅ EXEMPLO DE USO NOS COMPONENTES:
+   *
+   * // DssCard.module.scss
+   * .dss-card {
+   *   box-shadow: var(--dss-elevation-1);  // default
+   *
+   *   &:hover {
+   *     box-shadow: var(--dss-elevation-2);
+   *   }
+   *
+   *   &--elevated {
+   *     box-shadow: var(--dss-elevation-2);
+   *   }
+   *
+   *   &--floating {
+   *     box-shadow: var(--dss-elevation-3);
+   *   }
+   * }
+   *
+   * // DssModal.module.scss
+   * .dss-modal {
+   *   box-shadow: var(--dss-elevation-4);  // alta elevação
+   *
+   *   &--fullscreen {
+   *     box-shadow: var(--dss-elevation-5);  // máxima elevação
+   *   }
+   * }
+   *
+   * // DssTooltip.module.scss
+   * .dss-tooltip {
+   *   box-shadow: var(--dss-elevation-2);  // média elevação
+   * }
+   *
+   * // DssToast.module.scss
+   * .dss-toast {
+   *   box-shadow: var(--dss-elevation-3);  // alta elevação
+   *
+   *   &--important {
+   *     box-shadow: var(--dss-elevation-4);  // muito alta
+   *   }
+   * }
+   *
+   * ✅ BENEFÍCIOS:
+   * - Escalabilidade: 100 componentes = mesmos 6 tokens de elevação
+   * - Flexibilidade: Componentes escolhem nível de elevação livremente
+   * - Manutenibilidade: Mudanças isoladas nos componentes
+   * - Clareza: Níveis explícitos (elevation-1, elevation-2, elevation-3, etc.)
+   * - Consistência: Sistema unificado de profundidade visual
+   *
+   * 📚 Referência: AUDITORIA_DSS_JAN_2025.md
+   *               SPRINT_3_RELATORIO_JAN_2025.md
+   *               DSS_TOKEN_GUIDELINES.md
+   */
+  
+  /* ===========================================
+     5. SOMBRAS PARA ESTADOS
+     =========================================== */
+  --dss-shadow-hover: var(--dss-shadow-md);
+  --dss-shadow-active: var(--dss-shadow-inner);
+  --dss-shadow-drag: 0 10px 20px rgba(0, 0, 0, 0.15);
+  
+  /* ===========================================
+     6. PREFERÊNCIAS DO USUÁRIO
+     =========================================== */
+  @media (prefers-reduced-motion: reduce) {
+    --dss-shadow-transition: none;
+  }
+  
+  @media (prefers-contrast: high) {
+    --dss-shadow-focus: 0 0 0 3px rgba(31, 134, 222, 0.8);
+  }
+}

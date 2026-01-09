@@ -1,0 +1,757 @@
+@charset "UTF-8";
+/* ==========================================================================
+   DssInput - MAIN MODULE (Orquestrador Final)
+
+   Filosofia DSS: Arquitetura em 4 Camadas
+
+   LAYER 1: Structure (DssInput.vue)
+   LAYER 2: Composition (Base styles e mixins)
+   LAYER 3: Variants (filled, outlined, standout, borderless)
+   LAYER 4: Output (states, brands, orchestration)
+
+   Este arquivo importa TODAS as camadas e gera o CSS final.
+
+   Total estimado: ~400 linhas (vs ~1000+ em monolitico)
+   ========================================================================== */
+/* Layer 2: Composition */
+/* ==========================================================================
+   DssInput - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-spacing-*, --dss-radius-*, etc.)
+   ✅ Mixins reutilizáveis (@include dss-transition)
+   ✅ Reset e layout base
+   ❌ ZERO valores hardcoded
+   ❌ ZERO lógica de variantes
+   ========================================================================== */
+/* ==========================================================================
+   WRAPPER BASE
+   ========================================================================== */
+.dss-input {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--dss-font-family-sans);
+}
+
+/* ==========================================================================
+   FIELD WRAPPER
+   ========================================================================== */
+.dss-input__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--dss-spacing-14); /* 56px touch target */
+  gap: var(--dss-spacing-2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dense variant reduces height */
+.dss-input--dense .dss-input__field {
+  min-height: var(--dss-spacing-10); /* 40px */
+}
+
+/* ==========================================================================
+   CONTROL (Label + Input container)
+   ========================================================================== */
+.dss-input__control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  padding: var(--dss-spacing-4) var(--dss-spacing-4);
+}
+
+.dss-input--dense .dss-input__control {
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+}
+
+/* ==========================================================================
+   LABEL
+   ========================================================================== */
+.dss-input__label {
+  position: absolute;
+  left: var(--dss-spacing-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--dss-font-size-md);
+  color: var(--dss-text-secondary);
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left top;
+}
+
+/* Floating label (when focused or filled) */
+.dss-input__label--float {
+  top: var(--dss-spacing-2);
+  transform: translateY(0) scale(0.75);
+  font-size: var(--dss-font-size-sm);
+}
+
+/* Stacked label (always on top) */
+.dss-input__label--stack {
+  position: static;
+  transform: none;
+  font-size: var(--dss-font-size-sm);
+  margin-bottom: var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   NATIVE INPUT
+   ========================================================================== */
+.dss-input__native {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--dss-font-size-md);
+  color: var(--dss-text-primary);
+  padding: 0;
+  margin: 0;
+  line-height: var(--dss-line-height-normal);
+}
+.dss-input__native::placeholder {
+  color: var(--dss-text-hint);
+  opacity: 1;
+}
+.dss-input__native {
+  /* Remove autofill background */
+}
+.dss-input__native:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* With floating label, add top padding */
+.dss-input:not(.dss-input__label--stack) .dss-input__native {
+  padding-top: var(--dss-spacing-5);
+}
+
+/* Disabled state */
+.dss-input--disabled .dss-input__native {
+  color: var(--dss-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Readonly state */
+.dss-input--readonly .dss-input__native {
+  cursor: default;
+}
+
+/* ==========================================================================
+   SLOTS (Before, After, Prepend, Append)
+   ========================================================================== */
+.dss-input__before,
+.dss-input__after,
+.dss-input__prepend,
+.dss-input__append {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.dss-input__prepend {
+  padding-left: var(--dss-spacing-3);
+  color: var(--dss-text-secondary);
+}
+
+.dss-input__append {
+  padding-right: var(--dss-spacing-3);
+  color: var(--dss-text-secondary);
+  gap: var(--dss-spacing-2);
+}
+
+/* ==========================================================================
+   CLEAR BUTTON
+   ========================================================================== */
+.dss-input__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dss-spacing-6);
+  height: var(--dss-spacing-6);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--dss-text-secondary);
+  font-size: var(--dss-font-size-xl);
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--dss-radius-full);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dss-input__clear:hover {
+  background-color: var(--dss-gray-100);
+  color: var(--dss-text-primary);
+}
+.dss-input__clear:focus-visible {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline-offset: var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   BOTTOM SLOTS (Hint, Error)
+   ========================================================================== */
+.dss-input__bottom {
+  display: flex;
+  flex-direction: column;
+  padding: var(--dss-spacing-1) var(--dss-spacing-4) 0;
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-normal);
+  min-height: var(--dss-spacing-5);
+}
+
+.dss-input__hint {
+  color: var(--dss-text-secondary);
+}
+
+.dss-input__error {
+  color: var(--dss-error-600);
+}
+
+/* ==========================================================================
+   DISABLED STATE
+   ========================================================================== */
+.dss-input--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.dss-input--disabled .dss-input__field {
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   LOADING STATE
+   ========================================================================== */
+.dss-input--loading {
+  pointer-events: none;
+}
+.dss-input--loading .dss-input__append::after {
+  content: "";
+  display: inline-block;
+  width: var(--dss-spacing-4);
+  height: var(--dss-spacing-4);
+  border: var(--dss-border-width-md) solid var(--dss-gray-300);
+  border-top-color: var(--dss-action-primary);
+  border-radius: var(--dss-radius-full);
+  animation: dss-input-spin 0.6s linear infinite;
+}
+
+@keyframes dss-input-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Layer 3: Variants */
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANTS (Orchestrator)
+
+   Importa todas as variantes disponíveis
+   ========================================================================== */
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Filled
+
+   RESPONSABILIDADE: Estilo da variante filled (fundo sólido)
+
+   CARACTERÍSTICAS:
+   - Background sólido
+   - Sem borda
+   - Border-bottom apenas
+   - Elevação sutil
+   ========================================================================== */
+.dss-input--filled .dss-input__field {
+  background-color: var(--dss-gray-100); /* Changed from gray-50 for better visibility */
+  border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+  border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400); /* Darkened for better contrast */
+}
+.dss-input--filled {
+  /* Focus state */
+}
+.dss-input--filled.dss-input--focused .dss-input__field {
+  background-color: var(--dss-gray-200); /* Darker to show clear distinction */
+  border-bottom-color: var(--dss-action-primary);
+  box-shadow: 0 1px 0 0 var(--dss-action-primary);
+}
+.dss-input--filled {
+  /* Error state */
+}
+.dss-input--filled.dss-input--error .dss-input__field {
+  border-bottom-color: var(--dss-error-600);
+  box-shadow: 0 1px 0 0 var(--dss-error-600);
+}
+.dss-input--filled {
+  /* Disabled state */
+}
+.dss-input--filled.dss-input--disabled .dss-input__field {
+  background-color: var(--dss-gray-200);
+  border-bottom-style: dotted;
+}
+.dss-input--filled {
+  /* Readonly state */
+}
+.dss-input--filled.dss-input--readonly .dss-input__field {
+  background-color: var(--dss-gray-100);
+  border-bottom-color: transparent;
+}
+.dss-input--filled {
+  /* Hover (not disabled/readonly) */
+}
+.dss-input--filled:not(.dss-input--disabled):not(.dss-input--readonly):hover .dss-input__field {
+  background-color: var(--dss-gray-200);
+}
+
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Outlined
+
+   RESPONSABILIDADE: Estilo da variante outlined (borda completa)
+
+   CARACTERÍSTICAS:
+   - Border completa ao redor
+   - Fundo transparente
+   - Label flutua sobre a borda
+   ========================================================================== */
+.dss-input--outlined .dss-input__field {
+  background-color: transparent;
+  border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+  border-radius: var(--dss-radius-md);
+}
+.dss-input--outlined {
+  /* Focus state */
+}
+.dss-input--outlined.dss-input--focused .dss-input__field {
+  border-color: var(--dss-action-primary);
+  border-width: var(--dss-border-width-md);
+  box-shadow: 0 0 0 1px var(--dss-action-primary);
+}
+.dss-input--outlined {
+  /* Error state */
+}
+.dss-input--outlined.dss-input--error .dss-input__field {
+  border-color: var(--dss-error-600);
+  border-width: var(--dss-border-width-md);
+  box-shadow: 0 0 0 1px var(--dss-error-600);
+}
+.dss-input--outlined {
+  /* Disabled state */
+}
+.dss-input--outlined.dss-input--disabled .dss-input__field {
+  border-style: dotted;
+  background-color: var(--dss-gray-50);
+}
+.dss-input--outlined {
+  /* Readonly state */
+}
+.dss-input--outlined.dss-input--readonly .dss-input__field {
+  border-color: var(--dss-gray-300);
+}
+.dss-input--outlined {
+  /* Hover (not disabled/readonly/focused) */
+}
+.dss-input--outlined:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+  border-color: var(--dss-gray-600);
+}
+.dss-input--outlined {
+  /* Label notch effect (optional enhancement) */
+}
+.dss-input--outlined .dss-input__label--float {
+  background-color: var(--dss-surface-default);
+  padding: 0 var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Standout
+
+   RESPONSABILIDADE: Estilo da variante standout (alto contraste)
+
+   CARACTERÍSTICAS:
+   - Background escuro
+   - Destaque em toolbars/headers
+   - Transição de cor no focus
+   ========================================================================== */
+.dss-input--standout .dss-input__field {
+  background-color: var(--dss-gray-800);
+  border-radius: var(--dss-radius-md);
+  border: none;
+}
+.dss-input--standout {
+  /* Override label color for dark background */
+}
+.dss-input--standout .dss-input__label {
+  color: var(--dss-text-inverse-secondary);
+}
+.dss-input--standout {
+  /* Override input color for dark background */
+}
+.dss-input--standout .dss-input__native {
+  color: var(--dss-text-inverse);
+}
+.dss-input--standout .dss-input__native::placeholder {
+  color: var(--dss-text-inverse-hint);
+}
+.dss-input--standout {
+  /* Icons/slots color */
+}
+.dss-input--standout .dss-input__prepend,
+.dss-input--standout .dss-input__append {
+  color: var(--dss-text-inverse-secondary);
+}
+.dss-input--standout {
+  /* Focus state */
+}
+.dss-input--standout.dss-input--focused .dss-input__field {
+  background-color: var(--dss-gray-700);
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
+}
+.dss-input--standout {
+  /* Error state */
+}
+.dss-input--standout.dss-input--error .dss-input__field {
+  background-color: var(--dss-error-900);
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-error-600);
+}
+.dss-input--standout {
+  /* Disabled state */
+}
+.dss-input--standout.dss-input--disabled .dss-input__field {
+  background-color: var(--dss-gray-900);
+}
+.dss-input--standout {
+  /* Readonly state */
+}
+.dss-input--standout.dss-input--readonly .dss-input__field {
+  background-color: var(--dss-gray-800);
+}
+.dss-input--standout {
+  /* Hover (not disabled/readonly) */
+}
+.dss-input--standout:not(.dss-input--disabled):not(.dss-input--readonly):hover .dss-input__field {
+  background-color: var(--dss-gray-700);
+}
+
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Borderless
+
+   RESPONSABILIDADE: Estilo da variante borderless (sem bordas)
+
+   CARACTERÍSTICAS:
+   - Sem bordas
+   - Sem background
+   - Integração suave
+   - Underline no focus
+   ========================================================================== */
+.dss-input--borderless .dss-input__field {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: var(--dss-border-width-thin) solid transparent;
+}
+.dss-input--borderless {
+  /* Focus state - apenas underline */
+}
+.dss-input--borderless.dss-input--focused .dss-input__field {
+  border-bottom-color: var(--dss-action-primary);
+  box-shadow: 0 1px 0 0 var(--dss-action-primary);
+}
+.dss-input--borderless {
+  /* Error state */
+}
+.dss-input--borderless.dss-input--error .dss-input__field {
+  border-bottom-color: var(--dss-error-600);
+  box-shadow: 0 1px 0 0 var(--dss-error-600);
+}
+.dss-input--borderless {
+  /* Disabled state */
+}
+.dss-input--borderless.dss-input--disabled .dss-input__field {
+  border-bottom-style: dotted;
+  border-bottom-color: var(--dss-gray-300);
+}
+.dss-input--borderless {
+  /* Readonly state - completamente sem bordas */
+}
+.dss-input--borderless.dss-input--readonly .dss-input__field {
+  border-bottom-color: transparent;
+}
+.dss-input--borderless {
+  /* Hover (not disabled/readonly/focused) */
+}
+.dss-input--borderless:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+  border-bottom-color: var(--dss-gray-400);
+}
+.dss-input--borderless {
+  /* Remove padding from control (já que não há container visual) */
+}
+.dss-input--borderless .dss-input__control {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Layer 4: Output */
+/* ==========================================================================
+   DssInput - LAYER 4: OUTPUT (Orchestrator)
+
+   Importa states e brands
+   ========================================================================== */
+/* ==========================================================================
+   DssInput - LAYER 4: OUTPUT - States
+
+   RESPONSABILIDADE: Estados especiais (dark mode, focus rings, a11y)
+   ========================================================================== */
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+[data-theme=dark] .dss-input {
+  /* Filled variant in dark mode */
+}
+[data-theme=dark] .dss-input--filled .dss-input__field {
+  background-color: var(--dss-gray-900);
+  border-bottom-color: var(--dss-gray-700);
+}
+[data-theme=dark] .dss-input--filled.dss-input--focused .dss-input__field {
+  background-color: var(--dss-gray-800);
+}
+[data-theme=dark] .dss-input {
+  /* Outlined variant in dark mode */
+}
+[data-theme=dark] .dss-input--outlined .dss-input__field {
+  border-color: var(--dss-gray-600);
+}
+[data-theme=dark] .dss-input {
+  /* Standout becomes lighter in dark mode */
+}
+[data-theme=dark] .dss-input--standout .dss-input__field {
+  background-color: var(--dss-gray-700);
+}
+[data-theme=dark] .dss-input--standout.dss-input--focused .dss-input__field {
+  background-color: var(--dss-gray-600);
+}
+[data-theme=dark] {
+  /* Text colors in dark mode */
+}
+[data-theme=dark] .dss-input__native {
+  color: var(--dss-text-inverse);
+}
+[data-theme=dark] .dss-input__native::placeholder {
+  color: var(--dss-text-inverse-hint);
+}
+[data-theme=dark] .dss-input__label {
+  color: var(--dss-text-inverse-secondary);
+}
+[data-theme=dark] .dss-input__prepend,
+[data-theme=dark] .dss-input__append {
+  color: var(--dss-text-inverse-secondary);
+}
+
+/* ==========================================================================
+   FOCUS RINGS (A11Y)
+   ========================================================================== */
+.dss-input__field:focus-within {
+  /* Já aplicado em cada variante via box-shadow */
+  /* Este é um fallback para navegadores sem :focus-within */
+}
+
+/* Keyboard focus indicator (não mouse) */
+.dss-input:focus-within:not(:active) .dss-input__field {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline-offset: var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE
+   ========================================================================== */
+@media (prefers-contrast: high) {
+  .dss-input__field {
+    border-width: var(--dss-border-width-md) !important;
+    border-color: currentColor !important;
+  }
+  .dss-input--focused .dss-input__field {
+    outline: var(--dss-border-width-thick) solid var(--dss-action-primary);
+    outline-offset: var(--dss-spacing-1);
+  }
+}
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .dss-input,
+  .dss-input__field,
+  .dss-input__label,
+  .dss-input__clear {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+@media print {
+  .dss-input {
+    /* Remove backgrounds para economizar tinta */
+  }
+  .dss-input--filled .dss-input__field, .dss-input--standout .dss-input__field {
+    background: none !important;
+    border: 1px solid #000 !important;
+  }
+  .dss-input {
+    /* Remove clear button */
+  }
+  .dss-input .dss-input__clear {
+    display: none;
+  }
+}
+/* ==========================================================================
+   DssInput - LAYER 4: OUTPUT - Brands
+
+   RESPONSABILIDADE: Brandability (Hub, Water, Waste)
+
+   CARACTERÍSTICAS:
+   - Usa tokens genéricos de brand (--dss-hub-*, --dss-water-*, etc.)
+   - Apenas accent color no focus
+   - Mantém estrutura visual da variante
+   ========================================================================== */
+/* ==========================================================================
+   HUB BRAND (Orange)
+   ========================================================================== */
+[data-brand=hub].dss-input--filled.dss-input--focused .dss-input__field,
+.dss-input--brand-hub.dss-input--filled.dss-input--focused .dss-input__field {
+  border-bottom-color: var(--dss-hub-600);
+  box-shadow: 0 1px 0 0 var(--dss-hub-600);
+}
+[data-brand=hub].dss-input--outlined.dss-input--focused .dss-input__field,
+.dss-input--brand-hub.dss-input--outlined.dss-input--focused .dss-input__field {
+  border-color: var(--dss-hub-600);
+  box-shadow: 0 0 0 1px var(--dss-hub-600);
+}
+[data-brand=hub].dss-input--standout.dss-input--focused .dss-input__field,
+.dss-input--brand-hub.dss-input--standout.dss-input--focused .dss-input__field {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
+}
+[data-brand=hub].dss-input--borderless.dss-input--focused .dss-input__field,
+.dss-input--brand-hub.dss-input--borderless.dss-input--focused .dss-input__field {
+  border-bottom-color: var(--dss-hub-600);
+  box-shadow: 0 1px 0 0 var(--dss-hub-600);
+}
+[data-brand=hub],
+.dss-input--brand-hub {
+  /* Label color on focus */
+}
+[data-brand=hub].dss-input--focused .dss-input__label,
+.dss-input--brand-hub.dss-input--focused .dss-input__label {
+  color: var(--dss-hub-700);
+}
+[data-brand=hub],
+.dss-input--brand-hub {
+  /* Error state mantém erro, não brand */
+}
+[data-brand=hub].dss-input--error .dss-input__field,
+.dss-input--brand-hub.dss-input--error .dss-input__field {
+  /* Deixa o error-600 prevalecer */
+}
+
+/* ==========================================================================
+   WATER BRAND (Blue)
+   ========================================================================== */
+[data-brand=water].dss-input--filled.dss-input--focused .dss-input__field,
+.dss-input--brand-water.dss-input--filled.dss-input--focused .dss-input__field {
+  border-bottom-color: var(--dss-water-500);
+  box-shadow: 0 1px 0 0 var(--dss-water-500);
+}
+[data-brand=water].dss-input--outlined.dss-input--focused .dss-input__field,
+.dss-input--brand-water.dss-input--outlined.dss-input--focused .dss-input__field {
+  border-color: var(--dss-water-500);
+  box-shadow: 0 0 0 1px var(--dss-water-500);
+}
+[data-brand=water].dss-input--standout.dss-input--focused .dss-input__field,
+.dss-input--brand-water.dss-input--standout.dss-input--focused .dss-input__field {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
+}
+[data-brand=water].dss-input--borderless.dss-input--focused .dss-input__field,
+.dss-input--brand-water.dss-input--borderless.dss-input--focused .dss-input__field {
+  border-bottom-color: var(--dss-water-500);
+  box-shadow: 0 1px 0 0 var(--dss-water-500);
+}
+[data-brand=water],
+.dss-input--brand-water {
+  /* Label color on focus */
+}
+[data-brand=water].dss-input--focused .dss-input__label,
+.dss-input--brand-water.dss-input--focused .dss-input__label {
+  color: var(--dss-water-600);
+}
+
+/* ==========================================================================
+   WASTE BRAND (Green)
+   ========================================================================== */
+[data-brand=waste].dss-input--filled.dss-input--focused .dss-input__field,
+.dss-input--brand-waste.dss-input--filled.dss-input--focused .dss-input__field {
+  border-bottom-color: var(--dss-waste-600);
+  box-shadow: 0 1px 0 0 var(--dss-waste-600);
+}
+[data-brand=waste].dss-input--outlined.dss-input--focused .dss-input__field,
+.dss-input--brand-waste.dss-input--outlined.dss-input--focused .dss-input__field {
+  border-color: var(--dss-waste-600);
+  box-shadow: 0 0 0 1px var(--dss-waste-600);
+}
+[data-brand=waste].dss-input--standout.dss-input--focused .dss-input__field,
+.dss-input--brand-waste.dss-input--standout.dss-input--focused .dss-input__field {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
+}
+[data-brand=waste].dss-input--borderless.dss-input--focused .dss-input__field,
+.dss-input--brand-waste.dss-input--borderless.dss-input--focused .dss-input__field {
+  border-bottom-color: var(--dss-waste-600);
+  box-shadow: 0 1px 0 0 var(--dss-waste-600);
+}
+[data-brand=waste],
+.dss-input--brand-waste {
+  /* Label color on focus */
+}
+[data-brand=waste].dss-input--focused .dss-input__label,
+.dss-input--brand-waste.dss-input--focused .dss-input__label {
+  color: var(--dss-waste-700);
+}
+
+/* ==========================================================================
+   BRAND HINT/ERROR COLORS
+   ========================================================================== */
+/* Hub brand hint color (opcional) */
+[data-brand=hub] .dss-input__hint,
+.dss-input--brand-hub .dss-input__hint {
+  color: var(--dss-hub-700);
+}
+
+/* Water brand hint color */
+[data-brand=water] .dss-input__hint,
+.dss-input--brand-water .dss-input__hint {
+  color: var(--dss-water-700);
+}
+
+/* Waste brand hint color */
+[data-brand=waste] .dss-input__hint,
+.dss-input--brand-waste .dss-input__hint {
+  color: var(--dss-waste-700);
+}
+
+/* Error sempre usa --dss-error-600 independente de brand */
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dss-input__field {
+    border-width: var(--dss-border-width-md) !important;
+  }
+}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-input,
+  .dss-input * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

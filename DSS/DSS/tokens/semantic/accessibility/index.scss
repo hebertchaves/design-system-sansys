@@ -1,0 +1,88 @@
+// =============================================================================
+// DSS - Accessibility Tokens Aggregator
+// =============================================================================
+//
+// Criado: Dezembro 2025 (Reorganizacao Arquitetural)
+// Objetivo: Centralizar todos os tokens de acessibilidade WCAG 2.1 AA
+// Referencia: https://www.w3.org/WAI/WCAG21/quickref/
+//
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// FOCUS VISIBLE (WCAG 2.4.7 Level AA)
+// -----------------------------------------------------------------------------
+// Focus rings visiveis com contraste minimo 3:1
+// - 9 cores semanticas validadas
+// - Dark mode automatico
+// - Brandability (Hub, Water, Waste)
+// - High contrast mode
+// Tokens: --dss-focus-*, --dss-focus-shadow-*, --dss-focus-ring-*
+@import 'focus';
+
+// -----------------------------------------------------------------------------
+// CONTRAST RATIOS (WCAG 1.4.3, 1.4.6)
+// -----------------------------------------------------------------------------
+// Ratios de contraste pre-validados para texto e UI
+// - Minimos WCAG: 4.5:1 (texto), 3:1 (UI)
+// - Combinacoes aprovadas documentadas
+// Tokens: --dss-contrast-min-*, --dss-contrast-*-on-*
+@import 'contrast';
+
+// -----------------------------------------------------------------------------
+// TOUCH TARGETS (WCAG 2.5.5)
+// -----------------------------------------------------------------------------
+// Tamanhos minimos para areas tocaveis
+// - Minimo: 44x44px (WCAG)
+// - Ideal: 48x48px
+// Tokens: --dss-touch-target-*, --dss-touch-spacing-*
+@import 'sizing';
+
+// -----------------------------------------------------------------------------
+// TYPOGRAPHY (WCAG 1.4.4, 1.4.12)
+// -----------------------------------------------------------------------------
+// Tipografia acessivel e escalavel
+// - Tamanhos minimos
+// - Espacamento legivel
+// - Suporte a zoom 200%
+// Tokens: --dss-font-size-*-min, --dss-line-height-*
+@import 'typography';
+
+// =============================================================================
+// NOTAS DE USO
+// =============================================================================
+/*
+# Importar Tokens de Acessibilidade
+
+## Opcao 1: Importar todos
+```scss
+@import 'tokens/semantic/accessibility';
+```
+
+## Opcao 2: Importar especificos
+```scss
+@import 'tokens/semantic/accessibility/focus';
+@import 'tokens/semantic/accessibility/contrast';
+```
+
+# Conformidade WCAG 2.1 AA
+
+Este modulo garante conformidade com os seguintes criterios:
+
+- ✅ 2.4.7 Focus Visible (Level AA)
+- ✅ 1.4.3 Contrast (Minimum) (Level AA)
+- ✅ 1.4.6 Contrast (Enhanced) (Level AAA)
+- ✅ 2.5.5 Target Size (Level AAA)
+- ✅ 1.4.4 Resize Text (Level AA)
+- ✅ 1.4.12 Text Spacing (Level AA)
+
+# Auditoria
+
+Para auditar conformidade:
+```bash
+grep -r "dss-focus\|dss-contrast\|dss-touch" components/
+```
+
+# Documentacao
+
+Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
+*/

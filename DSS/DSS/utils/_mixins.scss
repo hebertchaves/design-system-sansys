@@ -1,0 +1,386 @@
+/* ==========================================================================
+   DSS - MIXINS PRINCIPAIS
+   Mixins para implementação consistente de componentes
+   ========================================================================== */
+
+/**
+ * Aplica anel de foco acessível (WCAG 2.1 AA)
+ *
+ * @param {string} $type - Tipo de foco (primary, secondary, tertiary, accent, success, error, warning, info, dark)
+ * @param {boolean} $offset - Se deve usar variante com offset (espacamento)
+ *
+ * Features:
+ * - 9 cores semanticas (vs 4 no sistema antigo)
+ * - Dark mode automatico
+ * - Brandability automatica (Hub, Water, Waste)
+ * - High contrast mode
+ * - Transicoes acessiveis (respeita prefers-reduced-motion)
+ *
+ * Uso:
+ *   @include dss-focus-ring('primary');           // Focus azul padrao
+ *   @include dss-focus-ring('error');             // Focus vermelho para erros
+ *   @include dss-focus-ring('primary', true);     // Focus com offset (espaco)
+ *
+ * Atualizado: Dez 16, 2025 - Sistema unificado com 9 cores
+ */
+@mixin dss-focus-ring($type: 'primary', $offset: false) {
+  &:focus-visible {
+    outline: none;
+
+    // Usar tokens do sistema unificado (accessibility/_focus.scss)
+    @if $offset {
+      // Variante com offset (espaco entre elemento e anel)
+      box-shadow: var(--dss-focus-shadow-#{$type}-offset);
+    } @else {
+      // Variante padrao (sem offset)
+      box-shadow: var(--dss-focus-shadow-#{$type});
+    }
+
+    // Transicao suave respeitando acessibilidade
+    @media (prefers-reduced-motion: no-preference) {
+      transition: box-shadow var(--dss-focus-duration) var(--dss-focus-easing);
+    }
+
+    // Fallback para navegadores sem :focus-visible
+    &:focus:not(:focus-visible) {
+      box-shadow: none;
+    }
+  }
+
+  // Garantir que elementos nao-interativos nao recebam foco
+  &:not([tabindex]):not(button):not(a):not(input):not(select):not(textarea):not([contenteditable]) {
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+/**
+ * Garante tamanho mínimo para elementos tocáveis (WCAG)
+ * 44×44px conforme diretrizes Veolia
+ */
+@mixin dss-touch-target($size: 'default') {
+  @if $size == 'default' or $size == 'min' {
+    min-height: var(--dss-touch-target-min);
+    min-width: var(--dss-touch-target-min);
+  } @else if $size == 'ideal' {
+    min-height: var(--dss-touch-target-ideal);
+    min-width: var(--dss-touch-target-ideal);
+  } @else if $size == 'large' {
+    min-height: var(--dss-touch-target-large);
+    min-width: var(--dss-touch-target-large);
+  }
+  
+  // Espaçamento interno adicional para ícones
+  padding: var(--dss-touch-spacing-min);
+  
+  // Para elementos que não podem aumentar (ex: ícones)
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    @if $size == 'default' or $size == 'min' {
+      width: var(--dss-touch-target-min);
+      height: var(--dss-touch-target-min);
+    } @else if $size == 'ideal' {
+      width: var(--dss-touch-target-ideal);
+      height: var(--dss-touch-target-ideal);
+    } @else if $size == 'large' {
+      width: var(--dss-touch-target-large);
+      height: var(--dss-touch-target-large);
+    }
+  }
+}
+
+/**
+ * Mixin para aplicar transições consistentes
+ * Respeita prefers-reduced-motion
+ */
+@mixin dss-transition($properties: all, $speed: 'base') {
+  $duration: var(--dss-duration-base);
+  $easing: var(--dss-easing-standard);
+  
+  @if $speed == 'fast' {
+    $duration: var(--dss-duration-fast);
+    $easing: var(--dss-easing-ease-out);
+  } @else if $speed == 'slow' {
+    $duration: var(--dss-duration-slow);
+    $easing: var(--dss-easing-ease-in-out);
+  } @else if $speed == 'instant' {
+    $duration: var(--dss-duration-instant);
+    $easing: var(--dss-easing-linear);
+  }
+  
+  transition: #{$properties} #{$duration} #{$easing};
+  
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/**
+ * Mixin para botões com lógica brand × semantic
+ */
+@mixin dss-button-variant($variant: 'primary', $mode: 'semantic') {
+  // Base comum para todos os botões
+  border: none;
+  cursor: pointer;
+  font-weight: var(--dss-font-weight-semibold);
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dss-spacing-2);
+  white-space: nowrap;
+  
+  @include dss-touch-target('ideal');
+  @include dss-focus-ring('primary');
+  @include dss-transition(all, 'fast');
+  
+  // Tamanhos - usa tokens genéricos (refatoração Jan 2025 Sprint 1)
+  &.dss-button--sm {
+    font-size: var(--dss-font-size-sm);
+    padding: var(--dss-spacing-1_5) var(--dss-spacing-3);
+  }
+
+  &.dss-button--md {
+    font-size: var(--dss-font-size-base);
+    padding: var(--dss-spacing-2) var(--dss-spacing-4);
+  }
+  
+  &.dss-button--lg {
+    font-size: var(--dss-font-size-lg);
+    padding: var(--dss-spacing-3) var(--dss-spacing-6);
+  }
+  
+  // Variantes por cor
+  @if $variant == 'primary' {
+    @if $mode == 'semantic' {
+      background-color: var(--dss-action-primary);
+      color: white;
+      
+      &:hover {
+        background-color: var(--dss-action-primary-hover);
+      }
+      
+      &:active {
+        background-color: var(--dss-action-primary-deep);
+      }
+      
+      &:disabled {
+        background-color: var(--dss-action-primary-disable);
+        cursor: not-allowed;
+      }
+    } @else if $mode == 'brand' {
+      background-color: var(--dss-brand-primary, var(--dss-action-primary));
+      color: white;
+      
+      &:hover {
+        background-color: var(--dss-brand-primary-hover, var(--dss-action-primary-hover));
+      }
+    }
+  }
+  
+  @if $variant == 'secondary' {
+    background-color: var(--dss-action-secondary);
+    color: white;
+    
+    &:hover {
+      background-color: var(--dss-action-secondary-hover);
+    }
+  }
+  
+  @if $variant == 'tertiary' {
+    background-color: var(--dss-action-tertiary);
+    color: white;
+    
+    &:hover {
+      background-color: var(--dss-action-tertiary-hover);
+    }
+  }
+  
+  // Estados
+  &:disabled {
+    opacity: var(--dss-opacity-disabled);
+    cursor: not-allowed;
+  }
+}
+
+/**
+ * Mixin para inputs com estados
+ */
+@mixin dss-input-base {
+  width: 100%;
+  border: 1px solid var(--dss-gray-300); /* refatoração Jan 2025 Sprint 2 */
+  border-radius: var(--dss-radius-md); /* refatoração Jan 2025 Sprint 1 */
+  background-color: var(--dss-surface-default);
+  color: var(--dss-text-body);
+  font-size: var(--dss-font-size-base);
+  line-height: var(--dss-line-height-normal);
+  min-height: var(--dss-input-height-min);
+  padding: var(--dss-spacing-2) var(--dss-spacing-3); /* refatoração Jan 2025 Sprint 1 */
+
+  @include dss-transition(border-color, 'fast');
+  @include dss-focus-ring('primary');
+
+  &:hover {
+    border: 1px solid var(--dss-gray-400); /* refatoração Jan 2025 Sprint 2 */
+  }
+
+  &:focus {
+    border: 2px solid var(--dss-action-primary); /* refatoração Jan 2025 Sprint 2 */
+  }
+
+  &.dss-input--error {
+    border: 2px solid var(--dss-negative); /* refatoração Jan 2025 Sprint 2 */
+
+    &:focus {
+      @include dss-focus-ring('error');
+    }
+  }
+
+  &.dss-input--success {
+    border: 2px solid var(--dss-positive); /* refatoração Jan 2025 Sprint 2 */
+  }
+  
+  &:disabled {
+    background-color: var(--dss-surface-disabled);
+    border-color: var(--dss-border-disabled);
+    color: var(--dss-text-disabled);
+    cursor: not-allowed;
+  }
+  
+  // Placeholder
+  &::placeholder {
+    color: var(--dss-text-muted);
+    opacity: 1;
+  }
+}
+
+/**
+ * Mixin para cards brandáveis
+ */
+@mixin dss-card($brand: null) {
+  background-color: var(--dss-surface-default);
+  border: 1px solid var(--dss-gray-200); /* refatoração Jan 2025 Sprint 2 */
+  border-radius: var(--dss-radius-lg); /* refatoração Jan 2025 Sprint 1 */
+  padding: var(--dss-spacing-6); /* refatoração Jan 2025 Sprint 1 */
+  
+  @if $brand == 'hub' {
+    border-color: var(--dss-border-hub-100);
+    background-color: var(--dss-surface-brand-subtle);
+  } @else if $brand == 'water' {
+    border-color: var(--dss-border-water-100);
+  } @else if $brand == 'waste' {
+    border-color: var(--dss-border-waste-100);
+  }
+  
+  &.dss-card--elevated {
+    box-shadow: var(--dss-elevation-1); /* refatoração Jan 2025 Sprint 3 */
+
+    &:hover {
+      box-shadow: var(--dss-elevation-2); /* refatoração Jan 2025 Sprint 3 */
+    }
+  }
+  
+  &.dss-card--selected {
+    border: 2px solid var(--dss-action-primary); /* refatoração Jan 2025 Sprint 2 */
+  }
+}
+
+/**
+ * Mixin para textos acessíveis
+ */
+@mixin dss-text($size: 'base', $weight: 'normal') {
+  // Tamanho com fallback para zoom
+  font-size: clamp(
+    var(--dss-font-size-base),
+    1rem + 0.5vw,
+    var(--dss-font-size-lg)
+  );
+  
+  @if $size == 'sm' {
+    font-size: var(--dss-font-size-sm);
+    line-height: var(--dss-line-height-sm);
+  } @else if $size == 'base' {
+    font-size: var(--dss-font-size-base);
+    line-height: var(--dss-line-height-base);
+  } @else if $size == 'lg' {
+    font-size: var(--dss-font-size-lg);
+    line-height: var(--dss-line-height-lg);
+  } @else if $size == 'xl' {
+    font-size: var(--dss-font-size-xl);
+    line-height: var(--dss-line-height-xl);
+  }
+  
+  // Peso
+  @if $weight == 'light' {
+    font-weight: var(--dss-font-weight-light);
+  } @else if $weight == 'normal' {
+    font-weight: var(--dss-font-weight-normal);
+  } @else if $weight == 'medium' {
+    font-weight: var(--dss-font-weight-medium);
+  } @else if $weight == 'semibold' {
+    font-weight: var(--dss-font-weight-semibold);
+  } @else if $weight == 'bold' {
+    font-weight: var(--dss-font-weight-bold);
+  }
+  
+  // Garantir contraste
+  color: var(--dss-text-body);
+  
+  // Para alto contraste
+  @media (prefers-contrast: high) {
+    font-weight: var(--dss-font-weight-semibold);
+  }
+}
+
+/**
+ * Mixin para aplicar opacidade com fallback
+ */
+@mixin dss-opacity($level: '10') {
+  opacity: var(--dss-opacity-#{$level});
+  
+  // Fallback para browsers antigos
+  @if $level == '10' {
+    opacity: 0.1;
+  } @else if $level == '20' {
+    opacity: 0.2;
+  } @else if $level == '50' {
+    opacity: 0.5;
+  } @else if $level == '75' {
+    opacity: 0.75;
+  }
+}
+
+/**
+ * Mixin para visually hidden (acessibilidade)
+ */
+@mixin dss-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  
+  // Mantém o elemento focalizável para leitores de tela
+  &:focus-visible {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}

@@ -1,0 +1,265 @@
+/* ==========================================================================
+   DSS - MIXINS DE ACESSIBILIDADE AVANÇADA
+   Implementação específica das diretrizes Veolia WCAG 2.1 AA
+   ========================================================================== */
+
+/**
+ * Mixin para validação de contraste em tempo de compilação
+ * @warn se contraste for insuficiente
+ */
+@mixin dss-validate-contrast($text-color, $bg-color, $context: 'text') {
+  $ratio: dss-contrast-ratio($text-color, $bg-color);
+  $min-ratio: 4.5;
+  $size: 'normal';
+  
+  @if $context == 'large-text' or $context == 'ui' {
+    $min-ratio: 3;
+    $size: 'large';
+  }
+  
+  @if $ratio < $min-ratio {
+    @warn "Contraste insuficiente (#{$context}): #{$ratio}:1 (mínimo: #{$min-ratio}:1)";
+    @warn "Cor do texto: #{$text-color}";
+    @warn "Cor do fundo: #{$bg-color}";
+  }
+}
+
+/**
+ * Mixin para implementar skip links (navegação por teclado)
+ */
+@mixin dss-skip-link {
+  .dss-skip-link {
+    @include dss-visually-hidden;
+    
+    &:focus {
+      position: fixed;
+      top: var(--dss-spacing-2);
+      left: var(--dss-spacing-2);
+      z-index: var(--dss-z-index-maximum);
+      padding: var(--dss-spacing-3) var(--dss-spacing-4);
+      background-color: var(--dss-surface-default);
+      color: var(--dss-text-body);
+      border: var(--dss-border-gray-300);
+      border-radius: var(--dss-radius-md);
+      box-shadow: var(--dss-shadow-lg);
+      text-decoration: none;
+      @include dss-focus-ring('primary');
+    }
+  }
+}
+
+/**
+ * Mixin para ARIA live regions (conteúdo dinâmico)
+ */
+@mixin dss-aria-live($politeness: 'polite') {
+  &[aria-live] {
+    @if $politeness == 'assertive' {
+      aria-live: assertive;
+    } @else {
+      aria-live: polite;
+    }
+    
+    // Garantir que seja anunciado por leitores de tela
+    position: relative;
+    z-index: var(--dss-z-index-tooltip);
+  }
+}
+
+/**
+ * Mixin para estados de carregamento acessíveis
+ */
+@mixin dss-loading-state($type: 'spinner') {
+  &[aria-busy="true"] {
+    position: relative;
+    color: transparent !important;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      
+      @if $type == 'spinner' {
+        width: 1.5em;
+        height: 1.5em;
+        border: 2px solid var(--dss-text-muted);
+        border-top-color: var(--dss-action-primary);
+        border-radius: 50%;
+        animation: dss-spin 1s linear infinite;
+      } @else if $type == 'dots' {
+        width: 4em;
+        height: 1em;
+        background: linear-gradient(
+          90deg,
+          var(--dss-action-primary) 0%,
+          var(--dss-action-primary) 33%,
+          transparent 33%,
+          transparent 66%,
+          var(--dss-action-primary) 66%,
+          var(--dss-action-primary) 100%
+        );
+        background-size: 300% 100%;
+        animation: dss-loading-dots 1.5s infinite;
+      }
+    }
+    
+    > * {
+      visibility: hidden;
+    }
+  }
+  
+  // Animações
+  @keyframes dss-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  
+  @keyframes dss-loading-dots {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+}
+
+/**
+ * Mixin para tooltips acessíveis
+ */
+@mixin dss-accessible-tooltip($position: 'top') {
+  position: relative;
+  
+  &[aria-describedby] {
+    &::after {
+      content: attr(aria-label);
+      position: absolute;
+      z-index: var(--dss-z-index-tooltip);
+      padding: var(--dss-spacing-2) var(--dss-spacing-3);
+      background-color: var(--dss-gray-900);
+      color: var(--dss-text-inverse);
+      font-size: var(--dss-font-size-sm);
+      border-radius: var(--dss-radius-sm);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--dss-duration-fast) var(--dss-easing-ease);
+      
+      @if $position == 'top' {
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: var(--dss-spacing-1);
+      } @else if $position == 'bottom' {
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: var(--dss-spacing-1);
+      } @else if $position == 'left' {
+        top: 50%;
+        right: 100%;
+        transform: translateY(-50%);
+        margin-right: var(--dss-spacing-1);
+      } @else if $position == 'right' {
+        top: 50%;
+        left: 100%;
+        transform: translateY(-50%);
+        margin-left: var(--dss-spacing-1);
+      }
+    }
+    
+    &:hover::after,
+    &:focus::after {
+      opacity: 1;
+    }
+  }
+}
+
+/**
+ * Mixin para modais acessíveis (focus trap)
+ */
+@mixin dss-accessible-modal {
+  // Esconder conteúdo de leitores de tela quando modal aberto
+  &[aria-modal="true"] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--dss-z-index-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    // Backdrop
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--dss-surface-overlay);
+    }
+    
+    // Conteúdo do modal
+    > * {
+      position: relative;
+      z-index: var(--dss-z-index-modal);
+      background-color: var(--dss-surface-default);
+      border-radius: var(--dss-radius-modal);
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow: auto;
+      @include dss-focus-ring('primary');
+    }
+    
+    // Garantir que fique preso dentro do modal
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+/**
+ * Mixin para formulários acessíveis
+ */
+@mixin dss-accessible-form {
+  // Labels obrigatórios
+  label {
+    display: block;
+    margin-bottom: var(--dss-label-margin-bottom);
+    font-weight: var(--dss-font-weight-medium);
+    
+    &.required::after {
+      content: ' *';
+      color: var(--dss-negative);
+    }
+  }
+  
+  // Campos obrigatórios
+  [required] {
+    border-left: 3px solid var(--dss-action-primary);
+  }
+  
+  // Mensagens de erro
+  .dss-error-message {
+    color: var(--dss-negative);
+    font-size: var(--dss-font-size-sm);
+    margin-top: var(--dss-spacing-1);
+    display: none;
+    
+    &[aria-live="polite"] {
+      display: block;
+    }
+  }
+  
+  // Grupo de campos
+  fieldset {
+    border: var(--dss-border-gray-200);
+    border-radius: var(--dss-radius-md);
+    padding: var(--dss-spacing-4);
+    margin: 0 0 var(--dss-spacing-6) 0;
+    
+    legend {
+      font-weight: var(--dss-font-weight-semibold);
+      padding: 0 var(--dss-spacing-2);
+    }
+  }
+}

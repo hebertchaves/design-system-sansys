@@ -1,0 +1,27 @@
+@use './2-composition/base' as composition;
+
+/* ==========================================================================
+   CORES: Aplicadas via classes utilitárias (.bg-*, .text-*) - Padrão Quasar
+   Definidas em: utils/_colors.scss
+   ========================================================================== */
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS - DssAvatar
+   ========================================================================== */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dss-avatar {
+    border: 2px solid currentColor !important;
+    font-weight: 700;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-avatar,
+  .dss-avatar * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

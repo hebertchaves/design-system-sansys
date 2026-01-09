@@ -1,0 +1,1104 @@
+/* ==========================================================================
+   DSS - SOBRESCRITAS DE COMPONENTES QUASAR
+   Aplicação das diretrizes de acessibilidade e tokens DSS
+   ========================================================================== */
+
+/* ===========================================
+   1. BOTÕES (Q-BTN) - Conformidade WCAG 2.1 AA
+   =========================================== */
+
+.q-btn {
+  /* Garantir tamanho mínimo para touch */
+  min-height: var(--dss-touch-target-min) !important;
+  min-width: var(--dss-touch-target-min) !important;
+  
+  /* Tipografia acessível */
+  font-weight: var(--dss-font-weight-semibold);
+  font-size: var(--dss-font-size-base);
+  
+  /* Espaçamento interno consistente - usa tokens genéricos (refatoração Jan 2025 Sprint 1) */
+  padding: var(--dss-spacing-2) var(--dss-spacing-4) !important;
+  
+  /* Transições consistentes */
+  transition: all var(--dss-transition-fast) !important;
+  
+  /* Foco acessível */
+  @include dss-focus-ring('primary');
+  
+  /* Estados de hover/active com nossos tokens */
+  &:hover:not(.disabled):not([disabled]) {
+    transform: translateY(-1px);
+  }
+  
+  &:active:not(.disabled):not([disabled]) {
+    transform: translateY(0);
+  }
+  
+  /* Botão primário com lógica brand × semantic */
+  &--primary {
+    background-color: var(--quasar-primary) !important;
+    color: white !important;
+    
+    &:hover:not(.disabled):not([disabled]) {
+      background-color: var(--quasar-primary-hover, var(--dss-action-primary-hover)) !important;
+    }
+    
+    &:active:not(.disabled):not([disabled]) {
+      background-color: var(--dss-action-primary-deep) !important;
+    }
+    
+    /* Desabilitado com opacidade acessível */
+    &.disabled,
+    &[disabled] {
+      background-color: var(--dss-action-primary-disable) !important;
+      opacity: var(--dss-opacity-disabled) !important;
+    }
+  }
+  
+  /* Botão secundário */
+  &--secondary {
+    background-color: var(--quasar-secondary) !important;
+    color: white !important;
+    
+    &:hover:not(.disabled):not([disabled]) {
+      background-color: var(--dss-action-secondary-hover) !important;
+    }
+  }
+  
+  /* Botão outline */
+  &--outline {
+    &-primary {
+      color: var(--quasar-primary) !important;
+      border: 2px solid var(--quasar-primary) !important;
+      background-color: transparent !important;
+      
+      &:hover:not(.disabled):not([disabled]) {
+        background-color: rgba(var(--quasar-primary), 0.1) !important;
+      }
+    }
+  }
+  
+  /* Botão flat */
+  &--flat {
+    &-primary {
+      color: var(--quasar-primary) !important;
+      
+      &:hover:not(.disabled):not([disabled]) {
+        background-color: rgba(var(--quasar-primary), 0.1) !important;
+      }
+    }
+  }
+  
+  /* Tamanhos customizados */
+  &--sm {
+    min-height: calc(var(--dss-touch-target-min) * 0.875) !important;
+    min-width: calc(var(--dss-touch-target-min) * 0.875) !important;
+    font-size: var(--dss-font-size-sm) !important;
+    padding: var(--dss-spacing-1_5) var(--dss-spacing-3) !important; /* refatoração Jan 2025 Sprint 1 */
+  }
+  
+  &--lg {
+    min-height: calc(var(--dss-touch-target-min) * 1.25) !important;
+    min-width: calc(var(--dss-touch-target-min) * 1.25) !important;
+    font-size: var(--dss-font-size-lg) !important;
+    padding: var(--dss-spacing-3) var(--dss-spacing-6) !important;
+  }
+  
+  /* Icon buttons - garantir área tocável */
+  &--round,
+  &--square {
+    padding: var(--dss-spacing-2) !important;
+    
+    .q-icon {
+      font-size: 1.25em !important;
+    }
+  }
+  
+  /* Desabilitado - estado acessível */
+  &.disabled,
+  &[disabled] {
+    cursor: not-allowed !important;
+    opacity: var(--dss-opacity-disabled) !important;
+    
+    &:hover {
+      transform: none !important;
+    }
+  }
+}
+
+/* ===========================================
+   2. INPUTS (Q-INPUT, Q-SELECT) - Acessibilidade
+   =========================================== */
+
+.q-field {
+  /* Margin bottom padrão */
+  margin-bottom: var(--dss-spacing-4) !important;
+  
+  /* Label acessível */
+  &__label {
+    color: var(--dss-text-body) !important;
+    font-weight: var(--dss-font-weight-medium) !important;
+    font-size: var(--dss-font-size-base) !important;
+    margin-bottom: var(--dss-spacing-1) !important;
+    
+    &.required::after {
+      content: ' *';
+      color: var(--dss-negative) !important;
+    }
+  }
+  
+  /* Container do input */
+  &__control {
+    min-height: var(--dss-input-height-min) !important;
+    border-radius: var(--dss-radius-md) !important; /* refatoração Jan 2025 Sprint 1 */
+
+    /* Border com nossos tokens - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+    &:before {
+      border-color: var(--dss-gray-300) !important;
+      border-width: 1px !important;
+    }
+
+    &:hover:before {
+      border-color: var(--dss-gray-400) !important;
+    }
+  }
+  
+  /* Input em foco - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+  &.q-field--focused {
+    .q-field__control:before {
+      border-color: var(--dss-action-primary) !important;
+      border-width: 2px !important;
+    }
+
+    @include dss-focus-ring('primary');
+  }
+
+  /* Input com erro - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+  &.q-field--error {
+    .q-field__control:before {
+      border-color: var(--dss-negative) !important;
+      border-width: 2px !important;
+    }
+    
+    .q-field__label,
+    .q-field__messages {
+      color: var(--dss-negative) !important;
+    }
+    
+    @include dss-focus-ring('error');
+  }
+  
+  /* Input com sucesso - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+  &.q-field--success {
+    .q-field__control:before {
+      border-color: var(--dss-positive) !important;
+    }
+    
+    .q-field__messages {
+      color: var(--dss-positive) !important;
+    }
+  }
+  
+  /* Input desabilitado */
+  &.q-field--disabled {
+    .q-field__control {
+      background-color: var(--dss-surface-disabled) !important;
+      
+      &:before {
+        border-color: var(--dss-border-disabled) !important;
+        border-style: dashed !important;
+      }
+    }
+    
+    .q-field__label,
+    .q-input__control {
+      color: var(--dss-text-disabled) !important;
+    }
+  }
+  
+  /* Mensagens de helper/error */
+  &__messages {
+    font-size: var(--dss-font-size-sm) !important;
+    margin-top: var(--dss-spacing-1) !important;
+    line-height: var(--dss-line-height-sm) !important;
+  }
+  
+  /* Prefix/suffix */
+  &__prefix,
+  &__suffix {
+    padding: 0 var(--dss-spacing-2) !important;
+    color: var(--dss-text-subtle) !important;
+  }
+  
+  /* Input interno */
+  .q-input__control {
+    min-height: var(--dss-input-height-min) !important;
+  }
+  
+  .q-input__native,
+  .q-textarea__native {
+    color: var(--dss-text-body) !important;
+    font-size: var(--dss-font-size-base) !important;
+    line-height: var(--dss-line-height-base) !important;
+    padding: var(--dss-spacing-2) var(--dss-spacing-3) !important; /* refatoração Jan 2025 Sprint 1 */
+    
+    /* Placeholder */
+    &::placeholder {
+      color: var(--dss-text-muted) !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+/* ===========================================
+   3. CARDS (Q-CARD) - Com brand tokens
+   =========================================== */
+
+.q-card {
+  background-color: var(--dss-surface-default) !important;
+  border: 1px solid var(--dss-gray-200) !important; /* refatoração Jan 2025 Sprint 2 */
+  border-radius: var(--dss-radius-lg) !important; /* refatoração Jan 2025 Sprint 1 */
+  box-shadow: var(--dss-elevation-1) !important; /* refatoração Jan 2025 Sprint 3 */
+  
+  /* Transição para hover */
+  transition: transform var(--dss-transition-fast), 
+              box-shadow var(--dss-transition-fast) !important;
+  
+  /* Card brandável via data-attribute */
+  &[data-brand="hub"] {
+    border-color: var(--dss-border-hub-100) !important;
+    background-color: var(--dss-surface-brand-subtle) !important;
+  }
+  
+  &[data-brand="water"] {
+    border-color: var(--dss-border-water-100) !important;
+  }
+  
+  &[data-brand="waste"] {
+    border-color: var(--dss-border-waste-100) !important;
+  }
+  
+  /* Card elevated */
+  &.q-card--elevated {
+    box-shadow: var(--dss-elevation-2) !important; /* refatoração Jan 2025 Sprint 3 */
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--dss-elevation-3) !important;
+    }
+  }
+  
+  /* Card flat */
+  &.q-card--flat {
+    box-shadow: none !important;
+    border: var(--dss-border-gray-200) !important;
+  }
+  
+  /* Sections do card - usa tokens genéricos (refatoração Jan 2025 Sprint 1) */
+  &__section {
+    padding: var(--dss-spacing-6) !important;
+
+    &--vert {
+      padding-left: var(--dss-spacing-6) !important;
+      padding-right: var(--dss-spacing-6) !important;
+    }
+
+    &--horiz {
+      padding-top: var(--dss-spacing-6) !important;
+      padding-bottom: var(--dss-spacing-6) !important;
+    }
+  }
+
+  /* Card actions */
+  .q-card__actions {
+    padding: var(--dss-spacing-4) var(--dss-spacing-6) !important; /* refatoração Jan 2025 Sprint 1 */
+    border-top: 1px solid var(--dss-gray-200) !important; /* refatoração Jan 2025 Sprint 2 */
+    
+    .q-btn {
+      margin-right: var(--dss-spacing-2) !important;
+      
+      &:last-child {
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+/* ===========================================
+   4. ALERTS (Q-BANNER, Q-ALERT) - Feedback tokens
+   =========================================== */
+
+.q-banner,
+.q-alert {
+  border-radius: var(--dss-radius-md) !important;
+  padding: var(--dss-spacing-4) !important;
+  margin-bottom: var(--dss-spacing-4) !important;
+  
+  /* Tipos de alerta com nossos feedback tokens */
+  &--info {
+    background-color: var(--dss-feedback-info-surface) !important;
+    color: var(--dss-text-info) !important;
+    border-left: 4px solid var(--dss-feedback-info) !important;
+  }
+  
+  &--positive {
+    background-color: var(--dss-feedback-success-surface) !important;
+    color: var(--dss-text-success) !important;
+    border-left: 4px solid var(--dss-feedback-success) !important;
+  }
+  
+  &--warning {
+    background-color: var(--dss-feedback-warning-surface) !important;
+    color: var(--dss-text-warning) !important;
+    border-left: 4px solid var(--dss-feedback-warning) !important;
+  }
+  
+  &--negative {
+    background-color: var(--dss-feedback-error-surface) !important;
+    color: var(--dss-text-error) !important;
+    border-left: 4px solid var(--dss-feedback-error) !important;
+  }
+  
+  /* Conteúdo do alerta */
+  &__content {
+    font-size: var(--dss-font-size-base) !important;
+    line-height: var(--dss-line-height-base) !important;
+  }
+  
+  /* Ícone */
+  .q-icon {
+    font-size: 1.5em !important;
+    margin-right: var(--dss-spacing-3) !important;
+  }
+  
+  /* Ações */
+  .q-banner__actions,
+  .q-alert__actions {
+    margin-top: var(--dss-spacing-3) !important;
+    
+    .q-btn {
+      margin-right: var(--dss-spacing-2) !important;
+      
+      &:last-child {
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+/* ===========================================
+   5. DIALOGS/MODALS (Q-DIALOG) - Focus trap
+   =========================================== */
+
+.q-dialog {
+  /* Backdrop com overlay token */
+  &__backdrop {
+    background-color: var(--dss-surface-overlay) !important;
+    backdrop-filter: blur(2px);
+  }
+  
+  /* Conteúdo do modal */
+  &__inner {
+    & > .q-card {
+      max-width: 90vw !important;
+      max-height: 90vh !important;
+      box-shadow: var(--dss-shadow-modal) !important;
+      
+      /* Foco preso dentro do modal */
+      &:focus {
+        outline: none;
+        @include dss-focus-ring('primary');
+      }
+    }
+    
+    /* Tamanhos predefinidos */
+    &--minimized > .q-card {
+      width: 300px !important;
+    }
+    
+    &--maximized > .q-card {
+      width: 95vw !important;
+      height: 95vh !important;
+    }
+  }
+  
+  /* Header do modal - usa tokens genéricos (refatoração Jan 2025) */
+  .q-dialog__title {
+    font-size: var(--dss-heading-4-size) !important;
+    font-weight: var(--dss-font-weight-semibold) !important;
+    padding: var(--dss-spacing-6) var(--dss-spacing-6) var(--dss-spacing-4) !important; /* Sprint 1 */
+    border-bottom: 1px solid var(--dss-gray-200) !important; /* Sprint 2 */
+    margin: 0 !important;
+  }
+
+  /* Body do modal - usa tokens genéricos (refatoração Jan 2025 Sprint 1) */
+  .q-dialog__message {
+    padding: var(--dss-spacing-6) !important;
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+    
+    /* Scrollbar customizada */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: var(--dss-surface-subtle);
+      border-radius: var(--dss-radius-full);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: var(--dss-gray-300);
+      border-radius: var(--dss-radius-full);
+      
+      &:hover {
+        background: var(--dss-gray-400);
+      }
+    }
+  }
+  
+  /* Footer do modal - usa tokens genéricos (refatoração Jan 2025) */
+  .q-dialog__footer {
+    padding: var(--dss-spacing-4) var(--dss-spacing-6) var(--dss-spacing-6) !important; /* Sprint 1 */
+    border-top: 1px solid var(--dss-gray-200) !important; /* Sprint 2 */
+    
+    .q-btn {
+      margin-left: var(--dss-spacing-2) !important;
+      
+      &:first-child {
+        margin-left: 0 !important;
+      }
+    }
+  }
+  
+  /* Botão de fechar */
+  .q-dialog__close {
+    position: absolute !important;
+    top: var(--dss-spacing-4) !important;
+    right: var(--dss-spacing-4) !important;
+    z-index: var(--dss-z-index-above) !important;
+    
+    .q-btn {
+      min-width: auto !important;
+      min-height: auto !important;
+      padding: var(--dss-spacing-1) !important;
+      background-color: var(--dss-surface-default) !important;
+      border: var(--dss-border-gray-300) !important;
+      
+      &:hover {
+        background-color: var(--dss-surface-hover) !important;
+      }
+    }
+  }
+}
+
+/* ===========================================
+   6. NAVIGATION (Q-TABS, Q-ROUTE-TAB) - Acessibilidade
+   =========================================== */
+
+.q-tabs {
+  /* Container */
+  &__content {
+    overflow: visible !important;
+  }
+  
+  /* Tabs */
+  &__indicator {
+    height: 3px !important;
+    background-color: var(--quasar-primary) !important;
+    border-radius: var(--dss-radius-full) !important;
+  }
+  
+  /* Individual tab */
+  .q-tab {
+    min-height: var(--dss-touch-target-min) !important;
+    padding: 0 var(--dss-spacing-3) !important;
+    
+    /* Ícone */
+    .q-icon {
+      font-size: 1.25em !important;
+      margin-bottom: var(--dss-spacing-1) !important;
+    }
+    
+    /* Label */
+    &__label {
+      font-size: var(--dss-font-size-sm) !important;
+      font-weight: var(--dss-font-weight-medium) !important;
+      line-height: var(--dss-line-height-sm) !important;
+    }
+    
+    /* Tab ativa */
+    &--active {
+      .q-tab__label {
+        color: var(--quasar-primary) !important;
+        font-weight: var(--dss-font-weight-semibold) !important;
+      }
+      
+      .q-icon {
+        color: var(--quasar-primary) !important;
+      }
+    }
+    
+    /* Hover */
+    &:hover:not(.q-tab--active) {
+      background-color: var(--dss-surface-hover) !important;
+    }
+    
+    /* Foco */
+    &:focus-visible {
+      @include dss-focus-ring('primary');
+    }
+    
+    /* Desabilitada */
+    &--disabled {
+      opacity: var(--dss-opacity-disabled) !important;
+      cursor: not-allowed !important;
+      
+      .q-tab__label,
+      .q-icon {
+        color: var(--dss-text-disabled) !important;
+      }
+    }
+  }
+  
+  /* Vertical tabs */
+  &--vertical {
+    .q-tab {
+      justify-content: flex-start !important;
+      padding: var(--dss-spacing-2) var(--dss-spacing-4) !important;
+      
+      .q-icon {
+        margin-right: var(--dss-spacing-2) !important;
+        margin-bottom: 0 !important;
+      }
+    }
+    
+    .q-tabs__indicator {
+      width: 3px !important;
+      height: auto !important;
+    }
+  }
+}
+
+/* ===========================================
+   7. MENUS & DROPDOWNS (Q-MENU, Q-SELECT) - Keyboard nav
+   =========================================== */
+
+.q-menu {
+  background-color: var(--dss-surface-default) !important;
+  border: var(--dss-border-gray-300) !important;
+  border-radius: var(--dss-radius-md) !important;
+  box-shadow: var(--dss-shadow-lg) !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  z-index: var(--dss-z-index-dropdown) !important;
+  
+  /* Itens do menu */
+  .q-item {
+    min-height: var(--dss-touch-target-min) !important;
+    padding: var(--dss-spacing-2) var(--dss-spacing-3) !important;
+    
+    /* Foco e hover */
+    &:hover:not(.q-item--disabled),
+    &:focus-visible {
+      background-color: var(--dss-surface-hover) !important;
+      @include dss-focus-ring('primary');
+    }
+    
+    /* Ativo/selecionado */
+    &--active {
+      background-color: var(--dss-surface-selected) !important;
+      color: var(--quasar-primary) !important;
+      font-weight: var(--dss-font-weight-semibold) !important;
+    }
+    
+    /* Desabilitado */
+    &--disabled {
+      opacity: var(--dss-opacity-disabled) !important;
+      cursor: not-allowed !important;
+      
+      .q-item__label {
+        color: var(--dss-text-disabled) !important;
+      }
+    }
+    
+    /* Ícone */
+    .q-icon {
+      margin-right: var(--dss-spacing-2) !important;
+      color: var(--dss-text-subtle) !important;
+    }
+    
+    .q-item__label {
+      font-size: var(--dss-font-size-base) !important;
+      line-height: var(--dss-line-height-base) !important;
+    }
+  }
+  
+  /* Separador */
+  .q-separator {
+    margin: var(--dss-spacing-1) 0 !important;
+    background-color: var(--dss-border-gray-200) !important;
+  }
+  
+  /* Header do menu */
+  .q-menu__header {
+    padding: var(--dss-spacing-3) !important;
+    border-bottom: var(--dss-border-gray-200) !important;
+    font-weight: var(--dss-font-weight-semibold) !important;
+    color: var(--dss-text-body) !important;
+  }
+}
+
+/* ===========================================
+   8. DATA TABLES (Q-TABLE) - Acessibilidade
+   =========================================== */
+
+.q-table {
+  /* Container */
+  &__container {
+    border-radius: var(--dss-radius-md) !important;
+    border: var(--dss-border-gray-200) !important;
+    overflow: hidden !important;
+  }
+  
+  /* Cabeçalho */
+  thead {
+    tr {
+      background-color: var(--dss-surface-subtle) !important;
+      
+      th {
+        color: var(--dss-text-body) !important;
+        font-weight: var(--dss-font-weight-semibold) !important;
+        font-size: var(--dss-font-size-sm) !important;
+        padding: var(--dss-spacing-3) !important;
+        border-bottom: var(--dss-border-gray-300) !important;
+        
+        /* Sort icon */
+        .q-table__sort-icon {
+          color: var(--dss-text-subtle) !important;
+          margin-left: var(--dss-spacing-1) !important;
+        }
+        
+        /* Coluna ordenada */
+        &.sorted {
+          background-color: var(--dss-surface-selected) !important;
+          color: var(--quasar-primary) !important;
+          
+          .q-table__sort-icon {
+            color: var(--quasar-primary) !important;
+          }
+        }
+        
+        /* Hover no cabeçalho */
+        &:hover {
+          background-color: var(--dss-surface-hover) !important;
+        }
+      }
+    }
+  }
+  
+  /* Corpo da tabela */
+  tbody {
+    tr {
+      /* Linhas alternadas para melhor legibilidade */
+      &:nth-child(even) {
+        background-color: var(--dss-surface-subtle) !important;
+      }
+      
+      /* Hover na linha */
+      &:hover {
+        background-color: var(--dss-surface-hover) !important;
+      }
+      
+      /* Linha selecionada */
+      &.selected {
+        background-color: var(--dss-surface-selected) !important;
+      }
+      
+      /* Células */
+      td {
+        padding: var(--dss-spacing-3) !important;
+        color: var(--dss-text-body) !important;
+        font-size: var(--dss-font-size-base) !important;
+        line-height: var(--dss-line-height-base) !important;
+        border-bottom: var(--dss-border-gray-200) !important;
+      }
+    }
+  }
+  
+  /* Paginação */
+  .q-table__bottom {
+    padding: var(--dss-spacing-3) !important;
+    border-top: var(--dss-border-gray-200) !important;
+    background-color: var(--dss-surface-subtle) !important;
+    
+    /* Contador de registros */
+    .q-table__control {
+      font-size: var(--dss-font-size-sm) !important;
+      color: var(--dss-text-subtle) !important;
+    }
+    
+    /* Input de paginação */
+    .q-table__pagination-input {
+      .q-field {
+        margin-bottom: 0 !important;
+        
+        .q-field__control {
+          min-height: calc(var(--dss-touch-target-min) * 0.875) !important;
+        }
+      }
+    }
+  }
+  
+  /* Empty state */
+  .q-table__empty {
+    padding: var(--dss-spacing-8) !important;
+    color: var(--dss-text-subtle) !important;
+    text-align: center !important;
+    
+    .q-icon {
+      font-size: 3em !important;
+      margin-bottom: var(--dss-spacing-3) !important;
+      color: var(--dss-text-muted) !important;
+    }
+  }
+}
+
+/* ===========================================
+   9. BADGES & CHIPS (Q-BADGE, Q-CHIP)
+   =========================================== */
+
+.q-badge {
+  background-color: var(--dss-action-primary) !important;
+  color: white !important;
+  font-size: var(--dss-font-size-xs) !important;
+  font-weight: var(--dss-font-weight-semibold) !important;
+  padding: var(--dss-spacing-0_5) var(--dss-spacing-1) !important;
+  border-radius: var(--dss-radius-full) !important;
+  line-height: 1 !important;
+  min-width: 1.5em !important;
+  min-height: 1.5em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  
+  /* Cores semânticas */
+  &--info {
+    background-color: var(--dss-feedback-info) !important;
+  }
+  
+  &--positive {
+    background-color: var(--dss-feedback-success) !important;
+  }
+  
+  &--warning {
+    background-color: var(--dss-feedback-warning) !important;
+  }
+  
+  &--negative {
+    background-color: var(--dss-feedback-error) !important;
+  }
+  
+  /* Outline variant */
+  &--outline {
+    background-color: transparent !important;
+    border: 1px solid currentColor !important;
+    
+    &.q-badge--info {
+      color: var(--dss-feedback-info) !important;
+    }
+    
+    &.q-badge--positive {
+      color: var(--dss-feedback-success) !important;
+    }
+  }
+}
+
+.q-chip {
+  background-color: var(--dss-surface-muted) !important;
+  color: var(--dss-text-body) !important;
+  font-size: var(--dss-font-size-sm) !important;
+  padding: var(--dss-spacing-1) var(--dss-spacing-2) !important;
+  border-radius: var(--dss-radius-full) !important;
+  min-height: calc(var(--dss-touch-target-min) * 0.75) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: var(--dss-spacing-1) !important;
+  
+  /* Foco */
+  &:focus-visible {
+    @include dss-focus-ring('primary');
+  }
+  
+  /* Removível */
+  &--removable {
+    padding-right: var(--dss-spacing-1) !important;
+    
+    .q-chip__remove {
+      margin-left: var(--dss-spacing-0_5) !important;
+      color: var(--dss-text-subtle) !important;
+      opacity: 0.7 !important;
+      
+      &:hover {
+        opacity: 1 !important;
+        color: var(--dss-negative) !important;
+      }
+    }
+  }
+  
+  /* Cores */
+  &--primary {
+    background-color: var(--dss-action-primary) !important;
+    color: white !important;
+  }
+  
+  &--info {
+    background-color: var(--dss-feedback-info-surface) !important;
+    color: var(--dss-text-info) !important;
+  }
+  
+  /* Outline */
+  &--outline {
+    background-color: transparent !important;
+    border: 1px solid currentColor !important;
+    
+    &.q-chip--primary {
+      border-color: var(--dss-action-primary) !important;
+      color: var(--dss-action-primary) !important;
+    }
+  }
+}
+
+/* ===========================================
+   10. PROGRESS & LOADERS (Q-LINEAR-PROGRESS, Q-SPINNER)
+   =========================================== */
+
+.q-linear-progress {
+  height: 4px !important;
+  border-radius: var(--dss-radius-full) !important;
+  overflow: hidden !important;
+  
+  /* Track */
+  &__track {
+    background-color: var(--dss-surface-muted) !important;
+  }
+  
+  /* Model */
+  &__model {
+    background-color: var(--quasar-primary) !important;
+    transition: width 0.3s var(--dss-easing-standard) !important;
+    
+    /* Cores semânticas */
+    &--info {
+      background-color: var(--dss-feedback-info) !important;
+    }
+    
+    &--positive {
+      background-color: var(--dss-feedback-success) !important;
+    }
+    
+    &--warning {
+      background-color: var(--dss-feedback-warning) !important;
+    }
+    
+    &--negative {
+      background-color: var(--dss-feedback-error) !important;
+    }
+  }
+  
+  /* Buffer */
+  &__buffer {
+    background-color: var(--dss-surface-subtle) !important;
+  }
+}
+
+.q-spinner {
+  color: var(--quasar-primary) !important;
+  
+  /* Tamanhos */
+  &--sm {
+    width: 1em !important;
+    height: 1em !important;
+  }
+  
+  &--md {
+    width: 1.5em !important;
+    height: 1.5em !important;
+  }
+  
+  &--lg {
+    width: 2em !important;
+    height: 2em !important;
+  }
+  
+  &--xl {
+    width: 3em !important;
+    height: 3em !important;
+  }
+  
+  /* Cores semânticas */
+  &--info {
+    color: var(--dss-feedback-info) !important;
+  }
+  
+  &--positive {
+    color: var(--dss-feedback-success) !important;
+  }
+  
+  &--warning {
+    color: var(--dss-feedback-warning) !important;
+  }
+  
+  &--negative {
+    color: var(--dss-feedback-error) !important;
+  }
+}
+
+/* ===========================================
+   11. TOOLTIPS (Q-TOOLTIP) - Acessibilidade
+   =========================================== */
+
+.q-tooltip {
+  background-color: var(--dss-gray-900) !important;
+  color: var(--dss-text-inverse) !important;
+  font-size: var(--dss-font-size-sm) !important;
+  padding: var(--dss-spacing-2) var(--dss-spacing-3) !important;
+  border-radius: var(--dss-radius-sm) !important;
+  box-shadow: var(--dss-shadow-md) !important;
+  max-width: 200px !important;
+  z-index: var(--dss-z-index-tooltip) !important;
+  
+  /* Tipografia */
+  &__content {
+    line-height: var(--dss-line-height-sm) !important;
+  }
+  
+  /* Arrow */
+  &__arrow {
+    color: var(--dss-gray-900) !important;
+  }
+  
+  /* Posições */
+  &--top {
+    margin-bottom: var(--dss-spacing-1) !important;
+  }
+  
+  &--bottom {
+    margin-top: var(--dss-spacing-1) !important;
+  }
+  
+  &--left {
+    margin-right: var(--dss-spacing-1) !important;
+  }
+  
+  &--right {
+    margin-left: var(--dss-spacing-1) !important;
+  }
+  
+  /* Para elementos desabilitados */
+  .disabled &,
+  [disabled] & {
+    display: none !important;
+  }
+}
+
+/* ===========================================
+   12. UTILITÁRIOS GERAIS DO QUASAR
+   =========================================== */
+
+/* Text colors com nossos tokens */
+.text-primary { color: var(--quasar-primary) !important; }
+.text-secondary { color: var(--quasar-secondary) !important; }
+.text-accent { color: var(--quasar-accent) !important; }
+.text-positive { color: var(--dss-feedback-success) !important; }
+.text-negative { color: var(--dss-feedback-error) !important; }
+.text-warning { color: var(--dss-feedback-warning) !important; }
+.text-info { color: var(--dss-feedback-info) !important; }
+.text-dark { color: var(--dss-text-body) !important; }
+.text-light { color: var(--dss-text-subtle) !important; }
+
+/* Background colors */
+.bg-primary { background-color: var(--quasar-primary) !important; }
+.bg-secondary { background-color: var(--quasar-secondary) !important; }
+.bg-accent { background-color: var(--quasar-accent) !important; }
+.bg-positive { background-color: var(--dss-feedback-success) !important; }
+.bg-negative { background-color: var(--dss-feedback-error) !important; }
+.bg-warning { background-color: var(--dss-feedback-warning) !important; }
+.bg-info { background-color: var(--dss-feedback-info) !important; }
+.bg-dark { background-color: var(--dss-gray-900) !important; }
+.bg-light { background-color: var(--dss-gray-100) !important; }
+
+/* Border colors */
+.border-primary { border-color: var(--quasar-primary) !important; }
+.border-secondary { border-color: var(--quasar-secondary) !important; }
+.border-accent { border-color: var(--quasar-accent) !important; }
+
+/* Shadows */
+.shadow-1 { box-shadow: var(--dss-shadow-sm) !important; }
+.shadow-2 { box-shadow: var(--dss-shadow-md) !important; }
+.shadow-3 { box-shadow: var(--dss-shadow-lg) !important; }
+.shadow-4 { box-shadow: var(--dss-shadow-xl) !important; }
+.shadow-5 { box-shadow: var(--dss-shadow-2xl) !important; }
+
+/* Rounded */
+.rounded-borders { border-radius: var(--dss-radius-md) !important; }
+.rounded-borders-lg { border-radius: var(--dss-radius-lg) !important; }
+.rounded-borders-xl { border-radius: var(--dss-radius-xl) !important; }
+
+/* ===========================================
+   13. MEDIA QUERIES PARA ACESSIBILIDADE
+   =========================================== */
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+  .q-btn,
+  .q-field,
+  .q-card,
+  .q-table,
+  .q-tab {
+    border-width: 2px !important;
+  }
+  
+  .q-btn--focus,
+  .q-field--focused {
+    outline: 3px solid var(--dss-action-primary) !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+  .q-btn,
+  .q-card,
+  .q-tab,
+  .q-table tr,
+  .q-menu .q-item {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .q-linear-progress__model {
+    transition: none !important;
+  }
+  
+  .q-spinner {
+    animation: none !important;
+    
+    &::before {
+      content: "⏳" !important;
+      animation: none !important;
+    }
+  }
+}
+
+/* Zoom do navegador */
+@media (max-width: 767px) {
+  .q-btn {
+    min-height: calc(var(--dss-touch-target-min) * 1.1) !important;
+    min-width: calc(var(--dss-touch-target-min) * 1.1) !important;
+  }
+  
+  .q-field {
+    margin-bottom: var(--dss-spacing-6) !important;
+  }
+}

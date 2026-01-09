@@ -1,0 +1,1779 @@
+@charset "UTF-8";
+/* ==========================================================================
+   DssCard - MAIN MODULE (Orquestrador Final)
+
+   Filosofia DSS: Arquitetura em 4 Camadas
+
+   LAYER 1: Structure (Vue components - DssCard.vue, DssCardSection.vue, etc.)
+   LAYER 2: Composition (Base styles e mixins)
+   LAYER 3: Variants (elevated, flat, bordered, outlined)
+   LAYER 4: Output (states, brands, orchestration)
+
+   Este arquivo importa TODAS as camadas e gera o CSS final.
+
+   Total estimado: ~200 linhas (vs ~800 em monolitico)
+   ========================================================================== */
+/* Layer 2: Composition */
+/* ==========================================================================
+   DssCard - LAYER 2: COMPOSITION (Base Styles)
+
+   Responsabilidade: Definir estilos base do card usando APENAS tokens genéricos
+   Filosofia DSS: Tokens = Provedores, Componentes = Consumidores
+   ========================================================================== */
+/* ==========================================================================
+   DSS - UTILS INDEX
+   Entry point para todos os utilitarios
+   ========================================================================== */
+/* 1. Funcoes Sass */
+/* ==========================================================================
+   DSS - FUNÇÕES SASS
+   Funções auxiliares para cálculos e transformações
+   ========================================================================== */
+/**
+ * Converte pixel para rem mantendo acessibilidade
+ * @param {number} $px - Valor em pixels
+ * @return {string} - Valor em rem
+ */
+/**
+ * Calcula contraste WCAG entre duas cores
+ * @param {color} $color1 - Cor do texto
+ * @param {color} $color2 - Cor do fundo
+ * @return {number} - Razão de contraste
+ */
+/**
+ * Calcula luminância relativa (WCAG)
+ */
+/**
+ * Verifica se contraste passa no WCAG AA
+ */
+/**
+ * Escurece uma cor mantendo acessibilidade
+ */
+/**
+ * Clareia uma cor mantendo acessibilidade
+ */
+/**
+ * Cria gradiente com opacidade
+ */
+/**
+ * Retorna token baseado no contexto de marca
+ */
+/**
+ * Calcula espaçamento responsivo
+ */
+/**
+ * Helper para modos claro/escuro
+ *
+ * NOTA: Dark mode é implementado via tokens com [data-theme="dark"]
+ * Esta função retorna referência a variável CSS que muda automaticamente
+ */
+/* 2. Mixins principais */
+/* ==========================================================================
+   DSS - MIXINS PRINCIPAIS
+   Mixins para implementação consistente de componentes
+   ========================================================================== */
+/**
+ * Aplica anel de foco acessível (WCAG 2.1 AA)
+ *
+ * @param {string} $type - Tipo de foco (primary, secondary, tertiary, accent, success, error, warning, info, dark)
+ * @param {boolean} $offset - Se deve usar variante com offset (espacamento)
+ *
+ * Features:
+ * - 9 cores semanticas (vs 4 no sistema antigo)
+ * - Dark mode automatico
+ * - Brandability automatica (Hub, Water, Waste)
+ * - High contrast mode
+ * - Transicoes acessiveis (respeita prefers-reduced-motion)
+ *
+ * Uso:
+ *   @include dss-focus-ring('primary');           // Focus azul padrao
+ *   @include dss-focus-ring('error');             // Focus vermelho para erros
+ *   @include dss-focus-ring('primary', true);     // Focus com offset (espaco)
+ *
+ * Atualizado: Dez 16, 2025 - Sistema unificado com 9 cores
+ */
+/**
+ * Garante tamanho mínimo para elementos tocáveis (WCAG)
+ * 44×44px conforme diretrizes Veolia
+ */
+/**
+ * Mixin para aplicar transições consistentes
+ * Respeita prefers-reduced-motion
+ */
+/**
+ * Mixin para botões com lógica brand × semantic
+ */
+/**
+ * Mixin para inputs com estados
+ */
+/**
+ * Mixin para cards brandáveis
+ */
+/**
+ * Mixin para textos acessíveis
+ */
+/**
+ * Mixin para aplicar opacidade com fallback
+ */
+/**
+ * Mixin para visually hidden (acessibilidade)
+ */
+/* 3. Mixins de acessibilidade avancada */
+/* ==========================================================================
+   DSS - MIXINS DE ACESSIBILIDADE AVANÇADA
+   Implementação específica das diretrizes Veolia WCAG 2.1 AA
+   ========================================================================== */
+/**
+ * Mixin para validação de contraste em tempo de compilação
+ * @warn se contraste for insuficiente
+ */
+/**
+ * Mixin para implementar skip links (navegação por teclado)
+ */
+/**
+ * Mixin para ARIA live regions (conteúdo dinâmico)
+ */
+/**
+ * Mixin para estados de carregamento acessíveis
+ */
+/**
+ * Mixin para tooltips acessíveis
+ */
+/**
+ * Mixin para modais acessíveis (focus trap)
+ */
+/**
+ * Mixin para formulários acessíveis
+ */
+/* 4. Classes utilitarias */
+/* ==========================================================================
+   DSS - CLASSES UTILITÁRIAS
+   Classes CSS para uso direto no HTML
+   ========================================================================== */
+/* ========== DISPLAY & LAYOUT ========== */
+.dss {
+  /* Display */
+}
+.dss-block {
+  display: block;
+}
+.dss-inline {
+  display: inline;
+}
+.dss-inline-block {
+  display: inline-block;
+}
+.dss-flex {
+  display: flex;
+}
+.dss-inline-flex {
+  display: inline-flex;
+}
+.dss-grid {
+  display: grid;
+}
+.dss-none {
+  display: none;
+}
+.dss-hidden {
+  visibility: hidden;
+}
+.dss {
+  /* Flexbox */
+}
+.dss-flex-row {
+  flex-direction: row;
+}
+.dss-flex-col {
+  flex-direction: column;
+}
+.dss-flex-wrap {
+  flex-wrap: wrap;
+}
+.dss-flex-nowrap {
+  flex-wrap: nowrap;
+}
+.dss-items-center {
+  align-items: center;
+}
+.dss-items-start {
+  align-items: flex-start;
+}
+.dss-items-end {
+  align-items: flex-end;
+}
+.dss-justify-center {
+  justify-content: center;
+}
+.dss-justify-between {
+  justify-content: space-between;
+}
+.dss-justify-around {
+  justify-content: space-around;
+}
+.dss-gap-0 {
+  gap: var(--dss-gap-0);
+}
+.dss-gap-2 {
+  gap: var(--dss-gap-2);
+}
+.dss-gap-4 {
+  gap: var(--dss-gap-4);
+}
+.dss-gap-6 {
+  gap: var(--dss-gap-6);
+}
+.dss {
+  /* Grid */
+}
+.dss-grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.dss-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.dss-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ========== ESPAÇAMENTO (PADDING) ========== */
+.dss-p-0 {
+  padding: var(--dss-padding-0);
+}
+.dss-p-1 {
+  padding: var(--dss-padding-1);
+}
+.dss-p-2 {
+  padding: var(--dss-padding-2);
+}
+.dss-p-3 {
+  padding: var(--dss-padding-3);
+}
+.dss-p-4 {
+  padding: var(--dss-padding-4);
+}
+.dss-p-6 {
+  padding: var(--dss-padding-6);
+}
+.dss-p-8 {
+  padding: var(--dss-padding-8);
+}
+.dss {
+  /* Direcionais */
+}
+.dss-px-0 {
+  padding-left: var(--dss-padding-0);
+  padding-right: var(--dss-padding-0);
+}
+.dss-px-2 {
+  padding-left: var(--dss-padding-2);
+  padding-right: var(--dss-padding-2);
+}
+.dss-px-4 {
+  padding-left: var(--dss-padding-4);
+  padding-right: var(--dss-padding-4);
+}
+.dss-py-0 {
+  padding-top: var(--dss-padding-0);
+  padding-bottom: var(--dss-padding-0);
+}
+.dss-py-2 {
+  padding-top: var(--dss-padding-2);
+  padding-bottom: var(--dss-padding-2);
+}
+.dss-py-4 {
+  padding-top: var(--dss-padding-4);
+  padding-bottom: var(--dss-padding-4);
+}
+.dss {
+  /* Individuais */
+}
+.dss-pt-4 {
+  padding-top: var(--dss-padding-4);
+}
+.dss-pr-4 {
+  padding-right: var(--dss-padding-4);
+}
+.dss-pb-4 {
+  padding-bottom: var(--dss-padding-4);
+}
+.dss-pl-4 {
+  padding-left: var(--dss-padding-4);
+}
+
+/* ========== ESPAÇAMENTO (MARGIN) ========== */
+.dss-m-0 {
+  margin: var(--dss-margin-0);
+}
+.dss-m-1 {
+  margin: var(--dss-margin-1);
+}
+.dss-m-2 {
+  margin: var(--dss-margin-2);
+}
+.dss-m-3 {
+  margin: var(--dss-margin-3);
+}
+.dss-m-4 {
+  margin: var(--dss-margin-4);
+}
+.dss-m-6 {
+  margin: var(--dss-margin-6);
+}
+.dss-m-8 {
+  margin: var(--dss-margin-8);
+}
+.dss-m-auto {
+  margin: auto;
+}
+.dss {
+  /* Direcionais */
+}
+.dss-mx-0 {
+  margin-left: var(--dss-margin-0);
+  margin-right: var(--dss-margin-0);
+}
+.dss-mx-2 {
+  margin-left: var(--dss-margin-2);
+  margin-right: var(--dss-margin-2);
+}
+.dss-mx-4 {
+  margin-left: var(--dss-margin-4);
+  margin-right: var(--dss-margin-4);
+}
+.dss-mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.dss-my-0 {
+  margin-top: var(--dss-margin-0);
+  margin-bottom: var(--dss-margin-0);
+}
+.dss-my-2 {
+  margin-top: var(--dss-margin-2);
+  margin-bottom: var(--dss-margin-2);
+}
+.dss-my-4 {
+  margin-top: var(--dss-margin-4);
+  margin-bottom: var(--dss-margin-4);
+}
+.dss-my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.dss {
+  /* Individuais */
+}
+.dss-mt-4 {
+  margin-top: var(--dss-margin-4);
+}
+.dss-mr-4 {
+  margin-right: var(--dss-margin-4);
+}
+.dss-mb-4 {
+  margin-bottom: var(--dss-margin-4);
+}
+.dss-ml-4 {
+  margin-left: var(--dss-margin-4);
+}
+
+/* ========== CORES DE TEXTO ========== */
+.dss-text-body {
+  color: var(--dss-text-body);
+}
+.dss-text-subtle {
+  color: var(--dss-text-subtle);
+}
+.dss-text-muted {
+  color: var(--dss-text-muted);
+}
+.dss-text-inverse {
+  color: var(--dss-text-inverse);
+}
+.dss-text-disabled {
+  color: var(--dss-text-disabled);
+}
+.dss-text {
+  /* Ação */
+}
+.dss-text-action {
+  color: var(--dss-text-action);
+}
+.dss-text-action-hover {
+  color: var(--dss-text-action-hover);
+}
+.dss-text {
+  /* Feedback */
+}
+.dss-text-success {
+  color: var(--dss-text-success);
+}
+.dss-text-error {
+  color: var(--dss-text-error);
+}
+.dss-text-warning {
+  color: var(--dss-text-warning);
+}
+.dss-text-info {
+  color: var(--dss-text-info);
+}
+.dss-text {
+  /* Brand */
+}
+.dss-text-brand-hub {
+  color: var(--dss-text-brand-hub);
+}
+.dss-text-brand-water {
+  color: var(--dss-text-brand-water);
+}
+.dss-text-brand-waste {
+  color: var(--dss-text-brand-waste);
+}
+
+/* ========== CORES DE FUNDO ========== */
+.dss-bg-default {
+  background-color: var(--dss-surface-default);
+}
+.dss-bg-subtle {
+  background-color: var(--dss-surface-subtle);
+}
+.dss-bg-muted {
+  background-color: var(--dss-surface-muted);
+}
+.dss-bg-overlay {
+  background-color: var(--dss-surface-overlay);
+}
+.dss-bg {
+  /* Estados */
+}
+.dss-bg-hover {
+  background-color: var(--dss-surface-hover);
+}
+.dss-bg-active {
+  background-color: var(--dss-surface-active);
+}
+.dss-bg-selected {
+  background-color: var(--dss-surface-selected);
+}
+.dss-bg-disabled {
+  background-color: var(--dss-surface-disabled);
+}
+.dss-bg {
+  /* Brand */
+}
+.dss-bg-brand-subtle {
+  background-color: var(--dss-surface-brand-subtle);
+}
+.dss-bg-brand-light {
+  background-color: var(--dss-surface-brand-light);
+}
+.dss-bg {
+  /* Feedback */
+}
+.dss-bg-success {
+  background-color: var(--dss-feedback-success-surface);
+}
+.dss-bg-error {
+  background-color: var(--dss-feedback-error-surface);
+}
+.dss-bg-warning {
+  background-color: var(--dss-feedback-warning-surface);
+}
+.dss-bg-info {
+  background-color: var(--dss-feedback-info-surface);
+}
+
+/* ========== TIPOGRAFIA ========== */
+.dss {
+  /* Tamanhos */
+}
+.dss-text-xs {
+  font-size: var(--dss-font-size-xs);
+}
+.dss-text-sm {
+  font-size: var(--dss-font-size-sm);
+}
+.dss-text-base {
+  font-size: var(--dss-font-size-base);
+}
+.dss-text-lg {
+  font-size: var(--dss-font-size-lg);
+}
+.dss-text-xl {
+  font-size: var(--dss-font-size-xl);
+}
+.dss-text-2xl {
+  font-size: var(--dss-font-size-2xl);
+}
+.dss-text-3xl {
+  font-size: var(--dss-font-size-3xl);
+}
+.dss-text-4xl {
+  font-size: var(--dss-font-size-4xl);
+}
+.dss {
+  /* Pesos */
+}
+.dss-font-light {
+  font-weight: var(--dss-font-weight-light);
+}
+.dss-font-normal {
+  font-weight: var(--dss-font-weight-normal);
+}
+.dss-font-medium {
+  font-weight: var(--dss-font-weight-medium);
+}
+.dss-font-semibold {
+  font-weight: var(--dss-font-weight-semibold);
+}
+.dss-font-bold {
+  font-weight: var(--dss-font-weight-bold);
+}
+.dss {
+  /* Alinhamento */
+}
+.dss-text-left {
+  text-align: left;
+}
+.dss-text-center {
+  text-align: center;
+}
+.dss-text-right {
+  text-align: right;
+}
+.dss-text-justify {
+  text-align: justify;
+}
+.dss {
+  /* Transformação */
+}
+.dss-uppercase {
+  text-transform: uppercase;
+}
+.dss-lowercase {
+  text-transform: lowercase;
+}
+.dss-capitalize {
+  text-transform: capitalize;
+}
+.dss-normal-case {
+  text-transform: none;
+}
+.dss {
+  /* Decoração */
+}
+.dss-underline {
+  text-decoration: underline;
+}
+.dss-line-through {
+  text-decoration: line-through;
+}
+.dss-no-underline {
+  text-decoration: none;
+}
+
+/* ========== BORDAS ========== */
+.dss-border-0 {
+  border-width: 0;
+}
+.dss-border-1 {
+  border-width: 1px;
+}
+.dss-border-2 {
+  border-width: 2px;
+}
+.dss-border {
+  /* Estilos */
+}
+.dss-border-solid {
+  border-style: solid;
+}
+.dss-border-dashed {
+  border-style: dashed;
+}
+.dss-border-dotted {
+  border-style: dotted;
+}
+.dss-border-none {
+  border-style: none;
+}
+.dss-border {
+  /* Cores - Neutras */
+}
+.dss-border-gray-100 {
+  border-color: var(--dss-border-gray-100);
+}
+.dss-border-gray-200 {
+  border-color: var(--dss-border-gray-200);
+}
+.dss-border-gray-300 {
+  border-color: var(--dss-border-gray-300);
+}
+.dss-border-gray-400 {
+  border-color: var(--dss-border-gray-400);
+}
+.dss-border-gray-500 {
+  border-color: var(--dss-border-gray-500);
+}
+.dss-border {
+  /* Cores - Ação */
+}
+.dss-border-primary {
+  border-color: var(--dss-border-primary);
+}
+.dss-border-secondary {
+  border-color: var(--dss-border-secondary);
+}
+.dss-border-tertiary {
+  border-color: var(--dss-border-tertiary);
+}
+.dss-border {
+  /* Cores - Feedback */
+}
+.dss-border-success {
+  border-color: var(--dss-border-success);
+}
+.dss-border-error {
+  border-color: var(--dss-border-error);
+}
+.dss-border-warning {
+  border-color: var(--dss-border-warning);
+}
+.dss-border-info {
+  border-color: var(--dss-border-info);
+}
+.dss-border {
+  /* Cores - Brand */
+}
+.dss-border-hub {
+  border-color: var(--dss-border-hub-500);
+}
+.dss-border-water {
+  border-color: var(--dss-border-water-500);
+}
+.dss-border-waste {
+  border-color: var(--dss-border-waste-500);
+}
+.dss {
+  /* Radius */
+}
+.dss-radius-none {
+  border-radius: var(--dss-radius-none);
+}
+.dss-radius-sm {
+  border-radius: var(--dss-radius-sm);
+}
+.dss-radius-md {
+  border-radius: var(--dss-radius-md);
+}
+.dss-radius-lg {
+  border-radius: var(--dss-radius-lg);
+}
+.dss-radius-xl {
+  border-radius: var(--dss-radius-xl);
+}
+.dss-radius-2xl {
+  border-radius: var(--dss-radius-2xl);
+}
+.dss-radius-3xl {
+  border-radius: var(--dss-radius-3xl);
+}
+.dss-radius-full {
+  border-radius: var(--dss-radius-full);
+}
+
+/* ========== SOMBRAS ========== */
+.dss-shadow-none {
+  box-shadow: none;
+}
+.dss-shadow-sm {
+  box-shadow: var(--dss-shadow-sm);
+}
+.dss-shadow-md {
+  box-shadow: var(--dss-shadow-md);
+}
+.dss-shadow-lg {
+  box-shadow: var(--dss-shadow-lg);
+}
+.dss-shadow-xl {
+  box-shadow: var(--dss-shadow-xl);
+}
+.dss-shadow-2xl {
+  box-shadow: var(--dss-shadow-2xl);
+}
+.dss-shadow {
+  /* Elevação semântica */
+}
+.dss-shadow-elevation-1 {
+  box-shadow: var(--dss-elevation-1);
+}
+.dss-shadow-elevation-2 {
+  box-shadow: var(--dss-elevation-2);
+}
+.dss-shadow-elevation-3 {
+  box-shadow: var(--dss-elevation-3);
+}
+.dss-shadow-elevation-4 {
+  box-shadow: var(--dss-elevation-4);
+}
+.dss-shadow-elevation-5 {
+  box-shadow: var(--dss-elevation-5);
+}
+.dss-shadow {
+  /* Brand */
+}
+.dss-shadow-hub {
+  box-shadow: var(--dss-shadow-hub-md);
+}
+.dss-shadow-water {
+  box-shadow: var(--dss-shadow-water-md);
+}
+.dss-shadow-waste {
+  box-shadow: var(--dss-shadow-waste-md);
+}
+.dss-shadow {
+  /* Estados */
+}
+.dss-shadow-hover {
+  box-shadow: var(--dss-shadow-hover);
+}
+.dss-shadow-focus {
+  box-shadow: var(--dss-shadow-focus);
+}
+
+/* ========== OPACIDADE ========== */
+.dss-opacity-0 {
+  opacity: var(--dss-opacity-0);
+}
+.dss-opacity-10 {
+  opacity: var(--dss-opacity-10);
+}
+.dss-opacity-20 {
+  opacity: var(--dss-opacity-20);
+}
+.dss-opacity-30 {
+  opacity: var(--dss-opacity-30);
+}
+.dss-opacity-40 {
+  opacity: var(--dss-opacity-40);
+}
+.dss-opacity-50 {
+  opacity: var(--dss-opacity-50);
+}
+.dss-opacity-60 {
+  opacity: var(--dss-opacity-60);
+}
+.dss-opacity-70 {
+  opacity: var(--dss-opacity-70);
+}
+.dss-opacity-80 {
+  opacity: var(--dss-opacity-80);
+}
+.dss-opacity-90 {
+  opacity: var(--dss-opacity-90);
+}
+.dss-opacity-100 {
+  opacity: var(--dss-opacity-100);
+}
+.dss-opacity {
+  /* Semânticos */
+}
+.dss-opacity-disabled {
+  opacity: var(--dss-opacity-disabled);
+}
+.dss-opacity-hover {
+  opacity: var(--dss-opacity-hover);
+}
+.dss-opacity-active {
+  opacity: var(--dss-opacity-active);
+}
+
+/* ========== ACESSIBILIDADE ========== */
+.dss {
+  /* Foco visível */
+}
+.dss-focus-ring:focus-visible:focus-visible {
+  outline: none;
+  box-shadow: var(--dss-focus-shadow-primary);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dss-focus-ring:focus-visible:focus-visible {
+    transition: box-shadow var(--dss-focus-duration) var(--dss-focus-easing);
+  }
+}
+.dss-focus-ring:focus-visible:focus-visible:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.dss-focus-ring:focus-visible:not([tabindex]):not(button):not(a):not(input):not(select):not(textarea):not([contenteditable]):focus {
+  outline: none;
+  box-shadow: none;
+}
+.dss-focus-ring-error:focus-visible:focus-visible {
+  outline: none;
+  box-shadow: var(--dss-focus-shadow-error);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dss-focus-ring-error:focus-visible:focus-visible {
+    transition: box-shadow var(--dss-focus-duration) var(--dss-focus-easing);
+  }
+}
+.dss-focus-ring-error:focus-visible:focus-visible:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.dss-focus-ring-error:focus-visible:not([tabindex]):not(button):not(a):not(input):not(select):not(textarea):not([contenteditable]):focus {
+  outline: none;
+  box-shadow: none;
+}
+.dss {
+  /* Touch target */
+}
+.dss-touch-target {
+  min-height: var(--dss-touch-target-min);
+  min-width: var(--dss-touch-target-min);
+  padding: var(--dss-touch-spacing-min);
+  position: relative;
+}
+.dss-touch-target::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--dss-touch-target-min);
+  height: var(--dss-touch-target-min);
+}
+.dss-touch-target-ideal {
+  min-height: var(--dss-touch-target-ideal);
+  min-width: var(--dss-touch-target-ideal);
+  padding: var(--dss-touch-spacing-min);
+  position: relative;
+}
+.dss-touch-target-ideal::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--dss-touch-target-ideal);
+  height: var(--dss-touch-target-ideal);
+}
+.dss {
+  /* Visually hidden */
+}
+.dss-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.dss-visually-hidden:focus-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+.dss {
+  /* Alto contraste */
+}
+@media (prefers-contrast: high) {
+  .dss .dss-high-contrast-border {
+    border-width: 2px;
+  }
+  .dss .dss-high-contrast-text {
+    font-weight: var(--dss-font-weight-bold);
+  }
+}
+.dss {
+  /* Reduzir movimento */
+}
+@media (prefers-reduced-motion: reduce) {
+  .dss .dss-reduced-motion {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ========== UTILITÁRIOS GERAIS ========== */
+.dss {
+  /* Cursor */
+}
+.dss-cursor-pointer {
+  cursor: pointer;
+}
+.dss-cursor-default {
+  cursor: default;
+}
+.dss-cursor-not-allowed {
+  cursor: not-allowed;
+}
+.dss-cursor-wait {
+  cursor: wait;
+}
+.dss {
+  /* Pointer events */
+}
+.dss-pointer-events-none {
+  pointer-events: none;
+}
+.dss-pointer-events-auto {
+  pointer-events: auto;
+}
+.dss {
+  /* Overflow */
+}
+.dss-overflow-auto {
+  overflow: auto;
+}
+.dss-overflow-hidden {
+  overflow: hidden;
+}
+.dss-overflow-visible {
+  overflow: visible;
+}
+.dss-overflow-scroll {
+  overflow: scroll;
+}
+.dss {
+  /* Position */
+}
+.dss-static {
+  position: static;
+}
+.dss-fixed {
+  position: fixed;
+}
+.dss-absolute {
+  position: absolute;
+}
+.dss-relative {
+  position: relative;
+}
+.dss-sticky {
+  position: sticky;
+}
+.dss {
+  /* Z-index */
+}
+.dss-z-0 {
+  z-index: var(--dss-z-index-0);
+}
+.dss-z-10 {
+  z-index: var(--dss-z-index-10);
+}
+.dss-z-20 {
+  z-index: var(--dss-z-index-20);
+}
+.dss-z-30 {
+  z-index: var(--dss-z-index-30);
+}
+.dss-z-40 {
+  z-index: var(--dss-z-index-40);
+}
+.dss-z-50 {
+  z-index: var(--dss-z-index-50);
+}
+.dss-z-auto {
+  z-index: var(--dss-z-index-auto);
+}
+.dss-z-max {
+  z-index: var(--dss-z-index-maximum);
+}
+.dss {
+  /* Transições */
+}
+.dss-transition-fast {
+  transition: all var(--dss-duration-fast) var(--dss-easing-ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dss-transition-fast {
+    transition: none;
+  }
+}
+.dss-transition-base {
+  transition: all var(--dss-duration-base) var(--dss-easing-standard);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dss-transition-base {
+    transition: none;
+  }
+}
+.dss-transition-slow {
+  transition: all var(--dss-duration-slow) var(--dss-easing-ease-in-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dss-transition-slow {
+    transition: none;
+  }
+}
+.dss-transition-none {
+  transition: none;
+}
+
+/* 5. Utilitarios especificos de borda */
+/* ==========================================================================
+   DSS - UTILITÁRIOS ESPECÍFICOS PARA BORDAS
+   Classes para bordas mais específicas
+   ========================================================================== */
+.dss {
+  /* Bordas por lado */
+}
+.dss-border-t-gray-300 {
+  border-top: var(--dss-border-gray-300);
+}
+.dss-border-t-primary {
+  border-top: var(--dss-border-primary);
+}
+.dss-border-t-error {
+  border-top: var(--dss-border-error);
+}
+.dss-border-t-success {
+  border-top: var(--dss-border-success);
+}
+.dss-border-r-gray-300 {
+  border-right: var(--dss-border-gray-300);
+}
+.dss-border-r-primary {
+  border-right: var(--dss-border-primary);
+}
+.dss-border-b-gray-300 {
+  border-bottom: var(--dss-border-gray-300);
+}
+.dss-border-b-primary {
+  border-bottom: var(--dss-border-primary);
+}
+.dss-border-b-hub {
+  border-bottom: var(--dss-border-hub-500);
+}
+.dss-border-b-water {
+  border-bottom: var(--dss-border-water-500);
+}
+.dss-border-b-waste {
+  border-bottom: var(--dss-border-waste-500);
+}
+.dss-border-l-gray-300 {
+  border-left: var(--dss-border-gray-300);
+}
+.dss-border-l-primary {
+  border-left: var(--dss-border-primary);
+}
+.dss-border-l-accent {
+  border-left: var(--dss-border-accent);
+}
+.dss {
+  /* Bordas para inputs - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+}
+.dss-border-input {
+  border: 1px solid var(--dss-gray-300);
+}
+.dss-border-input--hover {
+  border: 1px solid var(--dss-gray-400);
+}
+.dss-border-input--focus {
+  border: 2px solid var(--dss-action-primary);
+}
+.dss-border-input--error {
+  border: 2px solid var(--dss-negative);
+}
+.dss-border-input--success {
+  border: 2px solid var(--dss-positive);
+}
+.dss-border-input--disabled {
+  border: 1px solid var(--dss-gray-200);
+}
+.dss {
+  /* Bordas para cards - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+}
+.dss-border-card {
+  border: 1px solid var(--dss-gray-200);
+}
+.dss-border-card--elevated {
+  border: 1px solid var(--dss-gray-300);
+}
+.dss-border-card--selected {
+  border: 2px solid var(--dss-action-primary);
+}
+.dss {
+  /* Bordas para dividers - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+}
+.dss-border-divider--subtle {
+  border: 1px solid var(--dss-gray-100);
+}
+.dss-border-divider--default {
+  border: 1px solid var(--dss-gray-200);
+}
+.dss-border-divider--strong {
+  border: 1px solid var(--dss-gray-300);
+}
+.dss {
+  /* Bordas com espessuras diferentes */
+}
+.dss-border-width-thin {
+  border-width: 1px;
+}
+.dss-border-width-medium {
+  border-width: 2px;
+}
+.dss-border-width-thick {
+  border-width: 3px;
+}
+.dss-border-width-xthick {
+  border-width: 4px;
+}
+.dss {
+  /* Bordas arredondadas por lado */
+}
+.dss-rounded-t-none {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.dss-rounded-t-sm {
+  border-top-left-radius: var(--dss-radius-sm);
+  border-top-right-radius: var(--dss-radius-sm);
+}
+.dss-rounded-t-md {
+  border-top-left-radius: var(--dss-radius-md);
+  border-top-right-radius: var(--dss-radius-md);
+}
+.dss-rounded-t-lg {
+  border-top-left-radius: var(--dss-radius-lg);
+  border-top-right-radius: var(--dss-radius-lg);
+}
+.dss-rounded-b-none {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.dss-rounded-b-sm {
+  border-bottom-left-radius: var(--dss-radius-sm);
+  border-bottom-right-radius: var(--dss-radius-sm);
+}
+.dss-rounded-b-md {
+  border-bottom-left-radius: var(--dss-radius-md);
+  border-bottom-right-radius: var(--dss-radius-md);
+}
+.dss-rounded-b-lg {
+  border-bottom-left-radius: var(--dss-radius-lg);
+  border-bottom-right-radius: var(--dss-radius-lg);
+}
+.dss-rounded-l-none {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.dss-rounded-l-sm {
+  border-top-left-radius: var(--dss-radius-sm);
+  border-bottom-left-radius: var(--dss-radius-sm);
+}
+.dss-rounded-l-md {
+  border-top-left-radius: var(--dss-radius-md);
+  border-bottom-left-radius: var(--dss-radius-md);
+}
+.dss-rounded-r-none {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.dss-rounded-r-sm {
+  border-top-right-radius: var(--dss-radius-sm);
+  border-bottom-right-radius: var(--dss-radius-sm);
+}
+.dss-rounded-r-md {
+  border-top-right-radius: var(--dss-radius-md);
+  border-bottom-right-radius: var(--dss-radius-md);
+}
+
+/* 6. Utilitarios de layout */
+/* ==========================================================================
+   DSS - UTILITÁRIOS DE LAYOUT
+   Classes para layout responsivo e grid
+   ========================================================================== */
+.dss {
+  /* Container responsivo */
+}
+.dss-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--dss-container-padding);
+  padding-right: var(--dss-container-padding);
+}
+@media (min-width: 640px) {
+  .dss-container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .dss-container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .dss-container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .dss-container {
+    max-width: 1280px;
+  }
+}
+.dss {
+  /* Grid responsivo */
+}
+.dss-grid {
+  display: grid;
+  gap: var(--dss-grid-gap-md);
+}
+.dss-grid-responsive {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+@media (min-width: 640px) {
+  .dss-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 768px) {
+  .dss-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .dss-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.dss {
+  /* Aspect ratio */
+}
+.dss-aspect-square {
+  aspect-ratio: 1/1;
+}
+.dss-aspect-video {
+  aspect-ratio: 16/9;
+}
+.dss-aspect-auto {
+  aspect-ratio: auto;
+}
+.dss {
+  /* Object fit */
+}
+.dss-object-cover {
+  object-fit: cover;
+}
+.dss-object-contain {
+  object-fit: contain;
+}
+.dss-object-fill {
+  object-fit: fill;
+}
+.dss {
+  /* Width */
+}
+.dss-w-full {
+  width: 100%;
+}
+.dss-w-screen {
+  width: 100vw;
+}
+.dss-w-auto {
+  width: auto;
+}
+.dss-w-min {
+  width: min-content;
+}
+.dss-w-max {
+  width: max-content;
+}
+.dss {
+  /* Height */
+}
+.dss-h-full {
+  height: 100%;
+}
+.dss-h-screen {
+  height: 100vh;
+}
+.dss-h-auto {
+  height: auto;
+}
+.dss-h-min {
+  height: min-content;
+}
+.dss-h-max {
+  height: max-content;
+}
+.dss {
+  /* Min/Max dimensions */
+}
+.dss-min-w-0 {
+  min-width: 0;
+}
+.dss-min-w-full {
+  min-width: 100%;
+}
+.dss-min-w-screen {
+  min-width: 100vw;
+}
+.dss-max-w-full {
+  max-width: 100%;
+}
+.dss-max-w-screen {
+  max-width: 100vw;
+}
+.dss-max-w-prose {
+  max-width: 65ch;
+}
+.dss-min-h-0 {
+  min-height: 0;
+}
+.dss-min-h-full {
+  min-height: 100%;
+}
+.dss-min-h-screen {
+  min-height: 100vh;
+}
+.dss-max-h-full {
+  max-height: 100%;
+}
+.dss-max-h-screen {
+  max-height: 100vh;
+}
+.dss {
+  /* Responsive helpers */
+}
+@media (max-width: 767px) {
+  .dss-hide-mobile {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dss-hide-tablet {
+    display: none !important;
+  }
+}
+@media (min-width: 1024px) {
+  .dss-hide-desktop {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .dss-show-mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 767px), (min-width: 1024px) {
+  .dss-show-tablet {
+    display: none !important;
+  }
+}
+@media (max-width: 1023px) {
+  .dss-show-desktop {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   NOTA: _example-showcase.scss NAO e importado aqui.
+
+   Ele deve ser importado apenas nos arquivos .example.vue
+   para evitar adicionar CSS desnecessario aos builds de producao.
+
+   Para usar em exemplos:
+   @import '@/dss/utils/example-showcase';
+   ========================================================================== */
+/* ==========================================================================
+   BASE CARD CONTAINER
+   ========================================================================== */
+.dss-card {
+  /* Reset */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* Background */
+  background-color: var(--dss-surface-default);
+  /* Border radius - usa token genérico */
+  border-radius: var(--dss-radius-lg);
+  /* Overflow */
+  overflow: hidden;
+  /* Typography inheritance */
+  color: var(--dss-text-body);
+  /* Transitions */
+  transition: all var(--dss-duration-fast) var(--dss-easing-ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dss-card {
+    transition: none;
+  }
+}
+.dss-card {
+  /* Square variant */
+}
+.dss-card.dss-card--square {
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   CARD SECTION (Content Area)
+   ========================================================================== */
+.dss-card-section {
+  /* Layout */
+  padding: var(--dss-spacing-6);
+  /* Horizontal variant */
+}
+.dss-card-section.dss-card-section--horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--dss-spacing-4);
+}
+.dss-card-section {
+  /* Typography */
+  font-size: var(--dss-font-size-base);
+  line-height: var(--dss-line-height-relaxed);
+  /* Dividers between sections */
+}
+.dss-card-section + .dss-card-section {
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+}
+
+/* ==========================================================================
+   CARD ACTIONS (Button Area)
+   ========================================================================== */
+.dss-card-actions {
+  /* Layout */
+  display: flex;
+  padding: var(--dss-spacing-4);
+  gap: var(--dss-spacing-2);
+  /* Alignment variants */
+}
+.dss-card-actions.dss-card-actions--align-left {
+  justify-content: flex-start;
+}
+.dss-card-actions.dss-card-actions--align-center {
+  justify-content: center;
+}
+.dss-card-actions.dss-card-actions--align-right {
+  justify-content: flex-end;
+}
+.dss-card-actions.dss-card-actions--align-between {
+  justify-content: space-between;
+}
+.dss-card-actions.dss-card-actions--align-around {
+  justify-content: space-around;
+}
+.dss-card-actions {
+  /* Vertical variant */
+}
+.dss-card-actions.dss-card-actions--vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+.dss-card-actions {
+  /* Divider above actions */
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+}
+
+/* Layer 3: Variants */
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Index)
+
+   Importa todas as variantes do card
+   ========================================================================== */
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Elevated)
+
+   Responsabilidade: Variante com elevação (padrão do Quasar)
+   Usa tokens genéricos de elevation
+   ========================================================================== */
+.dss-card--elevated {
+  /* Elevation padrão */
+  box-shadow: var(--dss-elevation-1);
+  /* Hover elevation (se clickable) */
+}
+.dss-card--elevated.dss-card--clickable:hover {
+  box-shadow: var(--dss-elevation-2);
+  cursor: pointer;
+}
+.dss-card--elevated {
+  /* Active state */
+}
+.dss-card--elevated.dss-card--clickable:active {
+  box-shadow: var(--dss-shadow-active);
+}
+
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Flat)
+
+   Responsabilidade: Variante sem elevação
+   ========================================================================== */
+.dss-card--flat {
+  /* Remove elevation */
+  box-shadow: none;
+  /* Hover state (se clickable) */
+}
+.dss-card--flat.dss-card--clickable:hover {
+  background-color: var(--dss-surface-hover);
+  cursor: pointer;
+}
+.dss-card--flat {
+  /* Active state */
+}
+.dss-card--flat.dss-card--clickable:active {
+  background-color: var(--dss-surface-active);
+}
+
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Bordered)
+
+   Responsabilidade: Variante com borda + elevação
+   ========================================================================== */
+.dss-card--bordered {
+  /* Border */
+  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
+  /* Elevation mantida */
+  box-shadow: var(--dss-elevation-1);
+  /* Hover */
+}
+.dss-card--bordered.dss-card--clickable:hover {
+  border-color: var(--dss-gray-400);
+  box-shadow: var(--dss-elevation-2);
+  cursor: pointer;
+}
+.dss-card--bordered {
+  /* Active */
+}
+.dss-card--bordered.dss-card--clickable:active {
+  border-color: var(--dss-action-primary);
+  box-shadow: var(--dss-shadow-active);
+}
+
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Outlined)
+
+   Responsabilidade: Variante com borda SEM elevação
+   ========================================================================== */
+.dss-card--outlined {
+  /* Border apenas */
+  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
+  /* No elevation */
+  box-shadow: none;
+  /* Hover */
+}
+.dss-card--outlined.dss-card--clickable:hover {
+  border-color: var(--dss-action-primary);
+  background-color: rgba(var(--dss-action-primary-rgb), 0.05);
+  cursor: pointer;
+}
+.dss-card--outlined {
+  /* Active */
+}
+.dss-card--outlined.dss-card--clickable:active {
+  border-color: var(--dss-action-primary-deep);
+  background-color: rgba(var(--dss-action-primary-rgb), 0.1);
+}
+
+/* Layer 4: Output */
+/* ==========================================================================
+   DssCard - LAYER 4: OUTPUT (Index)
+
+   Orquestrador final - importa todas as camadas
+   ========================================================================== */
+/* ==========================================================================
+   DssCard - LAYER 4: OUTPUT (States)
+
+   Responsabilidade: Estados especiais (dark mode, disabled, loading)
+   ========================================================================== */
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+.dss-card--dark,
+[data-theme=dark] .dss-card {
+  background-color: var(--dss-surface-dark);
+  color: var(--dss-text-inverse);
+  /* Section dividers */
+}
+.dss-card--dark .dss-card-section + .dss-card-section,
+.dss-card--dark .dss-card-actions,
+[data-theme=dark] .dss-card .dss-card-section + .dss-card-section,
+[data-theme=dark] .dss-card .dss-card-actions {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.dss-card--dark,
+[data-theme=dark] .dss-card {
+  /* Bordered variant em dark mode */
+}
+.dss-card--dark.dss-card--bordered, .dss-card--dark.dss-card--outlined,
+[data-theme=dark] .dss-card.dss-card--bordered,
+[data-theme=dark] .dss-card.dss-card--outlined {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.dss-card--dark.dss-card--bordered.dss-card--clickable:hover, .dss-card--dark.dss-card--outlined.dss-card--clickable:hover,
+[data-theme=dark] .dss-card.dss-card--bordered.dss-card--clickable:hover,
+[data-theme=dark] .dss-card.dss-card--outlined.dss-card--clickable:hover {
+  border-color: var(--dss-action-primary);
+}
+
+/* ==========================================================================
+   FOCUS STATE (para cards clickable acessíveis)
+   ========================================================================== */
+.dss-card--clickable {
+  /* Tornar focusável via teclado */
+}
+.dss-card--clickable[tabindex="0"]:focus-visible {
+  outline: none;
+  box-shadow: var(--dss-focus-shadow-primary);
+}
+
+/* ==========================================================================
+   LOADING STATE (opcional)
+   ========================================================================== */
+.dss-card--loading {
+  position: relative;
+  pointer-events: none;
+}
+.dss-card--loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dark mode loading */
+[data-theme=dark] .dss-card--loading::after {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   DssCard - LAYER 4: OUTPUT (Brands)
+
+   Responsabilidade: Variações de marca (Hub, Water, Waste)
+   Usa tokens genéricos de brand
+   ========================================================================== */
+/* ==========================================================================
+   HUB BRAND (Laranja)
+   ========================================================================== */
+[data-brand=hub] .dss-card--brand-hub,
+.dss-card--brand-hub {
+  /* Borda com cor da marca */
+  border-left: var(--dss-border-width-thick) solid var(--dss-hub-600);
+  /* Variante bordered */
+}
+[data-brand=hub] .dss-card--brand-hub.dss-card--bordered, [data-brand=hub] .dss-card--brand-hub.dss-card--outlined,
+.dss-card--brand-hub.dss-card--bordered,
+.dss-card--brand-hub.dss-card--outlined {
+  border-color: var(--dss-hub-300);
+  border-left-color: var(--dss-hub-600);
+}
+[data-brand=hub] .dss-card--brand-hub.dss-card--bordered.dss-card--clickable:hover, [data-brand=hub] .dss-card--brand-hub.dss-card--outlined.dss-card--clickable:hover,
+.dss-card--brand-hub.dss-card--bordered.dss-card--clickable:hover,
+.dss-card--brand-hub.dss-card--outlined.dss-card--clickable:hover {
+  border-color: var(--dss-hub-400);
+  border-left-color: var(--dss-hub-700);
+}
+[data-brand=hub] .dss-card--brand-hub,
+.dss-card--brand-hub {
+  /* Background sutil da marca */
+}
+[data-brand=hub] .dss-card--brand-hub .dss-card-section:first-child,
+.dss-card--brand-hub .dss-card-section:first-child {
+  background-color: rgba(var(--dss-hub-primary-rgb), 0.05);
+}
+
+/* ==========================================================================
+   WATER BRAND (Azul)
+   ========================================================================== */
+[data-brand=water] .dss-card--brand-water,
+.dss-card--brand-water {
+  /* Borda com cor da marca */
+  border-left: var(--dss-border-width-thick) solid var(--dss-water-500);
+  /* Variante bordered */
+}
+[data-brand=water] .dss-card--brand-water.dss-card--bordered, [data-brand=water] .dss-card--brand-water.dss-card--outlined,
+.dss-card--brand-water.dss-card--bordered,
+.dss-card--brand-water.dss-card--outlined {
+  border-color: var(--dss-water-200);
+  border-left-color: var(--dss-water-500);
+}
+[data-brand=water] .dss-card--brand-water.dss-card--bordered.dss-card--clickable:hover, [data-brand=water] .dss-card--brand-water.dss-card--outlined.dss-card--clickable:hover,
+.dss-card--brand-water.dss-card--bordered.dss-card--clickable:hover,
+.dss-card--brand-water.dss-card--outlined.dss-card--clickable:hover {
+  border-color: var(--dss-water-300);
+  border-left-color: var(--dss-water-600);
+}
+[data-brand=water] .dss-card--brand-water,
+.dss-card--brand-water {
+  /* Background sutil da marca */
+}
+[data-brand=water] .dss-card--brand-water .dss-card-section:first-child,
+.dss-card--brand-water .dss-card-section:first-child {
+  background-color: rgba(var(--dss-water-primary-rgb), 0.05);
+}
+
+/* ==========================================================================
+   WASTE BRAND (Verde)
+   ========================================================================== */
+[data-brand=waste] .dss-card--brand-waste,
+.dss-card--brand-waste {
+  /* Borda com cor da marca */
+  border-left: var(--dss-border-width-thick) solid var(--dss-waste-600);
+  /* Variante bordered */
+}
+[data-brand=waste] .dss-card--brand-waste.dss-card--bordered, [data-brand=waste] .dss-card--brand-waste.dss-card--outlined,
+.dss-card--brand-waste.dss-card--bordered,
+.dss-card--brand-waste.dss-card--outlined {
+  border-color: var(--dss-waste-200);
+  border-left-color: var(--dss-waste-600);
+}
+[data-brand=waste] .dss-card--brand-waste.dss-card--bordered.dss-card--clickable:hover, [data-brand=waste] .dss-card--brand-waste.dss-card--outlined.dss-card--clickable:hover,
+.dss-card--brand-waste.dss-card--bordered.dss-card--clickable:hover,
+.dss-card--brand-waste.dss-card--outlined.dss-card--clickable:hover {
+  border-color: var(--dss-waste-300);
+  border-left-color: var(--dss-waste-700);
+}
+[data-brand=waste] .dss-card--brand-waste,
+.dss-card--brand-waste {
+  /* Background sutil da marca */
+}
+[data-brand=waste] .dss-card--brand-waste .dss-card-section:first-child,
+.dss-card--brand-waste .dss-card-section:first-child {
+  background-color: rgba(var(--dss-waste-primary-rgb), 0.05);
+}
+
+/* ==========================================================================
+   DARK MODE - BRAND ADJUSTMENTS
+   ========================================================================== */
+[data-theme=dark] .dss-card--brand-hub {
+  border-left-color: var(--dss-hub-400);
+}
+[data-theme=dark] .dss-card--brand-water {
+  border-left-color: var(--dss-water-400);
+}
+[data-theme=dark] .dss-card--brand-waste {
+  border-left-color: var(--dss-waste-500); /* Mais claro em dark mode */
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dss-card {
+    border: var(--dss-border-width-md) solid currentColor;
+  }
+}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-card {
+    transition: none;
+  }
+}

@@ -1,0 +1,38 @@
+/* ==========================================================================
+   DSS - UTILS INDEX
+   Entry point para todos os utilitarios
+   ========================================================================== */
+
+/* 1. Funcoes Sass */
+@import 'functions';
+
+/* 2. Mixins principais */
+@import 'mixins';
+
+/* 3. Mixins de acessibilidade avancada */
+@import 'accessibility-mixins';
+
+/* 4. Classes utilitarias */
+@import 'helpers';
+
+/* 5. Classes utilitarias de cores (padrão Quasar) */
+@import 'colors';
+
+/* 5.1. Estados de hover para classes utilitarias de cores */
+@import 'colors-hover';
+
+/* 6. Utilitarios especificos de borda */
+@import 'border-helpers';
+
+/* 7. Utilitarios de layout */
+@import 'layout-helpers';
+
+/* ==========================================================================
+   NOTA: _example-showcase.scss NAO e importado aqui.
+
+   Ele deve ser importado apenas nos arquivos .example.vue
+   para evitar adicionar CSS desnecessario aos builds de producao.
+
+   Para usar em exemplos:
+   @import '@/dss/utils/example-showcase';
+   ========================================================================== */

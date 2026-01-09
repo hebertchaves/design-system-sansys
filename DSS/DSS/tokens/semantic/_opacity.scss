@@ -1,0 +1,47 @@
+/* ==========================================================================
+   DSS - TOKENS DE OPACIDADE
+   Sistema padronizado para transparências
+   ========================================================================== */
+
+:root {
+  /* Escala de opacidade (0-100) */
+  --dss-opacity-0: 0;
+  --dss-opacity-5: 0.05;
+  --dss-opacity-10: 0.1;
+  --dss-opacity-15: 0.15;
+  --dss-opacity-20: 0.2;
+  --dss-opacity-25: 0.25;
+  --dss-opacity-30: 0.3;
+  --dss-opacity-35: 0.35;
+  --dss-opacity-40: 0.4;
+  --dss-opacity-45: 0.45;
+  --dss-opacity-50: 0.5;
+  --dss-opacity-55: 0.55;
+  --dss-opacity-60: 0.6;
+  --dss-opacity-65: 0.65;
+  --dss-opacity-70: 0.7;
+  --dss-opacity-75: 0.75;
+  --dss-opacity-80: 0.8;
+  --dss-opacity-85: 0.85;
+  --dss-opacity-90: 0.9;
+  --dss-opacity-95: 0.95;
+  --dss-opacity-100: 1;
+  
+  /* Opacidades semânticas */
+  --dss-opacity-disabled: var(--dss-opacity-40);
+  --dss-opacity-hover: var(--dss-opacity-10);
+  --dss-opacity-active: var(--dss-opacity-20);
+  --dss-opacity-selected: var(--dss-opacity-15);
+  --dss-opacity-overlay: var(--dss-opacity-50);
+  --dss-opacity-backdrop: var(--dss-opacity-75);
+  
+  /* Opacidades para overlays de marca */
+  --dss-opacity-brand-subtle: var(--dss-opacity-8);
+  --dss-opacity-brand-light: var(--dss-opacity-12);
+  --dss-opacity-brand-medium: var(--dss-opacity-16);
+  --dss-opacity-brand-strong: var(--dss-opacity-24);
+  
+  /* Funções de utilidade (para referência) */
+  --dss-opacity-function-hover: "opacity: var(--dss-opacity-hover)";
+  --dss-opacity-function-disabled: "opacity: var(--dss-opacity-disabled)";
+}

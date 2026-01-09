@@ -1,0 +1,21 @@
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Flat)
+
+   Responsabilidade: Variante sem elevação
+   ========================================================================== */
+
+.dss-card--flat {
+  /* Remove elevation */
+  box-shadow: none;
+
+  /* Hover state (se clickable) */
+  &.dss-card--clickable:hover {
+    background-color: var(--dss-surface-hover);
+    cursor: pointer;
+  }
+
+  /* Active state */
+  &.dss-card--clickable:active {
+    background-color: var(--dss-surface-active);
+  }
+}

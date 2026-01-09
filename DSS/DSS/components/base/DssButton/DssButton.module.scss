@@ -1,0 +1,24 @@
+@use './2-composition/base' as composition;
+@use './3-variants' as variants;
+@use './4-output' as output;
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dss-button {
+    border-width: var(--dss-border-width-md) !important;
+    font-weight: 600;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-button,
+  .dss-button * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

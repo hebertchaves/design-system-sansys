@@ -1,0 +1,314 @@
+/* ==========================================================================
+   DSS - TOKENS DE BREAKPOINTS
+   Sistema de responsividade baseado em Quasar Framework
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     BREAKPOINTS PRINCIPAIS
+     Baseado em Quasar v2 e Material Design
+     =========================================== */
+
+  /* Extra Small (Mobile Portrait) */
+  --dss-breakpoint-xs: 0px;
+  --dss-breakpoint-xs-min: 0px;
+  --dss-breakpoint-xs-max: 599px;
+
+  /* Small (Mobile Landscape / Tablet Portrait) */
+  --dss-breakpoint-sm: 600px;
+  --dss-breakpoint-sm-min: 600px;
+  --dss-breakpoint-sm-max: 1023px;
+
+  /* Medium (Tablet Landscape / Desktop Small) */
+  --dss-breakpoint-md: 1024px;
+  --dss-breakpoint-md-min: 1024px;
+  --dss-breakpoint-md-max: 1439px;
+
+  /* Large (Desktop) */
+  --dss-breakpoint-lg: 1440px;
+  --dss-breakpoint-lg-min: 1440px;
+  --dss-breakpoint-lg-max: 1919px;
+
+  /* Extra Large (Large Desktop / 4K) */
+  --dss-breakpoint-xl: 1920px;
+  --dss-breakpoint-xl-min: 1920px;
+
+  /* ===========================================
+     BREAKPOINTS DE ZOOM (WCAG 2.1 AA)
+     Para suporte a zoom 200%/300%
+     =========================================== */
+
+  /* Zoom 200% - Elementos devem se adaptar */
+  --dss-breakpoint-zoom-200: calc(var(--dss-breakpoint-md) * 0.5);  /* ~512px */
+
+  /* Zoom 300% - Elementos devem se adaptar */
+  --dss-breakpoint-zoom-300: calc(var(--dss-breakpoint-md) * 0.33); /* ~341px */
+
+  /* ===========================================
+     CONTAINER MAX-WIDTH
+     Larguras máximas por breakpoint
+     =========================================== */
+
+  --dss-container-xs: 100%;
+  --dss-container-sm: 600px;
+  --dss-container-md: 1024px;
+  --dss-container-lg: 1440px;
+  --dss-container-xl: 1920px;
+
+  /* ===========================================
+     GUTTER / SPACING POR BREAKPOINT
+     Espaçamento lateral responsivo
+     =========================================== */
+
+  --dss-gutter-xs: var(--dss-spacing-4, 16px);  /* 16px */
+  --dss-gutter-sm: var(--dss-spacing-6, 24px);  /* 24px */
+  --dss-gutter-md: var(--dss-spacing-8, 32px);  /* 32px */
+  --dss-gutter-lg: var(--dss-spacing-10, 40px); /* 40px */
+  --dss-gutter-xl: var(--dss-spacing-12, 48px); /* 48px */
+
+  /* ===========================================
+     ORIENTAÇÃO
+     Tokens para landscape/portrait
+     =========================================== */
+
+  --dss-orientation-portrait: portrait;
+  --dss-orientation-landscape: landscape;
+}
+
+/* ===========================================
+   MIXINS SASS PARA BREAKPOINTS
+   Uso: @include dss-breakpoint-up('md') { ... }
+   =========================================== */
+
+/**
+ * Breakpoint maior ou igual (mobile-first)
+ * @param {string} $size - xs, sm, md, lg, xl
+ */
+@mixin dss-breakpoint-up($size) {
+  @if $size == 'xs' {
+    @media (min-width: 0px) {
+      @content;
+    }
+  } @else if $size == 'sm' {
+    @media (min-width: 600px) {
+      @content;
+    }
+  } @else if $size == 'md' {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  } @else if $size == 'lg' {
+    @media (min-width: 1440px) {
+      @content;
+    }
+  } @else if $size == 'xl' {
+    @media (min-width: 1920px) {
+      @content;
+    }
+  }
+}
+
+/**
+ * Breakpoint menor ou igual (desktop-first)
+ * @param {string} $size - xs, sm, md, lg, xl
+ */
+@mixin dss-breakpoint-down($size) {
+  @if $size == 'xs' {
+    @media (max-width: 599px) {
+      @content;
+    }
+  } @else if $size == 'sm' {
+    @media (max-width: 1023px) {
+      @content;
+    }
+  } @else if $size == 'md' {
+    @media (max-width: 1439px) {
+      @content;
+    }
+  } @else if $size == 'lg' {
+    @media (max-width: 1919px) {
+      @content;
+    }
+  } @else if $size == 'xl' {
+    @media (min-width: 0px) { // Sempre aplica
+      @content;
+    }
+  }
+}
+
+/**
+ * Breakpoint entre dois tamanhos (range)
+ * @param {string} $min - xs, sm, md, lg, xl
+ * @param {string} $max - xs, sm, md, lg, xl
+ */
+@mixin dss-breakpoint-between($min, $max) {
+  $min-value: 0px;
+  $max-value: 9999px;
+
+  @if $min == 'xs' { $min-value: 0px; }
+  @if $min == 'sm' { $min-value: 600px; }
+  @if $min == 'md' { $min-value: 1024px; }
+  @if $min == 'lg' { $min-value: 1440px; }
+  @if $min == 'xl' { $min-value: 1920px; }
+
+  @if $max == 'xs' { $max-value: 599px; }
+  @if $max == 'sm' { $max-value: 1023px; }
+  @if $max == 'md' { $max-value: 1439px; }
+  @if $max == 'lg' { $max-value: 1919px; }
+  @if $max == 'xl' { $max-value: 9999px; }
+
+  @media (min-width: #{$min-value}) and (max-width: #{$max-value}) {
+    @content;
+  }
+}
+
+/**
+ * Breakpoint apenas para um tamanho específico
+ * @param {string} $size - xs, sm, md, lg, xl
+ */
+@mixin dss-breakpoint-only($size) {
+  @if $size == 'xs' {
+    @media (max-width: 599px) {
+      @content;
+    }
+  } @else if $size == 'sm' {
+    @media (min-width: 600px) and (max-width: 1023px) {
+      @content;
+    }
+  } @else if $size == 'md' {
+    @media (min-width: 1024px) and (max-width: 1439px) {
+      @content;
+    }
+  } @else if $size == 'lg' {
+    @media (min-width: 1440px) and (max-width: 1919px) {
+      @content;
+    }
+  } @else if $size == 'xl' {
+    @media (min-width: 1920px) {
+      @content;
+    }
+  }
+}
+
+/**
+ * Orientação do dispositivo
+ * @param {string} $orientation - portrait, landscape
+ */
+@mixin dss-orientation($orientation) {
+  @if $orientation == 'portrait' {
+    @media (orientation: portrait) {
+      @content;
+    }
+  } @else if $orientation == 'landscape' {
+    @media (orientation: landscape) {
+      @content;
+    }
+  }
+}
+
+/**
+ * Touch device (sem mouse preciso)
+ */
+@mixin dss-touch-device {
+  @media (hover: none) and (pointer: coarse) {
+    @content;
+  }
+}
+
+/**
+ * Desktop (com mouse preciso)
+ */
+@mixin dss-desktop-device {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+/**
+ * High DPI / Retina displays
+ */
+@mixin dss-retina {
+  @media (-webkit-min-device-pixel-ratio: 2),
+         (min-resolution: 192dpi) {
+    @content;
+  }
+}
+
+/* ===========================================
+   EXEMPLOS DE USO
+   =========================================== */
+
+/*
+// Mobile-first approach (recomendado)
+.my-component {
+  padding: var(--dss-spacing-2);
+
+  @include dss-breakpoint-up('sm') {
+    padding: var(--dss-spacing-4);
+  }
+
+  @include dss-breakpoint-up('md') {
+    padding: var(--dss-spacing-6);
+  }
+
+  @include dss-breakpoint-up('lg') {
+    padding: var(--dss-spacing-8);
+  }
+}
+
+// Desktop-first approach
+.my-component {
+  font-size: 18px;
+
+  @include dss-breakpoint-down('md') {
+    font-size: 16px;
+  }
+
+  @include dss-breakpoint-down('sm') {
+    font-size: 14px;
+  }
+}
+
+// Range específico (tablet)
+.tablet-only {
+  @include dss-breakpoint-between('sm', 'md') {
+    display: block;
+  }
+}
+
+// Apenas mobile
+.mobile-only {
+  @include dss-breakpoint-only('xs') {
+    display: block;
+  }
+}
+
+// Orientação
+.landscape-view {
+  @include dss-orientation('landscape') {
+    flex-direction: row;
+  }
+}
+
+// Touch vs Desktop
+.interactive-element {
+  @include dss-touch-device {
+    // Aumentar área de toque
+    padding: var(--dss-spacing-4);
+  }
+
+  @include dss-desktop-device {
+    // Área menor para mouse preciso
+    padding: var(--dss-spacing-2);
+  }
+}
+
+// Retina displays
+.icon {
+  background-image: url('icon.png');
+
+  @include dss-retina {
+    background-image: url('icon@2x.png');
+  }
+}
+*/

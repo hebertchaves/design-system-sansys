@@ -1,0 +1,540 @@
+/* ==========================================================================
+   DSS - UTILITÁRIOS ESPECÍFICOS PARA QUASAR
+   Classes helper para uso com componentes Quasar
+   ========================================================================== */
+
+/* ===========================================
+   1. CLASSES DE CONTEXTUALIZAÇÃO DE MARCA
+   =========================================== */
+
+/* Aplicar tokens de marca em qualquer componente */
+.dss-brand-hub {
+  --quasar-primary: var(--dss-brand-primary) !important;
+  --quasar-primary-hover: var(--dss-brand-primary-hover) !important;
+  
+  &.q-btn--primary {
+    background-color: var(--dss-brand-primary) !important;
+    
+    &:hover:not(.disabled):not([disabled]) {
+      background-color: var(--dss-brand-primary-hover) !important;
+    }
+  }
+}
+
+.dss-brand-water {
+  --quasar-primary: var(--dss-brand-primary) !important;
+  --quasar-primary-hover: var(--dss-brand-primary-hover) !important;
+}
+
+.dss-brand-waste {
+  --quasar-primary: var(--dss-brand-primary) !important;
+  --quasar-primary-hover: var(--dss-brand-primary-hover) !important;
+}
+
+/* Forçar modo semantic (ignorar brand context) */
+.dss-mode-semantic {
+  --quasar-primary: var(--dss-action-primary) !important;
+  --quasar-primary-hover: var(--dss-action-primary-hover) !important;
+  --quasar-secondary: var(--dss-action-secondary) !important;
+  --quasar-accent: var(--dss-action-accent) !important;
+}
+
+/* ===========================================
+   2. CLASSES DE ACESSIBILIDADE ESPECÍFICAS
+   =========================================== */
+
+/* Skip link para Quasar apps */
+.q-app .dss-skip-to-content {
+  @include dss-visually-hidden;
+  
+  &:focus {
+    position: fixed;
+    top: var(--dss-spacing-2);
+    left: var(--dss-spacing-2);
+    z-index: var(--dss-z-index-maximum);
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    background-color: var(--dss-surface-default);
+    color: var(--dss-text-body);
+    border: var(--dss-border-gray-300);
+    border-radius: var(--dss-radius-md);
+    box-shadow: var(--dss-shadow-lg);
+    text-decoration: none;
+    @include dss-focus-ring('primary');
+  }
+}
+
+/* High contrast utilities */
+.dss-high-contrast {
+  @media (prefers-contrast: high) {
+    .q-btn {
+      border: 2px solid currentColor !important;
+    }
+    
+    .q-field--focused {
+      outline: 3px solid var(--dss-action-primary) !important;
+      outline-offset: 2px !important;
+    }
+    
+    .q-tab--active {
+      text-decoration: underline !important;
+      text-underline-offset: 4px !important;
+    }
+  }
+}
+
+/* Reduced motion utilities */
+.dss-reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    .q-btn,
+    .q-card,
+    .q-tab,
+    .q-item,
+    .q-table tr {
+      transition: none !important;
+    }
+    
+    .q-spinner,
+    .q-linear-progress__model {
+      animation: none !important;
+    }
+    
+    .q-menu,
+    .q-dialog {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+/* ===========================================
+   3. CLASSES DE LAYOUT PARA APPS QUASAR
+   =========================================== */
+
+/* Container principal da app */
+.dss-app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+  .q-header {
+    flex-shrink: 0;
+  }
+  
+  .q-page-container {
+    flex: 1 0 auto;
+  }
+  
+  .q-footer {
+    flex-shrink: 0;
+  }
+}
+
+/* Sidebar acessível */
+.dss-sidebar-accessible {
+  .q-drawer {
+    width: 280px !important;
+    
+    .q-list {
+      padding: var(--dss-spacing-4) 0;
+      
+      .q-item {
+        min-height: var(--dss-touch-target-min);
+        padding: var(--dss-spacing-3) var(--dss-spacing-4);
+        
+        .q-icon {
+          margin-right: var(--dss-spacing-3);
+          font-size: 1.25em;
+        }
+        
+        .q-item__label {
+          font-size: var(--dss-font-size-base);
+          font-weight: var(--dss-font-weight-medium);
+        }
+        
+        &--active {
+          background-color: var(--dss-surface-selected);
+          color: var(--quasar-primary);
+          font-weight: var(--dss-font-weight-semibold);
+          
+          .q-icon {
+            color: var(--quasar-primary);
+          }
+        }
+        
+        &:hover:not(.q-item--active) {
+          background-color: var(--dss-surface-hover);
+        }
+        
+        &:focus-visible {
+          @include dss-focus-ring('primary');
+        }
+      }
+      
+      .q-separator {
+        margin: var(--dss-spacing-2) var(--dss-spacing-4);
+        background-color: var(--dss-border-gray-200);
+      }
+    }
+  }
+}
+
+/* ===========================================
+   4. CLASSES PARA FORMULÁRIOS COMPLEXOS
+   =========================================== */
+
+.dss-form-group {
+  margin-bottom: var(--dss-spacing-6);
+  
+  &__label {
+    display: block;
+    font-weight: var(--dss-font-weight-semibold);
+    color: var(--dss-text-body);
+    margin-bottom: var(--dss-spacing-2);
+    font-size: var(--dss-font-size-base);
+    
+    &.required::after {
+      content: ' *';
+      color: var(--dss-negative);
+    }
+  }
+  
+  &__help {
+    display: block;
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-subtle);
+    margin-top: var(--dss-spacing-1);
+    line-height: var(--dss-line-height-sm);
+  }
+  
+  &__error {
+    display: block;
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-negative);
+    margin-top: var(--dss-spacing-1);
+    line-height: var(--dss-line-height-sm);
+  }
+  
+  &--error {
+    .q-field__control:before {
+      border-color: var(--dss-negative) !important; /* refatoração Jan 2025 Sprint 2 */
+    }
+  }
+
+  &--success {
+    .q-field__control:before {
+      border-color: var(--dss-positive) !important; /* refatoração Jan 2025 Sprint 2 */
+    }
+  }
+}
+
+/* ===========================================
+   5. CLASSES PARA DATA TABLES
+   =========================================== */
+
+.dss-data-table {
+  .q-table {
+    &__container {
+      border: var(--dss-border-gray-200);
+      border-radius: var(--dss-radius-md);
+      overflow: hidden;
+    }
+    
+    thead tr {
+      background-color: var(--dss-surface-subtle);
+      
+      th {
+        font-weight: var(--dss-font-weight-semibold);
+        color: var(--dss-text-body);
+        border-bottom: var(--dss-border-gray-300);
+      }
+    }
+    
+    tbody tr {
+      &:nth-child(even) {
+        background-color: var(--dss-surface-subtle);
+      }
+      
+      &:hover {
+        background-color: var(--dss-surface-hover);
+      }
+      
+      &.selected {
+        background-color: var(--dss-surface-selected);
+      }
+    }
+  }
+  
+  &--striped {
+    .q-table tbody tr:nth-child(odd) {
+      background-color: var(--dss-surface-subtle);
+    }
+  }
+  
+  &--compact {
+    .q-table {
+      th, td {
+        padding: var(--dss-spacing-2) !important;
+        font-size: var(--dss-font-size-sm) !important;
+      }
+    }
+  }
+}
+
+/* ===========================================
+   6. CLASSES PARA CARDS
+   =========================================== */
+
+.dss-card {
+  @include dss-card;
+  
+  &-header {
+    padding: var(--dss-spacing-6); /* refatoração Jan 2025 Sprint 1 */
+    border-bottom: 1px solid var(--dss-gray-200); /* refatoração Jan 2025 Sprint 2 */
+    
+    &__title {
+      font-size: var(--dss-heading-4-size);
+      font-weight: var(--dss-font-weight-semibold);
+      color: var(--dss-text-body);
+      margin: 0;
+    }
+    
+    &__subtitle {
+      font-size: var(--dss-font-size-sm);
+      color: var(--dss-text-subtle);
+      margin-top: var(--dss-spacing-1);
+    }
+  }
+  
+  &-body {
+    padding: var(--dss-spacing-6); /* refatoração Jan 2025 Sprint 1 */
+  }
+
+  &-footer {
+    padding: var(--dss-spacing-4) var(--dss-spacing-6); /* refatoração Jan 2025 Sprint 1 */
+    border-top: 1px solid var(--dss-gray-200); /* refatoração Jan 2025 Sprint 2 */
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--dss-spacing-2);
+  }
+  
+  /* Variantes */
+  &--brand-hub {
+    border-color: var(--dss-border-hub-100);
+    background-color: var(--dss-surface-brand-subtle);
+  }
+  
+  &--brand-water {
+    border-color: var(--dss-border-water-100);
+  }
+  
+  &--brand-waste {
+    border-color: var(--dss-border-waste-100);
+  }
+  
+  &--elevated {
+    box-shadow: var(--dss-elevation-2); /* refatoração Jan 2025 Sprint 3 */
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--dss-elevation-3);
+    }
+  }
+}
+
+/* ===========================================
+   7. CLASSES PARA ALERTS E NOTIFICAÇÕES
+   =========================================== */
+
+.dss-alert {
+  padding: var(--dss-spacing-4);
+  border-radius: var(--dss-radius-md);
+  margin-bottom: var(--dss-spacing-4);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dss-spacing-3);
+  
+  &__icon {
+    flex-shrink: 0;
+    font-size: 1.5em;
+    margin-top: 0.125em;
+  }
+  
+  &__content {
+    flex: 1;
+    
+    &-title {
+      font-size: var(--dss-font-size-base);
+      font-weight: var(--dss-font-weight-semibold);
+      margin: 0 0 var(--dss-spacing-1) 0;
+    }
+    
+    &-message {
+      font-size: var(--dss-font-size-base);
+      line-height: var(--dss-line-height-base);
+      margin: 0;
+    }
+  }
+  
+  &__actions {
+    flex-shrink: 0;
+    margin-top: var(--dss-spacing-2);
+  }
+  
+  /* Variantes */
+  &--info {
+    background-color: var(--dss-feedback-info-surface);
+    color: var(--dss-text-info);
+    border-left: 4px solid var(--dss-feedback-info);
+  }
+  
+  &--success {
+    background-color: var(--dss-feedback-success-surface);
+    color: var(--dss-text-success);
+    border-left: 4px solid var(--dss-feedback-success);
+  }
+  
+  &--warning {
+    background-color: var(--dss-feedback-warning-surface);
+    color: var(--dss-text-warning);
+    border-left: 4px solid var(--dss-feedback-warning);
+  }
+  
+  &--error {
+    background-color: var(--dss-feedback-error-surface);
+    color: var(--dss-text-error);
+    border-left: 4px solid var(--dss-feedback-error);
+  }
+  
+  /* Tamanhos */
+  &--sm {
+    padding: var(--dss-spacing-3);
+    font-size: var(--dss-font-size-sm);
+  }
+  
+  &--lg {
+    padding: var(--dss-spacing-6);
+    
+    .dss-alert__icon {
+      font-size: 2em;
+    }
+  }
+}
+
+/* ===========================================
+   8. CLASSES PARA BREADCRUMBS
+   =========================================== */
+
+.dss-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--dss-spacing-1);
+  margin-bottom: var(--dss-spacing-4);
+  
+  &__item {
+    display: flex;
+    align-items: center;
+    color: var(--dss-text-subtle);
+    font-size: var(--dss-font-size-sm);
+    
+    &:not(:last-child)::after {
+      content: '/';
+      margin: 0 var(--dss-spacing-1);
+      color: var(--dss-text-muted);
+    }
+    
+    a {
+      color: var(--dss-text-action);
+      text-decoration: none;
+      
+      &:hover {
+        color: var(--dss-text-action-hover);
+        text-decoration: underline;
+      }
+      
+      &:focus-visible {
+        @include dss-focus-ring('primary');
+        border-radius: var(--dss-radius-sm);
+      }
+    }
+    
+    &--current {
+      color: var(--dss-text-body);
+      font-weight: var(--dss-font-weight-medium);
+      
+      a {
+        color: inherit;
+        text-decoration: none;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+/* ===========================================
+   9. CLASSES PARA PAGINAÇÃO
+   =========================================== */
+
+.dss-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dss-spacing-1);
+  margin-top: var(--dss-spacing-6);
+  
+  &__item {
+    min-width: var(--dss-touch-target-min);
+    min-height: var(--dss-touch-target-min);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--dss-radius-md);
+    color: var(--dss-text-body);
+    font-size: var(--dss-font-size-base);
+    font-weight: var(--dss-font-weight-medium);
+    text-decoration: none;
+    transition: all var(--dss-transition-fast);
+    
+    &:hover:not(.disabled):not(.active) {
+      background-color: var(--dss-surface-hover);
+    }
+    
+    &:focus-visible {
+      @include dss-focus-ring('primary');
+    }
+    
+    &--active {
+      background-color: var(--dss-action-primary);
+      color: white;
+      font-weight: var(--dss-font-weight-semibold);
+      
+      &:hover {
+        background-color: var(--dss-action-primary-hover);
+      }
+    }
+    
+    &--disabled {
+      opacity: var(--dss-opacity-disabled);
+      cursor: not-allowed;
+      
+      &:hover {
+        background-color: transparent;
+      }
+    }
+    
+    &--ellipsis {
+      pointer-events: none;
+      color: var(--dss-text-muted);
+    }
+    
+    .q-icon {
+      font-size: 1.25em;
+    }
+  }
+  
+  &__info {
+    margin-left: var(--dss-spacing-4);
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-subtle);
+  }
+}

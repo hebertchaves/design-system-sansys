@@ -1,0 +1,132 @@
+/* ==========================================================================
+   DssInput - LAYER 4: OUTPUT - Brands
+
+   RESPONSABILIDADE: Brandability (Hub, Water, Waste)
+
+   CARACTERÍSTICAS:
+   - Usa tokens genéricos de brand (--dss-hub-*, --dss-water-*, etc.)
+   - Apenas accent color no focus
+   - Mantém estrutura visual da variante
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Orange)
+   ========================================================================== */
+
+[data-brand="hub"],
+.dss-input--brand-hub {
+  &.dss-input--filled.dss-input--focused .dss-input__field {
+    border-bottom-color: var(--dss-hub-600);
+    box-shadow: 0 1px 0 0 var(--dss-hub-600);
+  }
+
+  &.dss-input--outlined.dss-input--focused .dss-input__field {
+    border-color: var(--dss-hub-600);
+    box-shadow: 0 0 0 1px var(--dss-hub-600);
+  }
+
+  &.dss-input--standout.dss-input--focused .dss-input__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
+  }
+
+  &.dss-input--borderless.dss-input--focused .dss-input__field {
+    border-bottom-color: var(--dss-hub-600);
+    box-shadow: 0 1px 0 0 var(--dss-hub-600);
+  }
+
+  /* Label color on focus */
+  &.dss-input--focused .dss-input__label {
+    color: var(--dss-hub-700);
+  }
+
+  /* Error state mantém erro, não brand */
+  &.dss-input--error .dss-input__field {
+    /* Deixa o error-600 prevalecer */
+  }
+}
+
+/* ==========================================================================
+   WATER BRAND (Blue)
+   ========================================================================== */
+
+[data-brand="water"],
+.dss-input--brand-water {
+  &.dss-input--filled.dss-input--focused .dss-input__field {
+    border-bottom-color: var(--dss-water-500);
+    box-shadow: 0 1px 0 0 var(--dss-water-500);
+  }
+
+  &.dss-input--outlined.dss-input--focused .dss-input__field {
+    border-color: var(--dss-water-500);
+    box-shadow: 0 0 0 1px var(--dss-water-500);
+  }
+
+  &.dss-input--standout.dss-input--focused .dss-input__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
+  }
+
+  &.dss-input--borderless.dss-input--focused .dss-input__field {
+    border-bottom-color: var(--dss-water-500);
+    box-shadow: 0 1px 0 0 var(--dss-water-500);
+  }
+
+  /* Label color on focus */
+  &.dss-input--focused .dss-input__label {
+    color: var(--dss-water-600);
+  }
+}
+
+/* ==========================================================================
+   WASTE BRAND (Green)
+   ========================================================================== */
+
+[data-brand="waste"],
+.dss-input--brand-waste {
+  &.dss-input--filled.dss-input--focused .dss-input__field {
+    border-bottom-color: var(--dss-waste-600);
+    box-shadow: 0 1px 0 0 var(--dss-waste-600);
+  }
+
+  &.dss-input--outlined.dss-input--focused .dss-input__field {
+    border-color: var(--dss-waste-600);
+    box-shadow: 0 0 0 1px var(--dss-waste-600);
+  }
+
+  &.dss-input--standout.dss-input--focused .dss-input__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
+  }
+
+  &.dss-input--borderless.dss-input--focused .dss-input__field {
+    border-bottom-color: var(--dss-waste-600);
+    box-shadow: 0 1px 0 0 var(--dss-waste-600);
+  }
+
+  /* Label color on focus */
+  &.dss-input--focused .dss-input__label {
+    color: var(--dss-waste-700);
+  }
+}
+
+/* ==========================================================================
+   BRAND HINT/ERROR COLORS
+   ========================================================================== */
+
+/* Hub brand hint color (opcional) */
+[data-brand="hub"] .dss-input__hint,
+.dss-input--brand-hub .dss-input__hint {
+  color: var(--dss-hub-700);
+}
+
+/* Water brand hint color */
+[data-brand="water"] .dss-input__hint,
+.dss-input--brand-water .dss-input__hint {
+  color: var(--dss-water-700);
+}
+
+/* Waste brand hint color */
+[data-brand="waste"] .dss-input__hint,
+.dss-input--brand-waste .dss-input__hint {
+  color: var(--dss-waste-800);
+}
+
+/* Error sempre usa --dss-error-600 independente de brand */

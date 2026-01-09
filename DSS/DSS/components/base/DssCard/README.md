@@ -1,0 +1,365 @@
+# DssCard - Arquitetura em 4 Camadas
+
+**Componente de Card** baseado no Quasar q-card, implementado com a nova arquitetura DSS em 4 camadas.
+
+---
+
+## 📁 Estrutura de Arquivos
+
+```
+DssCard/
+├── 1-structure/              # LAYER 1: Estrutura Vue
+│   ├── DssCard.vue           (template + props)
+│   ├── DssCardSection.vue    (seções de conteúdo)
+│   └── DssCardActions.vue    (área de ações)
+│
+├── 2-composition/            # LAYER 2: Composição Base
+│   └── _base.scss            (estilos fundamentais)
+│
+├── 3-variants/               # LAYER 3: Variantes
+│   ├── _elevated.scss        (com elevação - padrão)
+│   ├── _flat.scss            (sem elevação)
+│   ├── _bordered.scss        (borda + elevação)
+│   ├── _outlined.scss        (borda apenas)
+│   └── index.scss            (orquestrador)
+│
+├── 4-output/                 # LAYER 4: Output Final
+│   ├── _states.scss          (dark mode, loading, focus)
+│   ├── _brands.scss          (Hub, Water, Waste)
+│   └── index.scss            (orquestrador)
+│
+├── DssCard.module.scss       # Importa todas as camadas (~40 linhas)
+├── DssCard.example.vue       # Exemplos de uso
+├── index.js                  # Exports
+└── README.md                 # Esta documentação
+```
+
+---
+
+## 🎯 Filosofia das 4 Camadas
+
+### **LAYER 1: Structure (Estrutura)**
+**Responsabilidade:** Template HTML + Props + Interface
+
+**Características:**
+- ✅ APENAS template e props
+- ✅ Zero lógica de estilos
+- ✅ Componentes pequenos (~100 linhas)
+
+**Exemplo:**
+```vue
+<template>
+  <div :class="cardClasses">
+    <slot />
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    variant: { type: String, default: 'elevated' },
+    clickable: Boolean
+  }
+}
+</script>
+```
+
+---
+
+### **LAYER 2: Composition (Composição Base)**
+**Responsabilidade:** Estilos fundamentais usando APENAS tokens genéricos
+
+**Características:**
+- ✅ Reset e layout base
+- ✅ ZERO valores hardcoded
+- ✅ Usa tokens: `var(--dss-spacing-*)`, `var(--dss-radius-*)`
+- ✅ Mixins: `@include dss-transition()`
+
+**Exemplo:**
+```scss
+.dss-card {
+  background-color: var(--dss-surface-default);
+  border-radius: var(--dss-radius-lg);
+  padding: var(--dss-spacing-6);
+}
+```
+
+---
+
+### **LAYER 3: Variants (Variantes)**
+**Responsabilidade:** Variações visuais do componente
+
+**Características:**
+- ✅ 1 arquivo = 1 variante (~50 linhas)
+- ✅ Fácil debug (problema no outlined? → `_outlined.scss`)
+- ✅ Reutilizável (shared/variants no futuro)
+
+**Variantes Disponíveis:**
+- `elevated` - Com elevação (padrão Quasar)
+- `flat` - Sem elevação
+- `bordered` - Borda + elevação
+- `outlined` - Borda apenas (sem elevação)
+
+**Exemplo:**
+```scss
+.dss-card--outlined {
+  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
+  box-shadow: none;
+
+  &.dss-card--clickable:hover {
+    border-color: var(--dss-action-primary);
+  }
+}
+```
+
+---
+
+### **LAYER 4: Output (Saída Final)**
+**Responsabilidade:** Estados especiais e orquestração final
+
+**Características:**
+- ✅ Dark mode
+- ✅ Brandability (Hub, Water, Waste)
+- ✅ Estados (loading, focus, disabled)
+- ✅ Accessibility enhancements
+
+**Exemplo:**
+```scss
+[data-theme="dark"] .dss-card {
+  background-color: var(--dss-surface-dark);
+  color: var(--dss-text-inverse);
+}
+
+.dss-card--brand-hub {
+  border-left: var(--dss-border-width-thick) solid var(--dss-hub-600);
+}
+```
+
+---
+
+## 🚀 Uso Básico
+
+### **Importação**
+
+```javascript
+import { DssCard, DssCardSection, DssCardActions } from '@/dss/components/base/DssCard'
+```
+
+### **Exemplo 1: Card Simples**
+
+```vue
+<DssCard variant="elevated">
+  <DssCardSection>
+    <h3>Card Title</h3>
+    <p>Card content goes here.</p>
+  </DssCardSection>
+</DssCard>
+```
+
+### **Exemplo 2: Card Clickable**
+
+```vue
+<DssCard variant="elevated" clickable @click="handleClick">
+  <DssCardSection>
+    <h3>Clickable Card</h3>
+    <p>Hover to see elevation increase.</p>
+  </DssCardSection>
+</DssCard>
+```
+
+### **Exemplo 3: Card com Ações**
+
+```vue
+<DssCard variant="bordered">
+  <DssCardSection>
+    <h3>Confirmation</h3>
+    <p>Are you sure you want to proceed?</p>
+  </DssCardSection>
+
+  <DssCardActions align="right">
+    <DssButton @click="cancel">Cancel</DssButton>
+    <DssButton color="primary" @click="confirm">Confirm</DssButton>
+  </DssCardActions>
+</DssCard>
+```
+
+### **Exemplo 4: Card com Brand**
+
+```vue
+<DssCard variant="outlined" brand="hub">
+  <DssCardSection>
+    <h3>Hub Card</h3>
+    <p>Card with Hub brand accent (orange).</p>
+  </DssCardSection>
+</DssCard>
+```
+
+### **Exemplo 5: Card Horizontal**
+
+```vue
+<DssCard variant="elevated">
+  <DssCardSection horizontal>
+    <img src="avatar.jpg" alt="User" />
+    <div>
+      <h3>User Name</h3>
+      <p>User description</p>
+    </div>
+  </DssCardSection>
+</DssCard>
+```
+
+---
+
+## 🎨 Props API
+
+### **DssCard**
+
+| Prop | Type | Default | Values | Description |
+|------|------|---------|--------|-------------|
+| `variant` | String | `'elevated'` | `elevated`, `flat`, `bordered`, `outlined` | Visual variant |
+| `square` | Boolean | `false` | - | Remove border-radius |
+| `clickable` | Boolean | `false` | - | Make card clickable |
+| `dark` | Boolean | `false` | - | Dark mode |
+| `brand` | String | `null` | `hub`, `water`, `waste` | Brand accent |
+
+### **DssCardSection**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `horizontal` | Boolean | `false` | Horizontal layout |
+
+### **DssCardActions**
+
+| Prop | Type | Default | Values | Description |
+|------|------|---------|--------|-------------|
+| `align` | String | `'right'` | `left`, `center`, `right`, `between`, `around` | Alignment |
+| `vertical` | Boolean | `false` | - | Vertical layout |
+
+---
+
+## ✅ Benefícios da Arquitetura em 4 Camadas
+
+### **1. Separação de Responsabilidades**
+Cada arquivo tem 1 responsabilidade única:
+- `_elevated.scss` → APENAS variante elevated
+- `_brands.scss` → APENAS brandability
+- Fácil encontrar e corrigir bugs
+
+### **2. Arquivos Pequenos**
+```
+ANTES (monolítico):
+- DssCard.module.scss → 800 linhas
+
+DEPOIS (4 camadas):
+- _base.scss → ~100 linhas
+- _elevated.scss → ~30 linhas
+- _flat.scss → ~25 linhas
+- _bordered.scss → ~35 linhas
+- _outlined.scss → ~35 linhas
+- _states.scss → ~60 linhas
+- _brands.scss → ~100 linhas
+- DssCard.module.scss → ~40 linhas (orquestrador)
+
+Total: ~425 linhas (melhor organizadas)
+```
+
+### **3. Reutilização**
+Variantes podem ser compartilhadas:
+```scss
+// Futuro: shared/variants/_outlined.scss
+// Usado por: DssCard, DssButton, DssInput, etc.
+```
+
+### **4. Testabilidade**
+```javascript
+// Testar APENAS variante outlined
+import outlinedStyles from './3-variants/_outlined.scss'
+
+test('outlined has border', () => {
+  // test isolated
+})
+```
+
+### **5. Manutenção**
+```
+Bug no hover do outlined clickable?
+→ Ir direto: 3-variants/_outlined.scss linha 8
+
+vs ANTES:
+→ DssCard.module.scss linha ??? (procurar em 800 linhas)
+```
+
+---
+
+## 🔧 Tokens Utilizados
+
+**ZERO tokens component-specific!** Apenas tokens genéricos reutilizáveis:
+
+### **Spacing**
+- `--dss-spacing-2` (gaps)
+- `--dss-spacing-4` (actions padding)
+- `--dss-spacing-6` (section padding)
+
+### **Border Radius**
+- `--dss-radius-lg` (card corners)
+
+### **Borders**
+- `--dss-border-width-thin` (dividers, outlined)
+- `--dss-border-width-thick` (brand accent)
+
+### **Colors**
+- `--dss-surface-default` (background)
+- `--dss-surface-dark` (dark mode)
+- `--dss-gray-200`, `--dss-gray-300`, `--dss-gray-400` (borders)
+- `--dss-action-primary-rgb` (hover states)
+
+### **Elevation**
+- `--dss-elevation-1` (default)
+- `--dss-elevation-2` (hover)
+- `--dss-shadow-active` (active)
+- `--dss-focus-shadow-primary` (focus)
+
+### **Brand**
+- `--dss-hub-600`, `--dss-hub-primary-rgb`
+- `--dss-water-500`, `--dss-water-primary-rgb`
+- `--dss-waste-600`, `--dss-waste-primary-rgb`
+
+---
+
+## 📝 Notas de Migração do Quasar
+
+### **Props Compatíveis**
+✅ `flat` → `variant="flat"`
+✅ `bordered` → `variant="bordered"`
+✅ `square` → `square`
+✅ `dark` → `dark`
+
+### **Subcomponentes**
+✅ `q-card-section` → `DssCardSection`
+✅ `q-card-actions` → `DssCardActions`
+
+### **Diferenças**
+⚠️ `variant="outlined"` é novo (bordered sem elevation)
+⚠️ `brand` é específico do DSS (Hub, Water, Waste)
+
+---
+
+## 🎯 Próximos Passos
+
+### **Melhorias Futuras**
+- [ ] Shared variants (`shared/variants/_outlined.scss`)
+- [ ] Animações de entrada (fade-in, slide-in)
+- [ ] Skeleton loading state
+- [ ] Drag & drop support
+
+### **Testes**
+- [ ] Unit tests (variantes)
+- [ ] Integration tests (subcomponentes)
+- [ ] Visual regression tests
+- [ ] Accessibility tests (WCAG 2.1 AA)
+
+---
+
+**Criado:** 18 de Dezembro de 2025
+**Arquitetura:** 4 Camadas DSS v2.0
+**Filosofia:** Tokens = Provedores, Componentes = Consumidores

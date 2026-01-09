@@ -1,0 +1,43 @@
+/* ==========================================================================
+   DssInput - MAIN MODULE (Orquestrador Final)
+
+   Filosofia DSS: Arquitetura em 4 Camadas
+
+   LAYER 1: Structure (DssInput.vue)
+   LAYER 2: Composition (Base styles e mixins)
+   LAYER 3: Variants (filled, outlined, standout, borderless)
+   LAYER 4: Output (states, brands, orchestration)
+
+   Este arquivo importa TODAS as camadas e gera o CSS final.
+
+   Total estimado: ~400 linhas (vs ~1000+ em monolitico)
+   ========================================================================== */
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants' as variants;
+
+/* Layer 4: Output */
+@use './4-output' as output;
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dss-input__field {
+    border-width: var(--dss-border-width-md) !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-input,
+  .dss-input * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

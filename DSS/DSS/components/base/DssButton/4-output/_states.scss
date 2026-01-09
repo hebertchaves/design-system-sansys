@@ -1,0 +1,73 @@
+/* ==========================================================================
+   DssButton - LAYER 4: OUTPUT - States
+
+   RESPONSABILIDADE: Estados especiais (dark mode, a11y)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-button {
+    /* Buttons em dark mode mantêm cores mas ajustam contraste */
+    &--primary {
+      background-color: var(--dss-primary-light, #86c0f3);
+      color: var(--dss-gray-900);
+    }
+
+    &--secondary {
+      background-color: var(--dss-secondary-light, #6ddbcb);
+      color: var(--dss-gray-900);
+    }
+
+    &--outline {
+      border-color: currentColor;
+    }
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE
+   ========================================================================== */
+
+@media (prefers-contrast: high) {
+  .dss-button {
+    border: var(--dss-border-width-md) solid currentColor !important;
+    font-weight: 600;
+  }
+
+  .dss-button:focus-visible {
+    outline-width: var(--dss-border-width-thick);
+    outline-offset: var(--dss-spacing-2);
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-button,
+  .dss-button__spinner {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .dss-button--push {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  .dss-button {
+    border: 1px solid #000 !important;
+    background: none !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+}

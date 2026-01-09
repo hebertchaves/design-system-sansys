@@ -1,0 +1,47 @@
+/* ==========================================================================
+   DSS - TOKENS DE AÇÃO
+   ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
+   ========================================================================== */
+
+:root {
+  /* Primary Action - Azul (#1F86DE) */
+  --dss-action-primary: var(--dss-primary);
+  --dss-action-primary-light: var(--dss-primary-light);
+  --dss-action-primary-disable: var(--dss-primary-disable);
+  --dss-action-primary-hover: var(--dss-primary-hover);
+  --dss-action-primary-deep: var(--dss-primary-deep);
+  --dss-action-primary-focus: var(--dss-primary-focus);
+
+
+  /* Secondary Action - Verde (#26A69A) */
+  --dss-action-secondary: var(--dss-secondary);
+  --dss-action-secondary-light: var(--dss-secondary-light);
+  --dss-action-secondary-disable: var(--dss-secondary-disable);
+  --dss-action-secondary-hover: var(--dss-secondary-hover);
+  --dss-action-secondary-deep: var(--dss-secondary-deep);
+  --dss-action-secondary-focus: var(--dss-secondary-focus);
+
+  /* Tertiary Action - Laranja (#FF6607) */
+  --dss-action-tertiary: var(--dss-tertiary);
+  --dss-action-tertiary-light: var(--dss-tertiary-light);
+  --dss-action-tertiary-disable: var(--dss-tertiary-disable);
+  --dss-action-tertiary-hover: var(--dss-tertiary-hover);
+  --dss-action-tertiary-deep: var(--dss-tertiary-deep);
+  --dss-action-tertiary-focus: var(--dss-tertiary-focus);
+
+  /* Accent Action - Roxo (#B454C4) */
+  --dss-action-accent: var(--dss-accent);
+  --dss-action-accent-light: var(--dss-accent-light);
+  --dss-action-accent-disable: var(--dss-accent-disable);
+  --dss-action-accent-hover: var(--dss-accent-hover);
+  --dss-action-accent-deep: var(--dss-accent-deep);
+  --dss-action-accent-focus: var(--dss-accent-focus);
+
+    /* Dark Action - cinza escuro (#454545) */
+  --dss-action-dark: var(--dss-dark);
+  --dss-action-dark-light: var(--dss-dark-light);
+  --dss-action-dark-disable: var(--dss-dark-disable);
+  --dss-action-dark-hover: var(--dss-dark-hover);
+  --dss-action-dark-deep: var(--dss-dark-deep);
+  --dss-action-dark-focus: var(--dss-dark-focus);
+}

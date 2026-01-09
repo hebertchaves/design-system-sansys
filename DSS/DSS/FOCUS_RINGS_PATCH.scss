@@ -1,0 +1,597 @@
+/* ==========================================================================
+   DSS - PATCH: Focus Rings por Cor + Hover State + Variantes Push/Unelevated
+   ==========================================================================
+
+   PROBLEMA 1: Todos os botões usam focus ring azul (primary)
+   SOLUÇÃO: Adicionar focus rings específicos por cor
+
+   PROBLEMA 2: Variantes push e unelevated não mostram focus ring
+   SOLUÇÃO: Usar !important no unelevated, combinar sombras no push
+
+   PROBLEMA 3: Focus não muda a cor do componente
+   SOLUÇÃO: Aplicar background-color de hover quando focado
+
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   FILLED VARIANT - Focus Rings por Cor + Hover State
+   -------------------------------------------------------------------------- */
+
+.dss-button--filled {
+  /* PRIMARY */
+  &.dss-button--primary:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-primary-hover);
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+
+  &.dss-button--primary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-primary-hover);
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+
+  /* SECONDARY */
+  &.dss-button--secondary:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-secondary-hover);
+    box-shadow: var(--dss-focus-shadow-secondary);
+  }
+
+  &.dss-button--secondary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-secondary-hover);
+    box-shadow: var(--dss-focus-shadow-secondary);
+  }
+
+  /* TERTIARY */
+  &.dss-button--tertiary:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-tertiary-hover);
+    box-shadow: var(--dss-focus-shadow-tertiary);
+  }
+
+  &.dss-button--tertiary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-tertiary-hover);
+    box-shadow: var(--dss-focus-shadow-tertiary);
+  }
+
+  /* ACCENT */
+  &.dss-button--accent:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-accent-hover);
+    box-shadow: var(--dss-focus-shadow-accent);
+  }
+
+  &.dss-button--accent:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-accent-hover);
+    box-shadow: var(--dss-focus-shadow-accent);
+  }
+
+  /* POSITIVE */
+  &.dss-button--positive:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-success-hover);
+    box-shadow: var(--dss-focus-shadow-success);
+  }
+
+  &.dss-button--positive:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-success-hover);
+    box-shadow: var(--dss-focus-shadow-success);
+  }
+
+  /* NEGATIVE */
+  &.dss-button--negative:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-error-hover);
+    box-shadow: var(--dss-focus-shadow-error);
+  }
+
+  &.dss-button--negative:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-error-hover);
+    box-shadow: var(--dss-focus-shadow-error);
+  }
+
+  /* WARNING */
+  &.dss-button--warning:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-warning-hover);
+    box-shadow: var(--dss-focus-shadow-warning);
+  }
+
+  &.dss-button--warning:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-warning-hover);
+    box-shadow: var(--dss-focus-shadow-warning);
+  }
+
+  /* INFO */
+  &.dss-button--info:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-info-hover);
+    box-shadow: var(--dss-focus-shadow-info);
+  }
+
+  &.dss-button--info:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-info-hover);
+    box-shadow: var(--dss-focus-shadow-info);
+  }
+
+  /* DARK */
+  &.dss-button--dark:focus-visible:not(:disabled) {
+    background-color: var(--dss-dark-hover);
+    box-shadow: var(--dss-focus-shadow-dark);
+  }
+
+  &.dss-button--dark:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-dark-hover);
+    box-shadow: var(--dss-focus-shadow-dark);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   UNELEVATED VARIANT - Focus Rings por Cor + Hover State
+   IMPORTANTE: Usa !important para sobrescrever box-shadow: none !important
+   -------------------------------------------------------------------------- */
+
+.dss-button--unelevated {
+  /* PRIMARY */
+  &.dss-button--primary:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-primary-hover);
+    box-shadow: var(--dss-focus-shadow-primary) !important;
+  }
+
+  &.dss-button--primary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-primary-hover);
+    box-shadow: var(--dss-focus-shadow-primary) !important;
+  }
+
+  /* SECONDARY */
+  &.dss-button--secondary:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-secondary-hover);
+    box-shadow: var(--dss-focus-shadow-secondary) !important;
+  }
+
+  &.dss-button--secondary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-secondary-hover);
+    box-shadow: var(--dss-focus-shadow-secondary) !important;
+  }
+
+  /* TERTIARY */
+  &.dss-button--tertiary:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-tertiary-hover);
+    box-shadow: var(--dss-focus-shadow-tertiary) !important;
+  }
+
+  &.dss-button--tertiary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-tertiary-hover);
+    box-shadow: var(--dss-focus-shadow-tertiary) !important;
+  }
+
+  /* ACCENT */
+  &.dss-button--accent:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-accent-hover);
+    box-shadow: var(--dss-focus-shadow-accent) !important;
+  }
+
+  &.dss-button--accent:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-accent-hover);
+    box-shadow: var(--dss-focus-shadow-accent) !important;
+  }
+
+  /* POSITIVE */
+  &.dss-button--positive:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-success-hover);
+    box-shadow: var(--dss-focus-shadow-success) !important;
+  }
+
+  &.dss-button--positive:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-success-hover);
+    box-shadow: var(--dss-focus-shadow-success) !important;
+  }
+
+  /* NEGATIVE */
+  &.dss-button--negative:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-error-hover);
+    box-shadow: var(--dss-focus-shadow-error) !important;
+  }
+
+  &.dss-button--negative:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-error-hover);
+    box-shadow: var(--dss-focus-shadow-error) !important;
+  }
+
+  /* WARNING */
+  &.dss-button--warning:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-warning-hover);
+    box-shadow: var(--dss-focus-shadow-warning) !important;
+  }
+
+  &.dss-button--warning:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-warning-hover);
+    box-shadow: var(--dss-focus-shadow-warning) !important;
+  }
+
+  /* INFO */
+  &.dss-button--info:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-info-hover);
+    box-shadow: var(--dss-focus-shadow-info) !important;
+  }
+
+  &.dss-button--info:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-info-hover);
+    box-shadow: var(--dss-focus-shadow-info) !important;
+  }
+
+  /* DARK */
+  &.dss-button--dark:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-dark-hover);
+    box-shadow: var(--dss-focus-shadow-dark) !important;
+  }
+
+  &.dss-button--dark:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-dark-hover);
+    box-shadow: var(--dss-focus-shadow-dark) !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   PUSH VARIANT - Focus Rings por Cor + Hover State
+   IMPORTANTE: Combina shadow 3D + focus ring no :focus e :hover:focus
+   -------------------------------------------------------------------------- */
+
+.dss-button--push {
+  /* PRIMARY */
+  &.dss-button--primary:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-primary-hover);
+    /* Combina sombra 3D base + focus ring */
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-primary);
+  }
+
+  &.dss-button--primary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-primary-hover);
+    /* Combina sombra 3D de hover + focus ring */
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-primary);
+  }
+
+  /* SECONDARY */
+  &.dss-button--secondary:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-secondary-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-secondary);
+  }
+
+  &.dss-button--secondary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-secondary-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-secondary);
+  }
+
+  /* TERTIARY */
+  &.dss-button--tertiary:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-tertiary-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-tertiary);
+  }
+
+  &.dss-button--tertiary:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-tertiary-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-tertiary);
+  }
+
+  /* ACCENT */
+  &.dss-button--accent:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-action-accent-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-accent);
+  }
+
+  &.dss-button--accent:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-action-accent-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-accent);
+  }
+
+  /* POSITIVE */
+  &.dss-button--positive:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-success-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-success);
+  }
+
+  &.dss-button--positive:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-success-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-success);
+  }
+
+  /* NEGATIVE */
+  &.dss-button--negative:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-error-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-error);
+  }
+
+  &.dss-button--negative:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-error-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-error);
+  }
+
+  /* WARNING */
+  &.dss-button--warning:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-warning-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-warning);
+  }
+
+  &.dss-button--warning:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-warning-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-warning);
+  }
+
+  /* INFO */
+  &.dss-button--info:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-feedback-info-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-info);
+  }
+
+  &.dss-button--info:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-feedback-info-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-info);
+  }
+
+  /* DARK */
+  &.dss-button--dark:focus-visible:not(:disabled) {
+    outline: none;
+    background-color: var(--dss-dark-hover);
+    box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.1),
+                var(--dss-focus-shadow-dark);
+  }
+
+  &.dss-button--dark:hover:focus-visible:not(:disabled) {
+    background-color: var(--dss-dark-hover);
+    box-shadow: 0 7px 20px -3px rgba(0, 0, 0, 0.25),
+                0 5px 8px -2px rgba(0, 0, 0, 0.12),
+                var(--dss-focus-shadow-dark);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   OUTLINED VARIANT - Focus Rings por Cor + Hover State
+   -------------------------------------------------------------------------- */
+
+.dss-button--outlined {
+  /* PRIMARY */
+  &.dss-button--primary:focus-visible:not(:disabled) {
+    background-color: rgba(31, 134, 222, 0.1);
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+
+  &.dss-button--primary:hover:focus-visible:not(:disabled) {
+    background-color: rgba(31, 134, 222, 0.1);
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+
+  /* SECONDARY */
+  &.dss-button--secondary:focus-visible:not(:disabled) {
+    background-color: rgba(5, 156, 141, 0.1);
+    box-shadow: var(--dss-focus-shadow-secondary);
+  }
+
+  &.dss-button--secondary:hover:focus-visible:not(:disabled) {
+    background-color: rgba(5, 156, 141, 0.1);
+    box-shadow: var(--dss-focus-shadow-secondary);
+  }
+
+  /* TERTIARY */
+  &.dss-button--tertiary:focus-visible:not(:disabled) {
+    background-color: rgba(232, 99, 38, 0.1);
+    box-shadow: var(--dss-focus-shadow-tertiary);
+  }
+
+  &.dss-button--tertiary:hover:focus-visible:not(:disabled) {
+    background-color: rgba(232, 99, 38, 0.1);
+    box-shadow: var(--dss-focus-shadow-tertiary);
+  }
+
+  /* ACCENT */
+  &.dss-button--accent:focus-visible:not(:disabled) {
+    background-color: rgba(118, 71, 192, 0.1);
+    box-shadow: var(--dss-focus-shadow-accent);
+  }
+
+  &.dss-button--accent:hover:focus-visible:not(:disabled) {
+    background-color: rgba(118, 71, 192, 0.1);
+    box-shadow: var(--dss-focus-shadow-accent);
+  }
+
+  /* POSITIVE */
+  &.dss-button--positive:focus-visible:not(:disabled) {
+    background-color: rgba(76, 175, 80, 0.1);
+    box-shadow: var(--dss-focus-shadow-success);
+  }
+
+  &.dss-button--positive:hover:focus-visible:not(:disabled) {
+    background-color: rgba(76, 175, 80, 0.1);
+    box-shadow: var(--dss-focus-shadow-success);
+  }
+
+  /* NEGATIVE */
+  &.dss-button--negative:focus-visible:not(:disabled) {
+    background-color: rgba(244, 67, 54, 0.1);
+    box-shadow: var(--dss-focus-shadow-error);
+  }
+
+  &.dss-button--negative:hover:focus-visible:not(:disabled) {
+    background-color: rgba(244, 67, 54, 0.1);
+    box-shadow: var(--dss-focus-shadow-error);
+  }
+
+  /* WARNING */
+  &.dss-button--warning:focus-visible:not(:disabled) {
+    background-color: rgba(255, 193, 7, 0.1);
+    box-shadow: var(--dss-focus-shadow-warning);
+  }
+
+  &.dss-button--warning:hover:focus-visible:not(:disabled) {
+    background-color: rgba(255, 193, 7, 0.1);
+    box-shadow: var(--dss-focus-shadow-warning);
+  }
+
+  /* INFO */
+  &.dss-button--info:focus-visible:not(:disabled) {
+    background-color: rgba(33, 150, 243, 0.1);
+    box-shadow: var(--dss-focus-shadow-info);
+  }
+
+  &.dss-button--info:hover:focus-visible:not(:disabled) {
+    background-color: rgba(33, 150, 243, 0.1);
+    box-shadow: var(--dss-focus-shadow-info);
+  }
+
+  /* DARK */
+  &.dss-button--dark:focus-visible:not(:disabled) {
+    background-color: rgba(66, 66, 66, 0.1);
+    box-shadow: var(--dss-focus-shadow-dark);
+  }
+
+  &.dss-button--dark:hover:focus-visible:not(:disabled) {
+    background-color: rgba(66, 66, 66, 0.1);
+    box-shadow: var(--dss-focus-shadow-dark);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   FLAT VARIANT - Focus Rings por Cor + Hover State
+   -------------------------------------------------------------------------- */
+
+.dss-button--flat {
+  /* PRIMARY */
+  &.dss-button--primary:focus-visible:not(:disabled) {
+    background-color: rgba(31, 134, 222, 0.1);
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+
+  &.dss-button--primary:hover:focus-visible:not(:disabled) {
+    background-color: rgba(31, 134, 222, 0.1);
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+
+  /* SECONDARY */
+  &.dss-button--secondary:focus-visible:not(:disabled) {
+    background-color: rgba(5, 156, 141, 0.1);
+    box-shadow: var(--dss-focus-shadow-secondary);
+  }
+
+  &.dss-button--secondary:hover:focus-visible:not(:disabled) {
+    background-color: rgba(5, 156, 141, 0.1);
+    box-shadow: var(--dss-focus-shadow-secondary);
+  }
+
+  /* TERTIARY */
+  &.dss-button--tertiary:focus-visible:not(:disabled) {
+    background-color: rgba(232, 99, 38, 0.1);
+    box-shadow: var(--dss-focus-shadow-tertiary);
+  }
+
+  &.dss-button--tertiary:hover:focus-visible:not(:disabled) {
+    background-color: rgba(232, 99, 38, 0.1);
+    box-shadow: var(--dss-focus-shadow-tertiary);
+  }
+
+  /* ACCENT */
+  &.dss-button--accent:focus-visible:not(:disabled) {
+    background-color: rgba(118, 71, 192, 0.1);
+    box-shadow: var(--dss-focus-shadow-accent);
+  }
+
+  &.dss-button--accent:hover:focus-visible:not(:disabled) {
+    background-color: rgba(118, 71, 192, 0.1);
+    box-shadow: var(--dss-focus-shadow-accent);
+  }
+
+  /* POSITIVE */
+  &.dss-button--positive:focus-visible:not(:disabled) {
+    background-color: rgba(76, 175, 80, 0.1);
+    box-shadow: var(--dss-focus-shadow-success);
+  }
+
+  &.dss-button--positive:hover:focus-visible:not(:disabled) {
+    background-color: rgba(76, 175, 80, 0.1);
+    box-shadow: var(--dss-focus-shadow-success);
+  }
+
+  /* NEGATIVE */
+  &.dss-button--negative:focus-visible:not(:disabled) {
+    background-color: rgba(244, 67, 54, 0.1);
+    box-shadow: var(--dss-focus-shadow-error);
+  }
+
+  &.dss-button--negative:hover:focus-visible:not(:disabled) {
+    background-color: rgba(244, 67, 54, 0.1);
+    box-shadow: var(--dss-focus-shadow-error);
+  }
+
+  /* WARNING */
+  &.dss-button--warning:focus-visible:not(:disabled) {
+    background-color: rgba(255, 193, 7, 0.1);
+    box-shadow: var(--dss-focus-shadow-warning);
+  }
+
+  &.dss-button--warning:hover:focus-visible:not(:disabled) {
+    background-color: rgba(255, 193, 7, 0.1);
+    box-shadow: var(--dss-focus-shadow-warning);
+  }
+
+  /* INFO */
+  &.dss-button--info:focus-visible:not(:disabled) {
+    background-color: rgba(33, 150, 243, 0.1);
+    box-shadow: var(--dss-focus-shadow-info);
+  }
+
+  &.dss-button--info:hover:focus-visible:not(:disabled) {
+    background-color: rgba(33, 150, 243, 0.1);
+    box-shadow: var(--dss-focus-shadow-info);
+  }
+
+  /* DARK */
+  &.dss-button--dark:focus-visible:not(:disabled) {
+    background-color: rgba(66, 66, 66, 0.1);
+    box-shadow: var(--dss-focus-shadow-dark);
+  }
+
+  &.dss-button--dark:hover:focus-visible:not(:disabled) {
+    background-color: rgba(66, 66, 66, 0.1);
+    box-shadow: var(--dss-focus-shadow-dark);
+  }
+}

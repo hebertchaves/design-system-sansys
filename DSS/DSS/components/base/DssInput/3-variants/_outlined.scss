@@ -1,0 +1,54 @@
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Outlined
+
+   RESPONSABILIDADE: Estilo da variante outlined (borda completa)
+
+   CARACTERÍSTICAS:
+   - Border completa ao redor
+   - Fundo transparente
+   - Label flutua sobre a borda
+   ========================================================================== */
+
+.dss-input--outlined {
+  .dss-input__field {
+    background-color: transparent;
+    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border-radius: var(--dss-radius-md);
+  }
+
+  /* Focus state */
+  &.dss-input--focused .dss-input__field {
+    border-color: var(--dss-action-primary);
+    border-width: var(--dss-border-width-md);
+    box-shadow: 0 0 0 1px var(--dss-action-primary);
+  }
+
+  /* Error state */
+  &.dss-input--error .dss-input__field {
+    border-color: var(--dss-error-600);
+    border-width: var(--dss-border-width-md);
+    box-shadow: 0 0 0 1px var(--dss-error-600);
+  }
+
+  /* Disabled state */
+  &.dss-input--disabled .dss-input__field {
+    border-style: dotted;
+    background-color: var(--dss-gray-50);
+  }
+
+  /* Readonly state */
+  &.dss-input--readonly .dss-input__field {
+    border-color: var(--dss-gray-300);
+  }
+
+  /* Hover (not disabled/readonly/focused) */
+  &:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+    border-color: var(--dss-gray-600);
+  }
+
+  /* Label notch effect (optional enhancement) */
+  .dss-input__label--float {
+    background-color: var(--dss-surface-default);
+    padding: 0 var(--dss-spacing-1);
+  }
+}

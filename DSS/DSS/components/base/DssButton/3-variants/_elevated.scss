@@ -1,0 +1,22 @@
+/* ==========================================================================
+   DssButton - LAYER 3: VARIANT - Elevated (Default)
+
+   RESPONSABILIDADE: Botão com elevação/shadow
+
+   CARACTERÍSTICAS:
+   - Background sólido
+   - Box-shadow para elevação
+   - Hover aumenta elevação
+   ========================================================================== */
+
+.dss-button--elevated {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+}

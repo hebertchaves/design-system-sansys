@@ -1,0 +1,18 @@
+/* ==========================================================================
+   DSS COMPONENTS - Estilos Globais dos Componentes
+   ========================================================================== */
+
+/**
+ * NOTA: Este arquivo importa os estilos dos componentes de forma GLOBAL
+ * para uso em ambientes sem bundler (HTML puro, CDN, etc.)
+ *
+ * Para uso em aplicações Vue com bundler (Webpack/Vite),
+ * os componentes usam CSS Modules (.module.scss) automaticamente.
+ */
+
+/* Base Components */
+@import 'base/DssButton/DssButton.module';
+@import 'base/DssBadge/DssBadge.module';
+@import 'base/DssAvatar/DssAvatar.module';
+@import 'base/DssCard/DssCard.module';
+@import 'base/DssInput/DssInput.module';

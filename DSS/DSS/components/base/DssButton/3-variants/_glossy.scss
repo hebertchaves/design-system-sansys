@@ -1,0 +1,25 @@
+/* ==========================================================================
+   DssButton - LAYER 3: VARIANT - Glossy
+
+   RESPONSABILIDADE: Botão com efeito brilhante/glossy
+
+   CARACTERÍSTICAS:
+   - Background com gradiente (usa token --dss-gradient-glossy)
+   - Efeito de brilho sutil
+   - Hover intensifica sombra
+   - Active inverte gradiente (usa token --dss-gradient-glossy-active)
+   ========================================================================== */
+
+.dss-button--glossy {
+  background-image: var(--dss-gradient-glossy);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    background-image: var(--dss-gradient-glossy-active);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+}

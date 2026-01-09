@@ -1,0 +1,236 @@
+/* ==========================================================================
+   DSS - TOKENS DE BORDA
+   Suporte para TODAS as cores disponíveis
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. BORDAS NEUTRAS (ESCALA DE CINZA COMPLETA)
+     =========================================== */
+  --dss-border-gray-50: 1px solid var(--dss-gray-50);
+  --dss-border-gray-100: 1px solid var(--dss-gray-100);
+  --dss-border-gray-200: 1px solid var(--dss-gray-200);
+  --dss-border-gray-300: 1px solid var(--dss-gray-300);
+  --dss-border-gray-400: 1px solid var(--dss-gray-400);
+  --dss-border-gray-500: 1px solid var(--dss-gray-500);
+  --dss-border-gray-600: 1px solid var(--dss-gray-600);
+  --dss-border-gray-700: 1px solid var(--dss-gray-700);
+  --dss-border-gray-800: 1px solid var(--dss-gray-800);
+  --dss-border-gray-900: 1px solid var(--dss-gray-900);
+  --dss-border-gray-950: 1px solid var(--dss-gray-950);
+
+  /* ===========================================
+     2. BORDAS DE AÇÃO (COM TODAS AS VARIAÇÕES)
+     =========================================== */
+  /* Primary - TODAS as variações */
+  --dss-border-primary-disable: 1px solid var(--dss-primary-disable);
+  --dss-border-primary-light: 1px solid var(--dss-primary-light);
+  --dss-border-primary: 1px solid var(--dss-primary);
+  --dss-border-primary-hover: 1px solid var(--dss-primary-hover);
+  --dss-border-primary-deep: 1px solid var(--dss-primary-deep);
+  
+  /* Secondary - TODAS as variações */
+  --dss-border-secondary-disable: 1px solid var(--dss-secondary-disable);
+  --dss-border-secondary-light: 1px solid var(--dss-secondary-light);
+  --dss-border-secondary: 1px solid var(--dss-secondary);
+  --dss-border-secondary-hover: 1px solid var(--dss-secondary-hover);
+  --dss-border-secondary-deep: 1px solid var(--dss-secondary-deep);
+  
+  /* Tertiary - TODAS as variações */
+  --dss-border-tertiary-disable: 1px solid var(--dss-tertiary-disable);
+  --dss-border-tertiary-light: 1px solid var(--dss-tertiary-light);
+  --dss-border-tertiary: 1px solid var(--dss-tertiary);
+  --dss-border-tertiary-hover: 1px solid var(--dss-tertiary-hover);
+  --dss-border-tertiary-deep: 1px solid var(--dss-tertiary-deep);
+
+  /* Accent - TODAS as variações */
+  --dss-border-accent-disable: 1px solid var(--dss-accent-disable);
+  --dss-border-accent-light: 1px solid var(--dss-accent-light);
+  --dss-border-accent: 1px solid var(--dss-accent);
+  --dss-border-accent-hover: 1px solid var(--dss-accent-hover);
+  --dss-border-accent-deep: 1px solid var(--dss-accent-deep);
+
+  /* ===========================================
+     3. BORDAS DE FEEDBACK (COM TODAS AS VARIAÇÕES)
+     =========================================== */
+  /* Positive - TODAS as variações */
+  --dss-border-positive-disable: 1px solid var(--dss-positive-disable);
+  --dss-border-positive-light: 1px solid var(--dss-positive-light);
+  --dss-border-positive: 1px solid var(--dss-positive);
+  --dss-border-positive-hover: 1px solid var(--dss-positive-hover);
+  --dss-border-positive-deep: 1px solid var(--dss-positive-deep);
+  
+  /* Negative - TODAS as variações */
+  --dss-border-negative-disable: 1px solid var(--dss-negative-disable);
+  --dss-border-negative-light: 1px solid var(--dss-negative-light);
+  --dss-border-negative: 1px solid var(--dss-negative);
+  --dss-border-negative-hover: 1px solid var(--dss-negative-hover);
+  --dss-border-negative-deep: 1px solid var(--dss-negative-deep);
+  
+  /* Warning - TODAS as variações */
+  --dss-border-warning-disable: 1px solid var(--dss-warning-disable);
+  --dss-border-warning-light: 1px solid var(--dss-warning-light);
+  --dss-border-warning: 1px solid var(--dss-warning);
+  --dss-border-warning-hover: 1px solid var(--dss-warning-hover);
+  --dss-border-warning-deep: 1px solid var(--dss-warning-deep);
+  
+  /* Info - TODAS as variações */
+  --dss-border-info-disable: 1px solid var(--dss-info-disable);
+  --dss-border-info-light: 1px solid var(--dss-info-light);
+  --dss-border-info: 1px solid var(--dss-info);
+  --dss-border-info-hover: 1px solid var(--dss-info-hover);
+  --dss-border-info-deep: 1px solid var(--dss-info-deep);
+
+  /* ===========================================
+     4. BORDAS DE MARCA (ESCALA COMPLETA)
+     =========================================== */
+  /* Hub - TODOS os tons da escala */
+  --dss-border-hub-50: 1px solid var(--dss-hub-50);
+  --dss-border-hub-100: 1px solid var(--dss-hub-100);
+  --dss-border-hub-200: 1px solid var(--dss-hub-200);
+  --dss-border-hub-300: 1px solid var(--dss-hub-300);
+  --dss-border-hub-400: 1px solid var(--dss-hub-400);
+  --dss-border-hub-500: 1px solid var(--dss-hub-500);
+  --dss-border-hub-600: 1px solid var(--dss-hub-600);
+  --dss-border-hub-700: 1px solid var(--dss-hub-700);
+  --dss-border-hub-800: 1px solid var(--dss-hub-800);
+  --dss-border-hub-900: 1px solid var(--dss-hub-900);
+  --dss-border-hub-950: 1px solid var(--dss-hub-950);
+  
+  /* Water - TODOS os tons da escala */
+  --dss-border-water-50: 1px solid var(--dss-water-50);
+  --dss-border-water-100: 1px solid var(--dss-water-100);
+  --dss-border-water-200: 1px solid var(--dss-water-200);
+  --dss-border-water-300: 1px solid var(--dss-water-300);
+  --dss-border-water-400: 1px solid var(--dss-water-400);
+  --dss-border-water-500: 1px solid var(--dss-water-500);
+  --dss-border-water-600: 1px solid var(--dss-water-600);
+  --dss-border-water-700: 1px solid var(--dss-water-700);
+  --dss-border-water-800: 1px solid var(--dss-water-800);
+  --dss-border-water-900: 1px solid var(--dss-water-900);
+  --dss-border-water-950: 1px solid var(--dss-water-950);
+  
+  /* Waste - TODOS os tons da escala */
+  --dss-border-waste-50: 1px solid var(--dss-waste-50);
+  --dss-border-waste-100: 1px solid var(--dss-waste-100);
+  --dss-border-waste-200: 1px solid var(--dss-waste-200);
+  --dss-border-waste-300: 1px solid var(--dss-waste-300);
+  --dss-border-waste-400: 1px solid var(--dss-waste-400);
+  --dss-border-waste-500: 1px solid var(--dss-waste-500);
+  --dss-border-waste-600: 1px solid var(--dss-waste-600);
+  --dss-border-waste-700: 1px solid var(--dss-waste-700);
+  --dss-border-waste-800: 1px solid var(--dss-waste-800);
+  --dss-border-waste-900: 1px solid var(--dss-waste-900);
+  --dss-border-waste-950: 1px solid var(--dss-waste-950);
+
+  /* ===========================================
+     5. BORDAS DE DARK (COM TODAS AS VARIAÇÕES)
+     =========================================== */
+  --dss-border-dark-disable: 1px solid var(--dss-dark-disable);
+  --dss-border-dark-light: 1px solid var(--dss-dark-light);
+  --dss-border-dark: 1px solid var(--dss-dark);
+  --dss-border-dark-hover: 1px solid var(--dss-dark-hover);
+  --dss-border-dark-deep: 1px solid var(--dss-dark-deep);
+
+  /* ===========================================
+     6. BORDAS FUNCIONAIS (ESTADOS)
+     =========================================== */
+  --dss-border-focus: 2px solid var(--dss-action-primary);
+  --dss-border-focus-subtle: 1px solid var(--dss-action-primary);
+  
+  --dss-border-active: 2px solid var(--dss-action-secondary);
+  --dss-border-selected: 2px solid var(--dss-action-tertiary);
+  
+  --dss-border-disabled: 1px solid var(--dss-gray-300);
+  --dss-border-readonly: 1px dashed var(--dss-gray-400);
+
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 2)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (12 tokens):
+   *
+   * === INPUTS (6 tokens) ===
+   * --dss-border-input-default     → Use: 1px solid var(--dss-gray-300)
+   * --dss-border-input-hover       → Use: 1px solid var(--dss-gray-400)
+   * --dss-border-input-focus       → Use: 2px solid var(--dss-action-primary)
+   * --dss-border-input-error       → Use: 2px solid var(--dss-negative)
+   * --dss-border-input-success     → Use: 2px solid var(--dss-positive)
+   * --dss-border-input-disabled    → Use: 1px solid var(--dss-gray-200)
+   *
+   * === CARDS (3 tokens) ===
+   * --dss-border-card-default      → Use: 1px solid var(--dss-gray-200)
+   * --dss-border-card-elevated     → Use: 1px solid var(--dss-gray-300)
+   * --dss-border-card-selected     → Use: 2px solid var(--dss-action-primary)
+   *
+   * === DIVIDERS (3 tokens) ===
+   * --dss-border-divider-subtle    → Use: 1px solid var(--dss-gray-100)
+   * --dss-border-divider-default   → Use: 1px solid var(--dss-gray-200)
+   * --dss-border-divider-strong    → Use: 1px solid var(--dss-gray-300)
+   *
+   * ✅ EXEMPLO DE USO NOS COMPONENTES:
+   *
+   * // DssInput.module.scss
+   * .dss-input {
+   *   border: 1px solid var(--dss-gray-300);  // default
+   *
+   *   &:hover:not(:disabled) {
+   *     border: 1px solid var(--dss-gray-400);
+   *   }
+   *
+   *   &:focus {
+   *     border: 2px solid var(--dss-action-primary);
+   *   }
+   *
+   *   &.error {
+   *     border: 2px solid var(--dss-negative);
+   *   }
+   *
+   *   &.success {
+   *     border: 2px solid var(--dss-positive);
+   *   }
+   *
+   *   &:disabled {
+   *     border: 1px solid var(--dss-gray-200);
+   *   }
+   * }
+   *
+   * // DssCard.module.scss
+   * .dss-card {
+   *   border: 1px solid var(--dss-gray-200);  // default
+   *
+   *   &.elevated {
+   *     border: 1px solid var(--dss-gray-300);
+   *   }
+   *
+   *   &.selected {
+   *     border: 2px solid var(--dss-action-primary);
+   *   }
+   * }
+   *
+   * // DssDivider.module.scss
+   * .dss-divider {
+   *   border-bottom: 1px solid var(--dss-gray-200);  // default
+   *
+   *   &.subtle {
+   *     border-bottom: 1px solid var(--dss-gray-100);
+   *   }
+   *
+   *   &.strong {
+   *     border-bottom: 1px solid var(--dss-gray-300);
+   *   }
+   * }
+   *
+   * ✅ BENEFÍCIOS:
+   * - Escalabilidade: 100 componentes = mesmos tokens de border
+   * - Flexibilidade: Componentes escolhem espessura e cor livremente
+   * - Manutenibilidade: Mudanças isoladas nos componentes
+   * - Clareza: Valores explícitos (gray-300, 1px vs 2px)
+   *
+   * 📚 Referência: AUDITORIA_DSS_JAN_2025.md
+   *               SPRINT_2_RELATORIO_JAN_2025.md
+   *               DSS_TOKEN_GUIDELINES.md
+   */
+}

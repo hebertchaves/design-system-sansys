@@ -1,0 +1,139 @@
+/* ==========================================================================
+   DSS (Design System Sansys) - TOKENS GLOBAIS
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. ESCALA DE CINZA (SUPORTE GERAL)
+     =========================================== */
+  --dss-gray-50: #ffffff;
+  --dss-gray-100: #fafafa;
+  --dss-gray-200: #f5f5f5;
+  --dss-gray-300: #e5e5e5;
+  --dss-gray-400: #d4d4d4;
+  --dss-gray-500: #a3a3a3;
+  --dss-gray-600: #737373;
+  --dss-gray-700: #525252;
+  --dss-gray-800: #262626;
+  --dss-gray-900: #0a0a0a;
+  --dss-gray-950: #000000;
+
+  /* ===========================================
+     2. PALETAS DE MARCA (HUB, WATER, WASTE)
+     =========================================== */
+  
+  /* Hub (Laranja/Marrom) */
+  --dss-hub-50: #fff9ed;
+  --dss-hub-100: #fef2d6;
+  --dss-hub-200: #fde2ab;
+  --dss-hub-300: #fbcb76;
+  --dss-hub-400: #f8aa3f;
+  --dss-hub-500: #f5911a;
+  --dss-hub-600: #ef7a11;
+  --dss-hub-700: #bf590f;
+  --dss-hub-800: #984614;
+  --dss-hub-900: #7a3614;
+  --dss-hub-950: #421d08;
+
+  /* Water (Azul) */
+  --dss-water-50: #f0f7ff;
+  --dss-water-100: #e0eefe;
+  --dss-water-200: #badefd;
+  --dss-water-300: #7dc4fc;
+  --dss-water-400: #38a6f8;
+  --dss-water-500: #0e88e4;
+  --dss-water-600: #026cc7;
+  --dss-water-700: #0356a1;
+  --dss-water-800: #074a85;
+  --dss-water-900: #0c3e6e;
+  --dss-water-950: #082749;
+
+  /* Waste (Verde) */
+  --dss-waste-50: #edfcf4;
+  --dss-waste-100: #d3f8e2;
+  --dss-waste-200: #abefcb;
+  --dss-waste-300: #74e1ae;
+  --dss-waste-400: #3ccb8d;
+  --dss-waste-500: #18b173;
+  --dss-waste-600: #0b8154;
+  --dss-waste-700: #0a724e;
+  --dss-waste-800: #0a5b3e;
+  --dss-waste-900: #0a4a34;
+  --dss-waste-950: #042a1e;
+
+  /* ===========================================
+     3. CORES SEMÂNTICAS BASE
+     =========================================== */
+  
+  /* Primary (Azul Principal) */
+  --dss-primary-disable: #b3dcff;
+  --dss-primary-light: #86c0f3;
+  --dss-primary: #1f86de;
+  --dss-primary-hover: #0f5295;
+  --dss-primary-deep: #0a3a6a;
+  --dss-primary-focus:#006AC5;
+
+  /* Secondary (Verde/Turquesa) */
+  --dss-secondary-disable: #b5ece4;
+  --dss-secondary-light: #6ddbcb;
+  --dss-secondary: #26a69a;
+  --dss-secondary-hover: #1c857e;
+  --dss-secondary-deep: #116761;
+  --dss-secondary-focus: #009C8D;
+
+  /* Tertiary (Laranja) */
+  --dss-tertiary-disable: #ffd2b5;
+  --dss-tertiary-light: #ff9452;
+  --dss-tertiary: #ff6607;
+  --dss-tertiary-hover: #de5500;
+  --dss-tertiary-deep: #ad4200;
+  --dss-tertiary-deep: #E95900;
+
+  /* Accent (Roxo/Púrpura) */
+  --dss-accent-disable: #f0ddf4;
+  --dss-accent-light: #e3bceb;
+  --dss-accent: #b454c4;
+  --dss-accent-hover: #883b90;
+  --dss-accent-deep: #642f6a;
+  --dss-accent-deep: #B02EC5;
+
+  /* Dark (Cinza/Preto) */
+  --dss-dark-disable: #d7d7d7;
+  --dss-dark-light: #b0b0b0;
+  --dss-dark: #454545;
+  --dss-dark-hover: #313131;
+  --dss-dark-deep: #1d1d1d;
+  --dss-dark-deep: #3E3E3E;
+
+  /* Positive (Verde) */
+  --dss-positive-disable: #dbf8d1;
+  --dss-positive-light: #b9f2a4;
+  --dss-positive: #4dd228;
+  --dss-positive-hover: #27910D;
+  --dss-positive-deep: #246714;
+  --dss-positive-deep: #34C30C;
+
+  /* Negative (Vermelho) */
+  --dss-negative-disable: #ffcfd4;
+  --dss-negative-light: #ffa0ab;
+  --dss-negative: #d8182e;
+  --dss-negative-hover: #a01424;
+  --dss-negative-deep: #720e19;
+  --dss-negative-deep: #C40016;
+
+  /* Warning (Amarelo/Laranja) */
+  --dss-warning-disable: #fff9c3;
+  --dss-warning-light: #fff488;
+  --dss-warning: #fabd14;
+  --dss-warning-hover: #dd8e02;
+  --dss-warning-deep: #a66d08;
+  --dss-warning-deep: #E9AB00;
+
+  /* Info (Azul Claro) */
+  --dss-info-disable: #d2f6fc;
+  --dss-info-light: #a7effa;
+  --dss-info: #0cc4e9;
+  --dss-info-hover: #0c8bae;
+  --dss-info-deep: #0d7491;
+  --dss-info-deep: #00B2D5;
+}

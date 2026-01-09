@@ -1,0 +1,250 @@
+/* ==========================================================================
+   DssInput - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-spacing-*, --dss-radius-*, etc.)
+   ✅ Mixins reutilizáveis (@include dss-transition)
+   ✅ Reset e layout base
+   ❌ ZERO valores hardcoded
+   ❌ ZERO lógica de variantes
+   ========================================================================== */
+
+
+/* ==========================================================================
+   WRAPPER BASE
+   ========================================================================== */
+
+.dss-input {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--dss-font-family-sans);
+}
+
+/* ==========================================================================
+   FIELD WRAPPER
+   ========================================================================== */
+
+.dss-input__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--dss-input-height-md); /* 44px - ✅ WCAG 2.1 AA */
+  gap: var(--dss-spacing-2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dense variant reduces height */
+.dss-input--dense .dss-input__field {
+  min-height: var(--dss-input-height-sm); /* 36px - Denso */
+}
+
+/* ==========================================================================
+   CONTROL (Label + Input container)
+   ========================================================================== */
+
+.dss-input__control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  padding: var(--dss-spacing-4) var(--dss-spacing-4);
+}
+
+.dss-input--dense .dss-input__control {
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+}
+
+/* ==========================================================================
+   LABEL
+   ========================================================================== */
+
+.dss-input__label {
+  position: absolute;
+  left: var(--dss-spacing-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--dss-font-size-md);
+  color: var(--dss-text-secondary);
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left top;
+}
+
+/* Floating label (when focused or filled) */
+.dss-input__label--float {
+  top: var(--dss-spacing-2);
+  transform: translateY(0) scale(0.75);
+  font-size: var(--dss-font-size-sm);
+}
+
+/* Stacked label (always on top) */
+.dss-input__label--stack {
+  position: static;
+  transform: none;
+  font-size: var(--dss-font-size-sm);
+  margin-bottom: var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   NATIVE INPUT
+   ========================================================================== */
+
+.dss-input__native {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--dss-font-size-md);
+  color: var(--dss-text-primary);
+  padding: 0;
+  margin: 0;
+  line-height: var(--dss-line-height-normal);
+
+  &::placeholder {
+    color: var(--dss-text-hint);
+    opacity: 1;
+  }
+
+  /* Remove autofill background */
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+/* With floating label, add top padding */
+.dss-input:not(.dss-input__label--stack) .dss-input__native {
+  padding-top: var(--dss-spacing-5);
+}
+
+/* Disabled state */
+.dss-input--disabled .dss-input__native {
+  color: var(--dss-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Readonly state */
+.dss-input--readonly .dss-input__native {
+  cursor: default;
+}
+
+/* ==========================================================================
+   SLOTS (Before, After, Prepend, Append)
+   ========================================================================== */
+
+.dss-input__before,
+.dss-input__after,
+.dss-input__prepend,
+.dss-input__append {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.dss-input__prepend {
+  padding-left: var(--dss-spacing-3);
+  color: var(--dss-text-secondary);
+}
+
+.dss-input__append {
+  padding-right: var(--dss-spacing-3);
+  color: var(--dss-text-secondary);
+  gap: var(--dss-spacing-2);
+}
+
+/* ==========================================================================
+   CLEAR BUTTON
+   ========================================================================== */
+
+.dss-input__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dss-spacing-6);
+  height: var(--dss-spacing-6);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--dss-text-secondary);
+  font-size: var(--dss-font-size-xl);
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--dss-radius-full);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background-color: var(--dss-gray-100);
+    color: var(--dss-text-primary);
+  }
+
+  &:focus-visible {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline-offset: var(--dss-spacing-1);
+  }
+}
+
+/* ==========================================================================
+   BOTTOM SLOTS (Hint, Error)
+   ========================================================================== */
+
+.dss-input__bottom {
+  display: flex;
+  flex-direction: column;
+  padding: var(--dss-spacing-1) var(--dss-spacing-4) 0;
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-normal);
+  min-height: var(--dss-spacing-5);
+}
+
+.dss-input__hint {
+  color: var(--dss-text-secondary);
+}
+
+.dss-input__error {
+  color: var(--dss-error-600);
+}
+
+/* ==========================================================================
+   DISABLED STATE
+   ========================================================================== */
+
+.dss-input--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  .dss-input__field {
+    pointer-events: none;
+  }
+}
+
+/* ==========================================================================
+   LOADING STATE
+   ========================================================================== */
+
+.dss-input--loading {
+  pointer-events: none;
+
+  .dss-input__append::after {
+    content: '';
+    display: inline-block;
+    width: var(--dss-spacing-4);
+    height: var(--dss-spacing-4);
+    border: var(--dss-border-width-md) solid var(--dss-gray-300);
+    border-top-color: var(--dss-action-primary);
+    border-radius: var(--dss-radius-full);
+    animation: dss-input-spin 0.6s linear infinite;
+  }
+}
+
+@keyframes dss-input-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,54 @@
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Borderless
+
+   RESPONSABILIDADE: Estilo da variante borderless (sem bordas)
+
+   CARACTERÍSTICAS:
+   - Sem bordas
+   - Sem background
+   - Integração suave
+   - Underline no focus
+   ========================================================================== */
+
+.dss-input--borderless {
+  .dss-input__field {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    border-bottom: var(--dss-border-width-thin) solid transparent;
+  }
+
+  /* Focus state - apenas underline */
+  &.dss-input--focused .dss-input__field {
+    border-bottom-color: var(--dss-action-primary);
+    box-shadow: 0 1px 0 0 var(--dss-action-primary);
+  }
+
+  /* Error state */
+  &.dss-input--error .dss-input__field {
+    border-bottom-color: var(--dss-error-600);
+    box-shadow: 0 1px 0 0 var(--dss-error-600);
+  }
+
+  /* Disabled state */
+  &.dss-input--disabled .dss-input__field {
+    border-bottom-style: dotted;
+    border-bottom-color: var(--dss-gray-300);
+  }
+
+  /* Readonly state - completamente sem bordas */
+  &.dss-input--readonly .dss-input__field {
+    border-bottom-color: transparent;
+  }
+
+  /* Hover (not disabled/readonly/focused) */
+  &:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+    border-bottom-color: var(--dss-gray-400);
+  }
+
+  /* Remove padding from control (já que não há container visual) */
+  .dss-input__control {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

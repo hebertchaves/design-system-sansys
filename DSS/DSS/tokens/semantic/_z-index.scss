@@ -1,0 +1,70 @@
+/* ==========================================================================
+   DSS - TOKENS DE Z-INDEX
+   Sistema de camadas para controle de profundidade
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. CAMADAS BASE
+     =========================================== */
+  --dss-z-index-auto: auto;
+  --dss-z-index-0: 0;
+  --dss-z-index-10: 10;
+  --dss-z-index-20: 20;
+  --dss-z-index-30: 30;
+  --dss-z-index-40: 40;
+  --dss-z-index-50: 50;
+  
+  /* ===========================================
+     2. CAMADAS SEMÂNTICAS (ORDENADAS)
+     =========================================== */
+  --dss-z-index-below: -1;                /* Para elementos que devem ficar atrás */
+  --dss-z-index-default: 0;               /* Posição padrão do documento */
+  --dss-z-index-above: 1;                 /* Acima do padrão */
+  
+  /* Elementos flutuantes básicos */
+  --dss-z-index-dropdown: 1000;           /* Dropdowns, selects */
+  --dss-z-index-sticky: 1020;             /* Elementos sticky */
+  --dss-z-index-fixed: 1030;              /* Elementos fixed */
+  
+  /* Overlays e backdrops */
+  --dss-z-index-backdrop: 1040;           /* Backdrops de modais/drawers */
+  --dss-z-index-offcanvas: 1050;          /* Offcanvas/sidebars */
+  --dss-z-index-modal: 1060;              /* Modais/dialogs */
+  --dss-z-index-popover: 1070;            /* Popovers, tooltips */
+  --dss-z-index-tooltip: 1080;            /* Tooltips (acima de popovers) */
+  
+  /* Notificações e alerts */
+  --dss-z-index-toast: 1090;              /* Toasts/notificações */
+  --dss-z-index-alert: 1100;              /* Alerts importantes */
+  
+  /* Níveis máximos */
+  --dss-z-index-maximum: 9999;            /* Para casos extremos */
+  
+  /* ===========================================
+     3. CAMADAS PARA COMPONENTES ESPECÍFICOS
+     =========================================== */
+  /* Navegação */
+  --dss-z-index-navbar: 1030;             /* Navbar fixa */
+  --dss-z-index-sidebar: 1040;            /* Sidebar overlay */
+  
+  /* Formulários */
+  --dss-z-index-form-control: 10;         /* Para inputs com dropdown */
+  --dss-z-index-datepicker: 1050;         /* Datepickers */
+  
+  /* Loaders e overlays */
+  --dss-z-index-loader: 1100;             /* Loaders de página inteira */
+  --dss-z-index-progress: 50;             /* Progress bars fixas */
+  
+  /* ===========================================
+     4. CAMADAS DE FOCO E INTERATIVIDADE
+     =========================================== */
+  --dss-z-index-focus: 9999;              /* Garantir que foco fique visível */
+  
+  /* ===========================================
+     5. UTILITÁRIOS
+     =========================================== */
+  --dss-z-index-hide: -9999;              /* Para esconder elementos completamente */
+  --dss-z-index-behind: -1;               /* Colocar atrás do elemento pai */
+  --dss-z-index-front: 9999;              /* Trazer para frente */
+}

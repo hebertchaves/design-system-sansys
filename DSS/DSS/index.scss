@@ -1,0 +1,16 @@
+/* ==========================================================================
+   DSS (Design System Sansys) - ENTRY POINT PRINCIPAL
+   Sistema de Design completo com suporte a Dark Mode
+   ========================================================================== */
+
+/* 1. Tokens base (globals, semantic, brand) + Dark Mode */
+@import 'tokens/index';
+
+/* 2. Utilitarios (mixins, functions, helpers) */
+@import 'utils/index';
+
+/* 3. Temas (Quasar overrides) */
+@import 'themes/index';
+
+/* 4. Componentes (estilos globais) */
+@import 'components/index';

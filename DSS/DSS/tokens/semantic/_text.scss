@@ -1,0 +1,31 @@
+/* ==========================================================================
+   DSS - TOKENS DE TEXTO
+   Hierarquia tipográfica - SISTEMA PRÓPRIO
+   ========================================================================== */
+
+:root {
+  /* Text Hierarchy */
+  --dss-text-body: var(--dss-dark);               /* #454545 - Texto principal */
+  --dss-text-subtle: var(--dss-dark-light);       /* #B0B0B0 - Texto secundário */
+  --dss-text-muted: var(--dss-dark-disable);      /* #D7D7D7 - Texto terciário */
+  --dss-text-inverse: var(--dss-gray-50);         /* #ffffff - Texto claro */
+  
+  /* Text States */
+  --dss-text-disabled: var(--dss-gray-400);       /* #d4d4d4 - Texto desabilitado */
+  
+  /* Text Actions */
+  --dss-text-action: var(--dss-action-primary);     /* Links padrão */
+  --dss-text-action-hover: var(--dss-action-primary-hover);
+  --dss-text-action-alt: var(--dss-action-secondary); /* Links alternativos */
+  
+  /* Text Feedback */
+  --dss-text-success: var(--dss-positive);
+  --dss-text-error: var(--dss-negative);
+  --dss-text-warning: var(--dss-warning);
+  --dss-text-info: var(--dss-info);
+  
+  /* Text Brand (para uso em contextos específicos) */
+  --dss-text-brand-hub: var(--dss-hub-500);
+  --dss-text-brand-water: var(--dss-water-500);
+  --dss-text-brand-waste: var(--dss-waste-500);
+}

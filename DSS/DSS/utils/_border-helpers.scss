@@ -1,0 +1,94 @@
+/* ==========================================================================
+   DSS - UTILITÁRIOS ESPECÍFICOS PARA BORDAS
+   Classes para bordas mais específicas
+   ========================================================================== */
+
+.dss {
+  /* Bordas por lado */
+  &-border-t {
+    &-gray-300 { border-top: var(--dss-border-gray-300); }
+    &-primary { border-top: var(--dss-border-primary); }
+    &-error { border-top: var(--dss-border-error); }
+    &-success { border-top: var(--dss-border-success); }
+  }
+  
+  &-border-r {
+    &-gray-300 { border-right: var(--dss-border-gray-300); }
+    &-primary { border-right: var(--dss-border-primary); }
+  }
+  
+  &-border-b {
+    &-gray-300 { border-bottom: var(--dss-border-gray-300); }
+    &-primary { border-bottom: var(--dss-border-primary); }
+    &-hub { border-bottom: var(--dss-border-hub-500); }
+    &-water { border-bottom: var(--dss-border-water-500); }
+    &-waste { border-bottom: var(--dss-border-waste-500); }
+  }
+  
+  &-border-l {
+    &-gray-300 { border-left: var(--dss-border-gray-300); }
+    &-primary { border-left: var(--dss-border-primary); }
+    &-accent { border-left: var(--dss-border-accent); }
+  }
+  
+  /* Bordas para inputs - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+  &-border-input {
+    border: 1px solid var(--dss-gray-300);
+
+    &--hover { border: 1px solid var(--dss-gray-400); }
+    &--focus { border: 2px solid var(--dss-action-primary); }
+    &--error { border: 2px solid var(--dss-negative); }
+    &--success { border: 2px solid var(--dss-positive); }
+    &--disabled { border: 1px solid var(--dss-gray-200); }
+  }
+
+  /* Bordas para cards - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+  &-border-card {
+    border: 1px solid var(--dss-gray-200);
+
+    &--elevated { border: 1px solid var(--dss-gray-300); }
+    &--selected { border: 2px solid var(--dss-action-primary); }
+  }
+
+  /* Bordas para dividers - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+  &-border-divider {
+    &--subtle { border: 1px solid var(--dss-gray-100); }
+    &--default { border: 1px solid var(--dss-gray-200); }
+    &--strong { border: 1px solid var(--dss-gray-300); }
+  }
+  
+  /* Bordas com espessuras diferentes */
+  &-border-width {
+    &-thin { border-width: 1px; }
+    &-medium { border-width: 2px; }
+    &-thick { border-width: 3px; }
+    &-xthick { border-width: 4px; }
+  }
+  
+  /* Bordas arredondadas por lado */
+  &-rounded-t {
+    &-none { border-top-left-radius: 0; border-top-right-radius: 0; }
+    &-sm { border-top-left-radius: var(--dss-radius-sm); border-top-right-radius: var(--dss-radius-sm); }
+    &-md { border-top-left-radius: var(--dss-radius-md); border-top-right-radius: var(--dss-radius-md); }
+    &-lg { border-top-left-radius: var(--dss-radius-lg); border-top-right-radius: var(--dss-radius-lg); }
+  }
+  
+  &-rounded-b {
+    &-none { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    &-sm { border-bottom-left-radius: var(--dss-radius-sm); border-bottom-right-radius: var(--dss-radius-sm); }
+    &-md { border-bottom-left-radius: var(--dss-radius-md); border-bottom-right-radius: var(--dss-radius-md); }
+    &-lg { border-bottom-left-radius: var(--dss-radius-lg); border-bottom-right-radius: var(--dss-radius-lg); }
+  }
+  
+  &-rounded-l {
+    &-none { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+    &-sm { border-top-left-radius: var(--dss-radius-sm); border-bottom-left-radius: var(--dss-radius-sm); }
+    &-md { border-top-left-radius: var(--dss-radius-md); border-bottom-left-radius: var(--dss-radius-md); }
+  }
+  
+  &-rounded-r {
+    &-none { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+    &-sm { border-top-right-radius: var(--dss-radius-sm); border-bottom-right-radius: var(--dss-radius-sm); }
+    &-md { border-top-right-radius: var(--dss-radius-md); border-bottom-right-radius: var(--dss-radius-md); }
+  }
+}

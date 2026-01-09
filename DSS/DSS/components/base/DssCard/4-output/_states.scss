@@ -1,0 +1,70 @@
+/* ==========================================================================
+   DssCard - LAYER 4: OUTPUT (States)
+
+   Responsabilidade: Estados especiais (dark mode, disabled, loading)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+.dss-card--dark,
+[data-theme="dark"] .dss-card {
+  background-color: var(--dss-surface-dark);
+  color: var(--dss-text-inverse);
+
+  /* Section dividers */
+  .dss-card-section + .dss-card-section,
+  .dss-card-actions {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Bordered variant em dark mode */
+  &.dss-card--bordered,
+  &.dss-card--outlined {
+    border-color: rgba(255, 255, 255, 0.2);
+
+    &.dss-card--clickable:hover {
+      border-color: var(--dss-action-primary);
+    }
+  }
+}
+
+/* ==========================================================================
+   FOCUS STATE (para cards clickable acessíveis)
+   ========================================================================== */
+
+.dss-card--clickable {
+  /* Tornar focusável via teclado */
+  &[tabindex="0"]:focus-visible {
+    outline: none;
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+}
+
+/* ==========================================================================
+   LOADING STATE (opcional)
+   ========================================================================== */
+
+.dss-card--loading {
+  position: relative;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Dark mode loading */
+[data-theme="dark"] .dss-card--loading::after {
+  background-color: rgba(0, 0, 0, 0.5);
+}

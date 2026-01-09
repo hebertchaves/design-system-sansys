@@ -1,0 +1,22 @@
+/* ==========================================================================
+   DSS - TOKENS DE SUPERFÍCIE
+   Fundos e containers - SISTEMA PRÓPRIO
+   ========================================================================== */
+
+:root {
+  /* Surface Hierarchy */
+  --dss-surface-default: var(--dss-gray-50);           /* #ffffff - Fundo principal */
+  --dss-surface-subtle: var(--dss-gray-100);           /* #fafafa - Elevação suave */
+  --dss-surface-muted: var(--dss-gray-200);            /* #f5f5f5 - Áreas rebaixadas */
+  --dss-surface-overlay: rgba(0, 0, 0, 0.5);          /* Overlay escuro */
+  
+  /* Surface States */
+  --dss-surface-hover: rgba(0, 0, 0, 0.04);
+  --dss-surface-active: rgba(0, 0, 0, 0.08);
+  --dss-surface-selected: rgba(31, 134, 222, 0.12);   /* Primary com 12% opacidade */
+  --dss-surface-disabled: var(--dss-gray-200);        /* #f5f5f5 */
+  
+  /* Surface Brand (usando cores de marca com opacidade) */
+  --dss-surface-brand-subtle: rgba(245, 145, 26, 0.08);   /* Hub-500 8% */
+  --dss-surface-brand-light: rgba(245, 145, 26, 0.12);    /* Hub-500 12% */
+}

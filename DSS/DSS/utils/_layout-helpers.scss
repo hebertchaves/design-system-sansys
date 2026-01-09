@@ -1,0 +1,128 @@
+/* ==========================================================================
+   DSS - UTILITÁRIOS DE LAYOUT
+   Classes para layout responsivo e grid
+   ========================================================================== */
+
+.dss {
+  /* Container responsivo */
+  &-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--dss-container-padding);
+    padding-right: var(--dss-container-padding);
+    
+    @media (min-width: 640px) {
+      max-width: 640px;
+    }
+    
+    @media (min-width: 768px) {
+      max-width: 768px;
+    }
+    
+    @media (min-width: 1024px) {
+      max-width: 1024px;
+    }
+    
+    @media (min-width: 1280px) {
+      max-width: 1280px;
+    }
+  }
+  
+  /* Grid responsivo */
+  &-grid {
+    display: grid;
+    gap: var(--dss-grid-gap-md);
+    
+    &-responsive {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    &-2 {
+      @media (min-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    &-3 {
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    &-4 {
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
+  
+  /* Aspect ratio */
+  &-aspect {
+    &-square { aspect-ratio: 1 / 1; }
+    &-video { aspect-ratio: 16 / 9; }
+    &-auto { aspect-ratio: auto; }
+  }
+  
+  /* Object fit */
+  &-object {
+    &-cover { object-fit: cover; }
+    &-contain { object-fit: contain; }
+    &-fill { object-fit: fill; }
+  }
+  
+  /* Width */
+  &-w {
+    &-full { width: 100%; }
+    &-screen { width: 100vw; }
+    &-auto { width: auto; }
+    &-min { width: min-content; }
+    &-max { width: max-content; }
+  }
+  
+  /* Height */
+  &-h {
+    &-full { height: 100%; }
+    &-screen { height: 100vh; }
+    &-auto { height: auto; }
+    &-min { height: min-content; }
+    &-max { height: max-content; }
+  }
+  
+  /* Min/Max dimensions */
+  &-min-w {
+    &-0 { min-width: 0; }
+    &-full { min-width: 100%; }
+    &-screen { min-width: 100vw; }
+  }
+  
+  &-max-w {
+    &-full { max-width: 100%; }
+    &-screen { max-width: 100vw; }
+    &-prose { max-width: 65ch; }
+  }
+  
+  &-min-h {
+    &-0 { min-height: 0; }
+    &-full { min-height: 100%; }
+    &-screen { min-height: 100vh; }
+  }
+  
+  &-max-h {
+    &-full { max-height: 100%; }
+    &-screen { max-height: 100vh; }
+  }
+  
+  /* Responsive helpers */
+  &-hide {
+    &-mobile { @media (max-width: 767px) { display: none !important; } }
+    &-tablet { @media (min-width: 768px) and (max-width: 1023px) { display: none !important; } }
+    &-desktop { @media (min-width: 1024px) { display: none !important; } }
+  }
+  
+  &-show {
+    &-mobile { @media (min-width: 768px) { display: none !important; } }
+    &-tablet { @media (max-width: 767px), (min-width: 1024px) { display: none !important; } }
+    &-desktop { @media (max-width: 1023px) { display: none !important; } }
+  }
+}

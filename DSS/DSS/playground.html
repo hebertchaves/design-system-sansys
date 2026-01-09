@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSS Components Playground - Visual Testing</title>
+
+  <!-- DSS Tokens CSS -->
+  <link rel="stylesheet" href="./index.css">
+
+  <!-- DssCard Styles -->
+  <link rel="stylesheet" href="./components/base/DssCard/DssCard.module.css">
+
+  <!-- DssInput Styles -->
+  <link rel="stylesheet" href="./components/base/DssInput/DssInput.module.css">
+
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #262626;
+      line-height: 1.6;
+    }
+
+    .playground {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .playground__header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 40px;
+      background: linear-gradient(135deg, #1f86de 0%, #26a69a 100%);
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .playground__header h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .playground__header p {
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    .playground__section {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .playground__section-title {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1f86de;
+      border-bottom: 3px solid #1f86de;
+      padding-bottom: 12px;
+      display: inline-block;
+    }
+
+    .playground__section-subtitle {
+      font-size: 16px;
+      color: #737373;
+      margin-bottom: 32px;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 24px;
+    }
+
+    .example {
+      padding: 24px;
+      background: #fafafa;
+      border-radius: 8px;
+      border: 1px solid #e5e5e5;
+    }
+
+    .example__title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #454545;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .example__badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #1f86de;
+      color: white;
+    }
+
+    .example__badge--hub { background: #f5911a; }
+    .example__badge--water { background: #0e88e4; }
+    .example__badge--waste { background: #18b173; }
+    .example__badge--error { background: #dc2626; }
+
+    .example__value {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #737373;
+    }
+
+    .controls {
+      margin-top: 40px;
+      padding: 24px;
+      background: #f0f7ff;
+      border-radius: 8px;
+      border-left: 4px solid #1f86de;
+    }
+
+    .controls__title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #1f86de;
+    }
+
+    .controls__buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .controls__buttons button {
+      padding: 10px 20px;
+      background: white;
+      border: 2px solid #1f86de;
+      border-radius: 6px;
+      color: #1f86de;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .controls__buttons button:hover {
+      background: #1f86de;
+      color: white;
+    }
+
+    .controls__buttons button.active {
+      background: #1f86de;
+      color: white;
+    }
+
+    /* DSS Input Styles Override para garantir que funcione no playground */
+    .dss-input {
+      width: 100%;
+    }
+
+    .dss-card + .dss-card {
+      margin-top: 16px;
+    }
+
+    /* Brand theme wrapper */
+    [data-brand="hub"] { --brand-color: var(--dss-hub-600); }
+    [data-brand="water"] { --brand-color: var(--dss-water-500); }
+    [data-brand="waste"] { --brand-color: var(--dss-waste-600); }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="playground">
+      <!-- Header -->
+      <div class="playground__header">
+        <h1>🎨 DSS Components Playground</h1>
+        <p>Testes visuais dos componentes DssInput e DssCard</p>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <div class="controls__title">⚙️ Configurações Globais</div>
+        <div class="controls__buttons">
+          <button @click="toggleTheme" :class="{ active: darkMode }">
+            {{ darkMode ? '🌙 Dark Mode' : '☀️ Light Mode' }}
+          </button>
+          <button @click="currentBrand = null" :class="{ active: !currentBrand }">
+            Default
+          </button>
+          <button @click="currentBrand = 'hub'" :class="{ active: currentBrand === 'hub' }">
+            🟠 Hub
+          </button>
+          <button @click="currentBrand = 'water'" :class="{ active: currentBrand === 'water' }">
+            🔵 Water
+          </button>
+          <button @click="currentBrand = 'waste'" :class="{ active: currentBrand === 'waste' }">
+            🟢 Waste
+          </button>
+        </div>
+      </div>
+
+      <!-- DssInput Examples -->
+      <div class="playground__section">
+        <h2 class="playground__section-title">DssInput Component</h2>
+        <p class="playground__section-subtitle">Componente de input com 4 variantes e múltiplos estados</p>
+
+        <div class="example-grid">
+          <!-- Example 1: Outlined -->
+          <div class="example">
+            <div class="example__title">
+              Outlined (Padrão)
+              <span class="example__badge">outlined</span>
+            </div>
+            <div class="dss-input dss-input--outlined" :class="brandClass">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label" :class="{ 'dss-input__label--float': input1 }">
+                    Nome completo
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    v-model="input1"
+                    placeholder="Digite seu nome"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="example__value">Valor: {{ input1 || '(vazio)' }}</div>
+          </div>
+
+          <!-- Example 2: Filled -->
+          <div class="example">
+            <div class="example__title">
+              Filled
+              <span class="example__badge">filled</span>
+            </div>
+            <div class="dss-input dss-input--filled" :class="brandClass">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label" :class="{ 'dss-input__label--float': input2 }">
+                    Email
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    v-model="input2"
+                    type="email"
+                    placeholder="exemplo@email.com"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="example__value">Valor: {{ input2 || '(vazio)' }}</div>
+          </div>
+
+          <!-- Example 3: Standout -->
+          <div class="example">
+            <div class="example__title">
+              Standout
+              <span class="example__badge">standout</span>
+            </div>
+            <div class="dss-input dss-input--standout" :class="brandClass">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label" :class="{ 'dss-input__label--float': input3 }">
+                    Buscar
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    v-model="input3"
+                    placeholder="Digite para buscar..."
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="example__value">Valor: {{ input3 || '(vazio)' }}</div>
+          </div>
+
+          <!-- Example 4: Borderless -->
+          <div class="example">
+            <div class="example__title">
+              Borderless
+              <span class="example__badge">borderless</span>
+            </div>
+            <div class="dss-input dss-input--borderless" :class="brandClass">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label" :class="{ 'dss-input__label--float': input4 }">
+                    Comentário
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    v-model="input4"
+                    placeholder="Adicione um comentário..."
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="example__value">Valor: {{ input4 || '(vazio)' }}</div>
+          </div>
+
+          <!-- Example 5: With Error -->
+          <div class="example">
+            <div class="example__title">
+              Com Erro
+              <span class="example__badge example__badge--error">error</span>
+            </div>
+            <div class="dss-input dss-input--outlined dss-input--error">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label dss-input__label--float">
+                    CPF
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    v-model="input5"
+                    placeholder="000.000.000-00"
+                  />
+                </div>
+              </div>
+              <div class="dss-input__bottom">
+                <div class="dss-input__error">CPF inválido</div>
+              </div>
+            </div>
+            <div class="example__value">Valor: {{ input5 || '(vazio)' }}</div>
+          </div>
+
+          <!-- Example 6: Dense -->
+          <div class="example">
+            <div class="example__title">
+              Dense (Compacto)
+              <span class="example__badge">dense</span>
+            </div>
+            <div class="dss-input dss-input--outlined dss-input--dense" :class="brandClass">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label" :class="{ 'dss-input__label--float': input6 }">
+                    Código
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    v-model="input6"
+                    placeholder="Digite o código"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="example__value">Valor: {{ input6 || '(vazio)' }}</div>
+          </div>
+
+          <!-- Example 7: Disabled -->
+          <div class="example">
+            <div class="example__title">
+              Disabled
+              <span class="example__badge">disabled</span>
+            </div>
+            <div class="dss-input dss-input--outlined dss-input--disabled">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label dss-input__label--float">
+                    Campo Desabilitado
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    value="Não editável"
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example 8: With Hint -->
+          <div class="example">
+            <div class="example__title">
+              Com Hint
+              <span class="example__badge">hint</span>
+            </div>
+            <div class="dss-input dss-input--outlined" :class="brandClass">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label" :class="{ 'dss-input__label--float': input8 }">
+                    Username
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    v-model="input8"
+                    placeholder="Escolha um username"
+                  />
+                </div>
+              </div>
+              <div class="dss-input__bottom">
+                <div class="dss-input__hint">Mínimo de 6 caracteres</div>
+              </div>
+            </div>
+            <div class="example__value">Valor: {{ input8 || '(vazio)' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DssCard Examples -->
+      <div class="playground__section">
+        <h2 class="playground__section-title">DssCard Component</h2>
+        <p class="playground__section-subtitle">Componente de card com 4 variantes e suporte a brandability</p>
+
+        <div class="example-grid">
+          <!-- Card Example 1: Elevated -->
+          <div class="example">
+            <div class="example__title">
+              Elevated (Padrão)
+              <span class="example__badge">elevated</span>
+            </div>
+            <div class="dss-card dss-card--elevated" :class="brandCardClass">
+              <div class="dss-card-section">
+                <h3>Card Title</h3>
+                <p>This is an elevated card with default shadow.</p>
+              </div>
+              <div class="dss-card-actions" style="display: flex; justify-content: flex-end; gap: 8px; padding: 16px;">
+                <button style="padding: 8px 16px; border: 1px solid #d4d4d4; border-radius: 4px; background: white; cursor: pointer;">Cancel</button>
+                <button style="padding: 8px 16px; border: none; border-radius: 4px; background: #1f86de; color: white; cursor: pointer;">OK</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Example 2: Flat -->
+          <div class="example">
+            <div class="example__title">
+              Flat
+              <span class="example__badge">flat</span>
+            </div>
+            <div class="dss-card dss-card--flat" :class="brandCardClass">
+              <div class="dss-card-section">
+                <h3>Flat Card</h3>
+                <p>No elevation, clean look.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Example 3: Bordered -->
+          <div class="example">
+            <div class="example__title">
+              Bordered
+              <span class="example__badge">bordered</span>
+            </div>
+            <div class="dss-card dss-card--bordered" :class="brandCardClass">
+              <div class="dss-card-section">
+                <h3>Bordered Card</h3>
+                <p>Has both border and elevation.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Example 4: Outlined -->
+          <div class="example">
+            <div class="example__title">
+              Outlined
+              <span class="example__badge">outlined</span>
+            </div>
+            <div class="dss-card dss-card--outlined" :class="brandCardClass">
+              <div class="dss-card-section">
+                <h3>Outlined Card</h3>
+                <p>Border only, no elevation.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Example 5: Clickable -->
+          <div class="example">
+            <div class="example__title">
+              Clickable
+              <span class="example__badge">clickable</span>
+            </div>
+            <div class="dss-card dss-card--elevated dss-card--clickable" :class="brandCardClass" style="cursor: pointer;" @click="alert('Card clicked!')">
+              <div class="dss-card-section">
+                <h3>Clickable Card</h3>
+                <p>Hover to see elevation increase.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Example 6: Complex -->
+          <div class="example">
+            <div class="example__title">
+              Complex (Multi-section)
+              <span class="example__badge">complex</span>
+            </div>
+            <div class="dss-card dss-card--elevated" :class="brandCardClass">
+              <div class="dss-card-section">
+                <h3>Card Header</h3>
+              </div>
+              <div class="dss-card-section">
+                <p>Main content area.</p>
+                <ul style="margin-left: 20px; margin-top: 8px;">
+                  <li>Feature 1</li>
+                  <li>Feature 2</li>
+                  <li>Feature 3</li>
+                </ul>
+              </div>
+              <div class="dss-card-actions" style="display: flex; justify-content: space-between; padding: 16px;">
+                <button style="padding: 8px 16px; border: 1px solid #dc2626; border-radius: 4px; background: white; color: #dc2626; cursor: pointer;">Delete</button>
+                <div style="display: flex; gap: 8px;">
+                  <button style="padding: 8px 16px; border: 1px solid #d4d4d4; border-radius: 4px; background: white; cursor: pointer;">Cancel</button>
+                  <button style="padding: 8px 16px; border: none; border-radius: 4px; background: #1f86de; color: white; cursor: pointer;">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brand Showcase -->
+      <div class="playground__section" v-if="currentBrand">
+        <h2 class="playground__section-title">{{ brandName }} Brand Showcase</h2>
+        <p class="playground__section-subtitle">Exemplos com accent color da marca {{ brandName }}</p>
+
+        <div class="example-grid">
+          <div class="example">
+            <div class="example__title">
+              Input {{ brandName }}
+              <span class="example__badge" :class="'example__badge--' + currentBrand">{{ currentBrand }}</span>
+            </div>
+            <div class="dss-input dss-input--outlined dss-input--focused" :class="brandClass">
+              <div class="dss-input__field">
+                <div class="dss-input__control">
+                  <label class="dss-input__label dss-input__label--float">
+                    {{ brandName }} Input
+                  </label>
+                  <input
+                    class="dss-input__native"
+                    value="Focus para ver accent color"
+                  />
+                </div>
+              </div>
+              <div class="dss-input__bottom">
+                <div class="dss-input__hint">Accent color {{ brandName }} no focus</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="example">
+            <div class="example__title">
+              Card {{ brandName }}
+              <span class="example__badge" :class="'example__badge--' + currentBrand">{{ currentBrand }}</span>
+            </div>
+            <div class="dss-card dss-card--outlined" :class="brandCardClass">
+              <div class="dss-card-section">
+                <h3>{{ brandName }} Card</h3>
+                <p>Card com accent color {{ brandName }}.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          darkMode: false,
+          currentBrand: null,
+          input1: '',
+          input2: '',
+          input3: '',
+          input4: '',
+          input5: '123.456.789',
+          input6: '',
+          input8: ''
+        }
+      },
+      computed: {
+        brandClass() {
+          return this.currentBrand ? `dss-input--brand-${this.currentBrand}` : '';
+        },
+        brandCardClass() {
+          return this.currentBrand ? `dss-card--brand-${this.currentBrand}` : '';
+        },
+        brandName() {
+          const names = {
+            hub: 'Hub',
+            water: 'Water',
+            waste: 'Waste'
+          };
+          return names[this.currentBrand] || '';
+        }
+      },
+      methods: {
+        toggleTheme() {
+          this.darkMode = !this.darkMode;
+          document.documentElement.setAttribute('data-theme', this.darkMode ? 'dark' : 'light');
+        },
+        alert(msg) {
+          window.alert(msg);
+        }
+      },
+      mounted() {
+        console.log('DSS Playground loaded successfully! 🎉');
+        console.log('Components ready: DssInput, DssCard');
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

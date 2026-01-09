@@ -1,0 +1,10 @@
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANTS (Orchestrator)
+
+   Importa todas as variantes disponíveis
+   ========================================================================== */
+
+@forward './filled';
+@forward './outlined';
+@forward './standout';
+@forward './borderless';

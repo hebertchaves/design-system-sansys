@@ -1,0 +1,192 @@
+/* ==========================================================================
+   DSS - MAPEAMENTO DE TOKENS QUASAR → DSS
+   Tradução das variáveis do Quasar para nossos tokens
+   ========================================================================== */
+
+/* ===========================================
+   1. CORES PRINCIPAIS DO QUASAR
+   =========================================== */
+
+/* Primary Colors - Mapeamento para nossos tokens de ação */
+$primary: var(--dss-action-primary) !default;
+$primary-hover: var(--dss-action-primary-hover) !default;
+$primary-active: var(--dss-action-primary-deep) !default;
+
+/* Secondary Colors */
+$secondary: var(--dss-action-secondary) !default;
+$secondary-hover: var(--dss-action-secondary-hover) !default;
+$secondary-active: var(--dss-action-secondary-deep) !default;
+
+/* Accent Colors */
+$accent: var(--dss-action-accent) !default;
+$accent-hover: var(--dss-action-accent-hover) !default;
+$accent-active: var(--dss-action-accent-deep) !default;
+
+/* ===========================================
+   2. CORES SEMÂNTICAS DO QUASAR
+   =========================================== */
+
+/* Positive/Negative/Warning/Info - Mapeamento para feedback tokens */
+$positive: var(--dss-feedback-success) !default;
+$negative: var(--dss-feedback-error) !default;
+$warning: var(--dss-feedback-warning) !default;
+$info: var(--dss-feedback-info) !default;
+
+/* Dark/Light - Mapeamento para nossos neutros */
+$dark: var(--dss-text-body) !default;
+$light: var(--dss-text-subtle) !default;
+
+/* ===========================================
+   3. CORES DE ESTADO E BACKGROUND
+   =========================================== */
+
+$faded: var(--dss-text-muted) !default;
+$separator-color: var(--dss-border-gray-200) !default;
+$separator-dark-color: var(--dss-border-gray-300) !default;
+
+/* Backgrounds */
+$body-bg: var(--dss-surface-default) !default;
+$body-color: var(--dss-text-body) !default;
+
+$toolbar-bg: var(--dss-surface-subtle) !default;
+$toolbar-color: var(--dss-text-body) !default;
+
+$card-bg: var(--dss-surface-default) !default;
+$card-color: var(--dss-text-body) !default;
+
+/* ===========================================
+   4. CORES DE FORMULÁRIOS
+   =========================================== */
+
+$input-bg: var(--dss-surface-default) !default;
+$input-color: var(--dss-text-body) !default;
+$input-border-color: var(--dss-gray-300) !default; /* refatoração Jan 2025 Sprint 2 */
+$input-focus-border-color: var(--dss-action-primary) !default; /* refatoração Jan 2025 Sprint 2 */
+$input-error-border-color: var(--dss-negative) !default; /* refatoração Jan 2025 Sprint 2 */
+
+$label-color: var(--dss-text-body) !default;
+
+/* ===========================================
+   5. CORES DE BOTÕES
+   =========================================== */
+
+$button-background: transparent !default;
+$button-color: inherit !default;
+
+$button-primary-background: var(--dss-action-primary) !default;
+$button-primary-color: white !default;
+
+$button-secondary-background: var(--dss-action-secondary) !default;
+$button-secondary-color: white !default;
+
+$button-accent-background: var(--dss-action-accent) !default;
+$button-accent-color: white !default;
+
+/* ===========================================
+   6. CORES DE LINKS
+   =========================================== */
+
+$link-color: var(--dss-text-action) !default;
+$link-hover-color: var(--dss-text-action-hover) !default;
+$link-visited-color: var(--dss-text-action) !default;
+
+/* ===========================================
+   7. TOKENS DE MARCA DINÂMICOS
+   Sobrescritos via [data-brand]
+   =========================================== */
+
+:root {
+  /* Valores padrão (fallback para semantic tokens) */
+  --quasar-primary: var(--dss-action-primary);
+  --quasar-secondary: var(--dss-action-secondary);
+  --quasar-accent: var(--dss-action-accent);
+}
+
+[data-brand="hub"] {
+  --quasar-primary: var(--dss-brand-primary, var(--dss-action-primary));
+  --quasar-primary-hover: var(--dss-brand-primary-hover, var(--dss-action-primary-hover));
+}
+
+[data-brand="water"] {
+  --quasar-primary: var(--dss-brand-primary, var(--dss-action-primary));
+  --quasar-primary-hover: var(--dss-brand-primary-hover, var(--dss-action-primary-hover));
+}
+
+[data-brand="waste"] {
+  --quasar-primary: var(--dss-brand-primary, var(--dss-action-primary));
+  --quasar-primary-hover: var(--dss-brand-primary-hover, var(--dss-action-primary-hover));
+}
+
+/* ===========================================
+   8. TOKENS DE ESPAÇAMENTO E TAMANHO
+   =========================================== */
+
+/* Border Radius - usa tokens genéricos (refatoração Jan 2025 Sprint 1) */
+$generic-border-radius: var(--dss-radius-md) !default;
+$button-border-radius: var(--dss-radius-md) !default;
+$input-border-radius: var(--dss-radius-md) !default;
+
+/* Sizing - usa tokens genéricos (refatoração Jan 2025 Sprint 1) */
+$button-padding: var(--dss-spacing-2) var(--dss-spacing-4) !default;
+$input-padding: var(--dss-spacing-2) var(--dss-spacing-3) !default;
+
+/* ===========================================
+   9. TOKENS DE SOMBRA
+   =========================================== */
+
+$shadow-color: rgba(0, 0, 0, 0.1) !default;
+$shadow-transition: box-shadow var(--dss-transition-base) !default;
+
+$shadow-0: none !default;
+$shadow-1: var(--dss-shadow-sm) !default;
+$shadow-2: var(--dss-shadow-md) !default;
+$shadow-3: var(--dss-shadow-lg) !default;
+$shadow-4: var(--dss-shadow-xl) !default;
+$shadow-5: var(--dss-shadow-2xl) !default;
+$shadow-up-1: 0 -1px 3px rgba(0, 0, 0, 0.1) !default;
+
+/* ===========================================
+   10. TOKENS DE TIPOGRAFIA
+   =========================================== */
+
+/* Font Families */
+$typography-font-family: var(--dss-font-family-sans) !default;
+$monospace-font-family: var(--dss-font-family-mono) !default;
+
+/* Font Sizes - Mapeamento para scale acessível */
+$text-h1: var(--dss-heading-1-size) !default;
+$text-h2: var(--dss-heading-2-size) !default;
+$text-h3: var(--dss-heading-3-size) !default;
+$text-h4: var(--dss-heading-4-size) !default;
+$text-h5: var(--dss-heading-5-size) !default;
+$text-h6: var(--dss-heading-6-size) !default;
+
+$text-subtitle1: calc(var(--dss-font-size-lg) * 0.875) !default;
+$text-subtitle2: calc(var(--dss-font-size-base) * 0.875) !default;
+$text-body1: var(--dss-font-size-base) !default;
+$text-body2: var(--dss-font-size-sm) !default;
+$text-caption: var(--dss-font-size-xs) !default;
+$text-overline: var(--dss-font-size-xs) !default;
+
+/* Font Weights */
+$text-weight-thin: var(--dss-font-weight-light) !default;
+$text-weight-light: var(--dss-font-weight-light) !default;
+$text-weight-regular: var(--dss-font-weight-normal) !default;
+$text-weight-medium: var(--dss-font-weight-medium) !default;
+$text-weight-semibold: var(--dss-font-weight-semibold) !default;
+$text-weight-bold: var(--dss-font-weight-bold) !default;
+$text-weight-bolder: var(--dss-font-weight-extrabold) !default;
+
+/* Line Heights */
+$body-line-height: var(--dss-line-height-base) !default;
+$heading-line-height: 1.2 !default;
+
+/* ===========================================
+   11. TOKENS DE ANIMAÇÃO
+   =========================================== */
+
+$animation-duration: var(--dss-duration-base) !default;
+$animation-easing: var(--dss-easing-standard) !default;
+
+$transition-duration: var(--dss-duration-base) !default;
+$transition-easing: var(--dss-easing-standard) !default;

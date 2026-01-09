@@ -1,0 +1,106 @@
+/* ==========================================================================
+   DssCard - LAYER 2: COMPOSITION (Base Styles)
+
+   Responsabilidade: Definir estilos base do card usando APENAS tokens genéricos
+   Filosofia DSS: Tokens = Provedores, Componentes = Consumidores
+   ========================================================================== */
+
+@import '../../../../utils/index';
+
+/* ==========================================================================
+   BASE CARD CONTAINER
+   ========================================================================== */
+
+.dss-card {
+  /* Reset */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  /* Background */
+  background-color: var(--dss-surface-default);
+
+  /* Border radius - usa token genérico */
+  border-radius: var(--dss-radius-lg);
+
+  /* Overflow */
+  overflow: hidden;
+
+  /* Typography inheritance */
+  color: var(--dss-text-body);
+
+  /* Transitions */
+  @include dss-transition(all, 'fast');
+
+  /* Square variant */
+  &.dss-card--square {
+    border-radius: 0;
+  }
+}
+
+/* ==========================================================================
+   CARD SECTION (Content Area)
+   ========================================================================== */
+
+.dss-card-section {
+  /* Layout */
+  padding: var(--dss-spacing-6);
+
+  /* Horizontal variant */
+  &.dss-card-section--horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--dss-spacing-4);
+  }
+
+  /* Typography */
+  font-size: var(--dss-font-size-base);
+  line-height: var(--dss-line-height-relaxed);
+
+  /* Dividers between sections */
+  & + & {
+    border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  }
+}
+
+/* ==========================================================================
+   CARD ACTIONS (Button Area)
+   ========================================================================== */
+
+.dss-card-actions {
+  /* Layout */
+  display: flex;
+  padding: var(--dss-spacing-4);
+  gap: var(--dss-spacing-2);
+
+  /* Alignment variants */
+  &.dss-card-actions--align-left {
+    justify-content: flex-start;
+  }
+
+  &.dss-card-actions--align-center {
+    justify-content: center;
+  }
+
+  &.dss-card-actions--align-right {
+    justify-content: flex-end;
+  }
+
+  &.dss-card-actions--align-between {
+    justify-content: space-between;
+  }
+
+  &.dss-card-actions--align-around {
+    justify-content: space-around;
+  }
+
+  /* Vertical variant */
+  &.dss-card-actions--vertical {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Divider above actions */
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+}

@@ -1,0 +1,272 @@
+/**
+ * DssAvatar - Base Styles
+ * Compatível com q-avatar do Quasar Framework
+ * Usa apenas tokens genéricos do DSS (cores vão em _colors.scss)
+ */
+
+.dss-avatar {
+  // Display e Layout
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  vertical-align: middle;
+
+  // Dimensões padrão (compatível com Quasar)
+  width: var(--dss-touch-target-md); // 48px - tamanho padrão
+  height: var(--dss-touch-target-md);
+
+  // Forma circular por padrão
+  border-radius: var(--dss-border-radius-full); // 999px - círculo
+
+  // Tipografia
+  font-family: var(--dss-font-family-base);
+  font-size: var(--dss-font-size-base); // 16px
+  font-weight: var(--dss-font-weight-medium);
+  line-height: 1;
+  text-align: center;
+
+  // Overflow para imagens/conteúdo
+  overflow: hidden;
+
+  // Background padrão (será sobrescrito por cores específicas)
+  background-color: var(--dss-neutral-200);
+  color: var(--dss-neutral-700);
+
+  // Transições
+  transition: all var(--dss-transition-base);
+
+  // Prevenir seleção de texto
+  user-select: none;
+}
+
+/* ========================================
+   CONTEÚDO INTERNO
+   ======================================== */
+
+.dss-avatar__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  // Imagens devem preencher todo o avatar
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Texto deve ser centralizado
+  > span,
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ========================================
+   ÍCONE (Material Icons)
+   ======================================== */
+
+.dss-avatar__icon {
+  font-family: 'Material Icons';
+  font-size: var(--dss-icon-size-md); // 24px - ícone médio dentro do avatar
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Prevenir seleção do ícone
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ========================================
+   VARIANTES DE FORMA
+   ======================================== */
+
+// Square - sem border-radius
+.dss-avatar--square {
+  border-radius: 0;
+}
+
+// Rounded - border-radius menor (não é círculo, não é quadrado)
+.dss-avatar--rounded {
+  border-radius: var(--dss-border-radius-md); // 8px - arredondado mas não circular
+}
+
+/* ========================================
+   TAMANHOS CUSTOMIZÁVEIS
+   ======================================== */
+
+// Tamanho xs (extra small) - 32px
+.dss-avatar--xs {
+  width: var(--dss-touch-target-sm);
+  height: var(--dss-touch-target-sm);
+  font-size: var(--dss-font-size-xs);
+
+  .dss-avatar__icon {
+    font-size: var(--dss-icon-size-sm); // 16px
+  }
+}
+
+// Tamanho sm (small) - 40px
+.dss-avatar--sm {
+  width: 40px;
+  height: 40px;
+  font-size: var(--dss-font-size-sm);
+
+  .dss-avatar__icon {
+    font-size: var(--dss-icon-size-sm); // 20px
+  }
+}
+
+// Tamanho md (medium) - 48px (padrão, já definido na classe base)
+
+// Tamanho lg (large) - 64px
+.dss-avatar--lg {
+  width: var(--dss-touch-target-xl);
+  height: var(--dss-touch-target-xl);
+  font-size: var(--dss-font-size-lg);
+
+  .dss-avatar__icon {
+    font-size: var(--dss-icon-size-lg); // 32px
+  }
+}
+
+// Tamanho xl (extra large) - 80px
+.dss-avatar--xl {
+  width: 80px;
+  height: 80px;
+  font-size: var(--dss-font-size-xl);
+
+  .dss-avatar__icon {
+    font-size: var(--dss-icon-size-xl); // 48px
+  }
+}
+
+/* ========================================
+   AVATAR EM GRUPO (quando múltiplos avatars)
+   ======================================== */
+
+.dss-avatar-group {
+  display: inline-flex;
+  align-items: center;
+
+  .dss-avatar {
+    // Overlap de avatars em grupo
+    margin-left: calc(var(--dss-spacing-2) * -1); // -16px overlap
+
+    // Adicionar borda branca para separação
+    border: 2px solid white;
+    box-shadow: var(--dss-shadow-sm);
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+/* ========================================
+   ESTADOS INTERATIVOS (quando usado como botão)
+   ======================================== */
+
+// Avatar clicável
+button.dss-avatar,
+a.dss-avatar,
+.dss-avatar[role="button"] {
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: var(--dss-shadow-md);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--dss-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+/* ========================================
+   ACESSIBILIDADE
+   ======================================== */
+
+// Avatar com role="img" deve ter alt text via aria-label
+.dss-avatar[role="img"][aria-label] {
+  // Garantir que screen readers possam ler o alt text
+}
+
+// Avatar com imagem deve ter alt text
+.dss-avatar img[alt] {
+  // Imagem com alt text apropriado
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+@media (max-width: 768px) {
+  // Em mobile, avatars grandes ficam um pouco menores
+  .dss-avatar--xl {
+    width: 64px;
+    height: 64px;
+  }
+
+  .dss-avatar--lg {
+    width: 56px;
+    height: 56px;
+  }
+
+  // Avatar group overlap menor em mobile
+  .dss-avatar-group .dss-avatar {
+    margin-left: calc(var(--dss-spacing-1-5) * -1); // -12px overlap
+  }
+}
+
+/* ========================================
+   UTILITÁRIOS
+   ======================================== */
+
+// Avatar com status indicator (online, offline, etc.)
+.dss-avatar--with-status {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: var(--dss-positive); // status online por padrão
+  }
+}
+
+// Modificadores de status
+.dss-avatar--status-online::after {
+  background-color: var(--dss-positive);
+}
+
+.dss-avatar--status-away::after {
+  background-color: var(--dss-warning);
+}
+
+.dss-avatar--status-busy::after {
+  background-color: var(--dss-negative);
+}
+
+.dss-avatar--status-offline::after {
+  background-color: var(--dss-neutral-400);
+}

@@ -1,0 +1,384 @@
+/* ==========================================================================
+   DssButton - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-spacing-*, --dss-radius-*, etc.)
+   ✅ Mixins reutilizáveis (@include dss-transition)
+   ✅ Reset e layout base
+   ❌ ZERO valores hardcoded
+   ❌ ZERO lógica de variantes
+   ========================================================================== */
+
+/* ==========================================================================
+   BUTTON BASE
+   ========================================================================== */
+
+.dss-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dss-spacing-2);
+
+  /* Typography */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: 500;
+  line-height: var(--dss-line-height-tight);
+  text-transform: uppercase;
+  letter-spacing: 0.0892857143em; /* Quasar default */
+  text-decoration: none;
+  white-space: nowrap;
+
+  /* Layout */
+  padding: var(--dss-spacing-2) var(--dss-spacing-4);
+  min-height: var(--dss-touch-target-md); /* 44px - ✅ WCAG 2.1 AA */
+  min-width: var(--dss-spacing-16); /* 64px */
+
+  /* Borders */
+  border: none;
+  border-radius: var(--dss-radius-sm);
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  outline: 0;
+
+  /* Transitions */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Prevent text selection */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove uppercase if noCaps */
+.dss-button--no-caps {
+  text-transform: none;
+}
+
+/* ==========================================================================
+   BUTTON CONTENT
+   ========================================================================== */
+
+.dss-button__label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.dss-button__icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--dss-font-size-lg);
+  line-height: 1;
+
+  /* Material Icons */
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
+}
+
+/* Icon positioning - Ordem natural do DOM (como Quasar) */
+/* Espaçamento automático via gap do .dss-button (flexbox) */
+.dss-button__icon--left {
+  /* Ícone à esquerda - renderizado primeiro no template */
+}
+
+.dss-button__icon--right {
+  /* Ícone à direita - renderizado por último no template */
+}
+
+/* Icon-only buttons */
+.dss-button--icon-only {
+  min-width: var(--dss-touch-target-md); /* 44px - ✅ WCAG 2.1 AA */
+  padding: var(--dss-spacing-2);
+}
+
+/* ==========================================================================
+   LOADING STATE
+   ========================================================================== */
+
+.dss-button__loading {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+}
+
+.dss-button__spinner {
+  display: inline-block;
+  width: var(--dss-spacing-5);
+  height: var(--dss-spacing-5);
+  border: var(--dss-border-width-md) solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--dss-radius-full);
+  animation: dss-button-spin 0.6s linear infinite;
+  opacity: var(--dss-opacity-60);
+}
+
+@keyframes dss-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dss-button--loading {
+  pointer-events: none;
+
+  .dss-button__label,
+  .dss-button__icon {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   DISABLED STATE
+   ========================================================================== */
+
+.dss-button--disabled {
+  opacity: var(--dss-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   SIZE VARIANTS
+   ========================================================================== */
+
+.dss-button--xs {
+  padding: var(--dss-spacing-1) var(--dss-spacing-2);
+  min-height: var(--dss-touch-target-xs); /* 32px - Compacto */
+  min-width: var(--dss-spacing-12); /* 48px */
+  font-size: var(--dss-font-size-xs);
+
+  .dss-button__icon {
+    font-size: var(--dss-font-size-sm);
+  }
+}
+
+.dss-button--sm {
+  padding: calc(var(--dss-spacing-1) + 2px) var(--dss-spacing-3);
+  min-height: var(--dss-touch-target-sm); /* 36px - Denso */
+  min-width: var(--dss-spacing-14); /* 56px */
+  font-size: var(--dss-font-size-sm);
+
+  .dss-button__icon {
+    font-size: var(--dss-font-size-md);
+  }
+}
+
+.dss-button--md {
+  /* Default size - já definido no .dss-button */
+}
+
+.dss-button--lg {
+  padding: var(--dss-spacing-3) var(--dss-spacing-5);
+  min-height: var(--dss-touch-target-lg); /* 52px - Destacado */
+  min-width: var(--dss-spacing-20); /* 80px */
+  font-size: var(--dss-font-size-lg);
+
+  .dss-button__icon {
+    font-size: var(--dss-font-size-xl);
+  }
+}
+
+.dss-button--xl {
+  padding: var(--dss-spacing-4) var(--dss-spacing-6);
+  min-height: var(--dss-touch-target-xl); /* 64px - Extra Grande */
+  min-width: var(--dss-spacing-24); /* 96px */
+  font-size: var(--dss-font-size-xl);
+
+  .dss-button__icon {
+    font-size: calc(var(--dss-font-size-xl) * 1.25);
+  }
+}
+
+/* Icon-only size adjustments */
+.dss-button--icon-only.dss-button--xs {
+  min-width: var(--dss-touch-target-xs); /* 32px */
+}
+
+.dss-button--icon-only.dss-button--sm {
+  min-width: var(--dss-touch-target-sm); /* 36px */
+}
+
+.dss-button--icon-only.dss-button--md {
+  min-width: var(--dss-touch-target-md); /* 44px */
+}
+
+.dss-button--icon-only.dss-button--lg {
+  min-width: var(--dss-touch-target-lg); /* 52px */
+}
+
+.dss-button--icon-only.dss-button--xl {
+  min-width: var(--dss-touch-target-xl); /* 64px */
+}
+
+/* ==========================================================================
+   SHAPE VARIANTS
+   ========================================================================== */
+
+.dss-button--round {
+  border-radius: var(--dss-radius-full);
+}
+
+.dss-button--square {
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   DENSE VARIANT
+   ========================================================================== */
+
+.dss-button--dense {
+  padding: var(--dss-spacing-1) var(--dss-spacing-3);
+  min-height: var(--dss-touch-target-sm); /* 36px - Denso */
+  font-size: var(--dss-font-size-sm);
+}
+
+/* ==========================================================================
+   FOCUS STATE (A11y)
+   ========================================================================== */
+
+.dss-button:focus-visible {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline-offset: var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   PROGRESS BAR (percentage mode - compatível com Quasar)
+   ========================================================================== */
+
+.dss-button__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.dss-button__progress-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: currentColor;
+  opacity: var(--dss-opacity-30);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dss-button__progress--dark .dss-button__progress-indicator {
+  opacity: var(--dss-opacity-60);
+}
+
+/* ==========================================================================
+   RIPPLE EFFECT (compatível com Quasar)
+   ========================================================================== */
+
+.dss-button__ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dss-button:active .dss-button__ripple::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 100%;
+  background-color: currentColor;
+  opacity: var(--dss-opacity-active);
+  border-radius: inherit;
+  transform: translateX(-50%);
+  animation: dss-ripple-horizontal var(--dss-duration-slowest) var(--dss-easing-ease-out);
+}
+
+@keyframes dss-ripple-horizontal {
+  0% {
+    width: 0;
+    opacity: var(--dss-opacity-active);
+  }
+  50% {
+    width: 100%;
+    opacity: var(--dss-opacity-selected);
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   LAYOUT MODIFIERS (compatível com Quasar)
+   ========================================================================== */
+
+/* Align */
+.dss-button--align-left {
+  justify-content: flex-start;
+}
+
+.dss-button--align-right {
+  justify-content: flex-end;
+}
+
+.dss-button--align-between {
+  justify-content: space-between;
+}
+
+.dss-button--align-around {
+  justify-content: space-around;
+}
+
+.dss-button--align-evenly {
+  justify-content: space-evenly;
+}
+
+/* Stack - layout vertical */
+.dss-button--stack {
+  flex-direction: column;
+
+  .dss-button__icon {
+    margin: 0 0 var(--dss-spacing-1) 0;
+  }
+
+  .dss-button__icon--left,
+  .dss-button__icon--right {
+    margin: 0;
+  }
+}
+
+/* Stretch - expande para preencher */
+.dss-button--stretch {
+  width: 100%;
+  max-width: none;
+}
+
+/* No wrap - previne quebra de texto */
+.dss-button--no-wrap {
+  white-space: nowrap;
+
+  .dss-button__label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

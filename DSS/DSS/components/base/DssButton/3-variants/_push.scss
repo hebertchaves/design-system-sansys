@@ -1,0 +1,25 @@
+/* ==========================================================================
+   DssButton - LAYER 3: VARIANT - Push
+
+   RESPONSABILIDADE: Botão com efeito "empurrado" (3D look)
+
+   CARACTERÍSTICAS:
+   - Background sólido
+   - Border-bottom mais escura (efeito 3D)
+   - Click "afunda" o botão
+   ========================================================================== */
+
+.dss-button--push {
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+  transform: translateY(0);
+
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+    transform: translateY(2px);
+  }
+}

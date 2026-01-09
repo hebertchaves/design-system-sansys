@@ -1,0 +1,228 @@
+/* ==========================================================================
+   CLASSES UTILITÁRIAS DE CORES - ESTADOS DE HOVER
+
+   PADRÃO QUASAR FRAMEWORK
+
+   ✅ USA TOKENS DE HOVER DO SISTEMA
+   - --dss-primary-hover, --dss-secondary-hover, etc.
+   - --dss-primary-light para flat/outline
+   - ZERO hardcoding, ZERO filtros CSS
+   ========================================================================== */
+
+/* ==========================================================================
+   HOVER - BOTÕES COM BACKGROUND COLORIDO (elevated, unelevated)
+   ========================================================================== */
+
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+  &.bg-primary {
+    background: var(--dss-primary-hover) !important;
+  }
+
+  &.bg-secondary {
+    background: var(--dss-secondary-hover) !important;
+  }
+
+  &.bg-tertiary {
+    background: var(--dss-tertiary-hover) !important;
+  }
+
+  &.bg-accent {
+    background: var(--dss-accent-hover) !important;
+  }
+
+  &.bg-positive {
+    background: var(--dss-positive-hover) !important;
+  }
+
+  &.bg-negative {
+    background: var(--dss-negative-hover) !important;
+  }
+
+  &.bg-warning {
+    background: var(--dss-warning-hover) !important;
+  }
+
+  &.bg-info {
+    background: var(--dss-info-hover) !important;
+  }
+}
+
+/* ==========================================================================
+   HOVER - BOTÕES FLAT/OUTLINE (apenas texto)
+   ========================================================================== */
+
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading),
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+  &.text-primary {
+    background: var(--dss-primary-light) !important;
+    color: var(--dss-primary-hover) !important;
+  }
+
+  &.text-secondary {
+    background: var(--dss-secondary-light) !important;
+    color: var(--dss-secondary-hover) !important;
+  }
+
+  &.text-tertiary {
+    background: var(--dss-tertiary-light) !important;
+    color: var(--dss-tertiary-hover) !important;
+  }
+
+  &.text-accent {
+    background: var(--dss-accent-light) !important;
+    color: var(--dss-accent-hover) !important;
+  }
+
+  &.text-positive {
+    background: var(--dss-positive-light) !important;
+    color: var(--dss-positive-hover) !important;
+  }
+
+  &.text-negative {
+    background: var(--dss-negative-light) !important;
+    color: var(--dss-negative-hover) !important;
+  }
+
+  &.text-warning {
+    background: var(--dss-warning-light) !important;
+    color: var(--dss-warning-hover) !important;
+  }
+
+  &.text-info {
+    background: var(--dss-info-light) !important;
+    color: var(--dss-info-hover) !important;
+  }
+}
+
+/* ==========================================================================
+   ACTIVE STATE - BOTÕES
+   ========================================================================== */
+
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading) {
+  /* Active state usa hover color + leve scale */
+  transform: scale(0.98);
+
+  &.bg-primary {
+    background: var(--dss-primary-hover) !important;
+  }
+
+  &.bg-secondary {
+    background: var(--dss-secondary-hover) !important;
+  }
+
+  &.bg-tertiary {
+    background: var(--dss-tertiary-hover) !important;
+  }
+
+  &.bg-accent {
+    background: var(--dss-accent-hover) !important;
+  }
+
+  &.bg-positive {
+    background: var(--dss-positive-hover) !important;
+  }
+
+  &.bg-negative {
+    background: var(--dss-negative-hover) !important;
+  }
+
+  &.bg-warning {
+    background: var(--dss-warning-hover) !important;
+  }
+
+  &.bg-info {
+    background: var(--dss-info-hover) !important;
+  }
+}
+
+/* ==========================================================================
+   HOVER - BADGES
+   ========================================================================== */
+
+.dss-badge:hover:not(.dss-badge--transparent) {
+  &.bg-primary {
+    background: var(--dss-primary-hover) !important;
+  }
+
+  &.bg-secondary {
+    background: var(--dss-secondary-hover) !important;
+  }
+
+  &.bg-tertiary {
+    background: var(--dss-tertiary-hover) !important;
+  }
+
+  &.bg-accent {
+    background: var(--dss-accent-hover) !important;
+  }
+
+  &.bg-positive {
+    background: var(--dss-positive-hover) !important;
+  }
+
+  &.bg-negative {
+    background: var(--dss-negative-hover) !important;
+  }
+
+  &.bg-warning {
+    background: var(--dss-warning-hover) !important;
+  }
+
+  &.bg-info {
+    background: var(--dss-info-hover) !important;
+  }
+}
+
+.dss-badge--outline:hover,
+.dss-badge--transparent:hover {
+  &.text-primary {
+    background: var(--dss-primary-light) !important;
+    color: var(--dss-primary-hover) !important;
+  }
+
+  &.text-secondary {
+    background: var(--dss-secondary-light) !important;
+    color: var(--dss-secondary-hover) !important;
+  }
+
+  &.text-tertiary {
+    background: var(--dss-tertiary-light) !important;
+    color: var(--dss-tertiary-hover) !important;
+  }
+
+  &.text-accent {
+    background: var(--dss-accent-light) !important;
+    color: var(--dss-accent-hover) !important;
+  }
+
+  &.text-positive {
+    background: var(--dss-positive-light) !important;
+    color: var(--dss-positive-hover) !important;
+  }
+
+  &.text-negative {
+    background: var(--dss-negative-light) !important;
+    color: var(--dss-negative-hover) !important;
+  }
+
+  &.text-warning {
+    background: var(--dss-warning-light) !important;
+    color: var(--dss-warning-hover) !important;
+  }
+
+  &.text-info {
+    background: var(--dss-info-light) !important;
+    color: var(--dss-info-hover) !important;
+  }
+}
+
+/* ==========================================================================
+   TRANSITIONS
+   ========================================================================== */
+
+.dss-button,
+.dss-badge {
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -1,0 +1,166 @@
+/* ==========================================================================
+   DSS - TOKENS DE ESPAÇAMENTO
+   Sistema de escala para margins, paddings e gaps
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. ESCALA BASE (REM BASED - 1rem = 16px)
+     =========================================== */
+  --dss-spacing-0: 0;                     /* 0px */
+  --dss-spacing-px: 1px;                  /* 1px - para bordas finas */
+  --dss-spacing-0_5: 0.125rem;            /* 2px */
+  --dss-spacing-1: 0.25rem;               /* 4px */
+  --dss-spacing-1_5: 0.375rem;            /* 6px */
+  --dss-spacing-2: 0.5rem;                /* 8px */
+  --dss-spacing-2_5: 0.625rem;            /* 10px */
+  --dss-spacing-3: 0.75rem;               /* 12px */
+  --dss-spacing-3_5: 0.875rem;            /* 14px */
+  --dss-spacing-4: 1rem;                  /* 16px */
+  --dss-spacing-5: 1.25rem;               /* 20px */
+  --dss-spacing-6: 1.5rem;                /* 24px */
+  --dss-spacing-7: 1.75rem;               /* 28px */
+  --dss-spacing-8: 2rem;                  /* 32px */
+  --dss-spacing-9: 2.25rem;               /* 36px */
+  --dss-spacing-10: 2.5rem;               /* 40px */
+  --dss-spacing-11: 2.75rem;              /* 44px */
+  --dss-spacing-12: 3rem;                 /* 48px */
+  --dss-spacing-14: 3.5rem;               /* 56px */
+  --dss-spacing-16: 4rem;                 /* 64px */
+  --dss-spacing-20: 5rem;                 /* 80px */
+  --dss-spacing-24: 6rem;                 /* 96px */
+  --dss-spacing-28: 7rem;                 /* 112px */
+  --dss-spacing-32: 8rem;                 /* 128px */
+  --dss-spacing-36: 9rem;                 /* 144px */
+  --dss-spacing-40: 10rem;                /* 160px */
+  --dss-spacing-44: 11rem;                /* 176px */
+  --dss-spacing-48: 12rem;                /* 192px */
+  --dss-spacing-52: 13rem;                /* 208px */
+  --dss-spacing-56: 14rem;                /* 224px */
+  --dss-spacing-60: 15rem;                /* 240px */
+  --dss-spacing-64: 16rem;                /* 256px */
+  --dss-spacing-72: 18rem;                /* 288px */
+  --dss-spacing-80: 20rem;                /* 320px */
+  --dss-spacing-96: 24rem;                /* 384px */
+  
+  /* ===========================================
+     2. ESPAÇAMENTOS SEMÂNTICOS
+     =========================================== */
+  /* Container e layout */
+  --dss-container-padding: var(--dss-spacing-4);
+  --dss-section-spacing: var(--dss-spacing-12);
+  --dss-component-spacing: var(--dss-spacing-6);
+  
+  /* Grid e gap */
+  --dss-grid-gap-sm: var(--dss-spacing-2);
+  --dss-grid-gap-md: var(--dss-spacing-4);
+  --dss-grid-gap-lg: var(--dss-spacing-6);
+  --dss-grid-gap-xl: var(--dss-spacing-8);
+  
+  /* ===========================================
+     3. ESPAÇAMENTO GENÉRICO PARA FORMULÁRIOS
+     =========================================== */
+  /* Form e labels */
+  --dss-form-gap: var(--dss-spacing-4);
+  --dss-label-margin-bottom: var(--dss-spacing-1);
+
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (16 tokens):
+   * --dss-button-padding-x          → Use: var(--dss-spacing-4)
+   * --dss-button-padding-y          → Use: var(--dss-spacing-2)
+   * --dss-button-padding-compact-x  → Use: var(--dss-spacing-3)
+   * --dss-button-padding-compact-y  → Use: var(--dss-spacing-1_5)
+   * --dss-input-padding-x           → Use: var(--dss-spacing-3)
+   * --dss-input-padding-y           → Use: var(--dss-spacing-2)
+   * --dss-input-height              → Use: var(--dss-spacing-10)
+   * --dss-card-padding              → Use: var(--dss-spacing-6)
+   * --dss-card-padding-compact      → Use: var(--dss-spacing-4)
+   * --dss-modal-padding             → Use: var(--dss-spacing-6)
+   * --dss-modal-header-padding      → Use: var(--dss-spacing-6) var(--dss-spacing-6) var(--dss-spacing-4)
+   * --dss-modal-body-padding        → Use: var(--dss-spacing-6)
+   * --dss-modal-footer-padding      → Use: var(--dss-spacing-4) var(--dss-spacing-6) var(--dss-spacing-6)
+   * --dss-radius-button             → Use: var(--dss-radius-md)
+   * --dss-radius-input              → Use: var(--dss-radius-md)
+   * --dss-radius-card               → Use: var(--dss-radius-lg)
+   *
+   * ✅ BENEFÍCIOS:
+   * - Escalabilidade: 100 componentes = mesmos tokens
+   * - Flexibilidade: Componentes escolhem livremente
+   * - Manutenibilidade: Mudanças isoladas nos componentes
+   *
+   * 📚 Referência: AUDITORIA_DSS_JAN_2025.md
+   *               REFATORACAO_COMPLETA_JAN_2025.md
+   *               DSS_TOKEN_GUIDELINES.md
+   */
+  
+  /* ===========================================
+     4. MARGINS SEMÂNTICAS
+     =========================================== */
+  --dss-margin-auto: auto;
+  --dss-margin-0: var(--dss-spacing-0);
+  --dss-margin-1: var(--dss-spacing-1);
+  --dss-margin-2: var(--dss-spacing-2);
+  --dss-margin-3: var(--dss-spacing-3);
+  --dss-margin-4: var(--dss-spacing-4);
+  --dss-margin-6: var(--dss-spacing-6);
+  --dss-margin-8: var(--dss-spacing-8);
+  --dss-margin-12: var(--dss-spacing-12);
+  --dss-margin-16: var(--dss-spacing-16);
+  
+  /* ===========================================
+     5. PADDINGS SEMÂNTICOS
+     =========================================== */
+  --dss-padding-0: var(--dss-spacing-0);
+  --dss-padding-1: var(--dss-spacing-1);
+  --dss-padding-2: var(--dss-spacing-2);
+  --dss-padding-3: var(--dss-spacing-3);
+  --dss-padding-4: var(--dss-spacing-4);
+  --dss-padding-6: var(--dss-spacing-6);
+  --dss-padding-8: var(--dss-spacing-8);
+  --dss-padding-12: var(--dss-spacing-12);
+  --dss-padding-16: var(--dss-spacing-16);
+  
+  /* ===========================================
+     6. GAPS SEMÂNTICOS (FLEX/GRID)
+     =========================================== */
+  --dss-gap-0: var(--dss-spacing-0);
+  --dss-gap-1: var(--dss-spacing-1);
+  --dss-gap-2: var(--dss-spacing-2);
+  --dss-gap-3: var(--dss-spacing-3);
+  --dss-gap-4: var(--dss-spacing-4);
+  --dss-gap-6: var(--dss-spacing-6);
+  --dss-gap-8: var(--dss-spacing-8);
+  --dss-gap-12: var(--dss-spacing-12);
+  
+  /* ===========================================
+     7. ESPAÇAMENTO PARA ACESSIBILIDADE
+     =========================================== */
+  /* Touch spacing (WCAG) */
+  --dss-touch-spacing: var(--dss-spacing-2); /* 8px mínimo entre elementos tocáveis */
+  
+  /* Line height como spacing (para tipografia) */
+  --dss-line-height-spacing: calc(1em * var(--dss-line-height-base));
+  
+  /* ===========================================
+     8. BORDER RADIUS (relacionado a spacing)
+     UPDATED: JAN 2025 - Valores mais visíveis e práticos
+     =========================================== */
+  --dss-radius-none: 0;
+  --dss-radius-sm: var(--dss-spacing-1);    /* 4px */
+  --dss-radius-md: var(--dss-spacing-2);    /* 8px */
+  --dss-radius-lg: var(--dss-spacing-3);    /* 12px */
+  --dss-radius-xl: var(--dss-spacing-4);    /* 16px */
+  --dss-radius-2xl: var(--dss-spacing-5);   /* 20px */
+  --dss-radius-3xl: var(--dss-spacing-6);   /* 24px */
+  --dss-radius-full: 9999px;
+
+  /* Radius especial para badges (mantido por ser altamente específico) */
+  --dss-radius-badge: var(--dss-radius-full);
+
+  /* ⚠️ NOTA: Radius semânticos de componentes foram removidos (ver seção 3) */
+}

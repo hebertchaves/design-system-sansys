@@ -1,0 +1,65 @@
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Standout
+
+   RESPONSABILIDADE: Estilo da variante standout (alto contraste)
+
+   CARACTERÍSTICAS:
+   - Background escuro
+   - Destaque em toolbars/headers
+   - Transição de cor no focus
+   ========================================================================== */
+
+.dss-input--standout {
+  .dss-input__field {
+    background-color: var(--dss-gray-800);
+    border-radius: var(--dss-radius-md);
+    border: none;
+  }
+
+  /* Override label color for dark background */
+  .dss-input__label {
+    color: var(--dss-text-inverse-secondary);
+  }
+
+  /* Override input color for dark background */
+  .dss-input__native {
+    color: var(--dss-text-inverse);
+
+    &::placeholder {
+      color: var(--dss-text-inverse-hint);
+    }
+  }
+
+  /* Icons/slots color */
+  .dss-input__prepend,
+  .dss-input__append {
+    color: var(--dss-text-inverse-secondary);
+  }
+
+  /* Focus state */
+  &.dss-input--focused .dss-input__field {
+    background-color: var(--dss-gray-700);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
+  }
+
+  /* Error state */
+  &.dss-input--error .dss-input__field {
+    background-color: var(--dss-error-900);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-error-600);
+  }
+
+  /* Disabled state */
+  &.dss-input--disabled .dss-input__field {
+    background-color: var(--dss-gray-900);
+  }
+
+  /* Readonly state */
+  &.dss-input--readonly .dss-input__field {
+    background-color: var(--dss-gray-800);
+  }
+
+  /* Hover (not disabled/readonly) */
+  &:not(.dss-input--disabled):not(.dss-input--readonly):hover .dss-input__field {
+    background-color: var(--dss-gray-700);
+  }
+}

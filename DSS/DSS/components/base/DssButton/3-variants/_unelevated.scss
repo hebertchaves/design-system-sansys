@@ -1,0 +1,22 @@
+/* ==========================================================================
+   DssButton - LAYER 3: VARIANT - Unelevated
+
+   RESPONSABILIDADE: Botão sem elevação (como flat mas sem mudanças no hover)
+
+   CARACTERÍSTICAS:
+   - Background sólido
+   - Sem box-shadow
+   - Hover sutil
+   ========================================================================== */
+
+.dss-button--unelevated {
+  box-shadow: none;
+
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+    filter: brightness(0.95);
+  }
+
+  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    filter: brightness(0.9);
+  }
+}

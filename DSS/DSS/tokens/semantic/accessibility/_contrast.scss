@@ -1,0 +1,89 @@
+/* ==========================================================================
+   DSS - TOKENS DE CONTRASTE
+   Conformidade WCAG 2.1 AA - Baseado na Página 7 do Guia Veolia
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. RATIOS MÍNIMOS WCAG 2.1 AA
+     =========================================== */
+  --dss-contrast-min-text: 4.5;           /* Texto normal (≤ 18pt) */
+  --dss-contrast-min-large: 3.0;          /* Texto grande (> 18pt ou 14pt bold) */
+  --dss-contrast-min-ui: 3.0;             /* Componentes de interface */
+  --dss-contrast-min-graphics: 3.0;       /* Gráficos informativos e ícones */
+  --dss-contrast-min-focus: 4.5;          /* Indicadores de foco (recomendado) */
+  
+  /* ===========================================
+     2. COMBINAÇÕES PRÉ-VALIDADAS
+     Status: ✅ APROVADO | ⚠️ LIMÍTROFE | ❌ REJEITADO
+     =========================================== */
+  
+  /* ---------- AÇÃO ---------- */
+  /* Primary */
+  --dss-contrast-primary-on-white: 4.6;   /* ✅ APROVADO */
+  --dss-contrast-primary-on-gray50: 4.8;  /* ✅ APROVADO */
+  --dss-contrast-primary-on-gray100: 3.9; /* ❌ NÃO USAR PARA TEXTO NORMAL */
+  
+  /* Secondary */
+  --dss-contrast-secondary-on-white: 3.2; /* ⚠️ SÓ PARA TEXTO GRANDE */
+  --dss-contrast-secondary-on-gray50: 3.4;/* ⚠️ SÓ PARA TEXTO GRANDE */
+  
+  /* Tertiary */
+  --dss-contrast-tertiary-on-white: 3.1;  /* ⚠️ SÓ PARA TEXTO GRANDE */
+  --dss-contrast-tertiary-on-gray50: 3.3; /* ⚠️ SÓ PARA TEXTO GRANDE */
+  
+  /* ---------- FEEDBACK ---------- */
+  /* Positive */
+  --dss-contrast-positive-on-white: 2.4;  /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-positive-on-gray900: 7.8;/* ✅ APROVADO (texto claro sobre escuro) */
+  
+  /* Negative */
+  --dss-contrast-negative-on-white: 7.1;  /* ✅ APROVADO */
+  --dss-contrast-negative-on-gray50: 7.5; /* ✅ APROVADO */
+  
+  /* Warning */
+  --dss-contrast-warning-on-white: 1.9;   /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-warning-on-gray900: 11.2;/* ✅ APROVADO (texto claro sobre escuro) */
+  
+  /* Info */
+  --dss-contrast-info-on-white: 1.8;      /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-info-on-gray900: 9.6;    /* ✅ APROVADO (texto claro sobre escuro) */
+  
+  /* ---------- MARCA ---------- */
+  /* Hub */
+  --dss-contrast-hub500-on-white: 2.9;    /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-hub500-on-gray900: 8.3;  /* ✅ APROVADO (texto claro sobre escuro) */
+  
+  /* Water */
+  --dss-contrast-water500-on-white: 4.6;  /* ✅ APROVADO */
+  --dss-contrast-water500-on-gray900: 11.1;/* ✅ APROVADO */
+  
+  /* Waste */
+  --dss-contrast-waste500-on-white: 3.1;  /* ⚠️ SÓ PARA TEXTO GRANDE */
+  --dss-contrast-waste500-on-gray900: 7.4;/* ✅ APROVADO */
+  
+  /* ---------- NEUTROS ---------- */
+  /* Dark */
+  --dss-contrast-dark-on-white: 12.3;     /* ✅ APROVADO */
+  --dss-contrast-dark-on-gray50: 10.1;    /* ✅ APROVADO */
+  
+  /* Gray */
+  --dss-contrast-gray600-on-white: 4.8;   /* ✅ APROVADO */
+  --dss-contrast-gray700-on-white: 7.3;   /* ✅ APROVADO */
+  
+  /* ===========================================
+     3. CLASSES DE UTILIDADE PARA CONTROLE DE CONTRASTE
+     =========================================== */
+  --dss-contrast-safe-text: var(--dss-text-body);      /* Uso seguro para texto */
+  --dss-contrast-safe-ui: var(--dss-action-primary);   /* Uso seguro para UI */
+  --dss-contrast-safe-graphics: var(--dss-negative);   /* Uso seguro para gráficos */
+  
+  /* ===========================================
+     4. MIXINS E FUNÇÕES (para uso em SCSS)
+     =========================================== */
+  /* Nota: Estas variáveis são para documentação,
+     a implementação real será em _mixins.scss */
+  --dss-contrast-check-small-text: "Garantir ≥ 4.5:1";
+  --dss-contrast-check-large-text: "Garantir ≥ 3:1";
+  --dss-contrast-check-ui: "Garantir ≥ 3:1";
+}

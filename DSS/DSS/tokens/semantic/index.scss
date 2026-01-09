@@ -1,0 +1,58 @@
+/* ==========================================================================
+   DSS - TOKENS SEMÂNTICOS - AGREGADOR
+   Importa todos os tokens semânticos em um único arquivo
+   ========================================================================== */
+
+/* ===========================================
+   1. TOKENS SEMÂNTICOS PRINCIPAIS
+   =========================================== */
+
+/* Ações e interações */
+@import 'actions';
+
+/* Texto e tipografia */
+@import 'text';
+
+/* Superfícies e backgrounds */
+@import 'surfaces';
+
+/* Bordas */
+@import 'borders';
+
+/* Espessuras de borda */
+@import 'border-widths';
+
+/* Feedback e estados */
+@import 'feedback';
+
+/* ===========================================
+   2. TOKENS DE LAYOUT E UTILIDADE
+   =========================================== */
+
+/* Opacidade */
+@import 'opacity';
+
+/* Sombras e elevação */
+@import 'shadows';
+
+/* Z-index */
+@import 'z-index';
+
+/* Motion e animações */
+@import 'motion';
+
+/* Espaçamento */
+@import 'spacing';
+
+/* Breakpoints responsivos */
+@import 'breakpoints';
+
+/* Gradientes */
+@import 'gradients';
+
+/* ===========================================
+   3. TOKENS DE ACESSIBILIDADE (WCAG 2.1 AA)
+   =========================================== */
+
+/* Agrega: contrast, focus, sizing, typography */
+@import 'accessibility/index';

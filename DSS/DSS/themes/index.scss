@@ -1,0 +1,44 @@
+/* ==========================================================================
+   DSS - THEMES INDEX
+   Entry point para temas e integrações
+   ========================================================================== */
+
+/* 1. Mapeamento de tokens Quasar → DSS */
+@import 'quasar-tokens-mapping';
+
+/* 2. Sobrescritas de componentes Quasar */
+@import 'quasar-overrides';
+
+/* 3. Utilitários específicos para Quasar */
+@import 'quasar-utilities';
+
+/* 4. Importar Quasar variables com nossas customizações */
+// Nota: Este arquivo será incluído na build do Quasar
+// @import 'quasar.variables';
+
+/* 5. Classes de tema global */
+.dss-theme {
+  /* Aplicar tokens de marca baseado em data-brand */
+  &--hub {
+    --quasar-primary: var(--dss-brand-primary);
+    --quasar-primary-hover: var(--dss-brand-primary-hover);
+  }
+  
+  &--water {
+    --quasar-primary: var(--dss-brand-primary);
+    --quasar-primary-hover: var(--dss-brand-primary-hover);
+  }
+  
+  &--waste {
+    --quasar-primary: var(--dss-brand-primary);
+    --quasar-primary-hover: var(--dss-brand-primary-hover);
+  }
+  
+  /* Forçar modo semantic */
+  &--semantic {
+    --quasar-primary: var(--dss-action-primary);
+    --quasar-primary-hover: var(--dss-action-primary-hover);
+    --quasar-secondary: var(--dss-action-secondary);
+    --quasar-accent: var(--dss-action-accent);
+  }
+}

@@ -1,0 +1,141 @@
+/* ==========================================================================
+   DSS - FUNÇÕES SASS
+   Funções auxiliares para cálculos e transformações
+   ========================================================================== */
+
+/**
+ * Converte pixel para rem mantendo acessibilidade
+ * @param {number} $px - Valor em pixels
+ * @return {string} - Valor em rem
+ */
+@function dss-rem($px) {
+  @if unitless($px) {
+    @error "A função dss-rem requer uma unidade (px)";
+  }
+  
+  @if unit($px) != 'px' {
+    @error "A função dss-rem só aceita pixels";
+  }
+  
+  // Base: 1rem = 16px (padrão acessível)
+  $base-font-size: 16px;
+  @return calc($px / $base-font-size) * 1rem;
+}
+
+/**
+ * Calcula contraste WCAG entre duas cores
+ * @param {color} $color1 - Cor do texto
+ * @param {color} $color2 - Cor do fundo
+ * @return {number} - Razão de contraste
+ */
+@function dss-contrast-ratio($color1, $color2) {
+  $l1: dss-luminance($color1);
+  $l2: dss-luminance($color2);
+  
+  @if $l1 > $l2 {
+    @return ($l1 + 0.05) / ($l2 + 0.05);
+  } @else {
+    @return ($l2 + 0.05) / ($l1 + 0.05);
+  }
+}
+
+/**
+ * Calcula luminância relativa (WCAG)
+ */
+@function dss-luminance($color) {
+  $r: red($color) / 255;
+  $g: green($color) / 255;
+  $b: blue($color) / 255;
+  
+  $r: if($r <= 0.03928, $r / 12.92, pow(($r + 0.055) / 1.055, 2.4));
+  $g: if($g <= 0.03928, $g / 12.92, pow(($g + 0.055) / 1.055, 2.4));
+  $b: if($b <= 0.03928, $b / 12.92, pow(($b + 0.055) / 1.055, 2.4));
+  
+  @return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+}
+
+/**
+ * Verifica se contraste passa no WCAG AA
+ */
+@function dss-is-contrast-valid($text-color, $bg-color, $size: 'normal') {
+  $ratio: dss-contrast-ratio($text-color, $bg-color);
+  $min-ratio: if($size == 'large', 3, 4.5);
+  
+  @return $ratio >= $min-ratio;
+}
+
+/**
+ * Escurece uma cor mantendo acessibilidade
+ */
+@function dss-darken-accessible($color, $amount: 10%) {
+  $darkened: darken($color, $amount);
+  
+  // Garante contraste mínimo com branco
+  @if not dss-is-contrast-valid($darkened, white, 'normal') {
+    @warn "Cor muito clara, ajustando para manter acessibilidade";
+    @return darken($color, $amount * 1.5);
+  }
+  
+  @return $darkened;
+}
+
+/**
+ * Clareia uma cor mantendo acessibilidade
+ */
+@function dss-lighten-accessible($color, $amount: 10%) {
+  $lightened: lighten($color, $amount);
+  
+  // Garante contraste mínimo com preto
+  @if not dss-is-contrast-valid(black, $lightened, 'normal') {
+    @warn "Cor muito escura, ajustando para manter acessibilidade";
+    @return lighten($color, $amount * 1.5);
+  }
+  
+  @return $lightened;
+}
+
+/**
+ * Cria gradiente com opacidade
+ */
+@function dss-gradient-with-opacity($color, $opacity: 0.5, $direction: 'to bottom') {
+  $rgba: rgba($color, $opacity);
+  @return linear-gradient(#{$direction}, $rgba 0%, transparent 100%);
+}
+
+/**
+ * Retorna token baseado no contexto de marca
+ */
+@function dss-brand-token($token-name, $brand: null) {
+  @if $brand == 'hub' {
+    @return var(--dss-brand-#{$token-name}, var(--dss-#{$token-name}));
+  } @else if $brand == 'water' {
+    @return var(--dss-brand-#{$token-name}, var(--dss-#{$token-name}));
+  } @else if $brand == 'waste' {
+    @return var(--dss-brand-#{$token-name}, var(--dss-#{$token-name}));
+  }
+  
+  @return var(--dss-#{$token-name});
+}
+
+/**
+ * Calcula espaçamento responsivo
+ */
+@function dss-responsive-spacing($base, $mobile-multiplier: 0.75, $desktop-multiplier: 1.25) {
+  @return clamp(
+    #{$base * $mobile-multiplier},
+    #{$base},
+    #{$base * $desktop-multiplier}
+  );
+}
+
+/**
+ * Helper para modos claro/escuro
+ *
+ * NOTA: Dark mode é implementado via tokens com [data-theme="dark"]
+ * Esta função retorna referência a variável CSS que muda automaticamente
+ */
+@function dss-theme-color($light, $dark) {
+  // Retorna referência à variável CSS
+  // O valor muda automaticamente quando [data-theme="dark"] está ativo
+  @return var(--dss-theme-#{$light}, #{$light});
+}

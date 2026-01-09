@@ -1,0 +1,316 @@
+/* ==========================================================================
+   DSS - VARIÁVEIS CUSTOMIZADAS DO QUASAR
+   Arquivo principal de configuração do Quasar com nossos tokens
+   ========================================================================== */
+
+// Importar mapeamento de tokens
+@import 'quasar-tokens-mapping';
+
+/* ===========================================
+   1. CONFIGURAÇÕES GERAIS DO QUASAR
+   =========================================== */
+
+// Brand
+$primary: var(--quasar-primary) !default;
+$secondary: var(--quasar-secondary) !default;
+$accent: var(--quasar-accent) !default;
+
+// Semantic colors
+$positive: var(--dss-feedback-success) !default;
+$negative: var(--dss-feedback-error) !default;
+$warning: var(--dss-feedback-warning) !default;
+$info: var(--dss-feedback-info) !default;
+
+// Neutral colors
+$dark: var(--dss-text-body) !default;
+$light: var(--dss-text-subtle) !default;
+$faded: var(--dss-text-muted) !default;
+
+// Backgrounds
+$body-bg: var(--dss-surface-default) !default;
+$body-color: var(--dss-text-body) !default;
+
+/* ===========================================
+   2. COMPONENT CONFIGURATIONS
+   =========================================== */
+
+// Buttons
+$button-border-radius: var(--dss-radius-button) !default;
+$button-padding: var(--dss-button-padding-y) var(--dss-button-padding-x) !default;
+$button-font-size: var(--dss-font-size-base) !default;
+$button-font-weight: var(--dss-font-weight-semibold) !default;
+$button-line-height: var(--dss-line-height-base) !default;
+$button-text-transform: none !default;
+$button-shadow: none !default;
+$button-hover-shadow: var(--dss-shadow-sm) !default;
+
+// Inputs
+$input-border-radius: var(--dss-radius-input) !default;
+$input-padding: var(--dss-input-padding-y) var(--dss-input-padding-x) !default;
+$input-font-size: var(--dss-font-size-base) !default;
+$input-line-height: var(--dss-line-height-base) !default;
+$input-label-color: var(--dss-text-body) !default;
+$input-label-font-size: var(--dss-font-size-base) !default;
+$input-label-font-weight: var(--dss-font-weight-medium) !default;
+
+// Cards - usa tokens genéricos (refatoração Jan 2025)
+$card-border-radius: var(--dss-radius-lg) !default; /* Sprint 1 */
+$card-padding: var(--dss-spacing-6) !default; /* Sprint 1 */
+$card-shadow: var(--dss-elevation-1) !default; /* Sprint 3 */
+
+// Dialogs - usa tokens genéricos (refatoração Jan 2025)
+$dialog-border-radius: var(--dss-radius-lg) !default; /* Sprint 1 */
+$dialog-shadow: var(--dss-shadow-modal) !default;
+$dialog-backdrop: var(--dss-surface-overlay) !default;
+
+// Tooltips
+$tooltip-border-radius: var(--dss-radius-sm) !default;
+$tooltip-padding: var(--dss-spacing-2) var(--dss-spacing-3) !default;
+$tooltip-fontsize: var(--dss-font-size-sm) !default;
+$tooltip-background: var(--dss-gray-900) !default;
+$tooltip-color: var(--dss-text-inverse) !default;
+$tooltip-max-width: 200px !default;
+
+// Badges
+$badge-border-radius: var(--dss-radius-full) !default;
+$badge-padding: var(--dss-spacing-0_5) var(--dss-spacing-1) !default;
+$badge-font-size: var(--dss-font-size-xs) !default;
+$badge-font-weight: var(--dss-font-weight-semibold) !default;
+
+// Chips
+$chip-border-radius: var(--dss-radius-full) !default;
+$chip-padding: var(--dss-spacing-1) var(--dss-spacing-2) !default;
+$chip-font-size: var(--dss-font-size-sm) !default;
+$chip-height: calc(var(--dss-touch-target-min) * 0.75) !default;
+
+// Tables
+$table-border-radius: var(--dss-radius-md) !default;
+$table-border-color: var(--dss-border-gray-200) !default;
+$table-header-font-size: var(--dss-font-size-sm) !default;
+$table-header-font-weight: var(--dss-font-weight-semibold) !default;
+$table-header-color: var(--dss-text-body) !default;
+$table-header-bg: var(--dss-surface-subtle) !default;
+$table-body-font-size: var(--dss-font-size-base) !default;
+$table-body-color: var(--dss-text-body) !default;
+$table-hover-bg: var(--dss-surface-hover) !default;
+$table-selected-bg: var(--dss-surface-selected) !default;
+$table-stripe-bg: var(--dss-surface-subtle) !default;
+
+// Tabs
+$tabs-border-radius: var(--dss-radius-md) !default;
+$tabs-padding: 0 var(--dss-spacing-3) !default;
+$tabs-min-height: var(--dss-touch-target-min) !default;
+$tabs-font-size: var(--dss-font-size-sm) !default;
+$tabs-font-weight: var(--dss-font-weight-medium) !default;
+$tabs-active-font-weight: var(--dss-font-weight-semibold) !default;
+$tabs-active-color: var(--quasar-primary) !default;
+$tabs-indicator-color: var(--quasar-primary) !default;
+$tabs-indicator-height: 3px !default;
+
+// Menus
+$menu-border-radius: var(--dss-radius-md) !default;
+$menu-shadow: var(--dss-shadow-lg) !default;
+$menu-background: var(--dss-surface-default) !default;
+$menu-padding: var(--dss-spacing-1) 0 !default;
+$menu-item-padding: var(--dss-spacing-2) var(--dss-spacing-3) !default;
+$menu-item-min-height: var(--dss-touch-target-min) !default;
+$menu-item-font-size: var(--dss-font-size-base) !default;
+$menu-item-active-bg: var(--dss-surface-selected) !default;
+$menu-item-active-color: var(--quasar-primary) !default;
+
+// Progress
+$progress-border-radius: var(--dss-radius-full) !default;
+$progress-height: 4px !default;
+$progress-track-bg: var(--dss-surface-muted) !default;
+$progress-model-bg: var(--quasar-primary) !default;
+$progress-model-transition: width 0.3s var(--dss-easing-standard) !default;
+
+/* ===========================================
+   3. TYPOGRAPHY CONFIGURATION
+   =========================================== */
+
+// Font families
+$typography-font-family: var(--dss-font-family-sans) !default;
+$monospace-font-family: var(--dss-font-family-mono) !default;
+
+// Font sizes (usando nossa escala acessível)
+$text-h1: var(--dss-heading-1-size) !default;
+$text-h2: var(--dss-heading-2-size) !default;
+$text-h3: var(--dss-heading-3-size) !default;
+$text-h4: var(--dss-heading-4-size) !default;
+$text-h5: var(--dss-heading-5-size) !default;
+$text-h6: var(--dss-heading-6-size) !default;
+
+$text-subtitle1: calc(var(--dss-font-size-lg) * 0.875) !default;
+$text-subtitle2: calc(var(--dss-font-size-base) * 0.875) !default;
+$text-body1: var(--dss-font-size-base) !default;
+$text-body2: var(--dss-font-size-sm) !default;
+$text-caption: var(--dss-font-size-xs) !default;
+$text-overline: var(--dss-font-size-xs) !default;
+
+// Font weights
+$text-weight-thin: var(--dss-font-weight-light) !default;
+$text-weight-light: var(--dss-font-weight-light) !default;
+$text-weight-regular: var(--dss-font-weight-normal) !default;
+$text-weight-medium: var(--dss-font-weight-medium) !default;
+$text-weight-semibold: var(--dss-font-weight-semibold) !default;
+$text-weight-bold: var(--dss-font-weight-bold) !default;
+$text-weight-bolder: var(--dss-font-weight-extrabold) !default;
+
+// Line heights
+$body-line-height: var(--dss-line-height-base) !default;
+$heading-line-height: 1.2 !default;
+
+/* ===========================================
+   4. SPACING & SIZING
+   =========================================== */
+
+// Base spacing unit
+$space-base: 1rem !default; // 16px
+
+// Spacing scale (usando nossos tokens)
+$space-xs: var(--dss-spacing-1) !default;    // 4px
+$space-sm: var(--dss-spacing-2) !default;    // 8px
+$space-md: var(--dss-spacing-4) !default;    // 16px
+$space-lg: var(--dss-spacing-6) !default;    // 24px
+$space-xl: var(--dss-spacing-8) !default;    // 32px
+
+// Component specific spacing
+$button-margin: var(--dss-spacing-1) !default;
+$input-margin: var(--dss-spacing-4) !default;
+$form-item-margin: var(--dss-spacing-4) !default;
+$card-margin: var(--dss-spacing-4) !default;
+
+/* ===========================================
+   5. SHADOWS & ELEVATION
+   =========================================== */
+
+// Shadow colors
+$shadow-color: rgba(0, 0, 0, 0.1) !default;
+$shadow-color-on-dark: rgba(0, 0, 0, 0.3) !default;
+
+// Shadow sizes (usando nossos tokens)
+$shadow-0: none !default;
+$shadow-1: var(--dss-shadow-sm) !default;
+$shadow-2: var(--dss-shadow-md) !default;
+$shadow-3: var(--dss-shadow-lg) !default;
+$shadow-4: var(--dss-shadow-xl) !default;
+$shadow-5: var(--dss-shadow-2xl) !default;
+$shadow-up-1: 0 -1px 3px rgba(0, 0, 0, 0.1) !default;
+$shadow-up-2: 0 -4px 6px rgba(0, 0, 0, 0.1) !default;
+
+// Transition for shadows
+$shadow-transition: box-shadow var(--dss-transition-base) !default;
+
+/* ===========================================
+   6. BORDER RADIUS
+   =========================================== */
+
+// Base border radius
+$generic-border-radius: var(--dss-radius-md) !default;
+
+// Component specific border radius
+$button-border-radius: var(--dss-radius-button) !default;
+$input-border-radius: var(--dss-radius-input) !default;
+$card-border-radius: var(--dss-radius-card) !default;
+$dialog-border-radius: var(--dss-radius-modal) !default;
+$menu-border-radius: var(--dss-radius-md) !default;
+$tooltip-border-radius: var(--dss-radius-sm) !default;
+$badge-border-radius: var(--dss-radius-full) !default;
+$chip-border-radius: var(--dss-radius-full) !default;
+$table-border-radius: var(--dss-radius-md) !default;
+
+/* ===========================================
+   7. TRANSITIONS & ANIMATIONS
+   =========================================== */
+
+// Durations (usando nossos tokens)
+$animation-duration-slow: var(--dss-duration-slow) !default;
+$animation-duration: var(--dss-duration-base) !default;
+$animation-duration-fast: var(--dss-duration-fast) !default;
+
+// Easing functions (usando nossos tokens)
+$animation-easing: var(--dss-easing-standard) !default;
+$animation-easing-in: var(--dss-easing-ease-in) !default;
+$animation-easing-out: var(--dss-easing-ease-out) !default;
+$animation-easing-in-out: var(--dss-easing-ease-in-out) !default;
+
+// Transition defaults
+$transition-duration: var(--dss-transition-base) !default;
+$transition-easing: var(--dss-easing-standard) !default;
+
+/* ===========================================
+   8. Z-INDEX LAYERS
+   =========================================== */
+
+// Z-index scale (usando nossos tokens)
+$z-fab: var(--dss-z-index-fixed) !default;
+$z-side: var(--dss-z-index-offcanvas) !default;
+$z-marginals: var(--dss-z-index-sticky) !default;
+$z-fixed: var(--dss-z-index-fixed) !default;
+$z-modal: var(--dss-z-index-modal) !default;
+$z-popup: var(--dss-z-index-popover) !default;
+$z-tooltip: var(--dss-z-index-tooltip) !default;
+$z-notify: var(--dss-z-index-toast) !default;
+$z-fullscreen: var(--dss-z-index-maximum) !default;
+
+/* ===========================================
+   9. BREAKPOINTS (RESPONSIVE)
+   =========================================== */
+
+// Breakpoints para acessibilidade (zoom)
+$breakpoint-xs: 0 !default;
+$breakpoint-sm: 600px !default;
+$breakpoint-md: 1024px !default;
+$breakpoint-lg: 1440px !default;
+$breakpoint-xl: 1920px !default;
+
+// Breakpoints para zoom do navegador
+$breakpoint-zoom-200: 800px !default;  // Para usuários com zoom 200%
+$breakpoint-zoom-300: 600px !default;  // Para usuários com zoom 300%
+
+/* ===========================================
+   10. ACCESSIBILITY SETTINGS
+   =========================================== */
+
+// Focus ring
+$focus-ring-width: 3px !default;
+$focus-ring-color: rgba(var(--quasar-primary), 0.5) !default;
+$focus-ring-style: solid !default;
+
+// Touch target minimum size
+$touch-target-min: var(--dss-touch-target-min) !default;
+$touch-target-ideal: var(--dss-touch-target-ideal) !default;
+
+// Reduced motion support
+$reduce-motion: true !default;
+
+// High contrast support
+$high-contrast: false !default;
+
+/* ===========================================
+   11. DARK MODE SUPPORT (FUTURO)
+   =========================================== */
+
+// Variáveis para dark mode (prontas para implementação futura)
+$dark-page: var(--dss-gray-900) !default;
+$dark-page-color: var(--dss-text-inverse) !default;
+$dark-card: var(--dss-gray-800) !default;
+$dark-card-color: var(--dss-text-inverse) !default;
+$dark-input: var(--dss-gray-800) !default;
+$dark-input-color: var(--dss-text-inverse) !default;
+$dark-separator-color: var(--dss-border-gray-700) !default;
+
+// Media query para dark mode
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dss-surface-default: var(--dss-gray-900);
+    --dss-surface-subtle: var(--dss-gray-800);
+    --dss-surface-muted: var(--dss-gray-700);
+    --dss-text-body: var(--dss-gray-100);
+    --dss-text-subtle: var(--dss-gray-300);
+    --dss-text-muted: var(--dss-gray-400);
+    --dss-border-gray-200: var(--dss-border-gray-700);
+    --dss-border-gray-300: var(--dss-border-gray-600);
+  }
+}
