@@ -56,7 +56,7 @@ export default function DssButtonPage() {
   };
 
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto space-y-8" style={{ backgroundColor: 'var(--dss-surface-default)' }}>
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto space-y-8" style={{ backgroundColor: 'var(--dss-surface-default)' }}>
       {/* Header */}
       <section className="space-y-4">
         <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--dss-text-subtle)' }}>
