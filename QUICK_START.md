@@ -1,6 +1,8 @@
-# 🚀 Quick Start - DSS Button (SEM erros!)
+# 🚀 Quick Start - DSS (Design System Sansys)
 
 > **IMPORTANTE**: O DSS agora é um projeto **totalmente independente** do Figma plugin!
+
+> **✨ NOVO v2.2.0**: Componentes modernos com **TypeScript + Composition API**!
 
 ---
 
@@ -58,6 +60,31 @@ Compiled index.scss to index.css.
 1. Abra o Windows Explorer
 2. Navegue: `C:\Users\hebert.chaves\quasar-to-figma-converter\V5\V5-2.0.2\dss\`
 3. Duplo clique em `test-dss-button.html`
+
+---
+
+## ✨ Componentes TypeScript + Composition API (v2.2.0)
+
+Os seguintes componentes foram **modernizados** com 100% type safety:
+
+- **DssButton** - Botão com 6 variantes
+- **DssBadge** - Badge/contador
+- **DssAvatar** - Avatar com imagem/texto
+- **DssCard** + subcomponentes (DssCardSection, DssCardActions)
+- **DssInput** - Input de formulário
+
+### Composables Globais Reutilizáveis
+
+```javascript
+import { useColorClasses, useAccessibility, useBrand } from '@sansys/design-system'
+```
+
+- `useColorClasses` - Gerenciamento de cores DSS
+- `useAccessibility` - Atributos WCAG 2.1 AA
+- `useComponentState` - Estados interativos (focus, hover, active)
+- `useBrand` - Marcas Sansys (hub, water, waste)
+
+**[📖 Ver guia completo de migração](./MIGRATION_TO_TYPESCRIPT.md)**
 
 ---
 
@@ -138,11 +165,21 @@ Após abrir `test-dss-button.html`:
 
 ## 📚 Mais Documentação
 
+### ✨ TypeScript + Composition API (NOVO!)
+- **`MIGRATION_TO_TYPESCRIPT.md`**: Guia completo de migração TypeScript
+  - Componentes migrados (DssButton, DssBadge, DssAvatar, DssCard, DssInput)
+  - Composables globais reutilizáveis
+  - Templates e exemplos práticos
+
+### Arquitetura e Implementação
+- **`DSS_ARCHITECTURE.md`**: Arquitetura em 4 camadas
+- **`DSS_IMPLEMENTATION_GUIDE.md`**: Guia de implementação completo
+- **`REFACTORING_QUASAR_PATTERN.md`**: Padrão Quasar Framework
+
+### Testes e Setup
 - **Este arquivo**: Quick start sem erros
 - **`INSTRUCOES_TESTE_DSSBUTTON.md`**: Instruções detalhadas
 - **`GUIA_SETUP_VSCODE.md`**: Setup completo com Vite
-- **`DSS_ARCHITECTURE.md`**: Arquitetura completa
-- **`DSS_IMPLEMENTATION_GUIDE.md`**: Como usar o DSS
 
 ---
 

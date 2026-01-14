@@ -1,7 +1,7 @@
 {
   "name": "@sansys/design-system",
   "version": "2.2.0",
-  "description": "Design System Sansys - Vue 3 Component Library with DSS Tokens",
+  "description": "Design System Sansys - Vue 3 Component Library with TypeScript, Composition API, and DSS Tokens",
   "type": "module",
   "main": "./dist/dss.umd.js",
   "module": "./dist/dss.es.js",
@@ -43,10 +43,15 @@
   "keywords": [
     "design-system",
     "vue",
+    "vue3",
+    "typescript",
+    "composition-api",
     "components",
     "dss",
     "sansys",
-    "tokens"
+    "tokens",
+    "wcag",
+    "accessibility"
   ],
   "author": "Hebert Daniel Oliveira Chaves",
   "license": "MIT"
