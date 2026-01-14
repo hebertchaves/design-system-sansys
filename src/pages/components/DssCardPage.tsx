@@ -2312,20 +2312,56 @@ export default function DssCardPage() {
         }}
       >
         <CardContent className="p-6">
-          <div className="space-y-6">
+          <Tabs defaultValue="Surface" className="w-full">
+            <TabsList className="flex flex-wrap h-auto gap-1 p-1 mb-6" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }}>
+              {Object.keys(tokensByCategory).map((category) => (
+                <TabsTrigger
+                  key={category}
+                  value={category}
+                  className="text-xs px-3 py-1.5 data-[state=active]:text-white transition-all"
+                  style={{
+                    color: 'var(--jtech-text-muted)',
+                  }}
+                >
+                  <span className="flex items-center gap-1.5">
+                    {category}
+                    <span 
+                      className="text-[10px] px-1.5 py-0.5 rounded-full"
+                      style={{ 
+                        backgroundColor: 'rgba(255,255,255,0.1)',
+                        color: 'var(--jtech-text-muted)'
+                      }}
+                    >
+                      {tokensByCategory[category].length}
+                    </span>
+                  </span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
             {Object.entries(tokensByCategory).map(([category, tokens]) => (
-              <div key={category}>
-                <h4 className="text-sm font-semibold mb-3" style={{ color: 'var(--jtech-heading-tertiary)' }}>
-                  {category}
-                </h4>
-                <div className="grid gap-2">
-                  {tokens.map((token) => (
-                    <TokenRow key={token.token} {...token} />
-                  ))}
+              <TabsContent key={category} value={category} className="mt-0">
+                <div className="space-y-1">
+                  <div 
+                    className="grid grid-cols-[1fr_140px_1fr] gap-4 pb-2 mb-2 text-xs font-semibold"
+                    style={{ 
+                      color: 'var(--jtech-heading-tertiary)',
+                      borderBottom: '1px solid var(--jtech-card-border)'
+                    }}
+                  >
+                    <span>Token</span>
+                    <span>Valor</span>
+                    <span>Uso</span>
+                  </div>
+                  <div className="grid gap-1.5">
+                    {tokens.map((token) => (
+                      <TokenRow key={token.token} {...token} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </TabsContent>
             ))}
-          </div>
+          </Tabs>
         </CardContent>
       </Card>
 
