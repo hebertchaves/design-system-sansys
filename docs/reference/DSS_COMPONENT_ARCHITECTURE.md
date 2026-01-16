@@ -3,7 +3,7 @@
 > **📅 Criado:** Janeiro 2025
 > **🔄 Atualizado:** Janeiro 2025 (Ação 3 - Refatoração Completa + Testes)
 > **🎯 Objetivo:** Documentar a filosofia e padrões de construção de componentes DSS
-> **✅ Implementado:** Estrutura de 6 arquivos obrigatórios, Testes unitários, Token guidelines
+> **✅ Implementado:** Arquitetura de 4 camadas, Testes unitários, Token guidelines
 
 ---
 
@@ -412,28 +412,46 @@ computed: {
 
 ## ✅ Regras de Implementação
 
-### 1. **Estrutura de Arquivos** ⭐ **ATUALIZADO**
+### 1. **Estrutura de Arquivos - Arquitetura de 4 Camadas** ⭐ **ATUALIZADO**
 
 ```
-components/base/ComponentName/
-├── ComponentName.vue              # Componente Vue principal
-├── ComponentName.module.scss      # Estilos CSS Modules
-├── ComponentName.test.js          # ✅ Testes unitários (Vitest/Jest) - OBRIGATÓRIO
-├── ComponentName.md               # Documentação completa
-├── ComponentName.example.vue      # Showcase visual
-└── index.js                       # Barrel export
+components/base/DssComponente/
+├── 1-structure/                   # CAMADA 1 - Componente Vue
+│   └── DssComponente.ts.vue       # TypeScript + Composition API
+├── 2-composition/                 # CAMADA 2 - Estilos base
+│   └── _base.scss                 # APENAS tokens genéricos
+├── 3-variants/                    # CAMADA 3 - Variantes visuais
+│   ├── _elevated.scss
+│   ├── _flat.scss
+│   ├── _outline.scss
+│   └── index.scss                 # Orquestrador de variantes
+├── 4-output/                      # CAMADA 4 - Brands e estados
+│   ├── _brands.scss               # Hub, Water, Waste
+│   ├── _states.scss               # Dark mode, high contrast
+│   └── index.scss                 # Orquestrador de output
+├── composables/                   # Lógica reutilizável (TypeScript)
+│   └── useComponenteClasses.ts
+├── types/                         # Interfaces TypeScript
+│   └── componente.types.ts
+├── DssComponente.module.scss      # Orquestrador principal (importa 4 camadas)
+├── DssComponente.test.js          # Testes unitários (Vitest/Jest)
+├── DssComponente.example.vue      # Showcase visual
+├── README.md                      # Documentação
+└── index.js                       # Export barrel
 ```
 
-**Total: 6 arquivos obrigatórios** (antes eram 5)
+**Referência:** Ver `components/base/DssButton/` como golden sample.
 
-**Obrigatório:**
-- ✅ Nome em PascalCase
-- ✅ `.vue` - Componente com props validadas e emits documentados
-- ✅ `.module.scss` - Estilos isolados usando tokens DSS
-- ✅ `.test.js` - **NOVO** - Testes de props, eventos, slots e acessibilidade WCAG
-- ✅ `.md` - Documentação completa com exemplos e API
-- ✅ `.example.vue` - Showcase visual para teste manual
-- ✅ `index.js` - Export para facilitar imports
+**Estrutura Obrigatória:**
+- ✅ **4 camadas SCSS** - 1-structure, 2-composition, 3-variants, 4-output
+- ✅ **Componente Vue** - TypeScript + Composition API em `1-structure/`
+- ✅ **Types** - Interfaces TypeScript em `types/`
+- ✅ **Composables** - Lógica reutilizável em `composables/`
+- ✅ **Orquestrador** - `.module.scss` que importa as 4 camadas
+- ✅ **Testes** - `.test.js` cobrindo props, eventos, slots, acessibilidade
+- ✅ **Showcase** - `.example.vue` para teste visual
+- ✅ **Documentação** - `README.md` com exemplos e API
+- ✅ **Export** - `index.js` para facilitar imports
 
 ### 2. **Import de Utilitários**
 
@@ -1696,6 +1714,10 @@ Use como exemplo ao criar novos componentes:
 - **Tutorial Passo a Passo** - Seção "📝 Guia para Novos Componentes" (acima)
 - **Checklist Final** - Seção "✅ Checklist Final" (acima)
 - **Anti-Patterns** - Seção "🚫 O Que NÃO Fazer" (acima)
+
+### **Governança e Documentação**
+- **[Checklist de Documentação](../guides/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md)** - Guia de referência para documentar componentes
+- **[Componentes Compostos](../guides/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md)** - Regras para componentes que orquestram outros componentes DSS
 
 ---
 

@@ -2722,6 +2722,8 @@ O DSS atende 100% dos critérios de sucesso nível AA do WCAG 2.1:
 
 ### Documentação de Referência
 - **Tokens**: Ver `DSS_ARCHITECTURE.md` para lista completa
+- **Governança**: Ver `dss_governanca_e_documentacao_de_componentes_basios_fase_1.md` para checklist de documentação
+- **Componentes Compostos**: Ver `dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md`
 - **WCAG 2.1 AA**: https://www.w3.org/WAI/WCAG21/quickref/
 - **Quasar Framework**: https://quasar.dev/
 

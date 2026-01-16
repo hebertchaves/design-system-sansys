@@ -914,9 +914,13 @@ computed: {
 ## 📞 Suporte
 
 **Dúvidas sobre arquitetura?**
-- Consulte o DssCard como referência
+- Consulte o DssButton como golden sample
 - Leia este guia completo
 - Verifique a filosofia DSS: "Tokens = Provedores, Componentes = Consumidores"
+
+**Documentação de componentes?**
+- Ver [`dss_governanca_e_documentacao_de_componentes_basios_fase_1.md`](./dss_governanca_e_documentacao_de_componentes_basios_fase_1.md) - Checklist de documentação
+- Ver [`dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md`](./dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md) - Componentes compostos
 
 **Componente criado:** 18/12/2025
 **Última atualização:** 18/12/2025
