@@ -1,10 +1,10 @@
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Copy, Check, Space, Grid, Box, Smartphone, Monitor, Maximize, Move } from "lucide-react";
-import { useState } from "react";
 
 // =============================================
 // DSS TOKENS - Conforme _spacing.scss
@@ -274,36 +274,26 @@ export default function SpacingPage() {
       />
 
       {/* Tabs Navigation */}
-      <Tabs defaultValue="scale" className="space-y-6">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
+      <DssTabs defaultValue="scale" className="space-y-6">
+        <DssTabsList>
           {[
             { value: "scale", label: "Escala Base", icon: Space },
             { value: "semantic", label: "Semânticos", icon: Box },
             { value: "radius", label: "Border Radius", icon: Move },
             { value: "breakpoints", label: "Breakpoints", icon: Monitor },
           ].map((tab) => (
-            <TabsTrigger
+            <DssTabsTrigger
               key={tab.value}
               value={tab.value}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg data-[state=active]:shadow-md"
-              style={{ 
-                color: 'var(--jtech-text-body)'
-              }}
+              icon={<tab.icon size={14} />}
             >
-              <tab.icon size={14} />
               {tab.label}
-            </TabsTrigger>
+            </DssTabsTrigger>
           ))}
-        </TabsList>
+        </DssTabsList>
 
         {/* Escala Base */}
-        <TabsContent value="scale" className="space-y-6">
+        <DssTabsContent value="scale" className="space-y-6">
           <SectionHeader 
             title="Escala Base de" 
             titleAccent="Espaçamento"
@@ -737,8 +727,8 @@ export default function SpacingPage() {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
-      </Tabs>
+        </DssTabsContent>
+      </DssTabs>
     </div>
   );
 }

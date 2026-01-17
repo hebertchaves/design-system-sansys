@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Copy, Check, Palette, Droplets, Leaf, Sun, AlertTriangle, CheckCircle2, Info, XCircle, Lightbulb } from "lucide-react";
-import { useState } from "react";
 
 // =============================================
 // DSS TOKENS - Conforme DSS_TOKEN_GUIDELINES.md
@@ -454,49 +453,24 @@ export default function ColorsPage() {
       />
 
       {/* Tabs Navigation - Jtech Style */}
-      <Tabs defaultValue="brands" className="space-y-6">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
-          <TabsTrigger 
-            value="brands" 
-            className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white rounded-lg px-4 py-2 text-sm font-medium transition-all"
-            style={{ color: 'var(--jtech-text-body)' }}
-          >
-            <Sun className="h-4 w-4 mr-2" />
+      <DssTabs defaultValue="brands" className="space-y-6">
+        <DssTabsList>
+          <DssTabsTrigger value="brands" icon={<Sun className="h-4 w-4" />}>
             Marcas
-          </TabsTrigger>
-          <TabsTrigger 
-            value="semantic" 
-            className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white rounded-lg px-4 py-2 text-sm font-medium transition-all"
-            style={{ color: 'var(--jtech-text-body)' }}
-          >
-            <Palette className="h-4 w-4 mr-2" />
+          </DssTabsTrigger>
+          <DssTabsTrigger value="semantic" icon={<Palette className="h-4 w-4" />}>
             Semânticas
-          </TabsTrigger>
-          <TabsTrigger 
-            value="grayscale" 
-            className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white rounded-lg px-4 py-2 text-sm font-medium transition-all"
-            style={{ color: 'var(--jtech-text-body)' }}
-          >
+          </DssTabsTrigger>
+          <DssTabsTrigger value="grayscale">
             Escala de Cinza
-          </TabsTrigger>
-          <TabsTrigger 
-            value="feedback" 
-            className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white rounded-lg px-4 py-2 text-sm font-medium transition-all"
-            style={{ color: 'var(--jtech-text-body)' }}
-          >
-            <AlertTriangle className="h-4 w-4 mr-2" />
+          </DssTabsTrigger>
+          <DssTabsTrigger value="feedback" icon={<AlertTriangle className="h-4 w-4" />}>
             Feedback
-          </TabsTrigger>
-        </TabsList>
+          </DssTabsTrigger>
+        </DssTabsList>
 
         {/* Brands Tab */}
-        <TabsContent value="brands" className="space-y-6 mt-6">
+        <DssTabsContent value="brands" className="space-y-6">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <BrandPaletteSection
               title="Sansys Hub"
@@ -562,10 +536,10 @@ export default function ColorsPage() {
               </Card>
             ))}
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Grayscale Tab */}
-        <TabsContent value="grayscale" className="mt-6">
+        <DssTabsContent value="grayscale">
           <Card 
             style={{ 
               backgroundColor: 'var(--jtech-card-bg)', 
@@ -609,17 +583,17 @@ export default function ColorsPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Feedback Tab */}
-        <TabsContent value="feedback" className="mt-6">
+        <DssTabsContent value="feedback">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {feedbackColors.map((feedback) => (
               <FeedbackCard key={feedback.category} {...feedback} />
             ))}
           </div>
-        </TabsContent>
-      </Tabs>
+        </DssTabsContent>
+      </DssTabs>
 
       {/* Usage Guidelines - Jtech Style */}
       <section className="space-y-4">
