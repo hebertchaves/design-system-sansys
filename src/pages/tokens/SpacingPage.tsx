@@ -328,10 +328,10 @@ export default function SpacingPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Espaçamentos Semânticos */}
-        <TabsContent value="semantic" className="space-y-6">
+        <DssTabsContent value="semantic" className="space-y-6">
           <SectionHeader 
             title="Espaçamentos" 
             titleAccent="Semânticos"
@@ -522,10 +522,10 @@ export default function SpacingPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Border Radius */}
-        <TabsContent value="radius" className="space-y-6">
+        <DssTabsContent value="radius" className="space-y-6">
           <SectionHeader 
             title="Border" 
             titleAccent="Radius"
@@ -582,10 +582,10 @@ export default function SpacingPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Breakpoints */}
-        <TabsContent value="breakpoints" className="space-y-6">
+        <DssTabsContent value="breakpoints" className="space-y-6">
           <SectionHeader 
             title="Breakpoints" 
             titleAccent="Responsivos"
