@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Copy, Check, Type, Heading, AlignLeft, Space, Eye, Accessibility } from "lucide-react";
-import { useState } from "react";
 
 // =============================================
 // DSS TOKENS - Conforme accessibility/_typography.scss
@@ -287,14 +286,8 @@ export default function TypographyPage() {
       />
 
       {/* Tabs Navigation */}
-      <Tabs defaultValue="families" className="space-y-6">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
+      <DssTabs defaultValue="families" className="space-y-6">
+        <DssTabsList>
           {[
             { value: "families", label: "Famílias", icon: Type },
             { value: "sizes", label: "Tamanhos", icon: AlignLeft },
@@ -304,22 +297,18 @@ export default function TypographyPage() {
             { value: "colors", label: "Cores de Texto", icon: Eye },
             { value: "a11y", label: "Acessibilidade", icon: Accessibility },
           ].map((tab) => (
-            <TabsTrigger
+            <DssTabsTrigger
               key={tab.value}
               value={tab.value}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg data-[state=active]:shadow-md"
-              style={{ 
-                color: 'var(--jtech-text-body)'
-              }}
+              icon={<tab.icon size={14} />}
             >
-              <tab.icon size={14} />
               {tab.label}
-            </TabsTrigger>
+            </DssTabsTrigger>
           ))}
-        </TabsList>
+        </DssTabsList>
 
         {/* Famílias de Fonte */}
-        <TabsContent value="families" className="space-y-6">
+        <DssTabsContent value="families" className="space-y-6">
           <SectionHeader 
             title="Famílias de" 
             titleAccent="Fonte"
@@ -792,8 +781,8 @@ export default function TypographyPage() {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
-      </Tabs>
+        </DssTabsContent>
+      </DssTabs>
     </div>
   );
 }
