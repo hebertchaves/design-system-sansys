@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useState } from "react";
 import { 
   Copy, Check, Layers, Code, FileText, Palette, Box,
   Loader2, ChevronRight, Save, Send, Upload, Plus, Trash2, 
@@ -1005,27 +1004,20 @@ export default function DssButtonPage() {
         badge="6 variantes • 8 cores • 3 brands"
       />
 
-      <Tabs defaultValue="variants" className="space-y-4">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
+      <DssTabs defaultValue="variantes" className="space-y-4">
+        <DssTabsList>
           {["Variantes", "Cores", "Brands", "Tamanhos", "Estados", "Ícones"].map((tab) => (
-            <TabsTrigger 
+            <DssTabsTrigger 
               key={tab.toLowerCase()}
               value={tab.toLowerCase()}
-              className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white"
             >
               {tab}
-            </TabsTrigger>
+            </DssTabsTrigger>
           ))}
-        </TabsList>
+        </DssTabsList>
 
         {/* Variantes Tab */}
-        <TabsContent value="variantes" className="space-y-4">
+        <DssTabsContent value="variantes" className="space-y-4">
           {variants.map((v) => (
             <Card 
               key={v.name}
@@ -1058,10 +1050,10 @@ export default function DssButtonPage() {
               </CardContent>
             </Card>
           ))}
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Cores Tab */}
-        <TabsContent value="cores" className="space-y-6">
+        <DssTabsContent value="cores" className="space-y-6">
           <Card 
             style={{ 
               backgroundColor: 'var(--jtech-card-bg)', 
@@ -1119,10 +1111,10 @@ export default function DssButtonPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Brands Tab */}
-        <TabsContent value="brands" className="space-y-4">
+        <DssTabsContent value="brands" className="space-y-4">
           {Object.values(brandColors).map((b) => (
             <Card 
               key={b.name}
@@ -1167,10 +1159,10 @@ export default function DssButtonPage() {
               </CardContent>
             </Card>
           ))}
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Tamanhos Tab */}
-        <TabsContent value="tamanhos">
+        <DssTabsContent value="tamanhos">
           <Card 
             style={{ 
               backgroundColor: 'var(--jtech-card-bg)', 
@@ -1220,10 +1212,10 @@ export default function DssButtonPage() {
               </Table>
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Estados Tab */}
-        <TabsContent value="estados">
+        <DssTabsContent value="estados">
           <Card 
             style={{ 
               backgroundColor: 'var(--jtech-card-bg)', 
@@ -1259,10 +1251,10 @@ export default function DssButtonPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Ícones Tab */}
-        <TabsContent value="ícones">
+        <DssTabsContent value="ícones">
           <Card 
             style={{ 
               backgroundColor: 'var(--jtech-card-bg)', 
@@ -1313,8 +1305,8 @@ export default function DssButtonPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
+        </DssTabsContent>
+      </DssTabs>
 
       {/* Tokens Section */}
       <SectionHeader
@@ -1323,35 +1315,21 @@ export default function DssButtonPage() {
         badge={`${tokensUsed.length} tokens`}
       />
 
-      <Tabs defaultValue="Action" className="space-y-4">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
+      <DssTabs defaultValue="Action" className="space-y-4">
+        <DssTabsList>
           {Object.keys(tokensByCategory).map((category) => (
-            <TabsTrigger 
+            <DssTabsTrigger 
               key={category}
               value={category}
-              className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white text-xs"
+              badge={tokensByCategory[category].length}
             >
               {category}
-              <span 
-                className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full"
-                style={{ 
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                }}
-              >
-                {tokensByCategory[category].length}
-              </span>
-            </TabsTrigger>
+            </DssTabsTrigger>
           ))}
-        </TabsList>
+        </DssTabsList>
 
         {Object.entries(tokensByCategory).map(([category, tokens]) => (
-          <TabsContent key={category} value={category} className="space-y-4">
+          <DssTabsContent key={category} value={category} className="space-y-4">
             <Card 
               className="transition-all duration-300"
               style={{ 
@@ -1396,9 +1374,9 @@ export default function DssButtonPage() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </DssTabsContent>
         ))}
-      </Tabs>
+      </DssTabs>
 
       {/* Anatomia */}
       <SectionHeader

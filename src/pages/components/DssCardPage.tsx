@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
   Copy, Check, Layers, Code, FileText, 
@@ -1406,27 +1406,20 @@ export default function DssCardPage() {
         badge="4 variantes • 3 brands"
       />
 
-      <Tabs defaultValue="variantes" className="space-y-4">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
+      <DssTabs defaultValue="variantes" className="space-y-4">
+        <DssTabsList>
           {["Variantes", "Brands", "Exemplos", "Dark Mode"].map((tab) => (
-            <TabsTrigger 
+            <DssTabsTrigger 
               key={tab.toLowerCase().replace(" ", "-")}
               value={tab.toLowerCase().replace(" ", "-")}
-              className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white"
             >
               {tab}
-            </TabsTrigger>
+            </DssTabsTrigger>
           ))}
-        </TabsList>
+        </DssTabsList>
 
         {/* Variantes Tab */}
-        <TabsContent value="variantes" className="space-y-4">
+        <DssTabsContent value="variantes" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {variants.map((v) => (
               <Card 
@@ -1497,10 +1490,10 @@ export default function DssCardPage() {
               </Card>
             ))}
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Brands Tab */}
-        <TabsContent value="brands" className="space-y-4">
+        <DssTabsContent value="brands" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {Object.values(brandColors).map((b) => (
               <Card 
@@ -1575,10 +1568,10 @@ export default function DssCardPage() {
               </Card>
             ))}
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Exemplos Tab */}
-        <TabsContent value="exemplos" className="space-y-4">
+        <DssTabsContent value="exemplos" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Product Card */}
             <Card 
@@ -1914,10 +1907,10 @@ export default function DssCardPage() {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Dark Mode Tab */}
-        <TabsContent value="dark-mode" className="space-y-4">
+        <DssTabsContent value="dark-mode" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Light Mode */}
             <Card 
@@ -2104,8 +2097,8 @@ export default function DssCardPage() {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
-      </Tabs>
+        </DssTabsContent>
+      </DssTabs>
 
       {/* Arquitetura 4 Camadas */}
       <SectionHeader
@@ -2305,35 +2298,21 @@ export default function DssCardPage() {
         badge={`${tokensUsed.length} tokens`}
       />
 
-      <Tabs defaultValue="Surface" className="space-y-4">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
+      <DssTabs defaultValue="Surface" className="space-y-4">
+        <DssTabsList>
           {Object.keys(tokensByCategory).map((category) => (
-            <TabsTrigger 
+            <DssTabsTrigger 
               key={category}
               value={category}
-              className="data-[state=active]:bg-[var(--dss-jtech-accent)] data-[state=active]:text-white text-xs"
+              badge={tokensByCategory[category].length}
             >
               {category}
-              <span 
-                className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full"
-                style={{ 
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                }}
-              >
-                {tokensByCategory[category].length}
-              </span>
-            </TabsTrigger>
+            </DssTabsTrigger>
           ))}
-        </TabsList>
+        </DssTabsList>
 
         {Object.entries(tokensByCategory).map(([category, tokens]) => (
-          <TabsContent key={category} value={category} className="space-y-4">
+          <DssTabsContent key={category} value={category} className="space-y-4">
             <Card 
               className="transition-all duration-300"
               style={{ 
@@ -2378,9 +2357,9 @@ export default function DssCardPage() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </DssTabsContent>
         ))}
-      </Tabs>
+      </DssTabs>
 
       {/* Acessibilidade */}
       <SectionHeader

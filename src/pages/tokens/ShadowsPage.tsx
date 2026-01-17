@@ -413,10 +413,10 @@ export default function ShadowsPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Elevação */}
-        <TabsContent value="elevation" className="space-y-6">
+        <DssTabsContent value="elevation" className="space-y-6">
           <SectionHeader 
             title="Sistema de" 
             titleAccent="Elevação"
@@ -554,10 +554,10 @@ export default function ShadowsPage() {
               </pre>
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Semânticas */}
-        <TabsContent value="semantic" className="space-y-6">
+        <DssTabsContent value="semantic" className="space-y-6">
           <SectionHeader 
             title="Sombras" 
             titleAccent="Semânticas"
@@ -687,10 +687,10 @@ export default function ShadowsPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Marcas */}
-        <TabsContent value="brands" className="space-y-6">
+        <DssTabsContent value="brands" className="space-y-6">
           <SectionHeader 
             title="Sombras de" 
             titleAccent="Marca"

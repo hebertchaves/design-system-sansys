@@ -377,10 +377,10 @@ export default function TypographyPage() {
               </Card>
             ))}
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Tamanhos */}
-        <TabsContent value="sizes" className="space-y-6">
+        <DssTabsContent value="sizes" className="space-y-6">
           <SectionHeader 
             title="Tamanhos de" 
             titleAccent="Fonte"
@@ -433,10 +433,10 @@ export default function TypographyPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Pesos */}
-        <TabsContent value="weights" className="space-y-6">
+        <DssTabsContent value="weights" className="space-y-6">
           <SectionHeader 
             title="Pesos de" 
             titleAccent="Fonte"
@@ -479,10 +479,10 @@ export default function TypographyPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Hierarquia */}
-        <TabsContent value="hierarchy" className="space-y-6">
+        <DssTabsContent value="hierarchy" className="space-y-6">
           <SectionHeader 
             title="Hierarquia" 
             titleAccent="Semântica"
@@ -572,10 +572,10 @@ export default function TypographyPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Espaçamento */}
-        <TabsContent value="spacing" className="space-y-6">
+        <DssTabsContent value="spacing" className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             {/* Altura de Linha */}
             <div className="space-y-4">
@@ -631,10 +631,10 @@ export default function TypographyPage() {
               </Card>
             </div>
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Cores de Texto */}
-        <TabsContent value="colors" className="space-y-6">
+        <DssTabsContent value="colors" className="space-y-6">
           <SectionHeader 
             title="Cores de" 
             titleAccent="Texto"
@@ -703,10 +703,10 @@ export default function TypographyPage() {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Acessibilidade */}
-        <TabsContent value="a11y" className="space-y-6">
+        <DssTabsContent value="a11y" className="space-y-6">
           <SectionHeader 
             title="Acessibilidade" 
             titleAccent="Tipográfica"

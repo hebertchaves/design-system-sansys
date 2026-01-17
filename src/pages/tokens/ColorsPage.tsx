@@ -494,10 +494,10 @@ export default function ColorsPage() {
               description="Gestão de resíduos sólidos"
             />
           </div>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Semantic Colors Tab */}
-        <TabsContent value="semantic" className="mt-6">
+        <DssTabsContent value="semantic">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {semanticColors.map((semantic) => (
               <Card 
