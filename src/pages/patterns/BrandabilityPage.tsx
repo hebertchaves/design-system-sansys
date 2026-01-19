@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Copy, Check, Palette, Layers, Code, Sparkles, Shield, Zap, Eye, Grid3X3, Sun, Droplets, Leaf } from "lucide-react";
@@ -1075,14 +1075,12 @@ export default function BrandabilityPage() {
           }}
         >
           <CardContent className="p-0">
-            <Tabs value={activeTokenTab} onValueChange={setActiveTokenTab}>
+            <DssTabs value={activeTokenTab} onValueChange={setActiveTokenTab}>
               <div 
                 className="border-b"
                 style={{ borderColor: 'var(--jtech-card-border)' }}
               >
-                <TabsList 
-                  className="w-full justify-start rounded-none bg-transparent p-0 flex-wrap"
-                >
+                <DssTabsList variant="underline">
                   {[
                     { id: "action", label: "Ações" },
                     { id: "brand", label: "Marca" },
@@ -1095,23 +1093,19 @@ export default function BrandabilityPage() {
                     { id: "component", label: "Componentes" },
                     { id: "quasar", label: "Quasar" },
                   ].map((tab) => (
-                    <TabsTrigger 
+                    <DssTabsTrigger 
                       key={tab.id} 
                       value={tab.id}
-                      className="rounded-none border-b-2 border-transparent data-[state=active]:border-current px-4 py-3 text-sm"
-                      style={{ 
-                        color: activeTokenTab === tab.id ? primaryColor : 'var(--jtech-text-body)',
-                        borderColor: activeTokenTab === tab.id ? primaryColor : 'transparent'
-                      }}
+                      variant="underline"
                     >
                       {tab.label}
-                    </TabsTrigger>
+                    </DssTabsTrigger>
                   ))}
-                </TabsList>
+                </DssTabsList>
               </div>
 
               <div className="p-4 space-y-2">
-                <TabsContent value="action" className="mt-0 space-y-2">
+                <DssTabsContent value="action" className="mt-0 space-y-2">
                   {selectedBrand.actionTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1119,9 +1113,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="brand" className="mt-0 space-y-2">
+                <DssTabsContent value="brand" className="mt-0 space-y-2">
                   {selectedBrand.brandTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1129,9 +1123,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="surface" className="mt-0 space-y-2">
+                <DssTabsContent value="surface" className="mt-0 space-y-2">
                   {selectedBrand.surfaceTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1139,9 +1133,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="text" className="mt-0 space-y-2">
+                <DssTabsContent value="text" className="mt-0 space-y-2">
                   {selectedBrand.textTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1149,9 +1143,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="border" className="mt-0 space-y-2">
+                <DssTabsContent value="border" className="mt-0 space-y-2">
                   {selectedBrand.borderTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1159,9 +1153,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="shadow" className="mt-0 space-y-2">
+                <DssTabsContent value="shadow" className="mt-0 space-y-2">
                   {selectedBrand.shadowTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1169,9 +1163,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="focus" className="mt-0 space-y-2">
+                <DssTabsContent value="focus" className="mt-0 space-y-2">
                   {selectedBrand.focusTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1179,9 +1173,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="gradient" className="mt-0 space-y-2">
+                <DssTabsContent value="gradient" className="mt-0 space-y-2">
                   {selectedBrand.gradientTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1189,9 +1183,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="component" className="mt-0 space-y-2">
+                <DssTabsContent value="component" className="mt-0 space-y-2">
                   {selectedBrand.componentTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1199,9 +1193,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
 
-                <TabsContent value="quasar" className="mt-0 space-y-2">
+                <DssTabsContent value="quasar" className="mt-0 space-y-2">
                   {selectedBrand.quasarTokens.map((token) => (
                     <TokenRow 
                       key={token.token} 
@@ -1209,9 +1203,9 @@ export default function BrandabilityPage() {
                       brandColor={primaryColor}
                     />
                   ))}
-                </TabsContent>
+                </DssTabsContent>
               </div>
-            </Tabs>
+            </DssTabs>
           </CardContent>
         </Card>
       </section>

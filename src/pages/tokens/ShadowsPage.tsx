@@ -1,10 +1,10 @@
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Copy, Check, Layers, Sun, Droplets, Leaf, Focus, MousePointer, Square } from "lucide-react";
-import { useState } from "react";
 
 // =============================================
 // DSS TOKENS - Conforme _shadows.scss
@@ -336,36 +336,26 @@ export default function ShadowsPage() {
       />
 
       {/* Tabs Navigation */}
-      <Tabs defaultValue="base" className="space-y-6">
-        <TabsList 
-          className="w-full justify-start gap-1 p-1 h-auto flex-wrap"
-          style={{ 
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            borderRadius: '0.75rem'
-          }}
-        >
+      <DssTabs defaultValue="base" className="space-y-6">
+        <DssTabsList>
           {[
             { value: "base", label: "Sombras Base", icon: Layers },
             { value: "elevation", label: "Elevação", icon: Square },
             { value: "semantic", label: "Semânticas", icon: Focus },
             { value: "brands", label: "Marcas", icon: Sun },
           ].map((tab) => (
-            <TabsTrigger
+            <DssTabsTrigger
               key={tab.value}
               value={tab.value}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg data-[state=active]:shadow-md"
-              style={{ 
-                color: 'var(--jtech-text-body)'
-              }}
+              icon={<tab.icon size={14} />}
             >
-              <tab.icon size={14} />
               {tab.label}
-            </TabsTrigger>
+            </DssTabsTrigger>
           ))}
-        </TabsList>
+        </DssTabsList>
 
         {/* Sombras Base */}
-        <TabsContent value="base" className="space-y-6">
+        <DssTabsContent value="base" className="space-y-6">
           <SectionHeader 
             title="Sombras" 
             titleAccent="Base"
@@ -423,10 +413,10 @@ export default function ShadowsPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Elevação */}
-        <TabsContent value="elevation" className="space-y-6">
+        <DssTabsContent value="elevation" className="space-y-6">
           <SectionHeader 
             title="Sistema de" 
             titleAccent="Elevação"
@@ -564,10 +554,10 @@ export default function ShadowsPage() {
               </pre>
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Semânticas */}
-        <TabsContent value="semantic" className="space-y-6">
+        <DssTabsContent value="semantic" className="space-y-6">
           <SectionHeader 
             title="Sombras" 
             titleAccent="Semânticas"
@@ -697,10 +687,10 @@ export default function ShadowsPage() {
               ))}
             </CardContent>
           </Card>
-        </TabsContent>
+        </DssTabsContent>
 
         {/* Marcas */}
-        <TabsContent value="brands" className="space-y-6">
+        <DssTabsContent value="brands" className="space-y-6">
           <SectionHeader 
             title="Sombras de" 
             titleAccent="Marca"
@@ -749,8 +739,8 @@ export default function ShadowsPage() {
               </Card>
             ))}
           </div>
-        </TabsContent>
-      </Tabs>
+        </DssTabsContent>
+      </DssTabs>
     </div>
   );
 }
