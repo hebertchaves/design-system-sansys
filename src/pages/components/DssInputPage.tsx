@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
-  Copy, Check, Layers, Code, FileText, 
+  Copy, Check, Layers, Code, FileText, Settings,
   Eye, EyeOff, Search, Mail, Lock, User, Phone,
   AlertCircle, CheckCircle2, Info, X, Calendar,
   CreditCard, AtSign, Hash, Globe
