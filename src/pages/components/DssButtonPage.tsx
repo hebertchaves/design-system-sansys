@@ -1140,53 +1140,6 @@ export default function DssButtonPage() {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection
-        icon={Palette}
-        title="Tokens DSS"
-        titleAccent="Utilizados"
-      >
-        <div className="pt-4">
-          <DssTabs defaultValue="Action" className="space-y-4">
-            <DssTabsList>
-              {Object.keys(tokensByCategory).map((category) => (
-                <DssTabsTrigger 
-                  key={category}
-                  value={category}
-                  badge={tokensByCategory[category].length}
-                >
-                  {category}
-                </DssTabsTrigger>
-              ))}
-            </DssTabsList>
-
-            {Object.entries(tokensByCategory).map(([category, tokens]) => (
-              <DssTabsContent key={category} value={category} className="space-y-4">
-                <div 
-                  className="p-4 rounded-lg"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
-                >
-                  <div 
-                    className="grid grid-cols-[1fr_140px_1fr] gap-4 pb-3 mb-3 text-xs font-semibold"
-                    style={{ 
-                      color: 'var(--jtech-heading-tertiary)',
-                      borderBottom: '1px solid var(--jtech-card-border)'
-                    }}
-                  >
-                    <span>Token</span>
-                    <span>Valor</span>
-                    <span>Uso</span>
-                  </div>
-                  <div className="grid gap-2">
-                    {tokens.map((t) => (
-                      <TokenRow key={t.token} token={t.token} value={t.value} usage={t.usage} />
-                    ))}
-                  </div>
-                </div>
-              </DssTabsContent>
-            ))}
-          </DssTabs>
-        </div>
-      </CollapsibleSection>
 
       <CollapsibleSection
         icon={CheckCircle}
