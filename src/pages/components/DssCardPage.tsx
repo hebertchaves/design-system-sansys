@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { 
-  Copy, Check, Layers, Code, FileText, 
-  LayoutDashboard, Image, CreditCard, User, Settings,
-  ChevronRight, MoreHorizontal, Heart, Share2, Bookmark,
-  Loader2, Mail, Star, Bell
+import {
+  Copy,
+  Check,
+  Layers,
+  Code,
+  FileText,
+  LayoutDashboard,
+  User,
+  Settings,
+  MoreHorizontal,
+  Loader2,
+  Star,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { AnatomySection } from "@/components/ui/AnatomySection";
+import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
 
 // ============================================================================
 // TOKENS REAIS DO DSS - Extraídos de index.css e globals.scss
@@ -42,7 +52,7 @@ const semanticColors = {
     bgFallback: "#1f86de",
     hoverFallback: "#1a70c2",
     lightFallback: "#e5f0ff",
-    deepFallback: "#0d5aa0"
+    deepFallback: "#0d5aa0",
   },
   secondary: {
     name: "secondary",
@@ -57,7 +67,7 @@ const semanticColors = {
     bgFallback: "#26a69a",
     hoverFallback: "#1e8e82",
     lightFallback: "#e0f2f1",
-    deepFallback: "#00695c"
+    deepFallback: "#00695c",
   },
   positive: {
     name: "positive",
@@ -72,7 +82,7 @@ const semanticColors = {
     bgFallback: "#21ba45",
     hoverFallback: "#1aa23c",
     lightFallback: "#e8f5e9",
-    deepFallback: "#0f7a26"
+    deepFallback: "#0f7a26",
   },
   negative: {
     name: "negative",
@@ -87,7 +97,7 @@ const semanticColors = {
     bgFallback: "#c10015",
     hoverFallback: "#a60013",
     lightFallback: "#ffebee",
-    deepFallback: "#8a000e"
+    deepFallback: "#8a000e",
   },
   warning: {
     name: "warning",
@@ -102,7 +112,7 @@ const semanticColors = {
     bgFallback: "#f2c037",
     hoverFallback: "#d9a82f",
     lightFallback: "#fff8e1",
-    deepFallback: "#c49a12"
+    deepFallback: "#c49a12",
   },
   info: {
     name: "info",
@@ -117,8 +127,8 @@ const semanticColors = {
     bgFallback: "#31ccec",
     hoverFallback: "#27b8d5",
     lightFallback: "#e1f5fe",
-    deepFallback: "#1fa3bf"
-  }
+    deepFallback: "#1fa3bf",
+  },
 };
 
 // Paletas de Marca REAIS do DSS (Sansys)
@@ -129,16 +139,24 @@ const brandColors = {
     icon: "🟠",
     principal: "#ef7a11",
     scale: {
-      50: "#fff9ed", 100: "#fef2d6", 200: "#fde2ab", 300: "#fbcb76", 
-      400: "#f8aa3f", 500: "#f5911a", 600: "#ef7a11", 700: "#bf590f", 
-      800: "#984614", 900: "#7a3614", 950: "#421d08"
+      50: "#fff9ed",
+      100: "#fef2d6",
+      200: "#fde2ab",
+      300: "#fbcb76",
+      400: "#f8aa3f",
+      500: "#f5911a",
+      600: "#ef7a11",
+      700: "#bf590f",
+      800: "#984614",
+      900: "#7a3614",
+      950: "#421d08",
     },
     tokens: {
       principal: "--dss-hub-600",
       hover: "--dss-hub-700",
       light: "--dss-hub-300",
-      disable: "--dss-hub-200"
-    }
+      disable: "--dss-hub-200",
+    },
   },
   water: {
     name: "water",
@@ -146,16 +164,24 @@ const brandColors = {
     icon: "🔵",
     principal: "#0e88e4",
     scale: {
-      50: "#f0f7ff", 100: "#e0eefe", 200: "#badefd", 300: "#7dc4fc", 
-      400: "#38a6f8", 500: "#0e88e4", 600: "#026cc7", 700: "#0356a1", 
-      800: "#074a85", 900: "#0c3e6e", 950: "#082749"
+      50: "#f0f7ff",
+      100: "#e0eefe",
+      200: "#badefd",
+      300: "#7dc4fc",
+      400: "#38a6f8",
+      500: "#0e88e4",
+      600: "#026cc7",
+      700: "#0356a1",
+      800: "#074a85",
+      900: "#0c3e6e",
+      950: "#082749",
     },
     tokens: {
       principal: "--dss-water-500",
       hover: "--dss-water-600",
       light: "--dss-water-300",
-      disable: "--dss-water-200"
-    }
+      disable: "--dss-water-200",
+    },
   },
   waste: {
     name: "waste",
@@ -163,24 +189,50 @@ const brandColors = {
     icon: "🟢",
     principal: "#18b173",
     scale: {
-      50: "#edfcf4", 100: "#d3f8e2", 200: "#abefcb", 300: "#74e1ae", 
-      400: "#3ccb8d", 500: "#18b173", 600: "#0b8154", 700: "#0a724e", 
-      800: "#0a5b3e", 900: "#0a4a34", 950: "#042a1e"
+      50: "#edfcf4",
+      100: "#d3f8e2",
+      200: "#abefcb",
+      300: "#74e1ae",
+      400: "#3ccb8d",
+      500: "#18b173",
+      600: "#0b8154",
+      700: "#0a724e",
+      800: "#0a5b3e",
+      900: "#0a4a34",
+      950: "#042a1e",
     },
     tokens: {
       principal: "--dss-waste-500",
       hover: "--dss-waste-600",
       light: "--dss-waste-300",
-      disable: "--dss-waste-200"
-    }
-  }
+      disable: "--dss-waste-200",
+    },
+  },
 };
 
 // Props API do DssCard
 const propsData = [
-  { category: "Visual", prop: "variant", type: "'elevated' | 'flat' | 'bordered' | 'outlined'", default: "'elevated'", description: "Estilo visual do card" },
-  { category: "Visual", prop: "square", type: "Boolean", default: "false", description: "Remove border-radius (cantos quadrados)" },
-  { category: "Interação", prop: "clickable", type: "Boolean", default: "false", description: "Torna o card interativo (hover/focus)" },
+  {
+    category: "Visual",
+    prop: "variant",
+    type: "'elevated' | 'flat' | 'bordered' | 'outlined'",
+    default: "'elevated'",
+    description: "Estilo visual do card",
+  },
+  {
+    category: "Visual",
+    prop: "square",
+    type: "Boolean",
+    default: "false",
+    description: "Remove border-radius (cantos quadrados)",
+  },
+  {
+    category: "Interação",
+    prop: "clickable",
+    type: "Boolean",
+    default: "false",
+    description: "Torna o card interativo (hover/focus)",
+  },
   { category: "Tema", prop: "dark", type: "Boolean", default: "false", description: "Aplica modo escuro ao card" },
   { category: "Brandabilidade", prop: "brand", type: "'hub' | 'water' | 'waste'", default: "null", description: "Tema de marca Sansys" },
 ];
@@ -192,7 +244,12 @@ const sectionPropsData = [
 
 // Props do DssCardActions
 const actionsPropsData = [
-  { prop: "align", type: "'left' | 'center' | 'right' | 'between' | 'around'", default: "'right'", description: "Alinhamento dos botões" },
+  {
+    prop: "align",
+    type: "'left' | 'center' | 'right' | 'between' | 'around'",
+    default: "'right'",
+    description: "Alinhamento dos botões",
+  },
   { prop: "vertical", type: "Boolean", default: "false", description: "Layout vertical para ações" },
 ];
 
@@ -207,11 +264,26 @@ const tokensUsed = [
   { category: "Surface", token: "--dss-surface-overlay", value: "rgba(0,0,0,0.5)", usage: "Overlay escuro" },
   { category: "Surface", token: "--dss-surface-hover", value: "rgba(0,0,0,0.04)", usage: "Hover em cards flat" },
   { category: "Surface", token: "--dss-surface-active", value: "rgba(0,0,0,0.08)", usage: "Estado ativo" },
-  { category: "Surface", token: "--dss-surface-selected", value: "rgba(31,134,222,0.12)", usage: "Seleção com primary" },
+  {
+    category: "Surface",
+    token: "--dss-surface-selected",
+    value: "rgba(31,134,222,0.12)",
+    usage: "Seleção com primary",
+  },
   { category: "Surface", token: "--dss-surface-disabled", value: "#f5f5f5", usage: "Estado desabilitado" },
-  { category: "Surface", token: "--dss-surface-brand-subtle", value: "rgba(245,145,26,0.08)", usage: "Brand 8% opacity" },
-  { category: "Surface", token: "--dss-surface-brand-light", value: "rgba(245,145,26,0.12)", usage: "Brand 12% opacity" },
-  
+  {
+    category: "Surface",
+    token: "--dss-surface-brand-subtle",
+    value: "rgba(245,145,26,0.08)",
+    usage: "Brand 8% opacity",
+  },
+  {
+    category: "Surface",
+    token: "--dss-surface-brand-light",
+    value: "rgba(245,145,26,0.12)",
+    usage: "Brand 12% opacity",
+  },
+
   // ============================================================================
   // ELEVATION - Sombras e profundidade
   // ============================================================================
@@ -220,12 +292,32 @@ const tokensUsed = [
   { category: "Elevation", token: "--dss-elevation-2", value: "0 4px 6px rgba(0,0,0,0.30)", usage: "Hover elevation" },
   { category: "Elevation", token: "--dss-elevation-3", value: "0 10px 15px rgba(0,0,0,0.35)", usage: "Modal/dialog" },
   { category: "Elevation", token: "--dss-shadow-focus", value: "0 0 0 3px rgba(31,134,222,0.5)", usage: "Focus ring" },
-  { category: "Elevation", token: "--dss-shadow-focus-error", value: "0 0 0 3px rgba(216,24,46,0.5)", usage: "Focus error" },
+  {
+    category: "Elevation",
+    token: "--dss-shadow-focus-error",
+    value: "0 0 0 3px rgba(216,24,46,0.5)",
+    usage: "Focus error",
+  },
   { category: "Elevation", token: "--dss-shadow-hover", value: "var(--dss-shadow-md)", usage: "Shadow hover state" },
-  { category: "Elevation", token: "--dss-shadow-hub-md", value: "0 4px 6px rgba(245,145,26,0.15)", usage: "Brand Hub shadow" },
-  { category: "Elevation", token: "--dss-shadow-water-md", value: "0 4px 6px rgba(14,136,228,0.15)", usage: "Brand Water shadow" },
-  { category: "Elevation", token: "--dss-shadow-waste-md", value: "0 4px 6px rgba(24,177,115,0.15)", usage: "Brand Waste shadow" },
-  
+  {
+    category: "Elevation",
+    token: "--dss-shadow-hub-md",
+    value: "0 4px 6px rgba(245,145,26,0.15)",
+    usage: "Brand Hub shadow",
+  },
+  {
+    category: "Elevation",
+    token: "--dss-shadow-water-md",
+    value: "0 4px 6px rgba(14,136,228,0.15)",
+    usage: "Brand Water shadow",
+  },
+  {
+    category: "Elevation",
+    token: "--dss-shadow-waste-md",
+    value: "0 4px 6px rgba(24,177,115,0.15)",
+    usage: "Brand Waste shadow",
+  },
+
   // ============================================================================
   // BORDER RADIUS - Arredondamento
   // ============================================================================
@@ -235,7 +327,7 @@ const tokensUsed = [
   { category: "Border Radius", token: "--dss-radius-lg", value: "12px", usage: "Radius padrão do card" },
   { category: "Border Radius", token: "--dss-radius-xl", value: "16px", usage: "Radius grande" },
   { category: "Border Radius", token: "--dss-radius-full", value: "9999px", usage: "Totalmente circular" },
-  
+
   // ============================================================================
   // BORDERS - Bordas compostas
   // ============================================================================
@@ -243,11 +335,16 @@ const tokensUsed = [
   { category: "Borders", token: "--dss-border-gray-300", value: "1px solid #d4d4d4", usage: "Borda bordered/outlined" },
   { category: "Borders", token: "--dss-border-gray-400", value: "1px solid #a3a3a3", usage: "Borda hover" },
   { category: "Borders", token: "--dss-border-primary", value: "1px solid var(--dss-primary)", usage: "Borda primary" },
-  { category: "Borders", token: "--dss-border-focus", value: "2px solid var(--dss-action-primary)", usage: "Focus ring" },
+  {
+    category: "Borders",
+    token: "--dss-border-focus",
+    value: "2px solid var(--dss-action-primary)",
+    usage: "Focus ring",
+  },
   { category: "Borders", token: "--dss-border-hub-600", value: "1px solid #ef7a11", usage: "Brand Hub border" },
   { category: "Borders", token: "--dss-border-water-500", value: "1px solid #0e88e4", usage: "Brand Water border" },
   { category: "Borders", token: "--dss-border-waste-500", value: "1px solid #18b173", usage: "Brand Waste border" },
-  
+
   // ============================================================================
   // SPACING - Espaçamentos
   // ============================================================================
@@ -262,7 +359,7 @@ const tokensUsed = [
   { category: "Spacing", token: "--dss-gap-2", value: "8px", usage: "Gap flex/grid pequeno" },
   { category: "Spacing", token: "--dss-gap-3", value: "12px", usage: "Gap flex/grid médio" },
   { category: "Spacing", token: "--dss-gap-4", value: "16px", usage: "Gap flex/grid padrão" },
-  
+
   // ============================================================================
   // ACTION COLORS - Cores de ação semânticas
   // ============================================================================
@@ -275,7 +372,7 @@ const tokensUsed = [
   { category: "Action", token: "--dss-action-tertiary", value: "#ff6607", usage: "Ação terciária" },
   { category: "Action", token: "--dss-action-accent", value: "#b454c4", usage: "Ação accent" },
   { category: "Action", token: "--dss-action-dark", value: "#454545", usage: "Ação escura" },
-  
+
   // ============================================================================
   // FEEDBACK COLORS - Cores de feedback
   // ============================================================================
@@ -287,7 +384,7 @@ const tokensUsed = [
   { category: "Feedback", token: "--dss-feedback-warning-light", value: "#fff8e1", usage: "Aviso light" },
   { category: "Feedback", token: "--dss-feedback-info", value: "#0cc4e9", usage: "Informação" },
   { category: "Feedback", token: "--dss-feedback-info-light", value: "#e1f5fe", usage: "Info light" },
-  
+
   // ============================================================================
   // TEXT - Tipografia
   // ============================================================================
@@ -299,7 +396,7 @@ const tokensUsed = [
   { category: "Text", token: "--dss-text-action", value: "var(--dss-action-primary)", usage: "Links" },
   { category: "Text", token: "--dss-text-success", value: "var(--dss-positive)", usage: "Texto sucesso" },
   { category: "Text", token: "--dss-text-error", value: "var(--dss-negative)", usage: "Texto erro" },
-  
+
   // ============================================================================
   // MOTION - Animação e transição
   // ============================================================================
@@ -310,7 +407,7 @@ const tokensUsed = [
   { category: "Motion", token: "--dss-easing-ease-out", value: "cubic-bezier(0,0,0.58,1)", usage: "Easing hover" },
   { category: "Motion", token: "--dss-transition-base", value: "all 250ms ease", usage: "Transição completa" },
   { category: "Motion", token: "--dss-transition-shadow", value: "box-shadow 250ms ease", usage: "Transição shadow" },
-  
+
   // ============================================================================
   // Z-INDEX - Camadas
   // ============================================================================
@@ -319,7 +416,7 @@ const tokensUsed = [
   { category: "Z-Index", token: "--dss-z-index-dropdown", value: "1000", usage: "Dropdowns" },
   { category: "Z-Index", token: "--dss-z-index-modal", value: "1060", usage: "Modais" },
   { category: "Z-Index", token: "--dss-z-index-tooltip", value: "1080", usage: "Tooltips" },
-  
+
   // ============================================================================
   // OPACITY - Transparência
   // ============================================================================
@@ -327,7 +424,7 @@ const tokensUsed = [
   { category: "Opacity", token: "--dss-opacity-hover", value: "0.1", usage: "Hover overlay" },
   { category: "Opacity", token: "--dss-opacity-active", value: "0.2", usage: "Active overlay" },
   { category: "Opacity", token: "--dss-opacity-overlay", value: "0.5", usage: "Backdrop overlay" },
-  
+
   // ============================================================================
   // BRANDS - Cores de marca (escalas completas)
   // ============================================================================
@@ -350,7 +447,7 @@ const tokensUsed = [
   { category: "Brand Waste", token: "--dss-waste-500", value: "#18b173", usage: "Waste principal" },
   { category: "Brand Waste", token: "--dss-waste-600", value: "#0b8154", usage: "Waste hover" },
   { category: "Brand Waste", token: "--dss-waste-700", value: "#0a724e", usage: "Waste deep" },
-  
+
   // ============================================================================
   // GRAY SCALE - Escala de cinza
   // ============================================================================
@@ -369,9 +466,27 @@ const tokensUsed = [
 
 // Anatomia 4 Camadas DSS
 const anatomyLayers = [
-  { layer: 1, name: "Structure", file: "1-structure/DssCard.vue", desc: "Template Vue + Props + Slots", color: "#ef7a11" },
-  { layer: 2, name: "Composition", file: "2-composition/_base.scss", desc: "Layout, padding, overflow", color: "#0e88e4" },
-  { layer: 3, name: "Variants", file: "3-variants/*.scss", desc: "elevated, flat, bordered, outlined", color: "#18b173" },
+  {
+    layer: 1,
+    name: "Structure",
+    file: "1-structure/DssCard.vue",
+    desc: "Template Vue + Props + Slots",
+    color: "#ef7a11",
+  },
+  {
+    layer: 2,
+    name: "Composition",
+    file: "2-composition/_base.scss",
+    desc: "Layout, padding, overflow",
+    color: "#0e88e4",
+  },
+  {
+    layer: 3,
+    name: "Variants",
+    file: "3-variants/*.scss",
+    desc: "elevated, flat, bordered, outlined",
+    color: "#18b173",
+  },
   { layer: 4, name: "Output", file: "4-output/*.scss", desc: "Dark mode, brands, estados", color: "#ff6607" },
 ];
 
@@ -389,7 +504,7 @@ function getColorConfig(colorKey?: string | null, brand?: string | null) {
       light: color.lightFallback,
       deep: color.deepFallback,
       text: color.textColor,
-      token: `--dss-action-${colorKey}`
+      token: `--dss-action-${colorKey}`,
     };
   }
   if (brand && brandColors[brand as keyof typeof brandColors]) {
@@ -400,7 +515,7 @@ function getColorConfig(colorKey?: string | null, brand?: string | null) {
       light: b.scale[100],
       deep: b.scale[800],
       text: "#ffffff",
-      token: `--dss-${brand}-600`
+      token: `--dss-${brand}-600`,
     };
   }
   return {
@@ -409,7 +524,7 @@ function getColorConfig(colorKey?: string | null, brand?: string | null) {
     light: "#e5f0ff",
     deep: "#0d5aa0",
     text: "#ffffff",
-    token: "--dss-action-primary"
+    token: "--dss-action-primary",
   };
 }
 
@@ -438,7 +553,7 @@ function DssAvatarPreview({
   dark = false,
 }: DssAvatarPreviewProps) {
   const colors = getColorConfig(colorKey, brand);
-  
+
   const sizeMap = {
     xs: { container: 24, font: 10, icon: 12 },
     sm: { container: 32, font: 12, icon: 16 },
@@ -446,9 +561,9 @@ function DssAvatarPreview({
     lg: { container: 56, font: 18, icon: 28 },
     xl: { container: 72, font: 24, icon: 36 },
   };
-  
+
   const s = sizeMap[size];
-  
+
   return (
     <div
       style={{
@@ -466,19 +581,22 @@ function DssAvatarPreview({
       title="DssAvatar"
     >
       {src ? (
-        <img 
-          src={src} 
-          alt="Avatar" 
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
+        <img src={src} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       ) : icon ? (
-        <span style={{ color: colors.bg, width: s.icon, height: s.icon, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <span
+          style={{
+            color: colors.bg,
+            width: s.icon,
+            height: s.icon,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           {icon}
         </span>
       ) : initials ? (
-        <span style={{ color: colors.bg, fontSize: s.font, fontWeight: 600 }}>
-          {initials}
-        </span>
+        <span style={{ color: colors.bg, fontSize: s.font, fontWeight: 600 }}>{initials}</span>
       ) : (
         <User style={{ color: colors.bg, width: s.icon, height: s.icon }} />
       )}
@@ -509,13 +627,13 @@ function DssBadgePreview({
   dark = false,
 }: DssBadgePreviewProps) {
   const colors = getColorConfig(colorKey, brand);
-  
+
   const sizeStyles = {
     xs: { padding: "2px 6px", fontSize: "9px" },
     sm: { padding: "3px 8px", fontSize: "10px" },
     md: { padding: "4px 10px", fontSize: "11px" },
   };
-  
+
   const getVariantStyles = (): React.CSSProperties => {
     switch (variant) {
       case "outline":
@@ -539,7 +657,7 @@ function DssBadgePreview({
         };
     }
   };
-  
+
   return (
     <span
       style={{
@@ -591,15 +709,15 @@ function DssButtonPreview({
 }: DssButtonPreviewProps) {
   const [isHovered, setIsHovered] = useState(false);
   const colors = getColorConfig(colorKey, brand);
-  
+
   const sizeStyles = {
     xs: { height: 24, padding: iconOnly ? "0 6px" : "0 8px", fontSize: 10, iconSize: 12 },
     sm: { height: 28, padding: iconOnly ? "0 8px" : "0 12px", fontSize: 11, iconSize: 14 },
     md: { height: 36, padding: iconOnly ? "0 10px" : "0 16px", fontSize: 12, iconSize: 16 },
   };
-  
+
   const s = sizeStyles[size];
-  
+
   const getVariantStyles = (): React.CSSProperties => {
     const base: React.CSSProperties = {
       display: "inline-flex",
@@ -618,7 +736,7 @@ function DssButtonPreview({
       transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
       whiteSpace: "nowrap",
     };
-    
+
     switch (variant) {
       case "flat":
         return {
@@ -651,13 +769,11 @@ function DssButtonPreview({
           backgroundColor: isHovered && !disabled ? colors.hover : colors.bg,
           color: colors.text,
           border: "none",
-          boxShadow: isHovered && !disabled 
-            ? "0 3px 6px rgba(0,0,0,0.16)" 
-            : "0 1px 3px rgba(0,0,0,0.12)",
+          boxShadow: isHovered && !disabled ? "0 3px 6px rgba(0,0,0,0.16)" : "0 1px 3px rgba(0,0,0,0.12)",
         };
     }
   };
-  
+
   return (
     <button
       style={getVariantStyles()}
@@ -670,7 +786,19 @@ function DssButtonPreview({
         <Loader2 style={{ width: s.iconSize, height: s.iconSize }} className="animate-spin" />
       ) : (
         <>
-          {icon && <span style={{ width: s.iconSize, height: s.iconSize, display: "flex", alignItems: "center", justifyContent: "center" }}>{icon}</span>}
+          {icon && (
+            <span
+              style={{
+                width: s.iconSize,
+                height: s.iconSize,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {icon}
+            </span>
+          )}
           {!iconOnly && label && <span>{label}</span>}
         </>
       )}
@@ -697,8 +825,8 @@ function DssSeparatorPreview({
   dark = false,
 }: DssSeparatorPreviewProps) {
   const colors = colorKey || brand ? getColorConfig(colorKey, brand) : null;
-  const borderColor = colors ? colors.light : (dark ? "rgba(255,255,255,0.12)" : "#e5e5e5");
-  
+  const borderColor = colors ? colors.light : dark ? "rgba(255,255,255,0.12)" : "#e5e5e5";
+
   return (
     <div
       style={{
@@ -724,24 +852,18 @@ interface DssIconPreviewProps {
   dark?: boolean;
 }
 
-function DssIconPreview({
-  icon,
-  size = "md",
-  colorKey = "primary",
-  brand = null,
-  dark = false,
-}: DssIconPreviewProps) {
+function DssIconPreview({ icon, size = "md", colorKey = "primary", brand = null, dark = false }: DssIconPreviewProps) {
   const colors = getColorConfig(colorKey, brand);
-  
+
   const sizeMap = {
     xs: 12,
     sm: 16,
     md: 20,
     lg: 24,
   };
-  
+
   const s = sizeMap[size];
-  
+
   return (
     <span
       style={{
@@ -796,7 +918,7 @@ function DssCardPreview({
         hover: color.hoverFallback,
         text: color.textColor,
         bg: color.bgFallback,
-        token: `--dss-action-${semanticColor}`
+        token: `--dss-action-${semanticColor}`,
       };
     }
     if (brand && brandColors[brand as keyof typeof brandColors]) {
@@ -807,7 +929,7 @@ function DssCardPreview({
         hover: brandData.scale[700],
         text: "#ffffff",
         bg: brandData.principal,
-        token: `--dss-${brand}-600`
+        token: `--dss-${brand}-600`,
       };
     }
     return null;
@@ -819,7 +941,7 @@ function DssCardPreview({
   const getVariantStyles = (): React.CSSProperties => {
     const borderColor = colorConfig?.border || undefined;
     const lightBg = colorConfig?.light || undefined;
-    
+
     const base: React.CSSProperties = {
       position: "relative",
       display: "flex",
@@ -838,38 +960,58 @@ function DssCardPreview({
         return {
           ...base,
           boxShadow: "none",
-          backgroundColor: isHovered && clickable 
-            ? (colorConfig ? lightBg : (dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"))
-            : (dark ? "#2a2a2a" : "#ffffff"),
+          backgroundColor:
+            isHovered && clickable
+              ? colorConfig
+                ? lightBg
+                : dark
+                  ? "rgba(255,255,255,0.08)"
+                  : "rgba(0,0,0,0.04)"
+              : dark
+                ? "#2a2a2a"
+                : "#ffffff",
         };
       case "bordered":
         return {
           ...base,
           border: `1px solid ${isHovered && clickable ? (colorConfig ? colorConfig.hover : "#a3a3a3") : "#d4d4d4"}`,
           borderLeftWidth: colorConfig ? "4px" : "1px",
-          borderLeftColor: colorConfig ? (isHovered && clickable ? colorConfig.hover : borderColor) : (isHovered && clickable ? "#a3a3a3" : "#d4d4d4"),
-          boxShadow: isHovered && clickable
-            ? "0 4px 6px rgba(0,0,0,0.12)"
-            : "0 1px 3px rgba(0,0,0,0.1)",
+          borderLeftColor: colorConfig
+            ? isHovered && clickable
+              ? colorConfig.hover
+              : borderColor
+            : isHovered && clickable
+              ? "#a3a3a3"
+              : "#d4d4d4",
+          boxShadow: isHovered && clickable ? "0 4px 6px rgba(0,0,0,0.12)" : "0 1px 3px rgba(0,0,0,0.1)",
         };
       case "outlined":
         return {
           ...base,
           border: `1px solid ${isHovered && clickable ? (colorConfig ? colorConfig.hover : "#1f86de") : "#d4d4d4"}`,
           borderLeftWidth: colorConfig ? "4px" : "1px",
-          borderLeftColor: colorConfig ? (isHovered && clickable ? colorConfig.hover : borderColor) : (isHovered && clickable ? "#1f86de" : "#d4d4d4"),
+          borderLeftColor: colorConfig
+            ? isHovered && clickable
+              ? colorConfig.hover
+              : borderColor
+            : isHovered && clickable
+              ? "#1f86de"
+              : "#d4d4d4",
           boxShadow: "none",
-          backgroundColor: isHovered && clickable 
-            ? (colorConfig ? lightBg : "rgba(31, 134, 222, 0.05)") 
-            : (dark ? "#2a2a2a" : "#ffffff"),
+          backgroundColor:
+            isHovered && clickable
+              ? colorConfig
+                ? lightBg
+                : "rgba(31, 134, 222, 0.05)"
+              : dark
+                ? "#2a2a2a"
+                : "#ffffff",
         };
       case "elevated":
       default:
         return {
           ...base,
-          boxShadow: isHovered && clickable
-            ? "0 4px 6px rgba(0,0,0,0.12)"
-            : "0 1px 3px rgba(0,0,0,0.1)",
+          boxShadow: isHovered && clickable ? "0 4px 6px rgba(0,0,0,0.12)" : "0 1px 3px rgba(0,0,0,0.1)",
         };
     }
   };
@@ -888,10 +1030,7 @@ function DssCardPreview({
         {children}
       </div>
       {showToken && (
-        <code 
-          className="text-[10px] font-mono mt-2"
-          style={{ color: 'var(--jtech-text-muted)' }}
-        >
+        <code className="text-[10px] font-mono mt-2" style={{ color: "var(--jtech-text-muted)" }}>
           {tokenName}
         </code>
       )}
@@ -900,16 +1039,16 @@ function DssCardPreview({
 }
 
 // Card Section Component
-function CardSection({ 
-  children, 
+function CardSection({
+  children,
   horizontal = false,
   className = "",
   style = {},
   isFirst = false,
   brand = null,
-  semanticColor = null
-}: { 
-  children: React.ReactNode; 
+  semanticColor = null,
+}: {
+  children: React.ReactNode;
   horizontal?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -926,9 +1065,9 @@ function CardSection({
       bgColor = `${brandColors[brand as keyof typeof brandColors].principal}0d`;
     }
   }
-  
+
   return (
-    <div 
+    <div
       className={`p-6 ${horizontal ? "flex items-center gap-4" : ""} ${className}`}
       style={{
         ...style,
@@ -941,11 +1080,11 @@ function CardSection({
 }
 
 // Card Actions Component
-function CardActions({ 
-  children, 
-  align = "right" 
-}: { 
-  children: React.ReactNode; 
+function CardActions({
+  children,
+  align = "right",
+}: {
+  children: React.ReactNode;
   align?: "left" | "center" | "right" | "between" | "around";
 }) {
   const justifyMap = {
@@ -957,7 +1096,7 @@ function CardActions({
   };
 
   return (
-    <div 
+    <div
       className="flex gap-2 p-4"
       style={{
         justifyContent: justifyMap[align],
@@ -985,42 +1124,47 @@ function TokenRow({ token, value, usage }: { token: string; value: string; usage
   const isColor = value.startsWith("#") || value.startsWith("rgb");
 
   return (
-    <div 
+    <div
       className="group flex items-center gap-4 py-3 px-4 rounded-lg transition-all cursor-pointer"
       onClick={copyToken}
-      style={{ 
-        backgroundColor: 'var(--jtech-card-bg)',
-        border: '1px solid var(--jtech-card-border)'
+      style={{
+        backgroundColor: "var(--jtech-card-bg)",
+        border: "1px solid var(--jtech-card-border)",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'var(--jtech-card-hover-border)';
-        e.currentTarget.style.transform = 'translateX(4px)';
+        e.currentTarget.style.borderColor = "var(--jtech-card-hover-border)";
+        e.currentTarget.style.transform = "translateX(4px)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'var(--jtech-card-border)';
-        e.currentTarget.style.transform = 'translateX(0)';
+        e.currentTarget.style.borderColor = "var(--jtech-card-border)";
+        e.currentTarget.style.transform = "translateX(0)";
       }}
     >
       {isColor && (
-        <div 
+        <div
           className="w-8 h-8 rounded-md flex-shrink-0"
-          style={{ backgroundColor: value, boxShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
+          style={{ backgroundColor: value, boxShadow: "0 2px 4px rgba(0,0,0,0.3)" }}
         />
       )}
       <div className="flex-1 min-w-0">
-        <code className="text-sm font-mono" style={{ color: 'var(--jtech-heading-secondary)' }}>
+        <code className="text-sm font-mono" style={{ color: "var(--jtech-heading-secondary)" }}>
           {token}
         </code>
-        <p className="text-xs mt-0.5" style={{ color: 'var(--jtech-text-body)' }}>{usage}</p>
+        <p className="text-xs mt-0.5" style={{ color: "var(--jtech-text-body)" }}>
+          {usage}
+        </p>
       </div>
       <div className="flex items-center gap-2">
-        <code className="text-[10px] font-mono" style={{ color: 'var(--jtech-text-muted)' }}>
+        <code className="text-[10px] font-mono" style={{ color: "var(--jtech-text-muted)" }}>
           {value}
         </code>
         {copied ? (
-          <Check className="h-4 w-4" style={{ color: 'var(--dss-positive)' }} />
+          <Check className="h-4 w-4" style={{ color: "var(--dss-positive)" }} />
         ) : (
-          <Copy className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--jtech-text-muted)' }} />
+          <Copy
+            className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ color: "var(--jtech-text-muted)" }}
+          />
         )}
       </div>
     </div>
@@ -1031,6 +1175,91 @@ function TokenRow({ token, value, usage }: { token: string; value: string; usage
 // COMPONENTE PRINCIPAL
 // ============================================================================
 
+// Dados da Anatomia 4 Camadas
+const cardAnatomyLayers = {
+  structure: {
+    files: ["DssCard.vue", "DssCardSection.vue", "DssCardActions.vue"],
+    description:
+      "Define a estrutura Vue do componente, incluindo template, props, slots e lógica de eventos. O DssCard aceita variant, clickable, square, dark e brand como props principais. Inclui subcomponentes DssCardSection e DssCardActions.",
+    responsibilities: [
+      "Definição do template HTML semântico",
+      "Declaração e validação de props",
+      "Gerenciamento de slots (content, actions)",
+      "Lógica de eventos click e keyboard",
+      "Atributos ARIA para acessibilidade",
+    ],
+    tokens: [],
+    codeExample: `<DssCard variant="elevated" clickable>
+  <DssCardSection>
+    <h3>Título</h3>
+    <p>Conteúdo</p>
+  </DssCardSection>
+  <DssCardActions>
+    <DssButton>Ação</DssButton>
+  </DssCardActions>
+</DssCard>`,
+  },
+  composition: {
+    files: ["_base.scss"],
+    description:
+      "Estilos fundamentais que são aplicados independente da variante. Define layout flexbox, overflow, transições base e estrutura de padding dos subcomponentes.",
+    responsibilities: [
+      "Display flex e direction column",
+      "Overflow hidden para conteúdo",
+      "Transições base (all 250ms ease)",
+      "Padding padrão das sections",
+      "Gap entre elementos internos",
+    ],
+    tokens: ["--dss-spacing-4", "--dss-spacing-6", "--dss-duration-base", "--dss-easing-standard"],
+    codeExample: `.dss-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: var(--dss-transition-base);
+}`,
+  },
+  variants: {
+    files: ["_elevated.scss", "_flat.scss", "_bordered.scss", "_outlined.scss"],
+    description:
+      "Cada variante define características visuais específicas: elevated (sombra), flat (sem elevação), bordered (borda + sombra), outlined (apenas borda).",
+    responsibilities: [
+      "Elevated: box-shadow com --dss-elevation-1",
+      "Flat: sem sombra, hover com background sutil",
+      "Bordered: border-radius + shadow",
+      "Outlined: apenas border, sem shadow",
+      "Square modifier para cantos retos",
+    ],
+    tokens: ["--dss-elevation-1", "--dss-elevation-2", "--dss-radius-lg", "--dss-border-gray-300"],
+    codeExample: `.dss-card--elevated {
+  box-shadow: var(--dss-elevation-1);
+}
+.dss-card--elevated:hover {
+  box-shadow: var(--dss-elevation-2);
+}`,
+  },
+  output: {
+    files: ["_states.scss", "_brands.scss"],
+    description:
+      "Camada final que aplica estados interativos (hover, focus, disabled), modo escuro e personalização por marca (Hub, Water, Waste).",
+    responsibilities: [
+      "Estados hover com elevação aumentada",
+      "Focus ring para acessibilidade",
+      "Modo dark com cores invertidas",
+      "Brand Hub: borda laranja",
+      "Brand Water: borda azul",
+      "Brand Waste: borda verde",
+    ],
+    tokens: ["--dss-hub-600", "--dss-water-500", "--dss-waste-500", "--dss-shadow-focus"],
+    codeExample: `.dss-card--brand-hub {
+  border-left: 4px solid var(--dss-hub-600);
+}
+.dss-card--dark {
+  background-color: var(--dss-surface-dark);
+  color: var(--dss-text-inverse);
+}`,
+  },
+};
+
 export default function DssCardPage() {
   const [selectedVariant, setSelectedVariant] = useState("elevated");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
@@ -1039,13 +1268,14 @@ export default function DssCardPage() {
   const [isSquare, setIsSquare] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
-  // Determina qual cor usar (semântica tem prioridade sobre brand)
-  const activeColorType = selectedSemanticColor ? 'semantic' : (selectedBrand ? 'brand' : null);
-  const activeColor = selectedSemanticColor || selectedBrand;
+  // Lógica de exclusão mútua: brand e semanticColor são mutuamente exclusivos
+  const effectiveSemanticColor = selectedBrand ? null : selectedSemanticColor;
+  const effectiveBrand = selectedSemanticColor ? null : selectedBrand;
 
   const codeExample = `<DssCard
-  variant="${selectedVariant}"${selectedSemanticColor ? `\n  color="${selectedSemanticColor}"` : ""}${selectedBrand && !selectedSemanticColor ? `\n  brand="${selectedBrand}"` : ""}${isClickable ? "\n  clickable" : ""}${isSquare ? "\n  square" : ""}${isDark ? "\n  dark" : ""}
+  variant="${selectedVariant}"${effectiveSemanticColor ? `\n  color="${effectiveSemanticColor}"` : ""}${effectiveBrand ? `\n  brand="${effectiveBrand}"` : ""}${isClickable ? "\n  clickable" : ""}${isSquare ? "\n  square" : ""}${isDark ? "\n  dark" : ""}
 >
   <DssCardSection>
     <h3>Título do Card</h3>
@@ -1063,52 +1293,19 @@ export default function DssCardPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const tokensByCategory = tokensUsed.reduce((acc, token) => {
-    if (!acc[token.category]) acc[token.category] = [];
-    acc[token.category].push(token);
-    return acc;
-  }, {} as Record<string, typeof tokensUsed>);
-
-  // Obter cor ativa (semântica ou brand)
-  const getActiveColorStyles = () => {
-    if (selectedSemanticColor && semanticColors[selectedSemanticColor as keyof typeof semanticColors]) {
-      const color = semanticColors[selectedSemanticColor as keyof typeof semanticColors];
-      return {
-        border: color.bgFallback,
-        light: color.lightFallback,
-        hover: color.hoverFallback,
-        text: color.textColor,
-        bg: color.bgFallback
-      };
-    }
-    if (selectedBrand && brandColors[selectedBrand as keyof typeof brandColors]) {
-      const brand = brandColors[selectedBrand as keyof typeof brandColors];
-      return {
-        border: brand.principal,
-        light: brand.scale[100],
-        hover: brand.scale[700],
-        text: "#ffffff",
-        bg: brand.principal
-      };
-    }
-    return null;
-  };
-
-  const colorStyles = getActiveColorStyles();
-
   return (
-    <div 
-      className="p-6 lg:p-8 max-w-6xl mx-auto space-y-10"
-      style={{ backgroundColor: 'var(--dss-page-bg)' }}
-    >
-      {/* Hero Header - Jtech Style */}
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto space-y-10" style={{ backgroundColor: "var(--dss-page-bg)" }}>
+      {/* ============================================================ */}
+      {/* 1. BADGES + TÍTULO + DESCRIÇÃO (PageHeader) */}
+      {/* ============================================================ */}
       <PageHeader
         icon={LayoutDashboard}
         badge="DSS Component"
         badgeVariant="default"
         title="Componente"
         titleAccent="DssCard"
-        subtitle="Container flexível para agrupamento de conteúdo. Implementa tokens genéricos DSS, arquitetura 4 camadas, brandability completa e acessibilidade WCAG 2.1 AA."
+        subtitle="DssCard é o componente utilizado para agrupar e organizar conteúdos relacionados em uma mesma superfície visual.
+Ele ajuda a estruturar informações, separar seções e criar hierarquia visual, servindo como base para a apresentação de dados, ações e conteúdos combinados."
         subtitleHighlights={["tokens genéricos DSS", "arquitetura 4 camadas", "WCAG 2.1 AA"]}
         extraBadges={[
           { label: "v1.0.0", variant: "info" },
@@ -1147,107 +1344,135 @@ export default function DssCardPage() {
         badge="Live Preview"
       />
 
-      <Card 
+      <Card
         className="overflow-hidden"
-        style={{ 
-          backgroundColor: 'var(--jtech-card-bg)', 
-          borderColor: 'var(--dss-jtech-accent)',
-          borderWidth: '2px'
+        style={{
+          backgroundColor: "var(--jtech-card-bg)",
+          borderColor: "var(--dss-jtech-accent)",
+          borderWidth: "2px",
         }}
       >
         <CardHeader>
-          <CardTitle className="flex items-center gap-2" style={{ color: 'var(--jtech-heading-secondary)' }}>
-            <Code className="h-5 w-5" style={{ color: 'var(--dss-jtech-accent)' }} />
+          <CardTitle className="flex items-center gap-2" style={{ color: "var(--jtech-heading-secondary)" }}>
+            <Code className="h-5 w-5" style={{ color: "var(--dss-jtech-accent)" }} />
             Configure o Card
           </CardTitle>
-          <CardDescription style={{ color: 'var(--jtech-text-body)' }}>
+          <CardDescription style={{ color: "var(--jtech-text-body)" }}>
             Selecione as props e veja o resultado em tempo real com tokens DSS reais.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Preview Area */}
-          <div 
-            className="p-8 rounded-lg flex items-center justify-center min-h-[280px] relative"
-            style={{ 
-              backgroundColor: 'rgba(0,0,0,0.3)',
-              backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)',
-              backgroundSize: '20px 20px'
+          {/* Preview Area com Dark Mode Toggle */}
+          <div
+            className="p-8 rounded-lg flex items-center justify-center min-h-[280px] relative transition-colors duration-300"
+            style={{
+              backgroundColor: isDarkMode ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.95)",
+              backgroundImage: isDarkMode
+                ? "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)"
+                : "radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0)",
+              backgroundSize: "20px 20px",
+              border: isDarkMode ? "1px solid var(--jtech-card-border)" : "1px solid #e5e5e5",
             }}
           >
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="absolute top-3 right-3 p-2 rounded-lg transition-all duration-200 hover:scale-105"
+              style={{
+                backgroundColor: isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)",
+                color: isDarkMode ? "#ffffff" : "#1a1a1a",
+                border: isDarkMode ? "1px solid rgba(255,255,255,0.2)" : "1px solid rgba(0,0,0,0.15)",
+              }}
+              title={isDarkMode ? "Mudar para tema claro" : "Mudar para tema escuro"}
+            >
+              {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+
+            {/* Theme Label */}
+            <span
+              className="absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded"
+              style={{
+                backgroundColor: isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)",
+                color: isDarkMode ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)",
+              }}
+            >
+              {isDarkMode ? "🌙 Dark" : "☀️ Light"}
+            </span>
+
             <DssCardPreview
               variant={selectedVariant}
               clickable={isClickable}
               square={isSquare}
               dark={isDark}
-              brand={selectedSemanticColor ? null : selectedBrand}
-              semanticColor={selectedSemanticColor}
+              brand={effectiveBrand}
+              semanticColor={effectiveSemanticColor}
               showToken={true}
             >
-              <CardSection isFirst={true} brand={selectedSemanticColor ? null : selectedBrand} semanticColor={selectedSemanticColor}>
+              <CardSection isFirst={true} brand={effectiveBrand} semanticColor={effectiveSemanticColor}>
                 {/* Header com DssAvatar + DssBadge */}
                 <div className="flex items-center gap-3 mb-3">
-                  <DssAvatarPreview 
-                    size="md" 
-                    colorKey={selectedSemanticColor}
-                    brand={selectedSemanticColor ? null : selectedBrand}
+                  <DssAvatarPreview
+                    size="md"
+                    colorKey={effectiveSemanticColor}
+                    brand={effectiveBrand}
                     icon={<User style={{ width: 20, height: 20 }} />}
                     dark={isDark}
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="font-semibold text-sm" style={{ color: isDark ? '#ffffff' : '#1a1a1a' }}>
+                      <h4 className="font-semibold text-sm" style={{ color: isDark ? "#ffffff" : "#1a1a1a" }}>
                         Título do Card
                       </h4>
-                      <DssBadgePreview 
-                        label="NOVO" 
-                        colorKey={selectedSemanticColor}
-                        brand={selectedSemanticColor ? null : selectedBrand}
+                      <DssBadgePreview
+                        label="NOVO"
+                        colorKey={effectiveSemanticColor}
+                        brand={effectiveBrand}
                         variant="soft"
                         size="xs"
                         dark={isDark}
                       />
                     </div>
-                    <p className="text-xs" style={{ color: isDark ? 'rgba(255,255,255,0.7)' : '#666' }}>
+                    <p className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.7)" : "#666" }}>
                       Subtítulo ou descrição
                     </p>
                   </div>
-                  <DssIconPreview 
+                  <DssIconPreview
                     icon={<MoreHorizontal style={{ width: "100%", height: "100%" }} />}
                     size="md"
                     colorKey={isDark ? null : "primary"}
                     dark={isDark}
                   />
                 </div>
-                
+
                 {/* DssSeparator */}
-                <DssSeparatorPreview 
+                <DssSeparatorPreview
                   orientation="horizontal"
-                  colorKey={selectedSemanticColor}
-                  brand={selectedSemanticColor ? null : selectedBrand}
+                  colorKey={effectiveSemanticColor}
+                  brand={effectiveBrand}
                   dark={isDark}
                 />
-                
+
                 {/* Content */}
-                <p className="text-sm mt-3" style={{ color: isDark ? 'rgba(255,255,255,0.8)' : '#444' }}>
-                  Este é um exemplo de conteúdo dentro do DssCard usando componentes DSS reais: DssAvatar, DssBadge, DssSeparator, DssButton e DssIcon.
+                <p className="text-sm mt-3" style={{ color: isDark ? "rgba(255,255,255,0.8)" : "#444" }}>
+                  Este é um exemplo de conteúdo dentro do DssCard usando componentes DSS reais.
                 </p>
               </CardSection>
-              
+
               {/* CardActions com DssButtons */}
               <CardActions align="right">
-                <DssButtonPreview 
+                <DssButtonPreview
                   label="Cancelar"
                   variant="flat"
-                  colorKey={selectedSemanticColor}
-                  brand={selectedSemanticColor ? null : selectedBrand}
+                  colorKey={effectiveSemanticColor}
+                  brand={effectiveBrand}
                   size="sm"
                   dark={isDark}
                 />
-                <DssButtonPreview 
+                <DssButtonPreview
                   label="Confirmar"
                   variant="elevated"
-                  colorKey={selectedSemanticColor}
-                  brand={selectedSemanticColor ? null : selectedBrand}
+                  colorKey={effectiveSemanticColor}
+                  brand={effectiveBrand}
                   size="sm"
                   dark={isDark}
                 />
@@ -1259,7 +1484,9 @@ export default function DssCardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Variant */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold" style={{ color: 'var(--jtech-heading-tertiary)' }}>Variant</label>
+              <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
+                Variant
+              </label>
               <div className="flex flex-wrap gap-2">
                 {variants.map((v) => (
                   <button
@@ -1267,9 +1494,10 @@ export default function DssCardPage() {
                     onClick={() => setSelectedVariant(v.name)}
                     className="px-3 py-1.5 rounded text-xs font-medium transition-all"
                     style={{
-                      backgroundColor: selectedVariant === v.name ? 'var(--dss-jtech-accent)' : 'rgba(255,255,255,0.05)',
-                      color: selectedVariant === v.name ? '#ffffff' : 'var(--jtech-text-body)',
-                      border: `1px solid ${selectedVariant === v.name ? 'var(--dss-jtech-accent)' : 'var(--jtech-card-border)'}`
+                      backgroundColor:
+                        selectedVariant === v.name ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
+                      color: selectedVariant === v.name ? "#ffffff" : "var(--jtech-text-body)",
+                      border: `1px solid ${selectedVariant === v.name ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
                     }}
                   >
                     {v.label}
@@ -1280,15 +1508,20 @@ export default function DssCardPage() {
 
             {/* Semantic Colors */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold" style={{ color: 'var(--jtech-heading-tertiary)' }}>Cores Semânticas</label>
+              <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
+                Cores Semânticas
+              </label>
               <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => setSelectedSemanticColor(null)}
+                  onClick={() => {
+                    setSelectedSemanticColor(null);
+                  }}
                   className="px-3 py-1.5 rounded text-xs font-medium transition-all"
                   style={{
-                    backgroundColor: !selectedSemanticColor ? 'var(--dss-jtech-accent)' : 'rgba(255,255,255,0.05)',
-                    color: !selectedSemanticColor ? '#ffffff' : 'var(--jtech-text-body)',
-                    border: `1px solid ${!selectedSemanticColor ? 'var(--dss-jtech-accent)' : 'var(--jtech-card-border)'}`
+                    backgroundColor:
+                      !selectedSemanticColor && !selectedBrand ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
+                    color: !selectedSemanticColor && !selectedBrand ? "#ffffff" : "var(--jtech-text-body)",
+                    border: `1px solid ${!selectedSemanticColor && !selectedBrand ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
                   }}
                 >
                   Nenhum
@@ -1302,9 +1535,9 @@ export default function DssCardPage() {
                     }}
                     className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
                     style={{
-                      backgroundColor: selectedSemanticColor === c.name ? c.bgFallback : 'rgba(255,255,255,0.05)',
-                      color: selectedSemanticColor === c.name ? c.textColor : 'var(--jtech-text-body)',
-                      border: `1px solid ${selectedSemanticColor === c.name ? c.bgFallback : 'var(--jtech-card-border)'}`
+                      backgroundColor: selectedSemanticColor === c.name ? c.bgFallback : "rgba(255,255,255,0.05)",
+                      color: selectedSemanticColor === c.name ? c.textColor : "var(--jtech-text-body)",
+                      border: `1px solid ${selectedSemanticColor === c.name ? c.bgFallback : "var(--jtech-card-border)"}`,
                     }}
                   >
                     <span>{c.icon}</span>
@@ -1322,9 +1555,10 @@ export default function DssCardPage() {
                   onClick={() => setSelectedBrand(null)}
                   className="px-3 py-1.5 rounded text-xs font-medium transition-all"
                   style={{
-                    backgroundColor: !selectedBrand && !selectedSemanticColor ? 'var(--dss-jtech-accent)' : 'rgba(255,255,255,0.05)',
-                    color: !selectedBrand && !selectedSemanticColor ? '#ffffff' : 'var(--jtech-text-body)',
-                    border: `1px solid ${!selectedBrand && !selectedSemanticColor ? 'var(--dss-jtech-accent)' : 'var(--jtech-card-border)'}`
+                    backgroundColor:
+                      !selectedBrand && !selectedSemanticColor ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
+                    color: !selectedBrand && !selectedSemanticColor ? "#ffffff" : "var(--jtech-text-body)",
+                    border: `1px solid ${!selectedBrand && !selectedSemanticColor ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
                   }}
                 >
                   Nenhum
@@ -1338,9 +1572,9 @@ export default function DssCardPage() {
                     }}
                     className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
                     style={{
-                      backgroundColor: selectedBrand === b.name ? b.principal : 'rgba(255,255,255,0.05)',
-                      color: selectedBrand === b.name ? '#ffffff' : 'var(--jtech-text-body)',
-                      border: `1px solid ${selectedBrand === b.name ? b.principal : 'var(--jtech-card-border)'}`
+                      backgroundColor: selectedBrand === b.name ? b.principal : "rgba(255,255,255,0.05)",
+                      color: selectedBrand === b.name ? "#ffffff" : "var(--jtech-text-body)",
+                      border: `1px solid ${selectedBrand === b.name ? b.principal : "var(--jtech-card-border)"}`,
                     }}
                   >
                     <span>{b.icon}</span>
@@ -1352,24 +1586,32 @@ export default function DssCardPage() {
 
             {/* States */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold" style={{ color: 'var(--jtech-heading-tertiary)' }}>Estados & Opções</label>
+              <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
+                Estados & Opções
+              </label>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { key: 'clickable', label: 'Clickable', active: isClickable, toggle: () => setIsClickable(!isClickable) },
-                  { key: 'square', label: 'Square', active: isSquare, toggle: () => setIsSquare(!isSquare) },
-                  { key: 'dark', label: 'Dark', active: isDark, toggle: () => setIsDark(!isDark) },
+                  {
+                    key: "clickable",
+                    label: "Clickable",
+                    active: isClickable,
+                    toggle: () => setIsClickable(!isClickable),
+                  },
+                  { key: "square", label: "Square", active: isSquare, toggle: () => setIsSquare(!isSquare) },
+                  { key: "dark", label: "Dark", active: isDark, toggle: () => setIsDark(!isDark) },
                 ].map((item) => (
                   <button
                     key={item.key}
                     onClick={item.toggle}
                     className="px-2 py-1.5 rounded text-xs font-medium transition-all"
                     style={{
-                      backgroundColor: item.active ? 'var(--dss-positive)' : 'rgba(255,255,255,0.05)',
-                      color: item.active ? '#ffffff' : 'var(--jtech-text-body)',
-                      border: `1px solid ${item.active ? 'var(--dss-positive)' : 'var(--jtech-card-border)'}`
+                      backgroundColor: item.active ? "var(--dss-positive)" : "rgba(255,255,255,0.05)",
+                      color: item.active ? "#ffffff" : "var(--jtech-text-body)",
+                      border: `1px solid ${item.active ? "var(--dss-positive)" : "var(--jtech-card-border)"}`,
                     }}
                   >
-                    {item.active && "✓ "}{item.label}
+                    {item.active && "✓ "}
+                    {item.label}
                   </button>
                 ))}
               </div>
@@ -1378,12 +1620,12 @@ export default function DssCardPage() {
 
           {/* Code Output */}
           <div className="relative">
-            <pre 
+            <pre
               className="p-4 overflow-x-auto rounded-lg font-mono text-sm"
-              style={{ 
-                backgroundColor: 'rgba(0,0,0,0.4)', 
-                color: 'var(--jtech-heading-secondary)',
-                border: '1px solid var(--jtech-card-border)'
+              style={{
+                backgroundColor: "rgba(0,0,0,0.4)",
+                color: "var(--jtech-heading-secondary)",
+                border: "1px solid var(--jtech-card-border)",
               }}
             >
               <code>{codeExample}</code>
@@ -1391,9 +1633,13 @@ export default function DssCardPage() {
             <button
               className="absolute top-2 right-2 p-2 rounded hover:bg-white/10 transition-colors"
               onClick={copyCode}
-              style={{ color: 'var(--jtech-text-muted)' }}
+              style={{ color: "var(--jtech-text-muted)" }}
             >
-              {copied ? <Check className="h-4 w-4" style={{ color: 'var(--dss-positive)' }} /> : <Copy className="h-4 w-4" />}
+              {copied ? (
+                <Check className="h-4 w-4" style={{ color: "var(--dss-positive)" }} />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
             </button>
           </div>
         </CardContent>
@@ -2202,234 +2448,155 @@ export default function DssCardPage() {
         </CardContent>
       </Card>
 
-      {/* Subcomponents Props */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card 
-          style={{ 
-            backgroundColor: 'var(--jtech-card-bg)', 
-            borderColor: 'var(--jtech-card-border)' 
-          }}
-        >
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg" style={{ color: 'var(--jtech-heading-secondary)' }}>
-              <Layers className="h-5 w-5" style={{ color: '#26a69a' }} />
-              DssCardSection Props
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead style={{ color: 'var(--jtech-heading-tertiary)' }}>Prop</TableHead>
-                  <TableHead style={{ color: 'var(--jtech-heading-tertiary)' }}>Tipo</TableHead>
-                  <TableHead style={{ color: 'var(--jtech-heading-tertiary)' }}>Default</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {sectionPropsData.map((row) => (
-                  <TableRow key={row.prop}>
-                    <TableCell>
-                      <code className="text-xs font-mono" style={{ color: '#26a69a' }}>{row.prop}</code>
-                    </TableCell>
-                    <TableCell>
-                      <code className="text-xs font-mono" style={{ color: 'var(--jtech-text-muted)' }}>{row.type}</code>
-                    </TableCell>
-                    <TableCell>
-                      <code className="text-xs font-mono" style={{ color: 'var(--jtech-text-muted)' }}>{row.default}</code>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <p className="text-xs mt-3" style={{ color: 'var(--jtech-text-muted)' }}>
-              {sectionPropsData[0].description}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card 
-          style={{ 
-            backgroundColor: 'var(--jtech-card-bg)', 
-            borderColor: 'var(--jtech-card-border)' 
-          }}
-        >
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg" style={{ color: 'var(--jtech-heading-secondary)' }}>
-              <Layers className="h-5 w-5" style={{ color: '#ff6607' }} />
-              DssCardActions Props
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead style={{ color: 'var(--jtech-heading-tertiary)' }}>Prop</TableHead>
-                  <TableHead style={{ color: 'var(--jtech-heading-tertiary)' }}>Tipo</TableHead>
-                  <TableHead style={{ color: 'var(--jtech-heading-tertiary)' }}>Default</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {actionsPropsData.map((row) => (
-                  <TableRow key={row.prop}>
-                    <TableCell>
-                      <code className="text-xs font-mono" style={{ color: '#ff6607' }}>{row.prop}</code>
-                    </TableCell>
-                    <TableCell>
-                      <code className="text-xs font-mono" style={{ color: 'var(--jtech-text-muted)' }}>{row.type}</code>
-                    </TableCell>
-                    <TableCell>
-                      <code className="text-xs font-mono" style={{ color: 'var(--jtech-text-muted)' }}>{row.default}</code>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <p className="text-xs mt-3" style={{ color: 'var(--jtech-text-muted)' }}>
-              {actionsPropsData[0].description}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Tokens Reference */}
-      <SectionHeader
-        title="Tokens"
-        titleAccent="Utilizados"
-        badge={`${tokensUsed.length} tokens`}
-      />
-
-      <DssTabs defaultValue="Surface" className="space-y-4">
-        <DssTabsList>
-          {Object.keys(tokensByCategory).map((category) => (
-            <DssTabsTrigger 
-              key={category}
-              value={category}
-              badge={tokensByCategory[category].length}
-            >
-              {category}
-            </DssTabsTrigger>
-          ))}
-        </DssTabsList>
-
-        {Object.entries(tokensByCategory).map(([category, tokens]) => (
-          <DssTabsContent key={category} value={category} className="space-y-4">
-            <Card 
-              className="transition-all duration-300"
-              style={{ 
-                backgroundColor: 'var(--jtech-card-bg)', 
-                borderColor: 'var(--jtech-card-border)' 
-              }}
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-3">
-                  <DssBadgePreview 
-                    label={category}
-                    colorKey="primary"
-                    variant="filled"
-                    size="sm"
-                  />
-                  <span className="text-sm" style={{ color: 'var(--jtech-text-body)' }}>
-                    {tokens.length} tokens disponíveis
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div 
-                  className="p-4 rounded-lg"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
-                >
-                  <div 
-                    className="grid grid-cols-[1fr_140px_1fr] gap-4 pb-3 mb-3 text-xs font-semibold"
-                    style={{ 
-                      color: 'var(--jtech-heading-tertiary)',
-                      borderBottom: '1px solid var(--jtech-card-border)'
-                    }}
-                  >
-                    <span>Token</span>
-                    <span>Valor</span>
-                    <span>Uso</span>
-                  </div>
-                  <div className="grid gap-2">
-                    {tokens.map((token) => (
-                      <TokenRow key={token.token} {...token} />
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </DssTabsContent>
-        ))}
-      </DssTabs>
-
-      {/* Acessibilidade */}
-      <SectionHeader
-        title="Acessibilidade"
-        titleAccent="WCAG 2.1 AA"
-        badge="A11y"
-      />
-
-      <Card 
-        style={{ 
-          backgroundColor: 'var(--jtech-card-bg)', 
-          borderColor: 'var(--jtech-card-border)' 
-        }}
-      >
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold" style={{ color: 'var(--jtech-heading-tertiary)' }}>
-                Navegação por Teclado
+          {/* Subcomponents Props */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4
+                className="text-sm font-semibold mb-3 flex items-center gap-2"
+                style={{ color: "var(--jtech-heading-secondary)" }}
+              >
+                <Layers className="h-4 w-4" style={{ color: "#26a69a" }} />
+                DssCardSection Props
               </h4>
-              <div className="space-y-2">
-                {[
-                  { key: "Tab", action: "Move focus para o card (se clickable)" },
-                  { key: "Enter/Space", action: "Ativa o card clickable" },
-                  { key: "Escape", action: "Remove focus do card" },
-                ].map((item) => (
-                  <div key={item.key} className="flex items-center gap-3">
-                    <kbd 
-                      className="px-2 py-1 text-xs font-mono rounded"
-                      style={{ 
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                        border: '1px solid var(--jtech-card-border)'
-                      }}
-                    >
-                      {item.key}
-                    </kbd>
-                    <span className="text-sm" style={{ color: 'var(--jtech-text-body)' }}>{item.action}</span>
-                  </div>
-                ))}
+              <div className="rounded-lg overflow-hidden border" style={{ borderColor: "var(--jtech-card-border)" }}>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead style={{ color: "var(--jtech-heading-tertiary)" }}>Prop</TableHead>
+                      <TableHead style={{ color: "var(--jtech-heading-tertiary)" }}>Tipo</TableHead>
+                      <TableHead style={{ color: "var(--jtech-heading-tertiary)" }}>Default</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {sectionPropsData.map((row) => (
+                      <TableRow key={row.prop}>
+                        <TableCell>
+                          <code className="text-xs font-mono" style={{ color: "#26a69a" }}>
+                            {row.prop}
+                          </code>
+                        </TableCell>
+                        <TableCell>
+                          <code className="text-xs font-mono" style={{ color: "var(--jtech-text-muted)" }}>
+                            {row.type}
+                          </code>
+                        </TableCell>
+                        <TableCell>
+                          <code className="text-xs font-mono" style={{ color: "var(--jtech-text-muted)" }}>
+                            {row.default}
+                          </code>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold" style={{ color: 'var(--jtech-heading-tertiary)' }}>
-                Atributos ARIA
+            <div>
+              <h4
+                className="text-sm font-semibold mb-3 flex items-center gap-2"
+                style={{ color: "var(--jtech-heading-secondary)" }}
+              >
+                <Layers className="h-4 w-4" style={{ color: "#ff6607" }} />
+                DssCardActions Props
               </h4>
-              <div className="space-y-2">
-                {[
-                  { attr: "role='button'", desc: "Aplicado quando clickable" },
-                  { attr: "tabindex='0'", desc: "Permite focus em cards clickable" },
-                  { attr: "aria-label", desc: "Descrição acessível (quando necessário)" },
-                ].map((item) => (
-                  <div key={item.attr} className="flex items-start gap-3">
-                    <code 
-                      className="px-2 py-1 text-xs font-mono rounded flex-shrink-0"
-                      style={{ 
-                        backgroundColor: 'rgba(31, 134, 222, 0.1)',
-                        color: '#1f86de'
-                      }}
-                    >
-                      {item.attr}
-                    </code>
-                    <span className="text-sm" style={{ color: 'var(--jtech-text-body)' }}>{item.desc}</span>
-                  </div>
-                ))}
+              <div className="rounded-lg overflow-hidden border" style={{ borderColor: "var(--jtech-card-border)" }}>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead style={{ color: "var(--jtech-heading-tertiary)" }}>Prop</TableHead>
+                      <TableHead style={{ color: "var(--jtech-heading-tertiary)" }}>Tipo</TableHead>
+                      <TableHead style={{ color: "var(--jtech-heading-tertiary)" }}>Default</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {actionsPropsData.map((row) => (
+                      <TableRow key={row.prop}>
+                        <TableCell>
+                          <code className="text-xs font-mono" style={{ color: "#ff6607" }}>
+                            {row.prop}
+                          </code>
+                        </TableCell>
+                        <TableCell>
+                          <code className="text-xs font-mono" style={{ color: "var(--jtech-text-muted)" }}>
+                            {row.type}
+                          </code>
+                        </TableCell>
+                        <TableCell>
+                          <code className="text-xs font-mono" style={{ color: "var(--jtech-text-muted)" }}>
+                            {row.default}
+                          </code>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </CollapsibleSection>
+
+      {/* Acessibilidade */}
+      <CollapsibleSection icon={Layers} title="Acessibilidade" titleAccent="WCAG 2.1 AA">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+          <div className="space-y-4">
+            <h4 className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
+              Navegação por Teclado
+            </h4>
+            <div className="space-y-2">
+              {[
+                { key: "Tab", action: "Move focus para o card (se clickable)" },
+                { key: "Enter/Space", action: "Ativa o card clickable" },
+                { key: "Escape", action: "Remove focus do card" },
+              ].map((item) => (
+                <div key={item.key} className="flex items-center gap-3">
+                  <kbd
+                    className="px-2 py-1 text-xs font-mono rounded"
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.1)",
+                      border: "1px solid var(--jtech-card-border)",
+                    }}
+                  >
+                    {item.key}
+                  </kbd>
+                  <span className="text-sm" style={{ color: "var(--jtech-text-body)" }}>
+                    {item.action}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
+              Atributos ARIA
+            </h4>
+            <div className="space-y-2">
+              {[
+                { attr: "role='button'", desc: "Aplicado quando clickable" },
+                { attr: "tabindex='0'", desc: "Permite focus em cards clickable" },
+                { attr: "aria-label", desc: "Descrição acessível (quando necessário)" },
+              ].map((item) => (
+                <div key={item.attr} className="flex items-start gap-3">
+                  <code
+                    className="px-2 py-1 text-xs font-mono rounded flex-shrink-0"
+                    style={{
+                      backgroundColor: "rgba(31, 134, 222, 0.1)",
+                      color: "#1f86de",
+                    }}
+                  >
+                    {item.attr}
+                  </code>
+                  <span className="text-sm" style={{ color: "var(--jtech-text-body)" }}>
+                    {item.desc}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
     </div>
   );
 }
