@@ -1164,7 +1164,10 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                   <button
                     key={v.name}
                     onClick={() => setSelectedVariant(v.name)}
-                    className="px-3 py-1.5 rounded text-xs font-medium transition-all"
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-all duration-200 ease-out
+                      hover:scale-105 active:scale-95 hover:shadow-md
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dss-jtech-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--jtech-surface-dark)]
+                      ${selectedVariant === v.name ? 'shadow-lg shadow-[var(--dss-jtech-accent)]/25' : ''}`}
                     style={{
                       backgroundColor:
                         selectedVariant === v.name ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
@@ -1191,14 +1194,18 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                       setSelectedColor(c.name);
                       setSelectedBrand(null);
                     }}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
+                    className={`px-2 py-1.5 rounded text-xs font-medium transition-all duration-200 ease-out flex items-center gap-1.5
+                      hover:scale-105 active:scale-95 hover:shadow-md
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dss-jtech-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--jtech-surface-dark)]
+                      ${selectedColor === c.name && !selectedBrand ? 'shadow-lg' : ''}`}
                     style={{
                       backgroundColor: selectedColor === c.name && !selectedBrand ? c.bg : "rgba(255,255,255,0.05)",
                       color: selectedColor === c.name && !selectedBrand ? "#ffffff" : "var(--jtech-text-body)",
                       border: `1px solid ${selectedColor === c.name && !selectedBrand ? c.bg : "var(--jtech-card-border)"}`,
+                      boxShadow: selectedColor === c.name && !selectedBrand ? `0 10px 15px -3px ${c.bg}40` : undefined,
                     }}
                   >
-                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.bg }} />
+                    <span className="w-2 h-2 rounded-full transition-transform duration-200 group-hover:scale-110" style={{ backgroundColor: c.bg }} />
                     {c.label}
                   </button>
                 ))}
@@ -1218,7 +1225,10 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                       setSelectedColor(c.name);
                       setSelectedBrand(null);
                     }}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
+                    className={`px-2 py-1.5 rounded text-xs font-medium transition-all duration-200 ease-out flex items-center gap-1.5
+                      hover:scale-105 active:scale-95 hover:shadow-md
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dss-jtech-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--jtech-surface-dark)]
+                      ${selectedColor === c.name && !selectedBrand ? 'shadow-lg' : ''}`}
                     style={{
                       backgroundColor: selectedColor === c.name && !selectedBrand ? c.bg : "rgba(255,255,255,0.05)",
                       color:
@@ -1228,6 +1238,7 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                             : "#ffffff"
                           : "var(--jtech-text-body)",
                       border: `1px solid ${selectedColor === c.name && !selectedBrand ? c.bg : "var(--jtech-card-border)"}`,
+                      boxShadow: selectedColor === c.name && !selectedBrand ? `0 10px 15px -3px ${c.bg}40` : undefined,
                     }}
                   >
                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.bg }} />
@@ -1245,7 +1256,10 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedBrand(null)}
-                  className="px-3 py-1.5 rounded text-xs font-medium transition-all"
+                  className={`px-3 py-1.5 rounded text-xs font-medium transition-all duration-200 ease-out
+                    hover:scale-105 active:scale-95 hover:shadow-md
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dss-jtech-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--jtech-surface-dark)]
+                    ${!selectedBrand ? 'shadow-lg shadow-[var(--dss-jtech-accent)]/25' : ''}`}
                   style={{
                     backgroundColor: !selectedBrand ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
                     color: !selectedBrand ? "#ffffff" : "var(--jtech-text-body)",
@@ -1261,14 +1275,18 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                       setSelectedBrand(b.name);
                       setSelectedColor("primary");
                     }}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
+                    className={`px-2 py-1.5 rounded text-xs font-medium transition-all duration-200 ease-out flex items-center gap-1.5
+                      hover:scale-105 active:scale-95 hover:shadow-md
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dss-jtech-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--jtech-surface-dark)]
+                      ${selectedBrand === b.name ? 'shadow-lg' : ''}`}
                     style={{
                       backgroundColor: selectedBrand === b.name ? b.principal : "rgba(255,255,255,0.05)",
                       color: selectedBrand === b.name ? "#ffffff" : "var(--jtech-text-body)",
                       border: `1px solid ${selectedBrand === b.name ? b.principal : "var(--jtech-card-border)"}`,
+                      boxShadow: selectedBrand === b.name ? `0 10px 15px -3px ${b.principal}40` : undefined,
                     }}
                   >
-                    <span>{b.icon}</span>
+                    <span className="transition-transform duration-200 hover:scale-110">{b.icon}</span>
                     {b.label}
                   </button>
                 ))}
@@ -1285,7 +1303,10 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                   <button
                     key={s.name}
                     onClick={() => setSelectedSize(s.name)}
-                    className="px-3 py-1.5 rounded text-xs font-medium transition-all"
+                    className={`px-3 py-1.5 rounded text-xs font-medium transition-all duration-200 ease-out
+                      hover:scale-105 active:scale-95 hover:shadow-md
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dss-jtech-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--jtech-surface-dark)]
+                      ${selectedSize === s.name ? 'shadow-lg shadow-[var(--dss-jtech-accent)]/25' : ''}`}
                     style={{
                       backgroundColor: selectedSize === s.name ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
                       color: selectedSize === s.name ? "#ffffff" : "var(--jtech-text-body)",
@@ -1320,14 +1341,19 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                   <button
                     key={item.key}
                     onClick={item.toggle}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all"
+                    className={`px-2 py-1.5 rounded text-xs font-medium transition-all duration-200 ease-out
+                      hover:scale-105 active:scale-95 hover:shadow-md
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dss-jtech-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--jtech-surface-dark)]
+                      ${item.active ? 'shadow-lg shadow-[var(--dss-positive)]/25' : ''}`}
                     style={{
                       backgroundColor: item.active ? "var(--dss-positive)" : "rgba(255,255,255,0.05)",
                       color: item.active ? "#ffffff" : "var(--jtech-text-body)",
                       border: `1px solid ${item.active ? "var(--dss-positive)" : "var(--jtech-card-border)"}`,
                     }}
                   >
-                    {item.active && "✓ "}
+                    <span className={`inline-block transition-transform duration-200 ${item.active ? 'scale-110' : ''}`}>
+                      {item.active && "✓ "}
+                    </span>
                     {item.label}
                   </button>
                 ))}
