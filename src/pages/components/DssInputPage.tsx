@@ -3,13 +3,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { DssTabs, DssTabsContent, DssTabsList, DssTabsTrigger } from "@/components/ui/dss-tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { PlaygroundButton } from "@/components/ui/PlaygroundButton";
+import { AnatomySection } from "@/components/ui/AnatomySection";
+import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
 import {
   Copy,
   Check,
   Layers,
   Code,
   FileText,
-  Settings,
   Eye,
   EyeOff,
   Search,
@@ -22,16 +24,19 @@ import {
   Info,
   X,
   Calendar,
-  CreditCard,
-  AtSign,
   Hash,
   Globe,
+  Sun,
+  Moon,
+  Settings,
+  Palette,
+  Layout,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 // ============================================================================
-// TOKENS REAIS DO DSS - Extraídos de index.css e globals.scss
+// DATA STRUCTURES - Pattern v2.0
 // ============================================================================
 
 // Variantes Visuais do DssInput
@@ -40,16 +45,6 @@ const variants = [
   { name: "filled", label: "Filled", desc: "Background preenchido, sem borda", hasOutline: false },
   { name: "standout", label: "Standout", desc: "Background com destaque no focus", hasOutline: false },
   { name: "borderless", label: "Borderless", desc: "Sem borda, apenas linha inferior", hasOutline: false },
-];
-
-// Estados do Input
-const inputStates = [
-  { name: "default", label: "Default", desc: "Estado padrão do input" },
-  { name: "focus", label: "Focus", desc: "Campo focado/ativo" },
-  { name: "error", label: "Error", desc: "Estado de erro/validação" },
-  { name: "success", label: "Success", desc: "Validação bem-sucedida" },
-  { name: "disabled", label: "Disabled", desc: "Campo desabilitado" },
-  { name: "readonly", label: "Readonly", desc: "Apenas leitura" },
 ];
 
 // Tipos de Input
@@ -64,7 +59,7 @@ const inputTypes = [
   { name: "date", label: "Date", icon: Calendar, desc: "Seleção de data" },
 ];
 
-// Cores Semânticas aplicáveis ao Input
+// Cores Semânticas
 const semanticColors = {
   primary: {
     name: "primary",
@@ -93,7 +88,7 @@ const semanticColors = {
   },
 };
 
-// Cores de Feedback para estados
+// Cores de Feedback
 const feedbackColors = {
   positive: {
     name: "positive",
@@ -167,155 +162,147 @@ const brandColors = {
   },
 };
 
-// Props API do DssInput
+// Props API
 const propsData = [
-  {
-    category: "Valor",
-    prop: "modelValue",
-    type: "String | Number",
-    default: "''",
-    description: "Valor do input (v-model)",
-  },
-  {
-    category: "Valor",
-    prop: "type",
-    type: "'text' | 'email' | 'password' | 'search' | 'tel' | 'number' | 'url' | 'date'",
-    default: "'text'",
-    description: "Tipo do input HTML",
-  },
+  { category: "Valor", prop: "modelValue", type: "String | Number", default: "''", description: "Valor do input (v-model)" },
+  { category: "Valor", prop: "type", type: "'text' | 'email' | 'password' | ...", default: "'text'", description: "Tipo do input HTML" },
   { category: "Valor", prop: "placeholder", type: "String", default: "''", description: "Texto placeholder" },
   { category: "Label", prop: "label", type: "String", default: "''", description: "Label do campo" },
   { category: "Label", prop: "hint", type: "String", default: "''", description: "Texto de ajuda abaixo do input" },
-  {
-    category: "Variantes",
-    prop: "variant",
-    type: "'outlined' | 'filled' | 'standout' | 'borderless'",
-    default: "'outlined'",
-    description: "Estilo visual do input",
-  },
-  {
-    category: "Variantes",
-    prop: "color",
-    type: "'primary' | 'secondary' | 'positive' | 'negative' | 'warning' | 'info'",
-    default: "'primary'",
-    description: "Cor semântica (focus)",
-  },
-  {
-    category: "Estados",
-    prop: "error",
-    type: "Boolean | String",
-    default: "false",
-    description: "Estado de erro (string = mensagem)",
-  },
+  { category: "Variantes", prop: "variant", type: "'outlined' | 'filled' | 'standout' | 'borderless'", default: "'outlined'", description: "Estilo visual do input" },
+  { category: "Variantes", prop: "color", type: "'primary' | 'secondary' | ...", default: "'primary'", description: "Cor semântica (focus)" },
+  { category: "Estados", prop: "error", type: "Boolean | String", default: "false", description: "Estado de erro (string = mensagem)" },
   { category: "Estados", prop: "disabled", type: "Boolean", default: "false", description: "Estado desabilitado" },
   { category: "Estados", prop: "readonly", type: "Boolean", default: "false", description: "Apenas leitura" },
   { category: "Estados", prop: "loading", type: "Boolean", default: "false", description: "Exibe spinner de loading" },
-  {
-    category: "Ícones",
-    prop: "prefix",
-    type: "String | Slot",
-    default: "null",
-    description: "Ícone/conteúdo à esquerda dentro do input",
-  },
-  {
-    category: "Ícones",
-    prop: "suffix",
-    type: "String | Slot",
-    default: "null",
-    description: "Ícone/conteúdo à direita dentro do input",
-  },
-  { category: "Ícones", prop: "before", type: "Slot", default: "null", description: "Conteúdo antes do input (fora)" },
-  { category: "Ícones", prop: "after", type: "Slot", default: "null", description: "Conteúdo depois do input (fora)" },
+  { category: "Ícones", prop: "prefix", type: "String | Slot", default: "null", description: "Ícone/conteúdo à esquerda" },
+  { category: "Ícones", prop: "suffix", type: "String | Slot", default: "null", description: "Ícone/conteúdo à direita" },
   { category: "Ações", prop: "clearable", type: "Boolean", default: "false", description: "Exibe botão de limpar" },
-  {
-    category: "Ações",
-    prop: "counter",
-    type: "Boolean",
-    default: "false",
-    description: "Exibe contador de caracteres",
-  },
-  { category: "Validação", prop: "rules", type: "Array<Function>", default: "[]", description: "Regras de validação" },
-  { category: "Validação", prop: "maxlength", type: "Number", default: "null", description: "Máximo de caracteres" },
-  {
-    category: "Brandabilidade",
-    prop: "brand",
-    type: "'hub' | 'water' | 'waste'",
-    default: "null",
-    description: "Tema de marca Veolia",
-  },
+  { category: "Brandabilidade", prop: "brand", type: "'hub' | 'water' | 'waste'", default: "null", description: "Tema de marca Veolia" },
   { category: "Densidade", prop: "dense", type: "Boolean", default: "false", description: "Versão compacta" },
-  { category: "Densidade", prop: "square", type: "Boolean", default: "false", description: "Bordas quadradas" },
 ];
 
-// Tokens utilizados pelo DssInput
+// Tokens organizados por categoria (14 categorias)
 const tokensUsed = [
-  { category: "Border", token: "--dss-border-width-thin", value: "1px", usage: "Borda padrão do input" },
-  { category: "Border", token: "--dss-border-width-md", value: "2px", usage: "Borda no estado focus" },
-  { category: "Border", token: "--dss-border-gray-300", value: "#d4d4d4", usage: "Cor da borda default" },
-  { category: "Border", token: "--dss-border-gray-400", value: "#a3a3a3", usage: "Cor da borda hover" },
-  { category: "Border", token: "--dss-radius-sm", value: "4px", usage: "Border-radius padrão" },
-  { category: "Border", token: "--dss-radius-md", value: "8px", usage: "Border-radius large" },
-  { category: "Border", token: "--dss-radius-none", value: "0", usage: "Sem arredondamento (square)" },
-  { category: "Focus", token: "--dss-action-primary", value: "#1f86de", usage: "Borda focus primary" },
-  { category: "Focus", token: "--dss-action-secondary", value: "#26a69a", usage: "Borda focus secondary" },
-  {
-    category: "Focus",
-    token: "--dss-shadow-focus",
-    value: "0 0 0 3px rgba(31,134,222,0.25)",
-    usage: "Focus ring primary",
-  },
-  {
-    category: "Focus",
-    token: "--dss-shadow-focus-error",
-    value: "0 0 0 3px rgba(216,24,46,0.25)",
-    usage: "Focus ring error",
-  },
+  // Action
+  { category: "Action", token: "--dss-action-primary", value: "#1f86de", usage: "Borda focus primary" },
+  { category: "Action", token: "--dss-action-secondary", value: "#26a69a", usage: "Borda focus secondary" },
+  // Feedback
   { category: "Feedback", token: "--dss-feedback-success", value: "#4dd228", usage: "Borda/ícone success" },
-  {
-    category: "Feedback",
-    token: "--dss-feedback-success-light",
-    value: "#e8f5e9",
-    usage: "Background success (filled)",
-  },
   { category: "Feedback", token: "--dss-feedback-error", value: "#d8182e", usage: "Borda/ícone error" },
-  { category: "Feedback", token: "--dss-feedback-error-light", value: "#ffebee", usage: "Background error (filled)" },
   { category: "Feedback", token: "--dss-feedback-warning", value: "#fabd14", usage: "Borda/ícone warning" },
-  {
-    category: "Feedback",
-    token: "--dss-feedback-warning-light",
-    value: "#fff8e1",
-    usage: "Background warning (filled)",
-  },
-  { category: "Surface", token: "--dss-surface-default", value: "#ffffff", usage: "Background outlined" },
-  { category: "Surface", token: "--dss-surface-subtle", value: "#fafafa", usage: "Background filled" },
-  { category: "Surface", token: "--dss-surface-muted", value: "#f5f5f5", usage: "Background disabled" },
-  { category: "Surface", token: "--dss-surface-hover", value: "rgba(0,0,0,0.04)", usage: "Hover filled" },
-  { category: "Text", token: "--dss-text-body", value: "#454545", usage: "Texto do input" },
-  { category: "Text", token: "--dss-text-subtle", value: "#737373", usage: "Placeholder text" },
-  { category: "Text", token: "--dss-text-muted", value: "#a3a3a3", usage: "Hint text" },
-  { category: "Text", token: "--dss-text-disabled", value: "#d4d4d4", usage: "Texto disabled" },
-  { category: "Text", token: "--dss-text-error", value: "#d8182e", usage: "Mensagem de erro" },
+  // Brand Hub
+  { category: "Brand Hub", token: "--dss-hub-600", value: "#ef7a11", usage: "Focus border Hub" },
+  { category: "Brand Hub", token: "--dss-hub-100", value: "#fef2d6", usage: "Background filled Hub" },
+  // Brand Water
+  { category: "Brand Water", token: "--dss-water-500", value: "#0e88e4", usage: "Focus border Water" },
+  { category: "Brand Water", token: "--dss-water-100", value: "#e0eefe", usage: "Background filled Water" },
+  // Brand Waste
+  { category: "Brand Waste", token: "--dss-waste-500", value: "#18b173", usage: "Focus border Waste" },
+  { category: "Brand Waste", token: "--dss-waste-100", value: "#d3f8e2", usage: "Background filled Waste" },
+  // Sizing
   { category: "Sizing", token: "--dss-touch-target-sm", value: "36px", usage: "Altura dense" },
   { category: "Sizing", token: "--dss-touch-target-md", value: "44px", usage: "Altura padrão WCAG" },
-  { category: "Sizing", token: "--dss-touch-target-lg", value: "52px", usage: "Altura large" },
   { category: "Sizing", token: "--dss-input-icon-size", value: "20px", usage: "Tamanho dos ícones" },
+  // Spacing
   { category: "Spacing", token: "--dss-spacing-2", value: "8px", usage: "Gap icon-text" },
   { category: "Spacing", token: "--dss-spacing-3", value: "12px", usage: "Padding horizontal" },
   { category: "Spacing", token: "--dss-spacing-4", value: "16px", usage: "Padding horizontal (lg)" },
-  { category: "Spacing", token: "--dss-spacing-1", value: "4px", usage: "Gap label-input" },
+  // Border Radius
+  { category: "Border Radius", token: "--dss-radius-sm", value: "4px", usage: "Border-radius padrão" },
+  { category: "Border Radius", token: "--dss-radius-md", value: "8px", usage: "Border-radius large" },
+  // Borders
+  { category: "Borders", token: "--dss-border-width-thin", value: "1px", usage: "Borda padrão" },
+  { category: "Borders", token: "--dss-border-width-md", value: "2px", usage: "Borda no focus" },
+  { category: "Borders", token: "--dss-border-gray-300", value: "#d4d4d4", usage: "Cor da borda default" },
+  // Typography
+  { category: "Typography", token: "--dss-font-size-sm", value: "14px", usage: "Texto do input" },
+  { category: "Typography", token: "--dss-font-size-xs", value: "12px", usage: "Hint/Error text" },
+  // Text
+  { category: "Text", token: "--dss-text-body", value: "#454545", usage: "Texto do input" },
+  { category: "Text", token: "--dss-text-subtle", value: "#737373", usage: "Placeholder text" },
+  { category: "Text", token: "--dss-text-muted", value: "#a3a3a3", usage: "Hint text" },
+  { category: "Text", token: "--dss-text-error", value: "#d8182e", usage: "Mensagem de erro" },
+  // Motion
   { category: "Motion", token: "--dss-duration-fast", value: "150ms", usage: "Transição focus" },
-  { category: "Motion", token: "--dss-duration-base", value: "250ms", usage: "Transição hover" },
   { category: "Motion", token: "--dss-easing-standard", value: "cubic-bezier(0.4,0,0.2,1)", usage: "Easing padrão" },
-  { category: "Brand Hub", token: "--dss-hub-600", value: "#ef7a11", usage: "Focus border Hub" },
-  { category: "Brand Hub", token: "--dss-hub-100", value: "#fef2d6", usage: "Background filled Hub" },
-  { category: "Brand Water", token: "--dss-water-500", value: "#0e88e4", usage: "Focus border Water" },
-  { category: "Brand Water", token: "--dss-water-100", value: "#e0eefe", usage: "Background filled Water" },
-  { category: "Brand Waste", token: "--dss-waste-500", value: "#18b173", usage: "Focus border Waste" },
-  { category: "Brand Waste", token: "--dss-waste-100", value: "#d3f8e2", usage: "Background filled Waste" },
+  // Surface
+  { category: "Surface", token: "--dss-surface-default", value: "#ffffff", usage: "Background outlined" },
+  { category: "Surface", token: "--dss-surface-subtle", value: "#fafafa", usage: "Background filled" },
+  { category: "Surface", token: "--dss-surface-muted", value: "#f5f5f5", usage: "Background disabled" },
+  // States
+  { category: "States", token: "--dss-shadow-focus", value: "0 0 0 3px rgba(31,134,222,0.25)", usage: "Focus ring primary" },
+  { category: "States", token: "--dss-shadow-focus-error", value: "0 0 0 3px rgba(216,24,46,0.25)", usage: "Focus ring error" },
+  // Opacity
+  { category: "Opacity", token: "--dss-opacity-disabled", value: "0.6", usage: "Opacidade disabled" },
 ];
 
+// Anatomy Data
+const anatomyData = {
+  structure: {
+    files: ["DssInput.ts.vue"],
+    description: "Define a estrutura HTML do input: container, label, input nativo, slots (prepend/append), hint/error. Props tipadas, composables de state e classes.",
+    responsibilities: ["Template HTML semântico", "Props TypeScript tipadas", "Lógica de estados (focus, error)", "Acessibilidade ARIA"],
+    tokens: ["Nenhum token - apenas estrutura"],
+    codeExample: `<template>
+  <div :class="wrapperClasses">
+    <label :for="inputId">{{ label }}</label>
+    <div class="dss-input__field">
+      <slot name="prepend" />
+      <input :id="inputId" v-model="modelValue" />
+      <slot name="append" />
+    </div>
+    <span v-if="hint">{{ hint }}</span>
+  </div>
+</template>`,
+  },
+  composition: {
+    files: ["_composition.scss"],
+    description: "Layout base do input: flexbox, espaçamentos, tipografia, reset de estilos nativos. Define a estrutura visual sem cores.",
+    responsibilities: ["Display flex e alinhamento", "Padding e spacing internos", "Font-size e line-height", "Reset de estilos nativos"],
+    tokens: ["--dss-spacing-*", "--dss-font-size-*", "--dss-touch-target-*"],
+    codeExample: `.dss-input__field {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  height: var(--dss-touch-target-md);
+  padding: 0 var(--dss-spacing-3);
+  font-size: var(--dss-font-size-sm);
+}`,
+  },
+  variants: {
+    files: ["_variants.scss"],
+    description: "Variações visuais do input: outlined (borda), filled (preenchido), standout (destaque), borderless (minimalista).",
+    responsibilities: ["Estilos por variante", "Comportamento de borda", "Background por estado", "Border-radius"],
+    tokens: ["--dss-radius-*", "--dss-border-*"],
+    codeExample: `.dss-input--outlined {
+  border: 1px solid var(--dss-gray-300);
+  border-radius: var(--dss-radius-sm);
+}
+
+.dss-input--filled {
+  background: var(--dss-surface-subtle);
+  border-bottom: 1px solid var(--dss-gray-300);
+}`,
+  },
+  output: {
+    files: ["_states.scss", "_brands.scss"],
+    description: "Camada final: cores semânticas, estados (focus, error, disabled), brandability (Hub, Water, Waste) e transições.",
+    responsibilities: ["Cores de focus por tema", "Estados visuais (error, success)", "Paletas de marca", "Transições e animações"],
+    tokens: ["--dss-action-*", "--dss-feedback-*", "--dss-hub-*", "--dss-water-*", "--dss-waste-*"],
+    codeExample: `.dss-input--focused {
+  border-color: var(--dss-action-primary);
+  box-shadow: var(--dss-shadow-focus);
+}
+
+.dss-input--brand-hub.dss-input--focused {
+  border-color: var(--dss-hub-600);
+}`,
+  },
+};
+
 // ============================================================================
-// PREVIEW COMPONENT - Renderização do Input com tokens reais
+// PREVIEW COMPONENT
 // ============================================================================
 
 interface InputPreviewProps {
@@ -330,7 +317,6 @@ interface InputPreviewProps {
   readonly?: boolean;
   clearable?: boolean;
   dense?: boolean;
-  square?: boolean;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   hint?: string;
@@ -338,6 +324,7 @@ interface InputPreviewProps {
   isFocused?: boolean;
   showPasswordToggle?: boolean;
   showToken?: boolean;
+  isDarkMode?: boolean;
 }
 
 const DssInputPreview: React.FC<InputPreviewProps> = ({
@@ -352,7 +339,6 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
   readonly = false,
   clearable = false,
   dense = false,
-  square = false,
   prefix,
   suffix,
   hint,
@@ -360,12 +346,12 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
   isFocused = false,
   showPasswordToggle = false,
   showToken = false,
+  isDarkMode = false,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [internalValue, setInternalValue] = useState(value);
   const [focused, setFocused] = useState(isFocused);
 
-  // Determina cores baseado na configuração
   const getColors = () => {
     if (error) {
       return {
@@ -380,7 +366,7 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
       const brandData = brandColors[brand as keyof typeof brandColors];
       return {
         border: brandData?.principal || "#1f86de",
-        focusShadow: `0 0 0 3px ${brandData?.principal}40` || "0 0 0 3px rgba(31,134,222,0.25)",
+        focusShadow: `0 0 0 3px ${brandData?.principal}40`,
         labelColor: brandData?.principal || "#1f86de",
         iconColor: brandData?.principal || "#1f86de",
       };
@@ -389,7 +375,7 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
     const colorData = semanticColors[color as keyof typeof semanticColors];
     return {
       border: colorData?.bg || "#1f86de",
-      focusShadow: `0 0 0 3px ${colorData?.bg}40` || "0 0 0 3px rgba(31,134,222,0.25)",
+      focusShadow: `0 0 0 3px ${colorData?.bg}40`,
       labelColor: colorData?.bg || "#1f86de",
       iconColor: colorData?.bg || "#1f86de",
     };
@@ -397,7 +383,6 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
 
   const colors = getColors();
 
-  // Estilos base por variante
   const getVariantStyles = (): React.CSSProperties => {
     const base: React.CSSProperties = {
       display: "flex",
@@ -408,9 +393,9 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
       padding: "0 12px",
       fontSize: "14px",
       fontFamily: "inherit",
-      color: disabled ? "#d4d4d4" : "#454545",
-      backgroundColor: disabled ? "#f5f5f5" : "#ffffff",
-      borderRadius: square ? "0" : "4px",
+      color: disabled ? "#d4d4d4" : isDarkMode ? "#e5e5e5" : "#454545",
+      backgroundColor: disabled ? (isDarkMode ? "#2a2a2a" : "#f5f5f5") : isDarkMode ? "#1a1a2e" : "#ffffff",
+      borderRadius: "4px",
       transition: "all 150ms cubic-bezier(0.4,0,0.2,1)",
       cursor: disabled ? "not-allowed" : "text",
       opacity: disabled ? 0.6 : 1,
@@ -420,17 +405,16 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
       case "outlined":
         return {
           ...base,
-          border: focused ? `2px solid ${colors.border}` : `1px solid ${error ? "#d8182e" : "#d4d4d4"}`,
+          border: focused ? `2px solid ${colors.border}` : `1px solid ${error ? "#d8182e" : isDarkMode ? "#404040" : "#d4d4d4"}`,
           boxShadow: focused ? colors.focusShadow : "none",
-          backgroundColor: disabled ? "#f5f5f5" : "#ffffff",
         };
       case "filled":
         return {
           ...base,
           border: "none",
-          borderBottom: focused ? `2px solid ${colors.border}` : `1px solid ${error ? "#d8182e" : "#d4d4d4"}`,
-          backgroundColor: disabled ? "#f5f5f5" : "#fafafa",
-          borderRadius: square ? "0" : "4px 4px 0 0",
+          borderBottom: focused ? `2px solid ${colors.border}` : `1px solid ${error ? "#d8182e" : isDarkMode ? "#404040" : "#d4d4d4"}`,
+          backgroundColor: disabled ? (isDarkMode ? "#2a2a2a" : "#f5f5f5") : isDarkMode ? "#252538" : "#fafafa",
+          borderRadius: "4px 4px 0 0",
         };
       case "standout":
         return {
@@ -441,8 +425,8 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
               ? `${brandColors[brand as keyof typeof brandColors]?.principal}15`
               : `${colors.border}15`
             : disabled
-              ? "#f5f5f5"
-              : "#f0f0f0",
+              ? (isDarkMode ? "#2a2a2a" : "#f5f5f5")
+              : isDarkMode ? "#252538" : "#f0f0f0",
           boxShadow: focused ? colors.focusShadow : "none",
         };
       case "borderless":
@@ -466,12 +450,11 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
 
   return (
     <div className="w-full">
-      {/* Label */}
       {label && (
         <label
           className="block text-sm font-medium mb-1.5"
           style={{
-            color: error ? "#d8182e" : focused ? colors.labelColor : "#454545",
+            color: error ? "#d8182e" : focused ? colors.labelColor : isDarkMode ? "#a0a0a0" : "#454545",
             transition: "color 150ms ease",
           }}
         >
@@ -479,12 +462,9 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
         </label>
       )}
 
-      {/* Input Container */}
       <div style={getVariantStyles()}>
-        {/* Prefix */}
-        {prefix && <span style={{ color: focused ? colors.iconColor : "#737373", flexShrink: 0 }}>{prefix}</span>}
+        {prefix && <span style={{ color: focused ? colors.iconColor : isDarkMode ? "#606060" : "#737373", flexShrink: 0 }}>{prefix}</span>}
 
-        {/* Input */}
         <input
           type={actualType}
           value={internalValue}
@@ -496,50 +476,44 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
           readOnly={readonly}
           className="flex-1 bg-transparent outline-none border-none"
           style={{
-            color: disabled ? "#d4d4d4" : "#454545",
+            color: disabled ? "#d4d4d4" : isDarkMode ? "#e5e5e5" : "#454545",
             fontSize: "14px",
           }}
         />
 
-        {/* Clearable */}
         {clearable && internalValue && !disabled && !readonly && (
           <button
             onClick={() => setInternalValue("")}
             className="flex-shrink-0 p-1 rounded hover:bg-black/5 transition-colors"
-            style={{ color: "#737373" }}
+            style={{ color: isDarkMode ? "#808080" : "#737373" }}
           >
             <X size={16} />
           </button>
         )}
 
-        {/* Password Toggle */}
         {type === "password" && showPasswordToggle && (
           <button
             onClick={() => setShowPassword(!showPassword)}
             className="flex-shrink-0 p-1 rounded hover:bg-black/5 transition-colors"
-            style={{ color: "#737373" }}
+            style={{ color: isDarkMode ? "#808080" : "#737373" }}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         )}
 
-        {/* Suffix */}
-        {suffix && <span style={{ color: focused ? colors.iconColor : "#737373", flexShrink: 0 }}>{suffix}</span>}
+        {suffix && <span style={{ color: focused ? colors.iconColor : isDarkMode ? "#606060" : "#737373", flexShrink: 0 }}>{suffix}</span>}
 
-        {/* Error/Success Icon */}
         {error && <AlertCircle size={18} style={{ color: "#d8182e", flexShrink: 0 }} />}
       </div>
 
-      {/* Hint/Error Message */}
       {(hint || (typeof error === "string" && error)) && (
-        <p className="text-xs mt-1.5" style={{ color: error ? "#d8182e" : "#a3a3a3" }}>
+        <p className="text-xs mt-1.5" style={{ color: error ? "#d8182e" : isDarkMode ? "#707070" : "#a3a3a3" }}>
           {typeof error === "string" ? error : hint}
         </p>
       )}
 
-      {/* Token Name */}
       {showToken && tokenName && (
-        <code className="text-[10px] font-mono mt-1 block text-center" style={{ color: "var(--jtech-text-muted)" }}>
+        <code className="text-[10px] font-mono mt-1 block text-center" style={{ color: isDarkMode ? "#606060" : "var(--jtech-text-muted)" }}>
           {tokenName}
         </code>
       )}
@@ -552,26 +526,25 @@ const DssInputPreview: React.FC<InputPreviewProps> = ({
 // ============================================================================
 
 const DssInputPage: React.FC = () => {
-  // Estados do Playground
+  // Playground States
   const [selectedVariant, setSelectedVariant] = useState("outlined");
   const [selectedColor, setSelectedColor] = useState("primary");
   const [selectedType, setSelectedType] = useState("text");
   const [inputLabel, setInputLabel] = useState("Email");
   const [inputPlaceholder, setInputPlaceholder] = useState("Digite seu email");
-  const [inputValue, setInputValue] = useState("");
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("Este campo é obrigatório");
+  const [errorMessage] = useState("Este campo é obrigatório");
   const [isDisabled, setIsDisabled] = useState(false);
   const [isReadonly, setIsReadonly] = useState(false);
   const [isClearable, setIsClearable] = useState(false);
   const [isDense, setIsDense] = useState(false);
-  const [isSquare, setIsSquare] = useState(false);
   const [showPrefix, setShowPrefix] = useState(false);
   const [showSuffix, setShowSuffix] = useState(false);
   const [showHint, setShowHint] = useState(false);
-  const [hintText, setHintText] = useState("Informe um email válido");
+  const [hintText] = useState("Informe um email válido");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
-  const [showPasswordToggle, setShowPasswordToggle] = useState(true);
+  const [showPasswordToggle] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Clipboard
   const [copiedCode, setCopiedCode] = useState(false);
@@ -588,29 +561,25 @@ const DssInputPage: React.FC = () => {
     }
   };
 
-  // Gera código do componente
+  // Generate code
   const generateCode = () => {
     const props: string[] = [];
 
     if (selectedVariant !== "outlined") props.push(`variant="${selectedVariant}"`);
-    if (selectedColor !== "primary") props.push(`color="${selectedColor}"`);
+    if (selectedBrand) {
+      props.push(`brand="${selectedBrand}"`);
+    } else if (selectedColor !== "primary") {
+      props.push(`color="${selectedColor}"`);
+    }
     if (selectedType !== "text") props.push(`type="${selectedType}"`);
     if (inputLabel) props.push(`label="${inputLabel}"`);
     if (inputPlaceholder) props.push(`placeholder="${inputPlaceholder}"`);
-    if (showError) {
-      if (errorMessage) {
-        props.push(`error="${errorMessage}"`);
-      } else {
-        props.push("error");
-      }
-    }
+    if (showError) props.push(`error="${errorMessage}"`);
     if (isDisabled) props.push("disabled");
     if (isReadonly) props.push("readonly");
     if (isClearable) props.push("clearable");
     if (isDense) props.push("dense");
-    if (isSquare) props.push("square");
     if (showHint && hintText) props.push(`hint="${hintText}"`);
-    if (selectedBrand) props.push(`brand="${selectedBrand}"`);
 
     const propsStr = props.length > 0 ? `\n  ${props.join("\n  ")}\n` : " ";
 
@@ -628,31 +597,36 @@ const DssInputPage: React.FC = () => {
     return code;
   };
 
-  // Categorias de tokens únicas
+  // Token categories
   const tokenCategories = [...new Set(tokensUsed.map((t) => t.category))];
 
-  // Get prefix icon based on type
+  // Get prefix icon
   const getPrefixIcon = () => {
     switch (selectedType) {
-      case "email":
-        return <Mail size={18} />;
-      case "search":
-        return <Search size={18} />;
-      case "tel":
-        return <Phone size={18} />;
-      case "password":
-        return <Lock size={18} />;
-      case "url":
-        return <Globe size={18} />;
-      default:
-        return <User size={18} />;
+      case "email": return <Mail size={18} />;
+      case "search": return <Search size={18} />;
+      case "tel": return <Phone size={18} />;
+      case "password": return <Lock size={18} />;
+      case "url": return <Globe size={18} />;
+      default: return <User size={18} />;
     }
+  };
+
+  // Handle brand selection with mutual exclusivity
+  const handleBrandSelect = (brand: string | null) => {
+    setSelectedBrand(brand);
+  };
+
+  // Handle color selection with mutual exclusivity
+  const handleColorSelect = (color: string) => {
+    setSelectedColor(color);
+    setSelectedBrand(null);
   };
 
   return (
     <div className="p-6 lg:p-8 max-w-6xl mx-auto space-y-10" style={{ backgroundColor: "var(--dss-page-bg)" }}>
       {/* ================================================================
-          HERO HEADER - Jtech Style
+          HERO HEADER
           ================================================================ */}
       <PageHeader
         icon={FileText}
@@ -660,47 +634,16 @@ const DssInputPage: React.FC = () => {
         badgeVariant="accent"
         title="Componente"
         titleAccent="DssInput"
-        subtitle="DssInput é o componente responsável pela entrada de dados do usuário em formulários e fluxos interativos.
-Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, garantindo clareza, previsibilidade e boa experiência durante o preenchimento."
+        subtitle="DssInput é o componente responsável pela entrada de dados do usuário em formulários e fluxos interativos. Oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, garantindo clareza, previsibilidade e boa experiência durante o preenchimento."
         subtitleHighlights={["tokens DSS", "brandability", "WCAG 2.1 AA"]}
         extraBadges={[
-          { label: "v1.2.0", variant: "info" },
+          { label: "v2.3.0", variant: "info" },
           { label: "Quasar Compatible", variant: "success" },
         ]}
       />
 
       {/* ================================================================
-          QUICK STATS - Jtech Style
-          ================================================================ */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { value: "4", label: "Variantes", color: semanticColors.primary.bg },
-          { value: "8", label: "Tipos de Input", color: semanticColors.secondary.bg },
-          { value: "3", label: "Brands Veolia", color: brandColors.hub.principal },
-          { value: "6", label: "Estados", color: brandColors.waste.principal },
-        ].map((stat, i) => (
-          <Card
-            key={i}
-            className="transition-all duration-300 hover:shadow-lg"
-            style={{
-              backgroundColor: "var(--jtech-card-bg)",
-              borderColor: "var(--jtech-card-border)",
-            }}
-          >
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold" style={{ color: stat.color }}>
-                {stat.value}
-              </div>
-              <div className="text-sm" style={{ color: "var(--jtech-text-body)" }}>
-                {stat.label}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* ================================================================
-          INTERACTIVE PLAYGROUND - Jtech Style
+          INTERACTIVE PLAYGROUND
           ================================================================ */}
       <SectionHeader title="Playground" titleAccent="Interativo" badge="Live Preview" />
 
@@ -712,22 +655,36 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
           borderWidth: "2px",
         }}
       >
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2" style={{ color: "var(--jtech-heading-secondary)" }}>
-            <Code className="h-5 w-5" style={{ color: "var(--dss-jtech-accent)" }} />
-            Configure o Input
-          </CardTitle>
-          <CardDescription style={{ color: "var(--jtech-text-body)" }}>
-            Selecione as props e veja o resultado em tempo real com tokens DSS reais.
-          </CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2" style={{ color: "var(--jtech-heading-secondary)" }}>
+              <Code className="h-5 w-5" style={{ color: "var(--dss-jtech-accent)" }} />
+              Configure o Input
+            </CardTitle>
+            <CardDescription style={{ color: "var(--jtech-text-body)" }}>
+              Selecione as props e veja o resultado em tempo real.
+            </CardDescription>
+          </div>
+          <PlaygroundButton
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            isSelected={isDarkMode}
+            selectedColor={isDarkMode ? "#6366f1" : undefined}
+          >
+            {isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
+            {isDarkMode ? "Light" : "Dark"}
+          </PlaygroundButton>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Preview Area */}
           <div
-            className="p-8 rounded-lg flex items-center justify-center min-h-[180px] relative"
+            className="p-8 rounded-lg flex items-center justify-center min-h-[180px] relative transition-all duration-300"
             style={{
-              backgroundColor: "#ffffff",
-              border: "1px dashed var(--jtech-card-border)",
+              backgroundColor: isDarkMode ? "#1a1a2e" : "#ffffff",
+              backgroundImage: isDarkMode
+                ? "radial-gradient(circle, #2d2d44 1px, transparent 1px)"
+                : "radial-gradient(circle, #e5e5e5 1px, transparent 1px)",
+              backgroundSize: "20px 20px",
+              border: `1px dashed ${isDarkMode ? "#404050" : "var(--jtech-card-border)"}`,
             }}
           >
             <div className="w-full max-w-sm">
@@ -737,19 +694,19 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
                 label={inputLabel}
                 placeholder={inputPlaceholder}
                 type={selectedType}
-                value={inputValue}
+                value=""
                 error={showError ? errorMessage : false}
                 disabled={isDisabled}
                 readonly={isReadonly}
                 clearable={isClearable}
                 dense={isDense}
-                square={isSquare}
                 prefix={showPrefix ? getPrefixIcon() : undefined}
                 suffix={showSuffix ? <Search size={18} /> : undefined}
                 hint={showHint ? hintText : undefined}
                 brand={selectedBrand}
                 showPasswordToggle={selectedType === "password" && showPasswordToggle}
                 showToken
+                isDarkMode={isDarkMode}
               />
             </div>
           </div>
@@ -758,75 +715,57 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Variant */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
-                Variant
+              <label className="text-sm font-semibold flex items-center gap-2" style={{ color: "var(--jtech-heading-tertiary)" }}>
+                <Layout size={14} /> Variant
               </label>
               <div className="flex flex-wrap gap-2">
                 {variants.map((v) => (
-                  <button
+                  <PlaygroundButton
                     key={v.name}
                     onClick={() => setSelectedVariant(v.name)}
-                    className="px-3 py-1.5 rounded text-xs font-medium transition-all"
-                    style={{
-                      backgroundColor:
-                        selectedVariant === v.name ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
-                      color: selectedVariant === v.name ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedVariant === v.name ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={selectedVariant === v.name}
                   >
                     {v.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
 
             {/* Type */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
-                Type
+              <label className="text-sm font-semibold flex items-center gap-2" style={{ color: "var(--jtech-heading-tertiary)" }}>
+                <Settings size={14} /> Type
               </label>
               <div className="flex flex-wrap gap-2">
                 {inputTypes.slice(0, 5).map((t) => (
-                  <button
+                  <PlaygroundButton
                     key={t.name}
                     onClick={() => setSelectedType(t.name)}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1"
-                    style={{
-                      backgroundColor: selectedType === t.name ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
-                      color: selectedType === t.name ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedType === t.name ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={selectedType === t.name}
                   >
                     <t.icon size={12} />
                     {t.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
 
             {/* Color */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
-                Color
+              <label className="text-sm font-semibold flex items-center gap-2" style={{ color: "var(--jtech-heading-tertiary)" }}>
+                <Palette size={14} /> Color
               </label>
               <div className="flex flex-wrap gap-2">
                 {Object.values(semanticColors).map((c) => (
-                  <button
+                  <PlaygroundButton
                     key={c.name}
-                    onClick={() => {
-                      setSelectedColor(c.name);
-                      setSelectedBrand(null);
-                    }}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
-                    style={{
-                      backgroundColor: selectedColor === c.name && !selectedBrand ? c.bg : "rgba(255,255,255,0.05)",
-                      color: selectedColor === c.name && !selectedBrand ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedColor === c.name && !selectedBrand ? c.bg : "var(--jtech-card-border)"}`,
-                    }}
+                    onClick={() => handleColorSelect(c.name)}
+                    isSelected={selectedColor === c.name && !selectedBrand}
+                    selectedColor={c.bg}
                   >
                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.bg }} />
                     {c.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
@@ -837,95 +776,72 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
                 Brand (Veolia)
               </label>
               <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setSelectedBrand(null)}
-                  className="px-3 py-1.5 rounded text-xs font-medium transition-all"
-                  style={{
-                    backgroundColor: !selectedBrand ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
-                    color: !selectedBrand ? "#ffffff" : "var(--jtech-text-body)",
-                    border: `1px solid ${!selectedBrand ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
-                  }}
+                <PlaygroundButton
+                  onClick={() => handleBrandSelect(null)}
+                  isSelected={!selectedBrand}
                 >
                   Nenhum
-                </button>
+                </PlaygroundButton>
                 {Object.values(brandColors).map((b) => (
-                  <button
+                  <PlaygroundButton
                     key={b.name}
-                    onClick={() => setSelectedBrand(b.name)}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
-                    style={{
-                      backgroundColor: selectedBrand === b.name ? b.principal : "rgba(255,255,255,0.05)",
-                      color: selectedBrand === b.name ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedBrand === b.name ? b.principal : "var(--jtech-card-border)"}`,
-                    }}
+                    onClick={() => handleBrandSelect(b.name)}
+                    isSelected={selectedBrand === b.name}
+                    selectedColor={b.principal}
                   >
                     <span>{b.icon}</span>
                     {b.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
 
-            {/* States & Modifiers */}
+            {/* States */}
             <div className="space-y-2">
               <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
-                Estados & Modificadores
+                Estados
               </label>
               <div className="flex flex-wrap gap-2">
                 {[
                   { key: "error", label: "Error", active: showError, toggle: () => setShowError(!showError) },
                   { key: "disabled", label: "Disabled", active: isDisabled, toggle: () => setIsDisabled(!isDisabled) },
                   { key: "readonly", label: "Readonly", active: isReadonly, toggle: () => setIsReadonly(!isReadonly) },
-                  {
-                    key: "clearable",
-                    label: "Clearable",
-                    active: isClearable,
-                    toggle: () => setIsClearable(!isClearable),
-                  },
+                  { key: "clearable", label: "Clearable", active: isClearable, toggle: () => setIsClearable(!isClearable) },
                   { key: "dense", label: "Dense", active: isDense, toggle: () => setIsDense(!isDense) },
                 ].map((item) => (
-                  <button
+                  <PlaygroundButton
                     key={item.key}
                     onClick={item.toggle}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all"
-                    style={{
-                      backgroundColor: item.active ? "var(--dss-positive)" : "rgba(255,255,255,0.05)",
-                      color: item.active ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${item.active ? "var(--dss-positive)" : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={item.active}
+                    selectedColor="#4dd228"
                   >
                     {item.active && "✓ "}
                     {item.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
 
-            {/* Icons & Extras */}
+            {/* Extras */}
             <div className="space-y-2">
               <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
-                Ícones & Extras
+                Extras
               </label>
               <div className="flex flex-wrap gap-2">
                 {[
                   { key: "prefix", label: "Prefix", active: showPrefix, toggle: () => setShowPrefix(!showPrefix) },
                   { key: "suffix", label: "Suffix", active: showSuffix, toggle: () => setShowSuffix(!showSuffix) },
                   { key: "hint", label: "Hint", active: showHint, toggle: () => setShowHint(!showHint) },
-                  { key: "square", label: "Square", active: isSquare, toggle: () => setIsSquare(!isSquare) },
                 ].map((item) => (
-                  <button
+                  <PlaygroundButton
                     key={item.key}
                     onClick={item.toggle}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all"
-                    style={{
-                      backgroundColor: item.active ? "var(--dss-positive)" : "rgba(255,255,255,0.05)",
-                      color: item.active ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${item.active ? "var(--dss-positive)" : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={item.active}
+                    selectedColor="#6366f1"
                   >
                     {item.active && "✓ "}
                     {item.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
@@ -934,24 +850,27 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
           {/* Code Output */}
           <div className="relative">
             <pre
-              className="p-4 overflow-x-auto rounded-lg font-mono text-sm"
+              className="p-4 rounded-lg text-sm overflow-x-auto font-mono"
               style={{
-                backgroundColor: "rgba(0,0,0,0.4)",
-                color: "var(--jtech-heading-secondary)",
+                backgroundColor: "rgba(0, 0, 0, 0.4)",
                 border: "1px solid var(--jtech-card-border)",
+                color: "#e5e5e5",
               }}
             >
-              <code>{generateCode()}</code>
+              {generateCode()}
             </pre>
             <button
-              className="absolute top-2 right-2 p-2 rounded hover:bg-white/10 transition-colors"
               onClick={() => copyToClipboard(generateCode())}
-              style={{ color: "var(--jtech-text-muted)" }}
+              className="absolute top-3 right-3 p-2 rounded-lg transition-all hover:bg-white/10"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
             >
               {copiedCode ? (
-                <Check className="h-4 w-4" style={{ color: "var(--dss-positive)" }} />
+                <Check size={16} style={{ color: "#4dd228" }} />
               ) : (
-                <Copy className="h-4 w-4" />
+                <Copy size={16} style={{ color: "#a3a3a3" }} />
               )}
             </button>
           </div>
@@ -959,186 +878,14 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
       </Card>
 
       {/* ================================================================
-          GALERIA TABS - Jtech Style
+          ANATOMY SECTION
           ================================================================ */}
-      <SectionHeader title="Galeria de" titleAccent="Variantes" badge="4 variantes • 8 tipos • 3 brands" />
+      <SectionHeader title="Anatomia" titleAccent="4 Camadas" badge="Arquitetura DSS" />
 
-      <DssTabs defaultValue="variantes" className="space-y-4">
-        <DssTabsList>
-          {["Variantes", "Tipos", "Estados", "Brands"].map((tab) => (
-            <DssTabsTrigger key={tab.toLowerCase()} value={tab.toLowerCase()}>
-              {tab}
-            </DssTabsTrigger>
-          ))}
-        </DssTabsList>
-
-        {/* Variantes Tab */}
-        <DssTabsContent value="variantes" className="space-y-4">
-          {variants.map((v) => (
-            <Card
-              key={v.name}
-              className="transition-all duration-300"
-              style={{
-                backgroundColor: "var(--jtech-card-bg)",
-                borderColor: "var(--jtech-card-border)",
-              }}
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-3">
-                  <Badge className="text-xs" style={{ backgroundColor: "var(--dss-jtech-accent)", color: "white" }}>
-                    {v.name}
-                  </Badge>
-                  <span className="text-sm" style={{ color: "var(--jtech-text-body)" }}>
-                    {v.desc}
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div
-                  className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg"
-                  style={{ backgroundColor: "#ffffff" }}
-                >
-                  <DssInputPreview
-                    variant={v.name}
-                    color="primary"
-                    label="Label Primary"
-                    placeholder="Digite algo..."
-                    type="text"
-                    value=""
-                  />
-                  <DssInputPreview
-                    variant={v.name}
-                    color="secondary"
-                    label="Label Secondary"
-                    placeholder="Digite algo..."
-                    type="text"
-                    value=""
-                    isFocused
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </DssTabsContent>
-
-        {/* Tipos Tab */}
-        <DssTabsContent value="tipos" className="space-y-4">
-          <Card
-            style={{
-              backgroundColor: "var(--jtech-card-bg)",
-              borderColor: "var(--jtech-card-border)",
-            }}
-          >
-            <CardHeader>
-              <CardTitle style={{ color: "var(--jtech-heading-secondary)" }}>Tipos de Input HTML</CardTitle>
-              <CardDescription style={{ color: "var(--jtech-text-body)" }}>
-                Diferentes tipos de entrada com comportamento nativo otimizado.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6 rounded-lg"
-                style={{ backgroundColor: "#ffffff" }}
-              >
-                {inputTypes.map((t) => (
-                  <DssInputPreview
-                    key={t.name}
-                    variant="outlined"
-                    color="primary"
-                    label={t.label}
-                    placeholder={t.desc}
-                    type={t.name}
-                    value=""
-                    prefix={<t.icon size={18} />}
-                    showPasswordToggle={t.name === "password"}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </DssTabsContent>
-
-        {/* Estados Tab */}
-        <DssTabsContent value="estados" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {inputStates.map((state) => (
-              <Card
-                key={state.name}
-                className="transition-all duration-300"
-                style={{
-                  backgroundColor: "var(--jtech-card-bg)",
-                  borderColor: "var(--jtech-card-border)",
-                }}
-              >
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-base" style={{ color: "var(--jtech-heading-primary)" }}>
-                      {state.label}
-                    </CardTitle>
-                  </div>
-                  <CardDescription style={{ color: "var(--jtech-text-muted)" }}>{state.desc}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="p-4 rounded-lg" style={{ backgroundColor: "#ffffff" }}>
-                    <DssInputPreview
-                      variant="outlined"
-                      color="primary"
-                      label={state.label}
-                      placeholder="Placeholder..."
-                      type="text"
-                      value={state.name === "default" ? "" : "Valor digitado"}
-                      error={state.name === "error" ? "Mensagem de erro" : false}
-                      disabled={state.name === "disabled"}
-                      readonly={state.name === "readonly"}
-                      isFocused={state.name === "focus" || state.name === "success"}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </DssTabsContent>
-
-        {/* Brands Tab */}
-        <DssTabsContent value="brands" className="space-y-4">
-          <Card
-            style={{
-              backgroundColor: "var(--jtech-card-bg)",
-              borderColor: "var(--jtech-card-border)",
-            }}
-          >
-            <CardHeader>
-              <CardTitle style={{ color: "var(--jtech-heading-secondary)" }}>Marcas Veolia</CardTitle>
-              <CardDescription style={{ color: "var(--jtech-text-body)" }}>
-                Inputs com tematização de marca aplicada ao focus.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 rounded-lg"
-                style={{ backgroundColor: "#ffffff" }}
-              >
-                {Object.values(brandColors).map((brand) => (
-                  <DssInputPreview
-                    key={brand.name}
-                    variant="outlined"
-                    color="primary"
-                    label={`${brand.icon} ${brand.label} Theme`}
-                    placeholder={`Input ${brand.label}...`}
-                    type="text"
-                    value=""
-                    brand={brand.name}
-                    isFocused
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </DssTabsContent>
-      </DssTabs>
+      <AnatomySection componentName="DssInput" layers={anatomyData} />
 
       {/* ================================================================
-          DOCUMENTAÇÃO TÉCNICA - Tabs
+          TECHNICAL DOCUMENTATION
           ================================================================ */}
       <SectionHeader
         title="Documentação"
@@ -1146,128 +893,111 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
         badge={`${propsData.length} props • ${tokensUsed.length} tokens`}
       />
 
-      <DssTabs defaultValue="props" className="space-y-4">
-        <DssTabsList>
-          <DssTabsTrigger value="props" badge={propsData.length}>
-            Props API
-          </DssTabsTrigger>
-          <DssTabsTrigger value="tokens" badge={tokensUsed.length}>
-            Tokens DSS
-          </DssTabsTrigger>
-          <DssTabsTrigger value="slots" badge={6}>
-            Slots
-          </DssTabsTrigger>
-          <DssTabsTrigger value="events" badge={5}>
-            Eventos
-          </DssTabsTrigger>
-        </DssTabsList>
-
-        {/* Props API Tab */}
-        <DssTabsContent value="props">
-          <Card
-            className="overflow-hidden"
-            style={{
-              backgroundColor: "var(--jtech-card-bg)",
-              borderColor: "var(--jtech-card-border)",
-            }}
-          >
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow style={{ borderColor: "var(--jtech-card-border)" }}>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Categoria</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Prop</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Tipo</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Default</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Descrição</TableHead>
+      {/* Props API */}
+      <CollapsibleSection
+        icon={Code}
+        title="Props API"
+        titleAccent="& Eventos"
+        defaultOpen={false}
+      >
+        <Card
+          className="overflow-hidden"
+          style={{
+            backgroundColor: "var(--jtech-card-bg)",
+            borderColor: "var(--jtech-card-border)",
+          }}
+        >
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow style={{ borderColor: "var(--jtech-card-border)" }}>
+                  <TableHead style={{ color: "var(--jtech-text-muted)" }}>Categoria</TableHead>
+                  <TableHead style={{ color: "var(--jtech-text-muted)" }}>Prop</TableHead>
+                  <TableHead style={{ color: "var(--jtech-text-muted)" }}>Tipo</TableHead>
+                  <TableHead style={{ color: "var(--jtech-text-muted)" }}>Default</TableHead>
+                  <TableHead style={{ color: "var(--jtech-text-muted)" }}>Descrição</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {propsData.map((prop, index) => (
+                  <TableRow
+                    key={index}
+                    style={{ borderColor: "var(--jtech-card-border)" }}
+                    className="hover:bg-white/5"
+                  >
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className="text-xs"
+                        style={{
+                          borderColor: "var(--jtech-card-border)",
+                          color: "var(--jtech-text-muted)",
+                        }}
+                      >
+                        {prop.category}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <code
+                        className="text-sm font-mono px-1.5 py-0.5 rounded"
+                        style={{
+                          backgroundColor: "rgba(255,255,255,0.1)",
+                          color: "var(--dss-jtech-accent)",
+                        }}
+                      >
+                        {prop.prop}
+                      </code>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-xs font-mono" style={{ color: "var(--jtech-text-body)" }}>
+                        {prop.type}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <code
+                        className="text-xs font-mono px-1.5 py-0.5 rounded"
+                        style={{
+                          backgroundColor: "rgba(0,0,0,0.2)",
+                          color: "#a3a3a3",
+                        }}
+                      >
+                        {prop.default}
+                      </code>
+                    </TableCell>
+                    <TableCell style={{ color: "var(--jtech-text-body)" }}>{prop.description}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {propsData.map((prop, index) => (
-                    <TableRow
-                      key={index}
-                      style={{ borderColor: "var(--jtech-card-border)" }}
-                      className="hover:bg-white/5"
-                    >
-                      <TableCell>
-                        <Badge
-                          variant="outline"
-                          className="text-xs"
-                          style={{
-                            borderColor: "var(--jtech-card-border)",
-                            color: "var(--jtech-text-muted)",
-                          }}
-                        >
-                          {prop.category}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <code
-                          className="text-sm font-mono px-1.5 py-0.5 rounded"
-                          style={{
-                            backgroundColor: "rgba(255,255,255,0.1)",
-                            color: "var(--dss-jtech-accent)",
-                          }}
-                        >
-                          {prop.prop}
-                        </code>
-                      </TableCell>
-                      <TableCell>
-                        <span className="text-xs font-mono" style={{ color: "var(--jtech-text-body)" }}>
-                          {prop.type}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <code
-                          className="text-xs font-mono px-1.5 py-0.5 rounded"
-                          style={{
-                            backgroundColor: "rgba(0,0,0,0.2)",
-                            color: "#a3a3a3",
-                          }}
-                        >
-                          {prop.default}
-                        </code>
-                      </TableCell>
-                      <TableCell style={{ color: "var(--jtech-text-body)" }}>{prop.description}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </Card>
-        </DssTabsContent>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </Card>
+      </CollapsibleSection>
 
-        {/* Tokens Tab */}
-        <DssTabsContent value="tokens">
-          <div className="space-y-6">
+      {/* Tokens DSS */}
+      <CollapsibleSection
+        icon={Layers}
+        title="Tokens DSS"
+        titleAccent="Utilizados"
+        defaultOpen={false}
+      >
+        <DssTabs defaultValue={tokenCategories[0]} className="space-y-4">
+          <DssTabsList className="flex-wrap">
             {tokenCategories.map((category) => (
+              <DssTabsTrigger key={category} value={category} badge={tokensUsed.filter((t) => t.category === category).length}>
+                {category}
+              </DssTabsTrigger>
+            ))}
+          </DssTabsList>
+
+          {tokenCategories.map((category) => (
+            <DssTabsContent key={category} value={category}>
               <Card
-                key={category}
                 style={{
                   backgroundColor: "var(--jtech-card-bg)",
                   borderColor: "var(--jtech-card-border)",
                 }}
               >
-                <CardHeader className="pb-3">
-                  <CardTitle
-                    className="text-base flex items-center gap-2"
-                    style={{ color: "var(--jtech-heading-primary)" }}
-                  >
-                    <Layers size={16} style={{ color: "var(--dss-jtech-accent)" }} />
-                    {category}
-                    <Badge
-                      variant="outline"
-                      className="text-xs ml-2"
-                      style={{
-                        borderColor: "var(--jtech-card-border)",
-                        color: "var(--jtech-text-muted)",
-                      }}
-                    >
-                      {tokensUsed.filter((t) => t.category === category).length} tokens
-                    </Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
+                <CardContent className="pt-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {tokensUsed
                       .filter((t) => t.category === category)
@@ -1321,365 +1051,10 @@ Ele oferece suporte a diferentes tipos de entrada, estados e feedbacks visuais, 
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        </DssTabsContent>
-
-        {/* Slots Tab */}
-        <DssTabsContent value="slots">
-          <Card
-            className="overflow-hidden"
-            style={{
-              backgroundColor: "var(--jtech-card-bg)",
-              borderColor: "var(--jtech-card-border)",
-            }}
-          >
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow style={{ borderColor: "var(--jtech-card-border)" }}>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Slot</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Posição</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Descrição</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Exemplo</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[
-                    {
-                      name: "prepend",
-                      position: "Dentro, à esquerda",
-                      desc: "Ícone ou conteúdo antes do texto",
-                      example: '<template #prepend><q-icon name="mail" /></template>',
-                    },
-                    {
-                      name: "append",
-                      position: "Dentro, à direita",
-                      desc: "Ícone ou conteúdo depois do texto",
-                      example: '<template #append><q-icon name="search" /></template>',
-                    },
-                    {
-                      name: "before",
-                      position: "Fora, à esquerda",
-                      desc: "Conteúdo externo antes do input",
-                      example: '<template #before><q-icon name="person" /></template>',
-                    },
-                    {
-                      name: "after",
-                      position: "Fora, à direita",
-                      desc: "Conteúdo externo depois do input",
-                      example: '<template #after><q-btn icon="send" /></template>',
-                    },
-                    {
-                      name: "label",
-                      position: "Acima",
-                      desc: "Customização do label",
-                      example: "<template #label>Custom <strong>Label</strong></template>",
-                    },
-                    {
-                      name: "error",
-                      position: "Abaixo",
-                      desc: "Mensagem de erro customizada",
-                      example: '<template #error><span class="custom">Erro!</span></template>',
-                    },
-                  ].map((slot, idx) => (
-                    <TableRow
-                      key={idx}
-                      style={{ borderColor: "var(--jtech-card-border)" }}
-                      className="hover:bg-white/5"
-                    >
-                      <TableCell>
-                        <code
-                          className="text-sm font-mono px-1.5 py-0.5 rounded"
-                          style={{
-                            backgroundColor: "rgba(255,255,255,0.1)",
-                            color: "var(--dss-jtech-accent)",
-                          }}
-                        >
-                          #{slot.name}
-                        </code>
-                      </TableCell>
-                      <TableCell style={{ color: "var(--jtech-text-body)" }}>{slot.position}</TableCell>
-                      <TableCell style={{ color: "var(--jtech-text-body)" }}>{slot.desc}</TableCell>
-                      <TableCell>
-                        <code className="text-xs font-mono" style={{ color: "#a3a3a3" }}>
-                          {slot.example}
-                        </code>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </Card>
-        </DssTabsContent>
-
-        {/* Events Tab */}
-        <DssTabsContent value="events">
-          <Card
-            className="overflow-hidden"
-            style={{
-              backgroundColor: "var(--jtech-card-bg)",
-              borderColor: "var(--jtech-card-border)",
-            }}
-          >
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow style={{ borderColor: "var(--jtech-card-border)" }}>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Evento</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Payload</TableHead>
-                    <TableHead style={{ color: "var(--jtech-text-muted)" }}>Descrição</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[
-                    {
-                      name: "@update:model-value",
-                      payload: "(value: string | number)",
-                      desc: "Emitido quando o valor muda (v-model)",
-                    },
-                    { name: "@focus", payload: "(event: FocusEvent)", desc: "Emitido quando o input recebe foco" },
-                    { name: "@blur", payload: "(event: FocusEvent)", desc: "Emitido quando o input perde foco" },
-                    { name: "@clear", payload: "()", desc: "Emitido quando o botão clear é clicado" },
-                    { name: "@keyup.enter", payload: "(event: KeyboardEvent)", desc: "Emitido ao pressionar Enter" },
-                  ].map((event, idx) => (
-                    <TableRow
-                      key={idx}
-                      style={{ borderColor: "var(--jtech-card-border)" }}
-                      className="hover:bg-white/5"
-                    >
-                      <TableCell>
-                        <code
-                          className="text-sm font-mono px-1.5 py-0.5 rounded"
-                          style={{
-                            backgroundColor: "rgba(255,255,255,0.1)",
-                            color: "var(--dss-jtech-accent)",
-                          }}
-                        >
-                          {event.name}
-                        </code>
-                      </TableCell>
-                      <TableCell>
-                        <code className="text-xs font-mono" style={{ color: "#a3a3a3" }}>
-                          {event.payload}
-                        </code>
-                      </TableCell>
-                      <TableCell style={{ color: "var(--jtech-text-body)" }}>{event.desc}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </Card>
-        </DssTabsContent>
-      </DssTabs>
-
-      {/* ================================================================
-          EXEMPLOS PRÁTICOS
-          ================================================================ */}
-      <SectionHeader title="Exemplos" titleAccent="Práticos" badge="Código pronto" />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Login Form Example */}
-        <Card
-          style={{
-            backgroundColor: "var(--jtech-card-bg)",
-            borderColor: "var(--jtech-card-border)",
-          }}
-        >
-          <CardHeader>
-            <CardTitle className="text-base" style={{ color: "var(--jtech-heading-primary)" }}>
-              Formulário de Login
-            </CardTitle>
-            <CardDescription style={{ color: "var(--jtech-text-muted)" }}>
-              Campos de email e senha com validação
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="p-6 rounded-lg space-y-4" style={{ backgroundColor: "#ffffff" }}>
-              <DssInputPreview
-                variant="outlined"
-                color="primary"
-                label="Email"
-                placeholder="seu@email.com"
-                type="email"
-                value=""
-                prefix={<Mail size={18} />}
-              />
-              <DssInputPreview
-                variant="outlined"
-                color="primary"
-                label="Senha"
-                placeholder="••••••••"
-                type="password"
-                value=""
-                prefix={<Lock size={18} />}
-                showPasswordToggle
-              />
-            </div>
-            <pre
-              className="p-3 rounded-lg text-xs overflow-x-auto"
-              style={{
-                backgroundColor: "rgba(0,0,0,0.4)",
-                border: "1px solid var(--jtech-card-border)",
-                color: "#e5e5e5",
-              }}
-            >
-              {`<DssInput
-  v-model="email"
-  type="email"
-  label="Email"
->
-  <template #prepend>
-    <q-icon name="mail" />
-  </template>
-</DssInput>`}
-            </pre>
-          </CardContent>
-        </Card>
-
-        {/* Search Example */}
-        <Card
-          style={{
-            backgroundColor: "var(--jtech-card-bg)",
-            borderColor: "var(--jtech-card-border)",
-          }}
-        >
-          <CardHeader>
-            <CardTitle className="text-base" style={{ color: "var(--jtech-heading-primary)" }}>
-              Campo de Busca
-            </CardTitle>
-            <CardDescription style={{ color: "var(--jtech-text-muted)" }}>
-              Input de pesquisa com clearable
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="p-6 rounded-lg" style={{ backgroundColor: "#ffffff" }}>
-              <DssInputPreview
-                variant="standout"
-                color="primary"
-                label=""
-                placeholder="Buscar..."
-                type="search"
-                value=""
-                prefix={<Search size={18} />}
-                clearable
-              />
-            </div>
-            <pre
-              className="p-3 rounded-lg text-xs overflow-x-auto"
-              style={{
-                backgroundColor: "rgba(0,0,0,0.4)",
-                border: "1px solid var(--jtech-card-border)",
-                color: "#e5e5e5",
-              }}
-            >
-              {`<DssInput
-  v-model="search"
-  variant="standout"
-  type="search"
-  clearable
->
-  <template #prepend>
-    <q-icon name="search" />
-  </template>
-</DssInput>`}
-            </pre>
-          </CardContent>
-        </Card>
-
-        {/* Validation Example */}
-        <Card
-          style={{
-            backgroundColor: "var(--jtech-card-bg)",
-            borderColor: "var(--jtech-card-border)",
-          }}
-        >
-          <CardHeader>
-            <CardTitle className="text-base" style={{ color: "var(--jtech-heading-primary)" }}>
-              Validação
-            </CardTitle>
-            <CardDescription style={{ color: "var(--jtech-text-muted)" }}>Input com estado de erro</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="p-6 rounded-lg" style={{ backgroundColor: "#ffffff" }}>
-              <DssInputPreview
-                variant="outlined"
-                color="primary"
-                label="CPF"
-                placeholder="000.000.000-00"
-                type="text"
-                value="123.456.789"
-                error="CPF inválido. Verifique os dígitos."
-              />
-            </div>
-            <pre
-              className="p-3 rounded-lg text-xs overflow-x-auto"
-              style={{
-                backgroundColor: "rgba(0,0,0,0.4)",
-                border: "1px solid var(--jtech-card-border)",
-                color: "#e5e5e5",
-              }}
-            >
-              {`<DssInput
-  v-model="cpf"
-  label="CPF"
-  :error="cpfError"
-  :rules="[validateCPF]"
-/>`}
-            </pre>
-          </CardContent>
-        </Card>
-
-        {/* Brand Example */}
-        <Card
-          style={{
-            backgroundColor: "var(--jtech-card-bg)",
-            borderColor: "var(--jtech-card-border)",
-          }}
-        >
-          <CardHeader>
-            <CardTitle className="text-base" style={{ color: "var(--jtech-heading-primary)" }}>
-              Brandabilidade
-            </CardTitle>
-            <CardDescription style={{ color: "var(--jtech-text-muted)" }}>
-              Input com tema de marca Veolia
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="p-6 rounded-lg space-y-4" style={{ backgroundColor: "#ffffff" }}>
-              {Object.values(brandColors).map((brand) => (
-                <DssInputPreview
-                  key={brand.name}
-                  variant="outlined"
-                  color="primary"
-                  label={`${brand.label} Theme`}
-                  placeholder={`Input ${brand.label}...`}
-                  type="text"
-                  value=""
-                  brand={brand.name}
-                  isFocused
-                />
-              ))}
-            </div>
-            <pre
-              className="p-3 rounded-lg text-xs overflow-x-auto"
-              style={{
-                backgroundColor: "rgba(0,0,0,0.4)",
-                border: "1px solid var(--jtech-card-border)",
-                color: "#e5e5e5",
-              }}
-            >
-              {`<DssInput
-  v-model="value"
-  label="Hub Theme"
-  brand="hub"
-/>`}
-            </pre>
-          </CardContent>
-        </Card>
-      </div>
+            </DssTabsContent>
+          ))}
+        </DssTabs>
+      </CollapsibleSection>
     </div>
   );
 };
