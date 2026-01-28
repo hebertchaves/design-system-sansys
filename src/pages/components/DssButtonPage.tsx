@@ -38,6 +38,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { AnatomySection } from "@/components/ui/AnatomySection";
 import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
+import { PlaygroundButton } from "@/components/ui/PlaygroundButton";
 
 // ============================================================================
 // TOKENS REAIS DO DSS - Extraídos de index.css e globals.scss
@@ -387,7 +388,13 @@ const propsData = [
     description: "Barra de progresso (0-100)",
   },
   { category: "Estados", prop: "disabled", type: "Boolean", default: "false", description: "Estado desabilitado" },
-  { category: "Brandabilidade", prop: "brand", type: "'hub' | 'water' | 'waste'", default: "null", description: "Tema de marca Sansys" },
+  {
+    category: "Brandabilidade",
+    prop: "brand",
+    type: "'hub' | 'water' | 'waste'",
+    default: "null",
+    description: "Tema de marca Sansys",
+  },
 ];
 
 // Tokens utilizados pelo DssButton
@@ -1073,31 +1080,6 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
           { label: "Quasar Compatible", variant: "success" },
         ]}
       />
-
-      {/* Quick Stats - Jtech Style */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { value: "6", label: "Variantes", color: semanticColors.primary.bg },
-          { value: "8", label: "Cores Semânticas", color: semanticColors.secondary.bg },
-          { value: "3", label: "Brands Sansys", color: brandColors.hub.principal },
-          { value: "5", label: "Tamanhos", color: brandColors.waste.principal },
-        ].map((stat, i) => (
-          <Card 
-            key={i}
-            className="transition-all duration-300 hover:shadow-lg"
-            style={{ 
-              backgroundColor: 'var(--jtech-card-bg)', 
-              borderColor: 'var(--jtech-card-border)' 
-            }}
-          >
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
-              <div className="text-sm" style={{ color: 'var(--jtech-text-body)' }}>{stat.label}</div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
       {/* Interactive Playground - Jtech Style */}
       <SectionHeader title="Playground" titleAccent="Interativo" badge="Live Preview" />
 
@@ -1180,19 +1162,13 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
               </label>
               <div className="flex flex-wrap gap-2">
                 {variants.map((v) => (
-                  <button
+                  <PlaygroundButton
                     key={v.name}
                     onClick={() => setSelectedVariant(v.name)}
-                    className="px-3 py-1.5 rounded text-xs font-medium transition-all"
-                    style={{
-                      backgroundColor:
-                        selectedVariant === v.name ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
-                      color: selectedVariant === v.name ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedVariant === v.name ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={selectedVariant === v.name}
                   >
                     {v.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
@@ -1204,22 +1180,20 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
               </label>
               <div className="flex flex-wrap gap-2">
                 {Object.values(semanticColors).map((c) => (
-                  <button
+                  <PlaygroundButton
                     key={c.name}
                     onClick={() => {
                       setSelectedColor(c.name);
                       setSelectedBrand(null);
                     }}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
-                    style={{
-                      backgroundColor: selectedColor === c.name && !selectedBrand ? c.bg : "rgba(255,255,255,0.05)",
-                      color: selectedColor === c.name && !selectedBrand ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedColor === c.name && !selectedBrand ? c.bg : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={selectedColor === c.name && !selectedBrand}
+                    selectedBg={c.bg}
+                    selectedBorder={c.bg}
+                    className="flex items-center gap-1.5"
                   >
                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.bg }} />
                     {c.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
@@ -1231,63 +1205,52 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
               </label>
               <div className="flex flex-wrap gap-2">
                 {Object.values(feedbackColors).map((c) => (
-                  <button
+                  <PlaygroundButton
                     key={c.name}
                     onClick={() => {
                       setSelectedColor(c.name);
                       setSelectedBrand(null);
                     }}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
-                    style={{
-                      backgroundColor: selectedColor === c.name && !selectedBrand ? c.bg : "rgba(255,255,255,0.05)",
-                      color:
-                        selectedColor === c.name && !selectedBrand
-                          ? c.name === "warning"
-                            ? "#1a1a1a"
-                            : "#ffffff"
-                          : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedColor === c.name && !selectedBrand ? c.bg : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={selectedColor === c.name && !selectedBrand}
+                    selectedBg={c.bg}
+                    selectedBorder={c.bg}
+                    selectedColor={c.name === "warning" ? "#1a1a1a" : "#ffffff"}
+                    className="flex items-center gap-1.5"
                   >
                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.bg }} />
                     {c.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
 
             {/* Brand */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold" style={{ color: 'var(--jtech-heading-tertiary)' }}>Brand (Sansys)</label>
+              <label className="text-sm font-semibold" style={{ color: "var(--jtech-heading-tertiary)" }}>
+                Brand (Sansys)
+              </label>
               <div className="flex flex-wrap gap-2">
-                <button
+                <PlaygroundButton
                   onClick={() => setSelectedBrand(null)}
-                  className="px-3 py-1.5 rounded text-xs font-medium transition-all"
-                  style={{
-                    backgroundColor: !selectedBrand ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
-                    color: !selectedBrand ? "#ffffff" : "var(--jtech-text-body)",
-                    border: `1px solid ${!selectedBrand ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
-                  }}
+                  isSelected={!selectedBrand}
                 >
                   Nenhum
-                </button>
+                </PlaygroundButton>
                 {Object.values(brandColors).map((b) => (
-                  <button
+                  <PlaygroundButton
                     key={b.name}
                     onClick={() => {
                       setSelectedBrand(b.name);
                       setSelectedColor("primary");
                     }}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all flex items-center gap-1.5"
-                    style={{
-                      backgroundColor: selectedBrand === b.name ? b.principal : "rgba(255,255,255,0.05)",
-                      color: selectedBrand === b.name ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedBrand === b.name ? b.principal : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={selectedBrand === b.name}
+                    selectedBg={b.principal}
+                    selectedBorder={b.principal}
+                    className="flex items-center gap-1.5"
                   >
                     <span>{b.icon}</span>
                     {b.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
@@ -1299,19 +1262,14 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
               </label>
               <div className="flex flex-wrap gap-2">
                 {sizes.map((s) => (
-                  <button
+                  <PlaygroundButton
                     key={s.name}
                     onClick={() => setSelectedSize(s.name)}
-                    className="px-3 py-1.5 rounded text-xs font-medium transition-all"
-                    style={{
-                      backgroundColor: selectedSize === s.name ? "var(--dss-jtech-accent)" : "rgba(255,255,255,0.05)",
-                      color: selectedSize === s.name ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${selectedSize === s.name ? "var(--dss-jtech-accent)" : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={selectedSize === s.name}
                   >
                     {s.label}
                     {s.isDefault && <span className="ml-1 opacity-50">•</span>}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
@@ -1334,19 +1292,16 @@ Ele oferece variações visuais e comportamentais bem definidas para diferentes 
                     toggle: () => setHasIconRight(!hasIconRight),
                   },
                 ].map((item) => (
-                  <button
+                  <PlaygroundButton
                     key={item.key}
                     onClick={item.toggle}
-                    className="px-2 py-1.5 rounded text-xs font-medium transition-all"
-                    style={{
-                      backgroundColor: item.active ? "var(--dss-positive)" : "rgba(255,255,255,0.05)",
-                      color: item.active ? "#ffffff" : "var(--jtech-text-body)",
-                      border: `1px solid ${item.active ? "var(--dss-positive)" : "var(--jtech-card-border)"}`,
-                    }}
+                    isSelected={item.active}
+                    selectedBg="var(--dss-positive)"
+                    selectedBorder="var(--dss-positive)"
                   >
                     {item.active && "✓ "}
                     {item.label}
-                  </button>
+                  </PlaygroundButton>
                 ))}
               </div>
             </div>
