@@ -21,8 +21,10 @@ import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
 // Importar sistema de Playground unificado
 import {
   DssPlayground,
+  ControlGrid,
   VariantSelector,
   ColorPicker,
+  FeedbackColorPicker,
   BrandPicker,
   ToggleGroup,
   DSS_SEMANTIC_COLORS,
@@ -406,12 +408,6 @@ export default function DssCardPage() {
 </DssCard>`;
   };
 
-  // Todas as cores para seleção
-  const allColors = [
-    ...Object.values(DSS_SEMANTIC_COLORS),
-    ...Object.values(feedbackColors),
-  ] as Array<SemanticColor | FeedbackColor>;
-
   // Token ativo baseado na seleção
   const getActiveToken = () => {
     if (selectedBrand) {
@@ -505,7 +501,7 @@ export default function DssCardPage() {
           </DssCardPreview>
         }
         controls={
-          <>
+          <ControlGrid columns={3}>
             <VariantSelector
               variants={variants}
               selectedVariant={selectedVariant}
@@ -513,20 +509,37 @@ export default function DssCardPage() {
             />
 
             <ColorPicker
-              label="Cor Semântica"
-              colors={allColors}
+              label="Color"
+              colors={Object.values(DSS_SEMANTIC_COLORS)}
               selectedColor={selectedColor}
               onSelect={handleColorChange}
+              disabled={!!selectedBrand}
+            />
+
+            <FeedbackColorPicker
+              label="Feedback"
+              colors={feedbackColors}
+              selectedColor={selectedColor}
+              onSelect={handleColorChange}
+              disabled={!!selectedBrand}
             />
 
             <BrandPicker
               brands={DSS_BRAND_COLORS}
               selectedBrand={selectedBrand}
-              onSelect={handleBrandChange}
+              onSelect={(brand) => {
+                if (brand) {
+                  setSelectedBrand(brand);
+                  setSelectedColor(null);
+                } else {
+                  setSelectedBrand(null);
+                  setSelectedColor("primary");
+                }
+              }}
             />
 
             <ToggleGroup
-              label="Estados"
+              label="Estados & Opções"
               options={[
                 { name: "clickable", label: "Clickable" },
                 { name: "square", label: "Square" },
@@ -534,7 +547,7 @@ export default function DssCardPage() {
               values={booleanStates}
               onToggle={toggleBooleanState}
             />
-          </>
+          </ControlGrid>
         }
         codePreview={generateCode()}
         activeToken={getActiveToken()}

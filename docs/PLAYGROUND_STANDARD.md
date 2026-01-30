@@ -1,8 +1,10 @@
-# 📋 PLAYGROUND STANDARD v1.0
+# 📋 PLAYGROUND STANDARD v2.0
 
 ## Padrão Unificado para Playgrounds de Componentes DSS
 
-Este documento define o padrão obrigatório para todos os playgrounds de componentes do Design System Sansys.
+Este documento define o padrão obrigatório para todos os playgrounds de documentação de componentes do Design System Sansys.
+
+**Golden Sample:** A página `DssButtonPage.tsx` é o modelo de referência para micro-interações.
 
 ---
 
@@ -36,10 +38,11 @@ DssPlayground (orquestrador)
 │   └── ThemeToggle
 ├── PreviewArea
 │   └── [ComponentPreview] (customizado por componente)
-└── Controls + Code
+└── ControlGrid (3 colunas responsivo)
     ├── ControlSection(s)
     │   ├── VariantSelector
     │   ├── ColorPicker
+    │   ├── FeedbackColorPicker
     │   ├── BrandPicker
     │   ├── SizeSelector
     │   ├── ToggleGroup
@@ -110,10 +113,45 @@ Em telas menores, o layout converte para coluna única:
 
 | Propriedade | Valor |
 |------------|-------|
-| Label Color | `var(--jtech-text-muted)` |
-| Label Font | 12px, uppercase, tracking-wider |
+| Label Color | `var(--jtech-heading-tertiary)` |
+| Label Font | 14px, font-semibold |
 | Gap entre controles | 8px |
-| Margin bottom | 20px |
+| Margin bottom | 8px |
+
+### PlaygroundButton Props (Micro-Interações)
+
+| Prop | Uso | Exemplo |
+|------|-----|---------|
+| `selectedBg` | Cor de background quando selecionado | `selectedBg={c.bg}` |
+| `selectedColor` | Cor do texto quando selecionado | `selectedColor="#ffffff"` |
+| `selectedBorder` | Cor da borda quando selecionado | `selectedBorder={c.bg}` |
+| `isSelected` | Estado de seleção | `isSelected={selectedColor === c.name}` |
+
+**Padrão para cores:**
+```tsx
+<PlaygroundButton
+  isSelected={selectedColor === c.name && !selectedBrand}
+  selectedBg={c.bg}
+  selectedColor="#ffffff"
+  selectedBorder={c.bg}
+>
+  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.bg }} />
+  {c.label}
+</PlaygroundButton>
+```
+
+**Padrão para toggles/estados:**
+```tsx
+<PlaygroundButton
+  isSelected={isActive}
+  selectedBg="var(--dss-positive)"
+  selectedColor="#ffffff"
+  selectedBorder="var(--dss-positive)"
+>
+  {isActive && "✓ "}
+  {label}
+</PlaygroundButton>
+```
 
 ### Code Preview
 
@@ -327,6 +365,6 @@ Antes de finalizar uma página de componente, verifique:
 
 ---
 
-**Versão:** 1.0  
-**Última atualização:** 2026-01-29  
+**Versão:** 2.0  
+**Última atualização:** 2026-01-30  
 **Autor:** Design System Sansys Team

@@ -145,9 +145,11 @@ export { PlaygroundPreviewArea } from "./PlaygroundPreviewArea";
 export { PlaygroundCodePreview } from "./PlaygroundCodePreview";
 export {
   ControlSection,
+  ControlGrid,
   ThemeToggle,
   VariantSelector,
   ColorPicker,
+  FeedbackColorPicker,
   BrandPicker,
   SizeSelector,
   ToggleGroup,
