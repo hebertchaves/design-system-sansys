@@ -668,7 +668,8 @@ const DssInputPage: React.FC = () => {
           <PlaygroundButton
             onClick={() => setIsDarkMode(!isDarkMode)}
             isSelected={isDarkMode}
-            selectedColor={isDarkMode ? "#6366f1" : undefined}
+            selectedBg="var(--dss-jtech-accent)"
+            selectedColor="#ffffff"
           >
             {isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
             {isDarkMode ? "Light" : "Dark"}
@@ -761,7 +762,9 @@ const DssInputPage: React.FC = () => {
                     key={c.name}
                     onClick={() => handleColorSelect(c.name)}
                     isSelected={selectedColor === c.name && !selectedBrand}
-                    selectedColor={c.bg}
+                    selectedBg={c.bg}
+                    selectedColor="#ffffff"
+                    selectedBorder={c.bg}
                   >
                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.bg }} />
                     {c.label}
@@ -779,6 +782,8 @@ const DssInputPage: React.FC = () => {
                 <PlaygroundButton
                   onClick={() => handleBrandSelect(null)}
                   isSelected={!selectedBrand}
+                  selectedBg="var(--dss-jtech-accent)"
+                  selectedColor="#ffffff"
                 >
                   Nenhum
                 </PlaygroundButton>
@@ -787,7 +792,9 @@ const DssInputPage: React.FC = () => {
                     key={b.name}
                     onClick={() => handleBrandSelect(b.name)}
                     isSelected={selectedBrand === b.name}
-                    selectedColor={b.principal}
+                    selectedBg={b.principal}
+                    selectedColor="#ffffff"
+                    selectedBorder={b.principal}
                   >
                     <span>{b.icon}</span>
                     {b.label}
@@ -813,7 +820,9 @@ const DssInputPage: React.FC = () => {
                     key={item.key}
                     onClick={item.toggle}
                     isSelected={item.active}
-                    selectedColor="#4dd228"
+                    selectedBg="var(--dss-positive)"
+                    selectedColor="#ffffff"
+                    selectedBorder="var(--dss-positive)"
                   >
                     {item.active && "✓ "}
                     {item.label}
@@ -837,7 +846,9 @@ const DssInputPage: React.FC = () => {
                     key={item.key}
                     onClick={item.toggle}
                     isSelected={item.active}
-                    selectedColor="#6366f1"
+                    selectedBg="var(--dss-jtech-accent)"
+                    selectedColor="#ffffff"
+                    selectedBorder="var(--dss-jtech-accent)"
                   >
                     {item.active && "✓ "}
                     {item.label}

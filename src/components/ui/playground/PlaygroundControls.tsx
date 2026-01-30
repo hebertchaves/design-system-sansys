@@ -3,12 +3,15 @@
  * PlaygroundControls - Controles Padronizados do Playground
  * ==========================================================================
  *
- * Componentes para controles do playground:
- * - ControlSection: Seção com label e controles
- * - ButtonGroupControl: Grupo de botões para seleção
- * - ColorPickerControl: Seletor de cores com preview
- * - BrandPickerControl: Seletor de brands
- * - ToggleControl: Switch on/off
+ * Componentes para controles do playground, seguindo o padrão visual
+ * da DssButtonPage (Golden Sample).
+ *
+ * PADRÃO DE MICRO-INTERAÇÕES:
+ * - Labels: text-sm font-semibold, color: var(--jtech-heading-tertiary)
+ * - Color dots: w-2 h-2 rounded-full
+ * - Toggle states: checkmark ✓ prefix, selectedBg="var(--dss-positive)"
+ * - Hover: scale-105, background transitions
+ * - Active: scale-95
  */
 
 import React from "react";
@@ -17,7 +20,7 @@ import { Sun, Moon } from "lucide-react";
 import type { Variant, BrandColor, SemanticColor, FeedbackColor } from "./types";
 
 // ==========================================================================
-// CONTROL SECTION
+// CONTROL SECTION - Container padrão com label
 // ==========================================================================
 
 interface ControlSectionProps {
@@ -28,10 +31,10 @@ interface ControlSectionProps {
 
 export function ControlSection({ label, children, className = "" }: ControlSectionProps) {
   return (
-    <div className={className}>
+    <div className={`space-y-2 ${className}`}>
       <label
-        className="text-xs font-medium mb-2 block uppercase tracking-wider"
-        style={{ color: "var(--jtech-text-muted)" }}
+        className="text-sm font-semibold block"
+        style={{ color: "var(--jtech-heading-tertiary)" }}
       >
         {label}
       </label>
@@ -41,7 +44,7 @@ export function ControlSection({ label, children, className = "" }: ControlSecti
 }
 
 // ==========================================================================
-// THEME TOGGLE
+// THEME TOGGLE - Botão Light/Dark
 // ==========================================================================
 
 interface ThemeToggleProps {
@@ -68,18 +71,24 @@ export function ThemeToggle({ isDarkMode, onToggle }: ThemeToggleProps) {
 }
 
 // ==========================================================================
-// VARIANT SELECTOR
+// VARIANT SELECTOR - Seletor de variantes
 // ==========================================================================
 
 interface VariantSelectorProps {
   variants: Variant[];
   selectedVariant: string;
   onSelect: (variant: string) => void;
+  label?: string;
 }
 
-export function VariantSelector({ variants, selectedVariant, onSelect }: VariantSelectorProps) {
+export function VariantSelector({ 
+  variants, 
+  selectedVariant, 
+  onSelect,
+  label = "Variant"
+}: VariantSelectorProps) {
   return (
-    <ControlSection label="Variante">
+    <ControlSection label={label}>
       {variants.map((v) => (
         <PlaygroundButton
           key={v.name}
@@ -96,23 +105,24 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Variant
 }
 
 // ==========================================================================
-// COLOR PICKER (SEMANTIC + FEEDBACK)
+// COLOR PICKER - Cores semânticas (Primary, Secondary, etc.)
 // ==========================================================================
 
 interface ColorPickerProps {
   label?: string;
-  colors: Array<SemanticColor | (FeedbackColor & { icon?: React.ComponentType<{ className?: string }> })>;
+  colors: SemanticColor[] | Array<SemanticColor & { [key: string]: any }>;
   selectedColor: string | null;
   onSelect: (color: string) => void;
-  showColorDot?: boolean;
+  /** Desativa a seleção quando brand está ativo */
+  disabled?: boolean;
 }
 
 export function ColorPicker({
-  label = "Cor Semântica",
+  label = "Color",
   colors,
   selectedColor,
   onSelect,
-  showColorDot = true,
+  disabled = false,
 }: ColorPickerProps) {
   return (
     <ControlSection label={label}>
@@ -120,20 +130,17 @@ export function ColorPicker({
         <PlaygroundButton
           key={c.name}
           onClick={() => onSelect(c.name)}
-          isSelected={selectedColor === c.name}
+          isSelected={selectedColor === c.name && !disabled}
           selectedBg={c.bg}
           selectedColor="#ffffff"
           selectedBorder={c.bg}
+          className="flex items-center gap-1.5"
         >
-          <div className="flex items-center gap-1.5">
-            {showColorDot && (
-              <div
-                className="w-3 h-3 rounded-full border border-white/30"
-                style={{ backgroundColor: c.bg }}
-              />
-            )}
-            <span>{c.label}</span>
-          </div>
+          <span 
+            className="w-2 h-2 rounded-full" 
+            style={{ backgroundColor: c.bg }} 
+          />
+          {c.label}
         </PlaygroundButton>
       ))}
     </ControlSection>
@@ -141,18 +148,82 @@ export function ColorPicker({
 }
 
 // ==========================================================================
-// BRAND PICKER
+// FEEDBACK COLOR PICKER - Cores de feedback com suporte a warning
+// ==========================================================================
+
+interface FeedbackColorPickerProps {
+  label?: string;
+  colors: FeedbackColor[] | Record<string, FeedbackColor>;
+  selectedColor: string | null;
+  onSelect: (color: string) => void;
+  /** Desativa a seleção quando brand está ativo */
+  disabled?: boolean;
+}
+
+export function FeedbackColorPicker({
+  label = "Feedback",
+  colors,
+  selectedColor,
+  onSelect,
+  disabled = false,
+}: FeedbackColorPickerProps) {
+  const colorArray = Array.isArray(colors) ? colors : Object.values(colors);
+  
+  return (
+    <ControlSection label={label}>
+      {colorArray.map((c) => (
+        <PlaygroundButton
+          key={c.name}
+          onClick={() => onSelect(c.name)}
+          isSelected={selectedColor === c.name && !disabled}
+          selectedBg={c.bg}
+          selectedColor={c.name === "warning" ? "#1a1a1a" : "#ffffff"}
+          selectedBorder={c.bg}
+          className="flex items-center gap-1.5"
+        >
+          <span 
+            className="w-2 h-2 rounded-full" 
+            style={{ backgroundColor: c.bg }} 
+          />
+          {c.label}
+        </PlaygroundButton>
+      ))}
+    </ControlSection>
+  );
+}
+
+// ==========================================================================
+// BRAND PICKER - Seletor de marcas (Hub, Water, Waste)
 // ==========================================================================
 
 interface BrandPickerProps {
   brands: Record<string, BrandColor>;
   selectedBrand: string | null;
-  onSelect: (brand: string) => void;
+  onSelect: (brand: string | null) => void;
+  label?: string;
+  /** Mostra opção "Nenhum" para limpar seleção */
+  showNone?: boolean;
 }
 
-export function BrandPicker({ brands, selectedBrand, onSelect }: BrandPickerProps) {
+export function BrandPicker({ 
+  brands, 
+  selectedBrand, 
+  onSelect,
+  label = "Brand (Sansys)",
+  showNone = true,
+}: BrandPickerProps) {
   return (
-    <ControlSection label="Brand">
+    <ControlSection label={label}>
+      {showNone && (
+        <PlaygroundButton
+          onClick={() => onSelect(null)}
+          isSelected={!selectedBrand}
+          selectedBg="var(--dss-jtech-accent)"
+          selectedColor="#ffffff"
+        >
+          Nenhum
+        </PlaygroundButton>
+      )}
       {Object.values(brands).map((b) => (
         <PlaygroundButton
           key={b.name}
@@ -161,11 +232,10 @@ export function BrandPicker({ brands, selectedBrand, onSelect }: BrandPickerProp
           selectedBg={b.principal}
           selectedColor="#ffffff"
           selectedBorder={b.principal}
+          className="flex items-center gap-1.5"
         >
-          <div className="flex items-center gap-1.5">
-            <span>{b.icon}</span>
-            <span>{b.label}</span>
-          </div>
+          <span>{b.icon}</span>
+          {b.label}
         </PlaygroundButton>
       ))}
     </ControlSection>
@@ -173,18 +243,30 @@ export function BrandPicker({ brands, selectedBrand, onSelect }: BrandPickerProp
 }
 
 // ==========================================================================
-// SIZE SELECTOR
+// SIZE SELECTOR - Seletor de tamanhos
 // ==========================================================================
 
-interface SizeSelectorProps {
-  sizes: Array<{ name: string; label: string; isDefault?: boolean }>;
-  selectedSize: string;
-  onSelect: (size: string) => void;
+interface SizeOption {
+  name: string;
+  label: string;
+  isDefault?: boolean;
 }
 
-export function SizeSelector({ sizes, selectedSize, onSelect }: SizeSelectorProps) {
+interface SizeSelectorProps {
+  sizes: SizeOption[];
+  selectedSize: string;
+  onSelect: (size: string) => void;
+  label?: string;
+}
+
+export function SizeSelector({ 
+  sizes, 
+  selectedSize, 
+  onSelect,
+  label = "Size"
+}: SizeSelectorProps) {
   return (
-    <ControlSection label="Tamanho">
+    <ControlSection label={label}>
       {sizes.map((s) => (
         <PlaygroundButton
           key={s.name}
@@ -194,9 +276,7 @@ export function SizeSelector({ sizes, selectedSize, onSelect }: SizeSelectorProp
           selectedColor="#ffffff"
         >
           {s.label}
-          {s.isDefault && (
-            <span className="text-[10px] opacity-60 ml-1">(default)</span>
-          )}
+          {s.isDefault && <span className="ml-1 opacity-50">•</span>}
         </PlaygroundButton>
       ))}
     </ControlSection>
@@ -204,7 +284,7 @@ export function SizeSelector({ sizes, selectedSize, onSelect }: SizeSelectorProp
 }
 
 // ==========================================================================
-// TOGGLE GROUP (Boolean States)
+// TOGGLE GROUP - Estados booleanos (Disabled, Loading, etc.)
 // ==========================================================================
 
 interface ToggleOption {
@@ -220,27 +300,37 @@ interface ToggleGroupProps {
   onToggle: (name: string) => void;
 }
 
-export function ToggleGroup({ label = "Estados", options, values, onToggle }: ToggleGroupProps) {
+export function ToggleGroup({ 
+  label = "Estados & Ícones", 
+  options, 
+  values, 
+  onToggle 
+}: ToggleGroupProps) {
   return (
     <ControlSection label={label}>
-      {options.map((opt) => (
-        <PlaygroundButton
-          key={opt.name}
-          onClick={() => onToggle(opt.name)}
-          isSelected={values[opt.name] || false}
-          selectedBg="var(--dss-jtech-accent)"
-          selectedColor="#ffffff"
-        >
-          {opt.icon && <span className="mr-1">{opt.icon}</span>}
-          {opt.label}
-        </PlaygroundButton>
-      ))}
+      {options.map((opt) => {
+        const isActive = values[opt.name] || false;
+        return (
+          <PlaygroundButton
+            key={opt.name}
+            onClick={() => onToggle(opt.name)}
+            isSelected={isActive}
+            selectedBg="var(--dss-positive)"
+            selectedColor="#ffffff"
+            selectedBorder="var(--dss-positive)"
+          >
+            {isActive && "✓ "}
+            {opt.icon && <span className="mr-1">{opt.icon}</span>}
+            {opt.label}
+          </PlaygroundButton>
+        );
+      })}
     </ControlSection>
   );
 }
 
 // ==========================================================================
-// ICON SELECTOR
+// ICON SELECTOR - Seletor de ícones
 // ==========================================================================
 
 interface IconOption {
@@ -291,5 +381,28 @@ export function IconSelector({
         </PlaygroundButton>
       ))}
     </ControlSection>
+  );
+}
+
+// ==========================================================================
+// CONTROL GRID - Layout responsivo para múltiplos controles
+// ==========================================================================
+
+interface ControlGridProps {
+  children: React.ReactNode;
+  columns?: 1 | 2 | 3;
+}
+
+export function ControlGrid({ children, columns = 3 }: ControlGridProps) {
+  const colsClass = {
+    1: "grid-cols-1",
+    2: "grid-cols-1 md:grid-cols-2",
+    3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+  };
+
+  return (
+    <div className={`grid ${colsClass[columns]} gap-6`}>
+      {children}
+    </div>
   );
 }

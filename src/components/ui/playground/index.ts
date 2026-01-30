@@ -30,9 +30,11 @@ export { PlaygroundCodePreview } from "./PlaygroundCodePreview";
 // Controles individuais
 export {
   ControlSection,
+  ControlGrid,
   ThemeToggle,
   VariantSelector,
   ColorPicker,
+  FeedbackColorPicker,
   BrandPicker,
   SizeSelector,
   ToggleGroup,
