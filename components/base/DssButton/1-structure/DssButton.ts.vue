@@ -78,7 +78,7 @@
  * ==========================================================================
  *
  * Componente de botão moderno com TypeScript + Composition API
- * 100% compatível com Quasar q-btn API
+ * Compatível com Quasar q-btn API
  *
  * @see https://quasar.dev/vue-components/button
  *

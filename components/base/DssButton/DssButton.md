@@ -14,7 +14,7 @@
 `DssButton`
 
 ### Descrição
-Componente de botão completo com suporte a acessibilidade WCAG 2.1 AA, brandabilidade multi-marca (Hub/Water/Waste), e compatibilidade 100% com a API do Quasar Framework (`q-btn`).
+Componente de botão completo com suporte a acessibilidade WCAG 2.1 AA, brandabilidade multi-marca (Hub/Water/Waste), e compatibilidade com a API do Quasar Framework (`q-btn`).
 
 ### Tipo do Componente
 **Básico** - Wrapper direto do Quasar Framework com extensões DSS (brandabilidade).
@@ -26,7 +26,7 @@ Componente de botão completo com suporte a acessibilidade WCAG 2.1 AA, brandabi
 - ✅ **6 variantes visuais** - Elevated, flat, outline, unelevated, push, glossy com estados de hover documentados
 - ✅ **Estados interativos robustos** - Loading com progresso determinístico, disabled, hover, active, focus
 - ✅ **31 tokens rastreáveis** - Tokens de cor, acessibilidade, espaçamento e forma com flags de proteção
-- ✅ **API 100% compatível com Quasar** - Todas as props do `q-btn` + extensões DSS de brandabilidade
+- ✅ **API compatível com Quasar** - Props do `q-btn` suportadas + extensões DSS de brandabilidade
 
 ---
 
@@ -165,7 +165,7 @@ O DssButton utiliza tokens das seguintes categorias:
 
 | Prop | Type | Default | Descrição |
 |------|------|---------|-----------|
-| `ripple` | Boolean \| Object | `true` | Efeito ripple Material Design |
+| `ripple` | Boolean \| Object | `false` | Efeito ripple Material Design |
 | `tabindex` | Number \| String | `null` | Ordem de navegação por teclado |
 
 ### Props de Layout
@@ -1159,6 +1159,27 @@ Verifique se `isDisabled` ou `isLoading` não estão `true` acidentalmente.
   Botão Responsivo
 </DssButton>
 ```
+
+---
+
+## 14. Exceções Documentadas
+
+O DssButton, como componente legado, possui valores não-tokenizados que são **exceções deliberadas** documentadas conforme DSS_COMPONENT_ARCHITECTURE.md.
+
+### Tabela de Exceções
+
+| ID | Valor | Arquivo | Justificativa | Severidade |
+|----|-------|---------|---------------|------------|
+| EX-01 | `letter-spacing: 0.0892857143em` | `2-composition/_base.scss` | Reproduz valor exato do Quasar Framework (q-btn). Não existe token DSS equivalente. | Baixa |
+| EX-02 | `calc(var(--dss-spacing-1) + 2px)` | `2-composition/_base.scss` | Compensação de alinhamento visual entre tamanhos sm/md. Sem token intermediário disponível. | Baixa |
+| EX-03 | `box-shadow: rgba(...)` em elevated | `3-variants/_elevated.scss` | Material Design elevation system (multi-stop shadows). Sem tokens DSS para shadow composto. | Baixa |
+| EX-04 | `box-shadow: rgba(...)` em push | `3-variants/_push.scss` | Efeito 3D Quasar (shadow + translateY). Sem tokens DSS para shadow 3D ou deslocamento sub-pixel. | Baixa |
+| EX-05 | `box-shadow: rgba(...)` em glossy | `3-variants/_glossy.scss` | Elevação glossy Quasar (multi-stop shadows). Sem tokens DSS para shadow glossy. | Baixa |
+| EX-06 | `rgba(0,0,0,0.04/0.08)` em outline hover/active | `3-variants/_outline.scss` | Overlay de interação Quasar (4%/8% black). Sem token DSS para overlay de interação. | Baixa |
+| EX-07 | `transform: translateY(-1px/2px)` em push | `3-variants/_push.scss` | Deslocamento visual do efeito 3D. Valores de efeito, não de spacing. | Baixa |
+| EX-08 | `border: 1px solid #000` em print | `4-output/_states.scss` | Print styles (legado aceitável). Cores em contexto de impressão não seguem tokens. | Baixa |
+
+> Todas as exceções estão documentadas nos respectivos arquivos SCSS com comentários `/* EXCEÇÃO DOCUMENTADA: ... */`.
 
 ---
 

@@ -1867,6 +1867,29 @@ Use como exemplo ao criar novos componentes:
   - Sistema de tamanhos consistente
   - Exemplo de fallback de conteúdo
 
+### **🏆 Golden Components — Referências Normativas**
+
+> **⚠️ VINCULANTE**: Novos componentes Compact Controls DEVEM ser auditados usando um Golden Component como referência.
+
+Os **Golden Components** são componentes que passaram por auditoria completa e receberam o **Selo de Conformidade DSS v2.2**. Eles servem como referência normativa para:
+
+- Uso correto dos tokens `--dss-compact-control-height-*`
+- Decisões sobre touch target (implementado vs contextual)
+- Convenção de pseudo-elementos (`::before` / `::after`)
+- Documentação de exceções visuais
+- Implementação de acessibilidade avançada
+
+| Componente | Categoria | Interativo | Touch Target | Referência |
+|------------|-----------|------------|--------------|------------|
+| **DssChip** | Compact Control | ✅ Sim | Implementado via `::before` | [DssChip.md](../../components/base/DssChip/DssChip.md) |
+| **DssBadge** | Compact Control | ❌ Não | Contextual (delegado ao pai) | [DssBadge.md](../../components/base/DssBadge/DssBadge.md) |
+
+**Diretriz Normativa:**
+> Nem todo Compact Control é interativo.
+> Touch target é uma decisão semântica e contextual, não uma obrigação universal do componente.
+
+📖 **Documento Oficial:** [DSS_GOLDEN_COMPONENTS.md](../governance/DSS_GOLDEN_COMPONENTS.md)
+
 ### **Templates e Checklists**
 - **Tutorial Passo a Passo** - Seção "📝 Guia para Novos Componentes" (acima)
 - **Checklist Final** - Seção "✅ Checklist Final" (acima)

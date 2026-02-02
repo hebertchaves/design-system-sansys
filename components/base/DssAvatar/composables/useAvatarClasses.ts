@@ -11,7 +11,7 @@
  * const { avatarClasses } = useAvatarClasses(props)
  * ```
  *
- * @version 2.3.0
+ * @version 2.2
  */
 
 import { computed } from 'vue'

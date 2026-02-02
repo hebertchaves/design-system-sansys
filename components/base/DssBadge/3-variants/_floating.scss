@@ -11,19 +11,36 @@
 
 .dss-badge--floating {
   position: absolute;
+  /*
+   * ⚠️ EXCEÇÃO DOCUMENTADA: Valores de posicionamento hardcoded
+   *
+   * top/right usam valores absolutos (-8px) porque:
+   * 1. Não existem tokens DSS para offset de posição
+   * 2. O offset precisa ser relativo ao tamanho visual do badge
+   * 3. Badge floating deve "transbordar" parcialmente o elemento pai
+   *
+   * Valores padronizados:
+   * - Desktop: -8px (badge padrão)
+   * - Mobile: -6px (badge ligeiramente maior)
+   */
   top: -8px;
   right: -8px;
   z-index: 10;
 
   /* Badge floating é menor */
-  min-width: var(--dss-spacing-2-5);
-  min-height: var(--dss-spacing-2-5);
-  padding: var(--dss-spacing-0-5);
-  font-size: 11px;
+  min-width: var(--dss-spacing-2_5);
+  min-height: var(--dss-spacing-2_5);
+  padding: var(--dss-spacing-0_5);
+  /*
+   * ⚠️ EXCEÇÃO DOCUMENTADA: font-size para floating badge
+   * Usa --dss-font-size-xs (12px) em vez de 11px para conformidade DSS.
+   * Floating badges são visualmente menores para não obstruir conteúdo.
+   */
+  font-size: var(--dss-font-size-xs);
 
   /* Badge numérico (com conteúdo) tem padding horizontal maior */
   &:not(:empty) {
-    padding: var(--dss-spacing-0-5) var(--dss-spacing-1);
+    padding: var(--dss-spacing-0_5) var(--dss-spacing-1);
   }
 }
 

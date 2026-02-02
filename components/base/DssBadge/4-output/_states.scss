@@ -5,9 +5,15 @@
 
    CARACTERÍSTICAS:
    - Dark mode
-   - High contrast mode
+   - High contrast mode (prefers-contrast: more)
+   - Forced colors (Windows High Contrast Mode)
    - Reduced motion
    - Badge vazio (dot indicator)
+
+   CONVENÇÕES:
+   - Badge NÃO é interativo por design (decisão arquitetural DSS v2.2)
+   - Touch target é responsabilidade do contexto de uso
+   - Focus ring aplica-se apenas quando badge está em contexto focável
    ========================================================================== */
 
 /* ==========================================================================
@@ -38,15 +44,30 @@
    HIGH CONTRAST MODE
    ========================================================================== */
 
-@media (prefers-contrast: high) {
+/*
+ * ⚠️ CONTEXTO DE ACESSIBILIDADE: prefers-contrast: more
+ *
+ * Em high contrast, alguns valores são intencionalmente ajustados
+ * para garantir visibilidade máxima.
+ *
+ * Exceções documentadas:
+ * - font-weight: 700 → Não existe token de font-weight para high contrast
+ */
+@media (prefers-contrast: more) {
   .dss-badge {
     border: var(--dss-border-width-md) solid currentColor !important;
+    /*
+     * ⚠️ EXCEÇÃO DOCUMENTADA: font-weight hardcoded para high contrast
+     * Não existe token --dss-font-weight-* específico para acessibilidade.
+     * Valor 700 (bold) garante legibilidade em contextos de alto contraste.
+     */
     font-weight: 700;
   }
 
-  /* Focus ring mais visível */
+  /* Focus ring mais visível em high contrast */
   .dss-badge:focus-visible {
-    outline-width: 3px;
+    outline-width: var(--dss-border-width-thick);
+    outline-offset: var(--dss-border-width-md);
   }
 }
 
@@ -63,12 +84,50 @@
 }
 
 /* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+   ========================================================================== */
+
+/*
+ * ⚠️ CONTEXTO DE ACESSIBILIDADE: forced-colors: active
+ *
+ * Em Windows High Contrast Mode, o navegador IGNORA cores CSS customizadas.
+ * Valores como ButtonText, Highlight, GrayText são keywords do sistema.
+ *
+ * Bordas usam valores absolutos porque:
+ * 1. Tokens CSS custom properties são ignorados em forced-colors
+ * 2. Valores precisam ser visíveis no tema de alto contraste do usuário
+ *
+ * Referência: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors
+ */
+@media (forced-colors: active) {
+  .dss-badge {
+    /* Usa cores do sistema - tokens CSS são ignorados neste contexto */
+    border: 2px solid ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+
+  .dss-badge:focus-visible {
+    /* Outline com valor absoluto - tokens ignorados em forced-colors */
+    outline: 3px solid Highlight;
+  }
+
+  /* Brands não se aplicam em forced-colors - sistema controla cores */
+  .dss-badge--brand-hub,
+  .dss-badge--brand-water,
+  .dss-badge--brand-waste {
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+/* ==========================================================================
    BADGE VAZIO (Dot Indicator)
    ========================================================================== */
 
 .dss-badge:empty {
-  min-width: var(--dss-spacing-1-5);
-  min-height: var(--dss-spacing-1-5);
+  min-width: var(--dss-spacing-1_5);
+  min-height: var(--dss-spacing-1_5);
   padding: 0;
   border-radius: 50%;
 
@@ -87,8 +146,8 @@
   cursor: help;
 }
 
-/* Focus states para badges interativos */
+/* Focus states para badges em contexto focável */
 .dss-badge:focus-visible {
-  outline: 2px solid var(--dss-focus-ring);
-  outline-offset: 2px;
+  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline-offset: var(--dss-spacing-0_5);
 }

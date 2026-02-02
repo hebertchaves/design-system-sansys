@@ -401,7 +401,7 @@ interface AvatarExpose {
 
 ## Versao
 
-**DSS v2.3.0** - Implementacao completa da API do Quasar QAvatar com extensoes DSS
+**DSS v2.2** - Wrapper DSS do QAvatar com API governada pelo Design System Sansys
 **Compatibilidade**: Quasar v2.x
 
 ---

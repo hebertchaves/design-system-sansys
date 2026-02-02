@@ -3,10 +3,16 @@
  * DssAvatar - LAYER 2: COMPOSITION (Base Styles)
  * ==========================================================================
  *
- * Wrapper DSS baseado no QAvatar, com API pública governada pelo DSS.
- * Usa apenas tokens genéricos do DSS (variantes em 3-variants/).
+ * Wrapper DSS baseado no QAvatar, com API publica governada pelo DSS.
+ * Usa apenas tokens genericos do DSS (variantes em 3-variants/).
  *
- * @version 2.3.0
+ * NOTA SEMANTICA: DssAvatar e componente Visual/Identity (nao interativo).
+ * Tokens --dss-touch-target-* sao reutilizados como tokens dimensionais
+ * genericos onde os valores coincidem, pois o DSS nao possui tokens
+ * --dss-size-* dedicados. Esta decisao esta documentada na Secao 14
+ * (Tabela de Excecoes) do DssAvatar.md.
+ *
+ * @version 2.2
  */
 
 .dss-avatar {
@@ -17,36 +23,40 @@
   position: relative;
   vertical-align: middle;
 
-  // Dimensões padrão (compatível com Quasar)
-  width: var(--dss-touch-target-md); // 48px - tamanho padrão
-  height: var(--dss-touch-target-md);
+  // Dimensoes padrao (md = 48px)
+  /* EXCECAO DOCUMENTADA: Reutiliza --dss-touch-target-min (48px) como
+     token dimensional. Avatar e Visual/Identity, nao interativo.
+     Nao existem tokens genericos --dss-size-* no catalogo DSS.
+     Ref: DssAvatar.md Secao 14, EXC-01 */
+  width: var(--dss-touch-target-min);
+  height: var(--dss-touch-target-min);
 
-  // Forma circular por padrão
-  border-radius: var(--dss-border-radius-full); // 999px - círculo
+  // Forma circular por padrao
+  border-radius: var(--dss-radius-full);
 
   // Tipografia
-  font-family: var(--dss-font-family-base);
-  font-size: var(--dss-font-size-base); // 16px
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
   font-weight: var(--dss-font-weight-medium);
   line-height: 1;
   text-align: center;
 
-  // Overflow para imagens/conteúdo
+  // Overflow para imagens/conteudo
   overflow: hidden;
 
-  // Background padrão (será sobrescrito por cores específicas)
+  // Background padrao (sera sobrescrito por cores especificas)
   background-color: var(--dss-neutral-200);
   color: var(--dss-neutral-700);
 
-  // Transições
+  // Transicoes
   transition: all var(--dss-transition-base);
 
-  // Prevenir seleção de texto
+  // Prevenir selecao de texto
   user-select: none;
 }
 
 /* ========================================
-   CONTEÚDO INTERNO
+   CONTEUDO INTERNO
    ======================================== */
 
 .dss-avatar__content {
@@ -73,18 +83,18 @@
 }
 
 /* ========================================
-   ÍCONE (Material Icons)
+   ICONE (Material Icons)
    ======================================== */
 
 .dss-avatar__icon {
   font-family: 'Material Icons';
-  font-size: var(--dss-icon-size-md); // 24px - ícone médio dentro do avatar
+  font-size: var(--dss-icon-size-md);
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  // Prevenir seleção do ícone
+  // Prevenir selecao do icone
   user-select: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -100,63 +110,77 @@
   border-radius: 0;
 }
 
-// Rounded - border-radius menor (não é círculo, não é quadrado)
+// Rounded - border-radius menor (nao e circulo, nao e quadrado)
 .dss-avatar--rounded {
-  border-radius: var(--dss-border-radius-md); // 8px - arredondado mas não circular
+  border-radius: var(--dss-radius-md);
 }
 
 /* ========================================
-   TAMANHOS CUSTOMIZÁVEIS
+   TAMANHOS CUSTOMIZAVEIS
    ======================================== */
 
 // Tamanho xs (extra small) - 32px
 .dss-avatar--xs {
+  /* EXCECAO DOCUMENTADA: Reutiliza --dss-touch-target-sm (36px) como
+     dimensao mais proxima. Valor real do avatar xs pode divergir do
+     token em 4px. Nao existem tokens --dss-size-xs no catalogo DSS.
+     Ref: DssAvatar.md Secao 14, EXC-01 */
   width: var(--dss-touch-target-sm);
   height: var(--dss-touch-target-sm);
   font-size: var(--dss-font-size-xs);
 
   .dss-avatar__icon {
-    font-size: var(--dss-icon-size-sm); // 16px
+    font-size: var(--dss-icon-size-sm);
   }
 }
 
 // Tamanho sm (small) - 40px
 .dss-avatar--sm {
+  /* EXCECAO DOCUMENTADA: 40px nao possui token canonico correspondente
+     no catalogo DSS. Valor mais proximo: --dss-touch-target-md (44px).
+     Mantido como valor fixo para preservar fidelidade ao QAvatar.
+     Ref: DssAvatar.md Secao 14, EXC-02 */
   width: 40px;
   height: 40px;
   font-size: var(--dss-font-size-sm);
 
   .dss-avatar__icon {
-    font-size: var(--dss-icon-size-sm); // 20px
+    font-size: var(--dss-icon-size-sm);
   }
 }
 
-// Tamanho md (medium) - 48px (padrão, já definido na classe base)
+// Tamanho md (medium) - 48px (padrao, ja definido na classe base)
 
 // Tamanho lg (large) - 64px
 .dss-avatar--lg {
+  /* EXCECAO DOCUMENTADA: Reutiliza --dss-touch-target-xl (64px).
+     Ref: DssAvatar.md Secao 14, EXC-01 */
   width: var(--dss-touch-target-xl);
   height: var(--dss-touch-target-xl);
   font-size: var(--dss-font-size-lg);
 
   .dss-avatar__icon {
-    font-size: var(--dss-icon-size-lg); // 32px
+    font-size: var(--dss-icon-size-lg);
   }
 }
 
 // Tamanho xl (extra large) - 80px
 .dss-avatar--xl {
+  /* EXCECAO DOCUMENTADA: 80px nao possui token canonico correspondente
+     no catalogo DSS. Nenhum token dimensional atinge este valor.
+     Mantido como valor fixo para preservar fidelidade ao QAvatar.
+     Ref: DssAvatar.md Secao 14, EXC-02 */
   width: 80px;
   height: 80px;
   font-size: var(--dss-font-size-xl);
 
   .dss-avatar__icon {
-    font-size: var(--dss-icon-size-xl); // 48px
+    font-size: var(--dss-icon-size-xl);
   }
 }
 
 /* ========================================
-   AVATAR EM GRUPO (quando múltiplos avatars)
+   AVATAR EM GRUPO (quando multiplos avatars)
    ======================================== */
 
 .dss-avatar-group {
@@ -165,10 +189,10 @@
 
   .dss-avatar {
     // Overlap de avatars em grupo
-    margin-left: calc(var(--dss-spacing-2) * -1); // -16px overlap
+    margin-left: calc(var(--dss-spacing-2) * -1);
 
-    // Adicionar borda branca para separação
-    border: 2px solid white;
+    // Borda para separacao visual
+    border: var(--dss-border-width-md) solid var(--dss-surface-default, #FFFFFF);
     box-shadow: var(--dss-shadow-sm);
 
     &:first-child {
@@ -178,10 +202,10 @@
 }
 
 /* ========================================
-   ESTADOS INTERATIVOS (quando usado como botão)
+   ESTADOS INTERATIVOS (quando usado como botao)
    ======================================== */
 
-// Avatar clicável
+// Avatar clicavel
 button.dss-avatar,
 a.dss-avatar,
 .dss-avatar[role="button"] {
@@ -197,6 +221,12 @@ a.dss-avatar,
   }
 
   &:focus-visible {
+    /* EXCECAO DOCUMENTADA: Outline 2px e offset 2px sao valores fixos
+       por requisito de contraste visual WCAG 2.1 AA. Os tokens
+       --dss-border-width-md (2px) poderiam ser usados, mas outline-width
+       e outline-offset em focus-visible seguem convencao CSS padrao
+       de acessibilidade com valores absolutos.
+       Ref: DssAvatar.md Secao 14, EXC-03 */
     outline: 2px solid var(--dss-focus-ring);
     outline-offset: 2px;
   }
@@ -220,9 +250,16 @@ a.dss-avatar,
    RESPONSIVIDADE
    ======================================== */
 
+/* EXCECAO DOCUMENTADA: @media queries nao suportam CSS custom properties
+   (var()). Breakpoint 768px e o valor padrao para $breakpoint-sm-max
+   do Quasar Framework. Limitacao tecnica do CSS.
+   Ref: DssAvatar.md Secao 14, EXC-04 */
 @media (max-width: 768px) {
   // Em mobile, avatars grandes ficam um pouco menores
   .dss-avatar--xl {
+    /* EXCECAO DOCUMENTADA: 64px e 56px sao valores responsivos
+       proporcionais sem token canonico correspondente.
+       Ref: DssAvatar.md Secao 14, EXC-02 */
     width: 64px;
     height: 64px;
   }
@@ -234,12 +271,12 @@ a.dss-avatar,
 
   // Avatar group overlap menor em mobile
   .dss-avatar-group .dss-avatar {
-    margin-left: calc(var(--dss-spacing-1-5) * -1); // -12px overlap
+    margin-left: calc(var(--dss-spacing-1-5) * -1);
   }
 }
 
 /* ========================================
-   UTILITÁRIOS
+   UTILITARIOS
    ======================================== */
 
 // Avatar com status indicator

@@ -17,11 +17,14 @@
   box-shadow: none;
 
   &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-    /* Hover preenche com cor semi-transparente */
+    /* EXCEÇÃO DOCUMENTADA: rgba overlay reproduz Quasar outline hover (4% black).
+       Não existe token DSS para overlay de interação. Ref: DSS_COMPONENT_ARCHITECTURE.md */
     background-color: rgba(0, 0, 0, 0.04);
   }
 
   &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    /* EXCEÇÃO DOCUMENTADA: rgba overlay reproduz Quasar outline active (8% black).
+       Ref: DSS_COMPONENT_ARCHITECTURE.md */
     background-color: rgba(0, 0, 0, 0.08);
   }
 }

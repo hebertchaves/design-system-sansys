@@ -118,10 +118,11 @@ O **DssAvatar** consome tokens de **multiplas categorias** do Design System Sans
 | **Cores Semanticas** | `--dss-positive`, `--dss-warning`, `--dss-negative`, `--dss-neutral-*` | Status indicators, cores de fundo |
 | **Cores de Texto** | `--dss-text-primary`, `--dss-text-inverse` | Texto/iniciais dentro do avatar |
 | **Cores Neutras** | `--dss-neutral-200`, `--dss-neutral-700` | Background padrao |
-| **Brands** | `--dss-brand-hub-*`, `--dss-brand-water-*`, `--dss-brand-waste-*` | Bordas e status por brand |
-| **Espacamento** | `--dss-touch-target-sm/md/xl` | Tamanhos predefinidos (32, 48, 64px) |
-| **Tipografia** | `--dss-font-family-base`, `--dss-font-size-xs/sm/md/lg/xl` | Fonte e tamanho do texto |
-| **Bordas** | `--dss-border-radius-full`, `--dss-border-radius-md` | Forma circular/rounded |
+| **Brands** | `--dss-hub-600`, `--dss-water-600`, `--dss-waste-600` | Bordas e status por brand (tokens canonicos) |
+| **Dimensoes** | `--dss-touch-target-min/sm/xl` | Tamanhos predefinidos (48, 36, 64px). Ver Secao 14 (EXC-01) |
+| **Tipografia** | `--dss-font-family-sans`, `--dss-font-size-xs/sm/md/lg/xl` | Fonte e tamanho do texto (canonicos) |
+| **Bordas** | `--dss-radius-full`, `--dss-radius-md` | Forma circular/rounded (canonicos) |
+| **Border Width** | `--dss-border-width-thin/md/thick` | Espessuras de borda (1px/2px/3px) |
 | **Acessibilidade** | `--dss-focus-ring` | Focus ring para avatares clicaveis |
 | **Motion** | `--dss-transition-base` | Transicoes de hover/focus |
 
@@ -285,9 +286,9 @@ O DssAvatar suporta **duas formas** de aplicar brandabilidade:
 
 | Brand | Cor da Borda | Token |
 |-------|--------------|-------|
-| **Hub** | Laranja | `--dss-brand-hub-primary` |
-| **Water** | Azul | `--dss-brand-water-primary` |
-| **Waste** | Verde | `--dss-brand-waste-primary` |
+| **Hub** | Laranja | `--dss-hub-600` |
+| **Water** | Azul | `--dss-water-600` |
+| **Waste** | Verde | `--dss-waste-600` |
 
 ---
 
@@ -612,6 +613,22 @@ Propriedade da Jtech
 
 ---
 
+## 14. Tabela de Excecoes Documentadas
+
+Valores mantidos intencionalmente sem token DSS, com justificativa tecnica.
+Cada excecao e referenciada no codigo-fonte via comentario `/* EXCECAO DOCUMENTADA */`.
+
+| ID | Valor | Local | Justificativa |
+|----|-------|-------|---------------|
+| EXC-01 | `--dss-touch-target-min` (48px), `--dss-touch-target-sm` (36px), `--dss-touch-target-xl` (64px) | `_base.scss` (classes md, xs, lg) | DssAvatar e Visual/Identity (nao interativo). Reutiliza tokens `--dss-touch-target-*` como dimensionais porque o catalogo DSS nao possui tokens genericos `--dss-size-*`. Os valores coincidem com as dimensoes desejadas do QAvatar. |
+| EXC-02 | `40px`, `80px`, `64px`, `56px` | `_base.scss` (classes sm, xl, responsivo) | Nenhum token canonico do DSS corresponde a estes valores. Mantidos como valores fixos para preservar fidelidade dimensional ao QAvatar. |
+| EXC-03 | `outline: 2px`, `outline-offset: 2px` | `_base.scss` (focus-visible) | Focus ring com valores fixos por convencao CSS de acessibilidade WCAG 2.1 AA. Token `--dss-border-width-md` (2px) poderia ser usado, mas outline segue padrao absoluto. |
+| EXC-04 | `@media (max-width: 768px)` | `_base.scss` (responsividade) | CSS @media queries nao suportam `var()` (CSS custom properties). Breakpoint 768px corresponde ao `$breakpoint-sm-max` do Quasar Framework. Limitacao tecnica do CSS. |
+| EXC-05 | `8px`, `10px`, `16px`, `20px` (status), `min-width: 8px` | `_status.scss` (status indicators) | Dimensoes de status indicators sao proporcionais ao tamanho do avatar. Nao existem tokens para sub-elementos dimensionais proporcionais. border-width foi tokenizado (`--dss-border-width-thin/md/thick`). |
+| EXC-06 | Mapas TS com valores px (`AVATAR_SIZE_MAP`, `AVATAR_ICON_SIZE_MAP`, `AVATAR_FONT_SIZE_MAP`) | `types/avatar.types.ts` | TypeScript nao pode consumir CSS custom properties (`var(--dss-*)`). Estes mapas alimentam inline styles via composable `useAvatarStyles.ts`. Valores replicam os tokens CSS correspondentes. Alternativa seria `getComputedStyle()` em runtime, com custo de performance inaceitavel. |
+
+---
+
 ## Apendice: Checklist de Conformidade
 
 ### Funcionalidade
@@ -626,20 +643,37 @@ Propriedade da Jtech
 - [x] role="img" quando tem aria-label
 - [x] Status com aria-label
 - [x] Focus ring para avatares clicaveis
+- [x] prefers-contrast: more (CSS Level 5)
+- [x] forced-colors: active (Windows High Contrast Mode)
+- [x] prefers-reduced-motion: reduce
 
 ### Brandabilidade
 - [x] Prop brand funcional (hub, water, waste)
 - [x] Contexto data-brand funcional
 - [x] Borda colorida por brand
+- [x] Tokens canonicos de brand (--dss-hub-600, --dss-water-600, --dss-waste-600)
 
 ### TypeScript
 - [x] Props totalmente tipadas
 - [x] Emits tipados
 - [x] Expose tipado
 
+### Tokens
+- [x] border-radius: --dss-radius-full, --dss-radius-md (canonicos)
+- [x] font-family: --dss-font-family-sans (canonico)
+- [x] font-size: --dss-font-size-md (canonico)
+- [x] border-width: --dss-border-width-thin/md/thick (canonicos)
+- [x] Excecoes documentadas na Secao 14
+
+### Arquitetura
+- [x] 4 camadas completas
+- [x] Layer 4 com _states.scss, _brands.scss, orchestrator
+- [x] @use/@forward (Sass Module System)
+- [x] Module orchestrator importa todas as layers
+
 ---
 
 **Ultima atualizacao:** Janeiro 2026
-**Versao:** DSS v2.3.0
-**Status:** Documentacao Template 13.1
+**Versao:** DSS v2.2
+**Status:** Documentacao Template 13.1 + Secao 14 (Excecoes)
 **Changelog:** Ver [DOCUMENTATION_CHANGELOG.md](./DOCUMENTATION_CHANGELOG.md)

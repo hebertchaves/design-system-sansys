@@ -25,10 +25,13 @@
   /* Typography */
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-md);
-  font-weight: 500;
+  font-weight: var(--dss-font-weight-medium);
   line-height: var(--dss-line-height-tight);
   text-transform: uppercase;
-  letter-spacing: 0.0892857143em; /* Quasar default */
+  /* EXCEÇÃO DOCUMENTADA: letter-spacing reproduz o valor exato do Quasar Framework
+     (0.0892857143em ≈ 1.25px em 14px). Não existe token DSS equivalente.
+     Justificativa: Fidelidade visual ao Quasar q-btn. Ref: DSS_COMPONENT_ARCHITECTURE.md */
+  letter-spacing: 0.0892857143em;
   text-decoration: none;
   white-space: nowrap;
 
@@ -169,6 +172,9 @@
 }
 
 .dss-button--sm {
+  /* EXCEÇÃO DOCUMENTADA: calc(token + 2px) compensa alinhamento visual entre
+     tamanhos sm e md. Sem token intermediário disponível.
+     Justificativa: Progressão visual suave. Ref: DSS_COMPONENT_ARCHITECTURE.md */
   padding: calc(var(--dss-spacing-1) + 2px) var(--dss-spacing-3);
   min-height: var(--dss-touch-target-sm); /* 36px - Denso */
   min-width: var(--dss-spacing-14); /* 56px */

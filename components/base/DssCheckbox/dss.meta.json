@@ -1,0 +1,11 @@
+{
+  "component": "DssCheckbox",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS v2.2",
+  "auditMode": "Final",
+  "auditDate": "2026-02-01",
+  "goldenComponent": "DssChip",
+  "category": "Compact Control interativo",
+  "hasReservations": true
+}

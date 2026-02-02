@@ -14,11 +14,21 @@
   border: var(--dss-border-width-md) solid currentColor;
   box-shadow: none !important;
 
-  /* Ajustar padding para compensar border */
-  padding: calc(var(--dss-spacing-0-5) - 1px) calc(var(--dss-spacing-1) - 1px);
+  /*
+   * ⚠️ EXCEÇÃO DOCUMENTADA: Compensação de padding para borda
+   *
+   * O valor `- 1px` é hardcoded porque:
+   * 1. É compensação matemática para manter altura visual consistente
+   * 2. --dss-border-width-md = 2px, então padding reduz ~1px por lado
+   * 3. Não existe token DSS para "compensação de borda"
+   * 4. O cálculo garante que outline badge tenha mesma altura que solid
+   *
+   * Fórmula: padding = token_original - (border_width / 2)
+   */
+  padding: calc(var(--dss-spacing-0_5) - 1px) calc(var(--dss-spacing-1) - 1px);
 
   /* Outline + floating */
   &.dss-badge--floating {
-    padding: calc(var(--dss-spacing-0-5) - 1px) calc(var(--dss-spacing-0-5) - 1px);
+    padding: calc(var(--dss-spacing-0_5) - 1px) calc(var(--dss-spacing-0_5) - 1px);
   }
 }

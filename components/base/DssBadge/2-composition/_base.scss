@@ -4,7 +4,7 @@
    RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos
 
    REGRAS:
-   ✅ APENAS tokens genéricos (--dss-spacing-*, --dss-border-radius-*, etc.)
+   ✅ APENAS tokens genéricos (--dss-spacing-*, --dss-radius-*, etc.)
    ✅ Mixins reutilizáveis
    ✅ Reset e layout base
    ❌ ZERO valores hardcoded
@@ -34,10 +34,10 @@
   /* Dimensões - Altura VISUAL (md = default) */
   min-width: var(--dss-compact-control-height-sm); /* 24px */
   min-height: var(--dss-compact-control-height-sm); /* 24px - altura VISUAL */
-  padding: var(--dss-spacing-0-5) var(--dss-spacing-1);
+  padding: var(--dss-spacing-0_5) var(--dss-spacing-1);
 
   /* Forma - Pill shape por padrão */
-  border-radius: var(--dss-border-radius-full);
+  border-radius: var(--dss-radius-full);
 
   /* Transições */
   transition: all var(--dss-duration-200) var(--dss-easing-standard);

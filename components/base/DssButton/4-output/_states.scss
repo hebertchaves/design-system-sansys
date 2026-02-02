@@ -31,15 +31,42 @@
    HIGH CONTRAST MODE
    ========================================================================== */
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .dss-button {
     border: var(--dss-border-width-md) solid currentColor !important;
-    font-weight: 600;
+    font-weight: var(--dss-font-weight-bold);
   }
 
   .dss-button:focus-visible {
     outline-width: var(--dss-border-width-thick);
     outline-offset: var(--dss-spacing-2);
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS MODE (Windows High Contrast)
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-button {
+    border: 2px solid ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+
+  .dss-button--disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  .dss-button:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: var(--dss-spacing-0_5);
+  }
+
+  .dss-button--loading .dss-button__spinner {
+    border-color: ButtonText;
+    border-right-color: transparent;
   }
 }
 

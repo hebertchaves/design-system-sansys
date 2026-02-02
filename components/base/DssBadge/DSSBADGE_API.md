@@ -336,9 +336,9 @@ Props aprovadas e mantidas pelo Design System:
 
 ### High Contrast Mode
 ```scss
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .dss-badge {
-    border-width: 2px !important;
+    border: var(--dss-border-width-md) solid currentColor !important;
     font-weight: 700;
   }
 }

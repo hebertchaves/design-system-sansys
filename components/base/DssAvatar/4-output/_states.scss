@@ -1,0 +1,111 @@
+/**
+ * ==========================================================================
+ * DssAvatar - LAYER 4: OUTPUT - States & Accessibility
+ * ==========================================================================
+ *
+ * RESPONSABILIDADE: Estados de acessibilidade do avatar
+ * - prefers-contrast: more (CSS Media Queries Level 5)
+ * - forced-colors: active (Windows High Contrast Mode)
+ * - prefers-reduced-motion: reduce
+ * - Dark mode adjustments
+ *
+ * REFERENCIA: Alinhado ao padrao DssBadge (Golden Component)
+ * e DssButton (_states.scss Layer 4)
+ *
+ * @version 2.2
+ */
+
+/* ==========================================================================
+   ACESSIBILIDADE: High Contrast (CSS Media Queries Level 5)
+   Ref: https://drafts.csswg.org/mediaqueries-5/#prefers-contrast
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-avatar {
+    border: var(--dss-border-width-md) solid currentColor !important;
+    font-weight: var(--dss-font-weight-bold);
+  }
+
+  .dss-avatar__status {
+    border-width: var(--dss-border-width-thick) !important;
+  }
+
+  /* Focus ring mais visivel em high contrast */
+  button.dss-avatar:focus-visible,
+  a.dss-avatar:focus-visible,
+  .dss-avatar[role="button"]:focus-visible {
+    outline-width: var(--dss-border-width-thick);
+    outline-offset: var(--dss-border-width-md);
+  }
+}
+
+/* ==========================================================================
+   ACESSIBILIDADE: Windows High Contrast Mode (forced-colors)
+   Ref: https://drafts.csswg.org/css-color-adjust-1/#forced-colors-mode
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-avatar {
+    /* Usa cores do sistema - tokens CSS sao ignorados neste contexto */
+    border: 2px solid ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+
+  .dss-avatar__status {
+    /* Status indicator usa cores do sistema */
+    border-color: Canvas;
+    background-color: ButtonText;
+  }
+
+  .dss-avatar__status--offline {
+    background-color: GrayText;
+  }
+
+  /* Focus ring para avatares interativos */
+  button.dss-avatar:focus-visible,
+  a.dss-avatar:focus-visible,
+  .dss-avatar[role="button"]:focus-visible {
+    /* Outline com valor absoluto - tokens ignorados em forced-colors */
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  /* Brands nao se aplicam em forced-colors - sistema controla cores */
+  .dss-avatar--brand-hub,
+  .dss-avatar--brand-water,
+  .dss-avatar--brand-waste {
+    border-color: ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+/* ==========================================================================
+   ACESSIBILIDADE: Reduced Motion
+   Ref: https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-avatar,
+  .dss-avatar *,
+  .dss-avatar__status {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-avatar {
+    background-color: var(--dss-neutral-700, #424242);
+    color: var(--dss-neutral-100, #F5F5F5);
+  }
+
+  .dss-avatar__status {
+    border-color: var(--dss-surface-dark, #1E1E1E);
+  }
+}

@@ -7,7 +7,7 @@
  * Wrapper DSS baseado no QAvatar, com API governada pelo DSS
  *
  * @see https://quasar.dev/vue-components/avatar
- * @version 2.3.0
+ * @version 2.2
  */
 
 import type { Ref } from 'vue'
@@ -220,6 +220,18 @@ export interface ContentStyle {
 
 /**
  * Mapeamento de tamanhos para pixels
+ *
+ * EXCECAO DOCUMENTADA (EXC-06): TypeScript nao pode consumir CSS custom
+ * properties (var(--dss-*)). Estes mapas alimentam inline styles no
+ * composable useAvatarStyles.ts para tamanhos customizados. Os valores
+ * fixos replicam os tokens CSS correspondentes:
+ * - xs: --dss-touch-target-sm (36px no catalogo, 32px no QAvatar)
+ * - sm: 40px (sem token canonico)
+ * - md: --dss-touch-target-min (48px)
+ * - lg: --dss-touch-target-xl (64px)
+ * - xl: 80px (sem token canonico)
+ *
+ * Ref: DssAvatar.md Secao 14, EXC-06
  */
 export const AVATAR_SIZE_MAP: Record<AvatarSize, string> = {
   xs: '32px',
@@ -230,7 +242,16 @@ export const AVATAR_SIZE_MAP: Record<AvatarSize, string> = {
 }
 
 /**
- * Mapeamento de tamanhos de ícone por tamanho de avatar
+ * Mapeamento de tamanhos de icone por tamanho de avatar
+ *
+ * EXCECAO DOCUMENTADA (EXC-06): Mesma limitacao TS <-> CSS.
+ * Valores replicam tokens --dss-icon-size-*:
+ * - xs/sm: --dss-icon-size-sm (20px no catalogo, xs usa 16px proporcional)
+ * - md: --dss-icon-size-md (24px)
+ * - lg: --dss-icon-size-lg (32px)
+ * - xl: --dss-icon-size-xl (48px)
+ *
+ * Ref: DssAvatar.md Secao 14, EXC-06
  */
 export const AVATAR_ICON_SIZE_MAP: Record<AvatarSize, string> = {
   xs: '16px',
@@ -242,6 +263,16 @@ export const AVATAR_ICON_SIZE_MAP: Record<AvatarSize, string> = {
 
 /**
  * Mapeamento de tamanhos de fonte por tamanho de avatar
+ *
+ * EXCECAO DOCUMENTADA (EXC-06): Mesma limitacao TS <-> CSS.
+ * Valores replicam tokens --dss-font-size-*:
+ * - xs: --dss-font-size-xs (12px)
+ * - sm: --dss-font-size-sm (14px)
+ * - md: --dss-font-size-md (16px)
+ * - lg: --dss-font-size-lg (18px)
+ * - xl: --dss-font-size-xl (20px)
+ *
+ * Ref: DssAvatar.md Secao 14, EXC-06
  */
 export const AVATAR_FONT_SIZE_MAP: Record<AvatarSize, string> = {
   xs: '12px',

@@ -98,6 +98,16 @@ O **DssButton é referência**, não fonte única de verdade.
    - ⚠️ Novos valores exigem justificativa explícita e aprovação
    - 📖 Consulte [DSS_COMPONENT_ARCHITECTURE.md - Valores Visuais Permitidos](docs/reference/DSS_COMPONENT_ARCHITECTURE.md#valores-visuais-permitidos-como-exceção-não-tokenizados)
 
+9. **Golden Components como Referência Normativa (VINCULANTE)**
+   - ❌ NUNCA auditar componentes sem referência a um Golden Component
+   - ✅ SEMPRE usar Golden Components como baseline para auditorias DSS
+   - ⚠️ Golden Components são componentes aprovados com Selo DSS v2.2
+   - 📖 Consulte [DSS_GOLDEN_COMPONENTS.md](docs/governance/DSS_GOLDEN_COMPONENTS.md)
+
+   **Golden Components Oficiais (Janeiro 2026):**
+   - **DssChip** — Compact Control interativo (referência para touch target `::before`)
+   - **DssBadge** — Compact Control não interativo (referência para decisões contextuais)
+
 ---
 
 ## 🎯 Escopo Funcional Mínimo (DEFINIÇÃO OFICIAL)

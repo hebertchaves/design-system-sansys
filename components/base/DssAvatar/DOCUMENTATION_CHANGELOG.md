@@ -4,7 +4,30 @@ Historico de alteracoes na documentacao do componente DssAvatar.
 
 ---
 
-## [2.3.0] - Janeiro 2026
+## [2.2.1] - Janeiro 2026
+
+### Corrigido (Auditoria DSS v2.2)
+- **NC-01 BLOQUEANTE**: `prefers-contrast: high` corrigido para `prefers-contrast: more` (CSS Level 5)
+- **NC-02 BLOQUEANTE**: Adicionado bloco `@media (forced-colors: active)` (Windows High Contrast Mode)
+- **NC-03**: `font-weight: 700` substituido por `var(--dss-font-weight-bold)`
+- **NC-04/NC-05**: Border-widths tokenizados com `--dss-border-width-md/thick`
+- **NC-06/NC-11**: Tamanhos sm/xl documentados como excecoes (sem token canonico)
+- **NC-07**: `border: 2px solid white` substituido por tokens
+- **NC-08**: Focus-visible documentado como excecao (EXC-03)
+- **NC-09**: Status indicators documentados como excecao (EXC-05), border-width tokenizado
+- **NC-10**: Breakpoint 768px documentado como excecao tecnica CSS (EXC-04)
+- **NC-12**: Mapas TS documentados como excecao (EXC-06)
+- **NC-13**: `@import` substituido por `@use`/`@forward` (Sass Module System)
+- **NC-14**: Versao corrigida de v2.3.0 para v2.2 em todos os arquivos
+- **NC-15**: Adicionada Secao 14 (Tabela de Excecoes) ao DssAvatar.md
+- **GAP-01/02**: Tokens corrigidos para canonicos (`--dss-radius-full`, `--dss-font-family-sans`, `--dss-hub-600`, etc.)
+- **GAP-03**: Uso de `--dss-touch-target-*` documentado como excecao (EXC-01)
+- **GAP-04**: DssAvatar.vue (Options API) marcado como @deprecated
+- **GAP-05**: Layer 4 reorganizada com `_states.scss`, `_brands.scss`, orchestrator
+
+---
+
+## [2.2.0] - Janeiro 2026 (pre-auditoria)
 
 ### Adicionado
 - **DssAvatar.md**: Documentacao completa seguindo Template 13.1 (13 secoes)

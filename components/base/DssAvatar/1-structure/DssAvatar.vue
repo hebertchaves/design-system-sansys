@@ -1,3 +1,10 @@
+<!--
+  @deprecated Use DssAvatar.ts.vue (TypeScript + Composition API).
+  Este arquivo Options API esta desatualizado e nao possui as props
+  brand, status, ariaLabel. Mantido apenas para compatibilidade retroativa.
+  Sera removido na proxima versao major do DSS.
+  @version 2.2
+-->
 <template>
   <div
     :class="avatarClasses"
@@ -16,6 +23,10 @@
 </template>
 
 <script>
+/**
+ * @deprecated Use DssAvatar.ts.vue (TypeScript + Composition API)
+ * @version 2.2
+ */
 export default {
   name: 'DssAvatar',
 
@@ -96,7 +107,7 @@ export default {
       if (this.square) {
         style.borderRadius = '0';
       } else if (this.rounded) {
-        style.borderRadius = '8px'; // var(--dss-border-radius-md)
+        style.borderRadius = '8px'; // @deprecated - usar var(--dss-radius-md)
       } else {
         // Padrão: circular (50%)
         style.borderRadius = '50%';

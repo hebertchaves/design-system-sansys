@@ -11,7 +11,7 @@
  * const { avatarStyle, iconStyle, contentStyle } = useAvatarStyles(props)
  * ```
  *
- * @version 2.3.0
+ * @version 2.2
  */
 
 import { computed, type CSSProperties } from 'vue'

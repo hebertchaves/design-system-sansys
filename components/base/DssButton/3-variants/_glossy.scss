@@ -10,6 +10,9 @@
    - Active inverte gradiente (usa token --dss-gradient-glossy-active)
    ========================================================================== */
 
+/* EXCEÇÃO DOCUMENTADA: box-shadow rgba reproduz elevação glossy do Quasar.
+   Não existem tokens DSS para shadow multi-stop glossy.
+   Ref: DSS_COMPONENT_ARCHITECTURE.md */
 .dss-button--glossy {
   background-image: var(--dss-gradient-glossy);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);

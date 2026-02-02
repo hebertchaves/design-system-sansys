@@ -113,9 +113,9 @@ O **DssBadge** consome tokens de **multiplas categorias** do Design System Sansy
 | **Cores de Texto** | `--dss-text-inverse`, `--dss-text-primary` | [Secao 2.3](../../../docs/reference/DSS_TOKEN_REFERENCE.md#23-cores-semânticas-base) | Texto dentro do badge |
 | **Cores Neutras** | `--dss-gray-50` a `--dss-gray-900` | [Secao 2.1 - Neutral Palette](../../../docs/reference/DSS_TOKEN_REFERENCE.md#21-neutral-palette) | Texto em variantes outline/transparent |
 | **Brands** | `--dss-hub-*`, `--dss-water-*`, `--dss-waste-*` (100-800) | [Secao 2.2 - Brand Palettes](../../../docs/reference/DSS_TOKEN_REFERENCE.md#22-brand-palettes) | Cores por brand |
-| **Espacamento** | `--dss-spacing-0-5`, `--dss-spacing-1`, `--dss-spacing-2-5`, `--dss-spacing-3` | [Secao 1.1 - Escala Base](../../../docs/reference/DSS_TOKEN_REFERENCE.md#11-escala-base) | Padding interno |
+| **Espacamento** | `--dss-spacing-0_5`, `--dss-spacing-1`, `--dss-spacing-1_5`, `--dss-spacing-2_5` | [Secao 1.1 - Escala Base](../../../docs/reference/DSS_TOKEN_REFERENCE.md#11-escala-base) | Padding interno |
 | **Tipografia** | `--dss-font-family-sans`, `--dss-font-size-xs`, `--dss-font-weight-medium` | [Secao 6 - Tipografia](../../../docs/reference/DSS_TOKEN_REFERENCE.md#6-tipografia) | Fonte, tamanho (12px), peso (500) |
-| **Bordas** | `--dss-border-radius-full`, `--dss-border-radius-lg`, `--dss-border-width-md` | [Secao 8 - Bordas](../../../docs/reference/DSS_TOKEN_REFERENCE.md#8-bordas) | Forma pill, variante outline |
+| **Bordas** | `--dss-radius-full`, `--dss-radius-lg`, `--dss-border-width-md` | [Secao 8 - Bordas](../../../docs/reference/DSS_TOKEN_REFERENCE.md#8-bordas) | Forma pill, variante outline |
 | **Motion** | `--dss-duration-200`, `--dss-easing-standard` | [Secao 5 - Motion](../../../docs/reference/DSS_TOKEN_REFERENCE.md#5-motionanimation) | Transicoes suaves |
 
 ### Altura Visual vs Touch Target
@@ -154,6 +154,17 @@ O **DssBadge** consome tokens de **multiplas categorias** do Design System Sansy
 📖 **Referencias:**
 - [Touch Target vs Visual Height](../../../docs/guides/DSS_IMPLEMENTATION_GUIDE.md#touch-target-vs-visual-height-wcag-255)
 - [`.dss-touch-wrapper` - Utility Oficial](../../../docs/guides/DSS_IMPLEMENTATION_GUIDE.md#touch-wrapper-utility-oficial-dss)
+
+### Exceções Documentadas (Valores sem Token)
+
+| Propriedade | Valores | Contexto | Justificativa |
+|-------------|---------|----------|---------------|
+| `top`, `right` | -8px, -6px | Floating badge positioning | Offset de posicionamento não possui tokens DSS |
+| `font-weight` | 700 | High contrast mode | Não existe token de peso para acessibilidade |
+| `border`, `outline` | 2px, 3px absolute | Forced colors mode | CSS custom properties ignoradas em forced-colors |
+| `calc() - 1px` | 1px | Outline variant padding | Compensação matemática para manter altura visual com borda |
+
+> Estes valores estão documentados nos arquivos SCSS com comentários explicativos. Não existem tokens DSS equivalentes porque operam em contextos específicos de acessibilidade, posicionamento ou compensação matemática.
 
 ### Observacoes Importantes
 

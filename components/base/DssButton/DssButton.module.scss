@@ -3,22 +3,8 @@
 @use './4-output' as output;
 
 /* ==========================================================================
-   ACCESSIBILITY ENHANCEMENTS
+   DssButton - MODULE ORCHESTRATOR
+
+   Responsabilidade: Importar e orquestrar as 3 camadas SCSS.
+   Estados de acessibilidade são gerenciados em 4-output/_states.scss.
    ========================================================================== */
-
-/* High contrast mode */
-@media (prefers-contrast: high) {
-  .dss-button {
-    border-width: var(--dss-border-width-md) !important;
-    font-weight: 600;
-  }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .dss-button,
-  .dss-button * {
-    transition: none !important;
-    animation: none !important;
-  }
-}

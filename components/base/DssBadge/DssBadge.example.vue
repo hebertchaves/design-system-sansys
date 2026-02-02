@@ -274,7 +274,8 @@
           <li>&#9989; aria-live="polite" para mudancas dinamicas</li>
           <li>&#9989; aria-label customizavel para contexto adicional</li>
           <li>&#9989; Contraste de cores WCAG 2.1 AA (&ge; 4.5:1)</li>
-          <li>&#9989; Suporte a prefers-contrast: high</li>
+          <li>&#9989; Suporte a prefers-contrast: more</li>
+          <li>&#9989; Suporte a forced-colors (Windows High Contrast)</li>
           <li>&#9989; Suporte a prefers-reduced-motion: reduce</li>
           <li>&#9989; Texto legivel em todos os tamanhos</li>
         </ul>

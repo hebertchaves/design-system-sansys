@@ -1,17 +1,17 @@
 /**
  * ==========================================================================
- * DssAvatar - LAYER 4: OUTPUT (Arquivo de Compilação Final)
+ * DssAvatar - LAYER 4: OUTPUT (Orchestrator)
  * ==========================================================================
  *
- * Importa todos os módulos do componente DssAvatar na ordem correta:
- * 1. Base styles (estrutura, layout, tipografia)
- * 2. Variants (brands, status)
+ * Orquestrador da Layer 4 que compila:
+ * - _states.scss (acessibilidade: prefers-contrast, forced-colors, reduced-motion, dark mode)
+ * - _brands.scss (overrides de marca na saida)
  *
- * @version 2.3.0
+ * NOTA: Layers 2 (composition) e 3 (variants) sao importadas
+ * pelo module orchestrator (DssAvatar.module.scss).
+ *
+ * @version 2.2
  */
 
-// Base styles (estrutura, layout, tipografia)
-@import '../2-composition/base';
-
-// Variants (brands, status)
-@import '../3-variants/index';
+@use './states';
+@use './brands';

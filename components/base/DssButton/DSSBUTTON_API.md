@@ -2,7 +2,7 @@
 
 ## 📋 Visão Geral
 
-O `DssButton` é um componente de botão **100% compatível com a API do Quasar Framework**, implementado seguindo rigorosamente as especificações oficiais do `q-btn`.
+O `DssButton` é um componente de botão **compatível com a API do Quasar Framework**, implementado seguindo as especificações oficiais do `q-btn` com extensões DSS de brandabilidade e acessibilidade.
 
 ---
 
@@ -161,7 +161,7 @@ function startUpload() {
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `ripple` | Boolean \| Object | `true` | Efeito ripple Material Design |
+| `ripple` | Boolean \| Object | `false` | Efeito ripple Material Design |
 | `tabindex` | Number \| String | `null` | Ordem de navegação por teclado |
 | `disabled` | Boolean | `false` | Desabilita o botão |
 
@@ -315,7 +315,7 @@ function handleClick(event) {
 
 ## ✅ Compatibilidade com Quasar
 
-### Props 100% Implementadas:
+### Props Implementadas:
 ✅ `label`, `icon`, `icon-right`
 ✅ `variant` (elevated, flat, outline, unelevated, push)
 ✅ `color` (primary, secondary, accent, positive, negative, warning, info)
@@ -369,7 +369,7 @@ As variantes `flat` e `outline` seguem um padrão consistente entre cores semân
 - ✅ Melhor contraste no hover (WCAG 2.1 AA)
 - ✅ Consistência visual entre semânticos e brands
 - ✅ Background transparente compatível com dark mode
-- ✅ Zero hardcoding, 100% baseado em tokens
+- ✅ Zero hardcoding, baseado em tokens DSS
 
 ---
 

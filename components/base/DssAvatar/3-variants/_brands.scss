@@ -8,7 +8,12 @@
  * - Water (azul/blue)
  * - Waste (verde/green)
  *
- * @version 2.3.0
+ * TOKENS: Usa tokens canonicos de brand do catalogo DSS:
+ * - --dss-hub-600 (Hub principal)
+ * - --dss-water-600 (Water padrao)
+ * - --dss-waste-600 (Waste principal)
+ *
+ * @version 2.2
  */
 
 /* ========================================
@@ -17,11 +22,11 @@
 
 .dss-avatar--brand-hub {
   // Borda colorida indica a brand
-  border: 2px solid var(--dss-brand-hub-primary, #F7931E);
+  border: var(--dss-border-width-md) solid var(--dss-hub-600, #ef7a11);
 
   // Status indicator usa cor da brand
   .dss-avatar__status--online {
-    background-color: var(--dss-brand-hub-primary, #F7931E);
+    background-color: var(--dss-hub-600, #ef7a11);
   }
 }
 
@@ -30,10 +35,10 @@
    ======================================== */
 
 .dss-avatar--brand-water {
-  border: 2px solid var(--dss-brand-water-primary, #1F86DE);
+  border: var(--dss-border-width-md) solid var(--dss-water-600, #026cc7);
 
   .dss-avatar__status--online {
-    background-color: var(--dss-brand-water-primary, #1F86DE);
+    background-color: var(--dss-water-600, #026cc7);
   }
 }
 
@@ -42,10 +47,10 @@
    ======================================== */
 
 .dss-avatar--brand-waste {
-  border: 2px solid var(--dss-brand-waste-primary, #70B62C);
+  border: var(--dss-border-width-md) solid var(--dss-waste-600, #0b8154);
 
   .dss-avatar__status--online {
-    background-color: var(--dss-brand-waste-primary, #70B62C);
+    background-color: var(--dss-waste-600, #0b8154);
   }
 }
 
@@ -56,18 +61,18 @@
 // Quando o avatar herda brand do contexto do app
 [data-brand="hub"] .dss-avatar:not([class*="--brand"]) {
   &.dss-avatar--with-status .dss-avatar__status--online {
-    background-color: var(--dss-brand-hub-primary, #F7931E);
+    background-color: var(--dss-hub-600, #ef7a11);
   }
 }
 
 [data-brand="water"] .dss-avatar:not([class*="--brand"]) {
   &.dss-avatar--with-status .dss-avatar__status--online {
-    background-color: var(--dss-brand-water-primary, #1F86DE);
+    background-color: var(--dss-water-600, #026cc7);
   }
 }
 
 [data-brand="waste"] .dss-avatar:not([class*="--brand"]) {
   &.dss-avatar--with-status .dss-avatar__status--online {
-    background-color: var(--dss-brand-waste-primary, #70B62C);
+    background-color: var(--dss-waste-600, #0b8154);
   }
 }

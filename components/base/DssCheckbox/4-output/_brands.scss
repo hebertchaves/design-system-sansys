@@ -1,0 +1,116 @@
+/* ==========================================================================
+   DssCheckbox - LAYER 4: OUTPUT (Brands)
+
+   RESPONSABILIDADE: Estilos especificos para cada marca (Hub, Water, Waste)
+
+   REGRAS:
+   - Usa tokens de marca (--dss-{brand}-*)
+   - Aplicado via atributo data-brand (contexto ou prop)
+   - NAO sobrescreve logica de estados
+   - Cores aplicadas APENAS ao .dss-checkbox__control quando checked/indeterminate
+
+   CENARIOS SUPORTADOS:
+   1. Brand via contexto (ancestral): <div data-brand="hub"><DssCheckbox /></div>
+   2. Brand via prop (mesmo elemento): <DssCheckbox brand="hub" />
+
+   GOLDEN COMPONENT: DssChip - mesmo padrao de brand mixins
+   ========================================================================== */
+
+/* ==========================================================================
+   MIXINS PARA EVITAR DUPLICACAO
+   ========================================================================== */
+
+@mixin checkbox-brand-colors($brand) {
+  /* Primary */
+  &.dss-checkbox--primary {
+    .dss-checkbox__control--checked,
+    .dss-checkbox__control--indeterminate {
+      background-color: var(--dss-#{$brand}-primary);
+      border-color: var(--dss-#{$brand}-primary);
+      color: var(--dss-#{$brand}-on-primary);
+
+      .dss-checkbox__check,
+      .dss-checkbox__dash {
+        color: var(--dss-#{$brand}-on-primary);
+      }
+    }
+  }
+
+  /* Secondary */
+  &.dss-checkbox--secondary {
+    .dss-checkbox__control--checked,
+    .dss-checkbox__control--indeterminate {
+      background-color: var(--dss-#{$brand}-secondary);
+      border-color: var(--dss-#{$brand}-secondary);
+      color: var(--dss-#{$brand}-on-secondary);
+
+      .dss-checkbox__check,
+      .dss-checkbox__dash {
+        color: var(--dss-#{$brand}-on-secondary);
+      }
+    }
+  }
+
+  /* Accent */
+  &.dss-checkbox--accent {
+    .dss-checkbox__control--checked,
+    .dss-checkbox__control--indeterminate {
+      background-color: var(--dss-#{$brand}-accent);
+      border-color: var(--dss-#{$brand}-accent);
+      color: var(--dss-#{$brand}-on-accent);
+
+      .dss-checkbox__check,
+      .dss-checkbox__dash {
+        color: var(--dss-#{$brand}-on-accent);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   HUB BRAND
+   ========================================================================== */
+
+/* Cenario 1: Brand via contexto (ancestral) */
+[data-brand='hub'] {
+  .dss-checkbox {
+    @include checkbox-brand-colors(hub);
+  }
+}
+
+/* Cenario 2: Brand via prop (mesmo elemento) */
+.dss-checkbox[data-brand='hub'] {
+  @include checkbox-brand-colors(hub);
+}
+
+/* ==========================================================================
+   WATER BRAND
+   ========================================================================== */
+
+/* Cenario 1: Brand via contexto (ancestral) */
+[data-brand='water'] {
+  .dss-checkbox {
+    @include checkbox-brand-colors(water);
+  }
+}
+
+/* Cenario 2: Brand via prop (mesmo elemento) */
+.dss-checkbox[data-brand='water'] {
+  @include checkbox-brand-colors(water);
+}
+
+/* ==========================================================================
+   WASTE BRAND
+   ========================================================================== */
+
+/* Cenario 1: Brand via contexto (ancestral) */
+[data-brand='waste'] {
+  .dss-checkbox {
+    @include checkbox-brand-colors(waste);
+  }
+}
+
+/* Cenario 2: Brand via prop (mesmo elemento) */
+.dss-checkbox[data-brand='waste'] {
+  @include checkbox-brand-colors(waste);
+}

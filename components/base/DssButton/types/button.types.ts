@@ -4,7 +4,7 @@
  * ==========================================================================
  *
  * Tipos e interfaces para o componente DssButton
- * Compatível 100% com Quasar q-btn API
+ * Compatível com Quasar q-btn API
  *
  * @see https://quasar.dev/vue-components/button
  */

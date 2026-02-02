@@ -1,0 +1,314 @@
+/* ==========================================================================
+   DssCheckbox - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genericos
+
+   REGRAS:
+   - APENAS tokens genericos (--dss-spacing-*, --dss-radius-*, etc.)
+   - ZERO tokens especificos de componente (--dss-checkbox-*)
+   - ZERO valores hardcoded (exceto excecoes documentadas)
+   - ZERO logica de variantes
+   - ::before NO ROOT = touch target (WCAG 2.5.5)
+   - Icones de estado sao elementos <span>, NAO pseudo-elementos
+
+   GOLDEN COMPONENT: DssChip (Compact Control interativo)
+   ========================================================================== */
+
+/* ==========================================================================
+   CHECKBOX ROOT (<label>)
+   ========================================================================== */
+
+.dss-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dss-spacing-2); /* 8px */
+
+  /* Altura visual via token generico de compact control */
+  min-height: var(--dss-compact-control-height-md); /* 28px */
+
+  /* Typography */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-normal);
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+
+  /* Transitions */
+  transition: opacity var(--dss-duration-200) var(--dss-easing-standard);
+
+  /* Prevent tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+
+  /* Touch Target WCAG 2.5.5 via ::before no ROOT
+   *
+   * O touch target e implementado como pseudo-elemento invisivel
+   * centralizado no root <label>, garantindo area minima de 48px.
+   * pointer-events: none e OBRIGATORIO para nao interferir nos cliques.
+   */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: var(--dss-touch-target-min); /* 48px */
+    min-height: var(--dss-touch-target-min); /* 48px */
+    pointer-events: none; /* OBRIGATORIO - cliques chegam ao input */
+  }
+}
+
+/* ==========================================================================
+   HIDDEN NATIVE INPUT (sr-only)
+   ========================================================================== */
+
+/*
+ * Input nativo visualmente oculto mas acessivel a screen readers.
+ * Controla: foco, teclado, aria-checked, indeterminate.
+ * Tabindex e SOMENTE neste elemento, NUNCA no <label>.
+ */
+.dss-checkbox__native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   VISUAL CONTROL INDICATOR (caixa)
+   ========================================================================== */
+
+.dss-checkbox__control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  /* Dimensoes via token de espacamento generico */
+  width: var(--dss-spacing-5); /* 20px */
+  height: var(--dss-spacing-5); /* 20px */
+
+  /* Bordas */
+  border: var(--dss-border-width-md) solid currentColor;
+  border-radius: var(--dss-radius-sm);
+
+  /* Fundo */
+  background-color: transparent;
+  color: inherit;
+
+  /* Transitions */
+  transition: all var(--dss-duration-200) var(--dss-easing-standard);
+}
+
+/* ==========================================================================
+   STATE ICONS (elementos reais - NUNCA pseudo-elementos)
+   ========================================================================== */
+
+/*
+ * Icones de check e dash sao <span> com Material Icons.
+ * NUNCA usar ::after para renderizar checkmark ou dash.
+ * Convenção DSS: ::after reservado para efeitos visuais.
+ */
+.dss-checkbox__check,
+.dss-checkbox__dash {
+  /* Material Icons font */
+  font-family: 'Material Icons';
+  /*
+   * EXCECAO DOCUMENTADA: font-weight: normal
+   * Requisito tecnico da fonte Material Icons.
+   * Precedente: DssChip._base.scss
+   */
+  font-weight: normal;
+  font-style: normal;
+  font-size: var(--dss-font-size-sm); /* 14px */
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
+
+  /* Cor do icone - herda do pai (text-white via composable ou token de brand) */
+  color: inherit;
+}
+
+/* ==========================================================================
+   CHECKED STATE
+   ========================================================================== */
+
+.dss-checkbox__control--checked {
+  /*
+   * border-color: currentColor (NAO transparent)
+   * Robustez em forced-colors e high-contrast modes.
+   * Alinha com precedentes do DssChip.
+   */
+  border-color: currentColor;
+  /* Fundo aplicado via classes utilitarias (.bg-{color}) ou _brands.scss */
+}
+
+/* ==========================================================================
+   INDETERMINATE STATE
+   ========================================================================== */
+
+.dss-checkbox__control--indeterminate {
+  /* Mesmo tratamento que checked */
+  border-color: currentColor;
+  /* Fundo aplicado via classes utilitarias (.bg-{color}) ou _brands.scss */
+}
+
+/* ==========================================================================
+   LABEL
+   ========================================================================== */
+
+.dss-checkbox__label {
+  display: inline-flex;
+  align-items: center;
+  line-height: var(--dss-line-height-normal);
+}
+
+/* ==========================================================================
+   LEFT LABEL
+   ========================================================================== */
+
+.dss-checkbox--left-label {
+  flex-direction: row-reverse;
+}
+
+.dss-checkbox__label--left {
+  /* Nenhum estilo adicional necessario - flex-direction cuida da ordem */
+}
+
+/* ==========================================================================
+   SIZE VARIANTS
+   ========================================================================== */
+
+.dss-checkbox--xs {
+  gap: var(--dss-spacing-1); /* 4px */
+  min-height: var(--dss-compact-control-height-xs); /* 20px */
+  font-size: var(--dss-font-size-xs);
+
+  .dss-checkbox__control {
+    width: var(--dss-spacing-4); /* 16px */
+    height: var(--dss-spacing-4); /* 16px */
+  }
+
+  .dss-checkbox__check,
+  .dss-checkbox__dash {
+    font-size: var(--dss-font-size-xs); /* 12px */
+  }
+}
+
+.dss-checkbox--sm {
+  gap: var(--dss-spacing-1_5); /* 6px */
+  min-height: var(--dss-compact-control-height-sm); /* 24px */
+  font-size: var(--dss-font-size-xs);
+
+  .dss-checkbox__control {
+    width: var(--dss-spacing-5); /* 20px */
+    height: var(--dss-spacing-5); /* 20px */
+  }
+
+  .dss-checkbox__check,
+  .dss-checkbox__dash {
+    font-size: var(--dss-font-size-xs); /* 12px */
+  }
+}
+
+.dss-checkbox--md {
+  /* Default size - ja definido no .dss-checkbox base */
+}
+
+.dss-checkbox--lg {
+  gap: var(--dss-spacing-3); /* 12px */
+  min-height: var(--dss-compact-control-height-lg); /* 32px */
+  font-size: var(--dss-font-size-md);
+
+  .dss-checkbox__control {
+    width: var(--dss-spacing-6); /* 24px */
+    height: var(--dss-spacing-6); /* 24px */
+  }
+
+  .dss-checkbox__check,
+  .dss-checkbox__dash {
+    font-size: var(--dss-font-size-md); /* 16px */
+  }
+}
+
+/* ==========================================================================
+   DENSE VARIANT
+   ========================================================================== */
+
+.dss-checkbox--dense {
+  gap: var(--dss-spacing-1); /* 4px */
+  min-height: var(--dss-compact-control-height-sm); /* 24px */
+  font-size: var(--dss-font-size-xs);
+}
+
+/* ==========================================================================
+   HOVER STATE
+   ========================================================================== */
+
+/*
+ * EXCECAO DOCUMENTADA: brightness(0.95)
+ *
+ * Valor canonico DSS para hover de controles interativos.
+ * filter: brightness() ajusta a cor sem alterar a base do componente.
+ * Nao existem tokens DSS para brightness.
+ *
+ * Referencia: CLAUDE.md Principio #8
+ * Valores canonicos: 0.85, 0.90, 0.92, 0.95 (light), 1.10, 1.20 (dark)
+ */
+.dss-checkbox:not(.dss-checkbox--disabled):hover .dss-checkbox__control {
+  filter: brightness(0.95);
+}
+
+/*
+ * EXCECAO DOCUMENTADA: brightness(0.90)
+ *
+ * Valor canonico DSS para active state de controles interativos.
+ * Escurecimento moderado de 10% durante interacao ativa (mousedown).
+ *
+ * Referencia: CLAUDE.md Principio #8
+ * Precedente: DssChip._base.scss :active
+ * Valores canonicos: 0.85, 0.90, 0.92, 0.95 (light), 1.10, 1.20 (dark)
+ */
+.dss-checkbox:not(.dss-checkbox--disabled):active .dss-checkbox__control {
+  filter: brightness(0.90);
+}
+
+/* ==========================================================================
+   FOCUS STATE (A11y)
+   ========================================================================== */
+
+/*
+ * Focus ring aplicado ao indicador visual (.dss-checkbox__control)
+ * quando o input nativo esta focado via :focus-visible.
+ * O tabindex existe SOMENTE no <input>, NUNCA no <label>.
+ */
+.dss-checkbox__control--focused {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline-offset: var(--dss-spacing-0_5); /* 2px */
+}
+
+/* ==========================================================================
+   DISABLED STATE
+   ========================================================================== */
+
+.dss-checkbox--disabled {
+  opacity: var(--dss-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}

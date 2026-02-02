@@ -9,6 +9,9 @@
    - Hover aumenta elevação
    ========================================================================== */
 
+/* EXCEÇÃO DOCUMENTADA: box-shadow usa rgba hardcoded (Quasar elevation system).
+   Não existem tokens DSS para shadow multi-stop. Valores reproduzem Material Design
+   elevation levels (rest=2, hover=4, active=1). Ref: DSS_COMPONENT_ARCHITECTURE.md */
 .dss-button--elevated {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
 

@@ -9,6 +9,10 @@
    - Click "afunda" o botão
    ========================================================================== */
 
+/* EXCEÇÃO DOCUMENTADA: box-shadow rgba e transform px reproduzem efeito 3D do Quasar push.
+   Não existem tokens DSS para shadow 3D ou deslocamento sub-pixel.
+   transform: translateY(-1px/2px) são valores de efeito visual, não spacing.
+   Ref: DSS_COMPONENT_ARCHITECTURE.md */
 .dss-button--push {
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
   transform: translateY(0);

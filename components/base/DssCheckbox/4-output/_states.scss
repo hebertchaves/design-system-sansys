@@ -1,0 +1,192 @@
+/* ==========================================================================
+   DssCheckbox - LAYER 4: OUTPUT (States)
+
+   RESPONSABILIDADE: Estilos para estados especiais (dark mode, high contrast)
+
+   REGRAS:
+   - Usa media queries para preferencias do usuario
+   - Ajusta contraste e visibilidade
+   - Mantem acessibilidade WCAG 2.1 AA
+   - ::before NO ROOT reservado para touch target
+   - Icones sao elementos <span>, nunca pseudo-elementos
+
+   GOLDEN COMPONENT: DssChip._states.scss
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  /*
+   * EXCECAO DOCUMENTADA: Brightness invertido para dark mode
+   *
+   * Em dark mode, fundos escuros precisam ser CLAREADOS no hover/active,
+   * nao escurecidos como em light mode.
+   *
+   * Valor: brightness(1.10) - canonico DSS
+   * Referencia: CLAUDE.md Principio #8
+   */
+  .dss-checkbox:not(.dss-checkbox--disabled):hover {
+    .dss-checkbox__control--checked,
+    .dss-checkbox__control--indeterminate {
+      filter: brightness(1.1);
+    }
+  }
+
+  /*
+   * Active state em dark mode: brightness(1.20)
+   * Clareamento de 20% durante interacao ativa.
+   * Valor canonico DSS. Precedente: DssChip._states.scss
+   */
+  .dss-checkbox:not(.dss-checkbox--disabled):active {
+    .dss-checkbox__control--checked,
+    .dss-checkbox__control--indeterminate {
+      filter: brightness(1.2);
+    }
+  }
+
+  /* Disabled state em dark mode */
+  .dss-checkbox--disabled {
+    opacity: var(--dss-opacity-disabled);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE
+   ========================================================================== */
+
+/*
+ * CONTEXTO DE ACESSIBILIDADE: prefers-contrast: more
+ *
+ * Em high contrast, bordas e outlines sao aumentados para
+ * garantir visibilidade maxima.
+ *
+ * Excecao: saturate(1.2) - valor canonico DSS
+ * Referencia: CLAUDE.md Principio #8
+ */
+@media (prefers-contrast: more) {
+  .dss-checkbox__control {
+    /* Bordas mais visiveis em high contrast */
+    border-width: var(--dss-border-width-thick);
+  }
+
+  /* Focus ring mais forte */
+  .dss-checkbox__control--focused {
+    outline-width: var(--dss-border-width-thick);
+    outline-offset: var(--dss-border-width-thick);
+  }
+
+  /* Cores mais saturadas quando checked */
+  .dss-checkbox__control--checked,
+  .dss-checkbox__control--indeterminate {
+    filter: saturate(1.2);
+  }
+
+  /* Disabled mais distinto */
+  .dss-checkbox--disabled {
+    opacity: var(--dss-opacity-50);
+
+    .dss-checkbox__label {
+      text-decoration: line-through;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-checkbox {
+    transition: none;
+  }
+
+  .dss-checkbox__control {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  .dss-checkbox {
+    /* Remove efeitos para impressao */
+    filter: none;
+  }
+
+  .dss-checkbox__control {
+    /* Borda visivel para impressao */
+    border: var(--dss-border-width-md) solid currentColor;
+    filter: none;
+    background-color: transparent;
+  }
+
+  /* Icones de check/dash visiveis na impressao */
+  .dss-checkbox__check,
+  .dss-checkbox__dash {
+    color: currentColor;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast)
+   ========================================================================== */
+
+/*
+ * CONTEXTO DE ACESSIBILIDADE: forced-colors: active
+ *
+ * Em Windows High Contrast Mode, o navegador IGNORA cores CSS customizadas.
+ * Valores como ButtonText, Highlight, GrayText sao keywords do sistema.
+ *
+ * Bordas e outlines usam valores absolutos porque:
+ * 1. Tokens CSS custom properties sao ignorados em forced-colors
+ * 2. Valores precisam ser visiveis no tema de alto contraste do usuario
+ *
+ * EXCECAO DOCUMENTADA: 2px, 3px
+ * Tokens CSS sao ignorados em forced-colors mode.
+ * Referencia: DSS_COMPONENT_ARCHITECTURE.md
+ * Precedente: DssChip._states.scss
+ */
+@media (forced-colors: active) {
+  .dss-checkbox__control {
+    /* Usa cores do sistema - tokens CSS sao ignorados */
+    border: 2px solid ButtonText;
+    background-color: ButtonFace;
+    forced-color-adjust: none;
+  }
+
+  /* Checked state em forced colors */
+  .dss-checkbox__control--checked,
+  .dss-checkbox__control--indeterminate {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+
+  /* Icones em forced colors */
+  .dss-checkbox__control--checked .dss-checkbox__check,
+  .dss-checkbox__control--indeterminate .dss-checkbox__dash {
+    color: HighlightText;
+  }
+
+  /* Hover em forced colors */
+  .dss-checkbox:not(.dss-checkbox--disabled):hover .dss-checkbox__control {
+    border-color: Highlight;
+  }
+
+  /* Focus em forced colors */
+  .dss-checkbox__control--focused {
+    outline: 3px solid Highlight;
+  }
+
+  /* Disabled em forced colors */
+  .dss-checkbox--disabled .dss-checkbox__control {
+    border-color: GrayText;
+  }
+
+  .dss-checkbox--disabled .dss-checkbox__label {
+    color: GrayText;
+  }
+}

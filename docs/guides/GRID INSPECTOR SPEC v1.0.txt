@@ -1,0 +1,311 @@
+📄 GRID INSPECTOR SPEC v1.0
+
+Design System Sansys — UI Grid Control Framework
+
+1. Visão Geral
+
+O Grid Inspector é um módulo avançado para estudo, validação e demonstração de sistemas de grid aplicados a interfaces corporativas complexas.
+
+Ele permite:
+
+controlar a estrutura real do layout
+
+visualizar overlays didáticos
+
+estudar spacing em sistemas enterprise
+
+simular densidade e nested layouts
+
+Este componente é parte do ecossistema DSS e deve seguir rigorosamente as definições deste documento.
+
+2. Objetivo do Componente
+
+O Grid Inspector existe para resolver três necessidades centrais:
+
+2.1 Layout Real
+
+Controlar o grid estrutural aplicado em dashboards, formulários e tabelas.
+
+2.2 Overlay Didático
+
+Demonstrar visualmente colunas, gaps, padding e margens.
+
+2.3 Pesquisa e Benchmark
+
+Permitir estudos refinados comparando grids modernos:
+
+Material Design
+
+IBM Carbon
+
+Bootstrap
+
+Enterprise ERP layouts
+
+3. Princípios Fundamentais
+3.1 Grid não é estética
+
+Grid é infraestrutura de layout, garantindo:
+
+consistência
+
+escalabilidade
+
+previsibilidade operacional
+
+hierarquia visual clara
+
+3.2 UI Enterprise exige densidade controlada
+
+Sistemas como saneamento, ERP e CRM trabalham com:
+
+alto volume de dados
+
+múltiplos níveis de componentes
+
+interfaces densas e funcionais
+
+Portanto, grid deve suportar modos de densidade.
+
+4. Glossário Oficial (Fonte de Verdade)
+
+Estas definições são obrigatórias e imutáveis.
+
+Padding (Espaço interno)
+
+Padding define o espaço entre:
+
+conteúdo interno
+
+borda do container
+
+📌 Exemplo:
+
+Card padding = 24px
+
+Form section padding = 32px
+
+Gap / Gutter (Espaço interno entre elementos)
+
+Gap (ou gutter) define o espaço ENTRE elementos dentro do grid:
+
+entre colunas
+
+entre linhas
+
+entre módulos internos
+
+📌 Exemplo:
+
+gap = 16px entre cards de um dashboard
+
+⚠️ Gap nunca deve ser usado como separação externa entre blocos independentes.
+
+Margin (Espaço externo entre componentes)
+
+Margin define separação externa entre:
+
+seções diferentes
+
+componentes independentes
+
+containers macroestruturais
+
+📌 Exemplo:
+
+margin-bottom = 48px entre blocos de formulário
+
+Container
+
+Container define a largura útil máxima do layout.
+
+Fixed container
+
+Fluid container
+
+Nested Grid (Grid Aninhado)
+
+Nested grid ocorre quando um componente possui layout interno próprio.
+
+Exemplo: Card contém
+
+título
+
+descrição
+
+ícone
+
+divisor
+
+CTA
+
+badges
+
+Nested grids são obrigatórios em UI enterprise.
+
+5. Estrutura Funcional do Grid Inspector
+
+O painel deve ser compacto, escalável e organizado por tabs.
+
+6. Arquitetura do Painel (UX/UI)
+Layout obrigatório: Tabs + Accordions
+TAB 1 — Layout Grid (Real)
+
+Controla a estrutura real aplicada ao sistema.
+
+Seletores obrigatórios:
+
+Columns Count: 4 / 8 / 12 / 16 / 24
+
+Container Type: Fixed / Fluid
+
+Column Width Mode: Auto / Fixed
+
+Breakpoints Presets:
+
+Mobile
+
+Tablet
+
+Desktop
+
+Ultra-wide
+
+TAB 2 — Overlay Grid (Didático)
+
+Camada visual de estudo.
+
+Controles obrigatórios:
+
+Toggle: Show Columns
+
+Toggle: Show Gap Zones
+
+Toggle: Show Padding Zones
+
+Toggle: Show Margin Boundaries
+
+Slider: Overlay Opacity
+
+Color Mapping System
+
+TAB 3 — Spacing System (Enterprise)
+
+Controle refinado de spacing.
+
+Seletores obrigatórios:
+
+Gap X (Column Gap)
+
+Gap Y (Row Gap)
+
+Padding Inline (Left/Right)
+
+Padding Block (Top/Bottom)
+
+Margin External (Between Sections)
+
+TAB 4 — Advanced Layout Study
+
+Modo avançado de benchmark.
+
+Features obrigatórias:
+
+Nested Grid Inspector
+
+Baseline Grid (4px/8px step)
+
+Density Modes:
+
+Comfortable
+
+Compact
+
+Dense
+
+7. Presets Enterprise (Saneamento / ERP)
+
+O Grid Inspector deve oferecer layouts exemplo reais:
+
+Dashboard
+
+volume distribuído
+
+clientes ativos
+
+alertas críticos
+
+eficiência operacional
+
+Formulários administrativos
+
+cadastro de unidade
+
+ordens de serviço
+
+parâmetros tarifários
+
+Tabelas densas
+
+filtros avançados
+
+paginação
+
+colunas fixas
+
+ações inline
+
+8. Benchmark Oficial de Mercado
+
+O Grid Inspector deve estar alinhado com:
+
+Material Design
+
+spacing baseado em múltiplos de 8dp
+
+grids responsivos escaláveis
+
+IBM Carbon
+
+enterprise-first
+
+densidade alta e modularidade
+
+Bootstrap
+
+grid universal de 12 colunas
+
+breakpoints padronizados
+
+Atlassian Design System
+
+layouts operacionais complexos
+
+9. Tokens Recomendados (Design System)
+
+O Grid Inspector deve operar sobre tokens:
+
+Spacing Scale
+
+4 / 8 / 12 / 16 / 24 / 32 / 48 / 64
+
+Grid Presets
+
+12 col (standard web)
+
+16 col (enterprise dashboards)
+
+24 col (ultra-wide data systems)
+
+10. Checklist de Validação
+
+Antes de aprovar qualquer alteração:
+
+✅ Gap aplicado internamente entre módulos
+✅ Margin usado apenas externamente
+✅ Padding consistente em containers
+✅ Nested grids suportados
+✅ Painel escalável sem crescer verticalmente
+✅ Densidade ajustável
+✅ Overlay didático claro
+✅ Presets enterprise disponíveis
