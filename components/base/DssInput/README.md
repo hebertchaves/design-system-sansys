@@ -195,7 +195,7 @@ interface InputProps {
 
   &.dss-input--focused .dss-input__field {
     border-color: var(--dss-action-primary);
-    box-shadow: 0 0 0 1px var(--dss-action-primary);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
   }
 }
 ```
@@ -216,7 +216,7 @@ interface InputProps {
 [data-brand="hub"] .dss-input--brand-hub {
   &.dss-input--focused .dss-input__field {
     border-color: var(--dss-hub-600);
-    box-shadow: 0 0 0 1px var(--dss-hub-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-hub-600);
   }
 }
 ```
@@ -411,7 +411,7 @@ const focusInput = () => {
 - Label mantém posição
 
 ### **Disabled**
-- Opacidade reduzida (0.6)
+- Opacidade reduzida (0.4)
 - Border dotted
 - Cursor `not-allowed`
 - Não interativo

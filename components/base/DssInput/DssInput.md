@@ -258,7 +258,7 @@ O **DssInput** consome tokens de **múltiplas categorias** do Design System Sans
 | **Focus** | Borda azul, box-shadow, label flutua para cima | Editando ativamente | `--dss-action-primary`, `--dss-focus-ring` | WCAG 2.4.7 AA |
 | **Filled (com valor)** | Label flutuante no topo, valor visível | Clearable se habilitado | - | Label permanece no topo |
 | **Error** | Borda vermelha, mensagem de erro visível | Editável para correção | `--dss-error-600`, `--dss-error-900` | `role="alert"` no error |
-| **Disabled** | Opacidade 0.6, borda pontilhada, cursor not-allowed | Não focável, não editável | `--dss-opacity-disabled` | `aria-disabled="true"` |
+| **Disabled** | Opacidade 0.4, borda pontilhada, cursor not-allowed | Não focável, não editável | `--dss-opacity-disabled` | `aria-disabled="true"` |
 | **Readonly** | Aparência normal, sem edição | Focável, selecionável, não editável | - | `aria-readonly="true"` |
 | **Loading** | Spinner no append, pointer-events desabilitado | Não editável temporariamente | - | `aria-busy="true"` |
 

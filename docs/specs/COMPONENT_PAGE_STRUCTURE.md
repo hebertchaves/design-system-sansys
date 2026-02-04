@@ -1,8 +1,10 @@
 # Estrutura Padrão para Páginas de Componentes DSS
 
-**Versão 2.0 - Janeiro 2025**
+**Versão 2.2 — Fevereiro 2026**
 
 Este documento define a hierarquia oficial de informações para todas as páginas de documentação de componentes no Design System Sansys.
+
+> **Natureza normativa.** Este template é vinculante para todas as páginas de componentes publicadas no repositório Lovable. Seções marcadas com ⭐ OBRIGATÓRIO não podem ser omitidas. Seções marcadas como (Opcional) podem ser omitidas com justificativa.
 
 ---
 
@@ -12,10 +14,28 @@ Todas as páginas de componentes DEVEM seguir esta estrutura na ordem especifica
 
 ### 1. Badges de Metadados
 
-- Versão do componente (ex: `v2.1.0`)
+- Versão do componente (ex: `v2.3.0`)
 - Compatibilidade (ex: `Quasar Compatible`)
-- Status (ex: `Golden Sample`, `Beta`, `Deprecated`)
+- Status (ex: `Beta`, `Deprecated`, `Selo DSS v2.2`)
 - Referências relevantes
+
+#### Golden Component Badge
+
+Quando o componente possui **Selo de Conformidade DSS v2.2**, o badge DEVE declarar:
+
+```
+Status: Selo DSS v2.2
+```
+
+Se o componente é um **Golden Component** (referência normativa para sua categoria), o badge DEVE declarar:
+
+```
+Status: Golden Component (normativo)
+```
+
+> **Referência:** Consultar `docs/governance/DSS_GOLDEN_COMPONENTS.md` para lista oficial de Golden Components.
+> Apenas componentes listados nesse documento podem usar o badge "Golden Component".
+> A ausência do badge Golden Component NÃO impede a publicação — apenas indica que o componente não é referência normativa para sua categoria.
 
 ### 2. Título do Componente
 
@@ -37,7 +57,36 @@ Todas as páginas de componentes DEVEM seguir esta estrutura na ordem especifica
 - Variantes, Cores, Brands, Tamanhos, etc.
 - Cores visuais para cada stat
 
-### 5. Playground Interativo
+### 5. Quando Usar / Quando NÃO Usar ⭐ OBRIGATÓRIO
+
+Esta seção DEVE estar presente em toda página de componente. Seu objetivo é orientar decisões de produto — quando selecionar este componente e quando optar por outro.
+
+#### Formato obrigatório
+
+```markdown
+#### ✅ Quando Usar
+
+- Caso de uso 1 (orientado a produto/UX)
+- Caso de uso 2
+- Caso de uso 3
+
+#### ❌ Quando NÃO Usar
+
+| Cenário | Alternativa Recomendada |
+|---------|------------------------|
+| Textos longos / multiline | `DssTextarea` |
+| Seleção entre opções predefinidas | `DssSelect` |
+| Valores booleanos | `DssCheckbox` ou `DssToggle` |
+```
+
+#### Regras
+
+- Mínimo de 3 itens em "Quando Usar"
+- Mínimo de 3 itens em "Quando NÃO Usar"
+- "Quando NÃO Usar" DEVE indicar a alternativa recomendada
+- Foco em decisão de produto, não em detalhes técnicos
+
+### 6. Playground Interativo
 
 - Card único contendo:
   - Preview visual do componente
@@ -46,13 +95,38 @@ Todas as páginas de componentes DEVEM seguir esta estrutura na ordem especifica
   - **Toggle Light/Dark Mode** para testar em ambos os temas
 - Usar seção `SectionHeader` com título "Playground **Interativo**"
 
-### 6. Galeria de Variantes (Opcional)
+### 7. Estados Interativos ⭐ OBRIGATÓRIO
+
+Esta seção DEVE apresentar uma **tabela única padronizada** com todos os estados visuais e interativos do componente. A tabela DEVE cobrir no mínimo os estados listados abaixo.
+
+#### Formato obrigatório
+
+```markdown
+| Estado | Aparência | Interação | Tokens / Regras CSS | Notas |
+|--------|-----------|-----------|---------------------|-------|
+| **Default** | Descrição visual | Comportamento | Tokens aplicados | — |
+| **Hover** | Descrição visual | Comportamento | Tokens aplicados | — |
+| **Focus** | Descrição visual | Comportamento | Tokens aplicados | WCAG 2.4.7 |
+| **Active / Pressed** | Descrição visual | Comportamento | Tokens aplicados | — |
+| **Disabled** | Descrição visual | Não interativo | Tokens aplicados | `aria-disabled` |
+| **Loading** | Descrição visual | Não interativo | Tokens aplicados | `aria-busy` (se aplicável) |
+```
+
+#### Regras
+
+- Os estados **Default**, **Hover**, **Focus**, **Active** e **Disabled** são OBRIGATÓRIOS
+- **Loading** é obrigatório se o componente suportar a prop `loading`; caso contrário, declarar "Não aplicável" explicitamente
+- Cada estado DEVE listar os tokens CSS aplicados (ex: `--dss-opacity-disabled`, `--dss-action-primary`)
+- Se o componente possui variantes, os estados DEVEM ser documentados para cada variante ou declarar que se aplicam uniformemente
+- A coluna "Notas" DEVE indicar critérios WCAG aplicáveis (ex: WCAG 2.4.7 para focus)
+
+### 8. Galeria de Variantes (Opcional)
 
 - Tabs organizados por categoria (Variantes, Cores, Brands, Tamanhos, Estados)
 - Demonstração visual de cada opção
 - Usar componente `DssTabs`
 
-### 7. Anatomia 4 Camadas ⭐ OBRIGATÓRIO
+### 9. Anatomia 4 Camadas ⭐ OBRIGATÓRIO
 
 - Usar componente `AnatomySection`
 - Cards clicáveis para cada camada:
@@ -67,13 +141,179 @@ Todas as páginas de componentes DEVEM seguir esta estrutura na ordem especifica
   - Tokens utilizados
   - Exemplo de código
 
-### 8. Documentação Técnica (Colapsável)
+### 10. Documentação Técnica (Colapsável)
 
 - Usar componente `CollapsibleSection`
-- Seções:
-  - **Props API & Eventos** - Tabela com todas as props
+- Seções OBRIGATÓRIAS:
+  - **Props API** - Tabela com todas as props, agrupadas por categoria
+  - **Eventos** - Tabela com todos os eventos emitidos, payload e descrição
+  - **Slots** - Tabela com todos os slots disponíveis e seu propósito
   - **Tokens DSS Utilizados** - Tabs por categoria de tokens
-  - **Acessibilidade WCAG** - Conformidade e implementação
+  - **Acessibilidade WCAG** - Conformidade e implementação (ver formato abaixo)
+
+> **Regra:** Se o componente não emite eventos, declarar explicitamente: "Este componente não emite eventos customizados."
+> Se o componente não possui slots, declarar explicitamente: "Este componente não possui slots."
+> Omissão silenciosa é proibida.
+
+#### 10.1 Eventos — formato obrigatório
+
+```markdown
+| Evento | Payload | Quando Emitido | Descrição |
+|--------|---------|----------------|-----------|
+| `update:modelValue` | `string` | Ao alterar valor | Evento v-model |
+| `focus` | `FocusEvent` | Ao receber foco | — |
+```
+
+#### 10.2 Slots — formato obrigatório
+
+```markdown
+| Slot | Descrição | Uso Recomendado |
+|------|-----------|-----------------|
+| `default` | Conteúdo principal | Texto ou ícones |
+| `prepend` | Conteúdo à esquerda | Ícones de contexto |
+```
+
+#### 10.3 Acessibilidade WCAG — formato obrigatório
+
+A seção de acessibilidade DEVE conter no mínimo:
+
+**A. Tabela de conformidade WCAG**
+
+```markdown
+| Critério WCAG | Nível | Aplicação no Componente | Status |
+|---------------|-------|-------------------------|--------|
+| 2.5.5 Target Size | AA | Touch target mínimo 44px | ✅ |
+| 2.4.7 Focus Visible | AA | Focus ring visível com token `--dss-focus-ring` | ✅ |
+| 1.4.3 Contrast (Minimum) | AA | Contraste texto/fundo ≥ 4.5:1 | ✅ |
+| 1.3.1 Info and Relationships | A | Labels, ARIA, estrutura semântica | ✅ |
+| 4.1.2 Name, Role, Value | A | ARIA attributes completos | ✅ |
+```
+
+> Incluir todos os critérios WCAG aplicáveis ao componente. A tabela acima é o mínimo obrigatório.
+
+**B. Touch Target vs Altura Visual**
+
+A página DEVE documentar explicitamente a relação entre altura visual e touch target:
+
+```markdown
+#### Touch Target vs Altura Visual
+
+| Propriedade | Valor | Token |
+|-------------|-------|-------|
+| **Altura visual** | Xpx | `--dss-*` |
+| **Touch target (área clicável)** | ≥ 44px | `--dss-*` |
+| **Implementação** | `min-height` ou `::before` | — |
+```
+
+Regras:
+- A altura visual PODE ser menor que 44px (ex: Chip, Badge)
+- O touch target DEVE ser ≥ 44px para componentes interativos (WCAG 2.5.5)
+- Se altura visual = touch target, declarar explicitamente
+- Se altura visual < touch target, documentar o mecanismo de expansão (`::before`, wrapper interno, etc.)
+- Componentes NÃO interativos (Visual / Identity) NÃO são obrigados a implementar touch target; declarar explicitamente essa decisão
+
+**C. Media queries de acessibilidade**
+
+Documentar suporte a:
+- `prefers-reduced-motion: reduce`
+- `prefers-contrast: high`
+- `forced-colors: active` (Windows High Contrast)
+
+### 11. Anti-patterns ⭐ OBRIGATÓRIO
+
+Esta seção DEVE listar usos incorretos comuns e confusões com outros componentes. O objetivo é prevenir erros recorrentes.
+
+#### Formato obrigatório
+
+```markdown
+#### Usos Incorretos
+
+##### 1. Título do Anti-pattern
+
+**Problema:** Descrição do uso incorreto.
+
+<!-- Exemplo INCORRETO -->
+<!-- Exemplo CORRETO -->
+
+**Por quê:** Justificativa técnica ou de UX.
+
+---
+
+#### Combinações Não Permitidas
+
+| Combinação | Por quê | Alternativa |
+|------------|---------|-------------|
+| `disabled` + `loading` | Estados conflitantes | Use apenas `loading` |
+```
+
+#### Regras
+
+- Mínimo de 3 anti-patterns documentados
+- Cada anti-pattern DEVE ter exemplo incorreto E correto
+- Incluir tabela de "Combinações Não Permitidas" quando o componente possuir props de estado
+- Linguagem direta e prática
+
+### 12. Vinculantes DSS v2.2 ⭐ OBRIGATÓRIO
+
+Esta seção DEVE estar presente em toda página de componente e declara conformidade com as regras normativas DSS v2.2.
+
+#### 12.1 Pseudo-elementos
+
+Toda página DEVE declarar explicitamente o uso de pseudo-elementos no componente:
+
+```markdown
+#### Uso de Pseudo-elementos
+
+| Pseudo-elemento | Uso neste componente | Finalidade |
+|-----------------|----------------------|------------|
+| `::before` | ✅ Utilizado / ❌ Não utilizado | Touch target (WCAG 2.5.5) |
+| `::after` | ✅ Utilizado / ❌ Não utilizado | Efeitos visuais (hover, overlay) |
+```
+
+Convenção oficial DSS (CLAUDE.md, vinculante):
+- `::before` → **RESERVADO** exclusivamente para touch target (WCAG 2.5.5)
+- `::after` → Efeitos visuais (hover, active, selected overlays)
+
+> ❌ Uso conflituoso (ex: `::before` para efeitos visuais) é **erro bloqueante**.
+> ⚠️ Uso não documentado é **gap de auditoria**.
+
+#### 12.2 Tabela Canônica de `brightness()`
+
+Se o componente utiliza `filter: brightness()` para estados visuais, a página DEVE referenciar a tabela canônica abaixo. Valores fora desta tabela são PROIBIDOS sem aprovação explícita.
+
+| Valor | Uso | Contexto | Aplicação |
+|-------|-----|----------|-----------|
+| `brightness(0.95)` | Hover padrão | Light mode | Todos (base) |
+| `brightness(0.92)` | Hover intensificado | Light mode, fundos sólidos | Filled variants |
+| `brightness(0.90)` | Active padrão | Light mode | Todos (base) |
+| `brightness(0.85)` | Active intensificado | Light mode, fundos sólidos | Filled variants |
+| `brightness(1.10)` | Hover dark mode | Dark mode | Filled variants |
+| `brightness(1.20)` | Active dark mode | Dark mode | Filled variants |
+
+> **Fonte:** `docs/reference/DSS_COMPONENT_ARCHITECTURE.md` — Valores Visuais Permitidos.
+> ❌ Valores arbitrários (ex: 0.93, 0.88, 1.05) são PROIBIDOS.
+> Novos valores exigem justificativa e aprovação da equipe DSS.
+
+Se o componente **não utiliza** `filter: brightness()`, declarar explicitamente:
+
+```markdown
+Este componente não utiliza `filter: brightness()`. Estados visuais são implementados via tokens de cor.
+```
+
+#### 12.3 Classificação do Componente
+
+Toda página DEVE declarar a classificação do componente conforme DSS v2.2:
+
+| Classificação | Descrição | Exemplo |
+|---------------|-----------|---------|
+| **Action Control (interativo)** | Recebe interação direta do usuário | DssButton, DssInput, DssCheckbox |
+| **Compact Control** | Controle interativo de dimensões reduzidas | DssChip, DssBadge (interativo) |
+| **Visual / Identity (não interativo)** | Exibe informação sem interação direta | DssBadge (estático), DssDivider |
+
+A classificação determina:
+- Se touch target é obrigatório (Action Control e Compact Control: sim; Visual/Identity: não)
+- Quais tokens de altura usar (`--dss-compact-control-height-*` para Compact Controls)
+- Quais estados são mandatórios
 
 ---
 
@@ -171,10 +411,10 @@ const brandColors = {
 
 ```typescript
 const variants = [
-  { 
+  {
     name: "elevated",      // Valor da prop
     label: "Elevated",     // Label de exibição
-    desc: "Botão com elevação/shadow (padrão)", 
+    desc: "Botão com elevação/shadow (padrão)",
     hasElevation: true     // Metadado para lógica
   },
   { name: "flat", label: "Flat", desc: "Background transparente, apenas texto", hasElevation: false },
@@ -214,17 +454,57 @@ const sizes = [
 
 ```typescript
 const propsData = [
-  { 
+  {
     category: "Conteúdo",      // Agrupamento
     prop: "label",             // Nome da prop
     type: "String",            // Tipo TypeScript
     default: "''",             // Valor padrão
-    description: "Texto do botão" 
+    description: "Texto do botão"
   },
   { category: "Variantes", prop: "variant", type: "'elevated' | 'flat' | 'outline'", default: "'elevated'", description: "Estilo visual" },
   { category: "Estados", prop: "loading", type: "Boolean", default: "false", description: "Exibe spinner" },
   { category: "Brandabilidade", prop: "brand", type: "'hub' | 'water' | 'waste'", default: "null", description: "Tema de marca" },
   // ... demais props agrupadas por categoria
+];
+```
+
+### Eventos
+
+```typescript
+const eventsData = [
+  {
+    event: "update:modelValue",
+    payload: "string",
+    description: "Emitido quando o valor muda (v-model)",
+  },
+  {
+    event: "click",
+    payload: "MouseEvent",
+    description: "Emitido ao clicar no componente",
+  },
+  // ... demais eventos
+  // Se não houver eventos: declarar array vazio com comentário
+  // const eventsData = []; // Este componente não emite eventos customizados
+];
+```
+
+### Slots
+
+```typescript
+const slotsData = [
+  {
+    slot: "default",
+    description: "Conteúdo principal do componente",
+    usage: "Texto, ícones ou conteúdo customizado",
+  },
+  {
+    slot: "prepend",
+    description: "Conteúdo antes do conteúdo principal",
+    usage: "Ícones de contexto",
+  },
+  // ... demais slots
+  // Se não houver slots: declarar array vazio com comentário
+  // const slotsData = []; // Este componente não possui slots
 ];
 ```
 
@@ -307,7 +587,7 @@ const getVariantStyles = (): React.CSSProperties => {
         color: isHovered ? colors.hover : colors.bg,
         border: variant === "outline" ? `1px solid ${isHovered ? colors.hover : colors.bg}` : "none",
       };
-    
+
     case "elevated":
     case "unelevated":
       // Hover: background usa COR HOVER
@@ -315,7 +595,7 @@ const getVariantStyles = (): React.CSSProperties => {
         backgroundColor: isHovered ? colors.hover : colors.bg,
         color: colors.textColor,
       };
-    
+
     case "push":
       // Hover: efeito 3D com translate
       return {
@@ -366,10 +646,10 @@ O playground DEVE suportar alternância de tema para visualização do component
 const [isDarkMode, setIsDarkMode] = useState(false);
 
 // Preview wrapper com tema dinâmico
-<div 
+<div
   style={{
     backgroundColor: isDarkMode ? '#1a1a2e' : '#ffffff',
-    backgroundImage: isDarkMode 
+    backgroundImage: isDarkMode
       ? 'radial-gradient(circle, #2d2d44 1px, transparent 1px)'
       : 'radial-gradient(circle, #e5e5e5 1px, transparent 1px)',
     backgroundSize: '20px 20px',
@@ -398,7 +678,7 @@ const [isDarkMode, setIsDarkMode] = useState(false);
 ```tsx
 <PageHeader
   icon={Box}
-  badge="Golden Sample"
+  badge="Selo DSS v2.2"
   badgeVariant="accent"
   title="Componente"
   titleAccent="DssButton"
@@ -475,14 +755,18 @@ interface AnatomyData {
 Antes de publicar uma página de componente, verifique:
 
 ### Estrutura
-- [ ] Badges de metadados presentes
+- [ ] Badges de metadados presentes (incluindo Golden Component se aplicável)
 - [ ] PageHeader com ícone e descrição
 - [ ] Quick Stats com métricas relevantes (opcional)
+- [ ] **Quando Usar / Quando NÃO Usar preenchido** (obrigatório)
 - [ ] Playground funcional com todos os controles
 - [ ] Toggle Light/Dark no playground
+- [ ] **Estados Interativos documentados em tabela única** (obrigatório)
 - [ ] Galeria de variantes em tabs (opcional)
 - [ ] Anatomia 4 Camadas com dados completos
 - [ ] Documentação técnica em CollapsibleSection
+- [ ] **Anti-patterns documentados** (obrigatório, mínimo 3)
+- [ ] **Vinculantes DSS v2.2 declarados** (obrigatório)
 
 ### Dados
 - [ ] `semanticColors` com tokens completos
@@ -491,6 +775,8 @@ Antes de publicar uma página de componente, verifique:
 - [ ] `variants` com metadados
 - [ ] `sizes` com touch targets WCAG
 - [ ] `propsData` categorizado
+- [ ] **`eventsData` declarado** (mesmo que vazio)
+- [ ] **`slotsData` declarado** (mesmo que vazio)
 - [ ] `tokensUsed` organizado por categoria (14 categorias)
 - [ ] `anatomyData` para as 4 camadas
 
@@ -502,21 +788,31 @@ Antes de publicar uma página de componente, verifique:
 
 ### Conteúdo
 - [ ] Props API documentada em tabela
+- [ ] **Eventos documentados em tabela** (ou declaração de ausência)
+- [ ] **Slots documentados em tabela** (ou declaração de ausência)
 - [ ] Tokens organizados por categoria
-- [ ] Seção de acessibilidade preenchida
+- [ ] Seção de acessibilidade preenchida com **tabela WCAG**
+- [ ] **Touch Target vs Altura Visual documentado**
+- [ ] **Pseudo-elementos declarados** (uso ou não-uso)
+- [ ] **Tabela de brightness() referenciada** (se aplicável)
+- [ ] **Classificação do componente declarada** (Action Control / Compact Control / Visual)
 
 ---
 
 ## 📚 Referências
 
-- **Componente modelo (Golden Sample)**: `src/pages/components/DssButtonPage.tsx`
-- **AnatomySection**: `src/components/ui/AnatomySection.tsx`
-- **CollapsibleSection**: `src/components/ui/CollapsibleSection.tsx`
-- **PageHeader**: `src/components/ui/PageHeader.tsx`
-- **SectionHeader**: `src/components/ui/SectionHeader.tsx`
+- **Golden Components:** `docs/governance/DSS_GOLDEN_COMPONENTS.md`
+- **Tokens oficiais:** `docs/reference/DSS_TOKEN_REFERENCE.md`
+- **Arquitetura de componentes:** `docs/reference/DSS_COMPONENT_ARCHITECTURE.md`
+- **Guia de implementação:** `docs/guides/DSS_IMPLEMENTATION_GUIDE.md`
+- **Componente modelo:** `src/pages/components/DssButtonPage.tsx`
+- **AnatomySection:** `src/components/ui/AnatomySection.tsx`
+- **CollapsibleSection:** `src/components/ui/CollapsibleSection.tsx`
+- **PageHeader:** `src/components/ui/PageHeader.tsx`
+- **SectionHeader:** `src/components/ui/SectionHeader.tsx`
 
 ---
 
 **Mantido por:** Equipe Design System Sansys
-**Atualizado em:** Janeiro 2025
-**Versão:** 2.0.0
+**Atualizado em:** Fevereiro 2026
+**Versão:** 2.2.0
