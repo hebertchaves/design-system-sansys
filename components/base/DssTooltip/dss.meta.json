@@ -1,0 +1,17 @@
+{
+  "component": "DssTooltip",
+  "dssVersion": "2.2",
+  "status": "sealed",
+  "seal": "DSS/docs/Compliance/seals/DssTooltip/DSSTOOLTIP_SELO_v2.2.md",
+  "auditMode": "final",
+  "auditDate": "2026-02-06",
+  "goldenComponent": "DssBadge",
+  "category": "Elemento Informativo Contextual nao interativo",
+  "phase": 1,
+  "hasReservations": true,
+  "reservationCount": 4,
+  "touchTarget": false,
+  "interactionStrategy": "external",
+  "states": ["visible", "hidden"],
+  "statesNotApplicable": ["hover", "active", "disabled", "loading", "focus", "checked"]
+}

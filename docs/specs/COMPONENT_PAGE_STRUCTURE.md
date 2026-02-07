@@ -1,172 +1,357 @@
-## 📚 Referências Normativas ⭐ OBRIGATÓRIO
+Estrutura Padrão para Páginas de Componentes DSS
 
-Esta seção estabelece **as fontes normativas oficiais** que a IA DEVE consultar, correlacionar e respeitar ao editar, atualizar ou validar uma página de componente DSS. Nenhuma decisão estrutural, semântica ou técnica pode ser tomada fora do escopo destas referências.
+Versão 2.3 — Fevereiro 2026
 
-### 1. Hierarquia de Autoridade
+Este documento define a estrutura normativa oficial para todas as páginas de documentação
+de componentes do Design System Sansys (DSS) publicadas no repositório Lovable.
 
-A IA DEVE respeitar rigorosamente a seguinte ordem de precedência:
+Natureza normativa e vinculante.
+Este arquivo é a fonte única da verdade estrutural das páginas de componentes.
+Nenhuma página pode divergir, simplificar ou reconstruir esta estrutura por inferência.
 
-1. **Selos de Conformidade DSS** (fonte máxima de verdade)
-2. **Documentos Normativos DSS v2.2**
-3. **COMPONENT_PAGE_STRUCTURE.md** (estrutura obrigatória)
-4. **PLAYGROUND_STANDARD.md** (padrões de interatividade)
-5. **Arquivo do componente (`Dss[Component]Page.tsx`)**
-6. **Tokens Oficiais DSS**
+🔒 Princípios Fundamentais
 
-Em caso de conflito, **a fonte de nível mais alto SEMPRE prevalece**.
+O DSS é maduro e em produção
 
----
+Este documento não cria arquitetura, apenas a expõe
 
-### 2. Selos de Conformidade DSS
+Nenhuma informação normativa pode ser:
 
-Antes de QUALQUER edição no template da página do componente, a IA DEVE:
+inferida
 
-1. Verificar se existe selo de conformidade para o componente.
-2. Ler integralmente o conteúdo do selo.
-3. Extrair regras, exceções, obrigações e decisões já aprovadas.
-4. Aplicar essas decisões de forma vinculante na página.
+duplicada
 
-#### 📁 Local Canônico dos Selos
+parcialmente documentada
 
-Os selos de conformidade estão armazenados obrigatoriamente no caminho:
+Omissão silenciosa é erro de auditoria
 
-```
+🧭 Referências Normativas e Precedência
+
+Em caso de conflito, a seguinte hierarquia DEVE ser respeitada:
+
+DSS_ARCHITECTURE.md
+
+COMPONENT_PAGE_STRUCTURE.md (este documento)
+
+DSS/docs/reference/DSS_COMPONENT_ARCHITECTURE.md
+
+DSS/docs/reference/DSS_TOKEN_REFERENCE.md
+
+DSS/docs/reference/DSS_TOKEN_GUIDELINES.md
+
+DSS/docs/governance/DSS_GOLDEN_COMPONENTS.md
+
+DSS/docs/compliance/seals/**
+
+Nenhuma página de componente pode sobrepor essas fontes.
+
+🏷️ Badges, Golden Components e Selos DSS
+Golden Component
+
+Um componente SÓ PODE declarar-se Golden Component se estiver listado em:
+
+DSS/docs/governance/DSS_GOLDEN_COMPONENTS.md
+
+
+A ausência do badge não impede publicação.
+
+Selo DSS v2.2
+
+A conformidade DSS NÃO é inferencial.
+
+📁 Caminho canônico obrigatório do selo:
+
 DSS/docs/compliance/seals/<NomeDoComponente>/<NOME_DO_COMPONENTE>_SELO_v2.2.md
-```
 
-Exemplo:
-
-```
-DSS/docs/compliance/seals/DssButton/DSSBUTTON_SELO_v2.2.md
-```
-
-#### Regras
-
-* Se o selo EXISTIR → ele é **fonte normativa obrigatória**
-
-* Se o selo NÃO existir → declarar explicitamente na página:
-
-  > "Este componente ainda não possui Selo de Conformidade DSS v2.2."
-
-* A IA **NÃO pode inferir** conformidade sem selo explícito
-
-* A IA **NÃO pode criar, alterar ou suavizar regras** definidas no selo
-
----
-
-### 3. Documentos Normativos DSS
-
-A IA DEVE consultar e respeitar integralmente:
-
-* `docs/reference/DSS_COMPONENT_ARCHITECTURE.md`
-* `docs/reference/DSS_TOKEN_REFERENCE.md`
-* `docs/governance/DSS_GOLDEN_COMPONENTS.md`
-* `docs/guides/DSS_IMPLEMENTATION_GUIDE.md`
-
-Esses documentos definem:
-
-* Uso permitido de pseudo‑elementos
-* Tabela canônica de `brightness()`
-* Classificação de componentes
-* Regras de estados interativos
-* Governança de tokens
-
----
-
-### 4. Estrutura da Página do Componente
-
-A IA DEVE seguir **sem exceções** a estrutura definida em:
-
-```
-COMPONENT_PAGE_STRUCTURE.md
-```
 
 Regras:
 
-* Seções ⭐ OBRIGATÓRIAS nunca podem ser omitidas
-* Seções opcionais só podem ser removidas com justificativa explícita
-* A ordem das seções é vinculante
+Sem selo → sem badge
+
+Código similar ≠ conformidade
+
+Componentes sem selo podem ser documentados, mas não são normativos
+
+🤖 Modo de Operação da IA (Vinculante)
+
+Qualquer IA (Lovable, Claude, etc.) que gere ou edite páginas de componentes DEVE:
+
+Usar este arquivo como referência estrutural
+
+NÃO criar templates paralelos
+
+NÃO inferir:
+
+tokens
+
+WCAG
+
+conformidade
+
+classificação
+
+Declarar explicitamente:
+
+“Não aplicável”
+
+“Não suportado”
+
+“Não utilizado”
+
+Regra de Não-Redundância
+
+Inventários globais vivem em documentos globais
+
+Páginas de componentes referenciam, não duplicam
+
+📋 Hierarquia Oficial das Seções
+
+Todas as páginas de componentes DEVEM seguir a ordem abaixo.
+
+1. Badges de Metadados
+
+Versão
+
+Compatibilidade
+
+Status
+
+Golden Component (se aplicável)
+
+Selo DSS v2.2 (se aplicável)
+
+2. Título do Componente
+
+PageHeader
+
+Ícone
+
+Nome do componente
+
+3. Descrição do Componente ⭐ OBRIGATÓRIO
+
+Esta seção DEVE descrever o **papel funcional do componente na interface**,
+orientando **decisões de produto e UX**.
+
+A descrição NÃO é uma definição técnica nem uma lista de capacidades.
+Ela deve responder à pergunta:
+
+> “Que tipo de ação ou informação este componente representa para o usuário final?”
+
+#### Estrutura obrigatória da descrição
+
+A descrição DEVE seguir o formato abaixo:
+
+1. **Frase 1 — Papel principal**
+   - Declare claramente **o que o componente representa na interface**
+   - Use linguagem orientada a ação ou função de UX
+   - Comece preferencialmente com:
+     - “DssX é o componente utilizado para…”
+
+2. **Frase 2 — Contextos de uso**
+   - Indique **quais tipos de ações, decisões ou situações** ele cobre
+   - Cite exemplos de uso reais (ex: confirmar, navegar, selecionar, indicar estado)
+
+3. **Frase 3 — Comportamento ou integração**
+   - Explique como o componente **se comporta no fluxo**
+   - Ou como **se integra a outros componentes**
+   - Ex: pode ser aninhado, disparar ações, representar estado, etc.
+
+#### Regras obrigatórias
+
+- Máximo de **3 frases**
+- Linguagem de **produto e UX**, não técnica
+- ❌ NÃO listar:
+  - WCAG
+  - Tokens
+  - Brandability
+  - Governança
+- ❌ NÃO usar verbos genéricos como:
+  - “representa visualmente”
+  - “suporta”
+  - “permite”
+- ❌ NÃO definir o componente pelo nome ou pela tecnologia
 
 ---
 
-## 🤖 Modo de Operação da IA ⭐ OBRIGATÓRIO
+#### Exemplos de referência
 
-Esta seção define **como a IA deve pensar, decidir e agir** ao editar ou amadurecer uma página de componente DSS.
+**Exemplo correto:**
 
----
+> DssButton é o componente utilizado para representar ações na interface, como confirmar, cancelar, enviar ou navegar.  
+> Ele oferece variações visuais e comportamentais bem definidas para diferentes contextos de uso.  
+> Pode ser utilizado de forma isolada ou aninhado em outros componentes acionáveis.
 
-### 1. Princípio Fundamental
+**Exemplo incorreto:**
 
-> **A IA NÃO cria um novo template.**
->
-> A IA **refina, amadurece e corrige** o template existente até atingir conformidade total com o DSS.
-
----
-
-### 2. Fluxo Operacional Obrigatório
-
-A IA DEVE seguir o fluxo abaixo, sempre nesta ordem:
-
-1. **Identificação do Componente**
-
-   * Nome do componente
-   * Classificação (Action / Compact / Visual)
-
-2. **Leitura do Selo (se existir)**
-
-   * Extrair decisões já aprovadas
-   * Identificar exceções documentadas
-
-3. **Auditoria da Página Atual**
-
-   * Comparar com `COMPONENT_PAGE_STRUCTURE.md`
-   * Identificar gaps, omissões ou inconsistências
-
-4. **Correção Estrutural**
-
-   * Criar seções faltantes
-   * Reorganizar seções fora de ordem
-   * Renomear seções conforme padrão oficial
-
-5. **Refinamento de Conteúdo**
-
-   * Tornar descrições mais orientadas a UX/produto
-   * Eliminar redundâncias
-   * Garantir linguagem normativa onde exigido
-
-6. **Validação Final**
-
-   * Checklist de conformidade DSS v2.2
-   * Declarações explícitas (eventos ausentes, slots ausentes, etc.)
+> DssAvatar é o componente para representação visual de usuários, entidades ou placeholders.  
+> Suporta brandabilidade multi-marca, status indicators e conformidade WCAG 2.1 AA.
 
 ---
 
-### 3. Regras de Decisão
+> ⚠️ Descrições que não sigam esta estrutura devem ser tratadas como **erro de auditoria**.
 
-A IA:
+4. Quando Usar / Quando NÃO Usar ⭐ OBRIGATÓRIO
 
-* ❌ NÃO deve inferir comportamentos não documentados
-* ❌ NÃO deve suavizar regras normativas
-* ❌ NÃO deve introduzir padrões novos sem referência DSS
-* ✅ DEVE declarar explicitamente quando algo **não se aplica**
-* ✅ DEVE preferir correção incremental ao invés de reescrita total
+Decisão de produto, nunca técnica.
 
----
+5. Playground Interativo ⭐ OBRIGATÓRIO
 
-### 4. Linguagem e Tom
+Preview
 
-* Seções normativas → linguagem **assertiva e vinculante**
-* Seções de UX → linguagem clara e orientada a produto
-* Anti‑patterns → linguagem direta e preventiva
+Controles
 
----
+Código em tempo real
 
-### 5. Resultado Esperado
+Toggle Light / Dark
 
-Ao final da atuação da IA:
+Siga as indicações contidas no arquivo DSS/docs/PLAYGROUND_STANDARD.md
 
-* A página do componente deve ser **auditável**
-* Nenhuma decisão deve depender de inferência implícita
-* Toda conformidade DSS deve estar **explicitamente declarada**
+6. Estados Interativos ⭐ OBRIGATÓRIO
 
-> Uma página DSS correta é aquela que pode ser validada sem contexto oral ou histórico externo.
+Tabela única:
+
+Default
+
+Hover
+
+Focus
+
+Active
+
+Disabled
+
+Loading (se aplicável)
+
+Com:
+
+Tokens
+
+WCAG
+
+ARIA
+
+8. Galeria de Variantes (Opcional)
+
+Tabs visuais, sem redundância textual.
+
+9. Anatomia 4 Camadas ⭐ OBRIGATÓRIO
+
+Structure
+
+Composition
+
+Variants
+
+Output
+
+10. Documentação Técnica (Colapsável)
+10.1 Props API
+10.2 Eventos
+10.3 Slots
+
+Ausência deve ser declarada explicitamente.
+
+10.4 Tokens ⭐ (Substitui “Tokens Utilizados”)
+
+Esta seção NÃO lista tokens individualmente, exceto quando o conjunto é fechado.
+
+O que documentar:
+
+Categorias de tokens aceitas
+
+Restrições reais
+
+Relação funcional com o componente
+
+Exemplo:
+
+Cores Semânticas
+
+Brand Tokens
+
+Sizing / Touch Target
+
+Border Radius
+
+Typography
+
+Motion
+
+States
+
+📌 Fonte única da verdade:
+
+DSS/docs/reference/DSS_TOKEN_REFERENCE.md
+
+10.5 Acessibilidade WCAG ⭐ OBRIGATÓRIO
+
+Tabela WCAG completa
+
+Touch Target vs Altura Visual
+
+Media queries:
+
+prefers-reduced-motion
+
+prefers-contrast
+
+forced-colors
+
+11. Anti-patterns ⭐ OBRIGATÓRIO
+
+Mín. 3
+
+Exemplo incorreto + correto
+
+Combinações proibidas (se aplicável)
+
+12. Vinculantes DSS v2.2 ⭐ OBRIGATÓRIO
+12.1 Pseudo-elementos
+
+::before → somente touch target
+
+::after → efeitos visuais
+
+Uso indevido = erro bloqueante.
+
+12.2 brightness() — Tabela Canônica
+
+Somente valores aprovados.
+Fora da tabela = proibido.
+
+12.3 Classificação do Componente
+
+Action Control
+
+Compact Control
+
+Visual / Identity
+
+Define:
+
+Touch target
+
+Estados obrigatórios
+
+Tokens aplicáveis
+
+✅ Checklist de Validação
+
+(permanece igual, pois já está correto e completo)
+
+📚 Referências Oficiais
+
+DSS/docs/governance/DSS_GOLDEN_COMPONENTS.md
+
+DSS/docs/reference/DSS_TOKEN_REFERENCE.md
+
+DSS/docs/reference/DSS_COMPONENT_ARCHITECTURE.md
+
+DSS/docs/compliance/seals/**
+
+src/pages/components/DssButtonPage.tsx
+
+Mantido por: Equipe Design System Sansys
+Versão: 2.3.0
+Status: Fonte normativa ativa

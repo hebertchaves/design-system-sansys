@@ -1,0 +1,23 @@
+/* ==========================================================================
+   DssTooltip - LAYER 3: VARIANT - Multi-line
+
+   RESPONSABILIDADE: Tooltip que permite multiplas linhas de texto
+
+   PARIDADE GOLDEN: Identico a DssBadge 3-variants/_multi-line.scss
+   - white-space: normal (permite quebra)
+   - line-height ajustado
+   - Padding expandido para acomodar texto longo
+
+   CARACTERISTICAS:
+   - White-space normal (permite quebra de linha)
+   - Line-height ajustado para legibilidade
+   - text-align: left para texto corrido (diferente do center padrao)
+   ========================================================================== */
+
+.dss-tooltip--multi-line {
+  white-space: normal;
+  word-break: break-word;
+  line-height: var(--dss-line-height-tight);
+  padding: var(--dss-spacing-2) var(--dss-spacing-2_5);
+  text-align: left;
+}

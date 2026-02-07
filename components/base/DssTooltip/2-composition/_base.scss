@@ -1,0 +1,80 @@
+/* ==========================================================================
+   DssTooltip - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genericos
+
+   GOLDEN COMPONENT: DssBadge (Compact Control nao interativo)
+   CLASSIFICACAO: Elemento Informativo Contextual (NAO interativo)
+
+   REGRAS:
+   ✅ APENAS tokens genericos (--dss-spacing-*, --dss-radius-*, etc.)
+   ✅ Mixins reutilizaveis
+   ✅ Reset e layout base
+   ❌ ZERO valores hardcoded (exceto documentados na tabela de excecoes)
+   ❌ ZERO logica de variantes (variantes vao em 3-variants/)
+   ❌ ZERO estados interativos (hover, active, focus, disabled, loading)
+
+   DECISOES EXPLICITAS:
+   - Touch target: NAO implementado (Opcao B — nao interativo)
+   - ::before: PROIBIDO
+   - ::after: Permitido apenas para efeitos visuais passivos
+   - Estados: Apenas visible/hidden (contextuais, nao interativos)
+   ========================================================================== */
+
+/* ==========================================================================
+   TOOLTIP BASE
+   ========================================================================== */
+
+.dss-tooltip {
+  /* Display e Layout */
+  display: inline-block;
+  position: relative;
+  z-index: var(--dss-z-index-tooltip);
+
+  /* Tipografia
+   * font-size: sm (14px) — maior que DssBadge (xs/12px) para legibilidade
+   *   de texto informativo. Tooltips exibem texto corrido, nao labels curtos.
+   * font-weight: normal (400) — DssBadge usa medium para enfase de label.
+   *   Tooltip exibe informacao contextual sem enfase especial.
+   */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-tight);
+  text-align: center;
+
+  /* Dimensoes
+   *
+   * ⚠️ EXCECAO DOCUMENTADA: max-width 300px
+   *
+   * Nao existe token DSS para largura maxima de conteudo informativo.
+   * O valor 300px garante legibilidade conforme principios WCAG 1.4.8
+   * (comprimento de linha ideal: 45-75 caracteres em ~14px).
+   *
+   * Alternativas avaliadas:
+   * - calc(75 * var(--dss-spacing-1)) = 300px — abusa semantica de spacing
+   * - Sem max-width — tooltips ficam excessivamente largos com texto longo
+   *
+   * Decisao: Hardcoded com excecao documentada.
+   */
+  max-width: 300px;
+  padding: var(--dss-spacing-1_5) var(--dss-spacing-2);
+
+  /* Forma
+   * border-radius: md — diferente de DssBadge (full/pill).
+   * Tooltip nao e pill shape; usa cantos moderadamente arredondados
+   * para diferenciar visualmente de badges e chips.
+   */
+  border-radius: var(--dss-radius-md);
+
+  /* Transicoes
+   * Apenas opacity — tooltip aparece/desaparece suavemente.
+   * Usa token semantico --dss-duration-tooltip para permitir ajuste
+   * global de timing de tooltips sem afetar outros componentes.
+   */
+  transition: opacity var(--dss-duration-tooltip) var(--dss-easing-standard);
+
+  /* Overflow — texto longo quebra graciosamente */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}

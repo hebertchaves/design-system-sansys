@@ -1,0 +1,11 @@
+/* ==========================================================================
+   DssTooltip - LAYER 4: OUTPUT (Orchestrator)
+
+   Importa brands e states
+
+   NOTA: Cores sao aplicadas via classes utilitarias (.bg-*, .text-*)
+   definidas em utils/_colors.scss (padrao Quasar Framework)
+   ========================================================================== */
+
+@forward './brands';
+@forward './states';
