@@ -527,8 +527,11 @@ export default function DssButtonPage() {
       <DssPlayground
         title="Configure o Botão"
         description="Selecione as props e veja o resultado em tempo real com tokens DSS reais."
+        layout="canonical"
         isDarkMode={isDarkMode}
         onDarkModeToggle={() => setIsDarkMode(!isDarkMode)}
+        previewMinHeight="360px"
+        previewRatio={0.7}
         previewContent={
           <DssButtonPreview
             label="Clique aqui"
@@ -544,22 +547,20 @@ export default function DssButtonPage() {
           />
         }
         controls={
-          <ControlGrid columns={3}>
+          <ControlGrid columns={4}>
             <VariantSelector
               variants={variants}
               selectedVariant={selectedVariant}
               onSelect={setSelectedVariant}
             />
+            <SizeSelector
+              sizes={sizes}
+              selectedSize={selectedSize}
+              onSelect={setSelectedSize}
+            />
             <ColorPicker
               label="Color"
               colors={Object.values(DSS_SEMANTIC_COLORS)}
-              selectedColor={selectedColor}
-              onSelect={handleColorChange}
-              disabled={!!selectedBrand}
-            />
-            <FeedbackColorPicker
-              label="Feedback"
-              colors={feedbackColors}
               selectedColor={selectedColor}
               onSelect={handleColorChange}
               disabled={!!selectedBrand}
@@ -569,10 +570,12 @@ export default function DssButtonPage() {
               selectedBrand={selectedBrand}
               onSelect={handleBrandChange}
             />
-            <SizeSelector
-              sizes={sizes}
-              selectedSize={selectedSize}
-              onSelect={setSelectedSize}
+            <FeedbackColorPicker
+              label="Feedback"
+              colors={feedbackColors}
+              selectedColor={selectedColor}
+              onSelect={handleColorChange}
+              disabled={!!selectedBrand}
             />
             <ToggleGroup
               label="Estados & Ícones"
