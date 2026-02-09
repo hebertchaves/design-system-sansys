@@ -32,13 +32,13 @@ As páginas de componentes DEVEM seguir **exatamente** a ordem abaixo.
 
 Exibidos no topo da página:
 
-* Versão do componente (ex: `v2.3.0`)
-* Compatibilidade (ex: `Quasar Compatible`)
-* Status normativo:
+- Versão do componente (ex: `v2.3.0`)
+- Compatibilidade (ex: `Quasar Compatible`)
+- Status normativo:
+  - `Selo DSS v2.2`
+  - `Golden Component (normativo)` (se aplicável)
 
-  * `Selo DSS v2.2`
-  * `Golden Component (normativo)` (se aplicável)
-* Links de referência normativa
+- Links de referência normativa
 
 #### Fonte de verdade dos selos de conformidade
 
@@ -50,9 +50,9 @@ DSS/docs/compliance/seals/<NomeDoComponente>/<NOME_DO_COMPONENTE>_SELO_v2.2.md
 
 Regras:
 
-* Se o arquivo existir → exibir o badge correspondente
-* Se o arquivo NÃO existir → NÃO inferir conformidade
-* É proibido assumir selo ou status sem arquivo explícito
+- Se o arquivo existir → exibir o badge correspondente
+- Se o arquivo NÃO existir → NÃO inferir conformidade
+- É proibido assumir selo ou status sem arquivo explícito
 
 ---
 
@@ -62,8 +62,8 @@ Usar o componente `PageHeader`.
 
 #### 2.1 Título
 
-* Nome do componente (ex: **DssAvatar**)
-* Ícone representativo
+- Nome do componente (ex: **DssAvatar**)
+- Ícone representativo
 
 #### 2.2 Descrição (Regra Reforçada)
 
@@ -86,10 +86,10 @@ A descrição DEVE responder, em texto corrido:
 
 Regras:
 
-* Mínimo de 2 frases
-* Máximo de 4 frases
-* Linguagem de UX + Produto
-* Não listar features técnicas
+- Mínimo de 2 frases
+- Máximo de 4 frases
+- Linguagem de UX + Produto
+- Não listar features técnicas
 
 ---
 
@@ -101,32 +101,34 @@ Seção orientada à **decisão de produto**.
 
 ```markdown
 #### ✅ Quando Usar
+
 - Caso de uso orientado a produto
 - Caso de uso orientado a UX
 - Caso de uso recorrente
 
 #### ❌ Quando NÃO Usar
-| Cenário | Alternativa Recomendada |
-|--------|------------------------|
-| Cenário inadequado | `OutroComponente` |
+
+| Cenário            | Alternativa Recomendada |
+| ------------------ | ----------------------- |
+| Cenário inadequado | `OutroComponente`       |
 ```
 
 Regras:
 
-* Mínimo de 3 itens em cada bloco
-* Sempre indicar alternativa
+- Mínimo de 3 itens em cada bloco
+- Sempre indicar alternativa
 
 ---
 
 ### 4. Playground Interativo ⭐ OBRIGATÓRIO
 
-* Preview central do componente
-* Controles interativos relevantes
-* Código gerado em tempo real
-* Toggle Light / Dark Mode
-* Exclusividade Brand ↔ Color
+- Preview central do componente
+- Controles interativos relevantes
+- Código gerado em tempo real
+- Toggle Light / Dark Mode
+- Exclusividade Brand ↔ Color
 
-> O playground DEVE aparecer **antes** de anatomia e documentação técnica.
+> O playground DEVE seguir modelo indicado no arquivo "DSS\docs\PLAYGROUND_STANDARD.md" e aparecer **antes** de anatomia e documentação técnica.
 
 ---
 
@@ -137,20 +139,20 @@ Os estados DEVEM ser documentados em **uma tabela única**, clara e comparável.
 #### Formato obrigatório
 
 ```markdown
-| Estado | Visual | Interação | Tokens Aplicados | Acessibilidade |
-|-------|--------|-----------|------------------|----------------|
-| Default | Aparência padrão | Pronto para interação | `--dss-*` | — |
-| Hover | Alteração visual | Pointer over | Tokens de hover | — |
-| Focus | Focus ring visível | Teclado | `--dss-focus-ring` | WCAG 2.4.7 |
-| Active | Pressionado | Clique / toque | Tokens de active | — |
-| Disabled | Opacidade reduzida | Não interativo | `--dss-opacity-disabled` | `aria-disabled` |
-| Loading | Feedback visual | Bloqueia interação | Tokens de estado | `aria-busy` |
+| Estado   | Visual             | Interação             | Tokens Aplicados         | Acessibilidade  |
+| -------- | ------------------ | --------------------- | ------------------------ | --------------- |
+| Default  | Aparência padrão   | Pronto para interação | `--dss-*`                | —               |
+| Hover    | Alteração visual   | Pointer over          | Tokens de hover          | —               |
+| Focus    | Focus ring visível | Teclado               | `--dss-focus-ring`       | WCAG 2.4.7      |
+| Active   | Pressionado        | Clique / toque        | Tokens de active         | —               |
+| Disabled | Opacidade reduzida | Não interativo        | `--dss-opacity-disabled` | `aria-disabled` |
+| Loading  | Feedback visual    | Bloqueia interação    | Tokens de estado         | `aria-busy`     |
 ```
 
 Regras:
 
-* Loading é obrigatório apenas se aplicável
-* Tokens e critérios WCAG DEVEM ser explícitos
+- Loading é obrigatório apenas se aplicável
+- Tokens e critérios WCAG DEVEM ser explícitos
 
 ---
 
@@ -165,9 +167,9 @@ Usar o componente `AnatomySection` com as camadas:
 
 Cada camada DEVE declarar:
 
-* Responsabilidades
-* Arquivos relacionados
-* Tipos de tokens envolvidos
+- Responsabilidades
+- Arquivos relacionados
+- Tipos de tokens envolvidos
 
 ---
 
@@ -181,23 +183,23 @@ Cada item abaixo é uma **seção colapsável independente**, no mesmo nível hi
 
 ### 7.1 Props API & Eventos
 
-* Tabela de Props (agrupadas por categoria)
-* Tabela de Eventos emitidos
+- Tabela de Props (agrupadas por categoria)
+- Tabela de Eventos emitidos
 
 Regras:
 
-* Se não houver eventos, declarar explicitamente a ausência
+- Se não houver eventos, declarar explicitamente a ausência
 
 ---
 
 ### 7.2 Slots
 
-* Tabela de slots disponíveis
-* Uso recomendado
+- Tabela de slots disponíveis
+- Uso recomendado
 
 Regras:
 
-* Se não houver slots, declarar explicitamente
+- Se não houver slots, declarar explicitamente
 
 ---
 
@@ -216,39 +218,39 @@ Esta seção documenta **capacidade**, não instância.
 
 Este componente aceita os seguintes tipos de tokens DSS:
 
-| Tipo de Token | Papel no Componente | Referência |
-|--------------|---------------------|------------|
-| Cores Semânticas | Estados e feedback | DSS_TOKEN_REFERENCE.md |
-| Brand Tokens | Identidade visual | DSS_TOKEN_REFERENCE.md |
-| Dimensões | Tamanhos e touch targets | DSS_TOKEN_REFERENCE.md |
-| Tipografia | Texto auxiliar | DSS_TOKEN_REFERENCE.md |
-| Bordas | Forma visual | DSS_TOKEN_REFERENCE.md |
-| Motion | Transições | DSS_TOKEN_REFERENCE.md |
+| Tipo de Token    | Papel no Componente      | Referência             |
+| ---------------- | ------------------------ | ---------------------- |
+| Cores Semânticas | Estados e feedback       | DSS_TOKEN_REFERENCE.md |
+| Brand Tokens     | Identidade visual        | DSS_TOKEN_REFERENCE.md |
+| Dimensões        | Tamanhos e touch targets | DSS_TOKEN_REFERENCE.md |
+| Tipografia       | Texto auxiliar           | DSS_TOKEN_REFERENCE.md |
+| Bordas           | Forma visual             | DSS_TOKEN_REFERENCE.md |
+| Motion           | Transições               | DSS_TOKEN_REFERENCE.md |
 ```
 
 ---
 
 ### 7.4 Acessibilidade WCAG ⭐ OBRIGATÓRIO
 
-* Tabela de conformidade WCAG
-* Touch Target vs Altura Visual
-* Media queries de acessibilidade
+- Tabela de conformidade WCAG
+- Touch Target vs Altura Visual
+- Media queries de acessibilidade
 
 ---
 
 ### 8. Anti-patterns ⭐ OBRIGATÓRIO
 
-* Mínimo de 3 usos incorretos
-* Exemplo incorreto + correto
-* Combinações não permitidas (se aplicável)
+- Mínimo de 3 usos incorretos
+- Exemplo incorreto + correto
+- Combinações não permitidas (se aplicável)
 
 ---
 
 ### 9. Vinculantes DSS v2.2 ⭐ OBRIGATÓRIO
 
-* Uso de pseudo-elementos (`::before` / `::after`)
-* Declaração de `brightness()` (ou não uso)
-* Classificação do componente (Action / Compact / Visual)
+- Uso de pseudo-elementos (`::before` / `::after`)
+- Declaração de `brightness()` (ou não uso)
+- Classificação do componente (Action / Compact / Visual)
 
 ---
 
@@ -256,10 +258,10 @@ Este componente aceita os seguintes tipos de tokens DSS:
 
 Links explícitos para:
 
-* DSS_TOKEN_REFERENCE.md
-* DSS_COMPONENT_ARCHITECTURE.md
-* DSS_GOLDEN_COMPONENTS.md
-* Selo de conformidade do componente (se existir)
+- DSS_TOKEN_REFERENCE.md
+- DSS_COMPONENT_ARCHITECTURE.md
+- DSS_GOLDEN_COMPONENTS.md
+- Selo de conformidade do componente (se existir)
 
 ---
 
@@ -267,9 +269,9 @@ Links explícitos para:
 
 A IA DEVE:
 
-* ❌ Não inferir tokens, selos ou status
-* ❌ Não simplificar seções
-* ✅ Referenciar sempre documentos oficiais
+- ❌ Não inferir tokens, selos ou status
+- ❌ Não simplificar seções
+- ✅ Referenciar sempre documentos oficiais
 
 ---
 
