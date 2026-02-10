@@ -40,6 +40,56 @@ O **DSS (Design System Sansys)** é um sistema de design completo baseado em tok
 
 ---
 
+## DSS Governance & Observability Layer
+
+The DSS architecture includes a dedicated governance and observability layer designed to make the system explainable, traceable and evolvable over time.
+
+Observability in the DSS is not a standalone feature or tooling concern. It is a cross-cutting architectural capability that enables visibility into how tokens, components, layout rules and governance decisions are applied across the system.
+
+This layer exists to ensure that DSS usage can be:
+- inspected and explained
+- validated against documented rules
+- audited over time
+- evolved without unintended breakage
+
+### Observability as a Cross-Cutting Concern
+
+Observability applies transversally to all DSS layers, including tokens, components, layout systems and governance rules. It does not introduce new design decisions, but instead exposes and validates the decisions already made by the system.
+
+Observability signals are produced and interpreted by designated DSS-aware tools, primarily operating in descriptive and validation modes.
+
+At this stage, the main observability actors are:
+- **Grid Inspector**, acting as a structural and layout narrator
+- **MCP**, acting as a semantic interpreter and architectural validator
+
+These tools do not own design authority. They observe, explain and validate DSS usage, but do not redefine system rules.
+
+### Scope and Intent
+
+At its current maturity level, DSS observability is intentionally non-generative.
+
+Its primary responsibilities are:
+- making DSS usage visible
+- explaining architectural and design decisions
+- validating compliance with documented rules
+- identifying inconsistencies, violations or risks
+
+Any form of automated generation, mutation or autonomous decision-making is explicitly out of scope for this layer.
+
+### Governance Reference
+
+The principles, scope, limits and contracts of DSS observability are formally defined in:
+
+→ `Governance/DSS_OBSERVABILITY_BASELINE.md`
+
+This document serves as the normative reference for:
+- what is observable
+- how observability signals are defined
+- which roles tools may assume
+- and which actions are explicitly prohibited
+
+---
+
 ## 📂 Estrutura de Diretórios
 
 ```
@@ -206,6 +256,19 @@ dss/
     ├── _colors-hover.scss          # ✅ Sistema de cores hover por brand
     └── _example-showcase.scss      # ✅ Classes para arquivos .example.vue
 ```
+> ⚠️ **Nota de Governança**
+>
+> A estrutura apresentada acima tem caráter **ilustrativo e explicativo**,
+> servindo como referência arquitetural para compreensão da organização interna
+> do DSS e dos padrões adotados na construção dos componentes.
+>
+> Este bloco **não deve ser utilizado como inventário completo ou fonte de
+> verdade do repositório**.
+>
+> A declaração oficial, exaustiva e auditável dos artefatos estruturais
+> existentes no Design System Sansys está definida no arquivo
+> `DSS_MANIFEST.md`, que atua como fonte única de verdade para fins de
+> governança, auditoria e validação estrutural.
 
 ---
 

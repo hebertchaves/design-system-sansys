@@ -36,6 +36,16 @@
 
 ---
 
+## Governance & Observability
+
+The DSS is governed by explicit observability rules.
+
+If you are building tools, agents or integrations,
+refer to:
+- DSS_OBSERVABILITY_BASELINE.md
+
+---
+
 ## 📦 **Instalação**
 
 ### NPM
