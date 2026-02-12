@@ -4,7 +4,7 @@
  * ==========================================================================
  *
  * Tipos e interfaces para DssCard e subcomponentes
- * Compatível 100% com Quasar q-card API
+ * Componente DSS baseado em Quasar q-card com API governada pelo Design System
  *
  * @see https://quasar.dev/vue-components/card
  */

@@ -14,7 +14,7 @@
 `DssCard`
 
 ### Descrição
-Componente de superfície estrutural com suporte a elevação, bordas e brandabilidade multi-marca (Hub/Water/Waste). Funciona como container de conteúdo com 100% de compatibilidade com a API do Quasar Framework (`q-card`).
+Componente de superfície estrutural com suporte a elevação, bordas e brandabilidade multi-marca (Hub/Water/Waste). Funciona como container de conteúdo baseado no Quasar `q-card`, com API governada pelo Design System Sansys.
 
 ### Tipo do Componente
 **🟠 Nível B - Básico** - Wrapper direto do Quasar Framework com extensões DSS (brandabilidade).
@@ -27,7 +27,7 @@ Componente de superfície estrutural com suporte a elevação, bordas e brandabi
 - ✅ **Estados visuais claros** - Clickable, dark mode, square (sem border-radius)
 - ✅ **Composição flexível** - Subcomponentes DssCardSection e DssCardActions para organização
 - ✅ **Tokens reutilizáveis** - ZERO tokens component-specific, usa apenas tokens genéricos do DSS
-- ✅ **API 100% compatível com Quasar** - Todas as props do `q-card` + extensões DSS de brandabilidade
+- ✅ **API governada pelo DSS** - Subconjunto curado das props do `q-card` + extensões DSS de brandabilidade
 
 ---
 
@@ -121,7 +121,7 @@ O DssCard utiliza tokens das seguintes categorias:
 | **Border Radius** | `--dss-radius-lg` (12px) | [Seção 1.9 - Border Radius](../../../DSS_TOKEN_REFERENCE.md#19-border-radius) | Cantos arredondados (padrão=lg, square=0) |
 | **Sombras (Elevação)** | `--dss-elevation-1`, `--dss-elevation-2`, `--dss-shadow-active` | [Seção 9.1 - Sombras Base](../../../DSS_TOKEN_REFERENCE.md#91-sombras-base) | Variant `elevated` (default=1, hover=2, active=active) |
 | **Brands** | `--dss-hub-600`, `--dss-water-500`, `--dss-waste-600` | [Seção 2.2 - Brand Palettes](../../../DSS_TOKEN_REFERENCE.md#22-brand-palettes) | Border-left colorido via prop `brand` |
-| **Opacidade** | `--dss-action-primary-rgb` (com alpha) | [Seção 2.4 - Opacidade](../../../DSS_TOKEN_REFERENCE.md#24-opacidade) | Hover overlay em cards clickable (rgba) |
+| **Superfícies (Hover/Active)** | `--dss-surface-hover`, `--dss-surface-active` | [Seção 4.5 - Surfaces](../../../DSS_TOKEN_REFERENCE.md#45-surfaces) | Hover/active overlay em cards clickable outlined |
 | **Motion** | `--dss-duration-fast`, `--dss-easing-ease-out` | [Seção 5 - Motion/Animation](../../../DSS_TOKEN_REFERENCE.md#5-motionanimation) | Transições de hover e elevação |
 | **Acessibilidade (Focus)** | `--dss-focus-ring`, `--dss-focus-shadow-primary` | [Seção 7.1 - Focus](../../../DSS_TOKEN_REFERENCE.md#71-focus-configurações-base) | Focus ring quando clickable (WCAG 2.4.7) |
 
@@ -217,7 +217,7 @@ O DssCard utiliza tokens das seguintes categorias:
 |--------|-----------|-----------|------------------|-------|
 | **Default** | Background surface, elevação/borda conforme variant | Estático (não-clicável) | `--dss-surface-default`, `--dss-elevation-1` (elevated) | Estado padrão |
 | **Clickable** | Cursor pointer, hover habilitado | Clicável, navegável | - | Apenas com `clickable="true"` |
-| **Hover (Clickable)** | Elevação aumenta (elevation-2), overlay sutil | Clique habilitado | `--dss-elevation-2`, `--dss-action-primary-rgb` (overlay) | Transição suave 150ms |
+| **Hover (Clickable)** | Elevação aumenta (elevation-2), overlay sutil | Clique habilitado | `--dss-elevation-2`, `--dss-surface-hover` (overlay) | Transição suave 150ms |
 | **Focus (Clickable)** | Focus ring visível (3px, offset 2px) | Navegação por teclado ativa | `--dss-focus-ring`, `--dss-focus-shadow-primary` | WCAG 2.4.7 AA |
 | **Active (Clickable)** | Elevação reduz, "afunda" visualmente | Clique em progresso | `--dss-shadow-active` | Feedback tátil |
 | **Dark Mode** | Background escuro, texto claro | Interação mantida | `--dss-surface-dark` | Via prop `dark="true"` ou `[data-theme="dark"]` |
@@ -1139,6 +1139,68 @@ export default {
 
 ---
 
+## 14. Comportamentos Implícitos
+
+### `inheritAttrs`
+
+| Componente | `inheritAttrs` | Forwarding | Descrição |
+|------------|----------------|------------|-----------|
+| `DssCard` | `false` | `v-bind="cardAttrs"` | Forwarding controlado via composable `useCardAttrs`. Atributos ARIA (`tabindex`, `role`) adicionados condicionalmente quando `clickable`. |
+| `DssCardSection` | `false` | `v-bind="$attrs"` | Atributos passados diretamente ao root `<div>`. |
+| `DssCardActions` | `false` | `v-bind="$attrs"` | Atributos passados diretamente ao root `<div>`. |
+
+### Elementos Decorativos
+
+- **Border-left de brand**: Elemento puramente decorativo, sem significado semântico. Não requer `aria-hidden` (é um estilo CSS, não um elemento DOM).
+- **Dividers entre sections**: Gerados via `border-top` CSS na regra `& + &`. Não são elementos DOM separados.
+- **Elevation shadow**: Puramente visual via `box-shadow`.
+
+### Estados Não Aplicáveis
+
+| Estado | Justificativa |
+|--------|---------------|
+| `disabled` | DssCard é superfície estrutural. Desabilitar pertence aos componentes internos (DssButton, DssInput). |
+| `loading` | Idem. Use `DssButton :loading="true"` dentro do card. |
+| `error` | Idem. Use `DssInput error="msg"` dentro do card. |
+| `indeterminate` | Não aplicável a superfícies. |
+
+---
+
+## 15. Paridade com Golden Component
+
+**Golden Component de Referência:** DssChip (primário), DssBadge (secundário)
+
+| Aspecto | DssCard | Golden (DssChip) | Status | Justificativa |
+|---------|---------|-------------------|--------|---------------|
+| Arquitetura 4 camadas | 4 camadas completas | 4 camadas completas | Igual | Conforme |
+| `defineOptions` | `name` + `inheritAttrs: false` | `name` + `inheritAttrs: false` | Igual | Conforme |
+| TypeScript + Composition API | `<script setup lang="ts">` | `<script setup lang="ts">` | Igual | Conforme |
+| Tokens component-specific | Zero | Zero | Igual | Conforme |
+| Touch target `::before` | Nao implementado | Implementado | Diferente | DssCard nao e Compact Control. Touch target nao aplicavel a superficies. |
+| `::after` overlay | Nao usado | Usado para hover/active | Diferente | DssCard usa `background-color` e `box-shadow` para estados, nao overlay pseudo-element. |
+| Forced-colors | Implementado | Implementado (25 linhas) | Igual | Padrão system keywords. |
+| `-webkit-tap-highlight-color` | Implementado (.dss-card--clickable) | Implementado (base) | Igual | Conforme |
+| Focus ring | `--dss-focus-shadow-primary` | `--dss-focus-shadow-primary` | Igual | Conforme |
+| Brand tokens | Numéricos (`--dss-hub-600`) | Numéricos | Igual | Tokens semânticos de brand ainda nao oficializados. |
+| Dense variant | Nao aplicavel | Implementado | N/A | Cards nao possuem variante dense. |
+| Composables | 5 composables | Composables por funcionalidade | Igual | Separação de responsabilidades. |
+
+---
+
+## 16. Exceções Documentadas
+
+| ID | Valor | Arquivo | Linha | Justificativa |
+|----|-------|---------|-------|---------------|
+| EXC-01 | `rgba(255, 255, 255, 0.12)` | `4-output/_states.scss` | 22 | Dark mode divider. Nenhum token DSS fornece white com alpha parcial. Padrao Material Design: dividers em dark = white 12% opacity. |
+| EXC-02 | `rgba(255, 255, 255, 0.2)` | `4-output/_states.scss` | 30 | Dark mode border. Bordas outlined/bordered em dark mode. Sem token equivalente no catalogo DSS. |
+| EXC-03 | `border-radius: 0` | `2-composition/_base.scss` | 42 | Square variant. Valor `0` e semanticamente "sem radius", nao hardcoded visual. |
+| EXC-04 | `2px solid ButtonText` | `4-output/_states.scss` | forced-colors | Forced-colors mode. System keywords obrigatorios (tokens CSS ignorados em forced-colors). |
+| EXC-05 | `3px solid Highlight` | `4-output/_states.scss` | forced-colors | Forced-colors focus. Valor absoluto obrigatorio. |
+| EXC-06 | `4px solid Highlight` | `4-output/_states.scss` | forced-colors | Forced-colors brand accent. Valor absoluto obrigatorio. |
+| EXC-07 | `linear-gradient(135deg, var(--dss-action-primary), var(--dss-action-secondary))` | `DssCard.example.vue` | 151 | Avatar placeholder decorativo no exemplo. Gradiente usa tokens DSS, nao hex. Arquivo de exemplo, nao afeta componente. |
+
+---
+
 ## 📋 Recursos
 
 - [Documentação Oficial do Quasar QCard](https://quasar.dev/vue-components/card)
@@ -1197,7 +1259,7 @@ Use este checklist ao documentar novos componentes baseado no Template 13.1:
 
 ---
 
-**Última atualização:** Janeiro 2025
+**Última atualização:** Fevereiro 2026
 **Versão:** DSS v2.2.0
 **Status:** 📋 Documentação Padrão DSS - Template 13.1
 **Fase:** Fase 1 - Componente Básico (Nível B)

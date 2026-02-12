@@ -19,7 +19,7 @@
  * ==========================================================================
  *
  * Componente de card moderno com TypeScript + Composition API
- * 100% compatível com Quasar q-card API
+ * Componente DSS baseado em q-card com API governada pelo Design System
  *
  * @see https://quasar.dev/vue-components/card
  *

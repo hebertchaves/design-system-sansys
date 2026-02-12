@@ -1,5 +1,5 @@
 <template>
-  <div :class="sectionClasses">
+  <div :class="sectionClasses" v-bind="$attrs">
     <slot />
   </div>
 </template>
@@ -11,7 +11,7 @@
  * ==========================================================================
  *
  * Seção de conteúdo dentro do DssCard
- * 100% compatível com Quasar q-card-section API
+ * Componente DSS baseado em q-card-section com API governada pelo Design System
  *
  * @see https://quasar.dev/vue-components/card#card-sections
  *
@@ -34,7 +34,8 @@ import { useCardSectionClasses } from '../composables'
 // ==========================================================================
 
 defineOptions({
-  name: 'DssCardSection'
+  name: 'DssCardSection',
+  inheritAttrs: false
 })
 
 // ==========================================================================

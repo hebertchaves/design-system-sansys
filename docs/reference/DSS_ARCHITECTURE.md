@@ -90,6 +90,179 @@ This document serves as the normative reference for:
 
 ---
 
+## 🏛️ Preview & Context Technical Governance
+
+Governance Status: Active  
+Policy Version: 1.0  
+Last Updated: 2026-02-11  
+
+---
+
+### 1. Structural Principle of DSS
+
+The DSS (Design System Structure) is an architectural system governed by:
+
+- Structured context  
+- Systemic state management  
+- Formal observability  
+- Grid and token compliance rules  
+
+Components that depend on DSS infrastructure (Grid, Tokens, Theme, Observability) are not isolated widgets.
+
+They are structural elements of a governed system.
+
+DSS prioritizes systemic integrity over preview convenience.
+
+---
+
+### 2. Context as an Architectural Contract
+
+Hooks such as:
+
+useGridSystem()
+useThemeSystem()
+useTokenSystem()
+
+represent mandatory structural contracts.
+
+if (!context) {
+  throw new Error('useGridSystem must be used within GridSystemProvider');
+}
+
+This explicit failure is intentional.
+
+It prevents:
+
+- Inconsistent state  
+- Broken observability  
+- Silent compliance violations  
+- Execution outside the official system scope  
+
+Context must never become optional.
+
+---
+
+### 3. Official Runtime Definition
+
+The official DSS execution environment is:
+
+index.html → main.tsx → Providers → Application Tree
+
+Only this hierarchy guarantees:
+
+- Valid state propagation  
+- Correct signal emission  
+- Grid validation accuracy  
+- Token compliance reliability  
+
+Any execution outside this tree is considered non-authoritative.
+
+---
+
+### 4. Policy on Preview Environments
+
+External preview tools may:
+
+- Render components in isolation  
+- Ignore the application’s Provider hierarchy  
+- Execute outside the official runtime tree  
+
+The DSS does not adapt its architecture to accommodate these limitations.
+
+It is strictly prohibited to:
+
+- Introduce automatic Provider fallbacks  
+- Detect preview environment to alter logic  
+- Mock context implicitly  
+- Modify exports solely for preview runtime compatibility  
+- Suppress structural errors  
+
+Architectural integrity must be preserved.
+
+---
+
+### 5. Official Component Classification
+
+#### Category A — Self-Contained Components
+
+Components that:
+
+- Do not depend on Providers  
+- Do not emit systemic signals  
+- Do not modify systemic state  
+
+Compatible with isolated preview.
+
+---
+
+#### Category B — Context-Bound Components
+
+Components that:
+
+- Depend on Providers  
+- Emit DSS signals  
+- Participate in governance layers  
+- Modify structural state  
+
+Not supported in isolated preview.  
+Must operate within the official application tree.
+
+---
+
+### 6. Controlled Preview (Playground Pattern)
+
+If preview is required for Context-Bound components, an explicit wrapper must be created:
+
+export function FloatingGridInspectorPlayground() {
+  return (
+    <GridSystemProvider>
+      <FloatingGridInspector />
+    </GridSystemProvider>
+  );
+}
+
+Mandatory conditions:
+
+- Explicit naming (Playground, Preview, Sandbox)  
+- No modification of the original component  
+- No weakening of the context contract  
+- No conditional Provider injection  
+
+Preview must be an external wrapper, never an internal mutation.
+
+---
+
+### 7. Observability Integrity
+
+Components that emit DSS observability signals must operate within the official Provider hierarchy.
+
+Partial execution compromises:
+
+- Grid validation  
+- Token compliance  
+- Metrics integrity  
+- Governance reliability  
+
+DSS does not recognize partial execution as valid for compliance analysis.
+
+---
+
+### 8. Strategic Directive
+
+DSS does not adapt to preview tools.  
+Preview tools must adapt to DSS — or use dedicated playground wrappers.
+
+Architectural integrity precedes convenience.
+
+---
+
+Public summary available at:
+
+./README.md#preview--context-technical-governance
+
+
+---
+
 ## 📂 Estrutura de Diretórios
 
 ```

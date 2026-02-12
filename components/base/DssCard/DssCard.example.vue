@@ -148,7 +148,7 @@
               width: 80px;
               height: 80px;
               border-radius: 50%;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              background: linear-gradient(135deg, var(--dss-action-primary), var(--dss-action-secondary));
               flex-shrink: 0;
             "
           ></div>
@@ -334,37 +334,28 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+/**
+ * DssCard - Exemplos de Uso
+ * Composition API + TypeScript (padrão DSS v2.2)
+ */
 import { DssCard, DssCardSection, DssCardActions } from './index'
 import { DssButton } from '../DssButton'
 // Nota: Em um projeto real, use:
 // import { DssCard, DssCardSection, DssCardActions } from '@/dss/components/base/DssCard'
 // import { DssButton } from '@/dss/components/base/DssButton'
 
-export default {
-  name: 'DssCardExample',
+function handleCancel(): void {
+  console.log('Cancelar clicado')
+}
 
-  components: {
-    DssCard,
-    DssCardSection,
-    DssCardActions,
-    DssButton
-  },
+function handleConfirm(): void {
+  console.log('Confirmar clicado')
+}
 
-  methods: {
-    handleCancel() {
-      console.log('Cancelar clicado')
-    },
-
-    handleConfirm() {
-      console.log('Confirmar clicado')
-    },
-
-    handleCardClick(productName) {
-      console.log(`Card clicado: ${productName}`)
-      // Exemplo: this.$router.push(`/produto/${productName}`)
-    }
-  }
+function handleCardClick(productName: string): void {
+  console.log(`Card clicado: ${productName}`)
+  // Exemplo: router.push(`/produto/${productName}`)
 }
 </script>
 
@@ -383,7 +374,7 @@ h2 {
   margin-top: var(--dss-spacing-12);
   margin-bottom: var(--dss-spacing-6);
   padding-bottom: var(--dss-spacing-2);
-  border-bottom: 2px solid var(--dss-gray-200);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
 }
 
 .example-section {
@@ -405,14 +396,14 @@ h2 {
 
 /* Dark background para seção dark mode */
 .dark-section {
-  background-color: #1a1a1a;
+  background-color: var(--dss-surface-dark);
   padding: var(--dss-spacing-6);
   border-radius: var(--dss-radius-lg);
   margin: var(--dss-spacing-8) 0;
 }
 
 .dark-section h2 {
-  color: white;
-  border-bottom-color: rgba(255, 255, 255, 0.2);
+  color: var(--dss-text-inverse);
+  border-bottom-color: var(--dss-gray-700);
 }
 </style>

@@ -36,6 +36,98 @@
 
 ---
 
+## 🏛️ Preview & Context Technical Governance
+
+The DSS (Design System Structure) is not merely a UI component library.  
+It is a governed architectural system built on structured context, systemic state, and formal observability.
+
+### 🔐 Context Is Mandatory
+
+Core DSS hooks such as:
+
+- useGridSystem()
+- useThemeSystem()
+- useTokenSystem()
+
+require their respective Providers.
+
+If used outside their Provider scope, they intentionally throw an error:
+
+useGridSystem must be used within GridSystemProvider
+
+This strict behavior protects:
+
+- State integrity  
+- Layout consistency  
+- Token compliance  
+- Observability reliability  
+- Architectural guarantees  
+
+The DSS does not support silent fallbacks or optional context execution.
+
+---
+
+### 🧩 Component Classification
+
+#### 🟢 Self-Contained Components
+
+Components that do not depend on system Providers and do not participate in systemic governance.
+
+Examples:
+- Button  
+- Badge  
+- Card  
+- Icon  
+
+Safe for isolated preview.  
+Can be rendered independently.
+
+---
+
+#### 🟡 Context-Bound Components
+
+Components that:
+
+- Depend on Providers  
+- Emit DSS observability signals  
+- Participate in compliance layers  
+- Modify systemic state  
+
+Examples:
+- FloatingGridInspector  
+- Layout overlays  
+- Governance panels  
+- Token debuggers  
+
+Must run within the official DSS application tree.  
+Not supported in isolated preview environments.
+
+---
+
+### 🧪 Preview Policy
+
+The official DSS runtime is:
+
+index.html → main.tsx → Providers → Application Tree
+
+Preview tools that render components outside this structure are considered non-official environments.
+
+The DSS does not:
+
+- Add conditional Providers  
+- Mock context automatically  
+- Modify exports to satisfy preview tools  
+- Suppress architectural errors  
+
+If preview is required for context-bound components, a dedicated Playground wrapper must be created explicitly.
+
+Full policy available at:
+
+./DSS_ARCHITECTURE.md#preview--context-technical-governance
+
+ 
+---
+
 ## Governance & Observability
 
 The DSS is governed by explicit observability rules.

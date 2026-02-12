@@ -1,0 +1,68 @@
+{
+  "component": "DssCard",
+  "dssVersion": "2.2",
+  "status": "conforme",
+  "seal": "DSS/docs/Compliance/seals/DssCard/DSSCARD_SELO_v2.2.md",
+  "sealDate": "2026-02-12",
+  "auditMode": "Auditoria Final",
+  "auditDate": "2026-02-12",
+  "goldenComponent": "DssChip",
+  "secondaryGoldenComponent": "DssBadge",
+  "category": "Basico (Surface/Container)",
+  "phase": 1,
+  "hasReservations": true,
+  "classification": "Componente de superficie estrutural composto",
+  "subcomponents": ["DssCardSection", "DssCardActions"],
+  "props": {
+    "DssCard": ["variant", "square", "clickable", "dark", "brand"],
+    "DssCardSection": ["horizontal"],
+    "DssCardActions": ["align", "vertical"]
+  },
+  "statesApplicable": ["default", "hover", "focus", "active"],
+  "statesNotApplicable": ["disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssCard e superficie estrutural. Estados de loading/disabled/error pertencem aos componentes internos (DssButton, DssInput, etc.).",
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "value": "rgba(255, 255, 255, 0.12)",
+      "location": "4-output/_states.scss",
+      "justification": "Dark mode divider. Nenhum token DSS fornece white com alpha parcial."
+    },
+    {
+      "id": "EXC-02",
+      "value": "rgba(255, 255, 255, 0.2)",
+      "location": "4-output/_states.scss",
+      "justification": "Dark mode border. Bordas em dark mode requerem white com alpha. Sem token equivalente."
+    },
+    {
+      "id": "EXC-03",
+      "value": "border-radius: 0",
+      "location": "2-composition/_base.scss",
+      "justification": "Square variant. Valor 0 e semanticamente 'sem radius', nao hardcoded visual."
+    },
+    {
+      "id": "EXC-04",
+      "value": "2px solid ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode. System keywords obrigatorios (tokens CSS ignorados em forced-colors)."
+    },
+    {
+      "id": "EXC-05",
+      "value": "3px solid Highlight",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors focus. Valor absoluto obrigatorio."
+    },
+    {
+      "id": "EXC-06",
+      "value": "4px solid Highlight",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors brand accent. Valor absoluto obrigatorio."
+    },
+    {
+      "id": "EXC-07",
+      "value": "linear-gradient(135deg, var(--dss-action-primary), var(--dss-action-secondary))",
+      "location": "DssCard.example.vue",
+      "justification": "Avatar placeholder no exemplo. Gradiente decorativo para demonstracao visual. Arquivo de exemplo, nao afeta componente."
+    }
+  ]
+}

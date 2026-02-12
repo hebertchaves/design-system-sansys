@@ -32,6 +32,11 @@
   /* Transitions */
   @include dss-transition(all, 'fast');
 
+  /* Clickable: remove tap highlight (mobile) */
+  &.dss-card--clickable {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* Square variant */
   &.dss-card--square {
     border-radius: 0;

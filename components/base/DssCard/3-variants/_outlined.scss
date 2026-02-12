@@ -14,13 +14,13 @@
   /* Hover */
   &.dss-card--clickable:hover {
     border-color: var(--dss-action-primary);
-    background-color: rgba(var(--dss-action-primary-rgb), 0.05);
+    background-color: var(--dss-surface-hover);
     cursor: pointer;
   }
 
   /* Active */
   &.dss-card--clickable:active {
     border-color: var(--dss-action-primary-deep);
-    background-color: rgba(var(--dss-action-primary-rgb), 0.1);
+    background-color: var(--dss-surface-active);
   }
 }

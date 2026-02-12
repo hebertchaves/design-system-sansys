@@ -328,7 +328,7 @@ vs ANTES:
 
 ### Refatoração Completa Baseada em Documentação
 
-O DssCard foi completamente refatorado para estar **100% alinhado** com a documentação oficial ([DssCard.md](./DssCard.md)):
+O DssCard foi completamente refatorado para estar **alinhado** com a documentação oficial ([DssCard.md](./DssCard.md)):
 
 #### 1. **Acessibilidade Aprimorada (WCAG 2.1 AA)**
 - ✅ Cards clickable agora são navegáveis por teclado (Tab, Enter, Space)
@@ -378,7 +378,7 @@ O DssCard foi completamente refatorado para estar **100% alinhado** com a docume
 - `--dss-surface-default` (background)
 - `--dss-surface-dark` (dark mode)
 - `--dss-gray-200`, `--dss-gray-300`, `--dss-gray-400` (borders)
-- `--dss-action-primary-rgb` (hover states)
+- `--dss-surface-hover`, `--dss-surface-active` (hover/active states)
 
 ### **Elevation**
 - `--dss-elevation-1` (default)
@@ -387,9 +387,9 @@ O DssCard foi completamente refatorado para estar **100% alinhado** com a docume
 - `--dss-focus-shadow-primary` (focus)
 
 ### **Brand**
-- `--dss-hub-600`, `--dss-hub-primary-rgb`
-- `--dss-water-500`, `--dss-water-primary-rgb`
-- `--dss-waste-600`, `--dss-waste-primary-rgb`
+- `--dss-hub-600`, `--dss-hub-300`, `--dss-hub-400`, `--dss-hub-700`
+- `--dss-water-500`, `--dss-water-200`, `--dss-water-300`, `--dss-water-600`
+- `--dss-waste-600`, `--dss-waste-200`, `--dss-waste-300`, `--dss-waste-700`
 
 ---
 

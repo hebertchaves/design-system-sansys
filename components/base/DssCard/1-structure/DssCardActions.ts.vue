@@ -1,5 +1,5 @@
 <template>
-  <div :class="actionsClasses">
+  <div :class="actionsClasses" v-bind="$attrs">
     <slot />
   </div>
 </template>
@@ -11,7 +11,7 @@
  * ==========================================================================
  *
  * Área de ações (botões) dentro do DssCard
- * 100% compatível com Quasar q-card-actions API
+ * Componente DSS baseado em q-card-actions com API governada pelo Design System
  *
  * @see https://quasar.dev/vue-components/card#card-actions
  *
@@ -35,7 +35,8 @@ import { useCardActionsClasses } from '../composables'
 // ==========================================================================
 
 defineOptions({
-  name: 'DssCardActions'
+  name: 'DssCardActions',
+  inheritAttrs: false
 })
 
 // ==========================================================================

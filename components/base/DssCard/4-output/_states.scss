@@ -13,16 +13,21 @@
   background-color: var(--dss-surface-dark);
   color: var(--dss-text-inverse);
 
-  /* Section dividers */
+  /* Section dividers
+     EXC-01: rgba(255, 255, 255, 0.12) — Dark mode divider.
+     Justificativa: Nenhum token DSS fornece white com alpha parcial para dark mode.
+     Padrão Material Design: dividers em dark = white 12% opacity. */
   .dss-card-section + .dss-card-section,
   .dss-card-actions {
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.12); /* EXC-01 */
   }
 
-  /* Bordered variant em dark mode */
+  /* Bordered variant em dark mode
+     EXC-02: rgba(255, 255, 255, 0.2) — Dark mode border.
+     Justificativa: Bordas em dark mode requerem white com alpha. Sem token equivalente. */
   &.dss-card--bordered,
   &.dss-card--outlined {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2); /* EXC-02 */
 
     &.dss-card--clickable:hover {
       border-color: var(--dss-action-primary);
@@ -43,4 +48,43 @@
 
   /* Cursor pointer para indicar clickable */
   cursor: pointer;
+}
+
+/* ==========================================================================
+   FORCED-COLORS MODE (Windows High Contrast)
+   Padrão DssChip: system keywords, valores absolutos (tokens ignorados)
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-card {
+    border: 2px solid ButtonText;
+  }
+
+  .dss-card-section + .dss-card-section,
+  .dss-card-actions {
+    border-color: ButtonText;
+  }
+
+  .dss-card--clickable {
+    &:hover {
+      border-color: Highlight;
+    }
+
+    &:focus-visible {
+      outline: 3px solid Highlight;
+      outline-offset: 1px;
+    }
+
+    &:active {
+      border-color: HighlightText;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+
+  .dss-card--brand-hub,
+  .dss-card--brand-water,
+  .dss-card--brand-waste {
+    border-left: 4px solid Highlight;
+  }
 }

@@ -658,28 +658,28 @@
   /* Radius */
 }
 .dss-radius-none {
-  border-radius: var(--dss-radius-none);
+  border-radius: var(--dss-radius-none) !important;
 }
 .dss-radius-sm {
-  border-radius: var(--dss-radius-sm);
+  border-radius: var(--dss-radius-sm) !important;
 }
 .dss-radius-md {
-  border-radius: var(--dss-radius-md);
+  border-radius: var(--dss-radius-md) !important;
 }
 .dss-radius-lg {
-  border-radius: var(--dss-radius-lg);
+  border-radius: var(--dss-radius-lg) !important;
 }
 .dss-radius-xl {
-  border-radius: var(--dss-radius-xl);
+  border-radius: var(--dss-radius-xl) !important;
 }
 .dss-radius-2xl {
-  border-radius: var(--dss-radius-2xl);
+  border-radius: var(--dss-radius-2xl) !important;
 }
 .dss-radius-3xl {
-  border-radius: var(--dss-radius-3xl);
+  border-radius: var(--dss-radius-3xl) !important;
 }
 .dss-radius-full {
-  border-radius: var(--dss-radius-full);
+  border-radius: var(--dss-radius-full) !important;
 }
 
 /* ========== SOMBRAS ========== */
@@ -1016,7 +1016,388 @@
   transition: none;
 }
 
-/* 5. Utilitarios especificos de borda */
+/* 5. Classes utilitarias de cores (padrão Quasar) */
+/**
+ * ==========================================================================
+ * CLASSES UTILITÁRIAS DE CORES - Padrão Quasar Framework
+ * ==========================================================================
+ *
+ * Este arquivo gera classes utilitárias globais (.bg-*, .text-*) que são
+ * reutilizadas por TODOS os componentes do DSS.
+ *
+ * INSPIRAÇÃO: https://github.com/quasarframework/quasar/blob/dev/ui/src/css/core/colors.sass
+ *
+ * VANTAGENS:
+ * - ✅ Redução massiva de CSS (~70% menos código)
+ * - ✅ Classes reutilizáveis (1 classe serve N componentes)
+ * - ✅ Padrão idêntico ao Quasar Framework
+ * - ✅ Escalável (100 componentes = mesmas 16 classes)
+ *
+ * ANTES (modelo antigo - duplicado):
+ * .dss-button--primary { background: var(--dss-primary); }
+ * .dss-badge--primary { background: var(--dss-primary); }
+ * .dss-avatar--primary { background: var(--dss-primary); }
+ *
+ * DEPOIS (modelo Quasar - reutilizável):
+ * .bg-primary { background: var(--dss-primary); } // usada por TODOS
+ *
+ * ==========================================================================
+ */
+/* ==========================================================================
+   CORES SEMÂNTICAS - Background
+   ========================================================================== */
+/**
+ * Classes de background (.bg-*)
+ * Aplicam cor de fundo usando tokens DSS
+ *
+ * USO: <div class="bg-primary">...</div>
+ */
+.bg-primary {
+  background: var(--dss-primary) !important;
+}
+
+.bg-secondary {
+  background: var(--dss-secondary) !important;
+}
+
+.bg-tertiary {
+  background: var(--dss-tertiary) !important;
+}
+
+.bg-accent {
+  background: var(--dss-accent) !important;
+}
+
+.bg-positive {
+  background: var(--dss-positive) !important;
+}
+
+.bg-negative {
+  background: var(--dss-negative) !important;
+}
+
+.bg-warning {
+  background: var(--dss-warning) !important;
+}
+
+.bg-info {
+  background: var(--dss-info) !important;
+}
+
+/* ==========================================================================
+   CORES SEMÂNTICAS - Text
+   ========================================================================== */
+/**
+ * Classes de texto (.text-*)
+ * Aplicam cor de texto usando tokens DSS
+ *
+ * USO: <span class="text-primary">...</span>
+ */
+.text-primary {
+  color: var(--dss-primary) !important;
+}
+
+.text-secondary {
+  color: var(--dss-secondary) !important;
+}
+
+.text-tertiary {
+  color: var(--dss-tertiary) !important;
+}
+
+.text-accent {
+  color: var(--dss-accent) !important;
+}
+
+.text-positive {
+  color: var(--dss-positive) !important;
+}
+
+.text-negative {
+  color: var(--dss-negative) !important;
+}
+
+.text-warning {
+  color: var(--dss-warning) !important;
+}
+
+.text-info {
+  color: var(--dss-info) !important;
+}
+
+/* ==========================================================================
+   CORES NEUTRAS - Text (utilitárias extras)
+   ========================================================================== */
+/**
+ * Cores neutras comuns
+ * Usadas para texto em componentes com fundo colorido
+ */
+.text-white {
+  color: white !important;
+}
+
+.text-black {
+  color: black !important;
+}
+
+.text-dark {
+  color: var(--dss-gray-900) !important;
+}
+
+.text-grey {
+  color: var(--dss-gray-600) !important;
+}
+
+/* ==========================================================================
+   CORES NEUTRAS - Background (utilitárias extras)
+   ========================================================================== */
+/**
+ * Backgrounds neutros
+ * Usados para componentes sem cor semântica
+ */
+.bg-white {
+  background: white !important;
+}
+
+.bg-black {
+  background: black !important;
+}
+
+.bg-dark {
+  background: var(--dss-gray-900) !important;
+}
+
+.bg-grey {
+  background: var(--dss-gray-200) !important;
+}
+
+.bg-transparent {
+  background: transparent !important;
+}
+
+/* ==========================================================================
+   NOTAS DE IMPLEMENTAÇÃO
+   ========================================================================== */
+/**
+ * COMO USAR EM COMPONENTES VUE:
+ *
+ * // Exemplo: DssBadge.vue
+ * computed: {
+ *   badgeClasses() {
+ *     return [
+ *       'dss-badge',
+ *       // Usa classes utilitárias ao invés de classes específicas
+ *       this.outline ? `text-${this.color}` : `bg-${this.color}`,
+ *       this.textColor && `text-${this.textColor}`,
+ *       this.floating && 'dss-badge--floating'
+ *     ]
+ *   }
+ * }
+ *
+ * ANTES: .dss-badge--primary (específico)
+ * DEPOIS: .bg-primary (reutilizável)
+ */
+/**
+ * ESTATÍSTICAS:
+ * - Total de linhas: ~150 (vs. ~2.000 no modelo antigo)
+ * - Classes geradas: 24 (8 cores × 2 tipos + 8 neutras)
+ * - Reutilizável por: TODOS os componentes DSS
+ * - Redução de código: ~93% neste arquivo
+ * - Escalabilidade: Infinita (100 componentes = mesmo CSS)
+ */
+/* 5.1. Estados de hover para classes utilitarias de cores */
+/* ==========================================================================
+   CLASSES UTILITÁRIAS DE CORES - ESTADOS DE HOVER
+
+   PADRÃO QUASAR FRAMEWORK
+
+   ✅ USA TOKENS DE HOVER DO SISTEMA
+   - --dss-primary-hover, --dss-secondary-hover, etc.
+   - --dss-primary-light para flat/outline
+   - ZERO hardcoding, ZERO filtros CSS
+   ========================================================================== */
+/* ==========================================================================
+   HOVER - BOTÕES COM BACKGROUND COLORIDO (elevated, unelevated)
+   ========================================================================== */
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-primary {
+  background: var(--dss-primary-hover) !important;
+}
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-secondary {
+  background: var(--dss-secondary-hover) !important;
+}
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-tertiary {
+  background: var(--dss-tertiary-hover) !important;
+}
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-accent {
+  background: var(--dss-accent-hover) !important;
+}
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-positive {
+  background: var(--dss-positive-hover) !important;
+}
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-negative {
+  background: var(--dss-negative-hover) !important;
+}
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-warning {
+  background: var(--dss-warning-hover) !important;
+}
+.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading).bg-info {
+  background: var(--dss-info-hover) !important;
+}
+
+/* ==========================================================================
+   HOVER - BOTÕES FLAT/OUTLINE (apenas texto)
+   ========================================================================== */
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-primary,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-primary {
+  background: var(--dss-primary-light) !important;
+  color: var(--dss-primary-hover) !important;
+}
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-secondary,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-secondary {
+  background: var(--dss-secondary-light) !important;
+  color: var(--dss-secondary-hover) !important;
+}
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-tertiary,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-tertiary {
+  background: var(--dss-tertiary-light) !important;
+  color: var(--dss-tertiary-hover) !important;
+}
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-accent,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-accent {
+  background: var(--dss-accent-light) !important;
+  color: var(--dss-accent-hover) !important;
+}
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-positive,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-positive {
+  background: var(--dss-positive-light) !important;
+  color: var(--dss-positive-hover) !important;
+}
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-negative,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-negative {
+  background: var(--dss-negative-light) !important;
+  color: var(--dss-negative-hover) !important;
+}
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-warning,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-warning {
+  background: var(--dss-warning-light) !important;
+  color: var(--dss-warning-hover) !important;
+}
+.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading).text-info,
+.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading).text-info {
+  background: var(--dss-info-light) !important;
+  color: var(--dss-info-hover) !important;
+}
+
+/* ==========================================================================
+   ACTIVE STATE - BOTÕES
+   ========================================================================== */
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading) {
+  /* Active state usa hover color + leve scale */
+  transform: scale(0.98);
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-primary {
+  background: var(--dss-primary-hover) !important;
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-secondary {
+  background: var(--dss-secondary-hover) !important;
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-tertiary {
+  background: var(--dss-tertiary-hover) !important;
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-accent {
+  background: var(--dss-accent-hover) !important;
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-positive {
+  background: var(--dss-positive-hover) !important;
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-negative {
+  background: var(--dss-negative-hover) !important;
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-warning {
+  background: var(--dss-warning-hover) !important;
+}
+.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading).bg-info {
+  background: var(--dss-info-hover) !important;
+}
+
+/* ==========================================================================
+   HOVER - BADGES
+   ========================================================================== */
+.dss-badge:hover:not(.dss-badge--transparent).bg-primary {
+  background: var(--dss-primary-hover) !important;
+}
+.dss-badge:hover:not(.dss-badge--transparent).bg-secondary {
+  background: var(--dss-secondary-hover) !important;
+}
+.dss-badge:hover:not(.dss-badge--transparent).bg-tertiary {
+  background: var(--dss-tertiary-hover) !important;
+}
+.dss-badge:hover:not(.dss-badge--transparent).bg-accent {
+  background: var(--dss-accent-hover) !important;
+}
+.dss-badge:hover:not(.dss-badge--transparent).bg-positive {
+  background: var(--dss-positive-hover) !important;
+}
+.dss-badge:hover:not(.dss-badge--transparent).bg-negative {
+  background: var(--dss-negative-hover) !important;
+}
+.dss-badge:hover:not(.dss-badge--transparent).bg-warning {
+  background: var(--dss-warning-hover) !important;
+}
+.dss-badge:hover:not(.dss-badge--transparent).bg-info {
+  background: var(--dss-info-hover) !important;
+}
+
+.dss-badge--outline:hover.text-primary,
+.dss-badge--transparent:hover.text-primary {
+  background: var(--dss-primary-light) !important;
+  color: var(--dss-primary-hover) !important;
+}
+.dss-badge--outline:hover.text-secondary,
+.dss-badge--transparent:hover.text-secondary {
+  background: var(--dss-secondary-light) !important;
+  color: var(--dss-secondary-hover) !important;
+}
+.dss-badge--outline:hover.text-tertiary,
+.dss-badge--transparent:hover.text-tertiary {
+  background: var(--dss-tertiary-light) !important;
+  color: var(--dss-tertiary-hover) !important;
+}
+.dss-badge--outline:hover.text-accent,
+.dss-badge--transparent:hover.text-accent {
+  background: var(--dss-accent-light) !important;
+  color: var(--dss-accent-hover) !important;
+}
+.dss-badge--outline:hover.text-positive,
+.dss-badge--transparent:hover.text-positive {
+  background: var(--dss-positive-light) !important;
+  color: var(--dss-positive-hover) !important;
+}
+.dss-badge--outline:hover.text-negative,
+.dss-badge--transparent:hover.text-negative {
+  background: var(--dss-negative-light) !important;
+  color: var(--dss-negative-hover) !important;
+}
+.dss-badge--outline:hover.text-warning,
+.dss-badge--transparent:hover.text-warning {
+  background: var(--dss-warning-light) !important;
+  color: var(--dss-warning-hover) !important;
+}
+.dss-badge--outline:hover.text-info,
+.dss-badge--transparent:hover.text-info {
+  background: var(--dss-info-light) !important;
+  color: var(--dss-info-hover) !important;
+}
+
+/* ==========================================================================
+   TRANSITIONS
+   ========================================================================== */
+.dss-button,
+.dss-badge {
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 6. Utilitarios especificos de borda */
 /* ==========================================================================
    DSS - UTILITÁRIOS ESPECÍFICOS PARA BORDAS
    Classes para bordas mais específicas
@@ -1186,13 +1567,23 @@
   border-bottom-right-radius: var(--dss-radius-md);
 }
 
-/* 6. Utilitarios de layout */
+/* 7. Utilitarios de layout */
 /* ==========================================================================
    DSS - UTILITÁRIOS DE LAYOUT
    Classes para layout responsivo e grid
+   Alinhado com Tailwind CSS + Suporte 4K
+   Atualizado: Janeiro 2025
    ========================================================================== */
+/* ===========================================
+   BREAKPOINTS DE REFERÊNCIA
+   XS: 320px  | SM: 640px  | MD: 1024px
+   LG: 1440px | XL: 1920px | 4K: 3840px
+   =========================================== */
 .dss {
-  /* Container responsivo */
+  /* ===========================================
+     CONTAINER RESPONSIVO
+     Alinhado com --dss-container-* tokens
+     =========================================== */
 }
 .dss-container {
   width: 100%;
@@ -1200,54 +1591,665 @@
   margin-right: auto;
   padding-left: var(--dss-container-padding);
   padding-right: var(--dss-container-padding);
+  /* SM: 640px+ → max-width: 608px */
 }
 @media (min-width: 640px) {
   .dss-container {
-    max-width: 640px;
+    max-width: 608px;
   }
 }
-@media (min-width: 768px) {
-  .dss-container {
-    max-width: 768px;
-  }
+.dss-container {
+  /* MD: 1024px+ → max-width: 960px */
 }
 @media (min-width: 1024px) {
   .dss-container {
-    max-width: 1024px;
+    max-width: 960px;
   }
 }
-@media (min-width: 1280px) {
+.dss-container {
+  /* LG: 1440px+ → max-width: 1280px */
+}
+@media (min-width: 1440px) {
   .dss-container {
     max-width: 1280px;
   }
 }
+.dss-container {
+  /* XL: 1920px+ → max-width: 1600px */
+}
+@media (min-width: 1920px) {
+  .dss-container {
+    max-width: 1600px;
+  }
+}
+.dss-container {
+  /* 4K: 3840px+ → max-width: 1600px (limite de legibilidade) */
+}
+@media (min-width: 3840px) {
+  .dss-container {
+    max-width: 1600px;
+  }
+}
+.dss-container {
+  /* Variante fluid - sem max-width */
+}
+.dss-container--fluid {
+  max-width: none !important;
+}
 .dss {
-  /* Grid responsivo */
+  /* ===========================================
+     SISTEMA DE GRID - BASE
+     Nomenclatura BEM: .dss-grid--cols-{n}
+     =========================================== */
 }
 .dss-grid {
   display: grid;
-  gap: var(--dss-grid-gap-md);
+  gap: var(--dss-grid-gap-md, 16px);
+  /* ===========================================
+     MODIFICADORES DE COLUNAS (Estáticos)
+     =========================================== */
 }
-.dss-grid-responsive {
+.dss-grid--cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+.dss-grid--cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.dss-grid--cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.dss-grid--cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.dss-grid--cols-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+.dss-grid--cols-6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+.dss-grid--cols-7 {
+  grid-template-columns: repeat(7, 1fr);
+}
+.dss-grid--cols-8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+.dss-grid--cols-9 {
+  grid-template-columns: repeat(9, 1fr);
+}
+.dss-grid--cols-10 {
+  grid-template-columns: repeat(10, 1fr);
+}
+.dss-grid--cols-11 {
+  grid-template-columns: repeat(11, 1fr);
+}
+.dss-grid--cols-12 {
+  grid-template-columns: repeat(12, 1fr);
+}
+.dss-grid {
+  /* Auto-fit responsivo */
+}
+.dss-grid--responsive, .dss-grid-responsive {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
+.dss-grid {
+  /* ===========================================
+     MODIFICADORES RESPONSIVOS - SM (640px+)
+     =========================================== */
+}
 @media (min-width: 640px) {
-  .dss-grid-2 {
+  .dss-grid--sm-cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .dss-grid--sm-cols-2, .dss-grid-2 {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-@media (min-width: 768px) {
-  .dss-grid-3 {
+  .dss-grid--sm-cols-3 {
     grid-template-columns: repeat(3, 1fr);
   }
+  .dss-grid--sm-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .dss-grid--sm-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .dss-grid--sm-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .dss-grid--sm-cols-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .dss-grid--sm-cols-8 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+.dss-grid {
+  /* ===========================================
+     MODIFICADORES RESPONSIVOS - MD (1024px+)
+     =========================================== */
 }
 @media (min-width: 1024px) {
-  .dss-grid-4 {
+  .dss-grid--md-cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .dss-grid--md-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dss-grid--md-cols-3, .dss-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .dss-grid--md-cols-4, .dss-grid-4 {
     grid-template-columns: repeat(4, 1fr);
+  }
+  .dss-grid--md-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .dss-grid--md-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .dss-grid--md-cols-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .dss-grid--md-cols-8 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .dss-grid--md-cols-9 {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  .dss-grid--md-cols-10 {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .dss-grid--md-cols-11 {
+    grid-template-columns: repeat(11, 1fr);
+  }
+  .dss-grid--md-cols-12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+.dss-grid {
+  /* ===========================================
+     MODIFICADORES RESPONSIVOS - LG (1440px+)
+     =========================================== */
+}
+@media (min-width: 1440px) {
+  .dss-grid--lg-cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .dss-grid--lg-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dss-grid--lg-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .dss-grid--lg-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .dss-grid--lg-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .dss-grid--lg-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .dss-grid--lg-cols-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .dss-grid--lg-cols-8 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .dss-grid--lg-cols-9 {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  .dss-grid--lg-cols-10 {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .dss-grid--lg-cols-11 {
+    grid-template-columns: repeat(11, 1fr);
+  }
+  .dss-grid--lg-cols-12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+.dss-grid {
+  /* ===========================================
+     MODIFICADORES RESPONSIVOS - XL (1920px+)
+     =========================================== */
+}
+@media (min-width: 1920px) {
+  .dss-grid--xl-cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .dss-grid--xl-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dss-grid--xl-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .dss-grid--xl-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .dss-grid--xl-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .dss-grid--xl-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .dss-grid--xl-cols-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .dss-grid--xl-cols-8 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .dss-grid--xl-cols-9 {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  .dss-grid--xl-cols-10 {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .dss-grid--xl-cols-11 {
+    grid-template-columns: repeat(11, 1fr);
+  }
+  .dss-grid--xl-cols-12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+.dss-grid {
+  /* ===========================================
+     MODIFICADORES DE GAP
+     =========================================== */
+}
+.dss-grid--gap-0 {
+  gap: 0;
+}
+.dss-grid--gap-1 {
+  gap: var(--dss-spacing-1, 4px);
+}
+.dss-grid--gap-2 {
+  gap: var(--dss-spacing-2, 8px);
+}
+.dss-grid--gap-3 {
+  gap: var(--dss-spacing-3, 12px);
+}
+.dss-grid--gap-4 {
+  gap: var(--dss-spacing-4, 16px);
+}
+.dss-grid--gap-5 {
+  gap: var(--dss-spacing-5, 20px);
+}
+.dss-grid--gap-6 {
+  gap: var(--dss-spacing-6, 24px);
+}
+.dss-grid--gap-8 {
+  gap: var(--dss-spacing-8, 32px);
+}
+.dss-grid--gap-10 {
+  gap: var(--dss-spacing-10, 40px);
+}
+.dss-grid--gap-12 {
+  gap: var(--dss-spacing-12, 48px);
+}
+.dss-grid {
+  /* Gaps semânticos */
+}
+.dss-grid--gap-sm {
+  gap: var(--dss-grid-gap-sm, 8px);
+}
+.dss-grid--gap-md {
+  gap: var(--dss-grid-gap-md, 16px);
+}
+.dss-grid--gap-lg {
+  gap: var(--dss-grid-gap-lg, 24px);
+}
+.dss-grid--gap-xl {
+  gap: var(--dss-grid-gap-xl, 32px);
+}
+.dss {
+  /* ===========================================
+     SISTEMA FLEXBOX - ROW
+     =========================================== */
+}
+.dss-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.dss-row--nowrap {
+  flex-wrap: nowrap;
+}
+.dss-row--reverse {
+  flex-direction: row-reverse;
+}
+.dss-row {
+  /* Alinhamento horizontal */
+}
+.dss-row--start {
+  justify-content: flex-start;
+}
+.dss-row--center {
+  justify-content: center;
+}
+.dss-row--end {
+  justify-content: flex-end;
+}
+.dss-row--between {
+  justify-content: space-between;
+}
+.dss-row--around {
+  justify-content: space-around;
+}
+.dss-row--evenly {
+  justify-content: space-evenly;
+}
+.dss-row {
+  /* Alinhamento vertical */
+}
+.dss-row--top {
+  align-items: flex-start;
+}
+.dss-row--middle {
+  align-items: center;
+}
+.dss-row--bottom {
+  align-items: flex-end;
+}
+.dss-row--stretch {
+  align-items: stretch;
+}
+.dss-row--baseline {
+  align-items: baseline;
+}
+.dss-row {
+  /* Gaps */
+}
+.dss-row--gap-sm {
+  gap: var(--dss-grid-gap-sm, 8px);
+}
+.dss-row--gap-md {
+  gap: var(--dss-grid-gap-md, 16px);
+}
+.dss-row--gap-lg {
+  gap: var(--dss-grid-gap-lg, 24px);
+}
+.dss-row--gap-xl {
+  gap: var(--dss-grid-gap-xl, 32px);
+}
+.dss {
+  /* ===========================================
+     SISTEMA DE COLUNAS (FLEXBOX)
+     Classes col-* para sistema 12 colunas
+     =========================================== */
+}
+.dss-col {
+  flex: 1 1 0%;
+  min-width: 0;
+  /* Colunas fixas */
+}
+.dss-col-1 {
+  flex: 0 0 8.3333333333%;
+  max-width: 8.3333333333%;
+}
+.dss-col-2 {
+  flex: 0 0 16.6666666667%;
+  max-width: 16.6666666667%;
+}
+.dss-col-3 {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+.dss-col-4 {
+  flex: 0 0 33.3333333333%;
+  max-width: 33.3333333333%;
+}
+.dss-col-5 {
+  flex: 0 0 41.6666666667%;
+  max-width: 41.6666666667%;
+}
+.dss-col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+.dss-col-7 {
+  flex: 0 0 58.3333333333%;
+  max-width: 58.3333333333%;
+}
+.dss-col-8 {
+  flex: 0 0 66.6666666667%;
+  max-width: 66.6666666667%;
+}
+.dss-col-9 {
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+.dss-col-10 {
+  flex: 0 0 83.3333333333%;
+  max-width: 83.3333333333%;
+}
+.dss-col-11 {
+  flex: 0 0 91.6666666667%;
+  max-width: 91.6666666667%;
+}
+.dss-col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+.dss-col-auto {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
+}
+.dss-col {
+  /* Colunas responsivas - SM (640px+) */
+}
+@media (min-width: 640px) {
+  .dss-col-sm-1 {
+    flex: 0 0 8.3333333333%;
+    max-width: 8.3333333333%;
+  }
+  .dss-col-sm-2 {
+    flex: 0 0 16.6666666667%;
+    max-width: 16.6666666667%;
+  }
+  .dss-col-sm-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .dss-col-sm-4 {
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+  }
+  .dss-col-sm-5 {
+    flex: 0 0 41.6666666667%;
+    max-width: 41.6666666667%;
+  }
+  .dss-col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .dss-col-sm-7 {
+    flex: 0 0 58.3333333333%;
+    max-width: 58.3333333333%;
+  }
+  .dss-col-sm-8 {
+    flex: 0 0 66.6666666667%;
+    max-width: 66.6666666667%;
+  }
+  .dss-col-sm-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .dss-col-sm-10 {
+    flex: 0 0 83.3333333333%;
+    max-width: 83.3333333333%;
+  }
+  .dss-col-sm-11 {
+    flex: 0 0 91.6666666667%;
+    max-width: 91.6666666667%;
+  }
+  .dss-col-sm-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+.dss-col {
+  /* Colunas responsivas - MD (1024px+) */
+}
+@media (min-width: 1024px) {
+  .dss-col-md-1 {
+    flex: 0 0 8.3333333333%;
+    max-width: 8.3333333333%;
+  }
+  .dss-col-md-2 {
+    flex: 0 0 16.6666666667%;
+    max-width: 16.6666666667%;
+  }
+  .dss-col-md-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .dss-col-md-4 {
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+  }
+  .dss-col-md-5 {
+    flex: 0 0 41.6666666667%;
+    max-width: 41.6666666667%;
+  }
+  .dss-col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .dss-col-md-7 {
+    flex: 0 0 58.3333333333%;
+    max-width: 58.3333333333%;
+  }
+  .dss-col-md-8 {
+    flex: 0 0 66.6666666667%;
+    max-width: 66.6666666667%;
+  }
+  .dss-col-md-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .dss-col-md-10 {
+    flex: 0 0 83.3333333333%;
+    max-width: 83.3333333333%;
+  }
+  .dss-col-md-11 {
+    flex: 0 0 91.6666666667%;
+    max-width: 91.6666666667%;
+  }
+  .dss-col-md-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+.dss-col {
+  /* Colunas responsivas - LG (1440px+) */
+}
+@media (min-width: 1440px) {
+  .dss-col-lg-1 {
+    flex: 0 0 8.3333333333%;
+    max-width: 8.3333333333%;
+  }
+  .dss-col-lg-2 {
+    flex: 0 0 16.6666666667%;
+    max-width: 16.6666666667%;
+  }
+  .dss-col-lg-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .dss-col-lg-4 {
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+  }
+  .dss-col-lg-5 {
+    flex: 0 0 41.6666666667%;
+    max-width: 41.6666666667%;
+  }
+  .dss-col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .dss-col-lg-7 {
+    flex: 0 0 58.3333333333%;
+    max-width: 58.3333333333%;
+  }
+  .dss-col-lg-8 {
+    flex: 0 0 66.6666666667%;
+    max-width: 66.6666666667%;
+  }
+  .dss-col-lg-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .dss-col-lg-10 {
+    flex: 0 0 83.3333333333%;
+    max-width: 83.3333333333%;
+  }
+  .dss-col-lg-11 {
+    flex: 0 0 91.6666666667%;
+    max-width: 91.6666666667%;
+  }
+  .dss-col-lg-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+.dss-col {
+  /* Colunas responsivas - XL (1920px+) */
+}
+@media (min-width: 1920px) {
+  .dss-col-xl-1 {
+    flex: 0 0 8.3333333333%;
+    max-width: 8.3333333333%;
+  }
+  .dss-col-xl-2 {
+    flex: 0 0 16.6666666667%;
+    max-width: 16.6666666667%;
+  }
+  .dss-col-xl-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .dss-col-xl-4 {
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+  }
+  .dss-col-xl-5 {
+    flex: 0 0 41.6666666667%;
+    max-width: 41.6666666667%;
+  }
+  .dss-col-xl-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .dss-col-xl-7 {
+    flex: 0 0 58.3333333333%;
+    max-width: 58.3333333333%;
+  }
+  .dss-col-xl-8 {
+    flex: 0 0 66.6666666667%;
+    max-width: 66.6666666667%;
+  }
+  .dss-col-xl-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .dss-col-xl-10 {
+    flex: 0 0 83.3333333333%;
+    max-width: 83.3333333333%;
+  }
+  .dss-col-xl-11 {
+    flex: 0 0 91.6666666667%;
+    max-width: 91.6666666667%;
+  }
+  .dss-col-xl-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 .dss {
-  /* Aspect ratio */
+  /* ===========================================
+     ASPECT RATIO
+     =========================================== */
 }
 .dss-aspect-square {
   aspect-ratio: 1/1;
@@ -1255,11 +2257,19 @@
 .dss-aspect-video {
   aspect-ratio: 16/9;
 }
+.dss-aspect-portrait {
+  aspect-ratio: 3/4;
+}
+.dss-aspect-wide {
+  aspect-ratio: 21/9;
+}
 .dss-aspect-auto {
   aspect-ratio: auto;
 }
 .dss {
-  /* Object fit */
+  /* ===========================================
+     OBJECT FIT
+     =========================================== */
 }
 .dss-object-cover {
   object-fit: cover;
@@ -1270,8 +2280,16 @@
 .dss-object-fill {
   object-fit: fill;
 }
+.dss-object-none {
+  object-fit: none;
+}
+.dss-object-scale-down {
+  object-fit: scale-down;
+}
 .dss {
-  /* Width */
+  /* ===========================================
+     WIDTH UTILITIES
+     =========================================== */
 }
 .dss-w-full {
   width: 100%;
@@ -1288,8 +2306,13 @@
 .dss-w-max {
   width: max-content;
 }
+.dss-w-fit {
+  width: fit-content;
+}
 .dss {
-  /* Height */
+  /* ===========================================
+     HEIGHT UTILITIES
+     =========================================== */
 }
 .dss-h-full {
   height: 100%;
@@ -1306,8 +2329,13 @@
 .dss-h-max {
   height: max-content;
 }
+.dss-h-fit {
+  height: fit-content;
+}
 .dss {
-  /* Min/Max dimensions */
+  /* ===========================================
+     MIN/MAX DIMENSIONS
+     =========================================== */
 }
 .dss-min-w-0 {
   min-width: 0;
@@ -1327,6 +2355,9 @@
 .dss-max-w-prose {
   max-width: 65ch;
 }
+.dss-max-w-content {
+  max-width: var(--dss-layout-content-max-width, 720px);
+}
 .dss-min-h-0 {
   min-height: 0;
 }
@@ -1343,39 +2374,231 @@
   max-height: 100vh;
 }
 .dss {
-  /* Responsive helpers */
+  /* ===========================================
+     SISTEMA DE VISIBILIDADE RESPONSIVA
+     Alinhado com breakpoints DSS
+     =========================================== */
+  /* Hide - Esconder em breakpoints específicos */
 }
-@media (max-width: 767px) {
+.dss-hide {
+  /* XS only (320px - 639px) */
+}
+@media (min-width: 320px) and (max-width: 639px) {
+  .dss-hide-xs {
+    display: none !important;
+  }
+}
+.dss-hide {
+  /* Mobile: XS (até 639px) */
+}
+@media (max-width: 639px) {
   .dss-hide-mobile {
     display: none !important;
   }
 }
-@media (min-width: 768px) and (max-width: 1023px) {
+.dss-hide {
+  /* SM only (640px - 1023px) */
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .dss-hide-sm {
+    display: none !important;
+  }
+}
+.dss-hide {
+  /* Tablet: SM (640px - 1023px) */
+}
+@media (min-width: 640px) and (max-width: 1023px) {
   .dss-hide-tablet {
     display: none !important;
   }
+}
+.dss-hide {
+  /* MD only (1024px - 1439px) */
+}
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .dss-hide-md {
+    display: none !important;
+  }
+}
+.dss-hide {
+  /* Desktop: MD+ (1024px+) */
 }
 @media (min-width: 1024px) {
   .dss-hide-desktop {
     display: none !important;
   }
 }
-@media (min-width: 768px) {
+.dss-hide {
+  /* LG only (1440px - 1919px) */
+}
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .dss-hide-lg {
+    display: none !important;
+  }
+}
+.dss-hide {
+  /* Wide: LG+ (1440px+) */
+}
+@media (min-width: 1440px) {
+  .dss-hide-wide {
+    display: none !important;
+  }
+}
+.dss-hide {
+  /* XL only (1920px - 3839px) */
+}
+@media (min-width: 1920px) and (max-width: 3839px) {
+  .dss-hide-xl {
+    display: none !important;
+  }
+}
+.dss-hide {
+  /* Ultrawide: XL+ (1920px+) */
+}
+@media (min-width: 1920px) {
+  .dss-hide-ultrawide {
+    display: none !important;
+  }
+}
+.dss-hide {
+  /* 4K: 3840px+ */
+}
+@media (min-width: 3840px) {
+  .dss-hide-4k {
+    display: none !important;
+  }
+}
+.dss {
+  /* Show - Mostrar APENAS em breakpoints específicos */
+}
+.dss-show {
+  /* Mobile only: até 639px */
+}
+@media (min-width: 640px) {
   .dss-show-mobile {
     display: none !important;
   }
 }
-@media (max-width: 767px), (min-width: 1024px) {
+.dss-show {
+  /* Tablet only: 640px - 1023px */
+}
+@media (max-width: 639px), (min-width: 1024px) {
   .dss-show-tablet {
     display: none !important;
   }
 }
-@media (max-width: 1023px) {
+.dss-show {
+  /* Desktop only: 1024px - 1439px */
+}
+@media (max-width: 1023px), (min-width: 1440px) {
   .dss-show-desktop {
     display: none !important;
   }
 }
+.dss-show {
+  /* Wide only: 1440px - 1919px */
+}
+@media (max-width: 1439px), (min-width: 1920px) {
+  .dss-show-wide {
+    display: none !important;
+  }
+}
+.dss-show {
+  /* Ultrawide only: 1920px - 3839px */
+}
+@media (max-width: 1919px), (min-width: 3840px) {
+  .dss-show-ultrawide {
+    display: none !important;
+  }
+}
+.dss-show {
+  /* 4K only: 3840px+ */
+}
+@media (max-width: 3839px) {
+  .dss-show-4k {
+    display: none !important;
+  }
+}
+.dss {
+  /* ===========================================
+     UTILITÁRIOS DE POSICIONAMENTO
+     =========================================== */
+}
+.dss-position-relative {
+  position: relative;
+}
+.dss-position-absolute {
+  position: absolute;
+}
+.dss-position-fixed {
+  position: fixed;
+}
+.dss-position-sticky {
+  position: sticky;
+}
+.dss-position-static {
+  position: static;
+}
+.dss-inset-0 {
+  inset: 0;
+}
+.dss-inset-auto {
+  inset: auto;
+}
+.dss-z-0 {
+  z-index: 0;
+}
+.dss-z-10 {
+  z-index: 10;
+}
+.dss-z-20 {
+  z-index: 20;
+}
+.dss-z-30 {
+  z-index: 30;
+}
+.dss-z-40 {
+  z-index: 40;
+}
+.dss-z-50 {
+  z-index: 50;
+}
+.dss-z-auto {
+  z-index: auto;
+}
+.dss {
+  /* ===========================================
+     SPACER COMPONENT
+     Cria espaço vertical/horizontal
+     =========================================== */
+}
+.dss-spacer {
+  flex: 1 1 auto;
+  /* Spacers fixos */
+}
+.dss-spacer--xs {
+  height: var(--dss-spacing-2, 8px);
+}
+.dss-spacer--sm {
+  height: var(--dss-spacing-4, 16px);
+}
+.dss-spacer--md {
+  height: var(--dss-spacing-6, 24px);
+}
+.dss-spacer--lg {
+  height: var(--dss-spacing-8, 32px);
+}
+.dss-spacer--xl {
+  height: var(--dss-spacing-12, 48px);
+}
+.dss-spacer--2xl {
+  height: var(--dss-spacing-16, 64px);
+}
 
+/* ===========================================
+   CLASSES LEGADAS (Compatibilidade)
+   Deprecadas - usar novas classes BEM
+   =========================================== */
 /* ==========================================================================
    NOTA: _example-showcase.scss NAO e importado aqui.
 
@@ -1408,6 +2631,12 @@
   .dss-card {
     transition: none;
   }
+}
+.dss-card {
+  /* Clickable: remove tap highlight (mobile) */
+}
+.dss-card.dss-card--clickable {
+  -webkit-tap-highlight-color: transparent;
 }
 .dss-card {
   /* Square variant */
@@ -1565,7 +2794,7 @@
 }
 .dss-card--outlined.dss-card--clickable:hover {
   border-color: var(--dss-action-primary);
-  background-color: rgba(var(--dss-action-primary-rgb), 0.05);
+  background-color: var(--dss-surface-hover);
   cursor: pointer;
 }
 .dss-card--outlined {
@@ -1573,7 +2802,7 @@
 }
 .dss-card--outlined.dss-card--clickable:active {
   border-color: var(--dss-action-primary-deep);
-  background-color: rgba(var(--dss-action-primary-rgb), 0.1);
+  background-color: var(--dss-surface-active);
 }
 
 /* Layer 4: Output */
@@ -1594,22 +2823,27 @@
 [data-theme=dark] .dss-card {
   background-color: var(--dss-surface-dark);
   color: var(--dss-text-inverse);
-  /* Section dividers */
+  /* Section dividers
+     EXC-01: rgba(255, 255, 255, 0.12) — Dark mode divider.
+     Justificativa: Nenhum token DSS fornece white com alpha parcial para dark mode.
+     Padrão Material Design: dividers em dark = white 12% opacity. */
 }
 .dss-card--dark .dss-card-section + .dss-card-section,
 .dss-card--dark .dss-card-actions,
 [data-theme=dark] .dss-card .dss-card-section + .dss-card-section,
 [data-theme=dark] .dss-card .dss-card-actions {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.12); /* EXC-01 */
 }
 .dss-card--dark,
 [data-theme=dark] .dss-card {
-  /* Bordered variant em dark mode */
+  /* Bordered variant em dark mode
+     EXC-02: rgba(255, 255, 255, 0.2) — Dark mode border.
+     Justificativa: Bordas em dark mode requerem white com alpha. Sem token equivalente. */
 }
 .dss-card--dark.dss-card--bordered, .dss-card--dark.dss-card--outlined,
 [data-theme=dark] .dss-card.dss-card--bordered,
 [data-theme=dark] .dss-card.dss-card--outlined {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.2); /* EXC-02 */
 }
 .dss-card--dark.dss-card--bordered.dss-card--clickable:hover, .dss-card--dark.dss-card--outlined.dss-card--clickable:hover,
 [data-theme=dark] .dss-card.dss-card--bordered.dss-card--clickable:hover,
@@ -1627,32 +2861,41 @@
   outline: none;
   box-shadow: var(--dss-focus-shadow-primary);
 }
+.dss-card--clickable {
+  /* Cursor pointer para indicar clickable */
+  cursor: pointer;
+}
 
 /* ==========================================================================
-   LOADING STATE (opcional)
+   FORCED-COLORS MODE (Windows High Contrast)
+   Padrão DssChip: system keywords, valores absolutos (tokens ignorados)
    ========================================================================== */
-.dss-card--loading {
-  position: relative;
-  pointer-events: none;
+@media (forced-colors: active) {
+  .dss-card {
+    border: 2px solid ButtonText;
+  }
+  .dss-card-section + .dss-card-section,
+  .dss-card-actions {
+    border-color: ButtonText;
+  }
+  .dss-card--clickable:hover {
+    border-color: Highlight;
+  }
+  .dss-card--clickable:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 1px;
+  }
+  .dss-card--clickable:active {
+    border-color: HighlightText;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .dss-card--brand-hub,
+  .dss-card--brand-water,
+  .dss-card--brand-waste {
+    border-left: 4px solid Highlight;
+  }
 }
-.dss-card--loading::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Dark mode loading */
-[data-theme=dark] .dss-card--loading::after {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
 /* ==========================================================================
    DssCard - LAYER 4: OUTPUT (Brands)
 
@@ -1680,14 +2923,6 @@
   border-color: var(--dss-hub-400);
   border-left-color: var(--dss-hub-700);
 }
-[data-brand=hub] .dss-card--brand-hub,
-.dss-card--brand-hub {
-  /* Background sutil da marca */
-}
-[data-brand=hub] .dss-card--brand-hub .dss-card-section:first-child,
-.dss-card--brand-hub .dss-card-section:first-child {
-  background-color: rgba(var(--dss-hub-primary-rgb), 0.05);
-}
 
 /* ==========================================================================
    WATER BRAND (Azul)
@@ -1710,14 +2945,6 @@
   border-color: var(--dss-water-300);
   border-left-color: var(--dss-water-600);
 }
-[data-brand=water] .dss-card--brand-water,
-.dss-card--brand-water {
-  /* Background sutil da marca */
-}
-[data-brand=water] .dss-card--brand-water .dss-card-section:first-child,
-.dss-card--brand-water .dss-card-section:first-child {
-  background-color: rgba(var(--dss-water-primary-rgb), 0.05);
-}
 
 /* ==========================================================================
    WASTE BRAND (Verde)
@@ -1739,14 +2966,6 @@
 .dss-card--brand-waste.dss-card--outlined.dss-card--clickable:hover {
   border-color: var(--dss-waste-300);
   border-left-color: var(--dss-waste-700);
-}
-[data-brand=waste] .dss-card--brand-waste,
-.dss-card--brand-waste {
-  /* Background sutil da marca */
-}
-[data-brand=waste] .dss-card--brand-waste .dss-card-section:first-child,
-.dss-card--brand-waste .dss-card-section:first-child {
-  background-color: rgba(var(--dss-waste-primary-rgb), 0.05);
 }
 
 /* ==========================================================================
@@ -1777,3 +2996,5 @@
     transition: none;
   }
 }
+
+/*# sourceMappingURL=DssCard.module.css.map */
