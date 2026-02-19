@@ -20,16 +20,19 @@ import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
 import {
   DssPlayground,
   ControlGrid,
+  ControlSection,
   VariantSelector,
   ColorPicker,
   FeedbackColorPicker,
   BrandPicker,
+  SizeSelector,
   ToggleGroup,
   DSS_SEMANTIC_COLORS,
   DSS_BRAND_COLORS,
   DSS_FEEDBACK_COLORS,
   type FeedbackColor,
 } from "@/components/ui/playground";
+import { PlaygroundButton } from "@/components/ui/PlaygroundButton";
 
 // ============================================================================
 // DADOS DO COMPONENTE — Derivados dos arquivos fonte DSS
@@ -153,6 +156,21 @@ const anatomyData = {
 };
 
 // ============================================================================
+// COMPOSITION TEMPLATES — Derivados de DssCard.example.vue (seções 1-19)
+// ============================================================================
+
+const compositionTemplates = [
+  { name: "basic", label: "Básico", desc: "Título + descrição" },
+  { name: "actions", label: "Com Ações", desc: "Section + DssCardActions" },
+  { name: "profile", label: "Perfil", desc: "Avatar horizontal + ações" },
+  { name: "status", label: "Status", desc: "Badge + métrica" },
+  { name: "tags", label: "Tags", desc: "DssChip group" },
+  { name: "form", label: "Formulário", desc: "DssInput + ações" },
+  { name: "settings", label: "Configurações", desc: "DssToggle list" },
+  { name: "dashboard", label: "Dashboard Misto", desc: "Avatar + Badge + Chip + Button" },
+];
+
+// ============================================================================
 // PREVIEW DO CARD
 // ============================================================================
 
@@ -163,7 +181,7 @@ interface DssCardPreviewProps {
   dark?: boolean;
   brand?: string | null;
   semanticColor?: string | null;
-  children?: React.ReactNode;
+  template?: string;
 }
 
 function DssCardPreview({
@@ -173,7 +191,7 @@ function DssCardPreview({
   dark = false,
   brand = null,
   semanticColor = null,
-  children,
+  template = "basic",
 }: DssCardPreviewProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -191,57 +209,181 @@ function DssCardPreview({
   };
 
   const colors = getColors();
+  const textColor = dark ? "#ffffff" : "#1a1a1a";
+  const subtextColor = dark ? "rgba(255,255,255,0.6)" : "#666";
+  const accentBtnBg = brand ? DSS_BRAND_COLORS[brand]?.principal : (semanticColor ? ({ ...DSS_SEMANTIC_COLORS, ...feedbackColors }[semanticColor]?.bg) : "#1f86de");
 
   const getVariantStyles = (): React.CSSProperties => {
     const base: React.CSSProperties = {
       backgroundColor: dark ? "#2a2a2a" : "#ffffff",
-      color: dark ? "#ffffff" : "#454545",
+      color: textColor,
       borderRadius: square ? "0" : "12px",
       transition: "all 250ms cubic-bezier(0.4,0,0.2,1)",
       cursor: clickable ? "pointer" : "default",
       transform: clickable && isHovered ? "translateY(-2px)" : "translateY(0)",
-      minWidth: "280px",
+      minWidth: "300px",
+      maxWidth: "420px",
       borderLeft: brand ? `4px solid ${colors.primary}` : undefined,
     };
 
     switch (variant) {
       case "elevated":
-        return {
-          ...base,
-          boxShadow: isHovered && clickable
-            ? "0 4px 6px rgba(0,0,0,0.30)"
-            : "0 1px 3px rgba(0,0,0,0.25)",
-        };
+        return { ...base, boxShadow: isHovered && clickable ? "0 4px 6px rgba(0,0,0,0.30)" : "0 1px 3px rgba(0,0,0,0.25)" };
       case "flat":
-        return {
-          ...base,
-          boxShadow: "none",
-          backgroundColor: isHovered && clickable
-            ? (dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)")
-            : (dark ? "#2a2a2a" : "#ffffff"),
-        };
+        return { ...base, boxShadow: "none", backgroundColor: isHovered && clickable ? (dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)") : (dark ? "#2a2a2a" : "#ffffff") };
       case "bordered":
-        return {
-          ...base,
-          border: `1px solid ${isHovered && clickable ? colors.primary : (dark ? "rgba(255,255,255,0.2)" : "#d4d4d4")}`,
-          borderLeft: brand ? `4px solid ${colors.primary}` : undefined,
-          boxShadow: isHovered && clickable
-            ? "0 4px 6px rgba(0,0,0,0.30)"
-            : "0 1px 3px rgba(0,0,0,0.25)",
-        };
+        return { ...base, border: `1px solid ${isHovered && clickable ? colors.primary : (dark ? "rgba(255,255,255,0.2)" : "#d4d4d4")}`, borderLeft: brand ? `4px solid ${colors.primary}` : undefined, boxShadow: isHovered && clickable ? "0 4px 6px rgba(0,0,0,0.30)" : "0 1px 3px rgba(0,0,0,0.25)" };
       case "outlined":
-        return {
-          ...base,
-          border: `1px solid ${isHovered && clickable ? colors.primary : (dark ? "rgba(255,255,255,0.2)" : "#d4d4d4")}`,
-          borderLeft: brand ? `4px solid ${colors.primary}` : undefined,
-          boxShadow: "none",
-          backgroundColor: isHovered && clickable
-            ? `${colors.light}20`
-            : (dark ? "#2a2a2a" : "#ffffff"),
-        };
+        return { ...base, border: `1px solid ${isHovered && clickable ? colors.primary : (dark ? "rgba(255,255,255,0.2)" : "#d4d4d4")}`, borderLeft: brand ? `4px solid ${colors.primary}` : undefined, boxShadow: "none" };
       default:
         return base;
     }
+  };
+
+  // ---- Composition template renderers ----
+
+  const renderBasic = () => (
+    <CardSection>
+      <h3 className="font-semibold text-base mb-1" style={{ color: textColor }}>Card Title</h3>
+      <p className="text-sm" style={{ color: subtextColor }}>This is a basic card with simple content.</p>
+    </CardSection>
+  );
+
+  const renderActions = () => (
+    <>
+      <CardSection>
+        <h3 className="font-semibold text-base mb-1" style={{ color: textColor }}>Confirmação</h3>
+        <p className="text-sm" style={{ color: subtextColor }}>Tem certeza que deseja continuar?</p>
+      </CardSection>
+      <CardActions align="right">
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Cancelar</button>
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Confirmar</button>
+      </CardActions>
+    </>
+  );
+
+  const renderProfile = () => (
+    <>
+      <CardSection horizontal>
+        <div style={{ width: 48, height: 48, borderRadius: "50%", background: `linear-gradient(135deg, ${colors.primary}, ${colors.light})`, flexShrink: 0 }} />
+        <div>
+          <h3 className="font-semibold text-sm" style={{ color: textColor }}>Maria Silva</h3>
+          <p className="text-xs" style={{ color: subtextColor }}>Engenheira de Software</p>
+        </div>
+      </CardSection>
+      <CardActions align="right">
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Mensagem</button>
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Ver Perfil</button>
+      </CardActions>
+    </>
+  );
+
+  const renderStatus = () => (
+    <CardSection>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="font-semibold text-sm" style={{ color: textColor }}>Pedidos Pendentes</h3>
+        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold" style={{ backgroundColor: "#fabd14", color: "#1a1a1a" }}>12</span>
+      </div>
+      <p className="text-2xl font-bold mt-2" style={{ color: textColor }}>142</p>
+      <p className="text-xs mt-1" style={{ color: subtextColor }}>Atualizado agora</p>
+    </CardSection>
+  );
+
+  const renderTags = () => (
+    <CardSection>
+      <h3 className="font-semibold text-sm mb-2" style={{ color: textColor }}>Categorias do Projeto</h3>
+      <div className="flex flex-wrap gap-1.5">
+        {["Frontend", "Vue.js", "TypeScript", "DSS"].map((tag, i) => (
+          <span key={i} className="px-2 py-0.5 rounded-full text-[10px] font-medium" style={{ backgroundColor: i === 3 ? (accentBtnBg || "#1f86de") : (dark ? "rgba(255,255,255,0.1)" : "#f0f0f0"), color: i === 3 ? "#fff" : textColor, border: `1px solid ${dark ? "rgba(255,255,255,0.15)" : "#e0e0e0"}` }}>
+            {tag}
+          </span>
+        ))}
+      </div>
+    </CardSection>
+  );
+
+  const renderForm = () => (
+    <>
+      <CardSection>
+        <h3 className="font-semibold text-sm mb-3" style={{ color: textColor }}>Contato</h3>
+        <div className="space-y-2">
+          {["Nome completo", "E-mail"].map((label, i) => (
+            <div key={i}>
+              <label className="text-[10px] font-medium block mb-0.5" style={{ color: subtextColor }}>{label}</label>
+              <div className="h-7 rounded border px-2 text-xs flex items-center" style={{ borderColor: dark ? "rgba(255,255,255,0.2)" : "#d4d4d4", backgroundColor: dark ? "rgba(255,255,255,0.05)" : "#fafafa", color: subtextColor }}>
+                {i === 0 ? "João Silva" : "joao@email.com"}
+              </div>
+            </div>
+          ))}
+        </div>
+      </CardSection>
+      <CardActions align="right">
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Cancelar</button>
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Enviar</button>
+      </CardActions>
+    </>
+  );
+
+  const renderSettings = () => (
+    <CardSection>
+      <h3 className="font-semibold text-sm mb-3" style={{ color: textColor }}>Configurações</h3>
+      <div className="space-y-3">
+        {[
+          { label: "Modo escuro", sub: "Ativar tema escuro", on: false },
+          { label: "Salvamento automático", sub: "Salvar alterações", on: true },
+          { label: "Analytics", sub: "Coleta de dados de uso", on: false },
+        ].map((item, i) => (
+          <div key={i} className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium" style={{ color: textColor }}>{item.label}</p>
+              <p className="text-[10px]" style={{ color: subtextColor }}>{item.sub}</p>
+            </div>
+            <div className="w-8 h-4 rounded-full relative" style={{ backgroundColor: item.on ? (accentBtnBg || "#1f86de") : (dark ? "rgba(255,255,255,0.2)" : "#ccc") }}>
+              <div className="w-3 h-3 rounded-full bg-white absolute top-0.5" style={{ left: item.on ? "17px" : "2px", transition: "left 150ms" }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </CardSection>
+  );
+
+  const renderDashboard = () => (
+    <>
+      <CardSection horizontal>
+        <div style={{ width: 48, height: 48, borderRadius: "50%", background: `linear-gradient(135deg, ${colors.primary}, ${colors.hover})`, flexShrink: 0 }} />
+        <div style={{ flex: 1 }}>
+          <div className="flex items-center gap-1.5">
+            <h3 className="font-semibold text-sm" style={{ color: textColor }}>Carlos Mendes</h3>
+            <span className="px-1.5 py-0.5 rounded text-[9px] font-medium" style={{ backgroundColor: "#0cc4e9", color: "#fff" }}>Tech Lead</span>
+          </div>
+          <p className="text-xs" style={{ color: subtextColor }}>Equipe de Engenharia</p>
+        </div>
+      </CardSection>
+      <CardSection>
+        <div className="flex flex-wrap gap-1">
+          {["Vue.js", "Node.js", "DevOps", "DSS"].map((tag, i) => (
+            <span key={i} className="px-2 py-0.5 rounded-full text-[10px] font-medium" style={{ backgroundColor: i === 3 ? (accentBtnBg || "#1f86de") : (dark ? "rgba(255,255,255,0.1)" : "#f0f0f0"), color: i === 3 ? "#fff" : textColor, border: `1px solid ${dark ? "rgba(255,255,255,0.15)" : "#e0e0e0"}` }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      </CardSection>
+      <CardActions align="right">
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Projetos</button>
+        <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Contatar</button>
+      </CardActions>
+    </>
+  );
+
+  const templateMap: Record<string, () => React.ReactNode> = {
+    basic: renderBasic,
+    actions: renderActions,
+    profile: renderProfile,
+    status: renderStatus,
+    tags: renderTags,
+    form: renderForm,
+    settings: renderSettings,
+    dashboard: renderDashboard,
   };
 
   return (
@@ -250,7 +392,7 @@ function DssCardPreview({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {children}
+      {(templateMap[template] || renderBasic)()}
     </div>
   );
 }
@@ -308,13 +450,18 @@ export default function DssCardPage() {
   const [selectedVariant, setSelectedVariant] = useState("elevated");
   const [selectedColor, setSelectedColor] = useState<string | null>("primary");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState("basic");
+  const [selectedActionsAlign, setSelectedActionsAlign] = useState("right");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [booleanStates, setBooleanStates] = useState({
     clickable: false,
     square: false,
+    dark: false,
+    horizontalSection: false,
+    verticalActions: false,
   });
 
-  // Exclusividade Color × Brand (PLAYGROUND_STANDARD v3.1)
+  // Color Application Domain v3.2: última seleção substitui silenciosamente
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
     setSelectedBrand(null);
@@ -334,27 +481,139 @@ export default function DssCardPage() {
     }));
   };
 
-  // Geração de código (PLAYGROUND_STANDARD v3.1: código de produção)
+  // Templates que possuem DssCardActions
+  const templatesWithActions = ["actions", "profile", "form", "dashboard"];
+  const hasActions = templatesWithActions.includes(selectedTemplate);
+
+  // Geração de código por template (PLAYGROUND_STANDARD v3.2)
   const generateCode = () => {
     const props: string[] = [];
     if (selectedVariant !== "elevated") props.push(`variant="${selectedVariant}"`);
-    if (selectedBrand) {
-      props.push(`brand="${selectedBrand}"`);
-    }
+    if (selectedBrand) props.push(`brand="${selectedBrand}"`);
     if (booleanStates.clickable) props.push("clickable");
     if (booleanStates.square) props.push("square");
-    if (isDarkMode) props.push("dark");
+    if (booleanStates.dark) props.push("dark");
 
     const propsStr = props.length > 0 ? `\n  ${props.join("\n  ")}` : "";
-    return `<DssCard${propsStr}>
-  <DssCardSection>
-    Card content here
+    const actionsAlignStr = selectedActionsAlign !== "right" ? ` align="${selectedActionsAlign}"` : ` align="right"`;
+    const verticalStr = booleanStates.verticalActions ? " vertical" : "";
+    const horizontalStr = booleanStates.horizontalSection ? " horizontal" : "";
+    const actionsAttrs = `${actionsAlignStr}${verticalStr}`;
+
+    const templateCode: Record<string, string> = {
+      basic: `<DssCard${propsStr}>
+  <DssCardSection${horizontalStr}>
+    <h3>Card Title</h3>
+    <p>Card content here.</p>
   </DssCardSection>
-  <DssCardActions align="right">
-    <DssButton label="Action" />
+</DssCard>`,
+      actions: `<DssCard${propsStr}>
+  <DssCardSection${horizontalStr}>
+    <h3>Confirmação</h3>
+    <p>Tem certeza que deseja continuar?</p>
+  </DssCardSection>
+  <DssCardActions${actionsAttrs}>
+    <DssButton variant="flat">Cancelar</DssButton>
+    <DssButton color="primary">Confirmar</DssButton>
   </DssCardActions>
-</DssCard>`;
+</DssCard>`,
+      profile: `<DssCard${propsStr}>
+  <DssCardSection horizontal>
+    <DssAvatar src="/foto.jpg" size="lg" />
+    <div>
+      <h3>Maria Silva</h3>
+      <p>Engenheira de Software</p>
+    </div>
+  </DssCardSection>
+  <DssCardActions${actionsAttrs}>
+    <DssButton variant="flat">Mensagem</DssButton>
+    <DssButton color="primary">Ver Perfil</DssButton>
+  </DssCardActions>
+</DssCard>`,
+      status: `<DssCard${propsStr}>
+  <DssCardSection${horizontalStr}>
+    <div class="flex items-center justify-between">
+      <h3>Pedidos Pendentes</h3>
+      <DssBadge color="warning">12</DssBadge>
+    </div>
+    <p class="metric-value">142</p>
+    <p><small>Atualizado agora</small></p>
+  </DssCardSection>
+</DssCard>`,
+      tags: `<DssCard${propsStr}>
+  <DssCardSection${horizontalStr}>
+    <h3>Categorias do Projeto</h3>
+    <div class="chip-group">
+      <DssChip>Frontend</DssChip>
+      <DssChip>Vue.js</DssChip>
+      <DssChip outline>TypeScript</DssChip>
+      <DssChip color="primary">DSS</DssChip>
+    </div>
+  </DssCardSection>
+</DssCard>`,
+      form: `<DssCard${propsStr}>
+  <DssCardSection${horizontalStr}>
+    <h3>Contato</h3>
+    <DssInput v-model="name" label="Nome completo" />
+    <DssInput v-model="email" label="E-mail" type="email" />
+  </DssCardSection>
+  <DssCardActions${actionsAttrs}>
+    <DssButton variant="flat">Cancelar</DssButton>
+    <DssButton color="primary">Enviar</DssButton>
+  </DssCardActions>
+</DssCard>`,
+      settings: `<DssCard${propsStr}>
+  <DssCardSection${horizontalStr}>
+    <h3>Configurações</h3>
+    <div class="toggle-list">
+      <DssToggle v-model="darkMode">Modo escuro</DssToggle>
+      <DssToggle v-model="autoSave">Salvamento automático</DssToggle>
+      <DssToggle v-model="analytics">Analytics</DssToggle>
+    </div>
+  </DssCardSection>
+</DssCard>`,
+      dashboard: `<DssCard${propsStr}>
+  <DssCardSection horizontal>
+    <DssAvatar src="/lead.jpg" size="lg" />
+    <div>
+      <h3>Carlos Mendes</h3>
+      <DssBadge color="info">Tech Lead</DssBadge>
+      <p>Equipe de Engenharia</p>
+    </div>
+  </DssCardSection>
+  <DssCardSection${horizontalStr}>
+    <DssChip>Vue.js</DssChip>
+    <DssChip>Node.js</DssChip>
+    <DssChip color="primary">DSS</DssChip>
+  </DssCardSection>
+  <DssCardActions${actionsAttrs}>
+    <DssButton variant="flat">Projetos</DssButton>
+    <DssButton color="primary">Contatar</DssButton>
+  </DssCardActions>
+</DssCard>`,
+    };
+
+    return templateCode[selectedTemplate] || templateCode.basic;
   };
+
+  const cardToggles = [
+    { name: "clickable", label: "Clickable" },
+    { name: "square", label: "Square" },
+    { name: "dark", label: "Dark" },
+  ];
+
+  const slotToggles = [
+    { name: "horizontalSection", label: "Horizontal Section" },
+    { name: "verticalActions", label: "Vertical Actions" },
+  ];
+
+  const actionsAlignOptions = [
+    { name: "left", label: "Left" },
+    { name: "center", label: "Center" },
+    { name: "right", label: "Right", isDefault: true },
+    { name: "between", label: "Between" },
+    { name: "around", label: "Around" },
+  ];
 
   return (
     <div className="p-6 space-y-8 pb-12">
@@ -446,67 +705,46 @@ export default function DssCardPage() {
 
       <DssPlayground
         title="Configure o Card"
-        description="Selecione as props e veja o resultado em tempo real com tokens DSS reais."
+        description="Explore TODAS as props do DssCard, DssCardSection e DssCardActions em tempo real."
         isDarkMode={isDarkMode}
         onDarkModeToggle={() => setIsDarkMode(!isDarkMode)}
-        previewMinHeight="320px"
+        previewMinHeight="360px"
         previewContent={
           <DssCardPreview
             variant={selectedVariant}
             clickable={booleanStates.clickable}
             square={booleanStates.square}
-            dark={isDarkMode}
+            dark={booleanStates.dark}
             brand={selectedBrand}
             semanticColor={selectedColor}
-          >
-            <CardSection>
-              <h3
-                className="font-semibold text-base mb-2"
-                style={{ color: isDarkMode ? "#ffffff" : "#1a1a1a" }}
-              >
-                Card Title
-              </h3>
-              <p
-                className="text-sm"
-                style={{ color: isDarkMode ? "rgba(255,255,255,0.7)" : "#666" }}
-              >
-                This is an example card content with the current configuration applied.
-              </p>
-            </CardSection>
-            <CardActions align="right">
-              <button
-                className="px-3 py-1.5 text-xs rounded transition-all"
-                style={{
-                  backgroundColor: "transparent",
-                  color: isDarkMode ? "#86c0f3" : "#1f86de",
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-3 py-1.5 text-xs rounded transition-all"
-                style={{
-                  backgroundColor: selectedBrand
-                    ? DSS_BRAND_COLORS[selectedBrand]?.principal
-                    : selectedColor
-                    ? { ...DSS_SEMANTIC_COLORS, ...feedbackColors }[selectedColor]?.bg
-                    : "#1f86de",
-                  color: "#ffffff",
-                }}
-              >
-                Confirm
-              </button>
-            </CardActions>
-          </DssCardPreview>
+            template={selectedTemplate}
+          />
         }
         controls={
-          <ControlGrid columns={4}>
+          <ControlGrid columns={5}>
+            {/* Variant */}
             <VariantSelector
               variants={variants}
               selectedVariant={selectedVariant}
               onSelect={setSelectedVariant}
             />
 
+            {/* Template / Composition Preset */}
+            <ControlSection label="Composição">
+              {compositionTemplates.map((t) => (
+                <PlaygroundButton
+                  key={t.name}
+                  onClick={() => setSelectedTemplate(t.name)}
+                  isSelected={selectedTemplate === t.name}
+                  selectedBg="var(--dss-jtech-accent)"
+                  selectedColor="#ffffff"
+                >
+                  {t.label}
+                </PlaygroundButton>
+              ))}
+            </ControlSection>
+
+            {/* Color Domain — Color */}
             <ColorPicker
               label="Color"
               colors={Object.values(DSS_SEMANTIC_COLORS)}
@@ -514,6 +752,7 @@ export default function DssCardPage() {
               onSelect={handleColorChange}
             />
 
+            {/* Color Domain — Feedback */}
             <FeedbackColorPicker
               label="Feedback"
               colors={feedbackColors}
@@ -521,21 +760,38 @@ export default function DssCardPage() {
               onSelect={handleColorChange}
             />
 
+            {/* Color Domain — Brand */}
             <BrandPicker
               brands={DSS_BRAND_COLORS}
               selectedBrand={selectedBrand}
               onSelect={handleBrandChange}
             />
 
+            {/* Card Props */}
             <ToggleGroup
-              label="Estados & Opções"
-              options={[
-                { name: "clickable", label: "Clickable" },
-                { name: "square", label: "Square" },
-              ]}
+              label="Card Props"
+              options={cardToggles}
               values={booleanStates}
               onToggle={toggleBooleanState}
             />
+
+            {/* Slot/Composition Controls */}
+            <ToggleGroup
+              label="Section & Actions"
+              options={slotToggles}
+              values={booleanStates}
+              onToggle={toggleBooleanState}
+            />
+
+            {/* Actions Align (only relevant for templates with actions) */}
+            {hasActions && (
+              <SizeSelector
+                label="Actions Align"
+                sizes={actionsAlignOptions}
+                selectedSize={selectedActionsAlign}
+                onSelect={setSelectedActionsAlign}
+              />
+            )}
           </ControlGrid>
         }
         codePreview={generateCode()}
