@@ -32,6 +32,36 @@ O DSS e uma **camada de governanca** sobre o Quasar, nao um espelho. Componentes
 
 ---
 
+## ✅ Gate Estrutural DSS (Pre-requisito — BLOQUEANTE)
+
+Antes de verificar documentacao, o componente DEVE passar pelo gate estrutural.
+Componentes que falham neste gate NAO podem receber auditoria ou selo.
+
+> **Fonte de verdade**: [CLAUDE.md — Gate Estrutural DSS](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss)
+
+### Arquitetura 4 Camadas
+- [ ] `1-structure/DssXxx.ts.vue` existe (implementacao canonica)
+- [ ] `2-composition/_base.scss` existe (estilos base, apenas tokens genericos)
+- [ ] `3-variants/index.scss` existe (orchestrador L3, mesmo se minimo)
+- [ ] `4-output/index.scss` existe (orchestrador L4, mesmo se minimo)
+
+### Entry Point Wrapper
+- [ ] `DssXxx.vue` existe na raiz do diretorio do componente
+- [ ] E re-export puro (apenas `<script>` com import + export default)
+- [ ] NAO contem `<template>` nem `<style>` nem logica
+- [ ] Aponta para `./1-structure/DssXxx.ts.vue`
+
+### Orchestrador SCSS
+- [ ] `DssXxx.module.scss` existe
+- [ ] Importa L2 → L3 → L4 **nessa ordem exata**
+- [ ] Compila sem erros (`npx sass DssXxx.module.scss`)
+
+### Barrel Export e Metadados
+- [ ] `index.js` exporta componente, types e composables
+- [ ] `dss.meta.json` existe com `goldenReference` e `goldenContext`
+
+---
+
 ## ✅ Estrutura Obrigatória (13 Seções)
 
 ### Seção 1 - Visão Geral

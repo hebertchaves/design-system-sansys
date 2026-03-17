@@ -114,6 +114,21 @@ O **DssButton é referência**, não fonte única de verdade.
    - **DssChip** — Golden Reference interativo (touch target `::before`, pseudo-elementos)
    - **DssBadge** — Golden Reference nao interativo (decisoes contextuais)
 
+10. **Entry Point Wrapper Obrigatorio (VINCULANTE)**
+    - Todo componente DSS DEVE possuir um arquivo `DssNomeComponente.vue` na **raiz** do diretorio do componente
+    - Este arquivo e um **re-export puro** — sem `<template>`, sem `<style>`, sem logica propria
+    - Aponta para a implementacao canonica em `1-structure/DssNomeComponente.ts.vue`
+    - ❌ NUNCA colocar implementacao no wrapper (NC-01 do DssButton foi exatamente isso)
+    - ❌ NUNCA omitir o wrapper (mesmo que `index.js` exporte diretamente)
+    - ✅ Formato canonico:
+    ```vue
+    <script>
+    import DssNomeComponente from './1-structure/DssNomeComponente.ts.vue'
+    export default DssNomeComponente
+    </script>
+    ```
+    - 📖 Consulte [DSS_COMPONENT_ARCHITECTURE.md - Passo 7](docs/reference/DSS_COMPONENT_ARCHITECTURE.md#passo-7-entry-point-wrapper)
+
 ---
 
 ## 🎯 Escopo Funcional Mínimo (DEFINIÇÃO OFICIAL)
@@ -193,30 +208,38 @@ Se um comportamento, token, estado ou padrão:
 
 ## 🏗️ Arquitetura Obrigatória (4 Camadas)
 
+```
 components/base/DssNomeComponente/
 ├── 1-structure/
-│ └── DssNomeComponente.ts.vue
+│   └── DssNomeComponente.ts.vue      ← Layer 1: Implementacao canonica (Vue + TS)
 ├── 2-composition/
-│ └── _base.scss
+│   └── _base.scss                    ← Layer 2: Estilos base (apenas tokens genericos)
 ├── 3-variants/
-│ ├── _variant.scss
-│ └── index.scss
+│   ├── _variant.scss                 ← Layer 3: Variantes visuais (density, etc.)
+│   └── index.scss                    ← Orchestrador L3
 ├── 4-output/
-│ ├── _states.scss
-│ ├── _brands.scss
-│ └── index.scss
+│   ├── _states.scss                  ← Layer 4: Dark mode, high contrast, forced-colors
+│   ├── _brands.scss                  ← Layer 4: Hub, Water, Waste
+│   └── index.scss                    ← Orchestrador L4
 ├── composables/
+│   └── useXxxClasses.ts              ← Logica de classes (computed)
 ├── types/
-├── DssNomeComponente.md
-├── DssNomeComponente.module.scss
-├── DssNomeComponente.example.vue
-├── DssNomeComponente.vue
-├── DSSNOMECOMPONENTE_API.md
-├── README.md
-└── index.js
+│   └── xxx.types.ts                  ← TypeScript interfaces (Props, Emits, Slots)
+├── DssNomeComponente.md              ← Documentacao normativa (Template 13.1)
+├── DssNomeComponente.module.scss     ← ORCHESTRADOR PRINCIPAL: importa L2 → L3 → L4 (nessa ordem)
+├── DssNomeComponente.example.vue     ← Exemplos interativos (min. 3 cenarios)
+├── DssNomeComponente.vue             ← ENTRY POINT WRAPPER: re-export puro para 1-structure/
+├── DSSNOMECOMPONENTE_API.md          ← API Reference (props, slots, events, tokens)
+├── dss.meta.json                     ← Metadados: Golden Context, tokens, audit status
+├── README.md                         ← Quick start e links
+└── index.js                          ← Barrel export (exporta wrapper + types + composables)
+```
 
-
-Nenhum diretório pode ser omitido.
+**Regras estruturais:**
+- Nenhum diretorio pode ser omitido (camadas com pouco conteudo continuam existindo)
+- `DssNomeComponente.vue` e **obrigatorio** — re-export puro, sem template/style/logica
+- `DssNomeComponente.module.scss` DEVE importar L2 → L3 → L4 **nessa ordem exata**
+- `index.js` DEVE exportar o componente, types e composables
 
 ---
 
@@ -273,18 +296,33 @@ Todo componente DSS, independente do escopo, **DEVE conter**:
 
 ---
 
-## ✅ Checklist de Validação Final
+## ✅ Checklist de Validação Final (Gate Estrutural DSS)
 
-O componente só é considerado válido se:
+O componente so e considerado valido — e elegivel para auditoria e selo — se **TODOS** os itens abaixo estiverem atendidos:
 
-- [ ] Arquitetura em 4 camadas completa
-- [ ] Nenhum valor hardcoded
-- [ ] Cores via classes utilitárias
-- [ ] Estados implementados e documentados
-- [ ] Tokens listados corretamente
-- [ ] README completo
-- [ ] Exemplo funcional
-- [ ] Acessibilidade validada
+### Gate Estrutural (Bloqueante)
+- [ ] **4 camadas existem** em completude (`1-structure/`, `2-composition/`, `3-variants/`, `4-output/`)
+- [ ] **Entry Point Wrapper** (`DssNomeComponente.vue`) existe e e re-export puro
+- [ ] **Orchestrador SCSS** (`DssNomeComponente.module.scss`) importa L2 → L3 → L4 na ordem
+- [ ] **Barrel export** (`index.js`) exporta componente, types e composables
+- [ ] **dss.meta.json** existe com `goldenReference` e `goldenContext` declarados
+
+### Gate Tecnico (Bloqueante)
+- [ ] Nenhum valor hardcoded (Token First)
+- [ ] Cores via classes utilitarias (nao no SCSS)
+- [ ] Estados implementados e documentados (hover, focus, active, disabled)
+- [ ] Acessibilidade validada (WCAG 2.1 AA, touch target, ARIA, teclado)
+- [ ] SCSS compila sem erros (`npx sass DssNomeComponente.module.scss`)
+
+### Gate Documental (Bloqueante para selo)
+- [ ] Tokens listados com nomes exatos
+- [ ] README completo (quick start, modos, exemplos)
+- [ ] Documentacao normativa (DssNomeComponente.md) com Template 13.1
+- [ ] API Reference (DSSNOMECOMPONENTE_API.md) atualizada
+- [ ] Exemplo funcional (DssNomeComponente.example.vue, min. 3 cenarios)
+
+> **Nenhum componente pode receber selo DSS v2.2 sem passar por este gate.**
+> Auditorias devem verificar este checklist ANTES de iniciar analise detalhada.
 
 ---
 

@@ -11,8 +11,8 @@
  * ==========================================================================
  */
 
-// Componente Vue principal
-export { default as DssChip } from './1-structure/DssChip.ts.vue'
+// Componente Vue principal (via Entry Point Wrapper)
+export { default as DssChip } from './DssChip.vue'
 
 // Composables
 export { useChipClasses } from './composables'

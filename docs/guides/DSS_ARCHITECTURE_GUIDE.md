@@ -48,31 +48,32 @@ PLUGIN V6:                    DSS COMPONENTS:
 ### **Template de Diretórios**
 
 ```
-DssComponent/
-├── 1-structure/              # LAYER 1
-│   ├── DssComponent.vue
-│   ├── DssComponentPart1.vue (se houver subcomponentes)
-│   └── DssComponentPart2.vue
-│
-├── 2-composition/            # LAYER 2
-│   ├── _base.scss
-│   └── _mixins.scss (opcional)
-│
-├── 3-variants/               # LAYER 3
-│   ├── _variant1.scss
-│   ├── _variant2.scss
-│   └── index.scss
-│
-├── 4-output/                 # LAYER 4
-│   ├── _states.scss
-│   ├── _brands.scss (se aplicável)
-│   └── index.scss
-│
-├── DssComponent.module.scss  # Orquestrador (~40 linhas)
-├── DssComponent.example.vue  # Exemplos de uso
-├── index.js                  # Exports
-└── README.md                 # Documentação
+DssNomeComponente/
+├── 1-structure/
+│   └── DssNomeComponente.ts.vue          # LAYER 1: Implementacao canonica
+├── 2-composition/
+│   └── _base.scss                        # LAYER 2: Estilos base (tokens genericos)
+├── 3-variants/
+│   ├── _variant.scss                     # LAYER 3: Variantes visuais
+│   └── index.scss                        # Orchestrador L3
+├── 4-output/
+│   ├── _states.scss                      # LAYER 4: Dark mode, high contrast
+│   ├── _brands.scss                      # LAYER 4: Hub, Water, Waste
+│   └── index.scss                        # Orchestrador L4
+├── composables/                          # Logica de classes (computed)
+├── types/                                # TypeScript interfaces
+├── DssNomeComponente.vue                 # ENTRY POINT WRAPPER (re-export puro)
+├── DssNomeComponente.module.scss         # Orchestrador principal (L2→L3→L4)
+├── DssNomeComponente.md                  # Documentacao normativa
+├── DssNomeComponente.example.vue         # Exemplos de uso
+├── DSSNOMECOMPONENTE_API.md              # API Reference
+├── dss.meta.json                         # Metadados Golden + audit
+├── README.md                             # Quick start
+└── index.js                              # Barrel export
 ```
+
+> **Nota**: `DssNomeComponente.vue` e um **re-export puro** (sem template/style/logica).
+> Para detalhes completos sobre o gate estrutural, consulte [CLAUDE.md — Gate Estrutural DSS](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss).
 
 ---
 

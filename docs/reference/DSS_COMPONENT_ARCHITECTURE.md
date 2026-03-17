@@ -1418,24 +1418,90 @@ Criar `DssNomeComponente.module.scss` - arquivo que importa todas as camadas:
 
 ---
 
-#### **Passo 7: Exports**
+#### **Passo 7: Entry Point Wrapper (OBRIGATORIO)**
 
-Criar `index.js` para exportar o componente:
+Criar `DssNomeComponente.vue` **na raiz** do diretorio do componente.
+
+Este arquivo e um **re-export puro** — sem `<template>`, sem `<style>`, sem logica propria.
+Sua unica responsabilidade e apontar para a implementacao canonica em `1-structure/`.
+
+```vue
+<!-- DssNomeComponente.vue — Entry Point Wrapper (re-export puro) -->
+<script>
+/**
+ * DssNomeComponente - Entry Point
+ *
+ * Re-export puro da implementacao canonica.
+ * NAO adicionar template, style ou logica neste arquivo.
+ */
+import DssNomeComponente from './1-structure/DssNomeComponente.ts.vue'
+export default DssNomeComponente
+</script>
+```
+
+**Regras do Entry Point Wrapper:**
+- ❌ NUNCA conter `<template>` (NC-01 do DssButton foi exatamente ter implementacao propria)
+- ❌ NUNCA conter `<style>`
+- ❌ NUNCA conter logica (computed, methods, data)
+- ✅ APENAS `<script>` com import + re-export
+- ✅ Extensao `.vue` (nao `.js` ou `.ts`) — para compatibilidade com ferramentas Vue
+
+**Por que o wrapper existe separado do `index.js`?**
+- O wrapper `.vue` e o entry point para imports diretos (`import DssItem from './DssItem.vue'`)
+- O `index.js` e o barrel export para imports de pacote (`import { DssItem } from '@dss/components/base/DssItem'`)
+- Ambos sao obrigatorios e complementares
+
+---
+
+#### **Passo 8: Barrel Export**
+
+Criar `index.js` para exportar o componente, types e composables:
 
 ```javascript
 /**
- * DssNomeComponente - Component Exports
+ * DssNomeComponente - Barrel Export
  */
-
-import DssNomeComponente from './1-structure/DssNomeComponente.vue'
-
-export { DssNomeComponente }
-export default DssNomeComponente
+export { default as DssNomeComponente } from './1-structure/DssNomeComponente.ts.vue'
+export * from './types/nomecomponente.types'
+export * from './composables'
 ```
 
 ---
 
-#### **Passo 8: Exemplo de Uso**
+#### **Passo 9: Verificacao Estrutural (Gate)**
+
+Antes de considerar o componente completo, verificar que TODOS os itens existem:
+
+```bash
+# Gate Estrutural — verificar completude
+ls -la components/base/DssNomeComponente/
+
+# Checklist obrigatorio:
+# ✅ 1-structure/DssNomeComponente.ts.vue    ← Layer 1 (implementacao)
+# ✅ 2-composition/_base.scss                ← Layer 2 (estilos base)
+# ✅ 3-variants/index.scss                   ← Layer 3 (variantes, mesmo se minimo)
+# ✅ 4-output/index.scss                     ← Layer 4 (brands + states)
+# ✅ DssNomeComponente.vue                   ← Entry Point Wrapper (re-export puro)
+# ✅ DssNomeComponente.module.scss           ← Orchestrador (L2 → L3 → L4)
+# ✅ index.js                                ← Barrel export
+# ✅ dss.meta.json                           ← Metadados Golden + audit
+# ✅ types/                                  ← TypeScript interfaces
+# ✅ composables/                            ← Logica de classes
+
+# Verificar orchestrador importa na ordem correta:
+cat DssNomeComponente.module.scss
+# Deve conter: @use './2-composition/...' → @use './3-variants/...' → @use './4-output/...'
+
+# Compilar SCSS sem erros:
+npx sass DssNomeComponente.module.scss --no-source-map
+```
+
+> **Nenhum componente passa para auditoria ou selo sem completar este gate.**
+> Consulte tambem o [Gate Estrutural DSS em CLAUDE.md](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss).
+
+---
+
+#### **Passo 10: Exemplo de Uso**
 
 Criar `DssNomeComponente.example.vue` para testar o componente:
 

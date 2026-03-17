@@ -161,6 +161,8 @@ O **DssItem** e o elemento base estrutural do DSS para listas, menus e navegacao
 | `brand` | `ItemBrand \| null` | `null` | Nao | Brand override |
 | `ariaLabel` | `string` | `undefined` | Nao | Label de acessibilidade |
 | `tabindex` | `number \| string \| null` | `null` | Nao | Tabindex customizado |
+| `leadingDecorative` | `boolean` | `false` | Nao | Marca leading como decorativo (aria-hidden). Usar apenas para icones decorativos |
+| `trailingDecorative` | `boolean` | `false` | Nao | Marca trailing como decorativo (aria-hidden). Usar apenas para icones decorativos |
 
 ### Slots
 
@@ -263,6 +265,25 @@ A brand afeta APENAS o active state:
 | `Enter` | Ativa o item (emite click) |
 | `Space` | Ativa o item (emite click, preventDefault) |
 | `Tab` | Move foco para proximo item focavel |
+
+### Slots Decorativos (WCAG 4.1.2)
+
+As props `leadingDecorative` e `trailingDecorative` controlam se os slots sao marcados com `aria-hidden="true"`.
+
+**Regra**: Por default, slots NAO sao marcados como decorativos. O consumidor DEVE declarar explicitamente quando o conteudo do slot e puramente decorativo.
+
+```vue
+<!-- CORRETO: Icones decorativos — marcar explicitamente -->
+<DssItem clickable label="Configuracoes" :leadingDecorative="true" :trailingDecorative="true">
+  <template #leading><DssIcon name="settings" /></template>
+  <template #trailing><DssIcon name="chevron_right" /></template>
+</DssItem>
+
+<!-- CORRETO: Trailing interativo — NAO marcar como decorativo -->
+<DssItem clickable label="Notificacoes">
+  <template #trailing><DssToggle v-model="notifications" /></template>
+</DssItem>
+```
 
 ### Contraste
 
@@ -459,6 +480,21 @@ A brand afeta APENAS o active state:
 | Overlay com `currentColor` | Permite que o overlay funcione automaticamente com qualquer cor |
 | Focus ring inset | `outline-offset` negativo evita overflow em listas contidas |
 | Cores via classes utilitarias | Segue padrao DSS de `.text-*` definidas em `utils/_colors.scss` |
+
+### Decisao Arquitetural — Altura via spacing tokens
+
+O DssItem NAO cria tokens proprios de altura (`--dss-item-height-*`).
+A altura e controlada exclusivamente via composicao de spacing tokens existentes:
+
+| Density | Min-Height | Composicao |
+|---------|-----------|------------|
+| `default` | 48px | `--dss-spacing-12` (token de spacing generico) |
+| `compact` | 32px | `--dss-spacing-8` (token de spacing generico) |
+
+**Justificativa**: DssItem NAO e um Compact Control (como DssChip/DssRadio).
+E um elemento estrutural dual-mode cuja altura depende do conteudo e padding,
+nao de um tamanho pre-definido. Tokens genericos de spacing sao suficientes
+e evitam proliferacao de tokens especificos.
 
 ### Limitacoes Intencionais
 

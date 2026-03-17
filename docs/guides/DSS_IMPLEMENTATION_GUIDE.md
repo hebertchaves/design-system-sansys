@@ -649,6 +649,54 @@ code {
 
 ---
 
+## 📦 Estrutura Obrigatoria de Componentes DSS
+
+### Entry Point Wrapper (OBRIGATORIO)
+
+Todo componente DSS DEVE possuir um arquivo `DssNomeComponente.vue` na raiz do diretorio do componente.
+
+**O que e:** Um re-export puro que aponta para a implementacao canonica em `1-structure/`.
+
+**Por que existe:**
+- E o entry point para imports diretos (`import DssItem from './DssItem.vue'`)
+- Complementa o `index.js` (barrel export para imports de pacote)
+- Permite que ferramentas Vue (Volar, DevTools) reconhecam o componente
+- Todos os selos DSS v2.2 concedidos exigem este arquivo
+
+**Formato canonico:**
+```vue
+<script>
+import DssNomeComponente from './1-structure/DssNomeComponente.ts.vue'
+export default DssNomeComponente
+</script>
+```
+
+**Regras:**
+- ❌ NUNCA conter `<template>` ou `<style>`
+- ❌ NUNCA conter logica (computed, methods, data)
+- ✅ APENAS `<script>` com import + re-export
+
+### Checklist de Completude — 4 Camadas
+
+Antes de considerar um componente pronto para auditoria, verificar:
+
+| # | Item | Arquivo | Obrigatorio |
+|---|------|---------|-------------|
+| 1 | Layer 1 — Implementacao Vue | `1-structure/DssXxx.ts.vue` | Sim |
+| 2 | Layer 2 — Estilos base | `2-composition/_base.scss` | Sim |
+| 3 | Layer 3 — Variantes | `3-variants/index.scss` | Sim (mesmo se vazio) |
+| 4 | Layer 4 — Output | `4-output/index.scss` | Sim (mesmo se vazio) |
+| 5 | Entry Point Wrapper | `DssXxx.vue` | Sim (re-export puro) |
+| 6 | Orchestrador SCSS | `DssXxx.module.scss` | Sim (L2→L3→L4 nessa ordem) |
+| 7 | Barrel Export | `index.js` | Sim |
+| 8 | Metadados | `dss.meta.json` | Sim |
+| 9 | Types | `types/xxx.types.ts` | Sim |
+| 10 | Composables | `composables/` | Sim (mesmo se minimo) |
+
+> **Fonte de verdade**: [CLAUDE.md — Gate Estrutural DSS](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss)
+
+---
+
 ## 🔘 Componentes Vue
 
 O DSS fornece componentes Vue reutilizáveis com acessibilidade WCAG 2.1 AA completa.

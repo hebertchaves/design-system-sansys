@@ -1,3 +1,4 @@
-export { default as DssItem } from './1-structure/DssItem.ts.vue'
+// Componente Vue principal (via Entry Point Wrapper)
+export { default as DssItem } from './DssItem.vue'
 export * from './types/item.types'
 export * from './composables'

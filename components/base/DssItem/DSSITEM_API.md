@@ -16,6 +16,8 @@
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | No | Brand override |
 | `ariaLabel` | `string` | `undefined` | No | Custom accessibility label |
 | `tabindex` | `number \| string \| null` | `null` | No | Custom tabindex |
+| `leadingDecorative` | `boolean` | `false` | No | Marks leading slot as decorative (aria-hidden="true"). Use for decorative icons only, NOT for interactive elements |
+| `trailingDecorative` | `boolean` | `false` | No | Marks trailing slot as decorative (aria-hidden="true"). Use for decorative icons only, NOT for interactive elements |
 
 ## Slots
 

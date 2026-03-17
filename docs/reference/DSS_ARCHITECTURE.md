@@ -737,37 +737,43 @@ Tokens WCAG 2.1 AA completos:
 Todos os componentes DSS seguem esta estrutura obrigatória:
 
 ```
-components/base/ComponentName/
-├── 1-structure/                   # CAMADA 1: Estrutura Vue
-│   └── ComponentName.vue          # Componente Vue principal
-├── 2-composition/                 # CAMADA 2: Estilos base com tokens
-│   └── _base.scss                 # Estilos fundamentais usando APENAS tokens genéricos
-├── 3-variants/                    # CAMADA 3: Variantes visuais
-│   ├── _variant1.scss             # Ex: filled, outlined, flat
-│   ├── _variant2.scss
-│   └── index.scss                 # Orquestrador de variantes
-├── 4-output/                      # CAMADA 4: Brandabilidade e estados
-│   ├── _brands.scss               # Hub, Water, Waste
-│   ├── _states.scss               # Dark mode, high contrast, reduced motion
-│   └── index.scss                 # Orquestrador de output
-├── ComponentName.module.scss      # ✅ Orquestrador principal (importa todas as camadas)
-├── ComponentName.test.js          # ✅ Testes unitários (Vitest/Jest)
-├── ComponentName.md               # ✅ Documentação completa
-├── ComponentName.example.vue      # ✅ Showcase visual interativo
-├── ComponentName_API.md           # ✅ Referência completa da API (opcional)
+components/base/DssNomeComponente/
+├── 1-structure/
+│   └── DssNomeComponente.ts.vue   # CAMADA 1: Implementacao canonica (Vue + TS)
+├── 2-composition/
+│   └── _base.scss                 # CAMADA 2: Estilos base (apenas tokens genericos)
+├── 3-variants/
+│   ├── _variant.scss              # CAMADA 3: Variantes visuais
+│   └── index.scss                 # Orchestrador L3
+├── 4-output/
+│   ├── _brands.scss               # CAMADA 4: Hub, Water, Waste
+│   ├── _states.scss               # CAMADA 4: Dark mode, high contrast, forced-colors
+│   └── index.scss                 # Orchestrador L4
+├── composables/                   # Logica de classes (computed)
+├── types/                         # TypeScript interfaces
+├── DssNomeComponente.vue          # ✅ ENTRY POINT WRAPPER (re-export puro para 1-structure/)
+├── DssNomeComponente.module.scss  # ✅ Orchestrador principal (importa L2 → L3 → L4)
+├── DssNomeComponente.md           # ✅ Documentacao normativa
+├── DssNomeComponente.example.vue  # ✅ Showcase visual interativo
+├── DSSNOMECOMPONENTE_API.md       # ✅ API Reference
+├── dss.meta.json                  # ✅ Metadados Golden + audit
+├── README.md                      # ✅ Quick start
 └── index.js                       # ✅ Barrel export
 ```
 
 **Arquivos Obrigatórios:**
-1. **`1-structure/*.vue`** - Componente com props validadas, emits documentados
+1. **`1-structure/*.ts.vue`** - Componente com props validadas, emits documentados
 2. **`2-composition/_base.scss`** - Estilos base usando APENAS tokens genéricos
-3. **`3-variants/*.scss`** - Variantes visuais (ZERO arquivos de cores)
-4. **`4-output/*.scss`** - Brandabilidade (Hub, Water, Waste) + Dark mode
-5. **`*.module.scss`** - Orquestrador principal que importa as 4 camadas
-6. **`*.test.js`** - Testes de props, eventos, acessibilidade WCAG
-7. **`*.md`** - Documentação com exemplos e API
-8. **`*.example.vue`** - Showcase de todas as variantes
-9. **`index.js`** - Export para facilitar imports
+3. **`3-variants/index.scss`** - Variantes visuais (ZERO arquivos de cores). Obrigatorio mesmo se minimo
+4. **`4-output/index.scss`** - Brandabilidade (Hub, Water, Waste) + estados de output
+5. **`DssNomeComponente.vue`** - **Entry Point Wrapper: re-export puro** (sem template/style/logica)
+6. **`DssNomeComponente.module.scss`** - Orchestrador que importa L2 → L3 → L4 **nessa ordem**
+7. **`dss.meta.json`** - Metadados com goldenReference e goldenContext
+8. **`*.md`** - Documentação com exemplos e API
+9. **`*.example.vue`** - Showcase de todas as variantes
+10. **`index.js`** - Barrel export (componente + types + composables)
+
+> **Gate Estrutural**: Consulte o [Checklist de Validacao Final em CLAUDE.md](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss) para a lista completa de pre-requisitos de auditoria e selo.
 
 **Padrões Aplicados:**
 - ✅ **Arquitetura de 4 Camadas**: Structure → Composition → Variants → Output

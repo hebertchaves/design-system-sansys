@@ -46,7 +46,7 @@
    * Usa overlay semi-transparente via ::after
    * Token: --dss-opacity-hover
    */
-  &:hover::after {
+  &:hover:not(.dss-item--disabled)::after {
     opacity: var(--dss-opacity-hover);
   }
 
@@ -56,7 +56,7 @@
    * Usa overlay com opacidade maior via ::after
    * Token: --dss-opacity-active
    */
-  &:active::after {
+  &:active:not(.dss-item--disabled)::after {
     opacity: var(--dss-opacity-active);
   }
 }

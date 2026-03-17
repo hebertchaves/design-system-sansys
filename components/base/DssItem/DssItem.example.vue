@@ -301,22 +301,22 @@ export default {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: var(--dss-font-size-2xl, 2.5rem);
   margin-bottom: var(--dss-spacing-8, 32px);
   color: var(--dss-text-body);
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: var(--dss-font-size-xl, 1.75rem);
   margin-top: var(--dss-spacing-8, 32px);
   margin-bottom: var(--dss-spacing-4, 16px);
   color: var(--dss-text-body);
-  border-bottom: 2px solid var(--dss-border-default);
+  border-bottom: var(--dss-border-width-md, 2px) solid var(--dss-border-default);
   padding-bottom: var(--dss-spacing-2, 8px);
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: var(--dss-font-size-lg, 1.25rem);
   margin-top: var(--dss-spacing-6, 24px);
   margin-bottom: var(--dss-spacing-3, 12px);
   color: var(--dss-text-body);
@@ -327,7 +327,7 @@ h3 {
 }
 
 .example-list {
-  border: var(--dss-border-width-thin, 1px) solid var(--dss-border-default, #e0e0e0);
+  border: var(--dss-border-width-thin, 1px) solid var(--dss-border-default);
   border-radius: var(--dss-radius-card, 8px);
   overflow: hidden;
 }
@@ -335,7 +335,7 @@ h3 {
 .accessibility-info {
   padding: var(--dss-spacing-6, 24px);
   background: var(--dss-surface-subtle);
-  border-left: 4px solid var(--dss-action-primary);
+  border-left: var(--dss-border-width-thick, 4px) solid var(--dss-action-primary);
   border-radius: var(--dss-radius-card, 8px);
 }
 

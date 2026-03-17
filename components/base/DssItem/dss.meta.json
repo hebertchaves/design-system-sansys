@@ -1,0 +1,71 @@
+{
+  "component": "DssItem",
+  "version": "2.2.0",
+  "classification": "Elemento Estrutural Base dual-mode",
+  "category": "Layout/List",
+  "phase": 1,
+  "goldenReference": "DssChip",
+  "goldenContext": "DssChip",
+  "goldenContextSecondary": null,
+  "seal": "pending",
+  "audit": {
+    "status": "corrections-applied",
+    "ncs": 5,
+    "gaps": 6,
+    "lastAudit": "2026-02-13"
+  },
+  "tokens": {
+    "spacing": [
+      "--dss-spacing-0_5",
+      "--dss-spacing-1",
+      "--dss-spacing-3",
+      "--dss-spacing-4",
+      "--dss-spacing-5",
+      "--dss-spacing-6",
+      "--dss-spacing-8",
+      "--dss-spacing-12"
+    ],
+    "typography": [
+      "--dss-font-family-sans",
+      "--dss-font-size-xs",
+      "--dss-font-size-sm",
+      "--dss-font-size-md",
+      "--dss-font-weight-normal",
+      "--dss-font-weight-medium",
+      "--dss-line-height-normal",
+      "--dss-line-height-tight"
+    ],
+    "colors": [
+      "--dss-text-body",
+      "--dss-text-subtle",
+      "--dss-action-primary",
+      "--dss-surface-active",
+      "--dss-border-default"
+    ],
+    "interaction": [
+      "--dss-touch-target-min",
+      "--dss-opacity-hover",
+      "--dss-opacity-active",
+      "--dss-opacity-disabled",
+      "--dss-opacity-50",
+      "--dss-focus-ring"
+    ],
+    "motion": [
+      "--dss-duration-150",
+      "--dss-easing-standard"
+    ],
+    "border": [
+      "--dss-border-width-thin",
+      "--dss-border-width-md",
+      "--dss-border-width-thick"
+    ],
+    "brand": [
+      "--dss-hub-600",
+      "--dss-hub-500",
+      "--dss-water-500",
+      "--dss-water-400",
+      "--dss-waste-600",
+      "--dss-waste-500"
+    ]
+  }
+}

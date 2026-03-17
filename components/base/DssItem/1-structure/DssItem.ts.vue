@@ -12,7 +12,7 @@
     @keydown.space.prevent="handleClick"
   >
     <!-- Leading slot (icone, avatar, checkbox) -->
-    <div v-if="$slots.leading" class="dss-item__leading" aria-hidden="true">
+    <div v-if="$slots.leading" class="dss-item__leading" :aria-hidden="leadingDecorative ? 'true' : undefined">
       <slot name="leading" />
     </div>
 
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Trailing slot (icone, badge, toggle) -->
-    <div v-if="$slots.trailing" class="dss-item__trailing" aria-hidden="true">
+    <div v-if="$slots.trailing" class="dss-item__trailing" :aria-hidden="trailingDecorative ? 'true' : undefined">
       <slot name="trailing" />
     </div>
   </div>
@@ -95,7 +95,9 @@ const props = withDefaults(defineProps<ItemProps>(), {
 
   // Accessibility
   ariaLabel: undefined,
-  tabindex: null
+  tabindex: null,
+  leadingDecorative: false,
+  trailingDecorative: false
 })
 
 // ==========================================================================

@@ -124,6 +124,20 @@ export interface ItemProps {
 
   /** Tabindex customizado (sobrescreve logica automatica) */
   tabindex?: number | string | null
+
+  /**
+   * Marca o conteudo do slot leading como decorativo (aria-hidden="true")
+   * Usar quando o leading contem apenas icones decorativos (DssIcon)
+   * NAO usar quando contem elementos interativos (DssCheckbox, DssRadio)
+   */
+  leadingDecorative?: boolean
+
+  /**
+   * Marca o conteudo do slot trailing como decorativo (aria-hidden="true")
+   * Usar quando o trailing contem apenas icones decorativos (DssIcon chevron)
+   * NAO usar quando contem elementos interativos (DssToggle, DssBadge clicavel)
+   */
+  trailingDecorative?: boolean
 }
 
 /**
