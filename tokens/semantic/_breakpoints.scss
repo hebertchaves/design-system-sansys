@@ -4,6 +4,17 @@
    Atualizado: Janeiro 2025
    ========================================================================== */
 
+// =============================================================================
+// SASS VARIABLES — uso exclusivo em media queries SCSS (nao sao CSS custom props)
+// CSS custom properties nao podem ser usadas diretamente em @media queries.
+// Use estas variaveis Sass com a sintaxe: @media (max-width: #{$var})
+// =============================================================================
+
+/// Breakpoint mobile-max: 768px (alinhado com Quasar Framework mobile cutoff)
+/// Uso: componentes com comportamento responsivo mobile/tablet (ex: DssBadge floating)
+/// Diferente de --dss-breakpoint-sm (640px, Tailwind) — este cobre tablets portrait ate 768px
+$dss-breakpoint-mobile-max: 768px;
+
 :root {
   /* ===========================================
      BREAKPOINTS PRINCIPAIS

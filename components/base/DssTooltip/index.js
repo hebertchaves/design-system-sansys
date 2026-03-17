@@ -6,7 +6,7 @@
  * Usando versao .ts.vue com type safety completo
  */
 
-import DssTooltip from './1-structure/DssTooltip.ts.vue'
+import DssTooltip from './DssTooltip.vue'
 
 export { DssTooltip }
 export default DssTooltip

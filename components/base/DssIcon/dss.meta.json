@@ -1,0 +1,13 @@
+{
+  "component": "DssIcon",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS/docs/Compliance/seals/DssIcon/DSSICON_SELO_v2.2.md",
+  "auditMode": "Final",
+  "auditDate": "2026-02-13",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssBadge",
+  "category": "Elemento Visual Base nao interativo",
+  "phase": 1,
+  "hasReservations": false
+}

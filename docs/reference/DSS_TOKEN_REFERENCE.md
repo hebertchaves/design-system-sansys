@@ -1271,6 +1271,16 @@ Os componentes que usam estes tokens DEVEM garantir touch target mínimo de 48×
 | `--dss-breakpoint-zoom-300` | 600px | Para zoom 300% |
 | `--dss-breakpoint-reflow` | 320px | **Mínimo WCAG reflow** |
 
+### 7.14.1 Variáveis SCSS de Breakpoint (uso exclusivo em @media queries)
+
+CSS custom properties não podem ser usadas diretamente em `@media` queries. Para esse caso, use as variáveis SCSS abaixo com a sintaxe `@media (max-width: #{$var})`.
+
+| Variável SCSS | Valor | Uso |
+|---------------|-------|-----|
+| `$dss-breakpoint-mobile-max` | `768px` | Breakpoint mobile/tablet (alinhado com Quasar Framework). Uso em componentes com comportamento responsivo mobile, ex: DssBadge floating. Distinto de `--dss-breakpoint-sm` (640px, Tailwind). |
+
+> **Nota**: Estas variáveis são definidas em `tokens/semantic/_breakpoints.scss` e devem ser importadas com `@use '../../../../tokens/semantic/breakpoints' as bp;`.
+
 ## 7.15 Z-Index
 
 **Total: 10 tokens**

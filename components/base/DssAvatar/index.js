@@ -6,7 +6,7 @@
  * Usando versão .ts.vue com type safety completo
  */
 
-import DssAvatar from './1-structure/DssAvatar.ts.vue'
+import DssAvatar from './DssAvatar.vue'
 
 export { DssAvatar }
 export default DssAvatar

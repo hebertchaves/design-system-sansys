@@ -1,0 +1,13 @@
+{
+  "component": "DssInput",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS/docs/Compliance/seals/DssInput/DSSINPUT_SELO_v2.2.md",
+  "auditMode": "Final",
+  "auditDate": "2026-02-04",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssChip",
+  "category": "Action Control (interativo)",
+  "phase": 1,
+  "hasReservations": false
+}

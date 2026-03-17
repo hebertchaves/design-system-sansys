@@ -6,7 +6,7 @@
  * TypeScript + Composition API (Feb 2026)
  */
 
-import DssIcon from './1-structure/DssIcon.ts.vue'
+import DssIcon from './DssIcon.vue'
 
 export { DssIcon }
 export default DssIcon

@@ -9,6 +9,10 @@
    - Dimensões menores para não obstruir conteúdo
    ========================================================================== */
 
+// Importa variavel SCSS de breakpoint para uso em @media query
+// CSS custom properties nao podem ser usadas diretamente em @media.
+@use '../../../../tokens/semantic/breakpoints' as bp;
+
 .dss-badge--floating {
   position: absolute;
   /*
@@ -48,7 +52,7 @@
    RESPONSIVIDADE
    ========================================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: #{bp.$dss-breakpoint-mobile-max}) {
   .dss-badge--floating {
     /* Badge floating ligeiramente maior em mobile (melhor touch target) */
     min-width: var(--dss-spacing-3);

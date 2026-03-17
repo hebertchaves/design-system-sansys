@@ -6,7 +6,7 @@
  * Usando versão .ts.vue com type safety completo
  */
 
-import DssBadge from './1-structure/DssBadge.ts.vue'
+import DssBadge from './DssBadge.vue'
 
 export { DssBadge }
 export default DssBadge
