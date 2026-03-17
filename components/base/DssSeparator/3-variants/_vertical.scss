@@ -1,0 +1,29 @@
+/* ==========================================================================
+   DssSeparator — VARIANTE: Vertical
+
+   RESPONSABILIDADE: Orientação vertical do separador.
+
+   Elemento renderizado: <div role="separator" aria-orientation="vertical">
+   (diferente do horizontal que usa <hr>)
+
+   NOTA DE ACESSIBILIDADE:
+   - aria-orientation="vertical" é definido no componente Vue (1-structure)
+   - O CSS apenas define a aparência visual
+   ========================================================================== */
+
+.dss-separator--vertical {
+  /* Sobrescreve layout horizontal */
+  display: inline-block;
+  width: 0;
+  height: auto;
+  min-height: var(--dss-spacing-4); /* 16px mínimo visível */
+  align-self: stretch;              /* Ocupa altura total em flex column */
+
+  /* Remove borda horizontal */
+  border-top: none;
+
+  /* Aplica borda vertical */
+  border-left-style: solid;
+  border-left-width: var(--dss-border-width-thin); /* 1px — mesmo default */
+  border-left-color: currentColor;
+}

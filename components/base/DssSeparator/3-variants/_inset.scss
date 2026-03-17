@@ -1,0 +1,63 @@
+/* ==========================================================================
+   DssSeparator — VARIANTE: Inset (Indentação)
+
+   RESPONSABILIDADE: Aplicar indentação nas extremidades do separador,
+   retirando-o das bordas do container para alinhamento contextual.
+
+   CONTEXTO DE USO:
+   - inset (true): Uso geral — afasta 16px das bordas
+   - inset-item: Alinhado com texto de lista (após ícone) — 56px
+   - inset-item-thumbnail: Alinhado após avatar/thumbnail — 64px
+
+   TOKENS DE ESPAÇAMENTO:
+   - inset        → var(--dss-spacing-4)  = 16px
+   - inset-item   → var(--dss-spacing-14) = 56px
+   - inset-thumbnail → var(--dss-spacing-16) = 64px
+     (--dss-spacing-18 = 72px não existe no catálogo DSS; 64px é o valor governado)
+
+   ORIENTAÇÃO:
+   - Horizontal: inset aplica margin-left (indenta da esquerda)
+   - Vertical: inset aplica margin-top (indenta do topo)
+   ========================================================================== */
+
+/* ------------------------------------------------------------------
+   Inset básico — 16px
+   ------------------------------------------------------------------ */
+.dss-separator--inset {
+  /* Horizontal: indenta da esquerda */
+  margin-left: var(--dss-spacing-4);
+
+  /* Vertical: indenta do topo */
+  &.dss-separator--vertical {
+    margin-top: var(--dss-spacing-4);
+    margin-left: 0;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Inset item — 56px (alinha com texto após ícone de lista)
+   ------------------------------------------------------------------ */
+.dss-separator--inset-item {
+  /* Horizontal */
+  margin-left: var(--dss-spacing-14);
+
+  /* Vertical */
+  &.dss-separator--vertical {
+    margin-top: var(--dss-spacing-14);
+    margin-left: 0;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Inset item-thumbnail — 64px (alinha após avatar/thumbnail)
+   ------------------------------------------------------------------ */
+.dss-separator--inset-item-thumbnail {
+  /* Horizontal */
+  margin-left: var(--dss-spacing-16);
+
+  /* Vertical */
+  &.dss-separator--vertical {
+    margin-top: var(--dss-spacing-16);
+    margin-left: 0;
+  }
+}

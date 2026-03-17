@@ -1,0 +1,52 @@
+{
+  "component": "DssSeparator",
+  "dssVersion": "2.2",
+  "status": "pending-audit",
+  "seal": null,
+  "auditMode": null,
+  "auditDate": null,
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssBadge",
+  "category": "Decorativo / Estrutural nao interativo",
+  "touchTarget": "Option B — nao aplicavel (componente nao interativo)",
+  "hasReservations": false,
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "value": "rgba(255, 255, 255, 0.12)",
+      "location": "4-output/_states.scss — [data-theme='dark'] .dss-separator",
+      "justification": "Dark mode divider per Material Design Guidelines. No DSS token provides white with partial alpha. rgba(255,255,255,0.12) is the canonical value for dividers on dark surfaces."
+    },
+    {
+      "id": "EXC-02",
+      "value": "1px",
+      "location": "4-output/_states.scss — @media (forced-colors: active)",
+      "justification": "In forced-colors mode, CSS custom properties (var(--dss-*)) are ignored by the browser. An absolute value is required to guarantee the border is visible in Windows High Contrast Mode."
+    }
+  ],
+  "tokensUsed": [
+    "--dss-border-width-hairline",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-gray-100",
+    "--dss-gray-200",
+    "--dss-gray-300",
+    "--dss-gray-400",
+    "--dss-primary",
+    "--dss-secondary",
+    "--dss-spacing-4",
+    "--dss-spacing-14",
+    "--dss-spacing-16",
+    "--dss-duration-150",
+    "--dss-easing-standard",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600"
+  ],
+  "antiPatterns": [
+    "Using <DssSeparator> inside <DssCard> to separate DssCardSection — DssCard manages its own dividers via CSS (& + &)",
+    "Passing dark prop — DSS manages dark mode via [data-theme='dark'] CSS globally",
+    "Using arbitrary color strings — only the 5 governed values are supported"
+  ]
+}

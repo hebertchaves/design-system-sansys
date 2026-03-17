@@ -1,0 +1,36 @@
+/* ==========================================================================
+   DssSeparator — VARIANTE: Cores
+
+   RESPONSABILIDADE: Modificadores de cor semântica para a linha do separador.
+
+   ARQUITETURA DE COR:
+   Usa a propriedade CSS `color` como veículo — a borda herda via `currentColor`.
+   Isso garante que um único modificador de cor funcione para horizontal E vertical.
+
+   TOKENS USADOS (os --dss-border-divider-* foram REMOVIDOS em Jan 2025):
+   - subtle    → var(--dss-gray-100)
+   - default   → var(--dss-gray-200)  [definido na Layer 2 — sem classe]
+   - strong    → var(--dss-gray-300)
+   - primary   → var(--dss-primary)
+   - secondary → var(--dss-secondary)
+   ========================================================================== */
+
+/* Subtle — Linha mais suave (fundo com pouco contraste) */
+.dss-separator--color-subtle {
+  color: var(--dss-gray-100);
+}
+
+/* Strong — Linha com mais ênfase */
+.dss-separator--color-strong {
+  color: var(--dss-gray-300);
+}
+
+/* Primary — Linha na cor primária da paleta de ação */
+.dss-separator--color-primary {
+  color: var(--dss-primary);
+}
+
+/* Secondary — Linha na cor secundária da paleta de ação */
+.dss-separator--color-secondary {
+  color: var(--dss-secondary);
+}

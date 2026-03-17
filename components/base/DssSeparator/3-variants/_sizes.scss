@@ -1,0 +1,33 @@
+/* ==========================================================================
+   DssSeparator — VARIANTE: Espessuras
+
+   RESPONSABILIDADE: Modificadores de espessura (border-width) da linha.
+
+   Os modificadores sobrescrevem border-top-width (horizontal) E
+   border-left-width (vertical) para funcionar em ambas orientações.
+   O default 'thin' (1px) é definido na Layer 2 — sem classe modificadora.
+
+   TOKENS:
+   - hairline → var(--dss-border-width-hairline) = 0.5px
+   - thin      → var(--dss-border-width-thin)     = 1px  [default — Layer 2]
+   - md        → var(--dss-border-width-md)        = 2px
+   - thick     → var(--dss-border-width-thick)     = 3px
+   ========================================================================== */
+
+/* Hairline — Ultra fina (ideal para displays de alta densidade) */
+.dss-separator--size-hairline {
+  border-top-width: var(--dss-border-width-hairline);  /* Horizontal */
+  border-left-width: var(--dss-border-width-hairline); /* Vertical   */
+}
+
+/* Medium — Linha com ênfase (2px) */
+.dss-separator--size-md {
+  border-top-width: var(--dss-border-width-md);  /* Horizontal */
+  border-left-width: var(--dss-border-width-md); /* Vertical   */
+}
+
+/* Thick — Linha forte (3px) */
+.dss-separator--size-thick {
+  border-top-width: var(--dss-border-width-thick);  /* Horizontal */
+  border-left-width: var(--dss-border-width-thick); /* Vertical   */
+}

@@ -1,0 +1,61 @@
+/* ==========================================================================
+   DssSeparator — LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos.
+   Define a estrutura visual base do separador horizontal (default).
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-border-width-*, --dss-spacing-*, etc.)
+   ✅ Reset de estilos default do browser para <hr>
+   ✅ Técnica currentColor para cor de borda (prop color → CSS color → currentColor)
+   ❌ ZERO valores hardcoded
+   ❌ ZERO lógica de variantes (variantes vão em 3-variants/)
+   ❌ ZERO cores de marca (cores de marca vão em 4-output/_brands.scss)
+
+   TÉCNICA DE COR:
+   O separador usa a propriedade CSS `color` como veículo de cor para a borda.
+   Isso permite que color-variants apenas sobrescrevam `color`, e o border
+   herda via `currentColor`. Não são usadas classes utilitárias (bg-*, text-*)
+   pois o separador não possui preenchimento — apenas borda.
+   ========================================================================== */
+
+/* ==========================================================================
+   RESET DO BROWSER PARA <hr>
+   ========================================================================== */
+
+.dss-separator {
+  /* Reset de estilos padrão do browser para <hr> */
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  /* ==========================================================================
+     LAYOUT BASE (Horizontal — default)
+     ========================================================================== */
+
+  /* Comportamento de layout */
+  display: block;
+  width: 100%;
+  height: 0;
+  flex-shrink: 0; /* Não encolhe em flex containers */
+  align-self: stretch; /* Ocupa largura total em flex row */
+
+  /* ==========================================================================
+     BORDA — Horizontal
+     Usa currentColor para herdar a cor definida pelo modificador de cor.
+     Cor padrão: var(--dss-gray-200) (equivale ao divider-default removido)
+     ========================================================================== */
+
+  /* Cor default — var(--dss-gray-200) */
+  /* Nota: --dss-border-divider-default foi REMOVIDO (Sprint Jan 2025).       */
+  /* Usar diretamente var(--dss-gray-200). Ver _borders.scss seção REMOVIDOS. */
+  color: var(--dss-gray-200);
+  border-top-style: solid;
+  border-top-width: var(--dss-border-width-thin); /* 1px */
+  border-top-color: currentColor;
+
+  /* ==========================================================================
+     TRANSIÇÃO
+     ========================================================================== */
+  transition: color var(--dss-duration-150) var(--dss-easing-standard);
+}

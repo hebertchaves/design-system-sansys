@@ -1,0 +1,108 @@
+/* ==========================================================================
+   DssSeparator — LAYER 4: OUTPUT — States
+
+   RESPONSABILIDADE: Estados especiais e acessibilidade.
+
+   CARACTERÍSTICAS:
+   - Dark mode
+   - High contrast mode (prefers-contrast: more)
+   - Forced colors (Windows High Contrast Mode)
+   - Reduced motion
+
+   NOTA SOBRE TOUCH TARGET:
+   DssSeparator é NÃO INTERATIVO (Opção B — Golden: DssBadge).
+   Touch target NÃO é aplicável. Não há foco, hover ou interação.
+   O cursor sobre o separador não comunica interatividade.
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-separator {
+    /*
+     * ⚠️ EXCEÇÃO DOCUMENTADA — EXC-01
+     *
+     * ID:          EXC-01
+     * Valor:       rgba(255, 255, 255, 0.12)
+     * Local:       4-output/_states.scss — bloco [data-theme="dark"]
+     * Justificativa: Dark mode divider conforme Material Design Guidelines.
+     *   Nenhum token DSS fornece branco com alpha parcial.
+     *   Tokens --dss-gray-* são tons de cinza absolutos, não semi-transparentes.
+     *   O padrão rgba(255,255,255,0.12) é consagrado para separadores em dark mode
+     *   pois preserva contraste sem "branquear" o fundo escuro.
+     * Referência: Material Design — Dividers in dark themes
+     */
+    color: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE
+   ========================================================================== */
+
+/*
+ * Em prefers-contrast: more, reforçamos a visibilidade do separador.
+ *
+ * Exceção documentada:
+ * - border-width: var(--dss-border-width-md) forçado — garante linha visível
+ *   mesmo para separadores hairline ou thin em monitores com contraste elevado.
+ */
+@media (prefers-contrast: more) {
+  .dss-separator {
+    color: currentColor; /* herda cor do contexto — máximo contraste */
+    border-top-width: var(--dss-border-width-md) !important;  /* 2px */
+    border-left-width: var(--dss-border-width-md) !important; /* 2px (vertical) */
+    opacity: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-separator {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+   ========================================================================== */
+
+/*
+ * ⚠️ CONTEXTO DE ACESSIBILIDADE: forced-colors: active
+ *
+ * Em Windows High Contrast Mode, tokens CSS custom properties são ignorados.
+ * Usando CanvasText (sistema) para garantir visibilidade máxima.
+ *
+ * Exceções documentadas:
+ * - border-color: CanvasText → keyword do sistema (tokens ignorados)
+ * - border-width: 1px → valor absoluto necessário (tokens ignorados)
+ */
+@media (forced-colors: active) {
+  .dss-separator {
+    /* Cores do sistema — tokens CSS ignorados em forced-colors */
+    color: CanvasText;
+    border-top-color: CanvasText;
+
+    /* Espessura mínima garantida */
+    border-top-width: 1px;   /* Exceção: tokens ignorados em forced-colors */
+    border-left-width: 1px;  /* Exceção: tokens ignorados em forced-colors */
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .dss-separator {
+    /* Preserva separadores em impressão com cor sólida */
+    color: var(--dss-gray-400);
+    border-top-width: var(--dss-border-width-thin);
+    border-left-width: var(--dss-border-width-thin);
+  }
+}

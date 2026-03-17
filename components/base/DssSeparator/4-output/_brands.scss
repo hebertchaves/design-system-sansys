@@ -1,0 +1,47 @@
+/* ==========================================================================
+   DssSeparator — LAYER 4: OUTPUT — Brands
+
+   RESPONSABILIDADE: Brandabilidade (Hub, Water, Waste).
+
+   MECANISMO: O separador herda a cor de marca pelo contexto [data-brand="x"]
+   ou via classe explícita .dss-separator--brand-x na prop `color`.
+
+   NOTA: DssSeparator não expõe prop `brand` separada.
+   O contexto [data-brand] é suficiente para brandabilidade contextual.
+   Para uso explícito, use color="primary" com o contexto de brand ativo.
+
+   TOKENS DE BRAND USADOS (numéricos — tokens semânticos de brand ainda não existem):
+   - Hub:   var(--dss-hub-600)
+   - Water: var(--dss-water-500)
+   - Waste: var(--dss-waste-600)
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] {
+  .dss-separator--color-primary {
+    color: var(--dss-hub-600);
+  }
+}
+
+/* ==========================================================================
+   WATER BRAND (Azul)
+   ========================================================================== */
+
+[data-brand="water"] {
+  .dss-separator--color-primary {
+    color: var(--dss-water-500);
+  }
+}
+
+/* ==========================================================================
+   WASTE BRAND (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] {
+  .dss-separator--color-primary {
+    color: var(--dss-waste-600);
+  }
+}
