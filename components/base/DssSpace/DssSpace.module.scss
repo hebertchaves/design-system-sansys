@@ -1,0 +1,9 @@
+/* ==========================================================================
+   DssSpace — ORCHESTRADOR PRINCIPAL
+
+   Importa as camadas na ordem obrigatória: L2 → L3 → L4
+   ========================================================================== */
+
+@use './2-composition/base' as composition;
+@use './3-variants' as variants;
+@use './4-output' as output;

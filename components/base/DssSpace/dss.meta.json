@@ -1,0 +1,43 @@
+{
+  "component": "DssSpace",
+  "dssVersion": "2.2.0",
+  "status": "pending-audit",
+  "seal": null,
+  "auditMode": null,
+  "auditDate": null,
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssSeparator",
+  "category": "Elemento de Layout puro nao interativo",
+  "touchTarget": "Option B — nao aplicavel (componente nao interativo)",
+  "hasReservations": false,
+  "exceptions": [],
+  "tokensUsed": [
+    "--dss-spacing-px",
+    "--dss-spacing-0_5",
+    "--dss-spacing-1",
+    "--dss-spacing-1_5",
+    "--dss-spacing-2",
+    "--dss-spacing-2_5",
+    "--dss-spacing-3",
+    "--dss-spacing-3_5",
+    "--dss-spacing-4",
+    "--dss-spacing-5",
+    "--dss-spacing-6",
+    "--dss-spacing-7",
+    "--dss-spacing-8",
+    "--dss-spacing-9",
+    "--dss-spacing-10",
+    "--dss-spacing-11",
+    "--dss-spacing-12",
+    "--dss-spacing-14",
+    "--dss-spacing-16",
+    "--dss-spacing-20",
+    "--dss-spacing-24"
+  ],
+  "antiPatterns": [
+    "Usar DssSpace para espaçamento entre elementos de conteúdo (parágrafos, cards) — use margin/padding com tokens de spacing",
+    "Passar valores arbitrários para size (ex.: '23') — apenas valores do tipo SpaceSize são válidos",
+    "Usar DssSpace fora de flex container — flex: 1 1 auto não tem efeito em contextos não-flex",
+    "Usar múltiplos DssSpace em sequência — dividem o espaço igualmente; se a intenção é espaço fixo, use um único com size"
+  ]
+}

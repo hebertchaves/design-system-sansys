@@ -1,0 +1,34 @@
+/* ==========================================================================
+   DssSpace — LAYER 4: OUTPUT — States
+
+   RESPONSABILIDADE: Estados especiais e acessibilidade.
+
+   APLICABILIDADE DOS ESTADOS:
+   DssSpace é um elemento de layout puro — sem cor, sem borda, sem animação.
+   A maioria dos media queries de acessibilidade NÃO é aplicável.
+
+   ✅ Aplicável:
+   - print: display: none (espaço de layout não tem significado em impressão)
+
+   ❌ NÃO aplicável (justificativa):
+   - [data-theme="dark"]: sem cor — não há o que adaptar
+   - prefers-contrast: more: sem cor, sem borda — nada a reforçar
+   - forced-colors: active: sem cor — tokens não são afetados
+   - prefers-reduced-motion: sem animações — mixin dss-transition não usado
+   - hover / active / focus / disabled: componente não interativo
+
+   NOTA: A simplicidade deste arquivo é CORRETA e ESPERADA.
+   O valor do DssSpace está na governança, não na complexidade visual.
+   ========================================================================== */
+
+/* ==========================================================================
+   PRINT
+   Espaços de layout puro não têm significado semântico em mídia impressa.
+   Ocultar garante que impressões não contenham whitespace invisível inesperado.
+   ========================================================================== */
+
+@media print {
+  .dss-space {
+    display: none;
+  }
+}

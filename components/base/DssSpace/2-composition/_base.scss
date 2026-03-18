@@ -1,0 +1,37 @@
+/* ==========================================================================
+   DssSpace — LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos.
+   Define o comportamento base do DssSpace no modo flex-grow (sem prop size).
+
+   REGRAS:
+   ✅ APENAS tokens genéricos
+   ✅ Modo padrão: flex: 1 1 auto — ocupa todo o espaço disponível restante
+   ❌ ZERO valores hardcoded
+   ❌ ZERO lógica de variantes (variantes vão em 3-variants/)
+   ❌ ZERO cores (DssSpace não tem cor — é invisível)
+   ❌ ZERO transições (DssSpace não tem estados visuais animados)
+   ❌ Não usar @include dss-transition (sem animações — omissão intencional)
+
+   TÉCNICA DE LAYOUT:
+   DssSpace usa flex: 1 1 auto para ocupar o espaço disponível restante.
+   min-width: 0 e min-height: 0 previnem overflow em flex containers com
+   conteúdo de tamanho intrínseco maior que o espaço disponível.
+
+   NOTA: Este arquivo não importa mixins porque DssSpace não possui
+   transições, animações ou touch target. A ausência de @use é intencional.
+   ========================================================================== */
+
+.dss-space {
+  /* Sem margin, padding, border ou conteúdo visual */
+  display: block;
+
+  /* ==========================================================================
+     MODO FLEX-GROW (padrão, sem prop size)
+     Ocupa todo o espaço disponível restante no flex container.
+     ========================================================================== */
+
+  flex: 1 1 auto; /* Cresce, encolhe, tamanho base automático */
+  min-width: 0;   /* Previne overflow em flex-row com conteúdo longo */
+  min-height: 0;  /* Previne overflow em flex-column com conteúdo longo */
+}
