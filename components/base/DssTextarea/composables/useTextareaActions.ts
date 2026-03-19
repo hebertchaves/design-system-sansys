@@ -20,7 +20,7 @@ import type { TextareaEmits } from '../types/textarea.types'
  * Composable para ações do textarea
  */
 export function useTextareaActions(
-  emit: (event: keyof TextareaEmits, ...args: any[]) => void,
+  emit: (event: string, ...args: any[]) => void,
   qInputRef: Ref<any | null>,
   isFocused: Ref<boolean>
 ) {
