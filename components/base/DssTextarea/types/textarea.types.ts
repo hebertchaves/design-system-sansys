@@ -11,7 +11,7 @@
  * @version 1.0.0
  */
 
-import type { Ref } from 'vue'
+// Vue types imported as needed
 
 // ==========================================================================
 // ENUMS E LITERAIS

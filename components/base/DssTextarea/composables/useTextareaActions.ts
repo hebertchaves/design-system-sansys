@@ -14,13 +14,13 @@
  */
 
 import type { Ref } from 'vue'
-import type { TextareaEmits } from '../types/textarea.types'
+// Types used for documentation reference only
 
 /**
  * Composable para ações do textarea
  */
 export function useTextareaActions(
-  emit: (event: keyof TextareaEmits, ...args: any[]) => void,
+  emit: (event: string, ...args: any[]) => void,
   qInputRef: Ref<any | null>,
   isFocused: Ref<boolean>
 ) {
