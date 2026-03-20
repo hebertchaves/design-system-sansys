@@ -1,0 +1,28 @@
+/* ==========================================================================
+   DssSlider - ORCHESTRADOR PRINCIPAL
+
+   RESPONSABILIDADE: Importa as camadas na ordem obrigatória DSS.
+
+   ORDEM OBRIGATÓRIA:
+   1. Layer 2 (_base.scss) — Estilos fundamentais
+   2. Layer 3 (index.scss) — Variantes (Fase 1: vazio)
+   3. Layer 4 (index.scss) — States + Brands
+
+   Referência de tokens (catálogo completo em dss.meta.json):
+   - --dss-action-primary         → fill, thumb, label (auto-brand via cascade)
+   - --dss-surface-muted          → track background
+   - --dss-feedback-error         → error state
+   - --dss-surface-disabled       → disabled track background
+   - --dss-gray-400               → disabled thumb/fill
+   - --dss-shadow-focus           → focus ring (padrão azul)
+   - --dss-touch-target-md        → touch target 44px (WCAG 2.5.5)
+   - --dss-touch-target-sm        → touch target 36px (dense)
+   - --dss-opacity-disabled       → opacidade disabled
+   - --dss-duration-200           → duração de transições
+   - --dss-easing-standard        → easing de transições
+   - Tokens de brand              → hub-600, water-500, waste-600 (focus ring)
+   ========================================================================== */
+
+@use './2-composition/base' as base;
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;

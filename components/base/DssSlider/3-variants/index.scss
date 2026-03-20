@@ -1,0 +1,20 @@
+/* ==========================================================================
+   DssSlider - LAYER 3: VARIANTS (Orchestrator)
+
+   RESPONSABILIDADE: Variantes visuais do componente.
+
+   FASE 1 — NOTA ARQUITETURAL:
+   O DssSlider Fase 1 não define variantes visuais de aparência (como
+   outlined/filled/standout do DssSelect ou DssInput). O slider possui
+   uma única forma visual governada pela Layer 2.
+
+   Variantes potenciais para Fase 2:
+   - dss-slider--size-sm: thumb e track menores
+   - dss-slider--size-lg: thumb e track maiores
+   - dss-slider--tick-labels: variante com labels de marcadores sempre visíveis
+
+   Esta camada existe para satisfazer o Gate Estrutural DSS obrigatório
+   (4 camadas fisicamente presentes).
+   ========================================================================== */
+
+/* Nenhuma variante na Fase 1. */

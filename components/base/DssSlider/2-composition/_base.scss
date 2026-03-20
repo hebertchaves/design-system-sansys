@@ -1,0 +1,335 @@
+/* ==========================================================================
+   DssSlider - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais via overrides dos elementos internos
+   do QSlider (Quasar). Usa APENAS tokens genéricos --dss-*.
+
+   REGRAS:
+   - APENAS tokens genéricos (--dss-spacing-*, --dss-action-primary, etc.)
+   - ZERO tokens específicos de componente (--dss-slider-*)
+   - ZERO valores hardcoded (exceto exceções documentadas)
+   - Seletores descendentes: .dss-slider .q-slider__* para override do Quasar
+
+   GOLDEN REFERENCE: DssToggle (track + thumb pattern, motion tokens)
+   GOLDEN CONTEXT: DssInput (form field pattern, error/hint)
+
+   ESTRATÉGIA DE COR:
+   O QSlider usa a prop `color` para aplicar classes utilitárias Quasar
+   (.text-{color}) no root (.q-slider), o que define `currentColor` dos filhos.
+   DssSlider NÃO repassa `color` ao QSlider — em vez disso, sobrescreve via CSS:
+   - Track fill (.q-slider__selection): var(--dss-action-primary)
+   - Thumb (.q-slider__thumb): var(--dss-action-primary) via currentColor
+   - Track background: var(--dss-surface-muted) (explícito — ignora currentColor)
+   Isso garante governança DSS total e resposta automática a brand tokens.
+
+   TOUCH TARGET: Opção A (interativo)
+   - min-height: var(--dss-touch-target-md) em .q-slider__track-container
+   - Consistente com DssInput, DssSelect, DssTextarea (Jan/Mar 2026)
+   - Dense: reduz para --dss-touch-target-sm (uso contextual)
+   ========================================================================== */
+
+/* ==========================================================================
+   WRAPPER EXTERNO (.dss-slider)
+   ========================================================================== */
+
+.dss-slider {
+  /* Layout */
+  display: block;
+  width: 100%;
+
+  /* Typography (hint/error messages) */
+  font-family: var(--dss-font-family-sans);
+
+  /* Transição de opacidade para disabled state */
+  transition: opacity var(--dss-duration-200) var(--dss-easing-standard);
+}
+
+/* ==========================================================================
+   TRACK CONTAINER — Touch Target WCAG 2.5.5
+   ========================================================================== */
+
+/*
+ * O .q-slider__track-container é a área de interação do QSlider.
+ * min-height garante área de toque ≥ 44px (WCAG 2.5.5 — Opção A).
+ * O QSlider alinha o track visualmente ao centro via padding interno;
+ * nosso min-height amplia a área sem deslocar o track visual.
+ */
+.dss-slider .q-slider__track-container,
+.dss-slider .q-slider__track-container--h {
+  min-height: var(--dss-touch-target-md); /* 44px — WCAG 2.5.5 */
+}
+
+/* Vertical: min-width em vez de min-height */
+.dss-slider.dss-slider--vertical .q-slider__track-container--v {
+  min-height: unset;
+  min-width: var(--dss-touch-target-md); /* 44px para orientação vertical */
+}
+
+/* ==========================================================================
+   TRACK BACKGROUND (.q-slider__track / .q-slider__inner)
+   ========================================================================== */
+
+/*
+ * Trilha de fundo (parte não preenchida).
+ * Sobrescreve o background default do QSlider com token DSS semântico.
+ *
+ * EXCEÇÃO DOCUMENTADA: border-radius: 9999px
+ * Pill shape (totalmente arredondado) é inerente ao componente slider.
+ * Não existe token DSS para pill/full-round radius.
+ * Precedente: DssToggle._base.scss usa border-radius: 9999px para o track.
+ */
+.dss-slider .q-slider__track {
+  background-color: var(--dss-surface-muted); /* --dss-gray-200 */
+  border-radius: 9999px; /* EXCEÇÃO: pill shape, não tokenizável */
+  overflow: hidden; /* garante que .q-slider__selection respeite o radius */
+}
+
+/* ==========================================================================
+   TRACK FILL — Selection (.q-slider__selection / .q-slider__inner-max)
+   ========================================================================== */
+
+/*
+ * Parte preenchida (ativa) da trilha — da posição 0 até o thumb.
+ * Usa --dss-action-primary que responde automaticamente ao brand via cascade.
+ * Quando [data-brand="hub"], --dss-action-primary → var(--dss-hub-600).
+ */
+.dss-slider .q-slider__selection {
+  background-color: var(--dss-action-primary);
+  border-radius: 9999px; /* EXCEÇÃO: alinha com o track pill shape */
+}
+
+/* ==========================================================================
+   THUMB (.q-slider__thumb-shape, .q-slider__thumb)
+   ========================================================================== */
+
+/*
+ * Thumb (indicador de posição) — elemento SVG do QSlider.
+ * Usamos currentColor via .dss-slider .q-slider{ color: ... }.
+ * O QSlider interpreta `color` CSS como fill do SVG.
+ *
+ * Dimensões do thumb:
+ * - Default: --dss-spacing-5 (20px) — proporção visual confortável
+ * - Dense: --dss-spacing-4 (16px) — compacto
+ */
+.dss-slider .q-slider {
+  /* Define currentColor para thumb SVG e outros elementos via herança */
+  color: var(--dss-action-primary);
+}
+
+/* Thumb SVG container — ajusta dimensões */
+.dss-slider .q-slider__thumb {
+  width: var(--dss-spacing-5);  /* 20px */
+  height: var(--dss-spacing-5); /* 20px */
+}
+
+/* Círculos SVG internos do thumb (path/circle elements) */
+.dss-slider .q-slider__thumb-shape {
+  fill: var(--dss-action-primary);
+}
+
+/* Borda do thumb SVG */
+.dss-slider .q-slider__thumb-path {
+  fill: var(--dss-action-primary);
+}
+
+/* ==========================================================================
+   FOCUS RING (.q-slider__focus-ring)
+   ========================================================================== */
+
+/*
+ * Focus ring do QSlider — aparece ao focar via teclado.
+ * Sobrescreve com token DSS de shadow de foco.
+ *
+ * EXCEÇÃO DOCUMENTADA: border-radius: 50%
+ * Forma circular inerente para envolver o thumb circular.
+ * Não existe token DSS para circle radius.
+ * Precedente: DssToggle._base.scss usa border-radius: 50% para thumb.
+ */
+.dss-slider .q-slider__focus-ring {
+  border-radius: 50%; /* EXCEÇÃO: forma circular, não tokenizável */
+  box-shadow: var(--dss-shadow-focus);
+
+  /* Dimensão proporcional ao thumb + halo */
+  width: calc(var(--dss-spacing-5) + var(--dss-spacing-2));   /* 28px */
+  height: calc(var(--dss-spacing-5) + var(--dss-spacing-2));  /* 28px */
+
+  /* Centralizar no thumb */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ==========================================================================
+   LABEL TOOLTIP (.q-slider__pin)
+   ========================================================================== */
+
+/*
+ * Tooltip que aparece ao arrastar (quando label=true ou labelAlways=true).
+ * Fundo usa --dss-action-primary (auto-brand via cascade).
+ */
+.dss-slider .q-slider__pin {
+  background-color: var(--dss-action-primary);
+  border-radius: var(--dss-radius-md);
+}
+
+.dss-slider .q-slider__pin-value-marker-bg {
+  background-color: var(--dss-action-primary);
+}
+
+.dss-slider .q-slider__pin-text,
+.dss-slider .q-slider__pin-value-marker-text {
+  color: var(--dss-text-inverse);
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-medium);
+  line-height: var(--dss-line-height-normal);
+}
+
+/* ==========================================================================
+   MARKERS (.q-slider__marker)
+   ========================================================================== */
+
+.dss-slider .q-slider__marker {
+  background-color: var(--dss-surface-muted);
+}
+
+/* Marcador na região preenchida */
+.dss-slider .q-slider__markers > div {
+  background-color: var(--dss-text-inverse);
+}
+
+/* Labels dos marcadores */
+.dss-slider .q-slider__marker-labels {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-secondary);
+}
+
+/* ==========================================================================
+   TRANSITIONS (Golden Reference: DssToggle)
+   ========================================================================== */
+
+.dss-slider .q-slider__track,
+.dss-slider .q-slider__selection,
+.dss-slider .q-slider__thumb-container {
+  transition: all var(--dss-duration-200) var(--dss-easing-standard);
+}
+
+/* ==========================================================================
+   HOVER STATE
+   ========================================================================== */
+
+/*
+ * EXCEÇÃO DOCUMENTADA: brightness(0.95)
+ * Valor canônico DSS para hover de controles interativos.
+ * Referência: CLAUDE.md Princípio #8
+ * Precedente: DssToggle._base.scss
+ */
+.dss-slider:not(.dss-slider--disabled):not(.dss-slider--readonly) .q-slider:hover .q-slider__selection {
+  filter: brightness(0.95);
+}
+
+.dss-slider:not(.dss-slider--disabled):not(.dss-slider--readonly) .q-slider:hover .q-slider__thumb-shape {
+  filter: brightness(0.95);
+}
+
+/* ==========================================================================
+   DISABLED STATE
+   ========================================================================== */
+
+.dss-slider--disabled {
+  opacity: var(--dss-opacity-disabled);
+  pointer-events: none;
+}
+
+/* Track e fill em disabled — degradado */
+.dss-slider--disabled .q-slider__track {
+  background-color: var(--dss-surface-disabled); /* --dss-gray-200 */
+}
+
+.dss-slider--disabled .q-slider__selection {
+  background-color: var(--dss-gray-400);
+}
+
+.dss-slider--disabled .q-slider .q-slider__thumb-shape {
+  fill: var(--dss-gray-400);
+}
+
+/* ==========================================================================
+   READONLY STATE
+   ========================================================================== */
+
+.dss-slider--readonly .q-slider {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ERROR STATE
+   ========================================================================== */
+
+/*
+ * Error state: trilha, fill e thumb recebem cor --dss-feedback-error.
+ * Segue padrão do Golden Context DssInput: usa token semântico de feedback.
+ */
+.dss-slider--error .q-slider {
+  color: var(--dss-feedback-error);
+}
+
+.dss-slider--error .q-slider__selection {
+  background-color: var(--dss-feedback-error);
+}
+
+.dss-slider--error .q-slider__thumb-shape {
+  fill: var(--dss-feedback-error);
+}
+
+.dss-slider--error .q-slider__pin {
+  background-color: var(--dss-feedback-error);
+}
+
+.dss-slider--error .q-slider__pin-value-marker-bg {
+  background-color: var(--dss-feedback-error);
+}
+
+/* ==========================================================================
+   DENSE MODE
+   ========================================================================== */
+
+/*
+ * Dense mode: reduz área de toque e thumb.
+ * Uso contextual — remover touch target em contextos densos (tabelas, etc.).
+ */
+.dss-slider--dense .q-slider__track-container,
+.dss-slider--dense .q-slider__track-container--h {
+  min-height: var(--dss-touch-target-sm); /* 36px — uso contextual */
+}
+
+.dss-slider--dense .q-slider__thumb {
+  width: var(--dss-spacing-4);  /* 16px */
+  height: var(--dss-spacing-4); /* 16px */
+}
+
+/* ==========================================================================
+   HINT MESSAGE
+   ========================================================================== */
+
+.dss-slider__hint {
+  display: block;
+  margin-top: var(--dss-spacing-1);
+  font-size: var(--dss-font-size-xs);
+  line-height: var(--dss-line-height-normal);
+  color: var(--dss-text-hint);
+}
+
+/* ==========================================================================
+   ERROR MESSAGE
+   ========================================================================== */
+
+.dss-slider__error {
+  display: block;
+  margin-top: var(--dss-spacing-1);
+  font-size: var(--dss-font-size-xs);
+  line-height: var(--dss-line-height-normal);
+  color: var(--dss-feedback-error);
+}

@@ -1,0 +1,8 @@
+/* ==========================================================================
+   DssSlider - LAYER 4: OUTPUT (Orchestrator)
+
+   ORDEM OBRIGATÓRIA: _states → _brands
+   ========================================================================== */
+
+@use './states' as states;
+@use './brands' as brands;

@@ -1,0 +1,60 @@
+/* ==========================================================================
+   DssSlider - LAYER 4: OUTPUT - Brands
+
+   RESPONSABILIDADE: Brandability — Hub, Water, Waste
+
+   CARACTERÍSTICAS:
+   - A maioria da brandability é provida AUTOMATICAMENTE via cascade.
+   - [data-brand="hub"] em tokens/brand/_hub.scss sobrescreve
+     --dss-action-primary: var(--dss-hub-600).
+   - Como _base.scss usa var(--dss-action-primary) para fill, thumb e label,
+     a troca de brand ocorre sem regras CSS adicionais neste arquivo.
+
+   CASOS ADICIONAIS (não cobertos pelo cascade de --dss-action-primary):
+   1. Focus ring: --dss-shadow-focus usa rgba fixo (azul padrão).
+      Brand deve sobrescrever o box-shadow do focus-ring com cor de brand.
+   2. Error override: --dss-feedback-error prevalece sobre brand por
+      especificidade — não requer regra explícita.
+
+   ESTRUTURA DE ESCOPO:
+   1. [data-brand="x"] → brand via contexto ancestral
+   2. .dss-slider[data-brand="x"] → brand via prop (mesmo elemento)
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Laranja)
+   ========================================================================== */
+
+/* Cenário 1: Brand via contexto (ancestral) */
+[data-brand='hub'] .dss-slider .q-slider__focus-ring,
+/* Cenário 2: Brand via prop (mesmo elemento) */
+.dss-slider[data-brand='hub'] .q-slider__focus-ring {
+  box-shadow: 0 0 0 var(--dss-focus-ring-width) var(--dss-hub-600);
+}
+
+/* ==========================================================================
+   WATER BRAND (Azul)
+   ========================================================================== */
+
+[data-brand='water'] .dss-slider .q-slider__focus-ring,
+.dss-slider[data-brand='water'] .q-slider__focus-ring {
+  box-shadow: 0 0 0 var(--dss-focus-ring-width) var(--dss-water-500);
+}
+
+/* ==========================================================================
+   WASTE BRAND (Verde)
+   ========================================================================== */
+
+[data-brand='waste'] .dss-slider .q-slider__focus-ring,
+.dss-slider[data-brand='waste'] .q-slider__focus-ring {
+  box-shadow: 0 0 0 var(--dss-focus-ring-width) var(--dss-waste-600);
+}
+
+/* ==========================================================================
+   BRAND ERROR OVERRIDE
+   Error sempre usa --dss-feedback-error independente de brand.
+   Especificidade garante precedência via seletores em _base.scss.
+   ========================================================================== */
+
+/* Declarado implicitamente via especificidade em _base.scss (.dss-slider--error).
+   Nenhuma regra adicional necessária aqui. */
