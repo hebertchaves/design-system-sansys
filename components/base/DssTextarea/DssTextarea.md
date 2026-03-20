@@ -1,7 +1,7 @@
 # DssTextarea
 
 **Versão DSS**: 2.2.0
-**Golden Reference**: DssInput
+**Golden Reference**: DssChip
 **Golden Context**: DssInput
 **Fase**: 1
 **Classificação**: Action Control interativo — campo multilinhas
@@ -35,18 +35,19 @@
 
 ## 2. Golden Component
 
-### Golden Reference: DssInput
+### Golden Reference: DssChip
 
-`DssInput` é o Golden Reference para `DssTextarea` porque:
+`DssChip` é o Golden Reference oficial para `DssTextarea` porque é o **Golden Reference canônico para componentes interativos** no DSS (conforme `DSS_GOLDEN_COMPONENTS.md`). Governa decisões de categoria: pseudo-elementos (`::before` para touch target), convenção de estados, ARIA, e padrões de acessibilidade compartilhados por todos os Action Controls interativos.
+
+### Golden Context: DssInput
+
+`DssInput` é o Golden Context de auditoria para `DssTextarea` porque:
 - Ambos são Action Controls interativos de formulário
 - Compartilham as mesmas variantes visuais (outlined, filled, standout, borderless)
 - Compartilham os mesmos tokens de estilo (input-height, spacing, colors)
 - Compartilham o mesmo padrão de brandabilidade
 - `DssTextarea` segue exatamente o mesmo sistema de prioridades de estados
-
-### Golden Context: DssInput
-
-`DssInput` é também o Golden Context porque não existe componente mais próximo para baseline de auditoria de um campo multilinhas.
+- É o componente certificado mais próximo funcionalmente de um campo multilinhas
 
 ### Diferença Arquitetural Principal
 

@@ -1,0 +1,85 @@
+/* ==========================================================================
+   DssSelect - LAYER 2: COMPOSITION (Base Styles — Dropdown Panel)
+
+   RESPONSABILIDADE: Estilos base do painel dropdown usando tokens genéricos.
+
+   ARQUITETURA ESPECIAL:
+   - O QMenu do QSelect é teleportado para o body pelo Quasar.
+   - Não pode ser estilizado via .dss-select (ancestral diferente no DOM).
+   - Solução: popup-content-class injeta .dss-select__panel no QMenu.
+   - Este SCSS usa .dss-select__panel como raiz de escopo do painel.
+
+   TOKEN DE Z-INDEX:
+   - O painel referencia --dss-z-index-dropdown (1000).
+   - O QMenu gerencia z-index via seu sistema interno de portal.
+   - A declaração abaixo reforça o token DSS sobre o elemento.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   PAINEL DROPDOWN (.dss-select__panel — injetado via popup-content-class)
+   ========================================================================== */
+
+.dss-select__panel {
+  background-color: var(--dss-surface-default);
+  border-radius: var(--dss-radius-md);
+  border: var(--dss-border-gray-200);
+  box-shadow: var(--dss-elevation-3);
+  z-index: var(--dss-z-index-dropdown);
+  overflow: hidden;
+
+  /* ==========================================================================
+     ITENS DO DROPDOWN (.q-item gerado pelo QSelect para cada opção)
+     ========================================================================== */
+
+  .q-item {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-md);
+    color: var(--dss-text-primary);
+    min-height: var(--dss-input-height-md);
+    padding: var(--dss-spacing-2) var(--dss-spacing-4);
+    transition: background-color var(--dss-duration-200) var(--dss-easing-standard);
+  }
+
+  /* Hover nas opções clicáveis */
+  .q-item--clickable:hover,
+  .q-item.q-manual-focusable--focused {
+    background-color: var(--dss-surface-hover);
+  }
+
+  /* Opção atualmente selecionada */
+  .q-item--active {
+    background-color: var(--dss-surface-selected);
+    color: var(--dss-text-action);
+
+    /* Ícone de check (quando multiple=true) */
+    .q-item__section--side .q-icon {
+      color: var(--dss-text-action);
+    }
+  }
+
+  /* Opção desabilitada (via disable no objeto da opção) */
+  .q-item--disable {
+    opacity: var(--dss-opacity-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ==========================================================================
+     LABEL DO ITEM
+     ========================================================================== */
+
+  .q-item__label {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-md);
+    line-height: var(--dss-line-height-normal);
+  }
+
+  /* Caption (sublabel — segunda linha) */
+  .q-item__label--caption {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+    margin-top: var(--dss-spacing-1);
+  }
+
+}

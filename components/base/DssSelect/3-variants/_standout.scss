@@ -1,0 +1,60 @@
+/* ==========================================================================
+   DssSelect - LAYER 3: VARIANT - Standout
+
+   RESPONSABILIDADE: Estilo da variante standout (destaque no foco)
+
+   CARACTERÍSTICAS:
+   - Fundo sutil em repouso (--dss-gray-100)
+   - Sem borda visível
+   - Box-shadow pronunciado no foco — visual de "destaque"
+   ========================================================================== */
+
+.dss-select--standout {
+
+  .q-field__control {
+    background-color: var(--dss-gray-100);
+    border: none;
+    border-radius: var(--dss-radius-md);
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    transition:
+      background-color var(--dss-duration-200) var(--dss-easing-standard),
+      box-shadow var(--dss-duration-200) var(--dss-easing-standard);
+  }
+
+  /* Hover */
+  &:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover {
+    .q-field__control {
+      background-color: var(--dss-gray-200);
+    }
+  }
+
+  /* Focus state — dual hook */
+  &.dss-select--focused .q-field__control,
+  &.q-field--focused .q-field__control {
+    background-color: var(--dss-gray-50);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
+  }
+
+  /* Focus: label color */
+  &.dss-select--focused .q-field__label,
+  &.q-field--focused .q-field__label {
+    color: var(--dss-action-primary);
+  }
+
+  /* Error state */
+  &.dss-select--error .q-field__control,
+  &.q-field--error .q-field__control {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-error-600);
+  }
+
+  /* Disabled state */
+  &.dss-select--disabled .q-field__control {
+    background-color: var(--dss-gray-50);
+  }
+
+  /* Readonly state */
+  &.dss-select--readonly .q-field__control {
+    background-color: var(--dss-gray-50);
+    box-shadow: none;
+  }
+}

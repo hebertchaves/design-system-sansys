@@ -1,0 +1,61 @@
+/* ==========================================================================
+   DssSelect - LAYER 3: VARIANT - Filled
+
+   RESPONSABILIDADE: Estilo da variante filled (fundo preenchido)
+
+   CARACTERÍSTICAS:
+   - Fundo preenchido (--dss-gray-100)
+   - Borda apenas na parte inferior
+   - Radius apenas no topo (flat na base)
+   ========================================================================== */
+
+.dss-select--filled {
+
+  .q-field__control {
+    background-color: var(--dss-gray-100);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  }
+
+  /* Hover */
+  &:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover {
+    .q-field__control {
+      background-color: var(--dss-gray-200);
+      border-bottom-color: var(--dss-gray-600);
+    }
+  }
+
+  /* Focus state — dual hook */
+  &.dss-select--focused .q-field__control,
+  &.q-field--focused .q-field__control {
+    background-color: var(--dss-gray-50);
+    border-bottom-color: var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+  }
+
+  /* Focus: label color */
+  &.dss-select--focused .q-field__label,
+  &.q-field--focused .q-field__label {
+    color: var(--dss-action-primary);
+  }
+
+  /* Error state */
+  &.dss-select--error .q-field__control,
+  &.q-field--error .q-field__control {
+    border-bottom-color: var(--dss-error-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+  }
+
+  /* Disabled state */
+  &.dss-select--disabled .q-field__control {
+    background-color: var(--dss-gray-50);
+    border-bottom-style: dotted;
+  }
+
+  /* Readonly state */
+  &.dss-select--readonly .q-field__control {
+    background-color: var(--dss-gray-50);
+    border-bottom-color: var(--dss-gray-300);
+  }
+}
