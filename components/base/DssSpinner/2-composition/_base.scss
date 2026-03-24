@@ -1,0 +1,161 @@
+// =============================================================================
+// DssSpinner — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos
+//
+// GOLDEN REFERENCE: DssIcon
+//   Segue a mesma arquitetura de componente visual não interativo.
+//   Padrão de sizing via --dss-icon-size-* (seção 7.11 do catálogo).
+//   Padrão de cor via color: inherit (currentColor).
+//
+// TOUCH TARGET: Opção B — NÃO implementado.
+//   DssSpinner não é interativo. Touch target é responsabilidade do
+//   container pai (ex: DssButton em estado loading).
+//
+// COMPORTAMENTOS IMPLÍCITOS:
+//   - color: inherit → herda currentColor do contexto (ex: texto branco em
+//     botão primário → spinner branco)
+//   - pointer-events: none → não recebe eventos de mouse/touch
+//   - flex-shrink: 0 → não comprime em layouts flex (padrão DssIcon)
+//
+// TOKENS UTILIZADOS (18 tokens):
+//   Dimensão: --dss-icon-size-{xs,sm,md,lg,xl}    (seção 7.11)
+//   Cor:      --dss-action-primary                 (seção 3.1)
+//             --dss-action-secondary               (seção 3.2)
+//             --dss-text-secondary                 (seção 4.6)
+//             --dss-feedback-error                 (seção 4.2)
+//             --dss-feedback-success               (seção 4.1)
+//             --dss-feedback-warning               (seção 4.3)
+//             --dss-feedback-info                  (seção 4.4)
+//   Brand:    --dss-hub-600, --dss-water-500, --dss-waste-600 (seção 2.2, claro)
+//             --dss-hub-500, --dss-water-400, --dss-waste-500 (seção 2.2, dark)
+//
+// EXCEÇÕES DOCUMENTADAS:
+//   EX-01: 1px, margin: -1px, clip: rect(0,0,0,0) em .dss-spinner__label
+//          Padrão sr-only de acessibilidade. Não tokenizável.
+//          Política CLAUDE.md: "sr-only pattern: 1px values are acceptable".
+//
+// =============================================================================
+
+.dss-spinner {
+  // ── Display e Layout ───────────────────────────────────────────────────────
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  vertical-align: middle;
+  flex-shrink: 0;         // Padrão DssIcon — não comprime em layouts flex
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;   // Não interativo — Opção B (padrão DssIcon)
+
+  // ── Cor: herda do contexto por padrão ─────────────────────────────────────
+  // currentColor propagado para o SVG interno via color: inherit no QSpinner.
+  // Padrão idêntico ao DssIcon (Golden Reference).
+  color: inherit;
+
+  // ── Dimensão padrão: md = 24px ────────────────────────────────────────────
+  // Usa os mesmos tokens do DssIcon (Golden Reference — seção 7.11).
+  width:  var(--dss-icon-size-md);
+  height: var(--dss-icon-size-md);
+
+  // ── Variantes de tamanho ──────────────────────────────────────────────────
+  // Mesmos tokens do DssIcon para consistência visual no sistema.
+  // xs (16px), sm (20px), md (24px), lg (32px), xl (48px).
+
+  &--size-xs {
+    width:  var(--dss-icon-size-xs);
+    height: var(--dss-icon-size-xs);
+  }
+
+  &--size-sm {
+    width:  var(--dss-icon-size-sm);
+    height: var(--dss-icon-size-sm);
+  }
+
+  &--size-md {
+    // Padrão definido no bloco base (.dss-spinner) — nenhuma override necessária.
+    // Mantido como documentação explícita de que md é o default.
+  }
+
+  &--size-lg {
+    width:  var(--dss-icon-size-lg);
+    height: var(--dss-icon-size-lg);
+  }
+
+  &--size-xl {
+    width:  var(--dss-icon-size-xl);
+    height: var(--dss-icon-size-xl);
+  }
+
+  // ── Variantes de cor ──────────────────────────────────────────────────────
+  // Sem color = color: inherit (currentColor do contexto pai).
+  // Token mapeado diretamente — prop `color` do QSpinner NÃO é usada.
+
+  &--color-primary {
+    color: var(--dss-action-primary);
+  }
+
+  &--color-secondary {
+    color: var(--dss-action-secondary);
+  }
+
+  &--color-neutral {
+    color: var(--dss-text-secondary);
+  }
+
+  &--color-error {
+    color: var(--dss-feedback-error);
+  }
+
+  &--color-success {
+    color: var(--dss-feedback-success);
+  }
+
+  &--color-warning {
+    color: var(--dss-feedback-warning);
+  }
+
+  &--color-info {
+    color: var(--dss-feedback-info);
+  }
+}
+
+// =============================================================================
+// INNER SPINNER (QSpinner*)
+//
+// O QSpinner recebe size="100%" e preenche o container DSS.
+// color: inherit garante que o SVG use o currentColor do .dss-spinner wrapper.
+// display: block remove o espaço inline abaixo de SVGs.
+// =============================================================================
+
+.dss-spinner__inner {
+  display: block;
+  color: inherit;
+}
+
+// =============================================================================
+// LABEL (sr-only)
+//
+// Texto acessível para screen readers — visualmente oculto.
+//
+// EX-01: 1px, margin: -1px, clip: rect(0,0,0,0)
+//   Padrão sr-only de acessibilidade de browsers.
+//   Não tokenizável — valores absolutos obrigatórios para o clip hack funcionar.
+//   Política CLAUDE.md: "sr-only pattern: 1px values in hidden input are
+//   acceptable (not hardcoded violation)".
+//   Precedente: DssInput, DssTextarea (mesma técnica).
+// =============================================================================
+
+.dss-spinner__label {
+  // EX-01 — sr-only pattern
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

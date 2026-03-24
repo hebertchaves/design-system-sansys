@@ -1,0 +1,146 @@
+// =============================================================================
+// DssFile — LAYER 4: OUTPUT — Brands
+//
+// RESPONSABILIDADE: Brandabilidade (Hub, Water, Waste)
+//
+// CARACTERÍSTICAS:
+//   - Accent color no foco e drag-drop ativo
+//   - Tokens numéricos de brand (semânticos não existem ainda — precedente DssInput)
+//   - Erro SEMPRE usa --dss-feedback-error independente de brand
+//   - Dark overrides em _states.scss (especificidade (0,3,0) > (0,2,0))
+//
+// GOLDEN CONTEXT: DssInput (padrão idêntico de brand)
+// =============================================================================
+
+// =============================================================================
+// HUB (Laranja)
+// =============================================================================
+
+[data-brand="hub"],
+.dss-file--brand-hub {
+  &.dss-file--outlined.dss-file--focused .dss-file__field {
+    border-color: var(--dss-hub-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-hub-600);
+  }
+
+  &.dss-file--filled.dss-file--focused .dss-file__field {
+    border-bottom-color: var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+  }
+
+  &.dss-file--standout.dss-file--focused .dss-file__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
+  }
+
+  &.dss-file--borderless.dss-file--focused .dss-file__field {
+    border-bottom-color: var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+  }
+
+  // Drag ativo com brand
+  &.dss-file--dragging .dss-file__field {
+    border-color: var(--dss-hub-600);
+  }
+
+  &.dss-file--focused .dss-file__label {
+    color: var(--dss-hub-700);
+  }
+
+  .dss-file__drag-label {
+    color: var(--dss-hub-600);
+  }
+
+  .dss-file__hint {
+    color: var(--dss-hub-700);
+  }
+}
+
+// =============================================================================
+// WATER (Azul)
+// =============================================================================
+
+[data-brand="water"],
+.dss-file--brand-water {
+  &.dss-file--outlined.dss-file--focused .dss-file__field {
+    border-color: var(--dss-water-500);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-water-500);
+  }
+
+  &.dss-file--filled.dss-file--focused .dss-file__field {
+    border-bottom-color: var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+  }
+
+  &.dss-file--standout.dss-file--focused .dss-file__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
+  }
+
+  &.dss-file--borderless.dss-file--focused .dss-file__field {
+    border-bottom-color: var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+  }
+
+  &.dss-file--dragging .dss-file__field {
+    border-color: var(--dss-water-500);
+  }
+
+  &.dss-file--focused .dss-file__label {
+    color: var(--dss-water-600);
+  }
+
+  .dss-file__drag-label {
+    color: var(--dss-water-500);
+  }
+
+  .dss-file__hint {
+    color: var(--dss-water-700);
+  }
+}
+
+// =============================================================================
+// WASTE (Verde)
+// =============================================================================
+
+[data-brand="waste"],
+.dss-file--brand-waste {
+  &.dss-file--outlined.dss-file--focused .dss-file__field {
+    border-color: var(--dss-waste-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-waste-600);
+  }
+
+  &.dss-file--filled.dss-file--focused .dss-file__field {
+    border-bottom-color: var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+  }
+
+  &.dss-file--standout.dss-file--focused .dss-file__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
+  }
+
+  &.dss-file--borderless.dss-file--focused .dss-file__field {
+    border-bottom-color: var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+  }
+
+  &.dss-file--dragging .dss-file__field {
+    border-color: var(--dss-waste-600);
+  }
+
+  &.dss-file--focused .dss-file__label {
+    color: var(--dss-waste-700);
+  }
+
+  .dss-file__drag-label {
+    color: var(--dss-waste-600);
+  }
+
+  .dss-file__hint {
+    color: var(--dss-waste-800);
+  }
+}
+
+// =============================================================================
+// BRAND DARK OVERRIDES — em _states.scss (especificidade (0,3,0))
+// [data-theme="dark"] [data-brand="x"] .dss-file > (0,2,0) dos seletores acima
+// =============================================================================
+// Ver 4-output/_states.scss para overrides dark de brand (se necessário na Fase 2)

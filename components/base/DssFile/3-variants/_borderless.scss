@@ -1,0 +1,50 @@
+// =============================================================================
+// DssFile — LAYER 3: VARIANT — Borderless
+//
+// Sem borda visível. Apenas sublinhado quando focado.
+// Uso: contextos onde o campo deve se integrar ao layout (ex: tabelas, listas).
+// =============================================================================
+
+.dss-file--borderless {
+  .dss-file__field {
+    background-color: transparent;
+    border: none;
+    border-bottom: var(--dss-border-width-thin) solid transparent;
+    border-radius: 0;
+  }
+
+  // Hover
+  &:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
+    border-bottom-color: var(--dss-gray-300);
+  }
+
+  // Foco
+  &.dss-file--focused .dss-file__field {
+    border-bottom-color: var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+  }
+
+  // Drag ativo
+  &.dss-file--dragging .dss-file__field {
+    border-bottom-color: var(--dss-action-primary);
+    border-bottom-style: dashed;
+    border-bottom-width: var(--dss-border-width-md);
+    background-color: var(--dss-surface-hover);
+  }
+
+  .dss-file__drag-label {
+    color: var(--dss-action-primary);
+  }
+
+  // Erro
+  &.dss-file--error .dss-file__field {
+    border-bottom-color: var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
+  }
+
+  // Readonly
+  &.dss-file--readonly .dss-file__field {
+    border-bottom-color: var(--dss-gray-300);
+    border-bottom-style: dashed;
+  }
+}

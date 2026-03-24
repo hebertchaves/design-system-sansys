@@ -56,6 +56,7 @@ O DSS utiliza tres conceitos distintos sob o termo "Golden". Cada um tem escopo,
 | DssToggle | DssCheckbox | DssRadio | Mesmo padrao Form/Selection + error state |
 | DssTooltip | DssBadge | — | Elemento nao interativo mais proximo |
 | DssIcon | DssBadge | — | Elemento nao interativo de exibicao |
+| DssSpinner | DssIcon | DssBadge | Componente nao interativo de feedback — mesma arquitetura de DssIcon |
 | DssCard | DssChip | DssBadge | Superficie com tokens genericos + decisoes contextuais |
 | DssItem | DssChip | — | Elemento dual-mode com interatividade |
 
@@ -123,6 +124,7 @@ DssChip (Golden Reference interativo)
 DssBadge (Golden Reference nao interativo)
   ├── DssTooltip (Golden Context: DssBadge)
   ├── DssIcon (Golden Context: DssBadge)
+  │     └── DssSpinner (Golden Context: DssIcon)
   └── DssCard (Golden Context secundario: DssBadge)
 ```
 

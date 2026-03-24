@@ -1,0 +1,217 @@
+// =============================================================================
+// DssFile — LAYER 4: OUTPUT — States
+//
+// RESPONSABILIDADE: Dark mode, acessibilidade e media queries especiais
+//
+// ORDEM CANÔNICA DSS:
+//   1. dark mode
+//   2. prefers-contrast: more
+//   3. prefers-reduced-motion
+//   4. print
+//   5. forced-colors (Windows HCM)
+//
+// GOLDEN CONTEXT: DssInput (mesma estrutura de states)
+// =============================================================================
+
+// =============================================================================
+// 1. DARK MODE
+// =============================================================================
+
+[data-theme="dark"] {
+  .dss-file {
+    // Outlined dark
+    &--outlined .dss-file__field {
+      border-color: var(--dss-gray-600);
+    }
+
+    &--outlined.dss-file--focused .dss-file__field {
+      border-color: var(--dss-action-primary);
+      box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
+    }
+
+    // Label notch em dark mode
+    // NC-02 fix: --dss-surface-dark-default não existe. --dss-surface-default é
+    // o token semântico que é automaticamente sobrescrito pelo tema dark via
+    // tokens/themes/dark/_colors.scss — nenhuma variante dark-specific necessária.
+    &--outlined .dss-file__label--float {
+      background-color: var(--dss-surface-default);
+    }
+
+    // Filled dark
+    &--filled .dss-file__field {
+      background-color: var(--dss-gray-900);
+      border-bottom-color: var(--dss-gray-700);
+    }
+
+    &--filled.dss-file--focused .dss-file__field {
+      background-color: var(--dss-gray-800);
+    }
+
+    // Standout dark
+    &--standout .dss-file__field {
+      background-color: var(--dss-gray-700);
+    }
+
+    &--standout.dss-file--focused .dss-file__field {
+      background-color: var(--dss-gray-600);
+    }
+
+    // Drag ativo em dark
+    // NC-02 fix: --dss-surface-dark-hover não existe. --dss-surface-hover é
+    // sobrescrito automaticamente pelo tema dark.
+    &--dragging .dss-file__field {
+      background-color: var(--dss-surface-hover);
+    }
+  }
+
+  // Tipografia dark
+  .dss-file__file-name {
+    color: var(--dss-text-inverse);
+  }
+
+  // NC-01 fix: --dss-text-inverse-secondary e --dss-text-inverse-hint não existem.
+  // DSS define apenas --dss-text-inverse (tokens/themes/dark/_colors.scss).
+  // Precedente: DssInput (Golden Context selado Jan 2026) usa --dss-text-inverse.
+  .dss-file__label {
+    color: var(--dss-text-inverse);
+  }
+
+  .dss-file__drop-hint {
+    color: var(--dss-text-inverse);
+  }
+
+  .dss-file__hint {
+    color: var(--dss-text-inverse);
+  }
+
+  // Botão de limpar dark
+  .dss-file__clear {
+    color: var(--dss-text-inverse);
+
+    &:hover {
+      background-color: var(--dss-gray-700);
+      color: var(--dss-text-inverse);
+    }
+  }
+
+  // Overlay de drag em dark
+  .dss-file__drag-label {
+    color: var(--dss-action-primary);
+  }
+}
+
+// =============================================================================
+// 2. HIGH CONTRAST MODE
+// =============================================================================
+
+@media (prefers-contrast: more) {
+  .dss-file__field {
+    border-width: var(--dss-border-width-md) !important;
+    border-color: currentColor !important;
+  }
+
+  .dss-file--focused .dss-file__field {
+    outline: var(--dss-border-width-thick) solid var(--dss-action-primary);
+    outline-offset: var(--dss-spacing-1);
+  }
+
+  .dss-file--dragging .dss-file__field {
+    border-style: dashed !important;
+    border-width: var(--dss-border-width-thick) !important;
+  }
+}
+
+// =============================================================================
+// 3. REDUCED MOTION
+// =============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-file,
+  .dss-file__field,
+  .dss-file__label,
+  .dss-file__clear,
+  .dss-file__drag-overlay {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+// =============================================================================
+// 4. PRINT
+// =============================================================================
+
+@media print {
+  .dss-file {
+    // Remove backgrounds para economizar tinta
+    &--filled .dss-file__field,
+    &--standout .dss-file__field {
+      background: none !important;
+      border: var(--dss-border-width-thin) solid var(--dss-text-primary) !important;
+    }
+
+    // Remove interatividade em impressão
+    .dss-file__clear,
+    .dss-file__drag-overlay,
+    .dss-file__drop-hint {
+      display: none;
+    }
+
+    // Mostra apenas o nome do arquivo
+    .dss-file__file-name {
+      overflow: visible;
+      white-space: normal;
+    }
+  }
+}
+
+// =============================================================================
+// 5. FORCED COLORS (Windows High Contrast Mode)
+// =============================================================================
+
+@media (forced-colors: active) {
+  .dss-file__field {
+    border: var(--dss-border-width-md) solid ButtonText;
+  }
+
+  .dss-file--focused .dss-file__field {
+    border-color: Highlight;
+    outline: var(--dss-border-width-md) solid Highlight;
+  }
+
+  .dss-file--dragging .dss-file__field {
+    border-color: Highlight;
+    border-style: dashed;
+    border-width: 2px; // EX-01: forced-colors — 2px mínimo para visibilidade em HCM
+  }
+
+  .dss-file--error .dss-file__field {
+    border-color: LinkText;
+  }
+
+  .dss-file--disabled .dss-file__field {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  .dss-file__file-name {
+    color: FieldText;
+  }
+
+  .dss-file__label {
+    color: FieldText;
+  }
+
+  .dss-file__clear {
+    color: ButtonText;
+    border: var(--dss-border-width-thin) solid ButtonText;
+
+    &:hover {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+
+  .dss-file__drag-label {
+    color: Highlight;
+  }
+}

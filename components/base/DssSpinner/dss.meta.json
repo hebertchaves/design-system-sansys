@@ -1,0 +1,44 @@
+{
+  "component": "DssSpinner",
+  "dssVersion": "2.2.0",
+  "status": "conformant",
+  "seal": "docs/Compliance/seals/DssSpinner/DSSSPINNER_SELO_v2.2.md",
+  "auditMode": "formal",
+  "auditDate": "2026-03-24",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssIcon",
+  "phase": 1,
+  "category": "Feedback de Status — indicador de carregamento",
+  "touchTarget": "Option B — não interativo; responsabilidade do container pai (DssButton em loading, etc.)",
+  "hasReservations": true,
+  "exceptions": [
+    "EX-01: 1px, margin: -1px, clip: rect(0,0,0,0) em .dss-spinner__label — padrão sr-only de acessibilidade; não tokenizável. Política CLAUDE.md: 'sr-only pattern: 1px values are acceptable'. Precedente: DssInput, DssTextarea.",
+    "EX-02: animation: none !important; transition: none !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important em @media (prefers-reduced-motion: reduce) — Quasar aplica animações via CSS interno; !important obrigatório para sobrescrever e respeitar preferência de movimento do usuário (WCAG 2.3.3). Precedente: DssIcon (_states.scss)."
+  ],
+  "tokensUsed": [
+    "--dss-icon-size-xs",
+    "--dss-icon-size-sm",
+    "--dss-icon-size-md",
+    "--dss-icon-size-lg",
+    "--dss-icon-size-xl",
+    "--dss-action-primary",
+    "--dss-action-secondary",
+    "--dss-text-secondary",
+    "--dss-feedback-error",
+    "--dss-feedback-success",
+    "--dss-feedback-warning",
+    "--dss-feedback-info",
+    "--dss-hub-600",
+    "--dss-hub-500",
+    "--dss-water-500",
+    "--dss-water-400",
+    "--dss-waste-600",
+    "--dss-waste-500"
+  ],
+  "antiPatterns": [
+    "Usar DssSpinner como elemento interativo — não possui touch target; se precisar de interação (cancelar loading), envolva em DssButton",
+    "Passar prop `color` ao QSpinner via $attrs — a cor é governada exclusivamente pelo SCSS via tokens DSS; nunca repasse diretamente ao Quasar",
+    "Omitir `ariaLabel` quando múltiplos spinners coexistem na página — 'Carregando' genérico não distingue contextos; use labels descritivos ('Carregando perfil', 'Salvando documento')",
+    "Usar DssSpinner sem contexto visual que indique loading — o spinner deve sempre acompanhar texto, botão em loading ou container com aria-label que comunique o estado"
+  ]
+}

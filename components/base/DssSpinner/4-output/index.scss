@@ -1,0 +1,15 @@
+// DssSpinner — LAYER 4: OUTPUT (Orchestrador)
+//
+// Ordem: _states antes de _brands.
+//
+// A cascata correta é garantida por ESPECIFICIDADE, não apenas por ordem:
+//   - Brand dark (em _states): [data-theme="dark"] .dss-spinner--brand-x.dss-spinner
+//     → especificidade (0,3,0) — vence o brand light por +1 seletor extra
+//   - Brand light (em _brands): .dss-spinner--brand-x.dss-spinner
+//     → especificidade (0,2,0)
+//
+// A ordem de importação aqui é secundária — manter states antes de brands
+// é uma convenção arquitetural DSS, não o mecanismo principal de resolução.
+
+@use './states' as states;
+@use './brands' as brands;

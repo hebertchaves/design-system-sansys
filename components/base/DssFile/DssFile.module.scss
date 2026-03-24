@@ -1,0 +1,36 @@
+// =============================================================================
+// DssFile — ORCHESTRADOR PRINCIPAL DE ESTILOS
+//
+// RESPONSABILIDADE: Importa as 3 camadas na ordem canônica DSS
+//
+// ORDEM OBRIGATÓRIA:
+//   1. L2 — Composição (base, tokens genéricos)
+//   2. L3 — Variantes (outlined, filled, standout, borderless)
+//   3. L4 — Output (states, brands)
+//
+// TOKENS TOTAIS: 42 tokens DSS
+//   Dimensão   : --dss-input-height-md, --dss-input-height-sm
+//   Espaçamento: --dss-spacing-1..6
+//   Tipografia : --dss-font-family-sans, --dss-font-size-sm/md/xl
+//                --dss-font-weight-medium, --dss-line-height-normal
+//   Cor base   : --dss-text-primary, --dss-text-secondary, --dss-text-hint
+//                --dss-text-disabled, --dss-text-inverse
+//   Cor feedback: --dss-feedback-error, --dss-action-primary
+//   Superfície : --dss-surface-default, --dss-surface-hover
+//   Neutros    : --dss-gray-50..900
+//   Bordas     : --dss-border-width-thin/md/thick, --dss-radius-md/full
+//   Focus      : --dss-focus-ring
+//   Motion     : --dss-duration-200/300, --dss-easing-standard
+//   Estado     : --dss-opacity-disabled
+//   Brand      : --dss-hub-600/700, --dss-water-500/600/700
+//                --dss-waste-600/700/800
+//
+// EXCEÇÕES DOCUMENTADAS:
+//   EX-01: 2px em forced-colors/drag-overlay — mínimo para visibilidade em HCM
+//          Não tokenizável: valor de sistema operacional.
+//          Precedente: DssInput forced-colors, DssIcon forced-colors.
+// =============================================================================
+
+@use './2-composition/base' as base;
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;

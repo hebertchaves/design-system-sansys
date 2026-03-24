@@ -1,0 +1,56 @@
+// =============================================================================
+// DssSpinner — LAYER 4: OUTPUT — Brands
+//
+// RESPONSABILIDADE: Brandability (Hub, Water, Waste)
+//
+// PADRÃO: Idêntico ao DssIcon (Golden Reference).
+//   - Seletor via prop (.dss-spinner--brand-*): mesmo elemento
+//   - Seletor via [data-brand] ancestral: descendente
+//
+// NOTA: Tokens numéricos de brand (--dss-hub-600, etc.) são usados porque
+// os tokens semânticos de brand (--dss-{brand}-primary) não existem ainda.
+// Exceção documentada nos metadados (precedente: DssIcon, DssCard).
+//
+// =============================================================================
+
+// =============================================================================
+// HUB BRAND (Orange)
+// =============================================================================
+
+/* Via prop: <DssSpinner brand="hub" /> */
+.dss-spinner--brand-hub.dss-spinner {
+  color: var(--dss-hub-600);
+}
+
+/* Via herança contextual: <div data-brand="hub"><DssSpinner /></div> */
+[data-brand="hub"] .dss-spinner {
+  color: var(--dss-hub-600);
+}
+
+// =============================================================================
+// WATER BRAND (Blue)
+// =============================================================================
+
+/* Via prop: <DssSpinner brand="water" /> */
+.dss-spinner--brand-water.dss-spinner {
+  color: var(--dss-water-500);
+}
+
+/* Via herança contextual: <div data-brand="water"><DssSpinner /></div> */
+[data-brand="water"] .dss-spinner {
+  color: var(--dss-water-500);
+}
+
+// =============================================================================
+// WASTE BRAND (Green)
+// =============================================================================
+
+/* Via prop: <DssSpinner brand="waste" /> */
+.dss-spinner--brand-waste.dss-spinner {
+  color: var(--dss-waste-600);
+}
+
+/* Via herança contextual: <div data-brand="waste"><DssSpinner /></div> */
+[data-brand="waste"] .dss-spinner {
+  color: var(--dss-waste-600);
+}
