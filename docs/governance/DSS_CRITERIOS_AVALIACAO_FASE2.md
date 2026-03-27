@@ -1,225 +1,226 @@
-# DSS — Critérios de Avaliação Fase 2
+Critérios de Avaliação e Qualidade — Fase 2 (DSS)
 
-> **Versão:** v2.4
-> **Data:** 26 Mar 2026
-> **Status:** Normativo vinculante
-> **Aplica-se a:** Componentes DSS de Fase 2 (Compostos)
+Versão: 2.4.0
+Data: Março 2026
+Status: Normativo
 
----
+Este documento define os critérios de qualidade exigidos para a criação de Pré-prompts e para a Avaliação de Componentes da Fase 2 do Design System Sansys (DSS). Ele materializa o conhecimento tácito desenvolvido durante o planejamento da Fase 2, garantindo que novos chats de execução mantenham o mesmo rigor arquitetural.
 
-## O que é um Componente Fase 2
 
-Componentes Fase 2 são **containers de composição** que gerenciam estado visual compartilhado entre dois ou mais componentes DSS filhos. Exemplos: `DssBtnGroup`, `DssCard` (com subcomponentes), `DssList`.
 
-**Critério de classificação Fase 2:** O componente gerencia internamente a aparência ou layout de instâncias de outros componentes DSS. Isso o distingue de Fase 1 (componente atômico) e Fase 3 (sistema completo de telas).
 
----
+0. Divisão de Responsabilidades entre Chats
 
-## Os 5 Eixos Obrigatórios do Pré-prompt (Fase 2)
+O DSS opera com dois tipos de chat, com responsabilidades estritamente separadas. Essa separação protege o contexto de cada chat e garante a qualidade ao longo do tempo.
 
-Todo componente Fase 2 **deve ter um pré-prompt que cubra os 5 eixos abaixo** antes da implementação. A ausência de qualquer eixo é Gap documentável — não bloqueante para o componente, mas bloqueante para o próximo componente da mesma família.
+Chat
+Responsabilidade
+Quando usar
+Chat Estratégico (este documento)
+Decisões arquiteturais amplas, revisão de governança, faseamento, tokens globais, breaking changes
+Quando a decisão impacta múltiplos componentes ou o sistema como um todo
+Chat de Execução (um por componente)
+Criação do pré-prompt, codificação, auditoria, correções e selagem de um único componente
+Um chat por componente, do início ao fim
 
-### Eixo 1 — Classificação e Contexto
 
-O pré-prompt deve declarar explicitamente:
-- **Fase** (1, 2 ou 3) com justificativa
-- **Nível** (Golden Reference, Golden Context, componente regular)
-- **Golden Context** — qual componente Fase 2 já selado serve de baseline de auditoria
-- **Justificativa de Fase 2** — por que este componente é composto e não atômico
 
-**Conforme quando:** Fase, Golden Context e justificativa de Fase 2 estão presentes e coerentes.
 
-### Eixo 2 — O Grande Risco Arquitetural
+O chat de execução não deve tomar decisões que impactem o sistema. Se durante a criação de um componente surgir uma questão arquitetural mais ampla (ex: necessidade de um novo token, mudança em uma convenção global), o trabalho deve ser pausado e a decisão escalada para o Chat Estratégico.
 
-O pré-prompt deve identificar o "calcanhar de Aquiles" do componente — o risco técnico mais provável de gerar uma NC. Para componentes Fase 2, os riscos típicos são:
 
-- Captura de estados de filhos via CSS (Gate de Responsabilidade v2.4)
-- Uso de seletores descendentes para modificar filhos DSS (Gate de Composição v2.4)
-- Escopo de estilo incorreto (`<style scoped>` bloqueando child selectors)
-- Prop sync não documentado (filhos que precisam replicar props do pai)
 
-O pré-prompt deve incluir o anti-pattern e o padrão correto para cada risco identificado.
 
-**Conforme quando:** Pelo menos 1 risco crítico identificado com anti-pattern e solução documentados.
+1. Critérios para um Pré-prompt de Qualidade
 
-### Eixo 3 — Mapeamento de API
+O pré-prompt é a ponte de conhecimento entre o planejamento e a execução. Um pré-prompt só é considerado completo e suficiente se cobrir obrigatoriamente os seguintes eixos:
 
-O pré-prompt deve listar:
-- Props **expostas** (com tipo, default e descrição)
-- Props **bloqueadas** (props Quasar não suportadas) com justificativa explícita
-- **Slots** disponíveis
-- **Eventos** emitidos (ou declaração explícita de ausência)
+1.1 Classificação e Contexto
 
-**Conforme quando:** Tabelas de props expostas e bloqueadas presentes, com justificativas.
+•
+Fase e Nível: Deve declarar explicitamente a qual nível da Fase 2 o componente pertence (ex: Nível 1 — Independente).
 
-### Eixo 4 — Governança de Tokens
+•
+Golden Context: Deve definir qual componente já selado servirá como baseline de auditoria (ex: DssCard para componentes compostos de superfície).
 
-O pré-prompt deve mapear os tokens CSS específicos para:
-- Bordas e separadores entre componentes filhos
-- Espaçamento e margens contextuais de grupo
-- Dimensões de container
-- Tokens de brand (Hub, Water, Waste)
+•
+Justificativa de Fase: Deve explicar por que o componente é Fase 2 (ex: gerencia estado visual compartilhado, orquestra múltiplos componentes Fase 1).
 
-**Conforme quando:** Tabela de tokens com nome exato (`--dss-*`) e uso mapeado.
+1.2 O Grande Risco Arquitetural
 
-### Eixo 5 — Acessibilidade e Estados
+Todo componente tem um "calcanhar de Aquiles" na sua integração com o Quasar. O pré-prompt deve identificar e mitigar esse risco antes da codificação.
 
-O pré-prompt deve definir:
-- **Role ARIA** do container (e.g., `role="group"`, `role="list"`)
-- **Decisão de touch target** — Opção A (implementado) ou Opção B (delegado aos filhos) com justificativa
-- **Delegação de estados** — quais estados (hover, focus, active, disabled) pertencem ao container vs. aos filhos
-- **Estados não aplicáveis** — com justificativa explícita
+•
+Exemplo no DssBtnGroup: A regra de prop sync obrigatório (props de estilo devem ser declaradas no grupo e nos filhos).
 
-**Conforme quando:** Role ARIA, decisão de touch target e delegação de estados declarados.
+•
+Deve incluir exemplos claros de Anti-patterns (❌) e Padrões Corretos (✅) para a documentação.
 
----
+1.3 Mapeamento de API (DSS vs Quasar)
 
-## Gate de Composição v2.4
+•
+Lista exata de quais props do Quasar serão expostas, bloqueadas ou modificadas.
 
-**Aplicação:** Obrigatório para todos os componentes Fase 2.
+•
+Justificativa para props bloqueadas (ex: dark é bloqueado porque o DSS usa CSS global).
 
-### Regra 1 — Zero HTML Nativo Substituível
+1.4 Governança de Tokens
 
-O componente **não pode** usar tags HTML nativas (`<button>`, `<a>`, `<input>`, `<img>`) se existir um componente DSS equivalente (`<DssButton>`, `<DssItem>`, `<DssInput>`, `<DssAvatar>`).
+•
+Mapeamento exato de quais tokens --dss-* devem ser usados para bordas, espaçamentos, cores e tipografia.
 
-```vue
-<!-- ❌ NÃO-CONFORMIDADE BLOQUEANTE -->
-<template>
-  <div class="dss-btn-group">
-    <button class="dss-button">Ação</button>  <!-- usa <button> em vez de DssButton -->
-  </div>
-</template>
+•
+Definição de como o componente lida com gaps e divisores internos.
 
-<!-- ✅ CONFORME -->
-<template>
-  <div class="dss-btn-group">
-    <slot />  <!-- aceita DssButton via slot -->
-  </div>
-</template>
-```
+1.5 Acessibilidade e Estados
 
-### Regra 2 — Zero Quebra de Encapsulamento
+•
+Definição de role ARIA e atributos obrigatórios.
 
-O componente pai **não pode** usar seletores CSS (`:deep()`, `::v-deep`, ou descendência direta) para alterar a aparência de um subcomponente DSS filho. Toda alteração visual no filho deve ser feita via props do próprio filho.
+•
+Decisão sobre Touch Target (Opção A: implementado via ::before ou Opção B: delegado ao contexto/filhos).
 
-```scss
-/* ❌ NÃO-CONFORMIDADE — altera aparência do filho via CSS descendente */
-.dss-btn-group > .dss-button {
-  color: red;
-  background: blue;
-}
+•
+Mapeamento de quais estados (hover, focus, active, disabled) pertencem ao container e quais pertencem aos filhos.
 
-/* ✅ CONFORME — alterações via props do filho */
-/* (no template) <DssButton color="primary" /> */
-```
 
-**Exceções documentadas:** Ver regime de exceções formais abaixo.
 
-### Regra 3 — Importação Correta
 
-Componentes DSS internos **devem** ser importados via seus wrappers na raiz, nunca via `1-structure`.
+2. Critérios de Aprovação de Componentes (Fase 2)
 
-```js
-// ❌ INCORRETO
-import DssButton from '../DssButton/1-structure/DssButton.ts.vue'
+Além do Checklist Mestre da Fase 1 (Gate Estrutural, Técnico e Documental), os componentes da Fase 2 exigem validações adicionais devido à sua natureza composta.
 
-// ✅ CORRETO
-import DssButton from '../DssButton/DssButton.vue'
-```
+2.1 Gate de Composição v2.4
 
----
+•
+Regra 1 — Uso Exclusivo de DSS: O componente composto não pode usar componentes Quasar diretamente em seu template. Ele deve orquestrar instâncias de componentes DSS da Fase 1.
 
-## Gate de Responsabilidade v2.4
+•
+Regra 2 — Zero Quebra de Encapsulamento: O componente pai não pode usar seletores CSS (:deep(), ::v-deep, ou descendência direta) para alterar a aparência de um subcomponente DSS filho. Toda alteração visual no filho deve ser feita via props do próprio filho.
 
-**Aplicação:** Obrigatório para todos os componentes Fase 2.
+•
+Exceções documentadas: Ver regime de exceções formais abaixo.
 
-### Regra 1 — Delegação de Estados Interativos
 
-Componentes container **não podem** capturar estados interativos (`:hover`, `:focus`, `:active`) que semanticamente pertencem aos filhos.
 
-```scss
-/* ❌ NÃO-CONFORMIDADE BLOQUEANTE — pai captura estado do filho */
-.dss-btn-group > .dss-button:hover {
-  background-color: var(--dss-surface-hover);
-}
+•
+Regra 3 — Importação Correta: Componentes DSS internos devem ser importados via seus wrappers na raiz, nunca via 1-structure.
 
-/* ✅ CONFORME — estado gerenciado pelo próprio filho (DssButton) */
-```
+2.2 Gate de Responsabilidade v2.4
 
-**Exceção documentada:** Uso de `z-index`/`position` em `:hover`/`:focus-visible` para gerenciamento de empilhamento de grupo (não altera aparência visual do botão) — ver `dss.meta.json > gateExceptions > responsibilityGateV24` do DssBtnGroup como precedente.
+Aplicação: Obrigatório para todos os componentes Fase 2.
 
-### Regra 2 — Sem Lógica de Negócio
+•
+Regra 1 — Delegação de Estados Interativos: Componentes container não podem capturar estados interativos (:hover, :focus, :active) que semanticamente pertencem aos filhos.
 
-O componente deve resolver exclusivamente um padrão de UI/UX. Não deve haver lógica condicional no `<script>` que dependa de regras de negócio específicas de um produto (Hub, Water, Waste) em vez de props genéricas.
+•
+Exceção documentada: Uso de z-index/position em :hover/:focus-visible para gerenciamento de empilhamento de grupo (não altera aparência visual do botão) — ver dss.meta.json > gateExceptions > responsibilityGateV24 do DssBtnGroup como precedente.
 
-```typescript
-// ❌ NÃO-CONFORMIDADE — lógica de negócio de produto no componente
-if (product === 'hub') { applyHubSpecificBehavior() }
 
-// ✅ CONFORME — comportamento controlado por prop genérica
-if (props.brand === 'hub') { applyBrandAccent() }
-```
 
-### Regra 3 — Limites Documentados
+•
+Regra 2 — Sem Lógica de Negócio: O componente deve resolver exclusivamente um padrão de UI/UX. Não deve haver lógica condicional no <script> que dependa de regras de negócio específicas de um produto (Hub, Water, Waste) em vez de props genéricas.
 
-A documentação (`.md`) **deve** declarar explicitamente:
-- O que o componente faz
-- O que ele **delega** aos filhos
+•
+Regra 3 — Limites Documentados: A documentação (.md) deve declarar explicitamente:
 
+•
+O que o componente faz
+
+•
+O que ele delega aos filhos
+
+•
 Ausência dessa declaração é Gap documentável.
 
----
 
-## Regime de Exceções Formais
+
+
+
+
+3. Regime de Exceções Formais
 
 Quando uma das regras dos Gates v2.4 precisa ser violada por necessidade técnica legítima, a exceção deve ser:
 
-### 1. Registrada em `dss.meta.json`
+1.
+Registrada em dss.meta.json
 
-```json
-"gateExceptions": {
-  "responsibilityGateV24": {
-    "location": "caminho/do/arquivo.scss",
-    "justification": "Descrição técnica precisa do motivo pelo qual a exceção é necessária e por que a alternativa sem exceção criaria impacto maior."
-  },
-  "compositionGateV24": {
-    "location": "caminho/do/arquivo.scss",
-    "justification": "Idem."
-  }
-}
-```
-
-### 2. Documentada em `DssNomeComponente.md` (seção Exceções)
-
+2.
+Documentada em DssNomeComponente.md (seção Exceções)
 A seção de exceções deve incluir uma subseção "Exceções aos Gates v2.4" com:
-- Nome do gate violado
-- Arquivo onde ocorre
-- Justificativa técnica
-- Decisão arquitetural (quem aprovou e quando)
 
-### 3. Aprovada explicitamente
+•
+Nome do gate violado
 
-A exceção deve ter registro de aprovação. Para fins deste framework, o registro no `dss.meta.json` + documentação no `.md` constituem a aprovação formal.
+•
+Arquivo onde ocorre
 
----
+•
+Justificativa técnica
 
-## Critérios de Status Final
+•
+Decisão arquitetural (quem aprovou e quando)
 
-| Status | Condição |
-|--------|----------|
-| ✅ **Elegível para Selo** | Zero NCs bloqueantes; Gates v2.4 conformes ou com exceções formais registradas; 5 eixos do pré-prompt cobertos |
-| 🟡 **Condicional** | NCs não-bloqueantes pendentes; Gates v2.4 com tensão não registrada; pré-prompt cobrindo < 5 eixos |
-| 🔴 **Não Elegível** | Qualquer NC bloqueante sem exceção formal; Gate v2.4 violado sem documentação |
 
----
 
-## Referências
+3.
+Aprovada explicitamente
+A exceção deve ter registro de aprovação. Para fins deste framework, o registro no dss.meta.json + documentação no .md constituem a aprovação formal.
 
-- `CLAUDE.md` — Regras normativas para agentes de IA
-- `DSS_GOLDEN_COMPONENTS.md` — Modelo Golden (Reference, Context, Sample)
-- `DSS_COMPONENT_ARCHITECTURE.md` — Arquitetura de 4 camadas e anti-patterns
-- `DssBtnGroup/dss.meta.json` — Precedente de exceções Gates v2.4 (Março 2026)
 
----
 
-*Criado: 26 Mar 2026 — DSS v2.4 — Framework de Auditoria Fase 2*
+
+4. Critérios de Status Final
+
+Status
+Condição
+✅ Elegível para Selo
+Zero NCs bloqueantes; Gates v2.4 conformes ou com exceções formais registradas; 5 eixos do pré-prompt cobertos
+🟡 Condicional
+NCs não-bloqueantes pendentes; Gates v2.4 com tensão não registrada; pré-prompt cobrindo < 5 eixos
+🔴 Não Elegível
+Qualquer NC bloqueante sem exceção formal; Gate v2.4 violado sem documentação
+
+
+
+
+
+
+
+5. Lições Aprendidas da Fase 1 Aplicadas à Fase 2
+
+O rigor da Fase 1 gerou aprendizados que são vinculantes para a Fase 2:
+
+1.
+Entry Point Wrapper é inegociável: O arquivo DssNomeComponente.vue na raiz deve ser um re-export puro. Nenhuma lógica ou template pode residir nele.
+
+2.
+Pseudo-elementos têm dono: ::before é exclusivo para touch target. ::after é para efeitos visuais. Componentes compostos raramente precisam de touch target próprio, delegando isso aos filhos.
+
+3.
+Exceções exigem registro: Qualquer desvio do sistema de tokens (ex: border-radius: 0 para variantes square) deve ser formalmente registrado no dss.meta.json com uma ID (ex: EXC-01) e justificativa.
+
+4.
+Documentação não é "nice to have": O escopo funcional mínimo inclui a documentação completa. Um componente com código perfeito e documentação rasa será reprovado na auditoria.
+
+
+
+
+6. Referências
+
+•
+CLAUDE.md — Regras normativas para agentes de IA
+
+•
+DSS_GOLDEN_COMPONENTS.md — Modelo Golden (Reference, Context, Sample)
+
+•
+DSS_COMPONENT_ARCHITECTURE.md — Arquitetura de 4 camadas e anti-patterns
+
+•
+DssBtnGroup/dss.meta.json — Precedente de exceções Gates v2.4 (Março 2026)
+
+
+
+
+Design System Sansys — Governança DSS v2.4
