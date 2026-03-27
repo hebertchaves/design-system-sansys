@@ -1,6 +1,6 @@
 # Critérios de Avaliação e Qualidade — Fase 2 (DSS)
 
-**Versão:** 1.0.0
+**Versão:** 2.4.0
 **Data:** Março 2026
 **Status:** Normativo
 
@@ -54,23 +54,52 @@ Todo componente tem um "calcanhar de Aquiles" na sua integração com o Quasar. 
 
 Além do Checklist Mestre da Fase 1 (Gate Estrutural, Técnico e Documental), os componentes da Fase 2 exigem validações adicionais devido à sua natureza composta.
 
-### 2.1 Validação de Composição Interna
-- **Uso Exclusivo de DSS:** O componente composto **não pode** usar componentes Quasar diretamente em seu template. Ele deve orquestrar instâncias de componentes DSS da Fase 1.
-- **Isolamento de Estilos:** O componente composto **não pode** redefinir estilos internos dos componentes filhos via CSS (ex: forçar um `border-radius` no filho via seletor descendente). O estilo deve ser passado via props da API do filho.
+### 2.1 Gate de Composição v2.4
+- **Regra 1 — Uso Exclusivo de DSS:** O componente composto **não pode** usar componentes Quasar diretamente em seu template. Ele deve orquestrar instâncias de componentes DSS da Fase 1.
+- **Regra 2 — Zero Quebra de Encapsulamento:** O componente pai não pode usar seletores CSS (`:deep()`, `::v-deep`, ou descendência direta) para alterar a aparência de um subcomponente DSS filho. Toda alteração visual no filho deve ser feita via props do próprio filho.
+  - *Exceções documentadas:* Ver regime de exceções formais abaixo.
+- **Regra 3 — Importação Correta:** Componentes DSS internos devem ser importados via seus wrappers na raiz, nunca via `1-structure`.
 
-### 2.2 Validação de Responsabilidade
-- **Sem Lógica de Negócio:** O componente deve resolver um padrão de UI/UX, nunca uma regra de negócio específica de um produto (Hub, Water, Waste).
-- **Delegação de Estados:** Em containers (como `DssBtnGroup`), estados interativos (hover, focus) devem ser delegados aos componentes filhos. O container não deve capturar foco a menos que seja semanticamente necessário.
+### 2.2 Gate de Responsabilidade v2.4
+*Aplicação: Obrigatório para todos os componentes Fase 2.*
 
-### 2.3 Validação de Documentação de Composição
-A documentação (`.md`) deve incluir obrigatoriamente:
-- Quais componentes DSS são utilizados internamente.
-- Limites de responsabilidade (o que o componente faz e o que ele delega).
-- Anti-patterns específicos de composição (ex: aninhar componentes de forma redundante).
+- **Regra 1 — Delegação de Estados Interativos:** Componentes container não podem capturar estados interativos (`:hover`, `:focus`, `:active`) que semanticamente pertencem aos filhos.
+  - *Exceção documentada:* Uso de z-index/position em `:hover`/`:focus-visible` para gerenciamento de empilhamento de grupo (não altera aparência visual do botão) — ver `dss.meta.json > gateExceptions > responsibilityGateV24` do `DssBtnGroup` como precedente.
+- **Regra 2 — Sem Lógica de Negócio:** O componente deve resolver exclusivamente um padrão de UI/UX. Não deve haver lógica condicional no `<script>` que dependa de regras de negócio específicas de um produto (Hub, Water, Waste) em vez de props genéricas.
+- **Regra 3 — Limites Documentados:** A documentação (`.md`) deve declarar explicitamente:
+  - O que o componente faz
+  - O que ele delega aos filhos
+  - *Ausência dessa declaração é Gap documentável.*
 
 ---
 
-## 3. Lições Aprendidas da Fase 1 Aplicadas à Fase 2
+## 3. Regime de Exceções Formais
+
+Quando uma das regras dos Gates v2.4 precisa ser violada por necessidade técnica legítima, a exceção deve ser:
+
+1. **Registrada em `dss.meta.json`**
+2. **Documentada em `DssNomeComponente.md` (seção Exceções)**
+   A seção de exceções deve incluir uma subseção "Exceções aos Gates v2.4" com:
+   - Nome do gate violado
+   - Arquivo onde ocorre
+   - Justificativa técnica
+   - Decisão arquitetural (quem aprovou e quando)
+3. **Aprovada explicitamente**
+   A exceção deve ter registro de aprovação. Para fins deste framework, o registro no `dss.meta.json` + documentação no `.md` constituem a aprovação formal.
+
+---
+
+## 4. Critérios de Status Final
+
+| Status | Condição |
+|---|---|
+| ✅ **Elegível para Selo** | Zero NCs bloqueantes; Gates v2.4 conformes ou com exceções formais registradas; 5 eixos do pré-prompt cobertos |
+| 🟡 **Condicional** | NCs não-bloqueantes pendentes; Gates v2.4 com tensão não registrada; pré-prompt cobrindo < 5 eixos |
+| 🔴 **Não Elegível** | Qualquer NC bloqueante sem exceção formal; Gate v2.4 violado sem documentação |
+
+---
+
+## 5. Lições Aprendidas da Fase 1 Aplicadas à Fase 2
 
 O rigor da Fase 1 gerou aprendizados que são **vinculantes** para a Fase 2:
 
@@ -81,4 +110,13 @@ O rigor da Fase 1 gerou aprendizados que são **vinculantes** para a Fase 2:
 
 ---
 
-**Design System Sansys — Governança DSS v2.2**
+## 6. Referências
+
+- `CLAUDE.md` — Regras normativas para agentes de IA
+- `DSS_GOLDEN_COMPONENTS.md` — Modelo Golden (Reference, Context, Sample)
+- `DSS_COMPONENT_ARCHITECTURE.md` — Arquitetura de 4 camadas e anti-patterns
+- `DssBtnGroup/dss.meta.json` — Precedente de exceções Gates v2.4 (Março 2026)
+
+---
+
+**Design System Sansys — Governança DSS v2.4**
