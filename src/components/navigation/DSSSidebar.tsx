@@ -39,6 +39,7 @@ import {
   ChevronDown,
   MessageSquare,
   SlidersHorizontal,
+  LayoutGrid,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
