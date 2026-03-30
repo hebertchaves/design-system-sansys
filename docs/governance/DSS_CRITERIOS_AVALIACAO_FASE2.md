@@ -15,7 +15,7 @@ O DSS opera com dois tipos de chat, com responsabilidades estritamente separadas
 | Chat | Responsabilidade | Quando usar |
 |---|---|---|
 | **Chat Estratégico** (este documento) | Decisões arquiteturais amplas, revisão de governança, faseamento, tokens globais, breaking changes | Quando a decisão impacta múltiplos componentes ou o sistema como um todo |
-| **Chat de Execução** (um por componente) | Criação do pré-prompt, codificação, auditoria, correções e selagem de **um único componente** | Um chat por componente, do início ao fim |
+| **Chat de Execução** (um por componente) | Codificação, auditoria, correções e selagem de **um único componente** — o pré-prompt já chega pronto do Chat Estratégico | Um chat por componente, do início ao fim |
 
 O chat de execução **não deve** tomar decisões que impactem o sistema. Se durante a criação de um componente surgir uma questão arquitetural mais ampla (ex: necessidade de um novo token, mudança em uma convenção global), o trabalho deve ser pausado e a decisão escalada para o Chat Estratégico.
 

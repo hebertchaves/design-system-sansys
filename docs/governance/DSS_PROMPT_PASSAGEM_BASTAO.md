@@ -9,8 +9,8 @@
 1. Abra um novo chat no projeto DSS.
 2. Copie todo o bloco de texto abaixo (dentro da área delimitada) e envie como sua primeira mensagem.
 3. Aguarde a confirmação do agente.
-4. Em seguida, solicite a criação do Pré-prompt do componente desejado (ex: "Crie o pré-prompt para o DssBtnGroup").
-5. Após validar o pré-prompt, envie o "Prompt de Criação de Componente — DSS v2.4 (Fase 2)".
+4. Em seguida, informe ao agente qual componente será criado e o caminho do pré-prompt já existente no repositório (ex: `docs/governance/pre-prompts/pre_prompt_dss_btn_group.md`).
+5. Após a leitura e confirmação do pré-prompt, envie o "Prompt de Criação de Componente — DSS v2.4 (Fase 2)".
 
 ---
 
@@ -18,7 +18,7 @@
 
 ```markdown
 Você está assumindo a execução da **Fase 2 do Design System Sansys (DSS)**. 
-Este chat será dedicado exclusivamente à criação do pré-prompt, codificação, auditoria e selagem de um único componente composto.
+Este chat será dedicado exclusivamente à codificação, auditoria e selagem de um único componente composto. O pré-prompt já foi criado pelo Chat Estratégico e estará disponível no repositório.
 
 Para garantir a continuidade do conhecimento e o rigor arquitetural estabelecido no planejamento, você DEVE operar sob as seguintes premissas e ler os arquivos indicados antes de tomar qualquer ação.
 
@@ -36,10 +36,10 @@ Antes de responder a este prompt, use suas ferramentas para ler e processar os s
 
 ### 3. Diretrizes de Execução para este Chat
 - **Foco Único:** Este chat tratará de apenas UM componente do início ao fim (desde o pré-prompt até o selo). Não misture escopos.
-- **Responsabilidade do Pré-prompt:** Você será responsável por criar o pré-prompt do componente antes de codificá-lo, seguindo estritamente os critérios definidos em `DSS_CRITERIOS_AVALIACAO_FASE2.md`.
+- **Responsabilidade do Pré-prompt:** O pré-prompt do componente foi criado pelo Chat Estratégico e está disponível em `docs/governance/pre-prompts/`. Você deve **lê-lo e confirmá-lo** antes de iniciar a codificação, mas **não deve criá-lo nem alterá-lo**.
 - **Composição Estrita:** Componentes da Fase 2 NÃO PODEM usar componentes Quasar diretamente em seus templates. Eles devem usar exclusivamente componentes DSS da Fase 1.
 - **Isolamento:** Não redefina estilos internos de componentes filhos via CSS no componente pai. Use a API de props do filho.
 - **Delegação:** Estados interativos (hover, focus) e touch targets geralmente pertencem aos componentes filhos, não ao container composto.
 
-Confirme que você leu os 3 arquivos obrigatórios e que compreendeu as diretrizes de execução. Após sua confirmação, informarei qual componente vamos construir hoje para que você inicie a criação do pré-prompt.
+Confirme que você leu os 3 arquivos obrigatórios e que compreendeu as diretrizes de execução. Após sua confirmação, informarei qual componente vamos construir hoje e o caminho do pré-prompt correspondente para que você o leia antes de iniciar a codificação.
 ```
