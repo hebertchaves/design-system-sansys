@@ -1,0 +1,28 @@
+/* ==========================================================================
+   DssOptionGroup - MAIN MODULE (Orquestrador Final)
+
+   Arquitetura em 4 Camadas DSS:
+
+   LAYER 1: Structure (Vue component — DssOptionGroup.ts.vue)
+   LAYER 2: Composition (Base styles — flexbox, gap, readonly)
+   LAYER 3: Variants (dense)
+   LAYER 4: Output (states, brands — delegados aos filhos)
+
+   Ordem obrigatória: L2 → L3 → L4
+   ========================================================================== */
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants' as variants;
+
+/* Layer 4: Output */
+@use './4-output' as output;
+
+/* ==========================================================================
+   NOTA: DssOptionGroup é um container de layout puro.
+   Não há estilos de high contrast, reduced-motion ou forced-colors próprios.
+   Todos esses comportamentos são integralmente gerenciados pelos filhos
+   DssRadio, DssCheckbox e DssToggle.
+   ========================================================================== */

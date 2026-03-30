@@ -1,0 +1,26 @@
+/* ==========================================================================
+   DssOptionGroup - LAYER 4: OUTPUT (States)
+
+   DssOptionGroup é um container de layout puro.
+   Dark mode, forced-colors e redução de movimento são delegados
+   integralmente aos componentes filhos (DssRadio, DssCheckbox, DssToggle).
+
+   Não há estados visuais próprios no container.
+   ========================================================================== */
+
+/*
+   DARK MODE — Delegado aos filhos.
+   DssRadio, DssCheckbox e DssToggle já gerenciam seus próprios estilos
+   para [data-theme="dark"]. Nenhum override necessário no container.
+*/
+
+/*
+   FORCED-COLORS — Delegado aos filhos.
+   Cada controle filho gerencia seus próprios system color keywords.
+   O container não tem bordas, fundos ou cores próprias a preservar.
+*/
+
+/*
+   PREFERS-REDUCED-MOTION — Delegado aos filhos via mixin dss-transition.
+   DssOptionGroup não tem animações próprias.
+*/

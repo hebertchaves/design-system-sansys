@@ -1,0 +1,48 @@
+/* ==========================================================================
+   DssOptionGroup - LAYER 2: COMPOSITION (Base Styles)
+
+   Responsabilidade: Layout flexbox do container e espaçamento entre controles.
+   DssOptionGroup é um container de layout puro — sem identidade visual própria.
+   A aparência dos controles pertence a DssRadio, DssCheckbox e DssToggle.
+
+   Tokens utilizados:
+   - --dss-spacing-2: gap vertical (padrão)
+   - --dss-spacing-4: gap horizontal (inline)
+   ========================================================================== */
+
+@import '../../../../utils/index';
+
+/* ==========================================================================
+   CONTAINER BASE
+   ========================================================================== */
+
+.dss-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+
+  /* Remove tap highlight em mobile — padrão Golden Reference DssChip */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
+   LAYOUT HORIZONTAL (inline)
+   Sobrescreve flex-direction para row e ajusta o gap.
+   ========================================================================== */
+
+.dss-option-group--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--dss-spacing-4);
+}
+
+/* ==========================================================================
+   ESTADO READONLY
+   Bloqueia interação sem remover o foco visual dos filhos.
+   Delegação total: cursor visual e pointer-events apenas no container.
+   ========================================================================== */
+
+.dss-option-group--readonly {
+  cursor: default;
+  pointer-events: none;
+}

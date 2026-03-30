@@ -1,0 +1,83 @@
+{
+  "component": "DssOptionGroup",
+  "dssVersion": "2.2",
+  "status": "sealed",
+  "auditMode": "Auditoria Completa",
+  "auditDate": "2026-03-27",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssBtnToggle",
+  "goldenContextNote": "DssBtnToggle é o Golden Context por ser o componente composto irmão de seleção mais próximo (Fase 2, selado 27 Mar 2026). Ambos gerenciam v-model e renderizam controles com base em um array de opções. Diferença fundamental: DssBtnToggle usa seleção exclusiva via QBtnToggle (WRAP); DssOptionGroup usa seleção múltipla ou exclusiva via composição explícita de DssRadio/DssCheckbox/DssToggle.",
+  "category": "Container de Seleção — Grupo de Controles (Radio, Checkbox ou Toggle)",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Componente Composto. O DssOptionGroup orquestra múltiplos componentes da Fase 1 (DssRadio, DssCheckbox, DssToggle) gerenciando o estado de seleção centralizado via v-model.",
+  "hasReservations": true,
+  "classification": "Construção Explícita — não faz wrap de QOptionGroup. Renderiza componentes DSS da Fase 1 via v-for.",
+  "architecturalDecision": "NÃO USAR QOptionGroup. Abordagem de construção explícita garantindo 100% de fidelidade visual e comportamental com os componentes DssRadio, DssCheckbox e DssToggle já selados.",
+  "subcomponents": [],
+  "compositionRequirements": ["DssRadio", "DssCheckbox", "DssToggle"],
+  "compositionFuture": [],
+  "compositionNote": "DssOptionGroup importa e renderiza DssRadio, DssCheckbox e DssToggle como filhos DSS explícitos. O type prop determina qual componente é renderizado. Estado de seleção é gerenciado pelo DssOptionGroup e repassado aos filhos via props.",
+  "props": {
+    "DssOptionGroup": [
+      "modelValue",
+      "options",
+      "type",
+      "color",
+      "keepColor",
+      "inline",
+      "disable",
+      "readonly",
+      "dense",
+      "ariaLabel",
+      "ariaLabelledby"
+    ]
+  },
+  "propsBlocked": ["dark", "size", "leftLabel"],
+  "propsBlockedJustification": {
+    "dark": "O DSS gerencia dark mode via CSS global (body.body--dark / [data-theme=dark]), não via prop de componente.",
+    "size": "Os componentes da Fase 1 já possuem tamanhos padronizados via tokens --dss-compact-control-height-*.",
+    "leftLabel": "O alinhamento do label deve seguir o padrão DSS (label à direita do controle). Não exposto para garantir consistência visual."
+  },
+  "statesApplicable": ["default", "disabled", "readonly"],
+  "statesNotApplicable": ["hover", "focus", "active", "error", "loading", "indeterminate"],
+  "statesNotApplicableJustification": "DssOptionGroup é container de layout. Estados interativos (hover, focus, active) pertencem aos filhos DSS. Error e indeterminate não são estados do container. Loading não aplicável (sem operações assíncronas). Indeterminate pertence ao DssCheckbox individual quando relevante.",
+  "touchTarget": "Opção B — Delegado aos filhos DSS (DssRadio, DssCheckbox, DssToggle). DssOptionGroup não é Compact Control standalone.",
+  "ariaRole": "radiogroup (type=radio) ou group (type=checkbox|toggle). Atributos aria-label e aria-labelledby suportados.",
+  "accessibility": {
+    "keyboardNavigation": "Tab navega entre controles. Setas (↑↓) navegam entre DssRadio dentro do grupo (via atributo name compartilhado). Space/Enter ativa DssCheckbox e DssToggle. Gerenciado pelos filhos DSS.",
+    "screenReader": "role=radiogroup ou group no container. aria-label ou aria-labelledby para identificação do grupo. aria-checked e aria-disabled gerenciados pelos filhos.",
+    "radioGroupName": "Gerado automaticamente (contador de módulo). Garante que todos os DssRadio do mesmo grupo compartilhem o mesmo name para navegação nativa por teclado."
+  },
+  "exceptions": [],
+  "gateExceptions": {},
+  "tokens": {
+    "spacing": [
+      "--dss-spacing-1",
+      "--dss-spacing-2",
+      "--dss-spacing-4"
+    ]
+  },
+  "reservations": [
+    {
+      "id": "RES-01",
+      "description": "Comparação de valores por igualdade estrita",
+      "detail": "isChecked() usa Array.includes() que compara por igualdade estrita (===). Valores objeto não são suportados como option.value — usar apenas primitivos (string, number, boolean).",
+      "severity": "baixa",
+      "blocking": false
+    },
+    {
+      "id": "RES-02",
+      "description": "Sem testes unitários",
+      "detail": "Testes unitários e de acessibilidade não foram implementados neste ciclo.",
+      "severity": "baixa",
+      "blocking": false
+    },
+    {
+      "id": "RES-03",
+      "description": "Mudança dinâmica de type",
+      "detail": "Alterar a prop type em runtime sem atualizar o modelValue para o tipo correto (scalar vs array) pode causar comportamento inesperado. Documentado como constraint de uso.",
+      "severity": "baixa",
+      "blocking": false
+    }
+  ]
+}

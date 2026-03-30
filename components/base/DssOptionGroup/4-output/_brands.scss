@@ -1,0 +1,12 @@
+/* ==========================================================================
+   DssOptionGroup - LAYER 4: OUTPUT (Brands)
+
+   Tratamento de marca (Hub, Water, Waste) delegado integralmente
+   aos componentes filhos (DssRadio, DssCheckbox, DssToggle).
+
+   DssOptionGroup é um container de layout sem identidade visual própria.
+   O container não adiciona acentos de marca — os filhos já os implementam.
+
+   Para contexto de marca: utilize [data-brand="hub|water|waste"] no
+   elemento pai do DssOptionGroup. Os filhos DSS reagirão automaticamente.
+   ========================================================================== */

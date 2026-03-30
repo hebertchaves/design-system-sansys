@@ -1,0 +1,21 @@
+/* ==========================================================================
+   DssOptionGroup - LAYER 3: VARIANTS - Dense
+
+   Modo compacto: reduz o gap entre controles pela metade.
+
+   Tokens:
+   - Vertical dense:  var(--dss-spacing-1) (metade do padrão spacing-2)
+   - Horizontal dense: var(--dss-spacing-2) (metade do padrão spacing-4)
+
+   Padrão de delegação: o `dense` é repassado aos filhos (DssRadio, etc.)
+   via prop. O container apenas reduz o gap entre eles.
+   ========================================================================== */
+
+.dss-option-group--dense {
+  gap: var(--dss-spacing-1);
+
+  /* Dense + inline: metade do gap horizontal */
+  &.dss-option-group--inline {
+    gap: var(--dss-spacing-2);
+  }
+}
