@@ -13,15 +13,10 @@ Este documento define os critérios de qualidade exigidos para a criação de Pr
 
 O DSS opera com dois tipos de chat, com responsabilidades estritamente separadas. Essa separação protege o contexto de cada chat e garante a qualidade ao longo do tempo.
 
-Chat
-Responsabilidade
-Quando usar
-Chat Estratégico (este documento)
-Decisões arquiteturais amplas, revisão de governança, faseamento, tokens globais, breaking changes
-Quando a decisão impacta múltiplos componentes ou o sistema como um todo
-Chat de Execução (um por componente)
-Criação do pré-prompt, codificação, auditoria, correções e selagem de um único componente
-Um chat por componente, do início ao fim
+| Chat | Responsabilidade | Quando usar |
+|---|---|---|
+| **Chat Estratégico** (este documento) | Decisões arquiteturais amplas, revisão de governança, faseamento, tokens globais, breaking changes | Quando a decisão impacta múltiplos componentes ou o sistema como um todo |
+| **Chat de Execução** (um por componente) | Codificação, auditoria, correções e selagem de **um único componente** — o pré-prompt já chega pronto do Chat Estratégico | Um chat por componente, do início ao fim |
 
 
 
