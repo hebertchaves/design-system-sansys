@@ -1,0 +1,19 @@
+/* ==========================================================================
+   DssItemSection - LAYER 3: VARIANTS
+
+   Responsabilidade: Variantes visuais do componente.
+
+   DssItemSection não possui variantes visuais próprias além das
+   definidas pelas props (avatar, thumbnail, side, top, noWrap).
+   Essas variantes de layout são delegadas ao QItemSection nativo
+   via props forwarding — o CSS do Quasar gerencia as variações
+   estruturais (.q-item__section--avatar, --side, --thumbnail, etc).
+
+   Os overrides de espaçamento para essas variantes estão na Layer 2
+   (2-composition/_base.scss), que é o local correto para sobrescritas
+   de CSS de terceiros (EXC-01).
+
+   Esta camada existe para manter a integridade da arquitetura de
+   4 camadas DSS. Justificativa de ausência de conteúdo: componente
+   estrutural não-interativo sem variantes visuais independentes.
+   ========================================================================== */

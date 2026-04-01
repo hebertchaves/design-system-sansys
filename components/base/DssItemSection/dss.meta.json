@@ -1,0 +1,80 @@
+{
+  "component": "DssItemSection",
+  "dssVersion": "2.2",
+  "status": "pronto-para-auditoria",
+  "seal": null,
+  "sealDate": null,
+  "auditMode": "Pre-Auditoria",
+  "auditDate": null,
+  "goldenReference": "DssAvatar",
+  "goldenReferenceJustification": "DssAvatar e o componente canonico de midia em secoes de lista. DssItemSection frequentemente hospeda DssAvatar na posicao leading, tornando DssAvatar a referencia natural para decisoes de layout de secao de midia.",
+  "goldenContext": "DssList",
+  "goldenContextJustification": "DssList e o container pai da familia de lista DSS. DssItemSection e filho direto de DssItem, que por sua vez e filho de DssList. A hierarquia semantica e: DssList > DssItem > DssItemSection.",
+  "category": "Container de Layout Interno",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Container estrutural que orquestra o layout interno de um DssItem, gerenciando alinhamento e espacamento de avatares, icones, textos e acoes secundarias.",
+  "classification": "Container de layout nao-interativo — coluna flex dentro do DssItem",
+  "hasReservations": false,
+  "subcomponents": [],
+  "compositionRequirements": ["DssItem"],
+  "compositionFuture": ["DssItemLabel"],
+  "compositionRecommendations": [
+    "DssAvatar",
+    "DssIcon",
+    "DssItemLabel",
+    "DssBadge",
+    "DssButton",
+    "DssToggle",
+    "DssCheckbox",
+    "DssRadio"
+  ],
+  "compositionNote": "DssItemSection e nao opinativo. Aceita qualquer filho como slot. O uso idiomatico DSS e: avatar/icon na posicao leading (avatar=true), DssItemLabel na posicao principal, DssIcon/DssBadge/DssButton na posicao trailing (side=true).",
+  "props": {
+    "DssItemSection": ["avatar", "thumbnail", "side", "top", "noWrap"],
+    "blocked": {}
+  },
+  "statesApplicable": ["default"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssItemSection e container nao-interativo. Todos os estados interativos (hover, focus, active, disabled) pertencem ao DssItem pai. Loading/error pertencem ao consumidor do DssItem.",
+  "accessibility": {
+    "role": "Herdado do QItemSection (div sem role explicito — elemento de apresentacao de layout)",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Nao aplicavel — componente nao-interativo (Option B, como DssAvatar Golden Reference)",
+    "keyboardNavigation": "Nao aplicavel — navegacao pertence ao DssItem pai",
+    "aria": "Nenhum atributo ARIA obrigatorio. Conteudo interativo dentro da secao gerencia sua propria acessibilidade."
+  },
+  "antiPatterns": [
+    "Usar DssItemSection fora de DssItem",
+    "Aplicar estilos interativos (hover, focus) via DssItemSection — pertence ao DssItem",
+    "Aninhar DssItemSection dentro de outro DssItemSection",
+    "Usar avatar=true e side=true simultaneamente",
+    "Usar thumbnail=true e avatar=true simultaneamente"
+  ],
+  "tokensUsed": [
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-text-body",
+    "--dss-text-inverse",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-compact-control-height-md"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Sobrescrita de seletores internos do Quasar com tokens DSS",
+      "selectors": [
+        ".dss-item-section.q-item__section--side",
+        ".dss-item-section.q-item__section--avatar"
+      ],
+      "location": "2-composition/_base.scss",
+      "justification": "Gate de Composicao v2.4 — Regra 2 exception. O QItemSection aplica padding-right e min-width hardcoded nas classes internas .q-item__section--side e .q-item__section--avatar. A sobrescrita via seletores compostos (.dss-item-section.q-item__section--*) e a unica forma de garantir que o ritmo visual do DSS seja aplicado sobre CSS de terceiros (Quasar), sem criar dependencias externas adicionais."
+    },
+    {
+      "id": "EXC-02",
+      "value": "ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode. System color keywords obrigatorios — tokens CSS sao ignorados pelo navegador em forced-colors. Padrao canonico DSS."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+/* ==========================================================================
+   DssItemSection - LAYER 2: COMPOSITION (Base)
+
+   Responsabilidade: Estilos base do container de seção de item de lista.
+   Garante que os espaçamentos internos do Quasar sejam substituídos pelos
+   tokens DSS (EXC-01 documentado abaixo).
+
+   Token First: Zero valores hardcoded. Toda dimensão via var(--dss-*).
+   ========================================================================== */
+
+.dss-item-section {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  color: var(--dss-text-body);
+
+  /* ==========================================================================
+     EXC-01: Sobrescrita de espaçamentos internos do Quasar
+
+     Contexto: O QItemSection aplica padding e min-width hardcoded nas
+     classes internas .q-item__section--side e .q-item__section--avatar.
+     Os seletores compostos abaixo (.dss-item-section.q-item__section--*)
+     são a única forma viável de sobrescrever CSS de terceiros (Quasar)
+     com tokens DSS, garantindo o ritmo visual e a consistência do sistema.
+
+     Gate de Composição v2.4 — Regra 2 exception formalizada.
+     Referência: dss.meta.json#exceptions[EXC-01]
+     ========================================================================== */
+
+  /* Seção lateral — sobrescrita do padding-right nativo do Quasar */
+  &.q-item__section--side {
+    padding-right: var(--dss-spacing-4);
+  }
+
+  /* Seção de avatar — sobrescrita do padding-right e min-width nativos do Quasar */
+  &.q-item__section--avatar {
+    padding-right: var(--dss-spacing-3);
+    min-width: calc(var(--dss-compact-control-height-md) + var(--dss-spacing-4));
+  }
+
+  /* Seção principal — layout gerenciado pelo DssItem (flex container pai) */
+  &.q-item__section--main {
+    // Nenhum override necessário. DssItem gerencia o gap entre seções.
+  }
+}

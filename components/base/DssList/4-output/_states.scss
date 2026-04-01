@@ -1,0 +1,69 @@
+/* ==========================================================================
+   DssList - LAYER 4: OUTPUT (States)
+
+   Responsabilidade: Estados especiais de renderização.
+   DssList é não-interativo — não possui hover/focus/active próprios.
+   Esta camada cobre apenas dark mode e high-contrast (ambientais).
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] .dss-list {
+  color: var(--dss-text-inverse);
+
+  /* Borda em dark mode
+     EXC-01: rgba(255, 255, 255, 0.2) — Dark mode border.
+     Justificativa: Bordas em dark mode requerem white com alpha.
+     Nenhum token DSS fornece white com alpha parcial equivalente. */
+  &.dss-list--bordered {
+    border-color: rgba(255, 255, 255, 0.2); /* EXC-01 */
+  }
+
+  /* Separadores em dark mode
+     EXC-02: rgba(255, 255, 255, 0.12) — Dark mode separator.
+     Justificativa: Divisores em dark = white 12% opacity (Material Design).
+     Nenhum token DSS fornece white com alpha parcial para separadores. */
+  &.dss-list--separator > * + * {
+    border-top-color: rgba(255, 255, 255, 0.12); /* EXC-02 */
+  }
+}
+
+/* ==========================================================================
+   FORCED-COLORS MODE (Windows High Contrast)
+   Padrão DssBadge (Golden Reference não-interativo):
+   system keywords, valores absolutos (tokens ignorados)
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-list--bordered {
+    border: 2px solid ButtonText; /* EXC-03: forced-colors, valor absoluto obrigatório */
+  }
+
+  .dss-list--separator > * + * {
+    border-top: 1px solid ButtonText; /* EXC-04: forced-colors, valor absoluto obrigatório */
+  }
+
+  .dss-list--brand-hub,
+  .dss-list--brand-water,
+  .dss-list--brand-waste {
+    &.dss-list--bordered {
+      border-left: 4px solid Highlight; /* EXC-05: forced-colors brand accent */
+    }
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .dss-list--bordered {
+    border-color: currentColor;
+  }
+
+  .dss-list--separator > * + * {
+    border-top-color: currentColor;
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "component": "DssList",
+  "dssVersion": "2.2",
+  "status": "conforme",
+  "seal": "DSS v2.2",
+  "sealDate": "2026-03-31",
+  "auditMode": "Auditoria-Final",
+  "auditDate": "2026-03-31",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssCard",
+  "goldenContextJustification": "DssList e um container estrutural nao interativo, assim como DssCard. Ambos fornecem superficie, layout e bordas sem interatividade propria.",
+  "category": "Container de Layout",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Container estrutural que orquestra componentes da Fase 1 (DssItem, DssSeparator)",
+  "classification": "Superficie estrutural de lista — container nao interativo",
+  "hasReservations": false,
+  "subcomponents": [],
+  "compositionRequirements": ["DssItem", "DssSeparator"],
+  "compositionFuture": ["DssItemSection", "DssItemLabel"],
+  "props": {
+    "DssList": ["bordered", "padding", "separator", "brand", "ariaLabel", "ariaLabelledby"],
+    "blocked": {
+      "dark": "Gerenciado globalmente via [data-theme='dark']. Prop nao exposta por decisao arquitetural DSS.",
+      "dense": "Densidade controlada individualmente nos DssItems, nao forcada pelo container."
+    }
+  },
+  "statesApplicable": ["default"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssList e container nao interativo. Todos os estados interativos (hover, focus, active, disabled) pertencem aos componentes filhos (DssItem). Loading/error pertencem ao consumidor da lista.",
+  "accessibility": {
+    "role": "list",
+    "wcagLevel": "2.1 AA",
+    "ariaLabel": "Opcional — recomendado quando contexto visual e insuficiente",
+    "ariaLabelledby": "Alternativa semantica ao ariaLabel",
+    "touchTarget": "Nao aplicavel — componente nao interativo (Option B, como DssBadge)",
+    "keyboardNavigation": "Nao aplicavel — navegacao pertence aos DssItems filhos"
+  },
+  "compositionRecommendations": [
+    "DssItem",
+    "DssSeparator",
+    "DssAvatar",
+    "DssBadge",
+    "DssIcon",
+    "DssToggle",
+    "DssCheckbox",
+    "DssRadio"
+  ],
+  "compositionNote": "DssList e um wrapper nao opinativo. Aceita qualquer filho como slot, mas o uso idiomatico DSS e com DssItem e DssSeparator.",
+  "antiPatterns": [
+    "Usar <ul> ou <li> nativos dentro do DssList (usar DssItem com role='listitem')",
+    "Aplicar estilos diretos nos DssItems via ::v-deep a partir do DssList",
+    "Usar DssList para criar menus de navegacao (usar q-menu ou componente dedicado)",
+    "Aninhar DssLists excessivamente sem clara hierarquia semantica"
+  ],
+  "tokensUsed": [
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-text-body",
+    "--dss-text-inverse",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-gray-200",
+    "--dss-gray-300",
+    "--dss-radius-md",
+    "--dss-spacing-2",
+    "--dss-hub-300",
+    "--dss-hub-400",
+    "--dss-hub-600",
+    "--dss-water-200",
+    "--dss-water-400",
+    "--dss-water-500",
+    "--dss-waste-200",
+    "--dss-waste-500",
+    "--dss-waste-600"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "value": "rgba(255, 255, 255, 0.2)",
+      "location": "4-output/_states.scss",
+      "justification": "Dark mode border. Bordas em dark mode requerem white com alpha. Nenhum token DSS fornece white com alpha parcial equivalente. Padrao identico ao DssCard EXC-02."
+    },
+    {
+      "id": "EXC-02",
+      "value": "rgba(255, 255, 255, 0.12)",
+      "location": "4-output/_states.scss",
+      "justification": "Dark mode separator. Divisores em dark = white 12% opacity (Material Design). Sem token DSS equivalente. Padrao identico ao DssCard EXC-01."
+    },
+    {
+      "id": "EXC-03",
+      "value": "2px solid ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode border. System keywords obrigatorios (tokens CSS ignorados em forced-colors). Padrao canonico DSS."
+    },
+    {
+      "id": "EXC-04",
+      "value": "1px solid ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode separator. Valor absoluto obrigatorio em forced-colors."
+    },
+    {
+      "id": "EXC-05",
+      "value": "4px solid Highlight",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors brand accent. Valor absoluto obrigatorio para identidade de marca em forced-colors."
+    },
+    {
+      "id": "EXC-06",
+      "description": "Seletor descendente para separadores",
+      "selector": ".dss-list--separator > * + *",
+      "location": "3-variants/_separator.scss",
+      "justification": "Gate de Composicao v2.4. Separadores automaticos via CSS sem exigir insercao manual de DssSeparator entre cada item. Abordagem performatica e idiomatica para listas. Alternativa rejeitada: DX friction com DssSeparator manual entre cada item. Afeta apenas borda superior (border-top), sem alterar padding, layout ou outros estilos dos filhos."
+    }
+  ]
+}

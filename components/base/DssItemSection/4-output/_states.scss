@@ -1,0 +1,43 @@
+/* ==========================================================================
+   DssItemSection - LAYER 4: STATES
+
+   Responsabilidade: Dark mode, high contrast, forced-colors, print.
+
+   DssItemSection é não-interativo — sem hover, focus, active, disabled.
+   Os únicos estados aplicáveis são adaptativos de contexto visual global.
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-item-section {
+    color: var(--dss-text-inverse);
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+
+   EXC-02: System color keywords obrigatórios em forced-colors.
+   Tokens CSS são ignorados pelo navegador neste modo — system keywords
+   são a única forma de garantir visibilidade. Padrão canônico DSS.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-item-section {
+    color: ButtonText; /* EXC-02 */
+    forced-color-adjust: auto;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .dss-item-section {
+    color: currentColor;
+  }
+}

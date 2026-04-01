@@ -1,0 +1,13 @@
+/* ==========================================================================
+   DssItemSection - LAYER 4: BRANDS
+
+   Responsabilidade: Estilos de marca (Hub, Water, Waste).
+
+   DssItemSection não possui estilização de marca direta.
+   É um container de layout neutro — a brandabilidade é gerenciada pelos
+   componentes filhos (DssIcon, DssAvatar, DssBadge) e propagada via
+   [data-brand] definido no ancestral DssItem ou DssList.
+
+   Nenhuma regra de brand é necessária neste nível.
+   Camada presente por integridade arquitetural (4-layer obrigatória DSS).
+   ========================================================================== */
