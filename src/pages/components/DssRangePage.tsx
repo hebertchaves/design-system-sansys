@@ -644,6 +644,8 @@ export default function DssRangePage() {
             errorMessage={booleanStates.error ? errorMessageText : ""}
             hint={!booleanStates.error ? hintText : ""}
             brand={selectedBrand}
+            color={selectedColor}
+            feedback={selectedFeedback}
             onValueChange={handleValueChange}
           />
         }
