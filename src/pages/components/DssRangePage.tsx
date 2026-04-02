@@ -63,10 +63,19 @@ const exposeData = [
 ];
 
 const stepOptions = [
+  { name: "0", label: "Contínuo" },
   { name: "1", label: "1" },
   { name: "5", label: "5" },
   { name: "10", label: "10" },
   { name: "25", label: "25" },
+  { name: "50", label: "50" },
+];
+
+const scalePresets = [
+  { name: "0-100", label: "0 — 100", min: 0, max: 100 },
+  { name: "0-1000", label: "0 — 1000", min: 0, max: 1000 },
+  { name: "-50-50", label: "-50 — 50", min: -50, max: 50 },
+  { name: "0-10", label: "0 — 10", min: 0, max: 10 },
 ];
 
 const anatomyData = {
