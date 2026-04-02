@@ -197,6 +197,8 @@ function DssRangePreview({
   errorMessage,
   hint,
   brand,
+  color,
+  feedback,
   onValueChange,
 }: DssRangePreviewProps) {
   const [isDragging, setIsDragging] = useState<"min" | "max" | null>(null);
@@ -207,10 +209,19 @@ function DssRangePreview({
   const minPercent = ((minVal - scaleMin) / range) * 100;
   const maxPercent = ((maxVal - scaleMin) / range) * 100;
 
+  const feedbackColors: Record<string, string> = {
+    positive: "#4dd228",
+    negative: "#d8182e",
+    warning: "#fabd14",
+    info: "#0cc4e9",
+  };
+
   const getTrackColor = () => {
     if (disabled) return "#6b7280";
     if (error) return "#d8182e";
     if (brand && DSS_BRAND_COLORS[brand]) return DSS_BRAND_COLORS[brand].principal;
+    if (feedback && feedbackColors[feedback]) return feedbackColors[feedback];
+    if (color && DSS_SEMANTIC_COLORS[color]) return DSS_SEMANTIC_COLORS[color].bg;
     return "#1f86de";
   };
 
