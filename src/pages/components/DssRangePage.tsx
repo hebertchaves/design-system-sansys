@@ -63,10 +63,19 @@ const exposeData = [
 ];
 
 const stepOptions = [
+  { name: "0", label: "Contínuo" },
   { name: "1", label: "1" },
   { name: "5", label: "5" },
   { name: "10", label: "10" },
   { name: "25", label: "25" },
+  { name: "50", label: "50" },
+];
+
+const scalePresets = [
+  { name: "0-100", label: "0 — 100", min: 0, max: 100 },
+  { name: "0-1000", label: "0 — 1000", min: 0, max: 1000 },
+  { name: "-50-50", label: "-50 — 50", min: -50, max: 50 },
+  { name: "0-10", label: "0 — 10", min: 0, max: 10 },
 ];
 
 const anatomyData = {
@@ -406,8 +415,11 @@ export default function DssRangePage() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedStep, setSelectedStep] = useState("1");
+  const [selectedScale, setSelectedScale] = useState("0-100");
   const [rangeMin, setRangeMin] = useState(20);
   const [rangeMax, setRangeMax] = useState(80);
+  const [hintText, setHintText] = useState("Arraste os thumbs para ajustar");
+  const [errorMessageText, setErrorMessageText] = useState("Intervalo inválido");
   const [booleanStates, setBooleanStates] = useState({
     markers: false,
     label: false,
@@ -418,8 +430,21 @@ export default function DssRangePage() {
     error: false,
   });
 
+  const currentScale = scalePresets.find(s => s.name === selectedScale) || scalePresets[0];
+
   const handleBrandChange = (brand: string | null) => {
     setSelectedBrand(brand);
+  };
+
+  const handleScaleChange = (scaleName: string) => {
+    setSelectedScale(scaleName);
+    const scale = scalePresets.find(s => s.name === scaleName);
+    if (scale) {
+      // Reset range values proportionally within new scale
+      const range = scale.max - scale.min;
+      setRangeMin(Math.round(scale.min + range * 0.2));
+      setRangeMax(Math.round(scale.min + range * 0.8));
+    }
   };
 
   const toggleBooleanState = (name: string) => {
@@ -434,6 +459,8 @@ export default function DssRangePage() {
   const generateCode = () => {
     const props: string[] = [];
     props.push(`v-model="rangeValue"`);
+    if (currentScale.min !== 0) props.push(`:min="${currentScale.min}"`);
+    if (currentScale.max !== 100) props.push(`:max="${currentScale.max}"`);
     if (selectedBrand) props.push(`brand="${selectedBrand}"`);
     if (Number(selectedStep) !== 1) props.push(`:step="${selectedStep}"`);
     if (booleanStates.markers) props.push("markers");
@@ -444,8 +471,9 @@ export default function DssRangePage() {
     if (booleanStates.readonly) props.push("readonly");
     if (booleanStates.error) {
       props.push("error");
-      props.push('error-message="Intervalo inválido"');
+      if (errorMessageText) props.push(`error-message="${errorMessageText}"`);
     }
+    if (!booleanStates.error && hintText) props.push(`hint="${hintText}"`);
     props.push('aria-label="Selecione o intervalo"');
 
     return `<!-- rangeValue = { min: ${rangeMin}, max: ${rangeMax} } -->\n<DssRange\n  ${props.join("\n  ")}\n/>`;
@@ -457,8 +485,7 @@ export default function DssRangePage() {
     { name: "dense", label: "Dense" },
   ];
 
-  const behaviorToggles = [
-    { name: "dragRange", label: "Drag Range" },
+  const stateToggles = [
     { name: "disabled", label: "Disabled" },
     { name: "readonly", label: "Readonly" },
     { name: "error", label: "Error" },
@@ -555,7 +582,7 @@ export default function DssRangePage() {
 
       <DssPlayground
         title="Configure o Range"
-        description="Explore TODAS as props visuais e comportamentais do DssRange em tempo real."
+        description="Explore TODAS as props visuais e comportamentais do DssRange em tempo real. Cada prop da API possui um seletor correspondente."
         isDarkMode={isDarkMode}
         onDarkModeToggle={() => setIsDarkMode(!isDarkMode)}
         previewMinHeight="280px"
@@ -563,8 +590,8 @@ export default function DssRangePage() {
           <DssRangePreview
             minVal={rangeMin}
             maxVal={rangeMax}
-            scaleMin={0}
-            scaleMax={100}
+            scaleMin={currentScale.min}
+            scaleMax={currentScale.max}
             step={Number(selectedStep)}
             markers={booleanStates.markers}
             label={booleanStates.label}
@@ -573,15 +600,30 @@ export default function DssRangePage() {
             disabled={booleanStates.disabled}
             readonly={booleanStates.readonly}
             error={booleanStates.error}
-            errorMessage={booleanStates.error ? "Intervalo inválido" : ""}
-            hint={!booleanStates.error ? "Arraste os thumbs para ajustar o intervalo" : ""}
+            errorMessage={booleanStates.error ? errorMessageText : ""}
+            hint={!booleanStates.error ? hintText : ""}
             brand={selectedBrand}
             onValueChange={handleValueChange}
           />
         }
         controls={
-          <ControlGrid columns={5}>
-            {/* Step */}
+          <ControlGrid columns={6}>
+            {/* 1. Escala (min/max) */}
+            <ControlSection label="Escala (min / max)">
+              {scalePresets.map((s) => (
+                <PlaygroundButton
+                  key={s.name}
+                  onClick={() => handleScaleChange(s.name)}
+                  isSelected={selectedScale === s.name}
+                  selectedBg="var(--dss-jtech-accent)"
+                  selectedColor="#ffffff"
+                >
+                  {s.label}
+                </PlaygroundButton>
+              ))}
+            </ControlSection>
+
+            {/* 2. Step */}
             <ControlSection label="Step">
               {stepOptions.map((s) => (
                 <PlaygroundButton
@@ -596,14 +638,14 @@ export default function DssRangePage() {
               ))}
             </ControlSection>
 
-            {/* Brand */}
+            {/* 3. Brand */}
             <BrandPicker
               brands={DSS_BRAND_COLORS}
               selectedBrand={selectedBrand}
               onSelect={handleBrandChange}
             />
 
-            {/* Visual */}
+            {/* 4. Visual */}
             <ToggleGroup
               label="Visual"
               options={visualToggles}
@@ -611,17 +653,77 @@ export default function DssRangePage() {
               onToggle={toggleBooleanState}
             />
 
-            {/* Comportamento */}
+            {/* 5. Estados */}
             <ToggleGroup
-              label="Comportamento"
-              options={behaviorToggles}
+              label="Estados"
+              options={stateToggles}
               values={booleanStates}
               onToggle={toggleBooleanState}
             />
+
+            {/* 6. Comportamento */}
+            <ControlSection label="Comportamento">
+              <PlaygroundButton
+                onClick={() => toggleBooleanState("dragRange")}
+                isSelected={booleanStates.dragRange}
+                selectedBg="var(--dss-positive)"
+                selectedColor="#ffffff"
+                selectedBorder="var(--dss-positive)"
+              >
+                {booleanStates.dragRange && "✓ "}Drag Range
+              </PlaygroundButton>
+            </ControlSection>
           </ControlGrid>
         }
         codePreview={generateCode()}
       />
+
+      {/* Hint & Error Message inputs */}
+      <div
+        className="grid md:grid-cols-2 gap-4 p-4 rounded-lg border"
+        style={{ backgroundColor: "var(--jtech-card-bg)", borderColor: "var(--jtech-card-border)" }}
+      >
+        <div className="space-y-1">
+          <label className="text-sm font-semibold block" style={{ color: "var(--jtech-heading-tertiary)" }}>
+            Hint Text
+          </label>
+          <input
+            type="text"
+            value={hintText}
+            onChange={(e) => setHintText(e.target.value)}
+            className="w-full px-3 py-2 rounded-md text-sm border"
+            style={{
+              backgroundColor: "var(--jtech-card-bg)",
+              borderColor: "var(--jtech-card-border)",
+              color: "var(--jtech-text-body)",
+            }}
+            placeholder="Texto de ajuda abaixo do range"
+          />
+          <span className="text-xs" style={{ color: "var(--jtech-text-muted)" }}>
+            Visível quando error=false. Prop: <code className="font-mono" style={{ color: "var(--dss-jtech-accent)" }}>hint</code>
+          </span>
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-semibold block" style={{ color: "var(--jtech-heading-tertiary)" }}>
+            Error Message
+          </label>
+          <input
+            type="text"
+            value={errorMessageText}
+            onChange={(e) => setErrorMessageText(e.target.value)}
+            className="w-full px-3 py-2 rounded-md text-sm border"
+            style={{
+              backgroundColor: "var(--jtech-card-bg)",
+              borderColor: "var(--jtech-card-border)",
+              color: "var(--jtech-text-body)",
+            }}
+            placeholder="Mensagem de erro"
+          />
+          <span className="text-xs" style={{ color: "var(--jtech-text-muted)" }}>
+            Visível quando error=true. Prop: <code className="font-mono" style={{ color: "var(--dss-jtech-accent)" }}>errorMessage</code>
+          </span>
+        </div>
+      </div>
 
       {/* ================================================================
        * SEÇÃO 4: ESTADOS INTERATIVOS
