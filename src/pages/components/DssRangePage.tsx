@@ -496,7 +496,13 @@ export default function DssRangePage() {
     props.push(`v-model="rangeValue"`);
     if (currentScale.min !== 0) props.push(`:min="${currentScale.min}"`);
     if (currentScale.max !== 100) props.push(`:max="${currentScale.max}"`);
-    if (selectedBrand) props.push(`brand="${selectedBrand}"`);
+    if (selectedBrand) {
+      props.push(`brand="${selectedBrand}"`);
+    } else if (selectedFeedback) {
+      props.push(`color="${selectedFeedback}"`);
+    } else if (selectedColor && selectedColor !== "primary") {
+      props.push(`color="${selectedColor}"`);
+    }
     if (Number(selectedStep) !== 1) props.push(`:step="${selectedStep}"`);
     if (booleanStates.markers) props.push("markers");
     if (booleanStates.label) props.push("label");
