@@ -176,6 +176,8 @@ interface DssRangePreviewProps {
   errorMessage: string;
   hint: string;
   brand: string | null;
+  color: string | null;
+  feedback: string | null;
   onValueChange: (min: number, max: number) => void;
 }
 
