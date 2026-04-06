@@ -745,6 +745,9 @@ export default function DssRangePage() {
               />
             </ControlSection>
           </ControlGrid>
+        }
+        codePreview={generateCode()}
+      />
 
       {/* ================================================================
        * SEÇÃO 4: ESTADOS INTERATIVOS
