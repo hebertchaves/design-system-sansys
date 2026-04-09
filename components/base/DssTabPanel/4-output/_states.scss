@@ -1,0 +1,63 @@
+// ==========================================================================
+// DssTabPanel — Layer 4: Output (States)
+// ==========================================================================
+//
+// Estados especiais: high contrast, forced-colors, print.
+//
+// Dark mode: DssTabPanel é container transparente — herda background do pai.
+// Filhos DSS (DssCard, DssInput, etc.) respondem individualmente ao dark mode.
+// Nenhuma sobrescrita de background necessária nesta camada.
+//
+// prefers-reduced-motion: DssTabPanel não possui transições próprias.
+// Nenhuma declaração necessária — filhos governam suas próprias transições.
+// ==========================================================================
+
+// ==========================================================================
+// HIGH CONTRAST (prefers-contrast: high)
+// ==========================================================================
+
+@media (prefers-contrast: high) {
+  .dss-tab-panel.q-tab-panel {
+    // Garante separação visual do painel em modo de alto contraste
+    outline: var(--dss-border-width-thin) solid currentColor;
+    outline-offset: calc(-1 * var(--dss-border-width-thin));
+  }
+}
+
+// ==========================================================================
+// FORCED-COLORS MODE (Windows High Contrast)
+// Padrão canônico DSS: system keywords — tokens CSS são ignorados pelo browser.
+// Precedente: DssCard EXC-04, DssTabs EXC-02.
+// ==========================================================================
+
+@media (forced-colors: active) {
+  .dss-tab-panel.q-tab-panel {
+    // Borda de sistema para delimitar o painel visualmente
+    border: 1px solid ButtonText; /* EXC-02 — forced-colors, system keyword obrigatório */
+  }
+
+  .dss-tab-panel--disabled {
+    // Forced-colors não respeita opacity — usar color do sistema
+    color: GrayText; /* EXC-03 — forced-colors, system keyword obrigatório */
+    border-color: GrayText; /* EXC-03 */
+  }
+}
+
+// ==========================================================================
+// PRINT
+//
+// Em impressão estática, garante que o painel ativo seja renderizado
+// visualmente mesmo que o QTabPanels tenha aplicado display:none via v-show
+// em outros painéis.
+//
+// EXC-04: display: block !important necessário para sobrescrever o v-show
+// do QTabPanels que usa style="display: none" inline — inline styles têm
+// precedência sobre regras de stylesheet sem !important.
+// Nenhum token DSS cobre a semântica de "forçar visibilidade em print".
+// ==========================================================================
+
+@media print {
+  .dss-tab-panel.q-tab-panel {
+    display: block !important; /* EXC-04 — forçar visibilidade em print */
+  }
+}

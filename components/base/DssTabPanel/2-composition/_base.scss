@@ -1,0 +1,62 @@
+// ==========================================================================
+// DssTabPanel — Layer 2: Composição Base
+// ==========================================================================
+//
+// Estilos fundamentais do painel de aba.
+// Usa APENAS tokens genéricos DSS.
+//
+// Responsabilidade: container estrutural não-interativo.
+// Nenhum estado :hover, :focus ou :active próprio — interatividade
+// pertence exclusivamente aos componentes filhos (Gate de Responsabilidade v2.4).
+//
+// Padrão Level 1 (NC-01 corrigido — Ciclo 1):
+//   <q-tab-panel> é o elemento raiz. O DOM renderiza:
+//   <div class="q-tab-panel dss-tab-panel [dss-tab-panel--disabled]">
+//   Seletor canônico: .dss-tab-panel.q-tab-panel (ambas as classes no mesmo elemento).
+//
+// EXC-01 — Seletor composto .dss-tab-panel.q-tab-panel:
+//   O QTabPanel aplica padding nativo de 16px (Material Design).
+//   O seletor composto garante especificidade suficiente para sobrescrever
+//   o padding nativo com tokens DSS.
+//   Precedente: DssTabs EXC-01 (.dss-tabs .q-tabs__arrow),
+//               DssTab EXC-01 (.dss-tab .q-tab__indicator).
+// ==========================================================================
+
+@import '../../../../utils/index';
+
+// ==========================================================================
+// ELEMENTO RAIZ — .dss-tab-panel.q-tab-panel
+//
+// No DOM: <div class="q-tab-panel dss-tab-panel">
+// EXC-01: seletor composto garante override do padding nativo do QTabPanel.
+// ==========================================================================
+
+/* EXC-01 — seletor composto (especificidade para override do QTabPanel) */
+.dss-tab-panel.q-tab-panel {
+  // Espaçamento interno governado por tokens DSS
+  // --dss-spacing-6 = 24px — tokenizado em vez do 16px nativo do QTabPanel
+  padding: var(--dss-spacing-6);
+
+  // Remove tap highlight em mobile (padrão Golden Reference DssCard)
+  -webkit-tap-highlight-color: transparent;
+}
+
+// ==========================================================================
+// ESTADO DESABILITADO
+//
+// Quando `disable` é true, o painel reduz opacidade para sinalizar
+// que não pode ser selecionado. Segue padrão canônico DSS.
+//
+// NC-03 corrigido (Ciclo 1): removido `cursor: not-allowed` — ineficaz
+// quando `pointer-events: none` está ativo (o ponteiro não alcança o elemento,
+// portanto o cursor nunca muda). Padrão: apenas opacity + pointer-events.
+// Precedente: DssSlider, DssCheckbox, DssRadio.
+// ==========================================================================
+
+.dss-tab-panel--disabled {
+  // Opacidade de desabilitado — token canônico DSS
+  opacity: var(--dss-opacity-disabled);
+
+  // Previne interações com filhos quando desabilitado
+  pointer-events: none;
+}

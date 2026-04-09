@@ -1,0 +1,59 @@
+// ==========================================================================
+// DssTabPanel — Layer 4: Output (Brands)
+// ==========================================================================
+//
+// Variações de marca: Hub (laranja), Water (azul), Waste (verde).
+//
+// O DssTabPanel recebe contexto de marca via cascata CSS do DssTabs pai
+// (que define [data-brand] no root div).
+//
+// Decisão arquitetural: O DssTabPanel não possui prop `brand` própria.
+// A marca é propagada pelo DssTabs (container de navegação) via CSS cascade.
+// O DssTabPanel reage ao [data-brand] do ancestral.
+//
+// Impacto visual: acento sutil de borda esquerda para identificação visual
+// do painel ativo associado à marca — consistente com DssCard brand variants.
+// ==========================================================================
+
+// ==========================================================================
+// HUB BRAND (Laranja)
+// ==========================================================================
+
+[data-brand="hub"] .dss-tab-panel.q-tab-panel {
+  // Acento de marca: borda esquerda sutil
+  border-left: var(--dss-border-width-thick) solid var(--dss-hub-600);
+}
+
+// ==========================================================================
+// WATER BRAND (Azul)
+// ==========================================================================
+
+[data-brand="water"] .dss-tab-panel.q-tab-panel {
+  border-left: var(--dss-border-width-thick) solid var(--dss-water-500);
+}
+
+// ==========================================================================
+// WASTE BRAND (Verde)
+// ==========================================================================
+
+[data-brand="waste"] .dss-tab-panel.q-tab-panel {
+  border-left: var(--dss-border-width-thick) solid var(--dss-waste-600);
+}
+
+// ==========================================================================
+// DARK MODE — AJUSTE DE BRAND
+// ==========================================================================
+
+[data-theme="dark"] {
+  [data-brand="hub"] .dss-tab-panel.q-tab-panel {
+    border-left-color: var(--dss-hub-400);
+  }
+
+  [data-brand="water"] .dss-tab-panel.q-tab-panel {
+    border-left-color: var(--dss-water-400);
+  }
+
+  [data-brand="waste"] .dss-tab-panel.q-tab-panel {
+    border-left-color: var(--dss-waste-500);
+  }
+}

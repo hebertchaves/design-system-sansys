@@ -1,0 +1,107 @@
+{
+  "component": "DssTabPanel",
+  "dssVersion": "2.2",
+  "status": "conforme",
+  "seal": "DSS/docs/Compliance/seals/DssTabPanel/DSSTABPANEL_SELO_v2.2.md",
+  "sealDate": "2026-04-09",
+  "auditMode": "Selo DSS v2.2 Concedido",
+  "auditDate": "2026-04-09",
+  "goldenReference": "DssCard",
+  "goldenReferenceJustification": "DssCard é o Golden Reference para DssTabPanel porque ambos são containers estruturais não-interativos que fornecem superfície de composição. DssCard implementa padding via tokens DSS, dark mode, brand propagation e Gate de Composição v2.4 — todos os padrões exatamente iguais aos necessários no DssTabPanel.",
+  "goldenContext": "DssTabs",
+  "goldenContextNote": "Golden Context alterado de DssTabPanels (especificado no pré-prompt) para DssTabs porque DssTabPanels ainda não foi implementado. DssTabs é o componente da família mais próximo disponível. Reavaliação recomendada quando DssTabPanels for selado. DssTabs é o Golden Context por ser o componente da família Tabs já selado (Selo DSS v2.2, 02 Apr 2026) e por definir os padrões arquiteturais e de brand propagation que o DssTabPanel deve seguir.",
+  "category": "Container de Conteúdo (Tab Panel)",
+  "phase": 1,
+  "phaseDescription": "Fase 1 — Componente Independente. O DssTabPanel é um wrapper direto do QTabPanel, sem subcomponentes DSS internos obrigatórios. Fornece container e espaçamento governados por tokens DSS. Composição do slot é responsabilidade do consumidor.",
+  "hasReservations": true,
+  "reservations": [
+    {
+      "id": "RES-01",
+      "description": "DssTabPanels (container pai) ainda não implementado. DssTabPanel usa QTabPanels via exemplo. Quando DssTabPanels for implementado, os exemplos devem ser atualizados.",
+      "impact": "Baixo — DssTabPanel funciona corretamente com QTabPanels. A atualização dos exemplos é cosmética."
+    },
+    {
+      "id": "RES-02",
+      "description": "Sem unit tests. Comportamento depende do estado do QTabPanels (container externo). Testes de integração recomendados quando DssTabPanels for implementado.",
+      "impact": "Baixo — DssTabPanel é container passivo. A lógica de show/hide pertence ao QTabPanel/QTabPanels."
+    },
+    {
+      "id": "RES-03",
+      "description": "Variante `flush` (sem padding) não implementada em v1.0.0. Casos de uso: imagens full-bleed, mapas, tabelas sem padding lateral.",
+      "impact": "Médio — Consumidores podem usar q-pa-none como workaround até v1.1.0."
+    }
+  ],
+  "classification": "Container estrutural não-interativo — fornece espaçamento e contexto de layout para conteúdo de aba",
+  "subcomponents": [],
+  "compositionRequirements": [],
+  "compositionFuture": ["DssTabPanels"],
+  "compositionNote": "DssTabPanel é container de conteúdo — fornece apenas slot e layout. Composição é responsabilidade do consumidor (Gate de Composição v2.4). Componentes recomendados no slot: DssCard, DssInput, DssSelect, DssList, DssItem, DssButton. DssTabPanels (Fase 2) será o container pai governado quando implementado.",
+  "compositionRecommendations": [
+    "DssCard",
+    "DssInput",
+    "DssSelect",
+    "DssList",
+    "DssItem",
+    "DssButton",
+    "DssCheckbox",
+    "DssRadio",
+    "DssToggle",
+    "DssSeparator"
+  ],
+  "props": {
+    "DssTabPanel": ["name", "disable"]
+  },
+  "propsBlocked": ["dark"],
+  "propsBlockedJustification": {
+    "dark": "DSS governa dark mode globalmente via [data-theme='dark'] no container ancestral ou via classe .dss-theme-dark. Prop dark por componente viola a governança centralizada de tema do DSS."
+  },
+  "statesApplicable": ["default", "disabled"],
+  "statesNotApplicable": ["hover", "focus", "active", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssTabPanel é container estrutural não-interativo. Gate de Responsabilidade v2.4: hover/focus/active pertencem exclusivamente aos componentes filhos no slot. loading: o painel não carrega dados — os filhos gerenciam loading individualmente. error: pertence ao conteúdo dos filhos. indeterminate: não aplicável a painéis de conteúdo.",
+  "touchTarget": "Opção B — Não implementado. DssTabPanel é container não-interativo (mesmo padrão do DssCard e DssTabs). Touch target (::before WCAG 2.5.5) pertence exclusivamente aos filhos interativos.",
+  "ariaRole": "role='tabpanel' gerenciado nativamente pelo QTabPanel em coordenação com QTabPanels. aria-labelledby associado automaticamente pelo Quasar com base no `name` prop.",
+  "accessibility": {
+    "role": "tabpanel (nativo QTabPanel)",
+    "wcagLevel": "2.1 AA",
+    "keyboardNavigation": "Gerenciado nativamente pelo QTabPanel/QTabPanels. Tab navega para o primeiro elemento interativo dentro do painel.",
+    "ariaManagement": "aria-labelledby e aria-selected gerenciados pelo QTabPanel em coordenação com QTabPanels e QTabs."
+  },
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "value": "Seletor composto .dss-tab-panel.q-tab-panel",
+      "location": "2-composition/_base.scss, 4-output/_states.scss, 4-output/_brands.scss",
+      "justification": "QTabPanel aplica padding nativo do Material Design (16px). O seletor composto .dss-tab-panel.q-tab-panel (ambas as classes no mesmo elemento raiz) garante especificidade suficiente para sobrescrever o padding nativo com --dss-spacing-6. Simplificado na NC-01 Ciclo 1: de .dss-tab-panel__inner.q-tab-panel para .dss-tab-panel.q-tab-panel, pois <q-tab-panel> é agora o root direto. Precedente: DssTabs EXC-01 (.dss-tabs .q-tabs__arrow), DssTab EXC-01 (.dss-tab .q-tab__indicator)."
+    },
+    {
+      "id": "EXC-02",
+      "value": "1px solid ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode. System color keywords obrigatórios — tokens CSS são ignorados pelo navegador em forced-colors. Padrão canônico DSS. Precedente: DssCard EXC-04, DssTabs EXC-02."
+    },
+    {
+      "id": "EXC-03",
+      "value": "GrayText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode — estado disabled. GrayText é o system keyword padrão para elementos desabilitados em forced-colors. Tokens CSS de opacity são ignorados pelo navegador."
+    },
+    {
+      "id": "EXC-04",
+      "value": "display: block !important",
+      "location": "4-output/_states.scss — bloco @media print",
+      "justification": "O QTabPanels aplica display: none via inline style (v-show) em painéis inativos. Em contexto de impressão, painéis podem precisar ser todos visíveis. O !important é necessário para sobrescrever o inline style do v-show. Nenhum token DSS cobre a semântica de visibilidade forçada em print. Precedente: DssTabs EXC-03 (display: none em @media print)."
+    }
+  ],
+  "tokensUsed": [
+    "--dss-spacing-6",
+    "--dss-opacity-disabled",
+    "--dss-border-width-thin",
+    "--dss-border-width-thick",
+    "--dss-hub-600",
+    "--dss-hub-400",
+    "--dss-water-500",
+    "--dss-water-400",
+    "--dss-waste-600",
+    "--dss-waste-500"
+  ]
+}
