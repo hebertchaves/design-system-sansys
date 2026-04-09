@@ -28,16 +28,36 @@ import {
   DssPlayground,
   ControlGrid,
   ControlSection,
+  ColorPicker,
+  FeedbackColorPicker,
   BrandPicker,
   SizeSelector,
   ToggleGroup,
+  DSS_SEMANTIC_COLORS,
+  DSS_FEEDBACK_COLORS,
   DSS_BRAND_COLORS,
+  type FeedbackColor,
 } from "@/components/ui/playground";
 import { PlaygroundButton } from "@/components/ui/PlaygroundButton";
 
 // ============================================================================
 // DADOS ESPECÍFICOS DO DSSTABS
 // ============================================================================
+
+// Feedback colors com ícones
+const feedbackColors: Record<string, FeedbackColor> = {
+  positive: { ...DSS_FEEDBACK_COLORS.positive, icon: CheckCircle },
+  negative: { ...DSS_FEEDBACK_COLORS.negative, icon: XCircle },
+  warning: { ...DSS_FEEDBACK_COLORS.warning, icon: AlertTriangle },
+  info: { ...DSS_FEEDBACK_COLORS.info, icon: Info },
+};
+
+// Tamanhos das abas (DssTab density)
+const sizes = [
+  { name: "sm", label: "SM", isDefault: false },
+  { name: "md", label: "MD", isDefault: true },
+  { name: "lg", label: "LG", isDefault: false },
+];
 
 // Alinhamentos do DssTabs
 const alignOptions = [
@@ -135,7 +155,11 @@ interface DssTabsPreviewProps {
   align: string;
   vertical: boolean;
   dense: boolean;
+  disabled: boolean;
   brand: string | null;
+  colorKey: string | null;
+  feedbackKey: string | null;
+  size: string;
   tabCount: number;
   activeTab: string;
   onTabChange: (tab: string) => void;
@@ -151,20 +175,39 @@ function DssTabsPreview({
   align,
   vertical,
   dense,
+  disabled,
   brand,
+  colorKey,
+  feedbackKey,
+  size,
   tabCount,
   activeTab,
   onTabChange,
 }: DssTabsPreviewProps) {
   const tabs = TAB_LABELS.slice(0, tabCount);
 
-  const getBrandColor = () => {
-    if (!brand) return "var(--dss-jtech-accent)";
-    const b = DSS_BRAND_COLORS[brand];
-    return b?.principal || "var(--dss-jtech-accent)";
+  // Color Application Domain: Brand > Feedback > Color > default
+  const getActiveColor = () => {
+    if (brand && DSS_BRAND_COLORS[brand]) {
+      return DSS_BRAND_COLORS[brand].principal;
+    }
+    if (feedbackKey && feedbackColors[feedbackKey]) {
+      return feedbackColors[feedbackKey].bg;
+    }
+    if (colorKey && DSS_SEMANTIC_COLORS[colorKey]) {
+      return DSS_SEMANTIC_COLORS[colorKey].bg;
+    }
+    return "var(--dss-jtech-accent)";
   };
 
-  const indicatorColor = getBrandColor();
+  const indicatorColor = getActiveColor();
+
+  const sizeMap: Record<string, { padding: string; fontSize: string }> = {
+    sm: { padding: dense ? "4px 8px" : "6px 10px", fontSize: "12px" },
+    md: { padding: dense ? "6px 12px" : "10px 16px", fontSize: "13px" },
+    lg: { padding: dense ? "8px 14px" : "12px 20px", fontSize: "15px" },
+  };
+  const sizeStyle = sizeMap[size] || sizeMap.md;
 
   const containerStyle: React.CSSProperties = {
     display: "flex",
@@ -179,14 +222,16 @@ function DssTabsPreview({
     borderBottom: vertical ? "none" : "2px solid var(--jtech-card-border)",
     borderLeft: vertical ? "2px solid var(--jtech-card-border)" : "none",
     position: "relative",
+    opacity: disabled ? 0.4 : 1,
+    pointerEvents: disabled ? "none" : undefined,
   };
 
   const tabStyle = (isActive: boolean): React.CSSProperties => ({
-    padding: dense ? "6px 12px" : "10px 16px",
-    fontSize: "13px",
+    padding: sizeStyle.padding,
+    fontSize: sizeStyle.fontSize,
     fontWeight: isActive ? 600 : 400,
     color: isActive ? indicatorColor : "var(--jtech-text-body)",
-    cursor: "pointer",
+    cursor: disabled ? "not-allowed" : "pointer",
     position: "relative",
     whiteSpace: "nowrap",
     transition: "all 0.2s ease",
@@ -212,16 +257,17 @@ function DssTabsPreview({
               key={tabId}
               role="tab"
               aria-selected={isActive}
+              aria-disabled={disabled || undefined}
               style={tabStyle(isActive)}
-              onClick={() => onTabChange(tabId)}
+              onClick={() => !disabled && onTabChange(tabId)}
               onMouseEnter={(e) => {
-                if (!isActive) {
+                if (!isActive && !disabled) {
                   e.currentTarget.style.color = indicatorColor;
                   e.currentTarget.style.backgroundColor = "var(--jtech-card-bg)";
                 }
               }}
               onMouseLeave={(e) => {
-                if (!isActive) {
+                if (!isActive && !disabled) {
                   e.currentTarget.style.color = "var(--jtech-text-body)";
                   e.currentTarget.style.backgroundColor = "transparent";
                 }
@@ -232,14 +278,12 @@ function DssTabsPreview({
           );
         })}
       </div>
-      {/* Tab panel placeholder */}
       <div
         role="tabpanel"
         style={{
           padding: "16px",
           fontSize: "13px",
           color: "var(--jtech-text-muted)",
-          borderTop: vertical ? "none" : undefined,
         }}
       >
         Conteúdo da aba: <strong style={{ color: "var(--jtech-heading-tertiary)" }}>{activeTab}</strong>
@@ -247,7 +291,6 @@ function DssTabsPreview({
     </div>
   );
 }
-
 // ============================================================================
 // COMPONENTE PRINCIPAL
 // Baseline: DssButtonPage | Guia: COMPONENT_PAGE_STRUCTURE.md v2.3
@@ -256,7 +299,10 @@ function DssTabsPreview({
 export default function DssTabsPage() {
   // Playground state
   const [selectedAlign, setSelectedAlign] = useState("left");
+  const [selectedColor, setSelectedColor] = useState<string | null>("primary");
+  const [selectedFeedback, setSelectedFeedback] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState("md");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedBreakpoint, setSelectedBreakpoint] = useState("600");
   const [selectedTabCount, setSelectedTabCount] = useState("5");
@@ -264,11 +310,28 @@ export default function DssTabsPage() {
   const [booleanStates, setBooleanStates] = useState({
     vertical: false,
     dense: false,
+    disabled: false,
   });
 
-  // Color Application Domain: Brand is the only color source for DssTabs
+  // Color Application Domain v3.2: exclusividade mútua implícita
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
+    setSelectedBrand(null);
+    setSelectedFeedback(null);
+  };
+
+  const handleFeedbackChange = (feedback: string) => {
+    setSelectedFeedback(feedback);
+    setSelectedColor(null);
+    setSelectedBrand(null);
+  };
+
   const handleBrandChange = (brand: string | null) => {
-    setSelectedBrand(brand || null);
+    if (brand) {
+      setSelectedBrand(brand);
+      setSelectedColor(null);
+      setSelectedFeedback(null);
+    }
   };
 
   const toggleBooleanState = (name: string) => {
@@ -280,25 +343,36 @@ export default function DssTabsPage() {
 
   // Code generation (clean, production-ready)
   const generateCode = () => {
-    const props: string[] = [];
-    props.push('v-model="activeTab"');
-    if (selectedAlign !== "left") props.push(`align="${selectedAlign}"`);
-    if (selectedBreakpoint !== "600") props.push(`:breakpoint="${selectedBreakpoint}"`);
-    if (booleanStates.vertical) props.push("vertical");
-    if (booleanStates.dense) props.push("dense");
-    if (selectedBrand) props.push(`brand="${selectedBrand}"`);
+    const tabsProps: string[] = [];
+    tabsProps.push('v-model="activeTab"');
+    if (selectedAlign !== "left") tabsProps.push(`align="${selectedAlign}"`);
+    if (selectedBreakpoint !== "600") tabsProps.push(`:breakpoint="${selectedBreakpoint}"`);
+    if (booleanStates.vertical) tabsProps.push("vertical");
+    if (booleanStates.dense) tabsProps.push("dense");
+    if (selectedBrand) tabsProps.push(`brand="${selectedBrand}"`);
 
     const tabCount = parseInt(selectedTabCount);
+    // DssTab props reflect the color domain
+    const tabColorProp = selectedBrand ? "" :
+      selectedFeedback && selectedFeedback !== "primary" ? ` color="${selectedFeedback}"` :
+      selectedColor && selectedColor !== "primary" ? ` color="${selectedColor}"` : "";
+    const tabSizeProp = selectedSize !== "md" ? ` size="${selectedSize}"` : "";
+    const tabDisabledNote = booleanStates.disabled ? " disable" : "";
+
     const tabLines = TAB_LABELS.slice(0, tabCount)
-      .map((t) => `  <DssTab name="${t.toLowerCase().replace(/\s/g, "-")}" label="${t}" />`)
+      .map((t) => `  <DssTab name="${t.toLowerCase().replace(/\s/g, "-")}" label="${t}"${tabColorProp}${tabSizeProp}${tabDisabledNote} />`)
       .join("\n");
 
-    return `<DssTabs\n  ${props.join("\n  ")}\n>\n${tabLines}\n</DssTabs>`;
+    return `<DssTabs\n  ${tabsProps.join("\n  ")}\n>\n${tabLines}\n</DssTabs>`;
   };
 
   const layoutToggles = [
     { name: "vertical", label: "Vertical" },
     { name: "dense", label: "Dense" },
+  ];
+
+  const stateToggles = [
+    { name: "disabled", label: "Disabled" },
   ];
 
   return (
@@ -389,7 +463,7 @@ export default function DssTabsPage() {
 
       <DssPlayground
         title="Configure o DssTabs"
-        description="Explore TODAS as props visuais e comportamentais do DssTabs em tempo real."
+        description="Explore TODAS as props visuais e comportamentais do DssTabs + DssTab em tempo real."
         isDarkMode={isDarkMode}
         onDarkModeToggle={() => setIsDarkMode(!isDarkMode)}
         previewMinHeight="240px"
@@ -398,7 +472,11 @@ export default function DssTabsPage() {
             align={selectedAlign}
             vertical={booleanStates.vertical}
             dense={booleanStates.dense}
+            disabled={booleanStates.disabled}
             brand={selectedBrand}
+            colorKey={selectedColor}
+            feedbackKey={selectedFeedback}
+            size={selectedSize}
             tabCount={parseInt(selectedTabCount)}
             activeTab={activeTab}
             onTabChange={setActiveTab}
@@ -406,6 +484,36 @@ export default function DssTabsPage() {
         }
         controls={
           <ControlGrid columns={5}>
+            {/* Color Domain — Semantic */}
+            <ColorPicker
+              label="Color"
+              colors={Object.values(DSS_SEMANTIC_COLORS)}
+              selectedColor={selectedColor}
+              onSelect={handleColorChange}
+            />
+
+            {/* Color Domain — Feedback */}
+            <FeedbackColorPicker
+              label="Feedback"
+              colors={feedbackColors}
+              selectedColor={selectedFeedback}
+              onSelect={handleFeedbackChange}
+            />
+
+            {/* Color Domain — Brand */}
+            <BrandPicker
+              brands={DSS_BRAND_COLORS}
+              selectedBrand={selectedBrand}
+              onSelect={handleBrandChange}
+            />
+
+            {/* Size */}
+            <SizeSelector
+              sizes={sizes}
+              selectedSize={selectedSize}
+              onSelect={setSelectedSize}
+            />
+
             {/* Align */}
             <SizeSelector
               label="Align"
@@ -414,17 +522,18 @@ export default function DssTabsPage() {
               onSelect={setSelectedAlign}
             />
 
-            {/* Brand (Color Application Domain — única fonte de cor no DssTabs) */}
-            <BrandPicker
-              brands={DSS_BRAND_COLORS}
-              selectedBrand={selectedBrand}
-              onSelect={handleBrandChange}
-            />
-
             {/* Layout toggles */}
             <ToggleGroup
               label="Layout"
               options={layoutToggles}
+              values={booleanStates}
+              onToggle={toggleBooleanState}
+            />
+
+            {/* States */}
+            <ToggleGroup
+              label="Estados"
+              options={stateToggles}
               values={booleanStates}
               onToggle={toggleBooleanState}
             />
