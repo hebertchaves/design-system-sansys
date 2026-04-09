@@ -28,10 +28,15 @@ import {
   DssPlayground,
   ControlGrid,
   ControlSection,
+  ColorPicker,
+  FeedbackColorPicker,
   BrandPicker,
   SizeSelector,
   ToggleGroup,
+  DSS_SEMANTIC_COLORS,
+  DSS_FEEDBACK_COLORS,
   DSS_BRAND_COLORS,
+  type FeedbackColor,
 } from "@/components/ui/playground";
 import { PlaygroundButton } from "@/components/ui/PlaygroundButton";
 
