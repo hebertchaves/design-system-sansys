@@ -31,7 +31,7 @@ O componente deve ser um wrapper direto do `<q-tab-panel>`. Como é um component
 
 ## 4. Governança de Tokens e CSS
 
-- **Espaçamento:** O padding interno deve ser governado por tokens do DSS (ex: `--dss-spacing-4`).
+- **Espaçamento:** O padding interno deve ser governado por tokens do DSS. O token adotado na implementação foi `--dss-spacing-6` (24px), e não `--dss-spacing-4` (16px) como sugerido inicialmente. Justificativa: 24px proporciona espaçamento mais generoso e adequado para conteúdo de painéis de abas, seguindo o padrão visual do `DssCard` (Golden Reference). Esta decisão deve ser mantida em revisões futuras.
 - **Background:** O background deve ser transparente por padrão (`--dss-surface-transparent`), herdando a cor do container pai (`DssTabPanels` ou `DssCard`), a menos que haja uma variante específica.
 - **Tipografia:** Deve herdar a tipografia base do DSS (`--dss-text-body`).
 
