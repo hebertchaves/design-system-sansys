@@ -740,17 +740,19 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 
 ## 4.6 Superfícies e Textos de Componentes
 
-Tokens de superfície e texto usados por componentes de formulário interativos (DssSlider, DssRange e similares). Presentes em `DSS/src/index.css`.
+Tokens de superfície e texto usados por componentes de formulário interativos e de navegação estrutural. Presentes em `DSS/src/index.css` (light mode: linhas 231–232; dark mode: linhas 603–604).
 
-**Total: 5 tokens**
+**Total: 7 tokens**
 
-| Token | Uso |
-|-------|-----|
-| `--dss-surface-muted` | Fundo do track inativo (trilha não selecionada) |
-| `--dss-surface-disabled` | Fundo de superfícies no estado desabilitado |
-| `--dss-text-hint` | Cor do texto de hint / dica abaixo de controles |
-| `--dss-text-inverse` | Cor de texto sobre fundos escuros (ex.: label tooltip do slider) |
-| `--dss-text-secondary` | Cor de texto secundário (menor ênfase visual) |
+| Token | Valor (light) | Uso |
+|-------|---------------|-----|
+| `--dss-surface-muted` | — | Fundo do track inativo (trilha não selecionada) |
+| `--dss-surface-disabled` | — | Fundo de superfícies no estado desabilitado |
+| `--dss-text-hint` | — | Cor do texto de hint / dica abaixo de controles |
+| `--dss-text-inverse` | — | Cor de texto sobre fundos escuros (ex.: label tooltip do slider) |
+| `--dss-text-secondary` | — | Cor de texto secundário (menor ênfase visual) |
+| `--dss-text-body` | `var(--dss-dark)` | Texto principal — corpo e itens atuais de navegação (ex.: breadcrumb ativo, item selecionado) |
+| `--dss-text-subtle` | `var(--dss-dark-light)` | Texto secundário — links de navegação, labels de menor ênfase visual. Suporta dark mode via cascata. |
 
 ---
 

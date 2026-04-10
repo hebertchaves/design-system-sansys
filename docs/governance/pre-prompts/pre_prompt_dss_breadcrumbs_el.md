@@ -111,8 +111,10 @@ O `DssBreadcrumbsEl` é um elemento de navegação estrutural.
 
 ## 8. EXCEÇÕES PREVISTAS
 
-### EXC-01: Dualidade de Renderização (Link vs. Span)
-- **Justificativa:** O `QBreadcrumbsEl` renderiza `<a>` ou `<span>` dependendo das props. O DSS precisa aplicar estilos distintos para cada caso via seletores CSS (`.dss-breadcrumbs-el a` e `.dss-breadcrumbs-el span`). Isso é uma exceção válida ao Gate de Composição v2.4 (Regra 1) — o seletor descendente é necessário porque o elemento renderizado é interno ao Quasar.
+### EXC-01: Seletor Composto com Classe Quasar Interna (Level 1 DOM Pattern)
+- **Justificativa:** O `QBreadcrumbsEl` aplica a classe `.q-breadcrumbs__el` no elemento raiz renderizado. O DSS usa o seletor composto `.dss-breadcrumbs-el.q-breadcrumbs__el` para aplicar estilos com especificidade adequada sem recorrer a seletores descendentes. Esta é uma exceção formal ao Gate de Composição v2.4 (Regra 1) — o seletor referencia uma classe interna do Quasar, mas o padrão segue o **Level 1 DOM pattern** consolidado na Fase 2 (precedentes: DssTabPanel EXC-01, DssTabPanels EXC-01).
+
+> **Nota de Governança (GAP-04 — corrigido em 2026-04-10):** O pré-prompt original descrevia seletores descendentes (`.dss-breadcrumbs-el a` e `.dss-breadcrumbs-el span`). A implementação adotou corretamente o seletor composto `.dss-breadcrumbs-el.q-breadcrumbs__el` — decisão arquitetural superior que elimina a necessidade de descendant selectors.
 
 ### EXC-02: `text-decoration` Hardcoded
 - **Justificativa:** O `text-decoration: underline` no estado hover é um padrão de UX amplamente aceito para links em contexto de navegação estrutural (WCAG 2.1 Success Criterion 1.4.1). Não existe token DSS para `text-decoration` — esta é uma exceção formal.
