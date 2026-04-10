@@ -78,6 +78,7 @@ const navigation = {
       { title: "DssBtnGroup", url: "/componentes/dss-btn-group", icon: LayoutGrid, status: "stable" },
       { title: "DssBtnDropdown", url: "/componentes/dss-btn-dropdown", icon: ChevronDown, status: "stable" },
       { title: "DssTabs", url: "/componentes/dss-tabs", icon: Layers, status: "stable" },
+      { title: "DssBreadcrumbsEl", url: "/componentes/dss-breadcrumbs-el", icon: Navigation, status: "stable" },
     ],
   },
   padroes: {
