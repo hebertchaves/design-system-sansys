@@ -1,0 +1,11 @@
+// ==========================================================================
+// DssTabPanels — Orchestrador Principal (L2 → L3 → L4)
+// ==========================================================================
+// Este arquivo é importado via @import em 1-structure/DssTabPanels.ts.vue
+// no bloco <style scoped>.
+//
+// Ordem obrigatória DSS: Composition → Variants → Output
+// ==========================================================================
+@use './2-composition/base' as dss-tab-panels-composition;
+@use './3-variants/index' as dss-tab-panels-variants;
+@use './4-output/index' as dss-tab-panels-output;

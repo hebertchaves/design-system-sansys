@@ -1,0 +1,92 @@
+{
+  "component": "DssTabPanels",
+  "dssVersion": "2.2",
+  "status": "conforme",
+  "seal": "DSS/docs/Compliance/seals/DssTabPanels/DSSTABPANELS_SELO_v2.2.md",
+  "sealDate": "2026-04-09",
+  "auditMode": "Selo DSS v2.2 Concedido",
+  "auditDate": "2026-04-09",
+  "goldenReference": "DssCard",
+  "goldenReferenceJustification": "DssCard é o Golden Reference para DssTabPanels porque ambos são containers estruturais que fornecem superfície de composição via slot. DssCard implementa background governado por tokens DSS, dark mode via cascata [data-theme], brand propagation e Gate de Composição v2.4 — todos os padrões arquiteturais aplicáveis ao DssTabPanels como container. Divergência documentada: DssTabPanels é transparente (sem background próprio), enquanto DssCard tem --dss-surface-default.",
+  "goldenContext": "DssTabs",
+  "goldenContextNote": "DssTabs é o Golden Context por ser o componente da família Tabs de maior complexidade já selado (Selo DSS v2.2, 02 Apr 2026) e por definir os padrões arquiteturais de composição e brand propagation que DssTabPanels deve seguir como container par. A relação DssTabs+DssTabPanels é estruturalmente equivalente à relação DssTabs+DssTab: um componente gerencia a navegação, o outro gerencia o conteúdo.",
+  "category": "Container de Painéis (Tab Panels Container)",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Componente Composto/Container. O DssTabPanels é o container pai dos DssTabPanel (Fase 1, Level 1). Gerencia qual DssTabPanel está ativo via v-model, coordena transições entre painéis e propaga o contexto de brand via cascata CSS. A composição dos DssTabPanel filhos é responsabilidade do consumidor (Gate de Composição v2.4).",
+  "hasReservations": true,
+  "reservations": [
+    {
+      "id": "RES-01",
+      "description": "Sem unit tests em v1.0.0. A lógica de show/hide pertence ao QTabPanels (container Quasar interno). Testes de integração com DssTab + DssTabPanel recomendados.",
+      "impact": "Baixo — DssTabPanels é container de orquestração. A lógica de switching pertence ao QTabPanels nativo."
+    },
+    {
+      "id": "RES-02",
+      "description": "Variante `flush` (sem padding nos filhos) não implementada em v1.0.0. Requer coordenação com DssTabPanel v1.1.0 (RES-03 do DssTabPanel). Casos de uso: imagens full-bleed, mapas, tabelas sem padding lateral.",
+      "impact": "Médio — Consumidores podem usar q-pa-none nos DssTabPanel filhos como workaround até v1.1.0."
+    },
+    {
+      "id": "RES-03",
+      "description": "Prop `tabindex` do QTabPanels não exposta. O padrão Quasar (-1: foco programático, não via Tab) é mantido. Se controle explícito de tabindex for necessário por acessibilidade, revisar em v1.1.0.",
+      "impact": "Baixo — O padrão tabindex=-1 é semanticamente correto para um container de painéis (navegação via DssTabs, não pelo container)."
+    }
+  ],
+  "classification": "Container orquestrador não-interativo — gerencia visibilidade dos DssTabPanel via v-model e coordena transições",
+  "subcomponents": [],
+  "compositionRequirements": ["DssTabPanel"],
+  "compositionFuture": [],
+  "compositionNote": "DssTabPanels é container pai dos DssTabPanel. Gate de Composição v2.4: o slot default aceita EXCLUSIVAMENTE componentes DssTabPanel. Uso de QTabPanel diretamente ou HTML nativo no slot viola a governança DSS.",
+  "compositionRecommendations": ["DssTabPanel"],
+  "props": {
+    "DssTabPanels": ["modelValue", "animated", "swipeable", "infinite", "keepAlive"]
+  },
+  "propsBlocked": ["dark", "transition-prev", "transition-next"],
+  "propsBlockedJustification": {
+    "dark": "DSS governa dark mode globalmente via [data-theme='dark'] no container ancestral ou via classe .dss-theme-dark. Prop dark por componente viola a governança centralizada de tema do DSS.",
+    "transition-prev": "DSS governa transições internamente. Quando animated=true, DssTabPanels define transition-prev='dss-tab-panels' para garantir fade governado por tokens DSS (--dss-duration-200, --dss-easing-standard). Expor transition-prev permitiria ao consumidor usar transições não governadas pelo DSS.",
+    "transition-next": "Mesmo motivo de transition-prev. DSS governa transition-next='dss-tab-panels' internamente para fade direction-agnostic. Fade idêntico para prev e next: sem motion direcional (evita desconforto vestibular, funciona em RTL)."
+  },
+  "statesApplicable": ["default"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssTabPanels é container orquestrador não-interativo. Gate de Responsabilidade v2.4: hover/focus/active pertencem exclusivamente aos componentes filhos (DssTab para navegação, DssTabPanel filhos para conteúdo). disabled: DssTabPanels não é desabilitável — desabilitar painéis individuais é responsabilidade do DssTabPanel (prop disable). loading/error/indeterminate: pertencem ao conteúdo dos filhos.",
+  "touchTarget": "Opção B — Não implementado. DssTabPanels é container não-interativo (mesmo padrão do DssCard e DssTabPanel). Touch target (::before WCAG 2.5.5) pertence exclusivamente aos filhos interativos (DssTab para navegação, controles dentro dos DssTabPanel para conteúdo).",
+  "ariaRole": "Nenhum role específico. QTabPanels não aplica role ao container (role='tabpanel' é aplicado pelos QTabPanel filhos, encapsulados pelos DssTabPanel).",
+  "accessibility": {
+    "role": "Nenhum (nativo QTabPanels — sem role no container)",
+    "wcagLevel": "2.1 AA",
+    "keyboardNavigation": "Gerenciado pelo DssTabs (setas ←/→ para trocar aba ativa). DssTabPanels reage à mudança de modelValue — sem interação direta por teclado no container.",
+    "ariaManagement": "aria-labelledby e role='tabpanel' gerenciados pelos DssTabPanel filhos (via QTabPanel + QTabPanels internos do Quasar)."
+  },
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "value": "transparent",
+      "location": "2-composition/_base.scss",
+      "justification": "Keyword CSS semântica para background. Token --dss-surface-transparent não existe no catálogo DSS. DssTabPanels é container pass-through: herda background do container pai (DssCard, layout de página). Override necessário para prevenir herança do tema Material Quasar via .body--dark .q-tab-panels (que DSS não utiliza — DSS governa via [data-theme='dark'])."
+    },
+    {
+      "id": "EXC-02",
+      "value": "1px solid ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode. System color keywords obrigatórios — tokens CSS são ignorados pelo navegador em forced-colors. Padrão canônico DSS. Precedente: DssTabPanel EXC-02, DssCard EXC-04."
+    }
+  ],
+  "gateExceptions": {
+    "compositionGateV24": {
+      "templateStructure": {
+        "location": "1-structure/DssTabPanels.ts.vue",
+        "justification": "DssTabPanels usa <q-tab-panels> como elemento raiz (Level 1 DOM pattern). O QTabPanels é a infraestrutura de state management que gerencia visibilidade dos painéis via provide/inject com os QTabPanel filhos — funcionalidade que não pode ser reimplementada sem o componente Quasar. Precedente: DssTabs templateStructure (mesmo padrão, família Tabs)."
+      },
+      "styleBlock": {
+        "location": "1-structure/DssTabPanels.ts.vue — segundo bloco <style>",
+        "justification": "Bloco <style> sem scoped obrigatório para classes Vue transition (.dss-tab-panels-enter-active, etc.) que são aplicadas pelo Vue runtime nos filhos do slot — fora do escopo data-v-xxx do root."
+      }
+    }
+  },
+  "tokensUsed": [
+    "--dss-border-width-thin",
+    "--dss-duration-200",
+    "--dss-duration-0",
+    "--dss-easing-standard"
+  ]
+}

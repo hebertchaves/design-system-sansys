@@ -3,18 +3,18 @@
  * DssTabPanel — Exemplos de Uso
  *
  * Cenários cobertos:
- * 1. Básico: painel simples com texto dentro de DssTabPanels
+ * 1. Básico: painel simples com texto dentro de DssTabPanels (v1.0.0 — RES-01 resolvida)
  * 2. Conteúdo Rico: painel contendo DssCard com seções
- * 3. Múltiplos Painéis: uso completo com DssTabs + DssTab + DssTabPanels
+ * 3. Múltiplos Painéis: uso completo com DssTabs + DssTab + DssTabPanels + brand
  *
- * ⚠️ Isenção DSS (Política DssSpace — DSS_IMPLEMENTATION_GUIDE.md):
- * Arquivos .example.vue são isentos de Token First e Gate de Composição
- * para scaffolding de contexto. Componentes Quasar nativos podem ser
- * usados excepcionalmente quando o componente DSS equivalente ainda
- * não existe (ex: DssTabPanels ainda não implementado).
+ * Atualizado em 2026-04-09 para usar DssTabPanels (agora implementado).
+ * Resolve RES-01 do DssTabPanel: exemplos atualizados de QTabPanels para DssTabPanels.
  */
 import { ref } from 'vue'
+import DssTab from '../DssTab/DssTab.vue'
+import DssTabs from '../DssTabs/DssTabs.vue'
 import DssTabPanel from './DssTabPanel.vue'
+import DssTabPanels from '../DssTabPanels/DssTabPanels.vue'
 
 // ==========================================================================
 // CENÁRIO 1 — Básico
@@ -29,7 +29,7 @@ const tabBasico = ref('descricao')
 const tabRico = ref('produto')
 
 // ==========================================================================
-// CENÁRIO 3 — Múltiplos Painéis com navegação completa
+// CENÁRIO 3 — Múltiplos Painéis com Brand
 // ==========================================================================
 
 const tabCompleto = ref('perfil')
@@ -46,12 +46,12 @@ const tabCompleto = ref('perfil')
     <section>
       <p style="font-weight: 600; margin-bottom: 16px;">Cenário 1: Básico</p>
 
-      <q-tabs v-model="tabBasico" align="left">
-        <q-tab name="descricao" label="Descrição" />
-        <q-tab name="detalhes" label="Detalhes" />
-      </q-tabs>
+      <DssTabs v-model="tabBasico" align="left">
+        <DssTab name="descricao" label="Descrição" />
+        <DssTab name="detalhes" label="Detalhes" />
+      </DssTabs>
 
-      <q-tab-panels v-model="tabBasico" animated>
+      <DssTabPanels v-model="tabBasico">
         <DssTabPanel name="descricao">
           <p>Este é o painel de Descrição. O DssTabPanel fornece espaçamento
           governado por tokens DSS e é um container não-interativo — os
@@ -63,7 +63,7 @@ const tabCompleto = ref('perfil')
           <code>var(--dss-spacing-6)</code> em vez do valor nativo do
           QTabPanel, garantindo alinhamento com o sistema de espaçamento DSS.</p>
         </DssTabPanel>
-      </q-tab-panels>
+      </DssTabPanels>
     </section>
 
     <!-- ======================================================================
@@ -75,13 +75,13 @@ const tabCompleto = ref('perfil')
     <section>
       <p style="font-weight: 600; margin-bottom: 16px;">Cenário 2: Conteúdo Rico (com DssCard)</p>
 
-      <q-tabs v-model="tabRico" align="left">
-        <q-tab name="produto" label="Produto" />
-        <q-tab name="especificacoes" label="Especificações" />
-        <q-tab name="avaliacoes" label="Avaliações" />
-      </q-tabs>
+      <DssTabs v-model="tabRico" align="left">
+        <DssTab name="produto" label="Produto" />
+        <DssTab name="especificacoes" label="Especificações" />
+        <DssTab name="avaliacoes" label="Avaliações" />
+      </DssTabs>
 
-      <q-tab-panels v-model="tabRico" animated>
+      <DssTabPanels v-model="tabRico" animated>
         <DssTabPanel name="produto">
           <q-card class="dss-card" flat bordered>
             <q-card-section class="dss-card-section">
@@ -120,7 +120,7 @@ const tabCompleto = ref('perfil')
             Nenhuma avaliação disponível ainda. Seja o primeiro a avaliar!
           </p>
         </DssTabPanel>
-      </q-tab-panels>
+      </DssTabPanels>
     </section>
 
     <!-- ======================================================================
@@ -132,13 +132,13 @@ const tabCompleto = ref('perfil')
       <p style="font-weight: 600; margin-bottom: 16px;">Cenário 3: Com propagação de marca (Hub)</p>
 
       <div data-brand="hub">
-        <q-tabs v-model="tabCompleto" align="left">
-          <q-tab name="perfil" label="Perfil" />
-          <q-tab name="seguranca" label="Segurança" />
-          <q-tab name="notificacoes" label="Notificações" />
-        </q-tabs>
+        <DssTabs v-model="tabCompleto" align="left">
+          <DssTab name="perfil" label="Perfil" />
+          <DssTab name="seguranca" label="Segurança" />
+          <DssTab name="notificacoes" label="Notificações" />
+        </DssTabs>
 
-        <q-tab-panels v-model="tabCompleto" animated>
+        <DssTabPanels v-model="tabCompleto">
           <DssTabPanel name="perfil">
             <p>Configurações de perfil do usuário. A borda esquerda laranja
             indica o acento de marca Hub, propagado via <code>[data-brand]</code>
@@ -153,7 +153,7 @@ const tabCompleto = ref('perfil')
           <DssTabPanel name="notificacoes">
             <p>Preferências de notificações por e-mail, SMS e push.</p>
           </DssTabPanel>
-        </q-tab-panels>
+        </DssTabPanels>
       </div>
     </section>
 

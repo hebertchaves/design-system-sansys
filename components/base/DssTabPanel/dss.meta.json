@@ -17,8 +17,8 @@
   "reservations": [
     {
       "id": "RES-01",
-      "description": "DssTabPanels (container pai) ainda não implementado. DssTabPanel usa QTabPanels via exemplo. Quando DssTabPanels for implementado, os exemplos devem ser atualizados.",
-      "impact": "Baixo — DssTabPanel funciona corretamente com QTabPanels. A atualização dos exemplos é cosmética."
+      "description": "DssTabPanels (container pai) implementado em v1.0.0 (2026-04-09). Os exemplos do DssTabPanel devem ser atualizados para usar DssTabPanels em vez de QTabPanels.",
+      "impact": "Baixo — DssTabPanel funciona corretamente com DssTabPanels. A atualização dos exemplos é cosmética e pode ser feita em próxima versão."
     },
     {
       "id": "RES-02",

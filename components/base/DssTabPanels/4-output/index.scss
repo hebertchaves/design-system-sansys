@@ -1,0 +1,4 @@
+// DssTabPanels — Layer 4 Orchestrator
+// Importa states e brands na ordem canônica DSS (states antes de brands).
+@use './states' as dss-tab-panels-states;
+@use './brands' as dss-tab-panels-brands;
