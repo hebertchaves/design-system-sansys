@@ -1,5 +1,4 @@
 import { Search, Sun, Moon } from "lucide-react";
-import { Search, Sun, Moon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -47,24 +46,6 @@ export function DSSHeader() {
       />
 
       <div className="flex items-center gap-3 relative z-10">
-        {/* Sidebar trigger with enhanced hover */}
-        <SidebarTrigger 
-          className={cn(
-            "transition-all duration-200 ease-out rounded-md p-2",
-            "hover:bg-white/10 hover:scale-105 active:scale-95"
-          )}
-          style={{ color: 'var(--dss-header-text)' }} 
-        />
-
-        {/* Animated separator */}
-        <div 
-          className="h-5 w-px transition-all duration-300"
-          style={{ 
-            backgroundColor: 'var(--dss-header-border)',
-            opacity: isLogoHovered ? 0.3 : 0.6,
-          }} 
-        />
-        
         {/* Logo/Brand - Jtech Style with micro-interactions */}
         <div 
           className="flex items-center gap-2.5 group cursor-pointer"
