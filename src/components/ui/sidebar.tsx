@@ -171,9 +171,9 @@ const Sidebar = React.forwardRef<
   }
 
   return (
-    <div
-      ref={ref}
-      className="group peer relative hidden shrink-0 text-sidebar-foreground md:flex"
+      <div
+        ref={ref}
+        className="group peer relative hidden shrink-0 self-stretch text-sidebar-foreground md:flex"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
@@ -181,7 +181,7 @@ const Sidebar = React.forwardRef<
     >
       <div
         className={cn(
-          "relative h-svh shrink-0 overflow-hidden transition-[width] duration-200 ease-linear",
+          "relative shrink-0 self-stretch overflow-hidden transition-[width] duration-200 ease-linear",
           "w-[var(--sidebar-width)]",
           "group-data-[collapsible=offcanvas]:w-0",
           side === "right" && "order-last",

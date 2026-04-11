@@ -11,6 +11,7 @@ import {
   SidebarMenuItem,
   SidebarHeader,
   SidebarFooter,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import {
@@ -66,20 +67,20 @@ const navigation = {
   componentes: {
     label: "Componentes",
     items: [
+      { title: "DssAvatar", url: "/componentes/dss-avatar", icon: User, status: "stable" },
+      { title: "DssBadge", url: "/componentes/dss-badge", icon: Badge, status: "stable" },
+      { title: "DssBreadcrumbsEl", url: "/componentes/dss-breadcrumbs-el", icon: Navigation, status: "stable" },
+      { title: "DssBtnDropdown", url: "/componentes/dss-btn-dropdown", icon: ChevronDown, status: "stable" },
+      { title: "DssBtnGroup", url: "/componentes/dss-btn-group", icon: LayoutGrid, status: "stable" },
       { title: "DssButton", url: "/componentes/dss-button", icon: RectangleHorizontal, status: "golden" },
       { title: "DssCard", url: "/componentes/dss-card", icon: CreditCard, status: "stable" },
-      { title: "DssInput", url: "/componentes/dss-input", icon: Square, status: "stable" },
-      { title: "DssBadge", url: "/componentes/dss-badge", icon: Badge, status: "stable" },
-      { title: "DssChip", url: "/componentes/dss-chip", icon: Tag, status: "golden" },
       { title: "DssCheckbox", url: "/componentes/dss-checkbox", icon: CheckSquareIcon, status: "stable" },
-      { title: "DssToggle", url: "/componentes/dss-toggle", icon: Circle, status: "stable" },
-      { title: "DssAvatar", url: "/componentes/dss-avatar", icon: User, status: "stable" },
-      { title: "DssTooltip", url: "/componentes/dss-tooltip", icon: MessageSquare, status: "stable" },
+      { title: "DssChip", url: "/componentes/dss-chip", icon: Tag, status: "golden" },
+      { title: "DssInput", url: "/componentes/dss-input", icon: Square, status: "stable" },
       { title: "DssRange", url: "/componentes/dss-range", icon: SlidersHorizontal, status: "stable" },
-      { title: "DssBtnGroup", url: "/componentes/dss-btn-group", icon: LayoutGrid, status: "stable" },
-      { title: "DssBtnDropdown", url: "/componentes/dss-btn-dropdown", icon: ChevronDown, status: "stable" },
       { title: "DssTabs", url: "/componentes/dss-tabs", icon: Layers, status: "stable" },
-      { title: "DssBreadcrumbsEl", url: "/componentes/dss-breadcrumbs-el", icon: Navigation, status: "stable" },
+      { title: "DssToggle", url: "/componentes/dss-toggle", icon: Circle, status: "stable" },
+      { title: "DssTooltip", url: "/componentes/dss-tooltip", icon: MessageSquare, status: "stable" },
     ],
   },
   padroes: {
@@ -157,55 +158,54 @@ export function DSSSidebar() {
       className="border-r"
       style={{ 
         borderColor: 'hsl(var(--sidebar-border))',
-        backgroundColor: 'hsl(var(--sidebar-background))'
+        backgroundColor: 'hsl(var(--sidebar-background))',
+        height: '100%',
       }}
     >
-      {/* Header com hover effect */}
+      {/* Header com trigger de expandir/retrair */}
       <SidebarHeader 
-        className={cn("border-b transition-all duration-200", collapsed ? "p-3" : "p-4")} 
-        style={{ borderColor: 'hsl(var(--sidebar-border))' }}
+        className={cn("border-b transition-all duration-200", collapsed ? "p-2" : "p-4")} 
+        style={{ 
+          borderColor: 'hsl(var(--sidebar-border))',
+          ...(collapsed ? { width: 'var(--sidebar-width-icon)', overflow: 'visible' } : {}),
+        }}
       >
-        <Link 
-          to="/" 
-          className={cn("flex items-center group", collapsed ? "justify-center" : "gap-3")}
-        >
-          <div 
-            className="h-9 w-9 rounded-lg flex items-center justify-center shadow-sm 
-                       transition-all duration-300 ease-out
-                       group-hover:shadow-lg group-hover:scale-105"
-            style={{ 
-              background: 'linear-gradient(135deg, var(--dss-jtech-accent), var(--dss-jtech-accent-hover))',
-              boxShadow: '0 2px 8px rgba(196, 30, 58, 0.3)'
-            }}
-          >
-            <span className="text-white font-bold text-sm transition-transform duration-200 group-hover:scale-110">
-              JT
-            </span>
-          </div>
+        <div className={cn(
+          "flex items-center",
+          collapsed ? "justify-center w-full" : "justify-between"
+        )}>
           {!collapsed && (
-            <div className="flex flex-col overflow-hidden">
+            <div className="flex flex-col overflow-hidden min-w-0 flex-1">
               <span 
-                className="font-semibold text-sm transition-colors duration-200 group-hover:text-white" 
+                className="font-semibold text-sm" 
                 style={{ color: 'hsl(var(--sidebar-foreground))' }}
               >
                 DSS
               </span>
               <span 
-                className="text-xs transition-colors duration-200" 
+                className="text-xs" 
                 style={{ color: 'hsl(var(--sidebar-muted))' }}
               >
                 Design System Sansys
               </span>
             </div>
           )}
-        </Link>
+          <SidebarTrigger 
+            className={cn(
+              "transition-all duration-200 ease-out rounded-md shrink-0",
+              collapsed ? "h-8 w-8" : "h-7 w-7",
+              "hover:bg-white/10 hover:scale-105 active:scale-95"
+            )}
+            style={{ color: 'hsl(var(--sidebar-foreground))' }} 
+          />
+        </div>
       </SidebarHeader>
 
       <SidebarContent className="sidebar-scroll px-2 py-3">
         {Object.entries(navigation).map(([key, section], sectionIndex) => (
           <SidebarGroup 
             key={key} 
-            className="mb-1"
+            className={cn("mb-1", collapsed && "p-0")}
             style={{ 
               animationDelay: `${sectionIndex * 50}ms`,
             }}
@@ -256,9 +256,8 @@ export function DSSSidebar() {
                           <Link
                             to={item.url}
                             className={cn(
-                              "relative flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg mx-1",
-                              "transition-all duration-200 ease-out",
-                              "group/item"
+                              "relative flex items-center text-sm rounded-lg transition-all duration-200 ease-out group/item",
+                              collapsed ? "justify-center" : "gap-3 px-3 py-2.5 mx-1"
                             )}
                             style={{
                               backgroundColor: active 
@@ -270,7 +269,7 @@ export function DSSSidebar() {
                                 ? 'var(--dss-jtech-accent-light)' 
                                 : 'hsl(var(--sidebar-foreground))',
                               fontWeight: active ? 500 : 400,
-                              transform: hovered && !active ? 'translateX(4px)' : 'translateX(0)',
+                              transform: hovered && !active && !collapsed ? 'translateX(4px)' : 'translateX(0)',
                             }}
                             onMouseEnter={() => setHoveredItem(item.url)}
                             onMouseLeave={() => setHoveredItem(null)}
