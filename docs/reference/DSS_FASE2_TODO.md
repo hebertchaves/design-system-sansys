@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** Março 2026
+> **Última Atualização:** Abril 2026
 > **Legenda:** ✅ Selado · 🔄 Em andamento · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -110,7 +110,7 @@
 
 ### Família: Navegação
 
-- [ ] `DssBreadcrumbs` 🔒 *(aguarda DssBreadcrumbsEl)*
+- [x] ~~`DssBreadcrumbs`~~ ✅ **SELADO**
 - [ ] `DssStepper` 🔒 *(aguarda DssStep)*
 - [ ] `DssMenu` 🔒 *(aguarda DssList, DssItem)*
 - [ ] `DssBottomSheet` 🔒 *(aguarda DssList, DssItem)*
@@ -204,8 +204,8 @@
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
 | Fase 2 — Nível 1 | 36 | 4 | 11% |
-| Fase 2 — Nível 2 | 16 | 0 | 0% |
+| Fase 2 — Nível 2 | 16 | 1 | 6% |
 | Fase 2 — Nível 3 | 7 | 0 | 0% |
 | Fase 2 — Nível 4 | 7 | 0 | 0% |
-| **Fase 2 Total** | **66** | **4** | **6%** |
+| **Fase 2 Total** | **66** | **5** | **8%** |
 | Fase 3 | 6 | N/A | — |

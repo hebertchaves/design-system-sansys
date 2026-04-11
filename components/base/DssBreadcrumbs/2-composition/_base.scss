@@ -1,0 +1,59 @@
+@use '../../../../utils/mixins' as dss;
+
+// =============================================================================
+// Layer 2 — Composição Base: DssBreadcrumbs
+//
+// Responsabilidades:
+//   - Layout do container (flexbox com align-items: center)
+//   - Gap entre itens via CSS custom property --dss-breadcrumbs-gap (EXC-02)
+//   - Tipografia e cor dos separadores injetados pelo QBreadcrumbs (EXC-01)
+//
+// EXC-01: Seletor descendente .dss-breadcrumbs .q-breadcrumbs__separator
+//   Necessário para aplicar tokens DSS aos separadores injetados pelo QBreadcrumbs.
+//   O QBreadcrumbs cria elementos DOM com .q-breadcrumbs__separator que não
+//   podem ser acessados via slot default ou seletores de classe DSS isolados.
+//   Precedente: DssBtnGroup (seletores .dss-btn-group > .dss-button).
+//
+// EXC-02: Seletor composto .dss-breadcrumbs.q-breadcrumbs
+//   Necessário para sobrescrever com especificidade suficiente as propriedades
+//   de layout internas do QBreadcrumbs sem usar !important.
+//   Precedente: DssBreadcrumbsEl EXC-01 (.dss-breadcrumbs-el.q-breadcrumbs__el).
+// =============================================================================
+
+// EXC-02: Override de layout do QBreadcrumbs com especificidade controlada
+.dss-breadcrumbs.q-breadcrumbs {
+  // Gap governado pela CSS custom property injetada via style binding no template.
+  // O valor padrão garante que o componente funcione mesmo sem style binding.
+  // Quasar default gutter (gutter="none") não aplica margem — gap é o único controle.
+  gap: var(--dss-breadcrumbs-gap, var(--dss-spacing-3));
+
+  // Garantia de alinhamento vertical entre itens e separadores
+  align-items: center;
+
+  // Remove tap highlight em mobile
+  -webkit-tap-highlight-color: transparent;
+}
+
+// EXC-01: Estilização dos separadores injetados pelo QBreadcrumbs
+// O QBreadcrumbs injeta .q-breadcrumbs__separator entre cada DssBreadcrumbsEl.
+// O aria-hidden="true" é aplicado nativamente pelo QBreadcrumbs nesses separadores.
+.dss-breadcrumbs .q-breadcrumbs__separator {
+  // Cor via CSS custom property — sobrescrita por brands em Layer 4
+  color: var(--dss-breadcrumbs-separator-color, var(--dss-text-subtle));
+
+  // Tipografia dos separadores
+  // Nota: O pré-prompt especificou --dss-line-height-md, mas esse token não existe
+  // no catálogo DSS (DSS_TOKEN_REFERENCE.md). Uso --dss-line-height-sm, que é o
+  // par canônico de --dss-font-size-sm. Divergência documentada aqui e em dss.meta.json.
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-sm);
+
+  // Alinhamento vertical do separador com os itens adjacentes
+  display: inline-flex;
+  align-items: center;
+
+  // Garantia semântica: separadores são decorativos
+  // (aria-hidden="true" já aplicado pelo QBreadcrumbs nativamente)
+  pointer-events: none;
+  user-select: none;
+}

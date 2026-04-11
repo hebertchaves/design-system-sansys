@@ -1,0 +1,136 @@
+{
+  "component": "DssBreadcrumbs",
+  "dssVersion": "2.2",
+  "status": "conforme",
+  "auditMode": "Selo DSS v2.2 Concedido",
+  "auditDate": "2026-04-11",
+  "seal": "DSS-SEAL-v2.2-DssBreadcrumbs-2026-04-11",
+  "sealDate": "2026-04-11",
+  "sealCycle": "Ciclo 1 (1 re-auditoria)",
+  "goldenReference": "DssBtnGroup",
+  "goldenReferenceJustification": "DssBtnGroup é o Golden Reference para DssBreadcrumbs por ser o componente composto de Fase 2 mais próximo estruturalmente: ambos são containers de agrupamento horizontal que orquestram filhos DSS sem gerenciar estados interativos próprios (Gate de Responsabilidade v2.4). DssBtnGroup implementa os padrões de seletores descendentes para estilizar filhos via CSS global (sem ::v-deep), padrão `gutter=\"none\"` via CSS custom properties, e brandabilidade via `[data-brand]` — todos aplicados ao DssBreadcrumbs.",
+  "goldenContext": "DssCard",
+  "goldenContextNote": "DssCard é o Golden Context por ser o componente estrutural de superfície mais comum que contém DssBreadcrumbs no topo de layouts de página. Ambos são containers de Fase 2 que gerenciam espaçamento interno e orquestram filhos DSS sem propagar estilos automaticamente.",
+  "category": "Container Orquestrador de Navegação (Breadcrumb Trail)",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Componente Composto de Primeiro Grau. O DssBreadcrumbs é um container orquestrador que gerencia o layout (flexbox, gap), a renderização de separadores e o contexto semântico de navegação (<nav role='navigation'>). Ele coordena instâncias de DssBreadcrumbsEl (Nível 1, selado) sem gerenciar estados interativos — esses pertencem exclusivamente aos filhos.",
+  "hasReservations": true,
+  "reservations": [
+    {
+      "id": "RES-01",
+      "description": "O QBreadcrumbs usa gutter='none' + CSS custom property para controle de gap. Se o Quasar atualizar a implementação interna de gutter (ex: mudar de margin para gap nativo), o override via CSS custom property pode conflitar. Monitorar atualizações do Quasar.",
+      "impact": "Baixo — override com seletor EXC-02 (.dss-breadcrumbs.q-breadcrumbs) tem especificidade suficiente"
+    },
+    {
+      "id": "RES-02",
+      "description": "O DssBreadcrumbs não injeta automaticamente aria-current='page' no último DssBreadcrumbsEl. É responsabilidade do consumidor declarar explicitamente aria-current='page' no último item. Considerar prop auxiliar em v2.0.0.",
+      "impact": "Baixo — documentado com exemplo no DssBreadcrumbs.md e exemplo.vue"
+    },
+    {
+      "id": "RES-03",
+      "description": "Sem unit tests em v1.0.0.",
+      "impact": "Baixo — lógica mínima (composable de classes, CSS custom properties)"
+    },
+    {
+      "id": "RES-04",
+      "description": "O separatorColor aceita qualquer string via var(--dss-text-{value}), sem validação em runtime. Valores inválidos resultam em CSS custom property indefinida (fallback: --dss-text-subtle). Adicionar validação em v1.1.0.",
+      "impact": "Baixo — fallback garante visual correto"
+    }
+  ],
+  "classification": "Container orquestrador de trilha de navegação — gerencia layout, gap e separadores para DssBreadcrumbsEl filhos",
+  "subcomponents": [],
+  "compositionRequirements": ["DssBreadcrumbsEl"],
+  "compositionOptional": [],
+  "compositionFuture": [],
+  "compositionNote": "DssBreadcrumbs é container de layout e semântica de navegação. Aceita apenas DssBreadcrumbsEl como filhos diretos via slot default. O uso de HTML nativo ou outros componentes DSS dentro do slot viola o Gate de Composição v2.4. A composição de DssIcon é indireta — gerenciada pelo DssBreadcrumbsEl filho via prop `icon`.",
+  "compositionRecommendations": ["DssBreadcrumbsEl"],
+  "props": {
+    "DssBreadcrumbs": [
+      "separator",
+      "separatorColor",
+      "gutter",
+      "align",
+      "brand"
+    ]
+  },
+  "propsBlocked": ["active-color", "separator-class", "gutter-color"],
+  "propsBlockedJustification": {
+    "active-color": "A cor do item ativo (item atual na trilha) é governada exclusivamente pelo DssBreadcrumbsEl filho via tokens --dss-text-body e --dss-font-weight-semibold. O DssBreadcrumbs não deve sobrescrever estados dos filhos (Gate de Responsabilidade v2.4).",
+    "separator-class": "As classes do separador são governadas pelo CSS DSS via seletor EXC-01 (.dss-breadcrumbs .q-breadcrumbs__separator). Permitir separator-class violaria a governança de tokenização DSS.",
+    "gutter-color": "Prop inexistente no QBreadcrumbs. Mencionada no pré-prompt como 'separator-color' — mapeada corretamente para 'separatorColor' (DSS camelCase)."
+  },
+  "statesApplicable": ["default"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssBreadcrumbs é container estrutural. Todos os estados interativos (hover, focus, active, disabled) pertencem exclusivamente aos DssBreadcrumbsEl filhos. loading: pertence às páginas de destino dos links. error: pertence ao roteamento/network. indeterminate: não aplicável a trilhas de navegação.",
+  "touchTarget": "Opção B — Não implementado. DssBreadcrumbs não é Compact Control. Touch target (::before WCAG 2.5.5) é responsabilidade exclusiva de cada DssBreadcrumbsEl filho.",
+  "ariaRole": "navigation (role='navigation' gerenciado nativamente pelo QBreadcrumbs via <nav>)",
+  "ariaLabel": "Injetado pelo consumidor via $attrs (v-bind='$attrs' no <q-breadcrumbs>). Valor padrão do QBreadcrumbs: 'Breadcrumbs'.",
+  "accessibility": {
+    "role": "navigation (nativo via QBreadcrumbs → <nav>)",
+    "wcagLevel": "2.1 AA",
+    "ariaCurrent": "Responsabilidade do consumidor — declarar aria-current='page' no último DssBreadcrumbsEl",
+    "ariaSeparators": "aria-hidden='true' aplicado nativamente pelo QBreadcrumbs nos separadores injetados",
+    "keyboardNavigation": "Herança dos DssBreadcrumbsEl filhos (Tab, Enter). O container em si não é focusável."
+  },
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "value": "Seletor descendente .dss-breadcrumbs .q-breadcrumbs__separator",
+      "location": "2-composition/_base.scss e 4-output/_brands.scss e 4-output/_states.scss",
+      "justification": "O QBreadcrumbs injeta elementos DOM com a classe .q-breadcrumbs__separator entre os filhos. Para aplicar tipografia e cor DSS a esses separadores, é estritamente necessário usar seletor descendente. Esta é a única forma de governar o visual dos separadores sem modificar o QBreadcrumbs. Exceção registrada no pré-prompt oficial do componente. Precedente: DssBtnGroup (_base.scss, seletores .dss-btn-group > .dss-button)."
+    },
+    {
+      "id": "EXC-02",
+      "value": "Seletor composto .dss-breadcrumbs.q-breadcrumbs",
+      "location": "2-composition/_base.scss",
+      "justification": "Seletor composto necessário para sobrescrever com especificidade suficiente as propriedades de layout internas do QBreadcrumbs (align-items, gap) sem usar !important. Precedente: DssBreadcrumbsEl EXC-01 (.dss-breadcrumbs-el.q-breadcrumbs__el) e DssTabPanel EXC-01 (.dss-tab-panel.q-tab-panel)."
+    },
+    {
+      "id": "EXC-03",
+      "value": "GrayText (system color keyword)",
+      "location": "4-output/_states.scss — @media (forced-colors: active)",
+      "justification": "Forced-colors mode — tokens CSS são ignorados pelo browser. GrayText é o system color keyword canônico para elementos secundários/decorativos em forced-colors. Padrão: DssBreadcrumbsEl _states.scss (mesma justificativa para separadores)."
+    },
+    {
+      "id": "EXC-04",
+      "value": "Token --dss-line-height-sm usado em vez de --dss-line-height-md",
+      "location": "2-composition/_base.scss (.dss-breadcrumbs .q-breadcrumbs__separator)",
+      "justification": "O pré-prompt especificou --dss-line-height-md para separadores, mas esse token não existe no catálogo DSS (DSS_TOKEN_REFERENCE.md). O token correto para textos com font-size-sm é --dss-line-height-sm (1.45). Precedente da mesma falha: DssTooltip NC-01 (--dss-font-weight-regular → --dss-font-weight-normal). Divergência documentada explicitamente no 2-composition/_base.scss."
+    }
+  ],
+  "gateExceptions": {
+    "compositionGateV24": {
+      "templateStructure": {
+        "id": "GATE-EXC-templateStructure",
+        "rule": "Regra 1 — Proibição de componente Quasar como elemento raiz do template",
+        "location": "1-structure/DssBreadcrumbs.ts.vue",
+        "justification": "QBreadcrumbs é obrigatório como root porque: (1) injeta role='navigation' e aria-label nativamente no elemento raiz; (2) gerencia os separadores automáticos entre filhos via slot interno; (3) adicionar um <div> wrapper externo criaria um nó DOM sem semântica entre o navigation landmark e os breadcrumb items, violando WCAG 1.3.1. Precedente: DssBreadcrumbsEl GATE-EXC-01 (mesmo pattern, família breadcrumbs).",
+        "approvedBy": "Chat Estratégico DSS",
+        "date": "2026-04"
+      },
+      "cssSelectorException": {
+        "location": "2-composition/_base.scss, 4-output/_brands.scss, 4-output/_states.scss",
+        "justification": "DssBreadcrumbs usa seletores CSS descendentes (.dss-breadcrumbs .q-breadcrumbs__separator) para governar separadores injetados pelo QBreadcrumbs. Esta é a única forma de aplicar tokens DSS a elementos DOM criados pelo framework Quasar que não são acessíveis via props ou slots DSS. Justificativa idêntica ao DssBtnGroup para seletores > .dss-button. Registrado formalmente no pré-prompt oficial."
+      }
+    }
+  },
+  "tokensUsed": [
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-1",
+    "--dss-font-size-sm",
+    "--dss-line-height-sm",
+    "--dss-text-subtle",
+    "--dss-text-body",
+    "--dss-border-width-thin",
+    "--dss-radius-sm",
+    "--dss-font-weight-bold",
+    "--dss-hub-600",
+    "--dss-hub-400",
+    "--dss-water-500",
+    "--dss-water-400",
+    "--dss-waste-600",
+    "--dss-waste-500"
+  ]
+}
