@@ -158,48 +158,40 @@ export function DSSSidebar() {
       className="border-r"
       style={{ 
         borderColor: 'hsl(var(--sidebar-border))',
-        backgroundColor: 'hsl(var(--sidebar-background))'
+        backgroundColor: 'hsl(var(--sidebar-background))',
+        height: '100%',
       }}
     >
-      {/* Header com hover effect */}
+      {/* Header com trigger de expandir/retrair */}
       <SidebarHeader 
         className={cn("border-b transition-all duration-200", collapsed ? "p-3" : "p-4")} 
         style={{ borderColor: 'hsl(var(--sidebar-border))' }}
       >
-        <Link 
-          to="/" 
-          className={cn("flex items-center group", collapsed ? "justify-center" : "gap-3")}
-        >
-          <div 
-            className="h-9 w-9 rounded-lg flex items-center justify-center shadow-sm 
-                       transition-all duration-300 ease-out
-                       group-hover:shadow-lg group-hover:scale-105"
-            style={{ 
-              background: 'linear-gradient(135deg, var(--dss-jtech-accent), var(--dss-jtech-accent-hover))',
-              boxShadow: '0 2px 8px rgba(196, 30, 58, 0.3)'
-            }}
-          >
-            <span className="text-white font-bold text-sm transition-transform duration-200 group-hover:scale-110">
-              JT
-            </span>
-          </div>
+        <div className={cn("flex items-center", collapsed ? "justify-center" : "justify-between")}>
           {!collapsed && (
             <div className="flex flex-col overflow-hidden">
               <span 
-                className="font-semibold text-sm transition-colors duration-200 group-hover:text-white" 
+                className="font-semibold text-sm" 
                 style={{ color: 'hsl(var(--sidebar-foreground))' }}
               >
                 DSS
               </span>
               <span 
-                className="text-xs transition-colors duration-200" 
+                className="text-xs" 
                 style={{ color: 'hsl(var(--sidebar-muted))' }}
               >
                 Design System Sansys
               </span>
             </div>
           )}
-        </Link>
+          <SidebarTrigger 
+            className={cn(
+              "transition-all duration-200 ease-out rounded-md p-2",
+              "hover:bg-white/10 hover:scale-105 active:scale-95"
+            )}
+            style={{ color: 'hsl(var(--sidebar-foreground))' }} 
+          />
+        </div>
       </SidebarHeader>
 
       <SidebarContent className="sidebar-scroll px-2 py-3">
