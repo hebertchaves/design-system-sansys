@@ -164,8 +164,11 @@ export function DSSSidebar() {
     >
       {/* Header com trigger de expandir/retrair */}
       <SidebarHeader 
-        className={cn("border-b transition-all duration-200", collapsed ? "p-3" : "p-4")} 
-        style={{ borderColor: 'hsl(var(--sidebar-border))' }}
+        className={cn("border-b transition-all duration-200", collapsed ? "p-2" : "p-4")} 
+        style={{ 
+          borderColor: 'hsl(var(--sidebar-border))',
+          ...(collapsed ? { width: 'var(--sidebar-width-icon)', overflow: 'visible' } : {}),
+        }}
       >
         <div className={cn(
           "flex items-center",
