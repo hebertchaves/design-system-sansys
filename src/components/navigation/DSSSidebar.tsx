@@ -205,7 +205,7 @@ export function DSSSidebar() {
         {Object.entries(navigation).map(([key, section], sectionIndex) => (
           <SidebarGroup 
             key={key} 
-            className="mb-1"
+            className={cn("mb-1", collapsed && "p-0")}
             style={{ 
               animationDelay: `${sectionIndex * 50}ms`,
             }}
@@ -256,9 +256,8 @@ export function DSSSidebar() {
                           <Link
                             to={item.url}
                             className={cn(
-                              "relative flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg mx-1",
-                              "transition-all duration-200 ease-out",
-                              "group/item"
+                              "relative flex items-center text-sm rounded-lg transition-all duration-200 ease-out group/item",
+                              collapsed ? "justify-center" : "gap-3 px-3 py-2.5 mx-1"
                             )}
                             style={{
                               backgroundColor: active 
@@ -270,7 +269,7 @@ export function DSSSidebar() {
                                 ? 'var(--dss-jtech-accent-light)' 
                                 : 'hsl(var(--sidebar-foreground))',
                               fontWeight: active ? 500 : 400,
-                              transform: hovered && !active ? 'translateX(4px)' : 'translateX(0)',
+                              transform: hovered && !active && !collapsed ? 'translateX(4px)' : 'translateX(0)',
                             }}
                             onMouseEnter={() => setHoveredItem(item.url)}
                             onMouseLeave={() => setHoveredItem(null)}
