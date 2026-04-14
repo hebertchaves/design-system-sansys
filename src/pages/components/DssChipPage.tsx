@@ -310,6 +310,7 @@
      size: "md",
      shape: "round",
      color: "primary",
+     feedbackColor: null,
      brand: null,
      selected: false,
      clickable: true,
@@ -320,19 +321,28 @@
      hasIconRight: false,
      label: "Categoria",
    });
- 
-   const handleChange = <K extends keyof DssChipState>(key: K, value: DssChipState[K]) => {
-     setState((prev) => {
-       // Exclusividade mútua: brand limpa color e vice-versa
-       if (key === "brand" && value) {
-         return { ...prev, [key]: value, color: null };
-       }
-       if (key === "color" && value) {
-         return { ...prev, [key]: value, brand: null };
-       }
-       return { ...prev, [key]: value };
-     });
+
+   // Color Application Domain: substituição implícita e silenciosa
+   const handleColorChange = (color: string) => {
+     setState((prev) => ({ ...prev, color, feedbackColor: null, brand: null }));
    };
+   const handleFeedbackChange = (feedbackColor: string) => {
+     setState((prev) => ({ ...prev, feedbackColor, color: null, brand: null }));
+   };
+   const handleBrandChange = (brand: string | null) => {
+     setState((prev) => ({ ...prev, brand, color: null, feedbackColor: null }));
+   };
+
+   const handleChange = <K extends keyof DssChipState>(key: K, value: DssChipState[K]) => {
+     setState((prev) => ({ ...prev, [key]: value }));
+   };
+
+   const toggleBooleanState = (name: string) => {
+     setState((prev) => ({ ...prev, [name]: !prev[name as keyof DssChipState] }));
+   };
+
+   // Feedback colors array for FeedbackColorPicker
+   const feedbackColors = Object.values(DSS_FEEDBACK_COLORS) as FeedbackColor[];
  
    return (
      <div className="p-6 space-y-8 pb-12">
