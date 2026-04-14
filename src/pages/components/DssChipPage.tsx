@@ -69,8 +69,9 @@
    variant: Variant;
    size: Size;
    shape: ChipShape;
-   color: SemanticColor | null;
-   brand: BrandColor | null;
+   color: string | null;
+   feedbackColor: string | null;
+   brand: string | null;
    selected: boolean;
    clickable: boolean;
    removable: boolean;
