@@ -95,8 +95,9 @@
  // COMPONENTE DE PREVIEW
  // ==========================================================================
  
- interface DssChipPreviewProps extends DssChipState {
+ interface DssChipPreviewProps extends Omit<DssChipState, 'feedbackColor'> {
    isDarkMode: boolean;
+   feedbackColor?: string | null;
  }
  
  function DssChipPreview({
@@ -123,11 +124,14 @@
      setIsSelected(selected);
    }, [selected]);
  
-   // Resolução de cor (brand tem prioridade)
+   // Color Application Domain: brand > feedbackColor > color
+   const resolvedColorName = brand || feedbackColor || color || "primary";
    const resolvedColor = brand
      ? `var(--dss-${brand}-primary)`
+     : feedbackColor
+     ? DSS_FEEDBACK_COLORS[feedbackColor]?.bg || `var(--dss-${feedbackColor})`
      : color
-     ? `var(--dss-${color})`
+     ? DSS_SEMANTIC_COLORS[color]?.bg || `var(--dss-${color})`
      : "var(--dss-primary)";
  
    // Estilos base por variante
