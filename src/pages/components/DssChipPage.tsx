@@ -274,6 +274,7 @@
    if (state.shape === "square") props.push("square");
    if (state.shape === "round") props.push("round");
    if (state.brand) props.push(`brand="${state.brand}"`);
+   else if (state.feedbackColor) props.push(`color="${state.feedbackColor}"`);
    else if (state.color && state.color !== "primary") props.push(`color="${state.color}"`);
    if (state.selected) props.push("selected");
    if (state.clickable) props.push("clickable");
