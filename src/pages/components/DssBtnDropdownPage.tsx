@@ -171,6 +171,12 @@ function DssBtnDropdownPreview({
 
   const brandColor = getBrandColor();
 
+  // Resolve effective color from color prop or default primary
+  const baseColor = color || "#1f86de";
+  const baseColorHover = color ? `color-mix(in srgb, ${color} 80%, black)` : "#0f5295";
+
+  const sizeConfig = sizes.find((s) => s.name === size) || sizes[2];
+
   const getBorderRadius = () => {
     if (square) return "0";
     return rounded ? "9999px" : "4px";
