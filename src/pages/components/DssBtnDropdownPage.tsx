@@ -135,7 +135,9 @@ const anatomyData = {
 
 interface DssBtnDropdownPreviewProps {
   variant: string;
+  color: string | null;
   brand: string | null;
+  size: string;
   split: boolean;
   rounded: boolean;
   square: boolean;
