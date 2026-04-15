@@ -196,20 +196,31 @@ function DssBtnDropdownPreview({
     return rounded ? "9999px" : "4px";
   };
 
+  // Dense reduces padding and min-height
+  const densePadding = dense
+    ? sizeConfig.padding.split(" ").map(v => {
+        const num = parseInt(v);
+        return `${Math.max(Math.round(num * 0.5), 2)}px`;
+      }).join(" ")
+    : sizeConfig.padding;
+  const denseHeight = dense
+    ? `${Math.round(parseInt(sizeConfig.height) * 0.75)}px`
+    : sizeConfig.height;
+
   const getButtonStyle = (): React.CSSProperties => {
     const base: React.CSSProperties = {
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      gap: "6px",
-      padding: sizeConfig.padding,
+      gap: dense ? "4px" : "6px",
+      padding: densePadding,
       fontSize: sizeConfig.fontSize,
       fontWeight: 500,
       fontFamily: "system-ui, -apple-system, sans-serif",
       textTransform: "uppercase",
       letterSpacing: "0.089em",
       cursor: disable ? "not-allowed" : "pointer",
-      minHeight: sizeConfig.height,
+      minHeight: denseHeight,
       borderRadius: split ? `${getBorderRadius()} 0 0 ${getBorderRadius()}` : getBorderRadius(),
       opacity: disable ? 0.5 : loading ? 0.7 : 1,
       position: "relative",
@@ -261,13 +272,13 @@ function DssBtnDropdownPreview({
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      padding: sizeConfig.padding.replace(/\d+px \d+px/, (m) => {
+      padding: dense ? `${Math.max(Math.round(parseInt(densePadding) * 0.5), 2)}px 6px` : sizeConfig.padding.replace(/\d+px \d+px/, (m) => {
         const parts = m.split(" ");
         return `${parts[0]} 10px`;
       }),
       cursor: disable ? "not-allowed" : "pointer",
       transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-      minHeight: sizeConfig.height,
+      minHeight: denseHeight,
       borderRadius: `0 ${getBorderRadius()} ${getBorderRadius()} 0`,
       opacity: disable ? 0.5 : 1,
     };
