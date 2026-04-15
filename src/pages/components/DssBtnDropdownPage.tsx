@@ -272,13 +272,13 @@ function DssBtnDropdownPreview({
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      padding: sizeConfig.padding.replace(/\d+px \d+px/, (m) => {
+      padding: dense ? `${Math.max(Math.round(parseInt(densePadding) * 0.5), 2)}px 6px` : sizeConfig.padding.replace(/\d+px \d+px/, (m) => {
         const parts = m.split(" ");
         return `${parts[0]} 10px`;
       }),
       cursor: disable ? "not-allowed" : "pointer",
       transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-      minHeight: sizeConfig.height,
+      minHeight: denseHeight,
       borderRadius: `0 ${getBorderRadius()} ${getBorderRadius()} 0`,
       opacity: disable ? 0.5 : 1,
     };
