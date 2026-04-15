@@ -418,10 +418,9 @@ export default function DssBtnDropdownPage() {
     setSelectedColor(null);
   };
 
-  // Effective color: brand > feedback/color > default
-  const effectiveColor = selectedBrand
-    ? DSS_BRAND_COLORS[selectedBrand as keyof typeof DSS_BRAND_COLORS]?.principal || null
-    : selectedColor;
+  // Pass semantic color name to preview (resolved to hex inside preview via COLOR_MAP)
+  // When brand is active, color is null (brand handles its own visual)
+  const effectiveColor = selectedBrand ? null : selectedColor;
 
   const toggleBooleanState = (name: string) => {
     setBooleanStates((prev) => ({ ...prev, [name]: !prev[name as keyof typeof prev] }));
