@@ -148,7 +148,9 @@ interface DssBtnDropdownPreviewProps {
 
 function DssBtnDropdownPreview({
   variant,
+  color,
   brand,
+  size,
   split,
   rounded,
   square,
