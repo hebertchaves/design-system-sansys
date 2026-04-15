@@ -43,6 +43,22 @@ const variants = [
   { name: "unelevated", label: "Unelevated", desc: "Sólido sem shadow" },
 ];
 
+const sizes = [
+  { name: "xs", label: "XS", height: "32px", padding: "4px 8px", fontSize: "12px", minWidth: "48px" },
+  { name: "sm", label: "SM", height: "36px", padding: "6px 12px", fontSize: "13px", minWidth: "56px" },
+  { name: "md", label: "MD", height: "44px", padding: "8px 16px", fontSize: "14px", minWidth: "64px", isDefault: true },
+  { name: "lg", label: "LG", height: "52px", padding: "12px 20px", fontSize: "16px", minWidth: "80px" },
+  { name: "xl", label: "XL", height: "64px", padding: "16px 24px", fontSize: "18px", minWidth: "96px" },
+];
+
+const feedbackColors: Record<string, FeedbackColor> = {
+  positive: { ...DSS_FEEDBACK_COLORS.positive, icon: CheckCircle },
+  negative: { ...DSS_FEEDBACK_COLORS.negative, icon: XCircle },
+  warning: { ...DSS_FEEDBACK_COLORS.warning, icon: AlertTriangle },
+  info: { ...DSS_FEEDBACK_COLORS.info, icon: Info },
+};
+];
+
 const propsData = [
   { category: "Conteúdo", prop: "label", type: "String", default: "undefined", description: "Rótulo do botão trigger." },
   { category: "Conteúdo", prop: "icon", type: "String", default: "undefined", description: "Ícone à esquerda do label (Material Icons)." },
