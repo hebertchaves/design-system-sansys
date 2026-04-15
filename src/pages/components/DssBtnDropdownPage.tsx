@@ -583,14 +583,16 @@ popup-content-class="dss-btn-dropdown__panel"
 
       <DssPlayground
         title="Configure o BtnDropdown"
-        description="Selecione variante, forma, comportamento e brand para visualizar o DssBtnDropdown em tempo real."
+        description="Explore TODAS as props visuais e comportamentais do DssBtnDropdown em tempo real."
         isDarkMode={isDarkMode}
         onDarkModeToggle={() => setIsDarkMode(!isDarkMode)}
         previewMinHeight="320px"
         previewContent={
           <DssBtnDropdownPreview
             variant={selectedVariant}
+            color={effectiveColor}
             brand={selectedBrand}
+            size={selectedSize}
             split={booleanStates.split}
             rounded={booleanStates.rounded}
             square={booleanStates.square}
@@ -600,19 +602,45 @@ popup-content-class="dss-btn-dropdown__panel"
           />
         }
         controls={
-          <ControlGrid columns={4}>
+          <ControlGrid columns={5}>
+            {/* Variant */}
             <VariantSelector
               variants={variants}
               selectedVariant={selectedVariant}
               onSelect={setSelectedVariant}
             />
 
+            {/* Size */}
+            <SizeSelector
+              sizes={sizes}
+              selectedSize={selectedSize}
+              onSelect={setSelectedSize}
+            />
+
+            {/* Color Domain — Semantic */}
+            <ColorPicker
+              label="Color"
+              colors={Object.values(DSS_SEMANTIC_COLORS)}
+              selectedColor={selectedColor}
+              onSelect={handleColorChange}
+            />
+
+            {/* Color Domain — Brand */}
             <BrandPicker
               brands={DSS_BRAND_COLORS}
               selectedBrand={selectedBrand}
               onSelect={handleBrandChange}
             />
 
+            {/* Color Domain — Feedback */}
+            <FeedbackColorPicker
+              label="Feedback"
+              colors={feedbackColors}
+              selectedColor={selectedColor}
+              onSelect={handleColorChange}
+            />
+
+            {/* Shape */}
             <ToggleGroup
               label="Forma"
               options={shapeToggles}
@@ -620,6 +648,7 @@ popup-content-class="dss-btn-dropdown__panel"
               onToggle={toggleBooleanState}
             />
 
+            {/* Behavior */}
             <ToggleGroup
               label="Comportamento"
               options={behaviorToggles}
