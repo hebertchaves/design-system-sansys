@@ -57,7 +57,6 @@ const feedbackColors: Record<string, FeedbackColor> = {
   warning: { ...DSS_FEEDBACK_COLORS.warning, icon: AlertTriangle },
   info: { ...DSS_FEEDBACK_COLORS.info, icon: Info },
 };
-];
 
 const propsData = [
   { category: "Conteúdo", prop: "label", type: "String", default: "undefined", description: "Rótulo do botão trigger." },
