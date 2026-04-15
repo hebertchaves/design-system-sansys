@@ -380,7 +380,9 @@ function DssBtnDropdownPreview({
 
 export default function DssBtnDropdownPage() {
   const [selectedVariant, setSelectedVariant] = useState("elevated");
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState("md");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [booleanStates, setBooleanStates] = useState({
     split: false,
@@ -391,9 +393,21 @@ export default function DssBtnDropdownPage() {
     loading: false,
   });
 
+  // Color Application Domain — mutual exclusivity
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
+    setSelectedBrand(null);
+  };
+
   const handleBrandChange = (brand: string | null) => {
     setSelectedBrand(brand);
+    setSelectedColor(null);
   };
+
+  // Effective color: brand > feedback/color > default
+  const effectiveColor = selectedBrand
+    ? DSS_BRAND_COLORS[selectedBrand as keyof typeof DSS_BRAND_COLORS]?.principal || null
+    : selectedColor;
 
   const toggleBooleanState = (name: string) => {
     setBooleanStates((prev) => ({ ...prev, [name]: !prev[name as keyof typeof prev] }));
@@ -403,7 +417,9 @@ export default function DssBtnDropdownPage() {
     const props: string[] = [];
     props.push(`label="Exportar"`);
     if (selectedVariant !== "elevated") props.push(`variant="${selectedVariant}"`);
+    if (selectedColor) props.push(`color="${selectedColor}"`);
     if (selectedBrand) props.push(`brand="${selectedBrand}"`);
+    if (selectedSize !== "md") props.push(`size="${selectedSize}"`);
     if (booleanStates.split) props.push("split");
     if (booleanStates.rounded) props.push("rounded");
     if (booleanStates.square) props.push("square");
