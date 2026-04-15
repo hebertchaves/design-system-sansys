@@ -161,6 +161,19 @@ function DssBtnDropdownPreview({
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  // Map semantic color names to actual CSS hex values
+  const COLOR_MAP: Record<string, string> = {
+    primary: "#1f86de",
+    secondary: "#26a69a",
+    tertiary: "#ff6607",
+    accent: "#b454c4",
+    dark: "#454545",
+    positive: "#21ba45",
+    negative: "#c10015",
+    warning: "#f2c037",
+    info: "#31ccec",
+  };
+
   const getBrandColor = () => {
     if (!brand) return null;
     if (brand === "hub") return DSS_BRAND_COLORS.hub.principal;
@@ -171,9 +184,10 @@ function DssBtnDropdownPreview({
 
   const brandColor = getBrandColor();
 
-  // Resolve effective color from color prop or default primary
-  const baseColor = color || "#1f86de";
-  const baseColorHover = color ? `color-mix(in srgb, ${color} 80%, black)` : "#0f5295";
+  // Resolve color name to CSS value
+  const resolvedColor = color ? (COLOR_MAP[color] || color) : "#1f86de";
+  const baseColor = resolvedColor;
+  const baseColorHover = `color-mix(in srgb, ${resolvedColor} 80%, black)`;
 
   const sizeConfig = sizes.find((s) => s.name === size) || sizes[2];
 
