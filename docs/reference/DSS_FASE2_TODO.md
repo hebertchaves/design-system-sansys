@@ -32,7 +32,7 @@
 ### Família: Navegação Estrutural
 
 - [x] ~~`DssBreadcrumbsEl`~~ ✅ **SELADO**
-- [ ] `DssStep` — Passo individual de stepper
+- [x] ~~`DssStep`~~ ✅ **SELADO**
 - [ ] `DssPagination` — Controle de paginação
 
 ### Família: Overlays e Dialogs
