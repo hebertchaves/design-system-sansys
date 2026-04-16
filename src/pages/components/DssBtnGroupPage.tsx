@@ -625,6 +625,7 @@ export default function DssBtnGroupPage() {
             square={booleanStates.square}
             spread={booleanStates.spread}
             stretch={booleanStates.stretch}
+            split={booleanStates.split}
           />
         }
         controls={
