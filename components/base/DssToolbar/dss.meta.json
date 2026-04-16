@@ -1,9 +1,9 @@
 {
   "component": "DssToolbar",
   "dssVersion": "2.2",
-  "status": "pending",
-  "auditMode": "Aguardando auditoria DSS v2.2",
-  "auditDate": null,
+  "status": "sealed",
+  "auditMode": "Auditoria DSS v2.2 — Aprovado",
+  "auditDate": "2026-04-16",
 
   "goldenReference": "DssCard",
   "goldenReferenceJustification": "DssCard é o Golden Reference canônico para DssToolbar: ambos são containers estruturais não-interativos que fornecem layout e superfície visual para elementos filhos, sem estados hover/focus/active próprios. DssCard recebeu Selo DSS v2.2 (Feb 2026) e estabelece o padrão para containers de fase 2 com brandabilidade e override de estilos Quasar.",
@@ -29,17 +29,16 @@
   ],
   "compositionNote": "DssToolbar fornece layout horizontal para qualquer componente DSS. O consumidor é responsável pela composição interna. Os mais comuns são DssButton (flat/ghost), texto/título, DssIcon e DssSpace (espaçador). Não instancia filhos automaticamente nem estiliza filhos internamente.",
 
-  "props": {
-    "DssToolbar": ["inset", "brand"],
-    "blocked": {
-      "dark": "Modo escuro governado globalmente pelo DSS via [data-theme='dark'], não por prop individual.",
-      "glossy": "Efeito visual não utilizado no DSS — ausência de glossy é padrão.",
-      "color": "Cor de fundo governada por tokens DSS + prop brand.",
-      "text-color": "Cor de texto governada por tokens DSS (--dss-text-body / --dss-text-inverse conforme brand)."
-    },
-    "passThrough": {
-      "dense": "Não declarado como prop DSS — encaminhado via $attrs ao QToolbar, que aplica .q-toolbar--dense nativamente."
-    }
+  "propsExposed": ["inset", "brand"],
+  "propsBlocked": ["dark", "glossy", "color", "text-color"],
+  "propsBlockedJustification": {
+    "dark": "Modo escuro governado globalmente pelo DSS via [data-theme='dark'], não por prop individual.",
+    "glossy": "Efeito visual não utilizado no DSS — ausência de glossy é padrão.",
+    "color": "Cor de fundo governada por tokens DSS + prop brand.",
+    "text-color": "Cor de texto governada por tokens DSS (--dss-text-body / --dss-text-inverse conforme brand)."
+  },
+  "propsPassThrough": {
+    "dense": "Não declarado como prop DSS — encaminhado via $attrs ao QToolbar, que aplica .q-toolbar--dense nativamente."
   },
 
   "statesApplicable": ["default", "branded"],

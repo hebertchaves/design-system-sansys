@@ -51,7 +51,7 @@
 
 ### Família: Estrutura de Página (Base)
 
-- [ ] `DssToolbar` — Barra de ações horizontal (base para Header/Footer)
+- [x] ~~`DssToolbar`~~ ✅ **SELADO**
 
 ### Família: Superfícies e Layout
 
