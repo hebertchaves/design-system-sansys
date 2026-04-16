@@ -1,0 +1,221 @@
+// ==========================================================================
+// DssStep — Layer 2: Composição Base
+// ==========================================================================
+//
+// Estilos base do passo de stepper. Tokens genéricos apenas.
+// Sem referências a variantes, brands ou estados adaptativos.
+//
+// EXC-01 — Gate de Composição v2.4 Regra 1:
+//   O componente usa <q-step> (primitivo Quasar) diretamente — wrapper Nível 1
+//   Independente. O QStep renderiza estrutura DOM complexa com classes internas
+//   (.q-stepper__tab, .q-stepper__dot, .q-stepper__title, etc.) com estilos
+//   hardcoded. Os seletores compostos abaixo (.dss-step .q-stepper__*) são a
+//   única forma de substituir CSS de terceiros com tokens DSS sem dependências
+//   adicionais. Precedente canônico: DssTab (Golden Reference) — .dss-tab .q-tab__indicator.
+// ==========================================================================
+
+/* EXC-01 — seletores Quasar (Gate de Composição v2.4 Regra 1 exception) */
+
+.dss-step {
+  // ------------------------------------------------------------------
+  // Cabeçalho do passo (.q-stepper__tab)
+  // Área não clicável por padrão — interativa somente com header-nav=true
+  // ------------------------------------------------------------------
+  .q-stepper__tab {
+    cursor: default;
+    padding-inline: var(--dss-spacing-4);
+    padding-block: var(--dss-spacing-3);
+    min-height: var(--dss-touch-target-md);
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+      color var(--dss-duration-150) var(--dss-easing-standard),
+      opacity var(--dss-duration-150) var(--dss-easing-standard);
+  }
+
+  // ------------------------------------------------------------------
+  // Dot: círculo com número ou ícone de status
+  // ------------------------------------------------------------------
+  .q-stepper__dot {
+    width: var(--dss-icon-size-lg);        // 32px
+    height: var(--dss-icon-size-lg);       // 32px
+    min-width: var(--dss-icon-size-lg);
+    border-radius: 50%;                    // EXC-02 — border-radius geométrico canônico
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-medium);
+
+    // Estado inativo (padrão)
+    background-color: var(--dss-surface-muted);
+    color: var(--dss-text-subtle);
+
+    transition:
+      background-color var(--dss-duration-150) var(--dss-easing-standard),
+      color var(--dss-duration-150) var(--dss-easing-standard);
+
+    // Ícone interno no dot (q-icon)
+    .q-icon {
+      font-size: var(--dss-icon-size-sm);  // 20px — menor que o dot
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Caps do dot (linhas conectoras integradas ao dot)
+  // ------------------------------------------------------------------
+  .q-stepper__dot-cap {
+    border-color: var(--dss-gray-300);
+  }
+
+  // ------------------------------------------------------------------
+  // Tipografia — Label container
+  // ------------------------------------------------------------------
+  .q-stepper__label {
+    padding-inline-start: var(--dss-spacing-3);
+  }
+
+  // ------------------------------------------------------------------
+  // Tipografia — Título do passo
+  // ------------------------------------------------------------------
+  .q-stepper__title {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-base);
+    font-weight: var(--dss-font-weight-normal);
+    line-height: var(--dss-line-height-tight);
+    color: var(--dss-text-subtle);
+
+    transition: color var(--dss-duration-150) var(--dss-easing-standard);
+  }
+
+  // ------------------------------------------------------------------
+  // Tipografia — Caption/Subtítulo
+  // ------------------------------------------------------------------
+  .q-stepper__caption,
+  .q-stepper__subtitle {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-text-subtle);
+    line-height: var(--dss-line-height-normal);
+    margin-block-start: var(--dss-spacing-0_5);
+  }
+
+  // ------------------------------------------------------------------
+  // Linha conectora entre passos
+  // ------------------------------------------------------------------
+  .q-stepper__line {
+    border-color: var(--dss-gray-300);
+    transition: border-color var(--dss-duration-150) var(--dss-easing-standard);
+  }
+
+  // ------------------------------------------------------------------
+  // Área de conteúdo do passo
+  // ------------------------------------------------------------------
+  .q-stepper__step-content {
+    padding-block: var(--dss-spacing-3);
+    padding-inline: var(--dss-spacing-4);
+  }
+
+  // ------------------------------------------------------------------
+  // Estado ativo (passo atual — gerenciado pelo QStepper pai via Quasar)
+  // Quasar aplica .q-stepper__step--active no elemento raiz quando ativo
+  // ------------------------------------------------------------------
+  &.q-stepper__step--active {
+    .q-stepper__dot {
+      background-color: var(--dss-action-primary);
+      color: var(--dss-text-inverse);
+    }
+
+    .q-stepper__title {
+      color: var(--dss-text-body);
+      font-weight: var(--dss-font-weight-medium);
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Estado concluído (done=true)
+  // Governado via prop done + classe DSS dss-step--done
+  // ------------------------------------------------------------------
+  &.dss-step--done {
+    .q-stepper__dot {
+      background-color: var(--dss-feedback-success);
+      color: var(--dss-text-inverse);
+    }
+
+    .q-stepper__title {
+      color: var(--dss-text-body);
+    }
+
+    .q-stepper__line {
+      border-color: var(--dss-feedback-success);
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Estado erro (error=true)
+  // Governado via prop error + classe DSS dss-step--error
+  // ------------------------------------------------------------------
+  &.dss-step--error {
+    .q-stepper__dot {
+      background-color: var(--dss-feedback-error);
+      color: var(--dss-text-inverse);
+    }
+
+    .q-stepper__title {
+      color: var(--dss-feedback-error);
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Estado desabilitado
+  // ------------------------------------------------------------------
+  &.dss-step--disable {
+    .q-stepper__tab {
+      opacity: var(--dss-opacity-disabled);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// Cabeçalho clicável quando header-nav=true
+// Aplica overlay hover/active via ::after (::before reservado para touch target)
+// ------------------------------------------------------------------
+.dss-step.dss-step--header-nav {
+  .q-stepper__tab {
+    cursor: pointer;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: currentColor;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--dss-duration-150) var(--dss-easing-standard);
+    }
+
+    @media (hover: hover) {
+      &:hover:not(.dss-step--disable .q-stepper__tab) {
+        &::after {
+          opacity: var(--dss-opacity-hover);
+        }
+      }
+    }
+
+    &:active {
+      &::after {
+        opacity: var(--dss-opacity-active);
+      }
+    }
+
+    &:focus-visible {
+      outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+      outline-offset: calc(-1 * var(--dss-border-width-md));
+    }
+  }
+}

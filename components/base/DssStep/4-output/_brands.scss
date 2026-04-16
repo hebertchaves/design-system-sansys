@@ -1,0 +1,74 @@
+// ==========================================================================
+// DssStep — Layer 4: Brands
+// ==========================================================================
+//
+// Sobrescreve a cor de ação primária (dot ativo) para cada produto DSS.
+// O estado done usa --dss-feedback-success (invariante de marca).
+// O estado error usa --dss-feedback-error (invariante de marca).
+// Apenas o estado ativo (dot + título) muda por brand.
+//
+// Padrão dual de seletor (paridade com DssTab Golden Reference e DssItem
+// Golden Context): suporta herança contextual [data-brand] no pai E
+// modificador de classe direto .dss-step--brand-* no DssStep.
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Hub (laranja)
+// ------------------------------------------------------------------
+[data-brand='hub'] .dss-step,
+.dss-step.dss-step--brand-hub {
+  /* EXC-01 — seletores Quasar (Gate de Composição v2.4 exception) */
+  &.q-stepper__step--active {
+    .q-stepper__dot {
+      background-color: var(--dss-hub-600);
+    }
+
+    .q-stepper__title {
+      color: var(--dss-hub-600);
+    }
+  }
+
+  &.dss-step--header-nav .q-stepper__tab:focus-visible {
+    outline-color: var(--dss-hub-600);
+  }
+}
+
+// ------------------------------------------------------------------
+// Water (azul)
+// ------------------------------------------------------------------
+[data-brand='water'] .dss-step,
+.dss-step.dss-step--brand-water {
+  &.q-stepper__step--active {
+    .q-stepper__dot {
+      background-color: var(--dss-water-600);
+    }
+
+    .q-stepper__title {
+      color: var(--dss-water-600);
+    }
+  }
+
+  &.dss-step--header-nav .q-stepper__tab:focus-visible {
+    outline-color: var(--dss-water-600);
+  }
+}
+
+// ------------------------------------------------------------------
+// Waste (verde)
+// ------------------------------------------------------------------
+[data-brand='waste'] .dss-step,
+.dss-step.dss-step--brand-waste {
+  &.q-stepper__step--active {
+    .q-stepper__dot {
+      background-color: var(--dss-waste-600);
+    }
+
+    .q-stepper__title {
+      color: var(--dss-waste-600);
+    }
+  }
+
+  &.dss-step--header-nav .q-stepper__tab:focus-visible {
+    outline-color: var(--dss-waste-600);
+  }
+}

@@ -1,0 +1,32 @@
+// ==========================================================================
+// DssStep — ORCHESTRADOR PRINCIPAL
+// ==========================================================================
+//
+// Importa as 4 camadas na ordem obrigatória: L2 → L3 → L4
+// Esta ordem garante a cascata CSS correta (base → variantes → output).
+//
+// Tokens utilizados:
+//   Layer 2 (base):    --dss-icon-size-lg, --dss-icon-size-md, --dss-icon-size-sm,
+//                      --dss-icon-size-xs, --dss-spacing-0_5, --dss-spacing-2,
+//                      --dss-spacing-3, --dss-spacing-4, --dss-touch-target-md,
+//                      --dss-font-family-sans, --dss-font-size-sm, --dss-font-size-base,
+//                      --dss-font-weight-normal, --dss-font-weight-medium,
+//                      --dss-line-height-tight, --dss-line-height-normal,
+//                      --dss-text-subtle, --dss-text-body, --dss-text-inverse,
+//                      --dss-surface-muted, --dss-action-primary,
+//                      --dss-feedback-success, --dss-feedback-error,
+//                      --dss-gray-300, --dss-opacity-disabled, --dss-opacity-hover,
+//                      --dss-opacity-active, --dss-focus-ring, --dss-border-width-md,
+//                      --dss-duration-150, --dss-easing-standard
+//
+//   Layer 3 (dense):   --dss-compact-control-height-sm, --dss-icon-size-md,
+//                      --dss-icon-size-xs, --dss-font-size-xs, --dss-font-size-sm,
+//                      --dss-spacing-2, --dss-spacing-3
+//
+//   Layer 4 (brands):  --dss-hub-600, --dss-water-600, --dss-waste-600
+//   Layer 4 (states):  --dss-gray-600, --dss-border-width-thick
+// ==========================================================================
+
+@use './2-composition/index' as composition;
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;

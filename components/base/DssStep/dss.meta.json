@@ -1,0 +1,151 @@
+{
+  "component": "DssStep",
+  "dssVersion": "2.2",
+  "status": "pending",
+  "auditMode": "Aguardando auditoria DSS v2.2",
+  "auditDate": null,
+
+  "goldenReference": "DssTab",
+  "goldenReferenceJustification": "DssTab é o Golden Reference canônico para DssStep: ambos são elementos interativos de navegação selecionáveis dentro de um container pai (DssTabs / DssStepper). DssTab já recebeu Selo DSS v2.2 (Abr 2026) e compartilha o mesmo padrão arquitetural — wrapper sobre primitivo Quasar (QTab / QStep), com estados visuais (hover, focus, active, disabled), overlay ::after e dot/indicador nativo governado por tokens via EXC-01.",
+
+  "goldenContext": "DssTabs",
+  "goldenContextJustification": "DssTabs é o Golden Context mais próximo para DssStep: ambos são componentes compostos de navegação onde filhos (DssTab / DssStep) gerenciam estados individuais e o pai orquestra a seleção global. DssTabs recebeu Selo DSS v2.2 (Abr 2026) e estabelece o padrão para containers de navegação com brandabilidade via [data-brand].",
+
+  "category": "Elemento interativo de navegação em stepper (wizard)",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Componente interativo de seleção dentro do contexto DssStepper. Passo individual que gerencia estados visuais (ativo, concluído, erro, desabilitado) e delega o estado de progresso ao container pai via v-model Quasar.",
+  "classification": "Controle interativo de navegação — wrapper DSS sobre QStep",
+
+  "hasReservations": false,
+
+  "subcomponents": [],
+  "compositionRequirements": [],
+  "compositionFuture": ["DssStepper"],
+  "compositionRecommendations": [
+    "q-stepper",
+    "DssStepper"
+  ],
+  "compositionNote": "DssStep é filho direto de q-stepper (ou DssStepper quando existir). Uso idiomático: q-stepper v-model + múltiplos DssStep com prop name. DssStepper está em compositionFuture — até então, q-stepper serve como container de scaffolding (coberto pela isenção de .example.vue conforme DSS_IMPLEMENTATION_GUIDE.md §9).",
+
+  "props": {
+    "DssStep": ["name", "title", "caption", "icon", "activeIcon", "doneIcon", "errorIcon", "done", "error", "disable", "headerNav"],
+    "blocked": {
+      "color": "Governado por tokens DSS via --dss-action-primary e overrides de brand em [data-brand].",
+      "active-color": "Governado por tokens DSS — ativo usa --dss-action-primary.",
+      "done-color": "Governado por tokens DSS — concluído usa --dss-feedback-success.",
+      "error-color": "Governado por tokens DSS — erro usa --dss-feedback-error.",
+      "prefix": "DSS governa numeração e ícones via QStep nativo. Prefixos textuais customizados violam a consistência visual do DSS."
+    }
+  },
+
+  "statesApplicable": ["default", "active", "done", "error", "disabled"],
+  "statesNotApplicable": ["hover", "focus", "active-press", "loading", "indeterminate"],
+  "statesNotApplicableJustification": "hover/focus/active-press: estados de interação aplicam-se apenas à área do cabeçalho quando header-nav=true. loading: DssStep não carrega dados — o progresso é gerenciado pelo consumidor via props done/error. indeterminate: não aplicável a elementos de progresso sequencial (cada passo é explicitamente done, active ou pending).",
+
+  "accessibility": {
+    "role": "tab (herdado do QStep via QStepper — estrutura tablist/tab/tabpanel nativa do Quasar)",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "min-height: var(--dss-touch-target-md) na área .q-stepper__tab — WCAG 2.5.5 via propriedade CSS",
+    "keyboardNavigation": "Setas para navegar entre passos (gerenciado nativamente pelo QStepper). Tab para focar o cabeçalho quando header-nav=true.",
+    "aria": "aria-expanded e aria-selected gerenciados pelo QStepper pai. DssStep não requer ARIA adicional.",
+    "contrastDot": "Ícones brancos (text-inverse) dentro de dots coloridos (primary, success, error) garantem contraste ≥ 3:1 (WCAG AA para elementos gráficos)."
+  },
+
+  "gateExceptions": {
+    "compositionGateV24": {
+      "rule1": "Uso de <q-step> diretamente — wrapper Nível 1 Independente sem equivalente DSS Fase 1",
+      "cssSelectors": "Uso de .dss-step .q-stepper__tab, .dss-step .q-stepper__dot, etc. — única forma de governar CSS de terceiros com tokens DSS"
+    },
+    "responsibilityGateV24": "Área do cabeçalho (.q-stepper__tab) é interativa somente quando header-nav=true. Área de conteúdo é sempre estática. Estados hover/focus/active aplicam-se exclusivamente à área do cabeçalho."
+  },
+
+  "antiPatterns": [
+    "Usar DssStep fora de q-stepper ou DssStepper",
+    "Aplicar cor de estado via prop color/active-color — usar [data-brand] no container pai",
+    "Usar DssStep como step de formulário sem controle externo de progresso",
+    "Aninhar DssStep dentro de outros DssStep",
+    "Usar DssStep como elemento de lista ou menu — usar DssItem ou DssList"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Uso direto do primitivo Quasar e sobrescrita dos elementos internos do QStep com tokens DSS",
+      "selectors": [
+        ".dss-step .q-stepper__tab",
+        ".dss-step .q-stepper__dot",
+        ".dss-step .q-stepper__dot-cap",
+        ".dss-step .q-stepper__label",
+        ".dss-step .q-stepper__title",
+        ".dss-step .q-stepper__caption",
+        ".dss-step .q-stepper__subtitle",
+        ".dss-step .q-stepper__line",
+        ".dss-step .q-stepper__step-content",
+        ".dss-step.q-stepper__step--active .*"
+      ],
+      "location": "2-composition/_base.scss + 3-variants/_dense.scss + 4-output/_brands.scss + 4-output/_states.scss",
+      "gatesViolated": ["Gate de Composição v2.4 — Regra 1"],
+      "justification": "O componente usa <q-step> (primitivo Quasar) diretamente porque é um wrapper de Nível 1 Independente. Não existe componente DSS Fase 1 equivalente para compor. O QStep renderiza estrutura DOM interna complexa (.q-stepper__tab, .q-stepper__dot, .q-stepper__title, etc.) com estilos hardcoded de tipografia e cores. A sobrescrita via seletores compostos (.dss-step .q-stepper__*) é a única forma de aplicar tokens DSS sobre CSS de terceiros sem dependências externas. Precedente canônico: DssTab (Golden Reference) — .dss-tab .q-tab__indicator."
+    },
+    {
+      "id": "EXC-02",
+      "value": "border-radius: 50%",
+      "location": "2-composition/_base.scss — .q-stepper__dot",
+      "justification": "Border-radius geométrico (50% = círculo perfeito) para o dot do stepper. Exceção canônica DSS para formas geométricas fundamentais. Precedente: DssRadio (50% no indicador circular), DssToggle (9999px/50% no thumb)."
+    },
+    {
+      "id": "EXC-03",
+      "value": "ButtonFace / ButtonText / HighlightText / Highlight / Mark / GrayText",
+      "location": "4-output/_states.scss — bloco @media (forced-colors: active)",
+      "justification": "Forced-colors mode. System color keywords obrigatórios — tokens CSS são ignorados pelo navegador em forced-colors. Padrão canônico DSS: ButtonText para texto padrão, GrayText para desabilitado, Highlight/HighlightText para selecionado/ativo."
+    },
+    {
+      "id": "EXC-04",
+      "value": "#000 !important / #fff !important",
+      "location": "4-output/_states.scss — bloco @media print",
+      "justification": "Impressão monocromática. Tokens CSS podem não ser resolvidos em contexto de impressão dependendo do browser. Valores hardcoded preto/branco são aceitáveis para garantir legibilidade. Precedente: DssTab (Golden Reference) EXC-03."
+    }
+  ],
+
+  "tokensUsed": [
+    "--dss-icon-size-lg",
+    "--dss-icon-size-md",
+    "--dss-icon-size-sm",
+    "--dss-icon-size-xs",
+    "--dss-compact-control-height-sm",
+    "--dss-touch-target-md",
+    "--dss-spacing-0_5",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-font-family-sans",
+    "--dss-font-size-xs",
+    "--dss-font-size-sm",
+    "--dss-font-size-base",
+    "--dss-font-weight-normal",
+    "--dss-font-weight-medium",
+    "--dss-line-height-tight",
+    "--dss-line-height-normal",
+    "--dss-text-subtle",
+    "--dss-text-body",
+    "--dss-text-inverse",
+    "--dss-surface-muted",
+    "--dss-action-primary",
+    "--dss-feedback-success",
+    "--dss-feedback-error",
+    "--dss-gray-300",
+    "--dss-gray-600",
+    "--dss-opacity-disabled",
+    "--dss-opacity-hover",
+    "--dss-opacity-active",
+    "--dss-focus-ring",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-border-width-thin",
+    "--dss-duration-150",
+    "--dss-easing-standard",
+    "--dss-hub-600",
+    "--dss-water-600",
+    "--dss-waste-600"
+  ]
+}
