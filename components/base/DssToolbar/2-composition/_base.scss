@@ -1,0 +1,49 @@
+// ==========================================================================
+// DssToolbar — Layer 2: Composição Base
+// ==========================================================================
+//
+// Estilos base da barra de ferramentas. Tokens genéricos apenas.
+// Sem referências a variantes, brands ou estados adaptativos.
+//
+// EXC-01 — Gate de Composição v2.4 Regra 1:
+//   O componente usa <q-toolbar> (primitivo Quasar) diretamente.
+//   O QToolbar aplica min-height: 50px e padding: 0 12px na classe .q-toolbar.
+//   Como .dss-toolbar é adicionado ao mesmo elemento raiz do .q-toolbar,
+//   os estilos abaixo sobrescrevem os defaults Quasar via cascata CSS
+//   (mesma especificidade, ordem posterior). Não é necessário seletor composto —
+//   .dss-toolbar age diretamente no elemento.
+//   Precedente: DssCard (Golden Reference) sobrescreve estilos de .q-card
+//   via .dss-card na mesma forma.
+// ==========================================================================
+
+/* EXC-01 — Sobrescrita de padding e min-height do QToolbar nativo */
+
+.dss-toolbar {
+  // ------------------------------------------------------------------
+  // Dimensões — sobrescreve QToolbar default (min-height: 50px)
+  // ------------------------------------------------------------------
+  min-height: var(--dss-spacing-14);       // 56px (padrão DSS toolbar)
+  padding-inline: var(--dss-spacing-4);    // 16px — sobrescreve padding: 0 12px do QToolbar
+
+  // ------------------------------------------------------------------
+  // Layout
+  // ------------------------------------------------------------------
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+
+  // ------------------------------------------------------------------
+  // Cores padrão (sem brand)
+  // ------------------------------------------------------------------
+  background-color: transparent;
+  color: var(--dss-text-body);
+
+  // ------------------------------------------------------------------
+  // Variante inset — padding-inline-start ampliado
+  // ------------------------------------------------------------------
+  &.dss-toolbar--inset {
+    padding-inline-start: var(--dss-spacing-6);  // 24px
+  }
+}

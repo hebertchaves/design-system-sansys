@@ -1,0 +1,78 @@
+// ==========================================================================
+// DssToolbar — Layer 4: Estados Adaptativos
+// ==========================================================================
+//
+// Dark mode, prefers-contrast, forced-colors, print.
+//
+// EXC-03 — forced-colors: system color keywords obrigatórios
+//   (tokens CSS são ignorados pelo navegador em forced-colors mode).
+//
+// Nota: DssToolbar é container não-interativo — sem hover/focus/active.
+// Apenas estados de tema e modo de acessibilidade são aplicáveis.
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Dark mode
+// ------------------------------------------------------------------
+[data-theme='dark'] {
+  .dss-toolbar {
+    color: var(--dss-text-body);
+
+    // Brands mantêm suas cores no dark mode — contraste preservado
+    &.dss-toolbar--brand-hub {
+      background-color: var(--dss-hub-600);
+      color: var(--dss-text-inverse);
+    }
+
+    &.dss-toolbar--brand-water {
+      background-color: var(--dss-water-600);
+      color: var(--dss-text-inverse);
+    }
+
+    &.dss-toolbar--brand-waste {
+      background-color: var(--dss-waste-600);
+      color: var(--dss-text-inverse);
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// High contrast / prefers-contrast
+// ------------------------------------------------------------------
+@media (prefers-contrast: more) {
+  .dss-toolbar {
+    // Container sem borda por padrão — em high-contrast adiciona borda de separação
+    outline: var(--dss-border-width-thin) solid currentColor;
+  }
+}
+
+// ------------------------------------------------------------------
+// Forced colors (Windows High Contrast)
+// EXC-03 — system color keywords obrigatórios (tokens ignorados pelo navegador)
+// ------------------------------------------------------------------
+@media (forced-colors: active) {
+  .dss-toolbar {
+    forced-color-adjust: auto;
+    color: ButtonText;
+
+    // Brands em forced-colors: usa Canvas/CanvasText do sistema
+    &.dss-toolbar--brand-hub,
+    &.dss-toolbar--brand-water,
+    &.dss-toolbar--brand-waste {
+      background-color: ButtonFace;
+      color: ButtonText;
+      border-bottom: var(--dss-border-width-thin) solid ButtonText;
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// Print
+// EXC-04 — valores hardcoded para impressão monocromática
+// ------------------------------------------------------------------
+@media print {
+  .dss-toolbar {
+    color: #000 !important;
+    background-color: transparent !important;
+  }
+}

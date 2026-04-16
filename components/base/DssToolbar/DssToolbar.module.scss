@@ -1,0 +1,21 @@
+// ==========================================================================
+// DssToolbar — ORCHESTRADOR PRINCIPAL
+// ==========================================================================
+//
+// Importa as 4 camadas na ordem obrigatória: L2 → L3 → L4
+//
+// Tokens utilizados:
+//   Layer 2 (base):    --dss-spacing-14, --dss-spacing-4, --dss-spacing-6,
+//                      --dss-text-body
+//
+//   Layer 3 (dense):   --dss-spacing-10, --dss-spacing-3, --dss-spacing-4
+//
+//   Layer 4 (brands):  --dss-hub-600, --dss-water-600, --dss-waste-600,
+//                      --dss-text-inverse
+//
+//   Layer 4 (states):  --dss-border-width-thin
+// ==========================================================================
+
+@use './2-composition/index' as composition;
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;

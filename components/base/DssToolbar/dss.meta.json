@@ -1,0 +1,134 @@
+{
+  "component": "DssToolbar",
+  "dssVersion": "2.2",
+  "status": "pending",
+  "auditMode": "Aguardando auditoria DSS v2.2",
+  "auditDate": null,
+
+  "goldenReference": "DssCard",
+  "goldenReferenceJustification": "DssCard é o Golden Reference canônico para DssToolbar: ambos são containers estruturais não-interativos que fornecem layout e superfície visual para elementos filhos, sem estados hover/focus/active próprios. DssCard recebeu Selo DSS v2.2 (Feb 2026) e estabelece o padrão para containers de fase 2 com brandabilidade e override de estilos Quasar.",
+
+  "goldenContext": "DssTabs",
+  "goldenContextJustification": "DssTabs é o Golden Context mais próximo para DssToolbar: ambos são containers horizontais de navegação/ação que gerenciam o layout dos filhos e aplicam brandabilidade via [data-brand]. DssTabs recebeu Selo DSS v2.2 (Abr 2026). DssHeader e DssFooter (contextos pais naturais) ainda não existem — registrados em compositionFuture.",
+
+  "category": "Container estrutural horizontal — barra de ferramentas",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Container estrutural não-interativo. Fornece layout horizontal flexbox e superfície de brand para composição de botões, ícones e texto. Bloco de construção base para DssHeader, DssFooter e barras de ação internas.",
+  "classification": "Container estrutural horizontal — wrapper DSS governado sobre QToolbar",
+
+  "hasReservations": false,
+
+  "subcomponents": [],
+  "compositionRequirements": [],
+  "compositionFuture": ["DssHeader", "DssFooter", "DssToolbarTitle"],
+  "compositionRecommendations": [
+    "DssButton",
+    "DssIcon",
+    "DssSpace",
+    "DssSeparator"
+  ],
+  "compositionNote": "DssToolbar fornece layout horizontal para qualquer componente DSS. O consumidor é responsável pela composição interna. Os mais comuns são DssButton (flat/ghost), texto/título, DssIcon e DssSpace (espaçador). Não instancia filhos automaticamente nem estiliza filhos internamente.",
+
+  "props": {
+    "DssToolbar": ["inset", "brand"],
+    "blocked": {
+      "dark": "Modo escuro governado globalmente pelo DSS via [data-theme='dark'], não por prop individual.",
+      "glossy": "Efeito visual não utilizado no DSS — ausência de glossy é padrão.",
+      "color": "Cor de fundo governada por tokens DSS + prop brand.",
+      "text-color": "Cor de texto governada por tokens DSS (--dss-text-body / --dss-text-inverse conforme brand)."
+    },
+    "passThrough": {
+      "dense": "Não declarado como prop DSS — encaminhado via $attrs ao QToolbar, que aplica .q-toolbar--dense nativamente."
+    }
+  },
+
+  "statesApplicable": ["default", "branded"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssToolbar é container estrutural 100% não-interativo. Nenhum estado de interação aplica-se ao container — hover/focus/active são responsabilidade exclusiva dos componentes filhos (DssButton, etc.). disabled/loading/error pertencem ao conteúdo, não ao container. indeterminate não aplicável a containers.",
+
+  "accessibility": {
+    "role": "toolbar (herdado nativamente do QToolbar — Quasar define role='toolbar' na div raiz)",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Opção B — não implementado. DssToolbar é container. Touch targets são responsabilidade dos filhos (DssButton, etc.).",
+    "keyboardNavigation": "Não gerenciada pelo DssToolbar. Navegação entre elementos da toolbar é responsabilidade dos filhos e do browser.",
+    "ariaLabel": "Recomendado via $attrs: <DssToolbar aria-label='Ações do documento'>. O componente repassa $attrs corretamente.",
+    "contrastBrands": "Hub: ~2.8:1 (texto grande/bold — WCAG AA large text). Water: ~7.0:1 (passes AA e AAA). Waste: ~5.0:1 (passes AA). Ver EXC-02.",
+    "dataAttr": "data-brand é automaticamente aplicado quando brand prop está definida, propagando herança de cor para filhos."
+  },
+
+  "compositionMatrix": {
+    "role": "Container estrutural horizontal de ações e navegação",
+    "recommended": ["DssButton (flat/ghost)", "DssIcon (decorativo)", "DssSpace (espaçador)", "DssSeparator (vertical)"],
+    "patterns": [
+      "Menu à esquerda + título no centro + ações à direita",
+      "Título à esquerda + ações à direita",
+      "Somente ações (icon buttons)"
+    ],
+    "limits": "DssToolbar NÃO estiliza seus filhos. Cores dos filhos são governadas pelos próprios componentes ou herança via [data-brand].",
+    "antiPatterns": [
+      "Usar HTML nativo (<button>, <a>) em vez de DssButton",
+      "Sobrescrever estilos internos de DssButton via ::v-deep dentro do DssToolbar",
+      "Aninhar toolbars (DssToolbar dentro de DssToolbar)",
+      "Adicionar estados hover/focus ao container em vez de aos filhos"
+    ]
+  },
+
+  "gateExceptions": {
+    "compositionGateV24": {
+      "rule1": "Uso de <q-toolbar> diretamente — wrapper Nível 1 Independente",
+      "cssMethod": "Classes .dss-toolbar aplicadas no mesmo elemento raiz que .q-toolbar — override por cascata, sem seletor composto obrigatório para L2. L3 usa .dss-toolbar.q-toolbar--dense (seletor composto com classe Quasar)."
+    },
+    "responsibilityGateV24": "DssToolbar é 100% não-interativo. Nenhum estado hover/focus/active é definido no container. Toda interatividade é responsabilidade dos componentes filhos."
+  },
+
+  "antiPatterns": [
+    "Usar DssToolbar como componente de ação standalone (sem conteúdo filho)",
+    "Adicionar estados hover/focus/active ao DssToolbar",
+    "Aplicar cor via prop bloqueada (color, text-color, dark)",
+    "Usar DssToolbar fora de um contexto de header, footer ou card",
+    "Aninhar múltiplos DssToolbar sem separação visual"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Sobrescrita de padding e min-height nativos do QToolbar",
+      "location": "2-composition/_base.scss + 3-variants/_dense.scss",
+      "gatesViolated": ["Gate de Composição v2.4 — Regra 1 (L3 com .q-toolbar--dense)"],
+      "justification": "L2: O QToolbar aplica min-height: 50px e padding: 0 12px no .q-toolbar. Como .dss-toolbar é aplicado no mesmo elemento, o override é feito por cascata (mesma especificidade, ordem posterior) — sem seletor composto necessário. L3: O dense usa .dss-toolbar.q-toolbar--dense (seletor composto com classe Quasar) porque dense é gerenciado nativamente pelo QToolbar via $attrs, não via prop DSS explícita."
+    },
+    {
+      "id": "EXC-02",
+      "description": "Contraste Hub brand (2.8:1) abaixo do mínimo AA para texto normal",
+      "value": "background-color: var(--dss-hub-600) (#ef7a11) com text-inverse (branco)",
+      "location": "4-output/_brands.scss",
+      "justification": "Hub-600 (#ef7a11) com texto branco tem contraste ~2.8:1 — abaixo de 4.5:1 (WCAG AA texto normal). Atende 3:1 (WCAG AA para texto grande ≥18pt ou bold ≥14pt). O consumidor DEVE garantir que o conteúdo de texto na toolbar com brand=hub seja grande ou bold. Razão de manutenção: hub-600 é a cor oficial do produto Hub; usar hub-800 (contraste ~6:1) afastaria visualmente do guideline da brand. Documentado como reserva arquitetural."
+    },
+    {
+      "id": "EXC-03",
+      "value": "ButtonFace / ButtonText / Canvas / CanvasText",
+      "location": "4-output/_states.scss — bloco @media (forced-colors: active)",
+      "justification": "Forced-colors mode. System color keywords obrigatórios — tokens CSS são ignorados pelo navegador. Padrão canônico DSS."
+    },
+    {
+      "id": "EXC-04",
+      "value": "#000 !important / transparent !important",
+      "location": "4-output/_states.scss — bloco @media print",
+      "justification": "Impressão monocromática. Tokens CSS podem não ser resolvidos em contexto de impressão. Valores hardcoded são aceitáveis para garantir legibilidade. Precedente: DssTab, DssStep."
+    }
+  ],
+
+  "tokensUsed": [
+    "--dss-spacing-14",
+    "--dss-spacing-10",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-6",
+    "--dss-text-body",
+    "--dss-text-inverse",
+    "--dss-hub-600",
+    "--dss-water-600",
+    "--dss-waste-600",
+    "--dss-border-width-thin"
+  ]
+}
