@@ -1,0 +1,293 @@
+🧭 PRÉ-PROMPT OFICIAL CONSOLIDADO
+DSS FASE 2 READY — COMPONENTES COMPOSTOS / ESTRUTURAIS
+Versão: 2.5 (Consolidada com MCP-First Workflow)
+
+🔷 0️⃣ CONTEXTO NORMATIVO
+Você está criando ou evoluindo um componente DSS dentro do Design System Sansys (DSS) v2.2.
+Este componente pode ser:
+- Superfície estrutural (Card, Form, Modal, Drawer, etc.)
+- Componente composto (usa outros DSS internamente)
+- Wrapper governado sobre infraestrutura Quasar
+
+Este pré-prompt é de leitura obrigatória antes de executar o
+🧬 PROMPT DE CRIAÇÃO DE COMPONENTES — DSS v2.5
+
+🔷 1️⃣ MODELO DSS × QUASAR (DECLARAÇÃO OBRIGATÓRIA)
+Antes de qualquer implementação, declare explicitamente:
+1.1 Modelo Arquitetural
+- Quasar = camada de execução
+- DSS = camada de governança, semântica e tokenização
+
+Regras:
+- Todo componente Quasar é elegível a ter versão DSS
+- DSS pode divergir da API Quasar
+- DSS pode expandir além do Quasar
+- Nunca copiar API automaticamente
+- Nunca declarar “100% compatível”
+
+🔷 2️⃣ MAPEAMENTO ESTRUTURAL OBRIGATÓRIO
+Antes de implementar, você DEVE realizar:
+2.1 Equivalente Estrutural no Quasar
+Mapear apenas para entender o ecossistema:
+- Componente equivalente principal
+- Componentes auxiliares normalmente usados junto
+- Padrões estruturais comuns
+⚠️ Não copiar API. Não herdar decisões.
+
+2.2 Mapeamento de Superfície de Composição DSS
+Liste TODOS os componentes que podem compor essa superfície, classificados em:
+🟢 A) Existentes DSS (Componentes já implementados)
+🟡 B) Planejados / Roadmap (Componentes esperados estruturalmente, ainda não implementados)
+⚪ C) Estruturalmente Esperados mas Inexistentes (Componentes que fariam sentido arquiteturalmente)
+
+2.3 Declaração de Impacto
+Declare explicitamente:
+Composição ideal requer:
+- Existentes: X
+- Planejados: Y
+- Inexistentes: Z
+
+Risco se Z não existir:
+Impacto arquitetural:
+Recomendação de priorização:
+
+Se houver lacuna crítica:
+🛑 Não improvisar. Propor RFC.
+
+🔷 3️⃣ REGRAS DE COMPOSIÇÃO (DERIVADAS DO DssCard)
+Aprendizado consolidado:
+3.1 O componente estrutural NÃO instancia filhos DSS automaticamente
+Ele:
+- Fornece slots
+- Fornece layout
+- Não cria dependência rígida
+
+3.2 Composição é responsabilidade do consumidor
+O componente estrutural:
+- Não estiliza filhos internamente
+- Não usa ::v-deep para sobrescrever filhos DSS
+- Não assume presença de componentes específicos
+
+3.3 Anti-Patterns de Composição (Obrigatório incluir na documentação)
+- Usar HTML nativo quando existe versão DSS
+- Sobrescrever estilo interno de filho DSS
+- Aninhar superfícies excessivamente
+- Misturar Quasar bruto com DSS
+- Criar dependência estrutural obrigatória
+
+3.4 Comunicação Pai-Filho (NOVO v2.4)
+- Prefira Slots (composição via consumidor) em vez de Prop Drilling.
+- Se o componente estrutural precisar controlar o estado dos filhos (ex: DssRadioGroup controlando DssRadio), use `provide/inject` tipado, NUNCA manipulação direta de `$parent` ou `$children`.
+
+🔷 4️⃣ PREVENÇÃO DE ERROS IDENTIFICADOS NO DssCard
+4.1 Nunca usar tokens inexistentes
+Validar contra DSS_TOKEN_REFERENCE.md.
+4.2 Nunca usar frases proibidas
+Exemplo proibido: “100% compatível”
+Substituir por: “Wrapper DSS governado sobre infraestrutura Quasar”
+4.3 Exemplo NÃO é zona livre
+Arquivos .example.vue devem seguir:
+- Zero hex
+- Zero rgb hardcoded
+- Zero px hardcoded
+- Tokens DSS apenas
+- Composition API + TypeScript
+- Sem componentes inexistentes
+4.4 dss.meta.json deve refletir:
+- Todas exceções documentadas
+- Reservas
+- compositionRecommendations
+- phaseDescription
+- goldenComponent
+- statesApplicable
+- statesNotApplicable
+
+🔷 5️⃣ MATRIZ DE COMPOSIÇÃO (OBRIGATÓRIA PARA FASE 2)
+Documentação deve conter:
+Seção: Matriz de Composição DSS
+Incluindo:
+- Papel estrutural do componente
+- Componentes DSS recomendados
+- Padrões de layout
+- Limites de responsabilidade
+- Governança de extensão
+- Anti-patterns
+
+🔷 6️⃣ GOVERNANÇA DE LACUNAS
+Se durante o mapeamento surgir componente inexistente:
+Você DEVE classificar:
+# Crítica estrutural -> Propor RFC antes de selar
+# Não crítica -> Documentar como evolução futura
+# Decorativa -> Ignorar
+
+Nunca:
+- Inventar
+- Simular
+- Criar placeholder DSS inexistente
+
+🔷 7️⃣ CHECKPOINT PRÉ-CRIAÇÃO
+Antes de rodar o prompt principal, confirme:
+- Golden Component definido
+- Mapeamento estrutural concluído
+- Componentes de composição classificados
+- Lacunas avaliadas
+- Decisão de priorização tomada
+Se qualquer item faltar: 🛑 Interromper.
+
+🔷 8️⃣ RELAÇÃO COM ROADMAP
+Se componente estrutural depender de outros:
+Você pode recomendar ordem ideal de criação.
+Sem inventar implementação. Apenas recomendação estratégica.
+
+🔷 9️⃣ INTEGRAÇÃO COM PROMPT DE CRIAÇÃO DSS v2.2
+Após a leitura deste pré-prompt, executar:
+🧬 PROMPT DE CRIAÇÃO DE COMPONENTES — DSS v2.5
+
+---
+
+🧬 PROMPT DE CRIAÇÃO DE COMPONENTES — DSS v2.5
+📦 FASE 2 — COMPONENTES COMPOSTOS / ALTA COMPLEXIDADE
+
+🔒 Postura obrigatória do agente
+Você está operando em modo normativo DSS v2.2 com MCP Fase 3.
+- Não invente padrões
+- Não simplifique requisitos
+- Não reinterprete o Golden Component
+- Não omita documentação de comportamentos implícitos
+- Não finalize sem reconciliação transversal
+Este prompt tem precedência sobre qualquer heurística genérica do modelo.
+
+🤖 0️⃣ MCP-FIRST WORKFLOW (NOVO v2.5 - OBRIGATÓRIO)
+Você tem acesso ao servidor MCP do DSS (Fase 3). Você NUNCA deve escrever o boilerplate do componente do zero.
+Antes de escrever qualquer código, você DEVE:
+1. Chamar a tool `generate_component_scaffold` passando o nome do componente e a família.
+2. Criar os arquivos físicos no repositório exatamente com o conteúdo retornado pelo MCP.
+3. Só então, adaptar o código gerado para a lógica específica do componente.
+4. Após implementar, rodar `validate_component_code` e usar as sugestões de tokens retornadas para corrigir valores hardcoded.
+
+1️⃣ CONTEXTO DO COMPONENTE (OBRIGATÓRIO)
+Antes de qualquer geração, declare explicitamente:
+- Nome do componente: Dss<Name>
+- Classificação DSS (ex.: Compact Control / Form / Navigation / Composite)
+- Fase: Fase 2
+- Golden Component(s) de referência (primário e secundário)
+- Escopo funcional (o que FAZ e o que NÃO faz)
+- Subcomponentes internos (se houver)
+- Estados aplicáveis e explicitamente não aplicáveis
+⚠️ Componentes de Fase 2 não podem ter comportamento implícito não declarado.
+
+2️⃣ ARQUITETURA OBRIGATÓRIA (NÍVEL VINCULANTE)
+O componente DEVE implementar integralmente:
+
+📐 Arquitetura DSS de 4 camadas
+1-structure/
+- Vue 3 + TypeScript + Composition API
+- defineOptions({ name, inheritAttrs }) obrigatório
+- inheritAttrs: false quando aplicável
+- v-bind="$attrs" documentado
+- Elementos decorativos com aria-hidden="true"
+
+2-composition/
+- Token-first
+- Zero valores hardcoded (exceto exceções DSS documentadas)
+- Touch target WCAG quando aplicável
+- Estados base completos
+
+3-variants/
+- Mesmo que vazio, DEVE existir
+- Justificar variantes ausentes
+
+4-output/
+- Brands via mixin (sem duplicação)
+- States: dark, reduced-motion, contrast, forced-colors, print
+- Barrel import obrigatório
+- Orquestrador
+- <Component>.module.scss com @use das 3 camadas
+
+🔒 ENTRY POINT WRAPPER (VINCULANTE - NOVO v2.4)
+Assim como na Fase 1, TODO componente da Fase 2 DEVE ter o arquivo `DssNome.vue` na raiz, atuando como re-export puro da Layer 1.
+
+🔗 REGRA DE IMPORTAÇÃO INTERNA (CRÍTICO - NOVO v2.4)
+Quando um componente da Fase 2 importar outro componente DSS (ex: DssCard importando DssButton), a importação DEVE ser feita apontando para o Entry Point Wrapper do filho, NUNCA para a pasta `1-structure` do filho.
+✅ Correto: `import DssButton from '../DssButton/DssButton.vue'`
+❌ Incorreto: `import DssButton from '../DssButton/1-structure/DssButton.ts.vue'`
+
+3️⃣ REGRAS DE TOKENS (CRÍTICAS — FONTE DE NCs RECORRENTES)
+🎨 Tokens de Brand
+PADRÃO: --dss-{brand}-primary | secondary | accent
+Tokens numéricos (-500, -600) SÓ podem ser usados se:
+- O Golden Component usar explicitamente
+- OU houver justificativa documentada com ID
+
+📏 Tokens de layout, spacing e tipografia
+- Usar tokens genéricos DSS
+- É proibido criar tokens específicos do componente na Fase 2
+
+⚠️ Exceções
+- Apenas exceções DSS canônicas (brightness, saturate, sr-only, border-radius geométrico)
+- Todas DEVEM ser documentadas com: ID, Valor, Local, Justificativa
+
+4️⃣ CONSISTÊNCIA COM GOLDEN COMPONENT (OBRIGATÓRIA)
+Antes de finalizar, compare explicitamente com o Golden Component:
+Checklist mínimo obrigatório:
+- aria-hidden="true" em elementos decorativos
+- defineOptions presente
+- inheritAttrs + forwarding coerente
+- -webkit-tap-highlight-color: transparent
+- Semântica de dense
+- Estratégia de focus-visible
+- Estratégia de error / disabled
+⚠️ Qualquer divergência deve ser intencional, documentada e citar o Golden Component.
+
+5️⃣ DOCUMENTAÇÃO — CONTRATO VINCULANTE
+O componente DEVE gerar:
+- <Component>.md (template DSS 13.x completo)
+- README.md (uso resumido)
+- <COMPONENT>_API.md (referência técnica)
+- dss.meta.json
+
+📚 Seções obrigatórias adicionais (Fase 2)
+Além do template padrão, adicione obrigatoriamente:
+🔹 Comportamentos Implícitos (Forwarding, inheritAttrs, SR, Estados N/A)
+🔹 Paridade com Golden Component (Tabela: Igual | Diferente | Justificativa)
+🔹 Tokens Utilizados (Nomes exatos, 1:1 com SCSS)
+⚠️ É proibido documentar tokens que não existem no código.
+
+6️⃣ TESTES (NÍVEL FASE 2)
+- Testes unitários E comportamentais
+- Testes de: Focus-visible, Estados compostos, Slots, Forwarding
+- Cobertura mínima: equivalente ou superior ao Golden Component
+
+7️⃣ ETAPA FINAL — RECONCILIAÇÃO DSS (OBRIGATÓRIA)
+Antes de declarar o componente como “criado”, execute mentalmente e documente:
+🔍 Reconciliação Transversal
+- SCSS ↔ CSS compilado
+- SCSS ↔ Documentação
+- Código ↔ Documentação
+- Golden ↔ Componente
+⚠️ Se qualquer item falhar, corrija antes de finalizar.
+
+8️⃣ SAÍDA ESPERADA
+Ao final, o agente DEVE entregar:
+- Estrutura completa de arquivos
+- Código compilável sem erros
+- Documentação coerente e reconciliada
+- Lista explícita de decisões arquiteturais
+- Declaração: “Componente PRONTO PARA AUDITORIA DSS v2.2”
+🚫 NÃO emitir selo
+🚫 NÃO auto-certificar conformidade
+
+🔎 VALIDAÇÃO ESTRUTURAL FINAL
+Antes de finalizar:
+- Wrapper existe
+- Wrapper é puro
+- 4 camadas existem
+- module.scss importa corretamente
+- index.js exporta wrapper
+- Documentação reconciliada
+- Golden comparado explicitamente
+Se falhar: corrigir antes de finalizar.
+
+🧠 NOTA FINAL (NORMATIVA)
+Este prompt foi endurecido com base em falhas reais de auditoria.
+Qualquer atalho ou omissão será tratada como não-conformidade na auditoria.
