@@ -191,6 +191,7 @@ interface DssBtnGroupPreviewProps {
   square: boolean;
   spread: boolean;
   stretch: boolean;
+  split: boolean;
 }
 
 function DssBtnGroupPreview({
