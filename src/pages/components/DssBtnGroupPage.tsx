@@ -412,6 +412,7 @@ export default function DssBtnGroupPage() {
     square: false,
     spread: false,
     stretch: false,
+    split: false,
   });
 
   // Color Application Domain — mutual exclusivity
