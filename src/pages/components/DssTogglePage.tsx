@@ -546,7 +546,7 @@ export default function DssTogglePage() {
         previewContent={<DssTogglePreview {...state} isDarkMode={isDarkMode} />}
         codePreview={generateToggleCode(state)}
         controls={
-          <div className="space-y-5">
+          <ControlGrid columns={5}>
             <SizeSelector
               label="Tamanho"
               sizes={[
@@ -564,11 +564,17 @@ export default function DssTogglePage() {
               colors={Object.values(DSS_SEMANTIC_COLORS)}
               selectedColor={state.color}
               onSelect={(color) => handleChange("color", color)}
-              disabled={!!state.brand}
+            />
+
+            <FeedbackColorPicker
+              label="Feedback"
+              colors={Object.values(DSS_FEEDBACK_COLORS)}
+              selectedColor={state.feedback}
+              onSelect={(feedback) => handleChange("feedback", feedback)}
             />
 
             <BrandPicker
-              label="Brand (Sansys)"
+              label="Brand"
               brands={DSS_BRAND_COLORS}
               selectedBrand={state.brand}
               onSelect={(brand) => handleChange("brand", brand)}
@@ -614,7 +620,7 @@ export default function DssTogglePage() {
                 />
               </div>
             </ControlSection>
-          </div>
+          </ControlGrid>
         }
       />
 
