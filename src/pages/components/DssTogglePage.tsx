@@ -61,6 +61,7 @@ import {
 interface DssToggleState {
   size: Size;
   color: SemanticColor | null;
+  feedback: FeedbackColor | null;
   brand: BrandColor | null;
   checked: boolean;
   disabled: boolean;
