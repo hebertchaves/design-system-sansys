@@ -286,14 +286,15 @@ function generateToggleCode(state: DssToggleState): string {
 
   if (state.size !== "md") props.push(`size="${state.size}"`);
   if (state.brand) props.push(`brand="${state.brand}"`);
+  else if (state.feedback) props.push(`color="${state.feedback}"`);
   else if (state.color && state.color !== "primary") props.push(`color="${state.color}"`);
-  if (state.checked) props.push("v-model=\"enabled\"");
+  props.push('v-model="enabled"');
   if (state.disabled) props.push("disable");
   if (state.dense) props.push("dense");
   if (state.leftLabel) props.push("left-label");
   if (state.label) props.push(`label="${state.label}"`);
   if (state.error) props.push("error");
-  if (state.errorMessage) props.push(`error-message="${state.errorMessage}"`);
+  if (state.error && state.errorMessage) props.push(`error-message="${state.errorMessage}"`);
 
   if (props.length <= 3) {
     return `<DssToggle ${props.join(" ")} />`;
