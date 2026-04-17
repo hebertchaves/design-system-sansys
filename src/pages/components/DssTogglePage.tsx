@@ -121,7 +121,15 @@ function DssTogglePreview({
     lg: { trackW: 52, trackH: 28, thumbSize: 24, gap: "12px", fontSize: "var(--dss-font-size-md)" },
   };
 
-  const sizeStyles = sizeMap[size];
+  const baseStyles = sizeMap[size];
+  const sizeStyles = dense
+    ? {
+        ...baseStyles,
+        trackW: Math.round(baseStyles.trackW * 0.85),
+        trackH: Math.round(baseStyles.trackH * 0.85),
+        thumbSize: Math.round(baseStyles.thumbSize * 0.85),
+      }
+    : baseStyles;
 
   const getContainerStyles = (): React.CSSProperties => ({
     display: "inline-flex",
