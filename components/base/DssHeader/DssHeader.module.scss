@@ -1,0 +1,16 @@
+// ==========================================================================
+// DssHeader — Orchestrador Principal SCSS
+// ==========================================================================
+//
+// Importa as 4 camadas na ordem obrigatória: L2 → L3 → L4.
+// Este arquivo é referenciado pelo componente via <style> scoped.
+// ==========================================================================
+
+/* Layer 2: Composição Base */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variantes */
+@use './3-variants' as variants;
+
+/* Layer 4: Output (brands, states) */
+@use './4-output' as output;

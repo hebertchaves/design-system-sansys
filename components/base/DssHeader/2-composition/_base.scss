@@ -1,0 +1,26 @@
+// ==========================================================================
+// DssHeader — Layer 2: Composição Base
+// ==========================================================================
+//
+// Estilos base do header. Tokens genéricos apenas.
+// Sem referências a variantes, brands ou estados adaptativos.
+//
+// EXC-02 — Sobrescrita de background via !important:
+//   O QHeader aplica bg-primary !important via sistema de classes utilitárias
+//   do Quasar quando nenhuma prop color é passada (default: 'primary').
+//   Como bg-primary usa !important, a sobrescrita requer !important também.
+//   Isso é necessário para que o DssHeader use --dss-surface-default (branco/
+//   superfície padrão) em vez da cor primary do Quasar.
+//   A prop color do QHeader é bloqueada no DssHeader — governança DSS.
+//   Precedente: DssToolbar sobrescreve padding/min-height do QToolbar (EXC-01).
+// ==========================================================================
+
+/* EXC-02 — Override de background-color do QHeader (bg-primary !important) */
+
+.dss-header {
+  // ------------------------------------------------------------------
+  // Cor de fundo — sobrescreve bg-primary !important do QHeader nativo
+  // ------------------------------------------------------------------
+  background-color: var(--dss-surface-default) !important;
+  color: var(--dss-text-body) !important;
+}
