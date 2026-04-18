@@ -1,0 +1,26 @@
+// ==========================================================================
+// DssFooter — Layer 2: Composição Base
+// ==========================================================================
+//
+// Estilos base do footer. Tokens genéricos apenas.
+// Sem referências a variantes, brands ou estados adaptativos.
+//
+// EXC-02 — Sobrescrita de background via !important:
+//   O QFooter aplica bg-primary !important via sistema de classes utilitárias
+//   do Quasar quando nenhuma prop color é passada (default: 'primary').
+//   Como bg-primary usa !important, a sobrescrita requer !important também.
+//   Isso é necessário para que o DssFooter use --dss-surface-default (branco/
+//   superfície padrão) em vez da cor primary do Quasar.
+//   A prop color do QFooter é bloqueada no DssFooter — governança DSS.
+//   Precedente: DssHeader (EXC-02) usa mesma estratégia para QHeader.
+// ==========================================================================
+
+/* EXC-02 — Override de background-color do QFooter (bg-primary !important) */
+
+.dss-footer {
+  // ------------------------------------------------------------------
+  // Cor de fundo — sobrescreve bg-primary !important do QFooter nativo
+  // ------------------------------------------------------------------
+  background-color: var(--dss-surface-default) !important;
+  color: var(--dss-text-body) !important;
+}

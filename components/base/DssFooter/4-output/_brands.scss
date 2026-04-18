@@ -1,0 +1,17 @@
+// ==========================================================================
+// DssFooter — Layer 4: Brands
+// ==========================================================================
+//
+// DssFooter NÃO gerencia brand diretamente.
+//
+// Responsabilidade de brand é delegada ao DssToolbar interno:
+//   <DssFooter>
+//     <DssToolbar brand="hub">  ← brand aplicada aqui
+//       ...
+//     </DssToolbar>
+//   </DssFooter>
+//
+// O DssFooter é um container estrutural transparente em termos de brand.
+// Qualquer contexto [data-brand] propagado por um ancestral será
+// automaticamente herdado pelos filhos DssToolbar dentro do DssFooter.
+// ==========================================================================

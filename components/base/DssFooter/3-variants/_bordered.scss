@@ -1,0 +1,12 @@
+// ==========================================================================
+// DssFooter — Layer 3: Variante Bordered
+// ==========================================================================
+//
+// Aplica borda superior sutil como alternativa flat à sombra de elevação.
+// Indicado para layouts com fundo claro onde sombra seria excessiva.
+// Usa border-top (não border-bottom) pois o footer ancora na base da página.
+// ==========================================================================
+
+.dss-footer--bordered {
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+}

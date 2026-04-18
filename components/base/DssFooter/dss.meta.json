@@ -1,0 +1,138 @@
+{
+  "component": "DssFooter",
+  "dssVersion": "2.2",
+  "status": "pending-audit",
+  "auditMode": "Aguardando Auditoria DSS v2.2",
+  "auditDate": null,
+  "seal": null,
+
+  "goldenReference": "DssCard",
+  "goldenReferenceJustification": "DssCard é o Golden Reference para DssFooter: ambos são containers estruturais não-interativos que fornecem superfície visual, com governança de fundo via tokens DSS e brandabilidade. DssCard recebeu Selo DSS v2.2 (Feb 2026) e estabelece o padrão para containers de Fase 2.",
+
+  "goldenContext": "DssHeader",
+  "goldenContextJustification": "DssHeader é o Golden Context mais próximo para DssFooter: ambos são containers estruturais de layout de página, não-interativos, que encapsulam primitivos Quasar (QHeader / QFooter), bloqueiam props de cor e delegam brand para DssToolbar. DssHeader recebeu Selo DSS v2.2 (Abr 2026) e é o par simétrico direto do DssFooter.",
+
+  "category": "Container estrutural de layout de página — footer fixo na base",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Container estrutural de Nível 3 (Composição de Segundo Grau). Orquestra DssToolbar (Nível 1). Wrapper DSS governado sobre QFooter. Bloco de construção base para DssLayout (futuro Nível 4). Par simétrico inferior do DssHeader.",
+  "classification": "Superfície e Layout — container estrutural não-interativo",
+
+  "hasReservations": false,
+
+  "subcomponents": [],
+  "compositionRequirements": [],
+  "compositionFuture": ["DssLayout"],
+  "compositionRecommendations": [
+    "DssToolbar (slot default — uso exclusivo recomendado)",
+    "DssTabs (slot default — navegação global em cenários específicos de bottom navigation)"
+  ],
+  "compositionNote": "DssFooter fornece o container <q-footer> do Quasar com governança DSS. O slot default deve receber exclusivamente componentes DssToolbar (um ou mais empilhados). Uso de HTML nativo ou texto solto diretamente no DssFooter viola o Gate de Composição v2.4.",
+
+  "propsExposed": ["elevated", "bordered"],
+  "propsBlocked": ["color", "height-hint"],
+  "propsBlockedJustification": {
+    "color": "Cor de fundo governada por token --dss-surface-default via CSS. A prop color do QFooter é bloqueada para garantir consistência visual. Override via !important documentado como EXC-02.",
+    "height-hint": "Altura calculada automaticamente pelo Quasar com base no conteúdo (DssToolbar). Não deve ser configurada pelo consumidor."
+  },
+  "propsPassThrough": {
+    "reveal": "Não declarado como prop DSS — encaminhado via $attrs ao QFooter, que oculta/exibe o footer ao rolar a página nativamente."
+  },
+
+  "statesApplicable": ["default", "elevated", "bordered"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssFooter é container estrutural 100% não-interativo. Nenhum estado de interação aplica-se — hover/focus/active são responsabilidade dos filhos (DssToolbar > DssButton). disabled/loading/error/indeterminate não se aplicam a containers de layout de página.",
+
+  "accessibility": {
+    "role": "contentinfo (role='contentinfo' herdado nativamente do QFooter — semântica de landmark de rodapé de página)",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Opção B — não implementado. DssFooter é container estrutural. Touch targets são responsabilidade dos filhos.",
+    "keyboardNavigation": "Não gerenciada pelo DssFooter. Navegação é responsabilidade dos filhos (DssToolbar, DssButton).",
+    "ariaLabel": "Recomendado via $attrs: <DssFooter aria-label='Rodapé principal'>. O componente repassa $attrs corretamente via v-bind.",
+    "landmark": "role='contentinfo' identifica este elemento como o rodapé principal da página. Deve haver apenas um DssFooter por página."
+  },
+
+  "compositionMatrix": {
+    "role": "Container estrutural inferior de página — âncora da base do layout",
+    "recommended": [
+      "DssToolbar (conteúdo primário — copyright, links, ações secundárias)",
+      "DssTabs (bottom navigation — cenários específicos)"
+    ],
+    "patterns": [
+      "DssFooter > DssToolbar (padrão básico)",
+      "DssFooter > DssToolbar (links secundários) + DssToolbar (copyright/legal)",
+      "DssFooter > DssToolbar com brand + informações de produto"
+    ],
+    "limits": "DssFooter NÃO define brand/cor — essa responsabilidade é do DssToolbar. DssFooter NÃO estiliza seus filhos. Máximo recomendado: 2 DssToolbars empilhados.",
+    "antiPatterns": [
+      "Usar HTML nativo (<nav>, <div>) diretamente no DssFooter em vez de DssToolbar",
+      "Adicionar texto ou botões diretamente no slot sem DssToolbar intermediário",
+      "Usar DssFooter fora de um contexto de QLayout",
+      "Sobrescrever z-index do QFooter via classes ou estilos inline",
+      "Instanciar múltiplos DssFooter por página (viola semântica role='contentinfo')"
+    ]
+  },
+
+  "gateExceptions": {
+    "compositionGateV24": {
+      "rule1": "Uso de <q-footer> diretamente — wrapper Nível 3 sobre primitivo Quasar de layout.",
+      "cssMethod": "Classes .dss-footer aplicadas no mesmo elemento raiz que .q-footer. EXC-02 justifica o uso de !important para sobrescrever bg-primary do QFooter."
+    },
+    "responsibilityGateV24": "DssFooter é 100% não-interativo. Nenhum estado hover/focus/active definido no container. Toda interatividade é responsabilidade dos filhos."
+  },
+
+  "antiPatterns": [
+    "Usar DssFooter como container genérico de conteúdo de página",
+    "Aplicar brand via prop bloqueada (color)",
+    "Sobrescrever z-index ou position do QFooter",
+    "Instanciar múltiplos DssFooter por página",
+    "Usar DssFooter fora de um contexto QLayout"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Uso de <q-layout> no arquivo DssFooter.example.vue",
+      "location": "DssFooter.example.vue — todos os exemplos",
+      "gatesViolated": ["Gate de Composição v2.4 — Regra 1 (Proibição de componentes Quasar no template)"],
+      "justification": "DssFooter requer contexto QLayout para renderizar corretamente (posicionamento fixo, cálculo de offset de conteúdo). Como DssLayout (Nível 4) ainda não existe, usa-se <q-layout> nativo temporariamente APENAS no arquivo de exemplo. O código fonte do componente (DssFooter.ts.vue) permanece 100% aderente aos gates. Isenção formal conforme DSS_IMPLEMENTATION_GUIDE.md — exemplo.vue tem contexto de scaffolding. Precedente: DssHeader (EXC-01)."
+    },
+    {
+      "id": "EXC-02",
+      "description": "Uso de !important para sobrescrever background-color do QFooter",
+      "value": "background-color: var(--dss-surface-default) !important",
+      "location": "2-composition/_base.scss + 4-output/_states.scss",
+      "gatesViolated": [],
+      "justification": "QFooter do Quasar aplica bg-primary !important via sistema de classes utilitárias (bg-{color}) quando color prop não é passada (default: 'primary'). Para que --dss-surface-default governe o fundo, é necessário !important. A prop color do QFooter é bloqueada no DssFooter (governança DSS). Precedente: DssHeader (EXC-02)."
+    },
+    {
+      "id": "EXC-03",
+      "description": "System color keywords em forced-colors mode",
+      "value": "Canvas, CanvasText, ButtonFace",
+      "location": "4-output/_states.scss — @media (forced-colors: active)",
+      "justification": "Forced-colors mode. System color keywords obrigatórios — tokens CSS são ignorados pelo navegador. Padrão canônico DSS. Precedente: DssHeader (EXC-03), DssToolbar (EXC-03), DssCard, DssStep."
+    },
+    {
+      "id": "EXC-04",
+      "description": "Valores hardcoded em @media print",
+      "value": "#fff, #000, 1px solid #000, position: static",
+      "location": "4-output/_states.scss — @media print",
+      "justification": "Impressão monocromática. Tokens CSS podem não ser resolvidos em contexto de impressão. Valores hardcoded garantem legibilidade. position: static cancela o position: fixed do QFooter para evitar que o footer apareça flutuando na impressão. Precedente: DssHeader (EXC-04), DssToolbar (EXC-04), DssTab, DssStep."
+    },
+    {
+      "id": "EXC-05",
+      "description": "Sombra invertida (projetada para cima) na variante elevated",
+      "value": "box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.30)",
+      "location": "3-variants/_elevated.scss",
+      "gatesViolated": ["Token First — valor hardcoded rgba()"],
+      "justification": "O sistema de tokens DSS v2.2 não possui variante --dss-elevation-up-* para sombras projetadas para cima. Para footers fixos na base da viewport, a sombra de --dss-elevation-2 (0 4px 6px rgba(0,0,0,0.30)) é projetada abaixo do footer e ficaria fora da viewport, sendo invisível. O valor hardcoded é o equivalente com eixo Y negado de --dss-shadow-md, conforme autorizado pelo pré-prompt DSS Fase 2 DssFooter. Será substituído por --dss-elevation-up-2 quando o token for adicionado ao catálogo DSS. Precedente: DssCard (EXC-01) usa rgba() hardcoded em dark mode."
+    }
+  ],
+
+  "tokensUsed": [
+    "--dss-surface-default",
+    "--dss-text-body",
+    "--dss-border-width-thin",
+    "--dss-gray-200",
+    "--dss-border-width-md"
+  ]
+}
