@@ -10,7 +10,7 @@ Este documento define as diretrizes arquiteturais e de governança para a criaç
 - **Família:** Superfícies e Layout
 - **Nível de Composição:** Nível 3 (Composição de Segundo Grau)
 - **Golden Reference:** `DssCard` (como container estrutural de alto nível)
-- **Golden Context:** `DssLayout` (container pai futuro, Nível 4)
+- **Golden Context:** `DssHeader` (componente com Selo v2.2 de mesma família e arquitetura). *Nota: Golden Context original era DssLayout, corrigido para DssHeader conforme definição formal de Golden Context.*
 - **Componente Quasar Base:** `QFooter`
 - **Dependência Direta:** `DssToolbar` (Nível 1)
 
@@ -43,7 +43,7 @@ O componente deve ser um wrapper direto do `<q-footer>`. O slot `default` é des
 ## 4. Governança de Tokens e CSS
 
 O `DssFooter` deve utilizar os seguintes tokens:
-- **Elevação (Elevated):** `--dss-shadow-2` (sombra padrão para footers/navbars). Nota: a sombra deve ser projetada para cima (ex: `0 -2px 4px rgba(...)` ou equivalente via token, se disponível, ou invertendo o eixo Y da sombra padrão).
+- **Elevação (Elevated):** `--dss-elevation-2` / `--dss-shadow-md` (sombra padrão para footers/navbars). *Nota: Como o token de sombra invertida não existe (`--dss-elevation-up-*`), deve-se documentar uma exceção (EXC-05) com o valor equivalente invertido de `--dss-shadow-md`.*
 - **Borda (Bordered):** `--dss-border-width-sm` solid `--dss-border-subtle` (aplicada no `border-top`).
 - **Cor de Fundo:** O `QFooter` nativo aplica a cor `primary` por padrão. O `DssFooter` deve sobrescrever isso para `--dss-surface-base` (fundo branco/escuro padrão), delegando a responsabilidade de cor (brand) para o `DssToolbar` interno.
 
@@ -80,3 +80,9 @@ O arquivo `DssFooter.example.vue` deve cobrir:
 ### EXC-04: Valores hardcoded em @media print
 - **Regra Violada:** Nenhuma (mas documentada para clareza).
 - **Justificativa:** Em impressão monocromática, tokens CSS podem não ser resolvidos. Valores hardcoded garantem legibilidade. `position: static` cancela o `position: fixed` do `QFooter` para evitar que o footer apareça flutuando na impressão. Precedente: `DssHeader`, `DssToolbar`.
+
+---
+
+## 8. Histórico de Auditoria
+
+- **18 Abr 2026:** Componente auditado e selado. GAPs documentais corrigidos neste pré-prompt (Golden Context ajustado para DssHeader; token de elevação corrigido com nota sobre EXC-05).
