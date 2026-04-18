@@ -24,6 +24,7 @@
 | Prop Quasar | Tipo | Descrição |
 |-------------|------|-----------|
 | `reveal` | `Boolean` | Oculta o footer ao rolar a página para baixo; reexibe ao rolar para cima. |
+| `reveal-offset` | `Number` | Offset em pixels para acionar o comportamento de reveal (nativo QFooter). |
 
 ---
 

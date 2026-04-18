@@ -1,6 +1,6 @@
 # DssFooter — Documentação Normativa DSS v2.2
 
-> **Status:** Pendente de Auditoria
+> **Status:** ✅ CONFORME — Selo DSS v2.2 emitido em 2026-04-18
 > **Versão DSS:** 2.2
 > **Fase:** 2 — Container Estrutural / Superfície e Layout
 > **Golden Reference:** DssCard

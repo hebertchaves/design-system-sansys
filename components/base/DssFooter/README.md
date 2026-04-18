@@ -57,6 +57,7 @@ import DssFooter from '@dss/components/base/DssFooter'
 | Prop Quasar | Descrição |
 |-------------|-----------|
 | `reveal` | Oculta/exibe o footer ao rolar a página |
+| `reveal-offset` | Offset em pixels para acionar o reveal |
 
 ## Slots
 

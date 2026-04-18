@@ -1,10 +1,10 @@
 {
   "component": "DssFooter",
   "dssVersion": "2.2",
-  "status": "pending-audit",
-  "auditMode": "Aguardando Auditoria DSS v2.2",
-  "auditDate": null,
-  "seal": null,
+  "status": "sealed",
+  "auditMode": "Auditoria DSS v2.2 — Aprovado",
+  "auditDate": "2026-04-18",
+  "seal": "DSS/docs/Compliance/seals/DssFooter/DSSFOOTER_SELO_v2.2.md",
 
   "goldenReference": "DssCard",
   "goldenReferenceJustification": "DssCard é o Golden Reference para DssFooter: ambos são containers estruturais não-interativos que fornecem superfície visual, com governança de fundo via tokens DSS e brandabilidade. DssCard recebeu Selo DSS v2.2 (Feb 2026) e estabelece o padrão para containers de Fase 2.",

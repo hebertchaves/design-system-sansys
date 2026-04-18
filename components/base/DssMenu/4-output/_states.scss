@@ -1,0 +1,90 @@
+/* ==========================================================================
+   DssMenu — Layer 4: Output — States
+
+   RESPONSABILIDADE: Estados adaptativos (dark mode, acessibilidade, impressão).
+
+   CLASSIFICAÇÃO: Overlay de Navegação (Nível 2 — não-interativo como container)
+
+   ESTADOS APLICÁVEIS:
+   - visible: controlado externamente via v-model/QMenu (sem CSS próprio)
+   - hidden: controlado externamente via v-model/QMenu
+
+   ESTADOS EXPLICITAMENTE NÃO APLICÁVEIS:
+   - hover: container overlay não-interativo
+   - active: container overlay não-interativo
+   - disabled: não aplicável a overlays de layout
+   - loading: não aplicável (Fase 2 síncrona)
+   - focus: gerenciado pelo QMenu nativamente
+   - checked: não aplicável
+
+   CARACTERÍSTICAS:
+   - Dark mode: adiciona borda (sombra menos visível em fundo escuro)
+   - High contrast (prefers-contrast: more): reforça borda
+   - Forced colors (Windows High Contrast Mode): system keywords
+   - Reduced motion: sem transição
+   - Print: overlay oculto em impressão
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   A sombra (box-shadow) é menos visível em fundos escuros.
+   Borda sutil compensa a perda de profundidade visual.
+   ========================================================================== */
+
+[data-theme='dark'] {
+  .dss-menu {
+    border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-menu {
+    border: var(--dss-border-width-md) solid currentColor !important;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-menu,
+  .dss-menu * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+
+   Em Windows High Contrast Mode, o navegador IGNORA tokens CSS customizados.
+   System color keywords são obrigatórios neste contexto.
+
+   EXC-03 — Paridade com DssTooltip, DssCard, DssFooter.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-menu {
+    background-color: Canvas !important;
+    color: CanvasText !important;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   Menus são overlays de interface interativa.
+   Não têm utilidade em contexto de impressão.
+   ========================================================================== */
+
+@media print {
+  .dss-menu {
+    display: none !important;
+  }
+}

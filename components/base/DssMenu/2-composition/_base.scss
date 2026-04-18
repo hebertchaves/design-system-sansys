@@ -1,0 +1,70 @@
+/* ==========================================================================
+   DssMenu — Layer 2: Composition (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais do menu usando tokens genéricos DSS.
+
+   GOLDEN REFERENCE: DssTooltip (overlay não-interativo)
+   GOLDEN CONTEXT: DssList (container de itens de lista)
+   CLASSIFICAÇÃO: Overlay de Navegação (Nível 2 — wrapper QMenu)
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-elevation-*, --dss-radius-*, --dss-surface-*)
+   ✅ Reset e layout base
+   ❌ ZERO valores hardcoded não documentados (Token First)
+   ❌ ZERO lógica de variantes (vão em 3-variants/)
+   ❌ ZERO estados interativos (hover, active, focus, disabled)
+
+   CONTEXTO DE TELEPORT:
+   QMenu teleporta seu conteúdo para <body>. Estes estilos são carregados
+   globalmente via components/index.scss e se aplicam ao elemento .dss-menu
+   onde quer que ele esteja na DOM.
+
+   EXCEÇÕES DOCUMENTADAS:
+   EXC-01 — !important em background-color e box-shadow
+   O QMenu do Quasar aplica background e box-shadow via classe .q-menu com
+   especificidade CSS que pode sobrescrever os tokens DSS.
+   Uso de !important é necessário para garantir que --dss-surface-default
+   e --dss-elevation-3 prevaleçam. Precedente: DssFooter (EXC-02),
+   DssSelect (panel override).
+   ========================================================================== */
+
+/* ==========================================================================
+   MENU BASE
+   ========================================================================== */
+
+.dss-menu {
+  /* ==========================================================================
+     Superfície
+     EXC-01: !important necessário para sobrescrever .q-menu { background: #fff }
+     do Quasar com especificidade equivalente.
+     ========================================================================== */
+  background-color: var(--dss-surface-default) !important;
+
+  /* ==========================================================================
+     Elevação
+     EXC-01: !important necessário para sobrescrever box-shadow do .q-menu.
+     --dss-elevation-3 é maior que --dss-elevation-2 (DssCard) pois menus
+     ficam acima do conteúdo da página.
+     ========================================================================== */
+  box-shadow: var(--dss-elevation-3) !important;
+
+  /* ==========================================================================
+     Forma
+     Bordas arredondadas moderadas — diferencia de tooltip (radius-md também)
+     mas estabelece identidade de overlay persistente.
+     ========================================================================== */
+  border-radius: var(--dss-radius-md);
+
+  /* ==========================================================================
+     Overflow
+     Garante que border-radius seja respeitado pelos filhos (DssList, DssItem).
+     Sem overflow: hidden, os cantos dos filhos ultrapassariam o container.
+     ========================================================================== */
+  overflow: hidden;
+
+  /* ==========================================================================
+     Tipografia — herança de contexto
+     ========================================================================== */
+  font-family: var(--dss-font-family-sans);
+  color: var(--dss-text-body);
+}

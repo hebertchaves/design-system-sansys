@@ -1,0 +1,142 @@
+{
+  "component": "DssMenu",
+  "dssVersion": "2.2",
+  "status": "pending-audit",
+  "auditMode": null,
+  "auditDate": null,
+  "seal": null,
+
+  "goldenReference": "DssTooltip",
+  "goldenReferenceJustification": "DssTooltip é o Golden Reference para DssMenu: ambos são overlays informativos/de navegação não-interativos como container, que aparecem sobre o conteúdo da página. DssTooltip recebeu Selo DSS v2.2 (Fev 2026) e estabelece o padrão para overlays de conteúdo contextual.",
+
+  "goldenContext": "DssList",
+  "goldenContextJustification": "DssList é o Golden Context mais próximo para DssMenu: ambos são containers não-interativos que agrupam DssItems, compartilham a estrutura de role ARIA para navegação por lista/menu, e definem a superfície visual que enquadra os itens de navegação.",
+
+  "category": "Overlay de Navegação — menu flutuante sobre conteúdo da página",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Overlay de Nível 2 (Composição de Primeiro Grau). Wrapper DSS governado sobre QMenu do Quasar. Orquestra DssList e DssItem (Nível 1) via slot. Teleporta para <body> via QMenu nativo.",
+  "classification": "Navegação / Overlays — container overlay não-interativo",
+
+  "hasReservations": false,
+
+  "subcomponents": [],
+  "compositionRequirements": [],
+  "compositionFuture": [],
+  "compositionRecommendations": [
+    "DssList (slot default — conteúdo primário do menu)",
+    "DssItem (itens clicáveis dentro de DssList)",
+    "DssSeparator (divisão entre grupos de itens)"
+  ],
+  "compositionNote": "DssMenu fornece o container <q-menu> com governança DSS. O slot default deve receber DssList com DssItems. Uso de HTML nativo ou texto solto diretamente viola o Gate de Composição v2.4.",
+
+  "propsExposed": ["modelValue", "fit", "cover", "anchor", "self", "offset"],
+  "propsBlocked": ["dark", "square"],
+  "propsBlockedJustification": {
+    "dark": "Modo escuro governado globalmente via [data-theme='dark']. Prop dark do QMenu é bloqueada para garantir consistência com o sistema de temas DSS.",
+    "square": "Cantos quadrados violam o token --dss-radius-md que define a identidade visual de overlays no DSS v2.2."
+  },
+  "propsPassThrough": {
+    "transition-show": "Animação de abertura do menu (via $attrs ao QMenu)",
+    "transition-hide": "Animação de fechamento do menu (via $attrs ao QMenu)",
+    "max-height": "Altura máxima do menu (via $attrs ao QMenu)",
+    "max-width": "Largura máxima do menu (via $attrs ao QMenu)",
+    "persistent": "Evita fechamento ao clicar fora (via $attrs ao QMenu)",
+    "no-focus": "Não transfere foco ao abrir (via $attrs ao QMenu)",
+    "touch-position": "Posiciona menu no ponto de toque (via $attrs ao QMenu)"
+  },
+
+  "statesApplicable": ["visible", "hidden"],
+  "statesNotApplicable": ["hover", "active", "disabled", "loading", "focus", "checked", "indeterminate"],
+  "statesNotApplicableJustification": "DssMenu é container overlay não-interativo. Estados de interação (hover/focus/active) pertencem aos filhos (DssItem, DssButton). disabled/loading/error/indeterminate não se aplicam a containers overlay de navegação.",
+
+  "accessibility": {
+    "role": "menu — herdado nativamente do QMenu (role='menu' no elemento raiz teleportado)",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Opção B — não implementado. DssMenu é container overlay. Touch targets são responsabilidade dos filhos (DssItem).",
+    "keyboardNavigation": "Gerenciada pelo QMenu nativamente (Esc fecha, setas navegam via aria-activedescendant).",
+    "ariaLabel": "Recomendado via $attrs: <DssMenu aria-label='Menu de ações'>. O componente repassa $attrs corretamente via v-bind.",
+    "landmark": "role='menu' identifica este elemento como menu de navegação. Requer aria-label ou aria-labelledby."
+  },
+
+  "teleportBehavior": {
+    "teleportsTo": "body",
+    "cssScoping": "Estilos carregados globalmente via components/index.scss. Seletor .dss-menu escopa os estilos no elemento teleportado.",
+    "zIndexManagement": "Gerenciado pelo Quasar via QMenu — DssMenu NÃO altera z-index.",
+    "positioningManagement": "Gerenciado pelo Quasar via QMenu — DssMenu NÃO altera position."
+  },
+
+  "compositionMatrix": {
+    "role": "Overlay de navegação — container flutuante sobre conteúdo da página",
+    "recommended": [
+      "DssList (conteúdo primário — lista de itens de navegação)",
+      "DssItem (itens individuais — ações, links, opções)",
+      "DssSeparator (divisão entre grupos semânticos de itens)"
+    ],
+    "patterns": [
+      "DssButton > DssMenu > DssList > DssItem (padrão básico)",
+      "DssButton > DssMenu > [DssList > DssItem(s)] + DssSeparator + [DssList > DssItem(s)] (grupos)",
+      "DssButton > DssMenu fit > DssList > DssItem (mesmo width do trigger)"
+    ],
+    "limits": "DssMenu NÃO define brand/cor dos itens — responsabilidade dos DssItems. DssMenu NÃO estiliza filhos via CSS. Conteúdo deve sempre ser encapsulado em DssList.",
+    "antiPatterns": [
+      "Usar HTML nativo (<ul>, <li>, <div>) diretamente no DssMenu em vez de DssList/DssItem",
+      "Adicionar texto ou botões diretamente no slot sem DssList intermediário",
+      "Sobrescrever z-index do QMenu via classes ou estilos inline",
+      "Instanciar DssMenu fora de um contexto de elemento trigger (q-btn, DssButton)",
+      "Usar prop `dark` (bloqueada) — usar [data-theme='dark'] globalmente"
+    ]
+  },
+
+  "gateExceptions": {
+    "compositionGateV24": {
+      "rule1": "Uso de <q-menu> diretamente — wrapper Nível 2 sobre primitivo Quasar de overlay.",
+      "cssMethod": "Classe .dss-menu aplicada no elemento raiz que QMenu renderiza e teleporta. EXC-01 justifica !important para sobrescrever background e box-shadow do QMenu."
+    },
+    "responsibilityGateV24": "DssMenu é 100% não-interativo como container. Nenhum estado hover/focus/active definido. Toda interatividade é responsabilidade dos filhos (DssItem, DssButton)."
+  },
+
+  "antiPatterns": [
+    "Usar DssMenu como container genérico fora de contexto de trigger",
+    "Sobrescrever z-index ou position do QMenu",
+    "Usar prop bloqueada `dark` ou `square`",
+    "Adicionar conteúdo diretamente no slot sem DssList"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Uso de !important em background-color e box-shadow",
+      "value": "background-color: var(--dss-surface-default) !important; box-shadow: var(--dss-elevation-3) !important",
+      "location": "2-composition/_base.scss",
+      "gatesViolated": [],
+      "justification": "QMenu do Quasar aplica background e box-shadow via classe .q-menu com especificidade CSS equivalente. Para garantir que os tokens DSS (--dss-surface-default e --dss-elevation-3) prevaleçam, !important é necessário. Prop `dark` bloqueada para evitar conflitos. Precedente: DssFooter (EXC-02), DssHeader (EXC-02)."
+    },
+    {
+      "id": "EXC-02",
+      "description": "System color keywords em forced-colors mode",
+      "value": "Canvas, CanvasText, ButtonText",
+      "location": "4-output/_states.scss — @media (forced-colors: active)",
+      "gatesViolated": [],
+      "justification": "Forced-colors mode. System color keywords obrigatórios — tokens CSS são ignorados pelo navegador. Padrão canônico DSS. Precedente: DssTooltip (EXC-03), DssCard, DssFooter (EXC-03), DssHeader (EXC-03)."
+    },
+    {
+      "id": "EXC-03",
+      "description": "Valores hardcoded em @media print",
+      "value": "display: none !important",
+      "location": "4-output/_states.scss — @media print",
+      "gatesViolated": [],
+      "justification": "Menus são overlays de interface interativa vinculados a contexto de uso. Não têm utilidade em impressão — ocultar com display:none é a decisão canônica. Precedente: DssTooltip (PRINT section)."
+    }
+  ],
+
+  "tokensUsed": [
+    "--dss-surface-default",
+    "--dss-elevation-3",
+    "--dss-radius-md",
+    "--dss-font-family-sans",
+    "--dss-text-body",
+    "--dss-border-width-thin",
+    "--dss-gray-200",
+    "--dss-border-width-md"
+  ]
+}

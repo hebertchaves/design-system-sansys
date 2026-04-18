@@ -1,0 +1,17 @@
+/* ==========================================================================
+   DssMenu — Layer 4: Output — Brands
+
+   RESPONSABILIDADE: Estilos de marca (hub, water, waste).
+
+   NOTA ARQUITETURAL:
+   DssMenu delega brand inteiramente aos seus filhos (DssList, DssItem).
+   O container do menu em si não possui identidade de brand — é uma
+   superfície neutra (--dss-surface-default) que enquadra os itens.
+
+   O atributo [data-brand] é aplicado individualmente nos DssItems via
+   prop `brand`, não no DssMenu.
+
+   Esta camada existe para manter a arquitetura de 4 camadas obrigatória.
+   ========================================================================== */
+
+/* Brand delegado aos filhos (DssList, DssItem) — sem regras nesta versão */
