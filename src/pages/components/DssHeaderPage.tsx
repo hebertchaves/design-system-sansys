@@ -27,11 +27,17 @@ import {
   ControlGrid,
   ControlSection,
   VariantSelector,
+  ColorPicker,
+  FeedbackColorPicker,
   BrandPicker,
+  SizeSelector,
   ToggleGroup,
+  DSS_SEMANTIC_COLORS,
+  DSS_FEEDBACK_COLORS,
   DSS_BRAND_COLORS,
 } from "@/components/ui/playground";
 import { PlaygroundButton } from "@/components/ui/PlaygroundButton";
+import { Loader2 } from "lucide-react";
 
 // ============================================================================
 // DADOS — Derivados de DssHeader.ts.vue + DSSHEADER_API.md + pre_prompt
