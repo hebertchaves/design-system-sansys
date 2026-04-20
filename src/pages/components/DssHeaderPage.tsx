@@ -155,16 +155,30 @@ const anatomyData = {
 
 interface DssHeaderPreviewProps {
   variant?: string;
-  brand?: string | null;
+  toolbarColor?: string | null;
+  toolbarBrand?: string | null;
+  toolbarFeedback?: string | null;
+  toolbarSize?: string;
+  toolbarDense?: boolean;
+  toolbarDisabled?: boolean;
+  toolbarLoading?: boolean;
   reveal?: boolean;
+  revealOffset?: number;
   template?: string;
   isDarkMode?: boolean;
 }
 
 function DssHeaderPreview({
   variant = "default",
-  brand = null,
+  toolbarColor = null,
+  toolbarBrand = null,
+  toolbarFeedback = null,
+  toolbarSize = "md",
+  toolbarDense = false,
+  toolbarDisabled = false,
+  toolbarLoading = false,
   reveal = false,
+  revealOffset = 250,
   template = "single",
   isDarkMode = false,
 }: DssHeaderPreviewProps) {
@@ -174,8 +188,18 @@ function DssHeaderPreview({
   const dividerColor = isDarkMode ? "hsl(0 0% 22%)" : "hsl(0 0% 90%)";
   const pageBg = isDarkMode ? "hsl(0 0% 9%)" : "hsl(0 0% 96%)";
 
-  // Brand é aplicado ao DssToolbar interno (DssHeader não tem brand)
-  const brandColor = brand && DSS_BRAND_COLORS[brand] ? DSS_BRAND_COLORS[brand].principal : null;
+  // ===== COLOR APPLICATION DOMAIN v3.2 =====
+  // Apenas uma fonte de cor pode estar ativa por vez.
+  // Resolução determinística no preview (último render). A UI já garante
+  // mutual exclusion no estado (ver handleColorSourceChange).
+  let resolvedToolbarBg: string | null = null;
+  if (toolbarBrand && DSS_BRAND_COLORS[toolbarBrand]) {
+    resolvedToolbarBg = DSS_BRAND_COLORS[toolbarBrand].principal;
+  } else if (toolbarFeedback && DSS_FEEDBACK_COLORS[toolbarFeedback]) {
+    resolvedToolbarBg = DSS_FEEDBACK_COLORS[toolbarFeedback].bg;
+  } else if (toolbarColor && DSS_SEMANTIC_COLORS[toolbarColor]) {
+    resolvedToolbarBg = DSS_SEMANTIC_COLORS[toolbarColor].bg;
+  }
 
   // Computa estilos de elevação/borda
   const headerStyle: React.CSSProperties = {
@@ -194,27 +218,62 @@ function DssHeaderPreview({
     headerStyle.borderBottom = `1px solid ${dividerColor}`;
   }
 
-  // Toolbar interna — quando há brand, toolbar adota brand (delegação)
-  const toolbarBg = brandColor || "transparent";
-  const toolbarTextColor = brandColor ? "#ffffff" : textColor;
-  const toolbarSubtleColor = brandColor ? "rgba(255,255,255,0.75)" : subtleColor;
-  const iconHoverBg = brandColor ? "rgba(255,255,255,0.15)" : (isDarkMode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)");
+  // Toolbar size → minHeight
+  const toolbarMinHeight =
+    toolbarDense ? 40 :
+    toolbarSize === "sm" ? 48 :
+    toolbarSize === "lg" ? 64 : 56;
+
+  const toolbarBg = resolvedToolbarBg || "transparent";
+  const toolbarTextColor = resolvedToolbarBg ? "#ffffff" : textColor;
+  const toolbarSubtleColor = resolvedToolbarBg ? "rgba(255,255,255,0.75)" : subtleColor;
+  const iconHoverBg = resolvedToolbarBg
+    ? "rgba(255,255,255,0.15)"
+    : isDarkMode
+    ? "rgba(255,255,255,0.08)"
+    : "rgba(0,0,0,0.06)";
+
+  const toolbarOpacity = toolbarDisabled ? 0.5 : 1;
+  const toolbarPointerEvents: React.CSSProperties["pointerEvents"] = toolbarDisabled ? "none" : "auto";
 
   const Toolbar = ({ children }: { children: React.ReactNode }) => (
     <div
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "12px",
-        padding: "0 16px",
-        minHeight: "56px",
+        gap: toolbarDense ? 8 : 12,
+        padding: toolbarDense ? "0 12px" : "0 16px",
+        minHeight: toolbarMinHeight,
         backgroundColor: toolbarBg,
         color: toolbarTextColor,
+        opacity: toolbarOpacity,
+        pointerEvents: toolbarPointerEvents,
+        position: "relative",
       }}
+      aria-disabled={toolbarDisabled || undefined}
+      aria-busy={toolbarLoading || undefined}
     >
       {children}
+      {toolbarLoading && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: resolvedToolbarBg ? "rgba(0,0,0,0.18)" : (isDarkMode ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.55)"),
+            backdropFilter: "blur(1px)",
+          }}
+        >
+          <Loader2 size={18} className="animate-spin" style={{ color: toolbarTextColor }} />
+        </div>
+      )}
     </div>
   );
+
+  const iconSize = toolbarDense ? 16 : 18;
+  const iconBtnSize = toolbarDense ? 30 : 36;
 
   const IconBtn = ({ icon: Icon, label }: { icon: typeof Menu; label: string }) => (
     <button
@@ -222,29 +281,31 @@ function DssHeaderPreview({
       aria-label={label}
       className="rounded-full transition-colors flex items-center justify-center"
       style={{
-        width: 36,
-        height: 36,
+        width: iconBtnSize,
+        height: iconBtnSize,
         backgroundColor: "transparent",
         color: "inherit",
       }}
       onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = iconHoverBg)}
       onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
     >
-      <Icon size={18} />
+      <Icon size={iconSize} />
     </button>
   );
+
+  const titleSize = toolbarDense ? 13 : 14;
 
   const renderSingle = () => (
     <Toolbar>
       <IconBtn icon={Menu} label="Menu" />
-      <span style={{ fontWeight: 600, fontSize: 14 }}>Sansys Application</span>
+      <span style={{ fontWeight: 600, fontSize: titleSize }}>Sansys Application</span>
     </Toolbar>
   );
 
   const renderWithSearch = () => (
     <Toolbar>
       <IconBtn icon={Menu} label="Menu" />
-      <span style={{ fontWeight: 600, fontSize: 14 }}>Dashboard</span>
+      <span style={{ fontWeight: 600, fontSize: titleSize }}>Dashboard</span>
       <div style={{ flex: 1 }} />
       <div
         style={{
@@ -252,10 +313,10 @@ function DssHeaderPreview({
           alignItems: "center",
           gap: 6,
           padding: "0 10px",
-          height: 32,
+          height: toolbarDense ? 28 : 32,
           width: 220,
           borderRadius: 6,
-          backgroundColor: brandColor ? "rgba(255,255,255,0.15)" : (isDarkMode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)"),
+          backgroundColor: resolvedToolbarBg ? "rgba(255,255,255,0.15)" : (isDarkMode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)"),
           color: toolbarSubtleColor,
           fontSize: 12,
         }}
@@ -269,7 +330,7 @@ function DssHeaderPreview({
   const renderActions = () => (
     <Toolbar>
       <IconBtn icon={Menu} label="Menu" />
-      <span style={{ fontWeight: 600, fontSize: 14 }}>Sansys Hub</span>
+      <span style={{ fontWeight: 600, fontSize: titleSize }}>Sansys Hub</span>
       <div style={{ flex: 1 }} />
       <IconBtn icon={Bell} label="Notificações" />
       <IconBtn icon={User} label="Perfil" />
@@ -280,7 +341,7 @@ function DssHeaderPreview({
     <>
       <Toolbar>
         <IconBtn icon={Menu} label="Menu" />
-        <span style={{ fontWeight: 600, fontSize: 14 }}>Sansys Application</span>
+        <span style={{ fontWeight: 600, fontSize: titleSize }}>Sansys Application</span>
         <div style={{ flex: 1 }} />
         <IconBtn icon={Bell} label="Notificações" />
         <IconBtn icon={User} label="Perfil" />
@@ -291,11 +352,13 @@ function DssHeaderPreview({
           alignItems: "center",
           gap: 16,
           padding: "0 16px",
-          minHeight: "44px",
-          backgroundColor: brandColor ? "rgba(0,0,0,0.10)" : (isDarkMode ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)"),
+          minHeight: toolbarDense ? 36 : 44,
+          backgroundColor: resolvedToolbarBg ? "rgba(0,0,0,0.10)" : (isDarkMode ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)"),
           color: toolbarTextColor,
           fontSize: 12,
-          borderTop: `1px solid ${brandColor ? "rgba(255,255,255,0.18)" : dividerColor}`,
+          borderTop: `1px solid ${resolvedToolbarBg ? "rgba(255,255,255,0.18)" : dividerColor}`,
+          opacity: toolbarOpacity,
+          pointerEvents: toolbarPointerEvents,
         }}
       >
         {["Visão Geral", "Relatórios", "Configurações"].map((tab, i) => (
@@ -303,10 +366,10 @@ function DssHeaderPreview({
             key={tab}
             style={{
               padding: "0 4px",
-              height: 44,
+              height: toolbarDense ? 36 : 44,
               display: "flex",
               alignItems: "center",
-              borderBottom: i === 0 ? `2px solid ${brandColor ? "#ffffff" : "var(--dss-action-primary, #1f86de)"}` : "2px solid transparent",
+              borderBottom: i === 0 ? `2px solid ${resolvedToolbarBg ? "#ffffff" : "var(--dss-action-primary, #1f86de)"}` : "2px solid transparent",
               fontWeight: i === 0 ? 600 : 400,
               opacity: i === 0 ? 1 : 0.7,
               cursor: "pointer",
@@ -326,6 +389,12 @@ function DssHeaderPreview({
     stacked: renderStacked,
   };
 
+  // Resumo legível para a área de conteúdo
+  const activeColorLabel =
+    toolbarBrand ? `brand="${toolbarBrand}"` :
+    toolbarFeedback ? `feedback="${toolbarFeedback}"` :
+    toolbarColor ? `color="${toolbarColor}"` : "neutro";
+
   return (
     <div
       style={{
@@ -344,15 +413,21 @@ function DssHeaderPreview({
         {(templateMap[template] || renderSingle)()}
       </header>
 
-      {/* Conteúdo simulado da página (para demonstrar contexto de layout) */}
+      {/* Conteúdo simulado da página */}
       <div style={{ padding: 20, minHeight: 160, color: subtleColor, fontSize: 12 }}>
         <p style={{ marginBottom: 8, color: textColor, fontWeight: 600, fontSize: 13 }}>
           Conteúdo da página
         </p>
-        <p>Área scrollável simulada. {reveal && "Reveal ativo: header se oculta ao rolar para baixo."}</p>
+        <p>
+          Área scrollável simulada.
+          {reveal && ` Reveal ativo (offset ${revealOffset}px): header se oculta ao rolar > ${revealOffset}px.`}
+        </p>
         <p style={{ marginTop: 8, opacity: 0.7 }}>
-          Variant: <code>{variant}</code>
-          {brand && <> · Brand do toolbar: <code>{brand}</code></>}
+          Header: <code>{variant}</code> · Toolbar: <code>{activeColorLabel}</code>
+          {toolbarDense && <> · <code>dense</code></>}
+          {!toolbarDense && toolbarSize !== "md" && <> · <code>size={toolbarSize}</code></>}
+          {toolbarDisabled && <> · <code>disabled</code></>}
+          {toolbarLoading && <> · <code>loading</code></>}
         </p>
       </div>
     </div>
