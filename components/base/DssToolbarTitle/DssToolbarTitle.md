@@ -287,7 +287,7 @@ O `DssToolbarTitle` sobrescreve esses valores via seletor composto (EXC-01):
 
 ---
 
-## 13. Paridade com Golden Reference (DssItemLabel)
+## 13. Paridade com Golden Context (DssItemLabel)
 
 | Aspecto                              | DssItemLabel | DssToolbarTitle | Divergência / Justificativa                     |
 |--------------------------------------|:---:|:---:|--------------------------------------------------|

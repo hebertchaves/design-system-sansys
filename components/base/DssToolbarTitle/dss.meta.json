@@ -1,17 +1,20 @@
 {
   "component": "DssToolbarTitle",
   "dssVersion": "2.2",
-  "status": "pre-audit",
-  "sealVersion": null,
-  "sealDate": null,
-  "auditMode": null,
-  "auditDate": null,
+  "status": "sealed",
+  "sealVersion": "v2.2",
+  "sealDate": "2026-04-21",
+  "auditMode": "Auditoria DSS v2.5 — Aprovado",
+  "auditDate": "2026-04-21",
 
-  "goldenReference": "DssItemLabel",
-  "goldenReferenceJustification": "DssItemLabel é o container tipográfico não-interativo de referência. Mesma arquitetura de sobrescrita de tipografia nativa Quasar via seletor composto (EXC-01). Sem touch target (Option B).",
+  "goldenReference": "DssBadge",
+  "goldenReferenceJustification": "Golden Reference oficial para componentes não-interativos (DSS_GOLDEN_COMPONENTS.md §1.1). DssToolbarTitle não possui touch target, estados interativos ou role ativo — mesma categoria de DssBadge.",
 
-  "goldenContext": "DssToolbar",
-  "goldenContextJustification": "DssToolbar é o container pai direto e o único contexto semântico válido do DssToolbarTitle. Gerencia a brand e propaga [data-brand] para herança de cores.",
+  "goldenContext": "DssItemLabel",
+  "goldenContextJustification": "Baseline de auditoria: componente tipográfico, não-interativo, wrapper de Quasar com EXC-01 de sobrescrita de tipografia nativa. Proximidade semântica/funcional máxima. Selado em 2026-04-20.",
+
+  "goldenContextSecondary": "DssToolbar",
+  "goldenContextSecondaryJustification": "Container pai semântico e único contexto de uso válido do DssToolbarTitle. Gerencia brand e propaga [data-brand] para herança de cores.",
 
   "category": "Container tipográfico para barra de ferramentas",
   "phase": 2,
@@ -63,8 +66,13 @@
       "value": "font-size: var(--dss-heading-4-size), font-weight: var(--dss-heading-4-weight), line-height: var(--dss-heading-4-line-height), letter-spacing: normal",
       "selectors": [".dss-toolbar-title.q-toolbar__title"],
       "location": "2-composition/_base.scss",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 2 (Sobrescrita de estilos internos do Quasar)"],
-      "justification": "QToolbarTitle aplica font-size: 21px, font-weight: normal, letter-spacing: 0.01em hardcoded via .q-toolbar__title. A única forma de garantir tokens DSS é a sobrescrita via seletor composto. Precedente canônico: DssItemLabel (EXC-01)."
+      "gatesViolated": [
+        "Gate de Composicao v2.4 — Regra 1 (Uso direto de componente Quasar no template — componente wrapper de Nivel 1 Independente, seu proposito e ser o encapsulador DSS do QToolbarTitle)",
+        "Gate de Composicao v2.4 — Regra 2 (Sobrescrita de estilos internos do Quasar)"
+      ],
+      "justification": "QToolbarTitle aplica font-size: 21px, font-weight: normal, letter-spacing: 0.01em hardcoded via .q-toolbar__title. A única forma de garantir tokens DSS é a sobrescrita via seletor composto. Precedente canônico: DssItemLabel (EXC-01).",
+      "approvedBy": "Precedente DssItemLabel EXC-01 (Selado 2026-04-20) — mesmo padrao de wrapper tipografico com sobrescrita de tipografia nativa Quasar",
+      "approvedDate": "2026-04-21"
     },
     {
       "id": "EXC-02",

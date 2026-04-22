@@ -55,6 +55,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssList** | Container de Layout Nao-Interativo | DssBadge | `conformant` — Selado (31 Mar 2026) |
 | **DssItemSection** | Container de Layout Interno (coluna flex dentro do DssItem) | DssAvatar | `conformant` — Selado (01 Abr 2026) |
 | **DssTab** | Elemento interativo de navegacao por abas | DssButton | `conformant` — Selado (01 Abr 2026) |
+| **DssToolbarTitle** | Estrutura de Página — Tipografia de barra de ferramentas | DssBadge | `conformant` — Selado (21 Abr 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
