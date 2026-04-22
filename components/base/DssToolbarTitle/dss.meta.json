@@ -1,0 +1,96 @@
+{
+  "component": "DssToolbarTitle",
+  "dssVersion": "2.2",
+  "status": "pre-audit",
+  "sealVersion": null,
+  "sealDate": null,
+  "auditMode": null,
+  "auditDate": null,
+
+  "goldenReference": "DssItemLabel",
+  "goldenReferenceJustification": "DssItemLabel é o container tipográfico não-interativo de referência. Mesma arquitetura de sobrescrita de tipografia nativa Quasar via seletor composto (EXC-01). Sem touch target (Option B).",
+
+  "goldenContext": "DssToolbar",
+  "goldenContextJustification": "DssToolbar é o container pai direto e o único contexto semântico válido do DssToolbarTitle. Gerencia a brand e propaga [data-brand] para herança de cores.",
+
+  "category": "Container tipográfico para barra de ferramentas",
+  "phase": 2,
+  "classification": "Elemento tipográfico estrutural não-interativo — wrapper DSS governado sobre QToolbarTitle",
+
+  "quasarBase": "QToolbarTitle",
+
+  "props": {
+    "DssToolbarTitle": ["shrink"],
+    "blocked": {
+      "color": "Governado por tokens do DssToolbar pai (--dss-text-body/--dss-text-inverse) para garantir contraste acessível.",
+      "active": "DssToolbarTitle não possui estado ativo. Navegação é feita via DssTab ou DssMenu."
+    }
+  },
+
+  "slots": ["default", "subtitle"],
+
+  "statesApplicable": ["default"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": {
+    "hover": "Componente não-interativo — sem resposta visual a interação do usuário.",
+    "focus": "Componente não-interativo — sem estado de foco próprio.",
+    "active": "Sem estado ativo (navegação pertence a DssTab ou DssMenu).",
+    "disabled": "Não possui comportamento de desabilitação — responsabilidade do pai.",
+    "loading": "Fase 1 — sem estado assíncrono.",
+    "error": "Elemento tipográfico — sem estado de erro.",
+    "indeterminate": "Não aplicável para elemento tipográfico linear."
+  },
+
+  "touchTarget": "NOT_APPLICABLE",
+  "touchTargetJustification": "Componente estritamente não-interativo (Option B). Sem interação do usuário esperada.",
+
+  "tokensUsed": [
+    "--dss-font-family-sans",
+    "--dss-heading-4-size",
+    "--dss-heading-4-weight",
+    "--dss-heading-4-line-height"
+  ],
+
+  "tokensInherited": [
+    "--dss-text-body",
+    "--dss-text-inverse"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Sobrescrita de tipografia nativa do QToolbarTitle com tokens DSS via seletor composto",
+      "value": "font-size: var(--dss-heading-4-size), font-weight: var(--dss-heading-4-weight), line-height: var(--dss-heading-4-line-height), letter-spacing: normal",
+      "selectors": [".dss-toolbar-title.q-toolbar__title"],
+      "location": "2-composition/_base.scss",
+      "gatesViolated": ["Gate de Composição v2.4 — Regra 2 (Sobrescrita de estilos internos do Quasar)"],
+      "justification": "QToolbarTitle aplica font-size: 21px, font-weight: normal, letter-spacing: 0.01em hardcoded via .q-toolbar__title. A única forma de garantir tokens DSS é a sobrescrita via seletor composto. Precedente canônico: DssItemLabel (EXC-01)."
+    },
+    {
+      "id": "EXC-02",
+      "value": "ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode (Windows High Contrast). System color keyword obrigatório — tokens CSS ignorados pelo SO."
+    }
+  ],
+
+  "antiPatterns": [
+    "Usar DssToolbarTitle fora de um DssToolbar pai",
+    "Aplicar prop color diretamente (governado pelo DssToolbar pai)",
+    "Inserir componentes de bloco ou layouts complexos no slot default",
+    "Usar para criar navegação (usar DssTab ou DssMenu)"
+  ],
+
+  "compositionRecommendations": [
+    "Sempre dentro de DssToolbar",
+    "Slot default para texto simples ou elementos inline",
+    "Para título de página, usar <h1> dentro do slot",
+    "Combinar com DssSpace ou botões DssButton nas extremidades da toolbar"
+  ],
+
+  "phaseDescription": "Fase 2 — Componente composto estrutural. Depende do DssToolbar pai para contexto de brand e cor. Sem dependências DSS diretas (apenas tipografia).",
+
+  "files": 19,
+  "createdAt": "2026-04-21",
+  "createdBy": "Claude Code — DSS v2.5 Protocol"
+}
