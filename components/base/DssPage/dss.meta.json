@@ -1,11 +1,11 @@
 {
   "component": "DssPage",
   "dssVersion": "2.2",
-  "status": "pre-audit",
-  "sealVersion": null,
-  "sealDate": null,
-  "auditMode": null,
-  "auditDate": null,
+  "status": "sealed",
+  "sealVersion": "v2.2",
+  "sealDate": "2026-04-22",
+  "auditMode": "DSS Modo Auditor v2.5",
+  "auditDate": "2026-04-22",
 
   "goldenReference": "DssBadge",
   "goldenReferenceJustification": "Golden Reference oficial para componentes não-interativos (DSS_GOLDEN_COMPONENTS.md §1.1). DssPage não possui touch target, estados interativos ou role ativo próprio (role='main' é semântico, não interativo).",
