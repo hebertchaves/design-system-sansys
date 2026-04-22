@@ -82,6 +82,7 @@ const navigation = {
       { title: "DssRange", url: "/componentes/dss-range", icon: SlidersHorizontal, status: "stable" },
       { title: "DssTabs", url: "/componentes/dss-tabs", icon: Layers, status: "stable" },
       { title: "DssToggle", url: "/componentes/dss-toggle", icon: Circle, status: "stable" },
+      { title: "DssToolbar", url: "/componentes/dss-toolbar", icon: Wrench, status: "stable" },
       { title: "DssTooltip", url: "/componentes/dss-tooltip", icon: MessageSquare, status: "stable" },
     ],
   },
