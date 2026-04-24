@@ -47,10 +47,10 @@ Os tokens DSS são **genéricos e reutilizáveis**. Componentes escolhem livreme
 
 ### 2. Cores
 - [2.1 Gray Palette (11 tokens)](#21-gray-palette)
-- [2.2 Brand Palettes (33 tokens)](#22-brand-palettes)
-  - Hub (11 tokens)
-  - Water (11 tokens)
-  - Waste (11 tokens)
+- [2.2 Brand Palettes (42 tokens)](#22-brand-palettes)
+  - Hub (14 tokens)
+  - Water (14 tokens)
+  - Waste (14 tokens)
 - [2.3 Cores Semânticas Base (48 tokens)](#23-cores-semânticas-base)
   - Primary (6 tokens)
   - Secondary (6 tokens)
@@ -82,7 +82,7 @@ Os tokens DSS são **genéricos e reutilizáveis**. Componentes escolhem livreme
 - [4.3 Warning (5 tokens)](#43-warning)
 - [4.4 Info (5 tokens)](#44-info)
 - [4.5 Feedback Surfaces (4 tokens)](#45-feedback-surfaces)
-- [4.6 Textos de Componentes (6 tokens)](#46-textos-de-componentes)
+- [4.6 Textos de Componentes (8 tokens)](#46-textos-de-componentes)
 - [4.7 Surface Hierarchy (12 tokens)](#47-surface-hierarchy)
 
 ### 5. Motion e Animação
@@ -323,7 +323,7 @@ Sistema de cores do DSS dividido em paletas neutras, de marca e semânticas.
 
 ## 2.2 Brand Palettes
 
-**⚠️ IMPORTANTE:** As paletas de marca (Hub, Water, Waste) são **escalas de 11 tons** (50 a 950).
+**⚠️ IMPORTANTE:** As paletas de marca (Hub, Water, Waste) são **escalas de 11 tons** (50 a 950) mais 3 tokens de estado (`hover`, `disable`, `deep`).
 Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso para interações**:
 
 **Padrão de Estados:**
@@ -334,7 +334,7 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 
 ### Hub (Laranja/Marrom)
 
-**Total: 11 tokens**
+**Total: 14 tokens**
 
 | Token | Valor Hex | RGB | Uso |
 |-------|-----------|-----|-----|
@@ -349,10 +349,13 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 | `--dss-hub-800` | #984614 | 152, 70, 20 | **💡 Hub hover/focus** |
 | `--dss-hub-900` | #7a3614 | 122, 54, 20 | Hub profundo |
 | `--dss-hub-950` | #421d08 | 66, 29, 8 | **🎯 Hub deep** |
+| `--dss-brand-hover` | `var(--dss-hub-700)` | — | Estado hover sobre primary |
+| `--dss-brand-disable` | `var(--dss-hub-200)` | — | Estado desabilitado |
+| `--dss-brand-deep` | `var(--dss-hub-800)` | — | Estado active/pressionado |
 
 ### Water (Azul)
 
-**Total: 11 tokens**
+**Total: 14 tokens**
 
 | Token | Valor Hex | RGB | Uso |
 |-------|-----------|-----|-----|
@@ -367,10 +370,13 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 | `--dss-water-800` | #074a85 | 7, 74, 133 | Water muito escuro |
 | `--dss-water-900` | #0c3e6e | 12, 62, 110 | Water profundo |
 | `--dss-water-950` | #082749 | 8, 39, 73 | **🎯 Water deep** |
+| `--dss-brand-hover` | `var(--dss-water-600)` | — | Estado hover sobre primary |
+| `--dss-brand-disable` | `var(--dss-water-200)` | — | Estado desabilitado |
+| `--dss-brand-deep` | `var(--dss-water-800)` | — | Estado active/pressionado |
 
 ### Waste (Verde)
 
-**Total: 11 tokens**
+**Total: 14 tokens**
 
 | Token | Valor Hex | RGB | Uso |
 |-------|-----------|-----|-----|
@@ -385,6 +391,9 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 | `--dss-waste-800` | #0a5b3e | 10, 91, 62 | **💡 Waste hover/focus** |
 | `--dss-waste-900` | #0a4a34 | 10, 74, 52 | Waste profundo |
 | `--dss-waste-950` | #042a1e | 4, 42, 30 | **🎯 Waste deep** |
+| `--dss-brand-hover` | `var(--dss-waste-700)` | — | Estado hover sobre primary |
+| `--dss-brand-disable` | `var(--dss-waste-200)` | — | Estado desabilitado |
+| `--dss-brand-deep` | `var(--dss-waste-800)` | — | Estado active/pressionado |
 
 **📝 RESUMO DE ESTADOS POR MARCA:**
 - **Hub**: Principal=600 | Light=300 | Disable=200 | Hover/Focus=800 | Deep=950
@@ -761,7 +770,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 
 Tokens de cor de texto usados por componentes de formulário interativos e de navegação estrutural. Definidos em `tokens/semantic/_text.scss`; sobrescritos em dark mode em `tokens/themes/dark/_colors.scss`.
 
-**Total: 6 tokens**
+**Total: 8 tokens**
 
 > **Nota:** `--dss-surface-muted` e `--dss-surface-disabled` foram movidos para a seção [4.7 Surface Hierarchy](#47-surface-hierarchy).
 
@@ -769,7 +778,8 @@ Tokens de cor de texto usados por componentes de formulário interativos e de na
 |-------|---------------|--------------|-----|
 | `--dss-text-hint` | — | — | Cor do texto de hint / dica abaixo de controles |
 | `--dss-text-inverse` | — | — | Cor de texto sobre fundos escuros (ex.: label tooltip do slider) |
-| `--dss-text-secondary` | — | — | Cor de texto secundário (menor ênfase visual) |
+| `--dss-text-primary` | `var(--dss-dark)` | — | Alias semântico de `--dss-text-body` |
+| `--dss-text-secondary` | `var(--dss-dark-light)` | — | Alias semântico de `--dss-text-subtle` |
 | `--dss-text-body` | `var(--dss-dark)` | — | Texto principal — corpo e itens atuais de navegação (ex.: breadcrumb ativo, item selecionado) |
 | `--dss-text-subtle` | `var(--dss-dark-light)` | — | Texto secundário — links de navegação, labels de menor ênfase visual. Suporta dark mode via cascata. |
 | `--dss-text-disabled` | `var(--dss-gray-400)` (#d4d4d4) | `var(--dss-gray-600)` (#737373) | Cor de texto em estado desabilitado. Semântica precisa de estado — distinto de `--dss-text-subtle` (texto ativo de menor ênfase) e `--dss-text-hint` (placeholder). Usado em: `DssInput`, `DssSelect`, `DssTextarea`, `DssBreadcrumbs`, `DssFile`, `_quasar-overrides.scss`, `_helpers.scss`, `_mixins.scss`. |

@@ -35,6 +35,10 @@
   --dss-brand-dark: var(--dss-waste-900);
   --dss-brand-darker: var(--dss-waste-950);
 
+  --dss-brand-hover: var(--dss-waste-700);       /* Estado hover sobre primary — #0a724e */
+  --dss-brand-disable: var(--dss-waste-200);     /* Estado desabilitado — #abefcb */
+  --dss-brand-deep: var(--dss-waste-800);        /* Estado active/pressionado — #0a5b3e */
+
   --dss-brand-background: var(--dss-waste-50);
   --dss-brand-surface: var(--dss-waste-100);
   --dss-brand-border: var(--dss-waste-200);

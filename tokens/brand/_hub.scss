@@ -35,6 +35,10 @@
   --dss-brand-dark: var(--dss-hub-900);
   --dss-brand-darker: var(--dss-hub-950);
   
+  --dss-brand-hover: var(--dss-hub-700);       /* Estado hover sobre primary — #bf590f */
+  --dss-brand-disable: var(--dss-hub-200);     /* Estado desabilitado — #fde2ab */
+  --dss-brand-deep: var(--dss-hub-800);        /* Estado active/pressionado — #984614 */
+
   --dss-brand-background: var(--dss-hub-50);
   --dss-brand-surface: var(--dss-hub-100);
   --dss-brand-border: var(--dss-hub-200);

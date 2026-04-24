@@ -5,6 +5,8 @@
 
 :root {
   /* Text Hierarchy */
+  --dss-text-primary: var(--dss-dark);            /* #454545 - Alias semântico de --dss-text-body */
+  --dss-text-secondary: var(--dss-dark-light);    /* #B0B0B0 - Alias semântico de --dss-text-subtle */
   --dss-text-body: var(--dss-dark);               /* #454545 - Texto principal */
   --dss-text-subtle: var(--dss-dark-light);       /* #B0B0B0 - Texto secundário */
   --dss-text-muted: var(--dss-dark-disable);      /* #D7D7D7 - Texto terciário */
