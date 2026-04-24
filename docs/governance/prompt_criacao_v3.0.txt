@@ -1,0 +1,178 @@
+🧭 PRÉ-PROMPT OFICIAL CONSOLIDADO
+DSS FASE 3 READY — COMPONENTES COMPOSTOS COMPLEXOS
+Versão: 3.0 (Consolidada com MCP-First Workflow e Guia de Composição)
+
+🔷 0️⃣ CONTEXTO NORMATIVO
+Você está criando ou evoluindo um componente DSS dentro do Design System Sansys (DSS) v2.2.
+Este componente pertence à Fase 3:
+- Orquestra múltiplos componentes DSS internamente
+- Gerencia estado compartilhado entre filhos
+- Baseado em protótipos reais de produto
+
+Este pré-prompt é de leitura obrigatória antes de executar o
+🧬 PROMPT DE CRIAÇÃO DE COMPONENTES — DSS v3.0
+
+🔷 1️⃣ CONTRATO DE INTERFACE (OBRIGATÓRIO FASE 3)
+Antes de qualquer implementação, você DEVE validar o Contrato de Interface fornecido no pré-prompt:
+1.1 Casos de Uso Negativos: O que o componente NÃO deve fazer.
+1.2 Matriz de Composição: Quais componentes DSS são permitidos internamente.
+1.3 Estado de Falha e Loading: Como o componente se comporta em estados de exceção.
+⚠️ Se o Contrato de Interface estiver ausente ou ambíguo, interrompa e solicite esclarecimentos.
+
+🔷 2️⃣ OS 5 PADRÕES OBRIGATÓRIOS DE COMPOSIÇÃO (VINCULANTE)
+Todo componente da Fase 3 DEVE implementar:
+2.1 `inheritAttrs: false` e Repasse Explícito
+- Declarar `inheritAttrs: false` no `defineOptions`.
+- Repassar `$attrs` explicitamente para o nó raiz correto via `v-bind="$attrs"`.
+2.2 Propagação de Estado via `provide/inject` Tipado
+- Usar `provide` no componente raiz para expor estado global (ex: `disabled`, `readonly`).
+- Usar `inject` nos componentes filhos para consumir esse estado.
+- NUNCA usar prop drilling excessivo.
+2.3 CSS Variables como Canal de Comunicação
+- Propagar propriedades visuais (ex: `brand`) via atributos de dados (`data-*`) no elemento raiz.
+2.4 Proibição Absoluta de `:deep()` para Layout
+- O layout interno deve ser controlado por classes no wrapper do componente pai.
+- NUNCA injetar CSS nos componentes filhos usando `:deep()`.
+2.5 Slots Dinâmicos e Tipados
+- Usar geração dinâmica de slots (`v-for` com `<slot :name="...">`) para repassar áreas de conteúdo.
+
+🔷 3️⃣ PREVENÇÃO DE ERROS E DARK MODE
+3.1 Nunca usar tokens inexistentes
+- Validar contra DSS_TOKEN_REFERENCE.md.
+3.2 Dark Mode e Contraste
+- Garantir que todas as cores de fundo e texto tenham contraste adequado (WCAG AA) em ambos os temas.
+- Evitar cores primárias fixas em fundos grandes; preferir `--dss-surface-muted` ou `--dss-surface-subtle`.
+3.3 Acessibilidade (ARIA)
+- O componente raiz deve gerenciar os atributos `aria-*` globais.
+- Garantir que o foco flua logicamente e não fique preso em elementos desabilitados.
+
+🔷 4️⃣ INTEGRAÇÃO COM PROMPT DE CRIAÇÃO DSS v3.0
+Após a leitura deste pré-prompt, executar:
+🧬 PROMPT DE CRIAÇÃO DE COMPONENTES — DSS v3.0
+
+---
+
+🧬 PROMPT DE CRIAÇÃO DE COMPONENTES — DSS v3.0
+📦 FASE 3 — COMPONENTES COMPOSTOS COMPLEXOS
+
+🔒 Postura obrigatória do agente
+Você está operando em modo normativo DSS v2.2 com MCP Fase 3.
+- Não invente padrões
+- Não simplifique requisitos
+- Não viole o Contrato de Interface
+- Não omita documentação de comportamentos implícitos
+Este prompt tem precedência sobre qualquer heurística genérica do modelo.
+
+🤖 0️⃣ MCP-FIRST WORKFLOW (OBRIGATÓRIO)
+Você tem acesso ao servidor MCP do DSS (Fase 3). Você NUNCA deve escrever o boilerplate do componente do zero.
+Antes de escrever qualquer código, você DEVE:
+1. Chamar a tool `generate_component_scaffold` passando o nome do componente e a família.
+2. Criar os arquivos físicos no repositório exatamente com o conteúdo retornado pelo MCP.
+3. Só então, adaptar o código gerado para a lógica específica do componente.
+4. Após implementar, rodar `validate_component_code` e usar as sugestões de tokens retornadas para corrigir valores hardcoded.
+
+1️⃣ CONTEXTO DO COMPONENTE (OBRIGATÓRIO)
+Antes de qualquer geração, declare explicitamente:
+- Nome do componente: Dss<Name>
+- Classificação DSS (ex.: Composite / Layout / Data)
+- Fase: Fase 3
+- Golden Component(s) de referência
+- Escopo funcional (o que FAZ e o que NÃO faz)
+- Subcomponentes internos permitidos
+
+2️⃣ ARQUITETURA OBRIGATÓRIA (NÍVEL VINCULANTE)
+O componente DEVE implementar integralmente:
+
+📐 Arquitetura DSS de 4 camadas
+1-structure/
+- Vue 3 + TypeScript + Composition API
+- defineOptions({ name, inheritAttrs: false }) obrigatório
+- v-bind="$attrs" no nó raiz correto
+- Elementos decorativos com aria-hidden="true"
+
+2-composition/
+- Token-first
+- Zero valores hardcoded (exceto exceções DSS documentadas)
+- Touch target WCAG quando aplicável
+- Estados base completos
+
+3-variants/
+- Mesmo que vazio, DEVE existir
+- Justificar variantes ausentes
+
+4-output/
+- Brands via mixin (sem duplicação)
+- States: dark, reduced-motion, contrast, forced-colors, print
+- Barrel import obrigatório
+- Orquestrador
+- <Component>.module.scss com @use das 3 camadas
+
+🔒 ENTRY POINT WRAPPER (VINCULANTE)
+TODO componente da Fase 3 DEVE ter o arquivo `DssNome.vue` na raiz, atuando como re-export puro da Layer 1.
+
+🔗 REGRA DE IMPORTAÇÃO INTERNA (CRÍTICO)
+Quando importar outro componente DSS, a importação DEVE ser feita apontando para o Entry Point Wrapper do filho, NUNCA para a pasta `1-structure` do filho.
+✅ Correto: `import DssButton from '../DssButton/DssButton.vue'`
+❌ Incorreto: `import DssButton from '../DssButton/1-structure/DssButton.ts.vue'`
+
+3️⃣ REGRAS DE TOKENS E DARK MODE (CRÍTICAS)
+🎨 Tokens de Brand e Surface
+- Usar tokens genéricos DSS para layout, spacing e tipografia.
+- Garantir contraste WCAG AA em light e dark mode.
+- Evitar cores primárias fixas em fundos grandes; preferir `--dss-surface-muted` ou `--dss-surface-subtle`.
+
+⚠️ Exceções
+- Apenas exceções DSS canônicas (brightness, saturate, sr-only, border-radius geométrico)
+- Todas DEVEM ser documentadas com: ID, Valor, Local, Justificativa
+
+4️⃣ DOCUMENTAÇÃO — CONTRATO VINCULANTE
+O componente DEVE gerar:
+- <Component>.md (template DSS 13.x completo)
+- README.md (uso resumido)
+- <COMPONENT>_API.md (referência técnica)
+- dss.meta.json
+
+📚 Seções obrigatórias adicionais (Fase 3)
+Além do template padrão, adicione obrigatoriamente:
+🔹 Contrato de Interface (Casos de uso negativos, Matriz de composição, Estado de falha)
+🔹 Comportamentos Implícitos (Forwarding, inheritAttrs, SR, Estados N/A)
+🔹 Tokens Utilizados (Nomes exatos, 1:1 com SCSS)
+⚠️ É proibido documentar tokens que não existem no código.
+
+5️⃣ TESTES E PLAYGROUND (NÍVEL FASE 3)
+- Testes unitários E comportamentais
+- Testes de: Focus-visible, Estados compostos, Slots, Forwarding, Dark Mode
+- O playground (`.example.vue`) deve demonstrar a orquestração completa, incluindo interatividade, dark mode e estado vazio.
+
+6️⃣ ETAPA FINAL — RECONCILIAÇÃO DSS (OBRIGATÓRIA)
+Antes de declarar o componente como “criado”, execute mentalmente e documente:
+🔍 Reconciliação Transversal
+- SCSS ↔ CSS compilado
+- SCSS ↔ Documentação
+- Código ↔ Documentação
+- Golden ↔ Componente
+⚠️ Se qualquer item falhar, corrija antes de finalizar.
+
+7️⃣ SAÍDA ESPERADA
+Ao final, o agente DEVE entregar:
+- Estrutura completa de arquivos
+- Código compilável sem erros
+- Documentação coerente e reconciliada
+- Lista explícita de decisões arquiteturais
+- Declaração: “Componente PRONTO PARA AUDITORIA DSS v2.2”
+🚫 NÃO emitir selo
+🚫 NÃO auto-certificar conformidade
+
+🔎 VALIDAÇÃO ESTRUTURAL FINAL
+Antes de finalizar:
+- Wrapper existe e é puro
+- 4 camadas existem
+- module.scss importa corretamente
+- index.js exporta wrapper
+- Documentação reconciliada
+- Golden comparado explicitamente
+Se falhar: corrigir antes de finalizar.
+
+🧠 NOTA FINAL (NORMATIVA)
+Este prompt foi endurecido com base em falhas reais de auditoria e no stress test da Fase 3.
+Qualquer atalho ou omissão será tratada como não-conformidade na auditoria.
