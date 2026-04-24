@@ -100,7 +100,7 @@ import {
   CallToolRequestSchema
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
-import { resolve as resolve10, dirname as dirname2 } from "path";
+import { resolve as resolve11, dirname as dirname2 } from "path";
 import { fileURLToPath as fileURLToPath2 } from "url";
 
 // src/tools/queryComponent.ts
@@ -1891,9 +1891,90 @@ async function generatePrePromptTemplate(componentName, dssRoot) {
 }
 var READ_ONLY_NOTICE6 = `This pre-prompt template is strictly generative per MCP_READ_ONLY_CONTRACT.md. The MCP generates and explains \u2014 it never writes files or applies changes autonomously. Copy the generated markdown to a file manually.`.trim();
 
+// src/tools/recordAuditEvent.ts
+import { readFileSync as readFileSync10, writeFileSync, existsSync as existsSync9 } from "fs";
+import { resolve as resolve10, join as join3 } from "path";
+var AUDIT_WRITE_NOTICE = [
+  "Controlled write \u2014 authorized under MCP_READ_ONLY_CONTRACT.md v0.2.",
+  "Scope: auditHistory[] + status/auditDate/seal fields in dss.meta.json only.",
+  "Requires explicit human request. No autonomous triggering permitted."
+].join(" ");
+async function recordAuditEvent(componentName, phase, verdict, ncs, gaps, notes, auditor, dssRoot) {
+  const pascal = /^[Dd]ss[A-Z]/.test(componentName) ? componentName.charAt(0).toUpperCase() + componentName.slice(1) : `Dss${componentName.charAt(0).toUpperCase()}${componentName.slice(1)}`;
+  const componentDir = resolve10(dssRoot, "components", "base", pascal);
+  const metaPath = join3(componentDir, "dss.meta.json");
+  if (!existsSync9(metaPath)) {
+    return {
+      success: false,
+      componentName: pascal,
+      event: null,
+      auditHistory: [],
+      statusUpdated: false,
+      error: `dss.meta.json not found at: components/base/${pascal}/dss.meta.json`,
+      notice: AUDIT_WRITE_NOTICE
+    };
+  }
+  let meta;
+  try {
+    meta = JSON.parse(readFileSync10(metaPath, "utf-8"));
+  } catch {
+    return {
+      success: false,
+      componentName: pascal,
+      event: null,
+      auditHistory: [],
+      statusUpdated: false,
+      error: "Failed to parse dss.meta.json \u2014 invalid JSON.",
+      notice: AUDIT_WRITE_NOTICE
+    };
+  }
+  const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+  const event = {
+    date: today,
+    phase,
+    verdict,
+    ncs,
+    gaps,
+    auditor: auditor || "Claude Code \u2014 Auditor DSS v2.5",
+    notes: notes || ""
+  };
+  const currentHistory = Array.isArray(meta.auditHistory) ? meta.auditHistory : [];
+  const updatedHistory = [...currentHistory, event];
+  meta.auditHistory = updatedHistory;
+  let statusUpdated = false;
+  if (phase === "seal-granted" && verdict === "compliant") {
+    meta.status = "granted";
+    meta.auditDate = today;
+    if (!meta.seal) meta.seal = "DSS v2.2";
+    statusUpdated = true;
+  }
+  try {
+    writeFileSync(metaPath, JSON.stringify(meta, null, 2) + "\n", "utf-8");
+  } catch (err) {
+    return {
+      success: false,
+      componentName: pascal,
+      event,
+      auditHistory: updatedHistory,
+      statusUpdated: false,
+      error: `Failed to write dss.meta.json: ${String(err)}`,
+      notice: AUDIT_WRITE_NOTICE
+    };
+  }
+  return {
+    success: true,
+    componentName: pascal,
+    event,
+    auditHistory: updatedHistory,
+    statusUpdated,
+    newStatus: meta.status,
+    notice: AUDIT_WRITE_NOTICE
+  };
+}
+
 // src/tools/index.ts
 var __dirname2 = dirname2(fileURLToPath2(import.meta.url));
-var DSS_ROOT2 = resolve10(__dirname2, "../..");
+var DSS_ROOT2 = resolve11(__dirname2, "../..");
 var QueryComponentSchema = z.object({
   componentName: z.string().describe(
     'Name of the DSS component (e.g. "DssCard", "DssButton", "card"). Case-insensitive, Dss prefix optional.'
@@ -1950,6 +2031,21 @@ var GeneratePrePromptTemplateSchema = z.object({
   componentName: z.string().describe(
     'Name of the DSS component to generate a pre-prompt for (e.g. "DssBtnGroup", "DssTab"). Case-insensitive, Dss prefix optional.'
   )
+});
+var RecordAuditEventSchema = z.object({
+  componentName: z.string().describe(
+    'Name of the DSS component (e.g. "DssPageSticky", "DssButton"). Case-insensitive, Dss prefix optional.'
+  ),
+  phase: z.enum(["initial-audit", "correction", "revalidation", "seal-granted"]).describe(
+    '"initial-audit" \u2014 first audit pass. "correction" \u2014 after NC/GAP fixes. "revalidation" \u2014 MCP re-check after correction. "seal-granted" \u2014 final seal emission; also sets status=granted in dss.meta.json.'
+  ),
+  verdict: z.enum(["compliant", "non-compliant", "pending"]).describe(
+    '"compliant" \u2014 zero violations. "non-compliant" \u2014 violations found. "pending" \u2014 corrections in progress.'
+  ),
+  ncs: z.number().int().min(0).default(0).describe("Number of non-conformities (NCs) found or resolved in this phase."),
+  gaps: z.number().int().min(0).default(0).describe("Number of gaps found or resolved in this phase."),
+  notes: z.string().optional().default("").describe("Free-text notes about the audit phase (e.g. which NCs were fixed)."),
+  auditor: z.string().optional().default("Claude Code \u2014 Auditor DSS v2.5").describe('Auditor identity. Defaults to "Claude Code \u2014 Auditor DSS v2.5".')
 });
 var TOOL_DEFINITIONS = [
   // ── Phase 1 Tools ──────────────────────────────────────────────────────────
@@ -2097,6 +2193,47 @@ var TOOL_DEFINITIONS = [
       },
       required: ["componentName"]
     }
+  },
+  // ── Phase 4 Tools ──────────────────────────────────────────────────────────
+  {
+    name: "record_audit_event",
+    description: "Records an audit event in the auditHistory[] of a component's dss.meta.json. When phase='seal-granted' and verdict='compliant', also sets status='granted', auditDate, and seal fields. CONTROLLED WRITE \u2014 authorized by MCP_READ_ONLY_CONTRACT.md v0.2. Only modifies auditHistory, status, auditDate and seal fields. Requires explicit human request.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        componentName: {
+          type: "string",
+          description: 'Name of the DSS component (e.g. "DssPageSticky", "DssButton"). Case-insensitive, Dss prefix optional.'
+        },
+        phase: {
+          type: "string",
+          enum: ["initial-audit", "correction", "revalidation", "seal-granted"],
+          description: '"initial-audit" \u2014 first audit pass. "correction" \u2014 after NC/GAP fixes. "revalidation" \u2014 MCP re-check after correction. "seal-granted" \u2014 final seal; also sets status=granted.'
+        },
+        verdict: {
+          type: "string",
+          enum: ["compliant", "non-compliant", "pending"],
+          description: '"compliant" \u2014 zero violations. "non-compliant" \u2014 violations found. "pending" \u2014 corrections in progress.'
+        },
+        ncs: {
+          type: "number",
+          description: "Number of non-conformities in this phase. Default: 0."
+        },
+        gaps: {
+          type: "number",
+          description: "Number of gaps in this phase. Default: 0."
+        },
+        notes: {
+          type: "string",
+          description: "Free-text notes about this audit phase."
+        },
+        auditor: {
+          type: "string",
+          description: 'Auditor identity. Default: "Claude Code \u2014 Auditor DSS v2.5".'
+        }
+      },
+      required: ["componentName", "phase", "verdict"]
+    }
   }
 ];
 function registerTools(server) {
@@ -2180,6 +2317,23 @@ function registerTools(server) {
       case "generate_pre_prompt_template": {
         const input = GeneratePrePromptTemplateSchema.parse(args);
         const result = await generatePrePromptTemplate(input.componentName, DSS_ROOT2);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+        };
+      }
+      // ── Phase 4 ────────────────────────────────────────────────────────────
+      case "record_audit_event": {
+        const input = RecordAuditEventSchema.parse(args ?? {});
+        const result = await recordAuditEvent(
+          input.componentName,
+          input.phase,
+          input.verdict,
+          input.ncs,
+          input.gaps,
+          input.notes,
+          input.auditor,
+          DSS_ROOT2
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
         };

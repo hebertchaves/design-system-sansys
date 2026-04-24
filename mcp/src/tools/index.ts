@@ -15,6 +15,7 @@ import { validateComponentCode } from "./validateComponentCode.js";
 import { suggestTokenReplacement } from "./suggestTokenReplacement.js";
 import { generateComponentScaffold } from "./generateComponentScaffold.js";
 import { generatePrePromptTemplate } from "./generatePrePromptTemplate.js";
+import { recordAuditEvent } from "./recordAuditEvent.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // After tsup bundle: __dirname = mcp/build/ → go up 2 levels to reach DSS root
@@ -120,6 +121,48 @@ const GeneratePrePromptTemplateSchema = z.object({
     .describe(
       'Name of the DSS component to generate a pre-prompt for (e.g. "DssBtnGroup", "DssTab"). Case-insensitive, Dss prefix optional.'
     ),
+});
+
+// ── Phase 4 schemas ────────────────────────────────────────────────────────
+
+const RecordAuditEventSchema = z.object({
+  componentName: z
+    .string()
+    .describe(
+      'Name of the DSS component (e.g. "DssPageSticky", "DssButton"). Case-insensitive, Dss prefix optional.'
+    ),
+  phase: z
+    .enum(["initial-audit", "correction", "revalidation", "seal-granted"])
+    .describe(
+      '"initial-audit" — first audit pass. "correction" — after NC/GAP fixes. "revalidation" — MCP re-check after correction. "seal-granted" — final seal emission; also sets status=granted in dss.meta.json.'
+    ),
+  verdict: z
+    .enum(["compliant", "non-compliant", "pending"])
+    .describe(
+      '"compliant" — zero violations. "non-compliant" — violations found. "pending" — corrections in progress.'
+    ),
+  ncs: z
+    .number()
+    .int()
+    .min(0)
+    .default(0)
+    .describe("Number of non-conformities (NCs) found or resolved in this phase."),
+  gaps: z
+    .number()
+    .int()
+    .min(0)
+    .default(0)
+    .describe("Number of gaps found or resolved in this phase."),
+  notes: z
+    .string()
+    .optional()
+    .default("")
+    .describe("Free-text notes about the audit phase (e.g. which NCs were fixed)."),
+  auditor: z
+    .string()
+    .optional()
+    .default("Claude Code — Auditor DSS v2.5")
+    .describe('Auditor identity. Defaults to "Claude Code — Auditor DSS v2.5".'),
 });
 
 // ─── Tool Definitions ─────────────────────────────────────────────────────────
@@ -293,6 +336,51 @@ const TOOL_DEFINITIONS = [
       required: ["componentName"],
     },
   },
+  // ── Phase 4 Tools ──────────────────────────────────────────────────────────
+  {
+    name: "record_audit_event",
+    description:
+      "Records an audit event in the auditHistory[] of a component's dss.meta.json. When phase='seal-granted' and verdict='compliant', also sets status='granted', auditDate, and seal fields. CONTROLLED WRITE — authorized by MCP_READ_ONLY_CONTRACT.md v0.2. Only modifies auditHistory, status, auditDate and seal fields. Requires explicit human request.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        componentName: {
+          type: "string",
+          description:
+            'Name of the DSS component (e.g. "DssPageSticky", "DssButton"). Case-insensitive, Dss prefix optional.',
+        },
+        phase: {
+          type: "string",
+          enum: ["initial-audit", "correction", "revalidation", "seal-granted"],
+          description:
+            '"initial-audit" — first audit pass. "correction" — after NC/GAP fixes. "revalidation" — MCP re-check after correction. "seal-granted" — final seal; also sets status=granted.',
+        },
+        verdict: {
+          type: "string",
+          enum: ["compliant", "non-compliant", "pending"],
+          description:
+            '"compliant" — zero violations. "non-compliant" — violations found. "pending" — corrections in progress.',
+        },
+        ncs: {
+          type: "number",
+          description: "Number of non-conformities in this phase. Default: 0.",
+        },
+        gaps: {
+          type: "number",
+          description: "Number of gaps in this phase. Default: 0.",
+        },
+        notes: {
+          type: "string",
+          description: "Free-text notes about this audit phase.",
+        },
+        auditor: {
+          type: "string",
+          description: 'Auditor identity. Default: "Claude Code — Auditor DSS v2.5".',
+        },
+      },
+      required: ["componentName", "phase", "verdict"],
+    },
+  },
 ];
 
 // ─── Handler Registration ─────────────────────────────────────────────────────
@@ -393,6 +481,24 @@ export function registerTools(server: Server): void {
       case "generate_pre_prompt_template": {
         const input = GeneratePrePromptTemplateSchema.parse(args);
         const result = await generatePrePromptTemplate(input.componentName, DSS_ROOT);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      // ── Phase 4 ────────────────────────────────────────────────────────────
+      case "record_audit_event": {
+        const input = RecordAuditEventSchema.parse(args ?? {});
+        const result = await recordAuditEvent(
+          input.componentName,
+          input.phase,
+          input.verdict,
+          input.ncs,
+          input.gaps,
+          input.notes,
+          input.auditor,
+          DSS_ROOT
+        );
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };

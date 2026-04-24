@@ -173,4 +173,42 @@ In case of conflict, the baseline document takes precedence.
 ## Versioning
 
 - **v0.1** — Initial MCP Read-Only contract  
+- **v0.2** — Addendum: Controlled Audit Write capability added (see below)
 - Future versions may extend MCP capabilities through explicit, versioned contracts
+
+---
+
+## Addendum v0.2 — Controlled Audit Write
+
+### Motivation
+
+The `auditHistory` field in `dss.meta.json` documents the audit lifecycle of each DSS component. Without a write-capable MCP tool, this field remains permanently empty — making audit trails unverifiable and the governance system internally inconsistent.
+
+Recording an audit event is not autonomous decision-making: it is transcription of a human-driven audit decision into the governance record. This addendum authorizes this specific, scoped write operation.
+
+### New Authorized Capability: Audit Event Recording
+
+MCP is authorized to write to `dss.meta.json` **exclusively** via the `record_audit_event` tool, subject to the following constraints:
+
+#### Permitted writes (exhaustive list)
+| Field | Condition |
+|-------|-----------|
+| `auditHistory[]` | Always — append only, never delete or overwrite |
+| `status` | Only when `phase="seal-granted"` AND `verdict="compliant"` → sets `"granted"` |
+| `auditDate` | Only when `phase="seal-granted"` AND `verdict="compliant"` → sets ISO date |
+| `seal` | Only when `phase="seal-granted"`, `verdict="compliant"`, AND `seal` is currently null |
+
+#### Prohibited writes (even via this tool)
+- Any field not listed above (goldenReference, tokens, exceptions, props, etc.)
+- Overwriting existing `auditHistory` entries
+- Changing `status` to any value other than `"granted"`
+- Writing to any file other than the target component's `dss.meta.json`
+
+#### Activation conditions
+- Requires explicit human request (tool call initiated by user or authorized agent)
+- No autonomous triggering based on validation results
+- The `record_audit_event` tool must not call itself or chain with other write operations
+
+### Constraint on Read-Only Principle
+
+This addendum introduces a **narrowly scoped exception** to the read-only principle. The core principle — "MCP observes and explains, but never decides or changes" — remains intact for all non-audit-record writes. The `record_audit_event` tool does not decide audit outcomes; it transcribes decisions already made by the human auditor.
