@@ -13,7 +13,7 @@
   // --------------------------------------------------------------------------
 
   &--disabled {
-    opacity: 0.6;
+    opacity: var(--dss-opacity-disabled);
     pointer-events: none;
     user-select: none;
   }
