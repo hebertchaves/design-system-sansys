@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "quasar": "^2.19.3",
+    "sass": "^1.99.0",
     "vue": "^3.4.21"
   },
   "devDependencies": {

@@ -22,8 +22,8 @@ import type { DataCardProps, DataCardEmits, DataCardTab } from './types/datacard
 import { provideDataCardDisabled, usePagination } from './composables/useDataCard'
 
 // Componentes DSS consumidos
-import DssCard from '../DssCard/DssCard.vue'
-import DssCardSection from '../DssCard/DssCardSection.vue'
+import DssCard from '../DssCard/1-structure/DssCard.ts.vue'
+import DssCardSection from '../DssCard/1-structure/DssCardSection.ts.vue'
 import DssToolbar from '../DssToolbar/DssToolbar.vue'
 import DssTabs from '../DssTabs/DssTabs.vue'
 import DssTab from '../DssTab/DssTab.vue'

@@ -6,7 +6,16 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@sansys/design-system': resolve(__dirname, '../dist/dss.es.js')
+      // Alias para importar componentes DSS diretamente do source
+      '@dss': resolve(__dirname, '../components/base'),
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Silencia warnings de deprecação do Sass moderno
+        quietDeps: true,
+      }
     }
   }
 })

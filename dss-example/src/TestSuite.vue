@@ -302,6 +302,29 @@
           </div>
         </div>
 
+        <!-- Phase 3 — Compostos -->
+        <div class="nav-section">
+          <button
+            @click="toggleCategory('phase3')"
+            class="nav-category"
+          >
+            <span class="nav-icon">🧬</span>
+            <span class="nav-label">Fase 3 — Compostos</span>
+            <span class="chevron" :class="{ expanded: expandedCategories.phase3 }">›</span>
+          </button>
+
+          <div v-show="expandedCategories.phase3" class="nav-submenu">
+            <button
+              @click="activeComponent = 'datacard'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'datacard' }]"
+            >
+              <span class="nav-icon">🃏</span>
+              <span class="nav-label">DssDataCard</span>
+              <span class="nav-badge stress">Stress Test</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Patterns -->
         <div class="nav-section">
           <button
@@ -386,6 +409,11 @@
         <TestCard />
       </div>
 
+      <!-- DssDataCard Stress Test View -->
+      <div v-if="activeComponent === 'datacard'" class="component-view">
+        <TestDataCard />
+      </div>
+
       <!-- Design Tokens View -->
       <div v-if="activeComponent === 'tokens'" class="component-view">
         <TestTokens />
@@ -402,6 +430,7 @@ import TestBadge from './TestBadge.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
+import TestDataCard from './TestDataCard.vue'
 
 // Active component state
 const activeComponent = ref('index')
@@ -416,6 +445,7 @@ const expandedCategories = ref({
   formsInput: false,
   layout: false,
   navigation: false,
+  phase3: true,
   patterns: false
 })
 
@@ -613,6 +643,11 @@ const toggleCategory = (category) => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
+}
+
+.nav-badge.stress {
+  background: #f59e0b;
+  color: #1a1a1a;
 }
 
 /* ========================================

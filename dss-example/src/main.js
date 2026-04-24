@@ -1,14 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-
-// Importar Design System Sansys
-import DesignSystemSansys from '@sansys/design-system'
+import { Quasar } from 'quasar'
 
 const app = createApp(App)
 
-// Registrar plugin globalmente (todos os componentes disponíveis)
-app.use(DesignSystemSansys, {
-  brand: 'hub' // Define brand padrão: hub, water, ou waste
-})
+// Registrar Quasar (JS apenas — CSS já carregado via dss-full.css no index.html)
+app.use(Quasar, { config: {} })
 
 app.mount('#app')
