@@ -1,0 +1,10 @@
+// ==========================================================================
+// DssDataCard — SCSS Orchestrator
+// ==========================================================================
+//
+// Importa as 4 camadas em ordem canônica DSS.
+// Não contém regras próprias — apenas orquestra.
+
+@use '2-composition/base';
+@use '3-variants/brand';
+@use '4-output/states';

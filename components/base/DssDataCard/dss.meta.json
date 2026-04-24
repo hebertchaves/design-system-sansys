@@ -1,0 +1,53 @@
+{
+  "name": "DssDataCard",
+  "version": "1.0.0",
+  "status": "stress-test",
+  "phase": "3-preview",
+  "level": "stress-test",
+  "family": "Composição Complexa",
+  "description": "Componente stress test da Fase 3. Composição profunda de DssCard + DssToolbar + DssTabs + DssTabPanels + paginação interna. Criado para revelar gargalos de CSS, prop drilling e conflitos de inheritAttrs antes da produção.",
+  "quasarBase": null,
+  "dependencies": [
+    "DssCard",
+    "DssCardSection",
+    "DssToolbar",
+    "DssTabs",
+    "DssTab",
+    "DssTabPanels",
+    "DssTabPanel",
+    "DssButton"
+  ],
+  "stressTestObjectives": [
+    "inheritAttrs: false — atributos aplicados no DssCard raiz via v-bind=\"$attrs\"",
+    "provide/inject tipado — disabled propaga sem prop drilling manual",
+    "CSS Variables — brand propaga via [data-brand] sem prop drilling",
+    "Proibição de :deep() — separação de responsabilidades preservada",
+    "Slots dinâmicos — tab-{name} para conteúdo de cada aba"
+  ],
+  "knownRisks": [
+    "RISCO-01: DssTabPanels pode conflitar com o overflow do DssCard — monitorar",
+    "RISCO-02: Botões de paginação com icon+label podem ter touch target < 44px em size=sm",
+    "RISCO-03: Skeleton animation pode causar reflow em listas longas"
+  ],
+  "tokens": [
+    "--dss-gray-300",
+    "--dss-surface-muted",
+    "--dss-text-body",
+    "--dss-text-subtle",
+    "--dss-font-size-base",
+    "--dss-font-size-sm",
+    "--dss-font-weight-medium",
+    "--dss-size-4",
+    "--dss-size-8",
+    "--dss-size-12",
+    "--dss-size-16"
+  ],
+  "propsBlocked": [
+    "dark"
+  ],
+  "goldenReference": "DssCard",
+  "goldenContext": "DssTabs + DssTabPanels",
+  "createdAt": "2026-04-24",
+  "sealedAt": null,
+  "sealVersion": null
+}

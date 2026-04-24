@@ -1,0 +1,35 @@
+// ==========================================================================
+// DssDataCard — 4-output/_states.scss
+// ==========================================================================
+//
+// Estados visuais do DssDataCard: disabled e loading.
+
+.dss-data-card {
+  // --------------------------------------------------------------------------
+  // Estado disabled
+  // O pointer-events é desabilitado no container.
+  // Os filhos interativos (DssButton, DssTab) recebem disabled via
+  // provide/inject — não via CSS cascata.
+  // --------------------------------------------------------------------------
+
+  &--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  // --------------------------------------------------------------------------
+  // Estado loading
+  // Oculta o conteúdo real e exibe o skeleton.
+  // --------------------------------------------------------------------------
+
+  &--loading {
+    .dss-data-card__content {
+      display: none;
+    }
+
+    .dss-data-card__pagination {
+      display: none;
+    }
+  }
+}
