@@ -51,7 +51,8 @@ Os tokens DSS são **genéricos e reutilizáveis**. Componentes escolhem livreme
   - Hub (14 tokens)
   - Water (14 tokens)
   - Waste (14 tokens)
-- [2.3 Cores Semânticas Base (48 tokens)](#23-cores-semânticas-base)
+- [2.3 Tokens de Marca Semânticos (15 tokens)](#23-tokens-de-marca-semânticos)
+- [2.4 Cores Semânticas Base (48 tokens)](#24-cores-semânticas-base)
   - Primary (6 tokens)
   - Secondary (6 tokens)
   - Tertiary (6 tokens)
@@ -61,7 +62,7 @@ Os tokens DSS são **genéricos e reutilizáveis**. Componentes escolhem livreme
   - Negative (6 tokens)
   - Warning (6 tokens)
   - Info (6 tokens)
-- [2.4 Opacidade (32 tokens)](#24-opacidade)
+- [2.5 Opacidade (32 tokens)](#25-opacidade)
   - Escala Base (21 tokens)
   - Tokens Semânticos de Estados (5 tokens)
   - Tokens Semânticos de UI (1 token)
@@ -323,7 +324,7 @@ Sistema de cores do DSS dividido em paletas neutras, de marca e semânticas.
 
 ## 2.2 Brand Palettes
 
-**⚠️ IMPORTANTE:** As paletas de marca (Hub, Water, Waste) são **escalas de 11 tons** (50 a 950) mais 3 tokens de estado (`hover`, `disable`, `deep`).
+**⚠️ IMPORTANTE:** As paletas de marca (Hub, Water, Waste) são **escalas de 11 tons** (50 a 950).
 Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso para interações**:
 
 **Padrão de Estados:**
@@ -334,7 +335,7 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 
 ### Hub (Laranja/Marrom)
 
-**Total: 14 tokens**
+**Total: 11 tokens**
 
 | Token | Valor Hex | RGB | Uso |
 |-------|-----------|-----|-----|
@@ -349,13 +350,10 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 | `--dss-hub-800` | #984614 | 152, 70, 20 | **💡 Hub hover/focus** |
 | `--dss-hub-900` | #7a3614 | 122, 54, 20 | Hub profundo |
 | `--dss-hub-950` | #421d08 | 66, 29, 8 | **🎯 Hub deep** |
-| `--dss-brand-hover` | `var(--dss-hub-700)` | — | Estado hover sobre primary |
-| `--dss-brand-disable` | `var(--dss-hub-200)` | — | Estado desabilitado |
-| `--dss-brand-deep` | `var(--dss-hub-800)` | — | Estado active/pressionado |
 
 ### Water (Azul)
 
-**Total: 14 tokens**
+**Total: 11 tokens**
 
 | Token | Valor Hex | RGB | Uso |
 |-------|-----------|-----|-----|
@@ -370,13 +368,10 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 | `--dss-water-800` | #074a85 | 7, 74, 133 | Water muito escuro |
 | `--dss-water-900` | #0c3e6e | 12, 62, 110 | Water profundo |
 | `--dss-water-950` | #082749 | 8, 39, 73 | **🎯 Water deep** |
-| `--dss-brand-hover` | `var(--dss-water-600)` | — | Estado hover sobre primary |
-| `--dss-brand-disable` | `var(--dss-water-200)` | — | Estado desabilitado |
-| `--dss-brand-deep` | `var(--dss-water-800)` | — | Estado active/pressionado |
 
 ### Waste (Verde)
 
-**Total: 14 tokens**
+**Total: 11 tokens**
 
 | Token | Valor Hex | RGB | Uso |
 |-------|-----------|-----|-----|
@@ -391,16 +386,37 @@ Apesar de não terem tokens de estado explícitos, seguem um **padrão de uso pa
 | `--dss-waste-800` | #0a5b3e | 10, 91, 62 | **💡 Waste hover/focus** |
 | `--dss-waste-900` | #0a4a34 | 10, 74, 52 | Waste profundo |
 | `--dss-waste-950` | #042a1e | 4, 42, 30 | **🎯 Waste deep** |
-| `--dss-brand-hover` | `var(--dss-waste-700)` | — | Estado hover sobre primary |
-| `--dss-brand-disable` | `var(--dss-waste-200)` | — | Estado desabilitado |
-| `--dss-brand-deep` | `var(--dss-waste-800)` | — | Estado active/pressionado |
 
 **📝 RESUMO DE ESTADOS POR MARCA:**
 - **Hub**: Principal=600 | Light=300 | Disable=200 | Hover/Focus=800 | Deep=950
 - **Water**: Principal=500 | Light=300 | Disable=200 | Hover/Focus=700 | Deep=950
 - **Waste**: Principal=600 | Light=300 | Disable=200 | Hover/Focus=800 | Deep=950
 
-## 2.3 Cores Semânticas Base
+## 2.3 Tokens de Marca Semânticos
+
+Tokens semânticos de marca que se adaptam automaticamente ao contexto atual (`[data-brand="hub|water|waste"]`). Devem ser usados por componentes compostos que precisam consumir cores da marca ativa sem conhecer a paleta específica.
+
+**Total: 15 tokens**
+
+| Token | Hub | Water | Waste | Semântica |
+|-------|-----|-------|-------|-----------|
+| `--dss-brand-primary` | `var(--dss-hub-600)` | `var(--dss-water-500)` | `var(--dss-waste-600)` | Cor principal da marca |
+| `--dss-brand-secondary` | `var(--dss-hub-300)` | `var(--dss-water-300)` | `var(--dss-waste-300)` | Variante clara / secundária |
+| `--dss-brand-tertiary` | `var(--dss-hub-800)` | `var(--dss-water-700)` | `var(--dss-waste-800)` | Terceira cor da marca |
+| `--dss-brand-accent` | `var(--dss-hub-400)` | `var(--dss-water-400)` | `var(--dss-waste-400)` | Cor de destaque / acento |
+| `--dss-brand-light` | `var(--dss-hub-100)` | `var(--dss-water-100)` | `var(--dss-waste-100)` | Variante muito clara |
+| `--dss-brand-lighter` | `var(--dss-hub-50)` | `var(--dss-water-50)` | `var(--dss-waste-50)` | Variante mínima |
+| `--dss-brand-dark` | `var(--dss-hub-900)` | `var(--dss-water-800)` | `var(--dss-waste-900)` | Variante escura |
+| `--dss-brand-darker` | `var(--dss-hub-950)` | `var(--dss-water-900)` | `var(--dss-waste-950)` | Variante mais escura |
+| `--dss-brand-background` | `var(--dss-hub-50)` | `var(--dss-water-50)` | `var(--dss-waste-50)` | Fundo de áreas brandadas |
+| `--dss-brand-surface` | `var(--dss-hub-100)` | `var(--dss-water-100)` | `var(--dss-waste-100)` | Superfície brandada |
+| `--dss-brand-border` | `var(--dss-hub-200)` | `var(--dss-water-200)` | `var(--dss-waste-200)` | Borda brandada |
+| `--dss-brand-text` | `var(--dss-hub-900)` | `var(--dss-water-800)` | `var(--dss-waste-900)` | Texto sobre fundo brandado |
+| `--dss-brand-hover` | `var(--dss-hub-700)` | `var(--dss-water-600)` | `var(--dss-waste-700)` | Estado hover sobre primary |
+| `--dss-brand-disable` | `var(--dss-hub-200)` | `var(--dss-water-200)` | `var(--dss-waste-200)` | Estado desabilitado |
+| `--dss-brand-deep` | `var(--dss-hub-800)` | `var(--dss-water-800)` | `var(--dss-waste-800)` | Estado active/pressionado |
+
+## 2.4 Cores Semânticas Base
 
 ### Primary (Azul Principal)
 
