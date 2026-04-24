@@ -1,0 +1,66 @@
+{
+  "name": "DssCadrisCard",
+  "version": "1.0.0",
+  "phase": 3,
+  "status": "ready-for-audit",
+  "classification": {
+    "type": "Composite",
+    "category": "Data / Search",
+    "family": "Card"
+  },
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssDataCard",
+  "dssVersion": "2.2",
+  "auditStatus": "pending",
+  "createdAt": "2026-04-24",
+  "dependencies": {
+    "dss": [
+      "DssCard",
+      "DssToolbar",
+      "DssToolbarTitle",
+      "DssInput",
+      "DssSelect",
+      "DssButton",
+      "DssIcon",
+      "DssSpace"
+    ],
+    "quasar": ["q-space"]
+  },
+  "tokens": [
+    "--dss-surface-muted",
+    "--dss-surface-subtle",
+    "--dss-surface-hover",
+    "--dss-text-primary",
+    "--dss-text-secondary",
+    "--dss-gray-200",
+    "--dss-gray-300",
+    "--dss-gray-600",
+    "--dss-gray-700",
+    "--dss-font-size-sm",
+    "--dss-font-size-md",
+    "--dss-font-weight-medium",
+    "--dss-font-weight-semibold",
+    "--dss-line-height-normal",
+    "--dss-spacing-4",
+    "--dss-spacing-8",
+    "--dss-spacing-12",
+    "--dss-spacing-16",
+    "--dss-spacing-24",
+    "--dss-spacing-48",
+    "--dss-border-radius-sm",
+    "--dss-opacity-disabled",
+    "--dss-duration-150",
+    "--dss-duration-1000",
+    "--dss-easing-standard"
+  ],
+  "slots": ["toolbar-actions"],
+  "props": ["rows", "loading", "pagination", "disable", "documentoOptions", "aterroOptions"],
+  "emits": ["search", "close", "update:pagination"],
+  "phase3Patterns": {
+    "inheritAttrs": true,
+    "provideInject": true,
+    "cssVariables": true,
+    "noDeepLayout": true,
+    "typedSlots": true
+  }
+}

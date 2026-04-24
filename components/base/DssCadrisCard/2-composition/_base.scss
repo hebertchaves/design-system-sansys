@@ -1,0 +1,202 @@
+// ==========================================================================
+// DssCadrisCard — Layer 2: Composition (_base.scss)
+// ==========================================================================
+// Estilos base estruturais. Apenas tokens genéricos DSS.
+// Cores de texto e fundos semânticos usam tokens de superfície (permitidos).
+// Cores de feedback (positive/negative/warning) são aplicadas via
+// classes utilitárias Quasar no template — NUNCA aqui.
+// ==========================================================================
+
+.dss-cadris-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  // --------------------------------------------------------------------------
+  // TOOLBAR
+  // --------------------------------------------------------------------------
+
+  &__toolbar {
+    border-bottom: 1px solid var(--dss-gray-200);
+  }
+
+  &__title {
+    font-weight: var(--dss-font-weight-semibold);
+  }
+
+  // --------------------------------------------------------------------------
+  // FILTROS
+  // --------------------------------------------------------------------------
+
+  &__filters {
+    border-bottom: 1px solid var(--dss-gray-200);
+  }
+
+  // --------------------------------------------------------------------------
+  // AÇÕES
+  // --------------------------------------------------------------------------
+
+  &__actions {
+    border-bottom: 1px solid var(--dss-gray-200);
+  }
+
+  // --------------------------------------------------------------------------
+  // ÁREA DE TABELA
+  // --------------------------------------------------------------------------
+
+  &__table-area {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  // --------------------------------------------------------------------------
+  // TABELA NATIVA (com ARIA roles)
+  // --------------------------------------------------------------------------
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--dss-font-size-sm);
+  }
+
+  &__thead {
+    th[role='columnheader'] {
+      background-color: var(--dss-surface-muted);
+      color: var(--dss-text-primary);
+      font-weight: var(--dss-font-weight-semibold);
+      font-size: var(--dss-font-size-sm);
+      text-align: left;
+      padding: var(--dss-spacing-12) var(--dss-spacing-16);
+      border-bottom: 2px solid var(--dss-gray-300);
+      white-space: nowrap;
+    }
+  }
+
+  &__tbody {
+    .dss-cadris-card__row {
+      border-bottom: 1px solid var(--dss-gray-200);
+      transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      // Linhas alternadas com token de superfície (permitido)
+      &:nth-child(even) {
+        background-color: var(--dss-surface-subtle);
+      }
+
+      &:hover {
+        background-color: var(--dss-surface-hover);
+      }
+    }
+  }
+
+  &__cell {
+    color: var(--dss-text-primary);
+    padding: var(--dss-spacing-12) var(--dss-spacing-16);
+    vertical-align: middle;
+    font-size: var(--dss-font-size-sm);
+    line-height: var(--dss-line-height-normal);
+  }
+
+  // --------------------------------------------------------------------------
+  // STATUS (ATIVO / INATIVO)
+  // cores via classes Quasar: text-positive / text-negative (no template)
+  // --------------------------------------------------------------------------
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--dss-spacing-4);
+    font-weight: var(--dss-font-weight-medium);
+    font-size: var(--dss-font-size-sm);
+  }
+
+  // --------------------------------------------------------------------------
+  // ESTADO DE LOADING — SKELETON
+  // --------------------------------------------------------------------------
+
+  &__skeleton {
+    padding: var(--dss-spacing-16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-spacing-8);
+  }
+
+  &__skeleton-row {
+    display: flex;
+    gap: var(--dss-spacing-16);
+    align-items: center;
+  }
+
+  &__skeleton-cell {
+    height: var(--dss-spacing-16);
+    background-color: var(--dss-surface-muted);
+    border-radius: var(--dss-border-radius-sm);
+    animation: dss-cadris-shimmer var(--dss-duration-1000) infinite linear;
+
+    &--sm  { flex: 1; }
+    &--md  { flex: 2; }
+    &--lg  { flex: 3; }
+  }
+
+  @keyframes dss-cadris-shimmer {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.4; }
+    100% { opacity: 1; }
+  }
+
+  // --------------------------------------------------------------------------
+  // ESTADO VAZIO
+  // --------------------------------------------------------------------------
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dss-spacing-48) var(--dss-spacing-24);
+    text-align: center;
+    color: var(--dss-text-secondary);
+  }
+
+  &__empty-icon {
+    color: var(--dss-text-secondary);
+    margin-bottom: var(--dss-spacing-12);
+  }
+
+  &__empty-message {
+    font-size: var(--dss-font-size-md);
+    font-weight: var(--dss-font-weight-medium);
+    color: var(--dss-text-primary);
+    margin: 0 0 var(--dss-spacing-4);
+  }
+
+  &__empty-hint {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+    margin: 0;
+  }
+
+  // --------------------------------------------------------------------------
+  // PAGINAÇÃO
+  // --------------------------------------------------------------------------
+
+  &__pagination {
+    border-top: 1px solid var(--dss-gray-200);
+    gap: var(--dss-spacing-4);
+    flex-wrap: wrap;
+  }
+
+  &__page-label {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+    margin-right: var(--dss-spacing-8);
+  }
+}

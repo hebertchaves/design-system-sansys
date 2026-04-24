@@ -1,0 +1,111 @@
+// ==========================================================================
+// DssCadrisCard — Layer 4: States (_states.scss)
+// ==========================================================================
+// Dark mode, high contrast, forced-colors, reduced-motion, print.
+// ==========================================================================
+
+.dss-cadris-card {
+  // --------------------------------------------------------------------------
+  // Estado: disabled
+  // --------------------------------------------------------------------------
+
+  &--disabled {
+    opacity: var(--dss-opacity-disabled);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  // --------------------------------------------------------------------------
+  // Estado: loading
+  // O overlay visual é gerenciado via skeleton no template.
+  // A classe CSS apenas isola interatividade.
+  // --------------------------------------------------------------------------
+
+  &--loading {
+    pointer-events: none;
+  }
+
+  // --------------------------------------------------------------------------
+  // Dark Mode
+  // Tokens de superfície adaptam automaticamente via CSS custom properties.
+  // Substituições explícitas apenas onde o adaptação automática é insuficiente.
+  // --------------------------------------------------------------------------
+
+  @media (prefers-color-scheme: dark) {
+    &__thead {
+      th[role='columnheader'] {
+        border-bottom-color: var(--dss-gray-600);
+      }
+    }
+
+    &__tbody .dss-cadris-card__row {
+      border-bottom-color: var(--dss-gray-700);
+    }
+
+    &__toolbar,
+    &__filters,
+    &__actions,
+    &__pagination {
+      border-color: var(--dss-gray-700);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Reduced Motion
+  // Desativa animação de shimmer no skeleton
+  // --------------------------------------------------------------------------
+
+  @media (prefers-reduced-motion: reduce) {
+    &__skeleton-cell {
+      animation: none;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // High Contrast (Windows)
+  // --------------------------------------------------------------------------
+
+  @media (forced-colors: active) {
+    &__table {
+      border: 1px solid ButtonText;
+    }
+
+    &__thead th[role='columnheader'] {
+      background-color: ButtonFace;
+      color: ButtonText;
+      border-bottom: 2px solid ButtonText;
+    }
+
+    &__tbody .dss-cadris-card__row {
+      border-bottom: 1px solid ButtonText;
+
+      &:hover {
+        outline: 2px solid Highlight;
+        outline-offset: -2px;
+      }
+    }
+
+    &__status {
+      forced-color-adjust: none;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Print
+  // --------------------------------------------------------------------------
+
+  @media print {
+    &__actions,
+    &__pagination {
+      display: none;
+    }
+
+    &__skeleton {
+      display: none;
+    }
+
+    &__table {
+      page-break-inside: avoid;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+// ==========================================================================
+// DssCadrisCard — Orchestrador Principal SCSS
+// ==========================================================================
+// Importa as 4 camadas na ordem obrigatória: L2 → L3 → L4
+// Nunca importar camadas fora desta ordem.
+// ==========================================================================
+
+// Layer 2 — Composition (estilos base)
+@use './2-composition/base' as l2-base;
+
+// Layer 3 — Variants (variantes estruturais)
+@use './3-variants/index' as l3-variants;
+
+// Layer 4 — Output (estados, brands, dark mode)
+@use './4-output/index' as l4-output;

@@ -1,0 +1,54 @@
+// ==========================================================================
+// DssCadrisCard — Layer 4: Brands (_brands.scss)
+// ==========================================================================
+// Personalização por brand via [data-brand] no elemento raiz.
+// Apenas tokens semânticos de brand. Sem cores hardcoded.
+//
+// Padrão de seletor: [data-brand="x"] .dss-cadris-card__element
+// (descendant com espaço — brand no ancestral DssCard raiz)
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Hub (laranja)
+// --------------------------------------------------------------------------
+
+[data-brand='hub'] {
+  .dss-cadris-card__thead th[role='columnheader'] {
+    background-color: var(--dss-surface-muted);
+    border-bottom-color: var(--dss-hub-primary, var(--dss-gray-300));
+  }
+
+  .dss-cadris-card__row:hover {
+    background-color: var(--dss-surface-hover);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Water (azul)
+// --------------------------------------------------------------------------
+
+[data-brand='water'] {
+  .dss-cadris-card__thead th[role='columnheader'] {
+    background-color: var(--dss-surface-muted);
+    border-bottom-color: var(--dss-water-primary, var(--dss-gray-300));
+  }
+
+  .dss-cadris-card__row:hover {
+    background-color: var(--dss-surface-hover);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Waste (verde)
+// --------------------------------------------------------------------------
+
+[data-brand='waste'] {
+  .dss-cadris-card__thead th[role='columnheader'] {
+    background-color: var(--dss-surface-muted);
+    border-bottom-color: var(--dss-waste-primary, var(--dss-gray-300));
+  }
+
+  .dss-cadris-card__row:hover {
+    background-color: var(--dss-surface-hover);
+  }
+}
