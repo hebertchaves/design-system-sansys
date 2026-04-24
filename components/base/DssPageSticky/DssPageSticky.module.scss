@@ -1,0 +1,13 @@
+// ==========================================================================
+// DssPageSticky — SCSS Orchestrator
+// ==========================================================================
+// Layer order MUST be: L2 → L3 → L4 (do not change)
+
+// Layer 2 — Base composition
+@use './2-composition/base' as *;
+
+// Layer 3 — Variants
+@use './3-variants/index' as *;
+
+// Layer 4 — Output (dark mode, high-contrast, brands)
+@use './4-output/index' as *;

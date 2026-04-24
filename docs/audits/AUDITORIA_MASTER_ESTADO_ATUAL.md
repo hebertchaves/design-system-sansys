@@ -27,7 +27,7 @@
 
 | Componente | Fase | Selo | Status Seal File | `dss.meta.json` | Golden Reference | Golden Context | Entry Point Wrapper |
 |-----------|------|------|-----------------|-----------------|-----------------|---------------|---------------------|
-| **DssButton** | 1 | `docs/Compliance/seals/DssButtom/` | CONFORME | Ausente | — (Golden Sample: doc) | — | ✅ Presente |
+| **DssButton** | 1 | `docs/Compliance/seals/DssButton/` | CONFORME | Ausente | — (Golden Sample: doc) | — | ✅ Presente |
 | **DssBadge** | 1 | `seals/DssBadge/DSS_BADGE_SELO_v2.2.md` | CONFORME | `seal: "approved"` | DssBadge (self) | DssChip | ❌ **AUSENTE** |
 | **DssChip** | 1 | `seals/DssChip/DSS_CHIP_SELO_v2.2.md` | CONFORME | ✅ Completo | DssChip (self) | DssChip (self) | ✅ Presente |
 | **DssCheckbox** | 1 | `seals/DssCheckbox/DSS_CHECKBOX_SELO_v2.2.md` | CONFORME | ✅ Completo | DssChip | DssChip | ✅ Presente |
@@ -39,8 +39,18 @@
 | **DssTooltip** | 1 | `seals/DssTooltip/DSSTOOLTIP_SELO_v2.2.md` | CONFORME | ✅ Completo | DssBadge | DssBadge | ❌ **AUSENTE** |
 | **DssCard** | 1 | `seals/DssCard/DSSCARD_SELO_v2.2.md` | CONFORME | ✅ Completo (phase: 2) | DssChip | DssChip + DssBadge | ✅ Presente |
 | **DssItem** | 1 | `seals/DssItem/DSSITEM_SELO_v2.2.md` | CONFORME | ✅ Completo (`seal: "granted"` — corrigido 17/03/2026) | DssChip | DssChip | ✅ Presente |
+| **DssSeparator** | 1 | `seals/DssSeparator/DSSSEPARATOR_SELO_v2.2.md` | CONFORME | ✅ Completo | DssBadge | DssBadge | ✅ Presente |
+| **DssSpace** | 1 | `seals/DssSpace/DSSSPACE_SELO_v2.2.md` | CONFORME | ✅ Completo | DssBadge | DssSeparator | ✅ Presente |
+| **DssTextarea** | 1 | `seals/DssTextarea/DSSTEXTAREA_SELO_v2.2.md` | CONFORME | ✅ Completo | DssChip | DssInput | ✅ Presente |
+| **DssSelect** | 1 | `seals/DssSelect/DSSSELECT_SELO_v2.2.md` | CONFORME | ✅ Completo | DssChip | DssInput | ✅ Presente |
+| **DssSlider** | 1 | `seals/DssSlider/DSSSLIDER_SELO_v2.2.md` | CONFORME | ✅ Completo | DssToggle | DssInput | ✅ Presente |
+| **DssFile** | 1 | `seals/DssFile/DSSFILE_SELO_v2.2.md` | CONFORME | ✅ Completo | DssInput | DssInput | ✅ Presente |
+| **DssTabs** | 2 | `seals/DssTabs/DSSTABS_SELO_v2.2.md` | CONFORME | ✅ Completo | DssBadge | DssButton | ✅ Presente |
+| **DssDrawer** | 2 | `seals/DssDrawer/DSSDRAWER_SELO_v2.2.md` | CONFORME | ✅ Completo | DssBadge | DssHeader | ✅ Presente |
+| **DssHeader** | 2 | `seals/DssHeader/DSSHEADER_SELO_v2.2.md` | CONFORME | ✅ Completo | DssBadge | DssHeader (self) | ✅ Presente |
+| **DssPageSticky** | 4 | `seals/DssPageSticky/DSSPAGESTICKY_SELO_v2.2.md` | CONFORME | ✅ Completo | DssBadge | DssHeader | ✅ Presente |
 
-**Total**: 12/12 componentes com selo emitido.
+**Total**: 23/23 componentes com selo emitido. *(Auditoria mestre criada em 17/03/2026 com 12 componentes; atualizada em 23/04/2026 com adição de DssSeparator, DssSpace, DssTextarea, DssSelect, DssSlider, DssFile, DssTabs, DssDrawer, DssHeader e DssPageSticky.)*
 
 ### 1.2 Inconsistências nos Metadados
 
@@ -285,7 +295,7 @@ export default DssNomeComponente
 | Acessibilidade WCAG 2.1 AA | CONFORME | 12/12 |
 | Pseudo-elementos Convention | CONFORME | 12/12 |
 | Touch Targets | CONFORME | 12/12 |
-| Selos Emitidos | CONFORME | 12/12 |
+| Selos Emitidos | CONFORME | 23/23 |
 | Contrato MCP Read-Only | PARCIAL | Funcional para validação estática; sinais sem mecanismo de emissão |
 
 ### 6.2 Ações Requeridas (Priorizadas)
@@ -319,7 +329,7 @@ export default DssNomeComponente
 
 Os seguintes componentes estão em estado ótimo — conformes em todos os gates verificados:
 
-✅ DssButton · DssChip · DssCheckbox · DssRadio · DssToggle · DssItem · DssCard
+✅ DssButton · DssChip · DssCheckbox · DssRadio · DssToggle · DssItem · DssCard · DssSeparator · DssSpace · DssTextarea · DssSelect · DssSlider · DssFile · DssTabs · DssDrawer · DssHeader · DssPageSticky
 
 ### 6.4 Componentes com Pendências Não-Bloqueantes
 

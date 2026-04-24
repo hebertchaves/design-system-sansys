@@ -1,0 +1,19 @@
+// ==========================================================================
+// DssPageSticky — Layer 3: Variantes Visuais
+// ==========================================================================
+//
+// Variante DSS exclusiva: elevated.
+// Sem variantes de tamanho ou densidade — DssPageSticky é container
+// de posicionamento puro, sem dimensões próprias.
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Variante: elevated
+// Aplica sombra de elevação nível 2 — ideal para elementos flutuantes
+// que precisam de destaque visual sobre o conteúdo da página.
+// Token: --dss-elevation-2 → var(--dss-shadow-md)
+//         → 0 4px 6px rgba(0, 0, 0, 0.30)
+// ------------------------------------------------------------------
+.dss-page-sticky--elevated {
+  box-shadow: var(--dss-elevation-2);
+}

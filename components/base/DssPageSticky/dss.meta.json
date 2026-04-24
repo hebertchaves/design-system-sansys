@@ -1,0 +1,107 @@
+{
+  "component": "DssPageSticky",
+  "cssClass": "dss-page-sticky",
+  "dssVersion": "2.2",
+  "status": "in-progress",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Componente utilitário de layout de Nível 4 (Composição de Terceiro Grau). Wrapper DSS governado sobre QPageSticky. Depende estruturalmente de DssLayout, DssPageContainer e DssPage.",
+
+  "goldenReference": "DssBadge",
+  "goldenReferenceJustification": "DssBadge é o Golden Reference oficial para componentes não-interativos. DssPageSticky é container estrutural de posicionamento puro — sem estados de interação (hover/focus/active). Mesma categoria arquitetural: container não-interativo que fornece estrutura, não interatividade.",
+
+  "goldenContext": "DssHeader",
+  "goldenContextJustification": "DssHeader é o Golden Context para DssPageSticky: ambos são wrappers DSS sobre primitivos Quasar de layout de página (QHeader / QPageSticky), não-interativos, que gerenciam posicionamento fixo com z-index e elevação governados por tokens DSS. DssHeader usa --dss-elevation-2 para elevated (mesmo token). Recebeu Selo DSS v2.2 (Abr 2026).",
+
+  "classification": {
+    "type": "Container utilitário de posicionamento",
+    "category": "Layout Global — Composição de Terceiro Grau",
+    "interactive": false,
+    "family": "Layout"
+  },
+
+  "compositionContext": {
+    "requiredParent": "DssPage (obrigatório para posicionamento correto via QLayout)",
+    "structuralChain": "DssLayout > DssPageContainer > DssPage > DssPageSticky",
+    "slotContent": "Livre — aceita qualquer elemento DSS (DssButton FAB, banners, CTAs)"
+  },
+
+  "propsExposed": ["position", "offset", "expand", "elevated"],
+  "propsBlocked": [],
+  "propsBlockedJustification": {},
+  "propsPassThrough": {
+    "via $attrs": "Todos os atributos não declarados são repassados ao q-page-sticky (aria-label, data-*, classes adicionais)"
+  },
+
+  "statesApplicable": ["default", "elevated"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssPageSticky é container estrutural de posicionamento 100% não-interativo. Não possui estados de interação — hover/focus/active são responsabilidade do conteúdo no slot. disabled/loading/error/indeterminate não se aplicam a containers de posicionamento.",
+
+  "accessibility": {
+    "role": "Nenhum role próprio — semântica pertence ao conteúdo no slot default",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Opção B — não implementado. DssPageSticky é container estrutural. Touch targets são responsabilidade do conteúdo interno.",
+    "keyboardNavigation": "Não gerenciada pelo DssPageSticky. Responsabilidade do conteúdo no slot.",
+    "ariaLabel": "Recomendado via $attrs quando necessário: <DssPageSticky aria-label='...'>"
+  },
+
+  "tokens": [
+    "--dss-z-index-sticky",
+    "--dss-elevation-2",
+    "--dss-shadow-lg",
+    "--dss-border-width-thin",
+    "--dss-gray-400"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Uso de <q-page-sticky> como elemento raiz do template",
+      "location": "1-structure/DssPageSticky.ts.vue — template",
+      "gatesViolated": ["Gate de Composição v2.4 — Regra 1 (primitivo Quasar como raiz)"],
+      "justification": "QPageSticky usa position: fixed calculado em relação ao QLayout pai, com offsets dinâmicos via CSS custom properties --q-header-offset e --q-footer-offset. Envolver em outro elemento quebra esse cálculo. Precedente canônico: DssPage (EXC-01), DssHeader (EXC-01), DssLayout, DssPageContainer."
+    },
+    {
+      "id": "EXC-02",
+      "description": "System color keywords em forced-colors mode",
+      "value": "ButtonFace, Canvas",
+      "location": "4-output/_states.scss — @media (forced-colors: active)",
+      "justification": "Forced-colors mode requer system color keywords — tokens CSS são ignorados pelo navegador. Padrão canônico DSS. Precedente: DssHeader (EXC-03), DssToolbar, DssCard, DssStep."
+    },
+    {
+      "id": "EXC-03",
+      "description": "Valores hardcoded em @media print",
+      "value": "position: static !important, z-index: auto !important",
+      "location": "4-output/_states.scss — @media print",
+      "justification": "position: fixed impede renderização correta na impressão (elemento aparece em todas as páginas). Tokens CSS não são resolvidos em contexto de impressão. Precedente: DssHeader (EXC-04), DssToolbar."
+    }
+  ],
+
+  "reservations": [
+    {
+      "id": "RES-01",
+      "description": "Dark mode — box-shadow com --dss-shadow-lg hardcoded na elevação",
+      "detail": "Em dark mode, --dss-shadow-md (rgba(0,0,0,0.30)) pode ser imperceptível sobre fundos escuros. Substituído por --dss-shadow-lg. Aguarda token semântico --dss-elevation-2-dark.",
+      "priority": "low"
+    },
+    {
+      "id": "RES-02",
+      "description": "Sem unit tests",
+      "detail": "DssPageSticky.test.js não implementado. Testes de posicionamento requerem ambiente de browser real (JSDOM não simula position: fixed corretamente).",
+      "priority": "medium"
+    }
+  ],
+
+  "antiPatterns": [
+    "Usar DssPageSticky fora de um contexto DssLayout > DssPageContainer > DssPage",
+    "Sobrescrever z-index via classes ou estilos inline (viola hierarquia DSS)",
+    "Aplicar cor de fundo no DssPageSticky (responsabilidade do conteúdo no slot)",
+    "Usar DssPageSticky para criar overlays ou backdrops (use DssDialog/DssDrawer)"
+  ],
+
+  "compositionRecommendations": [
+    "DssButton (round, com icon) — padrão FAB",
+    "Div governado por tokens DSS — banner de cookies, CTA persistente"
+  ],
+
+  "auditHistory": []
+}
