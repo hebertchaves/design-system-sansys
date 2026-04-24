@@ -2,7 +2,7 @@
   "name": "DssCadrisCard",
   "version": "1.0.0",
   "phase": 3,
-  "status": "ready-for-audit",
+  "status": "sealed",
   "classification": {
     "type": "Composite",
     "category": "Data / Search",
@@ -11,7 +11,7 @@
   "goldenReference": "DssBadge",
   "goldenContext": "DssDataCard",
   "dssVersion": "2.2",
-  "auditStatus": "pending",
+  "auditStatus": "approved",
   "createdAt": "2026-04-24",
   "dependencies": {
     "dss": [
