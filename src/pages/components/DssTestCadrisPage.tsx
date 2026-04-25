@@ -541,10 +541,10 @@ export default function DssTestCadrisPage() {
       />
 
       <div className="space-y-3">
-        <SectionHeader
-          title="Demonstração: DssCadrisCard"
-          subtitle="Card composto por DssToolbar (header navy), DssInputs/DssSelects de pesquisa, DssBtn de feedback (warning), DssTable (header primary), DssBadge de status e DssPagination — tudo via tokens semânticos com data-brand=water."
-        />
+        <SectionHeader title="Demonstração: DssCadrisCard" />
+        <p className="text-sm" style={{ color: "var(--dss-text-secondary, var(--dss-gray-700))" }}>
+          Card composto por DssToolbar (header navy), DssInputs/DssSelects de pesquisa, DssBtn de feedback (warning), DssTable (header primary), DssBadge de status e DssPagination — tudo via tokens semânticos com data-brand=water.
+        </p>
 
         <div
           className="rounded-lg p-6"
