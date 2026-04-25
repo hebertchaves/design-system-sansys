@@ -537,13 +537,13 @@ export default function DssTestCadrisPage() {
     <div className="space-y-8 px-8 py-8 max-w-[1400px] mx-auto">
       <PageHeader
         title="Página de Teste — Composição Complexa"
-        description="Demonstração real de aninhamento de componentes DSS. Esta página NÃO usa playground configurável — apenas mostra como um componente composto (estilo Cadris) é montado consumindo tokens e componentes DSS reais do repositório."
+        subtitle="Demonstração real de aninhamento de componentes DSS. Esta página NÃO usa playground configurável — apenas mostra como um componente composto (estilo Cadris) é montado consumindo tokens e componentes DSS reais do repositório."
       />
 
       <div className="space-y-3">
         <SectionHeader
           title="Demonstração: DssCadrisCard"
-          description="Card composto por DssToolbar (header navy), DssInputs/DssSelects de pesquisa, DssBtn de feedback (warning), DssTable (header primary), DssBadge de status e DssPagination — tudo via tokens semânticos com data-brand=water."
+          subtitle="Card composto por DssToolbar (header navy), DssInputs/DssSelects de pesquisa, DssBtn de feedback (warning), DssTable (header primary), DssBadge de status e DssPagination — tudo via tokens semânticos com data-brand=water."
         />
 
         <div
