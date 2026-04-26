@@ -30,6 +30,7 @@ import {
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
+import { VueCadrisMount } from "@/components/vue-runtime/VueCadrisMount";
 
 // ============================================================================
 // MOCK DATA — simulando o retorno de uma API de Cadris
@@ -537,7 +538,7 @@ export default function DssTestCadrisPage() {
     <div className="space-y-8 px-8 py-8 max-w-[1400px] mx-auto">
       <PageHeader
         title="Página de Teste — Composição Complexa"
-        subtitle="Demonstração real de aninhamento de componentes DSS. Esta página NÃO usa playground configurável — apenas mostra como um componente composto (estilo Cadris) é montado consumindo tokens e componentes DSS reais do repositório."
+        subtitle="Demonstração com runtime Vue 3 REAL embarcado (via ESM CDN). O DssCadrisCard abaixo é um componente Vue legítimo (template + setup + v-model + emits) executando no browser, consumindo exclusivamente tokens DSS."
       />
 
       <div className="space-y-3">
@@ -553,7 +554,7 @@ export default function DssTestCadrisPage() {
             border: "1px dashed var(--dss-gray-300)",
           }}
         >
-          <DssCadrisCardDemo />
+          <VueCadrisMount />
         </div>
       </div>
 
