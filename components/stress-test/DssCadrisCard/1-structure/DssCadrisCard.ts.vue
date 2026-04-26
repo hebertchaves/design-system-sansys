@@ -3,20 +3,13 @@
  * ==========================================================================
  * DssCadrisCard — 1-structure/DssCadrisCard.ts.vue (Implementação Canônica)
  * ==========================================================================
- *
- * Componente composto Fase 3 — interface de pesquisa e listagem de Cadris.
- * Orquestra: DssCard + DssToolbar + DssToolbarTitle + DssInput + DssSelect
- *             + DssButton + DssIcon + DssSpace + tabela nativa ARIA.
- *
- * FASE 3 — Padrões implementados:
- * 1. inheritAttrs: false → $attrs aplicado no DssCard raiz via v-bind="$attrs"
- * 2. provide/inject tipado → disabled propaga via CADRIS_CARD_DISABLED_KEY
- * 3. CSS Variables → brand via [data-brand] no elemento raiz
- * 4. Sem :deep() para layout → classes wrapper controlam layout interno
- * 5. Slots tipados → toolbar-actions (extensão da toolbar)
- *
- * @version 1.0.0
- * @phase 3
+ * Layout visual baseado no protótipo Sansys:
+ * - Header escuro (bg-dark) com título "Cadris" e botão X
+ * - Label "Pesquisa" + 4 filtros em linha
+ * - Botão "Pesquisar" centralizado (laranja + ícone search)
+ * - Label "Total Cadris" + tabela com header azul primário
+ * - Paginação estilo "Linhas por página: [v] X-Y de Z [<][>]"
+ * - Botão "FECHAR" no rodapé centralizado
  */
 
 import { computed, toRef, useAttrs } from 'vue'
@@ -28,23 +21,17 @@ import {
   provideCadrisCardDisabled,
 } from '../composables/useCadrisCard'
 
-// Componentes DSS — Entry Point Wrappers (NUNCA 1-structure dos filhos)
-import DssCard from '../../DssCard/DssCard.vue'
-import DssToolbar from '../../DssToolbar/DssToolbar.vue'
-import DssToolbarTitle from '../../DssToolbarTitle/DssToolbarTitle.vue'
-import DssInput from '../../DssInput/DssInput.vue'
-import DssSelect from '../../DssSelect/DssSelect.vue'
-import DssButton from '../../DssButton/DssButton.vue'
-import DssIcon from '../../DssIcon/DssIcon.vue'
-import DssSpace from '../../DssSpace/DssSpace.vue'
-
-// --------------------------------------------------------------------------
-// Configuração
-// --------------------------------------------------------------------------
+// Componentes DSS — Entry Point Wrappers
+// stress-test/DssCadrisCard/1-structure/ → ../../../base/<Component>/
+import DssCard from '../../../base/DssCard/DssCard.vue'
+import DssInput from '../../../base/DssInput/DssInput.vue'
+import DssSelect from '../../../base/DssSelect/DssSelect.vue'
+import DssButton from '../../../base/DssButton/DssButton.vue'
+import DssIcon from '../../../base/DssIcon/DssIcon.vue'
 
 defineOptions({
   name: 'DssCadrisCard',
-  inheritAttrs: false, // ⚠️ Atributos aplicados manualmente no DssCard raiz
+  inheritAttrs: false,
 })
 
 const props = withDefaults(defineProps<DssCadrisCardProps>(), {
@@ -54,27 +41,27 @@ const props = withDefaults(defineProps<DssCadrisCardProps>(), {
   disable: false,
   documentoOptions: () => [],
   aterroOptions: () => [],
+  rowsPerPageOptions: () => [10, 25, 50],
 })
 
 const emit = defineEmits<DssCadrisCardEmits>()
-
 const attrs = useAttrs()
 
 // --------------------------------------------------------------------------
-// Classes reativas do componente raiz
+// Classes reativas
 // --------------------------------------------------------------------------
 
 const { rootClasses } = useCadrisCardClasses(props)
 
 // --------------------------------------------------------------------------
-// Provide: disabled para toda a árvore interna (sem prop drilling)
+// Provide: disabled para a árvore interna
 // --------------------------------------------------------------------------
 
 const disabledRef = toRef(props, 'disable')
 provideCadrisCardDisabled(disabledRef)
 
 // --------------------------------------------------------------------------
-// Filtros reativos
+// Filtros
 // --------------------------------------------------------------------------
 
 const { filters, resetFilters } = useCadrisFilters()
@@ -94,136 +81,158 @@ function handleClose(): void {
 
 const paginationRef = computed(() => props.pagination)
 
-const {
-  hasPrev,
-  hasNext,
-  pageLabel,
-  visiblePages,
-  goToPage,
-  goToPrev,
-  goToNext,
-  totalPages,
-} = useCadrisPagination(paginationRef, (_, value) =>
-  emit('update:pagination', value)
+const { hasPrev, hasNext, goToPrev, goToNext, totalPages } =
+  useCadrisPagination(paginationRef, (_, value) => emit('update:pagination', value))
+
+const showPagination = computed(() => totalPages.value > 0 && !props.loading)
+
+/** Intervalo exibido: "1-12 de 65" */
+const pageRange = computed(() => {
+  if (!props.pagination) return ''
+  const { page, rowsPerPage, rowsNumber } = props.pagination
+  const start = (page - 1) * rowsPerPage + 1
+  const end = Math.min(page * rowsPerPage, rowsNumber)
+  return `${start}-${end} de ${rowsNumber}`
+})
+
+/** Opções de "Linhas por página" formatadas para DssSelect */
+const rowsPerPageSelectOptions = computed(() =>
+  props.rowsPerPageOptions.map((n) => ({ label: String(n), value: n }))
 )
 
-const showPagination = computed(
-  () => totalPages.value > 0 && !props.loading
-)
+function handleRowsPerPageChange(newVal: number): void {
+  if (!props.pagination) return
+  emit('update:pagination', { ...props.pagination, rowsPerPage: newVal, page: 1 })
+}
 
 // --------------------------------------------------------------------------
-// Estado vazio / tabela
+// Estado da tabela
 // --------------------------------------------------------------------------
 
 const hasRows = computed(() => (props.rows?.length ?? 0) > 0)
 </script>
 
 <template>
-  <!--
-    STRESS TEST — inheritAttrs: false
-    v-bind="attrs" aplicado no DssCard raiz. class/style/atributos do consumidor
-    chegam ao lugar correto.
-  -->
   <DssCard
     v-bind="attrs"
     :class="rootClasses"
-    variant="elevated"
+    variant="bordered"
+    class="dss-cadris-card"
   >
     <!-- ====================================================================
-         TOOLBAR — Cabeçalho "Cadris" com ações e botão fechar
+         HEADER ESCURO — "Cadris" + X
+         bg-dark / text-white via Quasar utility classes (Token First)
          ==================================================================== -->
-    <DssToolbar class="dss-cadris-card__toolbar">
-      <DssToolbarTitle class="dss-cadris-card__title">
-        Cadris
-      </DssToolbarTitle>
+    <div class="dss-cadris-card__header">
+      <span class="dss-cadris-card__header-title">Cadris</span>
 
-      <DssSpace />
-
-      <!-- Slot para ações adicionais (lado direito, antes do fechar) -->
       <slot name="toolbar-actions" />
 
       <DssButton
-        variant="flat"
+        variant="outlined"
         icon="close"
+        round
+        dense
         :disable="disable"
+        class="dss-cadris-card__header-close"
         aria-label="Fechar painel de Cadris"
         @click="handleClose"
       />
-    </DssToolbar>
-
-    <!-- ====================================================================
-         FILTROS — Campos de pesquisa em grid responsivo
-         ==================================================================== -->
-    <div class="dss-cadris-card__filters row q-pa-md q-col-gutter-md">
-      <div class="col-12 col-sm-6 col-md-3">
-        <DssInput
-          v-model="filters.cadri"
-          label="Cadri"
-          :disable="disable || loading"
-          clearable
-        />
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-        <DssInput
-          v-model="filters.gerador"
-          label="Gerador"
-          :disable="disable || loading"
-          clearable
-        />
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-        <DssSelect
-          v-model="filters.documento"
-          :options="documentoOptions"
-          label="Documento"
-          :disable="disable || loading"
-          clearable
-          emit-value
-          map-options
-        />
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-        <DssSelect
-          v-model="filters.aterro"
-          :options="aterroOptions"
-          label="Aterro"
-          :disable="disable || loading"
-          clearable
-          emit-value
-          map-options
-        />
-      </div>
     </div>
 
     <!-- ====================================================================
-         AÇÕES — Botões de pesquisa e fechar
+         FILTROS — Label "Pesquisa" + 4 campos em linha
          ==================================================================== -->
-    <div class="dss-cadris-card__actions row q-px-md q-pb-md q-gutter-sm">
+    <div class="dss-cadris-card__pesquisa-section">
+      <span class="dss-cadris-card__pesquisa-label">Pesquisa</span>
+    </div>
+
+    <div class="dss-cadris-card__filters">
+      <DssInput
+        v-model="filters.cadri"
+        label="Cadri"
+        :disable="disable || loading"
+        clearable
+        dense
+      />
+      <DssInput
+        v-model="filters.gerador"
+        label="Gerador"
+        :disable="disable || loading"
+        clearable
+        dense
+      />
+      <DssSelect
+        v-model="filters.documento"
+        :options="documentoOptions"
+        label="Documento"
+        :disable="disable || loading"
+        clearable
+        emit-value
+        map-options
+        dense
+      />
+      <DssSelect
+        v-model="filters.aterro"
+        :options="aterroOptions"
+        label="Aterro"
+        :disable="disable || loading"
+        clearable
+        emit-value
+        map-options
+        dense
+      />
+    </div>
+
+    <!-- ====================================================================
+         ÚLTIMA LINHA DO FORM — Linhas por página
+         ==================================================================== -->
+    <div
+      v-if="pagination"
+      class="dss-cadris-card__form-pagination"
+    >
+      <span class="dss-cadris-card__pagination-label">Linhas por página:</span>
+      <DssSelect
+        :model-value="pagination.rowsPerPage"
+        :options="rowsPerPageSelectOptions"
+        dense
+        borderless
+        emit-value
+        map-options
+        class="dss-cadris-card__rows-select"
+        :disable="disable"
+        @update:model-value="handleRowsPerPageChange"
+      />
+    </div>
+
+    <!-- ====================================================================
+         AÇÃO DE BUSCA — Botão Pesquisar centralizado
+         ==================================================================== -->
+    <div class="dss-cadris-card__search-action">
       <DssButton
-        color="warning"
+        unelevated
+        icon="search"
         label="Pesquisar"
+        class="bg-tertiary text-white"
         :loading="loading"
         :disable="disable"
         @click="handleSearch"
       />
-
-      <DssButton
-        variant="flat"
-        label="FECHAR"
-        :disable="disable"
-        @click="handleClose"
-      />
     </div>
 
     <!-- ====================================================================
-         ÁREA DE TABELA — Loading | Vazio | Dados
+         LABEL "Total Cadris"
+         ==================================================================== -->
+    <div class="dss-cadris-card__total-label">
+      Total Cadris
+    </div>
+
+    <!-- ====================================================================
+         ÁREA DA TABELA — Loading | Vazio | Dados
          ==================================================================== -->
     <div class="dss-cadris-card__table-area">
 
-      <!-- Estado de carregamento (skeleton) -->
+      <!-- Loading skeleton -->
       <div
         v-if="loading"
         class="dss-cadris-card__skeleton"
@@ -237,12 +246,14 @@ const hasRows = computed(() => (props.rows?.length ?? 0) > 0)
           class="dss-cadris-card__skeleton-row"
           aria-hidden="true"
         >
-          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--md" />
-          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--lg" />
+          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--sm" />
           <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--lg" />
           <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--md" />
           <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--sm" />
-          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--md" />
+          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--sm" />
+          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--sm" />
+          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--sm" />
+          <div class="dss-cadris-card__skeleton-cell dss-cadris-card__skeleton-cell--lg" />
         </div>
       </div>
 
@@ -253,38 +264,26 @@ const hasRows = computed(() => (props.rows?.length ?? 0) > 0)
         role="status"
         aria-label="Nenhum resultado encontrado"
       >
-        <DssIcon
-          name="search_off"
-          size="2.5rem"
-          class="dss-cadris-card__empty-icon"
-          aria-hidden="true"
-        />
-        <p class="dss-cadris-card__empty-message">
-          Nenhum resultado encontrado
-        </p>
-        <p class="dss-cadris-card__empty-hint">
-          Tente ajustar os filtros da pesquisa
-        </p>
+        <DssIcon name="search_off" size="2.5rem" class="dss-cadris-card__empty-icon" aria-hidden="true" />
+        <p class="dss-cadris-card__empty-message">Nenhum resultado encontrado</p>
+        <p class="dss-cadris-card__empty-hint">Tente ajustar os filtros da pesquisa</p>
       </div>
 
       <!-- Tabela de dados -->
-      <div
-        v-else
-        class="dss-cadris-card__table-wrapper"
-      >
-        <table
-          class="dss-cadris-card__table"
-          role="table"
-          aria-label="Lista de Cadris"
-        >
-          <thead class="dss-cadris-card__thead">
+      <div v-else class="dss-cadris-card__table-wrapper">
+        <table class="dss-cadris-card__table" role="table" aria-label="Lista de Cadris">
+
+          <!-- Header azul (bg-primary text-white via Quasar classes) -->
+          <thead class="dss-cadris-card__thead bg-primary text-white">
             <tr role="row">
-              <th role="columnheader" scope="col">Nº Cadri</th>
+              <th role="columnheader" scope="col">Cadri</th>
               <th role="columnheader" scope="col">Gerador</th>
               <th role="columnheader" scope="col">Aterro</th>
-              <th role="columnheader" scope="col">Documento</th>
-              <th role="columnheader" scope="col">Situação</th>
-              <th role="columnheader" scope="col">Validade</th>
+              <th role="columnheader" scope="col">Data vencimento</th>
+              <th role="columnheader" scope="col">Dias Faltantes</th>
+              <th role="columnheader" scope="col">Média mensal</th>
+              <th role="columnheader" scope="col">Ativo</th>
+              <th role="columnheader" scope="col">Resíduos</th>
             </tr>
           </thead>
 
@@ -295,35 +294,34 @@ const hasRows = computed(() => (props.rows?.length ?? 0) > 0)
               class="dss-cadris-card__row"
               role="row"
             >
-              <td role="cell" class="dss-cadris-card__cell">
-                {{ row.numeroCadri }}
+              <td role="cell" class="dss-cadris-card__cell">{{ row.numeroCadri }}</td>
+              <td role="cell" class="dss-cadris-card__cell">{{ row.gerador }}</td>
+              <td role="cell" class="dss-cadris-card__cell">{{ row.aterro }}</td>
+              <td role="cell" class="dss-cadris-card__cell">{{ row.dataVencimento }}</td>
+              <td role="cell" class="dss-cadris-card__cell dss-cadris-card__cell--center">
+                {{ row.diasFaltantes }}
               </td>
+              <td role="cell" class="dss-cadris-card__cell">{{ row.mediaMonsal }}</td>
+
+              <!-- Ativo: ponto colorido + Sim/Não -->
               <td role="cell" class="dss-cadris-card__cell">
-                {{ row.gerador }}
-              </td>
-              <td role="cell" class="dss-cadris-card__cell">
-                {{ row.aterro }}
-              </td>
-              <td role="cell" class="dss-cadris-card__cell">
-                {{ row.documento }}
-              </td>
-              <td role="cell" class="dss-cadris-card__cell">
-                <span
-                  class="dss-cadris-card__status"
-                  :class="row.situacao === 'ativo'
-                    ? 'dss-cadris-card__status--ativo text-positive'
-                    : 'dss-cadris-card__status--inativo text-negative'"
-                >
+                <span class="dss-cadris-card__ativo" :class="row.ativo ? 'dss-cadris-card__ativo--sim' : 'dss-cadris-card__ativo--nao'">
                   <DssIcon
-                    :name="row.situacao === 'ativo' ? 'check_circle' : 'cancel'"
-                    size="1rem"
+                    name="circle"
+                    size="0.625rem"
+                    :class="row.ativo ? 'text-positive' : 'text-negative'"
                     aria-hidden="true"
                   />
-                  {{ row.situacao === 'ativo' ? 'Ativo' : 'Inativo' }}
+                  {{ row.ativo ? 'Sim' : 'Não' }}
                 </span>
               </td>
+
+              <!-- Resíduos: texto truncado + chevron de expansão -->
               <td role="cell" class="dss-cadris-card__cell">
-                {{ row.validade }}
+                <span class="dss-cadris-card__residuos">
+                  <span class="dss-cadris-card__residuos-text">{{ row.residuos }}</span>
+                  <DssIcon name="expand_more" size="1rem" class="dss-cadris-card__residuos-chevron" aria-hidden="true" />
+                </span>
               </td>
             </tr>
           </tbody>
@@ -332,22 +330,22 @@ const hasRows = computed(() => (props.rows?.length ?? 0) > 0)
     </div>
 
     <!-- ====================================================================
-         PAGINAÇÃO — Botões com janela deslizante
-         Botões recebem disabled via provide/inject — sem prop drilling
+         PAGINAÇÃO — "Linhas por página: [v] X-Y de Z [<] [>]"
          ==================================================================== -->
+    <!-- Navegação de páginas: range + setas (Linhas por página está no form) -->
     <div
       v-if="showPagination"
-      class="dss-cadris-card__pagination row items-center justify-end q-pa-sm"
+      class="dss-cadris-card__pagination row items-center justify-end"
       role="navigation"
       aria-label="Paginação de Cadris"
     >
-      <span class="dss-cadris-card__page-label">
-        {{ pageLabel }}
-      </span>
+      <span class="dss-cadris-card__pagination-range">{{ pageRange }}</span>
 
       <DssButton
         variant="flat"
         icon="chevron_left"
+        round
+        dense
         size="sm"
         :disable="!hasPrev || disable"
         aria-label="Página anterior"
@@ -355,25 +353,27 @@ const hasRows = computed(() => (props.rows?.length ?? 0) > 0)
       />
 
       <DssButton
-        v-for="page in visiblePages"
-        :key="page"
-        variant="flat"
-        size="sm"
-        :label="String(page)"
-        :color="page === pagination?.page ? 'primary' : undefined"
-        :disable="disable"
-        :aria-label="`Ir para página ${page}`"
-        :aria-current="page === pagination?.page ? 'page' : undefined"
-        @click="goToPage(page)"
-      />
-
-      <DssButton
         variant="flat"
         icon="chevron_right"
+        round
+        dense
         size="sm"
         :disable="!hasNext || disable"
         aria-label="Próxima página"
         @click="goToNext"
+      />
+    </div>
+
+    <!-- ====================================================================
+         RODAPÉ — Botão FECHAR centralizado
+         ==================================================================== -->
+    <div class="dss-cadris-card__footer">
+      <DssButton
+        color="dark"
+        label="FECHAR"
+        :disable="disable"
+        class="dss-cadris-card__fechar-btn"
+        @click="handleClose"
       />
     </div>
   </DssCard>

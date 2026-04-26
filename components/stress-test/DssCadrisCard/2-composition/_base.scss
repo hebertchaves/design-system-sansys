@@ -2,9 +2,8 @@
 // DssCadrisCard — Layer 2: Composition (_base.scss)
 // ==========================================================================
 // Estilos base estruturais. Apenas tokens genéricos DSS.
-// Cores de texto e fundos semânticos usam tokens de superfície (permitidos).
-// Cores de feedback (positive/negative/warning) são aplicadas via
-// classes utilitárias Quasar no template — NUNCA aqui.
+// Cores de fundo e texto semânticas são aplicadas via classes utilitárias
+// Quasar no template (bg-dark, bg-primary, text-white, text-positive, etc.).
 // ==========================================================================
 
 .dss-cadris-card {
@@ -13,35 +12,88 @@
   width: 100%;
 
   // --------------------------------------------------------------------------
-  // TOOLBAR
+  // HEADER — waste-primary, branco, X vazado
   // --------------------------------------------------------------------------
 
-  &__toolbar {
-    border-bottom: 1px solid var(--dss-gray-200);
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--dss-spacing-2);
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    border-radius: var(--dss-radius-sm) var(--dss-radius-sm) 0 0;
+    background-color: var(--dss-waste-600);
+    color: white;
   }
 
-  &__title {
+  &__header-title {
+    flex: 1;
     font-weight: var(--dss-font-weight-semibold);
+    font-size: var(--dss-font-size-md);
+  }
+
+  // Botão X vazado: borda e ícone brancos sobre fundo verde
+  &__header-close {
+    color: white !important;
+    border-color: white !important;
+    background: transparent !important;
   }
 
   // --------------------------------------------------------------------------
-  // FILTROS
+  // SEÇÃO "Pesquisa" — label separador
+  // --------------------------------------------------------------------------
+
+  &__pesquisa-section {
+    padding: var(--dss-spacing-3) var(--dss-spacing-4) 0;
+  }
+
+  &__pesquisa-label {
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-text-secondary);
+  }
+
+  // --------------------------------------------------------------------------
+  // FILTROS — flex puro, 4 campos sempre em linha com largura igual
   // --------------------------------------------------------------------------
 
   &__filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--dss-spacing-3);
+    padding: var(--dss-spacing-2) var(--dss-spacing-4) var(--dss-spacing-4);
+
+    & > * {
+      flex: 1 1 0;
+      min-width: 0; // permite encolher abaixo do tamanho do conteúdo
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // AÇÃO DE BUSCA — centralizado por CSS, sem classes Quasar
+  // --------------------------------------------------------------------------
+
+  &__search-action {
+    display: flex;
+    justify-content: center;
+    padding-bottom: var(--dss-spacing-4);
+  }
+
+  // --------------------------------------------------------------------------
+  // LABEL "Total Cadris"
+  // --------------------------------------------------------------------------
+
+  &__total-label {
+    padding: var(--dss-spacing-2) var(--dss-spacing-4);
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-semibold);
+    color: var(--dss-text-secondary);
+    border-top: 1px solid var(--dss-gray-200);
     border-bottom: 1px solid var(--dss-gray-200);
   }
 
   // --------------------------------------------------------------------------
-  // AÇÕES
-  // --------------------------------------------------------------------------
-
-  &__actions {
-    border-bottom: 1px solid var(--dss-gray-200);
-  }
-
-  // --------------------------------------------------------------------------
-  // ÁREA DE TABELA
+  // ÁREA DA TABELA
   // --------------------------------------------------------------------------
 
   &__table-area {
@@ -65,15 +117,24 @@
   }
 
   &__thead {
+    // bg-primary text-white aplicados via Quasar no template
+
     th[role='columnheader'] {
-      background-color: var(--dss-surface-muted);
-      color: var(--dss-text-primary);
       font-weight: var(--dss-font-weight-semibold);
       font-size: var(--dss-font-size-sm);
       text-align: left;
-      padding: var(--dss-spacing-12) var(--dss-spacing-16);
-      border-bottom: 2px solid var(--dss-gray-300);
+      padding: var(--dss-spacing-3) var(--dss-spacing-4);
       white-space: nowrap;
+
+      // Larguras de coluna aproximadas do protótipo
+      &:nth-child(1) { width: 10%; }  // Cadri
+      &:nth-child(2) { width: 18%; }  // Gerador
+      &:nth-child(3) { width: 12%; }  // Aterro
+      &:nth-child(4) { width: 12%; }  // Data vencimento
+      &:nth-child(5) { width: 9%;  }  // Dias Faltantes
+      &:nth-child(6) { width: 10%; }  // Média mensal
+      &:nth-child(7) { width: 8%;  }  // Ativo
+      &:nth-child(8) { width: 21%; }  // Resíduos
     }
   }
 
@@ -86,7 +147,6 @@
         border-bottom: none;
       }
 
-      // Linhas alternadas com token de superfície (permitido)
       &:nth-child(even) {
         background-color: var(--dss-surface-subtle);
       }
@@ -99,23 +159,49 @@
 
   &__cell {
     color: var(--dss-text-primary);
-    padding: var(--dss-spacing-12) var(--dss-spacing-16);
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
     vertical-align: middle;
     font-size: var(--dss-font-size-sm);
     line-height: var(--dss-line-height-normal);
+
+    &--center {
+      text-align: center;
+    }
   }
 
   // --------------------------------------------------------------------------
-  // STATUS (ATIVO / INATIVO)
-  // cores via classes Quasar: text-positive / text-negative (no template)
+  // STATUS ATIVO / INATIVO
+  // text-positive / text-negative aplicados via Quasar no template
   // --------------------------------------------------------------------------
 
-  &__status {
+  &__ativo {
     display: inline-flex;
     align-items: center;
-    gap: var(--dss-spacing-4);
+    gap: var(--dss-spacing-1);
     font-weight: var(--dss-font-weight-medium);
     font-size: var(--dss-font-size-sm);
+  }
+
+  // --------------------------------------------------------------------------
+  // RESÍDUOS — texto truncado + chevron de expansão
+  // --------------------------------------------------------------------------
+
+  &__residuos {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--dss-spacing-1);
+    max-width: 12rem;
+  }
+
+  &__residuos-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__residuos-chevron {
+    flex-shrink: 0;
+    color: var(--dss-text-secondary);
   }
 
   // --------------------------------------------------------------------------
@@ -123,22 +209,22 @@
   // --------------------------------------------------------------------------
 
   &__skeleton {
-    padding: var(--dss-spacing-16);
+    padding: var(--dss-spacing-4);
     display: flex;
     flex-direction: column;
-    gap: var(--dss-spacing-8);
+    gap: var(--dss-spacing-2);
   }
 
   &__skeleton-row {
     display: flex;
-    gap: var(--dss-spacing-16);
+    gap: var(--dss-spacing-4);
     align-items: center;
   }
 
   &__skeleton-cell {
-    height: var(--dss-spacing-16);
+    height: var(--dss-spacing-4);
     background-color: var(--dss-surface-muted);
-    border-radius: var(--dss-border-radius-sm);
+    border-radius: var(--dss-radius-sm);
     animation: dss-cadris-shimmer var(--dss-duration-1000) infinite linear;
 
     &--sm  { flex: 1; }
@@ -161,21 +247,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--dss-spacing-48) var(--dss-spacing-24);
+    padding: var(--dss-spacing-12) var(--dss-spacing-6);
     text-align: center;
     color: var(--dss-text-secondary);
   }
 
   &__empty-icon {
     color: var(--dss-text-secondary);
-    margin-bottom: var(--dss-spacing-12);
+    margin-bottom: var(--dss-spacing-3);
   }
 
   &__empty-message {
     font-size: var(--dss-font-size-md);
     font-weight: var(--dss-font-weight-medium);
     color: var(--dss-text-primary);
-    margin: 0 0 var(--dss-spacing-4);
+    margin: 0 0 var(--dss-spacing-1);
   }
 
   &__empty-hint {
@@ -185,18 +271,57 @@
   }
 
   // --------------------------------------------------------------------------
-  // PAGINAÇÃO
+  // PAGINAÇÃO NO FORM — última linha da seção de filtros
+  // --------------------------------------------------------------------------
+
+  &__form-pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--dss-spacing-1);
+    padding: 0 var(--dss-spacing-4) var(--dss-spacing-2);
+  }
+
+  // --------------------------------------------------------------------------
+  // PAGINAÇÃO DE NAVEGAÇÃO — abaixo da tabela (range + setas apenas)
   // --------------------------------------------------------------------------
 
   &__pagination {
     border-top: 1px solid var(--dss-gray-200);
-    gap: var(--dss-spacing-4);
-    flex-wrap: wrap;
+    padding: var(--dss-spacing-2) var(--dss-spacing-3);
+    gap: var(--dss-spacing-1);
   }
 
-  &__page-label {
+  &__pagination-label {
     font-size: var(--dss-font-size-sm);
     color: var(--dss-text-secondary);
-    margin-right: var(--dss-spacing-8);
+    white-space: nowrap;
+  }
+
+  &__rows-select {
+    min-width: 4rem;
+  }
+
+  &__pagination-range {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+    margin: 0 var(--dss-spacing-2);
+    white-space: nowrap;
+  }
+
+  // --------------------------------------------------------------------------
+  // RODAPÉ
+  // --------------------------------------------------------------------------
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--dss-gray-200);
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  }
+
+  &__fechar-btn {
+    min-width: var(--dss-spacing-24); // ~96px
   }
 }

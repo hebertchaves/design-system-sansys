@@ -14,23 +14,27 @@
 // TIPOS DE SUPORTE
 // ==========================================================================
 
-export type CadrisSituacao = 'ativo' | 'inativo'
-
 export interface CadrisRow {
   /** Identificador único */
   id: string | number
   /** Número do Cadri */
   numeroCadri: string
-  /** Nome do gerador */
+  /** Nome / CNPJ do gerador */
   gerador: string
   /** Nome do aterro */
   aterro: string
-  /** Tipo de documento */
-  documento: string
-  /** Situação do Cadri */
-  situacao: CadrisSituacao
-  /** Data de validade (ISO 8601 ou string formatada) */
-  validade: string
+  /** Data de vencimento (ex: "31/12/2024") */
+  dataVencimento: string
+  /** Dias faltantes para o vencimento */
+  diasFaltantes: number
+  /** Média mensal de resíduos (ex: "0 ton") */
+  mediaMonsal: string
+  /** Se o Cadri está ativo */
+  ativo: boolean
+  /** Resumo da lista de resíduos */
+  residuos: string
+  /** Tipo de documento — usado apenas no filtro */
+  documento?: string
 }
 
 export interface CadrisPagination {
@@ -98,6 +102,12 @@ export interface DssCadrisCardProps {
    * @default []
    */
   aterroOptions?: SelectOption[]
+
+  /**
+   * Opções do seletor "Linhas por página" na paginação.
+   * @default [10, 25, 50]
+   */
+  rowsPerPageOptions?: number[]
 }
 
 // ==========================================================================

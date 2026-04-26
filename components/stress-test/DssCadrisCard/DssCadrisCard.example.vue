@@ -25,13 +25,13 @@ const isDark = ref(false)
 // --------------------------------------------------------------------------
 
 const mockRows: CadrisRow[] = [
-  { id: 1, numeroCadri: 'CADRI-2024-001', gerador: 'Empresa Alpha Ltda', aterro: 'Aterro Beta S.A.', documento: 'CTF', situacao: 'ativo', validade: '31/12/2024' },
-  { id: 2, numeroCadri: 'CADRI-2024-002', gerador: 'Indústria Gamma', aterro: 'Aterro Delta', documento: 'MTR', situacao: 'ativo', validade: '30/06/2025' },
-  { id: 3, numeroCadri: 'CADRI-2024-003', gerador: 'Construtora Epsilon', aterro: 'Aterro Zeta', documento: 'CTF', situacao: 'inativo', validade: '15/03/2024' },
-  { id: 4, numeroCadri: 'CADRI-2024-004', gerador: 'Petroquímica Eta', aterro: 'Aterro Theta', documento: 'MTR', situacao: 'ativo', validade: '28/02/2026' },
-  { id: 5, numeroCadri: 'CADRI-2024-005', gerador: 'Logística Iota', aterro: 'Aterro Kappa', documento: 'CTF', situacao: 'ativo', validade: '31/10/2025' },
-  { id: 6, numeroCadri: 'CADRI-2024-006', gerador: 'Metalúrgica Lambda', aterro: 'Aterro Mu', documento: 'MTR', situacao: 'inativo', validade: '01/01/2024' },
-  { id: 7, numeroCadri: 'CADRI-2024-007', gerador: 'Fábrica Nu', aterro: 'Aterro Xi', documento: 'CTF', situacao: 'ativo', validade: '30/09/2025' },
+  { id: 1, numeroCadri: 'CADRI-2024-001', gerador: 'Empresa Alpha Ltda', aterro: 'Aterro Beta S.A.', dataVencimento: '31/12/2024', diasFaltantes: 120, mediaMonsal: '12 ton', ativo: true, residuos: 'Resíduo Classe II-A, Resíduo Inerte', documento: 'CTF' },
+  { id: 2, numeroCadri: 'CADRI-2024-002', gerador: 'Indústria Gamma', aterro: 'Aterro Delta', dataVencimento: '30/06/2025', diasFaltantes: 301, mediaMonsal: '8 ton', ativo: true, residuos: 'Resíduo Classe I Perigoso', documento: 'MTR' },
+  { id: 3, numeroCadri: 'CADRI-2024-003', gerador: 'Construtora Epsilon', aterro: 'Aterro Zeta', dataVencimento: '15/03/2024', diasFaltantes: 0, mediaMonsal: '0 ton', ativo: false, residuos: 'Entulho de Construção', documento: 'CTF' },
+  { id: 4, numeroCadri: 'CADRI-2024-004', gerador: 'Petroquímica Eta', aterro: 'Aterro Theta', dataVencimento: '28/02/2026', diasFaltantes: 450, mediaMonsal: '35 ton', ativo: true, residuos: 'Resíduo Classe I, Resíduo Classe II-A', documento: 'MTR' },
+  { id: 5, numeroCadri: 'CADRI-2024-005', gerador: 'Logística Iota', aterro: 'Aterro Kappa', dataVencimento: '31/10/2025', diasFaltantes: 215, mediaMonsal: '5 ton', ativo: true, residuos: 'Resíduo Orgânico', documento: 'CTF' },
+  { id: 6, numeroCadri: 'CADRI-2024-006', gerador: 'Metalúrgica Lambda', aterro: 'Aterro Mu', dataVencimento: '01/01/2024', diasFaltantes: 0, mediaMonsal: '0 ton', ativo: false, residuos: 'Escória Metálica, Poeira de Fundição', documento: 'MTR' },
+  { id: 7, numeroCadri: 'CADRI-2024-007', gerador: 'Fábrica Nu', aterro: 'Aterro Xi', dataVencimento: '30/09/2025', diasFaltantes: 184, mediaMonsal: '18 ton', ativo: true, residuos: 'Resíduo Industrial Não Perigoso', documento: 'CTF' },
 ]
 
 // --------------------------------------------------------------------------

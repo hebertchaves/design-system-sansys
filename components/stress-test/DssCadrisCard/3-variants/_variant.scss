@@ -4,7 +4,7 @@
 // Variantes estruturais do componente composto.
 //
 // Variantes aplicáveis:
-//   --compact  : reduz padding interno da tabela e filtros (densidade alta)
+//   --compact   : reduz padding interno da tabela e filtros (alta densidade)
 //   --borderless: remove bordas entre seções internas
 // ==========================================================================
 
@@ -15,17 +15,25 @@
   // --------------------------------------------------------------------------
 
   &--compact {
-    .dss-cadris-card__filters {
-      padding: var(--dss-spacing-8) var(--dss-spacing-12);
+    .dss-cadris-card__pesquisa-section {
+      padding: var(--dss-spacing-2) var(--dss-spacing-3) 0;
     }
 
-    .dss-cadris-card__actions {
-      padding: 0 var(--dss-spacing-12) var(--dss-spacing-8);
+    .dss-cadris-card__total-label {
+      padding: var(--dss-spacing-1) var(--dss-spacing-3);
     }
 
     .dss-cadris-card__cell,
     .dss-cadris-card__thead th[role='columnheader'] {
-      padding: var(--dss-spacing-8) var(--dss-spacing-12);
+      padding: var(--dss-spacing-2) var(--dss-spacing-3);
+    }
+
+    .dss-cadris-card__pagination {
+      padding: var(--dss-spacing-1) var(--dss-spacing-2);
+    }
+
+    .dss-cadris-card__footer {
+      padding: var(--dss-spacing-2) var(--dss-spacing-3);
     }
   }
 
@@ -36,10 +44,10 @@
   // --------------------------------------------------------------------------
 
   &--borderless {
-    .dss-cadris-card__toolbar,
-    .dss-cadris-card__filters,
-    .dss-cadris-card__actions,
-    .dss-cadris-card__pagination {
+    .dss-cadris-card__pesquisa-section,
+    .dss-cadris-card__total-label,
+    .dss-cadris-card__pagination,
+    .dss-cadris-card__footer {
       border-color: transparent;
     }
   }
