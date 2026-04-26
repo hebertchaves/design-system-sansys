@@ -85,6 +85,7 @@ const navigation = {
       { title: "DssToggle", url: "/componentes/dss-toggle", icon: Circle, status: "stable" },
       { title: "DssToolbar", url: "/componentes/dss-toolbar", icon: Wrench, status: "stable" },
       { title: "DssTooltip", url: "/componentes/dss-tooltip", icon: MessageSquare, status: "stable" },
+      { title: "🧪 Teste Cadris", url: "/componentes/teste-cadris", icon: LayoutGrid, status: "beta" },
     ],
   },
   padroes: {

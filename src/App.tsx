@@ -27,6 +27,7 @@ import DssTabsPage from "./pages/components/DssTabsPage";
 import DssBreadcrumbsElPage from "./pages/components/DssBreadcrumbsElPage";
 import DssHeaderPage from "./pages/components/DssHeaderPage";
 import DssToolbarPage from "./pages/components/DssToolbarPage";
+import DssTestCadrisPage from "./pages/components/DssTestCadrisPage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
 import ClassificationPage from "./pages/governance/ClassificationPage";
@@ -78,6 +79,7 @@ const App = () => (
             <Route path="/componentes/dss-breadcrumbs-el" element={<DssBreadcrumbsElPage />} />
             <Route path="/componentes/dss-header" element={<DssHeaderPage />} />
             <Route path="/componentes/dss-toolbar" element={<DssToolbarPage />} />
+            <Route path="/componentes/teste-cadris" element={<DssTestCadrisPage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             
             {/* Governança */}
