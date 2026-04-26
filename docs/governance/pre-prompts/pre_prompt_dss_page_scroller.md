@@ -7,7 +7,7 @@
 - **Nome do Componente:** `DssPageScroller`
 - **Família:** Layout Global (Composição de Terceiro Grau)
 - **Nível de Composição:** Nível 4
-- **Golden Reference:** `DssChip` (Golden Reference oficial para componentes interativos)
+- **Golden Reference:** `DssBadge` (Golden Reference oficial para componentes não-interativos)
 - **Golden Context:** `DssPageSticky` (baseline arquitetural — elemento flutuante com z-index)
 - **Contexto Estrutural:** `DssPage` (container pai semântico obrigatório)
 - **Componente Quasar Base:** `QPageScroller`
