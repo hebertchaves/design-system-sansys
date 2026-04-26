@@ -12,6 +12,15 @@ Este componente pertence à Fase 3:
 Este pré-prompt é de leitura obrigatória antes de executar o
 🧬 PROMPT DE CRIAÇÃO DE COMPONENTES — DSS v3.0
 
+🔷 0.1️⃣ DOCUMENTOS NORMATIVOS (LEITURA OBRIGATÓRIA)
+Antes de escrever qualquer linha de código, você DEVE ler integralmente:
+- `DSS/CLAUDE.md` (Princípios #1 a #10 — normativo vinculante)
+- `DSS_TOKEN_REFERENCE.md`
+- `DSS_COMPONENT_ARCHITECTURE.md`
+- `DSS_IMPLEMENTATION_GUIDE.md`
+- `DSS_GOLDEN_COMPONENTS.md`
+- Documentação oficial do Golden Component indicado no pré-prompt
+
 🔷 1️⃣ CONTRATO DE INTERFACE (OBRIGATÓRIO FASE 3)
 Antes de qualquer implementação, você DEVE validar o Contrato de Interface fornecido no pré-prompt:
 1.1 Casos de Uso Negativos: O que o componente NÃO deve fazer.
@@ -71,7 +80,16 @@ Antes de escrever qualquer código, você DEVE:
 3. Só então, adaptar o código gerado para a lógica específica do componente.
 4. Após implementar, rodar `validate_component_code` e usar as sugestões de tokens retornadas para corrigir valores hardcoded.
 
-1️⃣ CONTEXTO DO COMPONENTE (OBRIGATÓRIO)
+1️⃣ DOCUMENTOS NORMATIVOS (LEITURA OBRIGATÓRIA)
+Antes de escrever qualquer linha de código, você DEVE ler integralmente:
+- `DSS/CLAUDE.md` (Princípios #1 a #10 — normativo vinculante)
+- `DSS_TOKEN_REFERENCE.md`
+- `DSS_COMPONENT_ARCHITECTURE.md`
+- `DSS_IMPLEMENTATION_GUIDE.md`
+- `DSS_GOLDEN_COMPONENTS.md`
+- Documentação oficial do Golden Component indicado no pré-prompt
+
+2️⃣ CONTEXTO DO COMPONENTE (OBRIGATÓRIO)
 Antes de qualquer geração, declare explicitamente:
 - Nome do componente: Dss<Name>
 - Classificação DSS (ex.: Composite / Layout / Data)
@@ -80,7 +98,7 @@ Antes de qualquer geração, declare explicitamente:
 - Escopo funcional (o que FAZ e o que NÃO faz)
 - Subcomponentes internos permitidos
 
-2️⃣ ARQUITETURA OBRIGATÓRIA (NÍVEL VINCULANTE)
+3️⃣ ARQUITETURA OBRIGATÓRIA (NÍVEL VINCULANTE)
 O componente DEVE implementar integralmente:
 
 📐 Arquitetura DSS de 4 camadas
@@ -115,7 +133,7 @@ Quando importar outro componente DSS, a importação DEVE ser feita apontando pa
 ✅ Correto: `import DssButton from '../DssButton/DssButton.vue'`
 ❌ Incorreto: `import DssButton from '../DssButton/1-structure/DssButton.ts.vue'`
 
-3️⃣ REGRAS DE TOKENS E DARK MODE (CRÍTICAS)
+4️⃣ REGRAS DE TOKENS E DARK MODE (CRÍTICAS)
 🎨 Tokens de Brand e Surface
 - Usar tokens genéricos DSS para layout, spacing e tipografia.
 - Garantir contraste WCAG AA em light e dark mode.
@@ -125,7 +143,7 @@ Quando importar outro componente DSS, a importação DEVE ser feita apontando pa
 - Apenas exceções DSS canônicas (brightness, saturate, sr-only, border-radius geométrico)
 - Todas DEVEM ser documentadas com: ID, Valor, Local, Justificativa
 
-4️⃣ DOCUMENTAÇÃO — CONTRATO VINCULANTE
+5️⃣ DOCUMENTAÇÃO — CONTRATO VINCULANTE
 O componente DEVE gerar:
 - <Component>.md (template DSS 13.x completo)
 - README.md (uso resumido)
@@ -139,12 +157,12 @@ Além do template padrão, adicione obrigatoriamente:
 🔹 Tokens Utilizados (Nomes exatos, 1:1 com SCSS)
 ⚠️ É proibido documentar tokens que não existem no código.
 
-5️⃣ TESTES E PLAYGROUND (NÍVEL FASE 3)
+6️⃣ TESTES E PLAYGROUND (NÍVEL FASE 3)
 - Testes unitários E comportamentais
 - Testes de: Focus-visible, Estados compostos, Slots, Forwarding, Dark Mode
 - O playground (`.example.vue`) deve demonstrar a orquestração completa, incluindo interatividade, dark mode e estado vazio.
 
-6️⃣ ETAPA FINAL — RECONCILIAÇÃO DSS (OBRIGATÓRIA)
+7️⃣ ETAPA FINAL — RECONCILIAÇÃO DSS (OBRIGATÓRIA)
 Antes de declarar o componente como “criado”, execute mentalmente e documente:
 🔍 Reconciliação Transversal
 - SCSS ↔ CSS compilado
@@ -153,7 +171,7 @@ Antes de declarar o componente como “criado”, execute mentalmente e document
 - Golden ↔ Componente
 ⚠️ Se qualquer item falhar, corrija antes de finalizar.
 
-7️⃣ SAÍDA ESPERADA
+8️⃣ SAÍDA ESPERADA
 Ao final, o agente DEVE entregar:
 - Estrutura completa de arquivos
 - Código compilável sem erros
