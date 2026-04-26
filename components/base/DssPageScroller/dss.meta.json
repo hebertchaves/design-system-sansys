@@ -1,0 +1,115 @@
+{
+  "component": "DssPageScroller",
+  "cssClass": "dss-page-scroller",
+  "dssVersion": "2.2",
+  "status": "in-progress",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Componente utilitário de layout de Nível 4 (Composição de Terceiro Grau). Wrapper DSS governado sobre QPageScroller. Exibe elemento flutuante baseado em scroll. Depende estruturalmente de DssLayout, DssPageContainer e DssPage. Nota: A prop duration tem como default o valor 250, que corresponde ao token --dss-duration-base. Em iterações futuras, avaliar binding dinâmico via getComputedStyle.",
+
+  "goldenReference": "DssBadge",
+  "goldenReferenceJustification": "DssPageScroller é um container estrutural não-interativo (a interatividade pertence ao conteúdo interno, ex: DssButton). Conforme DSS_GOLDEN_COMPONENTS.md § 1.1, componentes não-interativos devem usar DssBadge como referência.",
+
+  "goldenContext": "DssPageSticky",
+  "goldenContextJustification": "DssPageSticky é o Golden Context canônico: ambos são wrappers DSS sobre primitivos Quasar de layout de página (QPageSticky / QPageScroller), utilizam <q-page-*> como elemento raiz (EXC-01 idêntico), gerenciam z-index via --dss-z-index-sticky, requerem cadeia DssLayout > DssPageContainer > DssPage, e são containers estruturais com slot livre. A diferença central: DssPageScroller adiciona lógica de visibilidade baseada em scroll e animação JS. DssPageSticky recebeu Selo DSS v2.2.",
+
+  "classification": {
+    "type": "Container utilitário de comportamento de scroll",
+    "category": "Layout Global — Composição de Terceiro Grau",
+    "interactive": false,
+    "family": "Layout"
+  },
+
+  "compositionContext": {
+    "requiredParent": "DssPage (obrigatório para detecção de scroll via QLayout)",
+    "structuralChain": "DssLayout > DssPageContainer > DssPage > DssPageScroller",
+    "slotContent": "Livre — aceita qualquer elemento DSS. Padrão recomendado: DssButton (round) com ícone e aria-label."
+  },
+
+  "propsExposed": ["position", "offset", "scrollOffset", "duration", "reverse"],
+  "propsBlocked": [],
+  "propsBlockedJustification": {},
+  "propsPassThrough": {
+    "via $attrs": "Todos os atributos não declarados são repassados ao q-page-scroller (aria-label, data-*, classes adicionais)"
+  },
+
+  "dssExclusiveProps": {
+    "duration": "Governa a duração da animação de scroll (padrão 250ms = --dss-duration-base, substituindo o valor Quasar nativo de 300ms). Forçado a 0 via prefersReducedMotion quando prefers-reduced-motion: reduce está ativo."
+  },
+
+  "statesApplicable": ["oculto", "visível"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": "DssPageScroller é container estrutural de comportamento de scroll. Os estados 'oculto' e 'visível' são comportamentais (gerenciados pelo QPageScroller via JS). hover/focus/active são responsabilidade do conteúdo no slot. disabled/loading/error/indeterminate não se aplicam a containers de posicionamento baseado em scroll.",
+
+  "accessibility": {
+    "role": "Nenhum role próprio — semântica pertence ao conteúdo no slot default",
+    "wcagLevel": "2.1 AA",
+    "wcag233": "prefers-reduced-motion detectado via window.matchMedia. effectiveDuration=0 quando ativo (scroll instantâneo). Garante WCAG 2.3.3 — Animação a partir de Interações.",
+    "touchTarget": "Opção B — não implementado. DssPageScroller é container estrutural. Touch targets são responsabilidade do conteúdo no slot (ex: DssButton com touch target adequado).",
+    "keyboardNavigation": "Não gerenciada pelo DssPageScroller. Responsabilidade do conteúdo no slot.",
+    "ariaLabel": "NÃO deve ser colocado no DssPageScroller. Deve estar no botão interno: <q-btn aria-label='Voltar ao topo'>."
+  },
+
+  "tokens": [
+    "--dss-z-index-sticky"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Uso de <q-page-scroller> como elemento raiz do template",
+      "location": "1-structure/DssPageScroller.ts.vue — template",
+      "gatesViolated": ["Gate de Composição v2.4 — Regra 1 (primitivo Quasar como raiz)"],
+      "justification": "QPageScroller monitora o scroll do container pai para controlar a visibilidade do slot via transição JS. Depende da hierarquia DOM direta (DssPage/QLayout) para detectar o evento de scroll corretamente. Envolver em <div> quebraria a detecção de scroll e a animação de entrada/saída. Precedente canônico: DssPageSticky (EXC-01), DssPage (EXC-01), DssHeader (EXC-01)."
+    },
+    {
+      "id": "EXC-02",
+      "description": "System color keywords em forced-colors mode",
+      "location": "4-output/_states.scss — @media (forced-colors: active)",
+      "justification": "forced-color-adjust: auto é necessário para preservar visibilidade em Windows High Contrast Mode. Tokens CSS são ignorados pelo navegador neste contexto. Padrão canônico DSS."
+    },
+    {
+      "id": "EXC-03",
+      "description": "display: none !important em @media print",
+      "value": "display: none !important",
+      "location": "4-output/_states.scss — @media print",
+      "justification": "Botão de 'Voltar ao Topo' não tem função em impressão e apareceria em todas as páginas impressas. Valor hardcoded necessário — tokens CSS são ignorados em contexto de impressão. Precedente: DssPageSticky (EXC-03), DssHeader (EXC-04)."
+    }
+  ],
+
+  "reservations": [
+    {
+      "id": "RES-01",
+      "description": "prefersReducedMotion: não há fallback para ambientes sem window.matchMedia",
+      "detail": "onMounted garante SSR-safe, mas ambientes de teste (JSDOM) podem não suportar window.matchMedia. Adicionar mock nos testes ou substituir por useMediaQuery de @vueuse/core em iteração futura.",
+      "priority": "low"
+    },
+    {
+      "id": "RES-02",
+      "description": "Sem unit tests",
+      "detail": "Testes de visibilidade baseada em scroll requerem ambiente de browser real. JSDOM não simula scroll events corretamente. Aguarda configuração de testes E2E com Playwright/Cypress.",
+      "priority": "medium"
+    },
+    {
+      "id": "RES-03",
+      "description": "duration como prop numérica sem binding de token CSS",
+      "detail": "A prop duration recebe um número JS (250) que corresponde ao valor de --dss-duration-base. Não há binding dinâmico ao token CSS em runtime — se o token mudar de 250 para outro valor, a prop default precisará ser atualizada manualmente. Considerar computedStyle read em v-next.",
+      "priority": "low"
+    }
+  ],
+
+  "antiPatterns": [
+    "Usar DssPageScroller fora de um contexto DssLayout > DssPageContainer > DssPage",
+    "Definir aria-label no DssPageScroller em vez do botão interno",
+    "Colocar múltiplos DssPageScroller na mesma página (conflito de posicionamento)",
+    "Sobrescrever z-index via classes ou estilos inline (viola hierarquia DSS)",
+    "Usar DssPageScroller como substituto de DssPageSticky (propósito diferente: visibilidade condicional vs. fixo permanente)"
+  ],
+
+  "compositionRecommendations": [
+    "DssButton (round, color='primary', icon='keyboard_arrow_up') — padrão FAB Voltar ao Topo",
+    "DssButton (round, color='secondary', icon='keyboard_arrow_down') — padrão Reverse",
+    "Conteúdo personalizado via slot — qualquer elemento DSS com interatividade própria"
+  ],
+
+  "auditHistory": []
+}

@@ -1,0 +1,45 @@
+// ==========================================================================
+// DssPageScroller — Layer 4: Estados Adaptativos
+// ==========================================================================
+//
+// Dark mode, high-contrast, forced-colors, print.
+// prefers-reduced-motion: gerenciado em JS (effectiveDuration = 0).
+// DssPageScroller não possui estados de interação (hover/focus/active).
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Dark mode
+// ------------------------------------------------------------------
+// z-index resolve corretamente em dark mode via token.
+// Nenhum override de cor necessário — aparência pertence ao slot.
+
+// ------------------------------------------------------------------
+// High Contrast (prefers-contrast: more)
+// ------------------------------------------------------------------
+// DssPageScroller é container invisível — sem border ou background próprio.
+// Nenhum override necessário.
+
+// ------------------------------------------------------------------
+// Forced Colors (Windows High Contrast Mode)
+// EXC-02 — System color keywords obrigatórios neste contexto.
+// Tokens CSS são ignorados pelo navegador em forced-colors mode.
+// ------------------------------------------------------------------
+@media (forced-colors: active) {
+  .dss-page-scroller {
+    // Preserva visibilidade do container no modo forced-colors.
+    // O conteúdo no slot (DssButton, etc.) gerencia sua própria adaptação.
+    forced-color-adjust: auto;
+  }
+}
+
+// ------------------------------------------------------------------
+// Print
+// EXC-03 — Elemento flutuante de "Voltar ao Topo" não tem sentido
+// em impressão. Ocultado para não aparecer em todas as páginas.
+// Valor hardcoded necessário — tokens CSS são ignorados em print.
+// ------------------------------------------------------------------
+@media print {
+  .dss-page-scroller {
+    display: none !important; // EXC-03: ocultar scroller em impressão
+  }
+}

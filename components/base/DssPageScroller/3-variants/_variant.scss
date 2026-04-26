@@ -1,0 +1,15 @@
+// ==========================================================================
+// DssPageScroller — Layer 3: Variantes Visuais
+// ==========================================================================
+//
+// DssPageScroller é container de comportamento de scroll puro.
+// Não possui variantes de tamanho, densidade ou forma.
+//
+// Justificativa: A aparência do elemento exibido (botão, ícone, etc.)
+// é responsabilidade exclusiva do conteúdo no slot default. O DssPageScroller
+// apenas controla visibilidade e posicionamento baseados em scroll.
+//
+// Variantes futuras (roadmap):
+// - .dss-page-scroller--elevated: sombra de elevação (aguarda validação
+//   de uso real — padrão da prop elevated do DssPageSticky)
+// ==========================================================================

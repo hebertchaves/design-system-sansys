@@ -1,0 +1,28 @@
+// ==========================================================================
+// DssPageScroller — Layer 2: Composição Base
+// ==========================================================================
+//
+// Estilos base do container de scroll. Tokens genéricos apenas.
+// Sem referências a variantes, brands ou estados adaptativos.
+//
+// Nota de especificidade:
+//   O QPageScroller aplica z-index via classes Quasar internas.
+//   O scoped style (data-v-xxxx) garante que .dss-page-scroller[data-v-xxxx]
+//   tenha especificidade superior, fazendo com que --dss-z-index-sticky (1020)
+//   governe o empilhamento sem !important.
+//   Hierarquia: 1020 (sticky) < 1040 (backdrop) < 1050 (modal) < 1070 (tooltip)
+//   — documentado em DSS_TOKEN_REFERENCE.md seção 7.15.
+//
+// Nota de animação:
+//   A duração da animação de scroll é governada pela prop `duration` em JS.
+//   O token --dss-duration-base (250ms) é o padrão, sobrepondo o valor
+//   Quasar nativo (300ms). O SCSS não controla a animação de scroll —
+//   ela é gerenciada exclusivamente pelo QPageScroller em JavaScript.
+// ==========================================================================
+
+.dss-page-scroller {
+  // Empilhamento governado pelo DSS.
+  // Posiciona acima de conteúdo (1) e dropdowns (1000),
+  // mas abaixo de backdrop (1040), modais (1050) e tooltips (1070).
+  z-index: var(--dss-z-index-sticky);
+}

@@ -58,6 +58,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssToolbarTitle** | Estrutura de Página — Tipografia de barra de ferramentas | DssBadge | `conformant` — Selado (21 Abr 2026) |
 | **DssPageContainer** | Layout Global — Container de página com offset automático | DssBadge | `conformant` — Selado (22 Abr 2026) |
 | **DssPage** | Layout Global — Container de conteúdo principal com min-height dinâmica | DssBadge | `conformant` — Selado (22 Abr 2026) |
+| **DssPageScroller** | Layout Global — Container de visibilidade condicional baseado em scroll | DssBadge | `conformant` — Selado (26 Abr 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 

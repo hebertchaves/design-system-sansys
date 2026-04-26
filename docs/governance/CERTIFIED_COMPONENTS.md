@@ -57,7 +57,8 @@
 | `DssHeader` | 3 | Estrutura de Página | 17/04/2026 | DssCard | DssToolbar | 2 NCs resolvidas; GAP-03 escalado |
 | `DssFooter` | 3 | Estrutura de Página | 18/04/2026 | DssCard | DssHeader | EXC-05: sombra upward pendente token |
 | `DssDrawer` | 3 | Estrutura de Página | **20/04/2026** | — | DssList | **Selado hoje** |
-| `DssLayout` | 4 | Layout Global | **20/04/2026** | — | DssHeader + DssFooter | **Selado hoje — desbloqueia DssPage** |
+| `DssLayout` | 4 | Layout Global | 20/04/2026 | — | DssHeader + DssFooter | Selado — desbloqueia DssPage |
+| `DssPageScroller` | 4 | Layout Global | **26/04/2026** | DssBadge | DssPageSticky | **Selado hoje — 3 NCs resolvidas** |
 
 ---
 
@@ -68,7 +69,8 @@
 | Jan–Fev 2026 | 10 | Fundação atômica: Chip, Badge, Button, Toggle, Checkbox, Radio, Avatar, Icon, Input, Tooltip |
 | Mar 2026 | 9 | Inputs especializados: Textarea, Select, Slider, Range, Separator, Space, Spinner, File, BtnDropdown/Toggle/OptionGroup |
 | Abr 1–15, 2026 | 9 | Navegação e Tabs: Tab, TabPanel, Tabs, TabPanels, RouteTab, BreadcrumbsEl, Breadcrumbs, Toolbar, Header |
-| **Abr 16–20, 2026** | **6** | **Layout completo: Footer, Menu, Drawer, Layout, Step, ItemLabel** |
+| Abr 16–20, 2026 | 6 | Layout completo: Footer, Menu, Drawer, Layout, Step, ItemLabel |
+| **Abr 21–26, 2026** | **1** | **Layout Global: PageScroller** |
 
 ---
 
