@@ -16,6 +16,7 @@ import { suggestTokenReplacement } from "./suggestTokenReplacement.js";
 import { generateComponentScaffold } from "./generateComponentScaffold.js";
 import { generatePrePromptTemplate } from "./generatePrePromptTemplate.js";
 import { recordAuditEvent } from "./recordAuditEvent.js";
+import { validateGridLayout } from "./validateGridLayout.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // After tsup bundle: __dirname = mcp/build/ → go up 2 levels to reach DSS root
@@ -121,6 +122,46 @@ const GeneratePrePromptTemplateSchema = z.object({
     .describe(
       'Name of the DSS component to generate a pre-prompt for (e.g. "DssBtnGroup", "DssTab"). Case-insensitive, Dss prefix optional.'
     ),
+});
+
+// ── Phase 5 schemas ────────────────────────────────────────────────────────
+
+const GridSpacingSchema = z.object({
+  x: z.number().describe("Horizontal spacing in pixels."),
+  y: z.number().describe("Vertical spacing in pixels."),
+});
+
+const ValidateGridLayoutSchema = z.object({
+  overlay: z
+    .object({
+      columns: z.number().int().positive().describe("Number of grid columns (e.g. 4, 8, 12, 16, 24)."),
+      gutter: GridSpacingSchema,
+      margin: GridSpacingSchema,
+      padding: GridSpacingSchema,
+    })
+    .optional()
+    .describe("Grid overlay configuration (visual grid layer)."),
+  layout: z
+    .object({
+      gutter: GridSpacingSchema,
+      margin: GridSpacingSchema,
+      padding: GridSpacingSchema,
+      autoColumnWidth: z.boolean().optional().describe("Whether columns should auto-size."),
+    })
+    .optional()
+    .describe("Layout configuration (functional grid layer)."),
+  viewportWidth: z
+    .number()
+    .optional()
+    .describe("Viewport width in pixels (used for breakpoint-aware suggestions)."),
+  brand: z
+    .enum(["hub", "water", "waste"])
+    .optional()
+    .describe("DSS brand context."),
+  theme: z
+    .enum(["light", "dark"])
+    .optional()
+    .describe("Theme context."),
 });
 
 // ── Phase 4 schemas ────────────────────────────────────────────────────────
@@ -336,6 +377,53 @@ const TOOL_DEFINITIONS = [
       required: ["componentName"],
     },
   },
+  // ── Phase 5 Tools ──────────────────────────────────────────────────────────
+  {
+    name: "validate_grid_layout",
+    description:
+      "Validates a grid/layout configuration against DSS spacing tokens and best practices. Checks: (1) spacing uses DSS tokens (CRITICAL), (2) overlay vs layout sync (CRITICAL), (3) column count conventions (HIGH), (4) responsive optimization (INFO). Returns verdict, violations and suggestions. Read-Only — no files are modified.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        overlay: {
+          type: "object",
+          description: "Grid overlay configuration (visual grid layer).",
+          properties: {
+            columns: { type: "number", description: "Number of grid columns (e.g. 4, 8, 12, 16, 24)." },
+            gutter: { type: "object", properties: { x: { type: "number" }, y: { type: "number" } }, required: ["x", "y"] },
+            margin: { type: "object", properties: { x: { type: "number" }, y: { type: "number" } }, required: ["x", "y"] },
+            padding: { type: "object", properties: { x: { type: "number" }, y: { type: "number" } }, required: ["x", "y"] },
+          },
+          required: ["columns", "gutter", "margin", "padding"],
+        },
+        layout: {
+          type: "object",
+          description: "Layout configuration (functional grid layer).",
+          properties: {
+            gutter: { type: "object", properties: { x: { type: "number" }, y: { type: "number" } }, required: ["x", "y"] },
+            margin: { type: "object", properties: { x: { type: "number" }, y: { type: "number" } }, required: ["x", "y"] },
+            padding: { type: "object", properties: { x: { type: "number" }, y: { type: "number" } }, required: ["x", "y"] },
+            autoColumnWidth: { type: "boolean", description: "Whether columns should auto-size." },
+          },
+          required: ["gutter", "margin", "padding"],
+        },
+        viewportWidth: {
+          type: "number",
+          description: "Viewport width in pixels for breakpoint-aware suggestions.",
+        },
+        brand: {
+          type: "string",
+          enum: ["hub", "water", "waste"],
+          description: "DSS brand context.",
+        },
+        theme: {
+          type: "string",
+          enum: ["light", "dark"],
+          description: "Theme context.",
+        },
+      },
+    },
+  },
   // ── Phase 4 Tools ──────────────────────────────────────────────────────────
   {
     name: "record_audit_event",
@@ -481,6 +569,15 @@ export function registerTools(server: Server): void {
       case "generate_pre_prompt_template": {
         const input = GeneratePrePromptTemplateSchema.parse(args);
         const result = await generatePrePromptTemplate(input.componentName, DSS_ROOT);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      // ── Phase 5 ────────────────────────────────────────────────────────────
+      case "validate_grid_layout": {
+        const input = ValidateGridLayoutSchema.parse(args ?? {});
+        const result = await validateGridLayout(input, DSS_ROOT);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };

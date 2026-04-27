@@ -4,6 +4,11 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3001',
+    },
+  },
   resolve: {
     alias: {
       // Alias para importar componentes DSS diretamente do source
