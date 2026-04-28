@@ -8,3 +8,20 @@ const app = createApp(App)
 app.use(Quasar, { config: {} })
 
 app.mount('#app')
+
+// Grid Inspector — apenas em desenvolvimento
+if (import.meta.env.DEV) {
+  import('@sansys/grid-inspector').then(({ injectGridInspector }) => {
+    import('@sansys/grid-inspector/styles').catch(() => {
+      // CSS já pode estar carregado via vite
+    });
+    injectGridInspector({
+      debug: false,
+      config: {
+        // Aponta para a área de conteúdo do Test Suite
+        // Altere para o seletor do grid real quando disponível
+        contentSelector: '.test-content',
+      },
+    });
+  });
+}

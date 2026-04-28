@@ -9,13 +9,6 @@ import {
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import {
   Tooltip,
@@ -51,9 +44,10 @@ export function FloatingGridInspector() {
   // 🆕 Nested Grid Context - para seleção de elementos específicos (opcional)
   
   // 🆕 Nested Grid Context - para seleção de elementos específicos
-  const { 
-    isSelectionMode, 
-    setIsSelectionMode, 
+  const {
+    isSelectionMode,
+    setIsSelectionMode,
+    setSelectedElement,
     selectedElementInfo,
     selectedGridConfig,
     updateSelectedGridConfig,
@@ -154,11 +148,29 @@ export function FloatingGridInspector() {
     if (!document.getElementById(id)) {
       const s = document.createElement('style');
       s.id = id;
-      s.textContent = '[data-radix-popper-content-wrapper],[data-radix-select-viewport]{z-index:1000001!important}';
+      s.textContent = '[data-radix-popper-content-wrapper],[data-radix-select-viewport]{z-index:1000001!important}[role="switch"]>span{background:white!important;box-shadow:0 1px 3px rgba(0,0,0,.25)!important}';
       document.head.appendChild(s);
     }
     return () => { document.getElementById(id)?.remove(); };
   }, []);
+
+  // Selection mode — capture-phase click listener so it fires before page handlers
+  useEffect(() => {
+    if (!isSelectionMode) return;
+
+    const handleClick = (e: MouseEvent) => {
+      const root = document.getElementById('grid-inspector-root');
+      if (root && root.contains(e.target as Node)) return; // ignore clicks inside the panel
+      e.preventDefault();
+      e.stopPropagation();
+      const el = e.target as HTMLElement;
+      setSelectedElement(el);
+      setIsSelectionMode(false);
+    };
+
+    document.addEventListener('click', handleClick, true);
+    return () => document.removeEventListener('click', handleClick, true);
+  }, [isSelectionMode, setSelectedElement, setIsSelectionMode]);
 
   // Breakpoint presets: when the breakpoint changes, sync overlay + layout to standard DSS values
   const BREAKPOINT_PRESETS = {
@@ -229,7 +241,8 @@ export function FloatingGridInspector() {
       ultra: '1920px',
     };
     root.style.setProperty('--grid-breakpoint-width', breakpointWidths[breakpoint]);
-    
+    root.style.setProperty('--grid-container-max-width', containerType === 'fluid' ? '100%' : breakpointWidths[breakpoint]);
+
     // Aplicar density mode (multiplicador de spacing)
     const densityMultipliers = {
       comfortable: '1',

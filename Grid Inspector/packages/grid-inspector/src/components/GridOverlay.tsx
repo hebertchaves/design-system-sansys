@@ -251,7 +251,7 @@ export function GridOverlay({
               <div
                 key={i}
                 className="relative h-full"
-                style={{ zIndex: 15 }}
+                style={{ zIndex: 15, pointerEvents: 'none' }}
               >
                 {/* Camada de COLUNA (rose) */}
                 {showColumns && (
@@ -399,18 +399,15 @@ export function GridOverlay({
           </div>
         ))}
 
-        {/* ── GAP Y — band between consecutive rows ── */}
+        {/* ── GAP Y — band between consecutive rows, sized by gutterY prop ── */}
         {showGapsY && gutterY > 0 && componentRows.length > 1 && componentRows.slice(0, -1).map((row, i) => {
-          const nextRow = componentRows[i + 1];
           const gapTop = row.top + row.height;
-          const gapHeight = nextRow.top - gapTop;
-          if (gapHeight <= 0) return null;
           return (
             <div
               key={`gap-y-${i}`}
               style={{
                 position: 'absolute', left: 0, right: 0, pointerEvents: 'none',
-                top: gapTop, height: gapHeight, zIndex: 18,
+                top: gapTop, height: gutterY, zIndex: 18,
                 backgroundColor: `rgba(191,219,254,${0.6*overlayOpacity})`,
                 borderTop: `1px solid rgba(96,165,250,${0.7*overlayOpacity})`,
                 borderBottom: `1px solid rgba(96,165,250,${0.7*overlayOpacity})`,
@@ -418,7 +415,7 @@ export function GridOverlay({
             >
               {showAnnotations && i === 0 && (
                 <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(37,99,235,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
-                  {Math.round(gapHeight)}px gap Y
+                  {gutterY}px gap Y
                 </div>
               )}
             </div>

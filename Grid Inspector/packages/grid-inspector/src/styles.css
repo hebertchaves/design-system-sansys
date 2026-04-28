@@ -3,10 +3,15 @@
  * GRID INSPECTOR STYLES
  * ==========================================================================
  *
- * Consolidated styles for @sansys/grid-inspector package.
- * This file is self-contained and includes all necessary styles for the
- * Grid Inspector to work in any environment.
+ * Self-contained styles for @sansys/grid-inspector.
+ * @tailwind base is intentionally omitted — we don't want Preflight
+ * (CSS reset) to affect the host page (Vue, React, plain HTML, etc.).
+ * Tailwind utilities are scoped to #sansys-grid-inspector-root via the
+ * `important` option in tailwind.config.js so they win over host CSS.
  */
+
+@tailwind components;
+@tailwind utilities;
 
 /* ==========================================================================
    CSS Variables - Theme (Light/Dark)

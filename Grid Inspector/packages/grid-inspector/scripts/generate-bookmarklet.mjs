@@ -35,33 +35,68 @@ const bookmarkletSource = `
 (function() {
   'use strict';
 
-  // Check if already loaded
+  // Toggle if already loaded
   if (window.__SANSYS_GRID_INSPECTOR__) {
-    console.log('[Grid Inspector] Already loaded - toggling');
     window.__SANSYS_GRID_INSPECTOR__.toggle();
     return;
   }
 
-  // Set bookmarklet flag
   window.__SANSYS_GRID_INSPECTOR_BOOKMARKLET__ = true;
 
-  // Load CSS
-  const css = document.createElement('link');
-  css.rel = 'stylesheet';
-  css.href = 'https://unpkg.com/@sansys/grid-inspector@latest/dist/style.css';
-  document.head.appendChild(css);
+  var BASE         = 'https://unpkg.com/@sansys/grid-inspector@latest/dist';
+  var REACT_CDN    = 'https://unpkg.com/react@18/umd/react.production.min.js';
+  var REACT_DOM_CDN= 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js';
 
-  // Load UMD bundle
-  const script = document.createElement('script');
-  script.src = 'https://unpkg.com/@sansys/grid-inspector@latest/dist/grid-inspector.umd.js';
-  script.onload = function() {
-    console.log('[Grid Inspector] ✅ Loaded successfully');
-  };
-  script.onerror = function() {
-    console.error('[Grid Inspector] ❌ Failed to load');
-    alert('Erro ao carregar Grid Inspector. Verifique a conexão.');
-  };
-  document.head.appendChild(script);
+  function loadScript(src, cb) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = cb || function(){};
+    s.onerror = function() { console.error('[Grid Inspector] Failed to load:', src); };
+    document.head.appendChild(s);
+  }
+
+  function loadCSS(href) {
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = href;
+    document.head.appendChild(l);
+  }
+
+  // Same void-element shim used by the UMD test page
+  function createJsxShim() {
+    var VOID = new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
+    function jsx(type, props, _key) {
+      if (!props) return React.createElement(type, null);
+      var ch = props.children, rest = Object.assign({}, props);
+      delete rest.children;
+      if (typeof type === 'string' && VOID.has(type)) return React.createElement(type, rest);
+      if (ch === undefined) return React.createElement(type, rest);
+      if (Array.isArray(ch)) return React.createElement.apply(null, [type, rest].concat(ch));
+      return React.createElement(type, rest, ch);
+    }
+    window.jsxRuntime = { jsx: jsx, jsxs: jsx, Fragment: React.Fragment };
+  }
+
+  function loadInspector() {
+    loadCSS(BASE + '/style.css');
+    loadScript(BASE + '/grid-inspector.umd.js', function() {
+      console.log('[Grid Inspector] Loaded');
+    });
+  }
+
+  // Load React stack only if not already present on the page
+  if (typeof window.React !== 'undefined' && typeof window.ReactDOM !== 'undefined') {
+    if (!window.jsxRuntime) createJsxShim();
+    loadInspector();
+  } else if (typeof window.React !== 'undefined') {
+    if (!window.jsxRuntime) createJsxShim();
+    loadScript(REACT_DOM_CDN, function() { loadInspector(); });
+  } else {
+    loadScript(REACT_CDN, function() {
+      createJsxShim();
+      loadScript(REACT_DOM_CDN, function() { loadInspector(); });
+    });
+  }
 })();
 `.trim();
 

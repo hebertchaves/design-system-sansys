@@ -52,7 +52,7 @@ export function BaselineGridOverlay() {
       ))}
       
       {/* Indicador do baseline grid */}
-      <div className="fixed bottom-16 left-4 bg-violet-600 text-white px-3 py-2 rounded-lg shadow-lg text-xs font-semibold flex items-center gap-2 z-50">
+      <div className="fixed bottom-16 left-4 bg-violet-600 text-white px-3 py-2 rounded-lg shadow-lg text-xs font-semibold flex items-center gap-2 z-50" style={{ pointerEvents: 'none' }}>
         <div className="flex flex-col gap-0.5">
           <div className="w-8 h-px bg-violet-300"></div>
           <div className="w-8 h-px bg-violet-300"></div>

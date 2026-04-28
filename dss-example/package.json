@@ -14,7 +14,10 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@sansys/grid-inspector": "file:../Grid Inspector/packages/grid-inspector",
     "@vitejs/plugin-vue": "^5.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "vite": "^5.2.0"
   }
 }
