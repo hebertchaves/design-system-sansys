@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DSS UI Rules Schema",
+  "description": "Schema programático das regras de UI do Design System Sansys para consumo pelo MCP e Grid Inspector",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Versão do schema de regras"
+    },
+    "hierarchy": {
+      "type": "object",
+      "description": "Regras de hierarquia de espaçamento baseadas no nível de aninhamento",
+      "properties": {
+        "level_1": {
+          "type": "object",
+          "description": "Nível raiz (Page, Layout, Drawer)",
+          "properties": {
+            "padding": { "type": "array", "items": { "type": "string" } },
+            "gap": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "level_2": {
+          "type": "object",
+          "description": "Nível de seção (Cards principais, Panels)",
+          "properties": {
+            "padding": { "type": "array", "items": { "type": "string" } },
+            "gap": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "level_3": {
+          "type": "object",
+          "description": "Nível de componente (Cards internos, Listas)",
+          "properties": {
+            "padding": { "type": "array", "items": { "type": "string" } },
+            "gap": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "level_4": {
+          "type": "object",
+          "description": "Nível atômico (Inputs, Buttons, Chips)",
+          "properties": {
+            "gap": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "components": {
+      "type": "object",
+      "description": "Regras específicas por componente",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "allowed_children": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "forbidden_children": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "mandatory_props": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "spacing_rules": {
+            "type": "object",
+            "properties": {
+              "padding": { "type": "string" },
+              "margin": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "default": {
+    "version": "1.0.0",
+    "hierarchy": {
+      "level_1": {
+        "padding": ["--dss-spacing-4", "--dss-spacing-6"],
+        "gap": ["--dss-spacing-6", "--dss-spacing-8"]
+      },
+      "level_2": {
+        "padding": ["--dss-spacing-4", "--dss-spacing-6"],
+        "gap": ["--dss-spacing-4", "--dss-spacing-6"]
+      },
+      "level_3": {
+        "padding": ["--dss-spacing-3", "--dss-spacing-4"],
+        "gap": ["--dss-spacing-3", "--dss-spacing-4"]
+      },
+      "level_4": {
+        "gap": ["--dss-spacing-1", "--dss-spacing-2"]
+      }
+    },
+    "components": {
+      "DssCard": {
+        "forbidden_children": ["DssCard"],
+        "spacing_rules": {
+          "padding": "--dss-spacing-4"
+        }
+      },
+      "DssHeader": {
+        "allowed_children": ["DssToolbar"],
+        "spacing_rules": {
+          "padding": "--dss-spacing-0"
+        }
+      },
+      "DssToolbar": {
+        "forbidden_children": ["DssCard", "DssForm"],
+        "spacing_rules": {
+          "padding": "--dss-spacing-2"
+        }
+      }
+    }
+  }
+}
