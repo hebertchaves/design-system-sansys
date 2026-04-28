@@ -1,0 +1,284 @@
+/**
+ * ==========================================================================
+ * DssAvatar - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Wrapper DSS baseado no QAvatar, com API pública governada pelo DSS.
+ * Usa apenas tokens genéricos do DSS.
+ *
+ * @version 2.2 (React)
+ */
+
+/* ========================================
+   BASE AVATAR
+   ======================================== */
+
+.dss-avatar {
+  /* Display e Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  vertical-align: middle;
+
+  /* Dimensões padrão (md = 48px) */
+  width: var(--dss-touch-target-min);
+  height: var(--dss-touch-target-min);
+
+  /* Forma circular por padrão */
+  border-radius: var(--dss-radius-full);
+
+  /* Tipografia */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-medium);
+  line-height: 1;
+  text-align: center;
+
+  /* Overflow para imagens/conteúdo */
+  overflow: hidden;
+
+  /* Background padrão (sobrescrito por cores específicas) */
+  background-color: var(--dss-neutral-200);
+  color: var(--dss-neutral-700);
+
+  /* Transições */
+  transition: all var(--dss-transition-base);
+
+  /* Prevenir seleção de texto */
+  user-select: none;
+}
+
+/* ========================================
+   CONTEÚDO INTERNO
+   ======================================== */
+
+.dss-avatar__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Imagens devem preencher todo o avatar */
+.dss-avatar__content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Texto deve ser centralizado */
+.dss-avatar__content > span,
+.dss-avatar__content > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+   ÍCONE (Material Icons)
+   ======================================== */
+
+.dss-avatar__icon {
+  font-family: 'Material Icons';
+  font-size: var(--dss-icon-size-md);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ========================================
+   VARIANTES DE FORMA
+   ======================================== */
+
+/* Square - sem border-radius */
+.dss-avatar--square {
+  border-radius: 0;
+}
+
+/* Rounded - border-radius menor (não é círculo, não é quadrado) */
+.dss-avatar--rounded {
+  border-radius: var(--dss-radius-md);
+}
+
+/* ========================================
+   TAMANHOS CUSTOMIZÁVEIS
+   ======================================== */
+
+/* Tamanho xs (extra small) - 32px */
+.dss-avatar--xs {
+  width: 32px;
+  height: 32px;
+  font-size: var(--dss-font-size-xs);
+}
+
+.dss-avatar--xs .dss-avatar__icon {
+  font-size: var(--dss-icon-size-sm);
+}
+
+/* Tamanho sm (small) - 40px */
+.dss-avatar--sm {
+  width: 40px;
+  height: 40px;
+  font-size: var(--dss-font-size-sm);
+}
+
+.dss-avatar--sm .dss-avatar__icon {
+  font-size: var(--dss-icon-size-sm);
+}
+
+/* Tamanho md (medium) - 48px (padrão, já definido na classe base) */
+
+/* Tamanho lg (large) - 64px */
+.dss-avatar--lg {
+  width: var(--dss-touch-target-xl);
+  height: var(--dss-touch-target-xl);
+  font-size: var(--dss-font-size-lg);
+}
+
+.dss-avatar--lg .dss-avatar__icon {
+  font-size: var(--dss-icon-size-lg);
+}
+
+/* Tamanho xl (extra large) - 80px */
+.dss-avatar--xl {
+  width: 80px;
+  height: 80px;
+  font-size: var(--dss-font-size-xl);
+}
+
+.dss-avatar--xl .dss-avatar__icon {
+  font-size: var(--dss-icon-size-xl);
+}
+
+/* ========================================
+   BRANDABILIDADE (HUB/WATER/WASTE)
+   ======================================== */
+
+/* Hub 🟠 */
+.dss-avatar--brand-hub {
+  border: 2px solid var(--dss-hub-600);
+}
+
+/* Water 🔵 */
+.dss-avatar--brand-water {
+  border: 2px solid var(--dss-water-500);
+}
+
+/* Waste 🟢 */
+.dss-avatar--brand-waste {
+  border: 2px solid var(--dss-waste-600);
+}
+
+/* ========================================
+   STATUS INDICATOR
+   ======================================== */
+
+.dss-avatar--with-status {
+  position: relative;
+}
+
+.dss-avatar__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--dss-surface-default, #FFFFFF);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+/* Status: Online (verde) */
+.dss-avatar__status--online {
+  background-color: var(--dss-positive);
+}
+
+/* Status: Away (amarelo) */
+.dss-avatar__status--away {
+  background-color: var(--dss-warning);
+}
+
+/* Status: Busy (vermelho) */
+.dss-avatar__status--busy {
+  background-color: var(--dss-negative);
+}
+
+/* Status: Offline (cinza) */
+.dss-avatar__status--offline {
+  background-color: var(--dss-neutral-400);
+}
+
+/* ========================================
+   AVATAR EM GRUPO (quando múltiplos avatars)
+   ======================================== */
+
+.dss-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.dss-avatar-group .dss-avatar {
+  /* Overlap de avatars em grupo */
+  margin-left: calc(var(--dss-spacing-2) * -1);
+
+  /* Borda para separação visual */
+  border: var(--dss-border-width-md) solid var(--dss-surface-default, #FFFFFF);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-avatar-group .dss-avatar:first-child {
+  margin-left: 0;
+}
+
+/* ========================================
+   ESTADOS INTERATIVOS (quando usado como botão)
+   ======================================== */
+
+/* Avatar clicável */
+.dss-avatar--clickable {
+  cursor: pointer;
+}
+
+.dss-avatar--clickable:hover {
+  transform: scale(1.05);
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-avatar--clickable:active {
+  transform: scale(0.95);
+}
+
+.dss-avatar--clickable:focus-visible {
+  outline: 2px solid var(--dss-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+@media (max-width: 768px) {
+  /* Em mobile, avatars grandes ficam um pouco menores */
+  .dss-avatar--xl {
+    width: 64px;
+    height: 64px;
+  }
+
+  .dss-avatar--lg {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* Avatar group overlap menor em mobile */
+  .dss-avatar-group .dss-avatar {
+    margin-left: calc(var(--dss-spacing-1-5) * -1);
+  }
+}

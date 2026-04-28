@@ -1,0 +1,407 @@
+/**
+ * ==========================================================================
+ * DssRadio - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Radio button DSS com estados completos e brandabilidade.
+ * @version 2.0 (React)
+ */
+
+/* ===== WRAPPER ===== */
+.dss-radio-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-xs);
+}
+
+.dss-radio-wrapper--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== CONTAINER (Label clicável) ===== */
+.dss-radio-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dss-spacing-sm);
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  min-height: 48px;
+}
+
+/* ===== HIDDEN INPUT ===== */
+.dss-radio {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+/* ===== RADIO MARK VISUAL ===== */
+.dss-radio__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  border: 2px solid var(--dss-gray-400);
+  border-radius: 50%;
+  background-color: white;
+  transition: all var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Inner dot */
+.dss-radio__mark::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all var(--dss-duration-200, 0.2s) var(--dss-easing-emphasized, cubic-bezier(0.4, 0.0, 0.2, 1));
+  transform: scale(0);
+}
+
+/* ===== LABEL ===== */
+.dss-radio__label {
+  margin-left: var(--dss-spacing-sm);
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-700);
+  line-height: var(--dss-line-height-normal);
+}
+
+/* ===== HELPER TEXT ===== */
+.dss-radio__helper {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-600);
+  line-height: var(--dss-line-height-normal);
+  margin-left: calc(20px + var(--dss-spacing-sm)); /* Align with label */
+}
+
+.dss-radio__helper--error {
+  color: var(--dss-negative);
+}
+
+/* ===== HOVER STATE (Unchecked) ===== */
+.dss-radio-container:hover:not(.dss-radio-wrapper--disabled *) .dss-radio__mark {
+  border-color: var(--dss-gray-600);
+  background-color: var(--dss-gray-50);
+}
+
+/* ===== ACTIVE STATE ===== */
+.dss-radio:active + .dss-radio__mark {
+  transform: scale(0.9);
+}
+
+/* ========================================================================== */
+/* COLOR: PRIMARY                                                             */
+/* ========================================================================== */
+
+.dss-radio--primary:checked + .dss-radio__mark {
+  border-color: var(--dss-primary);
+  background-color: white;
+}
+
+.dss-radio--primary:checked + .dss-radio__mark::after {
+  background-color: var(--dss-primary);
+  transform: scale(1);
+}
+
+.dss-radio--primary:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-primary-hover);
+  background-color: var(--dss-primary-light);
+}
+
+.dss-radio--primary:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-primary-hover);
+}
+
+.dss-radio--primary:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-primary-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: SECONDARY                                                           */
+/* ========================================================================== */
+
+.dss-radio--secondary:checked + .dss-radio__mark {
+  border-color: var(--dss-secondary);
+  background-color: white;
+}
+
+.dss-radio--secondary:checked + .dss-radio__mark::after {
+  background-color: var(--dss-secondary);
+  transform: scale(1);
+}
+
+.dss-radio--secondary:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-secondary-hover);
+  background-color: var(--dss-secondary-light);
+}
+
+.dss-radio--secondary:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-secondary-hover);
+}
+
+.dss-radio--secondary:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-secondary-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: TERTIARY                                                            */
+/* ========================================================================== */
+
+.dss-radio--tertiary:checked + .dss-radio__mark {
+  border-color: var(--dss-tertiary);
+  background-color: white;
+}
+
+.dss-radio--tertiary:checked + .dss-radio__mark::after {
+  background-color: var(--dss-tertiary);
+  transform: scale(1);
+}
+
+.dss-radio--tertiary:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-tertiary-hover);
+  background-color: var(--dss-tertiary-light);
+}
+
+.dss-radio--tertiary:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-tertiary-hover);
+}
+
+.dss-radio--tertiary:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-tertiary-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: POSITIVE                                                            */
+/* ========================================================================== */
+
+.dss-radio--positive:checked + .dss-radio__mark {
+  border-color: var(--dss-positive);
+  background-color: white;
+}
+
+.dss-radio--positive:checked + .dss-radio__mark::after {
+  background-color: var(--dss-positive);
+  transform: scale(1);
+}
+
+.dss-radio--positive:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-positive-hover);
+  background-color: var(--dss-positive-light);
+}
+
+.dss-radio--positive:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-positive-hover);
+}
+
+.dss-radio--positive:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-positive-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: NEGATIVE                                                            */
+/* ========================================================================== */
+
+.dss-radio--negative:checked + .dss-radio__mark {
+  border-color: var(--dss-negative);
+  background-color: white;
+}
+
+.dss-radio--negative:checked + .dss-radio__mark::after {
+  background-color: var(--dss-negative);
+  transform: scale(1);
+}
+
+.dss-radio--negative:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-negative-hover);
+  background-color: var(--dss-negative-light);
+}
+
+.dss-radio--negative:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-negative-hover);
+}
+
+.dss-radio--negative:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-negative-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: WARNING                                                             */
+/* ========================================================================== */
+
+.dss-radio--warning:checked + .dss-radio__mark {
+  border-color: var(--dss-warning);
+  background-color: white;
+}
+
+.dss-radio--warning:checked + .dss-radio__mark::after {
+  background-color: var(--dss-warning);
+  transform: scale(1);
+}
+
+.dss-radio--warning:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-warning-hover);
+  background-color: var(--dss-warning-light);
+}
+
+.dss-radio--warning:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-warning-hover);
+}
+
+.dss-radio--warning:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-warning-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: INFO                                                                */
+/* ========================================================================== */
+
+.dss-radio--info:checked + .dss-radio__mark {
+  border-color: var(--dss-info);
+  background-color: white;
+}
+
+.dss-radio--info:checked + .dss-radio__mark::after {
+  background-color: var(--dss-info);
+  transform: scale(1);
+}
+
+.dss-radio--info:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-info-hover);
+  background-color: var(--dss-info-light);
+}
+
+.dss-radio--info:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-info-hover);
+}
+
+.dss-radio--info:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-info-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* STATE: ERROR                                                               */
+/* ========================================================================== */
+
+.dss-radio--error + .dss-radio__mark {
+  border-color: var(--dss-negative);
+}
+
+.dss-radio--error:checked + .dss-radio__mark {
+  border-color: var(--dss-negative);
+}
+
+.dss-radio--error:checked + .dss-radio__mark::after {
+  background-color: var(--dss-negative);
+}
+
+.dss-radio--error:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-negative-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: HUB                                                        */
+/* ========================================================================== */
+
+.dss-radio--brand-hub:checked + .dss-radio__mark {
+  border-color: var(--dss-hub-600);
+  background-color: white;
+}
+
+.dss-radio--brand-hub:checked + .dss-radio__mark::after {
+  background-color: var(--dss-hub-600);
+  transform: scale(1);
+}
+
+.dss-radio--brand-hub:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-hub-700);
+  background-color: var(--dss-hub-100);
+}
+
+.dss-radio--brand-hub:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-hub-700);
+}
+
+.dss-radio--brand-hub:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-hub-300);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WATER                                                      */
+/* ========================================================================== */
+
+.dss-radio--brand-water:checked + .dss-radio__mark {
+  border-color: var(--dss-water-500);
+  background-color: white;
+}
+
+.dss-radio--brand-water:checked + .dss-radio__mark::after {
+  background-color: var(--dss-water-500);
+  transform: scale(1);
+}
+
+.dss-radio--brand-water:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-water-600);
+  background-color: var(--dss-water-100);
+}
+
+.dss-radio--brand-water:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-water-600);
+}
+
+.dss-radio--brand-water:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-water-300);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WASTE                                                      */
+/* ========================================================================== */
+
+.dss-radio--brand-waste:checked + .dss-radio__mark {
+  border-color: var(--dss-waste-600);
+  background-color: white;
+}
+
+.dss-radio--brand-waste:checked + .dss-radio__mark::after {
+  background-color: var(--dss-waste-600);
+  transform: scale(1);
+}
+
+.dss-radio--brand-waste:checked + .dss-radio__mark:hover {
+  border-color: var(--dss-waste-700);
+  background-color: var(--dss-waste-100);
+}
+
+.dss-radio--brand-waste:checked + .dss-radio__mark:hover::after {
+  background-color: var(--dss-waste-700);
+}
+
+.dss-radio--brand-waste:focus-visible + .dss-radio__mark {
+  outline: 2px solid var(--dss-waste-300);
+  outline-offset: 2px;
+}

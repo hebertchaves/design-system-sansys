@@ -1,0 +1,265 @@
+/**
+ * ==========================================================================
+ * DssCheckbox - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Checkbox DSS com estados completos e brandabilidade.
+ * @version 2.0 (React)
+ */
+
+/* ===== WRAPPER ===== */
+.dss-checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dss-spacing-sm);
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  min-height: 48px;
+}
+
+.dss-checkbox-wrapper--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== HIDDEN INPUT ===== */
+.dss-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+/* ===== CHECKMARK VISUAL ===== */
+.dss-checkbox__checkmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  border: 2px solid var(--dss-gray-400);
+  border-radius: var(--dss-radius-xs);
+  background-color: white;
+  transition: all var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+  font-size: 16px;
+  color: transparent;
+  flex-shrink: 0;
+}
+
+/* ===== LABEL ===== */
+.dss-checkbox__label {
+  margin-left: var(--dss-spacing-sm);
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-700);
+  line-height: var(--dss-line-height-normal);
+  cursor: pointer;
+}
+
+/* ===== HOVER STATE (unchecked) ===== */
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox__checkmark {
+  border-color: var(--dss-gray-600);
+  background-color: var(--dss-gray-50);
+}
+
+/* ===== CHECKED STATE ===== */
+.dss-checkbox:checked + .dss-checkbox__checkmark {
+  border-color: var(--dss-primary);
+  background-color: var(--dss-primary);
+  color: white;
+}
+
+/* ===== INDETERMINATE STATE ===== */
+.dss-checkbox:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-primary);
+  background-color: var(--dss-primary);
+  color: white;
+}
+
+/* ===== HOVER STATE (checked/indeterminate) ===== */
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-primary-hover);
+  background-color: var(--dss-primary-hover);
+}
+
+/* ===== FOCUS STATE ===== */
+.dss-checkbox:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-primary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== ACTIVE STATE ===== */
+.dss-checkbox:active:not(:disabled) + .dss-checkbox__checkmark {
+  transform: scale(0.95);
+}
+
+/* ===== CORES SEMÂNTICAS: SECONDARY ===== */
+.dss-checkbox--secondary:checked + .dss-checkbox__checkmark,
+.dss-checkbox--secondary:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-secondary);
+  background-color: var(--dss-secondary);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--secondary:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--secondary:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-secondary-hover);
+  background-color: var(--dss-secondary-hover);
+}
+
+.dss-checkbox--secondary:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-secondary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== CORES SEMÂNTICAS: POSITIVE ===== */
+.dss-checkbox--positive:checked + .dss-checkbox__checkmark,
+.dss-checkbox--positive:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-positive);
+  background-color: var(--dss-positive);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--positive:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--positive:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-positive-hover);
+  background-color: var(--dss-positive-hover);
+}
+
+.dss-checkbox--positive:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-positive-focus);
+  outline-offset: 2px;
+}
+
+/* ===== CORES SEMÂNTICAS: NEGATIVE ===== */
+.dss-checkbox--negative:checked + .dss-checkbox__checkmark,
+.dss-checkbox--negative:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-negative);
+  background-color: var(--dss-negative);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--negative:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--negative:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-negative-hover);
+  background-color: var(--dss-negative-hover);
+}
+
+.dss-checkbox--negative:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-negative-focus);
+  outline-offset: 2px;
+}
+
+/* ===== CORES SEMÂNTICAS: TERTIARY ===== */
+.dss-checkbox--tertiary:checked + .dss-checkbox__checkmark,
+.dss-checkbox--tertiary:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-tertiary);
+  background-color: var(--dss-tertiary);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--tertiary:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--tertiary:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-tertiary-hover);
+  background-color: var(--dss-tertiary-hover);
+}
+
+.dss-checkbox--tertiary:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-tertiary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== CORES SEMÂNTICAS: WARNING ===== */
+.dss-checkbox--warning:checked + .dss-checkbox__checkmark,
+.dss-checkbox--warning:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-warning);
+  background-color: var(--dss-warning);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--warning:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--warning:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-warning-hover);
+  background-color: var(--dss-warning-hover);
+}
+
+.dss-checkbox--warning:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-warning-focus);
+  outline-offset: 2px;
+}
+
+/* ===== CORES SEMÂNTICAS: INFO ===== */
+.dss-checkbox--info:checked + .dss-checkbox__checkmark,
+.dss-checkbox--info:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-info);
+  background-color: var(--dss-info);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--info:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--info:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-info-hover);
+  background-color: var(--dss-info-hover);
+}
+
+.dss-checkbox--info:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-info-focus);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: HUB ===== */
+.dss-checkbox--brand-hub:checked + .dss-checkbox__checkmark,
+.dss-checkbox--brand-hub:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-hub-600);
+  background-color: var(--dss-hub-600);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--brand-hub:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--brand-hub:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-hub-700);
+  background-color: var(--dss-hub-700);
+}
+
+.dss-checkbox--brand-hub:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-hub-300);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: WATER ===== */
+.dss-checkbox--brand-water:checked + .dss-checkbox__checkmark,
+.dss-checkbox--brand-water:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-water-500);
+  background-color: var(--dss-water-500);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--brand-water:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--brand-water:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-water-600);
+  background-color: var(--dss-water-600);
+}
+
+.dss-checkbox--brand-water:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-water-300);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: WASTE ===== */
+.dss-checkbox--brand-waste:checked + .dss-checkbox__checkmark,
+.dss-checkbox--brand-waste:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-waste-600);
+  background-color: var(--dss-waste-600);
+}
+
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--brand-waste:checked + .dss-checkbox__checkmark,
+.dss-checkbox-wrapper:hover:not(.dss-checkbox-wrapper--disabled) .dss-checkbox--brand-waste:indeterminate + .dss-checkbox__checkmark {
+  border-color: var(--dss-waste-700);
+  background-color: var(--dss-waste-700);
+}
+
+.dss-checkbox--brand-waste:focus-visible + .dss-checkbox__checkmark {
+  outline: 2px solid var(--dss-waste-300);
+  outline-offset: 2px;
+}

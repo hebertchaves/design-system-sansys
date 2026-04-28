@@ -1,0 +1,306 @@
+/**
+ * ==========================================================================
+ * DssBadge - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Wrapper DSS baseado no QBadge, com API pública governada pelo DSS.
+ *
+ * DIMENSÕES PADRÃO:
+ * - Normal: 24px height, 4px 8px padding, 12px font
+ * - Floating: 20px height, 4px padding, 11px font
+ * - Empty (dot): 12px × 12px
+ * - Floating empty: 16px × 16px
+ *
+ * @version 2.3 (React)
+ */
+
+/* ========================================
+   BASE BADGE
+   ======================================== */
+
+.dss-badge {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Dimensões */
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px 8px;
+  
+  /* Tipografia */
+  font-family: var(--dss-font-family-sans);
+  font-size: 12px;
+  font-weight: var(--dss-font-weight-semibold);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  
+  /* Visual */
+  border-radius: var(--dss-radius-full);
+  
+  /* Transições */
+  transition: all var(--dss-transition-base);
+  
+  /* Prevenir seleção */
+  user-select: none;
+}
+
+/* ========================================
+   CORES SEMÂNTICAS (Filled)
+   ======================================== */
+
+.dss-badge--primary {
+  background-color: var(--dss-primary);
+  color: white;
+}
+
+.dss-badge--secondary {
+  background-color: var(--dss-secondary);
+  color: white;
+}
+
+.dss-badge--tertiary {
+  background-color: var(--dss-tertiary);
+  color: white;
+}
+
+.dss-badge--accent {
+  background-color: var(--dss-accent);
+  color: white;
+}
+
+.dss-badge--positive {
+  background-color: var(--dss-positive);
+  color: white;
+}
+
+.dss-badge--negative {
+  background-color: var(--dss-negative);
+  color: white;
+}
+
+.dss-badge--warning {
+  background-color: var(--dss-warning);
+  color: var(--dss-gray-900);
+}
+
+.dss-badge--info {
+  background-color: var(--dss-info);
+  color: white;
+}
+
+/* ========================================
+   VARIANTE: OUTLINE
+   ======================================== */
+
+.dss-badge--outline {
+  background-color: transparent;
+  border: 2px solid currentColor;
+}
+
+.dss-badge--outline.dss-badge--primary {
+  color: var(--dss-primary);
+  background-color: transparent;
+}
+
+.dss-badge--outline.dss-badge--secondary {
+  color: var(--dss-secondary);
+  background-color: transparent;
+}
+
+.dss-badge--outline.dss-badge--tertiary {
+  color: var(--dss-tertiary);
+  background-color: transparent;
+}
+
+.dss-badge--outline.dss-badge--positive {
+  color: var(--dss-positive);
+  background-color: transparent;
+}
+
+.dss-badge--outline.dss-badge--negative {
+  color: var(--dss-negative);
+  background-color: transparent;
+}
+
+.dss-badge--outline.dss-badge--warning {
+  color: var(--dss-warning);
+  background-color: transparent;
+}
+
+.dss-badge--outline.dss-badge--info {
+  color: var(--dss-info);
+  background-color: transparent;
+}
+
+/* ========================================
+   VARIANTE: TRANSPARENT
+   ======================================== */
+
+.dss-badge--transparent {
+  background-color: transparent !important;
+}
+
+.dss-badge--transparent.dss-badge--primary {
+  color: var(--dss-primary);
+}
+
+.dss-badge--transparent.dss-badge--secondary {
+  color: var(--dss-secondary);
+}
+
+.dss-badge--transparent.dss-badge--positive {
+  color: var(--dss-positive);
+}
+
+.dss-badge--transparent.dss-badge--negative {
+  color: var(--dss-negative);
+}
+
+.dss-badge--transparent.dss-badge--warning {
+  color: var(--dss-warning);
+}
+
+/* ========================================
+   VARIANTE: ROUNDED
+   ======================================== */
+
+.dss-badge--rounded {
+  border-radius: var(--dss-radius-md);
+}
+
+/* ========================================
+   MULTI-LINE
+   ======================================== */
+
+.dss-badge--multi-line {
+  white-space: normal;
+  min-height: 32px;
+  padding: 4px 12px;
+}
+
+/* ========================================
+   FLOATING (Notificações)
+   ======================================== */
+
+.dss-badge--floating {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 4px;
+  font-size: 11px;
+  transform: translate(50%, -50%);
+}
+
+/* ========================================
+   EMPTY (Dot Indicator)
+   ======================================== */
+
+.dss-badge--empty {
+  min-width: 12px;
+  min-height: 12px;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+}
+
+.dss-badge--floating.dss-badge--empty {
+  min-width: 16px;
+  min-height: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+/* ========================================
+   ALINHAMENTO VERTICAL
+   ======================================== */
+
+.dss-badge--align-top {
+  vertical-align: top;
+}
+
+.dss-badge--align-middle {
+  vertical-align: middle;
+}
+
+.dss-badge--align-bottom {
+  vertical-align: bottom;
+}
+
+/* ========================================
+   BRANDABILIDADE (HUB/WATER/WASTE)
+   ======================================== */
+
+/* Hub 🟠 */
+.dss-badge--brand-hub {
+  background-color: var(--dss-hub-600);
+  color: white;
+}
+
+.dss-badge--outline.dss-badge--brand-hub {
+  background-color: transparent;
+  color: var(--dss-hub-600);
+  border-color: var(--dss-hub-600);
+}
+
+/* Water 🔵 */
+.dss-badge--brand-water {
+  background-color: var(--dss-water-500);
+  color: white;
+}
+
+.dss-badge--outline.dss-badge--brand-water {
+  background-color: transparent;
+  color: var(--dss-water-500);
+  border-color: var(--dss-water-500);
+}
+
+/* Waste 🟢 */
+.dss-badge--brand-waste {
+  background-color: var(--dss-waste-600);
+  color: white;
+}
+
+.dss-badge--outline.dss-badge--brand-waste {
+  background-color: transparent;
+  color: var(--dss-waste-600);
+  border-color: var(--dss-waste-600);
+}
+
+/* ========================================
+   COR DE TEXTO CUSTOMIZADA
+   ======================================== */
+
+.dss-badge--text-primary { color: var(--dss-primary) !important; }
+.dss-badge--text-secondary { color: var(--dss-secondary) !important; }
+.dss-badge--text-tertiary { color: var(--dss-tertiary) !important; }
+.dss-badge--text-positive { color: var(--dss-positive) !important; }
+.dss-badge--text-negative { color: var(--dss-negative) !important; }
+.dss-badge--text-warning { color: var(--dss-warning) !important; }
+.dss-badge--text-info { color: var(--dss-info) !important; }
+.dss-badge--text-white { color: white !important; }
+.dss-badge--text-dark { color: var(--dss-gray-900) !important; }
+
+/* ========================================
+   ACESSIBILIDADE
+   ======================================== */
+
+/* High Contrast Mode */
+@media (prefers-contrast: more) {
+  .dss-badge {
+    border: var(--dss-border-width-md) solid currentColor !important;
+    font-weight: 700;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-badge {
+    transition: none !important;
+  }
+}

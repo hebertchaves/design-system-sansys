@@ -1,0 +1,309 @@
+/**
+ * ==========================================================================
+ * DssTooltip - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Tooltip DSS com posicionamento, cores e brandabilidade.
+ * @version 2.0 (React)
+ */
+
+/* ===== WRAPPER ===== */
+.dss-tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* ===== TOOLTIP BASE ===== */
+.dss-tooltip {
+  position: absolute;
+  z-index: 9999;
+  padding: var(--dss-spacing-xs) var(--dss-spacing-sm);
+  border-radius: var(--dss-radius-md);
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-medium);
+  line-height: var(--dss-line-height-normal);
+  max-width: 240px;
+  word-wrap: break-word;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: 
+    opacity var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1)),
+    transform var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1)),
+    visibility 0s linear var(--dss-duration-200, 0.2s);
+}
+
+.dss-tooltip--visible {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* ===== ARROW ===== */
+.dss-tooltip__arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.dss-tooltip__arrow::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  background-color: inherit;
+}
+
+/* ========================================================================== */
+/* POSITION: TOP                                                              */
+/* ========================================================================== */
+
+.dss-tooltip--top {
+  bottom: calc(100% + var(--dss-spacing-xs));
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+}
+
+.dss-tooltip--top.dss-tooltip--visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.dss-tooltip--top .dss-tooltip__arrow {
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ========================================================================== */
+/* POSITION: BOTTOM                                                           */
+/* ========================================================================== */
+
+.dss-tooltip--bottom {
+  top: calc(100% + var(--dss-spacing-xs));
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.dss-tooltip--bottom.dss-tooltip--visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.dss-tooltip--bottom .dss-tooltip__arrow {
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ========================================================================== */
+/* POSITION: LEFT                                                             */
+/* ========================================================================== */
+
+.dss-tooltip--left {
+  right: calc(100% + var(--dss-spacing-xs));
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+}
+
+.dss-tooltip--left.dss-tooltip--visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+.dss-tooltip--left .dss-tooltip__arrow {
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ========================================================================== */
+/* POSITION: RIGHT                                                            */
+/* ========================================================================== */
+
+.dss-tooltip--right {
+  left: calc(100% + var(--dss-spacing-xs));
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+.dss-tooltip--right.dss-tooltip--visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+.dss-tooltip--right .dss-tooltip__arrow {
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ========================================================================== */
+/* COLOR: DARK                                                                */
+/* ========================================================================== */
+
+.dss-tooltip--dark {
+  background-color: var(--dss-gray-900);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--dark .dss-tooltip__arrow::before {
+  background-color: var(--dss-gray-900);
+}
+
+/* ========================================================================== */
+/* COLOR: LIGHT                                                               */
+/* ========================================================================== */
+
+.dss-tooltip--light {
+  background-color: white;
+  color: var(--dss-gray-700);
+  box-shadow: var(--dss-shadow-lg);
+  border: 1px solid var(--dss-gray-300);
+}
+
+.dss-tooltip--light .dss-tooltip__arrow::before {
+  background-color: white;
+  border: 1px solid var(--dss-gray-300);
+}
+
+/* ========================================================================== */
+/* COLOR: PRIMARY                                                             */
+/* ========================================================================== */
+
+.dss-tooltip--primary {
+  background-color: var(--dss-primary);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--primary .dss-tooltip__arrow::before {
+  background-color: var(--dss-primary);
+}
+
+/* ========================================================================== */
+/* COLOR: SECONDARY                                                           */
+/* ========================================================================== */
+
+.dss-tooltip--secondary {
+  background-color: var(--dss-secondary);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--secondary .dss-tooltip__arrow::before {
+  background-color: var(--dss-secondary);
+}
+
+/* ========================================================================== */
+/* COLOR: TERTIARY                                                            */
+/* ========================================================================== */
+
+.dss-tooltip--tertiary {
+  background-color: var(--dss-tertiary);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--tertiary .dss-tooltip__arrow::before {
+  background-color: var(--dss-tertiary);
+}
+
+/* ========================================================================== */
+/* COLOR: POSITIVE                                                            */
+/* ========================================================================== */
+
+.dss-tooltip--positive {
+  background-color: var(--dss-positive);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--positive .dss-tooltip__arrow::before {
+  background-color: var(--dss-positive);
+}
+
+/* ========================================================================== */
+/* COLOR: NEGATIVE                                                            */
+/* ========================================================================== */
+
+.dss-tooltip--negative {
+  background-color: var(--dss-negative);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--negative .dss-tooltip__arrow::before {
+  background-color: var(--dss-negative);
+}
+
+/* ========================================================================== */
+/* COLOR: WARNING                                                             */
+/* ========================================================================== */
+
+.dss-tooltip--warning {
+  background-color: var(--dss-warning);
+  color: var(--dss-gray-900);
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--warning .dss-tooltip__arrow::before {
+  background-color: var(--dss-warning);
+}
+
+/* ========================================================================== */
+/* COLOR: INFO                                                                */
+/* ========================================================================== */
+
+.dss-tooltip--info {
+  background-color: var(--dss-info);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--info .dss-tooltip__arrow::before {
+  background-color: var(--dss-info);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: HUB                                                        */
+/* ========================================================================== */
+
+.dss-tooltip--brand-hub {
+  background-color: var(--dss-hub-600);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--brand-hub .dss-tooltip__arrow::before {
+  background-color: var(--dss-hub-600);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WATER                                                      */
+/* ========================================================================== */
+
+.dss-tooltip--brand-water {
+  background-color: var(--dss-water-500);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--brand-water .dss-tooltip__arrow::before {
+  background-color: var(--dss-water-500);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WASTE                                                      */
+/* ========================================================================== */
+
+.dss-tooltip--brand-waste {
+  background-color: var(--dss-waste-600);
+  color: white;
+  box-shadow: var(--dss-shadow-md);
+}
+
+.dss-tooltip--brand-waste .dss-tooltip__arrow::before {
+  background-color: var(--dss-waste-600);
+}

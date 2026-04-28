@@ -1,0 +1,337 @@
+/**
+ * ==========================================================================
+ * DssToggle - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Toggle switch DSS com estados completos e brandabilidade.
+ * @version 2.0 (React)
+ */
+
+/* ===== WRAPPER ===== */
+.dss-toggle-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-xs);
+}
+
+.dss-toggle-wrapper--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== CONTAINER (Label clicável) ===== */
+.dss-toggle-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dss-spacing-sm);
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  min-height: 48px;
+}
+
+/* ===== HIDDEN INPUT ===== */
+.dss-toggle {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+/* ===== TRACK ===== */
+.dss-toggle__track {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  background-color: var(--dss-gray-300);
+  border-radius: var(--dss-radius-full);
+  transition: background-color var(--dss-duration-300, 0.3s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+  flex-shrink: 0;
+}
+
+/* ===== THUMB ===== */
+.dss-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: all var(--dss-duration-300, 0.3s) var(--dss-easing-emphasized, cubic-bezier(0.4, 0.0, 0.2, 1));
+  box-shadow: var(--dss-shadow-sm);
+}
+
+/* ===== LABEL ===== */
+.dss-toggle__label {
+  margin-left: var(--dss-spacing-sm);
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-700);
+  line-height: var(--dss-line-height-normal);
+}
+
+/* ===== HELPER TEXT ===== */
+.dss-toggle__helper {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-600);
+  line-height: var(--dss-line-height-normal);
+  margin-left: calc(44px + var(--dss-spacing-sm)); /* Align with label */
+}
+
+.dss-toggle__helper--error {
+  color: var(--dss-negative);
+}
+
+/* ===== HOVER STATE (Unchecked) ===== */
+.dss-toggle-container:hover:not(.dss-toggle-wrapper--disabled *) .dss-toggle__track {
+  background-color: var(--dss-gray-400);
+}
+
+/* ===== ACTIVE STATE ===== */
+.dss-toggle:active + .dss-toggle__track .dss-toggle__thumb {
+  width: 24px;
+}
+
+.dss-toggle:active:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(16px);
+}
+
+/* ========================================================================== */
+/* COLOR: PRIMARY                                                             */
+/* ========================================================================== */
+
+.dss-toggle--primary:checked + .dss-toggle__track {
+  background-color: var(--dss-primary);
+}
+
+.dss-toggle--primary:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--primary:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-primary-hover);
+}
+
+.dss-toggle--primary:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-primary-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: SECONDARY                                                           */
+/* ========================================================================== */
+
+.dss-toggle--secondary:checked + .dss-toggle__track {
+  background-color: var(--dss-secondary);
+}
+
+.dss-toggle--secondary:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--secondary:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-secondary-hover);
+}
+
+.dss-toggle--secondary:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-secondary-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: TERTIARY                                                            */
+/* ========================================================================== */
+
+.dss-toggle--tertiary:checked + .dss-toggle__track {
+  background-color: var(--dss-tertiary);
+}
+
+.dss-toggle--tertiary:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--tertiary:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-tertiary-hover);
+}
+
+.dss-toggle--tertiary:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-tertiary-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: POSITIVE                                                            */
+/* ========================================================================== */
+
+.dss-toggle--positive:checked + .dss-toggle__track {
+  background-color: var(--dss-positive);
+}
+
+.dss-toggle--positive:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--positive:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-positive-hover);
+}
+
+.dss-toggle--positive:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-positive-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: NEGATIVE                                                            */
+/* ========================================================================== */
+
+.dss-toggle--negative:checked + .dss-toggle__track {
+  background-color: var(--dss-negative);
+}
+
+.dss-toggle--negative:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--negative:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-negative-hover);
+}
+
+.dss-toggle--negative:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-negative-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: WARNING                                                             */
+/* ========================================================================== */
+
+.dss-toggle--warning:checked + .dss-toggle__track {
+  background-color: var(--dss-warning);
+}
+
+.dss-toggle--warning:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--warning:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-warning-hover);
+}
+
+.dss-toggle--warning:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-warning-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* COLOR: INFO                                                                */
+/* ========================================================================== */
+
+.dss-toggle--info:checked + .dss-toggle__track {
+  background-color: var(--dss-info);
+}
+
+.dss-toggle--info:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--info:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-info-hover);
+}
+
+.dss-toggle--info:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-info-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* STATE: ERROR                                                               */
+/* ========================================================================== */
+
+.dss-toggle--error + .dss-toggle__track {
+  background-color: var(--dss-negative-light);
+}
+
+.dss-toggle--error:checked + .dss-toggle__track {
+  background-color: var(--dss-negative);
+}
+
+.dss-toggle--error:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-negative-hover);
+}
+
+.dss-toggle--error:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-negative-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: HUB                                                        */
+/* ========================================================================== */
+
+.dss-toggle--brand-hub:checked + .dss-toggle__track {
+  background-color: var(--dss-hub-600);
+}
+
+.dss-toggle--brand-hub:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--brand-hub:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-hub-700);
+}
+
+.dss-toggle--brand-hub:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-hub-300);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WATER                                                      */
+/* ========================================================================== */
+
+.dss-toggle--brand-water:checked + .dss-toggle__track {
+  background-color: var(--dss-water-500);
+}
+
+.dss-toggle--brand-water:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--brand-water:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-water-600);
+}
+
+.dss-toggle--brand-water:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-water-300);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WASTE                                                      */
+/* ========================================================================== */
+
+.dss-toggle--brand-waste:checked + .dss-toggle__track {
+  background-color: var(--dss-waste-600);
+}
+
+.dss-toggle--brand-waste:checked + .dss-toggle__track .dss-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.dss-toggle--brand-waste:checked + .dss-toggle__track:hover {
+  background-color: var(--dss-waste-700);
+}
+
+.dss-toggle--brand-waste:focus-visible + .dss-toggle__track {
+  outline: 2px solid var(--dss-waste-300);
+  outline-offset: 2px;
+}

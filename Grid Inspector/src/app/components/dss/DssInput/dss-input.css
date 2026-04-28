@@ -1,0 +1,288 @@
+/**
+ * ==========================================================================
+ * DssInput - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Input DSS com estados completos e brandabilidade.
+ * @version 2.0 (React)
+ */
+
+/* ===== WRAPPER ===== */
+.dss-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-xs);
+  width: 100%;
+}
+
+/* ===== LABEL ===== */
+.dss-input__label {
+  display: block;
+  margin-bottom: var(--dss-spacing-xs);
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-semibold);
+  color: var(--dss-gray-700);
+  line-height: var(--dss-line-height-normal);
+}
+
+.dss-input__required {
+  color: var(--dss-negative);
+  margin-left: var(--dss-spacing-2xs);
+}
+
+/* ===== CONTAINER ===== */
+.dss-input {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-sm);
+  min-height: 48px;
+  padding: 0 var(--dss-spacing-md);
+  border-radius: var(--dss-radius-md);
+  transition: all var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+  background-color: white;
+  position: relative;
+}
+
+/* ===== FIELD ===== */
+.dss-input__field {
+  /* Remove aparência nativa */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  /* Layout base */
+  width: 100%;
+  min-height: 40px;
+  
+  /* Typography */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-700);
+  line-height: var(--dss-line-height-normal);
+  padding: 0;
+}
+
+.dss-input__field::placeholder {
+  color: var(--dss-gray-500);
+}
+
+.dss-input__field:focus {
+  outline: none;
+}
+
+/* ===== ICONS ===== */
+.dss-input__icon {
+  color: var(--dss-gray-600);
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: color var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+}
+
+.dss-input:focus-within .dss-input__icon {
+  color: var(--dss-primary);
+}
+
+/* ===== HELPER/ERROR TEXT ===== */
+.dss-input__helper {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-600);
+  line-height: var(--dss-line-height-normal);
+}
+
+.dss-input__helper--error {
+  color: var(--dss-negative);
+}
+
+/* ========================================================================== */
+/* VARIANT: OUTLINED                                                          */
+/* ========================================================================== */
+
+.dss-input--outlined {
+  border: 2px solid var(--dss-gray-300);
+}
+
+.dss-input--outlined:hover:not(.dss-input--disabled):not(.dss-input--error) {
+  border-color: var(--dss-gray-400);
+}
+
+.dss-input--outlined:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-color: var(--dss-primary);
+  box-shadow: 0 0 0 3px var(--dss-primary-focus);
+}
+
+/* ========================================================================== */
+/* VARIANT: FILLED                                                            */
+/* ========================================================================== */
+
+.dss-input--filled {
+  background-color: var(--dss-gray-100);
+  border: 2px solid transparent;
+}
+
+.dss-input--filled:hover:not(.dss-input--disabled):not(.dss-input--error) {
+  background-color: var(--dss-gray-200);
+}
+
+.dss-input--filled:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  background-color: white;
+  border-color: var(--dss-primary);
+  box-shadow: 0 0 0 3px var(--dss-primary-focus);
+}
+
+/* ========================================================================== */
+/* VARIANT: TEXT (Underline)                                                  */
+/* ========================================================================== */
+
+.dss-input--text {
+  padding-left: 0;
+  padding-right: 0;
+  border: none;
+  border-bottom: 2px solid var(--dss-gray-300);
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.dss-input--text:hover:not(.dss-input--disabled):not(.dss-input--error) {
+  border-bottom-color: var(--dss-gray-400);
+}
+
+.dss-input--text:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-bottom-color: var(--dss-primary);
+}
+
+/* ========================================================================== */
+/* STATE: ERROR                                                               */
+/* ========================================================================== */
+
+.dss-input--error {
+  border-color: var(--dss-negative) !important;
+}
+
+.dss-input--outlined.dss-input--error:focus-within,
+.dss-input--filled.dss-input--error:focus-within {
+  box-shadow: 0 0 0 3px var(--dss-negative-focus);
+}
+
+.dss-input--error .dss-input__icon {
+  color: var(--dss-negative);
+}
+
+.dss-input--error:focus-within .dss-input__icon {
+  color: var(--dss-negative);
+}
+
+/* ========================================================================== */
+/* STATE: SUCCESS                                                             */
+/* ========================================================================== */
+
+.dss-input--success {
+  border-color: var(--dss-positive) !important;
+}
+
+.dss-input--outlined.dss-input--success:focus-within,
+.dss-input--filled.dss-input--success:focus-within {
+  box-shadow: 0 0 0 3px var(--dss-positive-focus);
+}
+
+.dss-input--success .dss-input__icon {
+  color: var(--dss-positive);
+}
+
+.dss-input--success:focus-within .dss-input__icon {
+  color: var(--dss-positive);
+}
+
+/* ========================================================================== */
+/* STATE: DISABLED                                                            */
+/* ========================================================================== */
+
+.dss-input--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--dss-gray-100) !important;
+  pointer-events: none;
+}
+
+.dss-input--disabled .dss-input__field {
+  cursor: not-allowed;
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: HUB                                                        */
+/* ========================================================================== */
+
+.dss-input--brand-hub:focus-within:not(.dss-input--error):not(.dss-input--success) .dss-input__icon {
+  color: var(--dss-hub-600);
+}
+
+/* Outlined */
+.dss-input--outlined.dss-input--brand-hub:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-color: var(--dss-hub-600);
+  box-shadow: 0 0 0 3px var(--dss-hub-200);
+}
+
+/* Filled */
+.dss-input--filled.dss-input--brand-hub:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-color: var(--dss-hub-600);
+  box-shadow: 0 0 0 3px var(--dss-hub-200);
+}
+
+/* Text */
+.dss-input--text.dss-input--brand-hub:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-bottom-color: var(--dss-hub-600);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WATER                                                      */
+/* ========================================================================== */
+
+.dss-input--brand-water:focus-within:not(.dss-input--error):not(.dss-input--success) .dss-input__icon {
+  color: var(--dss-water-500);
+}
+
+/* Outlined */
+.dss-input--outlined.dss-input--brand-water:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-color: var(--dss-water-500);
+  box-shadow: 0 0 0 3px var(--dss-water-200);
+}
+
+/* Filled */
+.dss-input--filled.dss-input--brand-water:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-color: var(--dss-water-500);
+  box-shadow: 0 0 0 3px var(--dss-water-200);
+}
+
+/* Text */
+.dss-input--text.dss-input--brand-water:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-bottom-color: var(--dss-water-500);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WASTE                                                      */
+/* ========================================================================== */
+
+.dss-input--brand-waste:focus-within:not(.dss-input--error):not(.dss-input--success) .dss-input__icon {
+  color: var(--dss-waste-600);
+}
+
+/* Outlined */
+.dss-input--outlined.dss-input--brand-waste:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-color: var(--dss-waste-600);
+  box-shadow: 0 0 0 3px var(--dss-waste-200);
+}
+
+/* Filled */
+.dss-input--filled.dss-input--brand-waste:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-color: var(--dss-waste-600);
+  box-shadow: 0 0 0 3px var(--dss-waste-200);
+}
+
+/* Text */
+.dss-input--text.dss-input--brand-waste:focus-within:not(.dss-input--error):not(.dss-input--success) {
+  border-bottom-color: var(--dss-waste-600);
+}

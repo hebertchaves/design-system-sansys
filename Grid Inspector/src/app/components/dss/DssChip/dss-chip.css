@@ -1,0 +1,558 @@
+/**
+ * ==========================================================================
+ * DssChip - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Chip DSS com estados completos e brandabilidade.
+ * @version 2.0 (React)
+ */
+
+/* ===== BASE ===== */
+.dss-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dss-spacing-xs);
+  padding: var(--dss-spacing-xs) var(--dss-spacing-sm);
+  border-radius: var(--dss-radius-full);
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-medium);
+  line-height: var(--dss-line-height-tight);
+  transition: all var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+  max-width: fit-content;
+  user-select: none;
+}
+
+.dss-chip--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dss-chip--interactive {
+  cursor: pointer;
+}
+
+/* ===== ELEMENTOS ===== */
+
+/* Avatar */
+.dss-chip__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Icon */
+.dss-chip__icon {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Label */
+.dss-chip__label {
+  white-space: nowrap;
+}
+
+/* Delete button */
+.dss-chip__delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.dss-chip__delete:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.dss-chip__delete:active {
+  transform: scale(0.9);
+}
+
+.dss-chip__delete .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* ===== VARIANT: FILLED - PRIMARY ===== */
+.dss-chip--filled.dss-chip--primary {
+  background-color: var(--dss-primary);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--primary.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-primary-hover);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--primary.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-primary-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--primary.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-primary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: FILLED - SECONDARY ===== */
+.dss-chip--filled.dss-chip--secondary {
+  background-color: var(--dss-secondary);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--secondary.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-secondary-hover);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--secondary.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-secondary-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--secondary.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-secondary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: FILLED - TERTIARY ===== */
+.dss-chip--filled.dss-chip--tertiary {
+  background-color: var(--dss-tertiary);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--tertiary.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-tertiary-hover);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--tertiary.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-tertiary-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--tertiary.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-tertiary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: FILLED - POSITIVE ===== */
+.dss-chip--filled.dss-chip--positive {
+  background-color: var(--dss-positive);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--positive.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-positive-hover);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--positive.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-positive-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--positive.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-positive-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: FILLED - NEGATIVE ===== */
+.dss-chip--filled.dss-chip--negative {
+  background-color: var(--dss-negative);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--negative.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-negative-hover);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--negative.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-negative-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--negative.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-negative-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: FILLED - WARNING ===== */
+.dss-chip--filled.dss-chip--warning {
+  background-color: var(--dss-warning);
+  color: var(--dss-gray-900);
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--warning.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-warning-hover);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--warning.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-warning-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--warning.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-warning-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: FILLED - INFO ===== */
+.dss-chip--filled.dss-chip--info {
+  background-color: var(--dss-info);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--info.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-info-hover);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--info.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-info-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--info.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-info-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: OUTLINED - PRIMARY ===== */
+.dss-chip--outlined.dss-chip--primary {
+  background-color: transparent;
+  border: 2px solid var(--dss-primary);
+  color: var(--dss-primary);
+}
+
+.dss-chip--outlined.dss-chip--primary.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-primary-light);
+  border-color: var(--dss-primary-hover);
+  color: var(--dss-primary-hover);
+}
+
+.dss-chip--outlined.dss-chip--primary.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-primary-100);
+  border-color: var(--dss-primary-deep);
+  color: var(--dss-primary-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--primary.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-primary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: OUTLINED - SECONDARY ===== */
+.dss-chip--outlined.dss-chip--secondary {
+  background-color: transparent;
+  border: 2px solid var(--dss-secondary);
+  color: var(--dss-secondary);
+}
+
+.dss-chip--outlined.dss-chip--secondary.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-secondary-light);
+  border-color: var(--dss-secondary-hover);
+  color: var(--dss-secondary-hover);
+}
+
+.dss-chip--outlined.dss-chip--secondary.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-secondary-100);
+  border-color: var(--dss-secondary-deep);
+  color: var(--dss-secondary-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--secondary.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-secondary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: OUTLINED - TERTIARY ===== */
+.dss-chip--outlined.dss-chip--tertiary {
+  background-color: transparent;
+  border: 2px solid var(--dss-tertiary);
+  color: var(--dss-tertiary);
+}
+
+.dss-chip--outlined.dss-chip--tertiary.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-tertiary-light);
+  border-color: var(--dss-tertiary-hover);
+  color: var(--dss-tertiary-hover);
+}
+
+.dss-chip--outlined.dss-chip--tertiary.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-tertiary-100);
+  border-color: var(--dss-tertiary-deep);
+  color: var(--dss-tertiary-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--tertiary.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-tertiary-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: OUTLINED - POSITIVE ===== */
+.dss-chip--outlined.dss-chip--positive {
+  background-color: transparent;
+  border: 2px solid var(--dss-positive);
+  color: var(--dss-positive);
+}
+
+.dss-chip--outlined.dss-chip--positive.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-positive-light);
+  border-color: var(--dss-positive-hover);
+  color: var(--dss-positive-hover);
+}
+
+.dss-chip--outlined.dss-chip--positive.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-positive-100);
+  border-color: var(--dss-positive-deep);
+  color: var(--dss-positive-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--positive.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-positive-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: OUTLINED - NEGATIVE ===== */
+.dss-chip--outlined.dss-chip--negative {
+  background-color: transparent;
+  border: 2px solid var(--dss-negative);
+  color: var(--dss-negative);
+}
+
+.dss-chip--outlined.dss-chip--negative.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-negative-light);
+  border-color: var(--dss-negative-hover);
+  color: var(--dss-negative-hover);
+}
+
+.dss-chip--outlined.dss-chip--negative.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-negative-100);
+  border-color: var(--dss-negative-deep);
+  color: var(--dss-negative-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--negative.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-negative-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: OUTLINED - WARNING ===== */
+.dss-chip--outlined.dss-chip--warning {
+  background-color: transparent;
+  border: 2px solid var(--dss-warning);
+  color: var(--dss-warning-deep);
+}
+
+.dss-chip--outlined.dss-chip--warning.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-warning-light);
+  border-color: var(--dss-warning-hover);
+  color: var(--dss-warning-deep);
+}
+
+.dss-chip--outlined.dss-chip--warning.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-warning-100);
+  border-color: var(--dss-warning-deep);
+  color: var(--dss-warning-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--warning.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-warning-focus);
+  outline-offset: 2px;
+}
+
+/* ===== VARIANT: OUTLINED - INFO ===== */
+.dss-chip--outlined.dss-chip--info {
+  background-color: transparent;
+  border: 2px solid var(--dss-info);
+  color: var(--dss-info);
+}
+
+.dss-chip--outlined.dss-chip--info.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-info-light);
+  border-color: var(--dss-info-hover);
+  color: var(--dss-info-hover);
+}
+
+.dss-chip--outlined.dss-chip--info.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-info-100);
+  border-color: var(--dss-info-deep);
+  color: var(--dss-info-deep);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--info.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-info-focus);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: HUB (FILLED) ===== */
+.dss-chip--filled.dss-chip--brand-hub {
+  background-color: var(--dss-hub-600);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--brand-hub.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-hub-700);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--brand-hub.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-hub-800);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--brand-hub.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-hub-300);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: HUB (OUTLINED) ===== */
+.dss-chip--outlined.dss-chip--brand-hub {
+  background-color: transparent;
+  border: 2px solid var(--dss-hub-600);
+  color: var(--dss-hub-700);
+}
+
+.dss-chip--outlined.dss-chip--brand-hub.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-hub-100);
+  border-color: var(--dss-hub-700);
+  color: var(--dss-hub-800);
+}
+
+.dss-chip--outlined.dss-chip--brand-hub.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-hub-200);
+  border-color: var(--dss-hub-800);
+  color: var(--dss-hub-900);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--brand-hub.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-hub-300);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: WATER (FILLED) ===== */
+.dss-chip--filled.dss-chip--brand-water {
+  background-color: var(--dss-water-500);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--brand-water.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-water-600);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--brand-water.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-water-700);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--brand-water.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-water-300);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: WATER (OUTLINED) ===== */
+.dss-chip--outlined.dss-chip--brand-water {
+  background-color: transparent;
+  border: 2px solid var(--dss-water-500);
+  color: var(--dss-water-700);
+}
+
+.dss-chip--outlined.dss-chip--brand-water.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-water-100);
+  border-color: var(--dss-water-600);
+  color: var(--dss-water-800);
+}
+
+.dss-chip--outlined.dss-chip--brand-water.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-water-200);
+  border-color: var(--dss-water-700);
+  color: var(--dss-water-900);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--brand-water.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-water-300);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: WASTE (FILLED) ===== */
+.dss-chip--filled.dss-chip--brand-waste {
+  background-color: var(--dss-waste-600);
+  color: white;
+  border: none;
+}
+
+.dss-chip--filled.dss-chip--brand-waste.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-waste-700);
+  box-shadow: var(--dss-shadow-sm);
+}
+
+.dss-chip--filled.dss-chip--brand-waste.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-waste-800);
+  transform: scale(0.98);
+}
+
+.dss-chip--filled.dss-chip--brand-waste.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-waste-300);
+  outline-offset: 2px;
+}
+
+/* ===== BRANDABILIDADE: WASTE (OUTLINED) ===== */
+.dss-chip--outlined.dss-chip--brand-waste {
+  background-color: transparent;
+  border: 2px solid var(--dss-waste-600);
+  color: var(--dss-waste-700);
+}
+
+.dss-chip--outlined.dss-chip--brand-waste.dss-chip--interactive:hover:not(.dss-chip--disabled) {
+  background-color: var(--dss-waste-100);
+  border-color: var(--dss-waste-700);
+  color: var(--dss-waste-800);
+}
+
+.dss-chip--outlined.dss-chip--brand-waste.dss-chip--interactive:active:not(.dss-chip--disabled) {
+  background-color: var(--dss-waste-200);
+  border-color: var(--dss-waste-800);
+  color: var(--dss-waste-900);
+  transform: scale(0.98);
+}
+
+.dss-chip--outlined.dss-chip--brand-waste.dss-chip--interactive:focus-visible {
+  outline: 2px solid var(--dss-waste-300);
+  outline-offset: 2px;
+}

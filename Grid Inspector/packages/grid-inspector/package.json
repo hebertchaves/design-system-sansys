@@ -1,0 +1,79 @@
+{
+  "name": "@sansys/grid-inspector",
+  "version": "1.0.0",
+  "description": "Universal Grid Inspector for design system validation - Works as NPM package or Bookmarklet",
+  "author": "Sansys Design System Team",
+  "license": "MIT",
+  "keywords": [
+    "grid",
+    "design-system",
+    "layout",
+    "inspector",
+    "dss",
+    "sansys",
+    "bookmarklet",
+    "dev-tools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hebertchaves/design-system-sansys"
+  },
+  "type": "module",
+  "main": "./dist/grid-inspector.umd.js",
+  "module": "./dist/grid-inspector.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/grid-inspector.es.js",
+      "require": "./dist/grid-inspector.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:bookmarklet": "node scripts/generate-bookmarklet.mjs",
+    "build:all": "npm run build && npm run build:bookmarklet",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-select": "^2.1.0",
+    "@radix-ui/react-slider": "^1.2.0",
+    "@radix-ui/react-switch": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@radix-ui/react-toggle": "^1.1.0",
+    "@radix-ui/react-toggle-group": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.400.0",
+    "tailwind-merge": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "terser": "^5.27.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^3.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

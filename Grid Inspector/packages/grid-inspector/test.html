@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid Inspector — Teste</title>
+  <link rel="stylesheet" href="dist/style.css">
+  <!-- Tailwind CDN (necessário porque os componentes usam classes utilitárias) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f0f2f5;
+      padding: 40px 24px;
+    }
+    .page-header {
+      max-width: 960px;
+      margin: 0 auto 32px;
+    }
+    h1 { font-size: 28px; color: #1a1a2e; margin-bottom: 8px; }
+    .subtitle { color: #666; font-size: 15px; }
+    .status {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .status.ok { background: #dcfce7; color: #16a34a; }
+    .status.error { background: #fee2e2; color: #dc2626; }
+
+    .grid {
+      max-width: 960px;
+      margin: var(--dss-layout-margin-y, 0px) auto;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--dss-layout-gap-y, 16px) var(--dss-layout-gap-x, 16px);
+      padding-left: var(--dss-layout-margin-x, 0px);
+      padding-right: var(--dss-layout-margin-x, 0px);
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: var(--dss-layout-padding-y, 24px) var(--dss-layout-padding-x, 24px);
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .card.span-4  { grid-column: span 4; }
+    .card.span-6  { grid-column: span 6; }
+    .card.span-8  { grid-column: span 8; }
+    .card.span-12 { grid-column: span 12; }
+    .card h2 { font-size: 16px; color: #333; margin-bottom: 8px; }
+    .card p  { font-size: 14px; color: #777; line-height: 1.6; }
+    .card .pill {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      background: #f3f4f6;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    .controls {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 999998;
+    }
+    .controls button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .controls button:hover { opacity: .85; }
+    .btn-inject  { background: #6d28d9; color: white; }
+    .btn-toggle  { background: #0891b2; color: white; }
+    .btn-eject   { background: #dc2626; color: white; }
+    .btn-check   { background: #16a34a; color: white; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>🔍 Grid Inspector — Página de Teste</h1>
+    <p class="subtitle">Use os botões no canto inferior esquerdo para controlar o inspetor.</p>
+    <span class="status" id="status">Carregando…</span>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>Linha completa — 12 colunas</h2>
+      <p>Este card ocupa as 12 colunas da grid. Use o painel do Grid Inspector para visualizar as colunas sobrepostas.</p>
+    </div>
+
+    <div class="card span-4">
+      <h2>4 colunas</h2>
+      <p>Componente de largura terça.</p>
+      <span class="pill">span-4</span>
+    </div>
+    <div class="card span-4">
+      <h2>4 colunas</h2>
+      <p>Componente de largura terça.</p>
+      <span class="pill">span-4</span>
+    </div>
+    <div class="card span-4">
+      <h2>4 colunas</h2>
+      <p>Componente de largura terça.</p>
+      <span class="pill">span-4</span>
+    </div>
+
+    <div class="card span-6">
+      <h2>6 colunas</h2>
+      <p>Metade da grid — layout de duas colunas.</p>
+      <span class="pill">span-6</span>
+    </div>
+    <div class="card span-6">
+      <h2>6 colunas</h2>
+      <p>Metade da grid — layout de duas colunas.</p>
+      <span class="pill">span-6</span>
+    </div>
+
+    <div class="card span-8">
+      <h2>8 colunas — conteúdo principal</h2>
+      <p>Layout clássico de artigo. O conteúdo principal ocupa 8 colunas, deixando 4 para a sidebar.</p>
+    </div>
+    <div class="card span-4">
+      <h2>4 colunas — sidebar</h2>
+      <p>Área lateral do layout.</p>
+      <span class="pill">span-4</span>
+    </div>
+  </div>
+
+  <!-- Botões de controle -->
+  <div class="controls">
+    <button class="btn-inject" onclick="handleInject()">▶ Injetar Inspector</button>
+    <button class="btn-toggle" onclick="handleToggle()">⇄ Toggle</button>
+    <button class="btn-eject"  onclick="handleEject()">✕ Remover</button>
+    <button class="btn-check"  onclick="handleCheck()">? Status</button>
+  </div>
+
+  <!-- 1. React (local vendor — sem dependência de CDN) -->
+  <script src="dist/vendor/react.js"></script>
+  <script src="dist/vendor/react-dom.js"></script>
+  <script>
+    // Shim do jsx-runtime para o UMD bundle (global esperado: window.jsxRuntime)
+    // NOTA: React.createElement não pode ser usado diretamente como jsx/jsxs porque:
+    //   - jsx(type, props, key)  — children vivem DENTRO de props.children
+    //   - React.createElement(type, props, ...children) — children são args extras
+    // Além disso, o jsx-runtime real filtra children de elementos void (input, br, …).
+    // Este shim replica esse comportamento para evitar o erro:
+    //   "input is a void element and must neither have children …"
+    (function () {
+      var VOID_ELEMENTS = new Set([
+        'area','base','br','col','embed','hr','img','input',
+        'link','meta','param','source','track','wbr'
+      ]);
+
+      function jsxImpl(type, props, _key) {
+        if (!props) return React.createElement(type, null);
+
+        var children = props.children;
+        // Clonar props sem children (evita passá-los duas vezes)
+        var rest = Object.assign({}, props);
+        delete rest.children;
+
+        // Elementos void não podem receber filhos
+        if (typeof type === 'string' && VOID_ELEMENTS.has(type)) {
+          return React.createElement(type, rest);
+        }
+
+        if (children === undefined) {
+          return React.createElement(type, rest);
+        }
+        if (Array.isArray(children)) {
+          return React.createElement.apply(null, [type, rest].concat(children));
+        }
+        return React.createElement(type, rest, children);
+      }
+
+      window.jsxRuntime = {
+        jsx:      jsxImpl,
+        jsxs:     jsxImpl,
+        Fragment: React.Fragment,
+      };
+    })();
+  </script>
+
+  <!-- 2. Grid Inspector UMD -->
+  <script src="dist/grid-inspector.umd.js"></script>
+
+  <script>
+    const statusEl = document.getElementById('status');
+
+    function updateStatus() {
+      const active = window.GridInspector?.isGridInspectorActive?.();
+      statusEl.textContent = active ? '✅ Inspector ativo' : '⭕ Inspector inativo';
+      statusEl.className = 'status ' + (active ? 'ok' : '');
+    }
+
+    // Verificar dependências
+    const reactOk = typeof window.React !== 'undefined';
+    const reactDomOk = typeof window.ReactDOM !== 'undefined' && typeof window.ReactDOM.createRoot === 'function';
+    const bundleOk = typeof window.GridInspector !== 'undefined';
+
+    if (reactOk && reactDomOk && bundleOk) {
+      statusEl.textContent = `✅ Pronto — React ${window.React.version}`;
+      statusEl.className = 'status ok';
+      console.log('[test] GridInspector API:', Object.keys(window.GridInspector));
+    } else {
+      const missing = [];
+      if (!reactOk) missing.push('React');
+      if (!reactDomOk) missing.push('ReactDOM.createRoot');
+      if (!bundleOk) missing.push('GridInspector bundle');
+      statusEl.textContent = '❌ Faltando: ' + missing.join(', ');
+      statusEl.className = 'status error';
+      console.error('[test] Dependências ausentes:', missing);
+    }
+
+    function handleInject() {
+      try {
+        console.log('[test] React:', typeof window.React, typeof window.React?.version);
+        console.log('[test] ReactDOM:', typeof window.ReactDOM, typeof window.ReactDOM?.createRoot);
+        console.log('[test] jsxRuntime:', typeof window.jsxRuntime);
+        console.log('[test] GridInspector:', typeof window.GridInspector);
+        window.GridInspector.injectGridInspector({
+          debug: true,
+          config: {
+            contentSelector: '.grid',
+            overlay: {
+              columns: 12,
+              gutter:  { x: 16, y: 16 },
+              margin:  { x: 24, y: 0 },
+              visible: true,
+            },
+          },
+        });
+        setTimeout(updateStatus, 100);
+      } catch (err) {
+        console.error('[test] injectGridInspector falhou:', err);
+        statusEl.textContent = '❌ Erro: ' + err.message;
+        statusEl.className = 'status error';
+      }
+    }
+
+    function handleToggle() {
+      window.GridInspector.toggleGridInspector();
+      setTimeout(updateStatus, 100);
+    }
+
+    function handleEject() {
+      window.GridInspector.ejectGridInspector();
+      setTimeout(updateStatus, 100);
+    }
+
+    function handleCheck() {
+      const active = window.GridInspector.isGridInspectorActive();
+      alert('Grid Inspector está ' + (active ? 'ATIVO ✅' : 'INATIVO ⭕'));
+      updateStatus();
+    }
+
+    // Atalho de teclado: Ctrl+Shift+G
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'G') {
+        handleToggle();
+      }
+    });
+  </script>
+</body>
+</html>

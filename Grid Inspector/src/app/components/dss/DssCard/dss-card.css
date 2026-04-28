@@ -1,0 +1,444 @@
+/**
+ * ==========================================================================
+ * DssCard - Design System Sansys (React Adaptation)
+ * Baseado no repositório original: hebertchaves/design-system-sansys
+ * ==========================================================================
+ *
+ * Card DSS com variantes, cores semânticas e brandabilidade.
+ * @version 2.0 (React)
+ */
+
+/* ===== BASE CARD ===== */
+.dss-card {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  /* Visual base */
+  border-radius: var(--dss-radius-lg);
+  
+  /* Transitions */
+  transition: 
+    box-shadow var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1)),
+    transform var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1)),
+    border-color var(--dss-duration-200, 0.2s) var(--dss-easing-standard, cubic-bezier(0.4, 0.0, 0.2, 1));
+  
+  /* Overflow control */
+  overflow: hidden;
+}
+
+/* ===== CLICKABLE CARD ===== */
+.dss-card--clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.dss-card--clickable:hover {
+  transform: translateY(-2px);
+}
+
+.dss-card--clickable:active {
+  transform: translateY(0);
+}
+
+.dss-card--clickable:focus-visible {
+  outline: 2px solid var(--dss-primary-focus);
+  outline-offset: 2px;
+}
+
+/* ========================================================================== */
+/* VARIANT: ELEVATED                                                          */
+/* ========================================================================== */
+
+.dss-card--elevated {
+  background-color: var(--dss-gray-50);
+  box-shadow: var(--dss-shadow-md);
+  border: 1px solid var(--dss-gray-200);
+}
+
+.dss-card--elevated:hover {
+  box-shadow: var(--dss-shadow-lg);
+}
+
+.dss-card--elevated.dss-card--clickable:active {
+  box-shadow: var(--dss-shadow-md);
+}
+
+/* ========================================================================== */
+/* VARIANT: FILLED                                                            */
+/* ========================================================================== */
+
+.dss-card--filled {
+  background-color: var(--dss-gray-100);
+  border: none;
+}
+
+.dss-card--filled:hover {
+  background-color: var(--dss-gray-200);
+}
+
+/* ========================================================================== */
+/* VARIANT: OUTLINED                                                          */
+/* ========================================================================== */
+
+.dss-card--outlined {
+  background-color: transparent;
+  border: 2px solid var(--dss-gray-300);
+}
+
+.dss-card--outlined:hover {
+  border-color: var(--dss-gray-400);
+}
+
+/* ========================================================================== */
+/* COLOR: PRIMARY                                                             */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--primary.dss-card--elevated {
+  background-color: var(--dss-primary-50, #eff6ff);
+  border-color: var(--dss-primary-200, #bfdbfe);
+}
+
+/* Filled */
+.dss-card--primary.dss-card--filled {
+  background-color: var(--dss-primary-light);
+  border: 2px solid var(--dss-primary);
+}
+
+.dss-card--primary.dss-card--filled:hover {
+  background-color: var(--dss-primary-100, #dbeafe);
+}
+
+/* Outlined */
+.dss-card--primary.dss-card--outlined {
+  border-color: var(--dss-primary);
+}
+
+.dss-card--primary.dss-card--outlined:hover {
+  border-color: var(--dss-primary-hover);
+}
+
+/* ========================================================================== */
+/* COLOR: SECONDARY                                                           */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--secondary.dss-card--elevated {
+  background-color: var(--dss-secondary-50, #f5f3ff);
+  border-color: var(--dss-secondary-200, #ddd6fe);
+}
+
+/* Filled */
+.dss-card--secondary.dss-card--filled {
+  background-color: var(--dss-secondary-light);
+  border: 2px solid var(--dss-secondary);
+}
+
+.dss-card--secondary.dss-card--filled:hover {
+  background-color: var(--dss-secondary-100, #ede9fe);
+}
+
+/* Outlined */
+.dss-card--secondary.dss-card--outlined {
+  border-color: var(--dss-secondary);
+}
+
+.dss-card--secondary.dss-card--outlined:hover {
+  border-color: var(--dss-secondary-hover);
+}
+
+/* ========================================================================== */
+/* COLOR: TERTIARY                                                            */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--tertiary.dss-card--elevated {
+  background-color: var(--dss-tertiary-50, #fafafa);
+  border-color: var(--dss-tertiary-200, #e5e5e5);
+}
+
+/* Filled */
+.dss-card--tertiary.dss-card--filled {
+  background-color: var(--dss-tertiary-light);
+  border: 2px solid var(--dss-tertiary);
+}
+
+.dss-card--tertiary.dss-card--filled:hover {
+  background-color: var(--dss-tertiary-100, #f5f5f5);
+}
+
+/* Outlined */
+.dss-card--tertiary.dss-card--outlined {
+  border-color: var(--dss-tertiary);
+}
+
+.dss-card--tertiary.dss-card--outlined:hover {
+  border-color: var(--dss-tertiary-hover);
+}
+
+/* ========================================================================== */
+/* COLOR: POSITIVE                                                            */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--positive.dss-card--elevated {
+  background-color: var(--dss-positive-50);
+  border-color: var(--dss-positive-200);
+}
+
+/* Filled */
+.dss-card--positive.dss-card--filled {
+  background-color: var(--dss-positive-50);
+  border: 2px solid var(--dss-positive-200);
+}
+
+.dss-card--positive.dss-card--filled:hover {
+  background-color: var(--dss-positive-100, #dcfce7);
+}
+
+/* Outlined */
+.dss-card--positive.dss-card--outlined {
+  border-color: var(--dss-positive);
+}
+
+.dss-card--positive.dss-card--outlined:hover {
+  border-color: var(--dss-positive-hover);
+}
+
+/* ========================================================================== */
+/* COLOR: NEGATIVE                                                            */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--negative.dss-card--elevated {
+  background-color: var(--dss-negative-50);
+  border-color: var(--dss-negative-200);
+}
+
+/* Filled */
+.dss-card--negative.dss-card--filled {
+  background-color: var(--dss-negative-50);
+  border: 2px solid var(--dss-negative-200);
+}
+
+.dss-card--negative.dss-card--filled:hover {
+  background-color: var(--dss-negative-100, #fee2e2);
+}
+
+/* Outlined */
+.dss-card--negative.dss-card--outlined {
+  border-color: var(--dss-negative);
+}
+
+.dss-card--negative.dss-card--outlined:hover {
+  border-color: var(--dss-negative-hover);
+}
+
+/* ========================================================================== */
+/* COLOR: WARNING                                                             */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--warning.dss-card--elevated {
+  background-color: var(--dss-warning-50);
+  border-color: var(--dss-warning-200);
+}
+
+/* Filled */
+.dss-card--warning.dss-card--filled {
+  background-color: var(--dss-warning-50);
+  border: 2px solid var(--dss-warning-200);
+}
+
+.dss-card--warning.dss-card--filled:hover {
+  background-color: var(--dss-warning-100, #fef3c7);
+}
+
+/* Outlined */
+.dss-card--warning.dss-card--outlined {
+  border-color: var(--dss-warning);
+}
+
+.dss-card--warning.dss-card--outlined:hover {
+  border-color: var(--dss-warning-hover);
+}
+
+/* ========================================================================== */
+/* COLOR: INFO                                                                */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--info.dss-card--elevated {
+  background-color: var(--dss-info-50, #ecfeff);
+  border-color: var(--dss-info-200, #a5f3fc);
+}
+
+/* Filled */
+.dss-card--info.dss-card--filled {
+  background-color: var(--dss-info-light);
+  border: 2px solid var(--dss-info);
+}
+
+.dss-card--info.dss-card--filled:hover {
+  background-color: var(--dss-info-100, #cffafe);
+}
+
+/* Outlined */
+.dss-card--info.dss-card--outlined {
+  border-color: var(--dss-info);
+}
+
+.dss-card--info.dss-card--outlined:hover {
+  border-color: var(--dss-info-hover);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: HUB                                                        */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--brand-hub.dss-card--elevated {
+  background-color: var(--dss-hub-50);
+  border-color: var(--dss-hub-200);
+}
+
+/* Filled */
+.dss-card--brand-hub.dss-card--filled {
+  background-color: var(--dss-hub-50);
+  border: 2px solid var(--dss-hub-200);
+}
+
+.dss-card--brand-hub.dss-card--filled:hover {
+  background-color: var(--dss-hub-100);
+}
+
+/* Outlined */
+.dss-card--brand-hub.dss-card--outlined {
+  border-color: var(--dss-hub-600);
+}
+
+.dss-card--brand-hub.dss-card--outlined:hover {
+  border-color: var(--dss-hub-700);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WATER                                                      */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--brand-water.dss-card--elevated {
+  background-color: var(--dss-water-50);
+  border-color: var(--dss-water-200);
+}
+
+/* Filled */
+.dss-card--brand-water.dss-card--filled {
+  background-color: var(--dss-water-50);
+  border: 2px solid var(--dss-water-200);
+}
+
+.dss-card--brand-water.dss-card--filled:hover {
+  background-color: var(--dss-water-100);
+}
+
+/* Outlined */
+.dss-card--brand-water.dss-card--outlined {
+  border-color: var(--dss-water-500);
+}
+
+.dss-card--brand-water.dss-card--outlined:hover {
+  border-color: var(--dss-water-600);
+}
+
+/* ========================================================================== */
+/* BRANDABILIDADE: WASTE                                                      */
+/* ========================================================================== */
+
+/* Elevated */
+.dss-card--brand-waste.dss-card--elevated {
+  background-color: var(--dss-waste-50);
+  border-color: var(--dss-waste-200);
+}
+
+/* Filled */
+.dss-card--brand-waste.dss-card--filled {
+  background-color: var(--dss-waste-50);
+  border: 2px solid var(--dss-waste-200);
+}
+
+.dss-card--brand-waste.dss-card--filled:hover {
+  background-color: var(--dss-waste-100);
+}
+
+/* Outlined */
+.dss-card--brand-waste.dss-card--outlined {
+  border-color: var(--dss-waste-600);
+}
+
+.dss-card--brand-waste.dss-card--outlined:hover {
+  border-color: var(--dss-waste-700);
+}
+
+/* ========================================================================== */
+/* CARD SECTION                                                               */
+/* ========================================================================== */
+
+.dss-card__section {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
+  /* Spacing interno */
+  padding: var(--dss-spacing-lg);
+}
+
+/* Título da seção */
+.dss-card__title {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-lg);
+  font-weight: var(--dss-font-weight-bold);
+  color: var(--dss-gray-700);
+  line-height: var(--dss-line-height-tight);
+  margin: 0;
+  margin-bottom: var(--dss-spacing-xs);
+}
+
+/* Subtítulo da seção */
+.dss-card__subtitle {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-regular);
+  color: var(--dss-gray-600);
+  line-height: var(--dss-line-height-normal);
+  margin: 0;
+  margin-bottom: var(--dss-spacing-sm);
+}
+
+/* ========================================================================== */
+/* CARD ACTIONS                                                               */
+/* ========================================================================== */
+
+.dss-card__actions {
+  /* Layout */
+  display: flex;
+  gap: var(--dss-spacing-sm);
+  
+  /* Spacing interno */
+  padding: var(--dss-spacing-md) var(--dss-spacing-lg);
+}
+
+/* Alinhamento das ações */
+.dss-card__actions--left {
+  justify-content: flex-start;
+}
+
+.dss-card__actions--center {
+  justify-content: center;
+}
+
+.dss-card__actions--right {
+  justify-content: flex-end;
+}
