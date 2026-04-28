@@ -26,6 +26,7 @@ As regras de UI estão divididas em módulos temáticos para facilitar a consult
 - **[Módulo 5: Tabelas & Listas](./ui-rules/05_TABLES_LISTS.md)** — Densidade de dados, paginação e ações em lote.
 - **[Módulo 6: Navegação & Estrutura](./ui-rules/06_NAVIGATION.md)** — Tabs, Breadcrumbs, Steppers e Menus.
 - **[Módulo 7: Feedback & Status](./ui-rules/07_FEEDBACK.md)** — Toasts, Banners, Empty States e Spinners.
+- **[Módulo 8: Cards (Aprofundado)](./ui-rules/08_CARDS_ADVANCED.md)** — DssDataCard, especializações, aninhamento e estados complexos.
 
 ## 3. Integração com Ferramentas
 
@@ -34,6 +35,8 @@ O Grid Inspector utiliza as regras definidas no **Módulo 1** para validar se os
 
 ### 3.2. Model Context Protocol (MCP)
 Agentes de IA (como o Claude Code) que constroem telas ou componentes da Fase 3 **DEVEM** consultar os módulos de regras correspondentes antes de gerar o código. O MCP usará estas regras para validar se a composição proposta viola algum padrão do DSS.
+
+O arquivo `ui-rules/ui-rules.schema.json` é o contrato programático que o MCP consome diretamente para validar composições. Ele mapeia: hierarquia de aninhamento por nível, filhos permitidos e proibidos por componente, regras de espaçamento e posição de ações.
 
 ## 4. Glossário de Termos de UI
 

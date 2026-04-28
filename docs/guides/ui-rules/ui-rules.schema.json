@@ -2,116 +2,167 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "DSS UI Rules Schema",
   "description": "Schema programático das regras de UI do Design System Sansys para consumo pelo MCP e Grid Inspector",
-  "type": "object",
-  "properties": {
-    "version": {
-      "type": "string",
-      "description": "Versão do schema de regras"
+  "version": "1.1.0",
+  "hierarchy": {
+    "description": "Regra Matryoshka: Padding(Pai) >= Padding(Filho) em todos os níveis",
+    "level_1": {
+      "label": "Raiz (Page, Layout, Drawer)",
+      "components": ["DssPageContainer", "DssDrawer", "DssLayout", "DssPage"],
+      "padding_tokens": ["--dss-spacing-4", "--dss-spacing-6"],
+      "gap_tokens": ["--dss-spacing-6", "--dss-spacing-8"]
     },
-    "hierarchy": {
-      "type": "object",
-      "description": "Regras de hierarquia de espaçamento baseadas no nível de aninhamento",
-      "properties": {
-        "level_1": {
-          "type": "object",
-          "description": "Nível raiz (Page, Layout, Drawer)",
-          "properties": {
-            "padding": { "type": "array", "items": { "type": "string" } },
-            "gap": { "type": "array", "items": { "type": "string" } }
-          }
-        },
-        "level_2": {
-          "type": "object",
-          "description": "Nível de seção (Cards principais, Panels)",
-          "properties": {
-            "padding": { "type": "array", "items": { "type": "string" } },
-            "gap": { "type": "array", "items": { "type": "string" } }
-          }
-        },
-        "level_3": {
-          "type": "object",
-          "description": "Nível de componente (Cards internos, Listas)",
-          "properties": {
-            "padding": { "type": "array", "items": { "type": "string" } },
-            "gap": { "type": "array", "items": { "type": "string" } }
-          }
-        },
-        "level_4": {
-          "type": "object",
-          "description": "Nível atômico (Inputs, Buttons, Chips)",
-          "properties": {
-            "gap": { "type": "array", "items": { "type": "string" } }
-          }
-        }
-      }
+    "level_2": {
+      "label": "Seções Principais (Cards raiz, Panels)",
+      "components": ["DssCard", "DssTabPanel", "DssDialog"],
+      "padding_tokens": ["--dss-spacing-4", "--dss-spacing-6"],
+      "gap_tokens": ["--dss-spacing-4", "--dss-spacing-6"]
     },
-    "components": {
-      "type": "object",
-      "description": "Regras específicas por componente",
-      "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "allowed_children": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "forbidden_children": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "mandatory_props": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "spacing_rules": {
-            "type": "object",
-            "properties": {
-              "padding": { "type": "string" },
-              "margin": { "type": "string" }
-            }
-          }
-        }
-      }
+    "level_3": {
+      "label": "Sub-seções (Cards internos, Listas, Formulários)",
+      "components": ["DssList", "DssForm", "DssExpansionItem"],
+      "padding_tokens": ["--dss-spacing-3", "--dss-spacing-4"],
+      "gap_tokens": ["--dss-spacing-3", "--dss-spacing-4"]
+    },
+    "level_4": {
+      "label": "Elementos Atômicos (Inputs, Buttons, Chips)",
+      "components": ["DssInput", "DssButton", "DssChip", "DssBadge", "DssSelect"],
+      "padding_tokens": ["--dss-spacing-2", "--dss-spacing-3"],
+      "gap_tokens": ["--dss-spacing-1", "--dss-spacing-2"]
     }
   },
-  "default": {
-    "version": "1.0.0",
-    "hierarchy": {
-      "level_1": {
-        "padding": ["--dss-spacing-4", "--dss-spacing-6"],
-        "gap": ["--dss-spacing-6", "--dss-spacing-8"]
-      },
-      "level_2": {
-        "padding": ["--dss-spacing-4", "--dss-spacing-6"],
-        "gap": ["--dss-spacing-4", "--dss-spacing-6"]
-      },
-      "level_3": {
-        "padding": ["--dss-spacing-3", "--dss-spacing-4"],
-        "gap": ["--dss-spacing-3", "--dss-spacing-4"]
-      },
-      "level_4": {
-        "gap": ["--dss-spacing-1", "--dss-spacing-2"]
+  "components": {
+    "DssCard": {
+      "module": "03_CARD_PATTERNS",
+      "allowed_variants": ["elevated", "flat", "bordered", "outlined"],
+      "forbidden_children": ["DssCard[variant=elevated]"],
+      "nesting_rule": "Um DssCard com sombra (elevated) não pode ser filho de outro DssCard com sombra",
+      "spacing_rules": {
+        "padding": "--dss-spacing-4",
+        "padding_dense": "--dss-spacing-3"
       }
     },
-    "components": {
-      "DssCard": {
-        "forbidden_children": ["DssCard"],
-        "spacing_rules": {
-          "padding": "--dss-spacing-4"
-        }
-      },
-      "DssHeader": {
-        "allowed_children": ["DssToolbar"],
-        "spacing_rules": {
-          "padding": "--dss-spacing-0"
-        }
-      },
-      "DssToolbar": {
-        "forbidden_children": ["DssCard", "DssForm"],
-        "spacing_rules": {
-          "padding": "--dss-spacing-2"
-        }
+    "DssDataCard": {
+      "module": "08_CARDS_ADVANCED",
+      "allowed_children": ["DssToolbar", "DssTabs", "DssTabPanels", "DssPagination"],
+      "forbidden_children": ["DssDataCard"],
+      "pagination_position": "footer",
+      "actions_position": "toolbar-right",
+      "spacing_rules": {
+        "padding": "--dss-spacing-0",
+        "internal_gap": "--dss-spacing-4"
       }
+    },
+    "DssHeader": {
+      "module": "02_HEADERS_FOOTERS",
+      "allowed_children": ["DssToolbar"],
+      "forbidden_children": ["DssCard", "DssForm", "DssInput"],
+      "spacing_rules": {
+        "padding": "--dss-spacing-0"
+      }
+    },
+    "DssFooter": {
+      "module": "02_HEADERS_FOOTERS",
+      "allowed_children": ["DssToolbar"],
+      "forbidden_children": ["DssCard", "DssForm"],
+      "spacing_rules": {
+        "padding": "--dss-spacing-0"
+      }
+    },
+    "DssToolbar": {
+      "module": "02_HEADERS_FOOTERS",
+      "forbidden_children": ["DssCard", "DssForm", "DssInput"],
+      "actions_position": "right",
+      "spacing_rules": {
+        "padding": "--dss-spacing-2"
+      }
+    },
+    "DssDrawer": {
+      "module": "03_CARD_PATTERNS",
+      "nesting_rule": "Conteúdo do Drawer deve ser rolável independentemente da página",
+      "mobile_rule": "Em mobile, o Drawer deve ocupar 100% da largura",
+      "spacing_rules": {
+        "padding": "--dss-spacing-4",
+        "internal_gap": "--dss-spacing-4"
+      }
+    },
+    "DssDialog": {
+      "module": "03_CARD_PATTERNS",
+      "forbidden_children": ["DssDialog"],
+      "actions_position": "footer-right",
+      "actions_order": ["secondary", "primary"],
+      "nesting_rule": "Modais não podem ser abertos sobre outros modais",
+      "spacing_rules": {
+        "padding": "--dss-spacing-5"
+      }
+    },
+    "DssTabs": {
+      "module": "06_NAVIGATION",
+      "allowed_children": ["DssTab", "DssRouteTab"],
+      "forbidden_children": ["DssTabs"],
+      "nesting_rule": "DssTabs não pode ser aninhado dentro de outro DssTabs",
+      "use_case": "Alternância de visualizações no mesmo contexto, não navegação principal"
+    },
+    "DssBreadcrumbs": {
+      "module": "06_NAVIGATION",
+      "allowed_children": ["DssBreadcrumbsEl"],
+      "last_item_rule": "O último item não deve ser um link clicável",
+      "last_item_style": "--dss-font-weight-semibold",
+      "forbidden_contexts": ["DssDialog", "DssDrawer"]
+    },
+    "DssStepper": {
+      "module": "06_NAVIGATION",
+      "allowed_children": ["DssStep"],
+      "use_case": "Processos lineares com mais de 3 etapas",
+      "forbidden_use": "Navegação não-linear ou alternância de contexto"
+    },
+    "DssMenu": {
+      "module": "06_NAVIGATION",
+      "anchor_rule": "Deve ser ancorado a um elemento interativo com touch target >= 44x44px",
+      "destructive_actions_position": "bottom",
+      "destructive_actions_color": "--dss-feedback-error"
+    },
+    "DssSpinner": {
+      "module": "07_FEEDBACK",
+      "required_props": ["ariaLabel"],
+      "position_rule": "Centralizado no container onde o conteúdo será carregado",
+      "forbidden_use": "Overlay de tela inteira para operações não-críticas"
+    },
+    "DssBadge": {
+      "module": "07_FEEDBACK",
+      "use_case": "Contagens numéricas ou status muito curtos",
+      "color_tokens": ["--dss-feedback-success", "--dss-feedback-warning", "--dss-feedback-error", "--dss-feedback-info"],
+      "forbidden_use": "Elemento interativo principal"
+    },
+    "DssChip": {
+      "module": "07_FEEDBACK",
+      "use_case": "Categorias, tags ou filtros selecionados",
+      "color_tokens": ["--dss-feedback-success", "--dss-feedback-warning", "--dss-feedback-error", "--dss-feedback-info"]
     }
+  },
+  "empty_states": {
+    "module": "07_FEEDBACK",
+    "required_elements": ["icon_or_illustration", "title"],
+    "recommended_elements": ["description", "primary_action"],
+    "position_rule": "Centralizado no container onde os dados apareceriam",
+    "forbidden": "Tabela ou lista em branco sem nenhum feedback visual"
+  },
+  "form_rules": {
+    "module": "04_FORMS_INPUTS",
+    "gutter_tokens": ["q-col-gutter-sm", "q-col-gutter-md"],
+    "max_visible_fields": 15,
+    "mobile_rule": "Todos os campos devem ser col-12 em telas xs",
+    "validation": {
+      "use_prop": "rules",
+      "error_message_required": true,
+      "color_only_forbidden": true
+    }
+  },
+  "table_rules": {
+    "module": "05_TABLES_LISTS",
+    "cell_padding_tokens": ["--dss-spacing-2", "--dss-spacing-3"],
+    "mobile_rule": "Usar DssDataCard ou DssList em telas xs e sm",
+    "pagination_position": "footer",
+    "empty_state_required": true,
+    "loading_state_required": true
   }
 }
