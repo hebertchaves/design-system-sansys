@@ -141,9 +141,18 @@ export function GridOverlay({
 
     const resizeObserver = new ResizeObserver(measureComponents);
     resizeObserver.observe(target as HTMLElement);
-    const timeoutId = setTimeout(measureComponents, 150);
+    // Give CSS-var-triggered reflows time to settle before first measure
+    const timeoutId = setTimeout(measureComponents, 300);
 
-    return () => { resizeObserver.disconnect(); clearTimeout(timeoutId); };
+    // Re-measure on scroll (position changes aren't tracked by ResizeObserver)
+    const onScroll = () => requestAnimationFrame(measureComponents);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      resizeObserver.disconnect();
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', onScroll);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentRef, contentSelector]);
 
@@ -301,31 +310,33 @@ export function GridOverlay({
         </div>
         {/* ── End column area ── */}
 
-        {/* ── MARGIN X: spans from viewport edge to content container edge ── */}
-        {showMarginX && contentBounds && contentBounds.left > 0 && (
+        {/* ── MARGIN X: bands inside the content container at `margin` px from each edge ── */}
+        {showMarginX && contentBounds && margin > 0 && (
           <>
-            {/* Left margin band */}
+            {/* Left margin band — from container left edge inward by `margin` px */}
             <div
               style={{
-                position: 'absolute', top: 0, bottom: 0, left: 0, width: contentBounds.left,
-                borderRight: `2px dashed rgba(249,115,22,${0.7 * overlayOpacity})`,
-                backgroundColor: `rgba(253,186,116,${0.15 * overlayOpacity})`,
-                zIndex: 50,
+                position: 'absolute', top: 0, bottom: 0,
+                left: contentBounds.left, width: margin,
+                borderRight: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`,
+                backgroundColor: `rgba(253,186,116,${0.25 * overlayOpacity})`,
+                zIndex: 50, pointerEvents: 'none',
               }}
             >
               {showAnnotations && (
-                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%) rotate(-90deg)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
-                  {Math.round(contentBounds.left)}px margin
+                <div style={{ position: 'absolute', top: 8, left: '50%', transform: 'translateX(-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+                  {margin}px
                 </div>
               )}
             </div>
-            {/* Right margin band */}
+            {/* Right margin band — from container right edge inward by `margin` px */}
             <div
               style={{
-                position: 'absolute', top: 0, bottom: 0, right: 0, width: window.innerWidth - (contentBounds.left + contentBounds.width),
-                borderLeft: `2px dashed rgba(249,115,22,${0.7 * overlayOpacity})`,
-                backgroundColor: `rgba(253,186,116,${0.15 * overlayOpacity})`,
-                zIndex: 50,
+                position: 'absolute', top: 0, bottom: 0,
+                left: contentBounds.left + contentBounds.width - margin, width: margin,
+                borderLeft: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`,
+                backgroundColor: `rgba(253,186,116,${0.25 * overlayOpacity})`,
+                zIndex: 50, pointerEvents: 'none',
               }}
             />
           </>

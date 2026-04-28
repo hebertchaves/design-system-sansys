@@ -243,12 +243,14 @@ export function FloatingGridInspector() {
     root.style.setProperty('--grid-show-baseline', showBaselineGrid ? '1' : '0');
 
     // Layout CSS vars — afetam os componentes reais da página (NÃO a visualização do overlay)
-    root.style.setProperty('--dss-layout-gap-x', `${componentGutter}px`);
-    root.style.setProperty('--dss-layout-gap-y', `${componentGutterY}px`);
-    root.style.setProperty('--dss-layout-margin-x', `${componentMargin}px`);
-    root.style.setProperty('--dss-layout-margin-y', `${componentMarginY}px`);
-    root.style.setProperty('--dss-layout-padding-x', `${componentPadding}px`);
-    root.style.setProperty('--dss-layout-padding-y', `${componentPaddingY}px`);
+    // Density multiplier scales all layout values
+    const densityMult = { comfortable: 1, compact: 0.75, dense: 0.5 }[densityMode];
+    root.style.setProperty('--dss-layout-gap-x', `${Math.round(componentGutter * densityMult)}px`);
+    root.style.setProperty('--dss-layout-gap-y', `${Math.round(componentGutterY * densityMult)}px`);
+    root.style.setProperty('--dss-layout-margin-x', `${Math.round(componentMargin * densityMult)}px`);
+    root.style.setProperty('--dss-layout-margin-y', `${Math.round(componentMarginY * densityMult)}px`);
+    root.style.setProperty('--dss-layout-padding-x', `${Math.round(componentPadding * densityMult)}px`);
+    root.style.setProperty('--dss-layout-padding-y', `${Math.round(componentPaddingY * densityMult)}px`);
   }
 
   if (!isVisible) {
@@ -480,15 +482,21 @@ export function FloatingGridInspector() {
                           <Label htmlFor="container-type" className="text-xs font-semibold text-slate-700">
                             Container Type
                           </Label>
-                          <Select value={containerType} onValueChange={(val: 'fixed' | 'fluid') => setContainerType(val)}>
-                            <SelectTrigger id="container-type" className="h-8 text-xs">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="fixed">Fixed Width</SelectItem>
-                              <SelectItem value="fluid">Fluid / Responsive</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <div className="grid grid-cols-2 gap-1.5">
+                            {(['fixed', 'fluid'] as const).map((ct) => (
+                              <button
+                                key={ct}
+                                onClick={() => setContainerType(ct)}
+                                className={`py-1.5 px-2 text-xs font-bold rounded-lg transition-all border-2 ${
+                                  containerType === ct
+                                    ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-emerald-600 shadow-md'
+                                    : 'bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:bg-emerald-50'
+                                }`}
+                              >
+                                {ct === 'fixed' ? 'Fixed' : 'Fluid'}
+                              </button>
+                            ))}
+                          </div>
                         </div>
 
                         {/* Auto Column Width - 30% do espaço com indicador visual e Tooltip */}
@@ -921,7 +929,7 @@ export function FloatingGridInspector() {
                         id="element-show-columns"
                         checked={selectedGridConfig.showColumns}
                         onCheckedChange={(val) => updateSelectedGridConfig({ showColumns: val })}
-                        className="data-[state=checked]:bg-blue-600"
+                        className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-slate-300"
                       />
                     </div>
 
@@ -933,7 +941,7 @@ export function FloatingGridInspector() {
                         id="element-show-margins"
                         checked={selectedGridConfig.showMargins}
                         onCheckedChange={(val) => updateSelectedGridConfig({ showMargins: val })}
-                        className="data-[state=checked]:bg-orange-600"
+                        className="data-[state=checked]:bg-orange-600 data-[state=unchecked]:bg-slate-300"
                       />
                     </div>
                   </div>
@@ -961,7 +969,7 @@ export function FloatingGridInspector() {
                         min={0}
                         max={100}
                         step={5}
-                        className="flex-1"
+                        className="flex-1 [&_[role=slider]]:bg-slate-600 [&_[role=slider]]:border-slate-700"
                       />
                       <span className="text-xs font-mono font-bold text-slate-700 bg-slate-200 px-2 py-0.5 rounded min-w-[45px] text-center">{overlayOpacity}%</span>
                     </div>
@@ -975,7 +983,7 @@ export function FloatingGridInspector() {
                         id="show-grid"
                         checked={showGrid}
                         onCheckedChange={setShowGrid}
-                        className="data-[state=checked]:bg-blue-600"
+                        className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-slate-300"
                       />
                     </div>
                   </div>
@@ -1009,19 +1017,20 @@ export function FloatingGridInspector() {
                           id="show-columns"
                           checked={showColumns}
                           onCheckedChange={setShowColumns}
-                          className="data-[state=checked]:bg-rose-600"
+                          className="data-[state=checked]:bg-rose-600 data-[state=unchecked]:bg-slate-300"
                         />
                       </div>
                       
                       <div className="flex items-center justify-between p-2 bg-green-50 rounded-lg border border-green-200">
                         <Label htmlFor="show-padding" className="text-xs font-semibold text-green-900 flex items-center gap-2">
                           <div className="w-3 h-3 bg-green-200/60 border border-green-400 rounded"></div>
+                          Padding L/R
                         </Label>
                         <Switch
                           id="show-padding"
                           checked={showPaddingZonesX}
                           onCheckedChange={setShowPaddingZonesX}
-                          className="data-[state=checked]:bg-green-600"
+                          className="data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-slate-300"
                         />
                       </div>
                       <div className="flex items-center justify-between p-2 bg-orange-50 rounded-lg border border-orange-200">
@@ -1033,7 +1042,7 @@ export function FloatingGridInspector() {
                           id="show-margin"
                           checked={showMarginBoundariesX}
                           onCheckedChange={setShowMarginBoundariesX}
-                          className="data-[state=checked]:bg-orange-600"
+                          className="data-[state=checked]:bg-orange-600 data-[state=unchecked]:bg-slate-300"
                         />
                       </div>
                     </div>
@@ -1055,7 +1064,7 @@ export function FloatingGridInspector() {
                           id="show-rows"
                           checked={showRows}
                           onCheckedChange={setShowRows}
-                          className="data-[state=checked]:bg-rose-600"
+                          className="data-[state=checked]:bg-rose-600 data-[state=unchecked]:bg-slate-300"
                         />
                       </div>
                       
@@ -1069,7 +1078,7 @@ export function FloatingGridInspector() {
                           id="show-padding-y"
                           checked={showPaddingZonesY}
                           onCheckedChange={setShowPaddingZonesY}
-                          className="data-[state=checked]:bg-green-600"
+                          className="data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-slate-300"
                         />
                       </div>
                       <div className="flex items-center justify-between p-2 bg-orange-50 rounded-lg border border-orange-200">
@@ -1081,7 +1090,7 @@ export function FloatingGridInspector() {
                           id="show-margin-y"
                           checked={showMarginBoundariesY}
                           onCheckedChange={setShowMarginBoundariesY}
-                          className="data-[state=checked]:bg-orange-600"
+                          className="data-[state=checked]:bg-orange-600 data-[state=unchecked]:bg-slate-300"
                         />
                       </div>
                     </div>
@@ -1102,7 +1111,7 @@ export function FloatingGridInspector() {
                           id="show-baseline"
                           checked={showBaselineGrid}
                           onCheckedChange={setShowBaselineGrid}
-                          className="data-[state=checked]:bg-violet-600"
+                          className="data-[state=checked]:bg-violet-600 data-[state=unchecked]:bg-slate-300"
                         />
                       </div>
                     </div>
@@ -1138,7 +1147,7 @@ export function FloatingGridInspector() {
                       id="nested-grid"
                       checked={isSelectionMode}
                       onCheckedChange={setIsSelectionMode}
-                      className="data-[state=checked]:bg-indigo-600"
+                      className="data-[state=checked]:bg-indigo-600 data-[state=unchecked]:bg-slate-300"
                     />
                   </div>
                   
