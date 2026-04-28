@@ -1,0 +1,144 @@
+/**
+ * ==========================================================================
+ * GRID INSPECTOR STYLES
+ * ==========================================================================
+ *
+ * Consolidated styles for @sansys/grid-inspector package.
+ * This file is self-contained and includes all necessary styles for the
+ * Grid Inspector to work in any environment.
+ */
+
+/* ==========================================================================
+   CSS Variables - Theme (Light/Dark)
+   ========================================================================== */
+
+:root {
+  --background: #ffffff;
+  --foreground: oklch(0.145 0 0);
+  --card: #ffffff;
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #030213;
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.0058 264.53);
+  --secondary-foreground: #030213;
+  --muted: #ececf0;
+  --muted-foreground: #717182;
+  --accent: #e9ebef;
+  --accent-foreground: #030213;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: transparent;
+  --input-background: #f3f3f5;
+  --switch-background: #cbced4;
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+}
+
+/* ==========================================================================
+   Grid Inspector Specific - Scrollbar Styling
+   ========================================================================== */
+
+.overflow-y-auto {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(71, 85, 105, 0.2) rgba(241, 245, 249, 0.3); /* Firefox */
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.3);
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.2);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(71, 85, 105, 0.35);
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:active {
+  background: rgba(71, 85, 105, 0.5);
+}
+
+/* ==========================================================================
+   Grid Overlay Styles
+   ========================================================================== */
+
+#grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999998;
+  overflow: hidden;
+}
+
+#grid-overlay .grid-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  gap: var(--grid-gutter-x, 24px) var(--grid-gutter-y, 24px);
+  padding: var(--grid-padding-y, 0) var(--grid-padding-x, 0);
+  margin: var(--grid-margin-y, 0) var(--grid-margin-x, 0);
+}
+
+#grid-overlay .grid-column {
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Grid Inspector UI - Floating Panel
+   ========================================================================== */
+
+#grid-inspector-root {
+  position: fixed;
+  z-index: 999999;
+  pointer-events: none;
+}
+
+#grid-inspector-root * {
+  pointer-events: auto;
+}
+
+/* Reset box-sizing for Grid Inspector */
+#grid-inspector-root,
+#grid-inspector-root * {
+  box-sizing: border-box;
+}
