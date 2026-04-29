@@ -41,13 +41,19 @@
     "build:bookmarklet": "node scripts/generate-bookmarklet.mjs",
     "build:all": "npm run build && npm run build:bookmarklet",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "validate:grid": "node scripts/validate-grid-ci.mjs"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.400.0",
+    "tailwind-merge": "^2.2.0"
+  },
+  "devDependencies": {
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-select": "^2.1.0",
@@ -58,11 +64,6 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.0",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "lucide-react": "^0.400.0",
-    "tailwind-merge": "^2.2.0"
-  },
-  "devDependencies": {
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.2.0",

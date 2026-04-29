@@ -1,8 +1,16 @@
-import { VariantProps } from 'class-variance-authority';
-import { toggleVariants } from './toggle';
-import * as React from "react";
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
-declare function ToggleGroup({ className, variant, size, children, ...props }: React.ComponentProps<typeof ToggleGroupPrimitive.Root> & VariantProps<typeof toggleVariants>): import("react/jsx-runtime").JSX.Element;
-declare function ToggleGroupItem({ className, children, variant, size, ...props }: React.ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>): import("react/jsx-runtime").JSX.Element;
+import { ReactNode } from 'react';
+
+declare function ToggleGroup({ type: _type, value, onValueChange, children, className, }: {
+    type?: 'single' | 'multiple';
+    value?: string;
+    onValueChange?: (value: string) => void;
+    children: ReactNode;
+    className?: string;
+}): import("react/jsx-runtime").JSX.Element;
+declare function ToggleGroupItem({ value, children, className, }: {
+    value: string;
+    children: ReactNode;
+    className?: string;
+}): import("react/jsx-runtime").JSX.Element;
 export { ToggleGroup, ToggleGroupItem };
 //# sourceMappingURL=toggle-group.d.ts.map

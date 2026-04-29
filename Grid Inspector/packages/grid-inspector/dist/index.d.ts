@@ -61,4 +61,5 @@ export declare function toggleGridInspector(options?: InjectOptions): void;
 export declare function isGridInspectorActive(): boolean;
 export type { GridInspectorConfig };
 export { GridInspectorApp };
+export { setMcpServerUrl, getMcpServerUrl, isMcpConnected, setSimulatedViewportWidth, getSimulatedViewportWidth, } from './observability/mcp-validator';
 //# sourceMappingURL=index.d.ts.map

@@ -1,7 +1,7 @@
 import { VariantProps } from 'class-variance-authority';
 import * as React from "react";
 declare const badgeVariants: (props?: ({
-    variant?: "default" | "outline" | "secondary" | "destructive" | null | undefined;
+    variant?: "secondary" | "default" | "destructive" | "outline" | null | undefined;
 } & import('class-variance-authority/types').ClassProp) | undefined) => string;
 declare function Badge({ className, variant, asChild, ...props }: React.ComponentProps<"span"> & VariantProps<typeof badgeVariants> & {
     asChild?: boolean;

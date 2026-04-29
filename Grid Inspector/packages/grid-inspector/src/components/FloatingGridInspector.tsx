@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { isMcpConnected, setSimulatedViewportWidth } from '@/observability/mcp-validator';
 import {
   Accordion,
   AccordionContent,
@@ -16,7 +17,7 @@ import {
 
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Grid3x3, Eye, Box, ChevronLeft, ChevronRight, X, ArrowLeftRight, ArrowUpDown, Layers, Info, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Grid3x3, Eye, Box, ChevronLeft, ChevronRight, X, ArrowLeftRight, ArrowUpDown, Layers, Info, AlertTriangle, CheckCircle, Download, Wifi, WifiOff, Palette } from 'lucide-react';
 import { useGridSystem } from '@/hooks';
 import { useNestedGrid } from '@/contexts/NestedGridContext';
 
@@ -36,6 +37,8 @@ export function FloatingGridInspector() {
     setAutoColumnWidth,
     showRows,
     setShowRows,
+    brand,
+    setBrand,
     violations,
     highlightedElementIndex,
     setHighlightedElementIndex,
@@ -123,6 +126,66 @@ export function FloatingGridInspector() {
   
   const [panelSize, setPanelSize] = useState<PanelSize>('expanded');
   const [isVisible, setIsVisible] = useState(true);
+  const [mcpConnected, setMcpConnected] = useState(false);
+
+  // Poll MCP connection status every 5 s
+  useEffect(() => {
+    const check = () => setMcpConnected(isMcpConnected());
+    check();
+    const id = setInterval(check, 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Export current grid config + violations as a JSON report file
+  const exportReport = useCallback(() => {
+    const verdict =
+      violations.some(v => v.severity === 'critical' || v.severity === 'high')
+        ? 'non-compliant'
+        : violations.length > 0
+          ? 'warnings'
+          : 'compliant';
+
+    const report = {
+      tool: '@sansys/grid-inspector',
+      version: '1.0.0',
+      timestamp: new Date().toISOString(),
+      mcpSource: mcpConnected ? 'server' : 'client-side',
+      viewport: {
+        width: typeof window !== 'undefined' ? window.innerWidth : 0,
+        height: typeof window !== 'undefined' ? window.innerHeight : 0,
+      },
+      grid: {
+        overlay: {
+          columns: overlay.columns,
+          gutter: overlay.gutter,
+          margin: overlay.margin,
+          padding: overlay.padding,
+        },
+        layout: {
+          gutter: component.gutter,
+          margin: component.margin,
+          padding: component.padding,
+        },
+      },
+      verdict,
+      violations: violations.map(v => ({
+        id: v.id,
+        severity: v.severity,
+        type: v.type,
+        message: v.message,
+        affectedProperty: v.affectedProperty ?? null,
+        affectedValue: v.affectedValue ?? null,
+      })),
+    };
+
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `grid-report-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [overlay, component, violations, mcpConnected]);
   
   // 🔧 CONTROLES ADICIONAIS QUE SERÃO IMPLEMENTADOS
   const [overlayOpacity, setOverlayOpacity] = useState(60);
@@ -174,10 +237,10 @@ export function FloatingGridInspector() {
 
   // Breakpoint presets: when the breakpoint changes, sync overlay + layout to standard DSS values
   const BREAKPOINT_PRESETS = {
-    mobile:  { columns: 4,  gutterX: 8,  gutterY: 8,  marginX: 16, marginY: 0, paddingX: 8,  paddingY: 8  },
-    tablet:  { columns: 8,  gutterX: 16, gutterY: 16, marginX: 24, marginY: 0, paddingX: 16, paddingY: 16 },
-    desktop: { columns: 12, gutterX: 16, gutterY: 16, marginX: 24, marginY: 0, paddingX: 24, paddingY: 24 },
-    ultra:   { columns: 16, gutterX: 24, gutterY: 24, marginX: 40, marginY: 0, paddingX: 24, paddingY: 24 },
+    mobile:  { columns: 4,  gutterX: 8,  gutterY: 8,  marginX: 16, marginY: 0, paddingX: 8,  paddingY: 8,  viewportPx: 375  },
+    tablet:  { columns: 8,  gutterX: 16, gutterY: 16, marginX: 24, marginY: 0, paddingX: 16, paddingY: 16, viewportPx: 768  },
+    desktop: { columns: 12, gutterX: 16, gutterY: 16, marginX: 24, marginY: 0, paddingX: 24, paddingY: 24, viewportPx: 1440 },
+    ultra:   { columns: 16, gutterX: 24, gutterY: 24, marginX: 40, marginY: 0, paddingX: 24, paddingY: 24, viewportPx: 1920 },
   } as const;
 
   const handleBreakpointChange = (bp: string) => {
@@ -185,6 +248,8 @@ export function FloatingGridInspector() {
     setBreakpoint(bp as keyof typeof BREAKPOINT_PRESETS);
     const p = BREAKPOINT_PRESETS[bp as keyof typeof BREAKPOINT_PRESETS];
     if (!p) return;
+    // Simulate this viewport width for responsive MCP validation suggestions
+    setSimulatedViewportWidth(p.viewportPx);
     setOverlay({
       columns: p.columns,
       gutter: { x: p.gutterX, y: p.gutterY },
@@ -197,6 +262,16 @@ export function FloatingGridInspector() {
       padding: { x: p.paddingX, y: p.paddingY },
     });
   };
+
+  // Apply data-brand to <html> whenever brand changes
+  useEffect(() => {
+    const root = document.documentElement;
+    if (brand) {
+      root.setAttribute('data-brand', brand);
+    } else {
+      root.removeAttribute('data-brand');
+    }
+  }, [brand]);
 
   const widthClass = {
     expanded: 'w-[400px]',
@@ -360,8 +435,17 @@ export function FloatingGridInspector() {
                     </span>
                   )}
                 </h2>
-                <p className="text-xs text-slate-600">
+                <p className="text-xs text-slate-600 flex items-center gap-1.5">
                   {isEditingElement ? `📦 ${selectedElementInfo?.tagName} #${selectedElementInfo?.id}` : 'Layout & Overlay Controls'}
+                  <span
+                    title={mcpConnected ? 'MCP Server conectado' : 'MCP Server offline (validação local)'}
+                    className={`flex items-center gap-0.5 text-[10px] font-bold px-1 py-0.5 rounded ${
+                      mcpConnected ? 'text-emerald-700 bg-emerald-100' : 'text-slate-400 bg-slate-100'
+                    }`}
+                  >
+                    {mcpConnected ? <Wifi size={9} /> : <WifiOff size={9} />}
+                    MCP
+                  </span>
                 </p>
               </div>
             )}
@@ -1139,7 +1223,83 @@ export function FloatingGridInspector() {
 
         {/* TAB 4 — Advanced */}
         <TabsContent value="advanced" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
-          <Accordion type="multiple" defaultValue={[]} className="w-full">
+          <Accordion type="multiple" defaultValue={['advanced-brand']} className="w-full">
+
+            {/* Brand Selector */}
+            <AccordionItem value="advanced-brand" className="border-b border-slate-100">
+              <AccordionTrigger className="px-4 py-2.5 hover:bg-pink-50/50 text-xs font-semibold">
+                <div className="flex items-center gap-2">
+                  <Palette size={14} className="text-pink-600" />
+                  <span>Brand DSS</span>
+                  {brand && (
+                    <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
+                      style={{ background: brand === 'hub' ? '#ef7a11' : brand === 'water' ? '#0e88e4' : '#0b8154' }}
+                    >
+                      {brand.toUpperCase()}
+                    </span>
+                  )}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-3">
+                <div className="space-y-2">
+                  <Label className="text-xs font-semibold text-slate-700">Sansys Brand</Label>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {/* None */}
+                    <button
+                      onClick={() => setBrand(undefined)}
+                      className={`py-2 px-3 text-xs font-bold rounded-lg transition-all border-2 col-span-2 ${
+                        !brand
+                          ? 'bg-slate-200 text-slate-800 border-slate-400'
+                          : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                      }`}
+                    >
+                      None (brand-agnostic)
+                    </button>
+                    {/* Hub */}
+                    <button
+                      onClick={() => setBrand('hub')}
+                      className={`py-2 px-3 text-xs font-bold rounded-lg transition-all border-2 ${
+                        brand === 'hub'
+                          ? 'text-white border-[#ef7a11]'
+                          : 'bg-white text-[#ef7a11] border-[#ef7a11]/40 hover:border-[#ef7a11] hover:bg-orange-50'
+                      }`}
+                      style={brand === 'hub' ? { background: '#ef7a11' } : {}}
+                    >
+                      Hub (Orange)
+                    </button>
+                    {/* Water */}
+                    <button
+                      onClick={() => setBrand('water')}
+                      className={`py-2 px-3 text-xs font-bold rounded-lg transition-all border-2 ${
+                        brand === 'water'
+                          ? 'text-white border-[#0e88e4]'
+                          : 'bg-white text-[#0e88e4] border-[#0e88e4]/40 hover:border-[#0e88e4] hover:bg-blue-50'
+                      }`}
+                      style={brand === 'water' ? { background: '#0e88e4' } : {}}
+                    >
+                      Water (Blue)
+                    </button>
+                    {/* Waste */}
+                    <button
+                      onClick={() => setBrand('waste')}
+                      className={`py-2 px-3 text-xs font-bold rounded-lg transition-all border-2 col-span-2 ${
+                        brand === 'waste'
+                          ? 'text-white border-[#0b8154]'
+                          : 'bg-white text-[#0b8154] border-[#0b8154]/40 hover:border-[#0b8154] hover:bg-green-50'
+                      }`}
+                      style={brand === 'waste' ? { background: '#0b8154' } : {}}
+                    >
+                      Waste (Green)
+                    </button>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Define <code className="font-mono bg-slate-100 px-1 rounded">data-brand</code> em{' '}
+                    <code className="font-mono bg-slate-100 px-1 rounded">&lt;html&gt;</code> e habilita validação de tokens de cor por marca.
+                  </p>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="advanced-grid" className="border-b border-slate-100">
               <AccordionTrigger className="px-4 py-2.5 hover:bg-indigo-50/50 text-xs font-semibold">
                 <div className="flex items-center gap-2">
@@ -1254,6 +1414,14 @@ export function FloatingGridInspector() {
               <CheckCircle size={32} className="text-emerald-500" />
               <p className="text-sm font-bold text-emerald-700">Nenhum erro detectado</p>
               <p className="text-xs text-slate-500">Todos os valores estão dentro dos tokens DSS</p>
+              {/* Export button even when clean — useful for CI/handoff */}
+              <button
+                onClick={exportReport}
+                className="mt-2 flex items-center gap-1.5 text-[10px] font-semibold text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-emerald-200 transition-all"
+              >
+                <Download size={11} />
+                Exportar relatório
+              </button>
             </div>
           ) : (
             <div className="p-3 space-y-2">
@@ -1261,14 +1429,24 @@ export function FloatingGridInspector() {
                 <p className="text-xs font-bold text-slate-700">
                   {violations.length} {violations.length === 1 ? 'problema' : 'problemas'} detectado{violations.length !== 1 ? 's' : ''}
                 </p>
-                {highlightedElementIndex !== null && (
+                <div className="flex items-center gap-2">
+                  {highlightedElementIndex !== null && (
+                    <button
+                      onClick={() => setHighlightedElementIndex(null)}
+                      className="text-[10px] text-slate-500 hover:text-slate-700 underline"
+                    >
+                      limpar seleção
+                    </button>
+                  )}
                   <button
-                    onClick={() => setHighlightedElementIndex(null)}
-                    className="text-[10px] text-slate-500 hover:text-slate-700 underline"
+                    onClick={exportReport}
+                    title="Exportar relatório JSON"
+                    className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded border border-slate-200 hover:border-red-200 transition-all"
                   >
-                    limpar seleção
+                    <Download size={10} />
+                    Export
                   </button>
-                )}
+                </div>
               </div>
 
               {violations.map((v) => {
@@ -1320,6 +1498,14 @@ export function FloatingGridInspector() {
               </p>
             </div>
           )}
+
+          {/* Footer: MCP source indicator */}
+          <div className={`px-3 py-2 border-t flex items-center gap-1.5 text-[10px] font-medium ${
+            mcpConnected ? 'border-emerald-100 bg-emerald-50 text-emerald-700' : 'border-slate-100 bg-slate-50 text-slate-400'
+          }`}>
+            {mcpConnected ? <Wifi size={10} /> : <WifiOff size={10} />}
+            {mcpConnected ? 'Validação via MCP Server' : 'Validação local (MCP offline)'}
+          </div>
         </TabsContent>
       </Tabs>
 

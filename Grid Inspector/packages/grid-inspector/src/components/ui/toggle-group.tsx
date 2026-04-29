@@ -1,72 +1,67 @@
-"use client";
+import { createContext, useContext, type ReactNode } from 'react';
+import { cn } from './utils';
 
-import * as React from "react";
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
-import { type VariantProps } from "class-variance-authority";
+interface ToggleGroupContextValue {
+  value: string;
+  onValueChange: (value: string) => void;
+}
 
-import { cn } from "./utils";
-import { toggleVariants } from "./toggle";
-
-const ToggleGroupContext = React.createContext<
-  VariantProps<typeof toggleVariants>
->({
-  size: "default",
-  variant: "default",
+const ToggleGroupContext = createContext<ToggleGroupContextValue>({
+  value: '',
+  onValueChange: () => {},
 });
 
 function ToggleGroup({
-  className,
-  variant,
-  size,
+  type: _type = 'single',
+  value = '',
+  onValueChange,
   children,
-  ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
-  VariantProps<typeof toggleVariants>) {
+  className,
+}: {
+  type?: 'single' | 'multiple';
+  value?: string;
+  onValueChange?: (value: string) => void;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <ToggleGroupPrimitive.Root
-      data-slot="toggle-group"
-      data-variant={variant}
-      data-size={size}
-      className={cn(
-        "group/toggle-group flex w-fit items-center rounded-md data-[variant=outline]:shadow-xs",
-        className,
-      )}
-      {...props}
-    >
-      <ToggleGroupContext.Provider value={{ variant, size }}>
+    <ToggleGroupContext.Provider value={{ value, onValueChange: onValueChange ?? (() => {}) }}>
+      <div
+        data-slot="toggle-group"
+        className={cn('flex items-center', className)}
+      >
         {children}
-      </ToggleGroupContext.Provider>
-    </ToggleGroupPrimitive.Root>
+      </div>
+    </ToggleGroupContext.Provider>
   );
 }
 
 function ToggleGroupItem({
-  className,
+  value,
   children,
-  variant,
-  size,
-  ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
-  VariantProps<typeof toggleVariants>) {
-  const context = React.useContext(ToggleGroupContext);
+  className,
+}: {
+  value: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  const { value: selectedValue, onValueChange } = useContext(ToggleGroupContext);
+  const isSelected = selectedValue === value;
 
   return (
-    <ToggleGroupPrimitive.Item
+    <button
+      type="button"
       data-slot="toggle-group-item"
-      data-variant={context.variant || variant}
-      data-size={context.size || size}
+      data-state={isSelected ? 'on' : 'off'}
+      aria-pressed={isSelected}
+      onClick={() => onValueChange(value)}
       className={cn(
-        toggleVariants({
-          variant: context.variant || variant,
-          size: context.size || size,
-        }),
-        "min-w-0 flex-1 shrink-0 rounded-none shadow-none first:rounded-l-md last:rounded-r-md focus:z-10 focus-visible:z-10 data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l",
+        'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors',
         className,
       )}
-      {...props}
     >
       {children}
-    </ToggleGroupPrimitive.Item>
+    </button>
   );
 }
 

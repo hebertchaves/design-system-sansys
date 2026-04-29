@@ -259,3 +259,15 @@ if (typeof window !== 'undefined' && (window as any).__SANSYS_GRID_INSPECTOR_BOO
 
 export type { GridInspectorConfig };
 export { GridInspectorApp };
+
+// ============================================================================
+// MCP CONFIGURATION
+// ============================================================================
+
+export {
+  setMcpServerUrl,
+  getMcpServerUrl,
+  isMcpConnected,
+  setSimulatedViewportWidth,
+  getSimulatedViewportWidth,
+} from './observability/mcp-validator';
