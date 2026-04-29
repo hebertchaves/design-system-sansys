@@ -53,12 +53,22 @@ Quais componentes DSS são permitidos internamente:
 | `loading` | DSS | Criar | Controla o estado de carregamento da página inteira. |
 | `brand` | DSS | Criar | Propaga a marca (hub, water, waste) para os componentes internos. |
 | `disabled` | DSS | Criar | Desabilita interações na página. |
+| `pageTitle` | DSS | Criar | Título principal da página. |
+| `pageSubtitle` | DSS | Criar | Subtítulo ou view atual. |
+| `breadcrumbs` | DSS | Criar | Array de itens para navegação estrutural. |
+| `statusCounts` | DSS | Criar | Objeto com contadores (onTime, expiring, expired). |
+| `tableRows` | DSS | Criar | Array de dados para a tabela. |
+| `totalItems` | DSS | Criar | Total de itens para paginação. |
+| `currentPage` | DSS | Criar | Página atual (v-model). |
+| `itemsPerPage` | DSS | Criar | Quantidade de itens por página. |
+| `activeFilters` | DSS | Criar | Array de chips de filtros ativos. |
 
 ## 5️⃣ GOVERNANÇA DE TOKENS E COMPOSIÇÃO
 - **Layout:** Proibido usar `:deep()`. O layout interno deve ser controlado por classes no wrapper do componente pai.
 - **Atributos:** `inheritAttrs: false` é **obrigatório**. Repassar `$attrs` para o nó raiz correto via `v-bind="$attrs"`.
 - **Comunicação Visual:** Propagar `brand` via `data-brand` no elemento raiz.
 - **Comunicação de Estado:** Propagar `disabled`/`readonly` via `provide/inject` tipado, se aplicável.
+- **Tokens Específicos:** Use `--dss-border-gray-300` para bordas padrão. Para os cards de status, use obrigatoriamente a família `--dss-feedback-*` (success, warning, error).
 
 ## 6️⃣ ACESSIBILIDADE E ESTADOS
 - **Contraste:** Garantir que todas as cores extraídas do Figma sejam mapeadas para tokens semânticos que suportem Dark Mode automaticamente.

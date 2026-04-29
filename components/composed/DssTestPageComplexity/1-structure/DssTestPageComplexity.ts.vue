@@ -7,10 +7,11 @@ import { computed, provide, readonly, ref, useAttrs } from 'vue'
 import DssBreadcrumbs from '../../base/DssBreadcrumbs/DssBreadcrumbs.vue'
 import DssBreadcrumbsEl from '../../base/DssBreadcrumbsEl/DssBreadcrumbsEl.vue'
 import DssCard from '../../base/DssCard/DssCard.vue'
-import DssCardSection from '../../base/DssCard/DssCardSection.vue'
+import { DssCardSection } from '../../base/DssCard'
 import DssButton from '../../base/DssButton/DssButton.vue'
 import DssChip from '../../base/DssChip/DssChip.vue'
 import DssIcon from '../../base/DssIcon/DssIcon.vue'
+import DssCheckbox from '../../base/DssCheckbox/DssCheckbox.vue'
 import DssInput from '../../base/DssInput/DssInput.vue'
 import DssSelect from '../../base/DssSelect/DssSelect.vue'
 import DssDataCard from '../../base/DssDataCard/DssDataCard.vue'
@@ -203,7 +204,7 @@ const resultsLabel = computed(() => {
               <p
                 v-else
                 class="dss-test-page-complexity__status-number dss-test-page-complexity__status-number--success"
-                aria-label="`${statusCounts.onTime} ordens no prazo`"
+                :aria-label="`${statusCounts.onTime} ordens no prazo`"
               >
                 {{ statusCounts.onTime }}
               </p>
@@ -418,7 +419,7 @@ const resultsLabel = computed(() => {
         <template v-else>
           <!-- Cabeçalho da tabela (acessível via role=row) -->
           <div class="dss-test-page-complexity__table-header row items-center q-px-sm q-py-xs" role="row" aria-hidden="true">
-            <div class="col-auto" style="width: 40px" />
+            <div class="col-auto dss-test-page-complexity__table-col-action" />
             <div
               v-for="col in TABLE_COLUMNS"
               :key="col.key"
@@ -426,7 +427,7 @@ const resultsLabel = computed(() => {
             >
               {{ col.label }}
             </div>
-            <div class="col-auto" style="width: 40px" />
+            <div class="col-auto dss-test-page-complexity__table-col-action" />
           </div>
 
           <DssSeparator />
@@ -438,8 +439,8 @@ const resultsLabel = computed(() => {
             class="dss-test-page-complexity__table-row row items-center q-px-sm q-py-xs"
             role="row"
           >
-            <div class="col-auto" style="width: 40px">
-              <q-checkbox :disable="disabled" :aria-label="`Selecionar ordem ${row.code}`" />
+            <div class="col-auto dss-test-page-complexity__table-col-action">
+              <DssCheckbox :disable="disabled" :aria-label="`Selecionar ordem ${row.code}`" />
             </div>
             <div class="col">{{ row.team }}</div>
             <div class="col">{{ row.hasEquipment ? 'Sim' : 'Não' }}</div>
@@ -455,7 +456,7 @@ const resultsLabel = computed(() => {
             <div class="col">{{ row.hCode }}</div>
             <div class="col">{{ row.address }}</div>
             <div class="col">{{ row.neighborhood }}</div>
-            <div class="col-auto" style="width: 40px">
+            <div class="col-auto dss-test-page-complexity__table-col-action">
               <DssButton
                 flat
                 round

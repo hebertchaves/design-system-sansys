@@ -121,6 +121,7 @@
 ### `filter:search`
 - **Payload:** nenhum
 - **Quando:** Usuário clica no botão "Pesquisar" na seção de filtros.
+- **Nota (NC-08):** Os valores dos filtros internos (setor, equipe, código) não são emitidos no payload. Os filtros são estado interno não controlado (`filterStrategy: "uncontrolled"`). Para uso controlado, aguarde v1.1.0 ou crie uma especialização com props `v-model` para cada filtro.
 
 ### `row:view`
 - **Payload:** `ServiceOrderRow` (linha completa)
@@ -150,15 +151,7 @@
   </template>
   ```
 
-### `tab-orders` (default slot para views alternativas)
-- **Escopo:** nenhum
-- **Descrição:** Conteúdo exibido nas views "Mapa" e "Agenda" (quando `activeView !== 'dashboard'`). Quando não fornecido, as views alternativas exibem estado vazio.
-- **Exemplo:**
-  ```html
-  <template #tab-orders>
-    <DssMapView :orders="filteredOrders" />
-  </template>
-  ```
+> **NC-07 corrigida:** O slot `tab-orders` **não é exposto** por `DssTestPageComplexity`. Ele é um slot interno do `DssDataCard` consumido internamente. Tentativas de `<template #tab-orders>` neste componente não serão respondidas. As views "Mapa" e "Agenda" são renderizadas via slot interno do `DssDataCard` — para customizá-las, use o slot `table-footer` ou crie uma especialização do componente.
 
 ---
 
@@ -192,7 +185,7 @@
 | `--dss-text-secondary` | Subtítulos, labels, resultados |
 | `--dss-text-on-primary` | Texto em botão ativo |
 | `--dss-action-primary` | Botão de view ativo, links |
-| `--dss-border-default` | Borda do toggle de view |
+| `--dss-border-gray-300` | Borda do toggle de view |
 | `--dss-gray-200` | Bordas de linhas da tabela |
 | `--dss-feedback-success` | Cor texto/ícone sucesso |
 | `--dss-feedback-success-surface` | Background card sucesso |

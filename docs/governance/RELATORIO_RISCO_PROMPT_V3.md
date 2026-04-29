@@ -62,3 +62,21 @@ A omissão da seção normativa no `prompt_criacao_v3.0.txt` foi uma falha de go
 O arquivo `prompt_criacao_v3.0.txt` foi corrigido hoje (26/04/2026). A seção `0.1️⃣ DOCUMENTOS NORMATIVOS (LEITURA OBRIGATÓRIA)` foi restaurada no topo do prompt, garantindo que os próximos componentes da Fase 3 (como `DssDialog`, `DssTable`, etc.) leiam os documentos canônicos antes de gerar qualquer código.
 
 Os componentes já criados estão seguros, pois foram blindados pelas auditorias formais que emitiram seus respectivos selos.
+
+## 5. Stress Test Fase 3 (DssTestPageComplexity)
+
+Em 29/04/2026, foi executado um stress test empírico para validar a capacidade do agente executor de ler um protótipo do Figma via MCP e construir uma interface complexa em Vue 3 utilizando estritamente os componentes e tokens do DSS.
+
+O teste foi bem-sucedido, validando a governança atual (UI Rules + tokens + MCP), mas revelou 5 Não-Conformidades (NCs) bloqueantes que apontaram para gaps na cadeia de documentação:
+
+1. **NC-01 (`:aria-label`):** O pré-prompt não listou os atributos ARIA dinâmicos esperados por elemento.
+2. **NC-02 (import path):** O `prompt_criacao_v3.0` não instruía explicitamente sobre importação via barrel vs `1-structure`.
+3. **NC-03 (`q-checkbox`):** O pré-prompt não listou `DssCheckbox` na Matriz de Composição.
+4. **NC-04 (inline style):** O pré-prompt proibiu hardcoded em SCSS mas não em atributos `style=""` do template.
+5. **NC-05 (token inexistente):** O agente inventou o token `--dss-border-default` devido à falta de mapeamento explícito no pré-prompt.
+
+**Ações Corretivas Aplicadas:**
+- O componente `DssTestPageComplexity` foi corrigido (NC-01 a NC-08).
+- O `prompt_criacao_v3.0.txt` foi atualizado para proibir `style=""` e exigir importação via barrel.
+- O `pre_prompt_test_page_complexity.md` foi expandido com as props de dados e tokens específicos.
+- O relatório completo do stress test foi salvo em `docs/governance/RELATORIO_STRESS_TEST_FASE3.md`.

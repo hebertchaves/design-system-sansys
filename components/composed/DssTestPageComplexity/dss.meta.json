@@ -1,6 +1,6 @@
 {
   "name": "DssTestPageComplexity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dssVersion": "2.2",
   "phase": 3,
   "category": "composed",
@@ -8,27 +8,23 @@
   "status": "review",
   "auditStatus": "pending",
   "goldenReference": "DssChip",
-  "goldenContext": "DssCard",
+  "goldenContext": "DssDataCard",
   "dependencies": {
     "dss": [
       "DssCard",
       "DssCardSection",
-      "DssCardActions",
       "DssChip",
+      "DssCheckbox",
       "DssIcon",
-      "DssSeparator"
+      "DssSeparator",
+      "DssBreadcrumbs",
+      "DssBreadcrumbsEl",
+      "DssButton",
+      "DssInput",
+      "DssSelect",
+      "DssDataCard"
     ],
     "quasar": [
-      "QBreadcrumbs",
-      "QBreadcrumbsEl",
-      "QBtn",
-      "QTabs",
-      "QTab",
-      "QTabPanels",
-      "QTabPanel",
-      "QInput",
-      "QSelect",
-      "QPagination",
       "QSeparator"
     ]
   },
@@ -42,9 +38,8 @@
     "--dss-text-secondary",
     "--dss-text-on-primary",
     "--dss-action-primary",
-    "--dss-border-default",
+    "--dss-border-gray-300",
     "--dss-gray-200",
-    "--dss-gray-300",
     "--dss-feedback-success",
     "--dss-feedback-success-surface",
     "--dss-feedback-success-light",
@@ -95,6 +90,8 @@
     "disabled": true,
     "slots": ["filter-actions", "table-footer", "tab-orders"]
   },
+  "filterStrategy": "uncontrolled",
+  "filterStrategyNote": "Os filtros (setor, equipe, código) são estado interno não controlado. O evento filter:search não emite payload. Para uso controlado, o consumidor deve substituir os inputs por props v-model ou aguançar versão 1.1.0 com suporte a filtros controlados.",
   "created": "2026-04-29",
   "lastModified": "2026-04-29"
 }

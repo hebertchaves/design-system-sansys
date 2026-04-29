@@ -89,6 +89,14 @@
 
   // ── Tabela de dados ──────────────────────────────────────────────────────
 
+  // NC-04: substituído style="width: 40px" por token DSS
+  // --dss-spacing-10 = 2.5rem = 40px (conforme catálogo de spacing)
+  &__table-col-action {
+    width: var(--dss-spacing-10);
+    flex: 0 0 var(--dss-spacing-10);
+    min-width: var(--dss-spacing-10);
+  }
+
   &__table-header {
     background-color: var(--dss-surface-subtle);
   }

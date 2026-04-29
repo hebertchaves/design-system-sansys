@@ -9,7 +9,7 @@
 
 ## O que é
 
-`DssTestPageComplexity` é uma página de dados complexa que orquestra múltiplos componentes DSS e Quasar para exibir ordens de serviço com filtros, múltiplas visualizações (dashboard/mapa/agenda) e paginação. É o **stress test oficial de Fase 3** da arquitetura DSS.
+`DssTestPageComplexity` é uma página de dados complexa que orquestra múltiplos componentes DSS para exibir ordens de serviço com filtros, múltiplas visualizações (dashboard/mapa/agenda) e paginação. É o **stress test oficial de Fase 3** da arquitetura DSS.
 
 ## Quando usar
 
@@ -76,7 +76,7 @@ import DssTestPageComplexity from '@/components/composed/DssTestPageComplexity'
 | `update:activeView` | `TestPageView` | Mudança de view |
 | `update:currentPage` | `number` | Mudança de página |
 | `filter:remove` | `string` (filterId) | Remoção de chip de filtro |
-| `filter:search` | — | Clique em Pesquisar |
+| `filter:search` | — | Clique em Pesquisar. **Nota:** os valores dos filtros internos (setor, equipe, código) não são emitidos no payload — os filtros são estado interno não controlado. Veja `filterStrategy` em `dss.meta.json`. |
 | `row:view` | `ServiceOrderRow` | Clique em linha da tabela |
 
 ## Slots
@@ -85,7 +85,8 @@ import DssTestPageComplexity from '@/components/composed/DssTestPageComplexity'
 |------|-----------|
 | `filter-actions` | Ações extras no cabeçalho da seção de filtros |
 | `table-footer` | Ações extras no rodapé da tabela |
-| `tab-orders` | Conteúdo alternativo para views mapa/agenda |
+
+> **Atenção:** O slot `tab-orders` **não é exposto** por este componente. Ele é um slot interno do `DssDataCard` utilizado internamente. Tentativas de `<template #tab-orders>` no `DssTestPageComplexity` não serão respondidas.
 
 ## Modos
 
@@ -100,9 +101,9 @@ Propaga via `data-brand="hub|water|waste"` no elemento raiz — todos os filhos 
 
 ---
 
-## Tokens utilizados (46)
+## Tokens utilizados (45)
 
-`--dss-surface-muted`, `--dss-surface-default`, `--dss-surface-subtle`, `--dss-surface-hover`, `--dss-surface-selected`, `--dss-text-primary`, `--dss-text-secondary`, `--dss-text-on-primary`, `--dss-action-primary`, `--dss-border-default`, `--dss-gray-200`, `--dss-gray-300`, `--dss-feedback-success`, `--dss-feedback-success-surface`, `--dss-feedback-success-light`, `--dss-feedback-warning`, `--dss-feedback-warning-surface`, `--dss-feedback-warning-light`, `--dss-feedback-error`, `--dss-feedback-error-surface`, `--dss-feedback-error-light`, `--dss-font-size-4xl`, `--dss-font-size-lg`, `--dss-font-size-sm`, `--dss-font-size-base`, `--dss-font-weight-bold`, `--dss-font-weight-semibold`, `--dss-font-weight-medium`, `--dss-font-weight-normal`, `--dss-radius-lg`, `--dss-radius-md`, `--dss-radius-sm`, `--dss-spacing-1`, `--dss-spacing-3`, `--dss-spacing-4`, `--dss-spacing-6`, `--dss-spacing-8`, `--dss-spacing-10`, `--dss-spacing-32`, `--dss-spacing-40`, `--dss-opacity-disabled`, `--dss-duration-150`, `--dss-duration-1000`, `--dss-easing-standard`, `--dss-hub-primary`, `--dss-water-primary`, `--dss-waste-primary`
+`--dss-surface-muted`, `--dss-surface-default`, `--dss-surface-subtle`, `--dss-surface-hover`, `--dss-surface-selected`, `--dss-text-primary`, `--dss-text-secondary`, `--dss-text-on-primary`, `--dss-action-primary`, `--dss-border-gray-300`, `--dss-gray-200`, `--dss-feedback-success`, `--dss-feedback-success-surface`, `--dss-feedback-success-light`, `--dss-feedback-warning`, `--dss-feedback-warning-surface`, `--dss-feedback-warning-light`, `--dss-feedback-error`, `--dss-feedback-error-surface`, `--dss-feedback-error-light`, `--dss-font-size-4xl`, `--dss-font-size-lg`, `--dss-font-size-sm`, `--dss-font-size-base`, `--dss-font-weight-bold`, `--dss-font-weight-semibold`, `--dss-font-weight-medium`, `--dss-font-weight-normal`, `--dss-radius-lg`, `--dss-radius-md`, `--dss-radius-sm`, `--dss-spacing-1`, `--dss-spacing-3`, `--dss-spacing-4`, `--dss-spacing-6`, `--dss-spacing-8`, `--dss-spacing-10`, `--dss-spacing-32`, `--dss-spacing-40`, `--dss-opacity-disabled`, `--dss-duration-150`, `--dss-duration-1000`, `--dss-easing-standard`, `--dss-hub-primary`, `--dss-water-primary`, `--dss-waste-primary`
 
 ---
 

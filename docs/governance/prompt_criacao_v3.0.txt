@@ -111,6 +111,7 @@ O componente DEVE implementar integralmente:
 2-composition/
 - Token-first
 - Zero valores hardcoded (exceto exceções DSS documentadas)
+- NUNCA use atributos `style=""` no template para layout ou dimensões
 - Touch target WCAG quando aplicável
 - Estados base completos
 
@@ -129,9 +130,10 @@ O componente DEVE implementar integralmente:
 TODO componente da Fase 3 DEVE ter o arquivo `DssNome.vue` na raiz, atuando como re-export puro da Layer 1.
 
 🔗 REGRA DE IMPORTAÇÃO INTERNA (CRÍTICO)
-Quando importar outro componente DSS, a importação DEVE ser feita apontando para o Entry Point Wrapper do filho, NUNCA para a pasta `1-structure` do filho.
-✅ Correto: `import DssButton from '../DssButton/DssButton.vue'`
-❌ Incorreto: `import DssButton from '../DssButton/1-structure/DssButton.ts.vue'`
+Quando importar outro componente DSS, a importação DEVE ser feita apontando para o Entry Point Wrapper do filho ou via barrel export, NUNCA para a pasta `1-structure` do filho.
+✅ Correto: `import DssButton from '../../base/DssButton/DssButton.vue'`
+✅ Correto: `import { DssCardSection } from '../../base/DssCard'`
+❌ Incorreto: `import DssButton from '../../base/DssButton/1-structure/DssButton.ts.vue'`
 
 4️⃣ REGRAS DE TOKENS E DARK MODE (CRÍTICAS)
 🎨 Tokens de Brand e Surface
