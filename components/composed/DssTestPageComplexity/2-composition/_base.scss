@@ -1,0 +1,186 @@
+// Layer 2 — Base composition
+// Token First — zero valores hardcoded.
+// Cores NUNCA no SCSS — via classes utilitárias Quasar no template.
+
+.dss-test-page-complexity {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: var(--dss-surface-muted);
+
+  // ── Título da página ─────────────────────────────────────────────────────
+
+  &__page-title {
+    font-size: var(--dss-font-size-4xl, 1.75rem);
+    font-weight: var(--dss-font-weight-bold);
+    color: var(--dss-text-primary);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  &__page-subtitle {
+    font-size: var(--dss-font-size-4xl, 1.75rem);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-text-secondary);
+  }
+
+  // ── Cards de status ──────────────────────────────────────────────────────
+
+  &__status-card {
+    height: 100%;
+    border-radius: var(--dss-radius-lg, var(--dss-spacing-3));
+
+    // Fundos semânticos via tokens de feedback
+    &--success {
+      background-color: var(--dss-feedback-success-surface);
+      border: 1px solid var(--dss-feedback-success-light);
+    }
+    &--warning {
+      background-color: var(--dss-feedback-warning-surface);
+      border: 1px solid var(--dss-feedback-warning-light);
+    }
+    &--error {
+      background-color: var(--dss-feedback-error-surface);
+      border: 1px solid var(--dss-feedback-error-light);
+    }
+  }
+
+  &__status-icon {
+    flex-shrink: 0;
+
+    &--success { color: var(--dss-feedback-success); }
+    &--warning { color: var(--dss-feedback-warning); }
+    &--error   { color: var(--dss-feedback-error); }
+  }
+
+  &__status-number {
+    font-size: var(--dss-font-size-4xl, 1.75rem);
+    font-weight: var(--dss-font-weight-bold);
+    line-height: 1;
+    margin: 0 0 var(--dss-spacing-1) 0;
+
+    &--success { color: var(--dss-feedback-success); }
+    &--warning { color: var(--dss-feedback-warning); }
+    &--error   { color: var(--dss-feedback-error); }
+  }
+
+  &__status-label {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+    margin: 0;
+  }
+
+  // ── Seção Filtros ────────────────────────────────────────────────────────
+
+  &__filters-card {
+    background-color: var(--dss-surface-default);
+  }
+
+  &__filters-header {
+    padding: var(--dss-spacing-4) var(--dss-spacing-6);
+  }
+
+  &__filters-title {
+    font-size: var(--dss-font-size-lg);
+    font-weight: var(--dss-font-weight-semibold);
+    color: var(--dss-text-primary);
+    margin: 0;
+  }
+
+  // ── Tabela de dados ──────────────────────────────────────────────────────
+
+  &__table-header {
+    background-color: var(--dss-surface-subtle);
+  }
+
+  &__table-th {
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-semibold);
+    color: var(--dss-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__table-row {
+    border-bottom: 1px solid var(--dss-gray-200);
+    transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
+
+    &:hover {
+      background-color: var(--dss-surface-hover);
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__link {
+    color: var(--dss-action-primary);
+    text-decoration: none;
+    font-weight: var(--dss-font-weight-medium);
+
+    &:hover {
+      text-decoration: underline;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--dss-action-primary);
+      outline-offset: 2px;
+      border-radius: var(--dss-radius-sm);
+    }
+  }
+
+  &__table-footer {
+    border-top: 1px solid var(--dss-gray-200);
+    background-color: var(--dss-surface-subtle);
+    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  }
+
+  &__results-label {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+  }
+
+  // ── Estado vazio ─────────────────────────────────────────────────────────
+
+  &__empty {
+    min-height: var(--dss-spacing-32, 8rem);
+  }
+
+  &__empty-text {
+    font-size: var(--dss-font-size-base);
+    color: var(--dss-text-secondary);
+    margin: 0;
+  }
+
+  // ── Skeleton de loading ──────────────────────────────────────────────────
+
+  &__skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--dss-surface-muted) 25%,
+      var(--dss-surface-subtle) 50%,
+      var(--dss-surface-muted) 75%
+    );
+    background-size: 200% 100%;
+    animation: dss-skeleton-shimmer var(--dss-duration-1000, 1s) ease-in-out infinite;
+    border-radius: var(--dss-radius-sm);
+
+    &--number {
+      width: var(--dss-spacing-10);
+      height: var(--dss-spacing-8);
+      margin-bottom: var(--dss-spacing-1);
+    }
+
+    &--row {
+      height: var(--dss-spacing-10);
+      border-bottom: 1px solid var(--dss-gray-200);
+    }
+  }
+}
+
+@keyframes dss-skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

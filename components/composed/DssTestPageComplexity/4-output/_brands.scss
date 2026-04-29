@@ -1,0 +1,54 @@
+// Layer 4 — Brand tokens: Hub, Water, Waste
+// Token First — zero valores hardcoded.
+// Cores NUNCA no SCSS — ajustes de token semântico apenas.
+
+[data-brand="hub"],
+.dss-test-page-complexity--brand-hub {
+  .dss-test-page-complexity {
+    &__view-btn--active {
+      background-color: var(--dss-hub-primary, var(--dss-action-primary));
+    }
+
+    &__link {
+      color: var(--dss-hub-primary, var(--dss-action-primary));
+
+      &:focus-visible {
+        outline-color: var(--dss-hub-primary, var(--dss-action-primary));
+      }
+    }
+  }
+}
+
+[data-brand="water"],
+.dss-test-page-complexity--brand-water {
+  .dss-test-page-complexity {
+    &__view-btn--active {
+      background-color: var(--dss-water-primary, var(--dss-action-primary));
+    }
+
+    &__link {
+      color: var(--dss-water-primary, var(--dss-action-primary));
+
+      &:focus-visible {
+        outline-color: var(--dss-water-primary, var(--dss-action-primary));
+      }
+    }
+  }
+}
+
+[data-brand="waste"],
+.dss-test-page-complexity--brand-waste {
+  .dss-test-page-complexity {
+    &__view-btn--active {
+      background-color: var(--dss-waste-primary, var(--dss-action-primary));
+    }
+
+    &__link {
+      color: var(--dss-waste-primary, var(--dss-action-primary));
+
+      &:focus-visible {
+        outline-color: var(--dss-waste-primary, var(--dss-action-primary));
+      }
+    }
+  }
+}

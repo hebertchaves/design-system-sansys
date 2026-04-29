@@ -1,0 +1,160 @@
+// Layer 4 — States: dark mode, high contrast, forced-colors, print, reduced-motion
+// Token First — zero valores hardcoded.
+
+// ── Dark Mode ────────────────────────────────────────────────────────────────
+
+.body--dark {
+  .dss-test-page-complexity {
+    background-color: var(--dss-surface-muted);
+
+    &__status-card {
+      &--success {
+        background-color: var(--dss-feedback-success-surface);
+        border-color: var(--dss-feedback-success-light);
+      }
+      &--warning {
+        background-color: var(--dss-feedback-warning-surface);
+        border-color: var(--dss-feedback-warning-light);
+      }
+      &--error {
+        background-color: var(--dss-feedback-error-surface);
+        border-color: var(--dss-feedback-error-light);
+      }
+    }
+
+    &__filters-card {
+      background-color: var(--dss-surface-default);
+    }
+
+    &__table-header {
+      background-color: var(--dss-surface-subtle);
+    }
+
+    &__table-footer {
+      background-color: var(--dss-surface-subtle);
+    }
+
+    &__view-btn--active {
+      background-color: var(--dss-action-primary);
+      color: var(--dss-text-on-primary);
+    }
+  }
+}
+
+// ── High Contrast (prefers-contrast: more) ───────────────────────────────────
+
+@media (prefers-contrast: more) {
+  .dss-test-page-complexity {
+    &__status-card {
+      &--success { border-width: 2px; }
+      &--warning { border-width: 2px; }
+      &--error   { border-width: 2px; }
+    }
+
+    &__table-row {
+      border-bottom-width: 2px;
+    }
+
+    &__table-th {
+      font-weight: var(--dss-font-weight-bold);
+    }
+
+    &__link {
+      text-decoration: underline;
+    }
+
+    &__view-toggle {
+      border-width: 2px;
+    }
+  }
+}
+
+// ── Forced Colors (Windows High Contrast) ────────────────────────────────────
+
+@media (forced-colors: active) {
+  .dss-test-page-complexity {
+    &__status-card {
+      border: 1px solid ButtonText;
+    }
+
+    &__status-icon,
+    &__status-number {
+      color: ButtonText;
+    }
+
+    &__skeleton {
+      background: ButtonFace;
+      border: 1px solid ButtonText;
+    }
+
+    &__link {
+      color: LinkText;
+
+      &:hover {
+        color: ActiveText;
+      }
+    }
+
+    &__view-btn--active {
+      background-color: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+
+    &__table-footer {
+      border-top-color: ButtonText;
+    }
+  }
+}
+
+// ── Reduced Motion ────────────────────────────────────────────────────────────
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-test-page-complexity {
+    &__skeleton {
+      animation: none;
+    }
+
+    &__table-row {
+      transition: none;
+    }
+
+    &__view-btn {
+      transition: none;
+    }
+  }
+}
+
+// ── Print ─────────────────────────────────────────────────────────────────────
+
+@media print {
+  .dss-test-page-complexity {
+    background-color: transparent;
+
+    &__status-card {
+      border: 1px solid var(--dss-gray-300);
+      break-inside: avoid;
+    }
+
+    &__skeleton {
+      display: none;
+    }
+
+    &__filters-card {
+      display: none;
+    }
+
+    &__link {
+      color: inherit;
+      text-decoration: none;
+
+      &::after {
+        content: none;
+      }
+    }
+
+    &__view-toggle {
+      display: none;
+    }
+  }
+}
