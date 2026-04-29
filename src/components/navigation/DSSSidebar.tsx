@@ -44,6 +44,7 @@ import {
   LayoutGrid,
   Navigation,
   PanelTop,
+  PanelLeft,
   Wrench,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -78,6 +79,7 @@ const navigation = {
       { title: "DssCard", url: "/componentes/dss-card", icon: CreditCard, status: "stable" },
       { title: "DssCheckbox", url: "/componentes/dss-checkbox", icon: CheckSquareIcon, status: "stable" },
       { title: "DssChip", url: "/componentes/dss-chip", icon: Tag, status: "golden" },
+      { title: "DssDrawer", url: "/componentes/dss-drawer", icon: PanelLeft, status: "stable" },
       { title: "DssHeader", url: "/componentes/dss-header", icon: PanelTop, status: "stable" },
       { title: "DssInput", url: "/componentes/dss-input", icon: Square, status: "stable" },
       { title: "DssRange", url: "/componentes/dss-range", icon: SlidersHorizontal, status: "stable" },
