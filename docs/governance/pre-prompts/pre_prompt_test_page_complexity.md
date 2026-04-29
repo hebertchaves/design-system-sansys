@@ -15,9 +15,10 @@ Antes de escrever qualquer código, o agente executor **DEVE OBRIGATORIAMENTE**:
    - Traduzir os elementos visuais do Figma para componentes DSS existentes (ex: `DssPageContainer`, `DssCard`, `DssHeader`, `DssButton`, `DssInput`, etc.).
    - Traduzir cores e espaçamentos para tokens DSS (`--dss-spacing-*`, `--dss-surface-*`, `--dss-text-*`).
 
-3. **Validar com o Grid Inspector (MCP):**
+3. **Validar com o Grid Inspector (MCP e CI Gate):**
    - A composição final **DEVE** estar 100% aderente às regras definidas no `ui-rules.schema.json` e nos módulos do DSS UI Rules (especialmente Módulos 0, 1 e 8).
    - Use a tool `validateGridLayout` do MCP para garantir que a hierarquia de espaçamento (Regra Matryoshka) e os aninhamentos permitidos estão corretos.
+   - **Obrigatório:** Após gerar o código, você deve extrair a configuração de grid resultante e validá-ela usando o novo script de CI: `node "Grid Inspector/packages/grid-inspector/scripts/validate-grid-ci.mjs" --stdin`. O componente só é considerado pronto se o script retornar exit code 0.
 
 ## 1️⃣ CLASSIFICAÇÃO E CONTEXTO
 - **Nome:** `DssTestPageComplexity`
