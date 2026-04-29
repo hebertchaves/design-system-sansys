@@ -14,6 +14,104 @@
 @tailwind utilities;
 
 /* ==========================================================================
+   Inspector isolation — scoped to #sansys-grid-inspector-root
+   ========================================================================== */
+
+/*
+ * Tailwind v3 normally initialises --tw-* custom properties via @tailwind base
+ * (Preflight). We deliberately skip @tailwind base so it doesn't reset the host
+ * page. These are the only variables the inspector actually needs.
+ */
+#sansys-grid-inspector-root *,
+#sansys-grid-inspector-root *::before,
+#sansys-grid-inspector-root *::after {
+  box-sizing: border-box;
+  /* gradient stops */
+  --tw-gradient-from-position: ;
+  --tw-gradient-via-position: ;
+  --tw-gradient-to-position: ;
+  /* ring / shadow */
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / .5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  /* transform */
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  /* misc */
+  --tw-scroll-snap-strictness: proximity;
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+}
+
+/* Base font context so rem values compute off 16 px regardless of host root */
+#sansys-grid-inspector-root {
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Reset common elements that Quasar/DSS overrides.
+ * These counters the host's resets so our Tailwind utilities start clean.
+ */
+#sansys-grid-inspector-root button,
+#sansys-grid-inspector-root [role='button'] {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: none;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#sansys-grid-inspector-root input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+#sansys-grid-inspector-root a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#sansys-grid-inspector-root ul,
+#sansys-grid-inspector-root ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
    CSS Variables - Theme (Light/Dark)
    ========================================================================== */
 
