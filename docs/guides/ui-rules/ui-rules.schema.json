@@ -34,6 +34,7 @@
     "DssCard": {
       "module": "03_CARD_PATTERNS",
       "allowed_variants": ["elevated", "flat", "bordered", "outlined"],
+      "allowed_children": ["*"],
       "forbidden_children": ["DssCard[variant=elevated]"],
       "nesting_rule": "Um DssCard com sombra (elevated) não pode ser filho de outro DssCard com sombra",
       "spacing_rules": {
@@ -70,6 +71,7 @@
     },
     "DssToolbar": {
       "module": "02_HEADERS_FOOTERS",
+      "allowed_children": ["DssButton", "DssIcon", "DssTabs", "DssBreadcrumbs", "text"],
       "forbidden_children": ["DssCard", "DssForm", "DssInput"],
       "actions_position": "right",
       "spacing_rules": {
@@ -78,6 +80,7 @@
     },
     "DssDrawer": {
       "module": "03_CARD_PATTERNS",
+      "allowed_children": ["*"],
       "nesting_rule": "Conteúdo do Drawer deve ser rolável independentemente da página",
       "mobile_rule": "Em mobile, o Drawer deve ocupar 100% da largura",
       "spacing_rules": {
@@ -87,6 +90,7 @@
     },
     "DssDialog": {
       "module": "03_CARD_PATTERNS",
+      "allowed_children": ["*"],
       "forbidden_children": ["DssDialog"],
       "actions_position": "footer-right",
       "actions_order": ["secondary", "primary"],
@@ -117,24 +121,29 @@
     },
     "DssMenu": {
       "module": "06_NAVIGATION",
+      "allowed_children": ["DssList", "DssItem", "DssSeparator"],
+      "forbidden_children": ["DssForm", "DssCard", "DssTabs"],
       "anchor_rule": "Deve ser ancorado a um elemento interativo com touch target >= 44x44px",
       "destructive_actions_position": "bottom",
       "destructive_actions_color": "--dss-feedback-error"
     },
     "DssSpinner": {
       "module": "07_FEEDBACK",
+      "allowed_children": [],
       "required_props": ["ariaLabel"],
       "position_rule": "Centralizado no container onde o conteúdo será carregado",
       "forbidden_use": "Overlay de tela inteira para operações não-críticas"
     },
     "DssBadge": {
       "module": "07_FEEDBACK",
+      "allowed_children": ["text", "DssIcon"],
       "use_case": "Contagens numéricas ou status muito curtos",
       "color_tokens": ["--dss-feedback-success", "--dss-feedback-warning", "--dss-feedback-error", "--dss-feedback-info"],
       "forbidden_use": "Elemento interativo principal"
     },
     "DssChip": {
       "module": "07_FEEDBACK",
+      "allowed_children": ["text", "DssIcon", "DssAvatar"],
       "use_case": "Categorias, tags ou filtros selecionados",
       "color_tokens": ["--dss-feedback-success", "--dss-feedback-warning", "--dss-feedback-error", "--dss-feedback-info"]
     }
