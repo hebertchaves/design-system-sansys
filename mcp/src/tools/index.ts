@@ -17,6 +17,7 @@ import { generateComponentScaffold } from "./generateComponentScaffold.js";
 import { generatePrePromptTemplate } from "./generatePrePromptTemplate.js";
 import { recordAuditEvent } from "./recordAuditEvent.js";
 import { validateGridLayout } from "./validateGridLayout.js";
+import { describeGridInspector } from "./describeGridInspector.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // After tsup bundle: __dirname = mcp/build/ → go up 2 levels to reach DSS root
@@ -379,6 +380,15 @@ const TOOL_DEFINITIONS = [
   },
   // ── Phase 5 Tools ──────────────────────────────────────────────────────────
   {
+    name: "describe_grid_inspector",
+    description:
+      "Returns the complete operational manual of the Grid Inspector tool: its 5 operational fronts (Visual Debugger, Layout Editor, Token Validator, Brand Switcher, CI Reporter), architecture (Overlay Grid vs Layout Grid), all 5 panel descriptions, canonical breakpoints, valid DSS spacing tokens, CSS variables written to :root, MCP integration details, CI Gate usage (validate-grid-ci.mjs), and key concepts (Selection Mode, Density Mode, Bookmarklet). CALL THIS TOOL FIRST before using validate_grid_layout or performing any grid inspection task. No input required.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {},
+    },
+  },
+  {
     name: "validate_grid_layout",
     description:
       "Validates a grid/layout configuration against DSS spacing tokens and best practices. Checks: (1) spacing uses DSS tokens (CRITICAL), (2) overlay vs layout sync (CRITICAL), (3) column count conventions (HIGH), (4) responsive optimization (INFO). Returns verdict, violations and suggestions. Read-Only — no files are modified.",
@@ -574,7 +584,14 @@ export function registerTools(server: Server): void {
         };
       }
 
-      // ── Phase 5 ────────────────────────────────────────────────────────────
+      // ── Phase 5 ──────────────────────────────────────────────────────────────────
+      case "describe_grid_inspector": {
+        const result = await describeGridInspector();
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
       case "validate_grid_layout": {
         const input = ValidateGridLayoutSchema.parse(args ?? {});
         const result = await validateGridLayout(input, DSS_ROOT);
