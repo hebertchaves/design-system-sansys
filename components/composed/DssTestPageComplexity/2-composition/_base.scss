@@ -6,31 +6,216 @@
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  background-color: var(--dss-surface-muted);
+  background-color: var(--dss-surface-default);
 
-  // ── Título da página ─────────────────────────────────────────────────────
+  // ── Header bar ───────────────────────────────────────────────────────────
+  // EXC-01: box-shadow com rgba — não existe token de sombra no catálogo DSS
 
-  &__page-title {
-    font-size: var(--dss-font-size-4xl, 1.75rem);
-    font-weight: var(--dss-font-weight-bold);
-    color: var(--dss-text-primary);
-    margin: 0;
-    line-height: 1.2;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding: 0 var(--dss-spacing-4);
+    background-color: var(--dss-action-primary);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1); // EXC-01
+    min-height: var(--dss-spacing-10); // 48px via padding interno
   }
 
-  &__page-subtitle {
-    font-size: var(--dss-font-size-4xl, 1.75rem);
-    font-weight: var(--dss-font-weight-normal);
+  &__header-left,
+  &__header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--dss-spacing-1);
+  }
+
+  &__header-btn {
+    color: var(--dss-text-on-primary) !important;
+
+    .q-icon { color: var(--dss-text-on-primary); }
+  }
+
+  &__header-logo-area {
+    display: flex;
+    align-items: center;
+    color: var(--dss-text-on-primary);
+  }
+
+  &__header-logo-icon {
+    color: var(--dss-text-on-primary);
+  }
+
+  &__header-divider {
+    width: 1px;
+    height: var(--dss-spacing-6);
+    background-color: rgba(255, 255, 255, 0.3); // EXC-03: sem token de divider translúcido
+    margin: 0 var(--dss-spacing-3);
+    flex-shrink: 0;
+  }
+
+  &__header-title {
+    font-size: var(--dss-font-size-lg);
+    font-weight: var(--dss-font-weight-medium);
+    color: var(--dss-text-on-primary);
+    white-space: nowrap;
+  }
+
+  // ── Body — seções empilhadas (cada uma com border-bottom) ────────────────
+
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dss-surface-default);
+  }
+
+  // ── Sections — wrapper intermediário para grid-inspector row detection ───
+  // GridOverlay.tsx: firstChild = __body > :scope > * = __sections
+  //                  gridElements = Array.from(__sections.children) = 4 seções
+
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  // ── Seção 1 — Breadcrumbs + Título ──────────────────────────────────────
+
+  &__title-section {
+    padding: var(--dss-layout-padding-y, var(--dss-spacing-4)) var(--dss-layout-padding-x, var(--dss-spacing-6)) 0;
+    border-bottom: 1px solid var(--dss-border-gray-300);
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-layout-gap-y, var(--dss-spacing-3));
+    padding-bottom: var(--dss-layout-gap-y, var(--dss-spacing-3));
+  }
+
+  &__breadcrumbs {
+    font-size: var(--dss-font-size-sm);
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  // ── Título da página ─────────────────────────────────────────────────────
+  // EXC-02: border-bottom usa --dss-hub-primary (acento laranja Sansys Hub)
+
+  &__page-title {
+    font-size: var(--dss-font-size-4xl);
+    font-weight: var(--dss-font-weight-semibold);
+    color: var(--dss-text-primary);
+    margin: 0;
+    line-height: 1.3;
+    padding-bottom: var(--dss-spacing-1);
+    border-bottom: 2px solid var(--dss-hub-primary); // EXC-02
+    white-space: nowrap;
+  }
+
+  &__subtitle-group {
     color: var(--dss-text-secondary);
   }
 
-  // ── Cards de status ──────────────────────────────────────────────────────
+  &__subtitle-icon {
+    color: var(--dss-text-secondary);
+    flex-shrink: 0;
+  }
+
+  &__page-subtitle {
+    font-size: var(--dss-font-size-lg);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-text-secondary);
+    white-space: nowrap;
+  }
+
+  // ── Tab toggle — pill container ──────────────────────────────────────────
+  // EXC-01: box-shadow da aba ativa — sem token de sombra no catálogo DSS
+
+  &__tab-list {
+    display: flex;
+    align-items: center;
+    gap: var(--dss-spacing-1);
+    background-color: var(--dss-surface-muted);
+    border-radius: var(--dss-radius-md);
+    padding: var(--dss-spacing-1);
+  }
+
+  &__tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--dss-spacing-1);
+    padding: var(--dss-spacing-1) var(--dss-spacing-3);
+    border: none;
+    border-radius: var(--dss-radius-sm);
+    background-color: transparent;
+    color: var(--dss-text-secondary);
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-medium);
+    cursor: pointer;
+    transition:
+      background-color var(--dss-duration-150) var(--dss-easing-standard),
+      color           var(--dss-duration-150) var(--dss-easing-standard),
+      box-shadow      var(--dss-duration-150) var(--dss-easing-standard);
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      background-color: var(--dss-surface-hover);
+      color: var(--dss-text-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--dss-action-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: var(--dss-opacity-disabled);
+      cursor: default;
+    }
+
+    &--active {
+      background-color: var(--dss-surface-default);
+      color: var(--dss-text-primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1); // EXC-01
+    }
+  }
+
+  // ── Seção 2 — Cards de status ────────────────────────────────────────────
+
+  &__status-section {
+    padding: var(--dss-layout-padding-y, var(--dss-spacing-4)) var(--dss-layout-padding-x, var(--dss-spacing-6));
+    border-bottom: 1px solid var(--dss-border-gray-300);
+  }
+
+  // CSS grid nativo — elimina q-col-gutter-md; responde ao inspector via --dss-layout-gap-x
+
+  &__status-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--dss-layout-gap-x, var(--dss-spacing-4));
+
+    @media (max-width: 599px) {
+      grid-template-columns: 1fr;
+      gap: var(--dss-layout-gap-y, var(--dss-spacing-4));
+    }
+  }
+
+  &__status-col {
+    display: flex;
+    flex-direction: column;
+  }
 
   &__status-card {
     height: 100%;
-    border-radius: var(--dss-radius-lg, var(--dss-spacing-3));
+    border-radius: var(--dss-radius-lg);
 
-    // Fundos semânticos via tokens de feedback
     &--success {
       background-color: var(--dss-feedback-success-surface);
       border: 1px solid var(--dss-feedback-success-light);
@@ -47,21 +232,19 @@
 
   &__status-icon {
     flex-shrink: 0;
+    font-size: var(--dss-font-size-4xl);
 
     &--success { color: var(--dss-feedback-success); }
     &--warning { color: var(--dss-feedback-warning); }
-    &--error   { color: var(--dss-feedback-error); }
+    &--error   { color: var(--dss-feedback-error);   }
   }
 
   &__status-number {
-    font-size: var(--dss-font-size-4xl, 1.75rem);
-    font-weight: var(--dss-font-weight-bold);
+    font-size: var(--dss-font-size-4xl);
+    font-weight: var(--dss-font-weight-semibold);
+    color: var(--dss-text-primary);
     line-height: 1;
     margin: 0 0 var(--dss-spacing-1) 0;
-
-    &--success { color: var(--dss-feedback-success); }
-    &--warning { color: var(--dss-feedback-warning); }
-    &--error   { color: var(--dss-feedback-error); }
   }
 
   &__status-label {
@@ -70,14 +253,20 @@
     margin: 0;
   }
 
-  // ── Seção Filtros ────────────────────────────────────────────────────────
+  // ── Seção 3 — Filtros (plana, sem DssCard wrapper) ───────────────────────
 
-  &__filters-card {
-    background-color: var(--dss-surface-default);
+  &__filters-section {
+    padding: var(--dss-layout-padding-y, var(--dss-spacing-4)) var(--dss-layout-padding-x, var(--dss-spacing-6));
+    border-bottom: 1px solid var(--dss-border-gray-300);
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-layout-gap-y, var(--dss-spacing-4));
   }
 
   &__filters-header {
-    padding: var(--dss-spacing-4) var(--dss-spacing-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   &__filters-title {
@@ -87,34 +276,117 @@
     margin: 0;
   }
 
-  // ── Tabela de dados ──────────────────────────────────────────────────────
+  &__filters-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-layout-gap-y, var(--dss-spacing-4));
+  }
 
-  // NC-04: substituído style="width: 40px" por token DSS
-  // --dss-spacing-10 = 2.5rem = 40px (conforme catálogo de spacing)
+  // CSS grid nativo para linha de inputs — elimina q-col-gutter-md
+
+  &__filters-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--dss-layout-gap-x, var(--dss-spacing-4));
+
+    @media (max-width: 599px) {
+      grid-template-columns: 1fr;
+      gap: var(--dss-layout-gap-y, var(--dss-spacing-4));
+    }
+  }
+
+  &__filters-col {
+    min-width: 0;
+  }
+
+  // Chips de filtros ativos
+
+  &__active-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--dss-layout-gap-x, var(--dss-spacing-2));
+  }
+
+  // Input + botão de busca externo (Equipe e Código Serviço)
+  &__input-search-group {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--dss-spacing-3);
+  }
+
+  &__input-search-field {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__input-search-btn {
+    flex-shrink: 0;
+    margin-bottom: var(--dss-spacing-1);
+  }
+
+  // Botão Pesquisar — centralizado, laranja (hub brand)
+  // EXC-04: --dss-hub-primary como cor de CTA laranja do botão Pesquisar (Figma: #ff6900)
+  &__pesquisar-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__pesquisar-btn {
+    background-color: var(--dss-hub-primary, var(--dss-action-primary)) !important;
+    color: var(--dss-text-on-primary) !important;
+
+    .q-icon { color: var(--dss-text-on-primary); }
+  }
+
+  // ── Seção 4 — Tabela ─────────────────────────────────────────────────────
+
+  &__table-section {
+    padding: var(--dss-layout-padding-y, var(--dss-spacing-4)) var(--dss-layout-padding-x, var(--dss-spacing-6));
+    flex: 1;
+  }
+
+  &__table-card {
+    overflow: hidden;
+  }
+
+  &__table-col-check {
+    width: var(--dss-spacing-10);
+    flex: 0 0 var(--dss-spacing-10);
+    min-width: var(--dss-spacing-10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__table-col-action {
     width: var(--dss-spacing-10);
     flex: 0 0 var(--dss-spacing-10);
     min-width: var(--dss-spacing-10);
   }
 
+  // Cabeçalho azul conforme Figma
   &__table-header {
-    background-color: var(--dss-surface-subtle);
+    background-color: var(--dss-action-primary);
+    min-height: var(--dss-spacing-10);
+    padding: var(--dss-layout-gap-y, var(--dss-spacing-3)) var(--dss-layout-gap-x, var(--dss-spacing-4));
   }
 
   &__table-th {
     font-size: var(--dss-font-size-sm);
-    font-weight: var(--dss-font-weight-semibold);
-    color: var(--dss-text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: var(--dss-font-weight-medium);
+    color: var(--dss-text-on-primary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding: 0 var(--dss-spacing-3);
   }
 
   &__table-row {
     border-bottom: 1px solid var(--dss-gray-200);
+    padding: var(--dss-layout-gap-y, var(--dss-spacing-3)) var(--dss-layout-gap-x, var(--dss-spacing-4));
     transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-primary);
 
     &:hover {
       background-color: var(--dss-surface-hover);
@@ -129,9 +401,8 @@
     text-decoration: none;
     font-weight: var(--dss-font-weight-medium);
 
-    &:hover {
-      text-decoration: underline;
-    }
+    &:hover { text-decoration: underline; }
+
     &:focus-visible {
       outline: 2px solid var(--dss-action-primary);
       outline-offset: 2px;
@@ -139,10 +410,11 @@
     }
   }
 
+  // Rodapé da tabela: resultados + paginação
   &__table-footer {
     border-top: 1px solid var(--dss-gray-200);
-    background-color: var(--dss-surface-subtle);
-    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    padding: var(--dss-layout-gap-y, var(--dss-spacing-3)) var(--dss-layout-gap-x, var(--dss-spacing-4));
+    flex-wrap: nowrap;
   }
 
   &__results-label {
@@ -150,10 +422,63 @@
     color: var(--dss-text-secondary);
   }
 
+  // ── Paginação inline ─────────────────────────────────────────────────────
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    gap: var(--dss-spacing-1);
+  }
+
+  &__page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--dss-spacing-8);
+    min-width: var(--dss-spacing-8);
+    padding: 0 var(--dss-spacing-3);
+    border: 1px solid var(--dss-border-gray-300);
+    border-radius: var(--dss-radius-sm);
+    background-color: var(--dss-surface-default);
+    color: var(--dss-text-primary);
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-medium);
+    cursor: pointer;
+    transition:
+      background-color var(--dss-duration-150) var(--dss-easing-standard),
+      color           var(--dss-duration-150) var(--dss-easing-standard);
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      background-color: var(--dss-surface-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--dss-action-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: var(--dss-opacity-disabled);
+      cursor: default;
+    }
+
+    &--num {
+      min-width: var(--dss-spacing-8);
+      padding: 0;
+    }
+
+    &--active {
+      background-color: var(--dss-action-primary);
+      border-color: var(--dss-action-primary);
+      color: var(--dss-text-on-primary);
+    }
+  }
+
   // ── Estado vazio ─────────────────────────────────────────────────────────
 
   &__empty {
-    min-height: var(--dss-spacing-32, 8rem);
+    min-height: var(--dss-spacing-32);
   }
 
   &__empty-text {
@@ -172,7 +497,7 @@
       var(--dss-surface-muted) 75%
     );
     background-size: 200% 100%;
-    animation: dss-skeleton-shimmer var(--dss-duration-1000, 1s) ease-in-out infinite;
+    animation: dss-skeleton-shimmer var(--dss-duration-1000) ease-in-out infinite;
     border-radius: var(--dss-radius-sm);
 
     &--number {

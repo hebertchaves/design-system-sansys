@@ -1,6 +1,6 @@
 {
   "name": "DssTestPageComplexity",
-  "version": "1.0.1",
+  "version": "1.3.0",
   "dssVersion": "2.2",
   "phase": 3,
   "category": "composed",
@@ -8,7 +8,7 @@
   "status": "review",
   "auditStatus": "pending",
   "goldenReference": "DssChip",
-  "goldenContext": "DssDataCard",
+  "goldenContext": "DssCard",
   "dependencies": {
     "dss": [
       "DssCard",
@@ -22,7 +22,6 @@
       "DssButton",
       "DssInput",
       "DssSelect",
-      "DssDataCard"
     ],
     "quasar": [
       "QSeparator"
@@ -60,7 +59,12 @@
     "--dss-radius-lg",
     "--dss-radius-md",
     "--dss-radius-sm",
+    "--dss-layout-padding-x",
+    "--dss-layout-padding-y",
+    "--dss-layout-gap-x",
+    "--dss-layout-gap-y",
     "--dss-spacing-1",
+    "--dss-spacing-2",
     "--dss-spacing-3",
     "--dss-spacing-4",
     "--dss-spacing-6",
@@ -76,7 +80,12 @@
     "--dss-water-primary",
     "--dss-waste-primary"
   ],
-  "exceptions": [],
+  "exceptions": [
+    "EXC-01: box-shadow com rgba() no __tab-btn--active — sem token de sombra no catálogo DSS",
+    "EXC-02: border-bottom-color usa --dss-hub-primary como acento laranja do __page-title",
+    "EXC-03: __header-divider usa rgba(255,255,255,0.3) — sem token de divider translúcido no catálogo",
+    "EXC-04: __pesquisar-btn usa --dss-hub-primary (laranja #ff6900) como cor de CTA do botão Pesquisar — fidelidade ao design Figma"
+  ],
   "features": {
     "inheritAttrs": false,
     "provide": ["PAGE_COMPLEXITY_DISABLED_KEY"],
@@ -88,10 +97,15 @@
     "reducedMotion": true,
     "loading": true,
     "disabled": true,
-    "slots": ["filter-actions", "table-footer", "tab-orders"]
+    "slots": ["filter-actions", "table-footer"]
   },
   "filterStrategy": "uncontrolled",
   "filterStrategyNote": "Os filtros (setor, equipe, código) são estado interno não controlado. O evento filter:search não emite payload. Para uso controlado, o consumidor deve substituir os inputs por props v-model ou aguançar versão 1.1.0 com suporte a filtros controlados.",
   "created": "2026-04-29",
-  "lastModified": "2026-04-29"
+  "lastModified": "2026-04-30",
+  "changeLog": [
+    "1.1.0 — Reconstrução visual com fidelidade ao Figma MCP: header bar, pill tab toggle, table header azul, colunas renomeadas (Mobile/Protocolo/Matrícula/Nr.Hidrômetro), botão de busca externo para Equipe e Código, ícones de status diferenciados por tipo",
+    "1.2.0 — Aumento de fidelidade Figma: remoção de DssDataCard (substituído por DssCard + tabela raw), remoção de DssCard wrapper nos filtros (seção plana com border-bottom), paginação inline (Anterior/1/2/3/Próximo), botão Pesquisar laranja (--dss-hub-primary), layout por seções com border-bottom separadores, TestPageComplexity.vue simplificado para instância única com dados Figma",
+    "1.3.0 — Grid Inspector compatibility: __sections wrapper intermediário (firstChild detection), ids em todos os elementos inspecionáveis (dss-tpc-*), data-grid-debug attributes, remoção de classes Quasar (q-col-gutter-md, row, col-*) substituídas por CSS grid nativo, padrão --dss-layout-*/--dss-spacing-* em 17 pontos de padding/gap para resposta ao floating inspector"
+  ]
 }

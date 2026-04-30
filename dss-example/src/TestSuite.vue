@@ -331,6 +331,15 @@
               <span class="nav-label">DssCadrisCard</span>
               <span class="nav-badge stress">Stress Test</span>
             </button>
+
+            <button
+              @click="activeComponent = 'pagecomplexity'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'pagecomplexity' }]"
+            >
+              <span class="nav-icon">🧬</span>
+              <span class="nav-label">DssTestPageComplexity</span>
+              <span class="nav-badge stress">Stress Test</span>
+            </button>
           </div>
         </div>
 
@@ -428,6 +437,11 @@
         <TestCadrisCard />
       </div>
 
+      <!-- DssTestPageComplexity Stress Test View -->
+      <div v-if="activeComponent === 'pagecomplexity'" class="component-view">
+        <TestPageComplexity />
+      </div>
+
       <!-- Design Tokens View -->
       <div v-if="activeComponent === 'tokens'" class="component-view">
         <TestTokens />
@@ -446,6 +460,7 @@ import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
 import TestDataCard from './TestDataCard.vue'
 import TestCadrisCard from './TestCadrisCard.vue'
+import TestPageComplexity from './TestPageComplexity.vue'
 
 // Active component state
 const activeComponent = ref('index')

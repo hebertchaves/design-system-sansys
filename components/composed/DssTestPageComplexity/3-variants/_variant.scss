@@ -1,9 +1,6 @@
 // Layer 3 — Variants
 // Token First — zero valores hardcoded.
 
-// Neste componente de página, variantes são governadas pelo estado da view
-// (dashboard/map/schedule) via classes geradas pelo composable.
-
 .dss-test-page-complexity {
   // ── Variante disabled (raiz) ─────────────────────────────────────────────
 
@@ -15,55 +12,15 @@
   // ── Variante loading (raiz) ──────────────────────────────────────────────
 
   &--loading {
-    // Área de dados exibe skeletons via v-if no template — sem override CSS aqui.
-    // O esqueleto usa a animação dss-skeleton-shimmer definida em L2.
+    // Skeletons gerenciados por v-if no template — sem override CSS aqui.
   }
 
-  // ── View: dashboard (default) ─────────────────────────────────────────────
+  // ── Views — dashboard (default) / map / schedule ─────────────────────────
 
-  &--view-dashboard {
-    // Estado padrão — sem overrides necessários.
-  }
-
-  // ── View: map ────────────────────────────────────────────────────────────
-
-  &--view-map {
-    // Quando ativo, o painel de tabela é oculto via v-show no template.
-    // Sem overrides CSS necessários — estrutura gerenciada por slots e v-show.
-  }
-
-  // ── View: schedule ───────────────────────────────────────────────────────
-
+  &--view-dashboard,
+  &--view-map,
   &--view-schedule {
-    // Idem view-map: slot #tab-orders gerencia o conteúdo.
-  }
-
-  // ── Toggle de view (botões de visualização) ───────────────────────────────
-
-  &__view-toggle {
-    border: 1px solid var(--dss-border-gray-300);
-    border-radius: var(--dss-radius-md);
-    overflow: hidden;
-  }
-
-  &__view-btn {
-    border-radius: 0;
-    border: none;
-    transition:
-      background-color var(--dss-duration-150) var(--dss-easing-standard),
-      color           var(--dss-duration-150) var(--dss-easing-standard);
-
-    &--active {
-      background-color: var(--dss-action-primary);
-      color: var(--dss-text-on-primary);
-    }
-
-    &:first-child {
-      border-radius: var(--dss-radius-md) 0 0 var(--dss-radius-md);
-    }
-    &:last-child {
-      border-radius: 0 var(--dss-radius-md) var(--dss-radius-md) 0;
-    }
+    // Conteúdo gerenciado por slots e v-show no template.
   }
 
   // ── Linha da tabela selecionada ────────────────────────────────────────────
@@ -77,7 +34,7 @@
   // ── Chips de filtro ────────────────────────────────────────────────────────
 
   &__filter-chip {
-    max-width: var(--dss-spacing-40, 10rem);
+    max-width: var(--dss-spacing-40);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

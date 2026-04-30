@@ -5,7 +5,19 @@
 [data-brand="hub"],
 .dss-test-page-complexity--brand-hub {
   .dss-test-page-complexity {
-    &__view-btn--active {
+    &__header {
+      background-color: var(--dss-hub-primary, var(--dss-action-primary));
+    }
+
+    &__page-title {
+      border-bottom-color: var(--dss-hub-primary, var(--dss-action-primary));
+    }
+
+    &__tab-btn--active {
+      color: var(--dss-hub-primary, var(--dss-action-primary));
+    }
+
+    &__table-header {
       background-color: var(--dss-hub-primary, var(--dss-action-primary));
     }
 
@@ -22,7 +34,19 @@
 [data-brand="water"],
 .dss-test-page-complexity--brand-water {
   .dss-test-page-complexity {
-    &__view-btn--active {
+    &__header {
+      background-color: var(--dss-water-primary, var(--dss-action-primary));
+    }
+
+    &__page-title {
+      border-bottom-color: var(--dss-water-primary, var(--dss-action-primary));
+    }
+
+    &__tab-btn--active {
+      color: var(--dss-water-primary, var(--dss-action-primary));
+    }
+
+    &__table-header {
       background-color: var(--dss-water-primary, var(--dss-action-primary));
     }
 
@@ -39,7 +63,19 @@
 [data-brand="waste"],
 .dss-test-page-complexity--brand-waste {
   .dss-test-page-complexity {
-    &__view-btn--active {
+    &__header {
+      background-color: var(--dss-waste-primary, var(--dss-action-primary));
+    }
+
+    &__page-title {
+      border-bottom-color: var(--dss-waste-primary, var(--dss-action-primary));
+    }
+
+    &__tab-btn--active {
+      color: var(--dss-waste-primary, var(--dss-action-primary));
+    }
+
+    &__table-header {
       background-color: var(--dss-waste-primary, var(--dss-action-primary));
     }
 

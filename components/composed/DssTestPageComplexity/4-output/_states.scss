@@ -22,21 +22,17 @@
       }
     }
 
-    &__filters-card {
+    &__filters-section {
       background-color: var(--dss-surface-default);
-    }
-
-    &__table-header {
-      background-color: var(--dss-surface-subtle);
     }
 
     &__table-footer {
       background-color: var(--dss-surface-subtle);
     }
 
-    &__view-btn--active {
-      background-color: var(--dss-action-primary);
-      color: var(--dss-text-on-primary);
+    &__tab-btn--active {
+      background-color: var(--dss-surface-default);
+      color: var(--dss-text-primary);
     }
   }
 }
@@ -63,7 +59,7 @@
       text-decoration: underline;
     }
 
-    &__view-toggle {
+    &__tab-list {
       border-width: 2px;
     }
   }
@@ -95,7 +91,7 @@
       }
     }
 
-    &__view-btn--active {
+    &__tab-btn--active {
       background-color: Highlight;
       color: HighlightText;
       forced-color-adjust: none;
@@ -119,7 +115,7 @@
       transition: none;
     }
 
-    &__view-btn {
+    &__tab-btn {
       transition: none;
     }
   }
@@ -140,7 +136,7 @@
       display: none;
     }
 
-    &__filters-card {
+    &__filters-section {
       display: none;
     }
 
@@ -151,10 +147,6 @@
       &::after {
         content: none;
       }
-    }
-
-    &__view-toggle {
-      display: none;
     }
   }
 }
