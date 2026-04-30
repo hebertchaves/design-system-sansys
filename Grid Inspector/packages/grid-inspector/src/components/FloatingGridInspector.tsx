@@ -339,6 +339,9 @@ export function FloatingGridInspector() {
     root.style.setProperty('--dss-layout-margin-y', `${Math.round(componentMarginY * densityMult)}px`);
     root.style.setProperty('--dss-layout-padding-x', `${Math.round(componentPadding * densityMult)}px`);
     root.style.setProperty('--dss-layout-padding-y', `${Math.round(componentPaddingY * densityMult)}px`);
+    // Grid Structure vars — permitem que a página responda ao número de colunas e ao container type
+    root.style.setProperty('--dss-layout-columns', overlay.columns.toString());
+    root.style.setProperty('--dss-layout-max-width', containerType === 'fluid' ? '100%' : breakpointWidths[breakpoint]);
   }
 
   if (!isVisible) {

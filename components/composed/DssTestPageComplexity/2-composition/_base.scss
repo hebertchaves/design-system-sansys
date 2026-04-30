@@ -67,6 +67,12 @@
     display: flex;
     flex-direction: column;
     background-color: var(--dss-surface-default);
+    // Breakpoint + Container Type: --dss-layout-max-width escrito pelo inspector
+    // (fixed=breakpoint width, fluid=100%). Centraliza quando menor que viewport.
+    max-width: var(--dss-layout-max-width, 100%);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
   }
 
   // ── Sections — wrapper intermediário para grid-inspector row detection ───
@@ -77,6 +83,9 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    // Margin X/Y: espaço externo do conteúdo em relação às bordas do container
+    // Escrito pelo inspector via Spacing X > Margin e Spacing Y > Margin Y
+    margin: var(--dss-layout-margin-y, 0) var(--dss-layout-margin-x, 0);
   }
 
   // ── Seção 1 — Breadcrumbs + Título ──────────────────────────────────────

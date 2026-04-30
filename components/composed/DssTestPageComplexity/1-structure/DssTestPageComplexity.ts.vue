@@ -155,17 +155,22 @@ function handleRowView(row: ServiceOrderRow) {
     </header>
 
     <!-- ── Body (white bg, sections with border-bottom) ─────────────────── -->
+    <!-- data-grid-body: ponto de referência do GridOverlay para medir layoutBounds -->
+    <!-- (respeita max-width + margin:auto do breakpoint selecionado)              -->
     <div
       id="dss-tpc-body"
       class="dss-test-page-complexity__body"
       data-grid-debug="body"
+      data-grid-body
     >
 
       <!-- ── Grid-inspector row container — firstChild de __body ── -->
+      <!-- data-grid-rows: ponto de entrada explícito para o GridOverlay detectar as 4 seções como rows -->
       <div
         id="dss-tpc-sections"
         class="dss-test-page-complexity__sections"
         data-grid-debug="sections"
+        data-grid-rows
       >
 
       <!-- ── Seção 1: Breadcrumbs + Título + Tabs ── -->

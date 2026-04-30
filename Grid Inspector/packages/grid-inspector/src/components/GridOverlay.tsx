@@ -77,6 +77,12 @@ export function GridOverlay({
     top: number; height: number; left: number; width: number;
   } | null>(null);
 
+  // Bounds of the actual layout container ([data-grid-body]) — respects max-width + centering.
+  // Used for column area positioning so the overlay follows the layout when breakpoint narrows it.
+  const [layoutBounds, setLayoutBounds] = useState<{
+    top: number; height: number; left: number; width: number;
+  } | null>(null);
+
   // Unique CSS grid rows detected from DOM children, grouped by top position
   const [componentRows, setComponentRows] = useState<Array<{ top: number; height: number }>>([]);
 
@@ -102,8 +108,25 @@ export function GridOverlay({
         width: containerRect.width,
       });
 
+      // Measure layout container bounds ([data-grid-body]) separately.
+      // This element has max-width + margin:auto applied, so its left/width
+      // reflect the actual centered layout — not the full content area.
+      const layoutEl = container.querySelector('[data-grid-body]');
+      if (layoutEl) {
+        const lr = layoutEl.getBoundingClientRect();
+        setLayoutBounds({ top: lr.top, height: lr.height, left: lr.left, width: lr.width });
+      } else {
+        setLayoutBounds(null);
+      }
+
       let gridElements: Element[];
-      if (contentSelector && !contentRef?.current) {
+      // Priority 1: element with data-grid-rows attribute — explicit DSS contract
+      // Allows deeply-nested components to declare their own row container
+      // regardless of how many wrapper levels exist between container and rows.
+      const markedRowsContainer = container.querySelector('[data-grid-rows]');
+      if (markedRowsContainer) {
+        gridElements = Array.from(markedRowsContainer.children);
+      } else if (contentSelector && !contentRef?.current) {
         gridElements = Array.from(container.children);
       } else {
         const firstChild = container.querySelector(':scope > *');
@@ -141,6 +164,9 @@ export function GridOverlay({
 
     const resizeObserver = new ResizeObserver(measureComponents);
     resizeObserver.observe(target as HTMLElement);
+    // Also observe [data-grid-body] — its size changes when --dss-layout-max-width changes
+    const layoutEl = (resolveTarget() as Element | null)?.querySelector('[data-grid-body]');
+    if (layoutEl) resizeObserver.observe(layoutEl as HTMLElement);
     // Give CSS-var-triggered reflows time to settle before first measure
     const timeoutId = setTimeout(measureComponents, 300);
 
@@ -224,15 +250,17 @@ export function GridOverlay({
   }, []);
   
   const renderColumnarGrid = () => {
-    // When we have actual DOM bounds, position the overlay exactly over the content.
-    // Otherwise fall back to full-viewport.
+    // Outer area covers the full content container height (rows are measured relative to this).
     const outerStyle: React.CSSProperties = contentBounds
       ? { position: 'absolute', top: contentBounds.top, left: 0, right: 0, height: contentBounds.height, pointerEvents: 'none' }
       : { position: 'absolute', inset: 0, pointerEvents: 'none' };
 
-    // Column area anchored to the measured container (not an abstract maxWidth)
-    const columnAreaStyle: React.CSSProperties = contentBounds
-      ? { position: 'absolute', top: 0, bottom: 0, left: contentBounds.left, width: contentBounds.width, pointerEvents: 'none' }
+    // Column area: prefer layoutBounds ([data-grid-body]) so that overlay columns
+    // follow the layout when max-width + margin:auto are applied (breakpoint centering).
+    // Falls back to contentBounds when no data-grid-body is present.
+    const colBounds = layoutBounds || contentBounds;
+    const columnAreaStyle: React.CSSProperties = colBounds
+      ? { position: 'absolute', top: 0, bottom: 0, left: colBounds.left, width: colBounds.width, pointerEvents: 'none' }
       : { position: 'absolute', top: 0, bottom: 0, left: `${margin}px`, right: `${margin}px`, pointerEvents: 'none' };
 
     return (
@@ -255,21 +283,23 @@ export function GridOverlay({
               >
                 {/* Camada de COLUNA (rose) */}
                 {showColumns && (
-                  <div 
+                  <div
                     className="absolute inset-0 transition-all duration-300"
                     style={{
-                      backgroundColor: `rgba(251, 207, 232, ${0.4 * overlayOpacity})`, // rose-200/40 com opacidade dinâmica
-                      borderColor: `rgba(244, 114, 182, ${0.6 * overlayOpacity})`, // rose-400/60 com opacidade dinâmica
+                      backgroundColor: `rgba(251, 207, 232, ${0.4 * overlayOpacity})`,
+                      borderColor: `rgba(244, 114, 182, ${0.6 * overlayOpacity})`,
                       borderWidth: '1px',
-                      borderStyle: 'solid'
+                      borderStyle: 'solid',
+                      pointerEvents: 'none',
                     }}
                   >
                     {showAnnotations && (
-                      <div 
+                      <div
                         className="absolute top-2 left-2 text-xs font-mono font-bold z-10 px-1.5 py-0.5 rounded"
                         style={{
                           backgroundColor: `rgba(255, 255, 255, ${0.8 * overlayOpacity})`,
-                          color: `rgba(190, 18, 60, ${overlayOpacity})` // rose-700
+                          color: `rgba(190, 18, 60, ${overlayOpacity})`,
+                          pointerEvents: 'none',
                         }}
                       >
                         {i + 1}
@@ -277,25 +307,27 @@ export function GridOverlay({
                     )}
                   </div>
                 )}
-                
+
                 {/* Camada de PADDING (green) */}
                 {showPaddingX && (
-                  <div 
+                  <div
                     className="absolute inset-0 border-dashed transition-all duration-300"
                     style={{
                       margin: `0 ${padding}px`,
-                      backgroundColor: `rgba(187, 247, 208, ${0.6 * overlayOpacity})`, // green-200/60 com opacidade dinâmica
-                      borderColor: `rgba(74, 222, 128, ${0.7 * overlayOpacity})`, // green-400/70 com opacidade dinâmica
+                      backgroundColor: `rgba(187, 247, 208, ${0.6 * overlayOpacity})`,
+                      borderColor: `rgba(74, 222, 128, ${0.7 * overlayOpacity})`,
                       borderWidth: '1px',
-                      borderStyle: 'dashed'
+                      borderStyle: 'dashed',
+                      pointerEvents: 'none',
                     }}
                   >
                     {showAnnotations && i === 0 && (
-                      <div 
+                      <div
                         className="absolute -top-5 left-0 text-xs font-mono font-semibold px-1.5 py-0.5 rounded shadow-sm"
                         style={{
                           backgroundColor: `rgba(255, 255, 255, ${0.9 * overlayOpacity})`,
-                          color: `rgba(21, 128, 61, ${overlayOpacity})` // green-700
+                          color: `rgba(21, 128, 61, ${overlayOpacity})`,
+                          pointerEvents: 'none',
                         }}
                       >
                         {padding}px padding
@@ -310,30 +342,31 @@ export function GridOverlay({
         </div>
         {/* ── End column area ── */}
 
-        {/* ── MARGIN X: bands inside the content container at `margin` px from each edge ── */}
-        {showMarginX && contentBounds && margin > 0 && (
+        {/* ── MARGIN X: bands inside the layout container at `margin` px from each edge ── */}
+        {/* Uses colBounds (layoutBounds preferred) so margin bands align with the column area */}
+        {showMarginX && colBounds && margin > 0 && (
           <>
-            {/* Left margin band — from container left edge inward by `margin` px */}
+            {/* Left margin band */}
             <div
               style={{
                 position: 'absolute', top: 0, bottom: 0,
-                left: contentBounds.left, width: margin,
+                left: colBounds.left, width: margin,
                 borderRight: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`,
                 backgroundColor: `rgba(253,186,116,${0.25 * overlayOpacity})`,
                 zIndex: 50, pointerEvents: 'none',
               }}
             >
               {showAnnotations && (
-                <div style={{ position: 'absolute', top: 8, left: '50%', transform: 'translateX(-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+                <div style={{ position: 'absolute', top: 8, left: '50%', transform: 'translateX(-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', pointerEvents: 'none' }}>
                   {margin}px
                 </div>
               )}
             </div>
-            {/* Right margin band — from container right edge inward by `margin` px */}
+            {/* Right margin band */}
             <div
               style={{
                 position: 'absolute', top: 0, bottom: 0,
-                left: contentBounds.left + contentBounds.width - margin, width: margin,
+                left: colBounds.left + colBounds.width - margin, width: margin,
                 borderLeft: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`,
                 backgroundColor: `rgba(253,186,116,${0.25 * overlayOpacity})`,
                 zIndex: 50, pointerEvents: 'none',
@@ -345,10 +378,10 @@ export function GridOverlay({
         {/* ── MARGIN Y: top/bottom bands inside the content bounds ── */}
         {showMarginY && marginY > 0 && (
           <>
-            <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: marginY, zIndex: 60, borderBottom: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }}>
-              {showAnnotations && <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4 }}>{marginY}px margin Y</div>}
+            <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: marginY, zIndex: 60, pointerEvents: 'none', borderBottom: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }}>
+              {showAnnotations && <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, pointerEvents: 'none' }}>{marginY}px margin Y</div>}
             </div>
-            <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: marginY, zIndex: 60, borderTop: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }} />
+            <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: marginY, zIndex: 60, pointerEvents: 'none', borderTop: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }} />
           </>
         )}
 
@@ -366,7 +399,7 @@ export function GridOverlay({
             >
               <div
                 style={{
-                  position: 'absolute', inset: 0,
+                  position: 'absolute', inset: 0, pointerEvents: 'none',
                   backgroundColor: isHighlighted ? `rgba(239,68,68,${0.25*overlayOpacity})` : `rgba(251,207,232,${0.3*overlayOpacity})`,
                   borderTop: `${isHighlighted ? 2 : 1}px solid rgba(${isHighlighted ? '239,68,68' : '244,114,182'},${isHighlighted ? 0.9 : 0.5}*${overlayOpacity})`,
                   borderBottom: `${isHighlighted ? 2 : 1}px solid rgba(${isHighlighted ? '239,68,68' : '244,114,182'},${isHighlighted ? 0.9 : 0.5}*${overlayOpacity})`,
@@ -374,7 +407,7 @@ export function GridOverlay({
                 }}
               >
                 {showAnnotations && (
-                  <div style={{ position: 'absolute', top: 4, right: 8, fontSize: 11, fontFamily: 'monospace', fontWeight: 700, background: `rgba(255,255,255,${0.8*overlayOpacity})`, color: `rgba(190,18,60,${overlayOpacity})`, padding: '2px 5px', borderRadius: 3, zIndex: 10 }}>
+                  <div style={{ position: 'absolute', top: 4, right: 8, fontSize: 11, fontFamily: 'monospace', fontWeight: 700, background: `rgba(255,255,255,${0.8*overlayOpacity})`, color: `rgba(190,18,60,${overlayOpacity})`, padding: '2px 5px', borderRadius: 3, zIndex: 10, pointerEvents: 'none' }}>
                     Row {i + 1}
                   </div>
                 )}
@@ -389,9 +422,9 @@ export function GridOverlay({
             key={`pad-y-${i}`}
             style={{ position: 'absolute', left: 0, right: 0, pointerEvents: 'none', top: row.top, height: row.height, zIndex: 25 }}
           >
-            <div style={{ position: 'absolute', inset: `${paddingY}px 0`, borderTop: `2px dashed rgba(34,197,94,${0.9*overlayOpacity})`, borderBottom: `2px dashed rgba(34,197,94,${0.9*overlayOpacity})` }}>
+            <div style={{ position: 'absolute', inset: `${paddingY}px 0`, pointerEvents: 'none', borderTop: `2px dashed rgba(34,197,94,${0.9*overlayOpacity})`, borderBottom: `2px dashed rgba(34,197,94,${0.9*overlayOpacity})` }}>
               {showAnnotations && i === 0 && (
-                <div style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.95*overlayOpacity})`, color: `rgba(21,128,61,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+                <div style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.95*overlayOpacity})`, color: `rgba(21,128,61,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', pointerEvents: 'none' }}>
                   {paddingY}px padding Y
                 </div>
               )}
@@ -414,7 +447,7 @@ export function GridOverlay({
               }}
             >
               {showAnnotations && i === 0 && (
-                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(37,99,235,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(37,99,235,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', pointerEvents: 'none' }}>
                   {gutterY}px gap Y
                 </div>
               )}
