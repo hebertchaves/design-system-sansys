@@ -28,6 +28,7 @@ import DssBreadcrumbsElPage from "./pages/components/DssBreadcrumbsElPage";
 import DssHeaderPage from "./pages/components/DssHeaderPage";
 import DssToolbarPage from "./pages/components/DssToolbarPage";
 import DssDrawerPage from "./pages/components/DssDrawerPage";
+import DssFabPage from "./pages/components/DssFabPage";
 import DssTestCadrisPage from "./pages/components/DssTestCadrisPage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
@@ -81,6 +82,7 @@ const App = () => (
             <Route path="/componentes/dss-header" element={<DssHeaderPage />} />
             <Route path="/componentes/dss-toolbar" element={<DssToolbarPage />} />
             <Route path="/componentes/dss-drawer" element={<DssDrawerPage />} />
+            <Route path="/componentes/dss-fab" element={<DssFabPage />} />
             <Route path="/componentes/teste-cadris" element={<DssTestCadrisPage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             

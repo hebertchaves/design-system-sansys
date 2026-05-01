@@ -46,6 +46,7 @@ import {
   PanelTop,
   PanelLeft,
   Wrench,
+  Plus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -80,6 +81,7 @@ const navigation = {
       { title: "DssCheckbox", url: "/componentes/dss-checkbox", icon: CheckSquareIcon, status: "stable" },
       { title: "DssChip", url: "/componentes/dss-chip", icon: Tag, status: "golden" },
       { title: "DssDrawer", url: "/componentes/dss-drawer", icon: PanelLeft, status: "stable" },
+      { title: "DssFab", url: "/componentes/dss-fab", icon: Plus, status: "stable" },
       { title: "DssHeader", url: "/componentes/dss-header", icon: PanelTop, status: "stable" },
       { title: "DssInput", url: "/componentes/dss-input", icon: Square, status: "stable" },
       { title: "DssRange", url: "/componentes/dss-range", icon: SlidersHorizontal, status: "stable" },
