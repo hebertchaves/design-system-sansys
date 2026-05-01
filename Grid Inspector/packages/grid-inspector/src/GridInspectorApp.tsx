@@ -161,8 +161,8 @@ export function GridInspectorApp({ config = {}, debug = false }: GridInspectorAp
         <GridSystemProvider initialConfig={config}>
           <NestedGridProvider>
             <ViolationBridge />
-            <FloatingGridInspector />
             <GridOverlayBridge contentSelector={config.contentSelector} />
+            <FloatingGridInspector />
           </NestedGridProvider>
         </GridSystemProvider>
       </AppErrorBoundary>

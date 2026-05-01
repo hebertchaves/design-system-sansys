@@ -56,21 +56,7 @@ export function GridOverlay({
   
   // 🆕 AUTO COLUMN WIDTH - Controla se colunas usam 1fr ou largura fixa
   const [autoColumnWidth, setAutoColumnWidth] = useState(true);
-
-  // 🔧 CALCULAR LARGURA FIXA QUANDO AUTO = OFF (para não estourar o breakpoint)
-  const calculateFixedColumnWidth = (): string => {
-    if (autoColumnWidth) return '1fr';
-    
-    // Parse do breakpoint (ex: "1440px" -> 1440)
-    const breakpointValue = parseInt(containerMaxWidth);
-    if (isNaN(breakpointValue)) return '100px'; // fallback
-    
-    // Calcular espaço disponível: breakpoint - (2 * margin) - ((columns - 1) * gutter)
-    const availableWidth = breakpointValue - (2 * margin) - ((columns - 1) * gutter);
-    const columnWidth = availableWidth / columns;
-    
-    return `${columnWidth}px`;
-  };
+  // calculateFixedColumnWidth is defined inside renderColumnarGrid where colBounds is available
 
   // Full measured bounds of the content container (viewport-relative)
   const [contentBounds, setContentBounds] = useState<{
@@ -167,20 +153,56 @@ export function GridOverlay({
     // Also observe [data-grid-body] — its size changes when --dss-layout-max-width changes
     const layoutEl = (resolveTarget() as Element | null)?.querySelector('[data-grid-body]');
     if (layoutEl) resizeObserver.observe(layoutEl as HTMLElement);
+
     // Give CSS-var-triggered reflows time to settle before first measure
     const timeoutId = setTimeout(measureComponents, 300);
+    // Retry for async Vue component rendering (e.g. Vite HMR, lazy imports)
+    const retryId = setTimeout(measureComponents, 900);
 
-    // Re-measure on scroll (position changes aren't tracked by ResizeObserver)
-    const onScroll = () => requestAnimationFrame(measureComponents);
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Re-measure on window scroll
+    const onWindowScroll = () => requestAnimationFrame(measureComponents);
+    window.addEventListener('scroll', onWindowScroll, { passive: true });
+
+    // Re-measure on scroll inside the content element (overflow-y: auto containers
+    // like .test-content do NOT fire window scroll events)
+    const contentEl = target as HTMLElement;
+    const onContentScroll = () => requestAnimationFrame(measureComponents);
+    contentEl.addEventListener('scroll', onContentScroll, { passive: true });
 
     return () => {
       resizeObserver.disconnect();
       clearTimeout(timeoutId);
-      window.removeEventListener('scroll', onScroll);
+      clearTimeout(retryId);
+      window.removeEventListener('scroll', onWindowScroll);
+      contentEl.removeEventListener('scroll', onContentScroll);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentRef, contentSelector]);
+
+  // Re-measure bounds whenever the CSS-driven breakpoint or container type changes.
+  // The primary ResizeObserver may miss pure CSS-var changes when --dss-layout-max-width
+  // narrows [data-grid-body] but the outer .test-content container keeps its full width.
+  useEffect(() => {
+    const container = contentRef?.current
+      ?? (contentSelector ? (document.querySelector(contentSelector) as Element | null) : null);
+    if (!container) return;
+
+    const id = setTimeout(() => {
+      const containerRect = container.getBoundingClientRect();
+      setContentBounds({
+        top: containerRect.top, height: containerRect.height,
+        left: containerRect.left, width: containerRect.width,
+      });
+      const layoutEl = container.querySelector('[data-grid-body]');
+      if (layoutEl) {
+        const lr = layoutEl.getBoundingClientRect();
+        setLayoutBounds({ top: lr.top, height: lr.height, left: lr.left, width: lr.width });
+      }
+    }, 60); // 60ms: enough for CSS reflow after CSS var change
+
+    return () => clearTimeout(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerMaxWidth]);
 
   useEffect(() => {
     const updateFromCSSVars = () => {
@@ -259,6 +281,17 @@ export function GridOverlay({
     // follow the layout when max-width + margin:auto are applied (breakpoint centering).
     // Falls back to contentBounds when no data-grid-body is present.
     const colBounds = layoutBounds || contentBounds;
+
+    // Column width: use actual measured colBounds width (not theoretical containerMaxWidth).
+    // This ensures fixed-column mode follows the real layout width after breakpoint changes.
+    const calculateFixedColumnWidth = (): string => {
+      if (autoColumnWidth) return '1fr';
+      const totalWidth = colBounds?.width ?? parseInt(containerMaxWidth);
+      if (!totalWidth || isNaN(totalWidth) || totalWidth <= 0) return '100px';
+      const available = totalWidth - (2 * margin) - ((columns - 1) * gutter);
+      const w = Math.floor(available / columns);
+      return w > 0 ? `${w}px` : '100px';
+    };
     const columnAreaStyle: React.CSSProperties = colBounds
       ? { position: 'absolute', top: 0, bottom: 0, left: colBounds.left, width: colBounds.width, pointerEvents: 'none' }
       : { position: 'absolute', top: 0, bottom: 0, left: `${margin}px`, right: `${margin}px`, pointerEvents: 'none' };
@@ -375,24 +408,34 @@ export function GridOverlay({
           </>
         )}
 
-        {/* ── MARGIN Y: top/bottom bands inside the content bounds ── */}
-        {showMarginY && marginY > 0 && (
-          <>
-            <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: marginY, zIndex: 60, pointerEvents: 'none', borderBottom: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }}>
-              {showAnnotations && <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, pointerEvents: 'none' }}>{marginY}px margin Y</div>}
-            </div>
-            <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: marginY, zIndex: 60, pointerEvents: 'none', borderTop: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }} />
-          </>
-        )}
+        {/* ── MARGIN Y: top/bottom bands anchored to layoutBounds (__body), not contentBounds ──
+             layoutBounds = [data-grid-body] (__body, starts below header).
+             contentBounds = .test-content (includes area above the component).
+             Offset = layoutBounds.top - contentBounds.top places the band at the
+             exact boundary where --dss-layout-margin-y is applied (top of __sections). */}
+        {showMarginY && marginY > 0 && (() => {
+          const lbTop = layoutBounds && contentBounds ? layoutBounds.top - contentBounds.top : 0;
+          const lbHeight = layoutBounds ? layoutBounds.height : (contentBounds?.height ?? 0);
+          const hPos = colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 };
+          return (
+            <>
+              <div style={{ position: 'absolute', ...hPos, top: lbTop, height: marginY, zIndex: 60, pointerEvents: 'none', borderBottom: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }}>
+                {showAnnotations && <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, pointerEvents: 'none' }}>{marginY}px margin Y</div>}
+              </div>
+              <div style={{ position: 'absolute', ...hPos, top: lbTop + lbHeight - marginY, height: marginY, zIndex: 60, pointerEvents: 'none', borderTop: `2px dashed rgba(249,115,22,${0.8*overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12*overlayOpacity})` }} />
+            </>
+          );
+        })()}
 
-        {/* ── ROWS — one per CSS grid row (top already measured from DOM, no extra offset) ── */}
+        {/* ── ROWS — constrained to colBounds so they don't cover sidemenu/host header ── */}
         {showRows && componentRows.map((row, i) => {
           const isHighlighted = highlightedElementIndex === i;
           return (
             <div
               key={`row-${i}`}
               style={{
-                position: 'absolute', left: 0, right: 0, pointerEvents: 'none',
+                position: 'absolute', pointerEvents: 'none',
+                ...(colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }),
                 top: row.top, height: row.height,
                 zIndex: isHighlighted ? 30 : 20,
               }}
@@ -420,7 +463,7 @@ export function GridOverlay({
         {showPaddingY && paddingY > 0 && componentRows.map((row, i) => (
           <div
             key={`pad-y-${i}`}
-            style={{ position: 'absolute', left: 0, right: 0, pointerEvents: 'none', top: row.top, height: row.height, zIndex: 25 }}
+            style={{ position: 'absolute', pointerEvents: 'none', ...(colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }), top: row.top, height: row.height, zIndex: 25 }}
           >
             <div style={{ position: 'absolute', inset: `${paddingY}px 0`, pointerEvents: 'none', borderTop: `2px dashed rgba(34,197,94,${0.9*overlayOpacity})`, borderBottom: `2px dashed rgba(34,197,94,${0.9*overlayOpacity})` }}>
               {showAnnotations && i === 0 && (
@@ -432,15 +475,22 @@ export function GridOverlay({
           </div>
         ))}
 
-        {/* ── GAP Y — band between consecutive rows, sized by gutterY prop ── */}
-        {showGapsY && gutterY > 0 && componentRows.length > 1 && componentRows.slice(0, -1).map((row, i) => {
+        {/* ── GAP Y — band between consecutive rows using MEASURED actual gap ──
+             Uses nextRow.top - (row.top + row.height) so the band reflects the real
+             CSS gap between sections (set via --dss-layout-gap-y on __sections).
+             When gap = 0 (sections adjacent), band height = 0 and nothing is shown. */}
+        {showGapsY && componentRows.length > 1 && componentRows.slice(0, -1).map((row, i) => {
+          const nextRow = componentRows[i + 1];
+          const actualGap = nextRow.top - (row.top + row.height);
+          if (actualGap < 1) return null;
           const gapTop = row.top + row.height;
           return (
             <div
               key={`gap-y-${i}`}
               style={{
-                position: 'absolute', left: 0, right: 0, pointerEvents: 'none',
-                top: gapTop, height: gutterY, zIndex: 18,
+                position: 'absolute', pointerEvents: 'none',
+                ...(colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }),
+                top: gapTop, height: actualGap, zIndex: 18,
                 backgroundColor: `rgba(191,219,254,${0.6*overlayOpacity})`,
                 borderTop: `1px solid rgba(96,165,250,${0.7*overlayOpacity})`,
                 borderBottom: `1px solid rgba(96,165,250,${0.7*overlayOpacity})`,
@@ -448,7 +498,7 @@ export function GridOverlay({
             >
               {showAnnotations && i === 0 && (
                 <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, fontFamily: 'monospace', fontWeight: 600, background: `rgba(255,255,255,${0.9*overlayOpacity})`, color: `rgba(37,99,235,${overlayOpacity})`, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', pointerEvents: 'none' }}>
-                  {gutterY}px gap Y
+                  {Math.round(actualGap)}px gap Y
                 </div>
               )}
             </div>

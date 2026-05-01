@@ -7,6 +7,12 @@
   flex-direction: column;
   min-height: 100%;
   background-color: var(--dss-surface-default);
+  // Breakpoint + Container Type: centra toda a interface (header + body) quando o
+  // inspector aplica um max-width menor que o viewport.
+  max-width: var(--dss-layout-max-width, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 
   // ── Header bar ───────────────────────────────────────────────────────────
   // EXC-01: box-shadow com rgba — não existe token de sombra no catálogo DSS
@@ -67,12 +73,11 @@
     display: flex;
     flex-direction: column;
     background-color: var(--dss-surface-default);
-    // Breakpoint + Container Type: --dss-layout-max-width escrito pelo inspector
-    // (fixed=breakpoint width, fluid=100%). Centraliza quando menor que viewport.
-    max-width: var(--dss-layout-max-width, 100%);
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+    // CSS Container — @container queries abaixo respondem à largura real do __body,
+    // não ao viewport. Quando o inspector muda --dss-layout-max-width, os grids
+    // internos (status-row, filters-row) reagem automaticamente.
+    container-type: inline-size;
+    container-name: tpc-body;
   }
 
   // ── Sections — wrapper intermediário para grid-inspector row detection ───
@@ -84,19 +89,22 @@
     flex-direction: column;
     flex: 1;
     // Margin X/Y: espaço externo do conteúdo em relação às bordas do container
-    // Escrito pelo inspector via Spacing X > Margin e Spacing Y > Margin Y
     margin: var(--dss-layout-margin-y, 0) var(--dss-layout-margin-x, 0);
+    // Gap Y: espaço entre seções (rows do grid). Default 0 — inspector define via
+    // Spacing Y > Gap Y slider (component.gutter.y → --dss-layout-gap-y)
+    gap: var(--dss-layout-gap-y, 0);
   }
 
   // ── Seção 1 — Breadcrumbs + Título ──────────────────────────────────────
 
   &__title-section {
-    padding: var(--dss-layout-padding-y, var(--dss-spacing-4)) var(--dss-layout-padding-x, var(--dss-spacing-6)) 0;
+    // Padding simétrico: mesmo valor top/bottom via --dss-layout-padding-y
+    // Permite que as dashed lines do Padding Y overlay alinhem corretamente
+    padding: var(--dss-layout-padding-y, var(--dss-spacing-4)) var(--dss-layout-padding-x, var(--dss-spacing-6));
     border-bottom: 1px solid var(--dss-border-gray-300);
     display: flex;
     flex-direction: column;
     gap: var(--dss-layout-gap-y, var(--dss-spacing-3));
-    padding-bottom: var(--dss-layout-gap-y, var(--dss-spacing-3));
   }
 
   &__breadcrumbs {
@@ -210,7 +218,10 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--dss-layout-gap-x, var(--dss-spacing-4));
 
-    @media (max-width: 599px) {
+    // @container responde à largura do __body (não do viewport).
+    // Quando o inspector muda --dss-layout-max-width para um breakpoint estreito,
+    // o __body encolhe e estas queries disparam automaticamente.
+    @container tpc-body (max-width: 599px) {
       grid-template-columns: 1fr;
       gap: var(--dss-layout-gap-y, var(--dss-spacing-4));
     }
@@ -298,7 +309,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--dss-layout-gap-x, var(--dss-spacing-4));
 
-    @media (max-width: 599px) {
+    @container tpc-body (max-width: 599px) {
       grid-template-columns: 1fr;
       gap: var(--dss-layout-gap-y, var(--dss-spacing-4));
     }

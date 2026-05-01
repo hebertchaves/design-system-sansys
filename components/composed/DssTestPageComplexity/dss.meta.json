@@ -1,6 +1,6 @@
 {
   "name": "DssTestPageComplexity",
-  "version": "1.4.0",
+  "version": "1.6.0",
   "dssVersion": "2.2",
   "phase": 3,
   "category": "composed",
@@ -106,11 +106,13 @@
   "filterStrategy": "uncontrolled",
   "filterStrategyNote": "Os filtros (setor, equipe, código) são estado interno não controlado. O evento filter:search não emite payload. Para uso controlado, o consumidor deve substituir os inputs por props v-model ou aguançar versão 1.1.0 com suporte a filtros controlados.",
   "created": "2026-04-29",
-  "lastModified": "2026-04-30 (v1.4.0)",
+  "lastModified": "2026-04-30 (v1.6.0)",
   "changeLog": [
     "1.1.0 — Reconstrução visual com fidelidade ao Figma MCP: header bar, pill tab toggle, table header azul, colunas renomeadas (Mobile/Protocolo/Matrícula/Nr.Hidrômetro), botão de busca externo para Equipe e Código, ícones de status diferenciados por tipo",
     "1.2.0 — Aumento de fidelidade Figma: remoção de DssDataCard (substituído por DssCard + tabela raw), remoção de DssCard wrapper nos filtros (seção plana com border-bottom), paginação inline (Anterior/1/2/3/Próximo), botão Pesquisar laranja (--dss-hub-primary), layout por seções com border-bottom separadores, TestPageComplexity.vue simplificado para instância única com dados Figma",
     "1.3.0 — Grid Inspector compatibility: __sections wrapper intermediário (firstChild detection), ids em todos os elementos inspecionáveis (dss-tpc-*), data-grid-debug attributes, remoção de classes Quasar (q-col-gutter-md, row, col-*) substituídas por CSS grid nativo, padrão --dss-layout-*/--dss-spacing-* em 17 pontos de padding/gap para resposta ao floating inspector",
-    "1.4.0 — Grid Inspector full compliance: __sections consome --dss-layout-margin-x/y (Margin sliders operantes), __body consome --dss-layout-max-width (breakpoints/container type afetam largura real da página), ferramenta corrigida para escrever --dss-layout-columns e --dss-layout-max-width em :root"
+    "1.4.0 — Grid Inspector full compliance: __sections consome --dss-layout-margin-x/y (Margin sliders operantes), __body consome --dss-layout-max-width (breakpoints/container type afetam largura real da página), ferramenta corrigida para escrever --dss-layout-columns e --dss-layout-max-width em :root",
+    "1.5.0 — Container queries + overlay alignment: __body recebe container-type:inline-size/container-name:tpc-body, @media substituído por @container em __status-row e __filters-row (grids reagem à largura real do layout, não do viewport); GridOverlay corrigido: scroll listener no container overflow-y:auto, re-medição de layoutBounds ao mudar containerMaxWidth (60ms delay), retry timeout 900ms para rendering async, calculateFixedColumnWidth usa colBounds.width medido",
+    "1.6.0 — Header segue breakpoint + overlay não sobrepõe painel: max-width/margin:auto/width:100% movidos de __body para .dss-test-page-complexity (root), data-grid-body movido do #dss-tpc-body para o root element (layoutBounds mede a interface inteira incluindo header); GridInspectorApp: GridOverlayBridge renderiza antes de FloatingGridInspector no DOM (painel fica acima do overlay em ordem de stacking)"
   ]
 }

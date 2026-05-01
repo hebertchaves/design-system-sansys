@@ -4673,14 +4673,6 @@ function GridOverlay({
   const [showMarginY, setShowMarginY] = useState(true);
   const [containerMaxWidth, setContainerMaxWidth] = useState("1440px");
   const [autoColumnWidth, setAutoColumnWidth] = useState(true);
-  const calculateFixedColumnWidth = () => {
-    if (autoColumnWidth) return "1fr";
-    const breakpointValue = parseInt(containerMaxWidth);
-    if (isNaN(breakpointValue)) return "100px";
-    const availableWidth = breakpointValue - 2 * margin - (columns - 1) * gutter;
-    const columnWidth = availableWidth / columns;
-    return `${columnWidth}px`;
-  };
   const [contentBounds, setContentBounds] = useState(null);
   const [layoutBounds, setLayoutBounds] = useState(null);
   const [componentRows, setComponentRows] = useState([]);
@@ -4749,14 +4741,39 @@ function GridOverlay({
     const layoutEl = (_a = resolveTarget()) == null ? void 0 : _a.querySelector("[data-grid-body]");
     if (layoutEl) resizeObserver.observe(layoutEl);
     const timeoutId = setTimeout(measureComponents, 300);
-    const onScroll = () => requestAnimationFrame(measureComponents);
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const retryId = setTimeout(measureComponents, 900);
+    const onWindowScroll = () => requestAnimationFrame(measureComponents);
+    window.addEventListener("scroll", onWindowScroll, { passive: true });
+    const contentEl = target;
+    const onContentScroll = () => requestAnimationFrame(measureComponents);
+    contentEl.addEventListener("scroll", onContentScroll, { passive: true });
     return () => {
       resizeObserver.disconnect();
       clearTimeout(timeoutId);
-      window.removeEventListener("scroll", onScroll);
+      clearTimeout(retryId);
+      window.removeEventListener("scroll", onWindowScroll);
+      contentEl.removeEventListener("scroll", onContentScroll);
     };
   }, [contentRef, contentSelector]);
+  useEffect(() => {
+    const container = (contentRef == null ? void 0 : contentRef.current) ?? (contentSelector ? document.querySelector(contentSelector) : null);
+    if (!container) return;
+    const id = setTimeout(() => {
+      const containerRect = container.getBoundingClientRect();
+      setContentBounds({
+        top: containerRect.top,
+        height: containerRect.height,
+        left: containerRect.left,
+        width: containerRect.width
+      });
+      const layoutEl = container.querySelector("[data-grid-body]");
+      if (layoutEl) {
+        const lr = layoutEl.getBoundingClientRect();
+        setLayoutBounds({ top: lr.top, height: lr.height, left: lr.left, width: lr.width });
+      }
+    }, 60);
+    return () => clearTimeout(id);
+  }, [containerMaxWidth]);
   useEffect(() => {
     const updateFromCSSVars = () => {
       if (typeof window === "undefined") return;
@@ -4804,6 +4821,14 @@ function GridOverlay({
   const renderColumnarGrid = () => {
     const outerStyle = contentBounds ? { position: "absolute", top: contentBounds.top, left: 0, right: 0, height: contentBounds.height, pointerEvents: "none" } : { position: "absolute", inset: 0, pointerEvents: "none" };
     const colBounds = layoutBounds || contentBounds;
+    const calculateFixedColumnWidth = () => {
+      if (autoColumnWidth) return "1fr";
+      const totalWidth = (colBounds == null ? void 0 : colBounds.width) ?? parseInt(containerMaxWidth);
+      if (!totalWidth || isNaN(totalWidth) || totalWidth <= 0) return "100px";
+      const available = totalWidth - 2 * margin - (columns - 1) * gutter;
+      const w = Math.floor(available / columns);
+      return w > 0 ? `${w}px` : "100px";
+    };
     const columnAreaStyle = colBounds ? { position: "absolute", top: 0, bottom: 0, left: colBounds.left, width: colBounds.width, pointerEvents: "none" } : { position: "absolute", top: 0, bottom: 0, left: `${margin}px`, right: `${margin}px`, pointerEvents: "none" };
     return /* @__PURE__ */ jsxs("div", { style: outerStyle, children: [
       /* @__PURE__ */ jsx("div", { style: columnAreaStyle, children: /* @__PURE__ */ jsx(
@@ -4920,11 +4945,11 @@ function GridOverlay({
         )
       ] }),
       showMarginY && marginY > 0 && /* @__PURE__ */ jsxs(Fragment, { children: [
-        /* @__PURE__ */ jsx("div", { style: { position: "absolute", left: 0, right: 0, top: 0, height: marginY, zIndex: 60, pointerEvents: "none", borderBottom: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` }, children: showAnnotations && /* @__PURE__ */ jsxs("div", { style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", fontSize: 11, fontFamily: "monospace", fontWeight: 600, background: `rgba(255,255,255,${0.9 * overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: "2px 6px", borderRadius: 4, pointerEvents: "none" }, children: [
+        /* @__PURE__ */ jsx("div", { style: { position: "absolute", ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }, top: 0, height: marginY, zIndex: 60, pointerEvents: "none", borderBottom: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` }, children: showAnnotations && /* @__PURE__ */ jsxs("div", { style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", fontSize: 11, fontFamily: "monospace", fontWeight: 600, background: `rgba(255,255,255,${0.9 * overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: "2px 6px", borderRadius: 4, pointerEvents: "none" }, children: [
           marginY,
           "px margin Y"
         ] }) }),
-        /* @__PURE__ */ jsx("div", { style: { position: "absolute", left: 0, right: 0, bottom: 0, height: marginY, zIndex: 60, pointerEvents: "none", borderTop: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` } })
+        /* @__PURE__ */ jsx("div", { style: { position: "absolute", ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }, bottom: 0, height: marginY, zIndex: 60, pointerEvents: "none", borderTop: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` } })
       ] }),
       showRows && componentRows.map((row, i) => {
         const isHighlighted = highlightedElementIndex === i;
@@ -4933,9 +4958,8 @@ function GridOverlay({
           {
             style: {
               position: "absolute",
-              left: 0,
-              right: 0,
               pointerEvents: "none",
+              ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 },
               top: row.top,
               height: row.height,
               zIndex: isHighlighted ? 30 : 20
@@ -4965,7 +4989,7 @@ function GridOverlay({
       showPaddingY && paddingY > 0 && componentRows.map((row, i) => /* @__PURE__ */ jsx(
         "div",
         {
-          style: { position: "absolute", left: 0, right: 0, pointerEvents: "none", top: row.top, height: row.height, zIndex: 25 },
+          style: { position: "absolute", pointerEvents: "none", ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }, top: row.top, height: row.height, zIndex: 25 },
           children: /* @__PURE__ */ jsx("div", { style: { position: "absolute", inset: `${paddingY}px 0`, pointerEvents: "none", borderTop: `2px dashed rgba(34,197,94,${0.9 * overlayOpacity})`, borderBottom: `2px dashed rgba(34,197,94,${0.9 * overlayOpacity})` }, children: showAnnotations && i === 0 && /* @__PURE__ */ jsxs("div", { style: { position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", fontSize: 11, fontFamily: "monospace", fontWeight: 600, background: `rgba(255,255,255,${0.95 * overlayOpacity})`, color: `rgba(21,128,61,${overlayOpacity})`, padding: "2px 6px", borderRadius: 4, whiteSpace: "nowrap", pointerEvents: "none" }, children: [
             paddingY,
             "px padding Y"
@@ -4980,9 +5004,8 @@ function GridOverlay({
           {
             style: {
               position: "absolute",
-              left: 0,
-              right: 0,
               pointerEvents: "none",
+              ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 },
               top: gapTop,
               height: gutterY,
               zIndex: 18,
@@ -5243,8 +5266,8 @@ function GridInspectorApp({ config = {}, debug = false }) {
       },
       children: /* @__PURE__ */ jsx(AppErrorBoundary, { children: /* @__PURE__ */ jsx(GridSystemProvider, { initialConfig: config, children: /* @__PURE__ */ jsxs(NestedGridProvider, { children: [
         /* @__PURE__ */ jsx(ViolationBridge, {}),
-        /* @__PURE__ */ jsx(FloatingGridInspector, {}),
-        /* @__PURE__ */ jsx(GridOverlayBridge, { contentSelector: config.contentSelector })
+        /* @__PURE__ */ jsx(GridOverlayBridge, { contentSelector: config.contentSelector }),
+        /* @__PURE__ */ jsx(FloatingGridInspector, {})
       ] }) }) })
     }
   );
