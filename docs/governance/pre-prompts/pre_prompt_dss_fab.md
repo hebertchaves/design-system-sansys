@@ -41,6 +41,8 @@ O componente deve ser um wrapper direto do `<q-fab>`. O slot `default` é reserv
 
 ### 3.1. Props Expostas (Permitidas)
 
+*Nota: O DssFab não emite eventos próprios além dos nativos do Vue (ex: `@click`), pois o estado de expansão é gerenciado via `v-model` (evento `update:model-value`).*
+
 **Visuais (Alinhadas ao DssButton):**
 - `color` (String) - Cor semântica (primary, secondary, etc.). Padrão: `primary`.
 - `text-color` (String) - Cor do ícone/texto.
@@ -66,13 +68,22 @@ O componente deve ser um wrapper direto do `<q-fab>`. O slot `default` é reserv
 
 - **Border Radius:** `border-radius: var(--dss-radius-full)` (sempre circular ou pill).
 - **Elevação:** `box-shadow: var(--dss-elevation-2)` (padrão) e `var(--dss-elevation-3)` (hover/active).
-- **Transição:** `transition: all var(--dss-duration-base) var(--dss-easing-standard)`.
+- **Transição:** `transition: all var(--dss-duration-200) var(--dss-easing-standard)`.
 
 ## 5. Acessibilidade e Estados
 
 - **Role:** O Quasar gerencia os atributos `aria-expanded` e `aria-haspopup`.
 - **Touch Target:** O botão trigger deve ter no mínimo 48x48px (garantido pelo tamanho padrão do FAB).
 - **Estados aplicáveis:** `default`, `hover`, `focus`, `active`, `disabled`, `expanded`.
+
+**Tabela de Delegação de Estados:**
+| Estado | Gerenciado por | Mecanismo |
+|--------|----------------|-----------|
+| `hover` | DSS (CSS) | Pseudo-classe `:hover` no trigger |
+| `focus` | DSS (CSS) | Pseudo-classe `:focus-visible` no trigger |
+| `active` | DSS (CSS) | Pseudo-classe `:active` no trigger |
+| `disabled` | Quasar | Prop `disable` repassada ao `QFab` |
+| `expanded` | Quasar | Prop `model-value` / `v-model` |
 
 ## 6. Cenários de Uso Obrigatórios (Exemplos)
 
