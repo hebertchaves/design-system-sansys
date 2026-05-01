@@ -1,0 +1,5 @@
+// DssFab — Layer 4: Output orchestrator
+// Ordem: states primeiro (base), depois brands (sobrescreve onde necessário).
+
+@use './states' as *;
+@use './brands' as *;

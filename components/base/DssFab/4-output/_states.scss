@@ -1,0 +1,98 @@
+/* ==========================================================================
+   DssFab - LAYER 4: OUTPUT (States)
+
+   Responsabilidade: Dark mode, prefers-contrast, forced-colors,
+   prefers-reduced-motion, print.
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-fab__qfab .q-fab__trigger {
+    /* Em dark mode, a elevação padrão do Quasar já usa variáveis escuras.
+       DSS override garante uso dos tokens de elevação corretos. */
+    box-shadow: var(--dss-elevation-2);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow: var(--dss-elevation-3);
+    }
+
+    &:focus-visible {
+      outline: var(--dss-focus-ring-dark);
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-fab__qfab .q-fab__trigger {
+    transition: none;
+  }
+
+  /* Desabilita animação de abertura/fechamento das ações */
+  .dss-fab__qfab .q-fab__actions {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-fab__qfab .q-fab__trigger {
+    outline: var(--dss-border-width-md) solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+
+   EXC-01: 1px solid ButtonBorder / ButtonText
+   Justificativa: Forced-colors mode — system color keywords obrigatórios.
+   Tokens CSS são ignorados pelo navegador neste modo.
+   Padrão DssCard EXC-04 e DssBtnDropdown EXC-04.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-fab__qfab .q-fab__trigger {
+    border: 1px solid ButtonBorder; /* EXC-01 */
+    background-color: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+
+    &:hover {
+      background-color: Highlight;
+      color: HighlightText;
+      box-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid ButtonText;
+    }
+  }
+
+  /* Ações filhas em forced-colors */
+  .dss-fab__qfab .q-fab__actions {
+    background-color: Canvas;
+    border: 1px solid ButtonBorder; /* EXC-01 */
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  /* FAB não é relevante para impressão */
+  .dss-fab {
+    display: none;
+  }
+}

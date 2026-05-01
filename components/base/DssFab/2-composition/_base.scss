@@ -1,0 +1,116 @@
+/* ==========================================================================
+   DssFab - LAYER 2: COMPOSITION (Base Styles)
+
+   Responsabilidade: Estilos fundamentais do FAB usando APENAS tokens
+   genéricos DSS. Sem cores em SCSS — cores via classes utilitárias Quasar.
+
+   ARQUITETURA DE ESTILOS:
+   1. .dss-fab — container wrapper (aplicado no div externo)
+   2. .dss-fab__qfab — o QFab em si
+   3. .dss-fab__qfab .q-fab__trigger — botão trigger circular (gate exception)
+   4. .dss-fab__qfab .q-fab__actions — container das ações filhas
+
+   GATE-EXCEPTION (VINCULANTE):
+   Os seletores que acessam .q-fab__trigger e .q-fab__actions são
+   elementos DOM internos do QFab (Quasar Framework), não subcomponentes DSS.
+   O Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos.
+   Precedente: DssBtnDropdown gateExceptions → .q-btn-dropdown__arrow-container
+   (selado Mar 2026).
+   ========================================================================== */
+
+@import '../../../../utils/index';
+
+/* ==========================================================================
+   CONTAINER DO FAB
+   ========================================================================== */
+
+.dss-fab {
+  /* Inline-flex: ocupa apenas o espaço necessário */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Remove tap highlight em mobile */
+  -webkit-tap-highlight-color: transparent;
+
+  /* Posicionamento relativo para possível overlay de estados futuros */
+  position: relative;
+}
+
+/* ==========================================================================
+   QFAB WRAPPER (o QFab em si)
+   ========================================================================== */
+
+.dss-fab__qfab {
+  /* Herda o display inline-flex do container */
+  display: inline-flex;
+}
+
+/* ==========================================================================
+   TRIGGER (botão circular principal)
+
+   GATE-EXCEPTION: .q-fab__trigger é interno do QFab — não é subcomponente DSS.
+   Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos.
+   Precedente: DssBtnDropdown (selado Mar 2026).
+   ========================================================================== */
+
+.dss-fab__qfab .q-fab__trigger {
+  /* Forma circular — token full */
+  border-radius: var(--dss-radius-full);
+
+  /* Dimensões mínimas do FAB padrão (--dss-spacing-14 = 56px)
+     Garante touch target ≥ 48×48px (WCAG 2.5.5) sem pseudo-elemento ::before.
+     O FAB é classificado como Opção A: tamanho intrínseco garante o mínimo.
+     Diferente de Compact Controls (DssChip, DssRadio) que precisam de ::before
+     porque seu tamanho visual é inferior a 48px. */
+  min-width: var(--dss-spacing-14);
+  min-height: var(--dss-spacing-14);
+
+  /* Elevação padrão Material Design para FAB */
+  box-shadow: var(--dss-elevation-2);
+
+  /* Transição de elevação e cor */
+  transition:
+    box-shadow var(--dss-duration-200) var(--dss-easing-standard),
+    background-color var(--dss-duration-200) var(--dss-easing-standard);
+
+  /* Hover: elevação aumenta (Material Design — FAB hover) */
+  &:hover:not([disabled]):not(.disabled) {
+    box-shadow: var(--dss-elevation-3);
+  }
+
+  /* Focus-visible: ring de foco acessível */
+  &:focus-visible {
+    outline: var(--dss-focus-ring);
+    outline-offset: 2px;
+    box-shadow: var(--dss-elevation-2);
+  }
+
+  /* Active: feedback tátil */
+  &:active:not([disabled]):not(.disabled) {
+    box-shadow: var(--dss-elevation-3);
+  }
+}
+
+/* ==========================================================================
+   ESTADO DISABLED
+
+   Opacidade via token --dss-opacity-disabled (= 0.4, canônico DSS).
+   Pointer-events none impede interações.
+   Box-shadow removido — FAB desabilitado não tem elevação.
+   ========================================================================== */
+
+.dss-fab--disabled {
+  .q-fab__trigger {
+    opacity: var(--dss-opacity-disabled);
+    pointer-events: none;
+    cursor: default;
+    box-shadow: none;
+
+    /* Remove hover/active quando desabilitado */
+    &:hover,
+    &:active {
+      box-shadow: none;
+    }
+  }
+}

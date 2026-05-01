@@ -1,0 +1,86 @@
+{
+  "component": "DssFab",
+  "cssClass": "dss-fab",
+  "phase": 2,
+  "status": "in-progress",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssBtnDropdown",
+  "goldenContextNote": "DssBtnDropdown é o Golden Context por ser o componente composto de Fase 2 mais próximo semanticamente — botão que expande/gerencia um painel de ações. DssBtnDropdown foi selado em Mar 2026 e fornece o baseline arquitetural para wrapping de QFab.",
+  "phaseDescription": "Fase 2 — Componente Composto. O DssFab gerencia estado interno (expandido/colapsado) e orquestra múltiplos filhos (DssFabAction). Não é um simples wrapper de primitivo, mas um container interativo de ações.",
+  "classification": {
+    "type": "FAB (Composição de Primeiro Grau)",
+    "category": "Action Group Composto — Floating Action Button",
+    "interactive": true,
+    "family": "FAB"
+  },
+  "wrapperApproach": "WRAP QFab — não reconstrói trigger do zero. Justificativa: QFab fornece estado de expansão, direção de animação, acessibilidade WAI-ARIA e keyboard navigation nativos. Rebuilding seria duplicação de esforço sem ganho arquitetural. Precedente: DssBtnDropdown (selado Mar 2026).",
+  "compositionRequirements": ["DssButton", "DssIcon"],
+  "compositionNote": "DssFab envolve QFab diretamente. O trigger é renderizado internamente pelo QFab. DssIcon pode ser usado via prop `icon` ou slot. O slot default é reservado para DssFabAction (Nível 3, ainda a ser criado).",
+  "compositionFuture": ["DssFabAction"],
+  "compositionFutureNote": "DssFabAction (Nível 3) será o filho canônico do DssFab. Até que seja criado, exemplos usam <q-fab-action> nativo (EXC-01 documentado).",
+  "statesApplicable": ["default", "hover", "focus", "active", "disabled", "expanded"],
+  "statesNotApplicable": ["loading", "error", "indeterminate"],
+  "statesNotApplicableJustification": {
+    "loading": "Fase 2 síncrona — loading não aplicável ao trigger FAB.",
+    "error": "FAB é ação flutuante primária — estados de erro pertencem a componentes de formulário.",
+    "indeterminate": "Não aplicável a botões de ação."
+  },
+  "touchTarget": "Opção A — O FAB padrão tem 56×56px, garantindo touch target ≥ 48×48px (WCAG 2.5.5) sem necessidade de pseudo-elemento ::before. Diferente de Compact Controls (DssChip/DssRadio) que usam ::before porque seu tamanho visual é inferior a 48px.",
+  "ariaRole": "delegado ao QFab — role='button' com aria-expanded e aria-haspopup gerenciados pelo Quasar",
+  "accessibility": {
+    "keyboardNavigation": "Totalmente gerenciado pelo QFab: Enter/Space abre/fecha, Escape fecha, Tab navega entre ações",
+    "screenReader": "aria-expanded gerenciado pelo Quasar automaticamente",
+    "ariaLabel": "Prop ariaLabel disponível para contextos sem label visual suficientemente descritivo"
+  },
+  "propsBlocked": ["glossy", "push", "flat", "outline", "unelevated", "padding"],
+  "propsBlockedJustification": {
+    "glossy": "Não faz parte da linguagem visual DSS v2.2.",
+    "push": "Não faz parte da linguagem visual DSS v2.2.",
+    "flat": "FAB no DSS é sempre elevado (Material Design baseline). Variante flat não faz sentido semântico para ação flutuante primária.",
+    "outline": "Idem flat.",
+    "unelevated": "Idem flat.",
+    "padding": "Padding governado por tokens internos, não exposto na API pública."
+  },
+  "tokens": {
+    "shape": ["--dss-radius-full"],
+    "elevation": ["--dss-elevation-2", "--dss-elevation-3"],
+    "motion": ["--dss-duration-200", "--dss-easing-standard"],
+    "accessibility": ["--dss-focus-ring", "--dss-focus-ring-dark", "--dss-opacity-disabled"],
+    "border": ["--dss-border-width-md", "--dss-border-width-thick"],
+    "brand": ["--dss-hub-600", "--dss-hub-400", "--dss-water-500", "--dss-water-400", "--dss-waste-600", "--dss-waste-500"]
+  },
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "value": "<q-fab-action> nativo em exemplos",
+      "location": "DssFab.example.vue, DssFab.md",
+      "justification": "DssFabAction (Nível 3) ainda não foi construído. O DssFab requer filhos para demonstrar comportamento de expansão. Esta exceção será removida quando DssFabAction for selado."
+    },
+    {
+      "id": "EXC-States-01",
+      "value": "1px solid ButtonBorder",
+      "location": "4-output/_states.scss (@media forced-colors)",
+      "justification": "Forced-colors mode — system color keywords obrigatórios. Tokens CSS são ignorados pelo navegador neste modo. Padrão DssCard EXC-04, DssBtnDropdown EXC-04."
+    }
+  ],
+  "gateExceptions": {
+    "compositionGateV24": {
+      "files": ["2-composition/_base.scss", "4-output/_states.scss", "4-output/_brands.scss"],
+      "selectors": [".dss-fab__qfab .q-fab__trigger", ".dss-fab__qfab .q-fab__actions"],
+      "justification": "Seletores .q-fab__trigger e .q-fab__actions são elementos DOM internos do QFab (Quasar Framework), não subcomponentes DSS. Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos. Precedente: DssBtnDropdown gateExceptions → .q-btn-dropdown__arrow-container (selado Mar 2026)."
+    }
+  },
+  "reservations": [
+    "Brand tokens numéricos (--dss-hub-600, etc.) — tokens semânticos de brand ainda não existem no catálogo v2.2.",
+    "Mixin dss-transition disponível mas não utilizado — transição aplicada diretamente por clarity de contexto do FAB.",
+    "Sem unit tests — componentes DSS não têm testes unitários automatizados em v2.2.",
+    "DssFabAction (Nível 3) não existe ainda — slot default aceita q-fab-action nativo temporariamente (EXC-01)."
+  ],
+  "compositionRecommendations": [
+    "Posicionar DssFab dentro de DssPageSticky para posicionamento fixo na tela.",
+    "Usar DssFabAction (após ser criado) em vez de q-fab-action nativo.",
+    "Não usar position: fixed diretamente no DssFab — delegar ao container pai."
+  ],
+  "auditHistory": []
+}

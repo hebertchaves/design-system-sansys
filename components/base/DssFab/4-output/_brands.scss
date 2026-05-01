@@ -1,0 +1,111 @@
+/* ==========================================================================
+   DssFab - LAYER 4: OUTPUT (Brands)
+
+   Responsabilidade: Variações de marca (Hub, Water, Waste).
+   Acento visual de marca via box-shadow inset na borda inferior do trigger.
+
+   Nota: Tokens de brand numéricos (--dss-hub-600, etc.) são usados
+   intencionalmente — tokens semânticos de brand ainda não existem no
+   catálogo DSS v2.2. Padrão idêntico ao DssCard, DssBtnGroup e
+   DssBtnDropdown brands.
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] .dss-fab--brand-hub,
+.dss-fab--brand-hub {
+  > .dss-fab__qfab .q-fab__trigger {
+    box-shadow:
+      var(--dss-elevation-2),
+      inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-hub-600);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow:
+        var(--dss-elevation-3),
+        inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-hub-600);
+    }
+  }
+}
+
+/* ==========================================================================
+   WATER BRAND (Azul)
+   ========================================================================== */
+
+[data-brand="water"] .dss-fab--brand-water,
+.dss-fab--brand-water {
+  > .dss-fab__qfab .q-fab__trigger {
+    box-shadow:
+      var(--dss-elevation-2),
+      inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-water-500);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow:
+        var(--dss-elevation-3),
+        inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-water-500);
+    }
+  }
+}
+
+/* ==========================================================================
+   WASTE BRAND (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] .dss-fab--brand-waste,
+.dss-fab--brand-waste {
+  > .dss-fab__qfab .q-fab__trigger {
+    box-shadow:
+      var(--dss-elevation-2),
+      inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-waste-600);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow:
+        var(--dss-elevation-3),
+        inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-waste-600);
+    }
+  }
+}
+
+/* ==========================================================================
+   DARK MODE — BRAND ADJUSTMENTS
+   Clareia as cores de brand em dark mode para melhor contraste.
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-fab--brand-hub > .dss-fab__qfab .q-fab__trigger {
+    box-shadow:
+      var(--dss-elevation-2),
+      inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-hub-400);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow:
+        var(--dss-elevation-3),
+        inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-hub-400);
+    }
+  }
+
+  .dss-fab--brand-water > .dss-fab__qfab .q-fab__trigger {
+    box-shadow:
+      var(--dss-elevation-2),
+      inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-water-400);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow:
+        var(--dss-elevation-3),
+        inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-water-400);
+    }
+  }
+
+  .dss-fab--brand-waste > .dss-fab__qfab .q-fab__trigger {
+    box-shadow:
+      var(--dss-elevation-2),
+      inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-waste-500);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow:
+        var(--dss-elevation-3),
+        inset 0 calc(-1 * var(--dss-border-width-thick)) 0 var(--dss-waste-500);
+    }
+  }
+}
