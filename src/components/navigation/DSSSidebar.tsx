@@ -83,6 +83,7 @@ const navigation = {
       { title: "DssDrawer", url: "/componentes/dss-drawer", icon: PanelLeft, status: "stable" },
       { title: "DssFab", url: "/componentes/dss-fab", icon: Plus, status: "stable" },
       { title: "DssHeader", url: "/componentes/dss-header", icon: PanelTop, status: "stable" },
+      { title: "DssPage", url: "/componentes/dss-page", icon: FileText, status: "stable" },
       { title: "DssInput", url: "/componentes/dss-input", icon: Square, status: "stable" },
       { title: "DssRange", url: "/componentes/dss-range", icon: SlidersHorizontal, status: "stable" },
       { title: "DssTabs", url: "/componentes/dss-tabs", icon: Layers, status: "stable" },
