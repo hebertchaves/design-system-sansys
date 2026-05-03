@@ -21,11 +21,17 @@
       "DssBreadcrumbsEl",
       "DssButton",
       "DssInput",
-      "DssSelect",
+      "DssSelect"
     ],
     "quasar": [
       "QSeparator"
     ]
+  },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
   },
   "tokens": [
     "--dss-surface-muted",
@@ -92,7 +98,9 @@
   ],
   "features": {
     "inheritAttrs": false,
-    "provide": ["PAGE_COMPLEXITY_DISABLED_KEY"],
+    "provide": [
+      "PAGE_COMPLEXITY_DISABLED_KEY"
+    ],
     "brand": true,
     "darkMode": true,
     "highContrast": true,
@@ -101,7 +109,10 @@
     "reducedMotion": true,
     "loading": true,
     "disabled": true,
-    "slots": ["filter-actions", "table-footer"]
+    "slots": [
+      "filter-actions",
+      "table-footer"
+    ]
   },
   "filterStrategy": "uncontrolled",
   "filterStrategyNote": "Os filtros (setor, equipe, código) são estado interno não controlado. O evento filter:search não emite payload. Para uso controlado, o consumidor deve substituir os inputs por props v-model ou aguançar versão 1.1.0 com suporte a filtros controlados.",

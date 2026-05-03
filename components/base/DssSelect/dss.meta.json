@@ -70,5 +70,11 @@
     "Tentar sobrescrever o dropdown via CSS externo sem usar .dss-select__panel — o QMenu é teleportado para o body e requer a classe injetada via popup-content-class",
     "Usar use-chips sem DssChip no slot selected-item quando chips governados pelo DSS são necessários — os chips nativos do QSelect não possuem governança DSS completa",
     "Combinar emitValue=true sem mapOptions=true — o QSelect não conseguirá exibir o label correto da opção selecionada"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

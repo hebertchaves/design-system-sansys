@@ -43,7 +43,13 @@
       "ariaLabel"
     ]
   },
-  "propsBlocked": ["dark", "glossy", "size", "dense", "noCaps"],
+  "propsBlocked": [
+    "dark",
+    "glossy",
+    "size",
+    "dense",
+    "noCaps"
+  ],
   "propsBlockedJustification": {
     "dark": "O DSS gerencia dark mode via CSS global (body.body--dark / [data-theme=dark]), não via prop de componente.",
     "glossy": "Estilo glossy não é parte da linguagem visual DSS v2.2.",
@@ -51,8 +57,19 @@
     "dense": "Mesmo motivo de size — deve seguir tokens DSS. Fase 2 Ciclo 1 não implementa dense.",
     "noCaps": "Comportamento de casing é gerenciado por tokens de tipografia DSS. O componente já aplica no-caps internamente via prop nativa para consistência visual."
   },
-  "statesApplicable": ["default", "disabled", "readonly"],
-  "statesNotApplicable": ["hover", "focus", "active", "error", "indeterminate", "loading"],
+  "statesApplicable": [
+    "default",
+    "disabled",
+    "readonly"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "error",
+    "indeterminate",
+    "loading"
+  ],
   "statesNotApplicableJustification": "DssBtnToggle é container de composição. Estados hover/focus/active pertencem aos botões internos renderizados pelo QBtnToggle. Error e indeterminate não são estados de grupos de alternância. Loading não é aplicável (Fase 2, sem operações assíncronas de seleção).",
   "touchTarget": "Opção B — Delegado ao QBtnToggle interno. Os botões internos do QBtnToggle já implementam touch target adequado. DssBtnToggle não é Compact Control standalone.",
   "ariaRole": "group — definido explicitamente no template via role='group'. Os botões internos têm role='button' e aria-pressed gerenciados pelo Quasar.",
@@ -107,6 +124,12 @@
       "selector": ".q-btn-item:hover, .q-btn-item:focus-visible",
       "justification": "Uso de :hover/:focus-visible em .q-btn-item para ajuste de z-index no modo outline. O ajuste é estrutural de posicionamento (z-index: 1 apenas) — não captura nem modifica aparência visual de estados interativos. Necessário para que a borda do botão ativo fique visível sobre o botão adjacente com margin-left negativo. Precedente: DssBtnGroup Gate Exception responsibilityGateV24 (selado Mar 2026)."
     }
+  },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
   },
   "tokens": {
     "border": [

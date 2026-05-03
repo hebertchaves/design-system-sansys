@@ -16,7 +16,9 @@
   "classification": "Container tipografico nao-interativo — wrapper DSS sobre QItemLabel",
   "hasReservations": false,
   "subcomponents": [],
-  "compositionRequirements": ["DssItemSection"],
+  "compositionRequirements": [
+    "DssItemSection"
+  ],
   "compositionFuture": [],
   "compositionRecommendations": [
     "DssItemSection",
@@ -25,12 +27,27 @@
   ],
   "compositionNote": "DssItemLabel e filho direto natural de DssItemSection na zona principal (main) do DssItem. Uso idiomatico DSS: label principal (padrao) + label secundario (caption) ou label de categoria (overline) + label principal. Header e usado fora do DssItem, diretamente dentro de q-list.",
   "props": {
-    "DssItemLabel": ["header", "caption", "overline", "lines"],
+    "DssItemLabel": [
+      "header",
+      "caption",
+      "overline",
+      "lines"
+    ],
     "blocked": {},
     "blockedJustification": "A API do QItemLabel e minimalista e focada em tipografia — nenhuma prop precisa ser bloqueada."
   },
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssItemLabel e estritamente nao-interativo (Gate de Responsabilidade v2.4). hover/focus/active/disabled pertencem ao DssItem pai. loading/error pertencem ao consumidor. indeterminate nao e aplicavel a texto.",
   "accessibility": {
     "role": "Herdado do QItemLabel (div sem role explicito — elemento de apresentacao tipografica)",
@@ -76,7 +93,10 @@
         ".dss-item-label.q-item__label--overline"
       ],
       "location": "1-structure/DssItemLabel.ts.vue + 2-composition/_base.scss",
-      "gatesViolated": ["Gate de Composicao v2.4 — Regra 1", "Gate de Composicao v2.4 — Regra 2"],
+      "gatesViolated": [
+        "Gate de Composicao v2.4 — Regra 1",
+        "Gate de Composicao v2.4 — Regra 2"
+      ],
       "justification": "Regra 1 — O componente usa <q-item-label> (primitivo Quasar) diretamente porque e um wrapper de Nivel 1 Independente. Nao existe componente DSS Fase 1 equivalente para compor. Precedente estabelecido pelo DssItemSection (Golden Context), que da mesma forma envolve <q-item-section>. Regra 2 — O QItemLabel aplica tipografia hardcoded (font-size: 0.75rem, color: rgba(0,0,0,0.54), text-transform: uppercase, letter-spacing: 0.1em) nas suas classes de modificador. A sobrescrita via seletores compostos (.dss-item-label.q-item__label--*) e a unica forma de garantir que os tokens DSS sejam aplicados sobre CSS de terceiros, sem criar dependencias externas adicionais. Formalizado no Pre-Prompt DssItemLabel (Fase 2) secao 9."
     },
     {
@@ -85,5 +105,11 @@
       "location": "4-output/_states.scss",
       "justification": "Forced-colors mode. System color keywords obrigatorios — tokens CSS sao ignorados pelo navegador em forced-colors. ButtonText para texto principal, GrayText para texto secundario (caption, overline, header). Padrao canonico DSS."
     }
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

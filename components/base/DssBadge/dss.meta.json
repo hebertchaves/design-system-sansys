@@ -9,5 +9,20 @@
   "goldenContext": "DssChip",
   "phase": 1,
   "category": "Compact Control nao interativo",
-  "hasReservations": true
+  "hasReservations": true,
+  "defaultPreview": {
+    "props": {
+      "color": "primary"
+    },
+    "computedDimensions": {
+      "minHeight": "24px",
+      "minWidth": "24px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-0_5 --dss-spacing-1",
+      "fontSize": "--dss-font-size-xs",
+      "borderRadius": "--dss-radius-full"
+    },
+    "demoContent": "Label '99+'"
+  }
 }

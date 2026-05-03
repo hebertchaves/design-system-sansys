@@ -33,21 +33,45 @@
   ],
   "classification": "Container orquestrador não-interativo — gerencia visibilidade dos DssTabPanel via v-model e coordena transições",
   "subcomponents": [],
-  "compositionRequirements": ["DssTabPanel"],
+  "compositionRequirements": [
+    "DssTabPanel"
+  ],
   "compositionFuture": [],
   "compositionNote": "DssTabPanels é container pai dos DssTabPanel. Gate de Composição v2.4: o slot default aceita EXCLUSIVAMENTE componentes DssTabPanel. Uso de QTabPanel diretamente ou HTML nativo no slot viola a governança DSS.",
-  "compositionRecommendations": ["DssTabPanel"],
+  "compositionRecommendations": [
+    "DssTabPanel"
+  ],
   "props": {
-    "DssTabPanels": ["modelValue", "animated", "swipeable", "infinite", "keepAlive"]
+    "DssTabPanels": [
+      "modelValue",
+      "animated",
+      "swipeable",
+      "infinite",
+      "keepAlive"
+    ]
   },
-  "propsBlocked": ["dark", "transition-prev", "transition-next"],
+  "propsBlocked": [
+    "dark",
+    "transition-prev",
+    "transition-next"
+  ],
   "propsBlockedJustification": {
     "dark": "DSS governa dark mode globalmente via [data-theme='dark'] no container ancestral ou via classe .dss-theme-dark. Prop dark por componente viola a governança centralizada de tema do DSS.",
     "transition-prev": "DSS governa transições internamente. Quando animated=true, DssTabPanels define transition-prev='dss-tab-panels' para garantir fade governado por tokens DSS (--dss-duration-200, --dss-easing-standard). Expor transition-prev permitiria ao consumidor usar transições não governadas pelo DSS.",
     "transition-next": "Mesmo motivo de transition-prev. DSS governa transition-next='dss-tab-panels' internamente para fade direction-agnostic. Fade idêntico para prev e next: sem motion direcional (evita desconforto vestibular, funciona em RTL)."
   },
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssTabPanels é container orquestrador não-interativo. Gate de Responsabilidade v2.4: hover/focus/active pertencem exclusivamente aos componentes filhos (DssTab para navegação, DssTabPanel filhos para conteúdo). disabled: DssTabPanels não é desabilitável — desabilitar painéis individuais é responsabilidade do DssTabPanel (prop disable). loading/error/indeterminate: pertencem ao conteúdo dos filhos.",
   "touchTarget": "Opção B — Não implementado. DssTabPanels é container não-interativo (mesmo padrão do DssCard e DssTabPanel). Touch target (::before WCAG 2.5.5) pertence exclusivamente aos filhos interativos (DssTab para navegação, controles dentro dos DssTabPanel para conteúdo).",
   "ariaRole": "Nenhum role específico. QTabPanels não aplica role ao container (role='tabpanel' é aplicado pelos QTabPanel filhos, encapsulados pelos DssTabPanel).",
@@ -88,5 +112,11 @@
     "--dss-duration-200",
     "--dss-duration-0",
     "--dss-easing-standard"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

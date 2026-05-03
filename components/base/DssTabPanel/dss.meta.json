@@ -34,7 +34,9 @@
   "classification": "Container estrutural não-interativo — fornece espaçamento e contexto de layout para conteúdo de aba",
   "subcomponents": [],
   "compositionRequirements": [],
-  "compositionFuture": ["DssTabPanels"],
+  "compositionFuture": [
+    "DssTabPanels"
+  ],
   "compositionNote": "DssTabPanel é container de conteúdo — fornece apenas slot e layout. Composição é responsabilidade do consumidor (Gate de Composição v2.4). Componentes recomendados no slot: DssCard, DssInput, DssSelect, DssList, DssItem, DssButton. DssTabPanels (Fase 2) será o container pai governado quando implementado.",
   "compositionRecommendations": [
     "DssCard",
@@ -49,14 +51,29 @@
     "DssSeparator"
   ],
   "props": {
-    "DssTabPanel": ["name", "disable"]
+    "DssTabPanel": [
+      "name",
+      "disable"
+    ]
   },
-  "propsBlocked": ["dark"],
+  "propsBlocked": [
+    "dark"
+  ],
   "propsBlockedJustification": {
     "dark": "DSS governa dark mode globalmente via [data-theme='dark'] no container ancestral ou via classe .dss-theme-dark. Prop dark por componente viola a governança centralizada de tema do DSS."
   },
-  "statesApplicable": ["default", "disabled"],
-  "statesNotApplicable": ["hover", "focus", "active", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssTabPanel é container estrutural não-interativo. Gate de Responsabilidade v2.4: hover/focus/active pertencem exclusivamente aos componentes filhos no slot. loading: o painel não carrega dados — os filhos gerenciam loading individualmente. error: pertence ao conteúdo dos filhos. indeterminate: não aplicável a painéis de conteúdo.",
   "touchTarget": "Opção B — Não implementado. DssTabPanel é container não-interativo (mesmo padrão do DssCard e DssTabs). Touch target (::before WCAG 2.5.5) pertence exclusivamente aos filhos interativos.",
   "ariaRole": "role='tabpanel' gerenciado nativamente pelo QTabPanel em coordenação com QTabPanels. aria-labelledby associado automaticamente pelo Quasar com base no `name` prop.",
@@ -103,5 +120,11 @@
     "--dss-water-400",
     "--dss-waste-600",
     "--dss-waste-500"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

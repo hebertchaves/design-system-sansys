@@ -14,15 +14,16 @@ Este pré-prompt é de leitura obrigatória antes de executar o
 
 🔷 0.1️⃣ DOCUMENTOS NORMATIVOS (LEITURA OBRIGATÓRIA)
 Antes de escrever qualquer linha de código, você DEVE ler integralmente:
-- `DSS/CLAUDE.md` (Princípios #1 a #10 — normativo vinculante)
+- `DSS/CLAUDE.md` (Princípios #1 a #11 — normativo vinculante, incluindo Figma como Árbitro Visual)
 - `DSS_TOKEN_REFERENCE.md`
 - `DSS_COMPONENT_ARCHITECTURE.md`
 - `DSS_IMPLEMENTATION_GUIDE.md`
 - `DSS_GOLDEN_COMPONENTS.md`
 - Documentação oficial do Golden Component indicado no pré-prompt
 
-🔷 1️⃣ CONTRATO DE INTERFACE (OBRIGATÓRIO FASE 3)
+🔷 1️⃣ CONTRATO DE INTERFACE E VISUAL (OBRIGATÓRIO FASE 3)
 Antes de qualquer implementação, você DEVE validar o Contrato de Interface fornecido no pré-prompt:
+1.0 Árbitro Visual: O Figma é a fonte de verdade visual. Em caso de ambiguidade de dimensões ou espaçamentos, consulte o protótipo via MCP. Valores absolutos (px, hex) devem ser traduzidos para tokens DSS.
 1.1 Casos de Uso Negativos: O que o componente NÃO deve fazer.
 1.2 Matriz de Composição: Quais componentes DSS são permitidos internamente.
 1.3 Estado de Falha e Loading: Como o componente se comporta em estados de exceção.

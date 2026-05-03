@@ -17,22 +17,41 @@
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
-  "compositionFuture": ["DssTabs"],
+  "compositionFuture": [
+    "DssTabs"
+  ],
   "compositionRecommendations": [
     "q-tabs",
     "DssTabs"
   ],
   "compositionNote": "DssTab e filho direto de q-tabs (ou DssTabs quando existir). Uso idiomatico: q-tabs v-model + multiplos DssTab com prop name. DssTabs e listado em compositionFuture pois ainda nao existe no catalogo DSS — ate la, q-tabs serve como container de scaffolding (coberto pela isencao de .example.vue).",
   "props": {
-    "DssTab": ["name", "label", "icon", "alert", "disable"],
+    "DssTab": [
+      "name",
+      "label",
+      "icon",
+      "alert",
+      "disable"
+    ],
     "blocked": {
       "ripple": "Desativado permanentemente (:ripple='false'). DSS governa feedback visual via ::after overlay.",
       "no-caps": "Governado pelo CSS/tokens DSS, nao por prop. A transformacao de texto e definida pelos tokens de tipografia."
     },
     "blockedJustification": "ripple: O DSS nao usa o sistema de ripple do Material Design — o feedback visual de interacao e gerenciado via overlay ::after com opacity tokens (--dss-opacity-hover, --dss-opacity-active). no-caps: A transformacao de texto e responsabilidade do sistema de tokens DSS, nao uma opcao do consumidor."
   },
-  "statesApplicable": ["default", "hover", "focus", "active", "selected", "disabled"],
-  "statesNotApplicable": ["loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "selected",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "loading: DssTab nao carrega dados — e um controle de navegacao sincrono. error: estado de erro pertence ao formulario ou ao conteudo do painel, nao a aba de navegacao. indeterminate: nao aplicavel a elementos de navegacao binaria (selecionada/nao-selecionada).",
   "accessibility": {
     "role": "tab (herdado do QTab — elemento de navegacao por abas)",
@@ -81,7 +100,10 @@
         ".dss-tab .q-tab__indicator"
       ],
       "location": "2-composition/_base.scss + 4-output/_states.scss",
-      "gatesViolated": ["Gate de Composicao v2.4 — Regra 1", "Gate de Composicao v2.4 — Regra 2"],
+      "gatesViolated": [
+        "Gate de Composicao v2.4 — Regra 1",
+        "Gate de Composicao v2.4 — Regra 2"
+      ],
       "justification": "Regra 1 — O componente usa <q-tab> (primitivo Quasar) diretamente porque e um wrapper de Nivel 1 Independente. Nao existe componente DSS Fase 1 equivalente para compor. Precedente: DssItemSection (Golden Context de DssItemLabel) usa <q-item-section> pelo mesmo motivo. Regra 2 — O QTab renderiza .q-tab__indicator com altura e cor hardcoded. A sobrescrita via seletor composto (.dss-tab .q-tab__indicator) e a unica forma de aplicar tokens DSS sobre CSS de terceiros sem dependencias externas adicionais."
     },
     {
@@ -96,5 +118,11 @@
       "location": "4-output/_states.scss — bloco @media print",
       "justification": "Impressao monocromatica. Tokens CSS podem nao ser resolvidos em contexto de impressao dependendo do browser. Valor hardcoded preto e aceitavel para garantir legibilidade em impressao."
     }
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

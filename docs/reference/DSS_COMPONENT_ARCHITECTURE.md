@@ -413,7 +413,15 @@ computed: {
 
 ## ✅ Regras de Implementação
 
-### 1. **Estrutura de Arquivos - Arquitetura de 4 Camadas** ⭐ **ATUALIZADO**
+### 1. **Figma como Árbitro Visual (NOVO)** ⭐
+
+O DSS adota o Figma como **fonte de verdade visual** em tempo de execução.
+- O contrato estático de dimensões e espaçamentos reside no campo `defaultPreview` do `dss.meta.json`.
+- Em caso de ambiguidade (ex: o `withDefaults` não especifica qual variante é a padrão, ou o SCSS usa tokens compostos difíceis de inferir), o agente DEVE consultar o protótipo do Figma via MCP.
+- O Figma tem precedência sobre inferências baseadas em "bom senso" ou "padrões web".
+- Valores absolutos encontrados no Figma (px, hex) DEVEM ser traduzidos para tokens DSS (Princípio #1).
+
+### 2. **Estrutura de Arquivos - Arquitetura de 4 Camadas** ⭐ **ATUALIZADO**
 
 ```
 components/base/DssComponente/

@@ -6,34 +6,41 @@
   "sealDate": "2026-04-21",
   "auditMode": "Auditoria DSS v2.5 — Aprovado",
   "auditDate": "2026-04-21",
-
   "goldenReference": "DssBadge",
   "goldenReferenceJustification": "Golden Reference oficial para componentes não-interativos (DSS_GOLDEN_COMPONENTS.md §1.1). DssToolbarTitle não possui touch target, estados interativos ou role ativo — mesma categoria de DssBadge.",
-
   "goldenContext": "DssItemLabel",
   "goldenContextJustification": "Baseline de auditoria: componente tipográfico, não-interativo, wrapper de Quasar com EXC-01 de sobrescrita de tipografia nativa. Proximidade semântica/funcional máxima. Selado em 2026-04-20.",
-
   "goldenContextSecondary": "DssToolbar",
   "goldenContextSecondaryJustification": "Container pai semântico e único contexto de uso válido do DssToolbarTitle. Gerencia brand e propaga [data-brand] para herança de cores.",
-
   "category": "Container tipográfico para barra de ferramentas",
   "phase": 2,
   "classification": "Elemento tipográfico estrutural não-interativo — wrapper DSS governado sobre QToolbarTitle",
-
   "quasarBase": "QToolbarTitle",
-
   "props": {
-    "DssToolbarTitle": ["shrink"],
+    "DssToolbarTitle": [
+      "shrink"
+    ],
     "blocked": {
       "color": "Governado por tokens do DssToolbar pai (--dss-text-body/--dss-text-inverse) para garantir contraste acessível.",
       "active": "DssToolbarTitle não possui estado ativo. Navegação é feita via DssTab ou DssMenu."
     }
   },
-
-  "slots": ["default", "subtitle"],
-
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "slots": [
+    "default",
+    "subtitle"
+  ],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": {
     "hover": "Componente não-interativo — sem resposta visual a interação do usuário.",
     "focus": "Componente não-interativo — sem estado de foco próprio.",
@@ -43,28 +50,26 @@
     "error": "Elemento tipográfico — sem estado de erro.",
     "indeterminate": "Não aplicável para elemento tipográfico linear."
   },
-
   "touchTarget": "NOT_APPLICABLE",
   "touchTargetJustification": "Componente estritamente não-interativo (Option B). Sem interação do usuário esperada.",
-
   "tokensUsed": [
     "--dss-font-family-sans",
     "--dss-heading-4-size",
     "--dss-heading-4-weight",
     "--dss-heading-4-line-height"
   ],
-
   "tokensInherited": [
     "--dss-text-body",
     "--dss-text-inverse"
   ],
-
   "exceptions": [
     {
       "id": "EXC-01",
       "description": "Sobrescrita de tipografia nativa do QToolbarTitle com tokens DSS via seletor composto",
       "value": "font-size: var(--dss-heading-4-size), font-weight: var(--dss-heading-4-weight), line-height: var(--dss-heading-4-line-height), letter-spacing: normal",
-      "selectors": [".dss-toolbar-title.q-toolbar__title"],
+      "selectors": [
+        ".dss-toolbar-title.q-toolbar__title"
+      ],
       "location": "2-composition/_base.scss",
       "gatesViolated": [
         "Gate de Composicao v2.4 — Regra 1 (Uso direto de componente Quasar no template — componente wrapper de Nivel 1 Independente, seu proposito e ser o encapsulador DSS do QToolbarTitle)",
@@ -81,24 +86,26 @@
       "justification": "Forced-colors mode (Windows High Contrast). System color keyword obrigatório — tokens CSS ignorados pelo SO."
     }
   ],
-
   "antiPatterns": [
     "Usar DssToolbarTitle fora de um DssToolbar pai",
     "Aplicar prop color diretamente (governado pelo DssToolbar pai)",
     "Inserir componentes de bloco ou layouts complexos no slot default",
     "Usar para criar navegação (usar DssTab ou DssMenu)"
   ],
-
   "compositionRecommendations": [
     "Sempre dentro de DssToolbar",
     "Slot default para texto simples ou elementos inline",
     "Para título de página, usar <h1> dentro do slot",
     "Combinar com DssSpace ou botões DssButton nas extremidades da toolbar"
   ],
-
   "phaseDescription": "Fase 2 — Componente composto estrutural. Depende do DssToolbar pai para contexto de brand e cor. Sem dependências DSS diretas (apenas tipografia).",
-
   "files": 19,
   "createdAt": "2026-04-21",
-  "createdBy": "Claude Code — DSS v2.5 Protocol"
+  "createdBy": "Claude Code — DSS v2.5 Protocol",
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

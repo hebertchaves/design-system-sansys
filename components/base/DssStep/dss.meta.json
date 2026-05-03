@@ -4,31 +4,39 @@
   "status": "sealed",
   "auditMode": "Auditoria DSS v2.2 — Aprovado",
   "auditDate": "2026-04-20",
-
   "goldenReference": "DssTab",
   "goldenReferenceJustification": "DssTab é o Golden Reference canônico para DssStep: ambos são elementos interativos de navegação selecionáveis dentro de um container pai (DssTabs / DssStepper). DssTab já recebeu Selo DSS v2.2 (Abr 2026) e compartilha o mesmo padrão arquitetural — wrapper sobre primitivo Quasar (QTab / QStep), com estados visuais (hover, focus, active, disabled), overlay ::after e dot/indicador nativo governado por tokens via EXC-01.",
-
   "goldenContext": "DssTabs",
   "goldenContextJustification": "DssTabs é o Golden Context mais próximo para DssStep: ambos são componentes compostos de navegação onde filhos (DssTab / DssStep) gerenciam estados individuais e o pai orquestra a seleção global. DssTabs recebeu Selo DSS v2.2 (Abr 2026) e estabelece o padrão para containers de navegação com brandabilidade via [data-brand].",
-
   "category": "Elemento interativo de navegação em stepper (wizard)",
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente interativo de seleção dentro do contexto DssStepper. Passo individual que gerencia estados visuais (ativo, concluído, erro, desabilitado) e delega o estado de progresso ao container pai via v-model Quasar.",
   "classification": "Controle interativo de navegação — wrapper DSS sobre QStep",
-
   "hasReservations": false,
-
   "subcomponents": [],
   "compositionRequirements": [],
-  "compositionFuture": ["DssStepper"],
+  "compositionFuture": [
+    "DssStepper"
+  ],
   "compositionRecommendations": [
     "q-stepper",
     "DssStepper"
   ],
   "compositionNote": "DssStep é filho direto de q-stepper (ou DssStepper quando existir). Uso idiomático: q-stepper v-model + múltiplos DssStep com prop name. DssStepper está em compositionFuture — até então, q-stepper serve como container de scaffolding (coberto pela isenção de .example.vue conforme DSS_IMPLEMENTATION_GUIDE.md §9).",
-
   "props": {
-    "DssStep": ["name", "title", "caption", "icon", "activeIcon", "doneIcon", "errorIcon", "done", "error", "disable", "headerNav"],
+    "DssStep": [
+      "name",
+      "title",
+      "caption",
+      "icon",
+      "activeIcon",
+      "doneIcon",
+      "errorIcon",
+      "done",
+      "error",
+      "disable",
+      "headerNav"
+    ],
     "blocked": {
       "color": "Governado por tokens DSS via --dss-action-primary e overrides de brand em [data-brand].",
       "active-color": "Governado por tokens DSS — ativo usa --dss-action-primary.",
@@ -37,11 +45,21 @@
       "prefix": "DSS governa numeração e ícones via QStep nativo. Prefixos textuais customizados violam a consistência visual do DSS."
     }
   },
-
-  "statesApplicable": ["default", "active", "done", "error", "disabled"],
-  "statesNotApplicable": ["hover", "focus", "active-press", "loading", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "active",
+    "done",
+    "error",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active-press",
+    "loading",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "hover/focus/active-press: estados de interação aplicam-se apenas à área do cabeçalho quando header-nav=true. loading: DssStep não carrega dados — o progresso é gerenciado pelo consumidor via props done/error. indeterminate: não aplicável a elementos de progresso sequencial (cada passo é explicitamente done, active ou pending).",
-
   "accessibility": {
     "role": "tab (herdado do QStep via QStepper — estrutura tablist/tab/tabpanel nativa do Quasar)",
     "wcagLevel": "2.1 AA",
@@ -50,7 +68,6 @@
     "aria": "aria-expanded e aria-selected gerenciados pelo QStepper pai. DssStep não requer ARIA adicional.",
     "contrastDot": "Ícones brancos (text-inverse) dentro de dots coloridos (primary, success, error) garantem contraste ≥ 3:1 (WCAG AA para elementos gráficos)."
   },
-
   "gateExceptions": {
     "compositionGateV24": {
       "rule1": "Uso de <q-step> diretamente — wrapper Nível 1 Independente sem equivalente DSS Fase 1",
@@ -58,7 +75,6 @@
     },
     "responsibilityGateV24": "Área do cabeçalho (.q-stepper__tab) é interativa somente quando header-nav=true. Área de conteúdo é sempre estática. Estados hover/focus/active aplicam-se exclusivamente à área do cabeçalho."
   },
-
   "antiPatterns": [
     "Usar DssStep fora de q-stepper ou DssStepper",
     "Aplicar cor de estado via prop color/active-color — usar [data-brand] no container pai",
@@ -66,7 +82,6 @@
     "Aninhar DssStep dentro de outros DssStep",
     "Usar DssStep como elemento de lista ou menu — usar DssItem ou DssList"
   ],
-
   "exceptions": [
     {
       "id": "EXC-01",
@@ -84,7 +99,9 @@
         ".dss-step.q-stepper__step--active .*"
       ],
       "location": "2-composition/_base.scss + 3-variants/_dense.scss + 4-output/_brands.scss + 4-output/_states.scss",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 1"],
+      "gatesViolated": [
+        "Gate de Composição v2.4 — Regra 1"
+      ],
       "justification": "O componente usa <q-step> (primitivo Quasar) diretamente porque é um wrapper de Nível 1 Independente. Não existe componente DSS Fase 1 equivalente para compor. O QStep renderiza estrutura DOM interna complexa (.q-stepper__tab, .q-stepper__dot, .q-stepper__title, etc.) com estilos hardcoded de tipografia e cores. A sobrescrita via seletores compostos (.dss-step .q-stepper__*) é a única forma de aplicar tokens DSS sobre CSS de terceiros sem dependências externas. Precedente canônico: DssTab (Golden Reference) — .dss-tab .q-tab__indicator."
     },
     {
@@ -106,7 +123,6 @@
       "justification": "Impressão monocromática. Tokens CSS podem não ser resolvidos em contexto de impressão dependendo do browser. Valores hardcoded preto/branco são aceitáveis para garantir legibilidade. Precedente: DssTab (Golden Reference) EXC-03."
     }
   ],
-
   "tokensUsed": [
     "--dss-icon-size-lg",
     "--dss-icon-size-md",
@@ -147,5 +163,11 @@
     "--dss-hub-600",
     "--dss-water-600",
     "--dss-waste-600"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

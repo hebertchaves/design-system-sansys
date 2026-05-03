@@ -40,5 +40,11 @@
     "Passar valores arbitrários para size (ex.: '23') — apenas valores do tipo SpaceSize são válidos",
     "Usar DssSpace fora de flex container — flex: 1 1 auto não tem efeito em contextos não-flex",
     "Usar múltiplos DssSpace em sequência — dividem o espaço igualmente; se a intenção é espaço fixo, use um único com size"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

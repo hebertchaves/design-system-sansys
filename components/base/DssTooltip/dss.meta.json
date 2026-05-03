@@ -13,6 +13,22 @@
   "reservationCount": 4,
   "touchTarget": false,
   "interactionStrategy": "external",
-  "states": ["visible", "hidden"],
-  "statesNotApplicable": ["hover", "active", "disabled", "loading", "focus", "checked"]
+  "states": [
+    "visible",
+    "hidden"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "active",
+    "disabled",
+    "loading",
+    "focus",
+    "checked"
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

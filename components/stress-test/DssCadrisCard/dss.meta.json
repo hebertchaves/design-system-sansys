@@ -24,7 +24,15 @@
       "DssIcon",
       "DssSpace"
     ],
-    "quasar": ["q-space"]
+    "quasar": [
+      "q-space"
+    ]
+  },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
   },
   "tokens": [
     "--dss-surface-muted",
@@ -53,9 +61,22 @@
     "--dss-duration-1000",
     "--dss-easing-standard"
   ],
-  "slots": ["toolbar-actions"],
-  "props": ["rows", "loading", "pagination", "disable", "documentoOptions", "aterroOptions"],
-  "emits": ["search", "close", "update:pagination"],
+  "slots": [
+    "toolbar-actions"
+  ],
+  "props": [
+    "rows",
+    "loading",
+    "pagination",
+    "disable",
+    "documentoOptions",
+    "aterroOptions"
+  ],
+  "emits": [
+    "search",
+    "close",
+    "update:pagination"
+  ],
   "phase3Patterns": {
     "inheritAttrs": true,
     "provideInject": true,

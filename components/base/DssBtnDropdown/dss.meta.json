@@ -13,7 +13,10 @@
   "hasReservations": true,
   "classification": "Wrapper governado de QBtnDropdown — trigger + painel dropdown com estilos DSS",
   "subcomponents": [],
-  "compositionRequirements": ["DssButton", "DssIcon"],
+  "compositionRequirements": [
+    "DssButton",
+    "DssIcon"
+  ],
   "compositionNote": "DssBtnDropdown envolve QBtnDropdown diretamente. Não usa DssButton como filho explícito — o trigger é renderizado internamente pelo QBtnDropdown. DssIcon pode ser usado via prop `icon` ou slot `label`.",
   "wrapperApproach": "WRAP QBtnDropdown — não reconstrói trigger do zero. Justificativa: QBtnDropdown fornece posicionamento, acessibilidade WAI-ARIA, animações e keyboard navigation nativos. Rebuilding seria duplicação de esforço sem ganho arquitetural.",
   "variantMapping": {
@@ -49,7 +52,14 @@
       "ariaLabel"
     ]
   },
-  "propsBlocked": ["dark", "glossy", "push", "no-caps", "no-wrap", "ripple"],
+  "propsBlocked": [
+    "dark",
+    "glossy",
+    "push",
+    "no-caps",
+    "no-wrap",
+    "ripple"
+  ],
   "propsBlockedJustification": {
     "dark": "O DSS gerencia dark mode via CSS global (body.body--dark / [data-theme=dark]), não via prop de componente.",
     "glossy": "Estilo glossy não é parte da linguagem visual DSS v2.2.",
@@ -58,8 +68,19 @@
     "no-wrap": "Controle de wrapping via CSS contextual, não prop.",
     "ripple": "Efeito ripple gerenciado globalmente pelo Quasar, não configurável por componente no DSS."
   },
-  "statesApplicable": ["default", "disabled", "loading"],
-  "statesNotApplicable": ["hover", "focus", "active", "error", "indeterminate", "checked"],
+  "statesApplicable": [
+    "default",
+    "disabled",
+    "loading"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "error",
+    "indeterminate",
+    "checked"
+  ],
   "statesNotApplicableJustification": "DssBtnDropdown é container-trigger composto. Estados hover/focus/active pertencem ao QBtnDropdown interno (trigger) e aos itens do painel. Error, indeterminate e checked não são estados aplicáveis a botões de ação.",
   "touchTarget": "Opção B — Delegado ao QBtnDropdown interno. O trigger do QBtnDropdown já implementa touch target adequado. DssBtnDropdown não é Compact Control standalone.",
   "ariaRole": "delegado ao QBtnDropdown — role='button' com aria-haspopup='true' e aria-expanded gerenciados pelo Quasar",
@@ -111,6 +132,12 @@
       "selector": ".q-btn-dropdown__arrow-container",
       "justification": "Uso de seletor interno do Quasar (.q-btn-dropdown__arrow-container) necessário para estilizar o separador e o border-radius do modo split. Não quebra o encapsulamento de componentes DSS filhos — .q-btn-dropdown__arrow-container é um elemento DOM interno do QBtnDropdown (Quasar), não um subcomponente DSS. Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos. Precedente: DssBtnGroup registra exceção equivalente para seletores em .q-btn internos (selado Mar 2026)."
     }
+  },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
   },
   "tokens": {
     "surface": [

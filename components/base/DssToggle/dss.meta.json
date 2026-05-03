@@ -11,5 +11,20 @@
   "category": "Compact Control interativo",
   "phase": "1",
   "classification": "Form / Selection",
-  "hasReservations": false
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "color": "primary",
+      "size": "md"
+    },
+    "computedDimensions": {
+      "minHeight": "48px",
+      "minWidth": "48px"
+    },
+    "computedTokens": {
+      "gap": "--dss-spacing-2",
+      "fontSize": "--dss-font-size-sm"
+    },
+    "demoContent": "Label 'Ativar'"
+  }
 }

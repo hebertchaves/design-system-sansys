@@ -40,5 +40,20 @@
     "Passar prop `color` ao QSpinner via $attrs — a cor é governada exclusivamente pelo SCSS via tokens DSS; nunca repasse diretamente ao Quasar",
     "Omitir `ariaLabel` quando múltiplos spinners coexistem na página — 'Carregando' genérico não distingue contextos; use labels descritivos ('Carregando perfil', 'Salvando documento')",
     "Usar DssSpinner sem contexto visual que indique loading — o spinner deve sempre acompanhar texto, botão em loading ou container com aria-label que comunique o estado"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {
+      "type": "standard",
+      "size": "md"
+    },
+    "computedDimensions": {
+      "width": "24px",
+      "height": "24px"
+    },
+    "computedTokens": {
+      "width": "--dss-icon-size-md",
+      "height": "--dss-icon-size-md"
+    },
+    "demoContent": "Spinner girando"
+  }
 }

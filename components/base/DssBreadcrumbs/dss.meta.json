@@ -39,11 +39,15 @@
   ],
   "classification": "Container orquestrador de trilha de navegação — gerencia layout, gap e separadores para DssBreadcrumbsEl filhos",
   "subcomponents": [],
-  "compositionRequirements": ["DssBreadcrumbsEl"],
+  "compositionRequirements": [
+    "DssBreadcrumbsEl"
+  ],
   "compositionOptional": [],
   "compositionFuture": [],
   "compositionNote": "DssBreadcrumbs é container de layout e semântica de navegação. Aceita apenas DssBreadcrumbsEl como filhos diretos via slot default. O uso de HTML nativo ou outros componentes DSS dentro do slot viola o Gate de Composição v2.4. A composição de DssIcon é indireta — gerenciada pelo DssBreadcrumbsEl filho via prop `icon`.",
-  "compositionRecommendations": ["DssBreadcrumbsEl"],
+  "compositionRecommendations": [
+    "DssBreadcrumbsEl"
+  ],
   "props": {
     "DssBreadcrumbs": [
       "separator",
@@ -53,14 +57,28 @@
       "brand"
     ]
   },
-  "propsBlocked": ["active-color", "separator-class", "gutter-color"],
+  "propsBlocked": [
+    "active-color",
+    "separator-class",
+    "gutter-color"
+  ],
   "propsBlockedJustification": {
     "active-color": "A cor do item ativo (item atual na trilha) é governada exclusivamente pelo DssBreadcrumbsEl filho via tokens --dss-text-body e --dss-font-weight-semibold. O DssBreadcrumbs não deve sobrescrever estados dos filhos (Gate de Responsabilidade v2.4).",
     "separator-class": "As classes do separador são governadas pelo CSS DSS via seletor EXC-01 (.dss-breadcrumbs .q-breadcrumbs__separator). Permitir separator-class violaria a governança de tokenização DSS.",
     "gutter-color": "Prop inexistente no QBreadcrumbs. Mencionada no pré-prompt como 'separator-color' — mapeada corretamente para 'separatorColor' (DSS camelCase)."
   },
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssBreadcrumbs é container estrutural. Todos os estados interativos (hover, focus, active, disabled) pertencem exclusivamente aos DssBreadcrumbsEl filhos. loading: pertence às páginas de destino dos links. error: pertence ao roteamento/network. indeterminate: não aplicável a trilhas de navegação.",
   "touchTarget": "Opção B — Não implementado. DssBreadcrumbs não é Compact Control. Touch target (::before WCAG 2.5.5) é responsabilidade exclusiva de cada DssBreadcrumbsEl filho.",
   "ariaRole": "navigation (role='navigation' gerenciado nativamente pelo QBreadcrumbs via <nav>)",
@@ -132,5 +150,11 @@
     "--dss-water-400",
     "--dss-waste-600",
     "--dss-waste-500"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

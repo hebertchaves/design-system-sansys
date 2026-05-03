@@ -129,6 +129,13 @@ O **DssButton é referência**, não fonte única de verdade.
     ```
     - 📖 Consulte [DSS_COMPONENT_ARCHITECTURE.md - Passo 7](docs/reference/DSS_COMPONENT_ARCHITECTURE.md#passo-7-entry-point-wrapper)
 
+11. **Figma como Árbitro Visual (VINCULANTE)**
+    - O Figma é a **fonte de verdade visual** do DSS, não apenas uma referência.
+    - Em caso de ambiguidade sobre como um componente deve se parecer (ex: qual token de padding usar quando o `withDefaults` não especifica), o agente DEVE consultar o protótipo do Figma via MCP.
+    - O contrato estático (`defaultPreview` no `dss.meta.json`) reflete o Figma, mas o Figma tem precedência em caso de divergência.
+    - ❌ NUNCA inventar ou inferir dimensões, espaçamentos ou cores baseadas em "bom senso" ou "padrões web" se o Figma estiver disponível.
+    - ✅ SEMPRE traduzir os valores absolutos do Figma (px, hex) para os tokens DSS correspondentes (Princípio #1).
+
 ---
 
 ## 🎯 Escopo Funcional Mínimo (DEFINIÇÃO OFICIAL)

@@ -16,8 +16,12 @@
   "classification": "Container de layout nao-interativo — coluna flex dentro do DssItem",
   "hasReservations": false,
   "subcomponents": [],
-  "compositionRequirements": ["DssItem"],
-  "compositionFuture": ["DssItemLabel"],
+  "compositionRequirements": [
+    "DssItem"
+  ],
+  "compositionFuture": [
+    "DssItemLabel"
+  ],
   "compositionRecommendations": [
     "DssAvatar",
     "DssIcon",
@@ -30,11 +34,27 @@
   ],
   "compositionNote": "DssItemSection e nao opinativo. Aceita qualquer filho como slot. O uso idiomatico DSS e: avatar/icon na posicao leading (avatar=true), DssItemLabel na posicao principal, DssIcon/DssBadge/DssButton na posicao trailing (side=true).",
   "props": {
-    "DssItemSection": ["avatar", "thumbnail", "side", "top", "noWrap"],
+    "DssItemSection": [
+      "avatar",
+      "thumbnail",
+      "side",
+      "top",
+      "noWrap"
+    ],
     "blocked": {}
   },
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssItemSection e container nao-interativo. Todos os estados interativos (hover, focus, active, disabled) pertencem ao DssItem pai. Loading/error pertencem ao consumidor do DssItem.",
   "accessibility": {
     "role": "Herdado do QItemSection (div sem role explicito — elemento de apresentacao de layout)",
@@ -76,5 +96,11 @@
       "location": "4-output/_states.scss",
       "justification": "Forced-colors mode. System color keywords obrigatorios — tokens CSS sao ignorados pelo navegador em forced-colors. Padrao canonico DSS."
     }
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

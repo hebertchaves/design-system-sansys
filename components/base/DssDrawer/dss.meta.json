@@ -3,18 +3,14 @@
   "dssVersion": "2.2",
   "status": "pending-audit",
   "auditMode": "Pendente Auditoria DSS v2.2",
-
   "goldenReference": "DssHeader",
   "goldenReferenceJustification": "DssHeader é o Golden Reference para DssDrawer: ambos são containers estruturais de layout de página não-interativos que encapsulam primitivos Quasar de layout (QHeader / QDrawer), bloqueiam prop `color`/`dark`, governam fundo via --dss-surface-default (!important), e delegam interatividade e brand aos componentes filhos. DssHeader recebeu Selo DSS v2.2 (Abr 2026) e serve como baseline direto para esta auditoria.",
-
   "goldenContext": "DssHeader",
   "goldenContextJustification": "DssHeader é simultaneamente o Golden Reference e Golden Context mais próximo: é o componente da mesma família (Layout — Estrutura de Página), mesma Fase 2, mesma arquitetura de wrapper sobre primitivo Quasar de layout, com Selo v2.2. A paridade é documentada explicitamente na seção 12 do DssDrawer.md.",
-
   "category": "Container estrutural lateral de layout de página — painel de navegação",
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural de Nível 3 (Composição de Segundo Grau). Orquestra componentes de Nível 2 (DssList, DssMenu) e interage diretamente com o sistema de layout do Quasar (QLayout via provide/inject). Wrapper DSS governado sobre QDrawer.",
   "classification": "Layout — Estrutura de Página — container lateral não-interativo",
-
   "hasReservations": true,
   "reservations": [
     {
@@ -36,10 +32,15 @@
       "impact": "Médio — funcionalidade mini pode ser incompleta até DssItem ter suporte explícito a mini mode."
     }
   ],
-
   "subcomponents": [],
-  "compositionRequirements": ["DssList", "DssItem"],
-  "compositionFuture": ["DssLayout", "DssMenu"],
+  "compositionRequirements": [
+    "DssList",
+    "DssItem"
+  ],
+  "compositionFuture": [
+    "DssLayout",
+    "DssMenu"
+  ],
   "compositionRecommendations": [
     "DssList (conteúdo primário — lista de navegação)",
     "DssMenu (sub-menus contextuais dentro do drawer)",
@@ -47,7 +48,6 @@
     "DssSeparator (divisores de seção dentro do drawer)"
   ],
   "compositionNote": "DssDrawer fornece o container <q-drawer> com governança DSS. O slot default deve receber exclusivamente DssList, DssMenu ou elementos de cabeçalho de seção DSS. Uso de HTML nativo ou texto solto diretamente no DssDrawer viola o Gate de Composição v2.4.",
-
   "compositionMatrix": {
     "role": "Container estrutural lateral de página — âncora do painel de navegação",
     "recommended": [
@@ -71,7 +71,6 @@
       "Usar DssHeader dentro do DssDrawer (hierarquia incorreta)"
     ]
   },
-
   "props": {
     "DssDrawer": [
       "modelValue",
@@ -83,7 +82,10 @@
       "width"
     ]
   },
-  "propsBlocked": ["dark", "behavior"],
+  "propsBlocked": [
+    "dark",
+    "behavior"
+  ],
   "propsBlockedJustification": {
     "dark": "Dark mode gerenciado globalmente via [data-theme='dark'] e tokens --dss-surface-default. Prop `dark` do QDrawer é bloqueada para garantir consistência com o sistema de dark mode do DSS.",
     "behavior": "Comportamento responsivo padronizado pelo DSS: desktop = drawer empurra conteúdo (push mode), mobile = drawer sobrepõe conteúdo com backdrop (overlay mode). Corresponde a behavior='default' do QDrawer, hardcoded no template."
@@ -93,11 +95,22 @@
     "aria-labelledby": "Alternativa ao aria-label para referenciar elemento existente.",
     "role": "Padrão 'navigation'. Sobrescritível via $attrs para role='complementary' em painéis informativos."
   },
-
-  "statesApplicable": ["default", "elevated", "bordered", "mini"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "elevated",
+    "bordered",
+    "mini"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssDrawer é container estrutural 100% não-interativo. hover/focus/active são responsabilidade exclusiva dos DssItem/DssMenu internos. disabled/loading/error não se aplicam a containers de layout de página. indeterminate não é semanticamente aplicável a painéis laterais.",
-
   "accessibility": {
     "role": "navigation (padrão DSS, sobrescritível via $attrs para 'complementary')",
     "wcagLevel": "2.1 AA",
@@ -106,7 +119,6 @@
     "ariaLabel": "Recomendado via $attrs. Exemplos: aria-label='Menu principal', aria-label='Menu de navegação'.",
     "landmark": "role='navigation' identifica o drawer como landmark de navegação. Usar aria-label para distinguir múltiplos landmarks de navegação na mesma página."
   },
-
   "gateExceptions": {
     "compositionGateV24": {
       "rule1": {
@@ -120,13 +132,14 @@
     },
     "responsibilityGateV24": "DssDrawer é 100% não-interativo. Nenhum estado hover/focus/active definido no container. Toda interatividade é responsabilidade dos filhos (DssList, DssItem, DssMenu)."
   },
-
   "exceptions": [
     {
       "id": "EXC-01",
       "description": "Uso de <q-layout> no arquivo DssDrawer.example.vue",
       "location": "DssDrawer.example.vue — todos os exemplos",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 1"],
+      "gatesViolated": [
+        "Gate de Composição v2.4 — Regra 1"
+      ],
       "justification": "DssDrawer requer contexto QLayout para renderizar corretamente (posicionamento lateral, cálculo de offset de conteúdo, provide/inject de layout). Como DssLayout (Nível 4) ainda não existe, usa-se <q-layout> nativo temporariamente APENAS no arquivo de exemplo. O código fonte do componente (DssDrawer.ts.vue) permanece 100% aderente aos gates. Isenção formal conforme DSS_IMPLEMENTATION_GUIDE.md — example.vue tem contexto de scaffolding. Precedente: DssHeader EXC-01 (mesmo padrão)."
     },
     {
@@ -141,14 +154,18 @@
       "id": "EXC-03",
       "description": "<q-drawer> como elemento raiz (Gate de Composição v2.4 — Regra 1)",
       "location": "1-structure/DssDrawer.ts.vue — elemento raiz do template",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 1 (primitivo Quasar como raiz)"],
+      "gatesViolated": [
+        "Gate de Composição v2.4 — Regra 1 (primitivo Quasar como raiz)"
+      ],
       "justification": "QDrawer é primitivo de layout que depende de provide/inject do QLayout para funcionar. Não pode ser envolvido em <div> sem quebrar a matemática de layout. Classes DSS são aplicadas ao mesmo elemento. Precedente: DssHeader EXC-03 (usa <q-header> como raiz), mesma família e justificativa."
     },
     {
       "id": "EXC-04",
       "description": "Seletor interno .q-drawer__backdrop para aplicar token de opacidade",
       "location": "2-composition/_base.scss, 4-output/_states.scss",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 2 (estilização de elemento interno Quasar)"],
+      "gatesViolated": [
+        "Gate de Composição v2.4 — Regra 2 (estilização de elemento interno Quasar)"
+      ],
       "justification": ".q-drawer__backdrop é elemento DOM interno renderizado pelo QDrawer em modo overlay. Não é subcomponente DSS — é elemento Quasar interno. O seletor descendente é a única forma de aplicar --dss-opacity-backdrop sem alterar a API do QDrawer. Estilos globais (não-scoped) necessários para alcançar elemento interno. Precedente: DssTabs EXC-01 (.dss-tabs .q-tabs__arrow, mesma natureza)."
     },
     {
@@ -168,7 +185,6 @@
       "justification": "Impressão monocromática. Tokens CSS podem não ser resolvidos em contexto de impressão. position: static cancela o position: fixed do QDrawer para layout correto na impressão. Precedente: DssHeader (EXC-04), DssTabs (EXC-03)."
     }
   ],
-
   "tokensUsed": [
     "--dss-surface-default",
     "--dss-text-body",
@@ -177,5 +193,11 @@
     "--dss-border-width-md",
     "--dss-gray-200",
     "--dss-opacity-backdrop"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

@@ -29,6 +29,12 @@
     "RISCO-02: Botões de paginação com icon+label podem ter touch target < 44px em size=sm",
     "RISCO-03: Skeleton animation pode causar reflow em listas longas"
   ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  },
   "tokens": [
     "--dss-gray-300",
     "--dss-surface-muted",

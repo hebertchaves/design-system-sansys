@@ -61,5 +61,11 @@
     "Definir cor via prop `color` — DssSlider não expõe prop de cor; a cor é governada por tokens DSS via SCSS",
     "Usar DssSlider sem label visual ou ariaLabel — slider sem label acessível viola WCAG 1.3.1",
     "Usar DssSlider vertical sem definir height explícito no container pai — o QSlider não possui altura padrão em modo vertical"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

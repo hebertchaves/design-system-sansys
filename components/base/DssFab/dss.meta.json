@@ -15,12 +15,28 @@
     "family": "FAB"
   },
   "wrapperApproach": "WRAP QFab — não reconstrói trigger do zero. Justificativa: QFab fornece estado de expansão, direção de animação, acessibilidade WAI-ARIA e keyboard navigation nativos. Rebuilding seria duplicação de esforço sem ganho arquitetural. Precedente: DssBtnDropdown (selado Mar 2026).",
-  "compositionRequirements": ["DssButton", "DssIcon"],
+  "compositionRequirements": [
+    "DssButton",
+    "DssIcon"
+  ],
   "compositionNote": "DssFab envolve QFab diretamente. O trigger é renderizado internamente pelo QFab. DssIcon pode ser usado via prop `icon` ou slot. O slot default é reservado para DssFabAction (Nível 3, ainda a ser criado).",
-  "compositionFuture": ["DssFabAction"],
+  "compositionFuture": [
+    "DssFabAction"
+  ],
   "compositionFutureNote": "DssFabAction (Nível 3) será o filho canônico do DssFab. Até que seja criado, exemplos usam <q-fab-action> nativo (EXC-01 documentado).",
-  "statesApplicable": ["default", "hover", "focus", "active", "disabled", "expanded"],
-  "statesNotApplicable": ["loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "expanded"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": {
     "loading": "Fase 2 síncrona — loading não aplicável ao trigger FAB.",
     "error": "FAB é ação flutuante primária — estados de erro pertencem a componentes de formulário.",
@@ -33,7 +49,14 @@
     "screenReader": "aria-expanded gerenciado pelo Quasar automaticamente",
     "ariaLabel": "Prop ariaLabel disponível para contextos sem label visual suficientemente descritivo"
   },
-  "propsBlocked": ["glossy", "push", "flat", "outline", "unelevated", "padding"],
+  "propsBlocked": [
+    "glossy",
+    "push",
+    "flat",
+    "outline",
+    "unelevated",
+    "padding"
+  ],
   "propsBlockedJustification": {
     "glossy": "Não faz parte da linguagem visual DSS v2.2.",
     "push": "Não faz parte da linguagem visual DSS v2.2.",
@@ -42,13 +65,41 @@
     "unelevated": "Idem flat.",
     "padding": "Padding governado por tokens internos, não exposto na API pública."
   },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  },
   "tokens": {
-    "shape": ["--dss-radius-full"],
-    "elevation": ["--dss-elevation-2", "--dss-elevation-3"],
-    "motion": ["--dss-duration-200", "--dss-easing-standard"],
-    "accessibility": ["--dss-focus-ring", "--dss-focus-ring-dark", "--dss-opacity-disabled"],
-    "border": ["--dss-border-width-md", "--dss-border-width-thick"],
-    "brand": ["--dss-hub-600", "--dss-hub-400", "--dss-water-500", "--dss-water-400", "--dss-waste-600", "--dss-waste-500"]
+    "shape": [
+      "--dss-radius-full"
+    ],
+    "elevation": [
+      "--dss-elevation-2",
+      "--dss-elevation-3"
+    ],
+    "motion": [
+      "--dss-duration-200",
+      "--dss-easing-standard"
+    ],
+    "accessibility": [
+      "--dss-focus-ring",
+      "--dss-focus-ring-dark",
+      "--dss-opacity-disabled"
+    ],
+    "border": [
+      "--dss-border-width-md",
+      "--dss-border-width-thick"
+    ],
+    "brand": [
+      "--dss-hub-600",
+      "--dss-hub-400",
+      "--dss-water-500",
+      "--dss-water-400",
+      "--dss-waste-600",
+      "--dss-waste-500"
+    ]
   },
   "exceptions": [
     {
@@ -66,8 +117,15 @@
   ],
   "gateExceptions": {
     "compositionGateV24": {
-      "files": ["2-composition/_base.scss", "4-output/_states.scss", "4-output/_brands.scss"],
-      "selectors": [".dss-fab__qfab .q-fab__trigger", ".dss-fab__qfab .q-fab__actions"],
+      "files": [
+        "2-composition/_base.scss",
+        "4-output/_states.scss",
+        "4-output/_brands.scss"
+      ],
+      "selectors": [
+        ".dss-fab__qfab .q-fab__trigger",
+        ".dss-fab__qfab .q-fab__actions"
+      ],
       "justification": "Seletores .q-fab__trigger e .q-fab__actions são elementos DOM internos do QFab (Quasar Framework), não subcomponentes DSS. Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos. Precedente: DssBtnDropdown gateExceptions → .q-btn-dropdown__arrow-container (selado Mar 2026)."
     }
   },

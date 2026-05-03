@@ -33,22 +33,50 @@
   ],
   "classification": "Elemento individual de trilha de navegação — condicionalmente interativo (clicável como link ou estático como item atual)",
   "subcomponents": [],
-  "compositionRequirements": ["DssIcon"],
-  "compositionFuture": ["DssBreadcrumbs"],
+  "compositionRequirements": [
+    "DssIcon"
+  ],
+  "compositionFuture": [
+    "DssBreadcrumbs"
+  ],
   "compositionNote": "DssBreadcrumbsEl compõe DssIcon internamente (prop `icon`). A composição de DssIcon é opcional — o DssBreadcrumbsEl funciona sem ícone. O DssBreadcrumbs (futuro) será o container pai que gerencia separadores, role='navigation' e aria-current.",
-  "compositionRecommendations": ["DssIcon"],
+  "compositionRecommendations": [
+    "DssIcon"
+  ],
   "props": {
-    "DssBreadcrumbsEl": ["label", "icon", "to", "href", "disable", "tag"]
+    "DssBreadcrumbsEl": [
+      "label",
+      "icon",
+      "to",
+      "href",
+      "disable",
+      "tag"
+    ]
   },
-  "propsBlocked": ["ripple", "exact", "active-class", "exact-active-class"],
+  "propsBlocked": [
+    "ripple",
+    "exact",
+    "active-class",
+    "exact-active-class"
+  ],
   "propsBlockedJustification": {
     "ripple": "DSS não usa ripple em elementos de navegação estrutural. Ripple é reservado para controles de ação (DssButton) — não para elementos de trilha de navegação.",
     "exact": "Gerenciado pelo DssBreadcrumbs pai, não pelo elemento individual. Expor exact no DssBreadcrumbsEl violaria a governança do container pai.",
     "active-class": "DSS governa classes de estado ativo via CSS/tokens. Classes Quasar de estado ativo não seguem nomenclatura BEM DSS.",
     "exact-active-class": "Mesmo motivo de active-class. Estado ativo governado por tokens DSS, não por classes Quasar."
   },
-  "statesApplicable": ["default", "hover", "focus", "active", "disabled"],
-  "statesNotApplicable": ["loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssBreadcrumbsEl é elemento de navegação estrutural. loading: o elemento não carrega dados — a página de destino carrega. error: pertence ao roteamento/network, não ao elemento de breadcrumb. indeterminate: não aplicável a itens de trilha de navegação.",
   "statesDualNote": "A dualidade clicável/estático é uma exceção prevista ao Gate de Responsabilidade v2.4: item --clickable (com to/href) possui hover/focus/active; item --current (sem to/href) possui apenas default. Esta dualidade é documentada formalmente como característica central do componente.",
   "touchTarget": "Opção A — Condicional. Quando clicável (--clickable), o QBreadcrumbsEl renderiza um <a> que herda os padrões de touch target do navegador. Touch target explícito via ::before WCAG 2.5.5 não implementado em v1.0.0 (RES-03 prioritário em v1.1.0). Quando estático (--current), touch target não aplicável (elemento não-interativo).",
@@ -111,5 +139,11 @@
     "--dss-water-400",
     "--dss-waste-600",
     "--dss-waste-500"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

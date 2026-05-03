@@ -67,5 +67,11 @@
     "Passar type como prop — type='textarea' é fixo internamente; DssTextarea não aceita type",
     "Usar resize CSS manualmente no consumidor — resize: none é definido pelo componente; autogrow controla o tamanho",
     "Usar autogrow sem maxHeight em containers com altura fixa — pode causar overflow inesperado"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

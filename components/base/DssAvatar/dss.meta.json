@@ -9,5 +9,20 @@
   "goldenContext": "DssChip",
   "phase": 1,
   "category": "Basico (Visual/Identity)",
-  "hasReservations": true
+  "hasReservations": true,
+  "defaultPreview": {
+    "props": {
+      "size": "md"
+    },
+    "computedDimensions": {
+      "width": "48px",
+      "height": "48px"
+    },
+    "computedTokens": {
+      "width": "--dss-touch-target-min",
+      "height": "--dss-touch-target-min",
+      "borderRadius": "--dss-radius-full"
+    },
+    "demoContent": "Iniciais 'AB'"
+  }
 }

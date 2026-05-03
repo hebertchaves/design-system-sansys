@@ -14,14 +14,38 @@
   "phaseDescription": "Fase 2 Ready — Composicao Interna DSS documentada",
   "hasReservations": true,
   "classification": "Componente de superficie estrutural composto",
-  "subcomponents": ["DssCardSection", "DssCardActions"],
+  "subcomponents": [
+    "DssCardSection",
+    "DssCardActions"
+  ],
   "props": {
-    "DssCard": ["variant", "square", "clickable", "dark", "brand"],
-    "DssCardSection": ["horizontal"],
-    "DssCardActions": ["align", "vertical"]
+    "DssCard": [
+      "variant",
+      "square",
+      "clickable",
+      "dark",
+      "brand"
+    ],
+    "DssCardSection": [
+      "horizontal"
+    ],
+    "DssCardActions": [
+      "align",
+      "vertical"
+    ]
   },
-  "statesApplicable": ["default", "hover", "focus", "active"],
-  "statesNotApplicable": ["disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "hover",
+    "focus",
+    "active"
+  ],
+  "statesNotApplicable": [
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssCard e superficie estrutural. Estados de loading/disabled/error pertencem aos componentes internos (DssButton, DssInput, etc.).",
   "compositionRecommendations": [
     "DssAvatar",
@@ -78,5 +102,18 @@
       "location": "DssCard.example.vue",
       "justification": "Avatar placeholder no exemplo. Gradiente decorativo para demonstracao visual. Arquivo de exemplo, nao afeta componente."
     }
-  ]
+  ],
+  "defaultPreview": {
+    "props": {
+      "variant": "elevated",
+      "square": false
+    },
+    "computedDimensions": {
+      "minWidth": "100%"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-lg"
+    },
+    "demoContent": "DssCardSection com texto"
+  }
 }

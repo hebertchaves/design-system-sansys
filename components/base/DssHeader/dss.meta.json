@@ -5,31 +5,35 @@
   "auditMode": "Auditoria DSS v2.2 — Aprovado",
   "auditDate": "2026-04-17",
   "seal": "DSS/docs/Compliance/seals/DssHeader/DSSHEADER_SELO_v2.2.md",
-
   "goldenReference": "DssCard",
   "goldenReferenceJustification": "DssCard é o Golden Reference para DssHeader: ambos são containers estruturais não-interativos que fornecem superfície visual, com governança de fundo via tokens DSS e brandabilidade. DssCard recebeu Selo DSS v2.2 (Feb 2026) e estabelece o padrão para containers de Fase 2.",
-
   "goldenContext": "DssToolbar",
   "goldenContextJustification": "DssToolbar é o Golden Context mais próximo para DssHeader: ambos são containers estruturais de layout de página, não-interativos, que encapsulam primitivos Quasar (QToolbar / QHeader) e bloqueiam props de cor. DssToolbar recebeu Selo DSS v2.2 (Abr 2026) e serve como baseline direto para DssHeader, seu container imediato.",
-
   "category": "Container estrutural de layout de página — header fixo ao topo",
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural de Nível 3 (Composição de Segundo Grau). Orquestra DssToolbar (Nível 1). Wrapper DSS governado sobre QHeader. Bloco de construção base para DssLayout (futuro Nível 4).",
   "classification": "Superfície e Layout — container estrutural não-interativo",
-
   "hasReservations": false,
-
   "subcomponents": [],
   "compositionRequirements": [],
-  "compositionFuture": ["DssLayout", "DssDrawer", "DssFooter"],
+  "compositionFuture": [
+    "DssLayout",
+    "DssDrawer",
+    "DssFooter"
+  ],
   "compositionRecommendations": [
     "DssToolbar (slot default — uso exclusivo recomendado)",
     "DssTabs (slot default — navegação global em cenários específicos)"
   ],
   "compositionNote": "DssHeader fornece o container <q-header> do Quasar com governança DSS. O slot default deve receber exclusivamente componentes DssToolbar (um ou mais empilhados). Uso de HTML nativo ou DssTabs diretamente no DssHeader viola o Gate de Composição v2.4.",
-
-  "propsExposed": ["elevated", "bordered"],
-  "propsBlocked": ["color", "height-hint"],
+  "propsExposed": [
+    "elevated",
+    "bordered"
+  ],
+  "propsBlocked": [
+    "color",
+    "height-hint"
+  ],
   "propsBlockedJustification": {
     "color": "Cor de fundo governada por token --dss-surface-default via CSS. A prop color do QHeader é bloqueada para garantir consistência visual. Override via !important documentado como EXC-02.",
     "height-hint": "Altura calculada automaticamente pelo Quasar com base no conteúdo (DssToolbar). Não deve ser configurada pelo consumidor."
@@ -37,11 +41,21 @@
   "propsPassThrough": {
     "reveal": "Não declarado como prop DSS — encaminhado via $attrs ao QHeader, que oculta/exibe o header ao rolar a página nativamente."
   },
-
-  "statesApplicable": ["default", "elevated", "bordered"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "elevated",
+    "bordered"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssHeader é container estrutural 100% não-interativo. Nenhum estado de interação aplica-se — hover/focus/active são responsabilidade dos filhos (DssToolbar > DssButton). disabled/loading/error/indeterminate não se aplicam a containers de layout de página.",
-
   "accessibility": {
     "role": "banner (role='banner' herdado nativamente do QHeader — semântica de landmark de cabeçalho de página)",
     "wcagLevel": "2.1 AA",
@@ -50,7 +64,6 @@
     "ariaLabel": "Recomendado via $attrs: <DssHeader aria-label='Cabeçalho principal'>. O componente repassa $attrs corretamente via v-bind.",
     "landmark": "role='banner' identifica este elemento como o cabeçalho principal da página. Deve haver apenas um DssHeader por página."
   },
-
   "compositionMatrix": {
     "role": "Container estrutural superior de página — âncora do topo do layout",
     "recommended": [
@@ -71,7 +84,6 @@
       "Instanciar múltiplos DssHeader por página (viola semântica role='banner')"
     ]
   },
-
   "gateExceptions": {
     "compositionGateV24": {
       "rule1": "Uso de <q-header> diretamente — wrapper Nível 3 sobre primitivo Quasar de layout.",
@@ -79,7 +91,6 @@
     },
     "responsibilityGateV24": "DssHeader é 100% não-interativo. Nenhum estado hover/focus/active definido no container. Toda interatividade é responsabilidade dos filhos."
   },
-
   "antiPatterns": [
     "Usar DssHeader como container genérico de conteúdo de página",
     "Aplicar brand via prop bloqueada (color)",
@@ -87,13 +98,14 @@
     "Instanciar múltiplos DssHeader por página",
     "Usar DssHeader fora de um contexto QLayout"
   ],
-
   "exceptions": [
     {
       "id": "EXC-01",
       "description": "Uso de <q-layout> no arquivo DssHeader.example.vue",
       "location": "DssHeader.example.vue — todos os exemplos",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 1 (Proibição de componentes Quasar no template)"],
+      "gatesViolated": [
+        "Gate de Composição v2.4 — Regra 1 (Proibição de componentes Quasar no template)"
+      ],
       "justification": "DssHeader requer contexto QLayout para renderizar corretamente (posicionamento fixo, cálculo de offset de conteúdo). Como DssLayout (Nível 4) ainda não existe, usa-se <q-layout> nativo temporariamente APENAS no arquivo de exemplo. O código fonte do componente (DssHeader.ts.vue) permanece 100% aderente aos gates. Isenção formal conforme DSS_IMPLEMENTATION_GUIDE.md — exemplo.vue tem contexto de scaffolding."
     },
     {
@@ -119,7 +131,6 @@
       "justification": "Impressão monocromática. Tokens CSS podem não ser resolvidos em contexto de impressão. Valores hardcoded garantem legibilidade. position: static cancela o position: fixed do QHeader para evitar que o header apareça flutuando na impressão. Precedente: DssToolbar (EXC-04), DssTab, DssStep."
     }
   ],
-
   "tokensUsed": [
     "--dss-surface-default",
     "--dss-text-body",
@@ -127,5 +138,11 @@
     "--dss-border-width-thin",
     "--dss-gray-200",
     "--dss-border-width-md"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

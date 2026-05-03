@@ -17,12 +17,27 @@
   "hasReservations": false,
   "reservations": [],
   "subcomponents": [],
-  "compositionRequirements": ["DssTabs"],
+  "compositionRequirements": [
+    "DssTabs"
+  ],
   "compositionFuture": [],
   "compositionNote": "DssRouteTab é filho direto de DssTabs (ou q-tabs). Uso idiomático: DssTabs v-model + múltiplos DssRouteTab com props `name` e `to`. O DssTabs gerencia o estado de rota ativa via Vue Router. Estratégia de CSS compartilhado: DssRouteTab aplica a classe .dss-tab — todos os estilos visuais são fornecidos pelo DssTab.module.scss importado no orquestrador DssRouteTab.module.scss. Evita duplicação de tokens e garante paridade visual com DssTab. Em produção, bundlers (Vite/webpack) deduplicam CSS idêntico. Referência: pré-prompt §2.1 — Risco Principal: Duplicação de Lógica Visual.",
-  "compositionRecommendations": ["DssTabs"],
+  "compositionRecommendations": [
+    "DssTabs"
+  ],
   "props": {
-    "DssRouteTab": ["name", "label", "icon", "alert", "disable", "to", "exact", "replace", "href", "target"],
+    "DssRouteTab": [
+      "name",
+      "label",
+      "icon",
+      "alert",
+      "disable",
+      "to",
+      "exact",
+      "replace",
+      "href",
+      "target"
+    ],
     "blocked": {
       "ripple": "Desativado permanentemente (:ripple='false'). DSS governa feedback visual via ::after overlay.",
       "no-caps": "Governado pelo CSS/tokens DSS, não por prop. A transformação de texto é definida pelos tokens de tipografia.",
@@ -30,8 +45,19 @@
       "text-color": "Cores governadas exclusivamente por tokens DSS/brands. Não configurável pelo consumidor."
     }
   },
-  "statesApplicable": ["default", "hover", "focus", "active", "selected", "disabled"],
-  "statesNotApplicable": ["loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "selected",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "loading: DssRouteTab não carrega dados — é um controle de navegação síncrono (roteamento Vue Router é síncrono). error: estado de erro pertence ao conteúdo da rota de destino, não ao elemento de navegação. indeterminate: não aplicável a elementos de navegação binária (selecionada/não-selecionada).",
   "touchTarget": "Option A — interativo. min-height: var(--dss-touch-target-md) — herdado via classe .dss-tab do DssTab. WCAG 2.5.5.",
   "ariaRole": "tab (herdado do QRouteTab via QTab)",
@@ -50,7 +76,10 @@
         ".dss-tab .q-tab__indicator"
       ],
       "location": "DssTab.module.scss (importado) — 2-composition/_base.scss + 4-output/_states.scss do DssTab",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 1", "Gate de Composição v2.4 — Regra 2"],
+      "gatesViolated": [
+        "Gate de Composição v2.4 — Regra 1",
+        "Gate de Composição v2.4 — Regra 2"
+      ],
       "justification": "Regra 1 — O componente usa <q-route-tab> (primitivo Quasar) diretamente porque é um wrapper de Nível 1 Independente, análogo ao DssTab (Golden Reference). O QRouteTab herda a estrutura completa do QTab, incluindo o .q-tab__indicator. Regra 2 — Os seletores compostos (.dss-tab .q-tab__indicator) herdados do DssTab.module.scss sobrescrevem CSS hardcoded do Quasar com tokens DSS. A classe .dss-tab aplicada pelo DssRouteTab garante cobertura automática por esses seletores. Precedente: DssTab EXC-01."
     },
     {
@@ -97,5 +126,11 @@
     "--dss-hub-600",
     "--dss-water-600",
     "--dss-waste-600"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

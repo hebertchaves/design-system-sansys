@@ -9,5 +9,19 @@
   "goldenContext": "DssBadge",
   "category": "Elemento Visual Base nao interativo",
   "phase": 1,
-  "hasReservations": false
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "size": "md"
+    },
+    "computedDimensions": {
+      "width": "24px",
+      "height": "24px"
+    },
+    "computedTokens": {
+      "width": "--dss-icon-size-md",
+      "height": "--dss-icon-size-md"
+    },
+    "demoContent": "Ícone 'star'"
+  }
 }

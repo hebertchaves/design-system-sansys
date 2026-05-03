@@ -14,8 +14,13 @@
   "hasReservations": false,
   "classification": "Container de composição — Agrupa instâncias de DssTab com navegação por teclado e scroll automático",
   "subcomponents": [],
-  "compositionRequirements": ["DssTab"],
-  "compositionFuture": ["DssRouteTab", "DssTabPanels"],
+  "compositionRequirements": [
+    "DssTab"
+  ],
+  "compositionFuture": [
+    "DssRouteTab",
+    "DssTabPanels"
+  ],
   "compositionNote": "DssTabs é container de layout e gerenciamento de estado. Aceita apenas DssTab (ou DssRouteTab futuro) em seu slot. O uso de <q-tab> diretamente dentro de DssTabs é violação arquitetural (Gate de Composição v2.4). DssTabs propaga data-brand para que DssTab filhos respondam automaticamente via seletor CSS [data-brand] .dss-tab.",
   "props": {
     "DssTabs": [
@@ -28,7 +33,13 @@
       "ariaLabel"
     ]
   },
-  "propsBlocked": ["active-color", "active-bg-color", "indicator-color", "ripple", "no-caps"],
+  "propsBlocked": [
+    "active-color",
+    "active-bg-color",
+    "indicator-color",
+    "ripple",
+    "no-caps"
+  ],
   "propsBlockedJustification": {
     "active-color": "DSS governa cor da aba ativa via tokens --dss-action-primary no DssTab, não via prop do container.",
     "active-bg-color": "DSS governa cor de fundo via tokens no DssTab. Container não deve forçar cores nos filhos.",
@@ -36,8 +47,18 @@
     "ripple": "DSS não usa o sistema de ripple do Material Design. Feedback visual gerenciado via overlay ::after com opacity tokens no DssTab.",
     "no-caps": "Transformação de texto é responsabilidade dos tokens de tipografia DSS no DssTab, não uma opção do consumidor."
   },
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssTabs é container estrutural de navegação. Todos os estados interativos (hover, focus, active, disabled) pertencem exclusivamente aos DssTab filhos. O container em si não é focusável nem diretamente interativo. loading: container não carrega dados. error: pertence ao conteúdo das abas, não ao container. indeterminate: não aplicável a seleção de abas.",
   "touchTarget": "Opção B — Não implementado no container. Touch target (::before WCAG 2.5.5) é responsabilidade exclusiva de cada DssTab filho. As setas de navegação (.q-tabs__arrow) usam touch target nativo do QTabs.",
   "ariaRole": "outer div: nenhum role explícito (generic). role='tablist' no <q-tabs> interno — aria-label forwarded via prop.",
@@ -57,7 +78,10 @@
         ".dss-tabs[data-brand='x'] .q-tabs__arrow"
       ],
       "location": "2-composition/_base.scss, 4-output/_states.scss, 4-output/_brands.scss, 3-variants/_dense.scss",
-      "gatesViolated": ["Gate de Composição v2.4 — Regra 1", "Gate de Composição v2.4 — Regra 2"],
+      "gatesViolated": [
+        "Gate de Composição v2.4 — Regra 1",
+        "Gate de Composição v2.4 — Regra 2"
+      ],
       "justification": "Regra 1 — O componente usa <q-tabs> (primitivo Quasar) diretamente porque é um wrapper de Nível 2 Independente. Não existe componente DSS equivalente para compor. Precedente: DssTab EXC-01 (usa <q-tab>), DssInput/DssSelect/DssTextarea/DssSlider (usam QField/QInput/QSelect). Regra 2 — O QTabs renderiza .q-tabs__arrow com cor e padding nativos do Material Design. A sobrescrita via seletor composto é a única forma de aplicar tokens DSS sobre CSS de terceiros sem dependências externas adicionais. Precedente idêntico ao DssTab EXC-01 (.dss-tab .q-tab__indicator)."
     },
     {
@@ -103,5 +127,11 @@
     "--dss-hub-600",
     "--dss-water-600",
     "--dss-waste-600"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

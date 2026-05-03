@@ -18,6 +18,7 @@ import { generatePrePromptTemplate } from "./generatePrePromptTemplate.js";
 import { recordAuditEvent } from "./recordAuditEvent.js";
 import { validateGridLayout } from "./validateGridLayout.js";
 import { describeGridInspector } from "./describeGridInspector.js";
+import { validateVisualContract, validate_visual_contract_schema } from "./validateVisualContract.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // After tsup bundle: __dirname = mcp/build/ → go up 2 levels to reach DSS root
@@ -379,6 +380,7 @@ const TOOL_DEFINITIONS = [
     },
   },
   // ── Phase 5 Tools ──────────────────────────────────────────────────────────
+  validate_visual_contract_schema,
   {
     name: "describe_grid_inspector",
     description:
@@ -585,6 +587,10 @@ export function registerTools(server: Server): void {
       }
 
       // ── Phase 5 ──────────────────────────────────────────────────────────────────
+      case "validate_visual_contract": {
+        return await validateVisualContract(args);
+      }
+
       case "describe_grid_inspector": {
         const result = await describeGridInspector();
         return {

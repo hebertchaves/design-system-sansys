@@ -14,7 +14,11 @@
   "classification": "Construção Explícita — não faz wrap de QOptionGroup. Renderiza componentes DSS da Fase 1 via v-for.",
   "architecturalDecision": "NÃO USAR QOptionGroup. Abordagem de construção explícita garantindo 100% de fidelidade visual e comportamental com os componentes DssRadio, DssCheckbox e DssToggle já selados.",
   "subcomponents": [],
-  "compositionRequirements": ["DssRadio", "DssCheckbox", "DssToggle"],
+  "compositionRequirements": [
+    "DssRadio",
+    "DssCheckbox",
+    "DssToggle"
+  ],
   "compositionFuture": [],
   "compositionNote": "DssOptionGroup importa e renderiza DssRadio, DssCheckbox e DssToggle como filhos DSS explícitos. O type prop determina qual componente é renderizado. Estado de seleção é gerenciado pelo DssOptionGroup e repassado aos filhos via props.",
   "props": {
@@ -32,14 +36,29 @@
       "ariaLabelledby"
     ]
   },
-  "propsBlocked": ["dark", "size", "leftLabel"],
+  "propsBlocked": [
+    "dark",
+    "size",
+    "leftLabel"
+  ],
   "propsBlockedJustification": {
     "dark": "O DSS gerencia dark mode via CSS global (body.body--dark / [data-theme=dark]), não via prop de componente.",
     "size": "Os componentes da Fase 1 já possuem tamanhos padronizados via tokens --dss-compact-control-height-*.",
     "leftLabel": "O alinhamento do label deve seguir o padrão DSS (label à direita do controle). Não exposto para garantir consistência visual."
   },
-  "statesApplicable": ["default", "disabled", "readonly"],
-  "statesNotApplicable": ["hover", "focus", "active", "error", "loading", "indeterminate"],
+  "statesApplicable": [
+    "default",
+    "disabled",
+    "readonly"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "error",
+    "loading",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssOptionGroup é container de layout. Estados interativos (hover, focus, active) pertencem aos filhos DSS. Error e indeterminate não são estados do container. Loading não aplicável (sem operações assíncronas). Indeterminate pertence ao DssCheckbox individual quando relevante.",
   "touchTarget": "Opção B — Delegado aos filhos DSS (DssRadio, DssCheckbox, DssToggle). DssOptionGroup não é Compact Control standalone.",
   "ariaRole": "radiogroup (type=radio) ou group (type=checkbox|toggle). Atributos aria-label e aria-labelledby suportados.",
@@ -50,6 +69,12 @@
   },
   "exceptions": [],
   "gateExceptions": {},
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  },
   "tokens": {
     "spacing": [
       "--dss-spacing-1",

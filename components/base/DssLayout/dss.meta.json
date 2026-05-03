@@ -17,7 +17,10 @@
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
-  "compositionFuture": ["DssPageContainer", "DssPage"],
+  "compositionFuture": [
+    "DssPageContainer",
+    "DssPage"
+  ],
   "compositionRecommendations": [
     "DssHeader",
     "DssFooter",
@@ -27,13 +30,26 @@
   ],
   "compositionNote": "DssLayout e o container raiz — aceita exclusivamente componentes estruturais de layout no slot default. HTML nativo ou texto solto diretamente no DssLayout viola a governança de Nivel 4. DssPageContainer e DssPage sao compositionFuture e devem ser criados como dependencias da Fase 2.",
   "props": {
-    "DssLayout": ["view", "container"],
+    "DssLayout": [
+      "view",
+      "container"
+    ],
     "blocked": {
       "dark": "dark mode governado por [data-theme='dark'] via tokens CSS — prop nativa do QLayout bloqueada no DSS"
     }
   },
-  "statesApplicable": ["dark-mode"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "dark-mode"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssLayout e container estrutural raiz 100% nao-interativo (Gate de Responsabilidade v2.4). hover/focus/active/disabled pertencem aos componentes filhos. loading/error sao responsabilidade do DssPage ou componentes de conteudo. indeterminate nao se aplica a containers.",
   "accessibility": {
     "role": "Nao aplicado — DssLayout nao forca role semantico. Semântica e fornecida pelos filhos: DssHeader (banner), DssDrawer (navigation), DssPage (main), DssFooter (contentinfo).",
@@ -59,7 +75,9 @@
       "id": "EXC-01",
       "description": "QLayout como elemento raiz — Gate de Composicao v2.4 Regra 1",
       "location": "1-structure/DssLayout.ts.vue",
-      "gatesViolated": ["Gate de Composicao v2.4 — Regra 1"],
+      "gatesViolated": [
+        "Gate de Composicao v2.4 — Regra 1"
+      ],
       "justification": "DssLayout usa <q-layout> diretamente como raiz do template. QLayout depende de provide/inject interno para comunicar offsets de header/footer/drawer aos componentes filhos via variaveis CSS. Envolver em <div> quebraria a matematica de layout do Quasar. Precedente canonico: DssHeader (<q-header> como raiz), DssDrawer (<q-drawer> como raiz)."
     },
     {
@@ -85,8 +103,16 @@
       "id": "EXC-05",
       "value": "q-page-container e q-page nativos no exemplo",
       "location": "DssLayout.example.vue",
-      "gatesViolated": ["Gate de Composicao v2.4 — Regra 1 (somente no exemplo)"],
+      "gatesViolated": [
+        "Gate de Composicao v2.4 — Regra 1 (somente no exemplo)"
+      ],
       "justification": "DssPageContainer e DssPage ainda nao existem na Fase 2 do DSS. Uso de componentes Quasar nativos exclusivamente no arquivo de exemplo para demonstrar o calculo de offsets de layout. O codigo fonte do componente (DssLayout.ts.vue) permanece 100% aderente. Isencao formal conforme DSS_IMPLEMENTATION_GUIDE.md — politica de isenção de exemplos."
     }
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

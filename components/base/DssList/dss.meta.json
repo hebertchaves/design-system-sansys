@@ -15,17 +15,40 @@
   "classification": "Superficie estrutural de lista — container nao interativo",
   "hasReservations": false,
   "subcomponents": [],
-  "compositionRequirements": ["DssItem", "DssSeparator"],
-  "compositionFuture": ["DssItemSection", "DssItemLabel"],
+  "compositionRequirements": [
+    "DssItem",
+    "DssSeparator"
+  ],
+  "compositionFuture": [
+    "DssItemSection",
+    "DssItemLabel"
+  ],
   "props": {
-    "DssList": ["bordered", "padding", "separator", "brand", "ariaLabel", "ariaLabelledby"],
+    "DssList": [
+      "bordered",
+      "padding",
+      "separator",
+      "brand",
+      "ariaLabel",
+      "ariaLabelledby"
+    ],
     "blocked": {
       "dark": "Gerenciado globalmente via [data-theme='dark']. Prop nao exposta por decisao arquitetural DSS.",
       "dense": "Densidade controlada individualmente nos DssItems, nao forcada pelo container."
     }
   },
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading", "error", "indeterminate"],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error",
+    "indeterminate"
+  ],
   "statesNotApplicableJustification": "DssList e container nao interativo. Todos os estados interativos (hover, focus, active, disabled) pertencem aos componentes filhos (DssItem). Loading/error pertencem ao consumidor da lista.",
   "accessibility": {
     "role": "list",
@@ -112,5 +135,11 @@
       "location": "3-variants/_separator.scss",
       "justification": "Gate de Composicao v2.4. Separadores automaticos via CSS sem exigir insercao manual de DssSeparator entre cada item. Abordagem performatica e idiomatica para listas. Alternativa rejeitada: DX friction com DssSeparator manual entre cada item. Afeta apenas borda superior (border-top), sem alterar padding, layout ou outros estilos dos filhos."
     }
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }

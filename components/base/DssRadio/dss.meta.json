@@ -13,5 +13,20 @@
   "classification": "Form / Selection",
   "hasReservations": false,
   "createdDate": "2026-02-04",
-  "sealDate": "2026-02-05"
+  "sealDate": "2026-02-05",
+  "defaultPreview": {
+    "props": {
+      "color": "primary",
+      "size": "md"
+    },
+    "computedDimensions": {
+      "minHeight": "48px",
+      "minWidth": "48px"
+    },
+    "computedTokens": {
+      "gap": "--dss-spacing-2",
+      "fontSize": "--dss-font-size-sm"
+    },
+    "demoContent": "Label 'Opção'"
+  }
 }

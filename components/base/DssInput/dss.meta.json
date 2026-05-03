@@ -9,5 +9,20 @@
   "goldenContext": "DssChip",
   "category": "Action Control (interativo)",
   "phase": 1,
-  "hasReservations": false
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "variant": "outlined",
+      "type": "text",
+      "dense": false
+    },
+    "computedDimensions": {
+      "minHeight": "44px",
+      "width": "100%"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-4 --dss-spacing-4"
+    },
+    "demoContent": "Placeholder 'Digite aqui'"
+  }
 }

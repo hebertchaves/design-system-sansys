@@ -49,5 +49,11 @@
     "Using <DssSeparator> inside <DssCard> to separate DssCardSection — DssCard manages its own dividers via CSS (& + &)",
     "Passing dark prop — DSS manages dark mode via [data-theme='dark'] CSS globally",
     "Using arbitrary color strings — only the 5 governed values are supported"
-  ]
+  ],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {},
+    "demoContent": "Conteúdo padrão"
+  }
 }
