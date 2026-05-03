@@ -338,8 +338,8 @@ ${contentByVolume[contentVolume] ?? contentByVolume.few}
         badgeVariant="info"
         title="Componente"
         titleAccent="DssPage"
-        subtitle="DssPage é o componente que define a área de conteúdo principal da aplicação. Wrapper governado sobre QPage (Nível 4 — composição de terceiro grau), garante o cálculo dinâmico de min-height para o padrão de sticky footer e aplica role=\"main\" por padrão para acessibilidade. Deve ser usado dentro de um DssLayout + DssPageContainer e é responsável apenas pela área da página — cor de fundo, scrollbars e layout interno são delegados a outros componentes."
-        subtitleHighlights={["área de conteúdo principal", "Nível 4", "sticky footer", "role=\"main\""]}
+        subtitle={'DssPage é o componente que define a área de conteúdo principal da aplicação. Wrapper governado sobre QPage (Nível 4 — composição de terceiro grau), garante o cálculo dinâmico de min-height para o padrão de sticky footer e aplica role="main" por padrão para acessibilidade. Deve ser usado dentro de um DssLayout + DssPageContainer e é responsável apenas pela área da página — cor de fundo, scrollbars e layout interno são delegados a outros componentes.'}
+        subtitleHighlights={["área de conteúdo principal", "Nível 4", "sticky footer", 'role="main"']}
         extraBadges={[
           { label: "Quasar Compatible", variant: "success" },
           { label: "TypeScript", variant: "info" },
