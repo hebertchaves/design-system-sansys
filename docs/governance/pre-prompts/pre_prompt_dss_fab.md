@@ -69,6 +69,9 @@ O componente deve ser um wrapper direto do `<q-fab>`. O slot `default` é reserv
 - **Border Radius:** `border-radius: var(--dss-radius-full)` (sempre circular ou pill).
 - **Elevação:** `box-shadow: var(--dss-elevation-2)` (padrão) e `var(--dss-elevation-3)` (hover/active).
 - **Transição:** `transition: all var(--dss-duration-200) var(--dss-easing-standard)`.
+- **Dimensão Mínima (Touch Target):** `min-width` e `min-height` devem usar `var(--dss-spacing-14)` (56px).
+- **Padding (Extended FAB):** O padding horizontal da variante pill deve usar `var(--dss-padding-4)` (16px).
+- **Focus Ring (Dark Mode):** O catálogo não possui `--dss-focus-ring-dark`. Usar `outline: 2px solid white` com exceção `EXC-States-02` documentada.
 
 ## 5. Acessibilidade e Estados
 
