@@ -86,6 +86,7 @@ const App = () => (
             <Route path="/componentes/dss-drawer" element={<DssDrawerPage />} />
             <Route path="/componentes/dss-fab" element={<DssFabPage />} />
             <Route path="/componentes/dss-page" element={<DssPagePage />} />
+            <Route path="/componentes/dss-file" element={<DssFilePage />} />
             <Route path="/componentes/teste-cadris" element={<DssTestCadrisPage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             
