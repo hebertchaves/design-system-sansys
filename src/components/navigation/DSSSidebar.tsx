@@ -47,6 +47,7 @@ import {
   PanelLeft,
   Wrench,
   Plus,
+  Paperclip,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
