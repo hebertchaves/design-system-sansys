@@ -30,6 +30,7 @@ import DssToolbarPage from "./pages/components/DssToolbarPage";
 import DssDrawerPage from "./pages/components/DssDrawerPage";
 import DssFabPage from "./pages/components/DssFabPage";
 import DssPagePage from "./pages/components/DssPagePage";
+import DssFilePage from "./pages/components/DssFilePage";
 import DssTestCadrisPage from "./pages/components/DssTestCadrisPage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
@@ -85,6 +86,7 @@ const App = () => (
             <Route path="/componentes/dss-drawer" element={<DssDrawerPage />} />
             <Route path="/componentes/dss-fab" element={<DssFabPage />} />
             <Route path="/componentes/dss-page" element={<DssPagePage />} />
+            <Route path="/componentes/dss-file" element={<DssFilePage />} />
             <Route path="/componentes/teste-cadris" element={<DssTestCadrisPage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             
