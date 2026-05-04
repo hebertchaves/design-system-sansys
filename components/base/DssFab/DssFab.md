@@ -3,7 +3,7 @@
 > **Versão do Componente:** 1.0.0
 > **DSS Version:** v2.2
 > **Fase:** 2 — Componente Composto
-> **Status:** Em progresso (pré-auditoria)
+> **Status:** Conformant
 > **Data de Criação:** 2026-05-01
 > **Baseado em:** QFab (Quasar)
 > **Golden Reference:** DssChip
@@ -200,9 +200,10 @@ O DssFab é classificado como Fase 2 porque:
 | `--dss-elevation-3` | L2, L4 | Sombra no hover/active |
 | `--dss-duration-200` | L2 | Duração da transição |
 | `--dss-easing-standard` | L2 | Easing das transições (cubic-bezier(0.4,0,0.2,1)) |
+| `--dss-spacing-14` | L2 | Dimensão mínima do trigger (56px — touch target ≥ 48px) |
+| `--dss-padding-4` | L3 | Padding horizontal do Extended FAB (16px) |
 | `--dss-opacity-disabled` | L2 | Opacidade disabled = 0.4 |
 | `--dss-focus-ring` | L2 | Ring de foco (WCAG 2.4.7 AA) |
-| `--dss-focus-ring-dark` | L4 | Ring de foco no dark mode |
 | `--dss-border-width-md` | L4 | Borda em high-contrast |
 | `--dss-border-width-thick` | L4 | Acento de marca (box-shadow inset) |
 | `--dss-hub-600` / `--dss-hub-400` | L4 | Brand Hub claro/dark |
@@ -335,6 +336,7 @@ O `DssFabAction` ainda não existe. Até ser criado, o slot default aceita `<q-f
 |----|-------|-------|---------------|
 | EXC-01 | `<q-fab-action>` nativo | `.example.vue`, `.md` | DssFabAction (Nível 3) ainda não construído. Remoção após DssFabAction ser selado. |
 | EXC-States-01 | `1px solid ButtonBorder` | `4-output/_states.scss` | Forced-colors mode — system color keywords obrigatórios. Tokens CSS ignorados. Padrão DssCard EXC-04. |
+| EXC-States-02 | `outline: 2px solid white; outline-offset: 2px` | `4-output/_states.scss` | Fallback explícito para dark mode — token `--dss-focus-ring-dark` não existe no catálogo v2.2. Necessário para WCAG 2.4.7 em fundos escuros. |
 
 ### Gate Exception v2.4
 

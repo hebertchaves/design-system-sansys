@@ -20,7 +20,8 @@
     }
 
     &:focus-visible {
-      outline: var(--dss-focus-ring-dark);
+      outline: 2px solid white; /* EXC-States-02: Fallback explícito para dark mode */
+      outline-offset: 2px;
     }
   }
 }

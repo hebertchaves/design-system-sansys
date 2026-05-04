@@ -2,7 +2,7 @@
   "component": "DssFab",
   "cssClass": "dss-fab",
   "phase": 2,
-  "status": "in-progress",
+  "status": "conformant",
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssBtnDropdown",
@@ -83,9 +83,14 @@
       "--dss-duration-200",
       "--dss-easing-standard"
     ],
+    "sizing": [
+      "--dss-spacing-14"
+    ],
+    "padding": [
+      "--dss-padding-4"
+    ],
     "accessibility": [
       "--dss-focus-ring",
-      "--dss-focus-ring-dark",
       "--dss-opacity-disabled"
     ],
     "border": [
@@ -113,6 +118,12 @@
       "value": "1px solid ButtonBorder",
       "location": "4-output/_states.scss (@media forced-colors)",
       "justification": "Forced-colors mode — system color keywords obrigatórios. Tokens CSS são ignorados pelo navegador neste modo. Padrão DssCard EXC-04, DssBtnDropdown EXC-04."
+    },
+    {
+      "id": "EXC-States-02",
+      "value": "outline: 2px solid white; outline-offset: 2px",
+      "location": "4-output/_states.scss ([data-theme='dark'] :focus-visible)",
+      "justification": "Fallback explícito para dark mode — não existe token --dss-focus-ring-dark no catálogo v2.2. Valor hardcoded necessário para garantir visibilidade do focus ring em fundos escuros (WCAG 2.4.7). Padrão consistente com DssHeader EXC-01 e DssDrawer."
     }
   ],
   "gateExceptions": {

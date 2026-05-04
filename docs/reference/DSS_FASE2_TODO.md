@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 20 de Abril de 2026
+> **Última Atualização:** 04 de Maio de 2026
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -111,17 +111,17 @@
 ### Família: Navegação
 
 - [x] ~~`DssBreadcrumbs`~~ ✅ **SELADO**
-- [ ] `DssStepper` 🔒 *(aguarda DssStep — **DESBLOQUEADO** ✅)*
+- [x] ~~`DssStepper`~~ ✅ **SELADO** *(20 Abr 2026)*
 - [x] ~~`DssMenu`~~ ✅ **SELADO** *(18 Abr 2026)*
 - [ ] `DssBottomSheet` 🔒 *(aguarda DssList, DssItem)*
 
 ### Família: FAB
 
-- [ ] `DssFab` 🔒 *(aguarda DssButton, DssIcon)*
+- [x] ~~`DssFab`~~ ✅ **SELADO** *(04 Mai 2026)*
 
 ### Família: Estrutura de Página
 
-- [ ] `DssToolbarTitle` 🔒 *(aguarda DssToolbar — **DESBLOQUEADO** ✅)*
+- [x] ~~`DssToolbarTitle`~~ ✅ **SELADO** *(21 Abr 2026)*
 
 ### Família: Conteúdo Rico
 
@@ -173,10 +173,10 @@
 ### Família: Layout Global
 
 - [x] ~~`DssLayout`~~ ✅ **SELADO** *(20 Abr 2026)*
-- [ ] `DssPage` 🔒 *(aguarda DssLayout — **DESBLOQUEADO** ✅)*
-- [ ] `DssPageContainer` 🔒 *(aguarda DssLayout — **DESBLOQUEADO** ✅)*
-- [ ] `DssPageSticky` 🔒 *(aguarda DssLayout — **DESBLOQUEADO** ✅)*
-- [ ] `DssPageScroller` 🔒 *(aguarda DssLayout — **DESBLOQUEADO** ✅)*
+- [x] ~~`DssPage`~~ ✅ **SELADO** *(22 Abr 2026)*
+- [x] ~~`DssPageContainer`~~ ✅ **SELADO** *(22 Abr 2026)*
+- [x] ~~`DssPageSticky`~~ ✅ **SELADO** *(23 Abr 2026)*
+- [x] ~~`DssPageScroller`~~ ✅ **SELADO** *(26 Abr 2026)*
 
 ### Família: Dados Complexos
 
@@ -203,9 +203,9 @@
 | Nível | Total | Selados | % Concluído |
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
-| Fase 2 — Nível 1 | 36 | 12 | 33% |
-| Fase 2 — Nível 2 | 16 | 5 | 31% |
+| Fase 2 — Nível 1 | 38 | 15 | 39% |
+| Fase 2 — Nível 2 | 16 | 7 | 44% |
 | Fase 2 — Nível 3 | 7 | 3 | 43% |
-| Fase 2 — Nível 4 | 7 | 1 | 14% |
-| **Fase 2 Total** | **66** | **21** | **32%** |
+| Fase 2 — Nível 4 | 7 | 5 | 71% |
+| **Fase 2 Total** | **68** | **30** | **44%** |
 | Fase 3 | 6 | N/A | — |

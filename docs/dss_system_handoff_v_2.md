@@ -49,16 +49,34 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 
 | Componente | Categoria | Golden Reference | Status |
 |---|---|---|---|
-| **DssCard** | Container / Superfície | DssChip | `conformant` — Selado |
-| **DssBtnGroup** | Container de Composicao (Action Group) | DssChip | `conformant` — Selado (26 Mar 2026) |
-| **DssBtnDropdown** | Action Group Composto (Botao com Dropdown Integrado) | DssChip | `conformant` — Selado (27 Mar 2026) |
-| **DssList** | Container de Layout Nao-Interativo | DssBadge | `conformant` — Selado (31 Mar 2026) |
+| **DssCard** | Container / Superfície | DssChip | `conformant` — Selado (12 Fev 2026) |
+| **DssBtnGroup** | Container de Composição (Action Group) | DssChip | `conformant` — Selado (26 Mar 2026) |
+| **DssBtnDropdown** | Action Group Composto (Botão com Dropdown Integrado) | DssChip | `conformant` — Selado (27 Mar 2026) |
+| **DssBtnToggle** | Action Group Composto (Grupo de Botões Toggle) | DssButton | `conformant` — Selado (27 Mar 2026) |
+| **DssOptionGroup** | Container de Seleção — Grupo de Controles | DssChip | `conformant` — Selado (27 Mar 2026) |
+| **DssList** | Container de Layout Não-Interativo | DssBadge | `conformant` — Selado (31 Mar 2026) |
 | **DssItemSection** | Container de Layout Interno (coluna flex dentro do DssItem) | DssAvatar | `conformant` — Selado (01 Abr 2026) |
-| **DssTab** | Elemento interativo de navegacao por abas | DssButton | `conformant` — Selado (01 Abr 2026) |
+| **DssTab** | Elemento interativo de navegação por abas | DssButton | `conformant` — Selado (01 Abr 2026) |
+| **DssTabPanel** | Container de conteúdo por aba (painel isolado) | DssChip | `conformant` — Selado (09 Abr 2026) |
+| **DssTabPanels** | Container de múltiplos painéis de abas | DssCard | `conformant` — Selado (09 Abr 2026) |
+| **DssBreadcrumbsEl** | Elemento interativo de navegação estrutural (breadcrumb) | DssButton | `conformant` — Selado (10 Abr 2026) |
+| **DssRouteTab** | Elemento interativo de aba roteada (hero: DssTab + router-link) | DssTab | `conformant` — Selado (10 Abr 2026) |
+| **DssBreadcrumbs** | Container de navegação estrutural (breadcrumb trail) | DssBadge | `conformant` — Selado (11 Abr 2026) |
+| **DssToolbar** | Container estrutural horizontal — barra de ferramentas | DssCard | `conformant` — Selado (16 Abr 2026) |
+| **DssHeader** | Cabeçalho de página — estrutura de layout global | DssCard | `conformant` — Selado (17 Abr 2026) |
+| **DssFooter** | Rodapé de página — estrutura de layout global | DssCard | `conformant` — Selado (18 Abr 2026) |
+| **DssMenu** | Overlay de menu flutuante — composição DssList + DssItem via slot | DssTooltip | `conformant` — Selado (18 Abr 2026) |
+| **DssDrawer** | Container estrutural lateral de layout de página | DssHeader | `conformant` — Selado (19 Abr 2026) |
+| **DssItemLabel** | Container tipográfico não-interativo — wrapper QItemLabel | DssItem | `conformant` — Selado (20 Abr 2026) |
+| **DssLayout** | Container estrutural raiz da aplicação | DssCard | `conformant` — Selado (20 Abr 2026) |
+| **DssStep** | Controle interativo de navegação em stepper | DssTab | `conformant` — Selado (20 Abr 2026) |
+| **DssStepper** | Container de navegação por etapas | DssTabs | `conformant` — Selado (20 Abr 2026) |
 | **DssToolbarTitle** | Estrutura de Página — Tipografia de barra de ferramentas | DssBadge | `conformant` — Selado (21 Abr 2026) |
 | **DssPageContainer** | Layout Global — Container de página com offset automático | DssBadge | `conformant` — Selado (22 Abr 2026) |
 | **DssPage** | Layout Global — Container de conteúdo principal com min-height dinâmica | DssBadge | `conformant` — Selado (22 Abr 2026) |
+| **DssPageSticky** | Layout Global — Container de posicionamento fixo com offset de layout | DssBadge | `conformant` — Selado (23 Abr 2026) |
 | **DssPageScroller** | Layout Global — Container de visibilidade condicional baseado em scroll | DssBadge | `conformant` — Selado (26 Abr 2026) |
+| **DssFab** | Action Group Composto — Floating Action Button interativo | DssChip | `conformant` — Selado (04 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
@@ -327,5 +345,7 @@ Qualquer agente que ignore este documento **NÃO está operando no DSS**.
 ---
 
 **Design System Sansys — DSS v2.2**
-**Estado canônico ao final da Fase 1**
+**Estado canônico ao final da Fase 1 — Fase 2 em andamento**
+**Última atualização da tabela de selos:** 04 de Maio de 2026
+**Totais:** Fase 1: 19/19 ✅ | Fase 2: 28/68 (41%) | Total selados: 47 componentes
 

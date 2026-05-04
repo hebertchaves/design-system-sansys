@@ -13,12 +13,6 @@
    EXTENDED FAB (Ícone + Label — formato pill)
    ========================================================================== */
 
-.dss-fab--extended {
-  .q-fab__trigger {
-    /* Pill shape — mesmo token do circular (--dss-radius-full garante ambos) */
-    border-radius: var(--dss-radius-full);
-
-    /* Extended FAB tem padding horizontal maior */
-    /* O QFab gerencia isso internamente via padding do QBtn */
-  }
+.q-fab--extended .q-fab__trigger {
+  padding: 0 var(--dss-padding-4);
 }

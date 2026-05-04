@@ -72,6 +72,8 @@
 | `.dss-fab--brand-water` | Quando `brand="water"` |
 | `.dss-fab--brand-waste` | Quando `brand="waste"` |
 
+> **Nota sobre classes de direção:** As classes `.dss-fab--direction-{down|left|right}` são *extension hooks* — geradas pelo composable para uso potencial por consumidores via CSS, mas **sem estilo DSS próprio**. O comportamento visual de direção (posicionamento das ações filhas) é delegado nativamente ao QFab via prop `:direction`. Não existe CSS no módulo `DssFab.module.scss` para essas classes.
+
 ---
 
 ## Tokens Utilizados
@@ -83,9 +85,10 @@
 | `--dss-elevation-3` | L2, L4 | Sombra no hover/active |
 | `--dss-duration-200` | L2 | Duração da transição de elevação |
 | `--dss-easing-standard` | L2 | Easing das transições |
+| `--dss-spacing-14` | L2 | Dimensão mínima do trigger (56px) |
+| `--dss-padding-4` | L3 | Padding horizontal do Extended FAB (16px) |
 | `--dss-opacity-disabled` | L2 | Opacidade do estado disabled (0.4) |
 | `--dss-focus-ring` | L2 | Ring de foco (WCAG 2.4.7) |
-| `--dss-focus-ring-dark` | L4 | Ring de foco no dark mode |
 | `--dss-border-width-md` | L4 | Borda em high-contrast |
 | `--dss-border-width-thick` | L4 | Acento de marca (brand) |
 | `--dss-hub-600` / `--dss-hub-400` | L4 | Brand Hub (light/dark) |
@@ -101,3 +104,4 @@
 | EXC-01 | `<q-fab-action>` nativo | `DssFab.example.vue`, `DssFab.md` | DssFabAction (Nível 3) ainda não construído. Exceção temporária removível após DssFabAction ser selado. |
 | EXC-Gate | `.q-fab__trigger`, `.q-fab__actions` | `2-composition/_base.scss`, `4-output/` | Seletores Quasar internos necessários para override de elevação e shape. Gate de Composição v2.4 não se aplica a internos Quasar. Precedente: DssBtnDropdown gateExceptions. |
 | EXC-States-01 | `1px solid ButtonBorder` | `4-output/_states.scss` | Forced-colors mode — system color keywords obrigatórios. Tokens CSS ignorados neste modo. Padrão DssCard EXC-04. |
+| EXC-States-02 | `outline: 2px solid white; outline-offset: 2px` | `4-output/_states.scss` | Fallback explícito para dark mode — token `--dss-focus-ring-dark` não existe no catálogo v2.2. Necessário para WCAG 2.4.7 em fundos escuros. |
