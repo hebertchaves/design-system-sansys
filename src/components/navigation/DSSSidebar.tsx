@@ -206,7 +206,7 @@ export function DSSSidebar() {
             className={cn(
               "transition-all duration-200 ease-out rounded-md shrink-0",
               collapsed ? "h-8 w-8" : "h-7 w-7",
-              "hover:bg-white/10 hover:scale-105 active:scale-95"
+              "hover:bg-[hsl(var(--sidebar-accent))] hover:scale-105 active:scale-95"
             )}
             style={{ color: 'hsl(var(--sidebar-foreground))' }} 
           />
@@ -228,12 +228,12 @@ export function DSSSidebar() {
               className={cn(
                 "w-full flex items-center justify-between text-[10px] uppercase tracking-wider",
                 "font-semibold px-3 py-2 rounded-md transition-all duration-200",
-                "hover:bg-white/5 group cursor-pointer",
+                "hover:bg-[hsl(var(--sidebar-accent))] group cursor-pointer",
                 collapsed && "hidden"
               )}
               style={{ color: 'hsl(var(--sidebar-muted))' }}
             >
-              <span className="transition-colors duration-200 group-hover:text-white/80">
+              <span className="transition-colors duration-200 group-hover:text-[hsl(var(--sidebar-foreground))]">
                 {section.label}
               </span>
               <ChevronDown 
@@ -398,7 +398,7 @@ export function DSSSidebar() {
           className={cn("flex items-center text-xs", collapsed ? "justify-center" : "justify-between")}
           style={{ color: 'hsl(var(--sidebar-muted))' }}
         >
-          <div className="flex items-center gap-2 group cursor-pointer transition-colors duration-200 hover:text-white/80">
+          <div className="flex items-center gap-2 group cursor-pointer transition-colors duration-200 hover:text-[hsl(var(--sidebar-foreground))]">
             <Settings className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-90" />
             {!collapsed && <span>v2.0.0</span>}
           </div>
