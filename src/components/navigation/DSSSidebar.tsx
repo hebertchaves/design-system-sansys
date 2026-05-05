@@ -206,7 +206,7 @@ export function DSSSidebar() {
             className={cn(
               "transition-all duration-200 ease-out rounded-md shrink-0",
               collapsed ? "h-8 w-8" : "h-7 w-7",
-              "hover:bg-white/10 hover:scale-105 active:scale-95"
+              "hover:bg-[hsl(var(--sidebar-accent))] hover:scale-105 active:scale-95"
             )}
             style={{ color: 'hsl(var(--sidebar-foreground))' }} 
           />
