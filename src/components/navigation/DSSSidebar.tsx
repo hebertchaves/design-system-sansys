@@ -228,12 +228,12 @@ export function DSSSidebar() {
               className={cn(
                 "w-full flex items-center justify-between text-[10px] uppercase tracking-wider",
                 "font-semibold px-3 py-2 rounded-md transition-all duration-200",
-                "hover:bg-white/5 group cursor-pointer",
+                "hover:bg-[hsl(var(--sidebar-accent))] group cursor-pointer",
                 collapsed && "hidden"
               )}
               style={{ color: 'hsl(var(--sidebar-muted))' }}
             >
-              <span className="transition-colors duration-200 group-hover:text-white/80">
+              <span className="transition-colors duration-200 group-hover:text-[hsl(var(--sidebar-foreground))]">
                 {section.label}
               </span>
               <ChevronDown 
