@@ -77,6 +77,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssPageSticky** | Layout Global — Container de posicionamento fixo com offset de layout | DssBadge | `conformant` — Selado (23 Abr 2026) |
 | **DssPageScroller** | Layout Global — Container de visibilidade condicional baseado em scroll | DssBadge | `conformant` — Selado (26 Abr 2026) |
 | **DssFab** | Action Group Composto — Floating Action Button interativo | DssChip | `conformant` — Selado (04 Mai 2026) |
+| **DssFabAction** | Action — Floating Action Button Secondary (ação flutuante secundária) | DssChip | `conformant` — Selado (04 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
@@ -347,5 +348,5 @@ Qualquer agente que ignore este documento **NÃO está operando no DSS**.
 **Design System Sansys — DSS v2.2**
 **Estado canônico ao final da Fase 1 — Fase 2 em andamento**
 **Última atualização da tabela de selos:** 04 de Maio de 2026
-**Totais:** Fase 1: 19/19 ✅ | Fase 2: 28/68 (41%) | Total selados: 47 componentes
+**Totais:** Fase 1: 19/19 ✅ | Fase 2: 29/68 (43%) | Total selados: 48 componentes
 

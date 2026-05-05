@@ -1,0 +1,87 @@
+/* ==========================================================================
+   DssFabAction - LAYER 4: OUTPUT (States)
+
+   Responsabilidade: Dark mode, prefers-contrast, forced-colors,
+   prefers-reduced-motion, print.
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-fab-action__qaction .q-fab__action {
+    /* Em dark mode, a elevação padrão do Quasar já usa variáveis escuras.
+       DSS override garante uso dos tokens de elevação corretos. */
+    box-shadow: var(--dss-elevation-1);
+
+    &:hover:not([disabled]):not(.disabled) {
+      box-shadow: var(--dss-elevation-2);
+    }
+
+    &:focus-visible {
+      outline: 2px solid white; /* EXC-States-02: Fallback explícito para dark mode */
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-fab-action__qaction .q-fab__action {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-fab-action__qaction .q-fab__action {
+    outline: var(--dss-border-width-md) solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+
+   EXC-01: 1px solid ButtonBorder / ButtonText
+   Justificativa: Forced-colors mode — system color keywords obrigatórios.
+   Tokens CSS são ignorados pelo navegador neste modo.
+   Padrão DssFab EXC-States-01 (selado Mai 2026).
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-fab-action__qaction .q-fab__action {
+    border: 1px solid ButtonBorder; /* EXC-01 */
+    background-color: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+
+    &:hover {
+      background-color: Highlight;
+      color: HighlightText;
+      box-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid ButtonText;
+    }
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  /* FabAction não é relevante para impressão */
+  .dss-fab-action {
+    display: none;
+  }
+}
