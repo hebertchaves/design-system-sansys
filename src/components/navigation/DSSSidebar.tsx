@@ -398,7 +398,7 @@ export function DSSSidebar() {
           className={cn("flex items-center text-xs", collapsed ? "justify-center" : "justify-between")}
           style={{ color: 'hsl(var(--sidebar-muted))' }}
         >
-          <div className="flex items-center gap-2 group cursor-pointer transition-colors duration-200 hover:text-white/80">
+          <div className="flex items-center gap-2 group cursor-pointer transition-colors duration-200 hover:text-[hsl(var(--sidebar-foreground))]">
             <Settings className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-90" />
             {!collapsed && <span>v2.0.0</span>}
           </div>
