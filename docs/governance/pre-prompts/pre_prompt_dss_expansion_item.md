@@ -53,7 +53,7 @@
 
 - **Background (Header):** `transparent` (padrão) e `var(--dss-surface-hover)` no hover.
 - **Background (Expanded):** Quando expandido, o header pode receber um leve destaque visual (ex: `var(--dss-surface-subtle)`).
-- **Tipografia:** `var(--dss-text-body)` para o label, `var(--dss-text-secondary)` para o caption.
+- **Tipografia:** `var(--dss-text-body)` para o label, `var(--dss-text-subtle)` para o caption. ⚠️ **Atenção:** `--dss-text-secondary` **não existe** no catálogo DSS v2.2 — o token correto é `--dss-text-subtle`.
 - **Bordas:** O componente em si não deve ter bordas externas hardcoded. Se precisar de separadores, use `border-bottom: 1px solid var(--dss-border-gray-200)`.
 - **Transição:** A animação de expansão deve usar `var(--dss-duration-250)` e `var(--dss-easing-standard)`.
 - **Padding (Header):** `var(--dss-spacing-3)` vertical e `var(--dss-spacing-4)` horizontal.
