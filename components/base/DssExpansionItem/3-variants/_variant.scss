@@ -1,0 +1,23 @@
+/* ==========================================================================
+   DssExpansionItem - LAYER 3: VARIANTS
+
+   DENSE:
+   Reduz o padding vertical do header para contextos de alta densidade.
+   min-height mantido em --dss-touch-target-md por acessibilidade WCAG 2.5.5.
+   Diferente do padrão (--dss-spacing-12), dense usa o mínimo aceitável.
+
+   GATE-EXCEPTION: .q-item é interno do QExpansionItem (Quasar Framework).
+   Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos.
+   ========================================================================== */
+
+/* ==========================================================================
+   DENSE — padding vertical reduzido, touch target mínimo mantido
+   ========================================================================== */
+
+.dss-expansion-item--dense .q-item {
+  padding-top: var(--dss-spacing-1_5);
+  padding-bottom: var(--dss-spacing-1_5);
+
+  /* --dss-touch-target-md — mínimo WCAG 2.5.5 mantido em dense */
+  min-height: var(--dss-touch-target-md);
+}
