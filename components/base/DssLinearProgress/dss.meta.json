@@ -1,0 +1,103 @@
+{
+  "component": "DssLinearProgress",
+  "cssClass": "dss-linear-progress",
+  "phase": 2,
+  "status": "in-progress",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssSpinner",
+  "classification": {
+    "type": "Indicador de Progresso não interativo",
+    "category": "Progresso e Feedback",
+    "interactive": false,
+    "level": 2,
+    "family": "Progresso e Feedback"
+  },
+  "phaseDescription": "Nível 2 — Composição de base. Pré-requisito crítico para DssUploader (Nível 3).",
+  "statesApplicable": ["default", "indeterminate", "disabled"],
+  "statesNotApplicable": ["hover", "focus", "active", "loading"],
+  "statesNotApplicableReason": {
+    "hover": "Componente não interativo — Opção B (padrão DssBadge/DssSpinner)",
+    "focus": "Componente não interativo — sem navegação por teclado própria",
+    "active": "Componente não interativo",
+    "loading": "Este componente É o indicador de loading/progresso"
+  },
+  "tokens": [
+    "--dss-surface-muted",
+    "--dss-radius-full",
+    "--dss-opacity-disabled",
+    "--dss-duration-250",
+    "--dss-easing-standard",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-6",
+    "--dss-action-primary",
+    "--dss-action-secondary",
+    "--dss-feedback-error",
+    "--dss-feedback-success",
+    "--dss-feedback-warning",
+    "--dss-feedback-info",
+    "--dss-hub-600",
+    "--dss-hub-500",
+    "--dss-water-500",
+    "--dss-water-400",
+    "--dss-waste-600",
+    "--dss-waste-500"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "rule": "Gate de Composição v2.4 — seletores internos de terceiros",
+      "selectors": [".q-linear-progress", ".q-linear-progress__track", ".q-linear-progress__model"],
+      "justification": "Necessário para aplicar tokens DSS (--dss-surface-muted, --dss-radius-full, cores semânticas) à estrutura DOM gerada internamente pelo QLinearProgress. Sem esses overrides, o componente perderia governança visual do DSS.",
+      "location": "2-composition/_base.scss, 3-variants/_colors.scss, 4-output/_brands.scss"
+    },
+    {
+      "id": "EX-States-01",
+      "rule": "!important em prefers-reduced-motion",
+      "value": "animation: none !important; transition: none !important",
+      "justification": "Obrigatório para sobrescrever animações CSS internas do Quasar (QLinearProgress) em contexto de acessibilidade. Sem !important, violaria WCAG 2.3.3. Precedente: DssSpinner (EX-02).",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EX-Code-01",
+      "rule": "Token First — JS não pode consumir CSS vars",
+      "value": "animation-speed: 250",
+      "justification": "QLinearProgress aceita velocidade de animação como número JS. Valor equivale a --dss-duration-250 (250ms). Manter sincronizado ao atualizar token de duração.",
+      "location": "1-structure/DssLinearProgress.ts.vue"
+    },
+    {
+      "id": "EX-States-02",
+      "rule": "Uso de !important",
+      "value": "background-color: currentColor !important",
+      "justification": "Contexto print: garante visibilidade em impressão monocromática sobrescrevendo qualquer cor de background. Precedente: DssTabPanel (EXC-04).",
+      "location": "4-output/_states.scss"
+    }
+  ],
+  "compositionRecommendations": [
+    "DssUploader — usa DssLinearProgress para indicar progresso de upload",
+    "DssCard — container estrutural recomendado para exibir DssLinearProgress",
+    "DssSpinner — complementar para estados indeterminados de menor espaço"
+  ],
+  "propsBlocked": {
+    "dark": "Gerenciado pelo DSS via [data-theme='dark'] em _states.scss",
+    "track-color": "Governado por --dss-surface-muted — não exposto ao consumidor",
+    "rounded": "Governado por --dss-radius-full globalmente via _base.scss"
+  },
+  "defaultPreview": {
+    "props": {
+      "value": 0.7,
+      "color": "primary",
+      "size": "md"
+    },
+    "computedTokens": {
+      "height": "--dss-spacing-3 (12px)",
+      "trackColor": "--dss-surface-muted",
+      "modelColor": "--dss-action-primary",
+      "borderRadius": "--dss-radius-full (9999px)"
+    }
+  },
+  "auditHistory": []
+}

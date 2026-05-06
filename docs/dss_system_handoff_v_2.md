@@ -79,6 +79,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssFab** | Action Group Composto — Floating Action Button interativo | DssChip | `conformant` — Selado (04 Mai 2026) |
 | **DssFabAction** | Action — Floating Action Button Secondary (ação flutuante secundária) | DssChip | `conformant` — Selado (04 Mai 2026) |
 | **DssExpansionItem** | Expansão e Colapso — Item expansível com header interativo e painel colapsável | DssChip | `conformant` — Selado (05 Mai 2026) |
+| **DssLinearProgress** | Indicador de Progresso não interativo — Fase 2 Nível 2 | DssBadge | `conformant` — Selado (06 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
