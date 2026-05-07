@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 04 de Maio de 2026
+> **Última Atualização:** 07 de Maio de 2026
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -47,7 +47,7 @@
 
 ### Família: Expansão e Colapso
 
-- [ ] `DssExpansionItem` — Item expansível com animação (accordion) ⬜
+- [x] ~~`DssExpansionItem`~~ ✅ **SELADO** *(05 Mai 2026)*
 
 ### Família: Estrutura de Página (Base)
 
@@ -65,7 +65,7 @@
 
 ### Família: Progresso e Feedback
 
-- [ ] `DssLinearProgress` — Barra de progresso linear (determinada e indeterminada) ⬜
+- [x] ~~`DssLinearProgress`~~ ✅ **SELADO** *(06 Mai 2026)*
 - [ ] `DssCircularProgress` — Progresso circular (determinado e indeterminado) ⬜
 - [ ] `DssInnerLoading` — Overlay de loading sobre um container ⬜
 - [ ] `DssSkeleton` — Placeholder de carregamento (skeleton screen) ⬜
@@ -131,7 +131,7 @@
 
 ### Família: Upload
 
-- [ ] `DssUploader` 🔒 *(aguarda DssButton, DssIcon, DssLinearProgress)*
+- [x] ~~`DssUploader`~~ ✅ **SELADO** *(07 Mai 2026)*
 
 ### Família: Overlays Compostos
 
@@ -150,7 +150,7 @@
 
 ### Família: FAB
 
-- [ ] `DssFabAction` 🔒 *(aguarda DssFab)*
+- [x] ~~`DssFabAction`~~ ✅ **SELADO** *(04 Mai 2026)*
 
 ### Família: Layout (Estrutura de Página)
 
@@ -204,8 +204,8 @@
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
 | Fase 2 — Nível 1 | 38 | 15 | 39% |
-| Fase 2 — Nível 2 | 16 | 7 | 44% |
-| Fase 2 — Nível 3 | 7 | 3 | 43% |
+| Fase 2 — Nível 2 | 16 | 9 | 56% |
+| Fase 2 — Nível 3 | 7 | 4 | 57% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **30** | **44%** |
+| **Fase 2 Total** | **68** | **33** | **49%** |
 | Fase 3 | 6 | N/A | — |

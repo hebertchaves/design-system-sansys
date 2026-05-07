@@ -59,6 +59,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssTab** | Elemento interativo de navegação por abas | DssButton | `conformant` — Selado (01 Abr 2026) |
 | **DssTabPanel** | Container de conteúdo por aba (painel isolado) | DssChip | `conformant` — Selado (09 Abr 2026) |
 | **DssTabPanels** | Container de múltiplos painéis de abas | DssCard | `conformant` — Selado (09 Abr 2026) |
+| **DssTabs** | Container de navegação por abas — orquestra DssTab | DssBtnGroup | `conformant` — Selado (02 Abr 2026) |
 | **DssBreadcrumbsEl** | Elemento interativo de navegação estrutural (breadcrumb) | DssButton | `conformant` — Selado (10 Abr 2026) |
 | **DssRouteTab** | Elemento interativo de aba roteada (hero: DssTab + router-link) | DssTab | `conformant` — Selado (10 Abr 2026) |
 | **DssBreadcrumbs** | Container de navegação estrutural (breadcrumb trail) | DssBadge | `conformant` — Selado (11 Abr 2026) |
@@ -351,5 +352,5 @@ Qualquer agente que ignore este documento **NÃO está operando no DSS**.
 **Design System Sansys — DSS v2.2**
 **Estado canônico ao final da Fase 1 — Fase 2 em andamento**
 **Última atualização da tabela de selos:** 04 de Maio de 2026
-**Totais:** Fase 1: 19/19 ✅ | Fase 2: 31/68 (46%) | Total selados: 50 componentes
+**Totais:** Fase 1: 19/19 ✅ | Fase 2: 33/68 (49%) | Total selados: 52 componentes
 

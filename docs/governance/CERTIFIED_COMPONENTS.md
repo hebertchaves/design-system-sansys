@@ -32,7 +32,7 @@
 
 ---
 
-## Fase 2 — Componentes Compostos (22/66 — 33%)
+## Fase 2 — Componentes Compostos (33/68 — 49%)
 
 | Componente | Nível | Categoria | Data do Selo | Golden Reference | Golden Context | Observação |
 |---|---|---|---|---|---|---|
@@ -58,7 +58,17 @@
 | `DssFooter` | 3 | Estrutura de Página | 18/04/2026 | DssCard | DssHeader | EXC-05: sombra upward pendente token |
 | `DssDrawer` | 3 | Estrutura de Página | **20/04/2026** | — | DssList | **Selado hoje** |
 | `DssLayout` | 4 | Layout Global | 20/04/2026 | — | DssHeader + DssFooter | Selado — desbloqueia DssPage |
-| `DssPageScroller` | 4 | Layout Global | **26/04/2026** | DssBadge | DssPageSticky | **Selado hoje — 3 NCs resolvidas** |
+| `DssPageScroller` | 4 | Layout Global | 26/04/2026 | DssBadge | DssPageSticky | 3 NCs resolvidas |
+| `DssFab` | 2 | Action Group Composto — FAB interativo | 04/05/2026 | DssChip | DssButton | EXC: .q-fab__actions para direção; extension hooks sem CSS |
+| `DssFabAction` | 3 | Action — FAB secundário | 04/05/2026 | DssChip | DssFab | Opção B touch target; gate-exc .q-fab__action |
+| `DssExpansionItem` | 1 | Expansão e Colapso — Item expansível | 05/05/2026 | DssChip | DssItem | WRAP QExpansionItem; brand no expanded; gate-exc .q-item/.q-expansion-item--expanded |
+| `DssStepper` | 2 | Navegação por etapas | 20/04/2026 | DssTabs | DssStep | _brands.scss all-commented = INTENCIONAL (brand via filhos) |
+| `DssToolbarTitle` | 2 | Tipografia de barra de ferramentas | 21/04/2026 | DssBadge | DssItemLabel | Golden Ref DssBadge (NOT DssItemLabel) |
+| `DssPage` | 4 | Layout Global — conteúdo principal | 22/04/2026 | DssBadge | DssLayout | withDefaults só non-trivial; role="main" |
+| `DssPageContainer` | 4 | Layout Global — container com offset | 22/04/2026 | DssBadge | DssLayout | Record<string,never> para no-props |
+| `DssPageSticky` | 4 | Layout Global — posicionamento fixo | 23/04/2026 | DssBadge | DssLayout | defineEmits anti-padrão para containers |
+| `DssLinearProgress` | 1 | Indicador de Progresso não interativo | 06/05/2026 | DssBadge | DssSpinner | withDefaults só non-trivials; EXC-Gate-01 seletores Quasar; EX-Code-01 animation-speed |
+| `DssUploader` | 2 | Upload / File Management | 07/05/2026 | DssBadge | DssCard | EXC-01 slots obrigatórios; EXC-Gate-02 :has(); 6 NCs resolvidas |
 
 ---
 
@@ -68,9 +78,10 @@
 |---|---|---|
 | Jan–Fev 2026 | 10 | Fundação atômica: Chip, Badge, Button, Toggle, Checkbox, Radio, Avatar, Icon, Input, Tooltip |
 | Mar 2026 | 9 | Inputs especializados: Textarea, Select, Slider, Range, Separator, Space, Spinner, File, BtnDropdown/Toggle/OptionGroup |
-| Abr 1–15, 2026 | 9 | Navegação e Tabs: Tab, TabPanel, Tabs, TabPanels, RouteTab, BreadcrumbsEl, Breadcrumbs, Toolbar, Header |
-| Abr 16–20, 2026 | 6 | Layout completo: Footer, Menu, Drawer, Layout, Step, ItemLabel |
-| **Abr 21–26, 2026** | **1** | **Layout Global: PageScroller** |
+| Abr 1–15, 2026 | 10 | Navegação e Tabs: Tab, Tabs, TabPanel, TabPanels, RouteTab, BreadcrumbsEl, Breadcrumbs, Toolbar, Header, Card |
+| Abr 16–20, 2026 | 8 | Layout completo: Footer, Menu, Drawer, Layout, Step, Stepper, ItemLabel, ItemSection |
+| Abr 21–26, 2026 | 4 | Layout Global: ToolbarTitle, Page, PageContainer, PageSticky, PageScroller |
+| Mai 2026 | 5 | Compostos e Progresso: Fab, FabAction, ExpansionItem, LinearProgress, Uploader |
 
 ---
 
@@ -91,4 +102,4 @@
 
 ---
 
-**Design System Sansys — Governança DSS v2.2 · Última atualização: 20 de Abril de 2026**
+**Design System Sansys — Governança DSS v2.2 · Última atualização: 07 de Maio de 2026**

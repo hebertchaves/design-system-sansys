@@ -1,7 +1,7 @@
 # DSS — Faseamento Oficial de Componentes Quasar
 
 > **Status:** Ativo e Normativo
-> **Última Atualização:** Março 2026 (Revisão de cobertura total — todos os componentes Quasar classificados)
+> **Última Atualização:** Maio 2026 (Atualização de status — 33 componentes selados em Fase 2)
 
 ## Princípio Fundamental
 
@@ -59,26 +59,26 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 
 | Componente DSS | Quasar Base | Depende de (Fase 1) | Status |
 |---|---|---|---|
-| `DssCard` | `QCard` + `QCardSection` + `QCardActions` | `DssButton`, `DssAvatar` | ✅ Selado |
-| `DssBtnGroup` | `QBtnGroup` | `DssButton` | ⬜ Pendente |
-| `DssBtnDropdown` | `QBtnDropdown` | `DssButton`, `DssIcon` | ⬜ Pendente |
-| `DssBtnToggle` | `QBtnToggle` | `DssButton` | ⬜ Pendente |
-| `DssOptionGroup` | `QOptionGroup` | `DssRadio`, `DssCheckbox`, `DssToggle` | ⬜ Pendente |
-| `DssList` | `QList` | `DssItem`, `DssSeparator` | ⬜ Pendente |
-| `DssItemSection` | `QItemSection` | `DssItem` | ⬜ Pendente |
-| `DssItemLabel` | `QItemLabel` | `DssItem` | ⬜ Pendente |
-| `DssTab` | `QTab` | `DssIcon`, `DssBadge` | ⬜ Pendente |
-| `DssTabPanel` | `QTabPanel` | — | ⬜ Pendente |
-| `DssBreadcrumbsEl` | `QBreadcrumbsEl` | `DssIcon` | ⬜ Pendente |
-| `DssStep` | `QStep` | `DssIcon`, `DssButton` | ⬜ Pendente |
+| `DssCard` | `QCard` + `QCardSection` + `QCardActions` | `DssButton`, `DssAvatar` | ✅ Selado (12 Fev 2026) |
+| `DssBtnGroup` | `QBtnGroup` | `DssButton` | ✅ Selado (26 Mar 2026) |
+| `DssBtnDropdown` | `QBtnDropdown` | `DssButton`, `DssIcon` | ✅ Selado (27 Mar 2026) |
+| `DssBtnToggle` | `QBtnToggle` | `DssButton` | ✅ Selado (27 Mar 2026) |
+| `DssOptionGroup` | `QOptionGroup` | `DssRadio`, `DssCheckbox`, `DssToggle` | ✅ Selado (27 Mar 2026) |
+| `DssList` | `QList` | `DssItem`, `DssSeparator` | ✅ Selado (31 Mar 2026) |
+| `DssItemSection` | `QItemSection` | `DssItem` | ✅ Selado (01 Abr 2026) |
+| `DssItemLabel` | `QItemLabel` | `DssItem` | ✅ Selado (20 Abr 2026) |
+| `DssTab` | `QTab` | `DssIcon`, `DssBadge` | ✅ Selado (01 Abr 2026) |
+| `DssTabPanel` | `QTabPanel` | — | ✅ Selado (09 Abr 2026) |
+| `DssBreadcrumbsEl` | `QBreadcrumbsEl` | `DssIcon` | ✅ Selado (10 Abr 2026) |
+| `DssStep` | `QStep` | `DssIcon`, `DssButton` | ✅ Selado (20 Abr 2026) |
+| `DssToolbar` | `QToolbar` | `DssButton`, `DssIcon` | ✅ Selado (16 Abr 2026) |
+| `DssExpansionItem` | `QExpansionItem` | `DssItem`, `DssIcon` | ✅ Selado (05 Mai 2026) |
+| `DssLinearProgress` | `QLinearProgress` | — | ✅ Selado (06 Mai 2026) |
 | `DssPagination` | `QPagination` | `DssButton`, `DssIcon` | ⬜ Pendente |
 | `DssDialog` | `QDialog` | `DssButton`, `DssCard` | ⬜ Pendente |
 | `DssVirtualScroll` | `QVirtualScroll` | — | ⬜ Pendente |
 | `DssInfiniteScroll` | `QInfiniteScroll` | `DssSpinner` | ⬜ Pendente |
-| `DssExpansionItem` | `QExpansionItem` | `DssItem`, `DssIcon` | ⬜ Pendente |
-| `DssToolbar` | `QToolbar` | `DssButton`, `DssIcon` | ⬜ Pendente |
 | `DssImg` | `QImg` | `DssSpinner` | ⬜ Pendente |
-| `DssLinearProgress` | `QLinearProgress` | — | ⬜ Pendente |
 | `DssCircularProgress` | `QCircularProgress` | — | ⬜ Pendente |
 | `DssInnerLoading` | `QInnerLoading` | `DssSpinner` | ⬜ Pendente |
 | `DssKnob` | `QKnob` | — | ⬜ Pendente |
@@ -105,18 +105,18 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 
 | Componente DSS | Quasar Base | Depende de (Fase 2 N1) | Status |
 |---|---|---|---|
-| `DssTabs` | `QTabs` | `DssTab` | ⬜ Pendente |
-| `DssTabPanels` | `QTabPanels` | `DssTabPanel` | ⬜ Pendente |
-| `DssRouteTab` | `QRouteTab` | `DssTab` | ⬜ Pendente |
-| `DssBreadcrumbs` | `QBreadcrumbs` | `DssBreadcrumbsEl` | ⬜ Pendente |
-| `DssStepper` | `QStepper` + `QStepperNavigation` | `DssStep`, `DssButton` | ⬜ Pendente |
-| `DssMenu` | `QMenu` | `DssList`, `DssItem` | ⬜ Pendente |
+| `DssTabs` | `QTabs` | `DssTab` | ✅ Selado (02 Abr 2026) |
+| `DssTabPanels` | `QTabPanels` | `DssTabPanel` | ✅ Selado (09 Abr 2026) |
+| `DssRouteTab` | `QRouteTab` | `DssTab` | ✅ Selado (10 Abr 2026) |
+| `DssBreadcrumbs` | `QBreadcrumbs` | `DssBreadcrumbsEl` | ✅ Selado (11 Abr 2026) |
+| `DssStepper` | `QStepper` + `QStepperNavigation` | `DssStep`, `DssButton` | ✅ Selado (20 Abr 2026) |
+| `DssMenu` | `QMenu` | `DssList`, `DssItem` | ✅ Selado (18 Abr 2026) |
+| `DssFab` | `QFab` | `DssButton`, `DssIcon` | ✅ Selado (04 Mai 2026) |
+| `DssToolbarTitle` | `QToolbarTitle` | `DssToolbar` | ✅ Selado (21 Abr 2026) |
+| `DssUploader` | `QUploader` + `QUploaderAddTrigger` | `DssButton`, `DssIcon`, `DssLinearProgress` | ✅ Selado (07 Mai 2026) |
 | `DssBottomSheet` | `QBottomSheet` (plugin) | `DssList`, `DssItem` | ⬜ Pendente |
-| `DssFab` | `QFab` | `DssButton`, `DssIcon` | ⬜ Pendente |
-| `DssToolbarTitle` | `QToolbarTitle` | `DssToolbar` | ⬜ Pendente |
 | `DssTimeline` | `QTimeline` + `QTimelineEntry` | `DssIcon`, `DssAvatar` | ⬜ Pendente |
 | `DssCarousel` | `QCarousel` + `QCarouselSlide` + `QCarouselControl` | `DssButton`, `DssIcon` | ⬜ Pendente |
-| `DssUploader` | `QUploader` + `QUploaderAddTrigger` | `DssButton`, `DssIcon`, `DssLinearProgress` | ⬜ Pendente |
 | `DssPopupProxy` | `QPopupProxy` | `DssMenu` ou `DssDialog` | ⬜ Pendente |
 | `DssField` | `QField` | `DssInput` (padrão visual) | ⬜ Pendente |
 | `DssForm` | `QForm` | `DssButton` (submit/reset) | ⬜ Pendente |
@@ -130,10 +130,10 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 
 | Componente DSS | Quasar Base | Depende de (Fase 2 N2) | Status |
 |---|---|---|---|
-| `DssFabAction` | `QFabAction` | `DssFab` | ⬜ Pendente |
-| `DssHeader` | `QHeader` | `DssToolbar` | ⬜ Pendente |
-| `DssFooter` | `QFooter` | `DssToolbar` | ⬜ Pendente |
-| `DssDrawer` | `QDrawer` | `DssList`, `DssMenu` | ⬜ Pendente |
+| `DssFabAction` | `QFabAction` | `DssFab` | ✅ Selado (04 Mai 2026) |
+| `DssHeader` | `QHeader` | `DssToolbar` | ✅ Selado (17 Abr 2026) |
+| `DssFooter` | `QFooter` | `DssToolbar` | ✅ Selado (18 Abr 2026) |
+| `DssDrawer` | `QDrawer` | `DssList`, `DssMenu` | ✅ Selado (19 Abr 2026) |
 | `DssTimePicker` | `QTime` | `DssIcon`, `DssButton` | ⬜ Pendente |
 | `DssDatePicker` | `QDate` | `DssIcon`, `DssButton`, `DssBtnGroup` | ⬜ Pendente |
 | `DssColorPicker` | `QColor` | `DssInput`, `DssSlider` | ⬜ Pendente |
@@ -146,11 +146,11 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 
 | Componente DSS | Quasar Base | Depende de (Fase 2 N3) | Status |
 |---|---|---|---|
-| `DssLayout` | `QLayout` | `DssHeader`, `DssFooter`, `DssDrawer` | ⬜ Pendente |
-| `DssPage` | `QPage` | `DssLayout` | ⬜ Pendente |
-| `DssPageContainer` | `QPageContainer` | `DssLayout` | ⬜ Pendente |
-| `DssPageSticky` | `QPageSticky` | `DssLayout` | ⬜ Pendente |
-| `DssPageScroller` | `QPageScroller` | `DssLayout` | ⬜ Pendente |
+| `DssLayout` | `QLayout` | `DssHeader`, `DssFooter`, `DssDrawer` | ✅ Selado (20 Abr 2026) |
+| `DssPage` | `QPage` | `DssLayout` | ✅ Selado (22 Abr 2026) |
+| `DssPageContainer` | `QPageContainer` | `DssLayout` | ✅ Selado (22 Abr 2026) |
+| `DssPageSticky` | `QPageSticky` | `DssLayout` | ✅ Selado (23 Abr 2026) |
+| `DssPageScroller` | `QPageScroller` | `DssLayout` | ✅ Selado (26 Abr 2026) |
 | `DssTable` | `QTable` + `QTh` + `QTr` + `QTd` | `DssPagination`, `DssCheckbox`, `DssSpinner` | ⬜ Pendente |
 | `DssTree` | `QTree` | `DssIcon`, `DssCheckbox` | ⬜ Pendente |
 
@@ -180,12 +180,12 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | Fase | Total de Componentes | Selados | Pendentes |
 |---|---|---|---|
 | Fase 1 — Atômicos | 19 | 19 | 0 |
-| Fase 2 — Nível 1 (Independentes) | 37 | 1 (DssCard) | 36 |
-| Fase 2 — Nível 2 (1º Grau) | 16 | 0 | 16 |
-| Fase 2 — Nível 3 (2º Grau) | 7 | 0 | 7 |
-| Fase 2 — Nível 4 (Layouts) | 7 | 0 | 7 |
+| Fase 2 — Nível 1 (Independentes) | 37 | 15 | 22 |
+| Fase 2 — Nível 2 (1º Grau) | 16 | 9 | 7 |
+| Fase 2 — Nível 3 (2º Grau) | 7 | 4 | 3 |
+| Fase 2 — Nível 4 (Layouts) | 7 | 5 | 2 |
 | Fase 3 — Patterns/Utilitários | 6 | N/A | N/A |
-| **TOTAL** | **92** | **20** | **66** |
+| **TOTAL** | **92** | **52** | **34** |
 
 ---
 
@@ -196,4 +196,5 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | Março 2026 | **Cobertura total**: Todos os 92 componentes/patterns Quasar classificados. Adicionados 34 componentes ausentes na versão anterior. Fase 3 expandida com utilitários comportamentais. |
 | Março 2026 | Reordenação da Fase 2 em "Trilha de Execução" baseada em interdependência, garantindo que componentes consumidos sejam criados antes dos consumidores. |
 | Março 2026 | Reclassificação de `QOptionGroup`, `QBtnGroup`, `QFab` e `QFabAction` da Fase 1 para a Fase 2. Justificativa: A regra de ouro da Fase 1 exige que o componente seja um wrapper de um único componente, sem composição interna. Estes componentes gerenciam estado entre múltiplos filhos ou compõem outros componentes internamente, caracterizando comportamento de Fase 2. |
+| Maio 2026 | **Depara completo**: 33 selos verificados contra diretórios de seal. Status atualizado: N1 (15/37), N2 (9/16), N3 (4/7), N4 (5/7). Tabela de cobertura corrigida de 20→52 selados. |
 | Fevereiro 2026 | Documento original criado em formato PDF. |
