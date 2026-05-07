@@ -407,4 +407,4 @@ Após modificar arquivos `.vue` ou `.ts.vue`, execute `npm run build` (ou `build
 
 Propriedade da Jtech
 
-Desenvolvido com ❤️ por Hebert Daniel Oliveira Chaves
+Desenvolvido por Hebert Daniel Oliveira Chaves
