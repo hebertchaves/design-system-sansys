@@ -46,7 +46,7 @@
  * @version 1.0.0
  */
 
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { QUploader } from 'quasar'
 import type {
   DssUploaderProps,
@@ -68,19 +68,12 @@ defineOptions({ name: 'DssUploader', inheritAttrs: false })
 // ─── Props ────────────────────────────────────────────────────────────────
 
 const props = withDefaults(defineProps<DssUploaderProps>(), {
-  variant:          'elevated',
-  method:           'POST',
-  multiple:         false,
-  autoUpload:       false,
-  batch:            false,
-  withCredentials:  false,
-  sendRaw:          false,
-  disable:          false,
-  readonly:         false,
-  addAriaLabel:     'Adicionar arquivos',
-  uploadAriaLabel:  'Fazer upload de todos os arquivos',
-  abortAriaLabel:   'Cancelar upload',
-  clearAriaLabel:   'Remover todos os arquivos da fila',
+  variant:         'elevated',
+  method:          'POST',
+  addAriaLabel:    'Adicionar arquivos',
+  uploadAriaLabel: 'Fazer upload de todos os arquivos',
+  abortAriaLabel:  'Cancelar upload',
+  clearAriaLabel:  'Remover todos os arquivos da fila',
 })
 
 // ─── Emits ────────────────────────────────────────────────────────────────
@@ -236,7 +229,7 @@ defineExpose<DssUploaderExpose>({
            Reconstrói o header inteiramente com DssButton.
            QBtn nativo do Quasar NÃO é renderizado.
            ================================================================ -->
-      <template #header="(scope: QUploaderHeaderScope)">
+      <template #header="scope">
         <div
           class="dss-uploader__header"
           role="toolbar"
@@ -258,9 +251,9 @@ defineExpose<DssUploaderExpose>({
             Adicionar
           </DssButton>
 
-          <!-- Botão: Fazer upload (apenas no modo manual) -->
+          <!-- Botão: Fazer upload (apenas no modo manual e fora de upload ativo) -->
           <DssButton
-            v-if="!autoUpload && scope.canUpload && !readonly"
+            v-if="!autoUpload && scope.canUpload && !scope.isUploading && !readonly"
             variant="elevated"
             color="primary"
             size="sm"
@@ -321,7 +314,7 @@ defineExpose<DssUploaderExpose>({
            Reconstrói a lista de arquivos com DssIcon e DssLinearProgress.
            QIcon e QLinearProgress nativos NÃO são renderizados.
            ================================================================ -->
-      <template #list="(scope: QUploaderListScope)">
+      <template #list="scope">
         <!-- Estado vazio: dropzone com indicação visual -->
         <div
           v-if="scope.files.length === 0"

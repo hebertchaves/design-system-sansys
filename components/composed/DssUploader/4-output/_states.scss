@@ -129,14 +129,13 @@
   .dss-uploader {
     // Borda visível em HCM
     border: var(--dss-border-width-thin) solid CanvasText;
-    forced-color-adjust: none;
 
     &__header {
-      border-bottom: 1px solid CanvasText;
+      border-bottom: var(--dss-border-width-thin) solid CanvasText;
     }
 
     &__file-item {
-      border-bottom: 1px solid CanvasText;
+      border-bottom: var(--dss-border-width-thin) solid CanvasText;
     }
 
     &__file-name {

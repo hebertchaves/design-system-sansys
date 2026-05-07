@@ -80,6 +80,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssFabAction** | Action — Floating Action Button Secondary (ação flutuante secundária) | DssChip | `conformant` — Selado (04 Mai 2026) |
 | **DssExpansionItem** | Expansão e Colapso — Item expansível com header interativo e painel colapsável | DssChip | `conformant` — Selado (05 Mai 2026) |
 | **DssLinearProgress** | Indicador de Progresso não interativo — Fase 2 Nível 2 | DssBadge | `conformant` — Selado (06 Mai 2026) |
+| **DssUploader** | Upload / File Management — Composição de Primeiro Grau | DssBadge | `conformant` — Selado (07 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
@@ -350,5 +351,5 @@ Qualquer agente que ignore este documento **NÃO está operando no DSS**.
 **Design System Sansys — DSS v2.2**
 **Estado canônico ao final da Fase 1 — Fase 2 em andamento**
 **Última atualização da tabela de selos:** 04 de Maio de 2026
-**Totais:** Fase 1: 19/19 ✅ | Fase 2: 30/68 (44%) | Total selados: 49 componentes
+**Totais:** Fase 1: 19/19 ✅ | Fase 2: 31/68 (46%) | Total selados: 50 componentes
 

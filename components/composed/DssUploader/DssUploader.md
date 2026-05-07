@@ -164,11 +164,20 @@ Tokens principais:
 
 ## 10. Exceções Registradas
 
+### Exceções aos Gates v2.4
+
+| Gate | Rule | ID | Justificativa |
+|------|------|----|---------------|
+| Gate de Composição v2.4 | Rule 1 — no Quasar native in template | EXC-01 | `QUploader` é o motor de upload (XHR, validação, drag-and-drop). Não existe equivalente DSS. A UI é integralmente reconstruída via slots `#header` e `#list`, impedindo vazamento de `QBtn`, `QIcon`, `QLinearProgress`. |
+
+### Exceções Estruturais e Técnicas
+
 | ID | Tipo | Local | Justificativa |
 |----|------|-------|---------------|
 | EXC-01 | StructuralSlot | `1-structure/DssUploader.ts.vue` | Slots `header` e `list` obrigatoriamente sobrescritos para evitar vazamento de componentes nativos Quasar |
 | EXC-Gate-01 | QuasarInternalSelector | `2-composition/_base.scss` | Reset dos seletores `.q-uploader`, `.q-uploader__header`, `.q-uploader__list` — necessário para que o container DSS controle borda, sombra e fundo |
 | EXC-Gate-02 | CSSHasSelector | `3-variants/_variant.scss`, `4-output/_brands.scss` | `:has(.q-uploader--dnd)` detecta estado de drag sem JS adicional |
+| EXC-TS-01 | TypeScriptUnsafeCast | `1-structure/DssUploader.ts.vue` — `defineExpose` | `QUploader.pickFiles()` existe na API oficial mas não está tipado no pacote quasar. Cast `as any` com optional chaining garante segurança em runtime. |
 
 ---
 
