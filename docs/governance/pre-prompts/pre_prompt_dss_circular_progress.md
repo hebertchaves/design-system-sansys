@@ -126,11 +126,11 @@ O playground do `DssCircularProgress` deve permitir a manipulação dos seguinte
 *   **Feedback de Ação**: Integrar o `DssCircularProgress` com um `DssButton` para mostrar o progresso de uma ação iniciada pelo usuário.
 
 ### Estados a Expor
-| Estado | Descrição |
-| :--- | :--- |
-| **Progresso Determinado** | Com diferentes valores (0%, 25%, 50%, 75%, 100%). |
-| **Progresso Indeterminado** | Animação contínua. |
-| **Diferentes Tamanhos** | 'sm', 'md', 'lg'. |
-| **Diferentes Cores** | Usando tokens de cor do DSS (`hub`, `water`, `waste`). |
-| **Com e sem rótulo interno** | Exibição de texto ou ícone. |
-| **Com diferentes espessuras** | Variação na espessura da linha. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Progresso Determinado | Com diferentes valores (0%, 25%, 50%, 75%, 100%). | Visual | — |
+| Progresso Indeterminado | Animação contínua. | Visual | Prop `indeterminate=true` |
+| Diferentes Tamanhos | 'sm', 'md', 'lg'. | Visual | — |
+| Diferentes Cores | Usando tokens de cor do DSS (`hub`, `water`, `waste`). | Visual | — |
+| Com e sem rótulo interno | Exibição de texto ou ícone. | Visual | — |
+| Com diferentes espessuras | Variação na espessura da linha. | Visual | — |

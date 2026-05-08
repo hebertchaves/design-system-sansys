@@ -132,16 +132,16 @@ import { DssButton, DssFab, DssText, DssCard, DssCardSection } from '@dss/compon
 
 ### Estados a Expor
 
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `currentBreakpoint` | String | O breakpoint ativo no momento (e.g., `'xs'`, `'sm'`, `'md'`, `'lg'`, `'xl'`). |
-| `isXs` | Boolean | `true` se o breakpoint atual for `xs`. |
-| `isSm` | Boolean | `true` se o breakpoint atual for `sm`. |
-| `isMd` | Boolean | `true` se o breakpoint atual for `md`. |
-| `isLg` | Boolean | `true` se o breakpoint atual for `lg`. |
-| `isXl` | Boolean | `true` se o breakpoint atual for `xl`. |
-| `isMobile` | Boolean | `true` se o breakpoint atual for `xs` ou `sm`. |
-| `isDesktop` | Boolean | `true` se o breakpoint atual for `md`, `lg` ou `xl`. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `currentBreakpoint` | O breakpoint ativo no momento (e.g., `'xs'`, `'sm'`, `'md'`, `'lg'`, `'xl'`). | String | — |
+| `isXs` | `true` se o breakpoint atual for `xs`. | Boolean | — |
+| `isSm` | `true` se o breakpoint atual for `sm`. | Boolean | — |
+| `isMd` | `true` se o breakpoint atual for `md`. | Boolean | — |
+| `isLg` | `true` se o breakpoint atual for `lg`. | Boolean | — |
+| `isXl` | `true` se o breakpoint atual for `xl`. | Boolean | — |
+| `isMobile` | `true` se o breakpoint atual for `xs` ou `sm`. | Boolean | — |
+| `isDesktop` | `true` se o breakpoint atual for `md`, `lg` ou `xl`. | Boolean | — |
 
 ## 9. CONSIDERAÇÕES FINAIS
 

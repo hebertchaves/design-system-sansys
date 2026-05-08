@@ -147,13 +147,13 @@ Para garantir a robustez do componente, os seguintes cenários de uso devem ser 
 
 ### 8.3 Estados a Expor
 
-| Estado | Descrição | Exemplo de Uso | Tokens Relevantes |
-|---|---|---|---|
-| **Ativo** | A aba atualmente selecionada. | `v-model="tab-name"` | `--dss-action-hub`, `--dss-action-hub-surface` |
-| **Inativo** | Abas não selecionadas. | `DssTab` padrão | `--dss-text-subtle`, `--dss-surface-water` |
-| **Hover** | Estado de foco do mouse sobre uma aba. | `:hover` | `--dss-surface-hover` |
-| **Foco** | Estado de foco via teclado. | `:focus-visible` | `outline: 2px solid white` |
-| **Desabilitado** | Aba não clicável. | `:disabled` | `--dss-text-disabled`, `--dss-surface-disabled` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Ativo | A aba atualmente selecionada. | Visual | `v-model="tab-name"` |
+| Inativo | Abas não selecionadas. | Visual | `DssTab` padrão |
+| Hover | Estado de foco do mouse sobre uma aba. | Visual | `:hover` |
+| Foco | Estado de foco via teclado. | Visual | `:focus-visible` |
+| Desabilitado | Aba não clicável. | Visual | `:disabled` |
 
 ---
 

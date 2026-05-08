@@ -121,24 +121,24 @@ O componente deve ser um wrapper direto do `<q-footer>`. O slot default é desti
 
 ### Delegação de Estados
 
-| Estado | Pertence a |
-|--------|-----------|
-| `hover` | Filhos (DssButton, DssIcon) |
-| `focus` | Filhos (DssButton, DssIcon) |
-| `active` | Filhos (DssButton, DssIcon) |
-| `disabled` | Filhos ou conteúdo da página |
-| `loading` | Não aplicável ao container |
-| `error` | Não aplicável ao container |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `hover` | `hover` | Visual | Mouse over |
+| `focus` | `focus` | Visual | Navegação por teclado (Tab) |
+| `active` | `active` | Visual | Mouse press / tecla Enter |
+| `disabled` | `disabled` | Visual | Prop `disable=true` |
+| `loading` | `loading` | Funcional | Prop `loading=true` |
+| `error` | `error` | Funcional | Prop `error=true` ou validação |
 
 ### Estados do DssFooter
 
-| Estado | Implementado | Descrição |
-|--------|-------------|-----------|
-| `elevated` | ✅ | Sombra upward via EXC-05 |
-| `bordered` | ✅ | Border-top via `--dss-border-width-thin` |
-| `dark mode` | ✅ | Via `[data-theme="dark"]` |
-| `forced-colors` | ✅ | System keywords (EXC-03) |
-| `print` | ✅ | Hardcoded + position: static (EXC-04) |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `elevated` | Sombra upward via EXC-05 | Visual | — |
+| `bordered` | Border-top via `--dss-border-width-thin` | Visual | — |
+| `dark mode` | Via `[data-theme="dark"]` | Visual | `[data-theme="dark"]` ativo |
+| `forced-colors` | System keywords (EXC-03) | Visual | Media query `forced-colors: active` |
+| `print` | Hardcoded + position: static (EXC-04) | Visual | Media query `print` |
 
 ---
 
@@ -192,15 +192,15 @@ A lógica composta do DssFooter é relativamente simples, pois ele atua primaria
 
 Os estados a seguir devem ser facilmente observáveis e testáveis na Superfície de Playground, seja visualmente ou através de ferramentas de inspeção do navegador:
 
-| Estado | Descrição | Como Observar no Playground |
-|--------|-----------|-----------------------------|
-| **Padrão** | DssFooter sem elevação ou borda. | Estado inicial do componente. |
-| **Elevado** | DssFooter com sombra projetada para cima. | Ativar o controle `elevated`. |
-| **Com Borda** | DssFooter com borda superior. | Ativar o controle `bordered`. |
-| **Modo Escuro** | DssFooter renderizado no tema escuro. | Alternar o tema global da aplicação para escuro (`[data-theme="dark"]`). |
-| **Forced Colors** | DssFooter adaptado para modos de alto contraste. | Ativar o modo de alto contraste do sistema operacional. |
-| **Com Conteúdo** | DssFooter contendo componentes filhos (ex: DssToolbar). | Injetar conteúdo no slot padrão. |
-| **Revelado/Oculto** | DssFooter que aparece/desaparece ao rolar a página. | Simular rolagem da página com a prop `reveal` ativada. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | DssFooter sem elevação ou borda. | Visual | Estado inicial do componente. |
+| Elevado | DssFooter com sombra projetada para cima. | Visual | Ativar o controle `elevated`. |
+| Com Borda | DssFooter com borda superior. | Visual | Ativar o controle `bordered`. |
+| Modo Escuro | DssFooter renderizado no tema escuro. | Visual | Alternar o tema global da aplicação para escuro (`[data-theme="dark"]`). |
+| Forced Colors | DssFooter adaptado para modos de alto contraste. | Visual | Ativar o modo de alto contraste do sistema operacional. |
+| Com Conteúdo | DssFooter contendo componentes filhos (ex: DssToolbar). | Visual | Injetar conteúdo no slot padrão. |
+| Revelado/Oculto | DssFooter que aparece/desaparece ao rolar a página. | Visual | Simular rolagem da página com a prop `reveal` ativada. |
 
 ## 9. Histórico
 

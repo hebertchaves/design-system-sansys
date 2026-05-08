@@ -121,17 +121,17 @@ O componente deve iterar sobre a prop `options` e, para cada item, renderizar o 
 
 ### 8.3 Estados a Expor
 
-| Estado | Descrição | Exemplo de Uso |
-|---|---|---|
-| **Padrão** | Estado inicial do componente, sem seleção ou com seleção padrão. | `<DssOptionGroup :options="myOptions" v-model="selected" />` |
-| **Selecionado** | Um ou mais itens estão selecionados. | `v-model` reflete o(s) valor(es) selecionado(s). |
-| **Desabilitado** | O grupo inteiro ou itens específicos estão desabilitados. | `<DssOptionGroup :options="myOptions" v-model="selected" disable />` ou `options: [{ label: 'Item', value: 'item', disable: true }]` |
-| **Somente Leitura** | O grupo inteiro ou itens específicos estão em modo somente leitura. | `<DssOptionGroup :options="myOptions" v-model="selected" readonly />` |
-| **Hover** | Estado de foco do mouse sobre um item. | Visualização de feedback de interação. |
-| **Focus** | Estado de foco via teclado sobre um item. | Indicador de acessibilidade. |
-| **Brand: Hub** | Aplicação da paleta de cores `hub`. | `<DssOptionGroup :options="myOptions" v-model="selected" color="hub" />` |
-| **Brand: Water** | Aplicação da paleta de cores `water`. | `<DssOptionGroup :options="myOptions" v-model="selected" color="water" />` |
-| **Brand: Waste** | Aplicação da paleta de cores `waste`. | `<DssOptionGroup :options="myOptions" v-model="selected" color="waste" />` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Estado inicial do componente, sem seleção ou com seleção padrão. | Visual | `<DssOptionGroup :options="myOptions" v-model="selected" />` |
+| Selecionado | Um ou mais itens estão selecionados. | Visual | `v-model` reflete o(s) valor(es) selecionado(s). |
+| Desabilitado | O grupo inteiro ou itens específicos estão desabilitados. | Visual | `<DssOptionGroup :options="myOptions" v-model="selected" disable />` ou `options: [{ label: 'Item', value: 'item', disable: true }]` |
+| Somente Leitura | O grupo inteiro ou itens específicos estão em modo somente leitura. | Visual | `<DssOptionGroup :options="myOptions" v-model="selected" readonly />` |
+| Hover | Estado de foco do mouse sobre um item. | Visual | Visualização de feedback de interação. |
+| Focus | Estado de foco via teclado sobre um item. | Visual | Indicador de acessibilidade. |
+| Brand: Hub | Aplicação da paleta de cores `hub`. | Visual | `<DssOptionGroup :options="myOptions" v-model="selected" color="hub" />` |
+| Brand: Water | Aplicação da paleta de cores `water`. | Visual | `<DssOptionGroup :options="myOptions" v-model="selected" color="water" />` |
+| Brand: Waste | Aplicação da paleta de cores `waste`. | Visual | `<DssOptionGroup :options="myOptions" v-model="selected" color="waste" />` |
 
 ---
 

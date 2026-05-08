@@ -161,13 +161,13 @@ A lógica de composição do playground deve incluir um botão âncora (`DssButt
 
 A tabela abaixo define os estados que devem ser expostos no playground para validação visual e funcional:
 
-| Estado | Descrição | Props Envolvidas |
-|---|---|---|
-| **Default** | Menu padrão com comportamento de popover, abrindo abaixo do botão. | Nenhuma |
-| **Fit** | Menu com a mesma largura do botão âncora, ideal para selects customizados. | `fit="true"` |
-| **Cover** | Menu cobrindo o botão âncora, ocultando-o enquanto aberto. | `cover="true"` |
-| **Persistent** | Menu que não fecha ao clicar fora, exigindo interação com os itens. | `persistent="true"` |
-| **Auto-close** | Menu que fecha automaticamente ao clicar em qualquer item interno. | `auto-close="true"` |
-| **Brand Hub** | Item de destaque com a cor da brand Hub (ação principal). | `brand="hub"` |
-| **Brand Water** | Item de destaque com a cor da brand Water (ação secundária). | `brand="water"` |
-| **Brand Waste** | Item de destaque com a cor da brand Waste (ação destrutiva). | `brand="waste"` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Default | Menu padrão com comportamento de popover, abrindo abaixo do botão. | Visual | Padrão (renderização inicial) |
+| Fit | Menu com a mesma largura do botão âncora, ideal para selects customizados. | Visual | — |
+| Cover | Menu cobrindo o botão âncora, ocultando-o enquanto aberto. | Visual | — |
+| Persistent | Menu que não fecha ao clicar fora, exigindo interação com os itens. | Visual | — |
+| Auto-close | Menu que fecha automaticamente ao clicar em qualquer item interno. | Visual | — |
+| Brand Hub | Item de destaque com a cor da brand Hub (ação principal). | Visual | Prop `brand="hub"` ou `[data-brand="hub"]` |
+| Brand Water | Item de destaque com a cor da brand Water (ação secundária). | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
+| Brand Waste | Item de destaque com a cor da brand Waste (ação destrutiva). | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |

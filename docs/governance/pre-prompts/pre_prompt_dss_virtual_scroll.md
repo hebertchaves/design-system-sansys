@@ -115,12 +115,12 @@ O playground do `DssVirtualScroll` deve expor as seguintes configurações para 
 
 *   **Estados a Expor (em tabela):**
 
-| Estado | Propriedade | Descrição | Comportamento Esperado |
-| :--- | :--- | :--- | :--- |
-| Padrão | N/A | Lista renderizada normalmente com dados. | Rolagem fluida, itens renderizados corretamente, sem travamentos. |
-| Carregando | `loading: true` | Exibição de skeletons ou spinner. | Lista oculta ou sobreposta por indicadores de carregamento, interações bloqueadas. |
-| Vazio | `items: []` | Lista sem dados. | Exibição do componente `DssEmptyState` ou mensagem de lista vazia, orientando o usuário. |
-| Erro | `error: true` | Falha ao carregar dados. | Exibição de mensagem de erro com botão de tentar novamente, permitindo a recuperação da falha. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Lista renderizada normalmente com dados. | Visual | N/A |
+| Carregando | Exibição de skeletons ou spinner. | Funcional | `loading: true` |
+| Vazio | Lista sem dados. | Visual | `items: []` |
+| Erro | Falha ao carregar dados. | Funcional | `error: true` |
 lmente e funcionalmente em um ambiente controlado.
 
 *   **Controles Obrigatórios:**
@@ -137,12 +137,12 @@ lmente e funcionalmente em um ambiente controlado.
 
 *   **Estados a Expor (em tabela):**
 
-| Estado | Propriedade | Descrição | Comportamento Esperado |
-| :--- | :--- | :--- | :--- |
-| Padrão | N/A | Lista renderizada normalmente com dados. | Rolagem fluida, itens renderizados corretamente, sem travamentos. |
-| Carregando | `loading: true` | Exibição de skeletons ou spinner. | Lista oculta ou sobreposta por indicadores de carregamento, interações bloqueadas. |
-| Vazio | `items: []` | Lista sem dados. | Exibição do componente `DssEmptyState` ou mensagem de lista vazia, orientando o usuário. |
-| Erro | `error: true` | Falha ao carregar dados. | Exibição de mensagem de erro com botão de tentar novamente, permitindo a recuperação da falha. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Lista renderizada normalmente com dados. | Visual | N/A |
+| Carregando | Exibição de skeletons ou spinner. | Funcional | `loading: true` |
+| Vazio | Lista sem dados. | Visual | `items: []` |
+| Erro | Falha ao carregar dados. | Funcional | `error: true` |
 OUND
 
 O playground do `DssVirtualScroll` deve expor as seguintes configurações para testes, garantindo que todas as variações e estados possam ser validados visualmente e funcionalmente em um ambiente controlado.
@@ -161,9 +161,9 @@ O playground do `DssVirtualScroll` deve expor as seguintes configurações para 
 
 *   **Estados a Expor (em tabela):**
 
-| Estado | Propriedade | Descrição | Comportamento Esperado |
-| :--- | :--- | :--- | :--- |
-| Padrão | N/A | Lista renderizada normalmente com dados. | Rolagem fluida, itens renderizados corretamente, sem travamentos. |
-| Carregando | `loading: true` | Exibição de skeletons ou spinner. | Lista oculta ou sobreposta por indicadores de carregamento, interações bloqueadas. |
-| Vazio | `items: []` | Lista sem dados. | Exibição do componente `DssEmptyState` ou mensagem de lista vazia, orientando o usuário. |
-| Erro | `error: true` | Falha ao carregar dados. | Exibição de mensagem de erro com botão de tentar novamente, permitindo a recuperação da falha. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Lista renderizada normalmente com dados. | Visual | N/A |
+| Carregando | Exibição de skeletons ou spinner. | Funcional | `loading: true` |
+| Vazio | Lista sem dados. | Visual | `items: []` |
+| Erro | Falha ao carregar dados. | Funcional | `error: true` |

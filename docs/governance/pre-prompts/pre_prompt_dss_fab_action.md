@@ -78,12 +78,12 @@ A acessibilidade é uma prioridade no DSS. O `DssFabAction` deve garantir que to
 - **Estados aplicáveis:** `default`, `hover`, `focus`, `active`, `disabled`. A clareza visual entre esses estados é fundamental para o feedback interativo.
 
 **Tabela de Delegação de Estados:**
-| Estado | Gerenciado por | Mecanismo |
-|--------|----------------|-----------|
-| `hover` | DSS (CSS) | Pseudo-classe `:hover` na ação. Aumenta a elevação para `elevation-2` e pode aplicar um leve overlay de cor para indicar interatividade. |
-| `focus` | DSS (CSS) | Pseudo-classe `:focus-visible` na ação. Aplica o focus ring padrão do DSS (ou o fallback documentado para dark mode), garantindo visibilidade clara para navegação por teclado. |
-| `active` | DSS (CSS) | Pseudo-classe `:active` na ação. Reduz levemente a escala (efeito de "pressão") ou altera a cor de fundo para fornecer feedback tátil imediato. |
-| `disabled` | Quasar | Prop `disable` repassada ao `QFabAction`. Aplica opacidade de 50% e `pointer-events: none`, removendo o componente da ordem de tabulação e impedindo interações. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `hover` | DSS (CSS) | Visual | Pseudo-classe `:hover` na ação. Aumenta a elevação para `elevation-2` e pode aplicar um leve overlay de cor para indicar interatividade. |
+| `focus` | DSS (CSS) | Visual | Pseudo-classe `:focus-visible` na ação. Aplica o focus ring padrão do DSS (ou o fallback documentado para dark mode), garantindo visibilidade clara para navegação por teclado. |
+| `active` | DSS (CSS) | Visual | Pseudo-classe `:active` na ação. Reduz levemente a escala (efeito de "pressão") ou altera a cor de fundo para fornecer feedback tátil imediato. |
+| `disabled` | Quasar | Visual | Prop `disable` repassada ao `QFabAction`. Aplica opacidade de 50% e `pointer-events: none`, removendo o componente da ordem de tabulação e impedindo interações. |
 
 
 ## 6. Cenários de Uso Obrigatórios (Exemplos)

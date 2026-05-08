@@ -61,7 +61,7 @@ O arquivo `DssTabPanel.example.vue` deve cobrir:
 O `DssTabPanel` deve renderizar o conteúdo do slot apenas quando for a aba ativa, para otimizar a performance e evitar renderizações desnecessárias. A transição entre painéis deve ser suave, utilizando as transições padrão do Quasar, se aplicável, ou uma transição CSS simples.
 
 ### 8.3. Estados a Expor
-| Estado      | Descrição                                         | Tipo    |
-|-------------|---------------------------------------------------|---------|
-| `active`    | Indica se o painel está visível e ativo.          | Boolean |
-| `disabled`  | Indica se o painel está desabilitado.             | Boolean |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `active` | Indica se o painel está visível e ativo. | Boolean | Mouse press / tecla Enter |
+| `disabled` | Indica se o painel está desabilitado. | Boolean | Prop `disable=true` |

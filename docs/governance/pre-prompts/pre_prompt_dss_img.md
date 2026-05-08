@@ -63,8 +63,8 @@
   - Simular uma conexão lenta (throttling no navegador) para observar o estado de loading e a transição de fade-in.
 - **Estados a Expor:**
 
-| Estado | Descrição |
-|---|---|
-| Carregando (Loading) | O componente está aguardando o carregamento da imagem. Exibe um placeholder ou spinner, reservando o espaço necessário. |
-| Carregado com sucesso (Loaded) | A imagem foi carregada e exibida com sucesso, com uma transição suave. |
-| Erro no carregamento (Error Fallback) | Ocorreu um erro ao carregar a imagem. Um fallback visual (ícone ou imagem alternativa) é exibido para manter a integridade do layout. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Carregando (Loading) | O componente está aguardando o carregamento da imagem. Exibe um placeholder ou spinner, reservando o espaço necessário. | Funcional | Prop `loading=true` |
+| Carregado com sucesso (Loaded) | A imagem foi carregada e exibida com sucesso, com uma transição suave. | Funcional | Operação concluída |
+| Erro no carregamento (Error Fallback) | Ocorreu um erro ao carregar a imagem. Um fallback visual (ícone ou imagem alternativa) é exibido para manter a integridade do layout. | Funcional | Prop `error=true` ou validação |

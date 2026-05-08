@@ -158,12 +158,12 @@ O `DssBtnDropdown` deve orquestrar a interação entre o botão de acionamento e
 
 ### 8.3 Estados a Expor (Tabela)
 
-| Estado         | Descrição                                                                 | Propriedade/Atributo |
-| :------------- | :------------------------------------------------------------------------ | :------------------- |
-| `Fechado`      | O menu está oculto.                                                       | `v-model = false`    |
-| `Aberto`       | O menu está visível.                                                      | `v-model = true`     |
-| `Desabilitado` | O botão e o menu não podem ser interagidos.                              | `disable = true`     |
-| `Split`        | O botão é dividido em ação principal e acionador de dropdown.             | `split = true`       |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `Fechado` | O menu está oculto. | Visual | `v-model = false` |
+| `Aberto` | O menu está visível. | Visual | `v-model = true` |
+| `Desabilitado` | O botão e o menu não podem ser interagidos. | Visual | `disable = true` |
+| `Split` | O botão é dividido em ação principal e acionador de dropdown. | Visual | `split = true` |
 
 ### 8.4 Cenários de Uso (Exemplos Obrigatórios — Mínimo 5)
 

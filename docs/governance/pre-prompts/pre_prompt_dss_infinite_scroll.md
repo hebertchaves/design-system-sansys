@@ -138,8 +138,8 @@ O playground deve demonstrar a integração do `DssInfiniteScroll` com uma lógi
 *   Exemplo de uso no modo `reverse`.
 
 ### Estados a Expor
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `loading` | Booleano | Indica se o componente está atualmente carregando mais itens. |
-| `noMore` | Booleano | Indica se não há mais itens para carregar. |
-| `currentIndex` | Number | O índice atual de paginação que seria passado para a função `@load`. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `loading` | Indica se o componente está atualmente carregando mais itens. | Booleano | Prop `loading=true` |
+| `noMore` | Indica se não há mais itens para carregar. | Booleano | — |
+| `currentIndex` | O índice atual de paginação que seria passado para a função `@load`. | Number | — |

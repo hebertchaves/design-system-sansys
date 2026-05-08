@@ -236,13 +236,13 @@ seleção de cada botão individualmente. |
 
 O gerenciamento de estados é crucial para a interatividade e feedback visual do componente. Alguns estados são gerenciados diretamente pelo DssBtnToggle, enquanto outros são delegados ao QBtnToggle.
 
-| Estado | Aplicável | Proprietário | Detalhes |
-|--------|-----------|--------------|----------|
-| `default` | ✅ | DssBtnToggle | Estado inicial do componente, sem interações ativas. |
-| `disabled` | ✅ | Delegado ao QBtnToggle (prop `disable`) | O componente inteiro ou botões individuais são desativados. |
-| `readonly` | ✅ | DssBtnToggle (`.dss-btn-toggle--readonly`) | O componente permite visualização, mas não aceita alterações. |
-| `hover`, `focus`, `active` | Delegado | Pertencem aos botões internos | Estados de interação do usuário, gerenciados pelo QBtnToggle. |
-| `error`, `indeterminate`, `loading` | ❌ | Não aplicáveis a grupos de alternância | Estes estados não são semanticamente relevantes para um grupo de alternância. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `default` | ✅ | Visual | Padrão (renderização inicial) |
+| `disabled` | ✅ | Visual | Prop `disable=true` |
+| `readonly` | ✅ | Visual | Prop `readonly=true` |
+| `hover`, `focus`, `active` | Delegado | Visual | Mouse over |
+| `error`, `indeterminate`, `loading` | ❌ | Funcional | Prop `loading=true` |
 
 ---
 
@@ -316,18 +316,18 @@ O playground deve demonstrar a lógica composta do DssBtnToggle através de exem
 
 Os seguintes estados devem ser claramente visíveis e testáveis no playground, preferencialmente através de uma tabela ou de indicadores visuais claros:
 
-| Estado | Descrição | Como Expor no Playground |
-|--------|-----------|--------------------------|
-| `default` | O componente em seu estado normal, sem interações. | Exemplo básico do componente. |
-| `hover` | O estado quando o mouse está sobre um botão. | Interação direta do usuário. |
-| `focus` | O estado quando um botão está focado (via teclado ou clique). | Interação direta do usuário. |
-| `active` | O estado quando um botão está sendo clicado. | Interação direta do usuário. |
-| `selected` | O estado de um botão que está atualmente selecionado. | `modelValue` refletindo a opção. |
-| `disabled` | O componente ou um botão individual está desabilitado. | Ativar a prop `disable`. |
-| `readonly` | O componente está em modo somente leitura. | Ativar a prop `readonly`. |
-| `brand-hub` | O componente com o acento de marca `hub`. | Selecionar `hub` na prop `brand`. |
-| `brand-water` | O componente com o acento de marca `water`. | Selecionar `water` na prop `brand`. |
-| `brand-waste` | O componente com o acento de marca `waste`. | Selecionar `waste` na prop `brand`. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `default` | O componente em seu estado normal, sem interações. | Visual | Padrão (renderização inicial) |
+| `hover` | O estado quando o mouse está sobre um botão. | Visual | Mouse over |
+| `focus` | O estado quando um botão está focado (via teclado ou clique). | Visual | Navegação por teclado (Tab) |
+| `active` | O estado quando um botão está sendo clicado. | Visual | Mouse press / tecla Enter |
+| `selected` | O estado de um botão que está atualmente selecionado. | Visual | — |
+| `disabled` | O componente ou um botão individual está desabilitado. | Visual | Prop `disable=true` |
+| `readonly` | O componente está em modo somente leitura. | Visual | Prop `readonly=true` |
+| `brand-hub` | O componente com o acento de marca `hub`. | Visual | Prop `brand="hub"` ou `[data-brand="hub"]` |
+| `brand-water` | O componente com o acento de marca `water`. | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
+| `brand-waste` | O componente com o acento de marca `waste`. | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |
 
 ---
 

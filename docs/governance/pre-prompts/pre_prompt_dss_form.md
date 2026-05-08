@@ -114,11 +114,11 @@ O `DssForm` atua como um orquestrador, compondo múltiplos `DssInput`s e `DssBut
 
 ### Estados a Expor
 
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `isValid` | boolean | Indica se todos os campos do formulário são válidos. |
-| `isDirty` | boolean | Indica se algum campo do formulário foi modificado pelo usuário. |
-| `isSubmitting` | boolean | Indica se o formulário está em processo de submissão. |
-| `errors` | object | Um objeto contendo mensagens de erro para cada campo inválido. |
-| `values` | object | Um objeto contendo os valores atuais de todos os campos do formulário. |
-| `brandColor` | string | A cor de marca atual aplicada ao formulário (`hub`, `water`, `waste`). |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `isValid` | Indica se todos os campos do formulário são válidos. | boolean | — |
+| `isDirty` | Indica se algum campo do formulário foi modificado pelo usuário. | boolean | — |
+| `isSubmitting` | Indica se o formulário está em processo de submissão. | boolean | — |
+| `errors` | Um objeto contendo mensagens de erro para cada campo inválido. | object | Prop `error=true` ou validação |
+| `values` | Um objeto contendo os valores atuais de todos os campos do formulário. | object | — |
+| `brandColor` | A cor de marca atual aplicada ao formulário (`hub`, `water`, `waste`). | string | — |

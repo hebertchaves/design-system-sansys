@@ -67,12 +67,12 @@
 - **Estados aplicáveis:** `default`, `hover`, `focus`, `active`, `disabled`, `expanded`.
 
 **Tabela de Delegação de Estados:**
-| Estado | Gerenciado por | Mecanismo |
-|--------|----------------|-----------|
-| `hover` | DSS (CSS) | Pseudo-classe `:hover` no header |
-| `focus` | DSS (CSS) | Pseudo-classe `:focus-visible` no header |
-| `expanded` | Quasar | Classe `.q-expansion-item--expanded` |
-| `disabled` | Quasar | Prop `disable` repassada ao `QExpansionItem` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `hover` | DSS (CSS) | Visual | Pseudo-classe `:hover` no header |
+| `focus` | DSS (CSS) | Visual | Pseudo-classe `:focus-visible` no header |
+| `expanded` | Quasar | Visual | Classe `.q-expansion-item--expanded` |
+| `disabled` | Quasar | Visual | Prop `disable` repassada ao `QExpansionItem` |
 
 ## 6. Cenários de Uso Obrigatórios (Exemplos)
 

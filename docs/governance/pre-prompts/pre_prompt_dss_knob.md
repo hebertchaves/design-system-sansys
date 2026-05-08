@@ -139,12 +139,12 @@ O `DssKnob` deve aderir estritamente ao sistema de tokens do DSS para todas as s
 *   **Estados a Expor (em Tabela)**:
     A tabela a seguir detalha os eventos e estados que o `DssKnob` deve expor, permitindo que componentes pais reajam às interações do usuário e ao estado interno do knob:
 
-| Evento/Estado       | Descrição                                                                 | Tipo       |
-| :------------------ | :------------------------------------------------------------------------ | :--------- |
-| `@update:model-value` | Emitido quando o valor do knob é alterado pelo usuário. Fornece o novo valor. | `(value: Number) => void` |
-| `@focus`            | Emitido quando o knob recebe foco.                                        | `() => void` |
-| `@blur`             | Emitido quando o knob perde o foco.                                       | `() => void` |
-| `is-dragging`       | Propriedade reativa que indica se o usuário está arrastando o knob.      | `Boolean`  |
-| `is-disabled`       | Propriedade reativa que reflete o estado `disabled` do knob.              | `Boolean`  |
-| `is-readonly`       | Propriedade reativa que reflete o estado `readonly` do knob.              | `Boolean`  |
-| `has-error`         | Propriedade reativa que indica se o knob está em um estado de erro.       | `Boolean`  |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `@update:model-value` | Emitido quando o valor do knob é alterado pelo usuário. Fornece o novo valor. | `(value: Number) => void` | — |
+| `@focus` | Emitido quando o knob recebe foco. | `() => void` | Navegação por teclado (Tab) |
+| `@blur` | Emitido quando o knob perde o foco. | `() => void` | — |
+| `is-dragging` | Propriedade reativa que indica se o usuário está arrastando o knob. | `Boolean` | — |
+| `is-disabled` | Propriedade reativa que reflete o estado `disabled` do knob. | `Boolean` | Prop `disable=true` |
+| `is-readonly` | Propriedade reativa que reflete o estado `readonly` do knob. | `Boolean` | Prop `readonly=true` |
+| `has-error` | Propriedade reativa que indica se o knob está em um estado de erro. | `Boolean` | Prop `error=true` ou validação |

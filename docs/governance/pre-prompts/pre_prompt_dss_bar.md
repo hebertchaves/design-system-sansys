@@ -114,13 +114,13 @@ O playground deve demonstrar a composição do `DssBar` com outros componentes d
 
 ### Estados a Expor
 
-| Estado | Descrição |
-|---|---|
-| **Padrão** | Visualização inicial do componente com as propriedades padrão. |
-| **Fixed** | Indicar se a barra está fixada ou não. |
-| **Elevated** | Indicar se a barra possui elevação. |
-| **Hover/Focus/Active** | Demonstrar os estados de interatividade dos elementos internos (ex: `DssButton` ou `DssIcon` aninhados). |
-| **Tokens CSS** | Mostrar os valores CSS finais resultantes dos tokens DSS selecionados. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Visualização inicial do componente com as propriedades padrão. | Visual | Padrão (renderização inicial) |
+| Fixed | Indicar se a barra está fixada ou não. | Visual | — |
+| Elevated | Indicar se a barra possui elevação. | Visual | — |
+| Hover/Focus/Active | Demonstrar os estados de interatividade dos elementos internos (ex: `DssButton` ou `DssIcon` aninhados). | Visual | Mouse over |
+| Tokens CSS | Mostrar os valores CSS finais resultantes dos tokens DSS selecionados. | Visual | — |
 
 ---garantindo o uso correto de `--dss-spacing-4`, `--dss-text-subtle`, `--dss-action-hub`, `--dss-action-hub-surface` e `outline: 2px solid white`. |
 

@@ -101,17 +101,17 @@ O playground (`.example.vue`) deve demonstrar a orquestração completa:
 - **Integração de Filtros:** Demonstrar como os filtros selecionados afetam os dados exibidos, com lógica real de filtragem no mock do playground.
 
 ### 8.3. Estados a Expor
-| Estado | Descrição | Exemplo de Uso |
-|---|---|---|
-| `default` | Exibição padrão com dados mockados e paginação. | `<DssCadrisCard :rows="mockedData" :pagination="defaultPagination" />` |
-| `loading` | Componente em estado de carregamento, com skeleton na tabela e botão de pesquisa desabilitado/carregando. | `<DssCadrisCard loading />` |
-| `empty` | Nenhum resultado encontrado, com mensagem informativa. | `<DssCadrisCard :rows="[]" />` |
-| `error` | Exibição de mensagem de erro devido a falha na busca de dados. | `<DssCadrisCard error-message="Falha ao carregar dados." />` |
-| `dark-mode` | Componente renderizado no tema escuro, validando contraste. | (Ativado via toggle global do playground) |
-| `responsive-mobile` | Layout adaptado para telas pequenas. | (Ativado via botões de breakpoint do playground) |
-| `brand-hub` | Componente utilizando a marca hub. | `<DssCadrisCard brand="hub" />` |
-| `brand-water` | Componente utilizando a marca water. | `<DssCadrisCard brand="water" />` |
-| `brand-waste` | Componente utilizando a marca waste. | `<DssCadrisCard brand="waste" />` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `default` | Exibição padrão com dados mockados e paginação. | Visual | `<DssCadrisCard :rows="mockedData" :pagination="defaultPagination" />` |
+| `loading` | Componente em estado de carregamento, com skeleton na tabela e botão de pesquisa desabilitado/carregando. | Funcional | `<DssCadrisCard loading />` |
+| `empty` | Nenhum resultado encontrado, com mensagem informativa. | Visual | `<DssCadrisCard :rows="[]" />` |
+| `error` | Exibição de mensagem de erro devido a falha na busca de dados. | Funcional | `<DssCadrisCard error-message="Falha ao carregar dados." />` |
+| `dark-mode` | Componente renderizado no tema escuro, validando contraste. | Visual | (Ativado via toggle global do playground) |
+| `responsive-mobile` | Layout adaptado para telas pequenas. | Visual | (Ativado via botões de breakpoint do playground) |
+| `brand-hub` | Componente utilizando a marca hub. | Visual | `<DssCadrisCard brand="hub" />` |
+| `brand-water` | Componente utilizando a marca water. | Visual | `<DssCadrisCard brand="water" />` |
+| `brand-waste` | Componente utilizando a marca waste. | Visual | `<DssCadrisCard brand="waste" />` |
 
 ## 9️⃣ DIRETRIZES DE TESTES
 - **Testes Unitários:** Verificar se os eventos `@search` e `@update:pagination` são emitidos corretamente com os payloads esperados.

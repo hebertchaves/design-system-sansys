@@ -134,8 +134,8 @@ const containerStyle = computed(() => {
 
 ### 8.3. Estados a Expor
 
-| Estado | Descrição |
-| :--- | :--- |
-| **Default** | Layout padrão ocupando toda a tela. |
-| **Container** | Layout renderizado dentro de um container com dimensões fixas. |
-| **Right Drawer** | Layout com o drawer posicionado à direita. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Default | Layout padrão ocupando toda a tela. | Visual | Padrão (renderização inicial) |
+| Container | Layout renderizado dentro de um container com dimensões fixas. | Visual | — |
+| Right Drawer | Layout com o drawer posicionado à direita. | Visual | — |

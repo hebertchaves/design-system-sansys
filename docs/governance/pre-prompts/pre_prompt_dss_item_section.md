@@ -128,13 +128,13 @@ O `DssItemSection` atua como um flex container (`display: flex`, `flex-direction
 
 ### 8.3 Estados a Expor
 
-| Estado | Descrição | Observações |
-|---|---|---|
-| `default` | Estado padrão do componente, sem interatividade ou modificadores visuais. | Único estado intrínseco ao `DssItemSection`. |
-| `[data-theme="dark"]` | Aplica estilos de tema escuro, herdados do `DssItem` ou globalmente. | Não é um estado próprio, mas uma variação visual. |
-| `forced-colors` | Modo de alto contraste do sistema operacional. | Estilos aplicados pelo navegador, tokens DSS ignorados. |
-| `high-contrast` | Modo de alto contraste (ex: Windows High Contrast Mode). | Estilos aplicados pelo navegador, tokens DSS ignorados. |
-| `print` | Otimização para impressão. | Estilos específicos para mídia impressa. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `default` | Estado padrão do componente, sem interatividade ou modificadores visuais. | Visual | Único estado intrínseco ao `DssItemSection`. |
+| `[data-theme="dark"]` | Aplica estilos de tema escuro, herdados do `DssItem` ou globalmente. | Visual | Não é um estado próprio, mas uma variação visual. |
+| `forced-colors` | Modo de alto contraste do sistema operacional. | Visual | Estilos aplicados pelo navegador, tokens DSS ignorados. |
+| `high-contrast` | Modo de alto contraste (ex: Windows High Contrast Mode). | Visual | Estilos aplicados pelo navegador, tokens DSS ignorados. |
+| `print` | Otimização para impressão. | Visual | Estilos específicos para mídia impressa. |
 
 
 

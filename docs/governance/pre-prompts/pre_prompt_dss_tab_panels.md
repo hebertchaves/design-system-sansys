@@ -111,16 +111,16 @@ O playground deve demonstrar a lógica de composição do `DssTabPanels` de form
 ### 8.3. Estados a Expor
 Os seguintes estados devem ser claramente visualizáveis e inspecionáveis no playground, preferencialmente através de um painel de debug ou exibição de dados em tempo real:
 
-| Estado | Descrição | Valores Possíveis / Observações | Impacto Visual / Comportamental | Governança de Tokens |
-|---|---|---|---|---|
-| **Painel Ativo** | O identificador (`name`) do painel atualmente visível. | String ou Number (corresponde ao `modelValue`). | O conteúdo do painel ativo é exibido; outros estão ocultos. | N/A | 
-| **Transição Ativa** | Indica se uma animação de transição está em andamento. | Boolean (`true`/`false`). | Movimento suave entre painéis. | `--dss-duration-200`, `--dss-easing-standard` | 
-| **`prefers-reduced-motion`** | Reflete a preferência do usuário por movimento reduzido. | Boolean (`true`/`false`). | Se `true`, transições são desativadas (`--dss-duration-0`). | `--dss-duration-0` | 
-| **`forced-colors: active`** | Indica se o modo de cores forçadas está ativo. | Boolean (`true`/`false`). | Aplicação de `1px solid ButtonText` para bordas. | `ButtonText` | 
-| **Conteúdo `keep-alive`** | Demonstração do estado de inputs ou outros elementos em painéis inativos. | Valores dos inputs/estados persistentes. | O conteúdo de painéis inativos mantém seu estado ao retornar. | N/A | 
-| **Cor de Fundo** | Cor de fundo do container do `DssTabPanels`. | `transparent` | O componente se adapta ao fundo do seu pai. | `transparent` | 
-| **Cor de Ação Hub** | Cor utilizada para elementos de ação principal. | `--dss-action-hub` | Destaque visual para interações primárias. | `--dss-action-hub` | 
-| **Superfície de Ação Hub** | Cor de fundo para superfícies de ação principal. | `--dss-action-hub-surface` | Fundo para botões ou áreas de ação primárias. | `--dss-action-hub-surface` | 
-| **Espaçamento** | Espaçamento interno aplicado aos painéis. | `--dss-spacing-4` | Padding interno dos painéis. | `--dss-spacing-4` | 
-| **Cor de Texto Sutil** | Cor para textos secundários. | `--dss-text-subtle` | Textos com menor hierarquia visual. | `--dss-text-subtle` | 
-| **Foco** | Estilo de foco aplicado a elementos interativos. | `outline: 2px solid white` | Indicação visual de foco para acessibilidade. | `outline: 2px solid white` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Painel Ativo | O identificador (`name`) do painel atualmente visível. | Visual | String ou Number (corresponde ao `modelValue`). |
+| Transição Ativa | Indica se uma animação de transição está em andamento. | Visual | Boolean (`true`/`false`). |
+| `prefers-reduced-motion` | Reflete a preferência do usuário por movimento reduzido. | Visual | Boolean (`true`/`false`). |
+| `forced-colors: active` | Indica se o modo de cores forçadas está ativo. | Visual | Boolean (`true`/`false`). |
+| Conteúdo `keep-alive` | Demonstração do estado de inputs ou outros elementos em painéis inativos. | Visual | Valores dos inputs/estados persistentes. |
+| Cor de Fundo | Cor de fundo do container do `DssTabPanels`. | Visual | `transparent` |
+| Cor de Ação Hub | Cor utilizada para elementos de ação principal. | Visual | `--dss-action-hub` |
+| Superfície de Ação Hub | Cor de fundo para superfícies de ação principal. | Visual | `--dss-action-hub-surface` |
+| Espaçamento | Espaçamento interno aplicado aos painéis. | Visual | `--dss-spacing-4` |
+| Cor de Texto Sutil | Cor para textos secundários. | Visual | `--dss-text-subtle` |
+| Foco | Estilo de foco aplicado a elementos interativos. | Visual | `outline: 2px solid white` |

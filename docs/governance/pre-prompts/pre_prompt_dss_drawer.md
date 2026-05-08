@@ -137,16 +137,16 @@ A lógica de composição do `DssDrawer` deve ser demonstrada com exemplos concr
 
 Os seguintes estados visuais e funcionais do `DssDrawer` devem ser claramente documentados e demonstráveis no Storybook:
 
-| Estado | Descrição | Prop/Token Relacionado | Observações |
-|---|---|---|---|
-| **Aberto** | O drawer está visível e acessível. | `modelValue: true` | Estado padrão de visibilidade. |
-| **Fechado** | O drawer está oculto. | `modelValue: false` | Oculto para economizar espaço ou quando não é necessário. |
-| **Elevado** | O drawer exibe uma sombra para indicar elevação. | `elevated: true`, `--dss-elevation-2` | Confere profundidade visual, separando-o do conteúdo principal. |
-| **Com Borda** | O drawer exibe uma borda sutil em seu lado oposto ao conteúdo. | `bordered: true`, `--dss-border-width-thin` | Ajuda na distinção visual e organização do layout. |
-| **Minimizado** | O drawer está em um estado compacto, geralmente mostrando apenas ícones. | `mini: true` | Otimiza o espaço em tela, mantendo a navegação acessível. |
-| **Overlay** | O drawer sobrepõe o conteúdo da página, ideal para mobile. | `overlay: true` | Comportamento responsivo, geralmente ativado automaticamente em telas pequenas. |
-| **Lado Esquerdo** | O drawer está posicionado no lado esquerdo da tela. | `side: 'left'` | Posição padrão para navegação principal. |
-| **Lado Direito** | O drawer está posicionado no lado direito da tela. | `side: 'right'` | Usado para menus contextuais ou painéis auxiliares. | 
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Aberto | O drawer está visível e acessível. | Visual | `modelValue: true` |
+| Fechado | O drawer está oculto. | Visual | `modelValue: false` |
+| Elevado | O drawer exibe uma sombra para indicar elevação. | Visual | `elevated: true`, `--dss-elevation-2` |
+| Com Borda | O drawer exibe uma borda sutil em seu lado oposto ao conteúdo. | Visual | `bordered: true`, `--dss-border-width-thin` |
+| Minimizado | O drawer está em um estado compacto, geralmente mostrando apenas ícones. | Visual | `mini: true` |
+| Overlay | O drawer sobrepõe o conteúdo da página, ideal para mobile. | Visual | `overlay: true` |
+| Lado Esquerdo | O drawer está posicionado no lado esquerdo da tela. | Visual | `side: 'left'` |
+| Lado Direito | O drawer está posicionado no lado direito da tela. | Visual | `side: 'right'` |
 
 ---
 

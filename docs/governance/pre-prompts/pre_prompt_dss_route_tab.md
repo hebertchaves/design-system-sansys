@@ -141,15 +141,15 @@ Neste exemplo, o `DssBadge` é utilizado para indicar notificações no `DssRout
 
 ### 8.3. Estados a Expor
 
-| Estado           | Descrição                                                                 | Tokens/Estilos Relevantes                                   |
-| :--------------- | :------------------------------------------------------------------------ | :---------------------------------------------------------- |
-| **Padrão**       | Estado inicial, sem interação.                                            | `--dss-text-subtle`, `--dss-surface-default`                |
-| **`:hover`**     | Quando o cursor está sobre a aba.                                         | `--dss-surface-hover`, `--dss-text-default`                 |
-| **`:focus-visible`** | Quando a aba está focada via teclado.                                     | `outline: 2px solid white`, `--dss-focus-ring-offset`       |
-| **`:active`**    | Durante o clique ou ativação.                                             | `--dss-surface-active`, `--dss-text-default`                |
-| **`disable`**    | Quando a aba está desabilitada.                                           | `--dss-opacity-disabled`, `--dss-text-subtle`               |
-| **`selected`**   | Quando a rota correspondente está ativa.                                  | `--dss-action-hub-default`, `--dss-action-hub-surface`      |
-| **`alert`**      | Quando a aba possui um indicador de alerta.                               | `--dss-status-warning-default` (para o ponto de alerta)     |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Estado inicial, sem interação. | Visual | `--dss-text-subtle`, `--dss-surface-default` |
+| `:hover` | Quando o cursor está sobre a aba. | Visual | `--dss-surface-hover`, `--dss-text-default` |
+| `:focus-visible` | Quando a aba está focada via teclado. | Visual | `outline: 2px solid white`, `--dss-focus-ring-offset` |
+| `:active` | Durante o clique ou ativação. | Visual | `--dss-surface-active`, `--dss-text-default` |
+| `disable` | Quando a aba está desabilitada. | Visual | `--dss-opacity-disabled`, `--dss-text-subtle` |
+| `selected` | Quando a rota correspondente está ativa. | Visual | `--dss-action-hub-default`, `--dss-action-hub-surface` |
+| `alert` | Quando a aba possui um indicador de alerta. | Visual | `--dss-status-warning-default` (para o ponto de alerta) |
 
 ## 9. Diretrizes de Evolução e Versionamento
 

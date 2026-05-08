@@ -95,13 +95,13 @@ A acessibilidade é um requisito não funcional crítico para o `DssFab`. O comp
 
 **Tabela de Delegação de Estados:**
 
-| Estado | Gerenciado por | Mecanismo |
-|--------|----------------|-----------|
-| `hover` | DSS (CSS) | Pseudo-classe `:hover` no trigger, alterando a elevação para `--dss-elevation-3` |
-| `focus` | DSS (CSS) | Pseudo-classe `:focus-visible` no trigger, aplicando o focus ring acessível |
-| `active` | DSS (CSS) | Pseudo-classe `:active` no trigger, com leve redução de escala para feedback tátil |
-| `disabled` | Quasar | Prop `disable` repassada ao `QFab`, aplicando opacidade reduzida e `pointer-events: none` |
-| `expanded` | Quasar | Prop `model-value` / `v-model`, alternando os ícones e exibindo os filhos com animação |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `hover` | DSS (CSS) | Visual | Pseudo-classe `:hover` no trigger, alterando a elevação para `--dss-elevation-3` |
+| `focus` | DSS (CSS) | Visual | Pseudo-classe `:focus-visible` no trigger, aplicando o focus ring acessível |
+| `active` | DSS (CSS) | Visual | Pseudo-classe `:active` no trigger, com leve redução de escala para feedback tátil |
+| `disabled` | Quasar | Visual | Prop `disable` repassada ao `QFab`, aplicando opacidade reduzida e `pointer-events: none` |
+| `expanded` | Quasar | Visual | Prop `model-value` / `v-model`, alternando os ícones e exibindo os filhos com animação |
 
 ## 6. Cenários de Uso Obrigatórios (Exemplos)
 

@@ -137,14 +137,14 @@ A lógica central do `DssBreadcrumbsEl` reside na sua capacidade de adaptar-se d
 
 ### 8.3 Estados a Expor
 
-| Estado | Descrição | Props/Contexto | Tokens/Estilos Aplicados |
-|---|---|---|---|
-| **Padrão (Clicável)** | Item de navegação interativo, aguardando interação. | `label="Home"`, `to="/home"` | `var(--dss-text-subtle)`, `text-decoration: none` |
-| **Hover (Clicável)** | Item clicável com o cursor sobre ele. | `label="Home"`, `to="/home"` + `:hover` | `var(--dss-text-body)`, `text-decoration: underline` |
-| **Focus-visible (Clicável)** | Item clicável focado via teclado. | `label="Home"`, `to="/home"` + `:focus-visible` | `var(--dss-focus-ring)` |
-| **Desabilitado (Clicável)** | Item clicável, mas temporariamente inativo. | `label="Home"`, `to="/home"`, `disable=true` | `var(--dss-opacity-disabled)`, `pointer-events: none` |
-| **Estático (Atual)** | Item não interativo, representando a página atual. | `label="Página Atual"`, `aria-current="page"` | `var(--dss-text-body)`, `font-weight: var(--dss-font-weight-semibold)` |
-| **Estático (Outro)** | Item não interativo, parte da trilha, mas não a página atual. | `label="Categoria"` | `var(--dss-text-body)` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão (Clicável) | Item de navegação interativo, aguardando interação. | Visual | `label="Home"`, `to="/home"` |
+| Hover (Clicável) | Item clicável com o cursor sobre ele. | Visual | `label="Home"`, `to="/home"` + `:hover` |
+| Focus-visible (Clicável) | Item clicável focado via teclado. | Visual | `label="Home"`, `to="/home"` + `:focus-visible` |
+| Desabilitado (Clicável) | Item clicável, mas temporariamente inativo. | Visual | `label="Home"`, `to="/home"`, `disable=true` |
+| Estático (Atual) | Item não interativo, representando a página atual. | Visual | `label="Página Atual"`, `aria-current="page"` |
+| Estático (Outro) | Item não interativo, parte da trilha, mas não a página atual. | Visual | `label="Categoria"` |
 
 ---
 

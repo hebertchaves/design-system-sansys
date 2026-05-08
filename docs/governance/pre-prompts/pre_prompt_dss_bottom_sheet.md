@@ -117,17 +117,17 @@ O `DssBottomSheet` pode ser composto com outros componentes do DSS para criar ex
 
 ### Estados a Expor
 
-| Estado | Descrição | Props/Configuração | Observações |
-| :--- | :--- | :--- | :--- |
-| **Fechado** | O `BottomSheet` não está visível, aguardando ser ativado. | `v-model="false"` | Estado inicial, o componente está oculto e inativo. |
-| **Aberto** | O `BottomSheet` está visível e pronto para interação. | `v-model="true"` | O conteúdo é exibido, e o usuário pode interagir com os elementos internos. |
-| **Persistente** | O `BottomSheet` permanece aberto mesmo com cliques externos ou tecla Esc. | `persistent="true"` | Requer um controle explícito para fechamento, como um botão. |
-| **Maximizável** | O `BottomSheet` ocupa a altura total da tela, ideal para conteúdo extenso. | `maximized="true"` | Adapta-se a diferentes tamanhos de tela, útil para formulários longos. |
-| **Variante Hub** | O `BottomSheet` estilizado com a cor principal da marca (`hub`). | `brand="hub"` | Demonstra a aplicação da cor de ação principal do DSS. |
-| **Variante Water** | O `BottomSheet` estilizado com a cor secundária da marca (`water`). | `brand="water"` | Demonstra a aplicação da cor de ação secundária do DSS. |
-| **Variante Waste** | O `BottomSheet` estilizado com a cor de destaque da marca (`waste`). | `brand="waste"` | Demonstra a aplicação da cor de destaque do DSS. |
-| **Com Conteúdo Dinâmico** | Demonstração de como o `BottomSheet` se ajusta a conteúdo carregado assincronamente. | `v-model="true"` com conteúdo que muda após um delay | O componente deve redimensionar-se automaticamente. |
-| **Com Scroll Interno** | O `BottomSheet` com conteúdo que excede a altura, exibindo barra de rolagem interna. | `v-model="true"` e conteúdo longo | A rolagem deve ser contida dentro do componente. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Fechado | O `BottomSheet` não está visível, aguardando ser ativado. | Visual | `v-model="false"` |
+| Aberto | O `BottomSheet` está visível e pronto para interação. | Visual | `v-model="true"` |
+| Persistente | O `BottomSheet` permanece aberto mesmo com cliques externos ou tecla Esc. | Visual | `persistent="true"` |
+| Maximizável | O `BottomSheet` ocupa a altura total da tela, ideal para conteúdo extenso. | Visual | `maximized="true"` |
+| Variante Hub | O `BottomSheet` estilizado com a cor principal da marca (`hub`). | Visual | `brand="hub"` |
+| Variante Water | O `BottomSheet` estilizado com a cor secundária da marca (`water`). | Visual | `brand="water"` |
+| Variante Waste | O `BottomSheet` estilizado com a cor de destaque da marca (`waste`). | Visual | `brand="waste"` |
+| Com Conteúdo Dinâmico | Demonstração de como o `BottomSheet` se ajusta a conteúdo carregado assincronamente. | Visual | `v-model="true"` com conteúdo que muda após um delay |
+| Com Scroll Interno | O `BottomSheet` com conteúdo que excede a altura, exibindo barra de rolagem interna. | Visual | `v-model="true"` e conteúdo longo |
 
 ---
 *Fim do documento.*
@@ -197,20 +197,20 @@ O `DssBottomSheet` pode ser composto com outros componentes do DSS para criar ex
 
 ### Estados a Expor
 
-| Estado | Descrição | Props/Configuração | Observações |
-| :--- | :--- | :--- | :--- |
-| **Fechado** | O `BottomSheet` não está visível, aguardando ser ativado. | `v-model="false"` | Estado inicial, o componente está oculto e inativo, sem ocupar espaço na tela. |
-| **Aberto** | O `BottomSheet` está visível e pronto para interação. | `v-model="true"` | O conteúdo é exibido, e o usuário pode interagir com os elementos internos. O backdrop é visível. |
-| **Persistente** | O `BottomSheet` permanece aberto mesmo com cliques externos ou tecla Esc. | `persistent="true"` | Requer um controle explícito para fechamento, como um botão dentro do `BottomSheet`. |
-| **Maximizável** | O `BottomSheet` ocupa a altura total da tela, ideal para conteúdo extenso. | `maximized="true"` | Adapta-se a diferentes tamanhos de tela, útil para formulários longos ou listas de itens. |
-| **Variante Hub** | O `BottomSheet` estilizado com a cor principal da marca (`hub`). | `brand="hub"` | Demonstra a aplicação da cor de ação principal do DSS em elementos como o fundo ou o texto. |
-| **Variante Water** | O `BottomSheet` estilizado com a cor secundária da marca (`water`). | `brand="water"` | Demonstra a aplicação da cor de ação secundária do DSS, útil para estados de hover ou elementos menos proeminentes. |
-| **Variante Waste** | O `BottomSheet` estilizado com a cor de destaque da marca (`waste`). | `brand="waste"` | Demonstra a aplicação da cor de destaque do DSS, para alertas ou ações terciárias. |
-| **Com Conteúdo Dinâmico** | Demonstração de como o `BottomSheet` se ajusta a conteúdo carregado assincronamente. | `v-model="true"` com conteúdo que muda após um delay | O componente deve redimensionar-se automaticamente para acomodar o novo conteúdo. |
-| **Com Scroll Interno** | O `BottomSheet` com conteúdo que excede a altura, exibindo barra de rolagem interna. | `v-model="true"` e conteúdo longo | A rolagem deve ser contida dentro do componente, sem afetar a página de fundo. |
-| **Com `DssToolbar` Fixo** | O `BottomSheet` com um cabeçalho fixo, demonstrando a rolagem do conteúdo abaixo dele. | `v-model="true"` e `DssToolbar` | O `DssToolbar` permanece visível enquanto o conteúdo rola. |
-| **Com Validação de Formulário** | O `BottomSheet` contendo um formulário com mensagens de erro de validação. | `v-model="true"` e `DssForm` com erros | Demonstra como o `BottomSheet` lida com feedback de validação. |
-| **Estado de Carregamento** | O `BottomSheet` exibindo um `DssSpinner` enquanto aguarda o carregamento de dados. | `v-model="true"` e `DssSpinner` | Indica ao usuário que o conteúdo está sendo preparado. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Fechado | O `BottomSheet` não está visível, aguardando ser ativado. | Visual | `v-model="false"` |
+| Aberto | O `BottomSheet` está visível e pronto para interação. | Visual | `v-model="true"` |
+| Persistente | O `BottomSheet` permanece aberto mesmo com cliques externos ou tecla Esc. | Visual | `persistent="true"` |
+| Maximizável | O `BottomSheet` ocupa a altura total da tela, ideal para conteúdo extenso. | Visual | `maximized="true"` |
+| Variante Hub | O `BottomSheet` estilizado com a cor principal da marca (`hub`). | Visual | `brand="hub"` |
+| Variante Water | O `BottomSheet` estilizado com a cor secundária da marca (`water`). | Visual | `brand="water"` |
+| Variante Waste | O `BottomSheet` estilizado com a cor de destaque da marca (`waste`). | Visual | `brand="waste"` |
+| Com Conteúdo Dinâmico | Demonstração de como o `BottomSheet` se ajusta a conteúdo carregado assincronamente. | Visual | `v-model="true"` com conteúdo que muda após um delay |
+| Com Scroll Interno | O `BottomSheet` com conteúdo que excede a altura, exibindo barra de rolagem interna. | Visual | `v-model="true"` e conteúdo longo |
+| Com `DssToolbar` Fixo | O `BottomSheet` com um cabeçalho fixo, demonstrando a rolagem do conteúdo abaixo dele. | Visual | `v-model="true"` e `DssToolbar` |
+| Com Validação de Formulário | O `BottomSheet` contendo um formulário com mensagens de erro de validação. | Visual | `v-model="true"` e `DssForm` com erros |
+| Estado de Carregamento | O `BottomSheet` exibindo um `DssSpinner` enquanto aguarda o carregamento de dados. | Visual | `v-model="true"` e `DssSpinner` |
 
 ---
 *Fim do documento.*

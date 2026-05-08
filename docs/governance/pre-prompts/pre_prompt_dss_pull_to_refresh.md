@@ -218,11 +218,11 @@ const onRefresh = (done) => {
 
 ### Estados a Expor
 
-| Estado | Descrição | Props Aplicadas |
-| :--- | :--- | :--- |
-| **Default (Hub)** | Comportamento padrão com a cor principal da marca. | `color="hub"` |
-| **Water Theme** | Indicador utilizando a cor secundária da marca. | `color="water"` |
-| **Waste Theme** | Indicador utilizando a cor de destaque/alerta da marca. | `color="waste"` |
-| **Disabled** | Componente desativado, não responde ao gesto de puxar. | `disabled=true` |
-| **Small Size** | Indicador em tamanho reduzido. | `size="sm"` |
-| **Large Size** | Indicador em tamanho ampliado. | `size="lg"` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Default (Hub) | Comportamento padrão com a cor principal da marca. | Visual | Padrão (renderização inicial) |
+| Water Theme | Indicador utilizando a cor secundária da marca. | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
+| Waste Theme | Indicador utilizando a cor de destaque/alerta da marca. | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |
+| Disabled | Componente desativado, não responde ao gesto de puxar. | Visual | Prop `disable=true` |
+| Small Size | Indicador em tamanho reduzido. | Visual | — |
+| Large Size | Indicador em tamanho ampliado. | Visual | — |

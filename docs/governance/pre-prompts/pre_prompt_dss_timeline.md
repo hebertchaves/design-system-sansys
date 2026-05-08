@@ -172,13 +172,13 @@ O playground deve incluir um botão "Adicionar Item" que insere um novo `DssTime
 
 ### Estados a Expor
 
-| Estado | Descrição | Propriedades Relacionadas |
-| :----- | :-------- | :------------------------ |
-| Padrão | Timeline vertical com itens alinhados à esquerda | `orientation="vertical"`, `alignment="left"` |
-| Horizontal | Timeline com layout horizontal e itens no topo | `orientation="horizontal"`, `alignment="top"` |
-| Alternado | Timeline vertical com itens alternando lados | `orientation="vertical"`, `alignment="both"` |
-| Cores de Marca | Timeline utilizando cores da marca para os pontos | `lineColor="neutral"`, `dotColor="hub"`, `dotColor="water"`, `dotColor="waste"` |
-| Modo Escuro | Timeline renderizada em modo escuro com contraste ajustado | `isDark=true` |
-| Denso | Timeline com espaçamento reduzido entre os itens | `dense=true` |
-| Com Ícones | Timeline onde cada item possui um ícone específico | `icon="check"`, `icon="warning"`, `icon="info"` |
-| Conteúdo Rico | Timeline com slots customizados contendo imagens e botões | `default` slot preenchido com HTML complexo |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Timeline vertical com itens alinhados à esquerda | Visual | `orientation="vertical"`, `alignment="left"` |
+| Horizontal | Timeline com layout horizontal e itens no topo | Visual | `orientation="horizontal"`, `alignment="top"` |
+| Alternado | Timeline vertical com itens alternando lados | Visual | `orientation="vertical"`, `alignment="both"` |
+| Cores de Marca | Timeline utilizando cores da marca para os pontos | Visual | `lineColor="neutral"`, `dotColor="hub"`, `dotColor="water"`, `dotColor="waste"` |
+| Modo Escuro | Timeline renderizada em modo escuro com contraste ajustado | Visual | `isDark=true` |
+| Denso | Timeline com espaçamento reduzido entre os itens | Visual | `dense=true` |
+| Com Ícones | Timeline onde cada item possui um ícone específico | Visual | `icon="check"`, `icon="warning"`, `icon="info"` |
+| Conteúdo Rico | Timeline com slots customizados contendo imagens e botões | Visual | `default` slot preenchido com HTML complexo |

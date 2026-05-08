@@ -235,13 +235,13 @@ Isso inclui carregar os tons específicos de hub, water e waste, permitindo que 
 ### Estados a Expor
 A tabela a seguir lista os estados internos e propriedades que devem ser expostos e visíveis no playground para facilitar o debug, a compreensão do comportamento do componente e a verificação de que todas as propriedades estão funcionando conforme o esperado.
 
-| Estado | Descrição | Exemplo de Valor |
-| :--- | :--- | :--- |
-| **Cor Selecionada** | O valor atual refletido pelo `v-model`, formatado de acordo com a propriedade `colorFormat`. | `#3498db` |
-| **Estado de Habilitação** | Indica se o componente está atualmente desabilitado para interação, refletindo a propriedade `disabled`. | `false` |
-| **Estado de Somente Leitura** | Indica se o componente está em modo somente leitura, refletindo a propriedade `readonly`. | `false` |
-| **Formato Atual** | O formato de cor atualmente selecionado para exibição e emissão, refletindo a propriedade `colorFormat`. | `hex` |
-| **Paleta Ativa** | O array de cores que compõe a paleta atualmente em uso, refletindo a propriedade `colorPalette`. | `['#1abc9c', '#2ecc71', '#3498db']` |
-| **Modo de Exibição** | Indica a visibilidade atual do cabeçalho e do rodapé do componente, refletindo `hideHeader` e `hideFooter`. | `header: true, footer: true` |
-| **Estilo Visual** | Indica as configurações de estilo aplicadas, como bordas quadradas ou estilo plano, refletindo `square` e `flat`. | `square: false, flat: false` |
-| **Elevação Atual** | O nível de sombra atual aplicado ao componente, refletindo a propriedade `elevation`. | `1` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Cor Selecionada | O valor atual refletido pelo `v-model`, formatado de acordo com a propriedade `colorFormat`. | Visual | `#3498db` |
+| Estado de Habilitação | Indica se o componente está atualmente desabilitado para interação, refletindo a propriedade `disabled`. | Visual | `false` |
+| Estado de Somente Leitura | Indica se o componente está em modo somente leitura, refletindo a propriedade `readonly`. | Visual | `false` |
+| Formato Atual | O formato de cor atualmente selecionado para exibição e emissão, refletindo a propriedade `colorFormat`. | Visual | `hex` |
+| Paleta Ativa | O array de cores que compõe a paleta atualmente em uso, refletindo a propriedade `colorPalette`. | Visual | `['#1abc9c', '#2ecc71', '#3498db']` |
+| Modo de Exibição | Indica a visibilidade atual do cabeçalho e do rodapé do componente, refletindo `hideHeader` e `hideFooter`. | Visual | `header: true, footer: true` |
+| Estilo Visual | Indica as configurações de estilo aplicadas, como bordas quadradas ou estilo plano, refletindo `square` e `flat`. | Visual | `square: false, flat: false` |
+| Elevação Atual | O nível de sombra atual aplicado ao componente, refletindo a propriedade `elevation`. | Visual | `1` |

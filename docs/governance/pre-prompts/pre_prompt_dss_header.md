@@ -110,15 +110,15 @@ A lógica de composição no Playground deve refletir cenários reais e complexo
 
 A tabela abaixo define os estados que devem ser rigorosamente documentados e testáveis no Playground, garantindo cobertura completa das variações do componente:
 
-| Estado | Descrição | Props/Configuração |
-| :--- | :--- | :--- |
-| **Padrão (Flat)** | Header sem elevação ou borda, fundindo-se com o fundo da página se tiverem a mesma cor. Ideal para layouts contínuos. | `elevated: false`, `bordered: false` |
-| **Elevado** | Header com sombra (`--dss-shadow-2`), destacando-se claramente do conteúdo abaixo. | `elevated: true`, `bordered: false` |
-| **Com Borda** | Header com borda inferior sutil (`--dss-border-subtle`), proporcionando uma separação limpa e minimalista. | `elevated: false`, `bordered: true` |
-| **Reveal Ativo** | Header que se oculta suavemente na rolagem para baixo e reaparece na rolagem para cima. | `reveal: true` (requer simulação de rolagem no Playground) |
-| **Brand Hub** | Header contendo toolbar com a cor da marca principal (Hub). | Slot default preenchido com `DssToolbar brand="hub"` |
-| **Brand Water** | Header contendo toolbar com a cor da marca de água (Water). | Slot default preenchido com `DssToolbar brand="water"` |
-| **Brand Waste** | Header contendo toolbar com a cor da marca de resíduos (Waste). | Slot default preenchido com `DssToolbar brand="waste"` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão (Flat) | Header sem elevação ou borda, fundindo-se com o fundo da página se tiverem a mesma cor. Ideal para layouts contínuos. | Visual | `elevated: false`, `bordered: false` |
+| Elevado | Header com sombra (`--dss-shadow-2`), destacando-se claramente do conteúdo abaixo. | Visual | `elevated: true`, `bordered: false` |
+| Com Borda | Header com borda inferior sutil (`--dss-border-subtle`), proporcionando uma separação limpa e minimalista. | Visual | `elevated: false`, `bordered: true` |
+| Reveal Ativo | Header que se oculta suavemente na rolagem para baixo e reaparece na rolagem para cima. | Visual | `reveal: true` (requer simulação de rolagem no Playground) |
+| Brand Hub | Header contendo toolbar com a cor da marca principal (Hub). | Visual | Slot default preenchido com `DssToolbar brand="hub"` |
+| Brand Water | Header contendo toolbar com a cor da marca de água (Water). | Visual | Slot default preenchido com `DssToolbar brand="water"` |
+| Brand Waste | Header contendo toolbar com a cor da marca de resíduos (Waste). | Visual | Slot default preenchido com `DssToolbar brand="waste"` |
 
 ---
 *Fim do Pré-prompt*

@@ -256,10 +256,10 @@ borda arredondada (pill) para a variante `rounded`. |
 
 ## 7. Estados do Componente
 
-| Estado | Aplicável ao DssBtnGroup | Descrição |
-|--------|--------------------------|-----------|
-| default | ✅ Único estado do container | O estado padrão do grupo de botões, sem interações ativas ou modificações visuais. |
-| hover, focus, active, disabled, loading, error, indeterminate | ❌ Pertencem aos DssButton filhos | Estes estados são gerenciados individualmente por cada botão dentro do grupo, refletindo sua própria interatividade. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| default | O estado padrão do grupo de botões, sem interações ativas ou modificações visuais. | Visual | Padrão (renderização inicial) |
+| hover, focus, active, disabled, loading, error, indeterminate | Estes estados são gerenciados individualmente por cada botão dentro do grupo, refletindo sua própria interatividade. | Visual | Mouse over |
 
 ---
 
@@ -291,20 +291,20 @@ O playground deve demonstrar a `Composite Logic` do `DssBtnGroup` através de ex
 
 ### Estados a Expor (em tabela)
 
-| Estado | Descrição | Observações |
-|--------|-----------|-------------|
-| Default | Estado inicial do componente, sem interações. | O `DssBtnGroup` não possui estados interativos próprios, apenas o estado padrão. |
-| Com `flat` | O grupo de botões com estilo plano. | Separadores `--dss-gray-300` visíveis. |
-| Com `outline` | O grupo de botões com bordas visíveis. | Bordas duplas colapsadas. |
-| Com `push` | O grupo de botões com efeito 3D. | Separadores `--dss-gray-200` visíveis. |
-| Com `unelevated` | O grupo de botões sem sombra. | Separadores `--dss-gray-200` visíveis. |
-| Com `rounded` | O grupo de botões com cantos externos arredondados. | `border-radius: var(--dss-radius-full)` aplicado. |
-| Com `square` | O grupo de botões com cantos retos. | `border-radius: 0` aplicado. |
-| Com `spread` | Os botões distribuídos igualmente. | `display: flex` e `flex: 1` nos filhos. |
-| Com `stretch` | Os botões esticados verticalmente. | `align-self: stretch` nos filhos. |
-| Com `brand='hub'` | O grupo de botões com acento de marca 'hub'. | `box-shadow` inset com cor `hub`. |
-| Com `brand='water'` | O grupo de botões com acento de marca 'water'. | `box-shadow` inset com cor `water`. |
-| Com `brand='waste'` | O grupo de botões com acento de marca 'waste'. | `box-shadow` inset com cor `waste`. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Default | Estado inicial do componente, sem interações. | Visual | O `DssBtnGroup` não possui estados interativos próprios, apenas o estado padrão. |
+| Com `flat` | O grupo de botões com estilo plano. | Visual | Separadores `--dss-gray-300` visíveis. |
+| Com `outline` | O grupo de botões com bordas visíveis. | Visual | Bordas duplas colapsadas. |
+| Com `push` | O grupo de botões com efeito 3D. | Visual | Separadores `--dss-gray-200` visíveis. |
+| Com `unelevated` | O grupo de botões sem sombra. | Visual | Separadores `--dss-gray-200` visíveis. |
+| Com `rounded` | O grupo de botões com cantos externos arredondados. | Visual | `border-radius: var(--dss-radius-full)` aplicado. |
+| Com `square` | O grupo de botões com cantos retos. | Visual | `border-radius: 0` aplicado. |
+| Com `spread` | Os botões distribuídos igualmente. | Visual | `display: flex` e `flex: 1` nos filhos. |
+| Com `stretch` | Os botões esticados verticalmente. | Visual | `align-self: stretch` nos filhos. |
+| Com `brand='hub'` | O grupo de botões com acento de marca 'hub'. | Visual | `box-shadow` inset com cor `hub`. |
+| Com `brand='water'` | O grupo de botões com acento de marca 'water'. | Visual | `box-shadow` inset com cor `water`. |
+| Com `brand='waste'` | O grupo de botões com acento de marca 'waste'. | Visual | `box-shadow` inset com cor `waste`. |
 
 ---
 

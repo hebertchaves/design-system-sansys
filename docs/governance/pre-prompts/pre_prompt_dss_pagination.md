@@ -72,7 +72,7 @@ Esta seção detalha as propriedades (`props`) que o componente `DssPagination` 
   "color": "Cores são governadas pela prop 'brand' e tokens DSS.",
   "active-color": "Cor ativa é derivada da prop 'brand'.",
   "text-color": "Cor do texto é governada por tokens DSS (--dss-text-hub).",
-  "active-text-color": "Cor do texto ativo é governada por tokens DSS (--dss-text-on-primary).",
+  "active-text-color": "Cor do texto ativo é governada por tokens DSS (--dss-text-on-hub).",
   "dark": "Modo escuro governado globalmente pelo DSS via [data-theme='dark'].",
   "icon-*": "Ícones de navegação devem ser padronizados pelo DSS e não customizáveis por instância."
 }
@@ -84,9 +84,9 @@ O `DssPagination` deve utilizar exclusivamente tokens do DSS para estilização.
 
 ### 4.1. Cores e Theming
 - **Botão Ativo (Fundo):** `--dss-action-hub` (injetado via `--q-color-hub`).
-- **Botão Ativo (Texto):** `--dss-text-on-primary`.
+- **Botão Ativo (Texto):** `--dss-text-on-hub`.
 - **Botões Inativos (Texto):** `--dss-text-hub`.
-- **Marcas (Brands):** `--dss-hub-primary`, `--dss-water-primary`, `--dss-waste-primary` (aplicados dinamicamente baseados na prop `brand`).
+- **Marcas (Brands):** `--dss-action-hub`, `--dss-action-water`, `--dss-action-waste` (aplicados dinamicamente baseados na prop `brand`).
 
 ### 4.2. Espaçamento e Dimensões
 - **Gap entre botões:** `--dss-gap-1`.

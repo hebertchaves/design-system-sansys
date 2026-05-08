@@ -139,11 +139,11 @@ O Playground para o `DssTable` deve demonstrar todas as suas capacidades e varia
 
 ### Estados a Expor
 
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `loading` | Boolean | Indica se a tabela está carregando dados. |
-| `selectedRows` | Array | Objetos representando as linhas selecionadas. |
-| `pagination` | Object | Estado atual da paginação (página, itens por página, total de páginas). |
-| `filter` | String | Valor atual do filtro global. |
-| `sortBy` | String | Chave da coluna pela qual a tabela está ordenada. |
-| `sortOrder` | String | Ordem da ordenação (`asc`, `desc`). |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `loading` | Indica se a tabela está carregando dados. | Boolean | Prop `loading=true` |
+| `selectedRows` | Objetos representando as linhas selecionadas. | Array | — |
+| `pagination` | Estado atual da paginação (página, itens por página, total de páginas). | Object | — |
+| `filter` | Valor atual do filtro global. | String | — |
+| `sortBy` | Chave da coluna pela qual a tabela está ordenada. | String | — |
+| `sortOrder` | Ordem da ordenação (`asc`, `desc`). | String | — |

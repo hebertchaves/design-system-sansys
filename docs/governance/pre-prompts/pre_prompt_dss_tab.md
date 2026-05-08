@@ -134,13 +134,13 @@ O `DssTab` é um elemento interativo de navegação.
 
 ### 8.3 Estados a Expor
 
-| Estado | Descrição | Tokens/Estilos Aplicados |
-|---|---|---|
-| **Padrão (Inativo)** | Aba não selecionada, aguardando interação. | `color: var(--dss-text-subtle)` |
-| **Hover** | Cursor sobre a aba. | `background-color: var(--dss-surface-hover)`; `color: var(--dss-text-body)` |
-| **Focus-Visible** | Aba focada via teclado. | `outline: 2px solid var(--dss-action-water-500)`; `background-color: var(--dss-surface-hover)`; `color: var(--dss-text-body)` |
-| **Active (Selecionado)** | Aba atualmente selecionada. | `color: var(--dss-brand-hub-500)`; `border-bottom: var(--dss-border-width-md) solid var(--dss-brand-hub-500)` |
-| **Disabled** | Aba desabilitada, sem interação. | `opacity: var(--dss-opacity-disabled)`; `cursor: not-allowed` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão (Inativo) | Aba não selecionada, aguardando interação. | Visual | `color: var(--dss-text-subtle)` |
+| Hover | Cursor sobre a aba. | Visual | `background-color: var(--dss-surface-hover)`; `color: var(--dss-text-body)` |
+| Focus-Visible | Aba focada via teclado. | Visual | `outline: 2px solid var(--dss-action-water-500)`; `background-color: var(--dss-surface-hover)`; `color: var(--dss-text-body)` |
+| Active (Selecionado) | Aba atualmente selecionada. | Visual | `color: var(--dss-brand-hub-500)`; `border-bottom: var(--dss-border-width-md) solid var(--dss-brand-hub-500)` |
+| Disabled | Aba desabilitada, sem interação. | Visual | `opacity: var(--dss-opacity-disabled)`; `cursor: not-allowed` |
 
 ---
 

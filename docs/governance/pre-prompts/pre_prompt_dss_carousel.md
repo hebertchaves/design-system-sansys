@@ -109,11 +109,11 @@ O `DssCarousel` é composto por um contêiner principal, os slides (que podem co
 
 ### Estados a Expor
 
-| Estado | Descrição |
-| :--- | :--- |
-| `currentSlideIndex` | O índice do slide atualmente ativo. |
-| `isAutoplaying` | Booleano indicando se o autoplay está ativo. |
-| `isHovering` | Booleano indicando se o mouse está sobre o carrossel. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `currentSlideIndex` | O índice do slide atualmente ativo. | Visual | — |
+| `isAutoplaying` | Booleano indicando se o autoplay está ativo. | Visual | — |
+| `isHovering` | Booleano indicando se o mouse está sobre o carrossel. | Visual | Mouse over |
 
 ---
 *Nota: Este documento foi revisado para garantir conformidade com as diretrizes de nomenclatura de brand (hub, water, waste) e substituição de tokens fantasmas.*

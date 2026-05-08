@@ -146,10 +146,10 @@ O playground do `DssScrollArea` deve expor os seguintes controles para demonstra
 
 ### Estados a Expor
 
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `isScrolledToTop` | Booleano | Indicando se o conteúdo está no topo da rolagem. |
-| `isScrolledToBottom` | Booleano | Indicando se o conteúdo está na base da rolagem. |
-| `isScrolledToLeft` | Booleano | Indicando se o conteúdo está na esquerda da rolagem (para rolagem horizontal). |
-| `isScrolledToRight` | Booleano | Indicando se o conteúdo está na direita da rolagem (para rolagem horizontal). |
-| `hasScrollbars` | Booleano | Indicando se os *scrollbars* estão visíveis no momento. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `isScrolledToTop` | Indicando se o conteúdo está no topo da rolagem. | Booleano | — |
+| `isScrolledToBottom` | Indicando se o conteúdo está na base da rolagem. | Booleano | — |
+| `isScrolledToLeft` | Indicando se o conteúdo está na esquerda da rolagem (para rolagem horizontal). | Booleano | — |
+| `isScrolledToRight` | Indicando se o conteúdo está na direita da rolagem (para rolagem horizontal). | Booleano | — |
+| `hasScrollbars` | Indicando se os *scrollbars* estão visíveis no momento. | Booleano | — |

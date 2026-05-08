@@ -148,14 +148,14 @@ const isStep1Valid = ref(true)
 
 A tabela abaixo define os estados predefinidos que devem estar disponíveis como presets no playground, facilitando a visualização rápida das variações do componente.
 
-| Estado | Propriedades | Descrição |
-|---|---|---|
-| **Inativo Padrão** | `name="1"`, `title="Passo 1"` | Estado padrão de um passo futuro, aguardando navegação. |
-| **Ativo (Hub)** | `name="1"`, `title="Passo 1"`, `data-brand="hub"` | Passo atual, destacado com a cor da brand Hub. |
-| **Ativo (Water)** | `name="1"`, `title="Passo 1"`, `data-brand="water"` | Passo atual, destacado com a cor da brand Water. |
-| **Ativo (Waste)** | `name="1"`, `title="Passo 1"`, `data-brand="waste"` | Passo atual, destacado com a cor da brand Waste. |
-| **Concluído** | `done: true` | Passo finalizado com sucesso, utilizando o token `--dss-feedback-success`. |
-| **Erro de Validação** | `error: true` | Passo com validação falha, utilizando o token `--dss-feedback-error`. |
-| **Desabilitado** | `disable: true` | Passo inacessível, com opacidade reduzida e sem eventos de ponteiro. |
-| **Com Caption Longo** | `caption="Texto auxiliar muito longo para testar quebra de linha"` | Passo exibindo informações secundárias extensas para validar o layout. |
-| **Ícone Customizado** | `icon="dss-icon-settings"` | Passo utilizando um ícone específico em vez do número sequencial padrão. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Inativo Padrão | Estado padrão de um passo futuro, aguardando navegação. | Visual | `name="1"`, `title="Passo 1"` |
+| Ativo (Hub) | Passo atual, destacado com a cor da brand Hub. | Visual | `name="1"`, `title="Passo 1"`, `data-brand="hub"` |
+| Ativo (Water) | Passo atual, destacado com a cor da brand Water. | Visual | `name="1"`, `title="Passo 1"`, `data-brand="water"` |
+| Ativo (Waste) | Passo atual, destacado com a cor da brand Waste. | Visual | `name="1"`, `title="Passo 1"`, `data-brand="waste"` |
+| Concluído | Passo finalizado com sucesso, utilizando o token `--dss-feedback-success`. | Visual | `done: true` |
+| Erro de Validação | Passo com validação falha, utilizando o token `--dss-feedback-error`. | Funcional | `error: true` |
+| Desabilitado | Passo inacessível, com opacidade reduzida e sem eventos de ponteiro. | Visual | `disable: true` |
+| Com Caption Longo | Passo exibindo informações secundárias extensas para validar o layout. | Visual | `caption="Texto auxiliar muito longo para testar quebra de linha"` |
+| Ícone Customizado | Passo utilizando um ícone específico em vez do número sequencial padrão. | Visual | `icon="dss-icon-settings"` |

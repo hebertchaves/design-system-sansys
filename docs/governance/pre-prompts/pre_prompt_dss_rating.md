@@ -118,10 +118,10 @@ O DssRating utilizará exclusivamente tokens numéricos/padrão do DSS para espa
 
 ### Estados a Expor
 
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `v-model` | Number | Exibir o valor numérico atual da avaliação. |
-| `isHovering` | Boolean | Indicar se o mouse está sobre o componente. |
-| `isFocused` | Boolean | Indicar se o componente está focado. |
-| `isValid` | Boolean | Indicar se o valor da avaliação está dentro dos limites válidos. |
-| `isDirty` | Boolean | Indicar se o valor foi alterado pelo usuário. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `v-model` | Exibir o valor numérico atual da avaliação. | Number | — |
+| `isHovering` | Indicar se o mouse está sobre o componente. | Boolean | Mouse over |
+| `isFocused` | Indicar se o componente está focado. | Boolean | Navegação por teclado (Tab) |
+| `isValid` | Indicar se o valor da avaliação está dentro dos limites válidos. | Boolean | — |
+| `isDirty` | Indicar se o valor foi alterado pelo usuário. | Boolean | — |

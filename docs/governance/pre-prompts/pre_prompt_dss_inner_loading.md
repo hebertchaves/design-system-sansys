@@ -90,16 +90,16 @@
   - **Cenário 3: Carregamento Customizado com Slot:** Um contêiner onde o `DssInnerLoading` utiliza o slot `default` para exibir um ícone de nuvem animado e uma mensagem "Sincronizando arquivos...", demonstrando a flexibilidade de composição além do spinner padrão.
 - **Estados a Expor (em tabela):**
 
-| Estado | Descrição | Props/Configuração |
-| :--- | :--- | :--- |
-| **Padrão (Default)** | O estado básico com apenas o spinner centralizado, sem texto. | `showing: true`, `label: undefined`, `size: 'md'`, `color: 'hub'` |
-| **Com Label** | Exibe o spinner acompanhado de um texto explicativo abaixo. | `showing: true`, `label: 'Carregando informações...'`, `size: 'md'` |
-| **Tamanho Pequeno (Small)** | Spinner reduzido para uso em espaços confinados. | `showing: true`, `size: 'sm'`, `label: undefined` |
-| **Tamanho Grande (Large)** | Spinner ampliado para áreas de destaque. | `showing: true`, `size: 'lg'`, `label: 'Processando...'` |
-| **Cor Semântica (Water)** | Spinner utilizando a cor semântica `water`. | `showing: true`, `color: 'water'` |
-| **Cor Semântica (Waste)** | Spinner utilizando a cor semântica `waste`. | `showing: true`, `color: 'waste'` |
-| **Com Delay** | Simula o comportamento de atraso na exibição (requer interação no playground para visualizar). | `showing: false -> true`, `delay: 500` |
-| **Slot Customizado** | Demonstra o uso do slot para substituir o spinner por um conteúdo arbitrário. | `showing: true`, Slot preenchido com ícone/texto customizado |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão (Default) | O estado básico com apenas o spinner centralizado, sem texto. | Visual | `showing: true`, `label: undefined`, `size: 'md'`, `color: 'hub'` |
+| Com Label | Exibe o spinner acompanhado de um texto explicativo abaixo. | Visual | `showing: true`, `label: 'Carregando informações...'`, `size: 'md'` |
+| Tamanho Pequeno (Small) | Spinner reduzido para uso em espaços confinados. | Visual | `showing: true`, `size: 'sm'`, `label: undefined` |
+| Tamanho Grande (Large) | Spinner ampliado para áreas de destaque. | Visual | `showing: true`, `size: 'lg'`, `label: 'Processando...'` |
+| Cor Semântica (Water) | Spinner utilizando a cor semântica `water`. | Visual | `showing: true`, `color: 'water'` |
+| Cor Semântica (Waste) | Spinner utilizando a cor semântica `waste`. | Visual | `showing: true`, `color: 'waste'` |
+| Com Delay | Simula o comportamento de atraso na exibição (requer interação no playground para visualizar). | Visual | `showing: false -> true`, `delay: 500` |
+| Slot Customizado | Demonstra o uso do slot para substituir o spinner por um conteúdo arbitrário. | Visual | `showing: true`, Slot preenchido com ícone/texto customizado |
 
 ## 9. DIRETRIZES ADICIONAIS DE IMPLEMENTAÇÃO
 - **Integração com Vue/React:** O componente deve ser implementado de forma a facilitar a integração com frameworks reativos. Em Vue, por exemplo, a prop `showing` pode ser vinculada com `v-model` se o componente precisar emitir eventos de fechamento (embora não seja o caso padrão).

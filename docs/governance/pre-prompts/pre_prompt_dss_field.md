@@ -231,17 +231,17 @@ A lógica de composição do DssField deve ser demonstrada com exemplos concreto
 
 A tabela abaixo lista os estados do DssField que devem ser expostos e manipuláveis no playground, permitindo a visualização de todas as suas variações.
 
-| Estado | Descrição | Como Ativar no Playground |
-| :--- | :--- | :--- |
-| **Normal** | O estado padrão do campo, sem foco, hover ou erros. | Desativar todos os toggles de estado (`error`, `disabled`, `readonly`, `loading`). |
-| **Foco** | O campo está ativo e pronto para receber entrada do usuário. | Clicar dentro do campo de input no playground. |
-| **Hover** | O usuário passa o mouse sobre o campo. | Passar o mouse sobre o campo no playground. |
-| **Desabilitado** | O campo não é interativo e não pode ser focado. | Ativar o toggle `disabled`. |
-| **Somente Leitura** | O campo exibe seu valor, mas não permite edição. | Ativar o toggle `readonly`. |
-| **Carregamento** | O campo exibe um indicador de carregamento. | Ativar o toggle `loading`. |
-| **Erro** | O campo está em estado de erro, exibindo a mensagem de erro. | Ativar o toggle `error` e preencher `errorMessage`. |
-| **Com Valor** | O campo possui um valor preenchido. | Digitar um valor no campo de input no playground. |
-| **Vazio** | O campo não possui valor preenchido. | Limpar o valor do campo de input no playground. |
-| **Com Dica** | O campo exibe um texto de dica abaixo do input. | Preencher o campo `hint`. |
-| **Com Contador** | O campo exibe um contador de caracteres. | Ativar o toggle `counter` e preencher `maxLength`. |
-| **Com Limpar** | O campo exibe um ícone para limpar o valor. | Ativar o toggle `clearable` e preencher um valor. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Normal | O estado padrão do campo, sem foco, hover ou erros. | Visual | — |
+| Foco | O campo está ativo e pronto para receber entrada do usuário. | Visual | — |
+| Hover | O usuário passa o mouse sobre o campo. | Visual | Mouse over |
+| Desabilitado | O campo não é interativo e não pode ser focado. | Visual | Prop `disable=true` |
+| Somente Leitura | O campo exibe seu valor, mas não permite edição. | Visual | Prop `readonly=true` |
+| Carregamento | O campo exibe um indicador de carregamento. | Visual | — |
+| Erro | O campo está em estado de erro, exibindo a mensagem de erro. | Funcional | Prop `error=true` ou validação |
+| Com Valor | O campo possui um valor preenchido. | Visual | — |
+| Vazio | O campo não possui valor preenchido. | Visual | Slot ou conteúdo não fornecido |
+| Com Dica | O campo exibe um texto de dica abaixo do input. | Visual | — |
+| Com Contador | O campo exibe um contador de caracteres. | Visual | — |
+| Com Limpar | O campo exibe um ícone para limpar o valor. | Visual | — |

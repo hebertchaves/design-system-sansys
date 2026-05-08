@@ -142,10 +142,10 @@ A seção de Lógica Composta na Superfície de Playground deve demonstrar cená
 ### Estados a Expor
 Para facilitar a depuração e a integração com outras partes da aplicação, o `DssTree` deve expor os seguintes estados:
 
-| Estado Exposto | Tipo | Descrição |
-| :------------- | :--- | :---------- |
-| `model-value`  | `Array<String>` | Um array contendo as chaves únicas de todos os itens que estão atualmente selecionados na árvore. Este estado é bidirecional e pode ser usado para controlar a seleção programaticamente. |
-| `expanded-items` | `Array<String>` | Um array contendo as chaves únicas de todos os nós que estão atualmente expandidos. Permite controlar e observar quais partes da árvore estão visíveis. |
-| `is-loading`   | `Boolean` | Um booleano que indica se o componente está em processo de carregamento assíncrono de dados (por exemplo, filhos de um nó via lazy loading). Útil para exibir indicadores de carregamento na interface do usuário. |
-| `active-node`  | `String` ou `null` | A chave única do nó que está atualmente com foco (via teclado ou clique). Essencial para acessibilidade e navegação. |
-| `filtered-nodes` | `Array<Object>` | Um array dos nós que são visíveis após a aplicação de um filtro de busca. Útil para depuração e para exibir o número de resultados filtrados. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `model-value` | Um array contendo as chaves únicas de todos os itens que estão atualmente selecionados na árvore. Este estado é bidirecional e pode ser usado para controlar a seleção programaticamente. | `Array<String>` | — |
+| `expanded-items` | Um array contendo as chaves únicas de todos os nós que estão atualmente expandidos. Permite controlar e observar quais partes da árvore estão visíveis. | `Array<String>` | Clique no header |
+| `is-loading` | Um booleano que indica se o componente está em processo de carregamento assíncrono de dados (por exemplo, filhos de um nó via lazy loading). Útil para exibir indicadores de carregamento na interface do usuário. | `Boolean` | Prop `loading=true` |
+| `active-node` | A chave única do nó que está atualmente com foco (via teclado ou clique). Essencial para acessibilidade e navegação. | `String` ou `null` | Mouse press / tecla Enter |
+| `filtered-nodes` | Um array dos nós que são visíveis após a aplicação de um filtro de busca. Útil para depuração e para exibir o número de resultados filtrados. | `Array<Object>` | — |

@@ -109,15 +109,15 @@ Para demonstrar a `Composite Logic` do DssSkeleton, podemos simular o carregamen
 
 ### Estados a Expor
 
-| Estado | Descrição |
-| :--- | :--- |
-| **Carregando Avatar** | `DssSkeleton` com `variant='avatar'`, `width='--dss-spacing-32'`, `height='--dss-spacing-32'`, `animation='wave'`. Simula o carregamento de uma imagem de perfil. |
-| **Carregando Título** | `DssSkeleton` com `variant='heading'`, `width='--dss-spacing-64'`, `height='--dss-spacing-8'`, `animation='pulse'`. Simula o carregamento de um título principal. |
-| **Carregando Texto** | `DssSkeleton` com `variant='text'`, `lines=3`, `animation='wave'`. Simula o carregamento de um parágrafo de texto. |
-| **Carregando Card** | Composição de múltiplos `DssSkeleton` (avatar, título, texto) dentro de um contêiner com borda, simulando o carregamento de um card completo. |
-| **Estático (Sem Animação)** | `DssSkeleton` com `variant='rect'`, `width='--dss-spacing-48'`, `height='--dss-spacing-48'`, `animation='none'`. Demonstra o placeholder sem efeito visual de carregamento. |
-| **Com Borda** | `DssSkeleton` com `variant='rect'`, `width='--dss-spacing-48'`, `height='--dss-spacing-48'`, `bordered=true`. Demonstra o skeleton com contorno visual. |
-| **Raio Customizado** | `DssSkeleton` com `variant='rect'`, `width='--dss-spacing-48'`, `height='--dss-spacing-48'`, `radius='--dss-radius-full'`. Demonstra a aplicação de cantos arredondados. |
-| **Tema Hub** | `DssSkeleton` utilizando a cor de superfície `--dss-action-hub-surface`. |
-| **Tema Water** | `DssSkeleton` utilizando a cor de superfície `--dss-action-water-surface`. |
-| **Tema Waste** | `DssSkeleton` utilizando a cor de superfície `--dss-action-waste-surface`. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Carregando Avatar | `DssSkeleton` com `variant='avatar'`, `width='--dss-spacing-32'`, `height='--dss-spacing-32'`, `animation='wave'`. Simula o carregamento de uma imagem de perfil. | Funcional | Prop `loading=true` |
+| Carregando Título | `DssSkeleton` com `variant='heading'`, `width='--dss-spacing-64'`, `height='--dss-spacing-8'`, `animation='pulse'`. Simula o carregamento de um título principal. | Funcional | Prop `loading=true` |
+| Carregando Texto | `DssSkeleton` com `variant='text'`, `lines=3`, `animation='wave'`. Simula o carregamento de um parágrafo de texto. | Funcional | Prop `loading=true` |
+| Carregando Card | Composição de múltiplos `DssSkeleton` (avatar, título, texto) dentro de um contêiner com borda, simulando o carregamento de um card completo. | Funcional | Prop `loading=true` |
+| Estático (Sem Animação) | `DssSkeleton` com `variant='rect'`, `width='--dss-spacing-48'`, `height='--dss-spacing-48'`, `animation='none'`. Demonstra o placeholder sem efeito visual de carregamento. | Visual | — |
+| Com Borda | `DssSkeleton` com `variant='rect'`, `width='--dss-spacing-48'`, `height='--dss-spacing-48'`, `bordered=true`. Demonstra o skeleton com contorno visual. | Visual | — |
+| Raio Customizado | `DssSkeleton` com `variant='rect'`, `width='--dss-spacing-48'`, `height='--dss-spacing-48'`, `radius='--dss-radius-full'`. Demonstra a aplicação de cantos arredondados. | Visual | — |
+| Tema Hub | `DssSkeleton` utilizando a cor de superfície `--dss-action-hub-surface`. | Visual | Prop `brand="hub"` ou `[data-brand="hub"]` |
+| Tema Water | `DssSkeleton` utilizando a cor de superfície `--dss-action-water-surface`. | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
+| Tema Waste | `DssSkeleton` utilizando a cor de superfície `--dss-action-waste-surface`. | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |

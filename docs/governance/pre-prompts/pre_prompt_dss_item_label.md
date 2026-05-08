@@ -123,13 +123,13 @@ A lógica composta no playground deve demonstrar como o `DssItemLabel` interage 
 
 ### 8.3 Estados a Expor
 
-| Estado | Descrição | Propriedades CSS Impactadas | Tokens DSS Utilizados |
-|---|---|---|---|
-| **Padrão** | Estado inicial, sem props `header`, `caption` ou `overline` ativas. | `font-size`, `font-weight`, `color`, `line-height` | `--dss-text-body`, `--dss-font-size-md`, `--dss-font-weight-regular`, `--dss-line-height-md` |
-| **`header`** | Estilo de cabeçalho ativado. | `font-size`, `font-weight`, `color`, `line-height`, `padding-top` | `--dss-text-body`, `--dss-font-size-lg`, `--dss-font-weight-semibold`, `--dss-line-height-lg`, `--dss-spacing-2` |
-| **`caption`** | Estilo de legenda ativado. | `font-size`, `font-weight`, `color`, `line-height` | `--dss-text-subtle`, `--dss-font-size-sm`, `--dss-font-weight-regular`, `--dss-line-height-sm` |
-| **`overline`** | Estilo de overline ativado. | `font-size`, `font-weight`, `color`, `line-height`, `text-transform` | `--dss-text-subtle`, `--dss-font-size-xs`, `--dss-font-weight-medium`, `--dss-line-height-xs`, `uppercase` |
-| **Truncado** | Texto excedendo o número de linhas especificado. | `overflow`, `text-overflow`, `white-space` | N/A (propriedades CSS nativas) |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Estado inicial, sem props `header`, `caption` ou `overline` ativas. | Visual | `font-size`, `font-weight`, `color`, `line-height` |
+| `header` | Estilo de cabeçalho ativado. | Visual | `font-size`, `font-weight`, `color`, `line-height`, `padding-top` |
+| `caption` | Estilo de legenda ativado. | Visual | `font-size`, `font-weight`, `color`, `line-height` |
+| `overline` | Estilo de overline ativado. | Visual | `font-size`, `font-weight`, `color`, `line-height`, `text-transform` |
+| Truncado | Texto excedendo o número de linhas especificado. | Visual | `overflow`, `text-overflow`, `white-space` |
 
 ---
 

@@ -106,13 +106,13 @@ O `DssBanner` pode ser composto com outros componentes para criar padrões de UI
 
 ### Estados a Expor
 
-| Estado | Descrição | Props |
-| :--- | :--- | :--- |
-| Default | Banner padrão sem ícone e sem ações. | `variant="default"`, `text="Mensagem padrão"` |
-| Info | Banner informativo com ícone. | `variant="info"`, `icon="info"`, `text="Mensagem informativa"` |
-| Success | Banner de sucesso com ícone e botão de descarte. | `variant="success"`, `icon="check_circle"`, `dismissible=true`, `text="Operação concluída com sucesso"` |
-| Warning | Banner de aviso com ícone e link de ação. | `variant="warning"`, `icon="warning"`, `text="Atenção necessária"` |
-| Error | Banner de erro com ícone e múltiplas ações. | `variant="error"`, `icon="error"`, `text="Ocorreu um erro crítico"` |
-| Rounded | Banner com bordas arredondadas. | `rounded=true`, `variant="info"`, `text="Banner arredondado"` |
-| Small | Banner em tamanho pequeno. | `size="sm"`, `variant="info"`, `text="Banner pequeno"` |
-| Large | Banner em tamanho grande. | `size="lg"`, `variant="info"`, `text="Banner grande"` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Default | Banner padrão sem ícone e sem ações. | Visual | Padrão (renderização inicial) |
+| Info | Banner informativo com ícone. | Visual | — |
+| Success | Banner de sucesso com ícone e botão de descarte. | Funcional | Operação concluída |
+| Warning | Banner de aviso com ícone e link de ação. | Visual | — |
+| Error | Banner de erro com ícone e múltiplas ações. | Funcional | Prop `error=true` ou validação |
+| Rounded | Banner com bordas arredondadas. | Visual | Prop `round=true` |
+| Small | Banner em tamanho pequeno. | Visual | — |
+| Large | Banner em tamanho grande. | Visual | — |

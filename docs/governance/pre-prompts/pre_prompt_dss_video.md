@@ -141,12 +141,12 @@ O `DssVideo` pode ser composto por:
 
 ### Estados a Expor
 
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `isPlaying` | `boolean` | Indica se o vídeo está reproduzindo. |
-| `currentTime` | `number` | Tempo atual de reprodução do vídeo em segundos. |
-| `duration` | `number` | Duração total do vídeo em segundos. |
-| `isMuted` | `boolean` | Indica se o vídeo está mudo. |
-| `currentVolume` | `number` | Volume atual do vídeo (0 a 1). |
-| `hasError` | `boolean` | Indica se ocorreu um erro na reprodução do vídeo. |
-| `isLoading` | `boolean` | Indica se o vídeo está carregando. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `isPlaying` | Indica se o vídeo está reproduzindo. | `boolean` | — |
+| `currentTime` | Tempo atual de reprodução do vídeo em segundos. | `number` | — |
+| `duration` | Duração total do vídeo em segundos. | `number` | — |
+| `isMuted` | Indica se o vídeo está mudo. | `boolean` | — |
+| `currentVolume` | Volume atual do vídeo (0 a 1). | `number` | — |
+| `hasError` | Indica se ocorreu um erro na reprodução do vídeo. | `boolean` | Prop `error=true` ou validação |
+| `isLoading` | Indica se o vídeo está carregando. | `boolean` | Prop `loading=true` |

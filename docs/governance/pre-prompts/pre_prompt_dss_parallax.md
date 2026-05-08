@@ -81,11 +81,11 @@ O DssParallax deve encapsular um slot padrão (`<slot />`) para o conteúdo que 
 
 ### Estados a Expor
 
-| Estado | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `isReducedMotion` | Boolean | Indica se a preferência de movimento reduzido do usuário está ativa. |
-| `isIntersecting` | Boolean | Indica se o componente está visível na viewport (útil para otimizações de carregamento). |
-| `scrollPosition` | Number | Posição de rolagem atual do `scrollTarget` (para depuração ou lógica avançada de composição). |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `isReducedMotion` | Indica se a preferência de movimento reduzido do usuário está ativa. | Boolean | Media query `prefers-reduced-motion: reduce` |
+| `isIntersecting` | Indica se o componente está visível na viewport (útil para otimizações de carregamento). | Boolean | — |
+| `scrollPosition` | Posição de rolagem atual do `scrollTarget` (para depuração ou lógica avançada de composição). | Number | — |
 
 <!-- Expansão para atingir o tamanho mínimo de 150 linhas -->
 <!-- Detalhamento adicional sobre a implementação e uso do DssParallax -->

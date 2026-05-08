@@ -148,17 +148,17 @@ Exemplos de lógica de composição que podem ser demonstrados no playground, mo
 
 Os seguintes estados internos do DssMarkupTable devem ser expostos no playground para monitoramento e depuração, facilitando a compreensão do comportamento do componente.
 
-| Estado Interno      | Tipo    | Descrição                                                                |
-| :------------------ | :------ | :----------------------------------------------------------------------- |
-| `currentPage`       | Number  | A página atualmente exibida na tabela.                                   |
-| `currentSortBy`     | String  | O campo da coluna pela qual a tabela está atualmente ordenada.           |
-| `currentSortOrder`  | String  | A direção da ordenação atual (`asc` ou `desc`).                          |
-| `selectedRows`      | Array   | Um array contendo os objetos das linhas atualmente selecionadas.          |
-| `visibleColumns`    | Array   | Um array contendo os `field`s das colunas visíveis.                     |
-| `filteredData`      | Array   | O subconjunto de dados após a aplicação de filtros.                     |
-| `totalRowsNumber`   | Number  | O número total de linhas disponíveis (considerando paginação remota).    |
-| `isTableLoading`    | Boolean | Indica se a tabela está em processo de carregamento de dados.            |
-| `hasError`          | Boolean | Indica se ocorreu um erro durante o carregamento ou processamento de dados. |
-| `rowsPerPage`       | Number  | O número de linhas configurado para exibição por página.                 |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `currentPage` | A página atualmente exibida na tabela. | Number | — |
+| `currentSortBy` | O campo da coluna pela qual a tabela está atualmente ordenada. | String | — |
+| `currentSortOrder` | A direção da ordenação atual (`asc` ou `desc`). | String | — |
+| `selectedRows` | Um array contendo os objetos das linhas atualmente selecionadas. | Array | — |
+| `visibleColumns` | Um array contendo os `field`s das colunas visíveis. | Array | — |
+| `filteredData` | O subconjunto de dados após a aplicação de filtros. | Array | — |
+| `totalRowsNumber` | O número total de linhas disponíveis (considerando paginação remota). | Number | — |
+| `isTableLoading` | Indica se a tabela está em processo de carregamento de dados. | Boolean | Prop `loading=true` |
+| `hasError` | Indica se ocorreu um erro durante o carregamento ou processamento de dados. | Boolean | Prop `error=true` ou validação |
+| `rowsPerPage` | O número de linhas configurado para exibição por página. | Number | — |
 
 """

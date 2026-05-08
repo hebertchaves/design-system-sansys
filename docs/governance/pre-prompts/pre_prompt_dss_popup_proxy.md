@@ -143,13 +143,13 @@ O DssPopupProxy utilizará os tokens de design do DSS para espaçamento, raio de
 
 ### Estados a Expor (em tabela)
 
-| Estado | Descrição | Valores/Exemplos | Observações |
-| :----- | :-------- | :--------------- | :---------- |
-| `open` | Indica se o popup está visível ou oculto. | `true`, `false` | Controlado via `v-model:open`. |
-| `focused` | Indica se o popup ou seu conteúdo tem o foco do teclado. | `true`, `false` | Importante para acessibilidade. |
-| `position` | A posição calculada atual do popup na tela. | `{ x: 100, y: 250 }` | Coordenadas em pixels. |
-| `hasTarget` | Indica se um elemento `target` válido foi fornecido. | `true`, `false` | Afeta o comportamento de posicionamento. |
-| `isPersistent` | Indica se o popup está configurado para ser persistente. | `true`, `false` | Determina o comportamento de fechamento. |
-| `hasContent` | Indica se o slot padrão do popup contém algum conteúdo. | `true`, `false` | Pode ser usado para renderização condicional. |
-| `transitioning` | Indica se o popup está atualmente em uma transição de entrada ou saída. | `true`, `false` | Útil para evitar interações durante a animação. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `open` | Indica se o popup está visível ou oculto. | Visual | `true`, `false` |
+| `focused` | Indica se o popup ou seu conteúdo tem o foco do teclado. | Visual | `true`, `false` |
+| `position` | A posição calculada atual do popup na tela. | Visual | `{ x: 100, y: 250 }` |
+| `hasTarget` | Indica se um elemento `target` válido foi fornecido. | Visual | `true`, `false` |
+| `isPersistent` | Indica se o popup está configurado para ser persistente. | Visual | `true`, `false` |
+| `hasContent` | Indica se o slot padrão do popup contém algum conteúdo. | Visual | `true`, `false` |
+| `transitioning` | Indica se o popup está atualmente em uma transição de entrada ou saída. | Visual | `true`, `false` |
 """

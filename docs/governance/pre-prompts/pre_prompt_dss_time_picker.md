@@ -55,14 +55,14 @@
   - `format24h` (Toggle)
 - **Composite Logic:** Verificar a precedência visual e funcional quando `disabled` e `error` estão ativos simultaneamente (o estado disabled deve prevalecer). Testar a formatação automática ao digitar.
 - **Estados a Expor:**
-  | Estado | Descrição |
-  | --- | --- |
-  | `default` | Estado inicial, aguardando interação do usuário. |
-  | `hover` | Feedback visual ao posicionar o cursor sobre o campo. |
-  | `focus` | Destaque visual (anel de foco) quando o campo está ativo. |
-  | `disabled` | Opacidade reduzida, interações bloqueadas e remoção do fluxo de tabulação. |
-  | `error` | Estilização de erro (bordas/ícones vermelhos) e exibição da mensagem de erro associada. |
-  | `readonly` | Campo visível e focável, mas não editável. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `default` | Estado inicial, aguardando interação do usuário. | Visual | Padrão (renderização inicial) |
+| `hover` | Feedback visual ao posicionar o cursor sobre o campo. | Visual | Mouse over |
+| `focus` | Destaque visual (anel de foco) quando o campo está ativo. | Visual | Navegação por teclado (Tab) |
+| `disabled` | Opacidade reduzida, interações bloqueadas e remoção do fluxo de tabulação. | Visual | Prop `disable=true` |
+| `error` | Estilização de erro (bordas/ícones vermelhos) e exibição da mensagem de erro associada. | Funcional | Prop `error=true` ou validação |
+| `readonly` | Campo visível e focável, mas não editável. | Visual | Prop `readonly=true` |
 
 ## 9. DETALHAMENTO DE IMPLEMENTAÇÃO E EXPANSÃO
 Para garantir que o componente seja robusto e atenda a todos os requisitos de design e funcionalidade, os seguintes detalhes adicionais devem ser considerados durante a implementação:

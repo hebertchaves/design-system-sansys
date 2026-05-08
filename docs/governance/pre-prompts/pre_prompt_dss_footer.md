@@ -209,9 +209,9 @@ O playground deve demonstrar a interação do `DssFooter` com seu conteúdo inte
 
 ### 8.3. Estados a Expor
 
-| Estado | Descrição |
-| :--- | :--- |
-| `default` | Footer padrão, sem elevação ou borda, com fundo `--dss-surface-base`. |
-| `elevated` | Footer com sombra projetada para cima (`--dss-elevation-2` / `--dss-shadow-md` invertida). |
-| `bordered` | Footer com borda superior sutil (`--dss-border-width-sm` solid `--dss-border-subtle`). |
-| `reveal` | Footer que se esconde ao rolar para baixo e reaparece ao rolar para cima. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `default` | Footer padrão, sem elevação ou borda, com fundo `--dss-surface-base`. | Visual | Padrão (renderização inicial) |
+| `elevated` | Footer com sombra projetada para cima (`--dss-elevation-2` / `--dss-shadow-md` invertida). | Visual | — |
+| `bordered` | Footer com borda superior sutil (`--dss-border-width-sm` solid `--dss-border-subtle`). | Visual | — |
+| `reveal` | Footer que se esconde ao rolar para baixo e reaparece ao rolar para cima. | Visual | — |

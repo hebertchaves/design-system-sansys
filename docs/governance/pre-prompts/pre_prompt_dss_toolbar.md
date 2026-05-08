@@ -123,12 +123,12 @@ A `DssToolbar` deve reagir dinamicamente à prop `brand`, alterando sua cor de f
 
 ### 8.3. Estados a Expor
 
-| Estado | Descrição |
-|---|---|
-| `default` | Estado inicial, sem `brand` ou `inset` aplicados. |
-| `branded-hub` | `brand="hub"` aplicada. |
-| `branded-water` | `brand="water"` aplicada. |
-| `branded-waste` | `brand="waste"` aplicada. |
-| `inset-active` | `inset="true"` aplicada. |
-| `dense-active` | `dense="true"` aplicada. |
-| `branded-hub-inset-dense` | Combinação de `brand="hub"`, `inset="true"` e `dense="true"`. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `default` | Estado inicial, sem `brand` ou `inset` aplicados. | Visual | Padrão (renderização inicial) |
+| `branded-hub` | `brand="hub"` aplicada. | Visual | Prop `brand="hub"` ou `[data-brand="hub"]` |
+| `branded-water` | `brand="water"` aplicada. | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
+| `branded-waste` | `brand="waste"` aplicada. | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |
+| `inset-active` | `inset="true"` aplicada. | Visual | Mouse press / tecla Enter |
+| `dense-active` | `dense="true"` aplicada. | Visual | Mouse press / tecla Enter |
+| `branded-hub-inset-dense` | Combinação de `brand="hub"`, `inset="true"` e `dense="true"`. | Visual | Prop `brand="hub"` ou `[data-brand="hub"]` |

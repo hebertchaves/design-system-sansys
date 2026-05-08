@@ -122,24 +122,24 @@ O componente deve ser um wrapper direto do `<q-header>`. O slot default é desti
 
 ### Delegação de Estados
 
-| Estado | Pertence a |
-|--------|-----------|
-| `hover` | Filhos (DssButton, DssIcon) |
-| `focus` | Filhos (DssButton, DssIcon) |
-| `active` | Filhos (DssButton, DssIcon) |
-| `disabled` | Filhos ou conteúdo da página |
-| `loading` | Não aplicável ao container |
-| `error` | Não aplicável ao container |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `hover` | `hover` | Visual | Mouse over |
+| `focus` | `focus` | Visual | Navegação por teclado (Tab) |
+| `active` | `active` | Visual | Mouse press / tecla Enter |
+| `disabled` | `disabled` | Visual | Prop `disable=true` |
+| `loading` | `loading` | Funcional | Prop `loading=true` |
+| `error` | `error` | Funcional | Prop `error=true` ou validação |
 
 ### Estados do DssHeader
 
-| Estado | Implementado | Descrição |
-|--------|-------------|-----------|
-| `elevated` | ✅ | Box-shadow via `--dss-elevation-2` |
-| `bordered` | ✅ | Border-bottom via `--dss-border-width-thin` |
-| `dark mode` | ✅ | Via `[data-theme="dark"]` |
-| `forced-colors` | ✅ | System keywords (EXC-03) |
-| `print` | ✅ | Hardcoded (EXC-04) |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `elevated` | Box-shadow via `--dss-elevation-2` | Visual | — |
+| `bordered` | Border-bottom via `--dss-border-width-thin` | Visual | — |
+| `dark mode` | Via `[data-theme="dark"]` | Visual | `[data-theme="dark"]` ativo |
+| `forced-colors` | System keywords (EXC-03) | Visual | Media query `forced-colors: active` |
+| `print` | Hardcoded (EXC-04) | Visual | Media query `print` |
 
 ---
 
@@ -182,13 +182,13 @@ O DssHeader orquestra a renderização do DssToolbar. A lógica de composição 
 
 ### Estados a Expor
 
-| Estado | Descrição |
-|--------|-----------|
-| `elevated` | Exibe o header com sombra de elevação |
-| `bordered` | Exibe o header com borda inferior |
-| `brand="hub"` | Exibe o header com toolbar na cor hub |
-| `brand="water"` | Exibe o header com toolbar na cor water |
-| `brand="waste"` | Exibe o header com toolbar na cor waste |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `elevated` | Exibe o header com sombra de elevação | Visual | — |
+| `bordered` | Exibe o header com borda inferior | Visual | — |
+| `brand="hub"` | Exibe o header com toolbar na cor hub | Visual | Prop `brand="hub"` ou `[data-brand="hub"]` |
+| `brand="water"` | Exibe o header com toolbar na cor water | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
+| `brand="waste"` | Exibe o header com toolbar na cor waste | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |
 
 ---
 

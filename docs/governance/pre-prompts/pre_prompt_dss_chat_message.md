@@ -152,13 +152,13 @@ Um `DssChatMessage` é uma composição flexível de vários componentes menores
 
 **Estados a Expor:**
 
-| Estado               | Descrição                                                                 |
-| :------------------- | :------------------------------------------------------------------------ |
-| `Enviada`            | Mensagem enviada pelo usuário atual (`isMine: true`, `status: 'sent'`).   |
-| `Recebida`           | Mensagem recebida de outro usuário (`isMine: false`, `status: 'delivered'`). |
-| `Lida`               | Indicador visual de que a mensagem foi lida pelo destinatário (`status: 'read'`). |
-| `Com Erro`           | Mensagem que falhou ao ser enviada (`isMine: true`, `status: 'error'`).   |
-| `Carregando`         | Mensagem em processo de envio (`isMine: true`, `status: 'sending'`).     |
-| `Selecionada`        | Mensagem que está em um estado de seleção (`selecionado: true`).          |
-| `Com Avatar e Nome`  | Mensagem exibindo o avatar e nome do remetente.                           |
-| `Com Ações`          | Mensagem com botões de ação contextuais (`hasActions: true`).             |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `Enviada` | Mensagem enviada pelo usuário atual (`isMine: true`, `status: 'sent'`). | Visual | — |
+| `Recebida` | Mensagem recebida de outro usuário (`isMine: false`, `status: 'delivered'`). | Visual | — |
+| `Lida` | Indicador visual de que a mensagem foi lida pelo destinatário (`status: 'read'`). | Visual | — |
+| `Com Erro` | Mensagem que falhou ao ser enviada (`isMine: true`, `status: 'error'`). | Funcional | Prop `error=true` ou validação |
+| `Carregando` | Mensagem em processo de envio (`isMine: true`, `status: 'sending'`). | Funcional | Prop `loading=true` |
+| `Selecionada` | Mensagem que está em um estado de seleção (`selecionado: true`). | Visual | — |
+| `Com Avatar e Nome` | Mensagem exibindo o avatar e nome do remetente. | Visual | — |
+| `Com Ações` | Mensagem com botões de ação contextuais (`hasActions: true`). | Visual | — |

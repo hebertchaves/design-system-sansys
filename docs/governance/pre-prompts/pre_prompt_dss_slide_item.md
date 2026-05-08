@@ -131,13 +131,13 @@ A lógica de composição do DssSlideItem no playground deve demonstrar cenário
 
 **Estados a Expor:**
 
-| Estado | Descrição | Props Relacionadas |
-| :--- | :--- | :--- |
-| Padrão | Item com padding e alinhamento centralizado. | `padding="true"`, `align="center"`, `verticalAlign="middle"` |
-| Sem Padding | Item sem espaçamento interno, ideal para imagens full-bleed. | `padding="false"` |
-| Alinhado à Esquerda | Conteúdo alinhado à esquerda e ao topo. | `align="left"`, `verticalAlign="top"` |
-| Dark Mode | Item adaptado para contextos escuros. | `dark="true"` |
-| Altura Total | Item ocupando 100% da altura disponível. | `fullHeight="true"` |
-| Brand Hub | Item com destaque na cor da marca principal (hub). | `brandColor="hub"` |
-| Brand Water | Item com destaque na cor secundária (water). | `brandColor="water"` |
-| Brand Waste | Item com destaque na cor de alerta (waste). | `brandColor="waste"` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão | Item com padding e alinhamento centralizado. | Visual | Padrão (renderização inicial) |
+| Sem Padding | Item sem espaçamento interno, ideal para imagens full-bleed. | Visual | — |
+| Alinhado à Esquerda | Conteúdo alinhado à esquerda e ao topo. | Visual | — |
+| Dark Mode | Item adaptado para contextos escuros. | Visual | `[data-theme="dark"]` ativo |
+| Altura Total | Item ocupando 100% da altura disponível. | Visual | — |
+| Brand Hub | Item com destaque na cor da marca principal (hub). | Visual | Prop `brand="hub"` ou `[data-brand="hub"]` |
+| Brand Water | Item com destaque na cor secundária (water). | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
+| Brand Waste | Item com destaque na cor de alerta (waste). | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |

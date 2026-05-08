@@ -186,11 +186,11 @@ const onStop = () => {
 
 A tabela abaixo lista os estados predefinidos que devem ser expostos no playground para facilitar a visualização das diferentes configurações do componente.
 
-| Estado | Descrição | Configuração de Props |
-| :--- | :--- | :--- |
-| Padrão (Topo) | Barra de carregamento na posição superior com cor hub. | `position="top"`, `color="hub"`, `size="2px"` |
-| Inferior (Water) | Barra de carregamento na posição inferior com cor water. | `position="bottom"`, `color="water"`, `size="2px"` |
-| Espessa (Waste) | Barra de carregamento mais espessa com cor waste. | `position="top"`, `color="waste"`, `size="4px"` |
-| Lateral Esquerda | Barra de carregamento na lateral esquerda. | `position="left"`, `color="hub"`, `size="2px"` |
-| Lateral Direita | Barra de carregamento na lateral direita. | `position="right"`, `color="hub"`, `size="2px"` |
-| Reversa | Barra de carregamento com animação invertida. | `position="top"`, `color="hub"`, `reverse="true"` |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| Padrão (Topo) | Barra de carregamento na posição superior com cor hub. | Visual | `position="top"`, `color="hub"`, `size="2px"` |
+| Inferior (Water) | Barra de carregamento na posição inferior com cor water. | Visual | `position="bottom"`, `color="water"`, `size="2px"` |
+| Espessa (Waste) | Barra de carregamento mais espessa com cor waste. | Visual | `position="top"`, `color="waste"`, `size="4px"` |
+| Lateral Esquerda | Barra de carregamento na lateral esquerda. | Visual | `position="left"`, `color="hub"`, `size="2px"` |
+| Lateral Direita | Barra de carregamento na lateral direita. | Visual | `position="right"`, `color="hub"`, `size="2px"` |
+| Reversa | Barra de carregamento com animação invertida. | Visual | `position="top"`, `color="hub"`, `reverse="true"` |

@@ -160,25 +160,25 @@ Para foco, utilizar `outline: 2px solid white`.
 
 ### Delegação de Estados
 
-| Estado | Pertence a |
-|--------|-----------|
-| `hover` | Filhos (DssItem, DssButton) |
-| `focus` | QMenu nativo + filhos |
-| `active` | Filhos |
-| `disabled` | Filhos ou elemento trigger |
-| `loading` | Não aplicável ao container |
-| `error` | Não aplicável ao container |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `hover` | `hover` | Visual | Mouse over |
+| `focus` | `focus` | Visual | Navegação por teclado (Tab) |
+| `active` | `active` | Visual | Mouse press / tecla Enter |
+| `disabled` | `disabled` | Visual | Prop `disable=true` |
+| `loading` | `loading` | Funcional | Prop `loading=true` |
+| `error` | `error` | Funcional | Prop `error=true` ou validação |
 
 ### Estados do DssMenu
 
-| Estado | Implementado | Descrição |
-|--------|-------------|-----------|
-| `visible` | ✅ | Via v-model / QMenu nativo |
-| `hidden` | ✅ | Via v-model / QMenu nativo |
-| `dark mode` | ✅ | Via `[data-theme="dark"]` com borda |
-| `prefers-contrast` | ✅ | Borda reforçada |
-| `forced-colors` | ✅ | System keywords (EXC-02) |
-| `print` | ✅ | `display: none` (EXC-03) |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `visible` | Via v-model / QMenu nativo | Visual | — |
+| `hidden` | Via v-model / QMenu nativo | Visual | — |
+| `dark mode` | Via `[data-theme="dark"]` com borda | Visual | `[data-theme="dark"]` ativo |
+| `prefers-contrast` | Borda reforçada | Visual | Media query `prefers-contrast: more` |
+| `forced-colors` | System keywords (EXC-02) | Visual | Media query `forced-colors: active` |
+| `print` | `display: none` (EXC-03) | Visual | Media query `print` |
 
 ---
 
@@ -216,12 +216,12 @@ O DssMenu atua como um container que orquestra a exibição de itens de navegaç
 
 ### Estados a Expor
 
-| Estado | Descrição |
-|--------|-----------|
-| `visible` | Menu está visível na tela. |
-| `hidden` | Menu está oculto. |
-| `dark mode` | Menu renderizado com tema escuro, aplicando bordas sutis. |
-| `prefers-contrast` | Menu renderizado com bordas reforçadas para alto contraste. |
+| Estado | Descrição | Tipo | Trigger |
+|--------|-----------|------|----------|
+| `visible` | Menu está visível na tela. | Visual | — |
+| `hidden` | Menu está oculto. | Visual | — |
+| `dark mode` | Menu renderizado com tema escuro, aplicando bordas sutis. | Visual | `[data-theme="dark"]` ativo |
+| `prefers-contrast` | Menu renderizado com bordas reforçadas para alto contraste. | Visual | Media query `prefers-contrast: more` |
 
 ---
 

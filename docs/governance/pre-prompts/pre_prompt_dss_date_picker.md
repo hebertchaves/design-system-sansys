@@ -49,7 +49,7 @@ A estilização do DssDatePicker deve ser estritamente baseada nos tokens oficia
 | Célula de Data | `padding` | `--dss-spacing-2` |
 | Célula de Data (Hover) | `background-color` | `--dss-surface-hover` |
 | Célula de Data (Selecionada) | `background-color` | `--dss-action-hub-default` |
-| Célula de Data (Selecionada) | `color` | `--dss-text-on-primary` |
+| Célula de Data (Selecionada) | `color` | `--dss-text-on-hub` |
 | Célula de Data (Desabilitada) | `color` | `--dss-text-disabled` |
 | Célula Selecionada | `border-radius` | `--dss-radius-full` |
 | Anel de Foco | `outline` | `2px solid white` |
