@@ -6,6 +6,9 @@
 O `DssPagination` é um componente interativo, portanto, sua Golden Reference é o `DssChip`.
 
 ### Golden Context
+O baseline específico de auditoria para o `DssPagination` é o `DssBtnGroup`. Ambos são containers de botões coordenados interativos: `DssBtnGroup` agrupa `DssButton` em linha, enquanto `DssPagination` gerencia uma série de botões de página numerados. A decisão de delegação de estados (hover, focus, active) para os botões internos, o padrão de `inline-flex` no container, e a abordagem de theming via CSS custom properties seguem o mesmo modelo arquitetural.
+
+### Contexto do Componente
 O componente `DssPagination` é essencial para a navegação eficiente em grandes conjuntos de dados, permitindo que os usuários percorram o conteúdo dividido em páginas. No contexto de um Design System baseado em Vue.js/Quasar, ele padroniza a experiência de paginação, garantindo consistência visual e funcional em toda a aplicação. Ele abstrai a complexidade da lógica de paginação e da renderização de elementos de navegação, oferecendo uma interface simples e configurável para desenvolvedores.
 
 ### Justificativa
@@ -14,8 +17,10 @@ A paginação é um padrão de UI fundamental para a usabilidade de aplicações
 ## 2. RISCOS ARQUITETURAIS E GATES
 
 ### Riscos Arquiteturais
+
+- **⚠️ CALCANHAR DE AQUILES — Motor QPagination sem slot API (CRÍTICO):** O `QPagination` do Quasar não fornece API de slot para botões individuais de página. Isso torna impossível substituir os botões internos por `DssButton`, exigindo obrigatoriamente uma exceção ao Gate de Composição v2.4 (EXC-01) no `dss.meta.json`. Todo o theming visual deve ser feito via sobreescrita de seletores CSS internos estáveis (EXC-Gate-01) e da propriedade CSS `--q-color-primary`. Anti-pattern: tentar reconstruir a lógica de paginação manualmente fora do QPagination. Padrão correto: usar QPagination como motor e aplicar theming via `--q-color-primary` + seletores `.q-pagination .q-btn`.
 - **Performance**: Renderização de um grande número de botões de página pode impactar a performance em cenários extremos, exigindo otimizações ou estratégias de exibição condensada.
-- **Acessibilidade**: Falha em implementar corretamente atributos ARIA e navegação por teclado pode excluir usuários com deficiência.
+- **Acessibilidade**: Falha em implementar corretamente atributos ARIA (`role="navigation"`, `aria-label`, `aria-current="page"`) e navegação por teclado pode excluir usuários com deficiência. Atenção: QPagination usa `aria-current="page"` (não `"true"`) no botão ativo.
 - **Flexibilidade**: Um design excessivamente rígido pode limitar a capacidade de adaptação a diferentes requisitos de paginação (ex: paginação infinita, carregamento sob demanda).
 - **Sincronização de Estado**: Problemas na sincronização do estado da página atual entre o componente e o contexto da aplicação (Vuex, Pinia, etc.).
 
