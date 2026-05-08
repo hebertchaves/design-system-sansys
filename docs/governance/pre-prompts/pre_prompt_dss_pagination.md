@@ -12,7 +12,7 @@
 - **Componente Quasar Base:** `QPagination`
 - **Dependências Diretas:** Nenhuma (Usa o motor interno do Quasar)
 
-**Justificativa da Fase 2:** O `DssPagination` é essencial para a navegação eficiente em grandes conjuntos de dados, permitindo que os usuários percorram o conteúdo dividido em páginas. No contexto do DSS, ele padroniza a experiência de paginação, garantindo consistência visual, acessibilidade e suporte ao sistema de marcas (hub, water, waste).
+**Justificativa da Fase 2:** O `DssPagination` é um componente fundamental para a **navegação eficiente e intuitiva** em aplicações que lidam com grandes volumes de dados, como tabelas, listas de resultados de busca e feeds de conteúdo. Ele permite que os usuários **percorram o conteúdo dividido em páginas de forma controlada**, melhorando a usabilidade e a performance da interface. No contexto do Design System Sansys (DSS), o `DssPagination` não apenas padroniza a experiência de paginação, mas também **garante consistência visual rigorosa**, **acessibilidade robusta** (seguindo diretrizes WCAG) e **suporte nativo ao sistema de marcas** (`hub`, `water`, `waste`), assegurando que a identidade visual da Sansys seja mantida em todos os pontos de interação. Sua implementação como um wrapper do `QPagination` do Quasar, com as devidas adaptações, otimiza o tempo de desenvolvimento e mantém a compatibilidade com o ecossistema existente, ao mesmo tempo em que adere aos padrões de governança do DSS.
 
 ## 2. Riscos Arquiteturais e Gates de Responsabilidade
 
@@ -20,7 +20,7 @@
 
 O `QPagination` do Quasar não fornece API de slot para botões individuais de página. Isso torna impossível substituir os botões internos por `DssButton`. 
 
-**Mitigação:** O `DssPagination` deve atuar como um wrapper que utiliza o `QPagination` como motor de renderização e lógica. Todo o theming visual deve ser feito via sobreescrita de seletores CSS internos estáveis e da propriedade CSS `--q-color-primary`. Esta é uma exceção formal ao Gate de Composição v2.4 (EXC-01).
+**Mitigação:** O `DssPagination` deve atuar como um wrapper que utiliza o `QPagination` como motor de renderização e lógica. Todo o theming visual deve ser feito via sobreescrita de seletores CSS internos estáveis e da propriedade CSS `--q-color-hub`. Esta é uma exceção formal ao Gate de Composição v2.4 (EXC-01).
 
 ### 2.2. Gate de Responsabilidade v2.4
 
@@ -40,27 +40,29 @@ O componente deve ser um wrapper direto do `<q-pagination>`. Não há slots expo
 
 ### 3.1. Props Expostas (Permitidas)
 
+Esta seção detalha as propriedades (`props`) que o componente `DssPagination` expõe para configuração externa, permitindo aos desenvolvedores controlar seu comportamento e aparência de acordo com as necessidades da aplicação, sempre em conformidade com as diretrizes do DSS.
+
 **Controle de Estado:**
-- `modelValue` / `v-model` (Number) — Página atual selecionada (Obrigatório).
-- `max` (Number) — Número total de páginas (Obrigatório).
-- `maxPages` (Number) — Número máximo de botões de página visíveis simultaneamente (Padrão: 5).
+- `modelValue` / `v-model` (Number) — **Página atual selecionada.** Esta prop é **obrigatória** e bidirecional, utilizada para controlar e refletir a página atualmente ativa na paginação. Seu valor deve ser um número inteiro positivo que corresponde ao índice da página.
+- `max` (Number) — **Número total de páginas disponíveis.** Esta prop é **obrigatória** e define o limite superior para a navegação. O componente calculará e exibirá os botões de página com base neste valor.
+- `maxPages` (Number) — **Número máximo de botões de página visíveis simultaneamente.** Define a "janela" de páginas exibidas no componente. Se o número total de páginas (`max`) exceder `maxPages`, reticências (`ellipses`) serão exibidas para indicar páginas ocultas. O valor padrão é `5`.
 
 **Comportamento e Navegação:**
-- `disable` (Boolean) — Desabilita toda a paginação (visual + interação).
-- `readonly` (Boolean) — Bloqueia interação sem alterar aparência visual.
-- `ellipses` (Boolean) — Exibe reticências para páginas fora da janela visível (Padrão: true).
-- `boundaryLinks` (Boolean) — Exibe botões para ir à primeira e à última página.
-- `directionLinks` (Boolean) — Exibe botões para ir à página anterior e à próxima (Padrão: true).
+- `disable` (Boolean) — Quando `true`, **desabilita completamente a paginação**, tornando-a não interativa e aplicando estilos visuais que indicam seu estado desativado (e.g., opacidade reduzida). Impede qualquer interação do usuário com os botões de página.
+- `readonly` (Boolean) — Quando `true`, **bloqueia a interação do usuário** com a paginação, mas **mantém sua aparência visual normal**, sem os estilos de desabilitação. Útil para cenários onde a paginação deve ser exibida, mas não alterável pelo usuário.
+- `ellipses` (Boolean) — Quando `true` (padrão), **exibe indicadores de reticências** (`...`) para representar blocos de páginas que estão fora da janela de `maxPages` visível. Melhora a clareza em paginações com muitas páginas.
+- `boundaryLinks` (Boolean) — Quando `true`, **exibe botões dedicados para navegar diretamente para a primeira e a última página** do conjunto. Facilita a navegação rápida em grandes conjuntos de dados.
+- `directionLinks` (Boolean) — Quando `true` (padrão), **exibe botões para navegar para a página anterior e a próxima**. Essencial para a navegação sequencial.
 
 **Aparência e Theming:**
-- `size` (String) — Tamanho dos botões (`xs`, `sm`, `md`, `lg`). Padrão: `md`.
-- `flat` (Boolean) — Variante sem fundo preenchido no botão ativo.
-- `outline` (Boolean) — Variante com borda no botão ativo.
-- `round` (Boolean) — Variante com botões circulares.
-- `brand` (String) — Contexto de marca (`hub`, `water`, `waste`).
+- `size` (String) — **Define o tamanho visual dos botões de paginação.** Aceita os valores `xs`, `sm`, `md`, `lg`. O tamanho padrão é `md`. Esta prop influencia o espaçamento, altura e tipografia dos botões.
+- `flat` (Boolean) — Quando `true`, aplica uma **variante visual "plana"** ao botão ativo, removendo o fundo preenchido e destacando-o apenas pela cor do texto e, opcionalmente, uma borda sutil. Ideal para interfaces mais minimalistas.
+- `outline` (Boolean) — Quando `true`, aplica uma **variante visual "contornada"** ao botão ativo, exibindo-o com uma borda colorida e fundo transparente. Complementa a variante `flat` ou pode ser usada independentemente.
+- `round` (Boolean) — Quando `true`, renderiza os **botões de paginação com formato circular**, em vez do padrão retangular. Aplica `--dss-radius-full` para um visual mais suave.
+- `brand` (String) — **Define o contexto de marca para a paginação.** Aceita os valores `hub`, `water`, `waste`. Esta prop é crucial para aplicar as cores e estilos específicos da marca Sansys ao componente, garantindo a coesão visual com o restante do sistema.
 
 **Acessibilidade:**
-- `ariaLabel` (String) — Rótulo acessível para o container raiz (Padrão: 'Navegação por páginas').
+- `ariaLabel` (String) — **Fornece um rótulo acessível para o container raiz da paginação.** Este rótulo é lido por tecnologias assistivas, como leitores de tela, para descrever o propósito do componente. O valor padrão é `'Navegação por páginas'`, mas pode ser customizado para contextos específicos.
 
 ### 3.2. Props Bloqueadas (Governança DSS)
 
@@ -69,7 +71,7 @@ O componente deve ser um wrapper direto do `<q-pagination>`. Não há slots expo
 "propsBlockedJustification": {
   "color": "Cores são governadas pela prop 'brand' e tokens DSS.",
   "active-color": "Cor ativa é derivada da prop 'brand'.",
-  "text-color": "Cor do texto é governada por tokens DSS (--dss-text-primary).",
+  "text-color": "Cor do texto é governada por tokens DSS (--dss-text-hub).",
   "active-text-color": "Cor do texto ativo é governada por tokens DSS (--dss-text-on-primary).",
   "dark": "Modo escuro governado globalmente pelo DSS via [data-theme='dark'].",
   "icon-*": "Ícones de navegação devem ser padronizados pelo DSS e não customizáveis por instância."
@@ -81,9 +83,9 @@ O componente deve ser um wrapper direto do `<q-pagination>`. Não há slots expo
 O `DssPagination` deve utilizar exclusivamente tokens do DSS para estilização.
 
 ### 4.1. Cores e Theming
-- **Botão Ativo (Fundo):** `--dss-action-primary` (injetado via `--q-color-primary`).
+- **Botão Ativo (Fundo):** `--dss-action-hub` (injetado via `--q-color-hub`).
 - **Botão Ativo (Texto):** `--dss-text-on-primary`.
-- **Botões Inativos (Texto):** `--dss-text-primary`.
+- **Botões Inativos (Texto):** `--dss-text-hub`.
 - **Marcas (Brands):** `--dss-hub-primary`, `--dss-water-primary`, `--dss-waste-primary` (aplicados dinamicamente baseados na prop `brand`).
 
 ### 4.2. Espaçamento e Dimensões
@@ -104,7 +106,7 @@ O `DssPagination` deve utilizar exclusivamente tokens do DSS para estilização.
 
 - **Role:** O container raiz deve receber `role="navigation"` e o `aria-label` configurado.
 - **Página Ativa:** O QPagination gerencia internamente `aria-current="page"` no botão ativo. O DSS deve preservar este comportamento.
-- **Foco:** O foco deve ser visível via `@include mixins.dss-focus-ring` em `:focus-visible`.
+- **Foco:** O foco deve ser visível via `outline: 2px solid white` em `:focus-visible`.
 - **Navegação por Teclado:** Suporte a `Tab` para navegar entre botões e `Enter`/`Space` para ativar.
 - **Estado Disabled:** Aplica `pointer-events: none` e `opacity: var(--dss-opacity-disabled)`.
 
@@ -127,7 +129,7 @@ O arquivo `DssPagination.example.vue` deve cobrir:
 
 ### EXC-Gate-01: Seletores CSS Internos
 - **Regra Violada:** Gate de Composição v2.4 (Uso de seletores internos do Quasar).
-- **Justificativa:** Para aplicar os tokens DSS, é necessário sobrescrever seletores como `.q-pagination__middle` e `.q-pagination .q-btn`. A propriedade `--q-color-primary` é usada para conectar os tokens de marca. O uso de `background-color: transparent !important` é necessário na variante flat/outline para sobrescrever o `!important` nativo do Quasar.
+- **Justificativa:** Para aplicar os tokens DSS, é necessário sobrescrever seletores como `.q-pagination__middle` e `.q-pagination .q-btn`. A propriedade `--q-color-hub` é usada para conectar os tokens de marca. O uso de `background-color: transparent !important` é necessário na variante flat/outline para sobrescrever o `!important` nativo do Quasar.
 
 ## 8. Superfície de Playground (independente da API)
 

@@ -3,10 +3,11 @@
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
 ### Golden Reference
-DssBadge
+DssBadge (para componentes não-interativos) e DssChip (para interativos).
 
 ### Golden Context
 O DssResponsive é um componente fundamental para garantir a adaptabilidade da interface do usuário em diferentes tamanhos de tela e dispositivos. Ele atua como um wrapper ou utilitário que permite a exibição condicional de conteúdo ou a aplicação de estilos específicos com base nos breakpoints definidos pelo Design System. Seu objetivo é simplificar a criação de layouts responsivos, abstraindo a complexidade das media queries e fornecendo uma API consistente para os desenvolvedores.
+A necessidade de uma experiência de usuário fluida e consistente em múltiplos dispositivos é primordial. O DssResponsive centraliza a lógica de responsividade, promovendo a reutilização de código, a manutenção simplificada e a aderência aos padrões de design estabelecidos, evitando implementações ad-hoc de responsividade que poderiam levar a inconsistências visuais e técnicas.
 
 ### Justificativa
 A necessidade de uma experiência de usuário fluida e consistente em múltiplos dispositivos é primordial. O DssResponsive centraliza a lógica de responsividade, promovendo a reutilização de código, a manutenção simplificada e a aderência aos padrões de design estabelecidos, evitando implementações ad-hoc de responsividade que poderiam levar a inconsistências visuais e técnicas.
@@ -47,6 +48,14 @@ O DssResponsive não deve introduzir estilos visuais diretos que utilizem tokens
 </DssResponsive>
 ```
 
+Tokens de cor de marca como `--dss-action-hub` e `--dss-action-hub-surface` devem ser usados em vez de `hub`.
+Tokens de cor de marca como `--dss-action-water` e `--dss-action-water-surface` devem ser usados em vez de `water`.
+Tokens de cor de marca como `--dss-action-waste` e `--dss-action-waste-surface` devem ser usados em vez de `waste`.
+
+Tokens de espaçamento como `--dss-spacing-4` devem ser usados em vez de `--dss-spacing-4`.
+Tokens de texto como `--dss-text-subtle` devem ser usados em vez de `--dss-text-subtle`.
+Tokens de foco como `outline: 2px solid white` devem ser usados em vez de `outline: 2px solid white`.
+
 ## 5. ACESSIBILIDADE E ESTADOS
 
 ### Acessibilidade
@@ -83,7 +92,7 @@ O DssResponsive é um componente de composição, projetado para envolver outros
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 
 *   **`breakpoint` (Array<String> ou String):** Define em quais breakpoints o conteúdo do slot padrão deve ser exibido. Ex: `['sm', 'md']` ou `'lg'`. Se vazio, exibe em todos.
 *   **`hideOn` (Array<String> ou String):** Define em quais breakpoints o conteúdo deve ser ocultado. Ex: `['xs', 'sm']`.
@@ -95,15 +104,15 @@ O DssResponsive é um componente de composição, projetado para envolver outros
 ```vue
 <template>
   <DssResponsive :showOn="['md', 'lg', 'xl']">
-    <DssButton label="Ação Desktop" />
+    <DssButton label="Ação Desktop" color="hub" />
   </DssResponsive>
 
   <DssResponsive :showOn="['xs', 'sm']">
-    <DssFab icon="add" />
+    <DssFab icon="add" color="water" />
   </DssResponsive>
 
   <DssResponsive :hideOn="['sm']">
-    <DssText>Este texto não aparece em telas pequenas.</DssText>
+    <DssText color="subtle">Este texto não aparece em telas pequenas.</DssText>
   </DssResponsive>
 
   <DssResponsive v-slot="{ currentBreakpoint, isMobile }" :breakpoint="['sm', 'md']">
@@ -123,9 +132,25 @@ import { DssButton, DssFab, DssText, DssCard, DssCardSection } from '@dss/compon
 
 ### Estados a Expor
 
-O DssResponsive deve expor os seguintes estados através de um slot scope para permitir que os componentes filhos reajam à responsividade:
+| Estado | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `currentBreakpoint` | String | O breakpoint ativo no momento (e.g., `'xs'`, `'sm'`, `'md'`, `'lg'`, `'xl'`). |
+| `isXs` | Boolean | `true` se o breakpoint atual for `xs`. |
+| `isSm` | Boolean | `true` se o breakpoint atual for `sm`. |
+| `isMd` | Boolean | `true` se o breakpoint atual for `md`. |
+| `isLg` | Boolean | `true` se o breakpoint atual for `lg`. |
+| `isXl` | Boolean | `true` se o breakpoint atual for `xl`. |
+| `isMobile` | Boolean | `true` se o breakpoint atual for `xs` ou `sm`. |
+| `isDesktop` | Boolean | `true` se o breakpoint atual for `md`, `lg` ou `xl`. |
 
-*   **`currentBreakpoint` (String):** O breakpoint ativo no momento (e.g., `'xs'`, `'sm'`, `'md'`, `'lg'`, `'xl'`).
-*   **`isXs`, `isSm`, `isMd`, `isLg`, `isXl` (Boolean):** Propriedades booleanas para cada breakpoint, indicando se ele está ativo.
-*   **`isMobile` (Boolean):** `true` se o breakpoint atual for `xs` ou `sm`.
-*   **`isDesktop` (Boolean):** `true` se o breakpoint atual for `md`, `lg` ou `xl`.
+## 9. CONSIDERAÇÕES FINAIS
+
+O DssResponsive é uma ferramenta poderosa para criar interfaces adaptáveis, mas deve ser usado com moderação. O uso excessivo de renderização condicional pode levar a um DOM complexo e difícil de manter. Sempre que possível, prefira o uso de CSS (media queries, flexbox, grid) para resolver problemas de layout responsivo, reservando o DssResponsive para casos onde a lógica de exibição ou o comportamento do componente precisam mudar significativamente com base no tamanho da tela.
+
+Além disso, é importante lembrar que a responsividade não se trata apenas de ajustar o layout para diferentes tamanhos de tela, mas também de garantir que a experiência do usuário seja otimizada para cada dispositivo. Isso pode envolver a adaptação de interações (e.g., touch vs. mouse), a otimização de imagens e outros recursos, e a consideração de diferentes contextos de uso.
+
+Ao utilizar o DssResponsive, certifique-se de testar a interface em uma variedade de dispositivos e tamanhos de tela para garantir que ela funcione conforme o esperado. Utilize as ferramentas de desenvolvedor do navegador para simular diferentes dispositivos e identificar possíveis problemas de layout ou comportamento.
+
+Lembre-se também de manter a acessibilidade em mente ao criar interfaces responsivas. Certifique-se de que o conteúdo oculto não seja acessível por leitores de tela e que o foco do teclado seja gerenciado corretamente ao alternar entre diferentes visualizações.
+
+Por fim, mantenha-se atualizado com as melhores práticas de design responsivo e as novidades do Design System para garantir que suas interfaces continuem a oferecer a melhor experiência possível aos usuários.

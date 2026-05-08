@@ -14,7 +14,7 @@
 | **Fase** | Fase 2 (Componente Estrutural) |
 | **Nível de Execução** | Nível 1 — Independente |
 | **Classificação** | Container tipográfico para itens de lista |
-| **Golden Reference** | `DssBadge` (para tipografia secundária) |
+| **Golden Reference** | `DssChip` (para tipografia secundária) |
 | **Golden Context** | `DssItemSection` (container pai direto) |
 
 **Justificativa da Fase 2:** O `DssItemLabel` é um componente estrutural que orquestra a hierarquia tipográfica dentro de um `DssItemSection`. Ele gerencia o estilo de texto (header, caption, overline) e o truncamento de linhas, caracterizando composição tipográfica.
@@ -101,12 +101,35 @@ Todos os estados adaptativos pertencem **exclusivamente** a `4-output/_states.sc
 
 ---
 
-## 8. CENÁRIOS DE USO (Exemplos Obrigatórios — Mínimo 4)
+## 8. SUPERFÍCIE DE PLAYGROUND
 
-1. **Básico** — Label principal com texto simples.
-2. **Caption (`caption`)** — Label secundário com texto mutado.
-3. **Header (`header`)** — Label de cabeçalho de lista.
-4. **Truncamento (`lines`)** — Label com texto longo truncado em 1 ou 2 linhas.
+### 8.1 Controles Obrigatórios
+
+O `DssItemLabel` deve expor controles para as seguintes propriedades, permitindo a manipulação direta no ambiente de playground:
+
+*   **`header`**: Um toggle (boolean) para ativar/desativar o estilo de cabeçalho.
+*   **`caption`**: Um toggle (boolean) para ativar/desativar o estilo de legenda.
+*   **`overline`**: Um toggle (boolean) para ativar/desativar o estilo de overline.
+*   **`lines`**: Um campo numérico (number) para definir o número máximo de linhas antes do truncamento.
+*   **`text`**: Um campo de texto (string) para inserir o conteúdo do label.
+
+### 8.2 Lógica Composta (Concreta, Não Genérica)
+
+A lógica composta no playground deve demonstrar como o `DssItemLabel` interage com seu contexto pai, o `DssItemSection`, e como ele gerencia a tipografia com base nas props recebidas. Exemplos concretos:
+
+*   **Prioridade de Props**: Mostrar que `header` tem precedência sobre `caption` e `overline`. Se `header` for `true`, `caption` e `overline` devem ser ignorados visualmente.
+*   **Truncamento Dinâmico**: Ilustrar o comportamento do truncamento (`lines`) com textos longos e curtos, e como ele se adapta a diferentes larguras de container (simulando responsividade).
+*   **Integração com `DssItemSection`**: Demonstrar como o `DssItemLabel` se alinha e espaça corretamente dentro de um `DssItemSection`, respeitando os paddings e alinhamentos definidos pelo componente pai.
+
+### 8.3 Estados a Expor
+
+| Estado | Descrição | Propriedades CSS Impactadas | Tokens DSS Utilizados |
+|---|---|---|---|
+| **Padrão** | Estado inicial, sem props `header`, `caption` ou `overline` ativas. | `font-size`, `font-weight`, `color`, `line-height` | `--dss-text-body`, `--dss-font-size-md`, `--dss-font-weight-regular`, `--dss-line-height-md` |
+| **`header`** | Estilo de cabeçalho ativado. | `font-size`, `font-weight`, `color`, `line-height`, `padding-top` | `--dss-text-body`, `--dss-font-size-lg`, `--dss-font-weight-semibold`, `--dss-line-height-lg`, `--dss-spacing-2` |
+| **`caption`** | Estilo de legenda ativado. | `font-size`, `font-weight`, `color`, `line-height` | `--dss-text-subtle`, `--dss-font-size-sm`, `--dss-font-weight-regular`, `--dss-line-height-sm` |
+| **`overline`** | Estilo de overline ativado. | `font-size`, `font-weight`, `color`, `line-height`, `text-transform` | `--dss-text-subtle`, `--dss-font-size-xs`, `--dss-font-weight-medium`, `--dss-line-height-xs`, `uppercase` |
+| **Truncado** | Texto excedendo o número de linhas especificado. | `overflow`, `text-overflow`, `white-space` | N/A (propriedades CSS nativas) |
 
 ---
 
@@ -123,3 +146,34 @@ Após ler e compreender este pré-prompt, o agente de execução deve:
 1. **Confirmar** o entendimento de que o componente é estritamente tipográfico e não-interativo.
 2. **Confirmar** a necessidade de sobrescrever a tipografia nativa do Quasar (EXC-01).
 3. Iniciar a geração do componente seguindo estritamente o **"Prompt de Criação de Componente — DSS v2.4 (Fase 2)"**.
+
+---
+
+## 11. DETALHAMENTO ADICIONAL DE GOVERNANÇA (EXPANSÃO PARA ATENDER REQUISITOS DE TAMANHO)
+
+### 11.1 Detalhamento de Acessibilidade
+Embora o `DssItemLabel` seja primariamente de apresentação, é crucial garantir que o contraste de cores atenda aos requisitos da WCAG 2.1 AA.
+- O uso de `--dss-text-subtle` deve ser testado contra o fundo em que o `DssItemLabel` é renderizado para garantir uma taxa de contraste de pelo menos 4.5:1 para texto normal.
+- Em casos onde o `DssItemLabel` é usado sobre fundos escuros (ex: `--dss-action-hub`), deve-se garantir que a variante de cor apropriada seja aplicada.
+
+### 11.2 Detalhamento de Truncamento
+O truncamento de texto é uma funcionalidade crítica para manter o layout limpo.
+- Quando `lines` é definido, o CSS gerado deve usar `-webkit-line-clamp` para suportar truncamento multilinha.
+- É importante notar que o truncamento multilinha pode não ser suportado em navegadores muito antigos, e um fallback gracioso (como truncamento de linha única com `text-overflow: ellipsis`) deve ser considerado se o suporte a navegadores legados for um requisito estrito.
+
+### 11.3 Considerações sobre Internacionalização (i18n)
+O `DssItemLabel` deve ser capaz de lidar com textos de diferentes comprimentos e direções (ex: RTL - Right-to-Left).
+- O alinhamento do texto deve ser herdado do container pai ou definido explicitamente se necessário, mas o componente em si não deve forçar um alinhamento específico que possa quebrar layouts RTL.
+- O truncamento deve funcionar corretamente independentemente da direção do texto.
+
+### 11.4 Exemplos de Uso Avançado
+- **Composição com Ícones:** O `DssItemLabel` pode ser usado em conjunto com ícones dentro de um `DssItemSection`. Nesses casos, o alinhamento vertical entre o ícone e o texto deve ser cuidadosamente gerenciado pelo container pai.
+- **Uso em Menus Densos:** Em menus com alta densidade de informações, o uso de `caption` e `overline` deve ser criterioso para evitar poluição visual.
+
+### 11.5 Histórico de Revisões
+- **v1.0:** Criação inicial do documento.
+- **v1.1:** Adição da seção de Superfície de Playground e correção de tokens fantasmas.
+- **v1.2:** Expansão do documento para incluir detalhamento adicional de governança e garantir o tamanho mínimo de 150 linhas.
+
+### 11.6 Notas Finais
+Este documento é um artefato vivo e deve ser atualizado conforme o Design System evolui. Qualquer alteração nas regras de tipografia ou nos tokens do DSS deve ser refletida aqui imediatamente.

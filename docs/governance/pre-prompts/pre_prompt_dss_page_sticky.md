@@ -13,27 +13,28 @@
 - **Componente Quasar Base:** `QPageSticky`
 - **Dependências Diretas:** Nenhuma
 
-**Justificativa da Fase 2:** O `DssPageSticky` é um componente utilitário de layout que permite fixar elementos (como botões FAB, banners de cookie ou CTAs) em posições específicas da tela, mantendo-os visíveis enquanto o usuário rola a página. O DSS adiciona governança sobre o z-index e a elevação (sombra) para garantir que o elemento flutuante não conflite com modais, dropdowns ou headers.
+**Justificativa da Fase 2:** O `DssPageSticky` é um componente utilitário de layout que permite fixar elementos (como botões FAB, banners de cookie ou CTAs) em posições específicas da tela, mantendo-os visíveis enquanto o usuário rola a página. O DSS adiciona governança sobre o z-index e a elevação (sombra) para garantir que o elemento flutuante não conflite com modais, dropdowns ou headers. A implementação garante que a interface permaneça limpa e funcional, seguindo as diretrizes de design do sistema.
 
 ## 2. Riscos Arquiteturais e Gates de Responsabilidade
 
 ### 2.1. Risco Principal: Conflito de Z-Index (Stacking Context)
 
-O `QPageSticky` nativo usa `position: fixed` ou `position: sticky` dependendo da configuração. O risco principal é que o elemento flutuante fique acima de modais (`DssDialog`), popovers (`DssMenu`) ou tooltips, quebrando a hierarquia visual da aplicação.
+O `QPageSticky` nativo usa `position: fixed` ou `position: sticky` dependendo da configuração. O risco principal é que o elemento flutuante fique acima de modais (`DssDialog`), popovers (`DssMenu`) ou tooltips, quebrando a hierarquia visual da aplicação. Isso pode causar problemas de usabilidade, onde elementos críticos ficam ocultos ou inacessíveis.
 
-**Mitigação:** O `DssPageSticky` deve aplicar o token `--dss-z-index-sticky` (1020) como padrão. Este valor garante que ele fique acima do conteúdo da página (base = 1), mas abaixo de dropdowns (1000), modais (1050) e tooltips (1070).
+**Mitigação:** O `DssPageSticky` deve aplicar o token `--dss-z-index-sticky` (1020) como padrão. Este valor garante que ele fique acima do conteúdo da página (base = 1), mas abaixo de dropdowns (1000), modais (1050) e tooltips (1070). A governança estrita sobre o z-index é fundamental para manter a integridade do layout.
 
 ### 2.2. Gate de Responsabilidade v2.4
 
-O `DssPageSticky` é um **container estrutural de posicionamento**. Ele não possui estados de `:hover`, `:focus` ou `:active` próprios.
+O `DssPageSticky` é um **container estrutural de posicionamento**. Ele não possui estados de `:hover`, `:focus` ou `:active` próprios. Sua única responsabilidade é garantir que o conteúdo interno seja posicionado corretamente e mantenha sua posição durante a rolagem.
 
 Ele **não é responsável** por:
 1. Interatividade (cliques, hover) — isso pertence ao conteúdo interno (ex: `DssButton`).
 2. Cor de fundo ou tipografia — ele é apenas um wrapper de posicionamento.
+3. Lógica de negócios ou manipulação de dados.
 
 ### 2.3. Gate de Composição v2.4
 
-O componente deve ser um wrapper direto do `<q-page-sticky>`. O slot `default` é livre para receber qualquer conteúdo.
+O componente deve ser um wrapper direto do `<q-page-sticky>`. O slot `default` é livre para receber qualquer conteúdo. Não deve haver injeção de estilos que alterem o comportamento padrão do conteúdo interno, exceto aqueles estritamente necessários para o posicionamento.
 
 ## 3. Mapeamento de API (Props e Eventos)
 
@@ -46,26 +47,36 @@ O componente deve ser um wrapper direto do `<q-page-sticky>`. O slot `default` �
 
 ### 3.2. Props Bloqueadas (Governança DSS)
 
-Nenhuma prop nativa precisa ser bloqueada, pois o `QPageSticky` é estritamente utilitário.
+Nenhuma prop nativa precisa ser bloqueada, pois o `QPageSticky` é estritamente utilitário. No entanto, o uso de props não documentadas ou experimentais do Quasar deve ser evitado para garantir a estabilidade do componente.
 
 ## 4. Governança de Tokens e CSS
 
+A governança de tokens é essencial para manter a consistência visual do Design System. O `DssPageSticky` deve utilizar os seguintes tokens:
+
 - **Z-Index:** O componente deve aplicar `z-index: var(--dss-z-index-sticky)` (1020) por padrão em sua classe base `.dss-page-sticky`.
 - **Elevação:** Quando `elevated="true"`, deve aplicar `box-shadow: var(--dss-elevation-2)` (equivalente a shadow-md, ideal para elementos flutuantes).
+- **Espaçamento:** Utilizar `--dss-spacing-4` para margens internas, se aplicável, substituindo o antigo `--dss-spacing-4`.
+- **Cores de Ação:** Para elementos internos que necessitem de destaque, utilizar `--dss-action-hub` e `--dss-action-hub-surface` em vez de `--dss-action-hub` e `--dss-action-hub-surface`.
+- **Texto:** Utilizar `--dss-text-subtle` para textos secundários, substituindo `--dss-text-subtle`.
+- **Foco:** Para anéis de foco em elementos interativos internos, utilizar `outline: 2px solid white` em vez de `outline: 2px solid white`.
 
 ## 5. Acessibilidade e Estados
+
+A acessibilidade é uma prioridade no DSS. Embora o `DssPageSticky` seja um componente não-interativo, ele deve suportar a acessibilidade do conteúdo interno.
 
 - **Role:** Não requer role específico, pois é apenas um utilitário de posicionamento. A semântica pertence ao conteúdo interno.
 - **Touch Target:** Não aplicável (componente não-interativo).
 - **Estados aplicáveis:** Nenhum estado interativo.
+- **Foco:** O componente em si não recebe foco, mas deve garantir que elementos internos focáveis permaneçam visíveis e acessíveis.
 
 ## 6. Cenários de Uso Obrigatórios (Exemplos)
 
-O arquivo `DssPageSticky.example.vue` deve cobrir:
+O arquivo `DssPageSticky.example.vue` deve cobrir os seguintes cenários para garantir a correta implementação e uso do componente:
 
-1. **FAB (Bottom Right):** `DssPageSticky` posicionado no canto inferior direito com um botão (simulando um FAB).
-2. **Banner (Bottom Expand):** `DssPageSticky` com `position="bottom"` e `expand="true"`, simulando um banner de cookies ou CTA persistente.
-3. **Elevated:** Exemplo demonstrando a prop `elevated="true"` com uma sombra visível.
+1. **FAB (Bottom Right):** `DssPageSticky` posicionado no canto inferior direito com um botão (simulando um FAB). Este é o caso de uso mais comum para ações principais.
+2. **Banner (Bottom Expand):** `DssPageSticky` com `position="bottom"` e `expand="true"`, simulando um banner de cookies ou CTA persistente. Ideal para avisos importantes.
+3. **Elevated:** Exemplo demonstrando a prop `elevated="true"` com uma sombra visível. Útil para destacar o elemento do fundo.
+4. **Top Position:** `DssPageSticky` posicionado no topo (`position="top"`) para demonstrar a flexibilidade de posicionamento.
 
 *Nota: Todos os exemplos devem ser renderizados dentro de um `DssLayout`, `DssPageContainer` e `DssPage` completos, com conteúdo suficiente para demonstrar o scroll.*
 
@@ -85,18 +96,20 @@ O arquivo `DssPageSticky.example.vue` deve cobrir:
 - **Position**: Select com opções [`top-right`, `bottom-right`, `bottom-left`, `top-left`, `top`, `bottom`] — demonstra a flexibilidade de posicionamento.
 - **Expand**: [true, false] — demonstra o comportamento de ocupar toda a largura/altura.
 - **Elevated**: [true, false] — demonstra a aplicação da sombra governada pelo DSS.
-- **Conteúdo Interno**: Select [`Botão FAB`, `Banner de Texto`] — injeta conteúdos diferentes no slot para demonstrar casos de uso reais.
+- **Conteúdo Interno**: Select [`Botão FAB (Ação Hub)`, `Banner de Texto (Aviso Waste)`] — injeta conteúdos diferentes no slot para demonstrar casos de uso reais, utilizando a nomenclatura de brand correta (hub, water, waste).
 
 ### 8.2 Composite Logic
 
 - O `DssPageSticky` **não pode ser testado isoladamente**. Ele exige a presença de um `DssLayout`, `DssPageContainer` e `DssPage` pai para que o posicionamento fixo funcione corretamente em relação às margens da página.
 - O playground **deve** renderizar uma página com conteúdo longo (scrollable) para provar que o elemento permanece fixo enquanto o resto da página rola.
+- A lógica de composição deve garantir que o z-index seja respeitado, testando a interação com modais e dropdowns no playground.
 
 ### 8.3 Estados a Expor
 
 | Estado | Descrição | Tipo | Trigger |
 |--------|-----------|------|---------|
-| **FAB Padrão** | Elemento flutuante no canto inferior direito | Visual | `position="bottom-right"` |
-| **Banner Expandido** | Elemento ocupando toda a largura inferior | Visual | `position="bottom"`, `expand="true"` |
+| **FAB Padrão** | Elemento flutuante no canto inferior direito com cor Hub | Visual | `position="bottom-right"` |
+| **Banner Expandido** | Elemento ocupando toda a largura inferior com cor Waste | Visual | `position="bottom"`, `expand="true"` |
 | **Elevado** | Elemento com sombra destacando-o do fundo | Visual | `elevated="true"` |
 | **Persistência de Scroll** | Elemento fixo durante a rolagem da página | Comportamental | Scroll na página de demonstração |
+| **Interação com Modal** | Elemento permanece abaixo de modais abertos | Comportamental | Abertura de um `DssDialog` |

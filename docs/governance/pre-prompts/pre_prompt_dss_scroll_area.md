@@ -57,9 +57,19 @@ O `DssScrollArea` utilizará exclusivamente tokens numéricos e padrão do DSS p
 
 ### Tokens de Cor de Superfície
 *   `--dss-surface-default`: Utilizado como cor de fundo padrão para a área de rolagem, garantindo que o contraste e a identidade visual sejam mantidos.
+*   `--dss-action-hub-surface`: Utilizado em casos específicos onde a área de rolagem precisa de um destaque sutil de fundo.
+
+### Tokens de Cor de Ação
+*   `--dss-action-hub`: Utilizado para indicar interatividade ou foco em elementos internos da área de rolagem.
+
+### Tokens de Texto
+*   `--dss-text-subtle`: Utilizado para textos secundários ou descritivos dentro da área de rolagem.
 
 ### Tokens de Duração
 *   `--dss-duration-250`: Para a transição de ocultação/exibição dos *scrollbars* (barDelay), proporcionando uma experiência de usuário suave e não abrupta.
+
+### Foco
+*   `outline: 2px solid white`: Utilizado para indicar o foco do teclado na área de rolagem, garantindo acessibilidade sem depender de tokens fantasmas.
 
 ### Exemplo de Aplicação de Tokens (CSS hipotético)
 ```css
@@ -68,6 +78,10 @@ O `DssScrollArea` utilizará exclusivamente tokens numéricos e padrão do DSS p
   background-color: var(--dss-surface-default);
   padding: var(--dss-spacing-4);
   /* Outros estilos como largura, altura, etc. */
+}
+
+.dss-scroll-area:focus-visible {
+  outline: 2px solid white;
 }
 
 .dss-scroll-area__bar {
@@ -113,7 +127,7 @@ O `DssScrollArea` é um componente de composição, projetado para envolver outr
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 O playground do `DssScrollArea` deve expor os seguintes controles para demonstração e teste:
 *   **Prop `visible`**: Um *toggle* para alternar entre `auto`, `always`, `hidden` (se implementado).
 *   **Prop `horizontal`**: Um *toggle* para habilitar/desabilitar a rolagem horizontal.
@@ -123,16 +137,19 @@ O playground do `DssScrollArea` deve expor os seguintes controles para demonstra
 *   **Botão "Scroll to Top"**: Um botão para rolar programaticamente o conteúdo para o topo.
 *   **Botão "Scroll to Bottom"**: Um botão para rolar programaticamente o conteúdo para a base.
 *   **Botão "Scroll to Position (X, Y)"**: Campos de entrada para X e Y e um botão para rolar para uma posição específica.
+*   **Variantes de Marca**: Controles para testar a aplicação de cores de marca (hub, water, waste) no conteúdo interno, se aplicável.
 
 ### Composite Logic
-*   **Simulação de Conteúdo Dinâmico**: Demonstração de como o `DssScrollArea` se comporta quando o conteúdo é adicionado ou removido dinamicamente, ajustando automaticamente os *scrollbars*.
+*   **Simulação de Conteúdo Dinâmico**: Demonstração de como o `DssScrollArea` se comporta quando o conteúdo é adicionado ou removido dinamicamente, ajustando automaticamente os *scrollbars*. O conteúdo pode incluir elementos com cores hub, water ou waste.
 *   **Infinite Scroll**: Um exemplo de implementação de "infinite scroll" onde mais conteúdo é carregado quando o usuário atinge o final da rolagem.
 *   **Sincronização de Rolagem**: Demonstração de dois `DssScrollArea`s rolando em sincronia (e.g., uma tabela com cabeçalho fixo e corpo rolável).
 
 ### Estados a Expor
-O playground deve exibir visualmente ou através de *badges* os seguintes estados do `DssScrollArea`:
-*   `isScrolledToTop`: Booleano indicando se o conteúdo está no topo da rolagem.
-*   `isScrolledToBottom`: Booleano indicando se o conteúdo está na base da rolagem.
-*   `isScrolledToLeft`: Booleano indicando se o conteúdo está na esquerda da rolagem (para rolagem horizontal).
-*   `isScrolledToRight`: Booleano indicando se o conteúdo está na direita da rolagem (para rolagem horizontal).
-*   `hasScrollbars`: Booleano indicando se os *scrollbars* estão visíveis no momento.
+
+| Estado | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `isScrolledToTop` | Booleano | Indicando se o conteúdo está no topo da rolagem. |
+| `isScrolledToBottom` | Booleano | Indicando se o conteúdo está na base da rolagem. |
+| `isScrolledToLeft` | Booleano | Indicando se o conteúdo está na esquerda da rolagem (para rolagem horizontal). |
+| `isScrolledToRight` | Booleano | Indicando se o conteúdo está na direita da rolagem (para rolagem horizontal). |
+| `hasScrollbars` | Booleano | Indicando se os *scrollbars* estão visíveis no momento. |

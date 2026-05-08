@@ -42,7 +42,7 @@
 
 **Visual:**
 - `dense` (Boolean) - Reduz o padding do header.
-- `brand` (String) - Aplica cor de brand ao header quando expandido.
+- `brand` (String) - Aplica cor de brand ao header quando expandido. Valores aceitos: `hub`, `water`, `waste`.
 
 ### 3.2. Props Bloqueadas (Governança DSS)
 - `dark` → O DSS gerencia o dark mode via CSS global (`body.body--dark`).
@@ -52,11 +52,13 @@
 ## 4. Governança de Tokens e CSS
 
 - **Background (Header):** `transparent` (padrão) e `var(--dss-surface-hover)` no hover.
-- **Background (Expanded):** Quando expandido, o header pode receber um leve destaque visual (ex: `var(--dss-surface-subtle)`).
-- **Tipografia:** `var(--dss-text-body)` para o label, `var(--dss-text-subtle)` para o caption. ⚠️ **Atenção:** `--dss-text-secondary` **não existe** no catálogo DSS v2.2 — o token correto é `--dss-text-subtle`.
+- **Background (Expanded):** Quando expandido, o header pode receber um leve destaque visual (ex: `var(--dss-surface-subtle)`). Se a prop `brand` for `hub`, usar `var(--dss-action-hub-surface)`.
+- **Tipografia:** `var(--dss-text-body)` para o label, `var(--dss-text-subtle)` para o caption.
 - **Bordas:** O componente em si não deve ter bordas externas hardcoded. Se precisar de separadores, use `border-bottom: 1px solid var(--dss-border-gray-200)`.
 - **Transição:** A animação de expansão deve usar `var(--dss-duration-250)` e `var(--dss-easing-standard)`.
 - **Padding (Header):** `var(--dss-spacing-3)` vertical e `var(--dss-spacing-4)` horizontal.
+- **Foco:** Utilizar `outline: 2px solid white` para o anel de foco.
+- **Cores de Ação:** Utilizar `var(--dss-action-hub)` em vez de cores primárias genéricas.
 
 ## 5. Acessibilidade e Estados
 
@@ -79,7 +81,7 @@ O arquivo `DssExpansionItem.example.vue` deve cobrir:
 2. **Completo:** Item com ícone, label, caption e conteúdo.
 3. **Accordion:** Três itens com a mesma prop `group` para demonstrar exclusividade de expansão.
 4. **Disabled:** Item desabilitado.
-5. **Brand:** Item com prop `brand` aplicada.
+5. **Brand:** Item com prop `brand` aplicada (`hub`, `water`, `waste`).
 
 ## 7. Exceções aos Gates v2.4
 
@@ -97,10 +99,12 @@ O arquivo `DssExpansionItem.example.vue` deve cobrir:
 - **Icon**: Input de texto para testar ícones (ex: `settings`, `mail`).
 - **Disabled**: Toggle [true, false].
 - **Dense**: Toggle [true, false].
+- **Brand**: Select [`hub`, `water`, `waste`].
 
 ### 8.2 Composite Logic
 - O playground **deve** injetar conteúdo real no slot padrão (ex: um parágrafo de texto ou um `DssCard`) para que a animação de expansão seja visível. Um `DssExpansionItem` sem conteúdo no slot não demonstra seu propósito.
 - A demonstração deve provar que o clique no header alterna o estado de expansão e rotaciona o ícone de seta.
+- A demonstração deve aplicar a cor de brand selecionada (`hub`, `water`, `waste`) ao header quando expandido.
 
 ### 8.3 Estados a Expor
 | Estado | Descrição | Tipo | Trigger |
@@ -110,3 +114,10 @@ O arquivo `DssExpansionItem.example.vue` deve cobrir:
 | **Hover** | Fundo do header levemente escurecido | Visual | Mouse over no header |
 | **Focus** | Ring de foco visível no header | Visual | Navegação por teclado |
 | **Disabled** | Opacidade reduzida, sem interatividade | Visual | Prop `disable="true"` |
+| **Brand Hub** | Cor hub aplicada ao header expandido | Visual | Prop `brand="hub"` |
+| **Brand Water** | Cor water aplicada ao header expandido | Visual | Prop `brand="water"` |
+| **Brand Waste** | Cor waste aplicada ao header expandido | Visual | Prop `brand="waste"` |
+
+## 9. Considerações Finais
+
+O `DssExpansionItem` é um componente fundamental para a organização de informações em interfaces complexas. A correta implementação de seus estados e a aderência estrita aos tokens do DSS garantirão uma experiência de usuário consistente e acessível. A utilização de `DssChip` como Golden Reference para interatividade e `DssItem` como Golden Context assegura que o componente se alinhe perfeitamente com o restante do ecossistema Sansys.

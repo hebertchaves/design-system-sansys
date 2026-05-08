@@ -35,98 +35,130 @@ Considerando a ausência de um componente `QChatMessage` direto no Quasar que se
 | `name`                          | `senderName`                     | Nome do remetente da mensagem.                                            |
 | `bgColor`                       | `backgroundColor`                | Cor de fundo da bolha da mensagem (controlada por tokens DSS).            |
 | `textColor`                     | `textColor`                      | Cor do texto da mensagem (controlada por tokens DSS).                     |
-| `status`                        | `status`                         | Estado da mensagem (ex: 'sent', 'delivered', 'read', 'error', 'sending'). |
-| `@click`                        | `@click`                         | Evento emitido ao clicar na mensagem.                                     |
-| `@longpress`                    | `@longPress`                     | Evento emitido ao pressionar e segurar a mensagem.                       |
+| `status`                        | `status`                         | Estado da mensagem (ex: 'sent', 'delivered', 'read', 'error', 'sending'). Este status é crucial para a renderização condicional de ícones de feedback. |
+| `dense`                         | `compact`                        | Booleano que indica se a mensagem deve ser renderizada em um formato mais compacto, ideal para conversas com alta densidade de mensagens. |
+| `textColor`                     | `textColor`                      | Cor do texto da mensagem, controlada por tokens DSS como `--dss-text-default` ou `--dss-text-subtle`. |
+| `avatarPosition`                | `avatarPlacement`                | Posição do avatar em relação à bolha da mensagem (e.g., 'top', 'center', 'bottom'). |
+| `messageType`                   | `contentType`                    | Define o tipo de conteúdo da mensagem (e.g., 'text', 'image', 'file', 'link') para renderização especializada. |
+| `@click`                        | `@click`                         | Evento emitido ao clicar na área principal da mensagem, útil para seleção ou exibição de detalhes. |
+| `@longpress`                    | `@longPress`                     | Evento emitido ao pressionar e segurar a mensagem, geralmente para ativar modos de seleção múltipla ou menus contextuais. |
+| `@delete`                       | `@delete`                        | Evento customizado emitido quando uma ação de exclusão é disparada na mensagem. |
+| `@edit`                         | `@edit`                          | Evento customizado emitido quando uma ação de edição é disparada na mensagem. |
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
 O `DssChatMessage` utilizará exclusivamente tokens do DSS para garantir consistência visual e manutenibilidade. Abaixo estão exemplos de uso:
 
 *   **Espaçamento:**
-    *   `padding: var(--dss-spacing-4) var(--dss-spacing-8);` (padding interno da bolha da mensagem)
-    *   `margin-bottom: var(--dss-spacing-2);` (espaçamento entre mensagens)
+    *   `padding: var(--dss-spacing-4) var(--dss-spacing-8);` (padding interno da bolha da mensagem, garantindo respiro adequado ao conteúdo).
+    *   `margin-bottom: var(--dss-spacing-2);` (espaçamento vertical entre mensagens consecutivas para legibilidade).
+    *   `gap: var(--dss-spacing-1);` (espaçamento entre elementos internos da mensagem, como avatar e conteúdo).
 
 *   **Raio da Borda:**
-    *   `border-radius: var(--dss-radius-md);` (raio padrão da bolha da mensagem)
-    *   `border-bottom-left-radius: var(--dss-radius-sm);` (ajuste para a bolha do remetente)
+    *   `border-radius: var(--dss-radius-md);` (raio padrão da bolha da mensagem, conferindo um visual suave e moderno).
+    *   `border-bottom-left-radius: var(--dss-radius-sm);` (ajuste específico para a bolha do remetente, criando um "bico" que aponta para o avatar).
+    *   `border-top-right-radius: var(--dss-radius-xs);` (ajuste para mensagens recebidas, diferenciando visualmente a origem).
 
 *   **Cores de Superfície:**
-    *   `background-color: var(--dss-surface-default);` (cor de fundo para mensagens recebidas)
-    *   `background-color: var(--dss-surface-primary);` (cor de fundo para mensagens enviadas)
+    *   `background-color: var(--dss-surface-default);` (cor de fundo para mensagens recebidas, mantendo a neutralidade e foco no conteúdo).
+    *   `background-color: var(--dss-action-hub-surface);` (cor de fundo para mensagens enviadas pelo usuário, indicando a autoria e interatividade).
+    *   `background-color: var(--dss-surface-water);` (cor de fundo para mensagens de sistema ou informativas, destacando-as sutilmente).
+
+*   **Cores de Texto:**
+    *   `color: var(--dss-text-default);` (cor padrão para o texto principal da mensagem, garantindo contraste e legibilidade).
+    *   `color: var(--dss-text-subtle);` (cor para metadados como timestamp e nome do remetente, indicando informações secundárias).
 
 *   **Duração de Transição:**
-    *   `transition: background-color var(--dss-duration-250) ease-in-out;` (transição suave para estados de hover ou seleção)
+    *   `transition: background-color var(--dss-duration-250) ease-in-out;` (transição suave para estados de hover ou seleção, melhorando a experiência do usuário).
+    *   `transition: transform var(--dss-duration-150) ease-out;` (transição para efeitos de escala ou movimento em interações, como ao clicar).
 
-**Tokens Proibidos:** `--dss-padding-md`, `--dss-margin-sm`, `--dss-color-blue`, `--dss-duration-base` (qualquer token com sufixo semântico não numérico ou não padrão).
+*   **Sombras:**
+    *   `box-shadow: var(--dss-shadow-sm);` (sombra sutil para destacar a bolha da mensagem em superfícies claras).
+
+**Tokens Proibidos:** `--dss-spacing-4`, `--dss-margin-sm`, `--dss-color-blue`, `--dss-duration-base` (qualquer token com sufixo semântico não numérico ou não padrão). A utilização de tokens semânticos e escaláveis é mandatório para a governança do Design System.
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
 **Acessibilidade:**
-*   **Função ARIA:** O componente deve ter `role="listitem"` para cada mensagem individual dentro de um contêiner com `role="list"` ou `role="feed"`.
-*   **Labels:** Utilizar `aria-label` para fornecer contexto adicional, como "Mensagem de [Remetente] enviada em [Data/Hora]".
-*   **Foco e Navegação:** Garantir que elementos interativos dentro da mensagem (ex: botões de ação) sejam acessíveis via teclado e que o foco seja gerenciado corretamente.
-*   **Contraste de Cores:** Assegurar que as cores de texto e fundo atendam aos requisitos de contraste WCAG.
+*   **Função ARIA:** O componente deve ter `role="listitem"` para cada mensagem individual dentro de um contêiner com `role="list"` ou `role="feed"`. Isso ajuda tecnologias assistivas a interpretar a estrutura da conversa.
+*   **Labels:** Utilizar `aria-label` para fornecer contexto adicional e descritivo, como "Mensagem de [Remetente] enviada em [Data/Hora] com status [Status]". Isso enriquece a experiência para usuários de leitores de tela.
+*   **Foco e Navegação:** Garantir que todos os elementos interativos dentro da mensagem (ex: botões de ação, links) sejam acessíveis via teclado (`tabindex`) e que o foco seja gerenciado corretamente, especialmente em cenários de navegação complexos ou modais.
+*   **Contraste de Cores:** Assegurar que as cores de texto e fundo atendam aos requisitos mínimos de contraste WCAG 2.1 (nível AA) para garantir legibilidade para usuários com deficiência visual.
+*   **Estrutura Semântica:** Utilizar elementos HTML semânticos (`<time>`, `<p>`, `<span>`) para transmitir o significado correto do conteúdo da mensagem e seus metadados.
+*   **Feedback Visual para Estados:** Fornecer feedback visual claro para estados interativos (foco, hover, ativo) que não dependa apenas de cor.
 
 **Estados:**
-*   **Enviado (isMine: true):** Mensagem enviada pelo usuário atual.
-*   **Recebido (isMine: false):** Mensagem recebida de outro usuário.
-*   **Lido:** Indicador visual de que a mensagem foi lida pelo destinatário.
-*   **Não Lido:** Indicador visual de que a mensagem ainda não foi lida.
-*   **Erro:** Mensagem que falhou ao ser enviada.
-*   **Carregando:** Mensagem em processo de envio.
-*   **Selecionado:** Mensagem que está em um estado de seleção (ex: para cópia ou exclusão).
-*   **Hover:** Estado quando o mouse está sobre a mensagem.
+*   **Enviado (isMine: true):** Mensagem enviada pelo usuário atual. Visualmente alinhada à direita, com cor de fundo `--dss-action-hub-surface`.
+*   **Recebido (isMine: false):** Mensagem recebida de outro usuário. Visualmente alinhada à esquerda, com cor de fundo `--dss-surface-default`.
+*   **Lido:** Indicador visual (ex: ícone de check duplo azul) de que a mensagem foi lida pelo destinatário. Este estado é crucial para feedback em tempo real.
+*   **Não Lido:** Indicador visual (ex: bolha ou ponto) de que a mensagem ainda não foi lida, incentivando a atenção do usuário.
+*   **Erro:** Mensagem que falhou ao ser enviada. Exibição de um ícone de alerta (ex: exclamação em círculo) e, opcionalmente, uma mensagem de erro detalhada.
+*   **Carregando:** Mensagem em processo de envio. Pode ser representado por um spinner ou um estado de opacidade reduzida.
+*   **Selecionado:** Mensagem que está em um estado de seleção (ex: para cópia, exclusão ou encaminhamento). Geralmente com um destaque visual (borda ou cor de fundo diferente).
+*   **Hover:** Estado quando o ponteiro do mouse está sobre a mensagem, indicando interatividade. Pode ativar a exibição de ações contextuais.
+*   **Foco:** Estado quando a mensagem ou um de seus elementos internos está focado via teclado, essencial para acessibilidade.
+*   **Desabilitado:** Mensagem ou ações dentro dela que estão temporariamente indisponíveis, com feedback visual de inatividade.
 
 ## 6. DEPENDÊNCIAS E COMPOSIÇÃO
 
 **Dependências:**
-*   `DssAvatar`: Para exibir a imagem do perfil do remetente.
-*   `DssText`: Para o conteúdo da mensagem, nome do remetente e timestamp.
-*   `DssIcon`: Para ícones de status (ex: lido, erro) ou ações.
-*   `DssButton` (opcional): Para ações contextuais na mensagem.
+*   `DssAvatar`: Essencial para exibir a imagem de perfil do remetente, contribuindo para a identificação visual rápida em conversas. Deve ser configurável para diferentes tamanhos e formatos.
+*   `DssText`: Utilizado para renderizar o conteúdo principal da mensagem, o nome do remetente, o timestamp e quaisquer outros textos informativos. Deve suportar variações de tipografia e cor definidas pelos tokens do DSS.
+*   `DssIcon`: Necessário para exibir ícones de status (como lido, entregue, erro, enviando) e para representar ações contextuais (como responder, encaminhar, excluir). A biblioteca de ícones deve ser consistente com o restante do Design System.
+*   `DssButton` (opcional): Pode ser integrado para fornecer ações interativas diretamente na bolha da mensagem, como botões de resposta rápida ou opções de menu. Sua inclusão deve ser condicional e configurável.
+*   `DssTooltip` (opcional): Para fornecer informações adicionais ao passar o mouse sobre elementos da mensagem, como o timestamp completo ou o status detalhado.
+*   `DssLink` (opcional): Para renderizar URLs dentro do conteúdo da mensagem de forma acessível e estilizada.
 
 **Composição:**
-Um `DssChatMessage` é composto por:
-*   **Avatar do Remetente:** (Opcional) `DssAvatar` exibindo a imagem do remetente.
-*   **Cabeçalho da Mensagem:** (Opcional) Contendo o nome do remetente (`DssText`) e/ou o timestamp (`DssText`).
-*   **Bolha da Mensagem:** Contêiner principal da mensagem.
-    *   **Conteúdo da Mensagem:** `DssText` para o texto da mensagem, podendo incluir links ou outros elementos inline.
-    *   **Metadados da Mensagem:** (Opcional) `DssText` para o timestamp e `DssIcon` para o status de leitura/envio.
-*   **Ações da Mensagem:** (Opcional) `DssButton` ou `DssIcon` para ações como responder, editar, excluir.
+Um `DssChatMessage` é uma composição flexível de vários componentes menores, organizados para formar uma unidade de mensagem coesa:
+*   **Container Principal:** Um elemento flexível que agrupa todos os subcomponentes, controlando o alinhamento (esquerda/direita) e o espaçamento geral da mensagem.
+*   **Avatar do Remetente:** (Opcional) Um `DssAvatar` posicionado estrategicamente para indicar o autor da mensagem. Sua visibilidade pode ser controlada por uma propriedade `showAvatar`.
+*   **Bolha da Mensagem:** O contêiner visual principal que envolve o conteúdo da mensagem. Suas propriedades de estilo (cor de fundo, raio da borda, sombra) são definidas por tokens DSS e variam conforme o estado (`isMine`, `status`).
+    *   **Cabeçalho da Mensagem:** (Opcional) Uma área dentro da bolha que pode conter o nome do remetente (`DssText`) e/ou o timestamp (`DssText`), especialmente útil em chats de grupo ou para mensagens recebidas.
+    *   **Conteúdo da Mensagem:** O coração do componente, geralmente um `DssText` que exibe o texto da mensagem. Pode incluir slots para renderização de conteúdo rico (imagens, vídeos, anexos) ou componentes como `DssLink`.
+    *   **Metadados da Mensagem:** (Opcional) Uma área para informações secundárias, como o timestamp (`DssText`) e o ícone de status (`DssIcon`), que fornecem feedback sobre o envio e leitura da mensagem.
+*   **Ações da Mensagem:** (Opcional) Um slot ou um conjunto de `DssButton` ou `DssIcon` que aparecem ao interagir com a mensagem (ex: hover, seleção), permitindo ações como responder, editar, excluir, ou encaminhar. A visibilidade e o tipo de ações são configuráveis via propriedades.
 
 ## 7. EXCEÇÕES PREVISTAS
 
-*   **Mensagens Muito Longas:** O componente deve lidar com quebras de linha e rolagem interna, se necessário, para mensagens extensas.
-*   **Mensagens com Mídia:** Suporte para exibir imagens, vídeos ou outros anexos dentro da bolha da mensagem (requer componentes adicionais ou slots).
-*   **Mensagens com Links:** Detecção e renderização adequada de URLs clicáveis.
-*   **Mensagens de Sistema:** Diferenciação visual para mensagens geradas pelo sistema (ex: "Usuário X entrou no chat").
-*   **Mensagens Vazias:** Tratamento de mensagens sem conteúdo de texto.
-*   **Mensagens com Conteúdo HTML/Markdown:** Sanitização e renderização segura de conteúdo rico.
+*   **Mensagens Muito Longas:** O componente deve ser capaz de lidar com mensagens de texto extensas, aplicando quebras de linha automáticas e, se necessário, rolagem interna ou truncamento com opção de expansão para evitar sobrecarga visual e manter a legibilidade.
+*   **Mensagens com Mídia:** Prever suporte para a exibição de diferentes tipos de mídia (imagens, vídeos, áudios, documentos) diretamente dentro da bolha da mensagem. Isso pode ser alcançado através de slots dedicados ou componentes internos especializados (ex: `DssImage`, `DssVideoPlayer`).
+*   **Mensagens com Links:** Implementar detecção automática e renderização adequada de URLs clicáveis, garantindo que sejam acessíveis e visualmente distintos do texto normal. Considerar a exibição de pré-visualizações de links (link unfurling).
+*   **Mensagens de Sistema:** Permitir uma diferenciação visual clara para mensagens geradas pelo sistema (ex: "Usuário X entrou no chat", "Mensagem editada"), que podem ter um estilo neutro e centralizado, sem avatar ou bolha.
+*   **Mensagens Vazias:** Tratar mensagens que não contêm conteúdo de texto visível, mas podem ter anexos ou metadados. O componente deve ser robusto o suficiente para não quebrar e, idealmente, exibir um placeholder ou ícone indicativo.
+*   **Mensagens com Conteúdo HTML/Markdown:** Garantir a sanitização e renderização segura de conteúdo rico (HTML ou Markdown) para prevenir ataques XSS e manter a integridade visual. A renderização deve ser consistente com as diretrizes de tipografia do DSS.
+*   **Mensagens Interativas:** Exceções para mensagens que contêm elementos interativos complexos, como formulários embutidos, enquetes ou botões de ação que disparam fluxos específicos. Estes podem exigir slots ou componentes de renderização personalizados.
+*   **Mensagens Criptografadas:** Considerar o tratamento de mensagens criptografadas, onde o conteúdo pode precisar ser descriptografado antes da exibição, ou exibir um aviso caso a descriptografia falhe.
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-**Controles:**
-*   `message` (String): Conteúdo da mensagem.
-*   `isMine` (Boolean): Se a mensagem foi enviada pelo usuário atual.
-*   `timestamp` (String): Carimbo de data/hora da mensagem (ex: "10:30 AM", "Ontem 14:00").
-*   `senderName` (String): Nome do remetente.
-*   `avatarSrc` (String): URL do avatar do remetente.
-*   `status` (String): Estado da mensagem ('sent', 'delivered', 'read', 'error', 'sending').
-*   `hasActions` (Boolean): Se a mensagem deve exibir botões de ação.
+**Controles Obrigatórios:**
+*   `message` (String): O conteúdo textual principal da mensagem. Deve ser capaz de renderizar texto simples e, opcionalmente, suportar formatação básica como negrito ou itálico. Exemplo: "Olá, tudo bem?" ou "*Urgente*: Reunião às 10h."
+*   `isMine` (Boolean): Um flag booleano que indica se a mensagem foi enviada pelo usuário atualmente logado. Este controle é fundamental para a diferenciação visual do remetente e do destinatário, afetando o alinhamento e as cores da bolha da mensagem.
+*   `timestamp` (String): O carimbo de data/hora da mensagem. Pode ser uma string formatada (ex: "10:30 AM", "Ontem 14:00") ou um objeto `Date` que o componente formatará internamente. Essencial para contextualizar a mensagem cronologicamente.
+*   `senderName` (String, opcional): O nome do remetente da mensagem. Exibido acima da bolha da mensagem em conversas de grupo ou quando `isMine` é `false`. Exemplo: "João Silva".
+*   `avatarSrc` (String, opcional): A URL da imagem do avatar do remetente. Se fornecido, o `DssAvatar` será renderizado. Se ausente, um avatar placeholder ou as iniciais do remetente podem ser exibidos. Exemplo: "https://example.com/avatar.jpg".
+*   `status` (String, opcional): O estado atual da mensagem, que pode ser um dos seguintes: `sent` (enviada), `delivered` (entregue), `read` (lida), `error` (erro no envio), `sending` (enviando). Este controle é vital para fornecer feedback visual ao usuário sobre o ciclo de vida da mensagem.
+*   `hasActions` (Boolean, opcional): Um flag que determina se a mensagem deve exibir um conjunto de ações contextuais (ex: responder, editar, excluir). Quando `true`, um slot ou botões predefinidos são ativados.
+*   `compact` (Boolean, opcional): Se `true`, a mensagem será renderizada em um formato mais denso, reduzindo o espaçamento interno e externo, ideal para exibir um grande volume de mensagens.
+*   `contentType` (String, opcional): Define o tipo de conteúdo da mensagem além de texto simples, como `image`, `video`, `file`, `link`. Permite que o componente renderize o conteúdo de forma apropriada.
 
 **Composite Logic:**
-*   A propriedade `isMine` deve controlar o alinhamento da bolha da mensagem (direita para `true`, esquerda para `false`) e a cor de fundo (ex: `--dss-surface-primary` para `true`, `--dss-surface-default` para `false`).
-*   O `status` deve controlar o ícone exibido (ex: ícone de check duplo para 'read', ícone de exclamação para 'error').
-*   A presença de `avatarSrc` deve renderizar o `DssAvatar` correspondente.
-*   `hasActions` deve alternar a visibilidade de um slot ou de botões de ação predefinidos.
+*   **Alinhamento e Estilo da Bolha:** A propriedade `isMine` é a principal controladora do layout. Se `isMine` for `true`, a bolha da mensagem deve ser alinhada à direita, ter um `border-bottom-right-radius` menor para criar um "bico" e usar `background-color: var(--dss-action-hub-surface)`. Se `isMine` for `false`, a bolha deve ser alinhada à esquerda, ter um `border-bottom-left-radius` menor e usar `background-color: var(--dss-surface-default)`.
+*   **Feedback de Status:** O `status` da mensagem deve acionar a renderização de ícones específicos. Por exemplo, `status: 'read'` deve exibir um ícone de check duplo (ex: `DssIcon` com `name='check-double'`) na cor `--dss-action-water`. `status: 'error'` deve exibir um ícone de exclamação (ex: `DssIcon` com `name='alert-circle'`) na cor `--dss-feedback-error`.
+*   **Exibição do Avatar:** A presença da propriedade `avatarSrc` deve condicionar a renderização do componente `DssAvatar`. Se `avatarSrc` estiver vazio ou nulo, o `DssAvatar` não deve ser exibido, ou um placeholder com as iniciais do `senderName` pode ser gerado. A posição do avatar pode ser ajustada com base em `isMine` ou `avatarPlacement`.
+*   **Ações Contextuais:** Quando `hasActions` é `true`, um slot nomeado `actions` deve ser ativado, permitindo que o consumidor do componente injete `DssButton` ou `DssIcon` interativos. Alternativamente, um menu de contexto padrão pode ser exibido ao passar o mouse ou clicar na mensagem, oferecendo opções como "Responder", "Encaminhar", "Excluir".
+*   **Renderização de Conteúdo:** A propriedade `contentType` deve guiar a renderização do `message`. Se `contentType` for `image`, o `message` deve ser tratado como uma URL de imagem e renderizado dentro de um `DssImage`. Se for `link`, o `message` deve ser transformado em um `DssLink` clicável. Isso garante que diferentes tipos de conteúdo sejam apresentados de forma otimizada e segura.
 
 **Estados a Expor:**
-*   Mensagem Enviada (isMine: true, status: 'sent')
-*   Mensagem Recebida (isMine: false, status: 'delivered')
-*   Mensagem Lida (isMine: false, status: 'read')
-*   Mensagem com Erro (isMine: true, status: 'error')
-*   Mensagem Carregando (isMine: true, status: 'sending')
-*   Mensagem Selecionada (isMine: false, status: 'delivered', selecionado: true)
-*   Mensagem com Avatar e Nome do Remetente
-*   Mensagem com Ações Contextuais
+
+| Estado               | Descrição                                                                 |
+| :------------------- | :------------------------------------------------------------------------ |
+| `Enviada`            | Mensagem enviada pelo usuário atual (`isMine: true`, `status: 'sent'`).   |
+| `Recebida`           | Mensagem recebida de outro usuário (`isMine: false`, `status: 'delivered'`). |
+| `Lida`               | Indicador visual de que a mensagem foi lida pelo destinatário (`status: 'read'`). |
+| `Com Erro`           | Mensagem que falhou ao ser enviada (`isMine: true`, `status: 'error'`).   |
+| `Carregando`         | Mensagem em processo de envio (`isMine: true`, `status: 'sending'`).     |
+| `Selecionada`        | Mensagem que está em um estado de seleção (`selecionado: true`).          |
+| `Com Avatar e Nome`  | Mensagem exibindo o avatar e nome do remetente.                           |
+| `Com Ações`          | Mensagem com botões de ação contextuais (`hasActions: true`).             |

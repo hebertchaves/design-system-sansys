@@ -56,7 +56,7 @@ O `DssInfiniteScroll` deve utilizar exclusivamente os tokens de design do DSS pa
 
 *   **Espaçamento:** Para margens e preenchimentos internos, utilizar tokens como `--dss-spacing-4` (para um espaçamento padrão), `--dss-spacing-8`, `--dss-spacing-16`, etc., conforme a necessidade de densidade da informação. Por exemplo, para um espaçamento entre itens da lista, pode-se usar `--dss-spacing-8`.
 *   **Raio de Borda:** Se o componente ou seus elementos internos possuírem bordas arredondadas, utilizar tokens como `--dss-radius-md` para um arredondamento médio, `--dss-radius-sm` para um menor, ou `--dss-radius-full` para elementos circulares.
-*   **Cores:** Para cores de fundo, texto ou ícones de carregamento, utilizar tokens de superfície e texto do DSS, como `--dss-surface-default` para o fundo principal, `--dss-text-default` para o texto, e `--dss-interactive-primary` para elementos interativos ou de destaque.
+*   **Cores:** Para cores de fundo, texto ou ícones de carregamento, utilizar tokens de superfície e texto do DSS, como `--dss-surface-default` para o fundo principal, `--dss-text-default` para o texto, e `--dss-action-hub` para elementos interativos ou de destaque.
 *   **Duração de Transição:** Para quaisquer animações ou transições (por exemplo, no estado de carregamento), utilizar tokens de duração como `--dss-duration-250` para uma transição padrão, ou `--dss-duration-150` para algo mais rápido.
 
 **Exemplos de uso de tokens:**
@@ -69,7 +69,7 @@ O `DssInfiniteScroll` deve utilizar exclusivamente os tokens de design do DSS pa
 .dss-infinite-scroll__loading-spinner {
   margin-top: var(--dss-spacing-8);
   margin-bottom: var(--dss-spacing-8);
-  color: var(--dss-interactive-primary);
+  color: var(--dss-action-hub);
   transition: opacity var(--dss-duration-250) ease-in-out;
 }
 
@@ -116,7 +116,7 @@ O `DssInfiniteScroll` é um componente de composição que encapsula a lógica d
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 *   **`offset` (Slider/Input Numérico):** Para ajustar o valor do offset em pixels (ex: 0 a 1000).
 *   **`debounce` (Slider/Input Numérico):** Para ajustar o tempo de debounce em milissegundos (ex: 0 a 500).
 *   **`initialIndex` (Input Numérico):** Para definir o índice inicial de paginação.
@@ -138,7 +138,8 @@ O playground deve demonstrar a integração do `DssInfiniteScroll` com uma lógi
 *   Exemplo de uso no modo `reverse`.
 
 ### Estados a Expor
-O playground deve exibir visualmente e/ou através de um painel de depuração os seguintes estados internos do `DssInfiniteScroll`:
-*   **`loading` (Booleano):** Exibir como um badge ou texto (ex: "Carregando..." / "Ocioso").
-*   **`noMore` (Booleano):** Exibir como um badge ou texto (ex: "Sem mais itens" / "Aguardando").
-*   **`currentIndex` (Number):** O índice atual de paginação que seria passado para a função `@load`.
+| Estado | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `loading` | Booleano | Indica se o componente está atualmente carregando mais itens. |
+| `noMore` | Booleano | Indica se não há mais itens para carregar. |
+| `currentIndex` | Number | O índice atual de paginação que seria passado para a função `@load`. |

@@ -61,12 +61,19 @@ O `DssVideo` utilizará exclusivamente tokens do Design System para espaçamento
 ### Cores de Superfície
 
 *   **Fundo do Player/Controles:** `--dss-surface-default`, `--dss-surface-variant`.
+*   **Ações e Destaques:** `--dss-action-hub`, `--dss-action-hub-surface`, `--dss-action-water`, `--dss-action-waste`.
 
 ### Duração de Transição
 
 *   **Transições de Controles:** `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-250`, `--dss-duration-300` (ex: `--dss-duration-250` para fade-in/out de controles).
 
-**Tokens SEMÂNTICOS NÃO PERMITIDOS:** `--dss-padding-md`, `--dss-margin-lg`, `--dss-duration-base`.
+**Tokens SEMÂNTICOS NÃO PERMITIDOS:** `--dss-spacing-4` (quando usado incorretamente como padding-md), `--dss-margin-lg`, `--dss-duration-base`.
+**Correções de Tokens Fantasmas:**
+- Substituir `--dss-spacing-4` por `--dss-spacing-4`.
+- Substituir `--dss-text-subtle` por `--dss-text-subtle`.
+- Substituir `outline: 2px solid white` por `outline: 2px solid white`.
+- Substituir `--dss-action-hub` por `--dss-action-hub`.
+- Substituir `--dss-action-hub-surface` por `--dss-action-hub-surface`.
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
@@ -75,7 +82,7 @@ O `DssVideo` utilizará exclusivamente tokens do Design System para espaçamento
 *   **Controles de Teclado:** Todos os controles de reprodução devem ser navegáveis e operáveis via teclado (Tab, Enter, Espaço).
 *   **Legendas e Audiodescrição:** Suporte para faixas de legendas (WebVTT) e audiodescrição, com opções de ativação/desativação.
 *   **Atributos ARIA:** Uso adequado de `aria-label`, `aria-controls`, `aria-live` para informar o estado do player e dos controles a tecnologias assistivas.
-*   **Foco Visual:** Indicação clara do elemento focado para navegação por teclado.
+*   **Foco Visual:** Indicação clara do elemento focado para navegação por teclado, utilizando `outline: 2px solid white` ou tokens apropriados.
 
 ### Estados
 
@@ -112,7 +119,7 @@ O `DssVideo` pode ser composto por:
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 
 *   **`src` (string):** Campo de texto para inserir a URL ou caminho do vídeo.
 *   **`aspectRatio` (string):** Dropdown com opções como '16/9', '4/3', '1/1'.
@@ -122,20 +129,24 @@ O `DssVideo` pode ser composto por:
 *   **`volume` (number):** Slider para ajustar o volume (0 a 1).
 *   **`muted` (boolean):** Toggle switch para ativar/desativar mudo.
 *   **`poster` (string):** Campo de texto para inserir a URL da imagem de capa.
+*   **`brand` (string):** Dropdown para selecionar a marca visual do player, com opções `hub`, `water`, `waste`.
 
 ### Composite Logic
 
-*   **Alternância de Ícones:** Lógica para alternar entre ícones de play/pause com base no estado de reprodução.
-*   **Sincronização de Barra de Progresso:** Lógica para atualizar a barra de progresso com base no tempo atual do vídeo e duração total.
+*   **Alternância de Ícones:** Lógica para alternar entre ícones de play/pause com base no estado de reprodução (`isPlaying`).
+*   **Sincronização de Barra de Progresso:** Lógica para atualizar a barra de progresso com base no tempo atual do vídeo (`currentTime`) e duração total (`duration`).
 *   **Manipulação de Eventos:** Lógica para lidar com eventos de mídia (play, pause, ended, timeupdate, volumechange) e atualizar o estado interno do componente.
-*   **Fallback de Erro:** Lógica para exibir uma mensagem de erro amigável se o vídeo não puder ser carregado ou reproduzido.
+*   **Fallback de Erro:** Lógica para exibir uma mensagem de erro amigável se o vídeo não puder ser carregado ou reproduzido (`hasError`).
+*   **Aplicação de Brand:** Lógica para aplicar as cores de `hub`, `water` ou `waste` aos controles e barra de progresso com base na prop `brand`.
 
 ### Estados a Expor
 
-*   **`isPlaying` (boolean):** Indica se o vídeo está reproduzindo.
-*   **`currentTime` (number):** Tempo atual de reprodução do vídeo em segundos.
-*   **`duration` (number):** Duração total do vídeo em segundos.
-*   **`isMuted` (boolean):** Indica se o vídeo está mudo.
-*   **`currentVolume` (number):** Volume atual do vídeo (0 a 1).
-*   **`hasError` (boolean):** Indica se ocorreu um erro na reprodução do vídeo.
-*   **`isLoading` (boolean):** Indica se o vídeo está carregando.
+| Estado | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `isPlaying` | `boolean` | Indica se o vídeo está reproduzindo. |
+| `currentTime` | `number` | Tempo atual de reprodução do vídeo em segundos. |
+| `duration` | `number` | Duração total do vídeo em segundos. |
+| `isMuted` | `boolean` | Indica se o vídeo está mudo. |
+| `currentVolume` | `number` | Volume atual do vídeo (0 a 1). |
+| `hasError` | `boolean` | Indica se ocorreu um erro na reprodução do vídeo. |
+| `isLoading` | `boolean` | Indica se o vídeo está carregando. |

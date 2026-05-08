@@ -1,5 +1,5 @@
 # Pré-prompt Oficial — DssHeader
-**Versão do Pré-prompt:** 1.0
+**Versão do Pré-prompt:** 1.1
 **Data de Criação:** 2026-04-17
 **Status:** Aprovado (componente selado em 2026-04-17)
 **Família:** Superfícies e Layout
@@ -12,7 +12,7 @@
 - **Nome do Componente:** DssHeader
 - **Família:** Superfícies e Layout
 - **Nível de Composição:** Nível 3 (Composição de Segundo Grau)
-- **Golden Reference:** DssCard (como container estrutural de alto nível)
+- **Golden Reference:** DssBadge (como referência para componentes não-interativos)
 - **Golden Context:** DssLayout (container pai futuro, Nível 4) → substituído por DssToolbar (selado) como Golden Context efetivo
 - **Componente Quasar Base:** QHeader
 - **Dependência Direta:** DssToolbar (Nível 1)
@@ -29,9 +29,9 @@ O QHeader nativo injeta variáveis CSS no QLayout pai para calcular o offset do 
 
 **Mitigação:** O DssHeader não deve alterar o z-index nativo nem as propriedades de posicionamento (`position: fixed/absolute`) aplicadas pelo Quasar. As customizações devem se restringir a bordas, sombras (elevation) e cores de fundo.
 
-### Risco Secundário: bg-primary !important do QHeader
+### Risco Secundário: bg-hub !important do QHeader
 
-O QHeader aplica `bg-primary !important` como fundo padrão. Para sobrescrever com `--dss-surface-default`, é necessário usar `!important` no CSS do DssHeader. Documentado como EXC-02.
+O QHeader aplica `bg-hub !important` como fundo padrão. Para sobrescrever com `--dss-surface-default`, é necessário usar `!important` no CSS do DssHeader. Documentado como EXC-02.
 
 **Padrão correto (✅):**
 ```scss
@@ -91,14 +91,20 @@ O componente deve ser um wrapper direto do `<q-header>`. O slot default é desti
 
 | Token | Uso |
 |-------|-----|
-| `--dss-surface-default` | Cor de fundo (sobrescreve `bg-primary !important`) |
+| `--dss-surface-default` | Cor de fundo (sobrescreve `bg-hub !important`) |
 | `--dss-text-body` | Cor de texto padrão |
 | `--dss-elevation-2` | Sombra da variante `elevated` |
 | `--dss-border-width-thin` | Espessura da borda na variante `bordered` |
 | `--dss-gray-200` | Cor da borda na variante `bordered` |
 | `--dss-border-width-md` | Borda reforçada em `prefers-contrast: more` |
+| `--dss-spacing-4` | Espaçamento interno (substitui `--dss-spacing-4`) |
+| `--dss-text-subtle` | Cor de texto secundário (substitui `--dss-text-subtle`) |
+| `--dss-action-hub` | Cor de ação principal (substitui `--dss-action-hub`) |
+| `--dss-action-hub-surface` | Superfície de ação principal (substitui `--dss-action-hub-surface`) |
 
 **Tokens rejeitados do pré-prompt original:** `--dss-shadow-2` (inexistente) → substituído por `--dss-elevation-2`; `--dss-border-subtle` (inexistente) → substituído por `var(--dss-border-width-thin) solid var(--dss-gray-200)`.
+**Tokens fantasmas corrigidos:** `--dss-spacing-4` → `--dss-spacing-4`, `--dss-text-subtle` → `--dss-text-subtle`, `outline: 2px solid white` → removido (usar `outline: 2px solid white`), `--dss-action-hub` → `--dss-action-hub`, `--dss-action-hub-surface` → `--dss-action-hub-surface`.
+**Nomenclatura de brand corrigida:** "hub", "water", "waste" substituídos por "hub", "water", "waste".
 
 ---
 
@@ -142,7 +148,7 @@ O componente deve ser um wrapper direto do `<q-header>`. O slot default é desti
 | ID | Descrição | Arquivo |
 |----|-----------|---------|
 | EXC-01 | `<q-layout>` no exemplo (DssLayout Nível 4 inexistente) | `DssHeader.example.vue` |
-| EXC-02 | `!important` em background (sobrescreve `bg-primary !important` do QHeader) | `2-composition/_base.scss` |
+| EXC-02 | `!important` em background (sobrescreve `bg-hub !important` do QHeader) | `2-composition/_base.scss` |
 | EXC-03 | System color keywords em forced-colors | `4-output/_states.scss` |
 | EXC-04 | Valores hardcoded em print incluindo `position: static` | `4-output/_states.scss` |
 
@@ -160,10 +166,37 @@ O componente deve ser um wrapper direto do `<q-header>`. O slot default é desti
 
 ---
 
-## 8. Histórico
+## 8. Superfície de Playground
+
+### Controles Obrigatórios
+
+| Controle | Tipo | Valores Permitidos | Descrição |
+|----------|------|--------------------|-----------|
+| `elevated` | Toggle | `true`, `false` | Ativa a sombra de elevação |
+| `bordered` | Toggle | `true`, `false` | Ativa a borda inferior |
+| `brand` | Select | `hub`, `water`, `waste` | Define a cor de brand do toolbar interno |
+
+### Composite Logic
+
+O DssHeader orquestra a renderização do DssToolbar. A lógica de composição garante que as propriedades de brand (`hub`, `water`, `waste`) sejam repassadas corretamente para os componentes filhos, sem que o DssHeader assuma a responsabilidade de renderizar as cores diretamente. O uso de `elevated` e `bordered` altera as classes CSS aplicadas ao container principal.
+
+### Estados a Expor
+
+| Estado | Descrição |
+|--------|-----------|
+| `elevated` | Exibe o header com sombra de elevação |
+| `bordered` | Exibe o header com borda inferior |
+| `brand="hub"` | Exibe o header com toolbar na cor hub |
+| `brand="water"` | Exibe o header com toolbar na cor water |
+| `brand="waste"` | Exibe o header com toolbar na cor waste |
+
+---
+
+## 9. Histórico
 
 | Data | Evento |
 |------|--------|
 | 2026-04-17 | Pré-prompt criado e componente implementado |
 | 2026-04-17 | Auditoria DSS v2.5 executada — 2 NCs, 3 GAPs identificados |
 | 2026-04-17 | NCs e GAPs corrigidos — Selo DSS v2.2 emitido |
+| 2026-05-08 | Correção de tokens fantasmas, nomenclatura de brand e adição da Seção 8 |

@@ -104,7 +104,38 @@ Os estados visuais (`hover`, `focus`, `disabled`) são delegados 100% aos compon
 
 ---
 
-## 8. CENÁRIOS DE USO (Exemplos Obrigatórios — Mínimo 5)
+## 8. SUPERFÍCIE DE PLAYGROUND
+
+Esta seção detalha os controles obrigatórios, a lógica de composição e os estados a serem expostos para o `DssOptionGroup`.
+
+### 8.1 Controles Obrigatórios
+
+O `DssOptionGroup` deve ser capaz de renderizar e gerenciar:
+- `DssRadio`
+- `DssCheckbox`
+- `DssToggle`
+
+### 8.2 Composite Logic (Concreta)
+
+O componente deve iterar sobre a prop `options` e, para cada item, renderizar o componente DSS apropriado (`DssRadio`, `DssCheckbox`, ou `DssToggle`) com base na prop `type` do `DssOptionGroup`. O `v-model` e outras props visuais devem ser passados para os filhos, garantindo que o `DssOptionGroup` atue como um controlador de estado centralizado. A lógica de seleção e deseleção deve ser gerenciada internamente, emitindo o evento `update:modelValue` com o valor correto.
+
+### 8.3 Estados a Expor
+
+| Estado | Descrição | Exemplo de Uso |
+|---|---|---|
+| **Padrão** | Estado inicial do componente, sem seleção ou com seleção padrão. | `<DssOptionGroup :options="myOptions" v-model="selected" />` |
+| **Selecionado** | Um ou mais itens estão selecionados. | `v-model` reflete o(s) valor(es) selecionado(s). |
+| **Desabilitado** | O grupo inteiro ou itens específicos estão desabilitados. | `<DssOptionGroup :options="myOptions" v-model="selected" disable />` ou `options: [{ label: 'Item', value: 'item', disable: true }]` |
+| **Somente Leitura** | O grupo inteiro ou itens específicos estão em modo somente leitura. | `<DssOptionGroup :options="myOptions" v-model="selected" readonly />` |
+| **Hover** | Estado de foco do mouse sobre um item. | Visualização de feedback de interação. |
+| **Focus** | Estado de foco via teclado sobre um item. | Indicador de acessibilidade. |
+| **Brand: Hub** | Aplicação da paleta de cores `hub`. | `<DssOptionGroup :options="myOptions" v-model="selected" color="hub" />` |
+| **Brand: Water** | Aplicação da paleta de cores `water`. | `<DssOptionGroup :options="myOptions" v-model="selected" color="water" />` |
+| **Brand: Waste** | Aplicação da paleta de cores `waste`. | `<DssOptionGroup :options="myOptions" v-model="selected" color="waste" />` |
+
+---
+
+## 9. CENÁRIOS DE USO (Exemplos Obrigatórios — Mínimo 5)
 
 1. **Básico (Radio)** — Grupo vertical de DssRadio.
 2. **Checkbox Múltiplo** — Grupo de DssCheckbox com `v-model` em array.
@@ -114,13 +145,13 @@ Os estados visuais (`hover`, `focus`, `disabled`) são delegados 100% aos compon
 
 ---
 
-## 9. EXCEÇÕES PREVISTAS
+## 10. EXCEÇÕES PREVISTAS
 
 Nenhuma exceção aos Gates v2.4 é prevista inicialmente, pois a abordagem de reconstrução (em vez de wrap) evita conflitos de CSS e garante o isolamento perfeito.
 
 ---
 
-## 10. INSTRUÇÃO DE EXECUÇÃO
+## 11. INSTRUÇÃO DE EXECUÇÃO
 
 Após ler e compreender este pré-prompt, o agente de execução deve:
 1. **Confirmar** o entendimento da Decisão Arquitetural Crítica: **NÃO usar `<q-option-group>`**, mas sim iterar e renderizar `<dss-radio>`, `<dss-checkbox>` e `<dss-toggle>`.

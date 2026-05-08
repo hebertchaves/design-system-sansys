@@ -14,7 +14,7 @@
 | **Fase** | Fase 2 (Componente Estrutural/Interativo) |
 | **Nível de Execução** | Nível 1 — Independente |
 | **Classificação** | Elemento individual de trilha de navegação (breadcrumb) |
-| **Golden Reference** | `DssButton` (para estados interativos quando clicável) |
+| **Golden Reference** | `DssChip` (para estados interativos quando clicável) |
 | **Golden Context** | `DssBreadcrumbs` (container pai futuro — Nível 2) |
 
 **Justificativa da Fase 2:** O `DssBreadcrumbsEl` é um elemento de navegação que pode ser clicável (link) ou estático (item atual). Ele compõe `DssIcon` internamente e serve como bloco de construção fundamental para o `DssBreadcrumbs` (Nível 2).
@@ -109,7 +109,46 @@ O `DssBreadcrumbsEl` é um elemento de navegação estrutural.
 
 ---
 
-## 8. EXCEÇÕES PREVISTAS
+## 8. SUPERFÍCIE DE PLAYGROUND
+
+### 8.1 Controles Obrigatórios
+
+Para garantir a testabilidade e a flexibilidade do `DssBreadcrumbsEl`, os seguintes controles devem ser expostos no Storybook ou ambiente de playground:
+
+- **`label` (String):** Permite alterar o texto exibido no item do breadcrumb. Essencial para testar diferentes comprimentos de texto e internacionalização.
+- **`icon` (String):** Permite adicionar ou remover um ícone, testando a renderização com e sem o elemento visual.
+- **`to` (String | Object):** Controla o comportamento de link do item. Deve ser possível alternar entre um link válido (para testar estados interativos) e `null` ou `undefined` (para testar o estado estático).
+- **`href` (String):** Alternativa ao `to` para links externos. Deve ser testável em conjunto com `to` (mutuamente exclusivo).
+- **`disable` (Boolean):** Permite ativar e desativar o item, verificando os estilos e a inatividade esperada.
+- **`aria-current` (String):** Embora gerenciado pelo componente pai, é crucial poder forçar este atributo para testes de acessibilidade do `DssBreadcrumbsEl` isoladamente, garantindo que a marcação `aria-current="page"` seja aplicada corretamente no item estático.
+
+### 8.2 Lógica Composta (Concrete Logic)
+
+A lógica central do `DssBreadcrumbsEl` reside na sua capacidade de adaptar-se dinamicamente com base na presença das props `to` ou `href`. Esta é uma implementação concreta da dualidade link/texto:
+
+- **Renderização Condicional de Tag:**
+  - Se `to` ou `href` estiver presente e não for `null`/`undefined`, o componente deve renderizar um elemento `<a>` (ou a `tag` especificada pelo usuário, se aplicável) para garantir a semântica de link e a navegabilidade. Este elemento deve ser focado e clicável.
+  - Se `to` e `href` estiverem ausentes ou `null`/`undefined`, o componente deve renderizar um elemento `<span>` (ou a `tag` especificada pelo usuário) para um item estático. Este elemento não deve ser interativo.
+- **Aplicação de Estilos Baseados no Estado:**
+  - O componente deve aplicar classes CSS ou estilos inline que diferenciem visualmente os estados clicável (com `hover`, `focus-visible`) e estático (sem interação, com `font-weight` semibold).
+  - A propriedade `text-decoration: underline` deve ser aplicada especificamente no estado `:hover` de itens clicáveis, conforme a exceção `EXC-02`.
+- **Propagação de Atributos de Acessibilidade:**
+  - O `DssBreadcrumbsEl` deve ser capaz de receber e propagar atributos arbitrários via `v-bind="$attrs"`, garantindo que `aria-current="page"` possa ser aplicado ao item estático quando ele representa a página atual na trilha de navegação.
+
+### 8.3 Estados a Expor
+
+| Estado | Descrição | Props/Contexto | Tokens/Estilos Aplicados |
+|---|---|---|---|
+| **Padrão (Clicável)** | Item de navegação interativo, aguardando interação. | `label="Home"`, `to="/home"` | `var(--dss-text-subtle)`, `text-decoration: none` |
+| **Hover (Clicável)** | Item clicável com o cursor sobre ele. | `label="Home"`, `to="/home"` + `:hover` | `var(--dss-text-body)`, `text-decoration: underline` |
+| **Focus-visible (Clicável)** | Item clicável focado via teclado. | `label="Home"`, `to="/home"` + `:focus-visible` | `var(--dss-focus-ring)` |
+| **Desabilitado (Clicável)** | Item clicável, mas temporariamente inativo. | `label="Home"`, `to="/home"`, `disable=true` | `var(--dss-opacity-disabled)`, `pointer-events: none` |
+| **Estático (Atual)** | Item não interativo, representando a página atual. | `label="Página Atual"`, `aria-current="page"` | `var(--dss-text-body)`, `font-weight: var(--dss-font-weight-semibold)` |
+| **Estático (Outro)** | Item não interativo, parte da trilha, mas não a página atual. | `label="Categoria"` | `var(--dss-text-body)` |
+
+---
+
+## 9. EXCEÇÕES PREVISTAS
 
 ### EXC-01: Seletor Composto com Classe Quasar Interna (Level 1 DOM Pattern)
 - **Justificativa:** O `QBreadcrumbsEl` aplica a classe `.q-breadcrumbs__el` no elemento raiz renderizado. O DSS usa o seletor composto `.dss-breadcrumbs-el.q-breadcrumbs__el` para aplicar estilos com especificidade adequada sem recorrer a seletores descendentes. Esta é uma exceção formal ao Gate de Composição v2.4 (Regra 1) — o seletor referencia uma classe interna do Quasar, mas o padrão segue o **Level 1 DOM pattern** consolidado na Fase 2 (precedentes: DssTabPanel EXC-01, DssTabPanels EXC-01).
@@ -121,7 +160,7 @@ O `DssBreadcrumbsEl` é um elemento de navegação estrutural.
 
 ---
 
-## 9. INSTRUÇÃO DE EXECUÇÃO
+## 10. INSTRUÇÃO DE EXECUÇÃO
 
 Após ler e compreender este pré-prompt, o agente de execução deve:
 1. **Confirmar** o entendimento da dualidade link/texto e a necessidade de estilos distintos para cada estado.

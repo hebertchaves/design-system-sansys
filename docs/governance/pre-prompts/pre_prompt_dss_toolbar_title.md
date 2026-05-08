@@ -43,29 +43,75 @@ O componente deve ser um wrapper direto do `<q-toolbar-title>`. O slot `default`
 
 ### 3.1. Props Expostas (Permitidas)
 
-- `shrink` (Boolean) — Permite que o título encolha (shrink) em vez de crescer (grow) para ocupar o espaço disponível. Útil quando há múltiplos títulos ou elementos flexíveis na mesma toolbar.
+O `DssToolbarTitle` expõe um conjunto limitado de propriedades para garantir sua integridade e propósito como um título tipográfico dentro do `DssToolbar`. As props permitidas são cuidadosamente selecionadas para oferecer flexibilidade sem comprometer a governança do Design System.
+
+- **`shrink`** (Boolean, padrão: `false`)
+  - **Descrição:** Esta propriedade booleana controla o comportamento de flexibilidade do título dentro do `DssToolbar`. Quando `true`, o `DssToolbarTitle` permite que seu conteúdo encolha para ocupar apenas o espaço mínimo necessário, em vez de expandir para preencher o espaço disponível. Isso é particularmente útil em cenários onde múltiplos elementos flexíveis coexistem na mesma barra de ferramentas, como um título que deve ceder espaço a botões de ação ou outros componentes interativos.
+  - **Exemplo de Uso:** Em uma `DssToolbar` com um `DssToolbarTitle` e um `DssButton` alinhados, `shrink` pode ser usado para garantir que o título não force o botão para fora da tela em larguras menores.
+  - **Mapeamento Interno:** Esta prop geralmente se traduz em uma classe CSS ou estilo inline que ajusta as propriedades `flex-grow` e `flex-shrink` do elemento raiz do componente, como `flex: 0 1 auto` quando `shrink` é `true`.
+
+- **`tag`** (String, padrão: `'div'`)
+  - **Descrição:** Permite especificar a tag HTML semântica que será renderizada como o elemento raiz do `DssToolbarTitle`. Isso é crucial para a acessibilidade e SEO, permitindo que o título seja marcado como um `<h1>`, `<h2>`, etc., dependendo de sua importância hierárquica na página.
+  - **Exemplo de Uso:** Para o título principal de uma página, o uso de `<DssToolbarTitle tag="h1">Meu Título</DssToolbarTitle>` é recomendado.
+  - **Considerações:** O uso desta prop deve ser feito com cautela para manter a estrutura semântica correta da página. O DSS garante que a tipografia visual permaneça consistente, independentemente da tag semântica escolhida.
+
+- **`ellipsis`** (Boolean, padrão: `true`)
+  - **Descrição:** Controla se o texto do título deve ser truncado com reticências (`...`) quando excede a largura disponível. Quando `false`, o texto pode quebrar linha ou ser cortado, dependendo do comportamento padrão do navegador e do container pai.
+  - **Exemplo de Uso:** Em casos raros onde o truncamento não é desejado, esta prop pode ser definida como `false`.
+  - **Mapeamento Interno:** Ativa ou desativa as propriedades CSS `text-overflow: ellipsis`, `white-space: nowrap` e `overflow: hidden`.
 
 ### 3.2. Props Bloqueadas (Governança DSS)
 
+A governança do DSS impõe restrições rigorosas sobre quais propriedades podem ser expostas para garantir a consistência visual e funcional dos componentes. As props listadas abaixo são explicitamente bloqueadas para o `DssToolbarTitle`.
+
 ```json
-"propsBlocked": ["active", "color"],
+"propsBlocked": [
+  "active",
+  "color",
+  "align",
+  "dense"
+],
 "propsBlockedJustification": {
-  "active": "O DssToolbarTitle não possui estado ativo. A navegação é feita via DssTab ou DssMenu.",
-  "color": "A cor do texto é herdada do DssToolbar pai (que gerencia a brand) para garantir contraste acessível."
+  "active": "O DssToolbarTitle é um componente puramente tipográfico e não possui estados interativos como 'ativo'. A interatividade e navegação são gerenciadas por componentes irmãos ou pais, como `DssTab` ou `DssMenu`.",
+  "color": "A cor do texto do `DssToolbarTitle` é intencionalmente herdada do `DssToolbar` pai. Isso garante que o título sempre tenha o contraste adequado em relação ao fundo da toolbar, que pode variar com a `brand` (hub, water, waste) e o tema (claro/escuro). Definir uma cor diretamente no título violaria essa regra de contraste e a hierarquia visual.",
+  "align": "O alinhamento do texto dentro do `DssToolbarTitle` é controlado pelo `DssToolbar` pai através de suas propriedades de layout flexbox. Permitir que o título defina seu próprio alinhamento introduziria inconsistências e dificultaria a manutenção do layout geral da toolbar.",
+  "dense": "A propriedade `dense` geralmente afeta o espaçamento e o tamanho de componentes para uma versão mais compacta. No caso do `DssToolbarTitle`, seu tamanho e espaçamento são intrínsecos à sua tipografia (Heading 4) e ao contexto do `DssToolbar`. Modificar isso diretamente no título comprometeria a escala tipográfica do DSS."
 }
 ```
 
 ## 4. Governança de Tokens e CSS
 
-O `DssToolbarTitle` deve utilizar os seguintes tokens tipográficos para sobrescrever o padrão do Quasar:
+O `DssToolbarTitle` é um exemplo primordial de como o DSS impõe sua escala tipográfica sobre componentes base de frameworks. Para garantir a adesão total ao Design System, o `DssToolbarTitle` deve sobrescrever explicitamente os estilos padrão do `QToolbarTitle` do Quasar utilizando os tokens de design semânticos do DSS. Esta abordagem garante que qualquer atualização nos tokens do DSS seja refletida automaticamente no componente, mantendo a consistência.
 
-- **Font Family:** `--dss-font-family-sans`
-- **Font Size:** `--dss-heading-4-size` (20px) — substitui os 21px nativos
-- **Font Weight:** `--dss-heading-4-weight` (Medium/500) — substitui o normal/400 nativo
-- **Line Height:** `--dss-heading-4-line-height` (1.2)
-- **Letter Spacing:** `normal` (remove o 0.01em nativo)
+Os tokens tipográficos essenciais a serem aplicados são:
 
-*Nota: A cor do texto (`color`) não deve ser definida no componente, permitindo que ele herde `--dss-text-body` ou `--dss-text-inverse` do `DssToolbar` pai.*
+- **`--dss-font-family-sans`**
+  - **Propósito:** Define a família de fontes principal para o texto do título, garantindo que a fonte padrão do DSS seja utilizada em vez de qualquer fonte definida pelo Quasar ou pelo navegador.
+  - **Valor Esperado:** Geralmente uma pilha de fontes como `'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif`.
+
+- **`--dss-heading-4-size`** (20px)
+  - **Propósito:** Define o tamanho da fonte para o título, substituindo o valor nativo de 21px do `QToolbarTitle`. Isso alinha o título com a escala de `Heading 4` do DSS.
+  - **Mecanismo:** Aplica `font-size: var(--dss-heading-4-size);`.
+
+- **`--dss-heading-4-weight`** (Medium/500)
+  - **Propósito:** Define o peso da fonte, alterando o `normal/400` nativo para `Medium/500`, conforme especificado para `Heading 4` no DSS.
+  - **Mecanismo:** Aplica `font-weight: var(--dss-heading-4-weight);`.
+
+- **`--dss-heading-4-line-height`** (1.2)
+  - **Propósito:** Garante que a altura da linha do título esteja em conformidade com as diretrizes tipográficas do DSS para `Heading 4`, otimizando a legibilidade.
+  - **Mecanismo:** Aplica `line-height: var(--dss-heading-4-line-height);`.
+
+- **`letter-spacing: normal`**
+  - **Propósito:** Remove qualquer espaçamento de letra (`letter-spacing`) padrão que possa ser aplicado pelo `QToolbarTitle` (como `0.01em`), garantindo que o espaçamento seja o padrão `normal` para `Heading 4`.
+  - **Mecanismo:** Aplica `letter-spacing: normal;`.
+
+- **`text-transform: none`**
+  - **Propósito:** Garante que o texto do título não seja transformado automaticamente para maiúsculas ou outras formas, respeitando o caso original do conteúdo fornecido.
+  - **Mecanismo:** Aplica `text-transform: none;`.
+
+**Governança de Cores:**
+
+A cor do texto (`color`) do `DssToolbarTitle` é um aspecto crítico da governança de tokens. Ela **não deve ser definida diretamente** no componente. Em vez disso, o `DssToolbarTitle` deve herdar sua cor do `DssToolbar` pai. O `DssToolbar` é responsável por gerenciar a `brand` (hub, water, waste) e o tema (claro/escuro), e ele aplicará os tokens de cor apropriados, como `--dss-text-body` (para fundos claros) ou `--dss-text-inverse` (para fundos escuros/coloridos), garantindo o contraste acessível e a consistência visual em todo o sistema.
 
 ## 5. Acessibilidade e Estados
 

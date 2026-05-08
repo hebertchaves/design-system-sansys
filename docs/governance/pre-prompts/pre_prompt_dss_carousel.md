@@ -53,7 +53,11 @@ O `DssCarousel` deve utilizar exclusivamente os tokens numéricos/padrão do DSS
 *   **Raio das bordas**: `--dss-radius-md` (para cantos arredondados dos itens ou do próprio carrossel).
 *   **Duração da transição**: `--dss-duration-250` (para a velocidade da animação de troca de slide).
 *   **Cores de superfície**: `--dss-surface-default` (para o fundo do carrossel ou dos indicadores).
-*   **Cores de texto/ícones**: `--dss-text-primary` (para a cor dos ícones de navegação ou texto dos indicadores).
+*   **Cores de texto/ícones**: `--dss-text-hub` (para a cor dos ícones de navegação ou texto dos indicadores).
+*   **Ação Principal**: `--dss-action-hub` e `--dss-action-hub-surface` para botões de ação dentro do carrossel.
+*   **Foco**: `outline: 2px solid white` para o anel de foco.
+*   **Espaçamento Menor**: `--dss-spacing-4` para pequenos ajustes.
+*   **Texto Sutil**: `--dss-text-subtle` para descrições secundárias.
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
@@ -88,7 +92,7 @@ O `DssCarousel` é composto por um contêiner principal, os slides (que podem co
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 *   `currentSlide` (v-model): Número do slide atualmente visível.
 *   `items`: Array de dados para popular os slides.
 *   `showNavigationArrows`: Booleano para exibir/ocultar as setas de navegação.
@@ -104,6 +108,12 @@ O `DssCarousel` é composto por um contêiner principal, os slides (que podem co
 *   A `height` pode ser fixa ou adaptativa, dependendo do conteúdo dos slides.
 
 ### Estados a Expor
-*   `currentSlideIndex`: O índice do slide atualmente ativo.
-*   `isAutoplaying`: Booleano indicando se o autoplay está ativo.
-*   `isHovering`: Booleano indicando se o mouse está sobre o carrossel.
+
+| Estado | Descrição |
+| :--- | :--- |
+| `currentSlideIndex` | O índice do slide atualmente ativo. |
+| `isAutoplaying` | Booleano indicando se o autoplay está ativo. |
+| `isHovering` | Booleano indicando se o mouse está sobre o carrossel. |
+
+---
+*Nota: Este documento foi revisado para garantir conformidade com as diretrizes de nomenclatura de brand (hub, water, waste) e substituição de tokens fantasmas.*

@@ -3,7 +3,7 @@
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
 ### Golden Reference
-Para componentes interativos, a referência dourada é o **DssChip**.
+Para componentes interativos, a referência dourada é o **DssChip**. Para componentes não-interativos, a referência dourada é o **DssBadge**.
 
 ### Golden Context
 O `DssTable` é um componente fundamental para a exibição de dados tabulares de forma estruturada e interativa dentro do Design System. Ele oferece funcionalidades essenciais como ordenação, paginação, filtragem e seleção de linhas, garantindo uma experiência de usuário consistente e acessível para a manipulação de grandes volumes de informação. Seu design deve ser flexível para acomodar diferentes tipos de dados e complexidades, mantendo a integridade visual e funcional do DSS.
@@ -62,14 +62,15 @@ O `DssTable` deve utilizar exclusivamente os tokens numéricos/padrão do DSS pa
 *   **Cores de Superfície**: `--dss-surface-default` (para o fundo da tabela), `--dss-surface-hover` (para linhas em hover), `--dss-surface-selected` (para linhas selecionadas).
 *   **Duração de Transição**: `--dss-duration-250` (para transições de hover ou seleção).
 *   **Bordas**: `--dss-border-width-1`, `--dss-border-color-default`.
+*   **Foco**: `outline: 2px solid white` (para anéis de foco em elementos interativos).
 
 ### Tokens Permitidos
 *   **Espaçamento**: `--dss-spacing-1` a `--dss-spacing-96`
 *   **Raio**: `--dss-radius-sm`, `--dss-radius-md`, `--dss-radius-lg`, `--dss-radius-full`
 *   **Duração**: `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-250`, `--dss-duration-300`
-*   **Superfície**: `--dss-surface-default`, `--dss-surface-hover`, `--dss-surface-selected`, `--dss-surface-elevated`, etc. (conforme tokens de superfície existentes no DSS).
-*   **Cores**: `--dss-color-primary`, `--dss-color-secondary`, `--dss-color-info`, `--dss-color-success`, `--dss-color-warning`, `--dss-color-danger`, `--dss-color-neutral`, etc. (conforme tokens de cor existentes no DSS).
-*   **Tipografia**: `--dss-font-family-base`, `--dss-font-size-md`, `--dss-font-weight-regular`, `--dss-line-height-md`, etc. (conforme tokens de tipografia existentes no DSS).
+*   **Superfície**: `--dss-surface-default`, `--dss-surface-hover`, `--dss-surface-selected`, `--dss-surface-elevated`, `--dss-action-hub-surface`, etc. (conforme tokens de superfície existentes no DSS).
+*   **Cores**: `--dss-action-hub`, `--dss-color-water`, `--dss-color-waste`, `--dss-color-info`, `--dss-color-success`, `--dss-color-warning`, `--dss-color-danger`, `--dss-color-neutral`, etc. (conforme tokens de cor existentes no DSS).
+*   **Tipografia**: `--dss-font-family-base`, `--dss-font-size-md`, `--dss-font-weight-regular`, `--dss-line-height-md`, `--dss-text-subtle`, etc. (conforme tokens de tipografia existentes no DSS).
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
@@ -109,8 +110,7 @@ O `DssTable` deve ser altamente componível, permitindo a injeção de conteúdo
 
 ## 7. EXCEÇÕES PREVISTAS
 
-*   **Tabelas com Conteúdo Extenso**: Para tabelas com muitas colunas que excedem a largura da tela, deve-se prever rolagem horizontal (`overflow-x: auto`) ou a possibilidade de 
-ocultar/exibir colunas.
+*   **Tabelas com Conteúdo Extenso**: Para tabelas com muitas colunas que excedem a largura da tela, deve-se prever rolagem horizontal (`overflow-x: auto`) ou a possibilidade de ocultar/exibir colunas.
 *   **Tabelas Aninhadas**: Embora não seja o caso de uso primário, a estrutura deve permitir a renderização de tabelas aninhadas, se necessário, através de slots de expansão de linha.
 *   **Customização de Células Complexas**: A capacidade de renderizar componentes Vue complexos dentro das células, exigindo que o slot de célula forneça acesso aos dados da linha e da coluna.
 
@@ -118,7 +118,7 @@ ocultar/exibir colunas.
 
 O Playground para o `DssTable` deve demonstrar todas as suas capacidades e variações, permitindo que os desenvolvedores explorem e testem o componente em diferentes cenários.
 
-### Controles
+### Controles Obrigatórios
 *   **Dados**: Campo para inserir dados JSON simulados ou selecionar conjuntos de dados predefinidos (pequeno, médio, grande).
 *   **Colunas**: Controles para definir as colunas (nome, rótulo, ordenável, alinhamento).
 *   **Paginação**: Controles para habilitar/desabilitar paginação, definir itens por página, página atual.
@@ -127,8 +127,7 @@ O Playground para o `DssTable` deve demonstrar todas as suas capacidades e varia
 *   **Densidade**: Radio buttons para `compact`, `standard`.
 *   **Variante**: Radio buttons para `flat`, `bordered`, `elevated`.
 *   **Loading**: Checkbox para simular estado de carregamento.
-*   **No Data Label**: Campo de texto para customizar a mensagem de 
-tabela vazia.
+*   **No Data Label**: Campo de texto para customizar a mensagem de tabela vazia.
 *   **Wrap Cells**: Checkbox para habilitar/desabilitar quebra de texto nas células.
 
 ### Composite Logic
@@ -139,9 +138,12 @@ tabela vazia.
 *   **Customização de Slots**: Exemplos de como usar os slots `header` e `row` para renderizar conteúdo personalizado, como botões de ação ou componentes complexos dentro das células.
 
 ### Estados a Expor
-*   `loading`: Boolean que indica se a tabela está carregando dados.
-*   `selectedRows`: Array de objetos representando as linhas selecionadas.
-*   `pagination`: Objeto contendo o estado atual da paginação (página, itens por página, total de páginas).
-*   `filter`: String contendo o valor atual do filtro global.
-*   `sortBy`: String contendo a chave da coluna pela qual a tabela está ordenada.
-*   `sortOrder`: String contendo a ordem da ordenação (`asc`, `desc`).
+
+| Estado | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `loading` | Boolean | Indica se a tabela está carregando dados. |
+| `selectedRows` | Array | Objetos representando as linhas selecionadas. |
+| `pagination` | Object | Estado atual da paginação (página, itens por página, total de páginas). |
+| `filter` | String | Valor atual do filtro global. |
+| `sortBy` | String | Chave da coluna pela qual a tabela está ordenada. |
+| `sortOrder` | String | Ordem da ordenação (`asc`, `desc`). |

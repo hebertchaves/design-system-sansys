@@ -12,7 +12,7 @@
 - **Nome do Componente:** DssFooter
 - **Família:** Superfícies e Layout
 - **Nível de Composição:** Nível 3 (Composição de Segundo Grau)
-- **Golden Reference:** DssCard (como container estrutural de alto nível)
+- **GGolden Reference: DssBadge (como componente não-interativo de layout))
 - **Golden Context:** DssHeader (selado 2026-04-17) — par simétrico de mesma arquitetura
   > ⚠️ **Nota de Correção:** O pré-prompt original (entregue inline) declarou "Golden Context: DssLayout (container pai futuro, Nível 4)". Isso era uso incorreto da terminologia. DssLayout não existe e não tem Selo DSS v2.2. O Golden Context efetivo, conforme `DSS_GOLDEN_COMPONENTS.md` (componente com Selo v2.2 de proximidade semântica máxima), é **DssHeader**. Corrigido neste arquivo.
 - **Componente Quasar Base:** QFooter
@@ -30,9 +30,9 @@ Assim como o QHeader, o QFooter nativo injeta variáveis CSS no QLayout pai para
 
 **Mitigação:** O DssFooter não deve alterar o z-index nativo nem as propriedades de posicionamento (`position: fixed/absolute`) aplicadas pelo Quasar. As customizações devem se restringir a bordas, sombras (elevation) e cores de fundo.
 
-### Risco Secundário: bg-primary !important do QFooter
+### Risco Secundário: bg-hub !important do QFooter
 
-O QFooter aplica `bg-primary !important` como fundo padrão. Para sobrescrever com `--dss-surface-default`, é necessário usar `!important` no CSS do DssFooter. Documentado como EXC-02.
+O QFooter aplica `bg-hub !important` como fundo padrão. Para sobrescrever com `--dss-surface-default`, é necessário usar `!important` no CSS do DssFooter. Documentado como EXC-02.
 
 **Padrão correto (✅):**
 ```scss
@@ -92,7 +92,7 @@ O componente deve ser um wrapper direto do `<q-footer>`. O slot default é desti
 
 | Token | Uso |
 |-------|-----|
-| `--dss-surface-default` | Cor de fundo (sobrescreve `bg-primary !important`) |
+| `--dss-surface-default` | Cor de fundo (sobrescreve `bg-hub !important`) |
 | `--dss-text-body` | Cor de texto padrão |
 | `--dss-border-width-thin` | Espessura da borda superior na variante `bordered` |
 | `--dss-gray-200` | Cor da borda superior na variante `bordered` |
@@ -147,7 +147,7 @@ O componente deve ser um wrapper direto do `<q-footer>`. O slot default é desti
 | ID | Descrição | Arquivo |
 |----|-----------|---------|
 | EXC-01 | `<q-layout>` no exemplo (DssLayout Nível 4 inexistente) | `DssFooter.example.vue` |
-| EXC-02 | `!important` em background (sobrescreve `bg-primary !important` do QFooter) | `2-composition/_base.scss` |
+| EXC-02 | `!important` em background (sobrescreve `bg-hub !important` do QFooter) | `2-composition/_base.scss` |
 | EXC-03 | System color keywords em forced-colors | `4-output/_states.scss` |
 | EXC-04 | Valores hardcoded em print incluindo `position: static` | `4-output/_states.scss` |
 | EXC-05 | Sombra upward `0 -4px 6px rgba(0,0,0,0.30)` — equivalente invertido de `--dss-shadow-md` | `3-variants/_elevated.scss` |
@@ -166,7 +166,43 @@ O componente deve ser um wrapper direto do `<q-footer>`. O slot default é desti
 
 ---
 
-## 8. Histórico
+## 8. Superfície de Playground
+
+A Superfície de Playground do DssFooter é um ambiente controlado para testar e validar o comportamento do componente em diferentes configurações e com diversos conteúdos. Ela deve permitir a manipulação dos controles obrigatórios e a observação dos estados expostos, garantindo que o componente se comporte conforme as especificações do Design System Sansys v2.2.
+
+### Controles Obrigatórios
+
+Para garantir a auditabilidade e testabilidade do DssFooter, os seguintes controles devem estar disponíveis no playground. Estes controles refletem as `props` expostas e as capacidades de slot do componente:
+
+- **`elevated` (Boolean):** Um toggle para ativar ou desativar a sombra de elevação projetada para cima (conforme EXC-05). Isso permite visualizar o impacto visual da elevação em relação ao conteúdo da página.
+- **`bordered` (Boolean):** Um toggle para ativar ou desativar a borda superior sutil. Essencial para verificar a aplicação correta do token `--dss-border-width-thin` e `--dss-gray-200`.
+- **`aria-label` (String):** Um campo de texto para definir o `aria-label` do footer. Crucial para testar a acessibilidade e garantir que o landmark `contentinfo` seja corretamente identificado por tecnologias assistivas.
+- **Conteúdo do Slot Padrão:** Um editor de texto ou área de arrastar e soltar para injetar conteúdo HTML ou outros componentes DSS (como DssToolbar ou DssTabs) dentro do slot padrão do DssFooter. Isso simula cenários de uso reais e valida a governança de composição de Nível 3.
+
+### Composite Logic (Lógica Composta Concreta)
+
+A lógica composta do DssFooter é relativamente simples, pois ele atua primariamente como um container de layout, delegando a maior parte da interatividade aos seus filhos. No entanto, existem aspectos concretos de sua lógica que devem ser observados:
+
+- **Gerenciamento de Elevação:** Quando `elevated` é `true`, o componente aplica a sombra definida em EXC-05. A lógica garante que esta sombra seja projetada para cima, diferenciando-o visualmente do DssHeader. Isso é implementado via CSS, mas a ativação é controlada pela prop.
+- **Aplicação de Borda:** Quando `bordered` é `true`, o DssFooter aplica uma borda superior. A lógica garante que os tokens `--dss-border-width-thin` e `--dss-gray-200` sejam utilizados, e que a borda seja visível e consistente com o restante do Design System.
+- **Integração com QFooter:** O DssFooter encapsula o `QFooter` do Quasar. Sua lógica garante que as `props` repassadas via `$attrs` (como `reveal` e `reveal-offset`) funcionem corretamente, sem interferir na injeção de layout e z-index do Quasar (conforme mitigação do Risco Principal).
+- **Tratamento de `!important`:** A lógica interna do componente, ou a folha de estilo associada, deve lidar com a sobrescrita de `bg-hub !important` do QFooter, aplicando `--dss-surface-default !important` para garantir a cor de fundo correta (EXC-02).
+
+### Estados a Expor
+
+Os estados a seguir devem ser facilmente observáveis e testáveis na Superfície de Playground, seja visualmente ou através de ferramentas de inspeção do navegador:
+
+| Estado | Descrição | Como Observar no Playground |
+|--------|-----------|-----------------------------|
+| **Padrão** | DssFooter sem elevação ou borda. | Estado inicial do componente. |
+| **Elevado** | DssFooter com sombra projetada para cima. | Ativar o controle `elevated`. |
+| **Com Borda** | DssFooter com borda superior. | Ativar o controle `bordered`. |
+| **Modo Escuro** | DssFooter renderizado no tema escuro. | Alternar o tema global da aplicação para escuro (`[data-theme="dark"]`). |
+| **Forced Colors** | DssFooter adaptado para modos de alto contraste. | Ativar o modo de alto contraste do sistema operacional. |
+| **Com Conteúdo** | DssFooter contendo componentes filhos (ex: DssToolbar). | Injetar conteúdo no slot padrão. |
+| **Revelado/Oculto** | DssFooter que aparece/desaparece ao rolar a página. | Simular rolagem da página com a prop `reveal` ativada. |
+
+## 9. Histórico
 
 | Data | Evento |
 |------|--------|

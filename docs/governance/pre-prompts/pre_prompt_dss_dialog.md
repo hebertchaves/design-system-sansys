@@ -3,7 +3,7 @@
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
 ### Golden Reference
-Para componentes interativos, a referência dourada é o `DssChip`.
+Para componentes não-interativos, a referência dourada é o `DssBadge`. Para componentes interativos, a referência dourada é o `DssChip`.
 
 ### Golden Context
 O `DssDialog` é um componente modal que sobrepõe o conteúdo principal da aplicação para exibir informações críticas, solicitar entrada do usuário ou confirmar ações. Ele interrompe o fluxo do usuário para garantir atenção, sendo essencial para interações que exigem foco e decisão imediata. Seu contexto de uso abrange desde alertas simples até formulários complexos, sempre garantindo uma experiência consistente e acessível.
@@ -62,14 +62,14 @@ A estilização do `DssDialog` utilizará exclusivamente tokens numéricos e pad
 ### Exemplos de Tokens a Serem Utilizados
 *   **Espaçamento**: `--dss-spacing-4`, `--dss-spacing-8`, `--dss-spacing-16`, `--dss-spacing-24` para padding e margin internos.
 *   **Raio de Borda**: `--dss-radius-md` para as bordas do diálogo.
-*   **Cores de Superfície**: `--dss-surface-default` para o fundo do diálogo, `--dss-surface-overlay` para o backdrop.
+*   **Cores de Superfície**: `--dss-surface-default` para o fundo do diálogo, `--dss-action-hub-surface` para o backdrop.
 *   **Sombras**: `--dss-shadow-2` para a elevação do diálogo.
 *   **Duração de Transição**: `--dss-duration-250` para as animações de entrada e saída.
 *   **Tipografia**: Tokens de tipografia do DSS para títulos e corpo do texto dentro do diálogo.
-*   **Cores de Texto**: `--dss-text-primary`, `--dss-text-secondary`.
+*   **Cores de Texto: `--dss-text-hub`, `--dss-text-subtle`.`.
 
 ### Restrições
-*   **Proibido**: `--dss-padding-md`, `--dss-duration-base`, `--dss-dialog-background`. Apenas tokens explicitamente definidos no DSS serão utilizados.
+*   **Proibido**: `--dss-spacing-4`, `--dss-duration-base`, `--dss-dialog-background`. Apenas tokens explicitamente definidos no DSS serão utilizados.
 *   Qualquer nova necessidade de token deve ser proposta e aprovada pelo time de Design System.
 
 ## 5. ACESSIBILIDADE E ESTADOS
@@ -141,7 +141,7 @@ O `DssDialog` é um componente de composição, permitindo que outros componente
     <template #footer>
       <div class="dss-dialog-footer">
         <DssButton label="Cancelar" flat @click="isDialogOpen = false" />
-        <DssButton label="Confirmar" color="primary" @click="handleConfirm" />
+        <DssButton label="Confirmar" color="hub" @click="handleConfirm" />
       </div>
     </template>
   </DssDialog>

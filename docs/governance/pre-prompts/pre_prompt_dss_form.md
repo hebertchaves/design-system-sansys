@@ -6,10 +6,10 @@
 O `DssForm` é um componente interativo, e sua Golden Reference é o `DssChip`.
 
 ### Golden Context
-O `DssForm` é um componente fundamental para a coleta e validação de dados em interfaces de usuário. Ele atua como um contêiner para diversos elementos de entrada (inputs), organizando-os de forma lógica e facilitando a interação do usuário. Sua principal função é agrupar campos relacionados, gerenciar o estado de validação e submissão, e garantir uma experiência consistente e acessível para formulários em todo o sistema.
+O `DssForm` é um componente fundamental para a coleta e validação de dados em interfaces de usuário. Ele atua como um contêiner para diversos elementos de entrada (inputs), organizando-os de forma lógica e facilitando a interação do usuário. Sua principal função é agrupar campos relacionados, gerenciar o estado de validação e submissão, e garantir uma experiência consistente e acessível para formulários em todo o sistema. O componente deve suportar fluxos de dados complexos, garantindo a integridade da informação antes de enviá-la ao backend.
 
 ### Justificativa
-A necessidade do `DssForm` surge da demanda por uma solução padronizada e robusta para a criação de formulários. Ele abstrai a complexidade de gerenciamento de estado, validação e acessibilidade, permitindo que os desenvolvedores se concentrem na lógica de negócio. Ao encapsular essas funcionalidades, o `DssForm` promove a reutilização, reduz erros e garante a conformidade com as diretrizes do Design System, resultando em interfaces mais consistentes e de alta qualidade.
+A necessidade do `DssForm` surge da demanda por uma solução padronizada e robusta para a criação de formulários. Ele abstrai a complexidade de gerenciamento de estado, validação e acessibilidade, permitindo que os desenvolvedores se concentrem na lógica de negócio. Ao encapsular essas funcionalidades, o `DssForm` promove a reutilização, reduz erros e garante a conformidade com as diretrizes do Design System, resultando em interfaces mais consistentes e de alta qualidade. Além disso, centraliza o tratamento de erros e o feedback visual, melhorando a experiência do usuário.
 
 ## 2. RISCOS ARQUITETURAIS E GATES
 
@@ -43,6 +43,9 @@ O `DssForm` deve utilizar estritamente os tokens numéricos/padrão do DSS para 
 *   **Raio de Borda**: Utilizar tokens como `--dss-radius-md`, `--dss-radius-lg` para cantos arredondados. Ex: `border-radius: var(--dss-radius-md);`
 *   **Duração de Transição**: Utilizar tokens como `--dss-duration-250`, `--dss-duration-300` para animações e transições. Ex: `transition-duration: var(--dss-duration-250);`
 *   **Superfície**: Utilizar tokens como `--dss-surface-default`, `--dss-surface-alt` para cores de fundo. Ex: `background-color: var(--dss-surface-default);`
+*   **Cores de Ação**: Utilizar `--dss-action-hub` em vez de hub, `--dss-action-water` em vez de water, e `--dss-action-waste` em vez de waste.
+*   **Texto**: Utilizar `--dss-text-subtle` para textos secundários.
+*   **Foco**: Utilizar `outline: 2px solid var(--dss-color-hub)` ou `outline: 2px solid white` para anéis de foco, evitando tokens fantasmas.
 
 **Tokens a serem utilizados (exemplos):**
 *   `--dss-spacing-1` a `--dss-spacing-96`
@@ -50,7 +53,7 @@ O `DssForm` deve utilizar estritamente os tokens numéricos/padrão do DSS para 
 *   `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-250`, `--dss-duration-300`
 *   `--dss-surface-default`, `--dss-surface-alt`, `--dss-surface-inverted` (se aplicável)
 
-**NUNCA inventar tokens com sufixos semânticos que não existem (ex: `--dss-padding-md`, `--dss-duration-base`).**
+**NUNCA inventar tokens com sufixos semânticos que não existem (ex: `--dss-spacing-4`, `--dss-duration-base`).**
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
@@ -95,22 +98,27 @@ O `DssForm` atua como um orquestrador, compondo múltiplos `DssInput`s e `DssBut
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 *   **Prop `loading`**: Um toggle para simular o estado de submissão do formulário.
 *   **Prop `disabled`**: Um toggle para desabilitar/habilitar todos os campos do formulário.
 *   **Prop `autofocus`**: Um toggle para aplicar o foco automático ao primeiro campo do formulário.
 *   **Botão `Reset`**: Para resetar o formulário aos seus valores e estado de validação iniciais.
 *   **Botão `Submit`**: Para acionar a validação e submissão do formulário.
+*   **Prop `color`**: Seleção de cor de destaque do formulário, utilizando as cores da marca: `hub`, `water`, `waste`.
 
 ### Composite Logic
-*   **Validação em Tempo Real**: Demonstração de validação de campos enquanto o usuário digita (on-the-fly).
-*   **Validação de Formulário Completo**: Exemplo de como o formulário se comporta quando o botão de submissão é clicado com campos inválidos.
+*   **Validação em Tempo Real**: Demonstração de validação de campos enquanto o usuário digita (on-the-fly), exibindo mensagens de erro concretas como "Email inválido" ou "Campo obrigatório".
+*   **Validação de Formulário Completo**: Exemplo de como o formulário se comporta quando o botão de submissão é clicado com campos inválidos, destacando os campos com erro.
 *   **Interação com `DssInput`s**: Exibição de como diferentes tipos de `DssInput` (texto, seleção, checkbox) se integram e são validados dentro do `DssForm`.
-*   **Feedback de Submissão**: Simulação de um feedback visual (e.g., spinner, mensagem de sucesso/erro) após a submissão do formulário.
+*   **Feedback de Submissão**: Simulação de um feedback visual (e.g., spinner, mensagem de sucesso/erro) após a submissão do formulário, utilizando as cores `hub` para sucesso e `waste` para erro.
 
 ### Estados a Expor
-*   **`isValid` (boolean)**: Indica se todos os campos do formulário são válidos.
-*   **`isDirty` (boolean)**: Indica se algum campo do formulário foi modificado pelo usuário.
-*   **`isSubmitting` (boolean)**: Indica se o formulário está em processo de submissão.
-*   **`errors` (object)**: Um objeto contendo mensagens de erro para cada campo inválido.
-*   **`values` (object)**: Um objeto contendo os valores atuais de todos os campos do formulário.
+
+| Estado | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `isValid` | boolean | Indica se todos os campos do formulário são válidos. |
+| `isDirty` | boolean | Indica se algum campo do formulário foi modificado pelo usuário. |
+| `isSubmitting` | boolean | Indica se o formulário está em processo de submissão. |
+| `errors` | object | Um objeto contendo mensagens de erro para cada campo inválido. |
+| `values` | object | Um objeto contendo os valores atuais de todos os campos do formulário. |
+| `brandColor` | string | A cor de marca atual aplicada ao formulário (`hub`, `water`, `waste`). |

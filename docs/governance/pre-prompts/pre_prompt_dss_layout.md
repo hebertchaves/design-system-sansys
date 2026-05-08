@@ -9,7 +9,7 @@ Este documento define as diretrizes arquiteturais e de governança para a criaç
 - **Nome do Componente:** `DssLayout`
 - **Família:** Layout Global
 - **Nível de Composição:** Nível 4 (Composição de Terceiro Grau)
-- **Golden Reference:** `DssCard` (como container estrutural base)
+- **Golden Reference:** `DssBadge` (como container estrutural base)
 - **Golden Context:** `DssHeader` (componente de layout Nível 3 mais próximo; mesmo padrão de elemento raiz Quasar como raiz, dark mode, forced-colors e print idênticos — Selo v2.2)
 - **Referência Secundária:** `DssDrawer` (relevante para o padrão EXC-01 de elemento raiz Quasar, mas não usado como baseline de auditoria)
 - **Componente Quasar Base:** `QLayout`
@@ -80,3 +80,62 @@ O arquivo `DssLayout.example.vue` deve cobrir:
 ### EXC-05: Uso de `q-page-container` e `q-page` nativos no arquivo de exemplo
 - **Regra Violada:** Gate de Composição v2.4 — Regra 1 (somente no arquivo de exemplo).
 - **Justificativa:** `DssPageContainer` e `DssPage` são `compositionFuture`. O `DssLayout` requer um container de página para demonstrar o cálculo de offsets. Os nativos Quasar são usados **exclusivamente em `DssLayout.example.vue`** para fins de demonstração. O código fonte (`DssLayout.ts.vue`) permanece 100% aderente. Isenção formal conforme `DSS_IMPLEMENTATION_GUIDE.md`.
+
+## 8. Superfície de Playground
+
+O `DssLayout` deve expor uma superfície de playground no Storybook para permitir a exploração de suas propriedades e comportamentos.
+
+### 8.1. Controles Obrigatórios
+
+| Propriedade | Tipo | Valores Permitidos | Valor Padrão | Descrição |
+| :--- | :--- | :--- | :--- | :--- |
+| `view` | Select | `hHh lpR fFf`, `lHh Lpr lFf`, `hHh Lpr lff` | `hHh lpR fFf` | Define a estrutura do layout. |
+| `container` | Boolean | `true`, `false` | `false` | Permite que o layout seja renderizado dentro de um elemento pai com dimensões fixas. |
+
+### 8.2. Composite Logic
+
+A lógica de composição do `DssLayout` no playground deve demonstrar a integração com os componentes filhos.
+
+```vue
+<template>
+  <div :style="containerStyle">
+    <DssLayout :view="view" :container="container">
+      <DssHeader>
+        <!-- Conteúdo do Header -->
+      </DssHeader>
+      <DssDrawer>
+        <!-- Conteúdo do Drawer -->
+      </DssDrawer>
+      <q-page-container>
+        <q-page>
+          <!-- Conteúdo da Página -->
+        </q-page>
+      </q-page-container>
+      <DssFooter>
+        <!-- Conteúdo do Footer -->
+      </DssFooter>
+    </DssLayout>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+const props = defineProps({
+  view: { type: String, default: 'hHh lpR fFf' },
+  container: { type: Boolean, default: false }
+});
+
+const containerStyle = computed(() => {
+  return props.container ? { height: '400px', border: '1px solid var(--dss-border-subtle)' } : {};
+});
+</script>
+```
+
+### 8.3. Estados a Expor
+
+| Estado | Descrição |
+| :--- | :--- |
+| **Default** | Layout padrão ocupando toda a tela. |
+| **Container** | Layout renderizado dentro de um container com dimensões fixas. |
+| **Right Drawer** | Layout com o drawer posicionado à direita. |

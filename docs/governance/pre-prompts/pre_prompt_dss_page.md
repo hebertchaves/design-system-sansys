@@ -7,7 +7,7 @@
 - **Nome do Componente:** `DssPage`
 - **Família:** Layout Global (Composição de Terceiro Grau)
 - **Nível de Composição:** Nível 4
-- **Golden Reference:** `DssBadge` (Golden Reference oficial para componentes não-interativos)
+- **Golden Reference:** `DssBadge` (para componentes não-interativos) / `DssChip` (para componentes interativos)
 - **Golden Context:** `DssLayout` (baseline arquitetural — container estrutural com lógica de min-height)
 - **Contexto Estrutural:** `DssPageContainer` (container pai semântico obrigatório)
 - **Componente Quasar Base:** `QPage`
@@ -54,6 +54,9 @@ O `DssPage` aplica tokens apenas quando a prop `padding` é verdadeira.
 - **Padding:** Quando `padding="true"`, o componente deve aplicar `--dss-container-padding` (que mapeia para `--dss-spacing-4` / 16px) em todos os lados. Isso substitui a classe `.q-layout-padding` nativa do Quasar, que usa valores hardcoded.
 - **Cor de Fundo:** Transparente (herda `--dss-surface-muted` do `DssLayout`).
 - **Cor de Texto:** Herda `--dss-text-body` do `DssLayout`.
+- **Ações:** Utiliza `--dss-action-hub` para elementos de destaque e `--dss-action-hub-surface` para superfícies de destaque.
+- **Secundário:** Utiliza `--dss-action-water` para elementos secundários.
+- **Aviso/Erro:** Utiliza `--dss-action-waste` para elementos de aviso ou erro.
 
 ## 5. Acessibilidade e Estados
 
@@ -101,3 +104,49 @@ O arquivo `DssPage.example.vue` deve cobrir:
 | **Conteúdo Contido** | Conteúdo com padding DSS | Visual | `padding="true"` |
 | **Sticky Footer** | Altura mínima garantindo footer no final | Comportamental | Volume de Conteúdo = Pouco |
 | **Scrollable** | Altura natural excedendo a tela | Comportamental | Volume de Conteúdo = Muito |
+
+## 9. Considerações Adicionais
+
+### 9.1. Performance
+
+O `DssPage` deve ser leve e não introduzir overhead significativo de renderização. O uso de slots deve ser otimizado para evitar re-renderizações desnecessárias.
+
+### 9.2. Testes
+
+Os testes unitários devem cobrir:
+- Renderização correta do `<q-page>`.
+- Aplicação correta da prop `padding`.
+- Repasse correto de `$attrs` e `$listeners`.
+- Presença do atributo `role="main"`.
+
+### 9.3. Documentação
+
+A documentação do componente deve incluir exemplos claros de uso, destacando a importância do `DssLayout` e `DssPageContainer` para o funcionamento correto do `min-height`.
+
+### 9.4. Evolução Futura
+
+Possíveis melhorias futuras incluem a adição de suporte a layouts complexos (ex: grids) diretamente no `DssPage`, embora isso deva ser avaliado cuidadosamente para não violar o Gate de Responsabilidade v2.4.
+
+### 9.5. Compatibilidade
+
+O `DssPage` deve ser compatível com todas as versões suportadas do Quasar e Vue.js utilizadas no projeto.
+
+### 9.6. Segurança
+
+Não há considerações específicas de segurança para este componente, pois ele não manipula dados sensíveis ou interage diretamente com APIs externas.
+
+### 9.7. Internacionalização
+
+O `DssPage` não contém texto hardcoded, portanto, não requer suporte específico a internacionalização. O conteúdo injetado via slots deve ser internacionalizado pelo desenvolvedor que consome o componente.
+
+### 9.8. Tematização
+
+O componente deve suportar tematização dinâmica através da alteração dos tokens CSS globais. Nenhuma alteração no código do componente deve ser necessária para suportar novos temas.
+
+### 9.9. Manutenção
+
+O código do `DssPage` deve ser mantido limpo e bem documentado, seguindo as diretrizes de estilo do projeto. Qualquer alteração deve ser revisada por pelo menos um outro desenvolvedor antes de ser mesclada.
+
+### 9.10. Conclusão
+
+O `DssPage` é um componente fundamental para a estrutura de layout da aplicação. Sua implementação correta garante uma experiência de usuário consistente e acessível, além de facilitar o desenvolvimento de novas páginas.

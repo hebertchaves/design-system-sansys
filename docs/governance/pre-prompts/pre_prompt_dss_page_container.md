@@ -40,33 +40,81 @@ O componente deve ser um wrapper direto do `<q-page-container>`. O slot `default
 
 ### 3.1. Props Expostas (Permitidas)
 
-Nenhuma prop específica do DSS é adicionada. O componente atua como um pass-through estrutural puro.
+Nenhuma prop específica do DSS é adicionada diretamente ao `DssPageContainer`. Sua função é estritamente estrutural, atuando como um **pass-through puro** para o `<q-page-container>` subjacente. Isso significa que ele não introduz novas propriedades que modifiquem seu comportamento visual ou lógico intrínseco. Quaisquer propriedades passadas para o `DssPageContainer` serão automaticamente repassadas para o `QPageContainer` nativo, garantindo compatibilidade e aderência ao comportamento esperado do Quasar.
+
+**Exemplos de Props do Quasar que seriam repassadas (mas não são governadas pelo DSS):**
+- `padding`: Embora o DSS gerencie o padding dinamicamente, se uma prop `padding` fosse explicitamente passada, ela seria repassada, mas com a ressalva de que o comportamento pode ser sobrescrito pelo motor de layout do Quasar.
+- `class`: Classes CSS adicionais seriam aplicadas ao elemento raiz do `QPageContainer`.
+- `style`: Estilos inline seriam aplicados ao elemento raiz do `QPageContainer`.
+
+**Governança:** A ausência de props DSS explícitas reforça o papel do `DssPageContainer` como um elemento de composição de baixo nível, focado em orquestração de layout e não em personalização de conteúdo ou interação. A responsabilidade por props de conteúdo e interação recai sobre os componentes filhos, como `DssPage`.
 
 ### 3.2. Props Bloqueadas (Governança DSS)
 
-O `QPageContainer` nativo não possui props próprias documentadas na API do Quasar (ele apenas reage ao contexto do `QLayout`). Portanto, não há props a bloquear. O componente deve apenas repassar `$attrs` e slots.
+O `QPageContainer` nativo, por sua natureza de container estrutural, não possui um conjunto extenso de props próprias documentadas na API do Quasar que controlem seu comportamento visual ou funcional de forma independente. Ele opera hubamente reagindo ao contexto de layout fornecido pelo `QLayout` pai, utilizando variáveis CSS para calcular seus offsets.
+
+**Justificativa para não bloquear props:** Dada a ausência de props intrínsecas ao `QPageContainer` que pudessem introduzir comportamentos indesejados ou quebrar a governança do DSS, não há props específicas a serem explicitamente bloqueadas neste componente. A estratégia é permitir o repasse de `$attrs` e slots, garantindo que o `DssPageContainer` se comporte como um proxy transparente para o componente nativo do Quasar.
+
+**Implicações:**
+- **Flexibilidade:** Permite que desenvolvedores que necessitem de customizações muito específicas no `QPageContainer` nativo as apliquem diretamente, cientes de que estão operando fora da governança explícita do DSS para este componente.
+- **Simplicidade:** Mantém o `DssPageContainer` leve e focado em sua responsabilidade principal de orquestração de layout, sem a complexidade de gerenciar um conjunto de props bloqueadas que não seriam intrínsecas a ele.
+- **Alinhamento com Quasar:** Reforça a ideia de que o `DssPageContainer` é uma camada fina sobre o `QPageContainer`, mantendo o comportamento original do framework.
 
 ## 4. Governança de Tokens e CSS
 
-O `DssPageContainer` é um componente estrutural "invisível". Ele não aplica tokens de cor, tipografia ou espaçamento próprios.
+O `DssPageContainer` é classificado como um componente estrutural "invisível" dentro da arquitetura do DSS. Sua principal função é a orquestração de layout, e não a apresentação visual direta. Portanto, ele adere a uma governança estrita que proíbe a aplicação de tokens de design próprios que alterem sua aparência.
 
-- **Cor de Fundo:** Transparente (herda `--dss-surface-muted` do `DssLayout`).
-- **Padding:** Gerenciado dinamicamente pelo Quasar via variáveis CSS (`--q-header-offset`, etc.). O DSS não deve sobrescrever isso.
+### 4.1. Tokens de Cor e Superfície
+
+- **Cor de Fundo:** O `DssPageContainer` deve manter um fundo transparente. Ele não deve aplicar tokens como `--dss-surface-base` ou `--dss-surface-sunken`. A cor de fundo visível para o usuário será herdada do `DssLayout` pai (tipicamente `--dss-surface-muted` ou similar, dependendo do tema ativo).
+- **Bordas e Sombras:** É estritamente proibido aplicar bordas, sombras (box-shadow) ou qualquer outro efeito visual ao `DssPageContainer`. Ele deve permanecer visualmente indetectável.
+
+### 4.2. Tokens de Espaçamento e Layout
+
+- **Padding Dinâmico:** O padding do `DssPageContainer` é gerenciado exclusivamente e dinamicamente pelo motor de layout do Quasar. O Quasar injeta variáveis CSS específicas (como `--q-header-offset`, `--q-footer-offset`, `--q-drawer-left-offset`, `--q-drawer-right-offset`) no elemento raiz do layout, e o `QPageContainer` as utiliza para calcular seu padding interno.
+- **Proibição de Sobrescrita:** O DSS **não deve**, sob nenhuma circunstância, sobrescrever essas variáveis CSS ou aplicar regras de `padding` ou `margin` fixas (ex: `--dss-spacing-4`) ao `DssPageContainer`. Fazer isso quebraria a responsividade e o cálculo dinâmico do layout da aplicação.
+- **Alinhamento:** O alinhamento do conteúdo interno é responsabilidade do componente `DssPage` e não do `DssPageContainer`.
+
+### 4.3. Tipografia
+
+- O `DssPageContainer` não deve aplicar nenhum token de tipografia (como `--dss-text-body` ou `--dss-font-weight-bold`). A tipografia deve ser gerenciada pelos componentes de conteúdo renderizados dentro da `DssPage`.
 
 ## 5. Acessibilidade e Estados
 
-- **Role:** O `QPageContainer` não aplica um role específico. A semântica principal (`role="main"`) será aplicada no componente filho `DssPage`.
-- **Touch Target:** Não aplicável (componente não-interativo).
-- **Estados aplicáveis:** Nenhum estado interativo. Reage passivamente ao dark mode herdando o fundo do `DssLayout`.
+A acessibilidade no contexto do `DssPageContainer` é focada em não interferir na árvore de acessibilidade e permitir que os componentes filhos assumam a responsabilidade semântica.
+
+### 5.1. Semântica e ARIA Roles
+
+- **Role:** O `QPageContainer` nativo não aplica um role ARIA específico por padrão. O DSS mantém esse comportamento. A semântica principal de conteúdo (`role="main"`) deve ser aplicada no componente filho `DssPage`, que é o verdadeiro contêiner do conteúdo da página.
+- **Aria-hidden:** O `DssPageContainer` não deve usar `aria-hidden="true"`, pois isso ocultaria todo o conteúdo da página de leitores de tela.
+- **Foco:** Sendo um contêiner estrutural não-interativo, o `DssPageContainer` não deve receber foco (`tabindex="-1"` ou ausência de `tabindex`). O gerenciamento de foco deve ocorrer nos elementos interativos dentro da `DssPage`.
+
+### 5.2. Estados Interativos e Visuais
+
+- **Touch Target:** Não aplicável. O `DssPageContainer` não possui elementos interativos próprios, portanto, não há requisitos de tamanho mínimo de área de toque.
+- **Estados aplicáveis:** O componente é 100% não-interativo. Ele não possui estados de `:hover`, `:focus`, `:active` ou `:disabled`.
+- **Dark Mode:** O `DssPageContainer` reage passivamente ao dark mode. Como seu fundo é transparente, a transição para o modo escuro é gerenciada pela mudança de cor de fundo do `DssLayout` pai (ex: transição de `--dss-surface-muted` claro para escuro). Não há lógica interna no `DssPageContainer` para lidar com temas.
 
 ## 6. Cenários de Uso Obrigatórios (Exemplos)
 
-O arquivo `DssPageContainer.example.vue` deve cobrir:
+Os cenários de uso documentados no arquivo `DssPageContainer.example.vue` são cruciais para demonstrar a capacidade do componente de reagir ao contexto do layout. Eles devem focar exclusivamente na orquestração de padding dinâmico.
 
-1. **Básico:** `DssPageContainer` dentro de um `DssLayout` completo (com Header, Footer e Drawer), contendo uma `q-page` nativa temporária (EXC-02) para demonstrar o cálculo correto dos offsets.
-2. **Sem Header/Footer:** `DssPageContainer` em um layout limpo para demonstrar que o padding dinâmico se ajusta a zero.
+### 6.1. Cenários a serem implementados
 
-*Nota: Como o `DssPage` ainda não existe, os exemplos devem usar `<q-page>` nativo temporariamente.*
+1. **Layout Completo (Básico):**
+   - **Descrição:** Demonstra o `DssPageContainer` operando em sua capacidade máxima, dentro de um `DssLayout` que possui `DssHeader`, `DssFooter` e `DssDrawer` (esquerdo e direito) ativos.
+   - **Objetivo:** Validar que o padding interno do container é calculado corretamente para evitar que o conteúdo seja sobreposto por todos os elementos fixos do layout.
+   - **Implementação:** Utilizar uma `<q-page>` nativa temporária (EXC-02) com conteúdo suficiente para gerar scroll, evidenciando os limites do container.
+
+2. **Layout Limpo (Sem Offsets):**
+   - **Descrição:** Demonstra o `DssPageContainer` dentro de um `DssLayout` desprovido de Header, Footer ou Drawers.
+   - **Objetivo:** Validar que, na ausência de elementos fixos, o padding dinâmico se ajusta a zero, permitindo que o conteúdo ocupe 100% da área disponível da viewport.
+
+3. **Layout Dinâmico (Toggle de Elementos):**
+   - **Descrição:** Um cenário interativo onde botões fora do container permitem alternar a visibilidade do Header, Footer e Drawers.
+   - **Objetivo:** Demonstrar a reatividade em tempo real do `DssPageContainer` às mudanças de estado do `DssLayout` pai, recalculando o padding instantaneamente.
+
+*Nota de Implementação:* Como o componente `DssPage` (Nível 5) é classificado como `compositionFuture` e ainda não está disponível, todos os exemplos devem utilizar a tag `<q-page>` nativa do Quasar temporariamente para envolver o conteúdo de demonstração. Esta é uma exceção formalizada (EXC-02).
 
 ## 7. Exceções aos Gates v2.4
 

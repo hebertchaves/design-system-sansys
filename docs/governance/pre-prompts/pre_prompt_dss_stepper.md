@@ -7,7 +7,7 @@
 - **Nome do Componente:** `DssStepper`
 - **Família:** Navegação (Composição de Primeiro Grau)
 - **Nível de Composição:** Nível 2
-- **Golden Reference:** `DssTabs` (como container de navegação com painéis associados)
+- **Golden Reference: `DssChip`
 - **Golden Context:** `DssCard` (como container estrutural pai)
 - **Componente Quasar Base:** `QStepper`
 - **Dependências Diretas:** `DssStep` (obrigatório como filho)
@@ -38,14 +38,31 @@ O componente deve ser um wrapper direto do `<q-stepper>`. O slot `default` é de
 
 ## 3. Mapeamento de API (Props e Eventos)
 
+A API do `DssStepper` foi projetada para ser minimalista, delegando a maior parte da complexidade visual e de estado individual para os componentes `DssStep` filhos. Isso garante que o container permaneça focado em sua responsabilidade principal: orquestração e layout.
+
 ### 3.1. Props Expostas (Permitidas)
 
-- `modelValue` (String/Number) — O passo atualmente ativo.
-- `vertical` (Boolean) — Define o layout vertical (padrão é horizontal).
-- `header-nav` (Boolean) — Permite navegação clicando no cabeçalho dos passos.
-- `animated` (Boolean) — Ativa transições entre os painéis.
-- `flat` (Boolean) — Remove a sombra e borda do container (útil quando usado dentro de um DssCard).
-- `bordered` (Boolean) — Adiciona borda ao container.
+As seguintes propriedades são permitidas e devem ser implementadas com validações rigorosas:
+
+- `modelValue` (String/Number) — O passo atualmente ativo. Deve suportar v-model bidirecional.
+- `vertical` (Boolean) — Define o layout vertical (padrão é horizontal). Altera a disposição dos painéis e a orientação da linha conectora.
+- `header-nav` (Boolean) — Permite navegação clicando no cabeçalho dos passos. Quando ativo, os cabeçalhos dos `DssStep` tornam-se interativos.
+- `animated` (Boolean) — Ativa transições suaves entre os painéis de conteúdo.
+- `flat` (Boolean) — Remove a sombra e borda do container (útil quando usado dentro de um DssCard ou modais).
+- `bordered` (Boolean) — Adiciona borda ao container, utilizando os tokens de borda do DSS.
+- `alternative-labels` (Boolean) — Coloca os rótulos abaixo dos ícones no layout horizontal.
+- `contracted` (Boolean) — Modo compacto para espaços reduzidos.
+
+### 3.2. Eventos Expostos
+
+- `update:modelValue` — Emitido quando o passo ativo muda.
+- `transition` — Emitido durante a animação de troca de passos.
+
+### 3.3. Slots
+
+- `default` — Slot principal, restrito a receber apenas componentes `DssStep`.
+- `message` — Slot opcional para exibir mensagens globais acima ou abaixo do stepper.
+
 
 ### 3.2. Props Bloqueadas (Governança DSS)
 
@@ -54,7 +71,7 @@ O componente deve ser um wrapper direto do `<q-stepper>`. O slot `default` é de
 "propsBlockedJustification": {
   "dark": "Modo escuro governado globalmente pelo DSS via [data-theme='dark'].",
   "color": "Cores de estado são governadas pelos tokens DSS internamente no DssStep.",
-  "active-color": "Cor ativa governada pelo DssStep via --dss-action-primary.",
+  "active-color": "Cor ativa governada pelo DssStep via --dss-action-hub.",
   "done-color": "Cor de sucesso governada pelo DssStep via --dss-feedback-success.",
   "error-color": "Cor de erro governada pelo DssStep via --dss-feedback-error.",
   "inactive-color": "Cor inativa governada pelo DssStep via --dss-gray-300."
@@ -63,14 +80,37 @@ O componente deve ser um wrapper direto do `<q-stepper>`. O slot `default` é de
 
 ## 4. Governança de Tokens e CSS
 
-O `DssStepper` deve utilizar os seguintes tokens para a estrutura do container e linha conectora:
+A governança visual do `DssStepper` é estrita. O componente atua como um container estrutural e não deve possuir cores de marca (hub, water, waste) diretamente aplicadas, exceto quando repassadas aos filhos ou em estados específicos de foco.
 
-- **Borda do container (se bordered):** `--dss-border-width-thin` solid `--dss-gray-200`.
-- **Linha conectora (horizontal/vertical):** `--dss-gray-300` (cor) e `--dss-border-width-thin` (espessura).
-- **Background do container:** `--dss-surface-default`.
-- **Raio da borda:** `--dss-radius-md`.
+- **Espaçamento interno (padding):** `--dss-spacing-4` (para os painéis de conteúdo).
+- **Sombra (se não flat):** `--dss-shadow-sm`.
+- **Foco de teclado:** `outline: 2px solid white` (aplicado apenas quando navegável via teclado).
 
-*Nota: As cores dos ícones e textos dos passos já estão resolvidas no `DssStep`.*
+*Nota: As cores dos ícones, textos dos passos e estados (ativo, concluído, erro) já estão resolvidas no `DssStep` usando tokens como `--dss-action-hub`, `--dss-feedback-success`, etc.*
+
+### 4.1. Estrutura CSS Interna
+
+O CSS deve ser encapsulado e evitar vazamento. As classes internas do Quasar que precisam ser sobrescritas (como a linha conectora) devem ser tratadas com cuidado para não afetar outros componentes.
+
+```css
+.dss-stepper {
+  background-color: var(--dss-surface-default);
+  border-radius: var(--dss-radius-md);
+}
+
+.dss-stepper--bordered {
+  border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+}
+
+/* Exceção documentada para a linha conectora */
+.dss-stepper :deep(.q-stepper__line:before),
+.dss-stepper :deep(.q-stepper__dot:before),
+.dss-stepper :deep(.q-stepper__dot:after) {
+  background-color: var(--dss-gray-300);
+}
+```
+
+
 
 ## 5. Acessibilidade e Estados
 

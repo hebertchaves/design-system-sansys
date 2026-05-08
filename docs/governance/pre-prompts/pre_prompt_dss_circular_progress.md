@@ -47,7 +47,7 @@ O `DssCircularProgress` deve utilizar exclusivamente os tokens de design do DSS 
 
 *   **Tamanho (`size`)**: Definido por `width` e `height` utilizando tokens de espaçamento, por exemplo, `--dss-spacing-16` para um tamanho 'md'.
 *   **Espessura (`thickness`)**: Mapeado para um valor numérico que pode ser ajustado internamente, mas sua representação visual pode ser influenciada por tokens de espaçamento para bordas ou elementos internos, se aplicável.
-*   **Cor (`color`, `trackColor`)**: Utilizar tokens de cor semânticos do DSS, como `--dss-surface-default` para o fundo da trilha e `--dss-action-primary-default` para a cor do progresso.
+*   **Cor (`color`, `trackColor`)**: Utilizar tokens de cor semânticos do DSS, como `--dss-surface-default` para o fundo da trilha e `--dss-action-hub-default` para a cor do progresso.
 *   **Animação (`duration`)**: As transições e animações devem usar tokens de duração do DSS, por exemplo, `--dss-duration-250` para a duração da animação de mudança de valor.
 *   **Raio (`border-radius`)**: Se houver elementos com bordas arredondadas, usar tokens como `--dss-radius-full` para o formato circular.
 
@@ -109,12 +109,12 @@ O `DssCircularProgress` é um componente autônomo, mas pode ser composto com ou
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 O playground do `DssCircularProgress` deve permitir a manipulação dos seguintes controles para demonstração e teste:
 *   **`value` (Slider)**: Para ajustar o valor do progresso de 0 a 100.
 *   **`indeterminate` (Toggle)**: Para alternar entre os estados determinado e indeterminado.
 *   **`size` (Dropdown)**: Para selecionar tamanhos predefinidos (ex: 'sm', 'md', 'lg'), que mapeiam para tokens de espaçamento do DSS.
-*   **`color` (Color Picker)**: Para selecionar cores de progresso a partir dos tokens de cor do DSS.
+*   **`color` (Color Picker)**: Para selecionar cores de progresso a partir dos tokens de cor do DSS, como `hub`, `water`, `waste`.
 *   **`trackColor` (Color Picker)**: Para selecionar cores da trilha a partir dos tokens de cor do DSS.
 *   **`thickness` (Slider)**: Para ajustar a espessura da linha de progresso.
 *   **`angle` (Slider)**: Para ajustar o ângulo inicial do progresso.
@@ -126,11 +126,11 @@ O playground do `DssCircularProgress` deve permitir a manipulação dos seguinte
 *   **Feedback de Ação**: Integrar o `DssCircularProgress` com um `DssButton` para mostrar o progresso de uma ação iniciada pelo usuário.
 
 ### Estados a Expor
-Os seguintes estados devem ser claramente visíveis e testáveis no playground:
-*   **Progresso Determinado**: Com diferentes valores (0%, 25%, 50%, 75%, 100%).
-*   **Progresso Indeterminado**: Animação contínua.
-*   **Diferentes Tamanhos**: 'sm', 'md', 'lg'.
-*   **Diferentes Cores**: Usando tokens de cor do DSS.
-*   **Com e sem rótulo interno**.
-*   **Com diferentes espessuras**.
-
+| Estado | Descrição |
+| :--- | :--- |
+| **Progresso Determinado** | Com diferentes valores (0%, 25%, 50%, 75%, 100%). |
+| **Progresso Indeterminado** | Animação contínua. |
+| **Diferentes Tamanhos** | 'sm', 'md', 'lg'. |
+| **Diferentes Cores** | Usando tokens de cor do DSS (`hub`, `water`, `waste`). |
+| **Com e sem rótulo interno** | Exibição de texto ou ícone. |
+| **Com diferentes espessuras** | Variação na espessura da linha. |

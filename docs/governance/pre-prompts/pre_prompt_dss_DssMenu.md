@@ -1,5 +1,5 @@
 # Pré-prompt Oficial — DssMenu
-**Versão do Pré-prompt:** 1.0
+**Versão do Pré-prompt:** 1.1
 **Data de Criação:** 2026-04-18
 **Status:** Aprovado (componente selado em 2026-04-18)
 **Família:** Navegação / Overlays
@@ -12,7 +12,7 @@
 - **Nome do Componente:** DssMenu
 - **Família:** Navegação / Overlays
 - **Nível de Composição:** Nível 2 (Composição de Primeiro Grau)
-- **Golden Reference:** DssTooltip (overlay não-interativo como container)
+- **Golden Reference:** DssChip (componente interativo)
 - **Golden Context:** DssList (container de itens de lista, mesma estrutura de agrupamento)
 - **Componente Quasar Base:** QMenu
 - **Dependências Diretas:** DssList, DssItem (Nível 1)
@@ -138,8 +138,13 @@ Ao usar DssItem com ícones (slot content + DssItemSection), NÃO usar a prop `l
 | `--dss-border-width-thin` | Borda no dark mode |
 | `--dss-gray-200` | Cor da borda no dark mode |
 | `--dss-border-width-md` | Borda reforçada em prefers-contrast |
+| `--dss-action-hub` | Cor principal de ação |
+| `--dss-action-hub-surface` | Superfície principal de ação |
+| `--dss-spacing-4` | Espaçamento interno |
+| `--dss-text-subtle` | Texto secundário |
 
 **Dark mode:** Adicionar `border: var(--dss-border-width-thin) solid var(--dss-gray-200)`. Sombra perde visibilidade em fundo escuro — borda sutil compensa.
+Para foco, utilizar `outline: 2px solid white`.
 
 ---
 
@@ -197,7 +202,30 @@ Ao usar DssItem com ícones (slot content + DssItemSection), NÃO usar a prop `l
 
 ---
 
-## 8. Histórico
+## 8. Superfície de Playground
+
+### Controles Obrigatórios
+- `modelValue` (Boolean): Controle de visibilidade do menu.
+- `fit` (Boolean): Define se o menu deve adotar a largura do trigger.
+- `cover` (Boolean): Define se o menu deve sobrepor o trigger.
+- `anchor` (Select): Ponto de ancoragem no trigger (ex: 'top left', 'bottom right').
+- `self` (Select): Ponto de alinhamento do menu (ex: 'top left', 'bottom right').
+
+### Composite Logic
+O DssMenu atua como um container que orquestra a exibição de itens de navegação. A lógica de composição envolve a utilização do `<q-menu>` do Quasar para gerenciar o posicionamento e a visibilidade, enquanto o conteúdo interno é composto por `DssList` e `DssItem`. O estado de visibilidade é controlado via `v-model`, e o posicionamento é ajustado através das props `anchor` e `self`.
+
+### Estados a Expor
+
+| Estado | Descrição |
+|--------|-----------|
+| `visible` | Menu está visível na tela. |
+| `hidden` | Menu está oculto. |
+| `dark mode` | Menu renderizado com tema escuro, aplicando bordas sutis. |
+| `prefers-contrast` | Menu renderizado com bordas reforçadas para alto contraste. |
+
+---
+
+## 9. Histórico
 
 | Data | Evento |
 |------|--------|
@@ -205,3 +233,4 @@ Ao usar DssItem com ícones (slot content + DssItemSection), NÃO usar a prop `l
 | 2026-04-18 | Auditoria DSS v2.5 executada — 0 NCs, 3 GAPs identificados |
 | 2026-04-18 | GAPs resolvidos — Pré-prompt persistido (GAP-01), exemplo corrigido (GAP-02), limitação MCP registrada (GAP-03) |
 | 2026-04-18 | Selo DSS v2.2 emitido |
+| 2026-05-08 | Auditoria e correção de pré-prompt (Golden Reference, Seção 8, Tokens e Brand) |

@@ -46,15 +46,17 @@ O `DssBar` deve utilizar exclusivamente tokens de design do DSS para espaçament
 ### Exemplos de Uso de Tokens:
 - **Espaçamento interno (padding):** `--dss-spacing-4` (para padding geral), `--dss-spacing-2` (para espaçamento entre itens).
 - **Raio de borda (border-radius):** `--dss-radius-md` (se a barra tiver cantos arredondados).
-- **Cor de fundo:** `--dss-surface-default` (para o fundo padrão), `--dss-surface-primary` (para um fundo primário).
-- **Cor do texto/ícones:** `--dss-text-on-surface`.
+- **Cor de fundo:** `--dss-surface-default` (para o fundo padrão), `--dss-action-hub-surface` (para um fundo primário).
+- **Cor do texto/ícones:** `--dss-text-on-surface`, `--dss-text-subtle`.
 - **Duração de transições:** `--dss-duration-250` (para animações de hover ou clique).
+- **Foco:** `outline: 2px solid white` (para anéis de foco).
 
 ### Regras de Ouro para Tokens:
 - **Espaçamento:** Utilizar `--dss-spacing-1` a `--dss-spacing-96`.
 - **Raio:** Utilizar `--dss-radius-sm`, `--dss-radius-md`, `--dss-radius-lg`, `--dss-radius-full`.
 - **Duração:** Utilizar `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-250`, `--dss-duration-300`.
-- **NUNCA** inventar tokens com sufixos semânticos que não existem (ex: `--dss-padding-md`, `--dss-duration-base`).
+- **Cores de Brand:** Utilizar `hub`, `water`, `waste` em vez de `hub`, `water`, `waste`.
+- **NUNCA** inventar tokens com sufixos semânticos que não existem.
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
@@ -93,11 +95,11 @@ O `DssBar` é um componente de composição, permitindo que outros componentes d
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
-### Controles
+### Controles Obrigatórios
 - **`dark` (Checkbox):** Alterna entre tema claro e escuro.
 - **`dense` (Checkbox):** Ativa/desativa o modo compacto.
-- **`backgroundColor` (Dropdown/Color Picker):** Seleciona a cor de fundo da barra (com opções de tokens DSS como `--dss-surface-default`, `--dss-surface-primary`, etc.).
-- **`textColor` (Dropdown/Color Picker):** Seleciona a cor do texto/ícones (com opções de tokens DSS como `--dss-text-on-surface`, `--dss-text-primary`, etc.).
+- **`backgroundColor` (Dropdown/Color Picker):** Seleciona a cor de fundo da barra (com opções de tokens DSS como `--dss-surface-default`, `--dss-surface-hub`, `--dss-surface-water`, `--dss-surface-waste`).
+- **`textColor` (Dropdown/Color Picker):** Seleciona a cor do texto/ícones (com opções de tokens DSS como `--dss-text-on-surface`, `--dss-text-hub`, `--dss-text-water`, `--dss-text-waste`).
 - **`fixed` (Checkbox):** Fixa a barra no topo.
 - **`elevated` (Checkbox):** Adiciona elevação (sombra).
 - **Conteúdo do Slot `default` (Textarea):** Permite inserir texto ou outros componentes (ex: `DssButton`, `DssIcon`) para visualização.
@@ -105,13 +107,22 @@ O `DssBar` é um componente de composição, permitindo que outros componentes d
 - **Conteúdo do Slot `right` (Textarea):** Permite inserir conteúdo no lado direito da barra.
 
 ### Composite Logic
-O playground deve demonstrar a composição do `DssBar` com outros componentes do DSS. Exemplos:
+O playground deve demonstrar a composição do `DssBar` com outros componentes do DSS. Exemplos concretos:
 - Um `DssBar` contendo um `DssIcon` à esquerda, um título no centro e um `DssButton` à direita.
 - Um `DssBar` com um `DssInput` (campo de busca) no slot `default`.
-- Um `DssBar` fixo e elevado, com diferentes cores de fundo e texto.
+- Um `DssBar` fixo e elevado, com diferentes cores de fundo e texto, utilizando os tokens de brand `hub`, `water` e `waste`.
 
 ### Estados a Expor
-- **Visualização de todos os tokens CSS aplicados:** Mostrar os valores CSS finais resultantes dos tokens DSS selecionados.
-- **Estado de `fixed`:** Indicar se a barra está fixada ou não.
-- **Estado de `elevated`:** Indicar se a barra possui elevação.
-- **Interatividade dos elementos internos:** Demonstrar os estados de `hover`, `focus` e `active` dos `DssButton` ou `DssIcon` aninhados.
+
+| Estado | Descrição |
+|---|---|
+| **Padrão** | Visualização inicial do componente com as propriedades padrão. |
+| **Fixed** | Indicar se a barra está fixada ou não. |
+| **Elevated** | Indicar se a barra possui elevação. |
+| **Hover/Focus/Active** | Demonstrar os estados de interatividade dos elementos internos (ex: `DssButton` ou `DssIcon` aninhados). |
+| **Tokens CSS** | Mostrar os valores CSS finais resultantes dos tokens DSS selecionados. |
+
+---garantindo o uso correto de `--dss-spacing-4`, `--dss-text-subtle`, `--dss-action-hub`, `--dss-action-hub-surface` e `outline: 2px solid white`. |
+
+---
+*Fim do documento.*

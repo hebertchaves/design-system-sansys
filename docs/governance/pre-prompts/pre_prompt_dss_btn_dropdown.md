@@ -3,7 +3,7 @@
 **Fase:** 2
 **Nível:** 1 (Independente)
 **Dependências (Fase 1):** `DssButton`, `DssIcon`
-**Golden Context:** `DssCard` (Baseline para componentes compostos)
+**GoGolden Context: `DssChip` (Baseline para componentes interativos)
 
 ---
 
@@ -32,7 +32,7 @@ A regra da Fase 2 exige o uso de componentes DSS. No entanto, recriar toda a ló
 - ❌ **Anti-pattern:** Deixar o menu do dropdown com a sombra e borda padrão do Quasar.
 - ✅ **Padrão Correto:** Aplicar `var(--dss-surface-white)`, `var(--dss-shadow-md)` e `var(--dss-radius-md)` ao painel do dropdown.
 - ❌ **Anti-pattern:** Criar props de cor exclusivas para o dropdown.
-- ✅ **Padrão Correto:** Reutilizar os tipos `ButtonColor` e `ButtonVariant` do `DssButton`.
+- ✅ **Padrão Correto:** Reutilizar os tipos `ButtonColor` e `ButtonVariant` do `DssButton`, garantindo o uso de `hub`, `water` e `waste`.
 
 ---
 
@@ -41,18 +41,25 @@ A regra da Fase 2 exige o uso de componentes DSS. No entanto, recriar toda a ló
 A API do `DssBtnDropdown` deve ser uma fusão controlada entre a API do `DssButton` (para o visual) e a API de controle de dropdown.
 
 ### Props Expostas (Permitidas)
+
 **Visuais (Herdadas do DssButton):**
-- `variant` (elevated, flat, outline, etc.)
-- `color` (primary, secondary, etc.)
-- `size` (sm, md, lg)
-- `dense`, `round`, `square`, `disable`
+
+- `variant` (String): Define o estilo visual do botão. Valores permitidos incluem `elevated`, `flat`, `outline`, `push`, `unelevated`, `rounded`. Deve refletir diretamente as variantes disponíveis no `DssButton` para garantir consistência visual.
+- `color` (String): Especifica a cor do botão, utilizando os tokens de brand do DSS. Valores aceitos são `hub`, `water`, `waste`, entre outros definidos no sistema de tokens. Esta prop influencia a cor de fundo, texto e borda, dependendo da `variant`.
+- `size` (String): Controla o tamanho do botão. Valores como `sm` (small), `md` (medium) e `lg` (large) devem ser suportados, mapeando para os tamanhos correspondentes do `DssButton`.
+- `dense` (Boolean): Quando `true`, reduz o preenchimento interno do botão, tornando-o mais compacto. Útil para interfaces com menor densidade de informação.
+- `round` (Boolean): Aplica um `border-radius` de 50% para tornar o botão circular, ideal para botões de ícone.
+- `square` (Boolean): Garante que o botão tenha largura e altura iguais, mantendo-o quadrado.
+- `disable` (Boolean): Desabilita o botão, impedindo interações e alterando seu estilo visual para indicar inatividade.
 
 **Comportamentais (Dropdown):**
-- `modelValue` / `v-model` (boolean) → Controle de estado aberto/fechado
-- `split` (boolean) → Divide o botão em ação principal e seta de dropdown
-- `disableMainBtn` (boolean) → Desabilita apenas a ação principal no modo split
-- `menuAnchor` / `menuSelf` → Controle de posicionamento do menu
-- `autoClose` (boolean) → Fecha o menu ao clicar em um item interno
+
+- `modelValue` / `v-model` (Boolean): Propriedade reativa que controla o estado de abertura (`true`) ou fechamento (`false`) do menu dropdown. Essencial para a interação bidirecional com o componente.
+- `split` (Boolean): Transforma o `DssBtnDropdown` em um botão dividido, onde a parte esquerda atua como um botão normal e a direita como o acionador do dropdown. Permite uma ação primária e opções adicionais.
+- `disableMainBtn` (Boolean): Quando `split` é `true`, esta prop desabilita apenas a parte principal do botão, mantendo o acionador do dropdown ativo. Útil para cenários onde a ação principal é temporariamente indisponível.
+- `menuAnchor` (String): Define o ponto de ancoragem do menu em relação ao botão. Utiliza a sintaxe de posicionamento do Quasar (ex: `bottom start`, `top end`).
+- `menuSelf` (String): Define o ponto do próprio menu que será alinhado ao `menuAnchor`. Complementa `menuAnchor` para um posicionamento preciso.
+- `autoClose` (Boolean): Se `true`, o menu é automaticamente fechado quando um item interno é clicado ou quando o foco sai do menu. Garante um comportamento intuitivo de dropdown.
 
 ### Props Bloqueadas (Proibidas)
 - `dark` → O DSS gerencia o dark mode via CSS global (`body.body--dark`).
@@ -77,7 +84,7 @@ O painel que se abre deve seguir os tokens de superfície e elevação:
 - Borda (opcional dependendo do tema): `1px solid var(--dss-border-gray-200)`
 
 ### 4.3 Ícone de Dropdown
-O ícone padrão de seta deve utilizar a cor de texto apropriada para a variante do botão (ex: branco para `elevated primary`, cor primária para `outline primary`).
+O ícone padrão de seta deve utilizar a cor de texto apropriada para a variante do botão (ex: branco para `elevated hub`, cor hub para `outline hub`).
 
 ---
 
@@ -121,7 +128,7 @@ O `DssBtnDropdown` atua como um container para itens de menu.
 ```json
 {
   "phase": 2,
-  "goldenContext": "DssCard",
+  "goldenContext": "DssChip",
   "subcomponents": [],
   "compositionRequirements": ["DssButton", "DssIcon"],
   "compositionFuture": ["DssList", "DssItem"]
@@ -131,17 +138,40 @@ O `DssBtnDropdown` atua como um container para itens de menu.
 
 ---
 
-## 8. CENÁRIOS DE USO (Exemplos Obrigatórios — Mínimo 5)
+## 8. SUPERFÍCIE DE PLAYGROUND
+
+### 8.1 Controles Obrigatórios
+
+- **Slot Padrão (`default`):** Para o conteúdo do menu (itens, listas, etc.).
+- **Slot `label`:** Para o texto principal do botão.
+- **Slot `icon`:** Para um ícone customizado no botão.
+- **Slot `dropdown-icon`:** Para um ícone customizado na seta do dropdown.
+
+### 8.2 Composite Logic (Concreta, Não Genérica)
+
+O `DssBtnDropdown` deve orquestrar a interação entre o botão de acionamento e o painel do menu. Isso inclui:
+
+- **Gerenciamento de Estado:** Controlar a visibilidade do menu (`open`/`closed`) através de `v-model`.
+- **Posicionamento:** Utilizar a lógica de posicionamento do Quasar (`menuAnchor`, `menuSelf`) para garantir que o menu apareça corretamente em relação ao botão.
+- **Acessibilidade:** Propagar atributos ARIA e gerenciar o foco do teclado conforme especificado na Seção 5.
+- **Estilização:** Injetar classes e tokens do DSS no botão interno do Quasar (`QBtn`) e no painel do menu (`QMenu`) para garantir a conformidade visual.
+
+### 8.3 Estados a Expor (Tabela)
+
+| Estado         | Descrição                                                                 | Propriedade/Atributo |
+| :------------- | :------------------------------------------------------------------------ | :------------------- |
+| `Fechado`      | O menu está oculto.                                                       | `v-model = false`    |
+| `Aberto`       | O menu está visível.                                                      | `v-model = true`     |
+| `Desabilitado` | O botão e o menu não podem ser interagidos.                              | `disable = true`     |
+| `Split`        | O botão é dividido em ação principal e acionador de dropdown.             | `split = true`       |
+
+### 8.4 Cenários de Uso (Exemplos Obrigatórios — Mínimo 5)
 
 1. **Básico** — Dropdown simples com label e ícone de seta.
 2. **Variantes Visuais** — Demonstração com `outline`, `flat` e `elevated`.
 3. **Split Button** — Botão dividido (ação principal à esquerda, dropdown à direita).
 4. **Com Ícone Customizado** — Substituindo o ícone de seta padrão.
 5. **Brand Context** — Comportamento sob `data-brand="hub"`, `water` e `waste`.
-
----
-
-## 9. EXCEÇÕES PREVISTAS
 
 ### EXC-01: Alinhamento de Altura do Split
 - **Justificativa:** No modo `split`, o Quasar renderiza dois botões adjacentes. É necessário garantir que não haja gap indesejado e que a altura de ambos seja estritamente igual, aplicando `border-radius: 0` nas bordas de contato. Isso deve ser tratado no CSS da camada 2 (`_base.scss`).
@@ -152,6 +182,6 @@ O `DssBtnDropdown` atua como um container para itens de menu.
 
 Após ler e compreender este pré-prompt, o agente de execução deve:
 1. **Confirmar** o entendimento de que o visual do trigger deve ser idêntico ao `DssButton`.
-2. **Confirmar** o Golden Context: `DssCard`.
+2. **Confirmar** o Golden Context: `DssChip`.
 3. Iniciar a geração do componente seguindo estritamente o **"Prompt de Criação de Componente — DSS v2.4 (Fase 2)"**.
 4. Garantir que o wrapper `DssBtnDropdown.vue` seja um re-export puro.

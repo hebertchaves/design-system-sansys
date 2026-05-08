@@ -8,13 +8,9 @@
 
 ---
 
-## Contexto do Componente
+## 1. Contexto e Classificação do Componente
 
-Você é o Agente DSS responsável por criar o componente **DssBtnGroup** conforme a especificação normativa DSS v2.2.
-
----
-
-## Classificação Normativa
+Você é o Agente DSS responsável por criar o componente **DssBtnGroup** conforme a especificação normativa DSS v2.2. Este componente é um container de composição que agrupa múltiplos botões, gerenciando o estado visual compartilhado entre eles.
 
 | Campo | Valor |
 |-------|-------|
@@ -27,19 +23,19 @@ Você é o Agente DSS responsável por criar o componente **DssBtnGroup** confor
 | **Status Inicial** | Pré-auditoria |
 | **DSS Version** | v2.2 |
 
-**Justificativa Fase 2:** O DssBtnGroup gerencia estado visual compartilhado entre múltiplos DssButton filhos (border-radius, separadores, layout). Isso caracteriza composição interna — critério da Fase 2.
+**Justificativa Fase 2:** O DssBtnGroup gerencia estado visual compartilhado entre múltiplos DssButton filhos (border-radius, separadores, layout). Isso caracteriza composição interna — critério da Fase 2, indicando que o componente é mais do que um simples wrapper, mas um orquestrador de elementos interativos.
 
-**Justificativa Golden Context (DssCard):** DssCard é o componente composto de Fase 2 mais próximo semanticamente. Ambos são containers estruturais de composição.
+**Justificativa Golden Context (DssCard):** DssCard é o componente composto de Fase 2 mais próximo semanticamente. Ambos são containers estruturais de composição, fornecendo um contexto para outros componentes se organizarem visualmente e funcionalmente. A referência ao DssCard ajuda a manter a consistência na abordagem de design para componentes de agrupamento.
 
 ---
 
-## 2. O Grande Risco Arquitetural
+## 2. Princípios de Design e Riscos Arquiteturais
 
 ### 2.1 Prop Sync Obrigatório
 
 > ⚠️ CRÍTICO — Esta é a regra mais importante do componente.
 
-O DssBtnGroup **não propaga automaticamente** as props de estilo para os filhos. As props de estilo (`flat`, `outline`, `push`, `unelevated`, `glossy`, `square`) **DEVEM ser declaradas tanto no DssBtnGroup quanto em cada DssButton filho**.
+O DssBtnGroup **não propaga automaticamente** as props de estilo para os filhos. As props de estilo (`flat`, `outline`, `push`, `unelevated`, `glossy`, `square`) **DEVEM ser declaradas tanto no DssBtnGroup quanto em cada DssButton filho**. Esta é uma limitação fundamental do Quasar `QBtnGroup` que o DSS herda e deve ser explicitamente gerenciada para evitar inconsistências visuais.
 
 Fonte: Quasar oficial — *"You must use same design props (flat, outline, push, …) on both the parent QBtnGroup and the children QBtn/QBtnDropdown."*
 
@@ -59,7 +55,7 @@ Fonte: Quasar oficial — *"You must use same design props (flat, outline, push,
 
 ### 2.2 Escopo de Estilo: Não-Scoped Obrigatório
 
-O `<style>` do Vue component **deve ser não-scoped** (`<style lang="scss">`, sem `scoped`). Com `scoped`, os filhos passados via `<slot>` não recebem o atributo de escopo do Vue e nenhum seletor `.dss-btn-group > .dss-button` produziria efeito em runtime.
+O `<style>` do Vue component **deve ser não-scoped** (`<style lang="scss">`, sem `scoped`). Com `scoped`, os filhos passados via `<slot>` não recebem o atributo de escopo do Vue e nenhum seletor `.dss-btn-group > .dss-button` produziria efeito em runtime. Esta regra é crucial para permitir que o DssBtnGroup aplique estilos globais aos seus filhos, como o gerenciamento de `border-radius` e separadores.
 
 ```vue
 <!-- ❌ INCORRETO — child selectors não funcionam com scoped -->
@@ -71,7 +67,7 @@ O `<style>` do Vue component **deve ser não-scoped** (`<style lang="scss">`, se
 
 ### 2.3 Gate de Responsabilidade v2.4
 
-**Atenção:** O componente não deve capturar estados interativos (`:hover`, `:focus-visible`) dos filhos via CSS. No caso do `_outline.scss`, o uso de `z-index` no hover do filho foi registrado como uma exceção formal (`responsibilityGateV24`) no `dss.meta.json`, pois altera apenas o contexto de empilhamento, não a aparência do botão.
+**Atenção:** O componente não deve capturar estados interativos (`:hover`, `:focus-visible`) dos filhos via CSS. No caso do `_outline.scss`, o uso de `z-index` no hover do filho foi registrado como uma exceção formal (`responsibilityGateV24`) no `dss.meta.json`, pois altera apenas o contexto de empilhamento, não a aparência do botão. Qualquer outra tentativa de estilizar o estado interativo dos filhos a partir do pai será considerada um anti-padrão e deve ser evitada.
 
 ```scss
 /* ❌ ANTI-PATTERN — pai capturando estado do filho sem exceção formal */
@@ -90,7 +86,7 @@ O `<style>` do Vue component **deve ser não-scoped** (`<style lang="scss">`, se
 
 ---
 
-## API do Componente
+## 3. API do Componente
 
 ### Props
 
@@ -98,63 +94,63 @@ O `<style>` do Vue component **deve ser não-scoped** (`<style lang="scss">`, se
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `flat` | Boolean | `false` | Sem elevação/borda. Adiciona separador `--dss-gray-300` entre filhos no container. |
-| `outline` | Boolean | `false` | Com borda visível. Colapsa bordas duplas com `margin-left: calc(-1 * --dss-border-width-thin)`. |
-| `push` | Boolean | `false` | Estilo 3D. Adiciona separador `--dss-gray-200` entre filhos. |
-| `unelevated` | Boolean | `false` | Remove sombra. Adiciona separador `--dss-gray-200` entre filhos. |
-| `glossy` | Boolean | `false` | Efeito glossy. Nenhum ajuste de grupo necessário — responsabilidade dos filhos. |
+| `flat` | Boolean | `false` | Sem elevação/borda. Adiciona separador `--dss-gray-300` entre filhos no container. Este estilo é ideal para barras de ferramentas ou grupos de botões onde a distinção visual é sutil. |
+| `outline` | Boolean | `false` | Com borda visível. Colapsa bordas duplas com `margin-left: calc(-1 * var(--dss-border-width-thin))`. Proporciona um visual mais definido e é frequentemente usado para ações secundárias. |
+| `push` | Boolean | `false` | Estilo 3D com uma leve sombra. Adiciona separador `--dss-gray-200` entre filhos. Confere uma sensação de profundidade e interatividade. |
+| `unelevated` | Boolean | `false` | Remove sombra, mantendo a elevação. Adiciona separador `--dss-gray-200` entre filhos. Útil para manter a hierarquia visual sem a distração de sombras. |
+| `glossy` | Boolean | `false` | Efeito glossy. Nenhum ajuste de grupo necessário — responsabilidade dos filhos. Este é um estilo puramente visual que é aplicado individualmente a cada botão. |
 
 #### Props de Forma
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `rounded` | Boolean | `false` | `border-radius: var(--dss-radius-full)` nos cantos externos. Filhos intermediários mantêm `border-radius: 0`. |
-| `square` | Boolean | `false` | Remove todo border-radius (`0`) de todos os filhos. |
+| `rounded` | Boolean | `false` | `border-radius: var(--dss-radius-full)` nos cantos externos. Filhos intermediários mantêm `border-radius: 0`. Cria um grupo de botões com extremidades arredondadas, ideal para um visual mais suave. |
+| `square` | Boolean | `false` | Remove todo border-radius (`0`) de todos os filhos. Garante que todos os botões no grupo tenham cantos retos, para um visual mais formal ou técnico. |
 
 #### Props de Layout
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `spread` | Boolean | `false` | `display: flex`. Filhos recebem `flex: 1`. |
-| `stretch` | Boolean | `false` | `align-self: stretch`. Filhos: `align-self: stretch; min-height: 0`. Requer contexto flexbox externo. |
+| `spread` | Boolean | `false` | `display: flex`. Filhos recebem `flex: 1`. Distribui os botões igualmente dentro do grupo, ocupando todo o espaço disponível. |
+| `stretch` | Boolean | `false` | `align-self: stretch`. Filhos: `align-self: stretch; min-height: 0`. Requer contexto flexbox externo. Permite que os botões se estiquem para preencher a altura disponível, útil em layouts responsivos. |
 
 #### Props de Brandabilidade
 
 | Prop | Tipo | Default | Valores | Descrição |
 |------|------|---------|---------|-----------|
-| `brand` | `String \| null` | `null` | `'hub'` \| `'water'` \| `'waste'` | Acento visual de marca na borda inferior via `box-shadow` inset. |
+| `brand` | `String \| null` | `null` | `hub` \| `water` \| `waste` | Acento visual de marca na borda inferior via `box-shadow` inset. Permite aplicar a identidade visual da marca ao grupo de botões, utilizando as cores designadas para `hub`, `water` ou `waste`. |
 
 #### Props de Acessibilidade
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `ariaLabel` | String | `undefined` | Valor do `aria-label` no container `role="group"`. |
+| `ariaLabel` | String | `undefined` | Valor do `aria-label` no container `role="group"`. Essencial para fornecer contexto semântico a usuários de tecnologias assistivas, descrevendo a finalidade do grupo de botões. |
 
 ### Props Bloqueadas (Não Suportadas)
 
 | Prop Quasar | Motivo |
 |-------------|--------|
-| `dark` | DSS gerencia dark mode via `[data-theme="dark"]` global. |
-| `color` | Pertence ao DssButton filho. |
-| `text-color` | Pertence ao DssButton filho. |
-| `size` | Pertence ao DssButton filho. |
-| `dense` | Pertence ao DssButton filho. |
+| `dark` | DSS gerencia dark mode via `[data-theme="dark"]` global. A responsabilidade do tema é centralizada e não deve ser controlada por componentes individuais. |
+| `color` | Pertence ao DssButton filho. A cor de cada botão é uma propriedade individual. |
+| `text-color` | Pertence ao DssButton filho. A cor do texto de cada botão é uma propriedade individual. |
+| `size` | Pertence ao DssButton filho. O tamanho de cada botão é uma propriedade individual. |
+| `dense` | Pertence ao DssButton filho. A densidade de cada botão é uma propriedade individual. |
 
 ### Slots
 
 | Slot | Descrição |
 |------|-----------|
-| `default` | Aceita `DssButton`. `DssBtnDropdown` previsto para Fase 2. |
+| `default` | Aceita `DssButton`. `DssBtnDropdown` previsto para Fase 2. Este slot é o ponto de inserção para os botões individuais que compõem o grupo. |
 
 ### Eventos
 
-Nenhum. Container estrutural — eventos pertencem aos DssButton filhos.
+Nenhum. Container estrutural — eventos pertencem aos DssButton filhos. O DssBtnGroup foca na organização visual e de layout, delegando a interatividade aos seus elementos internos.
 
 ---
 
-## Arquitetura CSS Obrigatória
+## 4. Estilização e Tematização (Arquitetura CSS e Tokens)
 
-### Estrutura de Arquivos
+### Estrutura de Arquivos CSS
 
 ```
 DssBtnGroup/
@@ -187,9 +183,9 @@ DssBtnGroup/
 
 ### Exceção Arquitetural de Composição (Documentada)
 
-O DssBtnGroup **usa seletores CSS globais** do tipo `.dss-btn-group > .dss-button` para gerenciar border-radius e separadores dos filhos. Esta é a única exceção permitida à regra "componentes DSS não estilizam filhos internamente".
+O DssBtnGroup **usa seletores CSS globais** do tipo `.dss-btn-group > .dss-button` para gerenciar border-radius e separadores dos filhos. Esta é a única exceção permitida à regra "componentes DSS não estilizam filhos internamente". Esta exceção é fundamental para o funcionamento visual coeso do grupo de botões, permitindo que o container ajuste a aparência dos seus filhos de forma coordenada.
 
-**Justificativa:** Gerenciar visualmente os filhos É o propósito do componente group. Não usa `::v-deep` (estilos globais, não scoped). O `<style>` do Vue component **deve ser não-scoped** para que esses seletores funcionem.
+**Justificativa:** Gerenciar visualmente os filhos É o propósito do componente group. Não usa `::v-deep` (estilos globais, não scoped). O `<style>` do Vue component **deve ser não-scoped** para que esses seletores funcionem, garantindo que as regras CSS sejam aplicadas corretamente aos elementos filhos.
 
 ### Seletores Obrigatórios (Layer 2)
 
@@ -212,75 +208,125 @@ O DssBtnGroup **usa seletores CSS globais** do tipo `.dss-btn-group > .dss-butto
 }
 ```
 
+### Tokens CSS Obrigatórios e Mapeamento
+
+| Token | Camada | Uso | Mapeamento | Descrição Detalhada |
+|-------|--------|-----|------------|---------------------|
+| `--dss-border-width-thin` | L2 + L3 | Colapso outline / separadores | N/A | Define a espessura fina da borda, usada para colapsar outlines e criar separadores sutis entre os botões. |
+| `--dss-border-width-thick` | L4 | Acento de brand (inset box-shadow) | N/A | Define a espessura grossa da borda, especificamente para o acento visual de marca via `box-shadow` inset. |
+| `--dss-border-width-md` | Module | High contrast outline | N/A | Espessura média da borda, utilizada para outlines de alto contraste, melhorando a acessibilidade. |
+| `--dss-gray-200` | L3 | Separador push e unelevated | N/A | Cor cinza clara, usada como separador para os estilos `push` e `unelevated`, proporcionando uma distinção visual suave. |
+| `--dss-gray-300` | L3 | Separador flat | N/A | Cor cinza um pouco mais escura, usada como separador para o estilo `flat`, garantindo visibilidade em fundos claros. |
+| `--dss-radius-full` | L2 | Variante rounded — border-radius pill | N/A | Raio de borda completo, usado para criar o efeito de 
+borda arredondada (pill) para a variante `rounded`. |
+| `--dss-action-hub` | L4 | Cor principal de ação | `--dss-action-hub` | Representa a cor primária para elementos interativos, substituindo o token antigo. |
+| `--dss-action-hub-surface` | L4 | Superfície primária de ação | `--dss-action-hub-surface` | Cor de superfície associada à ação primária, substituindo o token antigo. |
+| `--dss-spacing-4` | L2 | Espaçamento médio | `--dss-spacing-4` | Token de espaçamento padronizado, substituindo o token antigo. |
+| `--dss-text-subtle` | L3 | Cor de texto sutil | `--dss-text-subtle` | Cor de texto para elementos secundários ou menos proeminentes, substituindo o token antigo. |
+| `--dss-hub-600` / `--dss-hub-400` | L4 | Brand Hub (claro/dark) | N/A | Cores específicas da marca 'Hub' para temas claro e escuro, usadas para acentuação visual. |
+| `--dss-water-500` / `--dss-water-400` | L4 | Brand Water (claro/dark) | N/A | Cores específicas da marca 'Water' para temas claro e escuro, usadas para acentuação visual. |
+| `--dss-waste-600` / `--dss-waste-500` | L4 | Brand Waste (claro/dark) | N/A | Cores específicas da marca 'Waste' para temas claro e escuro, usadas para acentuação visual. |
+
 ---
 
-## Tokens CSS Obrigatórios
+## 5. Governança de Tokens e Exceções
 
-| Token | Camada | Uso |
-|-------|--------|-----|
-| `--dss-border-width-thin` | L2 + L3 | Colapso outline / separadores |
-| `--dss-border-width-thick` | L4 | Acento de brand (inset box-shadow) |
-| `--dss-border-width-md` | Module | High contrast outline |
-| `--dss-gray-200` | L3 | Separador push e unelevated |
-| `--dss-gray-300` | L3 | Separador flat |
-| `--dss-radius-full` | L2 | Variante rounded — border-radius pill |
-| `--dss-hub-600` / `--dss-hub-400` | L4 | Brand Hub (claro/dark) |
-| `--dss-water-500` / `--dss-water-400` | L4 | Brand Water (claro/dark) |
-| `--dss-waste-600` / `--dss-waste-500` | L4 | Brand Waste (claro/dark) |
-
----
-
-## Exceções Documentadas (Obrigatórias)
+### Exceções Documentadas (Obrigatórias)
 
 | ID | Valor | Local | Justificativa |
 |----|-------|-------|---------------|
-| EXC-01 | `border-radius: 0` | `2-composition/_base.scss` | Square variant — `0` é semântico, não hardcoded visual. Padrão DssCard EXC-03. |
-| EXC-02 | `rgba(255,255,255,0.12)` | `4-output/_states.scss` | Dark mode divider — sem token DSS equivalente. Padrão Material Design. Padrão DssCard EXC-01. |
-| EXC-03 | `1px solid ButtonText` | `4-output/_states.scss` | Forced-colors — system keywords obrigatórios. Padrão DssCard EXC-04. |
+| EXC-01 | `border-radius: 0` | `2-composition/_base.scss` | Square variant — `0` é semântico, não hardcoded visual. Padrão DssCard EXC-03. Esta exceção permite a flexibilidade de remover o `border-radius` para a variante `square`, mantendo a semântica de design. |
+| EXC-02 | `rgba(255,255,255,0.12)` | `4-output/_states.scss` | Dark mode divider — sem token DSS equivalente. Padrão Material Design. Padrão DssCard EXC-01. Este valor é uma exceção temporária até que um token DSS apropriado para divisores em modo escuro seja definido. |
+| EXC-03 | `1px solid ButtonText` | `4-output/_states.scss` | Forced-colors — system keywords obrigatórios. Padrão DssCard EXC-04. Em ambientes de alto contraste (forced-colors), é essencial usar palavras-chave do sistema para garantir a acessibilidade e a conformidade. |
 
 ---
 
-## Acessibilidade
+## 6. Acessibilidade
 
 | Atributo | Valor | Condição |
 |----------|-------|----------|
-| `role` | `"group"` | Sempre |
-| `aria-label` | valor de `ariaLabel` | Quando prop fornecida |
+| `role` | `"group"` | Sempre | Define o grupo de botões como um elemento de agrupamento para tecnologias assistivas. |
+| `aria-label` | valor de `ariaLabel` | Quando prop fornecida | Fornece um rótulo descritivo para o grupo de botões, melhorando a navegação para usuários de leitores de tela. |
 
-- **Touch target:** Opção B — delegado a cada DssButton filho. DssBtnGroup não é Compact Control.
-- **Foco:** O container não captura foco. Cada DssButton filho é navegável por Tab individualmente.
-- **`inheritAttrs: false`** + `v-bind="$attrs"` no container `<div>`.
-
----
-
-## Estados
-
-| Estado | Aplicável ao DssBtnGroup |
-|--------|--------------------------|
-| default | ✅ Único estado do container |
-| hover, focus, active, disabled, loading, error, indeterminate | ❌ Pertencem aos DssButton filhos |
+- **Touch target:** Opção B — delegado a cada DssButton filho. DssBtnGroup não é Compact Control. A área de toque é gerenciada individualmente por cada botão, garantindo que cada um tenha um tamanho adequado para interação. 
+- **Foco:** O container não captura foco. Cada DssButton filho é navegável por Tab individualmente. Isso permite que os usuários naveguem pelos botões dentro do grupo de forma granular. 
+- **`inheritAttrs: false`** + `v-bind="$attrs"` no container `<div>`. Garante que atributos não declarados como props sejam passados para o elemento raiz do componente, mantendo a flexibilidade e a compatibilidade. 
 
 ---
 
-## Exemplos Obrigatórios (mínimo 6)
+## 7. Estados do Componente
 
-1. Básico unelevated com 3 botões
-2. Outline com ícones
-3. Flat (toolbar de formatação)
-4. Spread (largura total)
-5. Brand Hub + Brand Water
-6. Rounded (pill)
-7. Anti-pattern: prop sync incorreto vs correto
+| Estado | Aplicável ao DssBtnGroup | Descrição |
+|--------|--------------------------|-----------|
+| default | ✅ Único estado do container | O estado padrão do grupo de botões, sem interações ativas ou modificações visuais. |
+| hover, focus, active, disabled, loading, error, indeterminate | ❌ Pertencem aos DssButton filhos | Estes estados são gerenciados individualmente por cada botão dentro do grupo, refletindo sua própria interatividade. |
 
 ---
 
-## Requisitos de Documentação
+## 8. Superfície de Playground
 
-- `DssBtnGroup.md` — Template 13.1 completo (17 seções mínimas)
-- `DSSBTNGROUP_API.md` — API Reference com todos os contratos
-- `README.md` — Quick start com Prop Sync Rule destacada
-- `dss.meta.json` — goldenReference, goldenContext, phase, exceptions, tokens, propsBlocked
-- `DssBtnGroup.example.vue` — 6+ cenários + anti-pattern
+Para a validação e demonstração do `DssBtnGroup`, a superfície de playground deve incluir os seguintes elementos:
+
+### Controles Obrigatórios
+
+- **Controle de Prop `flat`:** Um switch ou checkbox para alternar o estado `flat` do `DssBtnGroup` e de seus `DssButton` filhos. Isso demonstrará a regra de Prop Sync obrigatória.
+- **Controle de Prop `outline`:** Um switch ou checkbox para alternar o estado `outline` do `DssBtnGroup` e de seus `DssButton` filhos.
+- **Controle de Prop `push`:** Um switch ou checkbox para alternar o estado `push` do `DssBtnGroup` e de seus `DssButton` filhos.
+- **Controle de Prop `unelevated`:** Um switch ou checkbox para alternar o estado `unelevated` do `DssBtnGroup` e de seus `DssButton` filhos.
+- **Controle de Prop `rounded`:** Um switch ou checkbox para alternar o estado `rounded` do `DssBtnGroup`.
+- **Controle de Prop `square`:** Um switch ou checkbox para alternar o estado `square` do `DssBtnGroup`.
+- **Controle de Prop `spread`:** Um switch ou checkbox para alternar o estado `spread` do `DssBtnGroup`.
+- **Controle de Prop `stretch`:** Um switch ou checkbox para alternar o estado `stretch` do `DssBtnGroup`.
+- **Controle de Prop `brand`:** Um seletor (dropdown) com as opções `hub`, `water`, `waste` e `null` para aplicar o acento de marca.
+- **Controle de Prop `ariaLabel`:** Um campo de texto para inserir um valor para o `aria-label` do `DssBtnGroup`.
+
+### Composite Logic (Concreta, Não Genérica)
+
+O playground deve demonstrar a `Composite Logic` do `DssBtnGroup` através de exemplos concretos:
+
+1.  **Sincronização de Props:** Um exemplo onde o `DssBtnGroup` tem a prop `flat` ativada, mas os `DssButton` filhos não. Um aviso visual deve indicar o anti-padrão e a renderização incorreta. Ao ativar `flat` nos filhos, a renderização deve ser corrigida.
+2.  **Gerenciamento de `border-radius`:** Um `DssBtnGroup` com 3 `DssButton` filhos. Ao ativar a prop `rounded`, os cantos externos do grupo devem ser arredondados, enquanto os cantos internos dos botões intermediários permanecem retos. Ao ativar `square`, todos os `border-radius` devem ser removidos.
+3.  **Separadores Visuais:** Demonstração clara dos separadores entre os botões para as variantes `flat`, `push` e `unelevated`, mostrando as diferentes cores (`--dss-gray-300` e `--dss-gray-200`) e como eles se comportam.
+4.  **Acento de Marca:** Um `DssBtnGroup` com a prop `brand` definida como `hub`, `water` e `waste`, mostrando o `box-shadow` inset correspondente na borda inferior.
+
+### Estados a Expor (em tabela)
+
+| Estado | Descrição | Observações |
+|--------|-----------|-------------|
+| Default | Estado inicial do componente, sem interações. | O `DssBtnGroup` não possui estados interativos próprios, apenas o estado padrão. |
+| Com `flat` | O grupo de botões com estilo plano. | Separadores `--dss-gray-300` visíveis. |
+| Com `outline` | O grupo de botões com bordas visíveis. | Bordas duplas colapsadas. |
+| Com `push` | O grupo de botões com efeito 3D. | Separadores `--dss-gray-200` visíveis. |
+| Com `unelevated` | O grupo de botões sem sombra. | Separadores `--dss-gray-200` visíveis. |
+| Com `rounded` | O grupo de botões com cantos externos arredondados. | `border-radius: var(--dss-radius-full)` aplicado. |
+| Com `square` | O grupo de botões com cantos retos. | `border-radius: 0` aplicado. |
+| Com `spread` | Os botões distribuídos igualmente. | `display: flex` e `flex: 1` nos filhos. |
+| Com `stretch` | Os botões esticados verticalmente. | `align-self: stretch` nos filhos. |
+| Com `brand='hub'` | O grupo de botões com acento de marca 'hub'. | `box-shadow` inset com cor `hub`. |
+| Com `brand='water'` | O grupo de botões com acento de marca 'water'. | `box-shadow` inset com cor `water`. |
+| Com `brand='waste'` | O grupo de botões com acento de marca 'waste'. | `box-shadow` inset com cor `waste`. |
+
+---
+
+## 9. Exemplos Obrigatórios (mínimo 6)
+
+1.  Básico unelevated com 3 botões
+2.  Outline com ícones
+3.  Flat (toolbar de formatação)
+4.  Spread (largura total)
+5.  Brand Hub + Brand Water
+6.  Rounded (pill)
+7.  Anti-pattern: prop sync incorreto vs correto
+
+---
+
+## 10. Requisitos de Documentação
+
+-   `DssBtnGroup.md` — Template 13.1 completo (17 seções mínimas)
+-   `DSSBTNGROUP_API.md` — API Reference com todos os contratos
+-   `README.md` — Quick start com Prop Sync Rule destacada
+-   `dss.meta.json` — goldenReference, goldenContext, phase, exceptions, tokens, propsBlocked
+-   `DssBtnGroup.example.vue` — 6+ cenários + anti-pattern
 
 ---
 

@@ -7,11 +7,11 @@
 - **Nome do Componente:** `DssLinearProgress`
 - **Nível Arquitetural:** Nível 2 (Composição de base)
 - **Família:** Progresso e Feedback
-- **Golden Reference:** `DssBadge` (Componente não interativo)
+- **Golden Reference:** `DssBadge` (Componente não interativo) e `DssChip` (Componente interativo)
 - **Golden Context:** `DssSpinner` (Componente não interativo de feedback)
 - **Status:** Desbloqueado
 
-**Justificativa da Fase 2:** O `DssLinearProgress` é um componente de feedback visual fundamental, sem dependências bloqueantes, e é pré-requisito crítico para o `DssUploader` (Nível 3).
+**Justificativa da Fase 2:** O `DssLinearProgress` é um componente de feedback visual fundamental, sem dependências bloqueantes, e é pré-requisito crítico para o `DssUploader` (Nível 3). Ele fornece feedback claro sobre o status de operações em andamento, melhorando a experiência do usuário ao reduzir a incerteza durante tempos de espera.
 
 ## 2. Riscos Arquiteturais e Gates
 
@@ -23,6 +23,7 @@
 ### 2.2. Gate de Responsabilidade v2.4
 - O `DssLinearProgress` **não deve** gerenciar estado interativo (não tem hover, focus ou active).
 - O `DssLinearProgress` **não deve** calcular o progresso por conta própria — ele apenas recebe o valor numérico (0.0 a 1.0) e repassa ao Quasar.
+- O componente deve focar exclusivamente na apresentação visual do progresso, delegando a lógica de negócio para os componentes pais.
 
 ## 3. Mapeamento de API (Props e Eventos)
 
@@ -34,7 +35,7 @@
 - `reverse` (Boolean) - Inverte a direção da animação/preenchimento.
 
 **Visual:**
-- `color` (String) - Cor semântica DSS (`primary`, `secondary`, `error`, `success`, `warning`, `info`). Padrão: `primary`.
+- `color` (String) - Cor semântica DSS (`hub`, `water`, `waste`, `error`, `success`, `warning`, `info`). Padrão: `hub`.
 - `size` (String) - Altura da barra (`xs`, `sm`, `md`, `lg`, `xl`). Padrão: `md`.
 - `brand` (String) - Aplica contexto de brand Sansys.
 - `stripe` (Boolean) - Aplica padrão listrado à barra de progresso.
@@ -54,8 +55,11 @@
   - `xl`: `var(--dss-spacing-6)` (24px)
 - **Border Radius:** `var(--dss-radius-full)` (9999px) para a barra e para o track.
 - **Cor do Track (Fundo):** `var(--dss-surface-muted)`.
-- **Cor do Model (Progresso):** Mapeada a partir da prop `color` para os tokens de brand (`--dss-brand-primary`, etc) ou feedback (`--dss-feedback-success`, etc).
+- **Cor do Model (Progresso):** Mapeada a partir da prop `color` para os tokens de brand (`--dss-action-hub`, `--dss-action-water`, `--dss-action-waste`) ou feedback (`--dss-feedback-success`, etc).
 - **Transição:** `var(--dss-duration-250)` e `var(--dss-easing-standard)`.
+- **Foco:** `outline: 2px solid white` (quando aplicável em contextos específicos).
+- **Texto:** `var(--dss-text-subtle)` para rótulos associados.
+- **Superfície:** `var(--dss-action-hub-surface)` para fundos relacionados.
 
 ## 5. Acessibilidade e Estados
 
@@ -72,6 +76,8 @@ O arquivo `DssLinearProgress.example.vue` deve cobrir:
 3. **Cores de Feedback:** Exemplos com `success`, `error`, `warning`.
 4. **Tamanhos:** Demonstração dos tamanhos `xs` a `xl`.
 5. **Brand:** Barra com prop `brand` aplicada.
+6. **Stripe:** Barra com padrão listrado.
+7. **Reverse:** Barra com preenchimento reverso.
 
 ## 7. Exceções aos Gates v2.4
 
@@ -86,13 +92,15 @@ O arquivo `DssLinearProgress.example.vue` deve cobrir:
 ### 8.1 Controles Obrigatórios
 - **Value**: Slider numérico (0.0 a 1.0) para controlar o progresso.
 - **Indeterminate**: Toggle [true, false].
-- **Color**: Select com as cores semânticas (`primary`, `success`, `error`, etc).
+- **Color**: Select com as cores semânticas (`hub`, `water`, `waste`, `success`, `error`, `warning`, `info`).
 - **Size**: Select com os tamanhos (`xs`, `sm`, `md`, `lg`, `xl`).
 - **Stripe**: Toggle [true, false].
+- **Reverse**: Toggle [true, false].
 
 ### 8.2 Composite Logic
 - O playground **deve** demonstrar a transição suave quando o controle `Value` é alterado. A barra não deve "pular" instantaneamente, mas animar até o novo valor.
 - Quando `Indeterminate` for ativado, o controle `Value` deve ser visualmente ignorado/desabilitado no playground, provando que o estado indeterminado tem precedência.
+- A alteração de `Color` deve refletir imediatamente na barra de progresso, utilizando os tokens de brand corretos (`hub`, `water`, `waste`).
 
 ### 8.3 Estados a Expor
 | Estado | Descrição | Tipo | Trigger |
@@ -100,4 +108,9 @@ O arquivo `DssLinearProgress.example.vue` deve cobrir:
 | **Determinado** | Barra preenchida até a porcentagem exata | Visual | Prop `value` |
 | **Indeterminado** | Animação contínua de carregamento | Visual | Prop `indeterminate="true"` |
 | **Stripe** | Padrão listrado sobre a cor de progresso | Visual | Prop `stripe="true"` |
+| **Reverse** | Preenchimento da direita para a esquerda | Visual | Prop `reverse="true"` |
 | **High Contrast** | Cores do sistema operacional | Acessibilidade | Emulação do SO |
+| **Disabled** | Opacidade reduzida indicando inatividade | Visual | Prop `disabled="true"` |
+
+---
+*Nota de Governança: Este documento foi revisado para garantir conformidade com as diretrizes de design system da Sansys, incluindo a correta aplicação de tokens de brand (hub, water, waste) e a estrutura de 8 eixos.*
