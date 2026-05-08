@@ -48,6 +48,7 @@ import {
   Wrench,
   Plus,
   Paperclip,
+  MoreHorizontal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -86,6 +87,7 @@ const navigation = {
       { title: "DssFile", url: "/componentes/dss-file", icon: Paperclip, status: "stable" },
       { title: "DssHeader", url: "/componentes/dss-header", icon: PanelTop, status: "stable" },
       { title: "DssPage", url: "/componentes/dss-page", icon: FileText, status: "stable" },
+      { title: "DssPagination", url: "/componentes/dss-pagination", icon: MoreHorizontal, status: "stable" },
       { title: "DssInput", url: "/componentes/dss-input", icon: Square, status: "stable" },
       { title: "DssRange", url: "/componentes/dss-range", icon: SlidersHorizontal, status: "stable" },
       { title: "DssTabs", url: "/componentes/dss-tabs", icon: Layers, status: "stable" },
