@@ -74,7 +74,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssToolbar` | `QToolbar` | `DssButton`, `DssIcon` | ✅ Selado (16 Abr 2026) |
 | `DssExpansionItem` | `QExpansionItem` | `DssItem`, `DssIcon` | ✅ Selado (05 Mai 2026) |
 | `DssLinearProgress` | `QLinearProgress` | — | ✅ Selado (06 Mai 2026) |
-| `DssPagination` | `QPagination` | `DssButton`, `DssIcon` | ⬜ Pendente |
+| `DssPagination` | `QPagination` | `DssButton`, `DssIcon` | ✅ Selado (08 Mai 2026) |
 | `DssDialog` | `QDialog` | `DssButton`, `DssCard` | ⬜ Pendente |
 | `DssVirtualScroll` | `QVirtualScroll` | — | ⬜ Pendente |
 | `DssInfiniteScroll` | `QInfiniteScroll` | `DssSpinner` | ⬜ Pendente |
@@ -180,12 +180,12 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | Fase | Total de Componentes | Selados | Pendentes |
 |---|---|---|---|
 | Fase 1 — Atômicos | 19 | 19 | 0 |
-| Fase 2 — Nível 1 (Independentes) | 37 | 15 | 22 |
+| Fase 2 — Nível 1 (Independentes) | 37 | 16 | 21 |
 | Fase 2 — Nível 2 (1º Grau) | 16 | 9 | 7 |
 | Fase 2 — Nível 3 (2º Grau) | 7 | 4 | 3 |
 | Fase 2 — Nível 4 (Layouts) | 7 | 5 | 2 |
 | Fase 3 — Patterns/Utilitários | 6 | N/A | N/A |
-| **TOTAL** | **92** | **52** | **34** |
+| **TOTAL** | **92** | **53** | **33** |
 
 ---
 

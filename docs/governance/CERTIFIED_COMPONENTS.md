@@ -32,7 +32,7 @@
 
 ---
 
-## Fase 2 — Componentes Compostos (33/68 — 49%)
+## Fase 2 — Componentes Compostos (34/68 — 50%)
 
 | Componente | Nível | Categoria | Data do Selo | Golden Reference | Golden Context | Observação |
 |---|---|---|---|---|---|---|
@@ -69,6 +69,7 @@
 | `DssPageSticky` | 4 | Layout Global — posicionamento fixo | 23/04/2026 | DssBadge | DssLayout | defineEmits anti-padrão para containers |
 | `DssLinearProgress` | 1 | Indicador de Progresso não interativo | 06/05/2026 | DssBadge | DssSpinner | withDefaults só non-trivials; EXC-Gate-01 seletores Quasar; EX-Code-01 animation-speed |
 | `DssUploader` | 2 | Upload / File Management | 07/05/2026 | DssBadge | DssCard | EXC-01 slots obrigatórios; EXC-Gate-02 :has(); 6 NCs resolvidas |
+| `DssPagination` | 1 | Navegação Estrutural | 08/05/2026 | DssChip | DssBtnGroup | EXC-01 motor QPagination sem slot API; EXC-Gate-01 --q-color-primary + seletores internos; 3 NCs resolvidas |
 
 ---
 
@@ -81,7 +82,7 @@
 | Abr 1–15, 2026 | 10 | Navegação e Tabs: Tab, Tabs, TabPanel, TabPanels, RouteTab, BreadcrumbsEl, Breadcrumbs, Toolbar, Header, Card |
 | Abr 16–20, 2026 | 8 | Layout completo: Footer, Menu, Drawer, Layout, Step, Stepper, ItemLabel, ItemSection |
 | Abr 21–26, 2026 | 4 | Layout Global: ToolbarTitle, Page, PageContainer, PageSticky, PageScroller |
-| Mai 2026 | 5 | Compostos e Progresso: Fab, FabAction, ExpansionItem, LinearProgress, Uploader |
+| Mai 2026 | 6 | Compostos, Progresso e Navegação: Fab, FabAction, ExpansionItem, LinearProgress, Uploader, Pagination |
 
 ---
 
@@ -102,4 +103,4 @@
 
 ---
 
-**Design System Sansys — Governança DSS v2.2 · Última atualização: 07 de Maio de 2026**
+**Design System Sansys — Governança DSS v2.2 · Última atualização: 08 de Maio de 2026**
