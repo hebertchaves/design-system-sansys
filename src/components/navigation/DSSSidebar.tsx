@@ -82,6 +82,7 @@ const navigation = {
       { title: "DssCard", url: "/componentes/dss-card", icon: CreditCard, status: "stable" },
       { title: "DssCheckbox", url: "/componentes/dss-checkbox", icon: CheckSquareIcon, status: "stable" },
       { title: "DssChip", url: "/componentes/dss-chip", icon: Tag, status: "golden" },
+      { title: "DssDialog", url: "/componentes/dss-dialog", icon: MessageSquare, status: "stable" },
       { title: "DssDrawer", url: "/componentes/dss-drawer", icon: PanelLeft, status: "stable" },
       { title: "DssFab", url: "/componentes/dss-fab", icon: Plus, status: "stable" },
       { title: "DssFile", url: "/componentes/dss-file", icon: Paperclip, status: "stable" },
