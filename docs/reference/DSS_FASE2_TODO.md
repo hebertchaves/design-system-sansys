@@ -37,7 +37,7 @@
 
 ### Família: Overlays e Dialogs
 
-- [ ] `DssDialog` — Modal/Dialog com slot de conteúdo livre ⬜
+- [x] `DssDialog` — Modal/Dialog com slot de conteúdo livre ✅ SELADO (2026-05-11)
 - [ ] `DssPopupEdit` — Edição inline em popup (clique para editar) ⬜
 
 ### Família: Scroll e Virtualização
