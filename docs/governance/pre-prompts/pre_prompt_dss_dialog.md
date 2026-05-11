@@ -101,7 +101,26 @@ O `DssDialog` dependerá de outros componentes e utilitários do Design System p
 ### Composição
 O `DssDialog` é um componente de composição, permitindo que outros componentes DSS sejam aninhados em seus slots `default`, `header` e `footer` para criar experiências modais ricas e variadas. Isso promove a reutilização e a consistência, ao mesmo tempo em que oferece flexibilidade para diferentes casos de uso.
 
-## 7. EXCEÇÕES PREVISTAS
+## 7. EXCEÇÕES PREVISTAS E ANTI-PADRÕES
+
+### Anti-patterns (❌) e Padrões Corretos (✅)
+
+- ❌ **Anti-pattern:** Usar `QBtn`, `QInput` ou outros componentes Quasar nativos dentro do `DssDialog`.
+- ✅ **Padrão Correto:** Usar exclusivamente componentes DSS (`DssButton`, `DssInput`) para compor o conteúdo do diálogo.
+
+- ❌ **Anti-pattern:** Aninhar mais de 2 níveis de `DssDialog`.
+- ✅ **Padrão Correto:** Avaliar fluxos alternativos (como navegação de página ou expansão inline) para evitar sobreposição excessiva de modais que prejudicam a acessibilidade e usabilidade.
+
+- ❌ **Anti-pattern:** Usar `DssDialog` para notificações temporárias ou feedback de sucesso/erro.
+- ✅ **Padrão Correto:** Usar `DssToast` ou `DssSnackbar` para mensagens efêmeras que não exigem interrupção do fluxo do usuário.
+
+- ❌ **Anti-pattern:** Usar `DssDialog` para tooltips ou popovers contextuais.
+- ✅ **Padrão Correto:** Usar `DssTooltip` ou `DssMenu` para informações complementares atreladas a um elemento específico.
+
+- ❌ **Anti-pattern:** Criar dependência estrutural obrigatória nos slots (ex: forçar o consumidor a usar uma classe específica no header).
+- ✅ **Padrão Correto:** O `DssDialog` deve fornecer a estrutura base, mas a composição interna dos slots (`header`, `default`, `footer`) é responsabilidade do consumidor.
+
+### Exceções Previstas
 
 *   **Modais de Notificação (Toasts/Snackbars)**: Para notificações não-interativas e temporárias, o `DssDialog` não é o componente adequado. Deve-se usar um componente específico de notificação (e.g., `DssToast` ou `DssSnackbar`).
 *   **Tooltips/Popovers**: Para informações contextuais que aparecem ao passar o mouse ou clicar em um elemento, mas que não bloqueiam a interação com o restante da página, o `DssDialog` é excessivo. Componentes como `DssTooltip` ou `DssPopover` devem ser utilizados.

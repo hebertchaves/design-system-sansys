@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 08 de Maio de 2026
+> **Última Atualização:** 11 de Maio de 2026
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -37,7 +37,7 @@
 
 ### Família: Overlays e Dialogs
 
-- [x] `DssDialog` — Modal/Dialog com slot de conteúdo livre ✅ SELADO (2026-05-11)
+- [x] ~~`DssDialog`~~ ✅ **SELADO** *(11 Mai 2026)*
 - [ ] `DssPopupEdit` — Edição inline em popup (clique para editar) ⬜
 
 ### Família: Scroll e Virtualização
@@ -203,9 +203,9 @@
 | Nível | Total | Selados | % Concluído |
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
-| Fase 2 — Nível 1 | 38 | 16 | 42% |
+| Fase 2 — Nível 1 | 38 | 17 | 45% |
 | Fase 2 — Nível 2 | 16 | 9 | 56% |
 | Fase 2 — Nível 3 | 7 | 4 | 57% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **34** | **50%** |
+| **Fase 2 Total** | **68** | **35** | **51%** |
 | Fase 3 | 6 | N/A | — |
