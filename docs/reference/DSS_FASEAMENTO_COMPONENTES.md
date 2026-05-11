@@ -75,7 +75,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssExpansionItem` | `QExpansionItem` | `DssItem`, `DssIcon` | ✅ Selado (05 Mai 2026) |
 | `DssLinearProgress` | `QLinearProgress` | — | ✅ Selado (06 Mai 2026) |
 | `DssPagination` | `QPagination` | `DssButton`, `DssIcon` | ✅ Selado (08 Mai 2026) |
-| `DssDialog` | `QDialog` | `DssButton`, `DssCard` | ⬜ Pendente |
+| `DssDialog` | `QDialog` | `DssButton`, `DssCard` | ✅ Selado (11 Mai 2026) |
 | `DssVirtualScroll` | `QVirtualScroll` | — | ⬜ Pendente |
 | `DssInfiniteScroll` | `QInfiniteScroll` | `DssSpinner` | ⬜ Pendente |
 | `DssImg` | `QImg` | `DssSpinner` | ⬜ Pendente |
@@ -93,7 +93,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssAjaxBar` | `QAjaxBar` | — | ⬜ Pendente |
 | `DssBanner` | `QBanner` | `DssButton`, `DssIcon` | ⬜ Pendente |
 | `DssBar` | `QBar` | `DssButton`, `DssIcon` | ⬜ Pendente |
-| `DssPopupEdit` | `QPopupEdit` | `DssInput`, `DssButton` | ⬜ Pendente |
+| `DssPopupEdit` | `QPopupEdit` | `DssInput`, `DssButton` | ✅ Selado (11 Mai 2026) |
 | `DssPullToRefresh` | `QPullToRefresh` | `DssIcon` | ⬜ Pendente |
 | `DssSlideItem` | `QSlideItem` | `DssIcon` | ⬜ Pendente |
 
@@ -180,12 +180,12 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | Fase | Total de Componentes | Selados | Pendentes |
 |---|---|---|---|
 | Fase 1 — Atômicos | 19 | 19 | 0 |
-| Fase 2 — Nível 1 (Independentes) | 37 | 16 | 21 |
+| Fase 2 — Nível 1 (Independentes) | 37 | 18 | 19 |
 | Fase 2 — Nível 2 (1º Grau) | 16 | 9 | 7 |
 | Fase 2 — Nível 3 (2º Grau) | 7 | 4 | 3 |
 | Fase 2 — Nível 4 (Layouts) | 7 | 5 | 2 |
 | Fase 3 — Patterns/Utilitários | 6 | N/A | N/A |
-| **TOTAL** | **92** | **53** | **33** |
+| **TOTAL** | **92** | **55** | **31** |
 
 ---
 
@@ -197,4 +197,5 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | Março 2026 | Reordenação da Fase 2 em "Trilha de Execução" baseada em interdependência, garantindo que componentes consumidos sejam criados antes dos consumidores. |
 | Março 2026 | Reclassificação de `QOptionGroup`, `QBtnGroup`, `QFab` e `QFabAction` da Fase 1 para a Fase 2. Justificativa: A regra de ouro da Fase 1 exige que o componente seja um wrapper de um único componente, sem composição interna. Estes componentes gerenciam estado entre múltiplos filhos ou compõem outros componentes internamente, caracterizando comportamento de Fase 2. |
 | Maio 2026 | **Depara completo**: 33 selos verificados contra diretórios de seal. Status atualizado: N1 (15/37), N2 (9/16), N3 (4/7), N4 (5/7). Tabela de cobertura corrigida de 20→52 selados. |
+| 11 Mai 2026 | Selos emitidos: `DssDialog` e `DssPopupEdit` (Nível 1). N1 atualizado: 18/37. Total: 55 selados. |
 | Fevereiro 2026 | Documento original criado em formato PDF. |

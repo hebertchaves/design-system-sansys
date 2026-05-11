@@ -1,156 +1,295 @@
 # Pré-prompt: DssPopupEdit
 
+> **Status de governança:** Corrigido em 11 Mai 2026 — retroativo à auditoria v2.5
+> **Correções aplicadas:** GAP-01 (tokens fantasma removidos), GAP-02 (semântica do v-model corrigida), Golden Context declarado
+
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
 ### Golden Reference
-DssChip (componente interativo)
+**DssChip** — componente interativo (estratégia Opção A para componentes com touch target)
 
 ### Golden Context
-O DssPopupEdit é um componente versátil, projetado para facilitar a edição de informações de forma contextual e não-intrusiva. Ele pode operar tanto como um modal, bloqueando a interação com o restante da interface até que uma ação seja tomada, quanto como um não-modal, permitindo que o usuário continue interagindo com o conteúdo de fundo. Sua principal função é permitir a modificação rápida e focada de dados, abrangendo desde a edição de campos de texto simples e a seleção de opções em listas suspensas, até o ajuste de configurações complexas em formulários. A natureza interativa do DssPopupEdit, que envolve a manipulação direta de dados e o gerenciamento de estados de interação do usuário, o alinha conceitualmente com componentes como o DssChip. O DssChip, por exemplo, é um componente interativo que gerencia seu próprio estado (selecionado, desabilitado) e responde a ações do usuário (clique, foco). Similarmente, o DssPopupEdit encapsula lógicas de interação para garantir uma experiência de edição coesa e eficiente. Este componente é fundamental para otimizar fluxos de trabalho que exigem ajustes pontuais, pois minimiza a interrupção do usuário ao evitar a navegação para novas páginas. Ao invés disso, ele atua como uma camada sobre o conteúdo existente, permitindo que as edições sejam realizadas no local, mantendo o foco do usuário na tarefa principal e no contexto original. Isso resulta em uma experiência mais fluida, rápida e menos propensa a erros, especialmente em aplicações com grande volume de dados ou interações frequentes.
+**DssMenu** — ambos são overlays teleportados via QMenu interno que requerem CSS global para estilizar o container (`.q-menu`, `.q-popup-edit`). O DssPopupEdit segue o mesmo padrão arquitetural: usa `EXC-Gate-01` (motor Quasar direto sem equivalente DSS) e `EXC-Gate-02` (ausência de `popup-content-class`, CSS global obrigatório).
+
+### Classificação DSS
+- **Tipo:** Overlay de Edição Inline
+- **Categoria:** Overlays e Dialogs — Fase 2 Nível 1 (Independente)
+- **Interatividade na raiz:** NÃO — o DssPopupEdit não é interativo na raiz. A interatividade pertence ao elemento pai hospedeiro (gatilho de clique) e aos filhos dentro do slot (DssInput, DssButton).
+- **Abertura:** Controlada pelo clique no elemento pai hospedeiro — diferente de DssDialog que usa `v-model:open` booleano.
 
 ### Justificativa
-A necessidade premente de um componente DssPopupEdit emerge da crescente demanda por uma experiência de usuário (UX) fluida, ininterrupta e altamente eficiente em cenários que envolvem a edição de dados. Em ambientes de aplicação modernos, a navegação constante entre telas para realizar pequenas modificações pode ser frustrante e contraproducente. O DssPopupEdit atua como uma solução estratégica para este problema, consolidando padrões de interface de usuário (UI) para edição inline ou contextual. Isso garante não apenas uma consistência visual impecável, mas também uma funcionalidade robusta em toda a aplicação, independentemente do módulo ou contexto em que é utilizado. Ao encapsular de forma inteligente a lógica complexa de exibição, edição e submissão de dados, o DssPopupEdit desempenha um papel crucial na redução da complexidade de desenvolvimento. Isso se traduz em menos código boilerplate, menor probabilidade de erros e um ciclo de desenvolvimento mais rápido. Além disso, ele promove ativamente a reutilização de componentes, um pilar fundamental dos Design Systems, alinhando-se perfeitamente aos princípios de modularidade e escalabilidade. Este componente é meticulosamente projetado para resolver problemas de usabilidade amplamente reconhecidos, como a perda de contexto que ocorre quando os usuários são forçados a navegar para uma nova página para realizar edições triviais. Ele também aborda a inconsistência na apresentação e no comportamento de formulários de edição, um desafio comum em aplicações desenvolvidas sem um Design System rigoroso. Ao fornecer uma solução padronizada, o DssPopupEdit promove a agilidade na interação do usuário, permitindo que as tarefas sejam concluídas com maior rapidez e menor esforço cognitivo. A padronização que ele oferece é um elemento crucial para a manutenção de longo prazo e a escalabilidade de grandes aplicações, garantindo que novas funcionalidades possam ser adicionadas sem comprometer a integridade ou a experiência do usuário existente. Em suma, o DssPopupEdit não é apenas um componente; é uma ferramenta essencial para elevar a qualidade da interação e a eficiência operacional em qualquer produto digital.
+O DssPopupEdit padroniza o padrão de edição inline contextual sobre `QPopupEdit` do Quasar. Permite edição rápida de valores em tabelas, listas e formulários sem navegar para outra tela. Seu diferencial em relação ao DssDialog é que opera diretamente sobre o elemento que contém o dado, preservando contexto visual. O DSS padroniza botões Salvar/Cancelar por padrão (`buttons: true`), contra o padrão Quasar (`buttons: false`), para garantir que o usuário sempre tenha controle explícito sobre o salvamento.
 
-## 2. RISCOS ARQUITETURAIS E GATES
+---
 
-- **Gerenciamento de Estado**: Este é um dos riscos mais críticos. O DssPopupEdit, ao encapsular um formulário de edição, precisa gerenciar o estado dos dados que estão sendo modificados. É fundamental definir como esse estado será sincronizado com o componente pai. Soluções como o uso de `v-model` (para ligação bidirecional de dados) ou um gerenciamento de estado explícito (via `props` e `events`) devem ser cuidadosamente avaliadas. A ausência de uma estratégia clara pode levar a inconsistências de dados, onde as alterações feitas no popup não são refletidas corretamente no componente pai, ou vice-versa. A complexidade aumenta exponencialmente em cenários com formulários aninhados ou quando múltiplos popups podem ser abertos simultaneamente. A escolha entre um gerenciamento de estado local (dentro do próprio componente DssPopupEdit) ou global (utilizando bibliotecas como Vuex ou Pinia em aplicações Vue.js, ou Context API/Redux em React) deve ser bem fundamentada, considerando a escala da aplicação e a necessidade de compartilhamento de estado entre diferentes partes da UI. Além disso, é vital implementar mecanismos para lidar com o estado de "sujo" (dirty state), indicando se o formulário foi modificado e se as alterações precisam ser salvas ou descartadas.
-- **Posicionamento e Responsividade**: Um desafio significativo é garantir que o DssPopupEdit se posicione de forma otimizada e responsiva em uma vasta gama de tamanhos de tela e dispositivos, desde desktops com monitores grandes até smartphones. Isso é particularmente complexo em cenários que envolvem rolagem da página ou a abertura de múltiplos popups. O componente deve ser intrinsecamente adaptável a diferentes viewports, prevenindo cortes indesejados de conteúdo, sobreposições com outros elementos da interface ou o aparecimento de barras de rolagem desnecessárias. Para mitigar esses riscos, testes rigorosos em diversas resoluções, densidades de pixel e orientações de tela (retrato e paisagem) são absolutamente mandatórios. A implementação técnica pode exigir estratégias CSS avançadas, como `position: fixed` para popups modais que devem permanecer visíveis independentemente da rolagem, ou `position: absolute` para popups contextuais. Em ambos os casos, cálculos dinâmicos baseados nas dimensões da viewport e na posição do elemento de ancoragem podem ser necessários para garantir um posicionamento preciso e evitar que o popup saia da tela. A consideração de `media queries` e unidades relativas (como `vw`, `vh`, `%`) é essencial para a criação de um componente verdadeiramente responsivo. Além disso, a gestão do `overflow` e a capacidade de o popup se ajustar automaticamente ao conteúdo interno são aspectos cruciais para uma experiência de usuário sem falhas.
-- **Performance**: A performance é um aspecto crítico, especialmente quando o DssPopupEdit é utilizado para renderizar formulários complexos, que podem conter múltiplos campos, validações em tempo real e componentes aninhados. É imperativo avaliar o impacto na performance, particularmente em cenários de re-renderização frequente, que podem ocorrer devido a atualizações de estado ou interações do usuário. Para mitigar potenciais gargalos, diversas estratégias de otimização de renderização devem ser consideradas. A utilização de `v-if` (ou equivalentes em outros frameworks) para renderização condicional de seções do formulário pode evitar que partes da UI sejam renderizadas desnecessariamente. A virtualização de listas, se aplicável a campos de seleção com muitas opções, pode reduzir drasticamente o número de elementos renderizados no DOM. Além disso, a carga de dados inicial e a complexidade dos componentes internos do formulário podem afetar significativamente a fluidez da interface e a responsividade do popup. É crucial que o DssPopupEdit seja projetado para ser o mais leve possível, evitando dependências desnecessárias e otimizando o ciclo de vida dos componentes internos. Testes de performance, como medição de tempo de carregamento e FPS (frames por segundo) durante interações, devem ser realizados para garantir uma experiência de usuário suave e sem atrasos perceptíveis.
-- **Animações**: A implementação de animações de entrada e saída é crucial para aprimorar a experiência do usuário, tornando a aparição e o desaparecimento do DssPopupEdit mais suaves e menos abruptos. É fundamental definir padrões claros para essas animações, garantindo consistência em toda a aplicação. As animações devem ser, acima de tudo, performáticas, evitando qualquer "jank" (engasgos visuais) ou atrasos que possam prejudicar a percepção de fluidez. A utilização de transições CSS, que são otimizadas pelos navegadores, é geralmente preferível a animações baseadas em JavaScript para efeitos mais simples. Para animações mais complexas, bibliotecas de animação leves e eficientes podem ser consideradas. A duração e o "easing" (curva de aceleração/desaceleração) das animações devem ser padronizados e alinhados com os tokens de duração do Design System (e.g., `--dss-duration-250`). Isso não apenas mantém a identidade visual, mas também contribui para uma sensação de coesão e profissionalismo. É importante testar as animações em diferentes dispositivos e condições de rede para garantir que elas permaneçam fluidas e responsivas, mesmo em ambientes com recursos limitados.
-- **Fechamento**: As condições de fechamento do DssPopupEdit devem ser claramente definidas e implementadas de forma consistente para garantir uma experiência de usuário previsível. As condições típicas incluem: 
-  - **Clique fora (Backdrop Click)**: O popup deve ser fechado quando o usuário clica na área externa (backdrop), a menos que a propriedade `persistent` esteja definida como `true`. 
-  - **Tecla ESC**: O pressionamento da tecla ESC deve fechar o popup, seguindo as diretrizes de acessibilidade para modais. 
-  - **Botão de Fechar**: Um botão de fechar explícito (geralmente um ícone 'x' no cabeçalho) deve estar disponível para o usuário. 
-  É fundamental que o usuário tenha controle claro sobre o fechamento do popup e que as ações de salvar ou cancelar sejam explícitas. A decisão de descartar ou persistir dados não salvos ao fechar o popup deve ser bem definida e comunicada ao usuário, por exemplo, através de um prompt de confirmação ("Você tem alterações não salvas. Deseja descartá-las?"). A implementação deve considerar o impacto no estado dos dados em edição, garantindo que as alterações sejam salvas, descartadas ou que o usuário seja alertado antes de perder o progresso. A consistência no comportamento de fechamento é vital para a usabilidade e para evitar frustrações.
-- **Empilhamento (Z-index)**: O gerenciamento do `z-index` é um aspecto técnico crucial para garantir a correta sobreposição visual do DssPopupEdit, especialmente em interfaces complexas onde múltiplos componentes flutuantes (como tooltips, dropdowns, outros modais) podem estar presentes. É essencial que o popup ativo esteja sempre visível e interativo, sem ser obscurecido por outros elementos. Para isso, uma estratégia de gerenciamento de `z-index` deve ser estabelecida. Isso pode envolver: 
-  - **`z-index` global**: Definir um valor de `z-index` alto e consistente para todos os modais e popups no Design System, garantindo que eles sempre apareçam acima do conteúdo principal. 
-  - **`z-index` contextual/dinâmico**: Em cenários onde múltiplos popups podem ser abertos (e.g., um popup de edição que abre um seletor de data em outro popup), pode ser necessário um sistema que atribua `z-index` dinamicamente, garantindo que o popup mais recentemente aberto tenha o `z-index` mais alto. 
-  A ausência de uma estratégia clara pode levar a problemas de sobreposição, onde partes do popup são cortadas ou escondidas por outros elementos, prejudicando a usabilidade e a estética. Testes de regressão para cenários de múltiplos componentes sobrepostos são recomendados para validar a eficácia da estratégia de `z-index`.
+## 2. DECISÃO ARQUITETURAL CRÍTICA — v-model
 
-## 3. MAPEAMENTO DE API (QUASAR → DSS)
+> ⚠️ **Diferença fundamental em relação ao DssDialog:**
 
-O DssPopupEdit deve abstrair e padronizar funcionalidades de componentes Quasar como `QDialog`, `QMenu` ou `QPopupProxy`, focando em um fluxo de edição. A API deve expor propriedades para um controle flexível e robusto do componente, permitindo que os desenvolvedores o integrem facilmente em suas aplicações, mantendo a consistência do Design System. Cada propriedade e evento deve ser cuidadosamente projetado para cobrir os casos de uso mais comuns e complexos.
+| | DssDialog | DssPopupEdit |
+|---|---|---|
+| `v-model` controla | **Visibilidade** (Boolean: true = aberto) | **Valor em edição** (qualquer tipo: string, number…) |
+| Abertura | `v-model:open="true"` programático | Clique no **elemento pai hospedeiro** |
+| Fechamento | `v-model:open="false"` | Botão Salvar / Cancelar / ESC / clique fora |
+
+O `v-model` do DssPopupEdit **nunca é Boolean de visibilidade**. Ele carrega o valor sendo editado. O QPopupEdit gerencia internamente a abertura/fechamento via QMenu interno.
+
+---
+
+## 3. RISCOS ARQUITETURAIS E GATES
+
+### EXC-Gate-01 — Motor QPopupEdit direto
+DssPopupEdit usa `<q-popup-edit>` diretamente no template. Não existe equivalente DSS para infraestrutura de edição inline (posicionamento via QMenu interno, gerenciamento de valor, eventos save/cancel). Toda a UI do popup é construída via slot default com conteúdo DSS.
+
+### EXC-Gate-02 — Ausência de popup-content-class (único no DSS)
+`QPopupEdit` **não expõe** `popup-content-class` ou equivalente. Impossível injetar classe DSS no container `.q-popup-edit` teleportado. CSS global com seletor `.q-popup-edit` é a única estratégia disponível. Este é o **único componente DSS nessa condição** — todos os outros overlays teleportados (DssMenu, DssBtnDropdown, DssSelect) usam `popup-content-class`.
+
+### EXC-01 — !important obrigatório em 4 propriedades
+QPopupEdit aplica `background`, `box-shadow`, `border-radius` e `padding` via `.q-card` interno com especificidade CSS superior. `!important` é necessário nas 4 propriedades para que os tokens DSS prevaleçam:
+```scss
+.q-popup-edit {
+  background-color: var(--dss-surface-default) !important;
+  box-shadow: var(--dss-elevation-3) !important;
+  border-radius: var(--dss-radius-md) !important;
+  padding: 0 !important;
+}
+```
+
+### EXC-02 — min-width hardcoded
+Não existe token DSS para largura mínima de popup inline. `min-width: 180px` hardcoded garante conteúdo mínimo usável.
+
+### Outros riscos
+- **buttons: true DSS default** — Quasar padrão é `false` (fecha ao qualquer clique). DSS força `true` (Salvar/Cancelar explícitos). Documentar no JSDoc.
+- **validate prop** — pode bloquear o fechamento se retornar false. Testar integração com DssInput.
+- **CSS global** — seletor `.q-popup-edit` afeta toda a aplicação. Garantir especificidade mínima necessária.
+
+---
+
+## 4. MAPEAMENTO DE API (QPopupEdit → DSS)
 
 ### Propriedades
-- **`modelValue` (v-model)**: `Boolean` - **Obrigatório**. Controla a visibilidade do popup. Quando `true`, o popup é exibido; quando `false`, ele é ocultado. Essencial para a reatividade e controle bidirecional do estado de abertura/fechamento, permitindo que o componente pai gerencie programaticamente a exibição do DssPopupEdit. A alteração deste valor deve ser feita através do evento `update:modelValue` para garantir a sincronização correta.
-- **`data`**: `Object` - **Obrigatório**. Objeto contendo os dados a serem editados. Este objeto é fundamental para preencher o formulário interno do popup. Internamente, uma cópia profunda (`deep clone`) deste objeto é criada para que as edições não afetem o estado original dos dados até que o usuário confirme a ação de salvar. Isso previne efeitos colaterais indesejados e permite que o usuário cancele as edições sem perder os dados originais. A estrutura deve ser flexível, aceitando qualquer objeto JSON válido que represente os campos do formulário.
-- **`title`**: `String` - **Opcional**. O título exibido no cabeçalho do popup. Deve ser conciso e descritivo, informando ao usuário o propósito da edição (e.g., "Editar Perfil", "Adicionar Novo Item"). Suporta renderização de HTML simples para formatação básica, permitindo o uso de tags como `<strong>` ou `<em>` para realce. Se não fornecido, o cabeçalho pode ser ocultado ou um título padrão pode ser usado, dependendo da implementação inter- **`actions`**: `Slot` ou `Array<Object>` - **Opcional**. Define os botões de ação exibidos no rodapé do popup. Esta propriedade oferece duas abordagens: 
-  1. **Slot (`#actions`)**: Permite total customização do rodapé, onde o desenvolvedor pode inserir qualquer componente ou HTML, como `DssButton` ou `DssLink`, para criar botões de ação personalizados. 
-  2. **Array de Objetos**: Para cenários mais simples, um array de objetos pode ser fornecido, onde cada objeto representa um botão e pode definir as seguintes propriedades: 
-     - `label`: `String` - Texto exibido no botão (e.g., 'Salvar', 'Cancelar'). 
-     - `handler`: `Function` - Função de callback a ser executada quando o botão é clicado. 
-     - `color`: `String` - Cor semântica do botão (e.g., `hub`, `water`, `waste`). 
-     - `flat`: `Boolean` - Se `true`, o botão terá um estilo plano. 
-  Esta flexibilidade garante que o componente possa ser adaptado a diversas necessidades de interação, desde ações simples até fluxos de trabalho complexos com múltiplos botões e lógicas específicas.- **`loading`**: `Boolean` - **Opcional**. Indica um estado de carregamento para o popup. Quando `true`, um indicador visual de carregamento (e.g., `DssSpinner`) é exibido, e os botões de ação podem ser automaticamente desabilitados para prevenir múltiplas submissões. Isso é crucial para melhorar a experiência do usuário, fornecendo feedback visual durante operações assíncronas, como o envio de dados para um servidor. O estado de carregamento deve ser gerenciado pelo componente pai, que define quando a operação assíncrona começa e termina.- **`error`**: `String` - **Opcional**. Mensagem de erro a ser exibida no popup. Esta mensagem é geralmente apresentada em uma área de notificação proeminente (e.g., um `DssBanner` ou `DssAlert`) abaixo do título ou acima do formulário. É útil para informar ao usuário sobre falhas de validação de formulário, erros de servidor ou outras condições que impedem a conclusão da ação. Pode ser um slot (`#error`) para customização avançada, permitindo que o desenvolvedor renderize componentes de erro mais complexos ou links para documentação de suporte.
-- **`persistent`**: `Boolean` - **Opcional**. Define se o popup é persistente. Se `true`, o popup não será fechado automaticamente ao clicar fora de sua área (`backdrop click`) ou ao pressionar a tecla ESC. Isso é particularmente útil para fluxos de trabalho críticos que exigem uma ação explícita do usuário (e.g., salvar ou cancelar) antes de permitir que ele continue interagindo com o restante da aplicação. O valor padrão é `false`, permitindo um fechamento mais flexível para popups informativos ou menos críticos.
-- **`position`**: `String` - **Opcional**. Define a posição do popup na tela. Os valores permitidos incluem: 
-  - `top`: Alinha o popup à parte superior da tela. 
-  - `bottom`: Alinha o popup à parte inferior da tela. 
-  - `left`: Alinha o popup à esquerda da tela. 
-  - `right`: Alinha o popup à direita da tela. 
-  - `standard`: Posicionamento padrão, geralmente centralizado com margens responsivas. 
-  - `center`: Centraliza o popup horizontal e verticalmente na tela. 
-  Esta propriedade oferece flexibilidade para adaptar o layout do popup a diferentes contextos de UI e requisitos de design. O padrão é `center` para a maioria dos casos de uso, garantindo que o popup seja o foco principal da interação.
-- **`maximized`**: `Boolean` - **Opcional**. Se `true`, o popup ocupará a largura e altura total da tela, comportando-se como um modal em tela cheia. Este modo é ideal para formulários complexos que exigem muito espaço ou para proporcionar uma experiência otimizada em dispositivos móveis, onde o espaço da tela é limitado. Quando maximizado, o popup geralmente esconde o conteúdo de fundo e pode ter um cabeçalho e rodapé fixos para navegação e ações.
-- **`width`**: `String` - **Opcional**. Define a largura máxima do popup. Pode ser um valor fixo (e.g., `500px`), um valor percentual (e.g., `80%`) ou uma unidade relativa (e.g., `50vw`). Esta propriedade permite controlar o tamanho horizontal do popup para se adequar ao conteúdo e ao layout geral da aplicação, garantindo que ele não se estenda excessivamente em telas grandes ou fique muito pequeno em telas menores. Em conjunto com a responsividade, ajuda a criar um layout adaptável.
-- **`height`**: `String` - **Opcional**. Define a altura máxima do popup. Pode ser um valor fixo (e.g., `400px`), um valor percentual (e.g., `70%`), uma unidade relativa (e.g., `60vh`), ou `auto` para que a altura se ajuste ao conteúdo. Esta propriedade é útil para controlar o espaço vertical ocupado pelo popup, especialmente quando o conteúdo interno pode ser extenso e exigir rolagem. Ao definir uma altura máxima, garante-se que o popup não ocupe toda a tela, mantendo a visibilidade de outros elementos importantes, se aplicável.
+
+| Prop DSS | Tipo | Padrão DSS | Padrão Quasar | Notas |
+|---|---|---|---|---|
+| `modelValue` | `unknown` | — | — | **VALOR EM EDIÇÃO** (não visibilidade). v-model bidirecional com o dado. |
+| `title` | `string` | `undefined` | — | Título opcional do popup. Renderiza `.q-item-label--header`. |
+| `buttons` | `boolean` | **`true`** | `false` | DSS força `true` — Salvar/Cancelar sempre explícitos. |
+| `labelSet` | `string` | `'Salvar'` | `'Set'` | Label do botão de confirmação. |
+| `labelCancel` | `string` | `'Cancelar'` | `'Cancel'` | Label do botão de cancelamento. |
+| `persistent` | `boolean` | `false` | `false` | Impede fechamento por clique fora e ESC. |
+| `fit` | `boolean` | `false` | `false` | Popup assume a largura do elemento pai. |
+| `cover` | `boolean` | `false` | `false` | Popup cobre o elemento pai. |
+| `validate` | `() => boolean` | `undefined` | — | Callback de validação. Retornar `false` bloqueia salvamento. |
+| `maxHeight` | `string` | `undefined` | — | Altura máxima do popup (e.g., `'30vh'`). |
+| `maxWidth` | `string` | `undefined` | — | Largura máxima do popup. |
+| `autoSave` | `boolean` | `false` | `false` | Salvar automaticamente ao mudar o valor. |
+| `touchPosition` | `boolean` | `false` | `false` | Posicionar o popup na posição do toque. |
+| `disable` | `boolean` | `false` | `false` | Desabilita a abertura do popup. |
+| `color` | `string` | `undefined` | `'primary'` | Cor dos botões padrão (Salvar/Cancelar). |
+| `offset` | `[number, number]` | `undefined` | `[10, 10]` | Offset de posicionamento `[x, y]`. |
+| `anchor` | `string` | `undefined` | `'bottom left'` | Ponto de ancoragem no pai. |
+| `self` | `string` | `undefined` | `'top left'` | Ponto de origem do popup. |
+
+### Slots
+
+| Slot | Descrição |
+|---|---|
+| `default` | Conteúdo de edição — DssInput, DssSelect, etc. com `autofocus`. |
+| `buttons` | Customização dos botões de ação (substitui os padrões Salvar/Cancelar). |
 
 ### Eventos
-- **`update:modelValue`**: Emitido quando o popup é fechado, passando o novo valor booleano (`false`). Essencial para a sincronização do `v-model` e para que o componente pai reaja ao fechamento.
-- **`save`**: Emitido quando a ação de salvar é confirmada pelo usuário, geralmente passando o objeto `data` modificado. Este evento deve ser tratado pelo componente pai para persistir as alterações.
-- **`cancel`**: Emitido quando a ação de cancelar é acionada, indicando que as edições devem ser descartadas. O componente pai pode usar este evento para reverter quaisquer alterações temporárias.
-- **`before-show`**: Emitido antes do popup ser exibido, permitindo que o componente pai execute ações de inicialização, como carregar dados.
-- **`after-show`**: Emitido após o popup ser totalmente exibido, útil para focar elementos ou iniciar animações.
-- **`before-hide`**: Emitido antes do popup ser ocultado, permitindo ações de limpeza ou validação final.
-- **`after-hide`**: Emitido após o popup ser totalmente ocultado, para liberar recursos ou finalizar processos.
 
-## 4. GOVERNANÇA DE TOKENS E CSS
+| Evento | Assinatura | Descrição |
+|---|---|---|
+| `update:modelValue` | `(value: unknown) => void` | Atualiza o valor v-model durante edição. |
+| `save` | `(value: unknown, initialValue: unknown) => void` | Emitido ao confirmar. Recebe valor final **e** valor inicial (dois args — obrigatório arrow function). |
+| `cancel` | `() => void` | Emitido ao cancelar. |
+| `beforeShow` | `() => void` | Antes do popup abrir. |
+| `show` | `() => void` | Após o popup abrir. |
+| `hide` | `() => void` | Após o popup fechar. |
+| `escape` | `() => void` | Emitido ao pressionar ESC. |
 
-O DssPopupEdit deve utilizar exclusivamente os tokens de design do DSS para espaçamento, raio, duração e cores de superfície, garantindo a consistência visual e a manutenibilidade do Design System. A adesão estrita a esses tokens evita a proliferação de valores mágicos e facilita futuras atualizações de design. A utilização de tokens semânticos é fundamental para a escalabilidade.
+> **Atenção crítica no evento @save:** O QPopupEdit emite `(value, initialValue)` com **dois argumentos**. Deve ser capturado com arrow function:
+> ```vue
+> @save="(val, initVal) => emit('save', val, initVal)"
+> ```
+> Nunca usar `$event` (captura apenas o primeiro argumento).
 
-- **Espaçamento interno (padding)**: `--dss-spacing-16` (para o espaçamento interno geral do conteúdo principal do popup, garantindo uma área de respiro adequada entre o conteúdo e as bordas do componente). Para elementos menores internos, como espaçamento entre ícones e texto, ou entre itens de uma lista, utilize `--dss-spacing-8` ou `--dss-spacing-4`. A escolha do token de espaçamento deve ser criteriosamente baseada na hierarquia visual, na densidade da informação e na legibilidade, seguindo as diretrizes de grid e espaçamento do DSS. Por exemplo, em formulários, o espaçamento entre campos pode ser `--dss-spacing-12` para manter a clareza sem sobrecarregar visualmente.
-- **Espaçamento externo (margin)**: `--dss-spacing-24` (aplicado como margem externa para garantir um respiro adequado entre o popup e as bordas da viewport, evitando que o componente fique colado nas extremidades da tela). Em contextos responsivos, especialmente em dispositivos móveis, este valor pode ser dinamicamente ajustado para `--dss-spacing-16` ou `--dss-spacing-8` para maximizar o espaço útil e melhorar a experiência em telas menores. A margem externa também pode ser utilizada para criar espaçamento entre o popup e outros elementos flutuantes, se houver, sempre respeitando a hierarquia e o fluxo da interface.
-- **Raio da borda (border-radius)**: `--dss-radius-md` (aplicado aos cantos do popup para conferir uma estética suave e moderna, alinhada com a identidade visual do DSS). Este é o token padrão para superfícies flutuantes. Em situações específicas, onde um elemento interno do popup ou um componente aninhado exija um arredondamento diferente, `--dss-radius-sm` (para um arredondamento mais sutil) ou `--dss-radius-lg` (para um arredondamento mais pronunciado) podem ser utilizados. A consistência no uso dos tokens de `border-radius` é vital para a percepção de coesão do Design System.
-- **Cor de fundo (background-color)**: `--dss-surface-default` (utilizado como cor de fundo principal para o corpo do popup, garantindo um contraste adequado com o texto e outros elementos interativos, e promovendo uma base visual neutra e consistente. Em cenários onde o popup precisa de um destaque maior ou um contexto visual diferente, tokens como `--dss-surface-overlay` ou `--dss-surface-elevated` podem ser considerados, mas `--dss-surface-default` é o ponto de partida para a maioria das implementações. A escolha da cor de fundo é crucial para a legibilidade e para a hierarquia visual do componente, assegurando que o conteúdo interno seja o foco principal. Além disso, a cor de fundo deve ser acessível, passando nos testes de contraste com as cores de texto e ícones utilizados. Este token é a base para a identidade visual do popup, definindo sua "tela" principal. 
-- **Cor da borda (border-color)**: `--dss-border-default` (para bordas sutis que ajudam a definir os limites do popup sem serem intrusivas). Em casos de validação ou feedback, `--dss-border-danger` ou `--dss-border-success` podem ser usados para indicar estados específicos. A espessura da borda deve ser consistente, geralmente `1px` ou `2px`, e o estilo `solid`. A borda contribui para a percepção de profundidade e separação do conteúdo de fundo, especialmente quando o popup não possui uma sombra proeminente. 
-- **Cor da sombra (box-shadow)**: `--dss-shadow-md` (para adicionar uma sombra discreta que eleva visualmente o popup da superfície de fundo, criando uma sensação de profundidade e foco). Em popups mais proeminentes ou em estados de foco, `--dss-shadow-lg` pode ser utilizado. A sombra é um elemento chave para a percepção de modalidade e para guiar o olhar do usuário para o componente. A consistência na aplicação de sombras é vital para a coesão visual do Design System. 
-- **Cor do texto (text-color)**: Utilize `--dss-text-default` para o texto principal do popup (títulos, rótulos de campos, conteúdo informativo), garantindo alta legibilidade e contraste. Para textos secundários, descrições, placeholders ou informações menos proeminentes, `--dss-text-subtle` deve ser empregado. A hierarquia de cores de texto é crucial para guiar o usuário através do conteúdo e destacar as informações mais importantes. Em casos de feedback de erro, utilize `--dss-text-danger` para mensagens de validação ou alertas críticos. 
-- **Cor de foco (focus-color)**: Para indicar o estado de foco de elementos interativos dentro do DssPopupEdit (como campos de entrada, botões ou links), utilize `outline: 2px solid var(--dss-action-hub)` como padrão. Em situações onde o `hub` já é a cor principal do elemento, ou para criar uma distinção visual secundária, `outline: 2px solid var(--dss-action-water)` pode ser uma alternativa. É fundamental que o indicador de foco seja sempre visível e claro para garantir a acessibilidade, especialmente para usuários que navegam via teclado. Evite remover o `outline` padrão sem fornecer um substituto visual adequado.ndo um contraste adequado com o texto e outros elementos interativos, e promovendo a legibilidade). Em cenários onde o popup possui seções internas distintas (e.g., cabeçalho, corpo, rodapé), cores de superfície adicionais como `--dss-surface-alt` ou `--dss-surface-subtle` podem ser empregadas para criar hierarquia visual e separar blocos de conteúdo. A escolha da cor de fundo deve sempre considerar a acessibilidade e a conformidade com as diretrizes de contraste do WCAG.
-- **Sombra (box-shadow)**: Para conferir profundidade e destacar o DssPopupEdit do conteúdo de fundo, utilize tokens de sombra padrão do DSS. Recomenda-se `--dss-shadow-elevation-2` para popups de menor importância ou contextuais, e `--dss-shadow-elevation-3` para modais mais proeminentes que exigem maior destaque. A aplicação de sombras é crucial para criar a percepção de camadas na interface, guiando o olhar do usuário para o elemento interativo principal. Evite o uso de sombras personalizadas para manter a consistência visual.
-- **Duração da transição (transition-duration)**: `--dss-duration-250` (aplicado às animações de entrada e saída do popup, como fade-in/fade-out ou slide-up/slide-down). Este token proporciona uma transição suave e perceptível, sem ser excessivamente lenta ou abrupta, contribuindo para uma experiência de usuário agradável. Para animações mais rápidas (e.g., feedback de clique) ou mais lentas (e.g., transições de página), outros tokens de duração como `--dss-duration-150` ou `--dss-duration-400` podem ser utilizados, mas `--dss-duration-250` é o padrão recomendado para transições de visibilidade de componentes modais.
-- **Cor do texto (text-color)**: Utilize `--dss-text-default` para o texto principal do popup (títulos, rótulos de campos, conteúdo informativo), garantindo alta legibilidade e contraste. Para textos secundários, descrições, placeholders ou informações menos proeminentes, `--dss-text-subtle` deve ser empregado. A hierarquia de cores de texto é crucial para guiar o usuário através do conteúdo e destacar as informações mais importantes. Em casos de feedback de erro, utilize `--dss-text-danger` para mensagens de validação ou alertas críticos.
-- **Cor de foco (focus-color)**: Para indicar o estado de foco de elementos interativos dentro do DssPopupEdit (como campos de entrada, botões ou links), utilize `outline: 2px solid var(--dss-action-hub)` como padrão. Em situações onde o `hub` já é a cor principal do elemento, ou para criar uma distinção visual secundária, `outline: 2px solid var(--dss-action-water)` pode ser uma alternativa. É fundamental que o indicador de foco seja sempre visível e claro para garantir a acessibilidade, especialmente para usuários que navegam via teclado. Evite remover o `outline` padrão sem fornecer um substituto visual adequado.utline: 2px solid var(--dss-action-hub)`.
+### Expose
 
-**NUNCA** inventar tokens como `--dss-spacing-4` ou `--dss-duration-base`. A lista de tokens permitidos é definida centralmente no Design System. Qualquer token não listado explicitamente deve ser considerado um 
-token fantasma e deve ser substituído por um token existente ou por uma alternativa CSS padrão, como `outline: 2px solid white` para foco.
+```typescript
+interface DssPopupEditExpose {
+  set: () => void    // Abre o popup programaticamente
+  cancel: () => void // Fecha o popup sem salvar
+}
+```
 
-## 5. ACESSIBILIDADE E ESTADOS
+---
+
+## 5. GOVERNANÇA DE TOKENS E CSS
+
+### Tokens Reais Utilizados na Implementação
+
+| Token | Uso |
+|---|---|
+| `--dss-surface-default` | `background-color` do container popup (`!important`) |
+| `--dss-elevation-3` | `box-shadow` (elevação do popup — `!important`) |
+| `--dss-radius-md` | `border-radius` (`!important`) |
+| `--dss-padding-4` | Padding horizontal e do header (16px) |
+| `--dss-padding-3` | Padding inferior do rodapé de botões (12px) |
+| `--dss-spacing-2` | `gap` entre botões, padding topo de botões (8px) |
+| `--dss-gray-100` | `border-color` dos separadores internos (header/buttons) |
+| `--dss-gray-200` | Borda em `prefers-contrast: more` |
+| `--dss-border-width-thin` | Espessura dos separadores |
+| `--dss-border-width-md` | Borda no modo alto-contraste |
+| `--dss-font-family-sans` | Tipografia do popup |
+| `--dss-text-body` | Cor do texto do título no header |
+| `--dss-hub-primary` | Cor de borda de botões (brand Hub) |
+| `--dss-water-primary` | Cor de borda de botões (brand Water) |
+| `--dss-waste-primary` | Cor de borda de botões (brand Waste) |
+
+### ⛔ Tokens Fantasma (NÃO USAR — não existem no DSS)
+
+| Token fantasma | Substituto real |
+|---|---|
+| `--dss-spacing-16` | `--dss-padding-4` (16px) |
+| `--dss-border-default` | `--dss-gray-100` (separador sutil) ou `--dss-gray-200` (borda) |
+| `--dss-shadow-md` | `--dss-elevation-3` |
+| `--dss-text-default` | `--dss-text-body` |
+| `--dss-text-subtle` | `--dss-text-body` (não existe variante "subtle" confirmada) |
+
+> ⚠️ **NUNCA inventar tokens.** Todos os tokens devem existir em `DSS/tokens/semantic/`. Em caso de dúvida, usar `mcp__dss__query_token` para verificar.
+
+### CSS Global (não scoped)
+
+O SCSS do DssPopupEdit **não pode usar `<style scoped>`** nem `@use` de escopo. O container `.q-popup-edit` é teleportado para fora da árvore Vue — seletores escopados não alcançarão o popup.
+
+**Estrutura correta:**
+```scss
+// DssPopupEdit.module.scss → global, sem scope
+.q-popup-edit {
+  // Estilos do container teleportado
+}
+```
+
+**Brand via ancestral:**
+```scss
+// [data-brand] no ancestral comum — filhos e popup herdam
+[data-brand='hub'] .q-popup-edit .q-popup-edit__buttons {
+  border-top-color: var(--dss-hub-primary);
+}
+```
+
+---
+
+## 6. ACESSIBILIDADE E ESTADOS
+
+### Interatividade — Opção B (não-interativo na raiz)
+
+O DssPopupEdit aplica **Opção B** de touch target (não implementa `::before`). A interatividade pertence ao elemento pai hospedeiro (gatilho de clique). Documentar explicitamente.
+
+### Estados Aplicáveis
+- `open` — popup visível
+- `closed` — popup oculto (estado padrão)
+- `persistent` — não fecha ao clicar fora / ESC
+- `disabled` — popup não abre
+- `with-title` — header com título visível
+- `with-buttons` — rodapé com Salvar/Cancelar
+
+### Estados NÃO Aplicáveis (documentar)
+- `hover` — N/A: DssPopupEdit não é controle interativo no root
+- `focus` — N/A: pertence aos filhos (DssInput, DssButton) via slot
+- `active` — N/A: não interativo no root
+- `loading` — N/A: usar DssSpinner dentro do slot quando necessário
+- `error` — N/A: usar DssInput com validação ou prop `validate` do QPopupEdit
 
 ### Acessibilidade
-- **Foco**: Gerenciamento de foco para garantir que o foco seja movido para o popup ao abrir e retorne ao elemento que o ativou ao fechar. Isso é crucial para usuários de teclado e leitores de tela. A ordem de tabulação dentro do popup deve ser lógica e intuitiva. O foco inicial deve ser no primeiro elemento interativo dentro do popup ou em um elemento de fechamento.
-- **ARIA**: Utilizar atributos ARIA apropriados (`role="dialog"`, `aria-modal="true"`, `aria-labelledby` para o título, `aria-describedby` para a descrição) para comunicar a semântica do popup a tecnologias assistivas. Isso garante que o contexto e a funcionalidade do popup sejam compreendidos por todos os usuários.
-- **Teclado**: Suporte completo à navegação por teclado, incluindo a capacidade de fechar o popup com a tecla ESC, navegar entre os elementos interativos com TAB e Shift+TAB, e ativar ações com ENTER ou ESPAÇO. Todos os elementos interativos devem ser acessíveis via teclado.
-- **Contraste**: Garantir que o contraste de cores entre o texto e o fundo, bem como entre os elementos interativos e seus estados, esteja em conformidade com as diretrizes WCAG 2.1 AA. Isso é vital para usuários com deficiência visual.
+- **Navegação por teclado:** ESC fecha o popup (gerenciado pelo QPopupEdit)
+- **Foco:** Move automaticamente para o primeiro elemento do slot ao abrir
+- **forced-colors:** Canvas/CanvasText para superfície, ButtonText para botões
+- **prefers-contrast: more** (nunca "high" — valor inválido)
+- **forced-color-adjust: none** — **PROIBIDO** (WCAG 1.4.11)
+- **prefers-reduced-motion:** Remover transições de abertura
 
-### Estados
-O DssPopupEdit deve suportar os seguintes estados visuais e interativos:
-- **Padrão (Default)**: Estado inicial do popup, com conteúdo e ações visíveis.
-- **Aberto (Open)**: O popup está visível e interativo. O foco é gerenciado para o primeiro elemento interativo.
-- **Fechado (Closed)**: O popup está oculto. O foco retorna ao elemento que o ativou.
-- **Carregando (Loading)**: Indica que uma operação assíncrona está em andamento, como o envio de dados. Elementos interativos podem ser desabilitados ou um spinner pode ser exibido.
-- **Erro (Error)**: Exibe uma mensagem de erro relevante, geralmente após uma falha na validação ou na submissão de dados. A mensagem deve ser clara e orientar o usuário sobre como corrigir o problema.
-- **Sucesso (Success)**: Pode ser um estado transitório após uma operação bem-sucedida, exibindo uma mensagem de confirmação antes de fechar o popup.
-- **Desabilitado (Disabled)**: Embora o popup em si não seja desabilitado, os elementos interativos dentro dele podem estar, dependendo do contexto (e.g., botões de ação desabilitados se o formulário for inválido).
+---
 
-## 6. INTERNACIONALIZAÇÃO (I18N)
+## 7. RECOMENDAÇÕES DE COMPOSIÇÃO
 
-Todos os textos exibidos no DssPopupEdit, incluindo títulos, rótulos de botões, mensagens de erro e descrições, devem ser passíveis de internacionalização. O componente deve aceitar chaves de tradução ou strings diretamente, permitindo que as aplicações que o utilizam forneçam as traduções necessárias. Isso garante que o componente possa ser utilizado em diferentes idiomas e regiões, adaptando-se às necessidades globais dos usuários. A estrutura de internacionalização deve ser compatível com as ferramentas de I18n utilizadas no ecossistema do Design System (e.g., `vue-i18n`).
+```vue
+<!-- ✅ Padrão correto: DssPopupEdit dentro do elemento hospedeiro -->
+<td>
+  {{ text }}
+  <DssPopupEdit v-model="text">
+    <DssInput v-model="text" autofocus dense />
+  </DssPopupEdit>
+</td>
 
-## 7. EXEMPLOS DE USO E BOAS PRÁTICAS
+<!-- ✅ Com título -->
+<DssPopupEdit v-model="value" title="Editar campo">
+  <DssInput v-model="value" autofocus />
+</DssPopupEdit>
 
-### Cenários de Uso
-- **Edição de Perfil**: Um popup para editar informações de usuário, como nome, e-mail e senha, sem sair da página de perfil.
-- **Configurações Rápidas**: Ajustar configurações de uma tabela ou lista, como filtros e ordenação, exibindo um formulário de configuração em um popup.
-- **Confirmação de Ação**: Um popup de confirmação antes de executar uma ação destrutiva, como excluir um item, com opções de 'Confirmar' e 'Cancelar'.
-- **Criação de Item Rápida**: Adicionar um novo item a uma lista ou tabela através de um formulário simplificado dentro de um popup.
+<!-- ✅ Persistente com validação -->
+<DssPopupEdit v-model="email" persistent :validate="() => isValidEmail(email)">
+  <DssInput v-model="email" type="email" autofocus />
+</DssPopupEdit>
 
-### Boas Práticas
-- **Conteúdo Conciso**: Mantenha o conteúdo do popup focado e conciso. Popups muito longos ou complexos podem prejudicar a usabilidade. Se a edição for muito extensa, considere uma página dedicada.
-- **Feedback Claro**: Forneça feedback visual claro para estados de carregamento, sucesso e erro. O usuário deve sempre saber o que está acontecendo.
-- **Ações Explícitas**: Os botões de ação devem ter rótulos claros e descritivos (e.g., 'Salvar Alterações', 'Cancelar Edição'). Evite rótulos genéricos como 'OK' ou 'Fechar' quando uma ação específica é esperada.
-- **Validação em Tempo Real**: Implemente validação de formulário em tempo real para guiar o usuário e evitar submissões de dados inválidos. Mensagens de erro devem ser contextuais e úteis.
-- **Evitar Aninhamento Excessivo**: Evite abrir múltiplos popups aninhados, pois isso pode criar uma experiência confusa e difícil de gerenciar. Se necessário, redesenhe o fluxo para usar um único popup ou uma página.
+<!-- ✅ Brand via ancestral -->
+<div data-brand="water">
+  <td>
+    {{ value }}
+    <DssPopupEdit v-model="value">...</DssPopupEdit>
+  </td>
+</div>
+```
 
-## 8. SUPERFÍCIE DE PLAYGROUND
+### Anti-patterns
+- ❌ Não usar QInput, QBtn ou componentes Quasar nativos no slot — usar DssInput, DssButton
+- ❌ Não usar DssPopupEdit standalone sem elemento pai hospedeiro (sem gatilho de abertura)
+- ❌ Não usar DssPopupEdit para formulários longos (3+ campos) — usar DssDialog
+- ❌ Não usar DssPopupEdit para notificações ou alertas — usar DssDialog ou futuro DssToast
+- ❌ Não aninhar múltiplos DssPopupEdit (fluxo confuso — redesenhar)
 
-Esta seção detalha os controles e a lógica para testar e demonstrar o DssPopupEdit em um ambiente de playground, garantindo que todas as suas funcionalidades e estados sejam facilmente exploráveis e compreendidos pelos desenvolvedores e designers.
+---
 
-### Controles Obrigatórios
-- **`modelValue` (Checkbox)**: Controla a visibilidade do popup. Permite abrir e fechar o componente para testar suas transições e gerenciamento de foco.
-- **`title` (Input de Texto)**: Permite alterar o título do popup dinamicamente, testando diferentes comprimentos de texto e caracteres especiais.
-- **`persistent` (Checkbox)**: Alterna entre o comportamento persistente e não persistente do popup, verificando o fechamento ao clicar fora ou pressionar ESC.
-- **`loading` (Checkbox)**: Simula o estado de carregamento, útil para testar o feedback visual e a desabilitação de ações durante operações assíncronas.
-- **`error` (Input de Texto)**: Permite inserir uma mensagem de erro para testar a exibição e o estilo das mensagens de validação.
-- **`position` (Dropdown)**: Oferece opções para `top`, `bottom`, `left`, `right`, `standard`, `center` para testar o posicionamento do popup em diferentes configurações.
-- **`maximized` (Checkbox)**: Alterna o modo maximizado para verificar a responsividade em tela cheia.
-- **`width` (Input de Texto)**: Permite definir a largura do popup (e.g., `500px`, `80%`) para testar o redimensionamento.
-- **`height` (Input de Texto)**: Permite definir a altura do popup (e.g., `auto`, `70vh`) para testar o redimensionamento vertical.
+## 8. SURFACE DE PLAYGROUND
 
-### Composite Logic (Concreta, Não Genérica)
-1. **Simulação de Edição de Dados**: O playground deve incluir um formulário de exemplo (e.g., nome, e-mail, telefone) dentro do DssPopupEdit. Ao abrir o popup, os dados iniciais devem ser carregados. Ao clicar em 'Salvar', os dados editados devem ser exibidos em algum lugar fora do popup (e.g., um `div` de preview) para demonstrar a atualização. Ao clicar em 'Cancelar', os dados originais devem ser restaurados no preview.
-2. **Validação de Formulário**: Implementar uma validação simples no formulário de exemplo (e.g., campo 'nome' obrigatório, 'e-mail' com formato válido). O botão 'Salvar' deve ser desabilitado se o formulário for inválido e mensagens de erro devem ser exibidas. Isso demonstra a integração do DssPopupEdit com lógicas de validação.
-3. **Feedback de Carregamento e Erro**: Ao clicar em 'Salvar', simular um atraso de 2 segundos (usando `setTimeout`) para demonstrar o estado `loading`. Se o campo 'nome' estiver vazio, simular um erro após o atraso, exibindo a mensagem de erro. Caso contrário, simular sucesso.
+### Cenários de Uso Corretos
+
+| Cenário | Descrição |
+|---|---|
+| Edição de célula de tabela | `<td>` hospedeiro, DssInput com autofocus, valor sincronizado via v-model |
+| Edição de campo de lista | `<li>` ou `DssItem` hospedeiro, conteúdo de seleção via DssSelect |
+| Edição persistente | `persistent: true` para campos críticos (CPF, e-mail confirmado) |
+| Brand contextual | `[data-brand="hub"]` no ancestral, popup herda acento visual |
+| Validação inline | `validate` prop bloqueando salvamento de e-mail inválido |
+
+### Controles do Playground
+- `v-model` — valor em edição (string ou number)
+- `title` — título opcional do header
+- `buttons` — habilitar/desabilitar padrão (padrão DSS = true)
+- `persistent` — impedir fechamento por clique fora
+- `fit` — popup assume largura do pai
+- `cover` — popup cobre o pai
+- `disable` — desabilitar abertura
 
 ### Estados a Expor
 
-| Estado | Descrição | Tipo | Trigger |
-|--------|-----------|------|----------|
-| Padrão (Default) | O estado inicial e mais comum do DssPopupEdit. O popup é exibido com seu conteúdo principal, formulário e botões de ação habilitados e prontos para interação. Nenhuma operação assíncrona está em andamento e não há erros de validação visíveis. | Visual | Padrão (renderização inicial) |
-| Aberto (Open) | O popup está visível na tela e ativo. O foco do teclado foi transferido para o primeiro elemento interativo dentro do popup, e o `backdrop` (se aplicável) está ativo, impedindo a interação com o conteúdo de fundo. | Visual | Ativação/clique no controle |
-| Fechado (Closed) | O popup não está visível. O componente ainda pode existir no DOM (dependendo da implementação de renderização condicional), mas não está acessível ao usuário. O foco do teclado foi devolvido ao elemento que originalmente acionou a abertura do popup. | Visual | Estado inicial ou fechamento do controle |
-| Carregando (Loading) | Indica que uma operação assíncrona, como o envio dos dados do formulário para um servidor, está em andamento. Neste estado, um indicador visual (como um `DssSpinner`) é exibido, e os botões de ação (especialmente o botão de submissão) são desabilitados para evitar cliques múltiplos. | Funcional | Prop `loading=true` |
-| Erro (Error) | O popup exibe uma mensagem de erro clara e acionável. Este estado é acionado quando ocorre uma falha na validação do formulário (erros no lado do cliente) ou quando a submissão dos dados falha (erros no lado do servidor). A mensagem de erro deve orientar o usuário sobre como corrigir o problema. | Funcional | Prop `error=true` ou validação |
-| Sucesso (Success) | Um estado transitório que pode ser exibido após uma operação bem-sucedida. Pode envolver a exibição de uma mensagem de confirmação (e.g., "Dados salvos com sucesso!") antes de fechar automaticamente o popup, ou a alteração visual de um botão para indicar o sucesso. | Funcional | Operação concluída |
-| Desabilitado (Disabled) | Refere-se ao estado dos elementos interativos dentro do popup. Por exemplo, o botão 'Salvar' pode estar no estado desabilitado se os campos obrigatórios do formulário não estiverem preenchidos ou se houver erros de validação pendentes. | Visual | Prop `disable=true` |
-| Maximizado (Maximized) | O popup ocupa toda a área disponível da viewport, comportando-se como uma tela cheia. Este estado é útil para formulários complexos ou para otimizar a experiência em dispositivos móveis. | Visual | — |
-| Persistente (Persistent) | O popup não pode ser fechado clicando fora de sua área ou pressionando a tecla ESC. O usuário é forçado a interagir com os botões de ação (e.g., 'Salvar' ou 'Cancelar') para fechar o modal. | Visual | — |
+| Estado | Trigger |
+|---|---|
+| Fechado (default) | Componente renderizado sem interação |
+| Aberto | Clique no elemento pai hospedeiro |
+| Com título | Prop `title` fornecida |
+| Persistente | Prop `persistent: true` |
+| Desabilitado | Prop `disable: true` |
+| Brand | `[data-brand="hub/water/waste"]` no ancestral |
+
+---
+
+## 9. REFERÊNCIAS
+
+- **Implementação selada:** `DSS/components/composed/DssPopupEdit/`
+- **Selo DSS v2.2:** `DSS/docs/Compliance/seals/DssPopupEdit/DSSPOPUPEDIT_SELO_v2.2.md`
+- **Golden Context (DssMenu):** `DSS/components/composed/DssMenu/`
+- **Tokens:** `DSS/tokens/semantic/_spacing.scss`, `_elevation.scss`, `_color.scss`
+- **Quasar API:** [QPopupEdit](https://quasar.dev/vue-components/popup-edit)
