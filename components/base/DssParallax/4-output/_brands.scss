@@ -1,0 +1,12 @@
+// =============================================================================
+// DssParallax — LAYER 4: BRANDS
+//
+// DssParallax é visualmente agnóstico de brand.
+//
+// Justificativa:
+//   O componente exibe uma imagem de fundo fornecida pelo consumidor.
+//   Personalização visual de brand (cores, bordas) é responsabilidade do
+//   conteúdo do slot default (ex: DssCard, DssButton dentro do overlay).
+//   Nenhuma sobrescrita de brand é necessária no container de paralaxe em si.
+//
+// =============================================================================

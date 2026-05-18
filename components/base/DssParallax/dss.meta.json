@@ -1,0 +1,75 @@
+{
+  "component": "DssParallax",
+  "cssClass": "dss-parallax",
+  "phase": 2,
+  "status": "in-progress",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssVideo",
+  "classification": {
+    "type": "Container de efeito visual não interativo",
+    "category": "Mídia e Visualização",
+    "interactive": false,
+    "level": 1,
+    "family": "Mídia e Visualização"
+  },
+  "phaseDescription": "Nível 1 — Container de efeito de paralaxe. Wrapper governado sobre QParallax com fallback estático para prefers-reduced-motion e suporte a alt text via sr-only.",
+  "statesApplicable": [
+    "default",
+    "reduced-motion"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error"
+  ],
+  "statesNotApplicableReason": {
+    "hover": "Componente não interativo — interatividade é responsabilidade do conteúdo do slot",
+    "focus": "Não interativo diretamente — elementos focáveis do slot são gerenciados pelos próprios filhos",
+    "active": "Sem estado ativo próprio — efeito visual não responde a cliques",
+    "disabled": "Sem semântica de disable para efeitos visuais de apresentação",
+    "loading": "QParallax não expõe slot de loading controlável para a imagem de fundo",
+    "error": "QParallax não expõe slot de erro controlável para a imagem de fundo"
+  },
+  "tokens": [],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "rule": "Gate de Composição v2.4 — componente Quasar como root element",
+      "detail": "QParallax é root element quando prefers-reduced-motion não está ativo. Sem div wrapper intermediário. Evita DOM desnecessário e preserva scroll listeners nativos do QParallax.",
+      "location": "1-structure/DssParallax.ts.vue — branch v-if='!isReducedMotion'"
+    },
+    {
+      "id": "EXC-States-01",
+      "rule": "Tratamento de prefers-reduced-motion via JS em vez de CSS puro",
+      "detail": "prefers-reduced-motion requer troca do componente raiz (QParallax → div estático) para evitar registro de scroll listeners. CSS puro (transition:none) não é suficiente para suprimir o comportamento JavaScript do QParallax.",
+      "location": "1-structure/DssParallax.ts.vue — branch v-else + composables/useReducedMotion.ts"
+    },
+    {
+      "id": "EXC-SrOnly-01",
+      "rule": "Classe utilitária .dss-sr-only definida no SCSS do componente",
+      "detail": ".dss-sr-only é definida em 2-composition/_base.scss em vez de um utilitário global DSS. Justificativa: o padrão sr-only é necessário especificamente para transmitir o alt text de CSS backgrounds invisíveis ao accessibility tree. Não existe utilitário global DSS para sr-only. Risco aceito: duplicação se outro componente DSS precisar do mesmo padrão — a ser resolvido com utilitário global em Fase 3.",
+      "location": "2-composition/_base.scss — .dss-sr-only"
+    }
+  ],
+  "gateExceptions": {
+    "templateStructure": "QParallax é root element quando prefers-reduced-motion não está ativo. Quando ativo, um div estático substitui o QParallax — ambos os branches recebem v-bind='$attrs' e :class='rootClasses'."
+  },
+  "compositionRecommendations": [
+    "DssCard — card flutuante como conteúdo de overlay no slot default",
+    "DssButton — CTA sobre o paralaxe (landing page hero)",
+    "DssImg — imagem adicional em overlay, complementar à família Mídia e Visualização",
+    "DssVideo — alternativa para fundos em vídeo na mesma família"
+  ],
+  "defaultPreview": {
+    "props": {
+      "src": "[URL da imagem de fundo]",
+      "height": 500,
+      "speed": 0.5
+    }
+  },
+  "auditHistory": []
+}

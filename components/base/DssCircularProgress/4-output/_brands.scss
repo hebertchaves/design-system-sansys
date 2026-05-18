@@ -1,0 +1,60 @@
+// =============================================================================
+// DssCircularProgress — LAYER 4: OUTPUT — Brands
+//
+// Brandability: Hub (laranja), Water (azul), Waste (verde).
+//
+// PADRÃO: Idêntico ao DssLinearProgress / DssSpinner (Golden Context).
+//   - Seletor via prop (.dss-circular-progress--brand-*): mesmo elemento
+//   - Seletor via [data-brand] ancestral: descendente
+//
+// Brand sobrescreve a cor do arco (.q-circular-progress__circle), mas NÃO
+// o track (--dss-surface-muted continua válido — hierarquia visual preservada).
+//
+// TOKENS: Numéricos de brand (precedente DssLinearProgress, DssSpinner).
+//   hub-600/water-500/waste-600  → light mode
+//   hub-500/water-400/waste-500  → dark mode (em _states.scss)
+//
+// EXC-Gate-01: seletor .q-circular-progress__circle necessário para override de cor.
+// =============================================================================
+
+// =============================================================================
+// HUB BRAND (Laranja)
+// =============================================================================
+
+/* Via prop: <DssCircularProgress brand="hub" /> */
+.dss-circular-progress--brand-hub.dss-circular-progress {
+  .q-circular-progress__circle { stroke: var(--dss-hub-600); }
+}
+
+/* Via herança contextual: <div data-brand="hub"><DssCircularProgress /></div> */
+[data-brand="hub"] .dss-circular-progress {
+  .q-circular-progress__circle { stroke: var(--dss-hub-600); }
+}
+
+// =============================================================================
+// WATER BRAND (Azul)
+// =============================================================================
+
+/* Via prop: <DssCircularProgress brand="water" /> */
+.dss-circular-progress--brand-water.dss-circular-progress {
+  .q-circular-progress__circle { stroke: var(--dss-water-500); }
+}
+
+/* Via herança contextual: <div data-brand="water"><DssCircularProgress /></div> */
+[data-brand="water"] .dss-circular-progress {
+  .q-circular-progress__circle { stroke: var(--dss-water-500); }
+}
+
+// =============================================================================
+// WASTE BRAND (Verde)
+// =============================================================================
+
+/* Via prop: <DssCircularProgress brand="waste" /> */
+.dss-circular-progress--brand-waste.dss-circular-progress {
+  .q-circular-progress__circle { stroke: var(--dss-waste-600); }
+}
+
+/* Via herança contextual: <div data-brand="waste"><DssCircularProgress /></div> */
+[data-brand="waste"] .dss-circular-progress {
+  .q-circular-progress__circle { stroke: var(--dss-waste-600); }
+}

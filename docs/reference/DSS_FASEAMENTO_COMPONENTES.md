@@ -79,7 +79,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssVirtualScroll` | `QVirtualScroll` | — | ✅ Selado (12 Mai 2026) |
 | `DssInfiniteScroll` | `QInfiniteScroll` | `DssSpinner` | ✅ Selado (13 Mai 2026) |
 | `DssImg` | `QImg` | `DssSpinner` | ✅ Selado (13 Mai 2026) |
-| `DssCircularProgress` | `QCircularProgress` | — | ⬜ Pendente |
+| `DssCircularProgress` | `QCircularProgress` | — | ✅ Selado (18 Mai 2026) |
 | `DssInnerLoading` | `QInnerLoading` | `DssSpinner` | ⬜ Pendente |
 | `DssKnob` | `QKnob` | — | ⬜ Pendente |
 | `DssRating` | `QRating` | `DssIcon` | ⬜ Pendente |
@@ -89,7 +89,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssMarkupTable` | `QMarkupTable` | — | ⬜ Pendente |
 | `DssVideo` | `QVideo` | — | ✅ Selado (13 Mai 2026) |
 | `DssResponsive` | `QResponsive` | — | ⬜ Pendente |
-| `DssParallax` | `QParallax` | — | ⬜ Pendente |
+| `DssParallax` | `QParallax` | — | ✅ Selado (18 Mai 2026) |
 | `DssAjaxBar` | `QAjaxBar` | — | ⬜ Pendente |
 | `DssBanner` | `QBanner` | `DssButton`, `DssIcon` | ⬜ Pendente |
 | `DssBar` | `QBar` | `DssButton`, `DssIcon` | ⬜ Pendente |

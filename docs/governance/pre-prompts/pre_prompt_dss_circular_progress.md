@@ -38,8 +38,8 @@ O `DssCircularProgress` é essencial para aprimorar a experiência do usuário, 
 | `indeterminate` (Boolean)                | `indeterminate` (Boolean)               | Se o progresso é indeterminado. |
 | `thickness` (Number)                     | `thickness` (Number)                    | Espessura da linha de progresso (0-1). |
 | `angle` (Number)                         | `angle` (Number)                        | Ângulo inicial do progresso. Padrão: 0. |
-| `font-size` (String)                     | `labelSize` (String)                    | Tamanho da fonte do rótulo interno. Mapear para tokens de tipografia do DSS. |
-| `label` (Slot)                           | `default` (Slot)                        | Conteúdo customizado dentro do círculo. |
+| `font-size` (String)                     | ❌ **BLOQUEADA** — não exposta ao DSS   | QCircularProgress usa `0.25em` por padrão (proporcional ao size). DSS mantém essa proporção nativa — tokenizar font-size absoluta quebraria a escala proporcional. |
+| `label` (Slot)                           | `default` (Slot)                        | Conteúdo customizado dentro do círculo (rótulo percentual, ícone). NÃO é prop String — é slot Vue. |
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
@@ -118,7 +118,7 @@ O playground do `DssCircularProgress` deve permitir a manipulação dos seguinte
 *   **`trackColor` (Color Picker)**: Para selecionar cores da trilha a partir dos tokens de cor do DSS.
 *   **`thickness` (Slider)**: Para ajustar a espessura da linha de progresso.
 *   **`angle` (Slider)**: Para ajustar o ângulo inicial do progresso.
-*   **`label` (Text Input)**: Para inserir texto customizado dentro do círculo.
+*   **`default` (Slot)**: Para inserir conteúdo customizado dentro do círculo (texto de percentual, ícone). Não é uma prop String — é o slot default Vue do componente.
 
 ### Composite Logic
 *   **Exibição Condicional**: Demonstrar como o `DssCircularProgress` pode ser exibido ou ocultado com base em uma condição (ex: `v-if` ou `v-show`).

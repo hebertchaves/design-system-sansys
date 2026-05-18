@@ -61,12 +61,12 @@
 
 - [x] ~~`DssImg`~~ ✅ **SELADO** *(13 Mai 2026)*
 - [x] ~~`DssVideo`~~ ✅ **SELADO** *(13 Mai 2026)*
-- [ ] `DssParallax` — Efeito parallax em imagens de fundo ⬜
+- [x] ~~`DssParallax`~~ ✅ **SELADO** *(18 Mai 2026)*
 
 ### Família: Progresso e Feedback
 
 - [x] ~~`DssLinearProgress`~~ ✅ **SELADO** *(06 Mai 2026)*
-- [ ] `DssCircularProgress` — Progresso circular (determinado e indeterminado) ⬜
+- [x] ~~`DssCircularProgress`~~ ✅ **SELADO** *(18 Mai 2026)*
 - [ ] `DssInnerLoading` — Overlay de loading sobre um container ⬜
 - [ ] `DssSkeleton` — Placeholder de carregamento (skeleton screen) ⬜
 - [ ] `DssAjaxBar` — Barra de progresso global para requisições Ajax ⬜

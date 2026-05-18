@@ -24,10 +24,9 @@ O DssParallax é essencial para adicionar dinamismo e modernidade às interfaces
 | :---------------------------- | :------------------------- | :---------- |
 | `QParallax`                   | `DssParallax`              | Componente principal. |
 | `src`                         | `src`                      | URL da imagem de fundo. |
-| `height`                      | `height`                   | Altura do componente. |
-| `speed`                       | `speed`                    | Velocidade do efeito de paralaxe (0 a 1). |
-| `factor`                      | `factor`                   | Fator de rolagem para o efeito. |
-| `scroll-target`               | `scrollTarget`             | Elemento alvo para rolagem. |
+| `height`                      | `height`                   | Altura do componente em pixels (Number, default: 500). |
+| `speed`                       | `speed`                    | Velocidade do efeito de paralaxe (0 a 1, default: 0.5). Único parâmetro de movimento — não existe prop `factor` separada na API atual do QParallax. |
+| `scroll-target`               | `scrollTarget`             | Elemento alvo para rolagem (CSS selector ou Element). |
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
