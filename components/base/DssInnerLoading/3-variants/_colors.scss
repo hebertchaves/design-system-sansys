@@ -1,0 +1,36 @@
+// =============================================================================
+// DssInnerLoading — Layer 3: Variants / Colors
+// =============================================================================
+//
+// Controla a prop CSS `color` no root do overlay.
+// DssSpinner (sem prop `color` explícita) herda via `currentColor` do ancestral.
+// .dss-inner-loading__label herda via `color: inherit`.
+//
+// Separação de responsabilidades:
+// - Este arquivo controla a COR do spinner e do label via CSS cascade.
+// - DssSpinner NÃO recebe a prop `color` — a herança CSS é o mecanismo correto.
+// - Brands (hub, water, waste) sobrescrevem estas cores em 4-output/_brands.scss.
+
+.dss-inner-loading--color-primary {
+  color: var(--dss-action-primary);
+}
+
+.dss-inner-loading--color-secondary {
+  color: var(--dss-action-secondary);
+}
+
+.dss-inner-loading--color-error {
+  color: var(--dss-feedback-error);
+}
+
+.dss-inner-loading--color-success {
+  color: var(--dss-feedback-success);
+}
+
+.dss-inner-loading--color-warning {
+  color: var(--dss-feedback-warning);
+}
+
+.dss-inner-loading--color-info {
+  color: var(--dss-feedback-info);
+}

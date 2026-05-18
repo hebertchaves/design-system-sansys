@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 13 de Maio de 2026
+> **Última Atualização:** 18 de Maio de 2026
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -67,7 +67,7 @@
 
 - [x] ~~`DssLinearProgress`~~ ✅ **SELADO** *(06 Mai 2026)*
 - [x] ~~`DssCircularProgress`~~ ✅ **SELADO** *(18 Mai 2026)*
-- [ ] `DssInnerLoading` — Overlay de loading sobre um container ⬜
+- [x] ~~`DssInnerLoading`~~ ✅ **SELADO** *(18 Mai 2026)*
 - [ ] `DssSkeleton` — Placeholder de carregamento (skeleton screen) ⬜
 - [ ] `DssAjaxBar` — Barra de progresso global para requisições Ajax ⬜
 
@@ -203,9 +203,9 @@
 | Nível | Total | Selados | % Concluído |
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
-| Fase 2 — Nível 1 | 38 | 20 | 53% |
+| Fase 2 — Nível 1 | 38 | 25 | 66% |
 | Fase 2 — Nível 2 | 16 | 9 | 56% |
 | Fase 2 — Nível 3 | 7 | 4 | 57% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **38** | **56%** |
+| **Fase 2 Total** | **68** | **43** | **63%** |
 | Fase 3 | 6 | N/A | — |

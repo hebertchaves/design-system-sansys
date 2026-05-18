@@ -91,6 +91,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssVideo** | Container de mídia não interativo — Fase 2 Nível 1 — Mídia e Visualização | DssBadge | `conformant` — Selado (13 Mai 2026) |
 | **DssParallax** | Container de efeito visual não interativo — Fase 2 Nível 1 — Mídia e Visualização | DssBadge | `conformant` — Selado (18 Mai 2026) |
 | **DssCircularProgress** | Indicador de progresso circular não interativo — Fase 2 Nível 1 — Progresso e Feedback | DssBadge | `conformant` — Selado (18 Mai 2026) |
+| **DssInnerLoading** | Overlay de loading para container — Fase 2 Nível 1 — Progresso e Feedback | DssBadge | `conformant` — Selado (18 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
@@ -361,5 +362,5 @@ Qualquer agente que ignore este documento **NÃO está operando no DSS**.
 **Design System Sansys — DSS v2.2**
 **Estado canônico ao final da Fase 1 — Fase 2 em andamento**
 **Última atualização da tabela de selos:** 11 de Maio de 2026
-**Totais:** Fase 1: 19/19 ✅ | Fase 2: 42/68 (62%) | Total selados: 61 componentes
+**Totais:** Fase 1: 19/19 ✅ | Fase 2: 43/68 (63%) | Total selados: 62 componentes
 

@@ -1,0 +1,14 @@
+// =============================================================================
+// DssInnerLoading — Layer 3: Variants / Sizes
+// =============================================================================
+//
+// INTENCIONALMENTE VAZIO — Tamanho é prop-driven via DssSpinner.
+//
+// A prop `size` de DssInnerLoading é repassada diretamente ao DssSpinner
+// no slot default via `:size="size"`. DssSpinner mapeia internamente para
+// tokens --dss-icon-size-* (xs:16px, sm:20px, md:24px, lg:32px, xl:48px).
+//
+// O overlay em si (QInnerLoading) ocupa sempre 100% do container pai —
+// não possui tamanho próprio que precise ser variado por prop.
+//
+// Ao usar o slot customizado, o consumer é responsável pelo tamanho do conteúdo.

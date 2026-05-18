@@ -1,0 +1,81 @@
+// =============================================================================
+// DssInnerLoading — Layer 4: Output / States
+// =============================================================================
+//
+// Suporte a media queries de acessibilidade e ambiente.
+//
+// EX-States-01: `animation: none !important; transition: none !important`
+// em prefers-reduced-motion — suprime tanto a animação do DssSpinner interno
+// (keyframes do QSpinner) quanto a transição de fade do próprio QInnerLoading
+// (Vue <Transition> com q-transition--fade). O seletor abrange o root e todos
+// os seus filhos. O uso de !important é obrigatório para sobrescrever keyframes
+// registrados pelos componentes Quasar via CSS global. Precedente: DssLinearProgress,
+// DssCircularProgress. WCAG 2.3.3 — nível AAA.
+//
+// EX-States-02: `display: none` em print — overlays de loading não fazem
+// sentido em impressão. Ocultar o overlay permite que o conteúdo subjacente
+// seja impresso normalmente. Precedente: DssCircularProgress (--indeterminate
+// display:none em print).
+//
+// EX-States-03: `forced-colors: active` — uso de SystemColor keywords
+// (Canvas, CanvasText, ButtonText) conforme WCAG 1.4.11. Previne que o
+// overlay desapareça ou perca contraste em modos de alto contraste do Windows.
+// border garante delimitação visual do overlay. Precedente: DssCircularProgress.
+
+// ─── prefers-contrast: more ──────────────────────────────────────────────────
+//
+// Aumenta a legibilidade do label em cenários de alto contraste requerido pelo usuário.
+// Tokens utilizados: --dss-font-weight-bold (não hardcoded).
+// prefers-contrast: more — valor válido. `high` é INVÁLIDO no spec CSS Level 5.
+
+@media (prefers-contrast: more) {
+  .dss-inner-loading__label {
+    font-weight: var(--dss-font-weight-bold);
+  }
+}
+
+// ─── prefers-reduced-motion: reduce ──────────────────────────────────────────
+//
+// EX-States-01: suprime animações do DssSpinner e transição de fade do QInnerLoading.
+// Valores estruturais: 0.01ms e 1 são canônicos do CSS para evitar snap instantâneo
+// sem iniciar animação real. Precedente: DssLinearProgress (EX-States-01), DssCircularProgress.
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-inner-loading,
+  .dss-inner-loading * {
+    animation: none !important;
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+// ─── print ───────────────────────────────────────────────────────────────────
+//
+// EX-States-02: overlay de loading oculto em impressão.
+
+@media print {
+  .dss-inner-loading {
+    display: none;
+  }
+}
+
+// ─── forced-colors: active ───────────────────────────────────────────────────
+//
+// EX-States-03: Windows High Contrast Mode.
+// Canvas: fundo do sistema (equivale ao --dss-surface-default em forced-colors).
+// CanvasText: texto e foreground do sistema.
+// ButtonText: bordas e outlines visíveis em forced-colors.
+// forced-color-adjust NÃO utilizado — propriedade herdada que afetaria slot customizado.
+// Precedente: DssCircularProgress, DssLinearProgress.
+
+@media (forced-colors: active) {
+  .dss-inner-loading {
+    background-color: Canvas;
+    border: 2px solid ButtonText;
+
+    .dss-inner-loading__label {
+      color: CanvasText;
+    }
+  }
+}
