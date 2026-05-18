@@ -33,6 +33,9 @@ import DssPagePage from "./pages/components/DssPagePage";
 import DssFilePage from "./pages/components/DssFilePage";
 import DssPaginationPage from "./pages/components/DssPaginationPage";
 import DssDialogPage from "./pages/components/DssDialogPage";
+import DssImgPage from "./pages/components/DssImgPage";
+import DssVideoPage from "./pages/components/DssVideoPage";
+import DssInfiniteScrollPage from "./pages/components/DssInfiniteScrollPage";
 import DssTestCadrisPage from "./pages/components/DssTestCadrisPage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
@@ -91,6 +94,9 @@ const App = () => (
             <Route path="/componentes/dss-file" element={<DssFilePage />} />
             <Route path="/componentes/dss-pagination" element={<DssPaginationPage />} />
             <Route path="/componentes/dss-dialog" element={<DssDialogPage />} />
+            <Route path="/componentes/dss-img" element={<DssImgPage />} />
+            <Route path="/componentes/dss-video" element={<DssVideoPage />} />
+            <Route path="/componentes/dss-infinite-scroll" element={<DssInfiniteScrollPage />} />
             <Route path="/componentes/teste-cadris" element={<DssTestCadrisPage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             
