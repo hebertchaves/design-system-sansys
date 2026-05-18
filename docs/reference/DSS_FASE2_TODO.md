@@ -68,8 +68,8 @@
 - [x] ~~`DssLinearProgress`~~ ✅ **SELADO** *(06 Mai 2026)*
 - [x] ~~`DssCircularProgress`~~ ✅ **SELADO** *(18 Mai 2026)*
 - [x] ~~`DssInnerLoading`~~ ✅ **SELADO** *(18 Mai 2026)*
-- [ ] `DssSkeleton` — Placeholder de carregamento (skeleton screen) ⬜
-- [ ] `DssAjaxBar` — Barra de progresso global para requisições Ajax ⬜
+- [x] ~~`DssSkeleton`~~ ✅ **SELADO** *(18 Mai 2026)*
+- [x] ~~`DssAjaxBar`~~ ✅ **SELADO** *(18 Mai 2026)*
 
 ### Família: Inputs Especializados
 

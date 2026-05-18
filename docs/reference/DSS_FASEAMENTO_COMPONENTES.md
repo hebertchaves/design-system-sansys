@@ -83,14 +83,14 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssInnerLoading` | `QInnerLoading` | `DssSpinner` | ✅ Selado (18 Mai 2026) |
 | `DssKnob` | `QKnob` | — | ⬜ Pendente |
 | `DssRating` | `QRating` | `DssIcon` | ⬜ Pendente |
-| `DssSkeleton` | `QSkeleton` | — | ⬜ Pendente |
+| `DssSkeleton` | `QSkeleton` | — | ✅ Selado (18 Mai 2026) |
 | `DssScrollArea` | `QScrollArea` | — | ⬜ Pendente |
 | `DssSplitter` | `QSplitter` | — | ⬜ Pendente |
 | `DssMarkupTable` | `QMarkupTable` | — | ⬜ Pendente |
 | `DssVideo` | `QVideo` | — | ✅ Selado (13 Mai 2026) |
 | `DssResponsive` | `QResponsive` | — | ⬜ Pendente |
 | `DssParallax` | `QParallax` | — | ✅ Selado (18 Mai 2026) |
-| `DssAjaxBar` | `QAjaxBar` | — | ⬜ Pendente |
+| `DssAjaxBar` | `QAjaxBar` | — | ✅ Selado (18 Mai 2026) |
 | `DssBanner` | `QBanner` | `DssButton`, `DssIcon` | ⬜ Pendente |
 | `DssBar` | `QBar` | `DssButton`, `DssIcon` | ⬜ Pendente |
 | `DssPopupEdit` | `QPopupEdit` | `DssInput`, `DssButton` | ✅ Selado (11 Mai 2026) |
