@@ -2,151 +2,186 @@
 
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
+- **Fase:** 2
+- **Nível:** 1 — Independente (depende apenas de componentes da Fase 1)
+- **Família:** Mídia e Visualização
+- **Tipo:** Container de mídia não interativo
+- **Interativo:** Não (controles de vídeo são internos ao iframe; interação é responsabilidade do player nativo)
+
 ### Golden Reference
 
-Para o componente `DssVideo`, que é um componente não-interativo de exibição de mídia, o **Golden Reference** é o `DssBadge`.
+**DssBadge** — Golden Reference oficial para componentes não interativos do DSS.
 
 ### Golden Context
 
-O `DssVideo` é um componente para incorporar e exibir conteúdo de vídeo. Ele deve ser flexível para aceitar diferentes fontes de vídeo (locais, URLs externas como YouTube/Vimeo) e fornecer controles básicos de reprodução (play, pause, volume, tela cheia) quando aplicável. A sua principal função é a apresentação visual de conteúdo dinâmico, sem interação complexa além dos controles de mídia.
+**DssImg** — baseline específico para auditoria. DssVideo segue o mesmo padrão arquitetural de DssImg: componente Quasar como root element (EXC-Gate-01), sistema `title`/`decorative` análogo ao `alt`/`decorative` do DssImg, variantes de `radius` idênticas, sem estados interativos.
 
-### Justificativa
+**Diferença crítica DssImg → DssVideo:** QVideo é um wrapper de `<iframe>`, não de `<img>`. Consequências diretas:
+- Não há slots `#loading` nem `#error` expostos pelo QVideo — documentar como N/A
+- Controles de reprodução são internos ao player embarcado (YouTube/Vimeo) — fora do escopo DSS
+- Acessibilidade via `title` do iframe (WCAG 4.1.2) em vez de `alt` da imagem (WCAG 1.1.1)
 
-A criação do `DssVideo` é justificada pela necessidade de padronizar a exibição de vídeos em todas as aplicações que utilizam o Design System. Isso garante uma experiência de usuário consistente, performance otimizada e conformidade com padrões de acessibilidade, além de reduzir o esforço de desenvolvimento ao reutilizar um componente bem definido e testado.
+### Justificativa de Fase 2
+
+DssVideo é classificado como Fase 2 por ser um wrapper de uma única base Quasar (`QVideo`) sem composição interna de outros componentes DSS — critério idêntico ao DssImg. A classificação Nível 1 é confirmada: dependência apenas de Fase 1 (nenhum componente DSS interno).
+
+---
 
 ## 2. RISCOS ARQUITETURAIS E GATES
 
-### Riscos Arquiteturais
+### Calcanhar de Aquiles: confundir `QVideo` com `<video>` HTML nativo
 
-*   **Compatibilidade de Formatos:** Risco de não suportar todos os formatos de vídeo desejados ou codecs, levando a problemas de reprodução em diferentes navegadores/dispositivos.
-*   **Performance:** Carregamento de vídeos grandes pode impactar a performance da página. Necessidade de lazy loading e otimização de recursos.
-*   **Segurança (CORS/XSS):** Ao carregar vídeos de fontes externas, há riscos de segurança relacionados a Cross-Origin Resource Sharing (CORS) e Cross-Site Scripting (XSS).
-*   **Acessibilidade:** Garantir que os controles de vídeo e o próprio vídeo sejam acessíveis para usuários com deficiência (legendas, audiodescrição, navegação por teclado).
-*   **Dependência de Terceiros:** Se forem utilizadas bibliotecas ou APIs de terceiros (ex: YouTube Iframe API), há o risco de mudanças nessas APIs que possam quebrar o componente.
+O maior risco é o agente implementar props da tag `<video>` HTML (`autoplay`, `loop`, `controls`, `volume`, `muted`, `poster`) no DssVideo. Essas propriedades **não pertencem à API do `QVideo`** — pertencem ao elemento nativo. O `QVideo` encapsula um `<iframe>` e gerencia apenas a responsividade.
 
-### Gates
+**Anti-pattern:**
+```typescript
+// ❌ Props que NÃO existem no QVideo
+interface DssVideoProps {
+  autoplay?: boolean    // <video> nativo — fora do escopo
+  loop?: boolean        // <video> nativo — fora do escopo
+  controls?: boolean    // <video> nativo — fora do escopo
+  volume?: number       // <video> nativo — fora do escopo
+  muted?: boolean       // <video> nativo — fora do escopo
+  poster?: string       // <video> nativo — fora do escopo
+}
+```
 
-*   **Gate 1: Prova de Conceito de Reprodução:** Demonstração de reprodução de vídeo local e de uma URL externa (YouTube) com controles básicos.
-*   **Gate 2: Otimização de Performance:** Avaliação do impacto de performance com vídeos de diferentes tamanhos e implementação de estratégias de otimização (ex: lazy loading).
-*   **Gate 3: Testes de Acessibilidade:** Validação completa da acessibilidade do componente, incluindo navegação por teclado, legendas e compatibilidade com leitores de tela.
-*   **Gate 4: Testes de Segurança:** Análise de vulnerabilidades de segurança, especialmente ao lidar com conteúdo externo.
+**Padrão correto:**
+```typescript
+// ✅ Props reais do QVideo + extensões DSS
+interface DssVideoProps {
+  src?: string                                       // QVideo nativo
+  ratio?: number | string                            // QVideo nativo (default: 16/9 numérico)
+  title?: string                                     // QVideo nativo + WCAG 4.1.2
+  decorative?: boolean                               // Extensão DSS (sets title="")
+  radius?: 'none' | 'sm' | 'md' | 'lg' | 'full'   // Extensão DSS
+  // fetchpriority flui via $attrs (prop avançada)
+}
+```
+
+### Risco secundário: string `'16/9'` como default de `ratio`
+
+`parseFloat('16/9') === 16` em JavaScript — o parser para no `/`. O default correto é o número `16/9` (sem aspas), que TypeScript avalia como `1.7777...`. Sempre usar número, nunca string, em `withDefaults` para ratio.
+
+---
 
 ## 3. MAPEAMENTO DE API (QUASAR → DSS)
 
-O `DssVideo` será construído sobre o componente `QVideo` do Quasar, estendendo suas funcionalidades e aplicando o design do DSS.
+A API real do `QVideo` (Quasar 2.x) tem **4 props** — não 8. Todas as outras props listadas em versões anteriores deste pré-prompt eram invenção.
 
-| Propriedade Quasar (`QVideo`) | Propriedade DSS (`DssVideo`) | Descrição | Observações | Tipo | Padrão |
-| :---------------------------- | :--------------------------- | :-------- | :---------- | :--- | :----- |
-| `src`                         | `src`                        | URL ou caminho do vídeo. | Obrigatório. | `string` | `''` |
-| `ratio`                       | `aspectRatio`                | Proporção do vídeo (ex: '16/9'). | Pode ser um token DSS para proporções comuns. | `string` | `'16/9'` |
-| `autoplay`                    | `autoplay`                   | Inicia a reprodução automaticamente. | | `boolean` | `false` |
-| `loop`                        | `loop`                       | Repete o vídeo. | | `boolean` | `false` |
-| `controls`                    | `showControls`               | Exibe os controles nativos do vídeo. | O DSS pode adicionar controles customizados. | `boolean` | `true` |
-| `volume`                      | `volume`                     | Volume inicial do vídeo (0 a 1). | | `number` | `0.5` |
-| `muted`                       | `muted`                      | Inicia o vídeo mudo. | | `boolean` | `false` |
-| `poster`                      | `poster`                     | Imagem de capa antes do vídeo carregar. | | `string` | `''` |
+### Props Expostas
+
+| Prop QVideo | Prop DSS | Tipo | Default | Observações |
+|-------------|----------|------|---------|-------------|
+| `src` | `src` | `String` | `undefined` | URL YouTube/Vimeo ou arquivo direto |
+| `ratio` | `ratio` | `Number \| String` | `16/9` (número) | Aspect ratio. Default não-trivial: previne CLS |
+| `title` | `title` | `String` | `undefined` | Título do iframe — WCAG 4.1.2 |
+| — | `decorative` | `Boolean` | `false` | Extensão DSS: define `title=""` automaticamente |
+| — | `radius` | `'none'\|'sm'\|'md'\|'lg'\|'full'` | `undefined` | Extensão DSS: border-radius via tokens |
+
+### Props Avançadas via `$attrs` (não declarar na API DSS)
+
+| Prop QVideo | Observação |
+|-------------|------------|
+| `fetchpriority` | `'auto'`, `'high'`, `'low'` — para iframes above the fold |
+
+### Props Bloqueadas (não existem no QVideo)
+
+| Prop | Motivo do bloqueio |
+|------|--------------------|
+| `autoplay` | Atributo do `<video>` HTML nativo, não prop do `QVideo` |
+| `loop` | Atributo do `<video>` HTML nativo, não prop do `QVideo` |
+| `controls` | Atributo do `<video>` HTML nativo, não prop do `QVideo` |
+| `volume` | Atributo do `<video>` HTML nativo, não prop do `QVideo` |
+| `muted` | Atributo do `<video>` HTML nativo, não prop do `QVideo` |
+| `poster` | Atributo do `<video>` HTML nativo, não prop do `QVideo` |
+
+### Slots
+
+| Slot | Descrição |
+|------|-----------|
+| `default` | Overlay sobre o vídeo (gradientes, legendas decorativas, call-to-actions) |
+
+### Events
+
+Nenhum. QVideo não emite eventos DSS. `defineEmits` deve ser **omitido** (anti-padrão para containers não-emissores — referência: DssPageSticky seal).
+
+---
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
-O `DssVideo` utilizará exclusivamente tokens do Design System para espaçamento, raio de borda, cores de superfície e durações de transição.
+### Tokens Utilizados
 
-### Espaçamento
+| Token | Uso |
+|-------|-----|
+| `--dss-radius-sm` | Variante `radius="sm"` |
+| `--dss-radius-md` | Variante `radius="md"` |
+| `--dss-radius-lg` | Variante `radius="lg"` |
+| `--dss-radius-full` | Variante `radius="full"` (circular) |
 
-*   **Margens e Preenchimentos Internos:** `--dss-spacing-X` (ex: `--dss-spacing-4` para padding interno, `--dss-spacing-8` para margem externa).
+### Tokens NÃO utilizados (e por quê)
 
-### Raio de Borda
+| Token | Motivo da ausência |
+|-------|--------------------|
+| `--dss-surface-disabled` | Sem estado de loading/error (QVideo sem esses slots) |
+| `--dss-text-subtle` | Sem ícone de erro (QVideo sem slot de erro) |
+| `--dss-action-hub/water/waste` | Iframe é opaco ao DSS — brand theming N/A nesta fase |
 
-*   **Bordas Arredondadas:** `--dss-radius-sm`, `--dss-radius-md`, `--dss-radius-lg`, `--dss-radius-full` (ex: `--dss-radius-md` para bordas padrão do player).
+### Tokens que NÃO existem no catálogo DSS (nunca usar)
 
-### Cores de Superfície
+- `--dss-action-hub-surface` — **NÃO EXISTE**
+- `--dss-margin-lg` — **NÃO EXISTE**
+- `--dss-duration-base` — **NÃO EXISTE**
+- `--dss-surface-variant` — verificar catálogo antes de usar
 
-*   **Fundo do Player/Controles:** `--dss-surface-default`, `--dss-surface-variant`.
-*   **Ações e Destaques:** `--dss-action-hub`, `--dss-action-hub-surface`, `--dss-action-water`, `--dss-action-waste`.
+### `_brands.scss`
 
-### Duração de Transição
+Bloco intencionalmente vazio. O conteúdo de vídeo embarcado (iframe YouTube/Vimeo) é opaco ao DSS — cores de marca não alcançam o player nativo. Reservado para extensões futuras (ex: border decorativo por brand). Documentar com comentário explícito.
 
-*   **Transições de Controles:** `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-250`, `--dss-duration-300` (ex: `--dss-duration-250` para fade-in/out de controles).
+### `_states.scss`
 
-**Tokens SEMÂNTICOS NÃO PERMITIDOS:** `--dss-spacing-4` (quando usado incorretamente como padding-md), `--dss-margin-lg`, `--dss-duration-base`.
-**Correções de Tokens Fantasmas:**
-- Substituir `--dss-spacing-4` por `--dss-spacing-4`.
-- Substituir `--dss-text-subtle` por `--dss-text-subtle`.
-- Substituir `outline: 2px solid white` por `outline: 2px solid white`.
-- Substituir `--dss-action-hub` por `--dss-action-hub`.
-- Substituir `--dss-action-hub-surface` por `--dss-action-hub-surface`.
+`forced-color-adjust: proibido no DSS` (referência: DssTextarea e DssUploader seals). `border-radius` é propriedade geométrica — não afetada pelo modo `forced-colors`. Nenhum bloco `@media (forced-colors: active)` necessário.
+
+---
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
-### Acessibilidade
+### Estados Aplicáveis
 
-*   **Controles de Teclado:** Todos os controles de reprodução devem ser navegáveis e operáveis via teclado (Tab, Enter, Espaço).
-*   **Legendas e Audiodescrição:** Suporte para faixas de legendas (WebVTT) e audiodescrição, com opções de ativação/desativação.
-*   **Atributos ARIA:** Uso adequado de `aria-label`, `aria-controls`, `aria-live` para informar o estado do player e dos controles a tecnologias assistivas.
-*   **Foco Visual:** Indicação clara do elemento focado para navegação por teclado, utilizando `outline: 2px solid white` ou tokens apropriados.
+| Estado | Implementado | Motivo |
+|--------|-------------|--------|
+| `default` | ✅ | Vídeo carregado e exibido |
+| `loading` | ❌ N/A | QVideo é iframe — não expõe slot `#loading` |
+| `error` | ❌ N/A | QVideo não expõe slot de erro |
+| `hover` | ❌ N/A | Container não interativo — responsabilidade do pai |
+| `focus` | ❌ N/A | Não interativo diretamente |
+| `active` | ❌ N/A | Container de mídia |
+| `disabled` | ❌ N/A | Sem semântica de disable para mídia |
 
-### Estados
+### Touch Target
 
-*   **Carregando:** Indicador visual enquanto o vídeo está sendo carregado.
-*   **Reproduzindo:** Ícone de pause visível, barra de progresso atualizando.
-*   **Pausado:** Ícone de play visível.
-*   **Erro:** Mensagem de erro clara e feedback visual em caso de falha na reprodução.
-*   **Mudo:** Ícone de volume com indicação de mudo.
-*   **Tela Cheia:** Botão de tela cheia com estado alternado.
+N/A — componente não interativo. `::before` não deve ser implementado (reservado para touch target — WCAG 2.5.5). `::after` também não aplicável.
 
-## 6. DEPENDÊNCIAS E COMPOSIÇÃO
+### WCAG
 
-### Dependências
+- **WCAG 4.1.2 (Nível A) — Name, Role, Value**: `title` obrigatório para iframes não-decorativos. Advertência em `import.meta.env?.DEV` se ausente sem `decorative=true`.
+- **WCAG 1.2.2 (Nível A) — Captions**: Fora do escopo — responsabilidade do provider (YouTube/Vimeo) ou da `<track>` para arquivos diretos.
+- **WCAG 1.2.1 — Apenas Vídeo**: `decorative=true` sinaliza ao leitor de tela que o iframe deve ser ignorado (sets `title=""`).
 
-*   **Quasar Framework:** `QVideo` (base do componente).
-*   **Vue.js:** Para a reatividade e ciclo de vida do componente.
-*   **Ícones DSS:** Para os ícones dos controles de reprodução (play, pause, volume, tela cheia).
+### Sistema `title` + `decorative` (análogo ao DssImg `alt` + `decorative`)
 
-### Composição
+```typescript
+// Lógica obrigatória na 1-structure
+const computedTitle = computed<string>(() => {
+  if (props.decorative === true) return ''
+  if (props.title !== undefined) return props.title
+  if (import.meta.env?.DEV) {
+    console.warn('[DssVideo] O prop `title` é obrigatório para vídeos não-decorativos (WCAG 4.1.2).')
+  }
+  return ''
+})
+```
 
-O `DssVideo` pode ser composto por:
+### Exceção Estrutural (EXC-Gate-01)
 
-*   `DssButton` (para controles de play/pause, volume, tela cheia).
-*   `DssSlider` (para barra de progresso e controle de volume).
-*   `DssIcon` (para os ícones dos controles).
-*   `DssSpinner` (para o estado de carregamento).
-
-## 7. EXCEÇÕES PREVISTAS
-
-*   **Vídeos sem Controles:** Em casos específicos, o `DssVideo` pode ser configurado para não exibir controles, funcionando como um background de vídeo ou elemento puramente visual.
-*   **Fontes Não Suportadas:** Se uma URL de vídeo for de um provedor não explicitamente suportado (ex: um serviço de streaming muito específico), o componente deve falhar graciosamente, talvez exibindo uma mensagem de erro ou um fallback.
-*   **DRM (Digital Rights Management):** O `DssVideo` não terá suporte nativo a DRM. Vídeos protegidos por DRM precisarão de soluções externas ou customizadas.
-*   **Eventos de Mídia Customizados:** Embora o componente forneça eventos básicos, eventos de mídia muito específicos (ex: `onseeking`, `onstalled`) podem não ser expostos diretamente, exigindo acesso ao elemento `video` nativo.
-
-## 8. SUPERFÍCIE DE PLAYGROUND
-
-### Controles Obrigatórios
-
-*   **`src` (string):** Campo de texto para inserir a URL ou caminho do vídeo.
-*   **`aspectRatio` (string):** Dropdown com opções como '16/9', '4/3', '1/1'.
-*   **`autoplay` (boolean):** Toggle switch para ativar/desativar autoplay.
-*   **`loop` (boolean):** Toggle switch para ativar/desativar loop.
-*   **`showControls` (boolean):** Toggle switch para exibir/ocultar controles.
-*   **`volume` (number):** Slider para ajustar o volume (0 a 1).
-*   **`muted` (boolean):** Toggle switch para ativar/desativar mudo.
-*   **`poster` (string):** Campo de texto para inserir a URL da imagem de capa.
-*   **`brand` (string):** Dropdown para selecionar a marca visual do player, com opções `hub`, `water`, `waste`.
-
-### Composite Logic
-
-*   **Alternância de Ícones:** Lógica para alternar entre ícones de play/pause com base no estado de reprodução (`isPlaying`).
-*   **Sincronização de Barra de Progresso:** Lógica para atualizar a barra de progresso com base no tempo atual do vídeo (`currentTime`) e duração total (`duration`).
-*   **Manipulação de Eventos:** Lógica para lidar com eventos de mídia (play, pause, ended, timeupdate, volumechange) e atualizar o estado interno do componente.
-*   **Fallback de Erro:** Lógica para exibir uma mensagem de erro amigável se o vídeo não puder ser carregado ou reproduzido (`hasError`).
-*   **Aplicação de Brand:** Lógica para aplicar as cores de `hub`, `water` ou `waste` aos controles e barra de progresso com base na prop `brand`.
-
-### Estados a Expor
-
-| Estado | Descrição | Tipo | Trigger |
-|--------|-----------|------|----------|
-| `isPlaying` | Indica se o vídeo está reproduzindo. | `boolean` | — |
-| `currentTime` | Tempo atual de reprodução do vídeo em segundos. | `number` | — |
-| `duration` | Duração total do vídeo em segundos. | `number` | — |
-| `isMuted` | Indica se o vídeo está mudo. | `boolean` | — |
-| `currentVolume` | Volume atual do vídeo (0 a 1). | `number` | — |
-| `hasError` | Indica se ocorreu um erro na reprodução do vídeo. | `boolean` | Prop `error=true` ou validação |
-| `isLoading` | Indica se o vídeo está carregando. | `boolean` | Prop `loading=true` |
+QVideo deve ser o root element direto — sem div wrapper intermediário. `$attrs` forwarded via `v-bind="$attrs"` no QVideo. Justificativa: QVideo já aplica `overflow:hidden` e `position:relative` internamente — necessários para clip de `border-radius` e aspect ratio padding trick.

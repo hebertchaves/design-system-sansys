@@ -2,144 +2,167 @@
 
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
+**Fase:** 2
+**Nível:** 1 — Container comportamental
+
 ### Golden Reference
-DssChip
+DssChip (componente interativo — governança global de categoria)
 
 ### Golden Context
-O `DssInfiniteScroll` é um componente que permite carregar conteúdo dinamicamente à medida que o usuário rola a página ou um contêiner específico. Ele é ideal para listas longas de dados, feeds de notícias ou qualquer cenário onde o carregamento de todo o conteúdo de uma vez prejudicaria a performance. O componente gerencia a lógica de detecção de scroll e o acionamento de um evento de carregamento quando o usuário se aproxima do final do conteúdo, permitindo que a aplicação adicione mais itens à lista de forma assíncrona.
+**DssVirtualScroll** — componente da mesma família (Scroll e Virtualização, Fase 2 Nível 1), selado em 12 Mai 2026. Usado como baseline técnico principal para: padrão de wrapper Quasar, seletores brand com descendant selector, spinner via `currentColor`, estrutura de slots em containers comportamentais.
 
-### Justificativa
-A necessidade de um componente de *infinite scroll* surge da demanda por otimização de performance e melhor experiência do usuário em aplicações com grandes volumes de dados. Ao carregar conteúdo sob demanda, evitamos o carregamento inicial excessivo, reduzimos o tempo de renderização e economizamos recursos do navegador. Isso resulta em uma interface mais responsiva e fluida, especialmente em dispositivos móveis ou conexões de internet mais lentas.
+### Justificativa de Fase 2
+`DssInfiniteScroll` é um container comportamental que depende do DSS estar estável (Fase 1) para poder governar a experiência de scroll incremental sobre componentes como `DssSpinner`, `DssList`, `DssItem` e `DssCard`. É complementar ao `DssVirtualScroll` (Golden Context) para carregamento sob demanda.
+
+---
 
 ## 2. RISCOS ARQUITETURAIS E GATES
 
-### Riscos
-*   **Loop Infinito de Carregamento:** Se a função de carregamento (`@load`) não for implementada corretamente ou se o conteúdo carregado não for suficiente para preencher o `offset` definido, o componente pode entrar em um loop de carregamento contínuo, consumindo recursos e prejudicando a experiência do usuário.
-*   **Problemas de Desempenho:** Embora o *infinite scroll* seja uma técnica de otimização, um carregamento excessivo de dados ou uma renderização complexa de cada item da lista pode, paradoxalmente, impactar negativamente o desempenho, especialmente em listas muito longas ou com itens visualmente ricos.
-*   **Acessibilidade:** Garantir que o carregamento de conteúdo seja perceptível e controlável para usuários com tecnologias assistivas é crucial. A falta de feedback visual ou programático sobre o estado de carregamento pode gerar confusão.
-*   **Scroll Target Incorreto:** Se o `scroll-target` for configurado incorretamente (apontando para um elemento não-scrollável ou inexistente), o componente pode não detectar os eventos de scroll, impedindo o carregamento de novos itens.
-*   **Gestão de Estado:** A complexidade na gestão do estado de carregamento (loading, erro, sem mais dados) e a integração com a lógica de paginação da aplicação podem levar a bugs e inconsistências.
+### Risco Principal — Loop Infinito de Carregamento
+**Anti-pattern:** Consumidor não chama `done()` após `@load` (path de sucesso, erro ou vazio).
+**Padrão correto:** `done()` SEMPRE chamado em qualquer caminho — `done(false)` para continuar, `done(true)` para encerrar. O `DssInfiniteScroll` expõe a `done` como wrapper para rastrear `isLoading`/`noMore` antes de delegar ao Quasar.
 
-### Gates
-*   **Validação da Função `done()`:** A função `done()` passada para o evento `@load` deve ser sempre chamada para indicar a conclusão do carregamento, evitando loops infinitos. Isso será validado em testes de unidade e integração.
-*   **Testes de Performance:** Serão realizados testes de performance com grandes volumes de dados e diferentes configurações de `offset` e `debounce` para garantir que o componente mantenha a responsividade e o desempenho aceitáveis.
-*   **Testes de Acessibilidade:** O componente deve ser testado com leitores de tela e outras ferramentas de acessibilidade para garantir que o estado de carregamento e a adição de novos itens sejam comunicados de forma clara aos usuários.
-*   **Validação do `scroll-target`:** A documentação e exemplos de uso devem enfatizar a importância de um `scroll-target` válido e scrollável. Testes de integração devem cobrir cenários com e sem `scroll-target` customizado.
-*   **Documentação Clara:** Fornecer exemplos claros e diretrizes para a gestão do estado de carregamento e a integração com APIs de dados.
+### Risco — `defineExpose` com API imperativa (EXC-Expose-01)
+**Anti-pattern:** Expor métodos do QInfiniteScroll sem documentar a exceção.
+**Padrão correto:** Delegar via `innerRef` e registrar EXC-Expose-01 em `dss.meta.json`. Precedente único no DSS para wrappers com API imperativa.
+
+### Risco — QInfiniteScroll como root element (EXC-Gate-01)
+**Anti-pattern:** Adicionar `<div>` wrapper entre o root DSS e o QInfiniteScroll.
+**Padrão correto:** QInfiniteScroll IS o root element. `v-bind="$attrs"` forwarded diretamente no `q-infinite-scroll`. Sem div intermediário.
+
+### Risco — Slot `no-more` fora do slot default
+**Anti-pattern:** Renderizar o estado no-more como irmão do QInfiniteScroll (fora da área de scroll).
+**Padrão correto:** Slot no-more renderizado DENTRO do slot default do QInfiniteScroll — aparece naturalmente ao final do conteúdo scrollável.
+
+### Risco — Scroll-target inválido
+**Anti-pattern:** `scroll-target` apontando para elemento não-scrollável ou inexistente.
+**Padrão correto:** Documentar o requisito no README e exemplos. O componente não valida o target — responsabilidade do consumidor.
+
+---
 
 ## 3. MAPEAMENTO DE API (QUASAR → DSS)
 
-| Propriedade Quasar | Tipo Quasar | Descrição Quasar | Propriedade DSS | Tipo DSS | Descrição DSS |
-| :----------------- | :---------- | :---------------- | :-------------- | :------- | :-------------- |
-| `offset`           | `Number`    | Offset (pixels) para o fundo do contêiner do Infinite Scroll a partir do qual o componente deve começar a carregar mais conteúdo. | `offset`         | `Number` | Offset (pixels) para o fundo do contêiner do Infinite Scroll a partir do qual o componente deve começar a carregar mais conteúdo. |
-| `debounce`         | `String \| Number` | Quantidade de debounce (em milissegundos). | `debounce`       | `Number` | Quantidade de debounce (em milissegundos). |
-| `initial-index`    | `Number`    | Inicializa o índice de paginação (usado para o evento `@load`). | `initialIndex`   | `Number` | Inicializa o índice de paginação (usado para o evento `@load`). |
-| `scroll-target`    | `Element \| String` | Seletor CSS ou elemento DOM a ser usado como um contêiner de scroll personalizado em vez do detectado automaticamente. | `scrollTarget`   | `String` | Seletor CSS ou elemento DOM a ser usado como um contêiner de scroll personalizado em vez do detectado automaticamente. |
-| `reverse`          | `Boolean`   | A área de scroll deve se comportar como um mensageiro - começando rolada para baixo e carregando ao atingir o topo. | `reverse`        | `Boolean` | A área de scroll deve se comportar como um mensageiro - começando rolada para baixo e carregando ao atingir o topo. |
+| Propriedade Quasar | Tipo Quasar | Propriedade DSS | Tipo DSS | Observação |
+| :----------------- | :---------- | :-------------- | :------- | :--------- |
+| `offset` | `Number` | `offset` | `Number` | Default DSS: 500px |
+| `debounce` | `String \| Number` | `debounce` | `Number` | Default DSS: 100ms (apenas Number) |
+| `initial-index` | `Number` | `initialIndex` | `Number` | camelCase DSS |
+| `scroll-target` | `Element \| String` | `scrollTarget` | `String \| Element \| null` | camelCase DSS; null aceito para reset |
+| `reverse` | `Boolean` | `reverse` | `Boolean` | Modo chat/mensageiro |
+| `disable` | `Boolean` | `disable` | `Boolean` | Para detecção de scroll e @load |
+| `tag` | `String` | — | **BLOQUEADA** | DssInfiniteScroll sempre renderiza como `<div>`. Usar `scroll-target` para containers customizados. |
 
-| Evento Quasar | Parâmetros Quasar | Descrição Quasar | Evento DSS | Parâmetros DSS | Descrição DSS |
-| :------------ | :---------------- | :--------------- | :--------- | :------------- | :-------------- |
-| `@load`       | `index: Number, done: Function` | Disparado quando o componente precisa carregar mais conteúdo. `done()` deve ser chamado quando o carregamento estiver completo. | `@load`    | `index: Number, done: Function` | Disparado quando o componente precisa carregar mais conteúdo. `done()` deve ser chamado quando o carregamento estiver completo. |
+| Evento Quasar | Parâmetros Quasar | Evento DSS | Parâmetros DSS | Observação |
+| :------------ | :---------------- | :--------- | :------------- | :--------- |
+| `@load` | `index: Number, done: Function` | `@load` | `index: number, done: (stop?: boolean) => void` | `done` é um wrapper DSS — atualiza `isLoading`/`noMore` antes de delegar ao Quasar |
 
-| Método Quasar | Parâmetros Quasar | Retorno Quasar | Descrição Quasar | Método DSS | Parâmetros DSS | Retorno DSS | Descrição DSS |
-| :------------ | :---------------- | :------------- | :--------------- | :--------- | :------------- | :---------- | :-------------- |
-| `poll()`      | -                 | `void`         | Verifica a posição do scroll e carrega mais conteúdo, se necessário. | `poll()`      | -              | `void`      | Verifica a posição do scroll e carrega mais conteúdo, se necessário. |
-| `trigger()`   | -                 | `void`         | Força o Infinite Scroll a carregar mais conteúdo, independentemente da posição do scroll. | `trigger()`   | -              | `void`      | Força o Infinite Scroll a carregar mais conteúdo, independentemente da posição do scroll. |
-| `reset()`     | -                 | `void`         | Reseta o índice de chamada para 0. | `reset()`     | -              | `void`      | Reseta o índice de chamada para 0. |
-| `stop()`      | -                 | `void`         | Para o funcionamento do Infinite Scroll, independentemente da posição do scroll. | `stop()`      | -              | `void`      | Para o funcionamento do Infinite Scroll, independentemente da posição do scroll. |
-| `resume()`    | -                 | `void`         | Reinicia o funcionamento do Infinite Scroll. Verifica a posição do scroll na chamada e, se o gatilho for atingido, carrega mais conteúdo. | `resume()`    | -              | `void`      | Reinicia o funcionamento do Infinite Scroll. Verifica a posição do scroll na chamada e, se o gatilho for atingido, carrega mais conteúdo. |
-| `setIndex(index)` | `index: Number`   | `void`         | Define o índice de paginação. | `setIndex(index)` | `index: Number` | `void`      | Define o índice de paginação. |
+| Método Quasar | Método DSS | Observação |
+| :------------ | :--------- | :--------- |
+| `poll()` | `poll()` | Delegado via innerRef |
+| `trigger()` | `trigger()` | Delegado via innerRef |
+| `reset()` | `reset()` | Delegado + reseta `noMore = false` |
+| `stop()` | `stop()` | Delegado via innerRef |
+| `resume()` | `resume()` | Delegado via innerRef |
+| `setIndex(index)` | `setIndex(index)` | Delegado via innerRef |
+
+---
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
-O `DssInfiniteScroll` deve utilizar exclusivamente os tokens de design do DSS para espaçamento, raio de borda, cores e durações de transição. Não serão permitidos valores hardcoded ou tokens semânticos não-existentes.
+O `DssInfiniteScroll` usa exclusivamente tokens DSS existentes no catálogo oficial.
 
-*   **Espaçamento:** Para margens e preenchimentos internos, utilizar tokens como `--dss-spacing-4` (para um espaçamento padrão), `--dss-spacing-8`, `--dss-spacing-16`, etc., conforme a necessidade de densidade da informação. Por exemplo, para um espaçamento entre itens da lista, pode-se usar `--dss-spacing-8`.
-*   **Raio de Borda:** Se o componente ou seus elementos internos possuírem bordas arredondadas, utilizar tokens como `--dss-radius-md` para um arredondamento médio, `--dss-radius-sm` para um menor, ou `--dss-radius-full` para elementos circulares.
-*   **Cores:** Para cores de fundo, texto ou ícones de carregamento, utilizar tokens de superfície e texto do DSS, como `--dss-surface-default` para o fundo principal, `--dss-text-default` para o texto, e `--dss-action-hub` para elementos interativos ou de destaque.
-*   **Duração de Transição:** Para quaisquer animações ou transições (por exemplo, no estado de carregamento), utilizar tokens de duração como `--dss-duration-250` para uma transição padrão, ou `--dss-duration-150` para algo mais rápido.
+**Tokens confirmados no catálogo:**
+- `--dss-spacing-4` (16px) — padding do container `__no-more`
+- `--dss-spacing-6` (24px) — padding do container `__loading`
+- `--dss-text-subtle` — cor da mensagem no-more (base, sem brand)
+- `--dss-opacity-disabled` — opacidade do estado disabled (0.4)
+- `--dss-action-hub` — cor do texto no-more em contexto brand hub
+- `--dss-action-water` — cor do texto no-more em contexto brand water
+- `--dss-action-waste` — cor do texto no-more em contexto brand waste
 
-**Exemplos de uso de tokens:**
+**Padrão de cor para loading spinner:**
+O spinner de loading NÃO usa `--dss-action-{brand}` diretamente no `_base.scss`. O DssSpinner filho herda `currentColor` do contexto, aplicando a cor brand automaticamente quando dentro de `[data-brand]`. Não adicionar `--dss-action-hub` no container `__loading` — isso violaria o padrão de delegação ao filho.
 
-```css
-.dss-infinite-scroll {
-  padding-bottom: var(--dss-spacing-16);
-}
-
-.dss-infinite-scroll__loading-spinner {
-  margin-top: var(--dss-spacing-8);
-  margin-bottom: var(--dss-spacing-8);
-  color: var(--dss-action-hub);
-  transition: opacity var(--dss-duration-250) ease-in-out;
-}
-
-.dss-infinite-scroll__item {
-  border-radius: var(--dss-radius-md);
-  background-color: var(--dss-surface-default);
-  margin-bottom: var(--dss-spacing-4);
+**Padrão brand:**
+```scss
+[data-brand="hub"] .dss-infinite-scroll {
+  .dss-infinite-scroll__no-more-text {
+    color: var(--dss-action-hub);
+  }
 }
 ```
+Consistente com DssVirtualScroll (Golden Context).
+
+---
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
 ### Acessibilidade
-*   **Feedback de Carregamento:** O componente deve fornecer feedback visual e programático claro quando novos itens estão sendo carregados. Isso pode ser feito através de um spinner de carregamento (`aria-live="polite"` ou `aria-busy="true"`) e mensagens de status que informem os usuários de leitores de tela sobre o progresso.
-*   **Foco:** Gerenciar o foco de forma apropriada quando novos itens são adicionados à lista, garantindo que o foco não seja perdido e que os usuários possam continuar navegando sem interrupções.
-*   **Controle:** Para usuários que não podem rolar, deve haver uma alternativa para acionar o carregamento de mais itens (ex: um botão "Carregar Mais").
-*   **Semântica:** Utilizar elementos HTML semânticos (`<ul>`, `<li>`) para as listas de itens e garantir que a estrutura seja compreensível para tecnologias assistivas.
+- **WCAG 2.1 AA** — mínimo obrigatório
+- **Loading feedback:** `role="status" aria-live="polite"` no container `__loading`; DssSpinner com `aria-hidden="true"` (decorativo — anúncio via container pai)
+- **No-more feedback:** `role="status" aria-live="polite"` no container `__no-more`
+- **`aria-label` de loading:** `"Carregando mais itens"` — PT-BR hardcoded. Prop `loadingLabel` planejada para Fase 3. Consumidores multilíngues devem substituir o slot `#loading` completo.
+- **Touch target:** NÃO APLICÁVEL — componente container comportamental não interativo. Opção B: sem `::before`. Consistente com DssBadge (Golden Reference não-interativo).
+- **`user-select`:** NÃO aplicar no root. Itens filhos gerenciam seleção. Consistente com DssVirtualScroll (Golden Context).
+- **prefers-contrast: more** (NOT `high`): texto no-more usa `currentColor` para contraste máximo
+- **forced-colors: active**: `CanvasText` para texto no-more
 
 ### Estados
-O `DssInfiniteScroll` deve gerenciar e expor os seguintes estados:
-*   **`loading` (Booleano):** Indica se o componente está atualmente carregando mais itens. Deve ser `true` durante a execução da função `@load` e `false` após a chamada de `done()`.
-*   **`noMore` (Booleano):** Indica se não há mais itens para carregar. Este estado é controlado pela aplicação através da função `done(true)`.
-*   **`error` (Booleano):** Indica se ocorreu um erro durante o carregamento dos itens. (A ser implementado ou gerenciado externamente, mas o componente deve permitir a exibição de um estado de erro).
+
+| Estado | Aplicável | Implementação |
+|--------|-----------|---------------|
+| `default` | ✅ | Lista renderizada; aguardando scroll |
+| `loading` | ✅ | DssSpinner via slot #loading; `isLoading` reativo exposto |
+| `no-more` | ✅ | Mensagem via slot #no-more; `noMore` reativo exposto |
+| `disabled` | ✅ | `pointer-events: none` + `--dss-opacity-disabled` |
+| `hover` | ❌ N/A | Container não interativo — itens filhos gerenciam |
+| `focus` | ❌ N/A | Scroll nativo do browser |
+| `active` | ❌ N/A | Container comportamental |
+| `error` | ❌ N/A | Responsabilidade exclusiva do consumidor: usar `disable=true` durante tratamento de erro e renderizar feedback no slot `default`. O DssInfiniteScroll NÃO implementa estado de erro interno. |
+
+---
 
 ## 6. DEPENDÊNCIAS E COMPOSIÇÃO
 
-### Dependências
-*   **Vue.js:** Como um componente Vue, depende do ecossistema Vue para sua reatividade e ciclo de vida.
-*   **Quasar Framework (opcional):** Embora o `DssInfiniteScroll` seja uma abstração, ele pode internamente utilizar utilitários ou componentes de baixo nível do Quasar (como `QSpinner` para o indicador de carregamento) se isso simplificar a implementação e não expor dependências diretas ao consumidor.
-*   **DssSpinner:** Para o indicador de carregamento, o `DssInfiniteScroll` deve utilizar o componente `DssSpinner` do próprio Design System, garantindo consistência visual.
+### Dependências DSS Internas
+- **DssSpinner** — loading indicator padrão no slot `#loading`. Importado via wrapper raiz (`../../DssSpinner/DssSpinner.vue`).
 
-### Composição
-O `DssInfiniteScroll` é um componente de composição que encapsula a lógica de *infinite scroll*. Ele deve ser capaz de compor:
-*   **Slots:** Um slot `default` para o conteúdo da lista e um slot `loading` para o indicador de carregamento (que pode ser o `DssSpinner`).
-*   **DssSpinner:** Para exibir o estado de carregamento.
-*   **DssButton (opcional):** Para um botão "Carregar Mais" em cenários de acessibilidade ou quando o scroll não é o único gatilho.
+### Dependências Quasar
+- **QInfiniteScroll** — motor de scroll infinito. Root element efetivo do componente.
+
+### Anti-patterns de Composição
+- **Não usar `done()` condicionalmente** — sempre chamar em todos os paths
+- **Não usar `stop()` sem `resume()`** — trava o componente permanentemente até `reset()`
+- **Não usar `DssInfiniteScroll` + `DssVirtualScroll` sem planejamento** de scroll-target — risco de conflito de detecção de eventos
+
+---
 
 ## 7. EXCEÇÕES PREVISTAS
 
-*   **Contêiner de Scroll Não-Padrão:** A capacidade de definir um `scroll-target` customizado é uma exceção importante, permitindo que o *infinite scroll* funcione dentro de elementos específicos da página, e não apenas no `window`.
-*   **Listas Invertidas (Messenger Style):** O modo `reverse` é uma exceção para casos de uso como chats ou feeds de mensagens, onde o carregamento ocorre ao rolar para o topo, e não para o fundo.
-*   **Conteúdo Inicial Insuficiente:** Se o conteúdo inicial renderizado for menor que a altura do contêiner do scroll, o `QInfiniteScroll` pode disparar o evento `@load` imediatamente. O `DssInfiniteScroll` deve lidar com isso de forma graciosa, talvez com um `debounce` padrão ou uma lógica interna para evitar múltiplos carregamentos desnecessários.
-*   **Desativação Temporária:** A necessidade de parar e reiniciar o *infinite scroll* (métodos `stop()` e `resume()`) é uma exceção para cenários onde o carregamento automático precisa ser pausado (ex: durante uma busca ou filtro).
+| ID | Regra | Justificativa |
+|----|-------|---------------|
+| EXC-Gate-01 | Gate de Composição v2.4 — componente filho como root element | QInfiniteScroll é root direto. `$attrs` forwarded via `v-bind="$attrs"`. Evita DOM desnecessário e preserva scroll detection nativa. |
+| EXC-Expose-01 | `defineExpose` em componente wrapper | `poll`, `trigger`, `reset`, `stop`, `resume`, `setIndex` delegados via `innerRef`. Necessário para controle programático externo. Padrão único no DSS para wrappers com API imperativa. |
+
+---
 
 ## 8. SUPERFÍCIE DE PLAYGROUND
 
 ### Controles Obrigatórios
-*   **`offset` (Slider/Input Numérico):** Para ajustar o valor do offset em pixels (ex: 0 a 1000).
-*   **`debounce` (Slider/Input Numérico):** Para ajustar o tempo de debounce em milissegundos (ex: 0 a 500).
-*   **`initialIndex` (Input Numérico):** Para definir o índice inicial de paginação.
-*   **`reverse` (Toggle):** Para alternar entre o modo de scroll normal e o modo reverso.
-*   **`scrollTarget` (Input de Texto/Dropdown):** Para simular diferentes alvos de scroll (ex: `window`, `#my-custom-scroll-area`).
-*   **Botão "Adicionar Item Manualmente":** Para simular a adição de um item à lista sem acionar o scroll.
-*   **Botão "Resetar Scroll":** Para chamar o método `reset()`.
-*   **Botão "Forçar Carregamento":** Para chamar o método `trigger()`.
-*   **Botão "Parar Carregamento":** Para chamar o método `stop()`.
-*   **Botão "Retomar Carregamento":** Para chamar o método `resume()`.
+- `offset` — Slider/Input Numérico (0–1000px)
+- `debounce` — Slider/Input Numérico (0–500ms)
+- `initialIndex` — Input Numérico
+- `reverse` — Toggle
+- `scrollTarget` — Input de Texto (seletor CSS)
+- `disable` — Toggle
+- Botão "Forçar Carregamento" → `trigger()`
+- Botão "Parar" → `stop()`
+- Botão "Retomar" → `resume()`
+- Botão "Reset" → `reset()`
 
-### Composite Logic
-O playground deve demonstrar a integração do `DssInfiniteScroll` com uma lógica de carregamento de dados simulada. Isso incluirá:
-*   Uma lista de itens que cresce à medida que o scroll é acionado.
-*   Um indicador de carregamento (`DssSpinner`) visível enquanto o `@load` está ativo.
-*   Uma mensagem "Sem mais itens" quando a função `done(true)` é chamada.
-*   Simulação de atraso no carregamento de dados (usando `setTimeout`) para observar o `debounce` em ação.
-*   Exemplo de uso com um `scroll-target` customizado (ex: um `div` com `overflow: auto` e altura fixa).
-*   Exemplo de uso no modo `reverse`.
-
-### Estados a Expor
-| Estado | Descrição | Tipo | Trigger |
-|--------|-----------|------|----------|
-| `loading` | Indica se o componente está atualmente carregando mais itens. | Booleano | Prop `loading=true` |
-| `noMore` | Indica se não há mais itens para carregar. | Booleano | — |
-| `currentIndex` | O índice atual de paginação que seria passado para a função `@load`. | Number | — |
+### Cenários Obrigatórios (mínimo 5)
+1. Lista básica com carregamento simulado (20 itens por ciclo, máx. 80)
+2. Scroll-target customizado (container com overflow: auto)
+3. Modo reverse — chat com mensagens mais antigas ao topo
+4. Controle programático — stop / resume / reset com botões
+5. Brand Hub — DssSpinner e texto no-more com cor hub

@@ -2,7 +2,7 @@
   "component": "DssVirtualScroll",
   "cssClass": "dss-virtual-scroll",
   "phase": 2,
-  "status": "in-progress",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssLinearProgress",
@@ -81,5 +81,19 @@
       "emptyPadding": "--dss-spacing-8 (32px)"
     }
   },
-  "auditHistory": []
+  "auditHistory": [
+    {
+      "date": "2026-05-12",
+      "auditor": "Claude (Modo Auditor DSS)",
+      "version": "2.2.0",
+      "result": "CONFORME",
+      "cycles": 2,
+      "ncFound": 6,
+      "ncResolved": 6,
+      "gapsFound": 5,
+      "gapsResolved": 3,
+      "ressalvas": 2,
+      "sealPath": "DSS/docs/Compliance/seals/DssVirtualScroll/DSSVIRTUALSCROLL_SELO_v2.2.md"
+    }
+  ]
 }

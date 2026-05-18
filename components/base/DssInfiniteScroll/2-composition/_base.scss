@@ -1,0 +1,72 @@
+// =============================================================================
+// DssInfiniteScroll — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// GOLDEN REFERENCE: DssChip (componente interativo)
+// GOLDEN CONTEXT:   DssVirtualScroll (componente de scroll e virtualização)
+//
+// TOUCH TARGET: NÃO IMPLEMENTADO — Opção B.
+//   DssInfiniteScroll é um container comportamental não interativo.
+//   O scroll é nativo do browser; itens filhos gerenciam touch targets.
+//
+// NOTA ARQUITETURAL:
+//   QInfiniteScroll é o root element do componente — sem div wrapper extra.
+//   A classe .dss-infinite-scroll é aplicada diretamente no QInfiniteScroll
+//   via :class="rootClasses". Os estilos abaixo operam sobre o element raiz
+//   gerado pelo Quasar.
+//
+// TOKENS UTILIZADOS (base):
+//   Espaçamento: --dss-spacing-4   (16px — padding no-more)
+//                --dss-spacing-6   (24px — padding loading area)
+//   Texto:       --dss-text-subtle (mensagem no-more)
+//   Opacidade:   --dss-opacity-disabled (0.4 — estado disabled)
+//
+// =============================================================================
+
+.dss-infinite-scroll {
+  // ── Display e Layout ───────────────────────────────────────────────────────
+  // QInfiniteScroll já renderiza display: block por padrão.
+  // Não forçamos flex para não quebrar layouts de tabela (type="table").
+  display: block;
+  width: 100%;
+
+  // ── Estado: Loading ───────────────────────────────────────────────────────
+  // Área do spinner exibida pelo QInfiniteScroll via #loading slot.
+  // O QInfiniteScroll gerencia show/hide — apenas estilizamos o container.
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dss-spacing-6);  // 24px — consistente com DssVirtualScroll
+    width: 100%;
+  }
+
+  // ── Estado: No More ───────────────────────────────────────────────────────
+  // Renderizado no slot default quando done(true) é chamado.
+
+  &__no-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dss-spacing-4);  // 16px
+    width: 100%;
+  }
+
+  &__no-more-text {
+    color: var(--dss-text-subtle);
+    // Tipografia controlada por classes utilitárias globais do consumidor
+  }
+
+  // ── Estado: Disabled ──────────────────────────────────────────────────────
+  // Opção B (não interativo como container): opacidade + pointer-events.
+  // QInfiniteScroll também para de disparar @load quando disable=true,
+  // mas o CSS garante feedback visual consistente.
+  // --dss-opacity-disabled = 0.4 (CLAUDE.md memory — nunca 0.6)
+
+  &--disabled {
+    pointer-events: none;
+    opacity: var(--dss-opacity-disabled);
+  }
+}

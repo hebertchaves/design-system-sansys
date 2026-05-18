@@ -1,0 +1,82 @@
+// =============================================================================
+// DssInfiniteScroll — LAYER 4: OUTPUT — States
+//
+// RESPONSABILIDADE: Dark mode, acessibilidade e media queries especiais.
+//
+// ORDEM CANÔNICA DSS:
+//   1. dark mode
+//   2. prefers-contrast: more
+//   3. prefers-reduced-motion  ← DssSpinner anima; este arquivo não anima
+//   4. print
+//   5. forced-colors (Windows HCM)
+//
+// GOLDEN REFERENCE: DssChip (padrão de estados em componentes interativos)
+// GOLDEN CONTEXT:   DssVirtualScroll (padrão de estados para containers de scroll)
+//
+// NOTA: DssInfiniteScroll não define animações próprias em _base.scss.
+//   A animação do spinner de loading pertence ao DssSpinner (componente filho).
+//   Portanto, prefers-reduced-motion não requer !important aqui — cada
+//   componente gerencia sua própria conformidade com reduced-motion.
+//
+// =============================================================================
+
+// =============================================================================
+// 1. DARK MODE
+// =============================================================================
+
+[data-theme="dark"] {
+  // --dss-text-subtle já tem override de dark mode nos tokens semânticos.
+  // Nenhum override adicional necessário para o no-more-text.
+
+  // Placeholder para futuras customizações de dark mode do container.
+}
+
+// =============================================================================
+// 2. HIGH CONTRAST (prefers-contrast: more)
+// =============================================================================
+
+@media (prefers-contrast: more) {
+  .dss-infinite-scroll {
+    &__no-more-text {
+      // currentColor garante contraste máximo contra qualquer fundo
+      color: currentColor;
+    }
+  }
+}
+
+// =============================================================================
+// 3. REDUCED MOTION
+// =============================================================================
+
+// DssInfiniteScroll não define @keyframes próprios.
+// O DssSpinner filho (slot #loading) gerencia sua própria conformidade.
+// Nenhum override necessário aqui.
+
+// =============================================================================
+// 4. PRINT
+// =============================================================================
+
+@media print {
+  .dss-infinite-scroll {
+    // Estado de loading não tem significado em contexto estático
+    &__loading {
+      display: none;
+    }
+
+    // No-more é informação relevante — mantém visibilidade
+    // (já visível por padrão, nenhum override necessário)
+  }
+}
+
+// =============================================================================
+// 5. FORCED COLORS (Windows High Contrast Mode)
+// =============================================================================
+
+@media (forced-colors: active) {
+  .dss-infinite-scroll {
+    &__no-more-text {
+      // CanvasText garante legibilidade em qualquer tema Windows HCM
+      color: CanvasText;
+    }
+  }
+}

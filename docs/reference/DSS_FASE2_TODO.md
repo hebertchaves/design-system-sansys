@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 11 de Maio de 2026
+> **Última Atualização:** 13 de Maio de 2026
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -42,8 +42,8 @@
 
 ### Família: Scroll e Virtualização
 
-- [ ] `DssVirtualScroll` — Lista virtualizada para grandes volumes de dados ⬜
-- [ ] `DssInfiniteScroll` — Carregamento progressivo por scroll ⬜
+- [x] ~~`DssVirtualScroll`~~ ✅ **SELADO** *(12 Mai 2026)*
+- [x] ~~`DssInfiniteScroll`~~ ✅ **SELADO** *(13 Mai 2026)*
 
 ### Família: Expansão e Colapso
 
@@ -59,8 +59,8 @@
 
 ### Família: Mídia e Visualização
 
-- [ ] `DssImg` — Imagem com lazy load, placeholder e aspect ratio ⬜
-- [ ] `DssVideo` — Embed de vídeo responsivo ⬜
+- [x] ~~`DssImg`~~ ✅ **SELADO** *(13 Mai 2026)*
+- [x] ~~`DssVideo`~~ ✅ **SELADO** *(13 Mai 2026)*
 - [ ] `DssParallax` — Efeito parallax em imagens de fundo ⬜
 
 ### Família: Progresso e Feedback
@@ -203,9 +203,9 @@
 | Nível | Total | Selados | % Concluído |
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
-| Fase 2 — Nível 1 | 38 | 18 | 47% |
+| Fase 2 — Nível 1 | 38 | 20 | 53% |
 | Fase 2 — Nível 2 | 16 | 9 | 56% |
 | Fase 2 — Nível 3 | 7 | 4 | 57% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **36** | **53%** |
+| **Fase 2 Total** | **68** | **38** | **56%** |
 | Fase 3 | 6 | N/A | — |

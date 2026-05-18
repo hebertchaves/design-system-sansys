@@ -1,0 +1,37 @@
+// =============================================================================
+// DssImg — LAYER 3: VARIANTS
+//
+// RESPONSABILIDADE: Variações visuais do DssImg.
+//
+// VARIANTES IMPLEMENTADAS:
+//   radius: controla o border-radius do container de imagem.
+//   QImg já aplica overflow:hidden — o border-radius clipa corretamente.
+//
+// NOTA: Variantes de densidade não aplicáveis.
+//   DssImg é um elemento de mídia; sua densidade é determinada pelo
+//   ratio e pelos slots de conteúdo, não por padding interno.
+//
+// TOKENS:
+//   --dss-radius-sm, --dss-radius-md, --dss-radius-lg, --dss-radius-full
+//
+// =============================================================================
+
+// Radius — sm
+.dss-img--radius-sm {
+  border-radius: var(--dss-radius-sm);
+}
+
+// Radius — md
+.dss-img--radius-md {
+  border-radius: var(--dss-radius-md);
+}
+
+// Radius — lg
+.dss-img--radius-lg {
+  border-radius: var(--dss-radius-lg);
+}
+
+// Radius — full (circular / pílula)
+.dss-img--radius-full {
+  border-radius: var(--dss-radius-full);
+}

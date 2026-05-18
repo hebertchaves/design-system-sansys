@@ -1,70 +1,182 @@
 # Pré-prompt: DssImg
 
 ## 1. CLASSIFICAÇÃO E CONTEXTO
-- **Golden Reference:** DssBadge
-- **Golden Context:** Exibição de imagens com suporte a lazy loading, placeholders, fallback de erro e proporções (aspect ratio) controladas.
-- **Justificativa:** O `DssImg` encapsula o `q-img` do Quasar, garantindo que o carregamento de imagens siga as diretrizes de performance, acessibilidade (alt text obrigatório) e design (bordas arredondadas, proporções) do Design System, evitando o uso de tags `<img>` nativas sem tratamento de erro. O componente é essencial para garantir uma experiência visual consistente e robusta em toda a aplicação, lidando com os desafios comuns de carregamento de mídia na web.
+
+- **Fase:** 2
+- **Nível:** 1 — Independente (depende apenas de componentes da Fase 1)
+- **Família:** Mídia e Visualização
+- **Tipo:** Container de mídia não interativo
+- **Interativo:** Não (imagem não tem interatividade própria; interação é responsabilidade do elemento pai)
+
+### Golden Reference
+
+**DssBadge** — Golden Reference oficial para componentes não interativos do DSS.
+
+### Golden Context
+
+**DssInfiniteScroll** — baseline específico para auditoria. DssImg segue o mesmo padrão arquitetural: componente Quasar como root element (EXC-Gate-01), `inheritAttrs: false` com `v-bind="$attrs"` forwarded ao root, sem estados interativos, sem `defineEmits` inventados, `withDefaults` apenas para defaults não-triviais.
+
+**Diferença crítica DssInfiniteScroll → DssImg:** QImg expõe slots `#loading` e `#error` que DssImg governa. DssInfiniteScroll expõe API imperativa via `defineExpose`; DssImg não expõe API imperativa — emite apenas eventos passivos (`load`, `error`).
+
+### Justificativa de Fase 2
+
+DssImg é classificado como Fase 2 N1 por ser um wrapper de uma única base Quasar (`QImg`) com composição interna de componentes DSS (`DssSpinner`, `DssIcon`). A dependência de componentes Fase 1 para estados visuais (loading/error) o eleva da Fase 1 para Fase 2 N1.
+
+---
 
 ## 2. RISCOS ARQUITETURAIS E GATES
-- **Gate de Performance:** Imagens muito grandes podem impactar o LCP (Largest Contentful Paint). O componente deve suportar lazy loading por padrão e permitir configuração de `loading="eager"` apenas quando necessário, como em imagens acima da dobra (above the fold). O uso de formatos modernos como WebP e AVIF deve ser encorajado através da documentação.
-- **Gate de Acessibilidade:** O atributo `alt` deve ser obrigatório ou fortemente encorajado para imagens não-decorativas. A falta de um texto alternativo adequado prejudica usuários de leitores de tela e a indexação por motores de busca.
-- **Gate de Estabilidade:** Falhas no carregamento da imagem (erro 404, problemas de rede) não devem quebrar o layout. Um fallback visual (ícone ou cor de fundo) deve ser exibido de forma consistente, garantindo que a interface permaneça utilizável e esteticamente agradável mesmo em condições adversas.
-- **Gate de Responsividade:** O componente deve se adaptar fluidamente a diferentes tamanhos de tela, respeitando as proporções definidas e evitando distorções na imagem.
+
+### Calcanhar de Aquiles: `alt` vs `decorative` — WCAG 1.1.1
+
+O maior risco é o agente omitir o sistema dual `alt`/`decorative` ou implementá-lo incorretamente.
+
+**Anti-pattern:**
+```vue
+<!-- ❌ alt hardcoded vazio sem decorative -->
+<q-img :alt="''" />
+
+<!-- ❌ alt opcional sem aviso em dev mode -->
+<q-img :alt="props.alt" />
+```
+
+**Padrão correto:**
+```typescript
+// ✅ Sistema dual com computed + dev warning
+const computedAlt = computed<string>(() => {
+  if (props.decorative === true) return ''
+  if (props.alt !== undefined) return props.alt
+  if (import.meta.env?.DEV) {
+    console.warn('[DssImg] O prop `alt` é obrigatório para imagens não-decorativas (WCAG 1.1.1).')
+  }
+  return ''
+})
+```
+
+### Risco secundário: QImg como root element (EXC-Gate-01)
+
+QImg DEVE ser o root element direto — sem div wrapper intermediário. O QImg renderiza como `<div>` com `overflow:hidden !important` (classe Quasar interna). Esse `overflow:hidden` é o que garante o clip correto do `border-radius` aplicado pelas variantes. Adicionar um wrapper div quebraria o clip.
+
+**Anti-pattern:**
+```vue
+<!-- ❌ Wrapper div extra — quebra overflow:hidden e aspect ratio trick -->
+<div :class="rootClasses">
+  <q-img v-bind="$attrs" ... />
+</div>
+```
+
+**Padrão correto:**
+```vue
+<!-- ✅ QImg como root element direto -->
+<q-img v-bind="$attrs" :class="rootClasses" ... />
+```
+
+---
 
 ## 3. MAPEAMENTO DE API (QUASAR → DSS)
-- `src` -> `src` (String, obrigatório): A URL da imagem a ser carregada.
-- `alt` -> `alt` (String, obrigatório para acessibilidade): Texto alternativo que descreve a imagem.
-- `ratio` -> `ratio` (Number/String, mapeado para proporções padrão do DSS, ex: 1, 4/3, 16/9, 21/9): Define a proporção da imagem, garantindo que o espaço seja reservado antes do carregamento completo, evitando layout shifts.
-- `fit` -> `fit` (String, default: 'cover' - aceita 'contain', 'fill', 'none', 'scale-down'): Define como a imagem deve se ajustar ao container.
-- `loading` -> `loading` (String, default: 'lazy'): Controla o comportamento de carregamento da imagem. 'lazy' adia o carregamento até que a imagem esteja próxima de entrar na viewport.
-- `spinner-color` -> Omitido (O DSS define o spinner padrão internamente usando tokens de cor, garantindo consistência visual).
-- `error-src` -> `fallbackSrc` (String, imagem de fallback em caso de erro): Permite especificar uma imagem alternativa caso a principal falhe.
-- `position` -> `position` (String, default: '50% 50%'): Define o alinhamento da imagem dentro do container quando `fit` é 'cover' ou 'contain'.
+
+### Props Expostas
+
+| Prop QImg | Prop DSS | Tipo | Default | Observações |
+|-----------|----------|------|---------|-------------|
+| `src` | `src` | `String` | `undefined` | URL da imagem |
+| `alt` | `alt` | `String` | `undefined` | Obrigatório para não-decorativas (WCAG 1.1.1) |
+| — | `decorative` | `Boolean` | `false` | Extensão DSS: define `alt=""` automaticamente |
+| `ratio` | `ratio` | `Number \| String` | `undefined` | Aspect ratio. Sem default — consumer deve prover |
+| `fit` | `fit` | `'cover'\|'contain'\|'fill'\|'none'\|'scale-down'` | `'cover'` | Default não-trivial |
+| `loading` | `loading` | `'lazy'\|'eager'` | `'lazy'` | Default não-trivial |
+| `error-src` | `fallbackSrc` | `String` | `undefined` | Imagem exibida quando `src` falha |
+| `placeholder-src` | `placeholderSrc` | `String` | `undefined` | LQIP — imagem de baixa qualidade enquanto carrega |
+| `position` | `position` | `String` | `undefined` | Equivalente a background-position |
+| `no-transition` | `noTransition` | `Boolean` | `false` | Desativa fade-in ao carregar |
+| — | `radius` | `'none'\|'sm'\|'md'\|'lg'\|'full'` | `undefined` | Extensão DSS: border-radius via tokens |
+
+### Props Bloqueadas (não expor)
+
+| Prop QImg | Motivo do bloqueio |
+|-----------|--------------------|
+| `spinner-color` | Gerenciado internamente via `DssSpinner` no slot `#loading` |
+| `spinner-size` | DSS usa `DssSpinner size="sm"` como padrão |
+| `no-spinner` | Irrelevante quando slot `#loading` é fornecido |
+
+### Props Avançadas via `$attrs`
+
+Props QImg não declaradas acima (`srcset`, `sizes`, `img-class`, `img-style`, `no-native-menu`, `fetchpriority`) fluem via `v-bind="$attrs"`.
+
+### Slots
+
+| Slot DSS | Slot QImg | Default DSS |
+|----------|-----------|-------------|
+| `default` | `default` | — (overlay sobre a imagem) |
+| `loading` | `#loading` | `DssSpinner size="sm"` com `aria-hidden="true"` |
+| `error` | `#error` | `DssIcon name="broken_image"` com `aria-hidden="true"` |
+
+### Events
+
+| Evento QImg | Evento DSS | Quando |
+|-------------|------------|--------|
+| `@load` | `@load` | Imagem carregada com sucesso |
+| `@error` | `@error` | Carregamento falhou (após tentativas de `src` e `fallbackSrc`) |
+
+---
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
-- **Raio de Borda:** Utilizar `--dss-radius-sm`, `--dss-radius-md`, `--dss-radius-lg`, `--dss-radius-full` para cantos arredondados, dependendo do contexto de uso (ex: avatares usam `full`, thumbnails usam `md`).
-- **Superfície (Placeholder/Fallback):** Utilizar `--dss-surface-default` ou `--dss-surface-disabled` para o fundo enquanto a imagem carrega ou em caso de erro.
-- **Cores de Marca:** Em casos específicos onde a imagem precisa interagir com as cores da marca, utilizar `--dss-action-hub`, `--dss-action-water`, `--dss-action-waste` e suas respectivas superfícies como `--dss-action-hub-surface`.
-- **Transições:** Utilizar `--dss-duration-250` para o fade-in da imagem após o carregamento, proporcionando uma experiência visual suave.
-- **Espaçamento:** Não aplicar margens internas (`padding`), o componente deve respeitar o container. Se necessário, usar `--dss-spacing-4` etc. no container pai.
-- **Foco:** Se a imagem for interativa (ex: dentro de um botão ou link), o anel de foco deve ser gerenciado pelo elemento pai, ou usar `outline: 2px solid white` se estritamente necessário no próprio componente.
+
+### Tokens Utilizados
+
+| Token | Uso |
+|-------|-----|
+| `--dss-surface-disabled` | Fundo dos containers `__loading` e `__error` |
+| `--dss-text-subtle` | Cor do ícone de erro (sem brand) |
+| `--dss-radius-sm` | Variante `radius="sm"` |
+| `--dss-radius-md` | Variante `radius="md"` |
+| `--dss-radius-lg` | Variante `radius="lg"` |
+| `--dss-radius-full` | Variante `radius="full"` (circular) |
+| `--dss-action-hub` | Cor do ícone de erro em brand hub |
+| `--dss-action-water` | Cor do ícone de erro em brand water |
+| `--dss-action-waste` | Cor do ícone de erro em brand waste |
+
+### Tokens que NÃO existem no catálogo DSS (nunca usar)
+
+- `--dss-action-hub-surface` — **NÃO EXISTE**
+- `--dss-duration-250` para fade-in — **NÃO usar**: o fade-in é gerenciado internamente pelo `QImg`. Não é responsabilidade do DSS CSS sobrescrever animação interna do Quasar.
+
+### `_brands.scss`
+
+Seletor descendant obrigatório: `[data-brand="hub"] .dss-img { .dss-img__error { color: var(--dss-action-hub); } }`. Compila para `[data-brand="hub"] .dss-img .dss-img__error`. Padrão DSS correto.
+
+### `_states.scss`
+
+- `forced-color-adjust: proibido no DSS`
+- `prefers-contrast: more` → `color: currentColor` no `__error`
+- `forced-colors: active` → `color: CanvasText` e `background-color: Canvas` (SystemColor keywords)
+- `print` → `__loading { display: none }` (estado de loading sem significado em papel)
+
+---
 
 ## 5. ACESSIBILIDADE E ESTADOS
-- **Estados:**
-  - *Loading:* Exibe um skeleton ou spinner com cor de superfície neutra. O espaço da imagem deve ser reservado para evitar Cumulative Layout Shift (CLS).
-  - *Loaded:* Imagem exibida com transição suave (fade-in). O placeholder é removido.
-  - *Error:* Exibe um ícone de erro ou imagem de fallback com `--dss-surface-disabled`. O usuário deve ser visualmente informado de que a imagem não pôde ser carregada.
-- **Acessibilidade:**
-  - O atributo `alt` deve descrever o conteúdo da imagem de forma concisa e clara.
-  - Se a imagem for puramente decorativa, `alt=""` deve ser explicitamente passado (ou o componente deve tratar `decorative: true`), instruindo os leitores de tela a ignorá-la.
-  - Ocultar placeholders e spinners de leitores de tela (`aria-hidden="true"`) para evitar ruído desnecessário durante a navegação.
 
-## 6. DEPENDÊNCIAS E COMPOSIÇÃO
-- **Quasar:** `QImg` (núcleo do componente), `QIcon` (para fallback de erro), `QSpinner` (para loading).
-- **DSS:** Pode utilizar `DssIcon` internamente para o estado de erro, caso o DSS possua um componente de ícone padronizado. O uso de componentes internos do DSS garante que as atualizações de design sejam propagadas automaticamente.
+### Estados Aplicáveis
 
-## 7. EXCEÇÕES PREVISTAS
-- **Imagens SVG Inline:** O `DssImg` não é otimizado para SVGs inline complexos que precisam de manipulação de CSS (para isso, usar `DssIcon` ou similar). É focado em imagens raster (JPG, PNG, WebP) ou SVGs externos via `src`.
-- **Imagens de Fundo:** Não deve ser usado como substituto para `background-image` em containers complexos, embora o `fit="cover"` cubra a maioria dos casos de uso simples. Para layouts muito complexos, o CSS nativo pode ser mais apropriado.
-- **Imagens de Alta Frequência:** Em cenários onde dezenas de imagens pequenas são renderizadas simultaneamente (ex: uma grade densa de avatares), o overhead do componente pode ser notável. Nesses casos, uma abordagem mais leve pode ser necessária, embora o `DssImg` deva ser a escolha padrão.
+| Estado | Implementado | Motivo |
+|--------|-------------|--------|
+| `default` | ✅ | Imagem carregada e exibida |
+| `loading` | ✅ | `DssSpinner` via slot `#loading`; QImg gerencia visibilidade |
+| `error` | ✅ | `DssIcon name="broken_image"` via slot `#error`; QImg exibe após falha de src e fallbackSrc |
+| `hover` | ❌ N/A | Container não interativo — responsabilidade do elemento pai (link, botão) |
+| `focus` | ❌ N/A | Não interativo diretamente |
+| `active` | ❌ N/A | Container de mídia |
+| `disabled` | ❌ N/A | Sem semântica de disable para elementos de mídia |
 
-## 8. SUPERFÍCIE DE PLAYGROUND
-- **Controles Obrigatórios:**
-  - `src` (Input de texto para URL da imagem)
-  - `alt` (Input de texto)
-  - `ratio` (Select: auto, 1, 4/3, 16/9, 21/9)
-  - `fit` (Select: cover, contain, fill, none)
-  - `radius` (Select: none, sm, md, lg, full)
-  - `loading` (Select: lazy, eager)
-  - `fallbackSrc` (Input de texto para URL da imagem de fallback)
-- **Composite Logic:**
-  - Alternar entre uma URL válida e uma URL quebrada para testar o estado de erro e o fallback visual.
-  - Testar diferentes proporções (`ratio`) em um container com largura fixa para verificar se o espaço é reservado corretamente antes do carregamento.
-  - Simular uma conexão lenta (throttling no navegador) para observar o estado de loading e a transição de fade-in.
-- **Estados a Expor:**
+### Touch Target
 
-| Estado | Descrição | Tipo | Trigger |
-|--------|-----------|------|----------|
-| Carregando (Loading) | O componente está aguardando o carregamento da imagem. Exibe um placeholder ou spinner, reservando o espaço necessário. | Funcional | Prop `loading=true` |
-| Carregado com sucesso (Loaded) | A imagem foi carregada e exibida com sucesso, com uma transição suave. | Funcional | Operação concluída |
-| Erro no carregamento (Error Fallback) | Ocorreu um erro ao carregar a imagem. Um fallback visual (ícone ou imagem alternativa) é exibido para manter a integridade do layout. | Funcional | Prop `error=true` ou validação |
+N/A — componente não interativo. `::before` não deve ser implementado (reservado para touch target — WCAG 2.5.5).
+
+### WCAG
+
+- **WCAG 1.1.1 (Nível A) — Texto Alternativo**: `alt` obrigatório para não-decorativas. Dev warning se ausente sem `decorative=true`.
+- **WCAG 1.1.1 — Imagens Decorativas**: `decorative=true` define `alt=""` automaticamente.
+- **ARIA loading/error**: `aria-hidden="true"` nos containers `__loading` e `__error` — decorativos; feedback acessível é o `alt` text.
+
+### Exceção Estrutural (EXC-Gate-01)
+
+QImg deve ser o root element direto. `$attrs` forwarded via `v-bind="$attrs"` no QImg. Justificativa: QImg aplica `overflow:hidden !important` internamente — necessário para clip de `border-radius` e aspect ratio padding trick.

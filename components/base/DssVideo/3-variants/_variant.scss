@@ -1,0 +1,6 @@
+// Layer 3 — Variants: border-radius via tokens DSS
+
+.dss-video--radius-sm  { border-radius: var(--dss-radius-sm); }
+.dss-video--radius-md  { border-radius: var(--dss-radius-md); }
+.dss-video--radius-lg  { border-radius: var(--dss-radius-lg); }
+.dss-video--radius-full { border-radius: var(--dss-radius-full); }
