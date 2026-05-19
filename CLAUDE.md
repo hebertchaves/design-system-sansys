@@ -324,9 +324,10 @@ O componente so e considerado valido — e elegivel para auditoria e selo — se
 ### Gate Documental (Bloqueante para selo)
 - [ ] Tokens listados com nomes exatos
 - [ ] README completo (quick start, modos, exemplos)
-- [ ] Documentacao normativa (DssNomeComponente.md) com Template 13.1
+- [ ] Documentação normativa (DssNomeComponente.md) com Template 13.1
 - [ ] API Reference (DSSNOMECOMPONENTE_API.md) atualizada
 - [ ] Exemplo funcional (DssNomeComponente.example.vue, min. 3 cenarios)
+- [ ] **Arquivo de testes** (DssNomeComponente.test.js) existe com cobertura mínima: renderização base, props, eventos e slots
 
 > **Nenhum componente pode receber selo DSS v2.2 sem passar por este gate.**
 > Auditorias devem verificar este checklist ANTES de iniciar analise detalhada.

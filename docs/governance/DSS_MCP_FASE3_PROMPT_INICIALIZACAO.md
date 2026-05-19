@@ -33,11 +33,13 @@ Para cada novo componente, siga estritamente esta ordem:
 2. **Scaffold:** Use `generate_component_scaffold` para obter o boilerplate. Crie os arquivos físicos no repositório com o conteúdo retornado.
 3. **Implementação:** Adapte o boilerplate gerado para a lógica específica do componente Quasar, garantindo que a API original seja exposta e que os tokens DSS sejam aplicados.
 4. **Auditoria:** Rode `validate_component_code`. Se houver valores hardcoded, use as sugestões do MCP ou a tool `suggest_token_replacement` para corrigi-los.
-5. **Selagem:** Atualize o `dss.meta.json` para `"status": "sealed"` e marque o componente como concluído no `DSS_FASE2_TODO.md`.
+5. **Testes:** Crie o arquivo `DssNomeComponente.test.js` na raiz do diretório do componente com cobertura mínima: renderização base, todas as props expostas, todos os eventos emitidos e todos os slots disponíveis. A ausência deste arquivo é NC bloqueante que impede a selação.
+6. **Selagem:** Atualize o `dss.meta.json` para `"status": "sealed"` e marque o componente como concluído no `DSS_FASE2_TODO.md`.
 
 ### Regras de Ouro
 - **NUNCA** ignore um erro apontado pelo `validate_component_code`.
 - **NUNCA** crie a estrutura de pastas manualmente; use sempre o `generate_component_scaffold`.
+- **NUNCA** declare um componente como "PRONTO PARA AUDITORIA" sem o arquivo `.test.js` criado e com cobertura mínima.
 - **SEMPRE** consulte o chat estratégico (Manus) se houver dúvidas sobre tokens globais ou decisões arquiteturais que afetem múltiplos componentes.
 
 Confirme que entendeu as instruções, verifique se as ferramentas `mcp__dss__*` estão disponíveis na sua sessão (via comando `/mcp`), e aguarde o nome do primeiro componente que vamos desenvolver.

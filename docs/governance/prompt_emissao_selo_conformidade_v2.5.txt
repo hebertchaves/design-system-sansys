@@ -22,6 +22,7 @@ Antes de emitir o selo, confirme explicitamente:
 ✅ O código analisado corresponde ao estado final pós-correção
 ✅ A arquitetura DSS vigente é v2.2
 ✅ Não há pendências técnicas abertas que exijam novo ciclo de correção
+✅ O arquivo <Componente>.test.js existe e possui cobertura mínima
 
 🔒 Gate Estrutural DSS (OBRIGATÓRIO — CLAUDE.md)
 ✅ O componente PASSOU no Gate Estrutural DSS conforme CLAUDE.md (fonte de verdade)
@@ -87,6 +88,7 @@ Avaliar somente estes pilares:
 - Estados
 - Acessibilidade
 - Documentação
+- Testes
 Cada um deve terminar em PASS / CONFORME, sem score numérico.
 
 📌 Regra adicional para “Arquitetura” (sem criar seção nova):

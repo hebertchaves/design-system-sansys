@@ -1,7 +1,7 @@
 Critérios de Avaliação e Qualidade — Fase 2 (DSS)
 
-Versão: 2.4.0
-Data: Março 2026
+Versão: 2.5.0
+Data: Maio 2026
 Status: Normativo
 
 Este documento define os critérios de qualidade exigidos para a criação de Pré-prompts e para a Avaliação de Componentes da Fase 2 do Design System Sansys (DSS). Ele materializa o conhecimento tácito desenvolvido durante o planejamento da Fase 2, garantindo que novos chats de execução mantenham o mesmo rigor arquitetural.
@@ -101,7 +101,18 @@ Exceções documentadas: Ver regime de exceções formais abaixo.
 •
 Regra 3 — Importação Correta: Componentes DSS internos devem ser importados via seus wrappers na raiz, nunca via 1-structure.
 
-2.2 Gate de Responsabilidade v2.4
+2.2 Gate de Testes (Obrigatório)
+
+•
+Regra 1 — Existência do Arquivo: Todo componente deve obrigatoriamente possuir um arquivo `DssNomeComponente.test.js` na raiz do seu diretório.
+
+•
+Regra 2 — Cobertura Mínima: O teste deve cobrir, no mínimo, a renderização base, as props expostas, os eventos emitidos e os slots disponíveis, refletindo os cenários do arquivo `.example.vue`.
+
+•
+Regra 3 — Bloqueio de Selo: A ausência do arquivo de testes ou cobertura insuficiente é considerada Não-Conformidade Bloqueante, impedindo a emissão do selo DSS.
+
+2.3 Gate de Responsabilidade v2.4
 
 Aplicação: Obrigatório para todos os componentes Fase 2.
 
@@ -135,7 +146,7 @@ Ausência dessa declaração é Gap documentável.
 
 3. Regime de Exceções Formais
 
-Quando uma das regras dos Gates v2.4 precisa ser violada por necessidade técnica legítima, a exceção deve ser:
+Quando uma das regras dos Gates v2.4 (ou v2.3) precisa ser violada por necessidade técnica legítima, a exceção deve ser:
 
 1.
 Registrada em dss.meta.json
@@ -170,11 +181,11 @@ A exceção deve ter registro de aprovação. Para fins deste framework, o regis
 Status
 Condição
 ✅ Elegível para Selo
-Zero NCs bloqueantes; Gates v2.4 conformes ou com exceções formais registradas; 5 eixos do pré-prompt cobertos
+Zero NCs bloqueantes; Gates v2.4 e Gate de Testes conformes ou com exceções formais registradas; 5 eixos do pré-prompt cobertos
 🟡 Condicional
 NCs não-bloqueantes pendentes; Gates v2.4 com tensão não registrada; pré-prompt cobrindo < 5 eixos
 🔴 Não Elegível
-Qualquer NC bloqueante sem exceção formal; Gate v2.4 violado sem documentação
+Qualquer NC bloqueante sem exceção formal (incluindo ausência de testes); Gate v2.4 violado sem documentação
 
 
 

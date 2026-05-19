@@ -192,6 +192,7 @@ Antes de finalizar:
 - index.js exporta wrapper
 - Documentação reconciliada
 - Golden comparado explicitamente
+- Arquivo <Componente>.test.js existe e cobre cenários do example.vue
 Se falhar: corrigir antes de finalizar.
 
 🧠 NOTA FINAL (NORMATIVA)
