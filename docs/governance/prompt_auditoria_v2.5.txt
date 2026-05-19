@@ -7,7 +7,7 @@ Você tem acesso ao servidor MCP do DSS (Fase 3).
 Antes de iniciar a auditoria manual, você DEVE:
 1. Rodar a tool `validate_component_code` passando o nome do componente.
 2. Usar o relatório retornado pelo MCP como fonte de verdade para o Gate de Tokens (valores hardcoded e sugestões de substituição).
-3. Focar sua análise humana nos 4 gates restantes (Estrutural, Composição, Responsabilidade e Documentação), que exigem julgamento contextual.
+3. Focar sua análise humana nos 5 gates restantes (Estrutural, Composição, Responsabilidade, Testes e Documentação), que exigem julgamento contextual.
 
 📚 DOCUMENTOS NORMATIVOS (VINCULANTES)
 Considere obrigatoriamente como fonte de verdade:
@@ -132,7 +132,14 @@ E. Documentação
 - Exceções claramente listadas
 - Nenhuma ambiguidade interpretativa
 
-F. Validação de Pré-prompt (Fase 2)
+F. Testes
+🔒 Gate de Testes (DSS_CRITERIOS_AVALIACAO_FASE2.md — v2.5.0)
+- Verificar se o arquivo `DssNomeComponente.test.js` existe na raiz do diretório do componente.
+- Verificar se o arquivo cobre os cenários mínimos: renderização base, props expostas, eventos emitidos e slots disponíveis.
+❌ Ausência do arquivo de testes deve ser classificada como NÃO-CONFORMIDADE BLOQUEANTE.
+⚠️ Cobertura insuficiente (ex: apenas renderização base sem props ou eventos) deve ser classificada como GAP não-bloqueante.
+
+G. Validação de Pré-prompt (Fase 2)
 Verifique se existe o arquivo `docs/governance/pre-prompts/pre_prompt_dss_[nome].md` e se ele cobriu os 5 eixos obrigatórios. Cada eixo ausente no pré-prompt que gerou uma não-conformidade no componente deve ser registrado como Gap para correção retroativa do pré-prompt.
 - Classificação e Contexto: Fase, Nível, Golden Context e justificativa de Fase 2 estão declarados?
 - Grande Risco Arquitetural: O "calcanhar de Aquiles" do componente foi identificado com anti-patterns e padrões corretos?

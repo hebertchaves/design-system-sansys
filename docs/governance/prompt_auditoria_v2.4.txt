@@ -126,7 +126,14 @@ E. Documentação
 - Exceções claramente listadas
 - Nenhuma ambiguidade interpretativa
 
-F. Validação de Pré-prompt (Fase 2 - NOVO v2.4)
+F. Testes (NOVO v2.5)
+🔒 Gate de Testes (DSS_CRITERIOS_AVALIACAO_FASE2.md — v2.5.0)
+- Verificar se o arquivo `DssNomeComponente.test.js` existe na raiz do diretório do componente.
+- Verificar se o arquivo cobre os cenários mínimos: renderização base, props expostas, eventos emitidos e slots disponíveis.
+❌ Ausência do arquivo de testes deve ser classificada como NÃO-CONFORMIDADE BLOQUEANTE.
+⚠️ Cobertura insuficiente (ex: apenas renderização base sem props ou eventos) deve ser classificada como GAP não-bloqueante.
+
+G. Validação de Pré-prompt (Fase 2 - NOVO v2.4)
 Verifique se existe o arquivo `docs/governance/pre-prompts/pre_prompt_dss_[nome].md` e se ele cobriu os 5 eixos obrigatórios. Cada eixo ausente no pré-prompt que gerou uma não-conformidade no componente deve ser registrado como Gap para correção retroativa do pré-prompt.
 - Classificação e Contexto: Fase, Nível, Golden Context e justificativa de Fase 2 estão declarados?
 - Grande Risco Arquitetural: O "calcanhar de Aquiles" do componente foi identificado com anti-patterns e padrões corretos?
