@@ -1,0 +1,73 @@
+// Layer 2 — Base composition
+// Apenas tokens genéricos DSS. Sem valores hardcoded. Sem cores no SCSS.
+//
+// EXC-Gate-01: QScrollArea é o root element (sem div wrapper adicional).
+//   A classe .dss-scroll-area é adicionada diretamente ao q-scrollarea via
+//   class binding no template. $attrs forwarded via v-bind=$attrs.
+//
+// EXC-Gate-02: Seletores .q-scrollarea__bar e .q-scrollarea__thumb são
+//   elementos internos do Quasar sem hooks de CSS custom property.
+//   Estilizados via descendant selectors CSS global (sem :deep()). Necessário
+//   para aplicar tokens DSS às barras de rolagem customizadas.
+//   Documentado em dss.meta.json > gateExceptions.
+
+.dss-scroll-area {
+  // Scroll area é um container: dimensões definidas pelo consumidor via class/style.
+  // O DSS não impõe width/height — a área se adapta ao contexto de uso.
+
+  // ─── Scrollbar Track (via .q-scrollarea__bar) ──────────────────────────────
+  //
+  // EXC-Gate-02 (ativo): .q-scrollarea__bar é o container da track da scrollbar
+  // (área clicável completa). Recebe background transparente e transição para
+  // suavizar a ocultação automática gerenciada pelo Quasar.
+
+  .q-scrollarea__bar {
+    background: transparent;
+    transition: opacity var(--dss-duration-250) var(--dss-easing-ease-out);
+    border-radius: var(--dss-radius-full);
+
+    &--v {
+      width: var(--dss-spacing-2); // 8px — largura da track vertical
+      right: 0;
+    }
+
+    &--h {
+      height: var(--dss-spacing-2); // 8px — altura da track horizontal
+      bottom: 0;
+    }
+  }
+
+  // ─── Scrollbar Thumb (via .q-scrollarea__thumb) ────────────────────────────
+  //
+  // EXC-Gate-02 (ativo): .q-scrollarea__thumb é o indicador arrastável.
+  // Cor base usa --dss-gray-400 (#d4d4d4) — suficientemente visível sobre
+  // fundos claros sem competir com o conteúdo.
+  // Hover usa --dss-gray-500 (#a3a3a3) — uma etapa mais escura na escala.
+
+  .q-scrollarea__thumb {
+    background: var(--dss-gray-400);
+    border-radius: var(--dss-radius-full);
+    transition:
+      background-color var(--dss-duration-250) var(--dss-easing-ease-out),
+      opacity var(--dss-duration-250) var(--dss-easing-ease-out);
+
+    &:hover {
+      background: var(--dss-gray-500);
+    }
+
+    &--v {
+      width: 100%;
+    }
+
+    &--h {
+      height: 100%;
+    }
+  }
+
+  // ─── Focus dentro da scroll area ──────────────────────────────────────────
+  //
+  // O próprio container não recebe foco — os elementos filhos gerenciam foco.
+  // Nenhum focus-visible no root: ele é um container de conteúdo.
+  // Elementos filhos interativos devem implementar focus-visible individualmente.
+  // Isso está alinhado com o comportamento de DssVirtualScroll (Golden Context).
+}
