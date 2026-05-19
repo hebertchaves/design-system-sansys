@@ -1,0 +1,68 @@
+// =============================================================================
+// DssRating — LAYER 2: COMPOSITION — Base
+//
+// EXC-Gate-01: QRating como root element (sem wrapper div).
+// QRating gerencia: ARIA role=slider, navegação por teclado, click e touch.
+//
+// EX-Color-01: Cores dos ícones via CSS cascade (sem prop Quasar `color`).
+// QRating não recebe color/color-selected/color-half → sem classe text-* no DOM
+// → CSS controla diretamente .q-rating__icon e .q-rating__icon--active.
+// Precedente: diferente de DssKnob (EXC-Gate-02 com valor fixo) — aqui não há
+// dependência de presença de classe para renderização do elemento.
+// =============================================================================
+
+.dss-rating {
+  -webkit-tap-highlight-color: transparent;
+
+  // ── EX-Color-01: Ícones não-selecionados (estado base/vazio) ─────────────
+  .q-rating__icon {
+    color: var(--dss-surface-muted);
+    transition: color var(--dss-duration-150) var(--dss-easing-standard),
+                filter var(--dss-duration-150) var(--dss-easing-standard);
+  }
+
+  // ── Ícones selecionados/preenchidos ──────────────────────────────────────
+  // CSS cascade: mesma especificidade que .q-rating__icon, declarado após → vence
+  .q-rating__icon--active {
+    color: var(--dss-action-primary);
+  }
+
+  // ── Ícone de meia avaliação (icon-half) ───────────────────────────────────
+  .q-rating__icon--half {
+    color: var(--dss-action-primary);
+  }
+
+  // ── Ícones sob hover durante interação ────────────────────────────────────
+  // EX-Structural-01: brightness(0.95) — valor canônico DssChip (Golden Reference)
+  &.q-rating--editable .q-rating__icon--hovered {
+    color: var(--dss-action-primary);
+    filter: brightness(0.95);
+  }
+
+  // ── Focus — padrão DssChip (Golden Reference) ─────────────────────────────
+  // QRating não usa ::before para foco (diferente de QKnob). Sem conflito de pseudo-elemento.
+  &.q-rating--editable:focus-visible {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--dss-radius-sm);
+  }
+
+  // ── Active press ──────────────────────────────────────────────────────────
+  // EX-Structural-01: brightness(0.90) canônico durante pressão
+  &.q-rating--editable:active .q-rating__icon--hovered {
+    filter: brightness(0.90);
+  }
+
+  // ── Disabled ──────────────────────────────────────────────────────────────
+  // QRating adiciona aria-disabled="true" no role=slider quando disable=true
+  &[aria-disabled="true"] {
+    opacity: var(--dss-opacity-disabled);
+  }
+
+  // ── Readonly ──────────────────────────────────────────────────────────────
+  // QRating remove .q-rating--editable quando readonly ou disable.
+  // Sem alteração de opacidade — readonly ≠ disabled semanticamente.
+  &:not(.q-rating--editable) {
+    cursor: default;
+  }
+}

@@ -2,26 +2,50 @@
 
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
-*   **Golden Reference**: DssChip
-*   **Golden Context**: O DssRating é um componente interativo utilizado para permitir que usuários avaliem itens ou forneçam feedback através de uma escala visual (e.g., estrelas, corações). Ele deve ser intuitivo, responsivo e acessível, seguindo os padrões de interação estabelecidos por componentes interativos como o DssChip.
+*   **Fase**: 2 — Nível 1 (Independente — sem dependências internas DSS)
+*   **Família**: Inputs Especializados
+*   **Golden Reference**: DssChip (controle interativo compacto — baseline global de categoria)
+*   **Golden Context**: DssKnob (controle de valor numérico interativo, QKnob como root element, brand via dual-selector, tokens idênticos hub-600/water-500/waste-600)
+*   **Quasar Base**: `QRating`
 *   **Justificativa**: Padronizar a exibição e interação de sistemas de avaliação, garantindo consistência visual e funcional em toda a aplicação, além de facilitar a coleta de feedback do usuário de forma padronizada.
 *   **Impacto no Sistema**: A padronização deste componente reduzirá a carga cognitiva do usuário ao fornecer uma interface familiar para avaliações em diferentes módulos do sistema.
 *   **Diretrizes de Uso**: Deve ser utilizado sempre que houver necessidade de quantificar a satisfação ou qualidade de um item de forma visual e rápida.
 
 ## 2. RISCOS ARQUITETURAIS E GATES
 
-*   **Riscos**:
-    *   **Performance**: Renderização de múltiplos componentes DssRating em listas extensas pode impactar a performance, especialmente se houver animações complexas ou re-renderizações desnecessárias.
-    *   **Customização excessiva**: Dificuldade em controlar a customização de ícones e cores, levando a inconsistências visuais e quebra da identidade visual da marca.
-    *   **Sincronização de estado**: Problemas na sincronização do estado de avaliação entre o componente e o modelo de dados da aplicação, resultando em dados inconsistentes.
-    *   **Acessibilidade**: Falha em fornecer feedback visual e textual adequado para leitores de tela e navegação por teclado, excluindo usuários com deficiências.
-    *   **Responsividade**: Comportamento inadequado em telas menores, onde os ícones podem ficar muito próximos ou difíceis de tocar.
-*   **Gates**:
-    *   Definição clara de propriedades para customização (tamanho, cor, ícone) restritas aos tokens do design system.
-    *   Implementação de mecanismos de debounce ou throttle para eventos de alteração de valor em cenários de alta frequência.
-    *   Testes de performance com 100+ instâncias do componente na mesma tela para garantir fluidez.
-    *   Auditoria de acessibilidade (WCAG 2.1 AA) para garantir navegação por teclado e compatibilidade com leitores de tela.
-    *   Testes de usabilidade em dispositivos móveis para validar a área de toque dos ícones.
+### Grande Risco Arquitetural: Governança de Cores via CSS (EX-Color-01)
+
+O risco central do DssRating é a tentação de passar as props `color`, `color-selected` e `color-half` do QRating ao DSS. **Isso é incorreto** — diferente do DssKnob (que usa EXC-Gate-02 porque o SVG precisa de valores fixos no DOM), o QRating **não adiciona classe `text-*` quando `color=undefined`**, portanto o CSS DSS controla ícones diretamente via cascade sem necessidade de props.
+
+❌ **INCORRETO** — Passar prop `color` ao QRating:
+```vue
+<!-- NUNCA fazer: DSS perderia governança; consumer poderia sobrescrever -->
+<QRating :color="brandColor" color-selected="primary" />
+```
+
+✅ **CORRETO** — Governança 100% via CSS cascade (sem EXC-Gate-02):
+```vue
+<!-- QRating sem prop color → nenhuma classe text-* adicionada → CSS DSS controla via cascade -->
+<QRating v-bind="$attrs" :class="rootClasses" ... />
+```
+```scss
+// CSS controla: não-selecionados = --dss-surface-muted, selecionados = --dss-action-primary
+.dss-rating .q-rating__icon { color: var(--dss-surface-muted); }
+.dss-rating .q-rating__icon--active { color: var(--dss-action-primary); }
+```
+
+**Precedente**: DssCircularProgress (prop `color` não passada — governança 100% CSS DSS).
+
+### Gate: EXC-Gate-01 — QRating como root element
+
+QRating gerencia internamente: navegação por teclado (ArrowLeft/Right, Home/End), drag por touch e mouse, ARIA (`role=slider`, `aria-valuemin/max/now`), e renderização de ícones via QIcon. Wrapper div seria redundante e quebraria acessibilidade.
+
+**Precedente**: DssKnob (EXC-Gate-01), DssAjaxBar (EXC-Gate-01), DssInfiniteScroll (EXC-Gate-01).
+
+### Outros Riscos
+
+*   **Customização de ícones**: Consumer pode passar `icon`, `icon-selected`, `icon-half` — forwarded via `$attrs`. DSS não restringe o ícone usado, apenas a cor.
+*   **Touch target**: QRating não tem mecanismo de touch target próprio. Consumer deve usar prop `size` para garantir WCAG 2.5.5 (≥ 44px). Documentado em `compositionRecommendations`.
 
 ## 3. MAPEAMENTO DE API (QUASAR → DSS)
 
@@ -46,40 +70,54 @@ O DssRating será construído com base no componente `QRating` do Quasar, adapta
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
-O DssRating utilizará exclusivamente tokens numéricos/padrão do DSS para espaçamento, raio, cor e duração.
+O DssRating utiliza exclusivamente tokens do catálogo DSS. Os tokens abaixo são os **12 tokens reais** usados na implementação — não usar outros.
 
-*   **Espaçamento**: `--dss-spacing-4` (para padding interno), `--dss-spacing-8` (para margens externas, se necessário).
-*   **Raio**: `--dss-radius-sm` (para ícones menores), `--dss-radius-md` (para ícones maiores ou contêiner).
-*   **Cores**: `--dss-action-hub`, `--dss-action-water`, `--dss-color-negative`, `--dss-color-surface-default` (para fundo), `--dss-color-on-surface` (para ícones).
-*   **Duração**: `--dss-duration-200` (para transições de hover ou clique).
-*   **Exemplo de uso de tokens**:
-    ```css
-    .dss-rating {
-        padding: var(--dss-spacing-4);
-        border-radius: var(--dss-radius-md);
-        color: var(--dss-action-hub);
-        transition: color var(--dss-duration-200) ease-in-out;
-    }
-    .dss-rating:focus-visible {
-        outline: 2px solid var(--dss-color-surface-default);
-    }
-    ```
-*   **Restrições**: Não é permitido o uso de cores hardcoded (e.g., `#FF0000`) ou valores de espaçamento arbitrários (e.g., `12px`). Todos os valores devem vir dos tokens do DSS.
+| Token DSS | Aplicação |
+|-----------|-----------|
+| `--dss-action-primary` | Cor dos ícones selecionados (neutro/sem brand) e ícone de meia avaliação |
+| `--dss-surface-muted` | Cor dos ícones não-selecionados |
+| `--dss-border-width-md` | Espessura do outline de foco (estado normal) |
+| `--dss-border-width-thick` | Espessura do outline de foco (prefers-contrast: more) |
+| `--dss-focus-ring` | Cor do outline de foco (neutro/sem brand) |
+| `--dss-opacity-disabled` | Opacidade no estado disabled (0.4) |
+| `--dss-radius-sm` | border-radius do outline de foco |
+| `--dss-duration-150` | Duração da transição de cor e filter |
+| `--dss-easing-standard` | Easing da transição |
+| `--dss-hub-600` | Ícones selecionados + foco (brand hub) |
+| `--dss-water-500` | Ícones selecionados + foco (brand water) |
+| `--dss-waste-600` | Ícones selecionados + foco (brand waste) |
+
+**Tokens NÃO existentes (nunca usar)**: `--dss-action-hub`, `--dss-action-water`, `--dss-color-negative`, `--dss-color-surface-default`, `--dss-color-on-surface`, `--dss-spacing-4`, `--dss-duration-200`.
+
+**Restrições**: Nenhum valor hardcoded (`#hex`, `px` arbitrário, `0.95` sem precedente canônico). Valores de `brightness()` permitidos: 0.85, 0.90, 0.92, 0.95 (CLAUDE.md Princípio 8).
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
-*   **Acessibilidade**:
-    *   **ARIA**: Utilizar `role="slider"`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, `aria-label` para descrever o estado e a função do componente para leitores de tela.
-    *   **Navegação por teclado**: Suporte para `Tab` para focar e `ArrowLeft`/`ArrowRight` para ajustar o valor.
-    *   **Feedback visual**: Estados de foco (`:focus-visible`) e hover (`:hover`) devem ser claramente visíveis.
-    *   **Contraste**: Garantir que as cores dos ícones em todos os estados (padrão, hover, selecionado, desabilitado) atendam aos requisitos de contraste da WCAG 2.1 AA.
-*   **Estados**:
-    *   **Padrão**: Componente com valor inicial e interativo.
-    *   **Hover**: Ícones reagem visualmente ao passar o mouse (e.g., mudança de cor ou leve aumento de tamanho).
-    *   **Foco**: Contorno visível ao focar via teclado (utilizando `outline: 2px solid var(--dss-color-surface-default)`).
-    *   **Selecionado**: Ícones preenchidos ou com cor diferente para indicar o valor atual.
-    *   **Desabilitado**: Componente não interativo, com estilo visual que indique inatividade (e.g., opacidade reduzida para 50% e cursor `not-allowed`).
-    *   **Somente Leitura**: Componente exibe o valor, mas não permite interação, sem estilo de desabilitado (cursor `default`).
+### Touch Target
+
+**Opção B — Delegado ao consumer via prop `size`**. O QRating não possui mecanismo de touch target próprio que o DSS possa interceptar via `::before`. O DSS documenta em `compositionRecommendations` que o consumer deve usar `size="44px"` ou maior em contextos touch para atender WCAG 2.5.5 (Touch Target Size). Sem `::before` DSS necessário.
+
+### ARIA e Navegação por Teclado
+
+*   **ARIA**: QRating gerencia internamente `role="slider"`, `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, `aria-disabled`. Consumer deve fornecer `aria-label` ou `aria-labelledby` via `$attrs`.
+*   **Navegação por teclado**: QRating gerencia internamente ArrowLeft/Right, Home/End, drag por touch e mouse.
+*   **Foco**: `outline: var(--dss-border-width-md) solid var(--dss-focus-ring)` em `:focus-visible` (apenas em `.q-rating--editable`). `border-radius: var(--dss-radius-sm)`.
+
+### Estados Aplicáveis
+
+| Estado | Mecanismo | Token |
+|--------|-----------|-------|
+| hover | `filter: brightness(0.95)` em `.q-rating__icon--hovered` (apenas editable) | `--dss-duration-150`, `--dss-easing-standard` |
+| focus | `outline` em `:focus-visible` (apenas editable) | `--dss-border-width-md`, `--dss-focus-ring`, `--dss-radius-sm` |
+| active | `filter: brightness(0.90)` durante pressão | — |
+| disabled | `opacity: var(--dss-opacity-disabled)` via `[aria-disabled="true"]` | `--dss-opacity-disabled` |
+| readonly | `cursor: default` — QRating remove `.q-rating--editable` | — |
+
+### Media Queries de Acessibilidade
+
+*   **`prefers-reduced-motion: reduce`** (EX-States-01): `transition/animation: none !important` no root e em `.q-rating__icon` — QRating anima mudança de ícone no hover via transition, suprimido para WCAG 2.3.3.
+*   **`forced-colors: active`** (EX-States-02): `ButtonText` para ícones não-selecionados, `Highlight` para selecionados/hovered. WCAG 1.4.11.
+*   **`prefers-contrast: more`** (EX-States-03): `outline-width: var(--dss-border-width-thick)` no foco.
 
 ## 6. DEPENDÊNCIAS E COMPOSIÇÃO
 

@@ -1,0 +1,103 @@
+{
+  "name": "DssRating",
+  "version": "2.2",
+  "phase": 2,
+  "level": 1,
+  "family": "Inputs Especializados",
+  "category": "Controle de avaliação por ícones (estrelas ou customizados)",
+  "status": "sealed",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssKnob",
+  "quasarBase": "QRating",
+  "internalDependencies": [],
+  "auditCycles": 1,
+  "tokensUsed": [
+    "--dss-action-primary",
+    "--dss-surface-muted",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-focus-ring",
+    "--dss-opacity-disabled",
+    "--dss-radius-sm",
+    "--dss-duration-150",
+    "--dss-easing-standard",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "color",
+      "reason": "Cor dos ícones não-selecionados governada via CSS (color: var(--dss-surface-muted)). QRating não recebe prop color → sem classe text-* → CSS DSS controla diretamente via cascade order. Consumer não consegue sobrescrever via prop (bloqueada). Substituído por prop brand DSS ('hub' | 'water' | 'waste') para ícones selecionados."
+    },
+    {
+      "quasarProp": "color-selected",
+      "reason": "Cor dos ícones selecionados governada via CSS (color: var(--dss-action-primary)). Controlada por brand prop e tokens DSS. Consumer não consegue sobrescrever via prop (bloqueada)."
+    },
+    {
+      "quasarProp": "color-half",
+      "reason": "Cor do ícone de meia-avaliação governada via CSS (color: var(--dss-action-primary)). Controlada pelo mesmo token dos ícones selecionados. Consumer não consegue sobrescrever via prop (bloqueada)."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "description": "QRating como root element — sem wrapper div. QRating gerencia internamente: navegação por teclado (ArrowLeft/Right, Home/End), drag por touch e mouse, ARIA (role=slider, aria-valuemin/max/now), e renderização de ícones via QIcon. Padrão DssKnob/DssInfiniteScroll/DssAjaxBar (root Quasar).",
+      "precedent": "DssKnob (EXC-Gate-01), DssAjaxBar (EXC-Gate-01), DssInfiniteScroll (EXC-Gate-01)"
+    },
+    {
+      "id": "EX-Color-01",
+      "description": "Cores dos ícones controladas 100% via CSS cascade, sem props Quasar (diferente de DssKnob que usa EXC-Gate-02 com valores fixos). QRating não adiciona classe text-* quando color=undefined → CSS .q-rating__icon e .q-rating__icon--active (cascade order, mesma especificidade, --active declarado após) controlam cores sem !important. Não requer EXC-Gate-02.",
+      "precedent": "DssCircularProgress (prop color não passada — governança 100% CSS)"
+    },
+    {
+      "id": "EX-Structural-01",
+      "description": "Hover/active: filter:brightness(0.95/0.90) aplicados em .q-rating__icon--hovered. Valores canônicos DSS (CLAUDE.md Princípio 8): 0.95 para hover e 0.90 para active. Consistente com DssChip (Golden Reference) e DssKnob (Golden Context).",
+      "precedent": "DssChip (hover brightness 0.95, active brightness 0.90), DssKnob (EX-Structural-01)"
+    },
+    {
+      "id": "EX-States-01",
+      "description": "prefers-reduced-motion: transition/animation suprimidos no root e em .q-rating__icon. O QRating anima a mudança de ícone durante hover via transition — suprimido para cumprir WCAG 2.3.3 (Animação sob Solicitação). Precedente: DssKnob (EX-States-01), DssLinearProgress (EX-States-01).",
+      "precedent": "DssKnob (EX-States-01), DssLinearProgress (EX-States-01)"
+    },
+    {
+      "id": "EX-States-02",
+      "description": "forced-colors: SystemColor keywords para ícones SVG (Highlight para selecionados, ButtonText para não-selecionados) e outline (Highlight). forced-color-adjust NÃO declarado — herança correta. WCAG 1.4.11 (Contraste Não-Textual — Nível AA).",
+      "precedent": "DssKnob (EX-States-02), DssCircularProgress (EX-States-03)"
+    },
+    {
+      "id": "EX-States-03",
+      "description": "prefers-contrast: more — outline-width: var(--dss-border-width-thick) no focus. Token canônico 3px. Sem stroke-width (DssRating usa ícones de fonte, não SVG direto). Necessário para garantir visibilidade do anel de foco em alto contraste.",
+      "precedent": "DssKnob (EX-States-03), DssBadge (prefers-contrast: more)"
+    }
+  ],
+  "statesApplicable": {
+    "hover": "filter: brightness(0.95) em .q-rating__icon--hovered (apenas quando .q-rating--editable); cor do ícone = --dss-action-primary/brand",
+    "focus": "outline: var(--dss-border-width-md) solid var(--dss-focus-ring) em :focus-visible; border-radius: var(--dss-radius-sm); apenas quando .q-rating--editable",
+    "active": "filter: brightness(0.90) em .q-rating__icon--hovered durante pressão",
+    "disabled": "opacity: var(--dss-opacity-disabled) = 0.4; QRating adiciona aria-disabled='true' e pointer-events:none via .no-pointer-events class"
+  },
+  "statesNotApplicable": {
+    "loading": "QRating é um controle síncrono — não tem estado de carregamento",
+    "error": "QRating não fornece mecanismo nativo de validação; estado de erro é responsabilidade do formulário pai (wrapper com aria-invalid, DssField, etc.)",
+    "readonly": "Gerenciado internamente pelo QRating via remoção de .q-rating--editable e pointer-events:none; cursor:default via DSS; sem alteração visual de opacidade — readonly ≠ disabled semanticamente",
+    "print": "Controle interativo de ícones — comportamento de impressão delegado ao browser; sem display:none (o valor pode ser relevante em documentos impressos)"
+  },
+  "compositionRecommendations": [
+    "Usar v-model para ligação bidirecional do valor numérico (0 a max).",
+    "Para formulários acessíveis, adicionar aria-label ou aria-labelledby — forwarded via $attrs ao QRating.",
+    "Garantir size >= '44px' por ícone para conformidade WCAG 2.5.5. O default do QRating (~24px) PODE não atender; usar size='44px' em contextos touch.",
+    "Combinar com DssTooltip para exibir o significado de cada nível de avaliação (ex: '1 = Péssimo', '5 = Excelente').",
+    "Para uso em modo somente leitura (exibição de avaliações existentes), usar readonly ao invés de disable para manter semântica correta.",
+    "icon-half requer que modelValue seja numérico com decimal (ex: 3.5) para exibir ícone de meia avaliação.",
+    "noReset=true é recomendado em formulários onde uma avaliação sempre é obrigatória (impede reset ao 0 por click)."
+  ],
+  "gateExceptions": {
+    "templateStructure": "QRating como root element — gerencia internamente ARIA slider, interação touch/click/teclado, e renderização de QIcon. Wrapper div seria redundante. (EXC-Gate-01)"
+  },
+  "defaultPreview": {
+    "modelValue": 3,
+    "brand": "hub",
+    "max": 5
+  }
+}

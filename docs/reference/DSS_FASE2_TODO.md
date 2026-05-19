@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 18 de Maio de 2026
+> **Última Atualização:** 18 de Maio de 2026 — DssRating SELADO
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -73,8 +73,8 @@
 
 ### Família: Inputs Especializados
 
-- [ ] `DssKnob` — Controle rotativo (dial) para valores numéricos ⬜
-- [ ] `DssRating` — Avaliação por estrelas (ou ícones customizados) ⬜
+- [x] ~~`DssKnob`~~ ✅ **SELADO (18 Mai 2026)**
+- [x] ~~`DssRating`~~ ✅ **SELADO** *(18 Mai 2026)*
 
 ### Família: Layout Auxiliar
 
@@ -203,9 +203,9 @@
 | Nível | Total | Selados | % Concluído |
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
-| Fase 2 — Nível 1 | 38 | 25 | 66% |
+| Fase 2 — Nível 1 | 38 | 26 | 68% |
 | Fase 2 — Nível 2 | 16 | 9 | 56% |
 | Fase 2 — Nível 3 | 7 | 4 | 57% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **43** | **63%** |
+| **Fase 2 Total** | **68** | **44** | **65%** |
 | Fase 3 | 6 | N/A | — |

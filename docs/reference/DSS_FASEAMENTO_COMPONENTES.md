@@ -81,7 +81,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssImg` | `QImg` | `DssSpinner` | ✅ Selado (13 Mai 2026) |
 | `DssCircularProgress` | `QCircularProgress` | — | ✅ Selado (18 Mai 2026) |
 | `DssInnerLoading` | `QInnerLoading` | `DssSpinner` | ✅ Selado (18 Mai 2026) |
-| `DssKnob` | `QKnob` | — | ⬜ Pendente |
+| `DssKnob` | `QKnob` | — | ✅ Selado (18 Mai 2026) |
 | `DssRating` | `QRating` | `DssIcon` | ⬜ Pendente |
 | `DssSkeleton` | `QSkeleton` | — | ✅ Selado (18 Mai 2026) |
 | `DssScrollArea` | `QScrollArea` | — | ⬜ Pendente |

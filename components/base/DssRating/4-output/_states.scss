@@ -1,0 +1,67 @@
+// =============================================================================
+// DssRating — LAYER 4: OUTPUT — States
+//
+// Dark mode: --dss-action-primary e --dss-surface-muted têm adaptação
+// automática via cascade de tokens semânticos. Sem override adicional necessário.
+//
+// EX-States-01: prefers-reduced-motion
+// EX-States-02: forced-colors
+// EX-States-03: prefers-contrast: more
+// =============================================================================
+
+// ── EX-States-03: prefers-contrast: more ─────────────────────────────────────
+//
+// Reforça espessura do anel de foco em alto contraste.
+// outline-width usa --dss-border-width-thick (3px) — token canônico.
+// Precedente: DssKnob (EX-States-03), DssBadge (prefers-contrast border).
+@media (prefers-contrast: more) {
+  .dss-rating {
+    &.q-rating--editable:focus-visible {
+      outline-width: var(--dss-border-width-thick);
+    }
+  }
+}
+
+// ── EX-States-01: prefers-reduced-motion ─────────────────────────────────────
+//
+// Suprime transições de cor e filter nos ícones.
+// WCAG 2.3.3 (Animação sob Solicitação — Nível AAA).
+// Precedente: DssKnob (EX-States-01), DssLinearProgress (EX-States-01).
+@media (prefers-reduced-motion: reduce) {
+  .dss-rating {
+    transition: none !important;
+    animation: none !important;
+
+    .q-rating__icon {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
+
+// ── EX-States-02: forced-colors (High Contrast Mode) ─────────────────────────
+//
+// SystemColor keywords para ícones e focus ring.
+// forced-color-adjust NÃO declarado — herança correta.
+// WCAG 1.4.11 (Contraste Não-Textual — Nível AA).
+// Precedente: DssKnob (EX-States-02), DssCircularProgress (EX-States-03).
+@media (forced-colors: active) {
+  .dss-rating {
+    // Ícones não-selecionados: ButtonText (cor neutra de interface)
+    .q-rating__icon {
+      color: ButtonText;
+    }
+
+    // Ícones selecionados e hover: Highlight (cor de destaque do sistema)
+    .q-rating__icon--active,
+    .q-rating__icon--half,
+    &.q-rating--editable .q-rating__icon--hovered {
+      color: Highlight;
+    }
+
+    // Focus ring: Highlight para garantir visibilidade em HCM
+    &.q-rating--editable:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

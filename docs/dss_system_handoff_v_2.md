@@ -94,6 +94,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssInnerLoading** | Overlay de loading para container — Fase 2 Nível 1 — Progresso e Feedback | DssBadge | `conformant` — Selado (18 Mai 2026) |
 | **DssSkeleton** | Placeholder visual de carregamento (skeleton screen) — Fase 2 Nível 1 — Progresso e Feedback | DssBadge | `conformant` — Selado (18 Mai 2026) |
 | **DssAjaxBar** | Barra de progresso global para requisições assíncronas (XHR/Fetch) — Fase 2 Nível 1 — Progresso e Feedback | DssBadge | `conformant` — Selado (18 Mai 2026) |
+| **DssKnob** | Controle rotativo (dial) para seleção de valores numéricos — Fase 2 Nível 1 — Inputs Especializados | DssChip | `conformant` — Selado (18 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
