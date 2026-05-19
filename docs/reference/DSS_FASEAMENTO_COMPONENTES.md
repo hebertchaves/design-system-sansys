@@ -84,8 +84,8 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssKnob` | `QKnob` | — | ✅ Selado (18 Mai 2026) |
 | `DssRating` | `QRating` | `DssIcon` | ⬜ Pendente |
 | `DssSkeleton` | `QSkeleton` | — | ✅ Selado (18 Mai 2026) |
-| `DssScrollArea` | `QScrollArea` | — | ⬜ Pendente |
-| `DssSplitter` | `QSplitter` | — | ⬜ Pendente |
+| `DssScrollArea` | `QScrollArea` | — | ✅ Selado (19 Mai 2026) |
+| `DssSplitter` | `QSplitter` | — | ✅ Selado (19 Mai 2026) |
 | `DssMarkupTable` | `QMarkupTable` | — | ⬜ Pendente |
 | `DssVideo` | `QVideo` | — | ✅ Selado (13 Mai 2026) |
 | `DssResponsive` | `QResponsive` | — | ⬜ Pendente |

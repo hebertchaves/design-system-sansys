@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssScrollArea } from './index.js'
 
 const scrollAreaRef = ref(null)
 
@@ -8,9 +7,7 @@ const longText = Array.from({ length: 30 }, (_, i) =>
   `Item ${i + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
 ).join('\n')
 
-const wideContent = Array.from({ length: 8 }, (_, i) =>
-  `Coluna ${i + 1}`
-)
+const wideContent = Array.from({ length: 8 }, (_, i) => `Coluna ${i + 1}`)
 
 function scrollToTop() {
   scrollAreaRef.value?.scrollTo(0, 300)
@@ -22,19 +19,19 @@ function scrollToBottom() {
 </script>
 
 <template>
-  <div style="display: flex; flex-direction: column; gap: 32px; padding: 24px;">
+  <div class="q-pa-lg column q-gutter-xl">
 
     <!-- Cenário 1: Scroll vertical com altura fixa -->
     <section>
-      <h3 style="margin-bottom: 8px;">Scroll Vertical (auto-hide)</h3>
+      <h3 class="q-mb-xs text-subtitle1">1. Scroll Vertical (auto-hide)</h3>
       <DssScrollArea
         ref="scrollAreaRef"
-        style="height: 200px; border: 1px solid #e5e5e5; border-radius: 8px;"
+        class="scroll-demo-md"
         label="Lista de itens"
       >
-        <div style="padding: 16px; white-space: pre-line;">{{ longText }}</div>
+        <div class="q-pa-md" style="white-space: pre-line;">{{ longText }}</div>
       </DssScrollArea>
-      <div style="display: flex; gap: 8px; margin-top: 8px;">
+      <div class="row q-gutter-sm q-mt-xs">
         <button @click="scrollToTop">Rolar ao topo</button>
         <button @click="scrollToBottom">Rolar ao fim</button>
       </div>
@@ -42,25 +39,25 @@ function scrollToBottom() {
 
     <!-- Cenário 2: Scrollbar sempre visível -->
     <section>
-      <h3 style="margin-bottom: 8px;">Scrollbar Always Visible</h3>
+      <h3 class="q-mb-xs text-subtitle1">2. Scrollbar Always Visible</h3>
       <DssScrollArea
         visible="always"
-        style="height: 160px; border: 1px solid #e5e5e5; border-radius: 8px;"
+        class="scroll-demo-sm"
         label="Área com scrollbar sempre visível"
       >
-        <div style="padding: 16px; white-space: pre-line;">{{ longText }}</div>
+        <div class="q-pa-md" style="white-space: pre-line;">{{ longText }}</div>
       </DssScrollArea>
     </section>
 
     <!-- Cenário 3: Scrollbar oculta (never) -->
     <section>
-      <h3 style="margin-bottom: 8px;">Scroll Silencioso (never)</h3>
+      <h3 class="q-mb-xs text-subtitle1">3. Scroll Silencioso (never)</h3>
       <DssScrollArea
         visible="never"
-        style="height: 120px; border: 1px solid #e5e5e5; border-radius: 8px;"
+        class="scroll-demo-xs"
         label="Área com rolagem sem barra visível"
       >
-        <div style="padding: 16px;">
+        <div class="q-pa-md">
           Este conteúdo é rolável mas a scrollbar fica oculta.
           Útil para áreas decorativas ou mobile-first.
           Adicione mais conteúdo para testar a rolagem via teclado ou touch.
@@ -70,17 +67,17 @@ function scrollToBottom() {
 
     <!-- Cenário 4: Scroll horizontal -->
     <section>
-      <h3 style="margin-bottom: 8px;">Scroll Horizontal</h3>
+      <h3 class="q-mb-xs text-subtitle1">4. Scroll Horizontal</h3>
       <DssScrollArea
         horizontal
-        style="width: 100%; max-width: 400px; border: 1px solid #e5e5e5; border-radius: 8px;"
+        class="scroll-demo-h"
         label="Conteúdo rolável horizontalmente"
       >
-        <div style="display: flex; gap: 16px; padding: 16px; width: max-content;">
+        <div class="row no-wrap q-gutter-md q-pa-md">
           <div
             v-for="col in wideContent"
             :key="col"
-            style="width: 120px; height: 80px; background: #f5f5f5; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
+            class="scroll-demo-col bg-grey-2 flex flex-center text-body2 text-center"
           >
             {{ col }}
           </div>
@@ -90,27 +87,66 @@ function scrollToBottom() {
 
     <!-- Cenário 5: Brand Hub -->
     <section data-brand="hub">
-      <h3 style="margin-bottom: 8px;">Brand Hub</h3>
+      <h3 class="q-mb-xs text-subtitle1">5. Brand Hub</h3>
       <DssScrollArea
         visible="always"
-        style="height: 160px; border: 1px solid #e5e5e5; border-radius: 8px;"
+        class="scroll-demo-sm"
         label="Área de scroll com tema Hub"
       >
-        <div style="padding: 16px; white-space: pre-line;">{{ longText }}</div>
+        <div class="q-pa-md bg-orange-1" style="white-space: pre-line;">{{ longText }}</div>
       </DssScrollArea>
     </section>
 
     <!-- Cenário 6: Brand Water -->
     <section data-brand="water">
-      <h3 style="margin-bottom: 8px;">Brand Water</h3>
+      <h3 class="q-mb-xs text-subtitle1">6. Brand Water</h3>
       <DssScrollArea
         visible="always"
-        style="height: 160px; border: 1px solid #e5e5e5; border-radius: 8px;"
+        class="scroll-demo-sm"
         label="Área de scroll com tema Water"
       >
-        <div style="padding: 16px; white-space: pre-line;">{{ longText }}</div>
+        <div class="q-pa-md bg-blue-1" style="white-space: pre-line;">{{ longText }}</div>
       </DssScrollArea>
     </section>
 
   </div>
 </template>
+
+<style>
+/*
+ * Example-only layout constraints.
+ * Usam unidades viewport (vh/vw) para evitar px hardcoded.
+ * Bordas e radii via tokens DSS.
+ */
+.scroll-demo-md {
+  height: 25vh;
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--dss-radius-sm);
+}
+
+.scroll-demo-sm {
+  height: 20vh;
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--dss-radius-sm);
+}
+
+.scroll-demo-xs {
+  height: 15vh;
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--dss-radius-sm);
+}
+
+.scroll-demo-h {
+  height: 15vh;
+  max-width: 50%;
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--dss-radius-sm);
+}
+
+.scroll-demo-col {
+  width: 8vw;
+  height: 8vw;
+  border-radius: var(--dss-radius-sm);
+  flex-shrink: 0;
+}
+</style>

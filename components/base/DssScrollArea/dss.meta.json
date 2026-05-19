@@ -2,7 +2,7 @@
   "component": "DssScrollArea",
   "cssClass": "dss-scroll-area",
   "phase": 2,
-  "status": "in-progress",
+  "status": "conformant",
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssVirtualScroll",
@@ -49,7 +49,7 @@
     {
       "id": "EXC-Gate-02",
       "rule": "Seletores descendentes de elementos internos do Quasar",
-      "detail": ".q-scrollarea__bar e .q-scrollarea__thumb são elementos internos do Quasar sem CSS custom property hooks públicos. Estilizados via CSS global com descendant selectors (.dss-scroll-area .q-scrollarea__thumb). Sem :deep() — SCSS é global via module.scss. Necessário para aplicar tokens DSS à scrollbar customizada.",
+      "detail": ".q-scrollarea__bar e .q-scrollarea__thumb são elementos internos do Quasar sem CSS custom property hooks públicos. Estilizados via CSS global com descendant selectors (.dss-scroll-area .q-scrollarea__thumb). Sem :deep() — SCSS é global via module.scss. Sub-padrão: `opacity: 1 !important` é necessário em 3-variants/_variant.scss para sobrescrever a opacidade controlada por JS do QScrollArea (auto-hide via script injeta `opacity: 0` como inline style). O `!important` no CSS DSS prevalece sobre o inline style do Quasar.",
       "location": "2-composition/_base.scss, 3-variants/_variant.scss, 4-output/_brands.scss, 4-output/_states.scss"
     },
     {

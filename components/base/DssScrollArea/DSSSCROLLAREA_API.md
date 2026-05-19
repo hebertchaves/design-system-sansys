@@ -86,9 +86,6 @@ const areaRef = ref(null)
 | `--dss-action-hub` | — | Thumb em brand="hub" |
 | `--dss-action-water` | — | Thumb em brand="water" |
 | `--dss-action-waste` | — | Thumb em brand="waste" |
-| `--dss-hub-600` | — | Thumb hover em brand="hub" |
-| `--dss-water-600` | — | Thumb hover em brand="water" |
-| `--dss-waste-600` | — | Thumb hover em brand="waste" |
 
 ## Props Bloqueadas (não expostas do QScrollArea)
 

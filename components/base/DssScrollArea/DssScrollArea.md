@@ -102,9 +102,6 @@
 | `--dss-action-hub` | — | Thumb em contexto brand="hub" |
 | `--dss-action-water` | — | Thumb em contexto brand="water" |
 | `--dss-action-waste` | — | Thumb em contexto brand="waste" |
-| `--dss-hub-600` | — | Thumb hover em brand="hub" |
-| `--dss-water-600` | — | Thumb hover em brand="water" |
-| `--dss-waste-600` | — | Thumb hover em brand="waste" |
 
 ---
 

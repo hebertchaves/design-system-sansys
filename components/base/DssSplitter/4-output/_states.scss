@@ -1,0 +1,71 @@
+/* ==========================================================================
+   DssSplitter — LAYER 4: STATES
+   Dark mode, prefers-contrast, forced-colors, print
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] .dss-splitter .q-splitter__separator {
+  background-color: var(--dss-gray-700);
+
+  &:hover  { background-color: var(--dss-gray-500); }
+  &:active { background-color: var(--dss-gray-400); }
+
+  /* Dark mode: focus ring branco (EXC-States-01 — não existe token --dss-focus-shadow-*-dark) */
+  &:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+}
+
+/* ==========================================================================
+   PREFERS-CONTRAST: MORE
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-splitter .q-splitter__separator {
+    background-color: var(--dss-gray-600);
+    border: 1px solid currentColor;
+
+    &:hover  { background-color: var(--dss-gray-800); }
+    &:active { background-color: var(--dss-gray-900); }
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast / WCAG 1.4.11)
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-splitter .q-splitter__separator {
+    background-color: ButtonText;
+    forced-color-adjust: none;
+
+    &:focus-visible {
+      outline: 2px solid Highlight;
+      box-shadow: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .dss-splitter {
+    display: block;
+  }
+
+  .dss-splitter .q-splitter__panel {
+    width: 100% !important;  /* mostra cada painel em largura total na impressão */
+    height: auto !important;
+  }
+
+  .dss-splitter .q-splitter__separator {
+    display: none;  /* separador interativo não relevante em print */
+  }
+}
