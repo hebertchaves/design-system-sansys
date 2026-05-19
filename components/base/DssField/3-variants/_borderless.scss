@@ -1,0 +1,38 @@
+/* ==========================================================================
+   DssField — LAYER 3: VARIANT — Borderless
+
+   Sem borda. Sem fundo. Apenas o conteúdo.
+   Usado em contextos onde a borda seria redundante (ex: dentro de cards, tabelas).
+   Equivalente visual de DssInput--borderless.
+   ========================================================================== */
+
+.dss-field--borderless {
+  .dss-field__field {
+    background-color: transparent;
+    border: none;
+  }
+
+  /* Focus: indicador visual mínimo (border-bottom) */
+  &.dss-field--focused .dss-field__field {
+    border-bottom: var(--dss-border-width-md) solid var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+  }
+
+  &.dss-field--focused .dss-field__label {
+    color: var(--dss-action-primary);
+  }
+
+  /* Error */
+  &.dss-field--error .dss-field__field {
+    border-bottom: var(--dss-border-width-md) solid var(--dss-error-600);
+  }
+
+  &.dss-field--error .dss-field__label {
+    color: var(--dss-error-600);
+  }
+
+  /* Readonly */
+  &.dss-field--readonly .dss-field__field {
+    cursor: default;
+  }
+}

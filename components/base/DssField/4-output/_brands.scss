@@ -1,0 +1,102 @@
+/* ==========================================================================
+   DssField — LAYER 4: OUTPUT — Brands (Hub, Water, Waste)
+
+   Dual-selector: prop brand (.dss-field--brand-{b}) e data-brand ancestral.
+   Apenas accent color no focus/label — estado de erro mantém --dss-error-600.
+   Padrão idêntico ao DssInput (Golden Context).
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] .dss-field,
+.dss-field--brand-hub {
+  /* Focus: borda/shadow hub */
+  &.dss-field--outlined.dss-field--focused .dss-field__field {
+    border-color: var(--dss-hub-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-hub-600);
+  }
+
+  &.dss-field--filled.dss-field--focused .dss-field__field,
+  &.dss-field--borderless.dss-field--focused .dss-field__field {
+    border-bottom-color: var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+  }
+
+  &.dss-field--standout.dss-field--focused .dss-field__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
+  }
+
+  /* Label em foco → cor brand */
+  &.dss-field--focused .dss-field__label {
+    color: var(--dss-hub-700);
+  }
+
+  /* Hint em brand */
+  .dss-field__hint {
+    color: var(--dss-hub-700);
+  }
+}
+
+/* ==========================================================================
+   WATER (Azul)
+   ========================================================================== */
+
+[data-brand="water"] .dss-field,
+.dss-field--brand-water {
+  &.dss-field--outlined.dss-field--focused .dss-field__field {
+    border-color: var(--dss-water-500);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-water-500);
+  }
+
+  &.dss-field--filled.dss-field--focused .dss-field__field,
+  &.dss-field--borderless.dss-field--focused .dss-field__field {
+    border-bottom-color: var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+  }
+
+  &.dss-field--standout.dss-field--focused .dss-field__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
+  }
+
+  &.dss-field--focused .dss-field__label {
+    color: var(--dss-water-600);
+  }
+
+  .dss-field__hint {
+    color: var(--dss-water-700);
+  }
+}
+
+/* ==========================================================================
+   WASTE (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] .dss-field,
+.dss-field--brand-waste {
+  &.dss-field--outlined.dss-field--focused .dss-field__field {
+    border-color: var(--dss-waste-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-waste-600);
+  }
+
+  &.dss-field--filled.dss-field--focused .dss-field__field,
+  &.dss-field--borderless.dss-field--focused .dss-field__field {
+    border-bottom-color: var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+  }
+
+  &.dss-field--standout.dss-field--focused .dss-field__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
+  }
+
+  &.dss-field--focused .dss-field__label {
+    color: var(--dss-waste-700);
+  }
+
+  .dss-field__hint {
+    color: var(--dss-waste-800);
+  }
+}
+
+/* Estado de erro mantém --dss-error-600 independente do brand */

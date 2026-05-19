@@ -1,0 +1,54 @@
+/* ==========================================================================
+   DssField — LAYER 3: VARIANT — Standout
+
+   Fundo sólido + destaque visual no focus (box-shadow + fundo elevado).
+   Label sempre empilhada (sem flutuação — stackLabel implícito).
+   Equivalente visual de DssInput--standout.
+   ========================================================================== */
+
+.dss-field--standout {
+  .dss-field__field {
+    background-color: var(--dss-gray-100);
+    border: none;
+    border-radius: var(--dss-radius-md);
+  }
+
+  /* Hover */
+  &:not(.dss-field--disabled):not(.dss-field--readonly):not(.dss-field--focused):hover .dss-field__field {
+    background-color: var(--dss-gray-200);
+  }
+
+  /* Focus: box-shadow de destaque ao invés de border */
+  &.dss-field--focused .dss-field__field {
+    background-color: var(--dss-gray-200);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
+  }
+
+  &.dss-field--focused .dss-field__label {
+    color: var(--dss-action-primary);
+  }
+
+  /* Active */
+  &:not(.dss-field--disabled):not(.dss-field--readonly):active .dss-field__field {
+    background-color: var(--dss-gray-300);
+  }
+
+  /* Error */
+  &.dss-field--error .dss-field__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-error-600);
+  }
+
+  &.dss-field--error .dss-field__label {
+    color: var(--dss-error-600);
+  }
+
+  /* Disabled */
+  &.dss-field--disabled .dss-field__field {
+    background-color: var(--dss-gray-200);
+  }
+
+  /* Readonly */
+  &.dss-field--readonly .dss-field__field {
+    background-color: var(--dss-gray-100);
+  }
+}

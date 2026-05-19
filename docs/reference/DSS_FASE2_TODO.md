@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 18 de Maio de 2026 — DssRating SELADO
+> **Última Atualização:** 19 de Maio de 2026 — DssField SELADO
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -139,7 +139,7 @@
 
 ### Família: Formulários
 
-- [ ] `DssField` 🔒 *(aguarda padrão visual de DssInput)*
+- [x] ~~`DssField`~~ ✅ **SELADO** *(19 Mai 2026 — 1 ciclo, 3 NCs corrigidas, 6 GAPs resolvidos)*
 - [ ] `DssForm` 🔒 *(aguarda DssButton)*
 
 ---
@@ -204,8 +204,8 @@
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
 | Fase 2 — Nível 1 | 38 | 26 | 68% |
-| Fase 2 — Nível 2 | 16 | 9 | 56% |
+| Fase 2 — Nível 2 | 16 | 10 | 63% |
 | Fase 2 — Nível 3 | 7 | 4 | 57% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **44** | **65%** |
+| **Fase 2 Total** | **68** | **45** | **66%** |
 | Fase 3 | 6 | N/A | — |
