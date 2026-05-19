@@ -99,6 +99,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssField** | Campo de formulário customizado — Fase 2 Nível 2 — Inputs Compostos | DssChip | `conformant` — Selado (19 Mai 2026) |
 | **DssScrollArea** | Container de scroll governado — Fase 2 Nível 1 — Layout Auxiliar | DssBadge | `conformant` — Selado (19 Mai 2026) |
 | **DssSplitter** | Divisor redimensionável entre dois painéis — Fase 2 Nível 1 — Layout Auxiliar | DssChip | `conformant` — Selado (19 Mai 2026) |
+| **DssResponsive** | Wrapper utilitário de visibilidade por breakpoint — Fase 2 Nível 1 — Layout Auxiliar | DssBadge | `conformant` — Selado (19 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 

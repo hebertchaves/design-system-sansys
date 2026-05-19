@@ -2,155 +2,163 @@
 
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
+**Fase:** 2 — **Nível 1 (Independente)**
+*(Não depende de outros componentes da Fase 2. Pode ser criado em paralelo com outros Nível 1.)*
+
+**Justificativa de Fase 2:** DssResponsive encapsula lógica de UI reativa (`$q.screen`) que precisaria ser replicada ad-hoc em múltiplos componentes. Por gerenciar estado de visibilidade e expô-lo via slot scope, vai além de um wrapper atômico Fase 1 — constitui um padrão reutilizável de UI/UX.
+
 ### Golden Reference
-DssBadge (para componentes não-interativos) e DssChip (para interativos).
+DssBadge — Golden Reference não-interativo oficial do DSS v2.2.
 
 ### Golden Context
-O DssResponsive é um componente fundamental para garantir a adaptabilidade da interface do usuário em diferentes tamanhos de tela e dispositivos. Ele atua como um wrapper ou utilitário que permite a exibição condicional de conteúdo ou a aplicação de estilos específicos com base nos breakpoints definidos pelo Design System. Seu objetivo é simplificar a criação de layouts responsivos, abstraindo a complexidade das media queries e fornecendo uma API consistente para os desenvolvedores.
-A necessidade de uma experiência de usuário fluida e consistente em múltiplos dispositivos é primordial. O DssResponsive centraliza a lógica de responsividade, promovendo a reutilização de código, a manutenção simplificada e a aderência aos padrões de design estabelecidos, evitando implementações ad-hoc de responsividade que poderiam levar a inconsistências visuais e técnicas.
+**DssLayout** — baseline de auditoria. Justificativa: DssLayout é o wrapper estrutural mais próximo com SCSS intencionalmente vazio e sem tokens visuais próprios, arquitetura idêntica à de DssResponsive (pure-logic wrapper).
 
 ### Justificativa
 A necessidade de uma experiência de usuário fluida e consistente em múltiplos dispositivos é primordial. O DssResponsive centraliza a lógica de responsividade, promovendo a reutilização de código, a manutenção simplificada e a aderência aos padrões de design estabelecidos, evitando implementações ad-hoc de responsividade que poderiam levar a inconsistências visuais e técnicas.
 
+---
+
 ## 2. RISCOS ARQUITETURAIS E GATES
 
-*   **Performance:** Garantir que a re-renderização ou a manipulação do DOM em mudanças de breakpoint não impacte negativamente a performance da aplicação.
-*   **Compatibilidade:** Assegurar compatibilidade com os principais navegadores e versões, especialmente em relação ao suporte a recursos de CSS e JavaScript utilizados para detecção de breakpoint.
-*   **Conflito de Estilos:** Prevenir conflitos com outras classes ou estilos de responsividade que possam ser aplicados diretamente, garantindo que a lógica do DssResponsive prevaleça ou se integre corretamente.
-*   **Sobrecarga de Conteúdo:** Evitar que a exibição condicional de grandes blocos de conteúdo cause problemas de SEO ou acessibilidade se não for gerenciada corretamente.
+### "Calcanhar de Aquiles": Prioridade de props com comportamento ambíguo
 
-## 3. MAPEAMENTO DE API (QUASAR → DSS)
+O risco central do DssResponsive é o comportamento quando múltiplas props de visibilidade são passadas simultaneamente. A ausência de regra clara gera comportamento imprevisível.
 
-O DssResponsive deve encapsular e estender as funcionalidades de responsividade do Quasar, como as classes de breakpoint (`lt-sm`, `gt-md`, etc.) e o `QResizeObserver` ou `Screen` plugin. A API do DSS deve ser mais declarativa e focada no comportamento desejado.
+**❌ Anti-pattern — Props conflitantes sem regra de prioridade:**
+```vue
+<!-- breakpoint e showOn passados juntos — qual prevalece? -->
+<DssResponsive :breakpoint="['xs']" :show-on="['md']">
+  <slot />
+</DssResponsive>
 
-| Quasar API/Conceito | DSSResponsive Equivalente/Abstração |
-| :------------------ | :---------------------------------- |
-| `lt-sm`, `gt-md` classes | `breakpoint` prop (e.g., `:breakpoint="['md', 'lg']"` para mostrar apenas em MD e LG) |
-| `QResizeObserver` | Interno, para detectar mudanças de tamanho e atualizar o estado responsivo. |
-| `Screen` plugin (width, height, etc.) | `currentBreakpoint` (slot prop ou evento) |
-
-## 4. GOVERNANÇA DE TOKENS E CSS
-
-O DssResponsive não deve introduzir estilos visuais diretos que utilizem tokens de espaçamento, raio ou duração, pois sua função é orquestrar a exibição de outros componentes. No entanto, ele pode influenciar a aplicação de classes CSS que, por sua vez, utilizam tokens do DSS.
-
-*   **Espaçamento:** N/A (o espaçamento é gerenciado pelos componentes filhos ou layouts que o DssResponsive orquestra).
-*   **Raio:** N/A.
-*   **Duração:** N/A.
-*   **Superfície:** N/A.
-
-**Exemplo de uso indireto de tokens (via classes aplicadas):**
-
-```html
-<DssResponsive :breakpoint="['sm']">
-  <DssCard class="dss-spacing-top-4">
-    <!-- Conteúdo do card -->
-  </DssCard>
+<!-- showOn e hideOn com o mesmo breakpoint — resultado undefined? -->
+<DssResponsive :show-on="['md']" :hide-on="['md']">
+  <slot />
 </DssResponsive>
 ```
 
-Tokens de cor de marca como `--dss-action-hub` e `--dss-action-hub-surface` devem ser usados em vez de `hub`.
-Tokens de cor de marca como `--dss-action-water` e `--dss-action-water-surface` devem ser usados em vez de `water`.
-Tokens de cor de marca como `--dss-action-waste` e `--dss-action-waste-surface` devem ser usados em vez de `waste`.
+**✅ Padrão correto — Regra de prioridade explícita e documentada:**
+```typescript
+// Prioridade: showOn > hideOn > breakpoint > (sempre visível)
+// showOn e breakpoint são aliases — showOn prevalece se ambos presentes
+// Se showOn=['md'] e hideOn=['md'] → AND logic → falso (oculto)
+const showList = props.showOn ?? props.breakpoint
+if (showList?.length) {
+  const shown = showList.includes(bp)
+  return props.hideOn?.length ? shown && !props.hideOn.includes(bp) : shown
+}
+if (props.hideOn?.length) return !props.hideOn.includes(bp)
+return true
+```
 
-Tokens de espaçamento como `--dss-spacing-4` devem ser usados em vez de `--dss-spacing-4`.
-Tokens de texto como `--dss-text-subtle` devem ser usados em vez de `--dss-text-subtle`.
-Tokens de foco como `outline: 2px solid white` devem ser usados em vez de `outline: 2px solid white`.
+**Outros riscos:**
+- **Performance:** Re-renderização do DOM em mudanças de breakpoint — usar `v-if` (não `v-show`) para remoção real do DOM, não apenas ocultação visual.
+- **Compatibilidade:** `useQuasar()` requer Quasar Screen Plugin ativo. Em SSR, `$q.screen` não está disponível no servidor.
+- **Conflito de Estilos:** O componente não deve interferir no layout dos filhos — wrapper deve ter CSS mínimo ou zero.
+
+---
+
+## 3. MAPEAMENTO DE API (QUASAR → DSS)
+
+O DssResponsive não envolve nenhum componente Quasar como root. Utiliza `useQuasar()` para acessar o Screen Plugin reativamente.
+
+| Quasar API/Conceito | DssResponsive Equivalente/Abstração | Decisão |
+| :--- | :--- | :--- |
+| `$q.screen.xs/sm/md/lg/xl` | `currentBreakpoint` (slot scope + composable) | Exposto via slot scope e `useResponsiveState` |
+| Classes `lt-sm`, `gt-md` | Props `showOn`, `hideOn`, `breakpoint` | API declarativa DSS em vez de classes imperativas |
+| `QResizeObserver` | Não utilizado | `$q.screen` já é reativo — QResizeObserver redundante |
+| `<component :is>` | Prop `tag` | Preserva semântica HTML do wrapper |
+
+**Props expostas:**
+- `showOn?: DssBreakpoint[]` — breakpoints onde o slot é exibido
+- `hideOn?: DssBreakpoint[]` — breakpoints onde o slot é ocultado
+- `breakpoint?: DssBreakpoint[]` — alias de `showOn`
+- `tag?: string` — tag HTML do wrapper (default: `'div'`)
+
+**Props bloqueadas / não expostas:**
+- Nenhuma prop Quasar direta — o componente usa `$q.screen` internamente sem expor a API do plugin.
+
+---
+
+## 4. GOVERNANÇA DE TOKENS E CSS
+
+O DssResponsive não deve introduzir estilos visuais diretos. Sua função é orquestrar a exibição de outros componentes.
+
+- **Espaçamento:** N/A — gerenciado pelos componentes filhos.
+- **Raio:** N/A.
+- **Duração/Animação:** N/A — sem transições próprias.
+- **Superfície:** N/A — sem background próprio.
+- **Tokens utilizados:** **Nenhum** — `tokensUsed: []` no `dss.meta.json`.
+
+O SCSS das 4 camadas existe mas é intencionalmente vazio — conforme precedente DssLayout (bloco SCSS vazio = sem CSS = decisão documentada, não omissão).
+
+**Exemplo correto de uso no playground (`example.vue`):**
+```html
+<!-- ✅ Token DSS para contexto visual dos exemplos -->
+<div style="background: var(--dss-surface-subtle); border: 1px solid var(--dss-gray-200)">
+  ...
+</div>
+
+<!-- ❌ Classes Quasar de cor (bg-blue-1, bg-green-1) -->
+<div class="bg-blue-1">...</div>
+```
+
+---
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
 ### Acessibilidade
 
-*   **Conteúdo Oculto:** Quando o conteúdo é ocultado por responsividade, garantir que ele não seja apenas `display: none`, mas também inacessível para leitores de tela (e.g., `aria-hidden="true"` ou remoção do DOM, dependendo do contexto).
-*   **Foco:** Se o DssResponsive gerenciar elementos interativos, garantir que o foco do teclado seja mantido ou redirecionado apropriadamente após mudanças de breakpoint.
+- **Touch target:** N/A — não interativo. Sem `::before` de touch target.
+- **Role ARIA:** Nenhum atributo ARIA adicionado pelo componente. `aria-hidden` desnecessário porque `v-if` remove o nó do DOM (WCAG 1.3.1 conforme).
+- **Conteúdo oculto:** Usar `v-if` (remoção do DOM), NÃO `v-show` (apenas `display: none` — acessível por leitores de tela).
+- **Foco:** O componente NÃO redireciona foco automaticamente. O consumidor é responsável pelo gerenciamento de foco quando conteúdo aparece reativamente após resize.
 
-### Estados
+### Delegação de estados
 
-*   **`isMobile`:** Estado booleano que indica se o breakpoint atual corresponde a um dispositivo móvel (e.g., `xs`, `sm`).
-*   **`isDesktop`:** Estado booleano que indica se o breakpoint atual corresponde a um dispositivo desktop (e.g., `md`, `lg`, `xl`).
-*   **`currentBreakpoint`:** String que representa o breakpoint ativo (e.g., `'xs'`, `'sm'`, `'md'`, `'lg'`, `'xl'`).
+| Estado | Pertence ao | Decisão |
+|---|---|---|
+| hover | Filhos (via slot) | Não capturado pelo wrapper |
+| focus | Filhos (via slot) | Não capturado pelo wrapper |
+| active | Filhos (via slot) | Não capturado pelo wrapper |
+| disabled | N/A | Não aplicável — wrapper não interativo |
+| loading | N/A | Não aplicável |
+| isVisible | DssResponsive | Controlado por props + `$q.screen` via `v-if` |
 
-## 6. DEPENDÊNCIAS E COMPOSIÇÃO
+### Estados expostos via slot scope
 
-### Dependências
+| Estado | Tipo | Descrição |
+|---|---|---|
+| `currentBreakpoint` | `'xs'|'sm'|'md'|'lg'|'xl'` | Breakpoint ativo |
+| `isXs`, `isSm`, `isMd`, `isLg`, `isXl` | `Boolean` | Flags individuais |
+| `isMobile` | `Boolean` | `xs` ou `sm` |
+| `isDesktop` | `Boolean` | `md`, `lg` ou `xl` |
 
-*   **Quasar Framework:** Utiliza as utilidades de responsividade e o sistema de breakpoints do Quasar.
-*   **DssBreakpoints (futuro):** Pode depender de um módulo DSS que defina e gerencie os breakpoints de forma centralizada.
+---
 
-### Composição
+## 6. PLAYGROUND E EXEMPLOS OBRIGATÓRIOS
 
-O DssResponsive é um componente de composição, projetado para envolver outros componentes ou blocos de conteúdo. Ele pode ser usado para:
+O `example.vue` deve cobrir no mínimo:
 
-*   Exibir diferentes versões de um componente (e.g., `DssTable` para desktop, `DssList` para mobile).
-*   Ajustar o layout de uma página (e.g., `DssGrid` com diferentes configurações de colunas).
-*   Ocultar ou mostrar elementos específicos (e.g., um botão de ação que aparece apenas em mobile).
+1. `showOn` com breakpoints desktop
+2. `showOn` com breakpoints mobile
+3. `hideOn`
+4. Slot scope com `currentBreakpoint`, `isMobile`, `isDesktop`
+5. `breakpoint` (alias) + slot scope combinados
+6. Prop `tag` customizado (`section`, `aside`)
+7. Sem constraints — sempre visível
+
+**Regra:** Usar `DssButton` (não `q-btn`) e tokens DSS (não classes de cor Quasar) nos exemplos.
+
+---
 
 ## 7. EXCEÇÕES PREVISTAS
 
-*   **Conteúdo Essencial Oculto:** Não deve ser usado para ocultar conteúdo que é essencial para a funcionalidade principal da aplicação em todos os breakpoints, a menos que uma alternativa acessível seja fornecida.
-*   **Responsividade Complexa:** Para cenários de responsividade muito complexos que exigem manipulação direta do DOM ou lógica de layout altamente customizada, o DssResponsive pode não ser a solução ideal, e uma implementação manual pode ser necessária (com justificativa).
-*   **Animações/Transições:** O DssResponsive não gerencia transições ou animações entre estados responsivos; isso deve ser tratado pelos componentes filhos ou por utilitários de transição dedicados.
+- **Nenhuma exceção DSS formal** — o componente não envolve componentes Quasar como root e não aplica estilos.
+- **SCSS vazio intencional** — conforme precedente DssLayout. Documentado em `dss.meta.json > phaseDescription`.
 
-## 8. SUPERFÍCIE DE PLAYGROUND
+---
 
-### Controles Obrigatórios
+## 8. CONSIDERAÇÕES FINAIS
 
-*   **`breakpoint` (Array<String> ou String):** Define em quais breakpoints o conteúdo do slot padrão deve ser exibido. Ex: `['sm', 'md']` ou `'lg'`. Se vazio, exibe em todos.
-*   **`hideOn` (Array<String> ou String):** Define em quais breakpoints o conteúdo deve ser ocultado. Ex: `['xs', 'sm']`.
-*   **`showOn` (Array<String> ou String):** Define em quais breakpoints o conteúdo deve ser mostrado. Ex: `['md', 'lg']`.
-*   **`tag` (String):** A tag HTML a ser renderizada como elemento raiz (padrão: `'div'`).
-
-### Composite Logic
-
-```vue
-<template>
-  <DssResponsive :showOn="['md', 'lg', 'xl']">
-    <DssButton label="Ação Desktop" color="hub" />
-  </DssResponsive>
-
-  <DssResponsive :showOn="['xs', 'sm']">
-    <DssFab icon="add" color="water" />
-  </DssResponsive>
-
-  <DssResponsive :hideOn="['sm']">
-    <DssText color="subtle">Este texto não aparece em telas pequenas.</DssText>
-  </DssResponsive>
-
-  <DssResponsive v-slot="{ currentBreakpoint, isMobile }" :breakpoint="['sm', 'md']">
-    <DssCard>
-      <DssCardSection>
-        <DssText>Breakpoint atual: {{ currentBreakpoint }}</DssText>
-        <DssText v-if="isMobile">Você está em um dispositivo móvel.</DssText>
-      </DssCardSection>
-    </DssCard>
-  </DssResponsive>
-</template>
-
-<script setup>
-import { DssButton, DssFab, DssText, DssCard, DssCardSection } from '@dss/components';
-</script>
-```
-
-### Estados a Expor
-
-| Estado | Descrição | Tipo | Trigger |
-|--------|-----------|------|----------|
-| `currentBreakpoint` | O breakpoint ativo no momento (e.g., `'xs'`, `'sm'`, `'md'`, `'lg'`, `'xl'`). | String | — |
-| `isXs` | `true` se o breakpoint atual for `xs`. | Boolean | — |
-| `isSm` | `true` se o breakpoint atual for `sm`. | Boolean | — |
-| `isMd` | `true` se o breakpoint atual for `md`. | Boolean | — |
-| `isLg` | `true` se o breakpoint atual for `lg`. | Boolean | — |
-| `isXl` | `true` se o breakpoint atual for `xl`. | Boolean | — |
-| `isMobile` | `true` se o breakpoint atual for `xs` ou `sm`. | Boolean | — |
-| `isDesktop` | `true` se o breakpoint atual for `md`, `lg` ou `xl`. | Boolean | — |
-
-## 9. CONSIDERAÇÕES FINAIS
-
-O DssResponsive é uma ferramenta poderosa para criar interfaces adaptáveis, mas deve ser usado com moderação. O uso excessivo de renderização condicional pode levar a um DOM complexo e difícil de manter. Sempre que possível, prefira o uso de CSS (media queries, flexbox, grid) para resolver problemas de layout responsivo, reservando o DssResponsive para casos onde a lógica de exibição ou o comportamento do componente precisam mudar significativamente com base no tamanho da tela.
-
-Além disso, é importante lembrar que a responsividade não se trata apenas de ajustar o layout para diferentes tamanhos de tela, mas também de garantir que a experiência do usuário seja otimizada para cada dispositivo. Isso pode envolver a adaptação de interações (e.g., touch vs. mouse), a otimização de imagens e outros recursos, e a consideração de diferentes contextos de uso.
-
-Ao utilizar o DssResponsive, certifique-se de testar a interface em uma variedade de dispositivos e tamanhos de tela para garantir que ela funcione conforme o esperado. Utilize as ferramentas de desenvolvedor do navegador para simular diferentes dispositivos e identificar possíveis problemas de layout ou comportamento.
-
-Lembre-se também de manter a acessibilidade em mente ao criar interfaces responsivas. Certifique-se de que o conteúdo oculto não seja acessível por leitores de tela e que o foco do teclado seja gerenciado corretamente ao alternar entre diferentes visualizações.
-
-Por fim, mantenha-se atualizado com as melhores práticas de design responsivo e as novidades do Design System para garantir que suas interfaces continuem a oferecer a melhor experiência possível aos usuários.
+DssResponsive é uma ferramenta poderosa para criar interfaces adaptáveis, mas deve ser usado com moderação. O uso excessivo de renderização condicional pode levar a um DOM complexo e difícil de manter. Sempre que possível, prefira o uso de CSS (media queries, flexbox, grid) para resolver problemas de layout responsivo, reservando o DssResponsive para casos onde a lógica de exibição ou o comportamento do componente precisam mudar significativamente com base no tamanho da tela.

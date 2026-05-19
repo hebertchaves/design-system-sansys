@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 19 de Maio de 2026 — DssSplitter SELADO
+> **Última Atualização:** 19 de Maio de 2026 — DssResponsive SELADO
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -80,7 +80,7 @@
 
 - [x] ~~`DssScrollArea`~~ ✅ **SELADO** *(19 Mai 2026)*
 - [x] ~~`DssSplitter`~~ ✅ **SELADO** *(19 Mai 2026)*
-- [ ] `DssResponsive` — Container que mantém aspect ratio responsivo ⬜
+- [x] ~~`DssResponsive`~~ ✅ **SELADO** *(19 Mai 2026)*
 
 ### Família: Tabela Simples
 
