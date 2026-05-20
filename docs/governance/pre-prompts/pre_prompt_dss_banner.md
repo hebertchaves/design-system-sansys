@@ -46,11 +46,11 @@ O `DssBanner` será construído com base nas capacidades de componentes de notif
 
 O `DssBanner` utilizará exclusivamente tokens do Design System para garantir consistência e facilidade de manutenção. Nenhum token semântico não-existente será inventado.
 
-*   **Espaçamento:** `--dss-spacing-4` (padding interno), `--dss-spacing-8` (espaçamento entre ícone e texto, ou texto e ações).
+*   **Espaçamento:** `--dss-padding-4` (padding interno), `--dss-gap-3` (espaçamento entre ícone e texto, ou texto e ações).
 *   **Raio da Borda:** `--dss-radius-md` para cantos arredondados padrão.
-*   **Cores de Superfície:** `--dss-surface-default` para o fundo padrão, e tokens específicos de `surface-info`, `surface-success`, `surface-warning`, `surface-error` para os diferentes `variants`. Para ações hub, usar --dss-action-hub-surface.`.
-*   **Cores de Texto:** `--dss-text-default` para o texto principal, `---dss-text-subtle para textos water, e tokens específicos de `text-info`, `text-success`, `text-warning`, `text-error` para os diferentes `variants`.
-*   **Cores de Ação:** `--dss-action-hub` para ações principais, `--dss-action-water para ações waters, e `--dss-action-waste` para ações destrutivas.
+*   **Cores de Superfície:** `--dss-surface-default` para o fundo padrão, e tokens específicos de `surface-brand-light` para variantes com brand. Para feedback: `--dss-feedback-info-surface`, `--dss-feedback-success-surface`, `--dss-feedback-warning-surface`, `--dss-feedback-error-surface`.
+*   **Cores de Texto:** `--dss-text-body` para o texto principal, `--dss-text-subtle` para textos secundários, e tokens específicos de `--dss-feedback-info`, `--dss-feedback-success`, `--dss-feedback-warning`, `--dss-feedback-error` para os diferentes `variants`.
+*   **Cores de Ação (brands):** `--dss-hub-600` para ações hub, `--dss-water-500` para ações water, e `--dss-waste-600` para ações waste.
 *   **Foco:** Utilizar `outline: 2px solid white` ou o token apropriado de foco do DSS para garantir visibilidade ao navegar por teclado.
 *   **Duração de Transição:** `--dss-duration-250` para animações de entrada/saída ou descarte.
 *   **Altura da Linha e Tamanho da Fonte:** Tokens de tipografia do DSS (e.g., `--dss-font-size-body-md`, `--dss-line-height-body-md`).

@@ -91,8 +91,8 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssResponsive` | `$q.screen` (Screen Plugin) | — | ✅ Selado (19 Mai 2026) |
 | `DssParallax` | `QParallax` | — | ✅ Selado (18 Mai 2026) |
 | `DssAjaxBar` | `QAjaxBar` | — | ✅ Selado (18 Mai 2026) |
-| `DssBanner` | `QBanner` | `DssButton`, `DssIcon` | ⬜ Pendente |
-| `DssBar` | `QBar` | `DssButton`, `DssIcon` | ⬜ Pendente |
+| `DssBanner` | `QBanner` | `DssButton`, `DssIcon` | ✅ Selado (20 Mai 2026) |
+| `DssBar` | `QBar` | `DssButton`, `DssIcon` | ✅ Selado (20 Mai 2026) |
 | `DssPopupEdit` | `QPopupEdit` | `DssInput`, `DssButton` | ✅ Selado (11 Mai 2026) |
 | `DssPullToRefresh` | `QPullToRefresh` | `DssIcon` | ⬜ Pendente |
 | `DssSlideItem` | `QSlideItem` | `DssIcon` | ⬜ Pendente |

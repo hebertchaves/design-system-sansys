@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 19 de Maio de 2026 — DssResponsive SELADO
+> **Última Atualização:** 20 de Maio de 2026 — DssBar SELADO (53/68 = 78%)
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -88,8 +88,8 @@
 
 ### Família: Notificações e Alertas
 
-- [ ] `DssBanner` — Faixa de notificação persistente (info, warning, error) ⬜
-- [ ] `DssBar` — Barra de sistema (título de janela, barra mobile) ⬜
+- [x] ~~`DssBanner`~~ ✅ **SELADO** *(20 Mai 2026)*
+- [x] ~~`DssBar`~~ ✅ **SELADO** *(20 Mai 2026)*
 
 ### Família: Interação Gestual
 

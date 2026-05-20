@@ -2,14 +2,18 @@
 
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
+**Fase:** 2 — **Nível:** 1 — **Independente**
+**Família:** Notificações e Alertas
+**Motor Quasar:** `QBar` (NÃO QToolbar — DssToolbar já encapsula QToolbar)
+
 ### Golden Reference
-O `DssBar` é um componente interativo, similar a uma barra de navegação ou cabeçalho. Portanto, o `DssChip` serve como **Golden Reference** para padrões de interação, acessibilidade e estados, enquanto o `DssBadge` pode ser consultado para aspectos de exibição de informações não-interativas contidas na barra.
+O `DssBar` é um componente **não-interativo** (container). O componente em si não responde a hover/focus/active — apenas os elementos internos possuem interação. Portanto, **DssBadge** é o **Golden Reference** para DssBar (padrão de componente não-interativo, consistente com DssMarkupTable, DssToolbar).
 
 ### Golden Context
-O `DssBar` é utilizado para exibir informações contextuais, ações rápidas ou navegação primária em uma interface. Ele pode conter elementos como título, botões de ação, ícones e, opcionalmente, um campo de busca ou outros componentes interativos. Seu uso é fundamental para a organização e a usabilidade da aplicação, fornecendo um ponto de acesso consistente para funcionalidades importantes.
+O **Golden Context** para auditar DssBar é **DssToolbar** — container horizontal de sistema, mesmo padrão de motor+wrapper, mesma estrutura não-interativa com suporte a brandabilidade. Use DssToolbar como baseline arquitetural durante auditoria.
 
 ### Justificativa
-A criação do `DssBar` visa padronizar a apresentação de barras de cabeçalho e navegação em todas as aplicações que utilizam o Design System. Isso garante consistência visual, comportamental e de acessibilidade, além de otimizar o desenvolvimento ao fornecer um componente reutilizável e bem definido. A integração com Vue.js/Quasar assegura a reatividade e a performance esperadas.
+A criação do `DssBar` visa padronizar barras de sistema (título de janela desktop/Electron, barra superior mobile) no Design System. Motor `QBar` é distinto de `QToolbar` (DssToolbar): QBar é usado para barras de sistema de baixo nível (window chrome, system UI), enquanto QToolbar é para toolbars de navegação de aplicação. A integração com Vue.js/Quasar assegura a reatividade e a performance esperadas.
 
 ## 2. RISCOS ARQUITETURAIS E GATES
 
@@ -25,57 +29,66 @@ A criação do `DssBar` visa padronizar a apresentação de barras de cabeçalho
 
 ## 3. MAPEAMENTO DE API (QUASAR → DSS)
 
-O `DssBar` será construído sobre o componente `QToolbar` do Quasar. A API do DSS deve abstrair as propriedades e eventos do Quasar, expondo uma interface mais semântica e alinhada com o Design System.
+O `DssBar` é construído sobre o componente **`QBar`** do Quasar (NÃO QToolbar). QBar é a barra de sistema de baixo nível do Quasar — usada para window title bars, Electron chrome e barras de sistema mobile.
 
-| Propriedade Quasar (QToolbar) | Propriedade DSS (DssBar) | Tipo | Descrição | Notas |
+**API real do QBar:**
+
+| Propriedade Quasar (QBar) | Propriedade DSS (DssBar) | Tipo | Descrição | Status |
 |---|---|---|---|---|
-| `dark` | `dark` | `Boolean` | Aplica o tema escuro. | Mapeamento direto. |
-| `dense` | `dense` | `Boolean` | Torna a barra mais compacta. | Mapeamento direto. |
-| `color` | `backgroundColor` | `String` | Cor de fundo da barra. | Deve aceitar tokens de cor do DSS (ex: `--dss-surface-default`). |
-| `text-color` | `textColor` | `String` | Cor do texto e ícones. | Deve aceitar tokens de cor do DSS. |
-| `inverted` | `inverted` | `Boolean` | Inverte as cores. | Considerar se é necessário ou se `backgroundColor` e `textColor` são suficientes. |
-| `fixed` | `fixed` | `Boolean` | Fixa a barra no topo. | Mapeamento direto. |
-| `float` | `float` | `Boolean` | Permite que a barra flutue. | Mapeamento direto. |
-| `elevated` | `elevated` | `Boolean` | Adiciona sombra para elevação. | Mapeamento direto. |
-| `v-slots` | `default`, `left`, `right` | `Slots` | Conteúdo da barra. | Abstrair slots do Quasar para slots nomeados do DSS. |
+| `dense` | `dense` | `Boolean` | Modo compacto — reduz altura e padding. | ✅ Exposta |
+| `dark` | — | `Boolean` | Aplica dark theme ao QBar. | ❌ Bloqueada — DSS usa `[data-theme="dark"]` global |
+| `glossy` | — | `Boolean` | Aparência brilhante. | ❌ Bloqueada — não faz parte do vocabulário visual DSS |
+| — | `elevated` | `Boolean` | Sombra de elevação (`--dss-shadow-md`). | ✅ DSS-própria (não existe no QBar) |
+| `default` slot | `default` slot | Slot | Conteúdo da barra. | ✅ Re-exposto diretamente |
+
+**Decisões de bloqueio:**
+- `dark`: Bloqueada — DSS gerencia dark mode via cascade global de tokens
+- `glossy`: Bloqueada — efeito visual fora do vocabulário DSS
+- `backgroundColor`/`textColor` como props: Bloqueadas — cores via brands CSS (`[data-brand]`) e tokens de superfície
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
-O `DssBar` deve utilizar exclusivamente tokens de design do DSS para espaçamento, raio, cores e duração de transições. É proibido o uso de valores hardcoded ou tokens semânticos não definidos no DSS.
+O `DssBar` deve utilizar exclusivamente tokens de design do DSS. Tokens fantasmas NÃO devem ser usados.
 
-### Exemplos de Uso de Tokens:
-- **Espaçamento interno (padding):** `--dss-spacing-4` (para padding geral), `--dss-spacing-2` (para espaçamento entre itens).
-- **Raio de borda (border-radius):** `--dss-radius-md` (se a barra tiver cantos arredondados).
-- **Cor de fundo:** `--dss-surface-default` (para o fundo padrão), `--dss-action-hub-surface` (para um fundo primário).
-- **Cor do texto/ícones:** `--dss-text-on-surface`, `--dss-text-subtle`.
-- **Duração de transições:** `--dss-duration-250` (para animações de hover ou clique).
-- **Foco:** `outline: 2px solid white` (para anéis de foco).
+### Tokens Reais Utilizados na Implementação:
+- **Padding:** `--dss-padding-4` (16px, padrão) · `--dss-padding-2` (8px, dense) — **NUNCA** `--dss-spacing-*` para padding
+- **Gap:** `--dss-gap-2` (8px entre itens) — **NUNCA** `--dss-spacing-*` para gap
+- **Altura:** `--dss-touch-target-md` (48px normal) · `--dss-compact-control-height-sm` (dense)
+- **Tipografia:** `--dss-font-family-sans` · `--dss-font-size-md` · `--dss-font-weight-normal` · `--dss-line-height-md`
+- **Superfície:** `--dss-surface-default` (fundo padrão) · `--dss-text-body` (texto padrão)
+- **Brands:** `--dss-hub-600` · `--dss-water-500` · `--dss-waste-600` · `--dss-text-inverse`
+- **Sombra:** `--dss-shadow-md` (elevação)
+- **Borda:** `--dss-border-width-thin` · `--dss-gray-700`
 
-### Regras de Ouro para Tokens:
-- **Espaçamento:** Utilizar `--dss-spacing-1` a `--dss-spacing-96`.
-- **Raio:** Utilizar `--dss-radius-sm`, `--dss-radius-md`, `--dss-radius-lg`, `--dss-radius-full`.
-- **Duração:** Utilizar `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-250`, `--dss-duration-300`.
-- **Cores de Brand:** Utilizar `hub`, `water`, `waste` em vez de `hub`, `water`, `waste`.
-- **NUNCA** inventar tokens com sufixos semânticos que não existem.
+### Tokens que NÃO existem (não usar):
+- ~~`--dss-spacing-4`~~ → usar `--dss-padding-4`
+- ~~`--dss-action-hub-surface`~~ → não existe; usar `[data-brand="hub"] .dss-bar { background: var(--dss-hub-600) }`
+- ~~`--dss-text-on-surface`~~ → não existe; usar `--dss-text-body` (claro) ou `--dss-text-inverse` (sobre brand)
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
-O `DssBar` deve ser totalmente acessível, seguindo as diretrizes WCAG 2.1 AA. Isso inclui suporte a navegação por teclado, leitores de tela e contraste de cores adequado.
+### Decisão de Touch Target
+DssBar é **container não-interativo** — a barra em si não tem touch target. Elementos internos (DssButton, DssIcon) possuem touch target próprio de 48px. Opção B (delegação ao consumer) — conforme DssBadge.
 
-### Estados:
-- **Padrão:** Estado inicial do componente.
-- **Hover:** Quando o cursor do mouse está sobre elementos interativos dentro da barra (botões, links).
-- **Focus:** Quando um elemento interativo dentro da barra recebe foco via teclado.
-- **Active/Pressed:** Quando um elemento interativo é ativado (clicado ou pressionado).
-- **Disabled:** Para elementos interativos desabilitados dentro da barra.
-- **Fixed:** Quando a barra está fixada no topo da tela.
-- **Elevated:** Quando a barra possui elevação (sombra).
+### Estados Implementados / N/A:
+| Estado | Status | Justificativa |
+|--------|--------|---------------|
+| default | ✅ | Estado inicial |
+| dense | ✅ | `dense=true` → QBar `.q-bar--dense` |
+| elevated | ✅ | `elevated=true` → `.dss-bar--elevated` + `--dss-shadow-md` |
+| hover | N/A | Barra não tem cursor próprio — delegado a filhos |
+| focus | N/A | Barra não é focável — delegado a filhos |
+| active | N/A | Barra não tem estado pressionado |
+| disabled | N/A | Container não é desabilitável |
+| loading | N/A | Componente estrutural |
 
-### Considerações de Acessibilidade:
-- **Semântica HTML:** Utilizar elementos HTML semânticos apropriados (ex: `<header>`, `<nav>`, `<button>`).
-- **Atributos ARIA:** Fornecer atributos ARIA (`aria-label`, `aria-labelledby`, `role`) para melhorar a experiência de leitores de tela, especialmente para elementos complexos ou interativos.
-- **Contraste de Cores:** Garantir que o contraste entre o texto/ícones e o fundo da barra atenda aos requisitos mínimos de acessibilidade.
-- **Navegação por Teclado:** Todos os elementos interativos devem ser navegáveis e operáveis via teclado.
+### Delegação de ARIA
+DssBar não impõe atributos ARIA no root — consumer é responsável por adicionar `role="banner"`, `aria-label`, etc. conforme contexto de uso. Documentar explicitamente no componente.
+
+### Acessibilidade implementada:
+- `forced-colors: active`: `ButtonFace`/`ButtonText` (EXC-States-01, sem `forced-color-adjust: none` no container)
+- `prefers-contrast: more`: `border-bottom` com `--dss-gray-700`
+- `prefers-reduced-motion`: N/A (sem animações)
 
 ## 6. DEPENDÊNCIAS E COMPOSIÇÃO
 

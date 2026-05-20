@@ -1,0 +1,40 @@
+/* ==========================================================================
+   DssBar — LAYER 2: COMPOSITION (Base Styles)
+
+   MOTOR: QBar (wraps q-bar)
+   Componente usado para barras de sistema: título de janela (desktop/Electron)
+   e barras superiores de aplicações mobile.
+
+   REGRAS:
+   ✅ Tokens genéricos DSS apenas
+   ✅ Estrutura e layout base
+   ✅ Sem valores hardcoded
+   ❌ Cores (ficam em 3-variants/ e 4-output/)
+   ✅ Touch target: N/A — barra é container; elementos internos têm touch target próprio
+   ========================================================================== */
+
+/* ==========================================================================
+   BAR BASE — Layout, Tipografia e Dimensionamento
+   ========================================================================== */
+
+.dss-bar {
+  /* Largura total */
+  width: 100%;
+
+  /* Altura mínima — referência: altura de touch target padrão DSS */
+  min-height: var(--dss-touch-target-md);
+
+  /* Espaçamento interno */
+  padding: 0 var(--dss-padding-4);
+  gap: var(--dss-gap-2);
+
+  /* Tipografia */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-md);
+
+  /* Fundo e cor de texto (sobrescritos por variantes/brands) */
+  background-color: var(--dss-surface-default);
+  color: var(--dss-text-body);
+}

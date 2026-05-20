@@ -1,0 +1,88 @@
+/* ==========================================================================
+   DssBanner — LAYER 3: VARIANTS
+   Variantes semânticas: default, info, success, warning, error
+   Variantes visuais: rounded (delegado ao QBanner via prop), dense (delegado)
+
+   REGRAS:
+   ✅ Apenas tokens DSS
+   ✅ Usa feedback surfaces e feedback colors do DSS_TOKEN_REFERENCE.md
+   ❌ Sem valores hardcoded
+   ========================================================================== */
+
+/* ==========================================================================
+   DEFAULT — Fundo neutro, borda cinza
+   ========================================================================== */
+
+.dss-banner--default {
+  background-color: var(--dss-surface-subtle);
+  border-left-color: var(--dss-gray-300);
+
+  /* Custom property para cor do ícone */
+  --dss-banner-icon-color: var(--dss-text-body);
+}
+
+/* ==========================================================================
+   INFO — Azul informativo
+   Fundo: --dss-feedback-info-surface (rgba info, 10%)
+   Borda: --dss-feedback-info (cor info padrão)
+   Ícone: --dss-feedback-info (cor info padrão)
+   ========================================================================== */
+
+.dss-banner--info {
+  background-color: var(--dss-feedback-info-surface);
+  border-left-color: var(--dss-feedback-info);
+
+  --dss-banner-icon-color: var(--dss-feedback-info-deep);
+}
+
+/* ==========================================================================
+   SUCCESS — Verde sucesso
+   Fundo: --dss-feedback-success-surface (rgba positive, 10%)
+   Borda: --dss-feedback-success (cor positive padrão)
+   Ícone: --dss-feedback-success-deep (verde mais escuro para contraste)
+   ========================================================================== */
+
+.dss-banner--success {
+  background-color: var(--dss-feedback-success-surface);
+  border-left-color: var(--dss-feedback-success);
+
+  --dss-banner-icon-color: var(--dss-feedback-success-deep);
+}
+
+/* ==========================================================================
+   WARNING — Amarelo aviso
+   Fundo: --dss-feedback-warning-surface (rgba warning, 10%)
+   Borda: --dss-feedback-warning (cor warning padrão)
+   Ícone: --dss-feedback-warning-deep (tom mais escuro para contraste)
+   ========================================================================== */
+
+.dss-banner--warning {
+  background-color: var(--dss-feedback-warning-surface);
+  border-left-color: var(--dss-feedback-warning);
+
+  --dss-banner-icon-color: var(--dss-feedback-warning-deep);
+}
+
+/* ==========================================================================
+   ERROR — Vermelho erro
+   Fundo: --dss-feedback-error-surface (rgba negative, 10%)
+   Borda: --dss-feedback-error (cor negative padrão)
+   Ícone: --dss-feedback-error-deep (vermelho mais escuro para contraste)
+   ========================================================================== */
+
+.dss-banner--error {
+  background-color: var(--dss-feedback-error-surface);
+  border-left-color: var(--dss-feedback-error);
+
+  --dss-banner-icon-color: var(--dss-feedback-error-deep);
+}
+
+/* ==========================================================================
+   DENSE — Padding reduzido (controlado via QBanner.props.dense)
+   EX-Structural-01: QBanner aplica a classe .q-banner--dense internamente;
+   usamos descendant selector para ajustar padding do wrapper DSS.
+   ========================================================================== */
+
+.dss-banner.q-banner--dense {
+  padding: var(--dss-padding-2) var(--dss-padding-4);
+}

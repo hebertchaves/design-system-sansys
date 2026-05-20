@@ -101,6 +101,8 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssSplitter** | Divisor redimensionável entre dois painéis — Fase 2 Nível 1 — Layout Auxiliar | DssChip | `conformant` — Selado (19 Mai 2026) |
 | **DssResponsive** | Wrapper utilitário de visibilidade por breakpoint — Fase 2 Nível 1 — Layout Auxiliar | DssBadge | `conformant` — Selado (19 Mai 2026) |
 | **DssMarkupTable** | Tabela HTML semântica com tokens DSS e brandabilidade — Fase 2 Nível 1 — Tabela Simples | DssBadge | `conformant` — Selado (19 Mai 2026) |
+| **DssBanner** | Faixa de notificação persistente (info, warning, error) — Fase 2 Nível 1 — Notificações e Alertas | DssBadge | `conformant` — Selado (20 Mai 2026) |
+| **DssBar** | Barra de sistema (título de janela Electron, barra mobile) — Fase 2 Nível 1 — Notificações e Alertas | DssBadge | `conformant` — Selado (20 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
@@ -370,6 +372,6 @@ Qualquer agente que ignore este documento **NÃO está operando no DSS**.
 
 **Design System Sansys — DSS v2.2**
 **Estado canônico ao final da Fase 1 — Fase 2 em andamento**
-**Última atualização da tabela de selos:** 19 de Maio de 2026
-**Totais:** Fase 1: 19/19 ✅ | Fase 2: 48/68 (71%) | Total selados: 67 componentes
+**Última atualização da tabela de selos:** 20 de Maio de 2026
+**Totais:** Fase 1: 19/19 ✅ | Fase 2: 53/68 (78%) | Total selados: 72 componentes
 
