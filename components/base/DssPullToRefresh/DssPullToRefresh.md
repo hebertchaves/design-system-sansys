@@ -204,7 +204,14 @@ Não aplicável como Compact Control — `DssPullToRefresh` é um container de r
 
 ---
 
-## 11. Exceções Registradas
+## 11. Decisões Arquiteturais
+
+*   **spinnerType descartado:** A prop `spinnerType` prevista no pré-prompt foi descartada. O `QPullToRefresh` usa um ícone Material simples para o indicador, não um componente spinner complexo. A customização via prop `icon` é suficiente e mais alinhada com o motor subjacente.
+*   **color bloqueada:** A prop `color` mapeada no pré-prompt foi bloqueada. A cor do indicador é governada via CSS (EXC-Gate-02-a) com base no atributo `data-brand` do container, seguindo o padrão do `DssPagination`.
+
+---
+
+## 12. Exceções Registradas
 
 | ID | Tipo | Local | Valor | Justificativa |
 |----|------|-------|-------|---------------|
@@ -218,7 +225,7 @@ Não aplicável como Compact Control — `DssPullToRefresh` é um container de r
 
 ---
 
-## 12. Anti-Patterns
+## 13. Anti-Patterns
 
 | Anti-Pattern | Por quê evitar |
 |-------------|----------------|
@@ -230,7 +237,7 @@ Não aplicável como Compact Control — `DssPullToRefresh` é um container de r
 
 ---
 
-## 13. Changelog
+## 14. Changelog
 
 | Versão | Data | Descrição |
 |--------|------|-----------|

@@ -50,7 +50,7 @@
 @media (forced-colors: active) {
   .dss-pull-to-refresh .q-pull-to-refresh__handler {
     background-color: ButtonFace !important;
-    border: 1px solid ButtonText;
+    border: var(--dss-border-width-thin) solid ButtonText;
     forced-color-adjust: auto;
   }
 

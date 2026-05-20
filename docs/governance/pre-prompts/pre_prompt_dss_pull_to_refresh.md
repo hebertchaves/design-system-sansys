@@ -150,7 +150,7 @@ A superfície de playground no Storybook deve permitir a exploração interativa
 
 | Propriedade | Tipo | Valores Permitidos | Valor Padrão | Descrição |
 | :--- | :--- | :--- | :--- | :--- |
-| `color` | Select | `'hub'`, `'water'`, `'waste'` | `'hub'` | Cor principal do indicador de refresh. |
+| `brand` | Select | `'hub'`, `'water'`, `'waste'` | `'hub'` | Cor principal do indicador de refresh (via `data-brand`). |
 | `size` | Select | `'sm'`, `'md'`, `'lg'` | `'md'` | Tamanho do indicador. |
 | `disabled` | Boolean | `true`, `false` | `false` | Desativa a funcionalidade de puxar. |
 | `simulateDelay` | Number | `0` a `5000` (ms) | `2000` | Controle exclusivo do playground para simular o tempo de resposta da API. |
@@ -163,7 +163,7 @@ A lógica do playground deve simular um cenário real de atualização de dados.
 <template>
   <div class="playground-container">
     <DssPullToRefresh
-      :color="args.color"
+      :data-brand="args.brand"
       :size="args.size"
       :disabled="args.disabled"
       @refresh="onRefresh"
@@ -221,8 +221,8 @@ const onRefresh = (done) => {
 | Estado | Descrição | Tipo | Trigger |
 |--------|-----------|------|----------|
 | Default (Hub) | Comportamento padrão com a cor principal da marca. | Visual | Padrão (renderização inicial) |
-| Water Theme | Indicador utilizando a cor secundária da marca. | Visual | Prop `brand="water"` ou `[data-brand="water"]` |
-| Waste Theme | Indicador utilizando a cor de destaque/alerta da marca. | Visual | Prop `brand="waste"` ou `[data-brand="waste"]` |
+| Water Theme | Indicador utilizando a cor secundária da marca. | Visual | Atributo `data-brand="water"` |
+| Waste Theme | Indicador utilizando a cor de destaque/alerta da marca. | Visual | Atributo `data-brand="waste"` |
 | Disabled | Componente desativado, não responde ao gesto de puxar. | Visual | Prop `disable=true` |
 | Small Size | Indicador em tamanho reduzido. | Visual | — |
 | Large Size | Indicador em tamanho ampliado. | Visual | — |

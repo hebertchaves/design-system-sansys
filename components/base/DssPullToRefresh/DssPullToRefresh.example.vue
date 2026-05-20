@@ -51,13 +51,13 @@ function onRefreshDisabled(_done: () => void) {
       </p>
       <div
         data-brand="hub"
-        style="height: 220px; overflow-y: auto; border: 1px solid var(--dss-gray-200); border-radius: var(--dss-radius-md);"
+        style="height: 55vh; overflow-y: auto; border: var(--dss-border-width-thin) solid var(--dss-gray-200); border-radius: var(--dss-radius-md);"
       >
         <DssPullToRefresh @refresh="onRefresh">
           <div
             v-for="item in items"
             :key="item.id"
-            style="padding: var(--dss-padding-4); border-bottom: 1px solid var(--dss-gray-100); color: var(--dss-text-body);"
+            style="padding: var(--dss-padding-4); border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-100); color: var(--dss-text-body);"
           >
             {{ item.label }}
           </div>
@@ -72,13 +72,13 @@ function onRefreshDisabled(_done: () => void) {
       </h3>
       <div
         data-brand="hub"
-        style="height: 180px; overflow-y: auto; border: 1px solid var(--dss-gray-200); border-radius: var(--dss-radius-md);"
+        style="height: 45vh; overflow-y: auto; border: var(--dss-border-width-thin) solid var(--dss-gray-200); border-radius: var(--dss-radius-md);"
       >
         <DssPullToRefresh size="sm" @refresh="onRefresh">
           <div
             v-for="item in items"
             :key="item.id"
-            style="padding: var(--dss-padding-3); border-bottom: 1px solid var(--dss-gray-100); color: var(--dss-text-body); font-size: var(--dss-font-size-sm);"
+            style="padding: var(--dss-padding-3); border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-100); color: var(--dss-text-body); font-size: var(--dss-font-size-sm);"
           >
             {{ item.label }}
           </div>
@@ -93,13 +93,13 @@ function onRefreshDisabled(_done: () => void) {
       </h3>
       <div
         data-brand="water"
-        style="height: 180px; overflow-y: auto; border: 1px solid var(--dss-water-200); border-radius: var(--dss-radius-md);"
+        style="height: 45vh; overflow-y: auto; border: var(--dss-border-width-thin) solid var(--dss-water-200); border-radius: var(--dss-radius-md);"
       >
         <DssPullToRefresh icon="sync" size="lg" @refresh="onRefreshWater">
           <div
             v-for="item in waterItems"
             :key="item.id"
-            style="padding: var(--dss-padding-4); border-bottom: 1px solid var(--dss-water-100); color: var(--dss-text-body);"
+            style="padding: var(--dss-padding-4); border-bottom: var(--dss-border-width-thin) solid var(--dss-water-100); color: var(--dss-text-body);"
           >
             {{ item.label }}
           </div>
@@ -114,7 +114,7 @@ function onRefreshDisabled(_done: () => void) {
       </h3>
       <div
         data-brand="hub"
-        style="height: 140px; overflow-y: auto; border: 1px solid var(--dss-gray-200); border-radius: var(--dss-radius-md);"
+        style="height: 35vh; overflow-y: auto; border: var(--dss-border-width-thin) solid var(--dss-gray-200); border-radius: var(--dss-radius-md);"
       >
         <DssPullToRefresh :disabled="true" @refresh="onRefreshDisabled">
           <div style="padding: var(--dss-padding-4); color: var(--dss-text-subtle);">
@@ -131,13 +131,13 @@ function onRefreshDisabled(_done: () => void) {
       </h3>
       <div
         data-brand="waste"
-        style="height: 160px; overflow-y: auto; border: 1px solid var(--dss-waste-200); border-radius: var(--dss-radius-md);"
+        style="height: 40vh; overflow-y: auto; border: var(--dss-border-width-thin) solid var(--dss-waste-200); border-radius: var(--dss-radius-md);"
       >
         <DssPullToRefresh :no-mouse="true" @refresh="onRefreshWater">
           <div
             v-for="item in waterItems"
             :key="item.id"
-            style="padding: var(--dss-padding-4); border-bottom: 1px solid var(--dss-waste-100); color: var(--dss-text-body);"
+            style="padding: var(--dss-padding-4); border-bottom: var(--dss-border-width-thin) solid var(--dss-waste-100); color: var(--dss-text-body);"
           >
             {{ item.label }}
           </div>

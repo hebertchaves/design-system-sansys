@@ -70,10 +70,28 @@
 }
 
 /* ==========================================================================
-   ESTADO DISABLED — Feedback visual ao consumidor
+   ESTADO DISABLED
+   NC-02 corrigido: A prop disable do QPullToRefresh já impede o gesto de pull
+   sem bloquear o conteúdo interno. pointer-events: none no container violaria
+   o Gate de Responsabilidade (container não pode capturar estados dos filhos).
+   Nenhum override CSS adicional é necessário.
    ========================================================================== */
+/* (sem regras CSS — disable é gerenciado inteiramente pelo QPullToRefresh) */
 
-.dss-pull-to-refresh--disabled {
-  opacity: var(--dss-opacity-disabled, 0.4);
-  pointer-events: none;
+/* ==========================================================================
+   UTILITÁRIO SR-ONLY LOCAL
+   EXC-SrOnly-02: Não existe utilitário global DSS para sr-only.
+   Risco aceito: duplicação se outro componente DSS precisar do mesmo padrão.
+   Precedente: DssParallax EXC-SrOnly-01.
+   ========================================================================== */
+.dss-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
