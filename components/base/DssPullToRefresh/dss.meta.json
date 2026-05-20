@@ -2,7 +2,7 @@
   "component": "DssPullToRefresh",
   "cssClass": "dss-pull-to-refresh",
   "phase": 2,
-  "status": "in-progress",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssInfiniteScroll",
@@ -25,7 +25,6 @@
     "--dss-icon-size-sm",
     "--dss-icon-size-md",
     "--dss-icon-size-lg",
-    "--dss-opacity-disabled",
     "--dss-border-width-thin",
     "--dss-border-width-thick",
 
@@ -121,7 +120,7 @@
       "date": "2026-05-20",
       "version": "v2.2",
       "auditor": "Chat Estratégico DSS",
-      "result": "REPROVADO — 1 NC Bloqueante",
+      "result": "REPROVADO — 1 NC Bloqueante (ciclo 1)",
       "ncs": [
         { "id": "NC-01", "severity": "bloqueante", "description": "Anunciador sr-only sem classe .dss-sr-only local.", "resolution": "Adicionado .dss-sr-only em 2-composition/_base.scss com EXC-SrOnly-02 registrada.", "status": "resolvida" },
         { "id": "NC-02", "severity": "não-bloqueante", "description": "Bloco .dss-pull-to-refresh--disabled com pointer-events: none viola Gate de Responsabilidade.", "resolution": "Bloco removido. disable é gerenciado inteiramente pelo QPullToRefresh.", "status": "resolvida" },
@@ -136,6 +135,16 @@
         { "id": "GAP-03", "description": "Golden Context sem nome no pré-prompt.", "resolution": "Golden Context corrigido para DssInfiniteScroll.", "status": "resolvida" },
         { "id": "GAP-04", "description": "Mapeamento de color incorreto no pré-prompt (prop color em vez de data-brand).", "resolution": "Seção 8 corrigida: prop brand via data-brand, composite logic e estados atualizados.", "status": "resolvida" }
       ]
+    },
+    {
+      "date": "2026-05-20",
+      "version": "v2.2",
+      "auditor": "Claude Code DSS",
+      "result": "APROVADO — 1 NC Não-Bloqueante corrigida",
+      "ncs": [
+        { "id": "NC-01", "severity": "não-bloqueante", "description": "Documentação inconsistente sobre estado disabled após NC-02 do ciclo 1: DssPullToRefresh.md §6 mencionava opacity + pointer-events; dss.meta.json e DSSPULLTOREFRESH_API.md listavam --dss-opacity-disabled como token usado (token fantasma).", "resolution": "DssPullToRefresh.md §6 corrigido; --dss-opacity-disabled removido de dss.meta.json e DSSPULLTOREFRESH_API.md.", "status": "resolvida" }
+      ],
+      "gaps": []
     }
   ]
 }

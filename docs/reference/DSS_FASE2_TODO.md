@@ -93,7 +93,7 @@
 
 ### Família: Interação Gestual
 
-- [ ] `DssPullToRefresh` — Gesto de arrastar para atualizar (mobile) ⬜
+- [x] `DssPullToRefresh` — Gesto de arrastar para atualizar (mobile) ✅ Selado (20 Mai 2026)
 - [ ] `DssSlideItem` — Item de lista com ações deslizáveis (swipe) ⬜
 
 ---

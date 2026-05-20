@@ -102,7 +102,7 @@ O componente possui 5 estados internos (gerenciados pelo QPullToRefresh):
 | Ready | ✅ | Gerenciado internamente pelo QPullToRefresh |
 | Refreshing | ✅ | `isRefreshing = true` → `aria-busy="true"` no anunciador |
 | Done | ✅ | Chamada de `done()` → `isRefreshing = false` |
-| Disabled | ✅ | `opacity: var(--dss-opacity-disabled)` + `pointer-events: none` |
+| Disabled | ✅ | Delegado ao QPullToRefresh via `:disable` prop — sem CSS adicional (ver NC-02 ciclo 1) |
 | Hover | N/A | Gesto de puxar não tem estado hover visual no handler |
 | Focus | N/A | O handler é gerado pelo QPullToRefresh sem foco próprio; não recebe foco via teclado |
 | Active | N/A | Não aplicável como estado CSS separado — Pulling/Ready já são estados visuais |

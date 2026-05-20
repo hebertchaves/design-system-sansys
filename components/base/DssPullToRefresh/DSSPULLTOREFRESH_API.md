@@ -60,7 +60,6 @@
 | `--dss-icon-size-sm` | Tamanho do ícone (size=sm) |
 | `--dss-icon-size-md` | Tamanho do ícone (size=md) |
 | `--dss-icon-size-lg` | Tamanho do ícone (size=lg) |
-| `--dss-opacity-disabled` | Opacidade do estado disabled |
 | `--dss-hub-600` | Cor do ícone em brand=hub |
 | `--dss-hub-50` | Background do handler em brand=hub |
 | `--dss-shadow-hub-md` | Sombra do handler em brand=hub |
