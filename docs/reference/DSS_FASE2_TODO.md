@@ -84,7 +84,7 @@
 
 ### Família: Tabela Simples
 
-- [ ] `DssMarkupTable` — Tabela HTML semântica com estilos DSS ⬜
+- [x] ~~`DssMarkupTable`~~ ✅ **SELADO** *(19 Mai 2026)*
 
 ### Família: Notificações e Alertas
 

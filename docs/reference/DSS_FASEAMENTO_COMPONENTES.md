@@ -86,7 +86,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssSkeleton` | `QSkeleton` | — | ✅ Selado (18 Mai 2026) |
 | `DssScrollArea` | `QScrollArea` | — | ✅ Selado (19 Mai 2026) |
 | `DssSplitter` | `QSplitter` | — | ✅ Selado (19 Mai 2026) |
-| `DssMarkupTable` | `QMarkupTable` | — | ⬜ Pendente |
+| `DssMarkupTable` | `QMarkupTable` | DssBadge | ✅ Selado (19 Mai 2026) |
 | `DssVideo` | `QVideo` | — | ✅ Selado (13 Mai 2026) |
 | `DssResponsive` | `$q.screen` (Screen Plugin) | — | ✅ Selado (19 Mai 2026) |
 | `DssParallax` | `QParallax` | — | ✅ Selado (18 Mai 2026) |
