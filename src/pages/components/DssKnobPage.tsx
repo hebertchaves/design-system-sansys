@@ -839,12 +839,8 @@ export default function DssKnobPage() {
             },
             {
               title: "Esquecer de documentar o valor no slot para screen readers",
-              wrong: '<DssKnob v-model="temp" show-value>
-  <span class="icon-thermo" />
-</DssKnob>',
-              correct: '<DssKnob v-model="temp" show-value>
-  <span class="icon-thermo" aria-label={`Temperatura: ${temp}°C`} />
-</DssKnob>',
+              wrong: '<DssKnob v-model="temp" show-value>\\n  <span class="icon-thermo" />\\n</DssKnob>',
+              correct: '<DssKnob v-model="temp" show-value>\\n  <span class="icon-thermo" aria-label={`Temperatura: ${temp}°C`} />\\n</DssKnob>',
               reason: "Quando o slot substitui o valor numérico, o conteúdo ARIA deve continuar descrevendo o valor atual.",
             },
           ].map((pattern, idx) => (
