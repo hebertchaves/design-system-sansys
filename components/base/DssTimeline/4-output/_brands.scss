@@ -1,0 +1,39 @@
+/* ==========================================================================
+   DssTimeline — LAYER 4: BRANDS (Hub, Water, Waste)
+
+   A linha conectora e o marcador/ponto adotam a cor principal da marca ativa.
+   Padrão: dual-selector (data-brand + classe standalone) para máxima
+   compatibilidade com contextos brandados sem envolver data-brand no DOM.
+
+   TOKENS: numéricos de marca (hub-600, water-500, waste-600) — padrão DSS.
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] .dss-timeline,
+.dss-timeline--brand-hub {
+  --dss-timeline-line-color: var(--dss-hub-600);
+  --dss-timeline-dot-color: var(--dss-hub-600);
+}
+
+/* ==========================================================================
+   WATER (Azul)
+   ========================================================================== */
+
+[data-brand="water"] .dss-timeline,
+.dss-timeline--brand-water {
+  --dss-timeline-line-color: var(--dss-water-500);
+  --dss-timeline-dot-color: var(--dss-water-500);
+}
+
+/* ==========================================================================
+   WASTE (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] .dss-timeline,
+.dss-timeline--brand-waste {
+  --dss-timeline-line-color: var(--dss-waste-600);
+  --dss-timeline-dot-color: var(--dss-waste-600);
+}

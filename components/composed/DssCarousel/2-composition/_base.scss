@@ -1,0 +1,114 @@
+/* ==========================================================================
+   DssCarousel — LAYER 2: COMPOSITION (Base Styles)
+
+   MOTOR: QCarousel + QCarouselSlide (EXC-Gate-01)
+   Componente de navegação de slides com suporte a setas, paginação,
+   autoplay, swipe e thumbnails.
+
+   EXC-Gate-01: QCarousel como motor insubstituível de slides.
+   EXC-Gate-02a: --q-color-primary override — QCarousel usa --q-color-primary
+     internamente para colorir os controles QBtn (setas e pontos).
+   EXC-Gate-02b: Descendant selector .q-carousel__navigation-icon — sem CSS
+     custom property nativa para diferenciar estado inativo dos pontos de
+     paginação.
+
+   REGRAS:
+   ✅ Tokens genéricos DSS apenas
+   ✅ Estrutura, layout, cores neutras de base
+   ✅ Sem valores hardcoded
+   ❌ Cores de marca (ficam em 4-output/_brands.scss)
+   ✅ Touch target: N/A — container; controles herdados de DssButton (global)
+   ========================================================================== */
+
+/* ==========================================================================
+   CAROUSEL BASE
+   ========================================================================== */
+
+.dss-carousel {
+  /* ─── EXC-Gate-02a: --q-color-primary override ─────────────────────────── */
+  /* QCarousel passa control-color="primary" aos QBtn internos,               */
+  /* que usam --q-color-primary (alias de --q-primary) para sua cor.          */
+  /* O DSS governa a cor real aqui e em _brands.scss.                         */
+  --q-color-primary: var(--dss-action-primary);
+
+  /* Arredondamento do container */
+  border-radius: var(--dss-radius-md);
+  overflow: hidden;
+
+  /* Background padrão para área sem slides (loading/vazio) */
+  background-color: var(--dss-surface-muted);
+}
+
+/* ==========================================================================
+   EXC-Gate-02b — Ponto de paginação INATIVO
+   Justificativa: QCarousel define color="primary" em TODOS os pontos de
+   paginação (ativos e inativos) via QBtn. Não há prop ou CSS custom property
+   nativa para diferenciar apenas os pontos inativos. Descendant selector com
+   !important é obrigatório para aplicar --dss-gray-400 no estado inativo.
+   ========================================================================== */
+
+/* Ponto inativo: cor sutil (cinza) */
+.dss-carousel .q-carousel__navigation-icon:not(.q-carousel__navigation-icon--active) {
+  color: var(--dss-gray-400) !important;
+  opacity: 1;
+}
+
+/* Ponto ativo: cor primária DSS (herdada via --q-color-primary) */
+.dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
+  color: var(--dss-action-primary) !important;
+}
+
+/* ==========================================================================
+   EXC-Gate-02c — Setas de navegação
+   Justificativa: QCarousel aplica .text-primary (color: var(--q-primary)) aos
+   botões de seta via control-color="primary". O override --q-color-primary é
+   suficiente; seletor descendente adicional só necessário para hover/active.
+   ========================================================================== */
+
+/* Hover overlay via ::after (::before reservado para touch target) */
+.dss-carousel .q-carousel__arrow .q-focus-helper {
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--dss-duration-hover) var(--dss-easing-hover);
+}
+
+.dss-carousel .q-carousel__arrow:hover .q-focus-helper {
+  opacity: 0.06;
+}
+
+.dss-carousel .q-carousel__arrow:active .q-focus-helper {
+  opacity: 0.12;
+}
+
+/* ==========================================================================
+   SLIDE — Conteúdo interno
+   ========================================================================== */
+
+/* Slide: garantir que ocupe todo o espaço do carousel */
+.dss-carousel .dss-carousel__slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   THUMBNAILS
+   ========================================================================== */
+
+/* Borda e espaçamento das miniaturas */
+.dss-carousel .q-carousel__thumbnail {
+  border-radius: var(--dss-radius-sm);
+  overflow: hidden;
+  opacity: 0.6;
+  transition: opacity var(--dss-duration-base) var(--dss-easing-standard);
+}
+
+.dss-carousel .q-carousel__thumbnail--active,
+.dss-carousel .q-carousel__thumbnail:hover {
+  opacity: 1;
+}
+
+/* Borda de destaque na miniatura ativa */
+.dss-carousel .q-carousel__thumbnail--active {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
+}

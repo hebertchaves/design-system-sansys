@@ -125,7 +125,7 @@
 
 ### Família: Conteúdo Rico
 
-- [ ] `DssTimeline` 🔒 *(aguarda DssIcon, DssAvatar)*
+- [x] `DssTimeline` + `DssTimelineEntry` ✅ Selado (21 Mai 2026)
 - [ ] `DssCarousel` 🔒 *(aguarda DssButton, DssIcon)*
 - [ ] `DssChatMessage` 🔒 *(aguarda DssAvatar)*
 

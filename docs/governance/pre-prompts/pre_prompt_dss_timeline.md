@@ -1,5 +1,17 @@
 # Pré-prompt: DssTimeline
 
+> **⚠️ CORREÇÃO RETROATIVA (Auditoria 2026-05-21):**
+> Este pré-prompt continha tokens inexistentes e nomes de props incorretos. Correções:
+> - `--dss-action-hub` → `--dss-hub-600`; `--dss-action-water` → `--dss-water-500`; `--dss-action-waste` → `--dss-waste-600`
+> - `--dss-color-neutral-400` → `--dss-gray-400`; `--dss-color-neutral-300` → `--dss-gray-300`
+> - `--dss-text-hub`, `--dss-text-water`, `--dss-text-waste` → não existem (usar tokens numéricos de marca)
+> - `--dss-border-width-sm` → `--dss-border-width-thin`; `--dss-border-color-default` → `--dss-gray-300`
+> - `--dss-font-weight-bold` → `--dss-font-weight-semibold`
+> - Prop `orientation` → `layout` (valores: `dense | comfortable | loose`)
+> - Prop `alignment` → `side` (valores: `left | right`)
+> - Subcomponente `DssTimelineItem` → **`DssTimelineEntry`** (QTimelineEntry como motor)
+> - O componente **não** implementa CSS custom — é wrapper de QTimeline/QTimelineEntry com EXC-Gate-01.
+
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 ### Golden Reference
 DssBadge

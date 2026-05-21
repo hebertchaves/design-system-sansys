@@ -115,7 +115,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssToolbarTitle` | `QToolbarTitle` | `DssToolbar` | ✅ Selado (21 Abr 2026) |
 | `DssUploader` | `QUploader` + `QUploaderAddTrigger` | `DssButton`, `DssIcon`, `DssLinearProgress` | ✅ Selado (07 Mai 2026) |
 | `DssBottomSheet` | `QBottomSheet` (plugin) | `DssList`, `DssItem` | ⬜ Pendente |
-| `DssTimeline` | `QTimeline` + `QTimelineEntry` | `DssIcon`, `DssAvatar` | ⬜ Pendente |
+| `DssTimeline` + `DssTimelineEntry` | `QTimeline` + `QTimelineEntry` | `DssIcon`, `DssAvatar` | ✅ Selado (21 Mai 2026) |
 | `DssCarousel` | `QCarousel` + `QCarouselSlide` + `QCarouselControl` | `DssButton`, `DssIcon` | ⬜ Pendente |
 | `DssPopupProxy` | `QPopupProxy` | `DssMenu` ou `DssDialog` | ⬜ Pendente |
 | `DssField` | `QField` | `DssInput` (padrão visual) | ⬜ Pendente |

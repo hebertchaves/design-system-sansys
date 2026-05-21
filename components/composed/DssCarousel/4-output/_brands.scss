@@ -1,0 +1,70 @@
+/* ==========================================================================
+   DssCarousel — LAYER 4: BRANDS (Hub, Water, Waste)
+
+   Sobrescreve --q-color-primary por brand para colorir os controles de
+   navegação (setas e ponto de paginação ativo).
+
+   EXC-Gate-02a: --q-color-primary override — padrão estabelecido por
+   DssPagination e DssAjaxBar. Cor real dos controles é governada pelo DSS,
+   não pela prop control-color do Quasar.
+
+   Padrão dual-selector (data-brand + classe standalone).
+   Tokens numéricos de marca: hub-600, water-500, waste-600.
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] .dss-carousel,
+.dss-carousel--brand-hub {
+  --q-color-primary: var(--dss-hub-600);
+}
+
+[data-brand="hub"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
+.dss-carousel--brand-hub .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
+  color: var(--dss-hub-600) !important;
+}
+
+[data-brand="hub"] .dss-carousel .q-carousel__thumbnail--active,
+.dss-carousel--brand-hub .q-carousel__thumbnail--active {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
+}
+
+/* ==========================================================================
+   WATER (Azul)
+   ========================================================================== */
+
+[data-brand="water"] .dss-carousel,
+.dss-carousel--brand-water {
+  --q-color-primary: var(--dss-water-500);
+}
+
+[data-brand="water"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
+.dss-carousel--brand-water .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
+  color: var(--dss-water-500) !important;
+}
+
+[data-brand="water"] .dss-carousel .q-carousel__thumbnail--active,
+.dss-carousel--brand-water .q-carousel__thumbnail--active {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
+}
+
+/* ==========================================================================
+   WASTE (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] .dss-carousel,
+.dss-carousel--brand-waste {
+  --q-color-primary: var(--dss-waste-600);
+}
+
+[data-brand="waste"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
+.dss-carousel--brand-waste .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
+  color: var(--dss-waste-600) !important;
+}
+
+[data-brand="waste"] .dss-carousel .q-carousel__thumbnail--active,
+.dss-carousel--brand-waste .q-carousel__thumbnail--active {
+  box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
+}
