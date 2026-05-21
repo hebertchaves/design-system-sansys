@@ -1,0 +1,270 @@
+// ==========================================================================
+// DssChatMessage — Layer 2: Base Composition
+// ==========================================================================
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// REGRAS:
+// - APENAS tokens genéricos (--dss-spacing-*, --dss-radius-*, --dss-font-*, etc.)
+// - ZERO valores hardcoded
+// - ZERO cores aplicadas no SCSS (exceto tokens de superfície semânticos)
+// - ZERO lógica de variantes de brand
+// - Touch target N/A — container de conteúdo, não controle compacto
+// ==========================================================================
+
+// ==========================================================================
+// ROOT — Container de Mensagem
+// ==========================================================================
+
+.dss-chat-message {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--dss-spacing-2);
+  max-width: 100%;
+
+  // Interação
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+
+  // Transição de seleção
+  transition: background-color var(--dss-duration-200) var(--dss-easing-standard);
+}
+
+// ==========================================================================
+// AVATAR ÁREA
+// ==========================================================================
+
+.dss-chat-message__avatar-area {
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+
+.dss-chat-message__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--dss-radius-full);
+}
+
+// ==========================================================================
+// CONTEÚDO PRINCIPAL
+// ==========================================================================
+
+.dss-chat-message__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-0_5);
+  min-width: 0; // previne overflow em textos longos
+  /*
+   * EX-Structural-01: 75% é constante geométrica de layout para bolhas de chat.
+   * Convenção universal de interfaces de mensageria (evita linhas excessivamente largas).
+   * Não há token DSS equivalente para max-width de componente.
+   */
+  max-width: 75%;
+}
+
+// ==========================================================================
+// NOME DO REMETENTE
+// ==========================================================================
+
+.dss-chat-message__sender-name {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-semibold);
+  line-height: var(--dss-line-height-md);
+  color: var(--dss-text-subtle);
+  padding-left: var(--dss-spacing-1);
+}
+
+// ==========================================================================
+// BOLHA DA MENSAGEM
+// ==========================================================================
+
+.dss-chat-message__bubble {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-1);
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+
+  // Transição suave de cor em hover/seleção
+  transition: filter var(--dss-duration-150) var(--dss-easing-standard);
+}
+
+// ==========================================================================
+// CONTEÚDO (TEXTO)
+// ==========================================================================
+
+.dss-chat-message__content {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-md);
+}
+
+.dss-chat-message__text {
+  margin: 0;
+  padding: 0;
+}
+
+// ==========================================================================
+// METADADOS (TIMESTAMP + STATUS)
+// ==========================================================================
+
+.dss-chat-message__meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--dss-spacing-1);
+  align-self: flex-end;
+}
+
+.dss-chat-message__timestamp {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-tight);
+  color: var(--dss-text-subtle);
+  white-space: nowrap;
+}
+
+// ==========================================================================
+// STATUS DA MENSAGEM
+// ==========================================================================
+
+.dss-chat-message__status {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+
+  // Cores por estado — via currentColor herdado pelo DssIcon
+  &--sending {
+    color: var(--dss-text-subtle);
+    animation: dss-chat-sending var(--dss-duration-slowest) var(--dss-easing-ease-in-out) infinite alternate;
+  }
+
+  &--sent {
+    color: var(--dss-text-subtle);
+  }
+
+  &--delivered {
+    color: var(--dss-text-subtle);
+  }
+
+  &--read {
+    // Padrão sem brand: texto-body (brand sobrescreve em _brands.scss)
+    color: var(--dss-text-body);
+  }
+
+  &--error {
+    color: var(--dss-feedback-error);
+  }
+}
+
+@keyframes dss-chat-sending {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+// ==========================================================================
+// AÇÕES CONTEXTUAIS
+// ==========================================================================
+
+.dss-chat-message__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-1);
+  margin-top: var(--dss-spacing-1);
+}
+
+// ==========================================================================
+// ALINHAMENTO: MENSAGEM RECEBIDA (lado esquerdo)
+// ==========================================================================
+
+.dss-chat-message--received {
+  flex-direction: row;
+  justify-content: flex-start;
+
+  .dss-chat-message__main {
+    align-items: flex-start;
+  }
+
+  .dss-chat-message__bubble {
+    background-color: var(--dss-surface-default);
+    color: var(--dss-text-body);
+    // Bico no canto inferior esquerdo (aponta para o avatar)
+    border-radius: var(--dss-radius-sm) var(--dss-radius-lg) var(--dss-radius-lg) var(--dss-radius-lg);
+    box-shadow: var(--dss-shadow-sm);
+  }
+}
+
+// ==========================================================================
+// ALINHAMENTO: MENSAGEM ENVIADA (lado direito)
+// ==========================================================================
+
+.dss-chat-message--mine {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+
+  .dss-chat-message__main {
+    align-items: flex-end;
+  }
+
+  .dss-chat-message__bubble {
+    // Padrão sem brand: cinza neutro
+    background-color: var(--dss-gray-200);
+    color: var(--dss-text-body);
+    // Bico no canto inferior direito (aponta para o avatar)
+    border-radius: var(--dss-radius-lg) var(--dss-radius-sm) var(--dss-radius-lg) var(--dss-radius-lg);
+    box-shadow: var(--dss-shadow-sm);
+  }
+
+  .dss-chat-message__sender-name {
+    padding-left: 0;
+    padding-right: var(--dss-spacing-1);
+  }
+}
+
+// ==========================================================================
+// ESTADO: SELECIONADO
+// ==========================================================================
+
+.dss-chat-message--selected .dss-chat-message__bubble {
+  outline: var(--dss-border-width-md) solid currentColor;
+  outline-offset: var(--dss-spacing-0_5);
+}
+
+// ==========================================================================
+// ESTADO: DESABILITADO
+// ==========================================================================
+
+.dss-chat-message--disable {
+  opacity: var(--dss-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// ==========================================================================
+// HOVER / ACTIVE — feedback visual de interatividade
+// (Exceção documentada: brightness() com valores canônicos 0.95 / 0.90)
+// ==========================================================================
+
+.dss-chat-message:not(.dss-chat-message--disable):hover .dss-chat-message__bubble {
+  filter: brightness(0.95);
+}
+
+.dss-chat-message:not(.dss-chat-message--disable):active .dss-chat-message__bubble {
+  filter: brightness(0.90);
+}
+
+// ==========================================================================
+// FOCUS (quando elementos filhos recebem foco via teclado)
+// ==========================================================================
+
+.dss-chat-message:focus-visible {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline-offset: var(--dss-spacing-1);
+  border-radius: var(--dss-radius-md);
+}

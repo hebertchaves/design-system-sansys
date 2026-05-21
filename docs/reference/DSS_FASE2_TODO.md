@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 21 de Maio de 2026 — DssBottomSheet SELADO (56/68 = 82%)
+> **Última Atualização:** 21 de Maio de 2026 — DssChatMessage SELADO (61/68 = 90%)
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -126,8 +126,8 @@
 ### Família: Conteúdo Rico
 
 - [x] `DssTimeline` + `DssTimelineEntry` ✅ Selado (21 Mai 2026)
-- [ ] `DssCarousel` 🔒 *(aguarda DssButton, DssIcon)*
-- [ ] `DssChatMessage` 🔒 *(aguarda DssAvatar)*
+- [x] ~~`DssCarousel`~~ ✅ **SELADO**
+- [x] ~~`DssChatMessage`~~ ✅ **SELADO** *(21 Mai 2026)*
 
 ### Família: Upload
 
@@ -203,9 +203,9 @@
 | Nível | Total | Selados | % Concluído |
 |---|---|---|---|
 | Fase 1 | 19 | 19 | 100% |
-| Fase 2 — Nível 1 | 38 | 26 | 68% |
-| Fase 2 — Nível 2 | 16 | 10 | 63% |
+| Fase 2 — Nível 1 | 38 | 38 | 100% |
+| Fase 2 — Nível 2 | 16 | 14 | 88% |
 | Fase 2 — Nível 3 | 7 | 4 | 57% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **45** | **66%** |
+| **Fase 2 Total** | **68** | **61** | **90%** |
 | Fase 3 | 6 | N/A | — |

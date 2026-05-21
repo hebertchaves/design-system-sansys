@@ -1,0 +1,45 @@
+// ==========================================================================
+// DssChatMessage — Layer 3: Variants
+// ==========================================================================
+//
+// RESPONSABILIDADE: Variantes visuais (densidade)
+//
+// REGRAS:
+// - ZERO valores hardcoded
+// - ZERO cores aplicadas
+// - Apenas ajustes de layout/densidade
+// ==========================================================================
+
+// ==========================================================================
+// VARIANTE: COMPACTO
+// Reduz espaçamento para alta densidade de mensagens (ex: logs, notificações)
+// ==========================================================================
+
+.dss-chat-message--compact {
+  gap: var(--dss-spacing-1_5);
+
+  .dss-chat-message__main {
+    gap: var(--dss-spacing-0_5);
+  }
+
+  .dss-chat-message__bubble {
+    padding: var(--dss-spacing-1_5) var(--dss-spacing-2_5);
+  }
+
+  .dss-chat-message__content {
+    font-size: var(--dss-font-size-sm);
+  }
+
+  .dss-chat-message__sender-name {
+    font-size: var(--dss-font-size-xs);
+  }
+
+  .dss-chat-message__timestamp {
+    font-size: var(--dss-font-size-xs);
+  }
+
+  .dss-chat-message__actions {
+    margin-top: var(--dss-spacing-0_5);
+    gap: var(--dss-spacing-0_5);
+  }
+}
