@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 20 de Maio de 2026 — DssSlideItem SELADO (55/68 = 81%)
+> **Última Atualização:** 21 de Maio de 2026 — DssBottomSheet SELADO (56/68 = 82%)
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -113,7 +113,7 @@
 - [x] ~~`DssBreadcrumbs`~~ ✅ **SELADO**
 - [x] ~~`DssStepper`~~ ✅ **SELADO** *(20 Abr 2026)*
 - [x] ~~`DssMenu`~~ ✅ **SELADO** *(18 Abr 2026)*
-- [ ] `DssBottomSheet` 🔒 *(aguarda DssList, DssItem)*
+- [x] ~~`DssBottomSheet`~~ ✅ **SELADO** *(21 Mai 2026)*
 
 ### Família: FAB
 
