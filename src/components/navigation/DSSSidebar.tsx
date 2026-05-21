@@ -52,6 +52,8 @@ import {
   Image as ImageIcon,
   Video as VideoIcon,
   ArrowDownToLine,
+  Gauge,
+  Menu as MenuIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
