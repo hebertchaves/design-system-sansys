@@ -38,6 +38,7 @@ import DssVideoPage from "./pages/components/DssVideoPage";
 import DssInfiniteScrollPage from "./pages/components/DssInfiniteScrollPage";
 import DssKnobPage from "./pages/components/DssKnobPage";
 import DssMenuPage from "./pages/components/DssMenuPage";
+import DssTestCadrisPage from "./pages/components/DssTestCadrisPage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
 import ClassificationPage from "./pages/governance/ClassificationPage";
@@ -98,6 +99,8 @@ const App = () => (
             <Route path="/componentes/dss-img" element={<DssImgPage />} />
             <Route path="/componentes/dss-video" element={<DssVideoPage />} />
             <Route path="/componentes/dss-infinite-scroll" element={<DssInfiniteScrollPage />} />
+            <Route path="/componentes/dss-knob" element={<DssKnobPage />} />
+            <Route path="/componentes/dss-menu" element={<DssMenuPage />} />
             <Route path="/componentes/teste-cadris" element={<DssTestCadrisPage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             
