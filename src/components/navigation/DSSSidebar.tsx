@@ -94,6 +94,8 @@ const navigation = {
       { title: "DssHeader", url: "/componentes/dss-header", icon: PanelTop, status: "stable" },
       { title: "DssImg", url: "/componentes/dss-img", icon: ImageIcon, status: "stable" },
       { title: "DssInfiniteScroll", url: "/componentes/dss-infinite-scroll", icon: ArrowDownToLine, status: "stable" },
+      { title: "DssKnob", url: "/componentes/dss-knob", icon: Gauge, status: "stable" },
+      { title: "DssMenu", url: "/componentes/dss-menu", icon: MenuIcon, status: "stable" },
       { title: "DssPage", url: "/componentes/dss-page", icon: FileText, status: "stable" },
       { title: "DssPagination", url: "/componentes/dss-pagination", icon: MoreHorizontal, status: "stable" },
       { title: "DssVideo", url: "/componentes/dss-video", icon: VideoIcon, status: "stable" },
