@@ -104,6 +104,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssBanner** | Faixa de notificação persistente (info, warning, error) — Fase 2 Nível 1 — Notificações e Alertas | DssBadge | `conformant` — Selado (20 Mai 2026) |
 | **DssBar** | Barra de sistema (título de janela Electron, barra mobile) — Fase 2 Nível 1 — Notificações e Alertas | DssBadge | `conformant` — Selado (20 Mai 2026) |
 | **DssPullToRefresh** | Wrapper de interação gestual (pull-to-refresh) — Fase 2 Nível 1 — Interação Gestual | DssChip | `conformant` — Selado (20 Mai 2026) |
+| **DssSlideItem** | Item de lista com ações deslizáveis (swipe) — Fase 2 Nível 1 — Interação Gestual | DssBadge | `conformant` — Selado (20 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 

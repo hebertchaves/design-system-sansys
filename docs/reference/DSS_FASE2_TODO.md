@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 20 de Maio de 2026 — DssBar SELADO (53/68 = 78%)
+> **Última Atualização:** 20 de Maio de 2026 — DssSlideItem SELADO (55/68 = 81%)
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -94,7 +94,7 @@
 ### Família: Interação Gestual
 
 - [x] `DssPullToRefresh` — Gesto de arrastar para atualizar (mobile) ✅ Selado (20 Mai 2026)
-- [ ] `DssSlideItem` — Item de lista com ações deslizáveis (swipe) ⬜
+- [x] ~~`DssSlideItem`~~ ✅ **SELADO** *(20 Mai 2026)*
 
 ---
 

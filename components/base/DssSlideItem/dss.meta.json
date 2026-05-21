@@ -1,0 +1,134 @@
+{
+  "component": "DssSlideItem",
+  "cssClass": "dss-slide-item",
+  "phase": 2,
+  "status": "in-progress",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssPullToRefresh",
+  "motor": "QSlideItem",
+  "classification": {
+    "type": "Interativo — Wrapper de Interação Gestual",
+    "category": "Interação Gestual",
+    "family": "Interação Gestual",
+    "level": 1,
+    "interactive": true
+  },
+  "phaseDescription": "Fase 2 — Nível 1 — Independente. Depende apenas de componentes da Fase 1 (nenhum componente DSS instanciado internamente).",
+  "tokens": [
+    "--dss-feedback-error",
+    "--dss-feedback-success",
+    "--dss-feedback-warning",
+    "--dss-feedback-info",
+    "--dss-text-inverse",
+    "--dss-padding-4",
+    "--dss-gap-2",
+    "--dss-border-width-thin"
+  ],
+  "statesApplicable": [
+    "idle",
+    "sliding",
+    "action-revealed",
+    "action-triggered",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover — gesto gestual, sem estado hover CSS próprio no container",
+    "focus — o foco é gerenciado pelos elementos internos (slot default), não pelo container",
+    "loading — sem indicador de carregamento interno; o consumer gerencia o estado de processamento da ação",
+    "active — sliding/action-triggered são os equivalentes; sem :active CSS separado"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "gateException",
+      "description": "QSlideItem como elemento root do componente DSS.",
+      "justification": "Motor necessário para o comportamento de swipe (gestão de eventos de toque, limiares, animação de retorno). Sem ele, o componente não pode existir.",
+      "location": "1-structure/DssSlideItem.ts.vue"
+    },
+    {
+      "id": "EXC-Gate-02-a",
+      "type": "gateException",
+      "description": "background-color !important nos descendant selectors .q-slide-item__left e .q-slide-item__right.",
+      "justification": "O QSlideItem aplica bg-{color} (classe Quasar com especificidade de 1 classe) nas áreas de ação. Sem !important, o override DSS perde em especificidade.",
+      "location": "2-composition/_base.scss"
+    },
+    {
+      "id": "EXC-Gate-02-b",
+      "type": "gateException",
+      "description": "CSS variables --dss-slide-item-left-bg e --dss-slide-item-right-bg injetadas via inline style pelo componente Vue.",
+      "justification": "Única forma de governar a cor por instância sem criar tokens específicos de componente (proibido na Fase 2). Cada instância pode ter cores diferentes; variáveis CSS no :root não serviriam.",
+      "location": "1-structure/DssSlideItem.ts.vue, 2-composition/_base.scss"
+    },
+    {
+      "id": "EXC-States-01",
+      "type": "statesException",
+      "description": "animation-duration: 0.01ms !important para prefers-reduced-motion.",
+      "justification": "A animação de swipe/retorno é CSS-based (transição do QSlideItem). CSS puro é suficiente. Padrão DssPullToRefresh.",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EXC-Expose-01",
+      "type": "exposeException",
+      "description": "defineExpose do método reset() do QSlideItem.",
+      "justification": "API imperativa necessária para resetar item programaticamente após processamento assíncrono da ação. Padrão: DssInfiniteScroll, DssScrollArea, DssPullToRefresh.",
+      "location": "1-structure/DssSlideItem.ts.vue"
+    }
+  ],
+  "accessibilityNotes": {
+    "wcag": "2.1 AA",
+    "criticalWarning": "O gesto de swipe não é acessível via teclado. Toda interface com DssSlideItem DEVE fornecer um mecanismo alternativo (botão, menu contextual) para cada ação.",
+    "ariaRole": "O consumer deve garantir que o DssSlideItem esteja dentro de um q-list (role='list' implícito)",
+    "actionLabels": "O conteúdo dos slots left/right deve ter texto descritivo visível ou aria-label"
+  },
+  "compositionRecommendations": {
+    "slotDefault": "DssItem + DssItemSection + DssItemLabel (padrão para listas)",
+    "slotLeft": "DssIcon + texto descritivo (ex: 'Deletar')",
+    "slotRight": "DssIcon + texto descritivo (ex: 'Arquivar')",
+    "requiredAlternative": "DssButton ou menu contextual para cada ação (obrigatório para acessibilidade)"
+  },
+  "defaultPreview": "DssSlideItem com slot default (DssItem), slot left (deletar) e slot right (arquivar), leftColor=error, rightColor=info",
+  "auditHistory": [
+    {
+      "date": "2026-05-20",
+      "version": "v2.2",
+      "auditor": "Claude Code DSS",
+      "result": "APROVADO — 1 NC Não-Bloqueante corrigida, 4 GAPs documentados",
+      "ncs": [
+        {
+          "id": "NC-01",
+          "severity": "não-bloqueante",
+          "description": "DssSlideItem.md e DSSSLIDEITEM_API.md declaravam Padrão: 'error'/'info' para leftColor/rightColor, mas o código usa undefined com fallback condicional.",
+          "resolution": "Documentação corrigida: 'undefined (fallback: error/info quando slot presente)'.",
+          "status": "resolvida"
+        }
+      ],
+      "gaps": [
+        {
+          "id": "GAP-01",
+          "description": "as any no reset() do defineExpose sem comentário explicativo.",
+          "resolution": "Comentário adicionado: 'QSlideItem.reset() não tipado publicamente na versão atual do Quasar'.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-02",
+          "description": "example.vue usava componentes Quasar brutos (q-item, q-icon) quando existem equivalentes DSS.",
+          "resolution": "example.vue atualizado com DssItem e DssIcon.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-03",
+          "description": "pre_prompt_dss_slide_item.md descreve componente semanticamente diferente (item de carrossel vs. swipe actions).",
+          "resolution": "Registrado para correção retroativa do pré-prompt antes do próximo componente da família.",
+          "status": "pendente"
+        },
+        {
+          "id": "GAP-04",
+          "description": "Estado disabled sem feedback visual no container. QSlideItem bloqueia gesto mas não altera visual.",
+          "resolution": "Nota adicionada em DssSlideItem.md §6: consumer deve aplicar disable no DssItem do slot default. Demonstrado no example.vue (cenário 3).",
+          "status": "resolvida"
+        }
+      ]
+    }
+  ]
+}

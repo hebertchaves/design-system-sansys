@@ -95,7 +95,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssBar` | `QBar` | `DssButton`, `DssIcon` | ✅ Selado (20 Mai 2026) |
 | `DssPopupEdit` | `QPopupEdit` | `DssInput`, `DssButton` | ✅ Selado (11 Mai 2026) |
 | `DssPullToRefresh` | `QPullToRefresh` | `DssIcon` | ✅ Selado (20 Mai 2026) |
-| `DssSlideItem` | `QSlideItem` | `DssIcon` | ⬜ Pendente |
+| `DssSlideItem` | `QSlideItem` | `DssIcon` | ✅ Selado (20 Mai 2026) |
 
 ---
 
