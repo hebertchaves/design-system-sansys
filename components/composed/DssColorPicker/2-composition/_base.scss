@@ -1,0 +1,90 @@
+// =============================================================================
+// DssColorPicker — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// GOLDEN REFERENCE: DssChip (componente interativo — focus, hover, disabled)
+// GOLDEN CONTEXT:   DssDatePicker (QMotor root, color="primary" fixo + --q-color-primary override)
+//
+// EXC-Gate-02: --q-color-primary override.
+//   QColor usa --q-color-primary para o indicador da aba ativa nos QTabs internos
+//   (espectro / ajuste / paleta). Override via CSS custom property na classe
+//   raiz .dss-color-picker.
+//   Padrão idêntico ao DssPagination, DssAjaxBar, DssCarousel,
+//   DssTimePicker e DssDatePicker.
+//
+// EXC-Gate-02b: Descendant selectors para elementos internos do QColor.
+//   QColor não fornece CSS custom property hooks nativos para as partes
+//   internas listadas abaixo. Descendant selectors são o único mecanismo
+//   de override CSS disponível.
+//
+// TOKENS UTILIZADOS:
+//   Cor primária (override): --dss-action-primary (via --q-color-primary)
+//   Superfície:              --dss-surface-default, --dss-surface-hover
+//   Border-radius:           --dss-radius-md, --dss-radius-sm
+//   Focus:                   --dss-focus-ring, --dss-border-width-md
+//   Disabled:                --dss-opacity-disabled
+//   Transição:               --dss-duration-hover, --dss-easing-hover
+// =============================================================================
+
+.q-color-picker.dss-color-picker {
+  // ── EXC-Gate-02: Override da cor primária do Quasar ───────────────────────
+  //
+  // QColor usa --q-color-primary (resolvida a partir da prop color="primary")
+  // para colorir o indicador da aba ativa (QTabs interno).
+  // Substituímos pelo token semântico DSS.
+  --q-color-primary: var(--dss-action-primary);
+
+  // ── Superfície do color picker ────────────────────────────────────────────
+  background-color: var(--dss-surface-default);
+  border-radius: var(--dss-radius-md);
+
+  // ── EXC-Gate-02b: Área de paleta de cores ─────────────────────────────────
+  //
+  // .q-color-picker__palette-square — cada quadrado de cor na paleta
+  // Hover via brightness canônico (valor 0.85 da tabela canônica DSS).
+  .q-color-picker__palette-square {
+    border-radius: var(--dss-radius-sm);
+    transition: filter var(--dss-duration-hover) var(--dss-easing-hover);
+
+    &:hover {
+      // EX-Structural-01: brightness(0.85) — valor canônico para hover em
+      // elementos de cor saturada. Não existe token DSS de brightness.
+      // Valor extraído da tabela canônica DSS (0.85 para hover light).
+      filter: brightness(0.85);
+    }
+
+    &:focus-visible {
+      outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+      outline-offset: 2px;
+    }
+  }
+
+  // ── EXC-Gate-02b: Header do color picker ──────────────────────────────────
+  //
+  // QColor renderiza o header com a cor selecionada como fundo.
+  // Adicionamos apenas o border-radius correto para o topo.
+  .q-color-picker__header {
+    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+  }
+
+  // ── Focus — padrão DssChip (Golden Reference) ────────────────────────────
+  &:focus-visible {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline-offset: 2px;
+  }
+
+  // ── Disabled ──────────────────────────────────────────────────────────────
+  //
+  // QColor adiciona aria-disabled="true" e pointer-events:none quando disable=true.
+  &[aria-disabled='true'] {
+    opacity: var(--dss-opacity-disabled);
+  }
+
+  // ── Readonly ──────────────────────────────────────────────────────────────
+  //
+  // QColor adiciona .q-color-picker--readonly quando readonly=true.
+  &.q-color-picker--readonly {
+    cursor: default;
+  }
+}

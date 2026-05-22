@@ -7,8 +7,10 @@ export interface DssChatMessageProps {
   message?: string
   /** Indica se a mensagem foi enviada pelo usuário atual (alinhamento à direita, cor de bolha distinta) */
   isMine?: boolean
-  /** Carimbo de data/hora exibido na mensagem */
+  /** Carimbo de data/hora exibido na mensagem (formato legível pelo usuário, ex: "10:30") */
   timestamp?: string
+  /** Valor legível por máquina para o atributo `datetime` do elemento `<time>` (ex: "2026-05-21T10:30:00") */
+  datetimeValue?: string
   /** Nome do remetente (exibido acima da bolha em mensagens recebidas) */
   senderName?: string
   /** URL da imagem de avatar do remetente */

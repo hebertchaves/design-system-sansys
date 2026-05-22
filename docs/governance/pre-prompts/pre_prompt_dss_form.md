@@ -3,10 +3,13 @@
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
 ### Golden Reference
-O `DssForm` é um componente interativo, e sua Golden Reference é o `DssChip`.
+DssChip
 
 ### Golden Context
-O `DssForm` é um componente fundamental para a coleta e validação de dados em interfaces de usuário. Ele atua como um contêiner para diversos elementos de entrada (inputs), organizando-os de forma lógica e facilitando a interação do usuário. Sua principal função é agrupar campos relacionados, gerenciar o estado de validação e submissão, e garantir uma experiência consistente e acessível para formulários em todo o sistema. O componente deve suportar fluxos de dados complexos, garantindo a integridade da informação antes de enviá-la ao backend.
+DssDialog
+
+### Justificativa do Golden Context
+DssDialog é o Golden Context mais próximo para DssForm: ambos usam um componente Quasar como motor direto (EXC-Gate-01), ambos expõem métodos imperativos via `defineExpose` (EXC-Expose-01 — DssDialog expõe o motor QDialog; DssForm expõe `validate/resetValidation/submit/reset` do QForm), ambos são containers estruturais não-interativos no root (Gate de Responsabilidade), e ambos utilizam `inheritAttrs: false` + `v-bind="$attrs"` ao motor Quasar. A diferença central é que DssForm renderiza como `<form>` nativo (semântica HTML) enquanto DssDialog teleporta para `<body>`.
 
 ### Justificativa
 A necessidade do `DssForm` surge da demanda por uma solução padronizada e robusta para a criação de formulários. Ele abstrai a complexidade de gerenciamento de estado, validação e acessibilidade, permitindo que os desenvolvedores se concentrem na lógica de negócio. Ao encapsular essas funcionalidades, o `DssForm` promove a reutilização, reduz erros e garante a conformidade com as diretrizes do Design System, resultando em interfaces mais consistentes e de alta qualidade. Além disso, centraliza o tratamento de erros e o feedback visual, melhorando a experiência do usuário.
@@ -37,23 +40,27 @@ A necessidade do `DssForm` surge da demanda por uma solução padronizada e robu
 
 ## 4. GOVERNANÇA DE TOKENS E CSS
 
-O `DssForm` deve utilizar estritamente os tokens numéricos/padrão do DSS para espaçamento, raio, duração e superfície, evitando qualquer sufixo semântico não existente.
+O `DssForm` é um container estrutural leve — QForm renderiza como `<form>` HTML nativo sem superfície visual. CSS é mínimo.
 
-*   **Espaçamento**: Utilizar tokens como `--dss-spacing-4`, `--dss-spacing-8`, `--dss-spacing-16` para margens e preenchimentos internos. Ex: `padding: var(--dss-spacing-16);`
-*   **Raio de Borda**: Utilizar tokens como `--dss-radius-md`, `--dss-radius-lg` para cantos arredondados. Ex: `border-radius: var(--dss-radius-md);`
-*   **Duração de Transição**: Utilizar tokens como `--dss-duration-250`, `--dss-duration-300` para animações e transições. Ex: `transition-duration: var(--dss-duration-250);`
-*   **Superfície**: Utilizar tokens como `--dss-surface-default`, `--dss-surface-alt` para cores de fundo. Ex: `background-color: var(--dss-surface-default);`
-*   **Cores de Ação**: Utilizar `--dss-action-hub` em vez de hub, `--dss-action-water` em vez de water, e `--dss-action-waste` em vez de waste.
-*   **Texto**: Utilizar `--dss-text-subtle` para textos secundários.
-*   **Foco**: Utilizar `outline: 2px solid var(--dss-color-hub)` ou `outline: 2px solid white` para anéis de foco, evitando tokens fantasmas.
+**Tokens utilizados (implementação canônica)**:
+- `--dss-form-gap` — gap entre campos do formulário (`tokens/semantic/_spacing.scss`, mapeia para `--dss-spacing-4`)
+- Demais tokens de espaçamento: `--dss-gap-3`, `--dss-gap-4`, `--dss-gap-6` (quando necessário)
 
-**Tokens a serem utilizados (exemplos):**
-*   `--dss-spacing-1` a `--dss-spacing-96`
-*   `--dss-radius-sm`, `--dss-radius-md`, `--dss-radius-lg`, `--dss-radius-full`
-*   `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-250`, `--dss-duration-300`
-*   `--dss-surface-default`, `--dss-surface-alt`, `--dss-surface-inverted` (se aplicável)
+**DssForm NÃO usa** (responsabilidade dos filhos):
+- Tokens de cor/superfície (`--dss-surface-default`, `--dss-hub-600`, etc.) — a cor pertence aos campos internos
+- Tokens de sombra ou elevation — DssForm não tem superfície elevada
+- Tokens de radius — DssForm não tem borda ou cantos arredondados próprios
 
-**NUNCA inventar tokens com sufixos semânticos que não existem (ex: `--dss-spacing-4`, `--dss-duration-base`).**
+**Tokens que NÃO existem no DSS (nunca usar)**:
+- `--dss-action-hub` → Use `--dss-hub-600`
+- `--dss-action-water` → Use `--dss-water-600`
+- `--dss-action-waste` → Use `--dss-waste-600`
+- `--dss-surface-alt` → Use `--dss-surface-variant` (se existir) ou `--dss-gray-100`
+- `--dss-surface-inverted` → Não existe; use `--dss-surface-default` no escopo correto
+- `--dss-text-subtle` → Use `--dss-text-secondary`
+- `--dss-duration-150/200/300` → Use `--dss-duration-fast` ou `--dss-duration-normal` (verificar catálogo)
+- `--dss-color-hub` → Use `--dss-hub-600`
+- Valores hardcoded de px, rem, hex, rgb → Sempre `var(--dss-*)`
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
@@ -76,10 +83,10 @@ O `DssForm` deve utilizar estritamente os tokens numéricos/padrão do DSS para 
 ## 6. DEPENDÊNCIAS E COMPOSIÇÃO
 
 ### Dependências Internas (outros componentes DSS)
-*   `DssInput` (e suas variantes como `DssTextInput`, `DssSelect`, `DssCheckbox`, `DssRadio`, `DssDateInput`, etc.)
-*   `DssButton` (para submissão e ações do formulário)
-*   `DssValidationMessage` (para exibir mensagens de erro)
-*   `DssSpinner` (para indicar estado de carregamento)
+*   `DssInput`, `DssTextarea`, `DssSelect`, `DssCheckbox`, `DssRadio`, `DssToggle`, `DssSlider`, `DssFile` (campos de entrada — todas já seladas Fase 1)
+*   `DssButton` (para submissão e ações do formulário — já selado Fase 1)
+*   `DssSpinner` (para indicar estado de carregamento — já selado Fase 1)
+*   `DssValidationMessage` — **NÃO EXISTE no DSS**. Mensagens de erro são exibidas pelos próprios campos (`DssInput`, `DssSelect`, etc.) via prop `error-message`. Documentar como lacuna de Fase 3 se demandado.
 
 ### Dependências Externas
 *   **Vue.js**: Framework principal.

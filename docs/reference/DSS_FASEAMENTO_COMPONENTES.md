@@ -82,7 +82,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssCircularProgress` | `QCircularProgress` | — | ✅ Selado (18 Mai 2026) |
 | `DssInnerLoading` | `QInnerLoading` | `DssSpinner` | ✅ Selado (18 Mai 2026) |
 | `DssKnob` | `QKnob` | — | ✅ Selado (18 Mai 2026) |
-| `DssRating` | `QRating` | `DssIcon` | ⬜ Pendente |
+| `DssRating` | `QRating` | `DssIcon` | ✅ Selado v2.2 — 2026-05-18 |
 | `DssSkeleton` | `QSkeleton` | — | ✅ Selado (18 Mai 2026) |
 | `DssScrollArea` | `QScrollArea` | — | ✅ Selado (19 Mai 2026) |
 | `DssSplitter` | `QSplitter` | — | ✅ Selado (19 Mai 2026) |
@@ -114,13 +114,13 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssFab` | `QFab` | `DssButton`, `DssIcon` | ✅ Selado (04 Mai 2026) |
 | `DssToolbarTitle` | `QToolbarTitle` | `DssToolbar` | ✅ Selado (21 Abr 2026) |
 | `DssUploader` | `QUploader` + `QUploaderAddTrigger` | `DssButton`, `DssIcon`, `DssLinearProgress` | ✅ Selado (07 Mai 2026) |
-| `DssBottomSheet` | `QBottomSheet` (plugin) | `DssList`, `DssItem` | ⬜ Pendente |
+| `DssBottomSheet` | `QBottomSheet` (plugin) | `DssList`, `DssItem` | ✅ Selado v2.2 |
 | `DssTimeline` + `DssTimelineEntry` | `QTimeline` + `QTimelineEntry` | `DssIcon`, `DssAvatar` | ✅ Selado (21 Mai 2026) |
-| `DssCarousel` | `QCarousel` + `QCarouselSlide` + `QCarouselControl` | `DssButton`, `DssIcon` | ⬜ Pendente |
-| `DssPopupProxy` | `QPopupProxy` | `DssMenu` ou `DssDialog` | ⬜ Pendente |
-| `DssField` | `QField` | `DssInput` (padrão visual) | ⬜ Pendente |
-| `DssForm` | `QForm` | `DssButton` (submit/reset) | ⬜ Pendente |
-| `DssChatMessage` | `QChatMessage` | `DssAvatar` | ⬜ Pendente |
+| `DssCarousel` | `QCarousel` + `QCarouselSlide` + `QCarouselControl` | `DssButton`, `DssIcon` | ✅ Selado v2.2 — 2026-05-21 |
+| `DssPopupProxy` | `QPopupProxy` | `DssMenu` ou `DssDialog` | ✅ Selado v2.2 — 2026-05-21 |
+| `DssField` | `QField` | `DssInput` (padrão visual) | ✅ Selado v2.2 — 2026-05-19 |
+| `DssForm` | `QForm` | `DssButton` (submit/reset) | ✅ Selado v2.2 — 2026-05-22 |
+| `DssChatMessage` | `QChatMessage` | `DssAvatar` | ✅ Selado v2.2 — 2026-05-21 |
 
 ---
 
@@ -134,8 +134,8 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssHeader` | `QHeader` | `DssToolbar` | ✅ Selado (17 Abr 2026) |
 | `DssFooter` | `QFooter` | `DssToolbar` | ✅ Selado (18 Abr 2026) |
 | `DssDrawer` | `QDrawer` | `DssList`, `DssMenu` | ✅ Selado (19 Abr 2026) |
-| `DssTimePicker` | `QTime` | `DssIcon`, `DssButton` | ⬜ Pendente |
-| `DssDatePicker` | `QDate` | `DssIcon`, `DssButton`, `DssBtnGroup` | ⬜ Pendente |
+| `DssTimePicker` | `QTime` | `DssIcon`, `DssButton` | ✅ Selado v2.2 — 2026-05-22 |
+| `DssDatePicker` | `QDate` | `DssIcon`, `DssButton`, `DssBtnGroup` | ✅ Selado v2.2 — 2026-05-22 |
 | `DssColorPicker` | `QColor` | `DssInput`, `DssSlider` | ⬜ Pendente |
 
 ---
@@ -182,10 +182,10 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | Fase 1 — Atômicos | 19 | 19 | 0 |
 | Fase 2 — Nível 1 (Independentes) | 37 | 20 | 17 |
 | Fase 2 — Nível 2 (1º Grau) | 16 | 9 | 7 |
-| Fase 2 — Nível 3 (2º Grau) | 7 | 4 | 3 |
+| Fase 2 — Nível 3 (2º Grau) | 7 | 5 | 2 |
 | Fase 2 — Nível 4 (Layouts) | 7 | 5 | 2 |
 | Fase 3 — Patterns/Utilitários | 6 | N/A | N/A |
-| **TOTAL** | **92** | **57** | **29** |
+| **TOTAL** | **92** | **58** | **28** |
 
 ---
 

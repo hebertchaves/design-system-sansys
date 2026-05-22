@@ -1,0 +1,15 @@
+// ==========================================================================
+// DssForm — Layer 3: Variants
+// ==========================================================================
+//
+// DssForm não possui variantes visuais próprias.
+//
+// Justificativa: DssForm é um container estrutural cujo único CSS é o
+// gap entre campos (Layer 2). Variações de layout (inline, grid, etc.)
+// são responsabilidade do consumidor via classes utilitárias Quasar
+// (row, col-*, q-gutter-*) ou CSS externo.
+//
+// Arquivo mantido para conformidade com a arquitetura de 4 camadas DSS.
+// Referência: DssDialog (_variant.scss vazio), DssPopupProxy (_variant.scss vazio).
+//
+// ==========================================================================

@@ -2,11 +2,13 @@
 
 ## 1. CLASSIFICAÇÃO E CONTEXTO
 
-**Golden Reference:** DssChip
+**Fase:** 2 — Nível 2 (Composição de Primeiro Grau) | **Família:** Conteúdo Rico
 
-**Golden Context:** O componente `DssChatMessage` é projetado para exibir mensagens individuais em uma interface de chat ou conversação. Ele deve ser capaz de representar mensagens enviadas pelo usuário atual e mensagens recebidas de outros participantes, com metadados associados como remetente, timestamp e status de leitura. Sua natureza interativa, permitindo seleção ou ações contextuais, o alinha com o `DssChip` como referência.
+**Golden Reference:** DssChip (interativo — touch target `::before`, pseudo-elementos, brand system)
 
-**Justificativa:** A necessidade de um componente de mensagem de chat padronizado no DSS surge da crescente demanda por interfaces de comunicação ricas e consistentes. Este componente garantirá uma experiência de usuário unificada em todas as aplicações que incorporam funcionalidades de chat, promovendo a reutilização e reduzindo o esforço de desenvolvimento.
+**Golden Context:** DssCarousel (composto Fase 2, EXC-Arch-01 — HTML semântico customizado com subcomponentes DSS internos)
+
+**Justificativa de EXC-Arch-01:** `QChatMessage` do Quasar é primitivo demais: texto como array de strings, sem slots ricos, sem status icons, sem estados de entrega/leitura. `DssChatMessage` é implementado como HTML semântico customizado (`<article role="listitem">`) com `DssAvatar` e `DssIcon` como subcomponentes internos.
 
 ## 2. RISCOS ARQUITETURAIS E GATES
 
@@ -60,22 +62,32 @@ O `DssChatMessage` utilizará exclusivamente tokens do DSS para garantir consist
     *   `border-top-right-radius: var(--dss-radius-xs);` (ajuste para mensagens recebidas, diferenciando visualmente a origem).
 
 *   **Cores de Superfície:**
-    *   `background-color: var(--dss-surface-default);` (cor de fundo para mensagens recebidas, mantendo a neutralidade e foco no conteúdo).
-    *   `background-color: var(--dss-action-hub-surface);` (cor de fundo para mensagens enviadas pelo usuário, indicando a autoria e interatividade).
-    *   `background-color: var(--dss-surface-water);` (cor de fundo para mensagens de sistema ou informativas, destacando-as sutilmente).
+    *   `background-color: var(--dss-surface-default);` — bolha de mensagem recebida (neutro).
+    *   `background-color: var(--dss-gray-200);` — bolha de mensagem enviada, sem brand (padrão).
+    *   `background-color: var(--dss-{hub|water|waste}-primary);` — bolha mine com brand ativo.
+    *   `background-color: var(--dss-surface-dark);` — bolha recebida em dark mode.
+    *   `background-color: var(--dss-gray-600);` — bolha mine em dark mode.
 
 *   **Cores de Texto:**
-    *   `color: var(--dss-text-default);` (cor padrão para o texto principal da mensagem, garantindo contraste e legibilidade).
-    *   `color: var(--dss-text-subtle);` (cor para metadados como timestamp e nome do remetente, indicando informações secundárias).
+    *   `color: var(--dss-text-body);` — texto principal da mensagem.
+    *   `color: var(--dss-text-subtle);` — timestamp, nome do remetente, ícones de status neutros.
+    *   `color: var(--dss-text-inverse);` — texto sobre superfícies escuras (dark mode).
+    *   `color: var(--dss-{hub|water|waste}-on-primary);` — texto sobre bolha mine com brand.
 
 *   **Duração de Transição:**
-    *   `transition: background-color var(--dss-duration-250) ease-in-out;` (transição suave para estados de hover ou seleção, melhorando a experiência do usuário).
-    *   `transition: transform var(--dss-duration-150) ease-out;` (transição para efeitos de escala ou movimento em interações, como ao clicar).
+    *   `transition: background-color var(--dss-duration-200) var(--dss-easing-standard);` — hover/seleção.
+    *   `transition: filter var(--dss-duration-150) var(--dss-easing-standard);` — brightness na bolha.
+    *   `animation: ... var(--dss-duration-slowest) var(--dss-easing-ease-in-out) infinite alternate;` — pulsação do status sending.
 
 *   **Sombras:**
-    *   `box-shadow: var(--dss-shadow-sm);` (sombra sutil para destacar a bolha da mensagem em superfícies claras).
+    *   `box-shadow: var(--dss-shadow-sm);` — sombra sutil da bolha.
 
-**Tokens Proibidos:** `--dss-spacing-4`, `--dss-margin-sm`, `--dss-color-blue`, `--dss-duration-base` (qualquer token com sufixo semântico não numérico ou não padrão). A utilização de tokens semânticos e escaláveis é mandatório para a governança do Design System.
+**⚠️ Tokens que NÃO existem no catálogo DSS (proibidos):**
+- `--dss-action-hub-surface`, `--dss-action-water` → usar `--dss-hub-primary`, `--dss-water-primary`
+- `--dss-surface-water`, `--dss-surface-hub` → tokens por produto não existem; usar `--dss-surface-default`
+- `--dss-text-default` → usar `--dss-text-body`
+- `--dss-duration-250` → tokens de duração existentes: `--dss-duration-150`, `-200`, `-slowest`
+- `--dss-margin-sm`, `--dss-color-blue` → não existem no catálogo DSS
 
 ## 5. ACESSIBILIDADE E ESTADOS
 
@@ -144,8 +156,8 @@ Um `DssChatMessage` é uma composição flexível de vários componentes menores
 *   `contentType` (String, opcional): Define o tipo de conteúdo da mensagem além de texto simples, como `image`, `video`, `file`, `link`. Permite que o componente renderize o conteúdo de forma apropriada.
 
 **Composite Logic:**
-*   **Alinhamento e Estilo da Bolha:** A propriedade `isMine` é a principal controladora do layout. Se `isMine` for `true`, a bolha da mensagem deve ser alinhada à direita, ter um `border-bottom-right-radius` menor para criar um "bico" e usar `background-color: var(--dss-action-hub-surface)`. Se `isMine` for `false`, a bolha deve ser alinhada à esquerda, ter um `border-bottom-left-radius` menor e usar `background-color: var(--dss-surface-default)`.
-*   **Feedback de Status:** O `status` da mensagem deve acionar a renderização de ícones específicos. Por exemplo, `status: 'read'` deve exibir um ícone de check duplo (ex: `DssIcon` com `name='check-double'`) na cor `--dss-action-water`. `status: 'error'` deve exibir um ícone de exclamação (ex: `DssIcon` com `name='alert-circle'`) na cor `--dss-feedback-error`.
+*   **Alinhamento e Estilo da Bolha:** A propriedade `isMine` é a principal controladora do layout. Se `isMine` for `true`, a bolha é alinhada à direita com `border-radius: var(--dss-radius-lg) var(--dss-radius-sm) var(--dss-radius-lg) var(--dss-radius-lg)` e `background-color: var(--dss-gray-200)` (sem brand) ou `var(--dss-{brand}-primary)` (com brand). Se `isMine` for `false`, alinhada à esquerda com `border-radius: var(--dss-radius-sm) var(--dss-radius-lg) var(--dss-radius-lg) var(--dss-radius-lg)` e `background-color: var(--dss-surface-default)`.
+*   **Feedback de Status (ícones Material Icons):** `sending` → `schedule` (animado, `--dss-text-subtle`); `sent` → `done` (`--dss-text-subtle`); `delivered` → `done_all` (`--dss-text-subtle`); `read` → `done_all` (`--dss-text-body` sem brand, `--dss-{brand}-primary` com brand); `error` → `error_outline` (`--dss-feedback-error`).
 *   **Exibição do Avatar:** A presença da propriedade `avatarSrc` deve condicionar a renderização do componente `DssAvatar`. Se `avatarSrc` estiver vazio ou nulo, o `DssAvatar` não deve ser exibido, ou um placeholder com as iniciais do `senderName` pode ser gerado. A posição do avatar pode ser ajustada com base em `isMine` ou `avatarPlacement`.
 *   **Ações Contextuais:** Quando `hasActions` é `true`, um slot nomeado `actions` deve ser ativado, permitindo que o consumidor do componente injete `DssButton` ou `DssIcon` interativos. Alternativamente, um menu de contexto padrão pode ser exibido ao passar o mouse ou clicar na mensagem, oferecendo opções como "Responder", "Encaminhar", "Excluir".
 *   **Renderização de Conteúdo:** A propriedade `contentType` deve guiar a renderização do `message`. Se `contentType` for `image`, o `message` deve ser tratado como uma URL de imagem e renderizado dentro de um `DssImage`. Se for `link`, o `message` deve ser transformado em um `DssLink` clicável. Isso garante que diferentes tipos de conteúdo sejam apresentados de forma otimizada e segura.

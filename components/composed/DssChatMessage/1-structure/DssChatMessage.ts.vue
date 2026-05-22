@@ -246,9 +246,11 @@ const handleClick = (event: MouseEvent) => {
           class="dss-chat-message__meta"
           aria-hidden="true"
         >
-          <time v-if="timestamp" class="dss-chat-message__timestamp">
-            {{ timestamp }}
-          </time>
+          <time
+              v-if="timestamp"
+              class="dss-chat-message__timestamp"
+              :datetime="datetimeValue"
+            >{{ timestamp }}</time>
           <span
             v-if="status && statusIcon"
             :class="`dss-chat-message__status dss-chat-message__status--${status}`"

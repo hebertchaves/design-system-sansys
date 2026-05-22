@@ -24,10 +24,10 @@
 
 | ID | Impacto | Fase | Descrição |
 |----|---------|------|-----------|
-| GAP-01 | Baixo | Fase 3 | `<time>` sem atributo `datetime` — elemento semântico sem formato legível por máquina (WCAG 1.3.1). Documentar responsabilidade do consumer ou adicionar prop `datetimeValue`. |
-| GAP-02 | Baixo | — | `<img>` HTML nativo no slot de DssAvatar em vez de `DssImg`. Atenuado: DssAvatar é projetado para receber `<img>` em seu slot; `DssImg` serve imagens de conteúdo, não avatares. |
-| GAP-03 | Baixo | — | Pré-prompt §4 listava tokens fantasmas (`--dss-action-hub-surface`, `--dss-surface-water`). Ignorados na implementação; pré-prompt deve ser corrigido. |
-| GAP-04 | Baixo | — | `dss.meta.json` status "in-progress" não atualizado automaticamente — corrigido para "sealed" neste ciclo de auditoria. |
+| GAP-01 | Baixo | ✅ Corrigido | `<time>` sem `datetime` — prop `datetimeValue?: string` adicionada; template usa `:datetime="datetimeValue"`. Documentado na API. |
+| GAP-02 | Baixo | Aceito | `<img>` HTML nativo no slot de DssAvatar em vez de `DssImg`. Atenuado: DssAvatar é projetado para receber `<img>` em seu slot; `DssImg` serve imagens de conteúdo, não avatares. |
+| GAP-03 | Baixo | ✅ Corrigido | Pré-prompt §4 com tokens fantasmas (`--dss-action-hub-surface`, `--dss-surface-water`, `--dss-text-default`, `--dss-action-water`). Seções 1, 4 e 8 reescritas com tokens reais e Golden Context declarado explicitamente. |
+| GAP-04 | Baixo | ✅ Corrigido | `dss.meta.json` atualizado para `status: "sealed"` com `auditHistory` registrado. |
 
 ## Exceções Aprovadas
 

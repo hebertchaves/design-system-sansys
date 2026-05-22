@@ -160,8 +160,8 @@
 
 ### Família: Inputs de Data/Hora
 
-- [ ] `DssTimePicker` 🔒 *(aguarda DssIcon, DssButton)*
-- [ ] `DssDatePicker` 🔒 *(aguarda DssIcon, DssButton, DssBtnGroup)*
+- [x] ~~`DssTimePicker`~~ ✅ **SELADO** *(22 Mai 2026)*
+- [x] ~~`DssDatePicker`~~ ✅ **SELADO** *(22 Mai 2026)*
 - [ ] `DssColorPicker` 🔒 *(aguarda DssInput, DssSlider)*
 
 ---
@@ -205,7 +205,7 @@
 | Fase 1 | 19 | 19 | 100% |
 | Fase 2 — Nível 1 | 38 | 38 | 100% |
 | Fase 2 — Nível 2 | 16 | 14 | 88% |
-| Fase 2 — Nível 3 | 7 | 4 | 57% |
+| Fase 2 — Nível 3 | 7 | 6 | 86% |
 | Fase 2 — Nível 4 | 7 | 5 | 71% |
-| **Fase 2 Total** | **68** | **61** | **90%** |
+| **Fase 2 Total** | **68** | **63** | **93%** |
 | Fase 3 | 6 | N/A | — |

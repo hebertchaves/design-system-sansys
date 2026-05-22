@@ -6,7 +6,8 @@
 |------|------|---------|-------------|
 | `message` | `String` | `undefined` | Conteúdo textual da mensagem. Substituído pelo slot `default` quando preenchido. |
 | `isMine` | `Boolean` | `false` | Indica que a mensagem foi enviada pelo usuário atual. Afeta alinhamento, cor e posição do avatar. |
-| `timestamp` | `String` | `undefined` | Carimbo de data/hora exibido na área de metadados (ex: `"10:30"`, `"Ontem 14:00"`). |
+| `timestamp` | `String` | `undefined` | Carimbo de data/hora exibido na área de metadados (ex: `"10:30"`, `"Ontem 14:00"`). Formato legível pelo usuário. |
+| `datetimeValue` | `String` | `undefined` | Valor legível por máquina para o atributo `datetime` do `<time>` (ex: `"2026-05-21T10:30:00"`). Melhora semântica WCAG 1.3.1. Se omitido, `<time>` renderiza sem `datetime`. |
 | `senderName` | `String` | `undefined` | Nome do remetente. Exibido acima da bolha somente em mensagens recebidas (`isMine: false`). |
 | `avatarSrc` | `String` | `undefined` | URL da imagem de avatar. Quando fornecido, renderiza um `<img>` dentro do `DssAvatar`. Substituído pelo slot `avatar`. |
 | `status` | `'sending' \| 'sent' \| 'delivered' \| 'read' \| 'error'` | `undefined` | Status de entrega/leitura. Renderiza ícone correspondente via `DssIcon`. |
