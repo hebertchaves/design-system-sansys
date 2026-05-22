@@ -1,0 +1,158 @@
+{
+  "component": "DssTree",
+  "cssClass": "dss-tree",
+  "phase": 2,
+  "level": 4,
+  "status": "sealed",
+  "auditDate": "2026-05-22",
+  "sealPath": "DSS/docs/Compliance/seals/DssTree/DSSTREE_SELO_v2.2.md",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssExpansionItem",
+  "classification": {
+    "type": "Árvore hierárquica interativa",
+    "category": "Navegação e Estrutura de Dados",
+    "interactive": true,
+    "note": "Interativo via seleção de nó, expansão/colapso, navegação por teclado e tick mode (checkbox). Motor QTree do Quasar."
+  },
+  "phaseDescription": "Fase 2 — Nível 4 (Dependente). Árvore hierárquica baseada em QTree do Quasar. Suporta seleção, expansão/colapso, navegação por teclado, lazy loading e modo checkbox (tick-strategy).",
+  "quasarBase": "QTree",
+  "dependencies": [],
+  "optionalComposition": [
+    "DssCheckbox",
+    "DssIcon",
+    "DssSpinner",
+    "DssBadge"
+  ],
+  "tokens": [
+    "--dss-action-primary",
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-size-sm",
+    "--dss-font-weight-semibold",
+    "--dss-text-body",
+    "--dss-gray-50",
+    "--dss-gray-100",
+    "--dss-gray-200",
+    "--dss-gray-700",
+    "--dss-gray-800",
+    "--dss-radius-sm",
+    "--dss-spacing-1",
+    "--dss-spacing-1_5",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-duration-250",
+    "--dss-touch-target-md",
+    "--dss-opacity-disabled",
+    "--dss-hub-50",
+    "--dss-hub-200",
+    "--dss-hub-600",
+    "--dss-hub-700",
+    "--dss-hub-900",
+    "--dss-water-50",
+    "--dss-water-200",
+    "--dss-water-500",
+    "--dss-water-700",
+    "--dss-water-900",
+    "--dss-waste-50",
+    "--dss-waste-200",
+    "--dss-waste-600",
+    "--dss-waste-700",
+    "--dss-waste-900"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "dark",
+      "reason": "Tema escuro governado via [data-theme='dark'] global."
+    },
+    {
+      "quasarProp": "color",
+      "reason": "Cor governada via --q-color-primary override com tokens DSS."
+    },
+    {
+      "quasarProp": "control-color",
+      "reason": "Cor do controle interno governada via --q-color-primary override."
+    },
+    {
+      "quasarProp": "text-color",
+      "reason": "Cor do texto governada via tokens DSS em cascata."
+    },
+    {
+      "quasarProp": "selected-color",
+      "reason": "Cor de seleção governada via tokens DSS no estado .q-tree__node-header--selected."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "description": "Seletores descendentes obrigatórios (.dss-tree .q-tree__node-header, .q-tree__node, .q-tree__arrow, .q-tree__label, .q-tree__children, .q-tree__spinner) para estilizar o DOM interno do QTree. QTree renderiza uma árvore hierárquica complexa internamente que não pode ser substituída por slots em todos os pontos. Precedente: DssMarkupTable, DssTable (EXC-Gate-01).",
+      "precedent": "DssMarkupTable (EXC-Gate-01), DssTable (EXC-Gate-01)"
+    },
+    {
+      "id": "EXC-Gate-02",
+      "description": "--q-color-primary: var(--dss-action-primary) no escopo .dss-tree. QTree usa internamente --q-color-primary para: checkboxes de tick mode (QCheckbox interno), ícones de spinner de lazy loading, indicadores de seleção ativa. DSS injeta a cor de ação via --q-color-primary para manter governança sem substituir os subcomponentes internos. Precedente: DssPagination, DssAjaxBar, DssTable (EXC-Gate-02).",
+      "precedent": "DssPagination (EXC-Gate-02), DssAjaxBar (EXC-Gate-02), DssTable (EXC-Gate-02)"
+    },
+    {
+      "id": "EXC-01",
+      "description": "Dark mode — .q-tree__node::before e ::after (connectors) usam rgba(255,255,255,0.15). Não existe token DSS equivalente para separadores com opacidade em dark mode. Padrão estabelecido por DssMarkupTable e DssTable.",
+      "precedent": "DssMarkupTable (EXC-01), DssTable (EXC-01)"
+    },
+    {
+      "id": "EXC-02",
+      "description": "Forced-colors — palavras-chave de cor do sistema (Canvas, ButtonText, Highlight, HighlightText) são obrigatórias em @media (forced-colors: active). Tokens CSS DSS são ignorados pelo user agent neste contexto.",
+      "precedent": "DssMarkupTable (EXC-02), DssTable (EXC-02)"
+    },
+    {
+      "id": "EXC-03",
+      "description": "Print — display:block no .dss-tree. Token não aplicável em contexto de impressão.",
+      "precedent": "DssMarkupTable (EXC-03), DssTable (EXC-03)"
+    },
+    {
+      "id": "EXC-04",
+      "description": "Print — outline: 1px solid currentColor em nós selecionados e border-color: currentColor nos connectors. Token não aplicável em contexto de impressão.",
+      "precedent": "DssMarkupTable (EXC-04), DssTable (EXC-04)"
+    },
+    {
+      "id": "EXC-Expose-01",
+      "description": "defineExpose com 9 métodos da API QTree: getNodeByKey, getTickedNodes, getExpandedNodes, isExpanded, isTicked, expandAll, collapseAll, setExpanded, setTicked. API imperativa para controle programático da árvore (expansão/colapso em massa, lazy loading, seleção programática).",
+      "precedent": "DssScrollArea, DssInfiniteScroll, DssTable (EXC-Expose-01)"
+    }
+  ],
+  "statesNotApplicable": {
+    "hover": "Hover aplicado individualmente em cada nó (.q-tree__node-header), não no container raiz",
+    "focus": "Focus aplicado individualmente em cada nó navegável (.q-tree__node-header:focus-visible)",
+    "active": "N/A no container — interatividade pertence a cada nó individualmente",
+    "loading": "Gerenciado pelo QTree internamente via lazy-load (spinner por nó, não no container)"
+  },
+  "gateExceptions": {
+    "templateStructure": "QTree como motor. Toda a estrutura interna (nós, labels, ícones, connectors, checkboxes) é gerenciada pelo QTree. Estilização via descendant selectors (EXC-Gate-01) e --q-color-primary override (EXC-Gate-02). Slots são forwarded dinamicamente via v-for sobre $slots."
+  },
+  "compositionRecommendations": [
+    "Usar v-model:selected para seleção simples de nó; v-model:ticked com tick-strategy para modo checkbox.",
+    "Para lazy loading: implementar @lazy-load recebendo { node, key, done, fail } — chamar done(children) após carregar.",
+    "Para filtro: bindar filter com um DssInput externo — DssTree aplica automaticamente no slot top.",
+    "Para personalização visual de nós individuais: usar #[header-NODE_KEY_VALUE] ou #default-header.",
+    "Usar expand-all-on-load=true apenas para árvores pequenas — em grandes datasets, usar setExpanded programaticamente.",
+    "Para acessibilidade: garantir que label-key aponte para campo com texto descritivo; não usar apenas ícones como label."
+  ],
+  "defaultPreview": {
+    "nodeKey": "id",
+    "labelKey": "label",
+    "tickStrategy": "none"
+  },
+  "auditHistory": [
+    {
+      "date": "2026-05-22",
+      "auditor": "Claude Code (Sonnet 4.6)",
+      "cycles": 1,
+      "result": "conformant",
+      "ncs": 1,
+      "ncsBlocking": 0,
+      "notes": "NC-01 corrigida: removido calc(var(--dss-touch-target-md)*0.75) do dense variant. 4 GAPs pré-prompt documentados."
+    }
+  ]
+}

@@ -151,8 +151,8 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssPageContainer` | `QPageContainer` | `DssLayout` | ✅ Selado (22 Abr 2026) |
 | `DssPageSticky` | `QPageSticky` | `DssLayout` | ✅ Selado (23 Abr 2026) |
 | `DssPageScroller` | `QPageScroller` | `DssLayout` | ✅ Selado (26 Abr 2026) |
-| `DssTable` | `QTable` + `QTh` + `QTr` + `QTd` | `DssPagination`, `DssCheckbox`, `DssSpinner` | ⬜ Pendente |
-| `DssTree` | `QTree` | `DssIcon`, `DssCheckbox` | ⬜ Pendente |
+| `DssTable` | `QTable` + `QTh` + `QTr` + `QTd` | `DssPagination`, `DssCheckbox`, `DssSpinner` | ✅ Selado v2.2 — 2026-05-22 |
+| `DssTree` | `QTree` | `DssIcon`, `DssCheckbox` | ✅ Selado v2.2 — 2026-05-22 |
 
 ---
 
@@ -179,13 +179,13 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 
 | Fase | Total de Componentes | Selados | Pendentes |
 |---|---|---|---|
-| Fase 1 — Atômicos | 19 | 19 | 0 |
-| Fase 2 — Nível 1 (Independentes) | 37 | 20 | 17 |
-| Fase 2 — Nível 2 (1º Grau) | 16 | 9 | 7 |
-| Fase 2 — Nível 3 (2º Grau) | 7 | 7 | 0 |
-| Fase 2 — Nível 4 (Layouts) | 7 | 5 | 2 |
+| Fase 1 — Atômicos | 19 | 19 | 0 ✅ |
+| Fase 2 — Nível 1 (Independentes) | 38 | 38 | 0 ✅ |
+| Fase 2 — Nível 2 (1º Grau) | 16 | 16 | 0 ✅ |
+| Fase 2 — Nível 3 (2º Grau) | 7 | 7 | 0 ✅ |
+| Fase 2 — Nível 4 (Layouts) | 7 | 7 | 0 ✅ |
 | Fase 3 — Patterns/Utilitários | 6 | N/A | N/A |
-| **TOTAL** | **92** | **58** | **28** |
+| **TOTAL Fase 2** | **68** | **68** | **0 🎉** |
 
 ---
 
@@ -201,4 +201,5 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | 12 Mai 2026 | Selo emitido: `DssVirtualScroll` (Nível 1). N1 atualizado: 19/37. Total: 56 selados. |
 | 13 Mai 2026 | Selo emitido: `DssInfiniteScroll` (Nível 1). N1 atualizado: 20/37. Total: 57 selados. |
 | 13 Mai 2026 | Selos emitidos: `DssImg` e `DssVideo` (Nível 1 — Família Mídia e Visualização). DssImg: 0 NCs, 4 GAPs pré-prompt. DssVideo: 2 NCs (forced-color-adjust + ratio string), 4 GAPs pré-prompt (API QVideo com props inexistentes). N1 atualizado: 22/38. Total: 59 selados. |
+| 22 Mai 2026 | **🎉 FASE 2 COMPLETA**: `DssTable` e `DssTree` selados (Nível 4). `DssForm` corrigido (já selado, não contabilizado). Total: 68/68 = 100%. Próximo: Fase 3 — Recipes e Guias. |
 | Fevereiro 2026 | Documento original criado em formato PDF. |

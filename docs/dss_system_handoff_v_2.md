@@ -114,6 +114,8 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssTimePicker** | Widget visual interativo de seleção de hora — Fase 2 Nível 3 — Seletores e Pickers | DssChip | `conformant` — Selado (22 Mai 2026) |
 | **DssDatePicker** | Widget visual interativo de seleção de data — Fase 2 Nível 3 — Seletores e Pickers | DssChip | `conformant` — Selado (22 Mai 2026) |
 | **DssColorPicker** | Widget visual interativo de seleção de cor — Fase 2 Nível 3 — Seletores e Pickers | DssChip | `conformant` — Selado (22 Mai 2026) |
+| **DssTable** | Tabela interativa com ordenação, paginação, filtro e seleção — Fase 2 Nível 4 — Tabelas e Dados | DssChip | `conformant` — Selado (22 Mai 2026) |
+| **DssTree** | Árvore hierárquica interativa com seleção, tick mode, lazy loading e API imperativa — Fase 2 Nível 4 — Navegação e Estrutura de Dados | DssChip | `conformant` — Selado (22 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 

@@ -1,0 +1,137 @@
+/* ==========================================================================
+   DssTree — LAYER 4: STATES
+
+   Estados globais:
+   - Dark mode ([data-theme="dark"])
+   - High contrast (prefers-contrast: more)
+   - Forced colors (forced-colors: active)
+   - Reduced motion (prefers-reduced-motion: reduce)
+   - Print (@media print)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme='dark'] .dss-tree {
+  .q-tree__node-header {
+    &:hover:not(.q-tree__node-header--selected) {
+      background-color: var(--dss-gray-800);
+    }
+
+    &.q-tree__node-header--selected {
+      background-color: var(--dss-gray-700);
+    }
+  }
+
+  .q-tree__label {
+    color: var(--dss-gray-200);
+  }
+
+  .q-tree__arrow {
+    color: var(--dss-gray-200);
+  }
+
+  .q-tree__node::before,
+  .q-tree__node::after {
+    /* EXC-01: border white com alpha — sem token DSS equivalente para dark connectors */
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .q-tree__no-nodes-label,
+  .q-tree__no-results-label {
+    color: var(--dss-gray-200);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-tree {
+    .q-tree__node-header {
+      &.q-tree__node-header--selected {
+        outline: var(--dss-border-width-md) solid var(--dss-action-primary);
+        outline-offset: -2px;
+      }
+    }
+
+    .q-tree__node::before,
+    .q-tree__node::after {
+      border-width: var(--dss-border-width-thin);
+      border-color: currentColor;
+    }
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (forced-colors: active)
+   EXC-02: System color keywords obrigatórios — tokens CSS ignorados pelo UA
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-tree {
+    .q-tree__node-header {
+      /* EXC-02 */
+      &.q-tree__node-header--selected {
+        background-color: Highlight;
+        color: HighlightText;
+        outline: 2px solid ButtonText;
+      }
+
+      &:hover:not(.q-tree__node-header--selected) {
+        background-color: Canvas;
+      }
+    }
+
+    .q-tree__arrow {
+      /* EXC-02 */
+      color: ButtonText;
+    }
+
+    .q-tree__node::before,
+    .q-tree__node::after {
+      /* EXC-02 */
+      border-color: ButtonText;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-tree {
+    .q-tree__node-header,
+    .q-tree__arrow {
+      transition: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .dss-tree {
+    /* EXC-03: display block em print */
+    display: block;
+
+    .q-tree__node-header {
+      &.q-tree__node-header--selected {
+        /* EXC-04: border 1px solid em print — token não aplicável em impressão */
+        outline: 1px solid currentColor;
+        background-color: transparent;
+      }
+    }
+
+    .q-tree__node::before,
+    .q-tree__node::after {
+      /* EXC-04 */
+      border-color: currentColor;
+    }
+  }
+}

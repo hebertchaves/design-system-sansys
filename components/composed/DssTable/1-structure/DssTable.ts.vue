@@ -1,0 +1,164 @@
+<template>
+  <q-table
+    ref="qTableRef"
+    v-bind="$attrs"
+    :class="tableClasses"
+    :rows="props.rows"
+    :columns="props.columns"
+    :row-key="props.rowKey"
+    :title="props.title"
+    :loading="props.loading"
+    :filter="props.filter"
+    :selection="props.selection !== 'none' ? props.selection : undefined"
+    :selected="props.modelValue"
+    :pagination="props.pagination"
+    :dense="isDense"
+    :bordered="props.bordered"
+    :flat="props.flat"
+    :wrap-cells="props.wrapCells"
+    :separator="props.separator"
+    :virtual-scroll="props.virtualScroll"
+    :no-data-label="props.noDataLabel"
+    :no-results-label="props.noResultsLabel"
+    :hide-bottom="props.hideBottom"
+    :hide-header="props.hideHeader"
+    :rows-per-page-options="props.rowsPerPageOptions"
+    @update:selected="emit('update:modelValue', $event)"
+    @update:pagination="emit('update:pagination', $event)"
+    @request="emit('request', $event)"
+    @selection="emit('selection', $event)"
+    @row-click="(evt, row, index) => emit('row-click', evt, row, index)"
+    @row-dblclick="(evt, row, index) => emit('row-dblclick', evt, row, index)"
+    @row-contextmenu="(evt, row, index) => emit('row-contextmenu', evt, row, index)"
+  >
+    <template v-if="$slots.top" #top="slotProps">
+      <slot name="top" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['top-left']" #top-left="slotProps">
+      <slot name="top-left" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['top-right']" #top-right="slotProps">
+      <slot name="top-right" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['top-row']" #top-row="slotProps">
+      <slot name="top-row" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['top-selection']" #top-selection="slotProps">
+      <slot name="top-selection" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots.header" #header="slotProps">
+      <slot name="header" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['header-cell']" #header-cell="slotProps">
+      <slot name="header-cell" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots.body" #body="slotProps">
+      <slot name="body" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['body-row']" #body-row="slotProps">
+      <slot name="body-row" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['body-cell']" #body-cell="slotProps">
+      <slot name="body-cell" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['no-data']" #no-data="slotProps">
+      <slot name="no-data" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots.loading" #loading>
+      <slot name="loading" />
+    </template>
+
+    <template v-if="$slots.pagination" #pagination="slotProps">
+      <slot name="pagination" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots.bottom" #bottom="slotProps">
+      <slot name="bottom" v-bind="slotProps" />
+    </template>
+
+    <template v-if="$slots['bottom-row']" #bottom-row="slotProps">
+      <slot name="bottom-row" v-bind="slotProps" />
+    </template>
+  </q-table>
+</template>
+
+<script lang="ts">
+export default {
+  name: 'DssTable',
+  inheritAttrs: false
+}
+</script>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import type { DssTableProps, DssTableEmits, DssTableSlots } from '../types/table.types'
+import { useTableClasses } from '../composables'
+
+// ============================================================================
+// PROPS
+// ============================================================================
+
+const props = withDefaults(defineProps<DssTableProps>(), {
+  rowKey: 'id',
+  selection: 'none',
+  density: 'standard',
+  separator: 'horizontal',
+  modelValue: () => [],
+  rowsPerPageOptions: () => [10, 25, 50],
+  noDataLabel: 'Nenhum dado disponível',
+  noResultsLabel: 'Nenhum resultado encontrado para o filtro aplicado'
+})
+
+// ============================================================================
+// EMITS + SLOTS
+// ============================================================================
+
+const emit = defineEmits<DssTableEmits>()
+defineSlots<DssTableSlots>()
+
+// ============================================================================
+// COMPOSABLES
+// ============================================================================
+
+const { tableClasses } = useTableClasses(props)
+
+// ============================================================================
+// COMPUTED
+// ============================================================================
+
+/** Mapeia density='compact' para o prop dense=true do QTable */
+const isDense = computed(() => props.density === 'compact')
+
+// ============================================================================
+// REF + EXPOSE
+// ============================================================================
+
+const qTableRef = ref()
+
+// EXC-Expose-01: API imperativa delegada ao QTable interno
+defineExpose({
+  /** Dispara requisição server-side manualmente */
+  requestServerInteraction: (reqProps?: Record<string, unknown>) =>
+    qTableRef.value?.requestServerInteraction(reqProps),
+  /** Reinicia o virtual-scroll para o início */
+  resetVirtualScroll: () => qTableRef.value?.resetVirtualScroll(),
+  /** Scrolla para o índice especificado (modo virtual-scroll) */
+  scrollTo: (index: number, edge?: 'start' | 'center' | 'end' | 'start-force' | 'center-force' | 'end-force') =>
+    qTableRef.value?.scrollTo(index, edge),
+  /** Limpa toda a seleção atual */
+  clearSelection: () => qTableRef.value?.clearSelection(),
+  /** Ordena por uma coluna específica */
+  sort: (col: string | { name: string }) => qTableRef.value?.sort(col)
+})
+</script>

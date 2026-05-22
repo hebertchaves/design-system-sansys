@@ -1,0 +1,12 @@
+// DssTree — SCSS Orchestrator
+// Layer order MUST be: L2 → L3 → L4 (do not change)
+// CSS global (sem scoped) — conteúdo do QTree é renderizado internamente
+
+// Layer 2 — Base composition
+@use './2-composition/base' as composition;
+
+// Layer 3 — Variants
+@use './3-variants/index' as variants;
+
+// Layer 4 — Output (dark mode, high-contrast, brands)
+@use './4-output/index' as output;
