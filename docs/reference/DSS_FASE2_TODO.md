@@ -1,7 +1,7 @@
 # DSS — To Do List: Fase 2
 
 > **Status:** Ativo
-> **Última Atualização:** 21 de Maio de 2026 — DssChatMessage SELADO (61/68 = 90%)
+> **Última Atualização:** 22 de Maio de 2026 — DssPopupProxy SELADO (62/68 = 91%)
 > **Legenda:** ✅ Selado · 🔄 Aguardando auditoria · ⬜ Pendente · 🔒 Bloqueado (aguarda dependência)
 
 ---
@@ -135,7 +135,7 @@
 
 ### Família: Overlays Compostos
 
-- [ ] `DssPopupProxy` 🔒 *(aguarda DssMenu ou DssDialog)*
+- [x] ~~`DssPopupProxy`~~ ✅ **SELADO** *(22 Mai 2026)*
 
 ### Família: Formulários
 
@@ -162,7 +162,7 @@
 
 - [x] ~~`DssTimePicker`~~ ✅ **SELADO** *(22 Mai 2026)*
 - [x] ~~`DssDatePicker`~~ ✅ **SELADO** *(22 Mai 2026)*
-- [ ] `DssColorPicker` 🔒 *(aguarda DssInput, DssSlider)*
+- [x] ~~`DssColorPicker`~~ ✅ **SELADO** *(22 Mai 2026)*
 
 ---
 

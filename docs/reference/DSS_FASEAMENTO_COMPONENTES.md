@@ -136,7 +136,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | `DssDrawer` | `QDrawer` | `DssList`, `DssMenu` | ✅ Selado (19 Abr 2026) |
 | `DssTimePicker` | `QTime` | `DssIcon`, `DssButton` | ✅ Selado v2.2 — 2026-05-22 |
 | `DssDatePicker` | `QDate` | `DssIcon`, `DssButton`, `DssBtnGroup` | ✅ Selado v2.2 — 2026-05-22 |
-| `DssColorPicker` | `QColor` | `DssInput`, `DssSlider` | ⬜ Pendente |
+| `DssColorPicker` | `QColor` | `DssInput`, `DssSlider` | ✅ Selado v2.2 — 2026-05-22 |
 
 ---
 
@@ -182,7 +182,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 | Fase 1 — Atômicos | 19 | 19 | 0 |
 | Fase 2 — Nível 1 (Independentes) | 37 | 20 | 17 |
 | Fase 2 — Nível 2 (1º Grau) | 16 | 9 | 7 |
-| Fase 2 — Nível 3 (2º Grau) | 7 | 5 | 2 |
+| Fase 2 — Nível 3 (2º Grau) | 7 | 7 | 0 |
 | Fase 2 — Nível 4 (Layouts) | 7 | 5 | 2 |
 | Fase 3 — Patterns/Utilitários | 6 | N/A | N/A |
 | **TOTAL** | **92** | **58** | **28** |

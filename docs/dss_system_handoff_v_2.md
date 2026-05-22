@@ -109,10 +109,11 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssTimelineEntry** | Subcomponente de entrada da DssTimeline (evento individual) — Fase 2 Nível 2 — Visualização de Dados e Histórico | DssBadge | `conformant` — Selado (21 Mai 2026) |
 | **DssChatMessage** | Widget de mensagem de chat — Fase 2 Nível 2 — Visualização de Dados e Histórico | DssBadge | `conformant` — Selado (21 Mai 2026) |
 | **DssCarousel** | Container de slides com navegação interativa — Fase 2 Nível 2 — Mídia e Visualização | DssChip | `conformant` — Selado (21 Mai 2026) |
-| **DssPopupProxy** | Proxy de overlay adaptativo (mobile/desktop) — Fase 2 Nível 2 — Overlays e Dialogs | DssChip | `conformant` — Selado (21 Mai 2026) |
+| **DssPopupProxy** | Proxy de overlay adaptativo (mobile/desktop) — Fase 2 Nível 2 — Overlays e Dialogs | DssChip | `conformant` — Selado (22 Mai 2026) |
 | **DssForm** | Container de formulário com validação — Fase 2 Nível 2 — Form Management | DssBadge | `conformant` — Selado (22 Mai 2026) |
 | **DssTimePicker** | Widget visual interativo de seleção de hora — Fase 2 Nível 3 — Seletores e Pickers | DssChip | `conformant` — Selado (22 Mai 2026) |
 | **DssDatePicker** | Widget visual interativo de seleção de data — Fase 2 Nível 3 — Seletores e Pickers | DssChip | `conformant` — Selado (22 Mai 2026) |
+| **DssColorPicker** | Widget visual interativo de seleção de cor — Fase 2 Nível 3 — Seletores e Pickers | DssChip | `conformant` — Selado (22 Mai 2026) |
 
 > Componentes selados **NÃO DEVEM ser re-arquitetados**. Apenas correções pontuais mediante nova auditoria.
 
@@ -383,5 +384,5 @@ Qualquer agente que ignore este documento **NÃO está operando no DSS**.
 **Design System Sansys — DSS v2.2**
 **Estado canônico ao final da Fase 1 — Fase 2 em andamento**
 **Última atualização da tabela de selos:** 22 de Maio de 2026
-**Totais:** Fase 1: 19/19 ✅ | Fase 2: 63/68 (93%) | Total selados: 82 componentes
+**Totais:** Fase 1: 19/19 ✅ | Fase 2: 64/68 (94%) | Total selados: 83 componentes
 

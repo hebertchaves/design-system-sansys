@@ -1,0 +1,133 @@
+/* ==========================================================================
+   DssPopupProxy — Layer 4: Output — States
+
+   RESPONSABILIDADE: Estados adaptativos (dark mode, acessibilidade, impressão).
+
+   CLASSIFICAÇÃO: Overlay Responsivo (Nível 2 — não-interativo como container)
+
+   ESTADOS APLICÁVEIS:
+   - visible: controlado externamente via v-model:open / QPopupProxy
+   - hidden: controlado externamente via v-model:open / QPopupProxy
+
+   ESTADOS EXPLICITAMENTE NÃO APLICÁVEIS:
+   - hover: container overlay não-interativo
+   - active: container overlay não-interativo
+   - disabled: não aplicável a overlays de layout
+   - loading: não aplicável (síncrono)
+   - focus: gerenciado pelo QMenu/QDialog nativamente
+   - checked: não aplicável
+
+   CARACTERÍSTICAS:
+   - Dark mode: adiciona borda (sombra menos visível em fundo escuro)
+   - High contrast (prefers-contrast: more): reforça borda
+   - Forced colors (Windows High Contrast Mode): system keywords
+   - Reduced motion: remove transições
+   - Print: overlay oculto em impressão
+
+   EXCEÇÕES:
+   EXC-02 — System color keywords em forced-colors mode
+   Tokens CSS são ignorados pelo navegador em Windows High Contrast Mode.
+   Canvas, CanvasText, ButtonText são obrigatórios neste contexto.
+   Precedente: DssMenu (EXC-02), DssTooltip (EXC-03), DssCard.
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   A sombra (box-shadow) é menos visível em fundos escuros.
+   Borda sutil compensa a perda de profundidade visual.
+   Aplica-se tanto ao modo menu quanto ao modo dialog.
+   ========================================================================== */
+
+[data-theme='dark'] {
+  .dss-popup-proxy {
+    border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  }
+
+  /* Modo dialog — EXC-Gate-01 */
+  .q-dialog.dss-popup-proxy {
+    .q-dialog__inner {
+      border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+    }
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-popup-proxy {
+    border: var(--dss-border-width-md) solid currentColor !important;
+  }
+
+  /* Modo dialog — EXC-Gate-01 */
+  .q-dialog.dss-popup-proxy {
+    .q-dialog__inner {
+      border: var(--dss-border-width-md) solid currentColor !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-popup-proxy,
+  .dss-popup-proxy * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Modo dialog — EXC-Gate-01 */
+  .q-dialog.dss-popup-proxy,
+  .q-dialog.dss-popup-proxy * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+
+   Em Windows High Contrast Mode, o navegador IGNORA tokens CSS customizados.
+   System color keywords são obrigatórios neste contexto.
+
+   EXC-02 — Paridade com DssMenu (EXC-02), DssTooltip (EXC-03), DssCard.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-popup-proxy {
+    background-color: Canvas !important;
+    color: CanvasText !important;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+  }
+
+  /* Modo dialog — EXC-Gate-01 */
+  .q-dialog.dss-popup-proxy {
+    .q-dialog__inner {
+      background-color: Canvas !important;
+      color: CanvasText !important;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   Overlays são componentes de interface interativa.
+   Não têm utilidade em contexto de impressão.
+   ========================================================================== */
+
+@media print {
+  .dss-popup-proxy {
+    display: none !important;
+  }
+
+  /* Modo dialog — EXC-Gate-01 */
+  .q-dialog.dss-popup-proxy {
+    display: none !important;
+  }
+}

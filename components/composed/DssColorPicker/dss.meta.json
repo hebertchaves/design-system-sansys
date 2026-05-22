@@ -3,7 +3,7 @@
   "cssClass": "dss-color-picker",
   "phase": 2,
   "level": 3,
-  "status": "in-progress",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssDatePicker",
