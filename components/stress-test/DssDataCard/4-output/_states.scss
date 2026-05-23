@@ -2,7 +2,7 @@
 // DssDataCard — 4-output/_states.scss
 // ==========================================================================
 //
-// Estados visuais do DssDataCard: disabled e loading.
+// Estados visuais, acessibilidade e media queries do DssDataCard.
 
 .dss-data-card {
   // --------------------------------------------------------------------------
@@ -18,18 +18,20 @@
     user-select: none;
   }
 
-  // --------------------------------------------------------------------------
-  // Estado loading
-  // Oculta o conteúdo real e exibe o skeleton.
-  // --------------------------------------------------------------------------
+  // Nota: o estado --loading é gerenciado exclusivamente pelo template Vue
+  // via v-if="loading" / v-else no conteúdo e showPagination no bloco de paginação.
+  // Não há CSS necessário aqui — os elementos simplesmente não existem no DOM
+  // quando loading=true.
+}
 
-  &--loading {
-    .dss-data-card__content {
-      display: none;
-    }
+// --------------------------------------------------------------------------
+// Acessibilidade — prefers-reduced-motion
+// Para usuários que preferem redução de movimento, a animação de shimmer
+// do skeleton é suprimida. Os elementos permanecem visíveis mas estáticos.
+// --------------------------------------------------------------------------
 
-    .dss-data-card__pagination {
-      display: none;
-    }
+@media (prefers-reduced-motion: reduce) {
+  .dss-data-card__skeleton-line {
+    animation: none;
   }
 }

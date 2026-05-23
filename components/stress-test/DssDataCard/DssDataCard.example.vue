@@ -13,12 +13,11 @@
 import { ref } from 'vue'
 import DssDataCard from './DssDataCard.vue'
 
-// Cenário 2: abas
-const activeTab2 = ref(1)
+// Cenário 2: abas (tab gerenciada internamente; sem paginação neste cenário)
 const tabs2 = [
-  { name: 1, label: 'Resumo', icon: 'dashboard' },
-  { name: 2, label: 'Detalhes', icon: 'list' },
-  { name: 3, label: 'Histórico', icon: 'history', disabled: false },
+  { name: 'resumo', label: 'Resumo', icon: 'dashboard' },
+  { name: 'detalhes', label: 'Detalhes', icon: 'list' },
+  { name: 'historico', label: 'Histórico', icon: 'history' },
 ]
 
 // Cenário 3: paginação
@@ -63,25 +62,24 @@ setTimeout(() => { isLoading5.value = false }, 3000)
     <!-- ====================================================================
          CENÁRIO 2 — Composição com abas
          Valida: DssTabs + DssTabPanels aninhados, slots dinâmicos tab-{name}
+         Nota: sem v-model pois não há paginação neste cenário
          ==================================================================== -->
     <section>
       <p class="text-subtitle2 q-mb-sm">2. Composição com abas — slots dinâmicos</p>
       <DssDataCard
-        v-model="activeTab2"
         title="Painel de Dados"
         subtitle="3 seções disponíveis"
         :tabs="tabs2"
         tabs-aria-label="Seções do painel de dados"
         style="max-width: 560px"
       >
-        <template #tab-1>
+        <template #tab-resumo>
           <p><strong>Resumo:</strong> Visão geral dos indicadores.</p>
-          <p>Aba ativa: {{ activeTab2 }}</p>
         </template>
-        <template #tab-2>
+        <template #tab-detalhes>
           <p><strong>Detalhes:</strong> Informações completas linha a linha.</p>
         </template>
-        <template #tab-3>
+        <template #tab-historico>
           <p><strong>Histórico:</strong> Registro de alterações.</p>
         </template>
       </DssDataCard>

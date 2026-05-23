@@ -1,59 +1,100 @@
 {
-  "name": "DssDataCard",
-  "version": "1.0.0",
-  "status": "stress-test",
-  "phase": "3-preview",
-  "level": "stress-test",
-  "family": "Composição Complexa",
-  "description": "Componente stress test da Fase 3. Composição profunda de DssCard + DssToolbar + DssTabs + DssTabPanels + paginação interna. Criado para revelar gargalos de CSS, prop drilling e conflitos de inheritAttrs antes da produção.",
+  "component": "DssDataCard",
+  "cssClass": "dss-data-card",
+  "phase": 3,
+  "level": 1,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssDataCard",
+  "classification": {
+    "type": "Componente Composto Complexo — Golden Context da Fase 3",
+    "category": "Card de Dados / Composição Profunda",
+    "interactive": true,
+    "note": "Orquestra DssCard + DssToolbar + DssTabs + DssTabPanels + paginação interna. Implementa os 5 padrões obrigatórios da Fase 3."
+  },
+  "phaseDescription": "Fase 3 — Nível 1 (Golden Context). Componente composto que serve como baseline de auditoria para toda a Fase 3.",
   "quasarBase": null,
-  "dependencies": [
-    "DssCard",
-    "DssCardSection",
-    "DssToolbar",
-    "DssTabs",
-    "DssTab",
-    "DssTabPanels",
-    "DssTabPanel",
-    "DssButton"
-  ],
-  "stressTestObjectives": [
-    "inheritAttrs: false — atributos aplicados no DssCard raiz via v-bind=\"$attrs\"",
-    "provide/inject tipado — disabled propaga sem prop drilling manual",
-    "CSS Variables — brand propaga via [data-brand] sem prop drilling",
-    "Proibição de :deep() — separação de responsabilidades preservada",
-    "Slots dinâmicos — tab-{name} para conteúdo de cada aba"
-  ],
-  "knownRisks": [
-    "RISCO-01: DssTabPanels pode conflitar com o overflow do DssCard — monitorar",
-    "RISCO-02: Botões de paginação com icon+label podem ter touch target < 44px em size=sm",
-    "RISCO-03: Skeleton animation pode causar reflow em listas longas"
-  ],
-  "defaultPreview": {
-    "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+  "dependencies": {
+    "dss": [
+      "DssCard",
+      "DssCardSection",
+      "DssToolbar",
+      "DssTabs",
+      "DssTab",
+      "DssTabPanels",
+      "DssTabPanel",
+      "DssButton"
+    ],
+    "quasar": [
+      "q-space"
+    ]
+  },
+  "phase3Patterns": {
+    "inheritAttrs": true,
+    "provideInject": true,
+    "cssVariables": true,
+    "noDeepLayout": true,
+    "typedSlots": true
   },
   "tokens": [
-    "--dss-gray-300",
-    "--dss-surface-muted",
-    "--dss-text-body",
-    "--dss-text-subtle",
-    "--dss-font-size-base",
+    "--dss-font-size-md",
     "--dss-font-size-sm",
     "--dss-font-weight-medium",
-    "--dss-size-4",
-    "--dss-size-8",
-    "--dss-size-12",
-    "--dss-size-16"
+    "--dss-text-body",
+    "--dss-text-secondary",
+    "--dss-gray-300",
+    "--dss-surface-muted",
+    "--dss-border-width-thin",
+    "--dss-radius-sm",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-opacity-disabled",
+    "--dss-line-height-xs",
+    "--dss-duration-1000",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600"
   ],
   "propsBlocked": [
-    "dark"
+    {
+      "quasarProp": "dark",
+      "reason": "Tema escuro governado via [data-theme='dark'] global."
+    }
   ],
-  "goldenReference": "DssCard",
-  "goldenContext": "DssTabs + DssTabPanels",
+  "exceptions": [
+    {
+      "id": "EXC-Structural-01",
+      "description": "gap: 2px em __title-group. Gap geométrico mínimo entre título e subtítulo — --dss-spacing-1 (4px) é o menor token disponível e seria visualmente excessivo.",
+      "precedent": "Novo — específico de layout composto"
+    },
+    {
+      "id": "EXC-Structural-02",
+      "description": "line-height: 1.3 em __subtitle. Nenhum token DSS mapeia para 1.3. --dss-line-height-xs = 1.4 é o mais próximo mas seria visualmente incorreto para um subtítulo compacto.",
+      "precedent": "Novo — ausência de token de line-height < xs"
+    },
+    {
+      "id": "EXC-Structural-03",
+      "description": "opacity: 0.4 no @keyframes dss-data-card-shimmer. Valor de ponto médio da animação shimmer — nenhum token DSS de opacidade de animação existe. --dss-opacity-disabled (0.4) tem o mesmo valor mas semântica de estado disabled, inapropriada para contexto de animação.",
+      "precedent": "Novo — ausência de token de opacidade para animações"
+    }
+  ],
+  "statesNotApplicable": {
+    "hover": "N/A no container — interatividade pertence aos componentes filhos",
+    "focus": "N/A no container — foco gerenciado por DssButton, DssTab individualmente",
+    "active": "N/A no container"
+  },
+  "defaultPreview": {
+    "title": "Indicadores",
+    "variant": "elevated",
+    "brand": null,
+    "tabs": [],
+    "totalItems": 0
+  },
   "createdAt": "2026-04-24",
-  "sealedAt": null,
-  "sealVersion": null
+  "inAuditSince": "2026-05-23",
+  "sealedAt": "2026-05-23",
+  "sealPath": "DSS/docs/Compliance/seals/DssDataCard/DSSDATACARD_SELO_v2.2.md"
 }

@@ -156,36 +156,87 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 
 ---
 
-## FASE 3 — Patterns / Recipes e Utilitários
+## FASE 3 — Componentes Compostos Complexos
 
-**Objetivo:** Acelerar times de produto, documentar boas práticas, exemplificar uso correto do DSS em cenários reais. **Não gera wrapper DSS.** Não vira um componente reutilizável no pacote npm. É puramente documentação, código de exemplo e guias de implementação.
+**Objetivo:** Criar interfaces completas e reutilizáveis que orquestram múltiplos componentes DSS (Fases 1 e 2) internamente, gerenciam estado compartilhado entre filhos e implementam padrões de composição de alto nível para cenários de produto real.
 
-**Regra de Ouro da Fase 3:** Não gera um wrapper DSS. É puramente documentação, código de exemplo e guias de implementação.
+**Regra de Ouro da Fase 3:** O componente orquestra **três ou mais componentes DSS** de Fase 1/2, gerencia estado global interno (disabled, loading, brand) via `provide/inject`, e resolve ao menos um dos riscos clássicos de composição profunda (prop drilling, inheritAttrs, :deep(), teleport de overlays).
 
-### Patterns de Fase 3 (Documentação e Exemplos)
+> **Fonte normativa:** `DSS_GUIA_COMPOSICAO_FASE3.md` · `DSS_ESTRATEGIA_FASE3_COMPLEXIDADE_IA.md` · `TEMPLATE_FASE3.md`
 
-| Componente / Pattern | Quasar Base | Justificativa |
+---
+
+### Diferencial arquitetural da Fase 3
+
+Componentes da Fase 3 **obrigatoriamente** implementam os 5 padrões do Guia de Composição:
+
+| # | Padrão | Regra |
 |---|---|---|
-| `DssEditor` | `QEditor` | Componente de altíssima complexidade (WYSIWYG). Requer integração com bibliotecas de rich text. Melhor tratado como recipe com configuração documentada. |
-| `DssScrollObserver` | `QScrollObserver` | Utilitário comportamental puro. Não tem representação visual. Usar diretamente do Quasar. |
-| `DssResizeObserver` | `QResizeObserver` | Utilitário comportamental puro. Não tem representação visual. Usar diretamente do Quasar. |
-| `DssIntersection` | `QIntersection` | Wrapper de diretiva/comportamento. Sem representação visual. Usar diretamente do Quasar. |
-| `DssNoSsr` | `QNoSsr` | Utilitário de renderização condicional. Sem representação visual. Usar diretamente do Quasar. |
-| `DssSlideTransition` | `QSlideTransition` | Transição CSS pura. Sem representação visual própria. Usar diretamente do Quasar. |
+| 1 | `inheritAttrs: false` | Repasse explícito de `$attrs` para o nó raiz correto via `v-bind="$attrs"` |
+| 2 | `provide/inject` tipado | Estado global (disabled, loading) propagado via composable com `InjectionKey` |
+| 3 | CSS Variables como canal visual | Prop `brand` propagada via `data-brand` no elemento raiz — sem prop drilling |
+| 4 | Proibição de `:deep()` para layout | Layout controlado por classes do componente pai, nunca injetando CSS nos filhos |
+| 5 | Slots dinâmicos e tipados | Conteúdo de subáreas exposto via `slot :name="..."` para composição transparente |
+
+---
+
+### Golden References da Fase 3
+
+| Papel | Componente | Quando usar |
+|---|---|---|
+| **Golden Reference** (interativo) | `DssChip` | Componentes com interação, hover, focus, active |
+| **Golden Reference** (não-interativo) | `DssBadge` | Componentes puramente de display |
+| **Golden Context** | `DssDataCard` | Baseline de auditoria para composição profunda |
+
+---
+
+### Candidatos Fase 3
+
+*Baseados nos stress-tests realizados em Abril/Maio 2026. A Fase 3 não é guiada por cobertura de API Quasar, mas por necessidades de produto. Novos componentes são adicionados conforme padrões recorrentes emergem.*
+
+| Componente DSS | Compõe | Padrão principal | Status |
+|---|---|---|---|
+| `DssDataCard` | `DssCard` + `DssTabs` + `DssToolbar` + `DssPagination` | provide/inject · slots dinâmicos | ✅ Selado (2026-05-23) — Golden Context da Fase 3 |
+| `DssCadrisCard` | `DssCard` + `DssInput` + `DssSelect` + `DssButton` + `DssIcon` | provide/inject · inheritAttrs · todos os 5 padrões | 🔄 Aguarda auditoria formal (selado informalmente em Abr 2026) |
+| `DssTestPageComplexity` | `DssLayout` + `DssCard` + `DssTable` + filtros + KPIs | Composição full-page · Grid Inspector | 🔒 5 NCs bloqueantes pendentes |
+
+> **Sobre os stress-tests:** estes componentes existem em `components/stress-test/` e foram criados para validar os padrões da Fase 3 antes da sua formalização. Devem ser promovidos para `components/composed/` após correção das NCs e emissão de selo v2.2 seguindo `TEMPLATE_FASE3.md`.
+
+---
+
+### O que NÃO é Fase 3
+
+Componentes Quasar sem representação visual própria, utilitários comportamentais e recipes de configuração **não são Fase 3**. Veja a seção "Utilitários Quasar" abaixo.
+
+---
+
+## Utilitários Quasar (sem wrapper DSS)
+
+*Estes elementos não geram wrapper DSS e não pertencem a nenhuma fase formal. São usados diretamente do Quasar ou documentados como recipes de configuração.*
+
+| Elemento | Quasar Base | Natureza | Entregável |
+|---|---|---|---|
+| Recipe: Editor Rich Text | `QEditor` | Altíssima complexidade WYSIWYG — requer biblioteca de rich text | Guia de configuração com tokens DSS |
+| Utilitário: Scroll Observer | `QScrollObserver` | Comportamental puro — sem representação visual | Usar diretamente do Quasar |
+| Utilitário: Resize Observer | `QResizeObserver` | Comportamental puro — sem representação visual | Usar diretamente do Quasar |
+| Utilitário: Intersection | `QIntersection` | Diretiva/comportamento — sem representação visual | Usar diretamente do Quasar |
+| Utilitário: No SSR | `QNoSsr` | Renderização condicional — sem representação visual | Usar diretamente do Quasar |
+| Utilitário: Slide Transition | `QSlideTransition` | Transição CSS — sem representação visual própria | Usar diretamente do Quasar |
 
 ---
 
 ## Resumo de Cobertura
 
-| Fase | Total de Componentes | Selados | Pendentes |
+| Fase | Total | Selados | Pendentes |
 |---|---|---|---|
 | Fase 1 — Atômicos | 19 | 19 | 0 ✅ |
 | Fase 2 — Nível 1 (Independentes) | 38 | 38 | 0 ✅ |
 | Fase 2 — Nível 2 (1º Grau) | 16 | 16 | 0 ✅ |
 | Fase 2 — Nível 3 (2º Grau) | 7 | 7 | 0 ✅ |
 | Fase 2 — Nível 4 (Layouts) | 7 | 7 | 0 ✅ |
-| Fase 3 — Patterns/Utilitários | 6 | N/A | N/A |
-| **TOTAL Fase 2** | **68** | **68** | **0 🎉** |
+| **Fase 2 Total** | **68** | **68** | **0 🎉** |
+| Fase 3 — Compostos Complexos | 3 | 1 | 33% (DssDataCard ✅ selado; DssCadrisCard aguarda auditoria; DssTestPageComplexity com 5 NCs) |
+| Utilitários (sem wrapper) | 6 | N/A | N/A |
 
 ---
 
