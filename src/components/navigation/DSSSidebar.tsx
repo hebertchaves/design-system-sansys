@@ -54,6 +54,7 @@ import {
   ArrowDownToLine,
   Gauge,
   Menu as MenuIcon,
+  ClipboardList as ClipboardListIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
