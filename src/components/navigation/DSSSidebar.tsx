@@ -93,6 +93,7 @@ const navigation = {
       { title: "DssFab", url: "/componentes/dss-fab", icon: Plus, status: "stable" },
       { title: "DssFile", url: "/componentes/dss-file", icon: Paperclip, status: "stable" },
       { title: "DssHeader", url: "/componentes/dss-header", icon: PanelTop, status: "stable" },
+      { title: "DssForm", url: "/componentes/dss-form", icon: ClipboardListIcon, status: "stable" },
       { title: "DssImg", url: "/componentes/dss-img", icon: ImageIcon, status: "stable" },
       { title: "DssInfiniteScroll", url: "/componentes/dss-infinite-scroll", icon: ArrowDownToLine, status: "stable" },
       { title: "DssKnob", url: "/componentes/dss-knob", icon: Gauge, status: "stable" },
