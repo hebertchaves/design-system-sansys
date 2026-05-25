@@ -39,6 +39,7 @@ import DssInfiniteScrollPage from "./pages/components/DssInfiniteScrollPage";
 import DssKnobPage from "./pages/components/DssKnobPage";
 import DssMenuPage from "./pages/components/DssMenuPage";
 import DssCarrosselPage from "./pages/components/DssCarrosselPage";
+import DssFormPage from "./pages/components/DssFormPage";
 import DssTestCadrisPage from "./pages/components/DssTestCadrisPage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
