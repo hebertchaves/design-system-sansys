@@ -14,8 +14,20 @@
     "family": "Layout Auxiliar"
   },
   "phaseDescription": "Nível 1 — Container de scroll governado. Envolve conteúdo arbitrário com scrollbar estilizada por tokens DSS.",
-  "statesApplicable": ["default", "scrolling", "always-visible", "never-visible"],
-  "statesNotApplicable": ["hover", "active", "disabled", "focus", "error", "loading"],
+  "statesApplicable": [
+    "default",
+    "scrolling",
+    "always-visible",
+    "never-visible"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "active",
+    "disabled",
+    "focus",
+    "error",
+    "loading"
+  ],
   "statesNotApplicableReason": {
     "hover": "Componente container — filhos gerenciam seus próprios estados de hover",
     "active": "Componente container de conteúdo — interação de filhos é responsabilidade do consumidor",
@@ -80,16 +92,19 @@
   "defaultPreview": {
     "props": {
       "visible": "auto",
-      "horizontal": false,
-      "barDelay": 1000
+      "horizontal": false
+    },
+    "computedDimensions": {
+      "minHeight": "200px"
     },
     "computedTokens": {
-      "thumbDefaultColor": "--dss-gray-400 (#d4d4d4)",
-      "thumbHoverColor": "--dss-gray-500 (#a3a3a3)",
-      "barThickness": "--dss-spacing-2 (8px)",
-      "thumbBorderRadius": "--dss-radius-full (9999px)",
-      "transitionDuration": "--dss-duration-250 (250ms)"
-    }
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Área com scrollbar customizada"
   },
   "auditHistory": []
 }

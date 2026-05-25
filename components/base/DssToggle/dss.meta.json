@@ -18,12 +18,17 @@
       "size": "md"
     },
     "computedDimensions": {
-      "minHeight": "48px",
-      "minWidth": "48px"
+      "minHeight": "44px"
     },
     "computedTokens": {
       "gap": "--dss-spacing-2",
-      "fontSize": "--dss-font-size-sm"
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-text-body"
     },
     "demoContent": "Label 'Ativar'"
   }

@@ -104,10 +104,21 @@
     "templateStructure": "Root element é <div> wrapper (não QSkeleton) para suportar prop lines com múltiplos QSkeleton filhos. A consistência arquitetural do wrapper div é preferida a um root condicional (às vezes QSkeleton, às vezes div). Entry point wrapper re-exporta corretamente para 1-structure/DssSkeleton.ts.vue."
   },
   "defaultPreview": {
-    "type": "rect",
-    "animation": "wave",
-    "height": "20px",
-    "width": "200px"
+    "props": {
+      "type": "text"
+    },
+    "computedDimensions": {
+      "minHeight": "24px",
+      "minWidth": "200px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "none"
+    },
+    "demoContent": "Bloco de texto esqueleto (placeholder de carregamento)"
   },
   "auditHistory": [
     {

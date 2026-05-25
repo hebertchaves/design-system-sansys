@@ -69,9 +69,23 @@
     "Usar autogrow sem maxHeight em containers com altura fixa — pode causar overflow inesperado"
   ],
   "defaultPreview": {
-    "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "props": {
+      "variant": "outlined"
+    },
+    "computedDimensions": {
+      "minHeight": "88px",
+      "minWidth": "240px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-3 --dss-spacing-4",
+      "borderRadius": "--dss-radius-md",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Placeholder 'Escreva sua mensagem aqui'"
   }
 }

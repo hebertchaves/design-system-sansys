@@ -55,8 +55,12 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedTokens": {
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "none"
+    },
+    "demoContent": "Elemento fixo na página"
   },
   "tokens": [
     "--dss-z-index-sticky",

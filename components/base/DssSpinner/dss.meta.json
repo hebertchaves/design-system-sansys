@@ -47,13 +47,14 @@
       "size": "md"
     },
     "computedDimensions": {
-      "width": "24px",
-      "height": "24px"
+      "minHeight": "40px",
+      "minWidth": "40px"
     },
     "computedTokens": {
-      "width": "--dss-icon-size-md",
-      "height": "--dss-icon-size-md"
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-action-primary"
     },
-    "demoContent": "Spinner girando"
+    "demoContent": "Spinner animado de carregamento"
   }
 }

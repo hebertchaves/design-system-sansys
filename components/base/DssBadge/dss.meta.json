@@ -20,8 +20,14 @@
     },
     "computedTokens": {
       "padding": "--dss-spacing-0_5 --dss-spacing-1",
+      "gap": "--dss-spacing-1",
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
       "fontSize": "--dss-font-size-xs",
-      "borderRadius": "--dss-radius-full"
+      "fontWeight": "--dss-font-weight-medium",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-action-primary",
+      "textColor": "--dss-text-inverse"
     },
     "demoContent": "Label '99+'"
   }

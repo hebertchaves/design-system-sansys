@@ -148,8 +148,21 @@
   ],
   "defaultPreview": {
     "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedDimensions": {
+      "minHeight": "200px",
+      "minWidth": "200px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2",
+      "borderRadius": "--dss-radius-md",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-subtle",
+      "textColor": "--dss-text-body",
+      "shadow": "--dss-shadow-sm"
+    },
+    "demoContent": "Menu com 3 itens"
   }
 }

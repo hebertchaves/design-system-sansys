@@ -105,5 +105,25 @@
     "Não aninhe DssBanner dentro de DssDialog — prefira DssDialog com slot de conteúdo",
     "Múltiplos banners: use q-gutter-y-sm entre instâncias"
   ],
-  "auditHistory": []
+  "auditHistory": [],
+  "defaultPreview": {
+    "props": {
+      "variant": "default"
+    },
+    "computedDimensions": {
+      "minHeight": "48px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-4",
+      "gap": "--dss-spacing-3",
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Mensagem informativa com ação"
+  }
 }

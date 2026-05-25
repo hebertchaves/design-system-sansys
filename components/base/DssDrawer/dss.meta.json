@@ -196,8 +196,20 @@
   ],
   "defaultPreview": {
     "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedDimensions": {
+      "minHeight": "100vh",
+      "minWidth": "300px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-4",
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-subtle",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Painel lateral com navegação"
   }
 }

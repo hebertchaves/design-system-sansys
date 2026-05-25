@@ -21,9 +21,14 @@
     },
     "computedTokens": {
       "padding": "--dss-spacing-1 --dss-spacing-3",
-      "fontSize": "--dss-font-size-sm",
+      "gap": "--dss-spacing-1",
       "borderRadius": "--dss-radius-full",
-      "gap": "--dss-spacing-1"
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-sm",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-text-body"
     },
     "demoContent": "Label 'Chip'"
   }

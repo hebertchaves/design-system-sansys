@@ -140,9 +140,21 @@
     "Para acessibilidade: garantir que label-key aponte para campo com texto descritivo; não usar apenas ícones como label."
   ],
   "defaultPreview": {
-    "nodeKey": "id",
-    "labelKey": "label",
-    "tickStrategy": "none"
+    "props": {
+      "nodeKey": "id",
+      "labelKey": "label"
+    },
+    "computedDimensions": {},
+    "computedTokens": {
+      "gap": "--dss-spacing-1",
+      "borderRadius": "--dss-radius-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Árvore hierárquica com nós expansíveis"
   },
   "auditHistory": [
     {

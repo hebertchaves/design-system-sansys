@@ -13,8 +13,9 @@
  * import { useBtnToggleClasses } from '@/dss/components/base/DssBtnToggle'
  */
 
-// Componente — via Entry Point Wrapper canônico (não via 1-structure diretamente)
-import DssBtnToggle from './DssBtnToggle.vue'
+// Importa direto da 1-structure para preservar o contexto <script setup>
+// (via wrapper .vue causa $setup undefined no compilador Vite)
+import DssBtnToggle from './1-structure/DssBtnToggle.ts.vue'
 
 export { DssBtnToggle }
 export default DssBtnToggle

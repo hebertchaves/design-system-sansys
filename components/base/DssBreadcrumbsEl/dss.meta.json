@@ -141,9 +141,22 @@
     "--dss-waste-500"
   ],
   "defaultPreview": {
-    "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "props": {
+      "label": "Home"
+    },
+    "computedDimensions": {
+      "minHeight": "17px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-1",
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-sm",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-action"
+    },
+    "demoContent": "Item de breadcrumb 'Home'"
   }
 }

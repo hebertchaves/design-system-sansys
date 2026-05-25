@@ -14,8 +14,18 @@
     "family": "Scroll e Virtualização"
   },
   "phaseDescription": "Nível 1 — Container comportamental. Complementar ao DssVirtualScroll para carregamento incremental.",
-  "statesApplicable": ["default", "loading", "no-more", "disabled"],
-  "statesNotApplicable": ["hover", "focus", "active", "error"],
+  "statesApplicable": [
+    "default",
+    "loading",
+    "no-more",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "error"
+  ],
   "statesNotApplicableReason": {
     "hover": "Componente container comportamental — itens filhos gerenciam seus próprios estados de hover",
     "focus": "Scroll é nativo do browser; foco gerenciado pelos itens filhos ou tabindex externo",
@@ -61,14 +71,16 @@
   "defaultPreview": {
     "props": {
       "offset": 500,
-      "debounce": 100,
-      "items": "[grows via @load event]"
+      "debounce": 100
     },
+    "computedDimensions": {},
     "computedTokens": {
-      "loadingPadding": "--dss-spacing-6 (24px)",
-      "noMorePadding": "--dss-spacing-4 (16px)",
-      "noMoreColor": "--dss-text-subtle"
-    }
+      "padding": "--dss-spacing-4",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Lista com carregamento infinito"
   },
   "auditHistory": [
     {

@@ -14,8 +14,17 @@
     "family": "Layout Auxiliar"
   },
   "phaseDescription": "Nível 1 — Container interativo de divisão. Permite redimensionamento dinâmico entre dois painéis via arrastar/teclado.",
-  "statesApplicable": ["default", "hover", "active", "disabled", "focus"],
-  "statesNotApplicable": ["loading", "error"],
+  "statesApplicable": [
+    "default",
+    "hover",
+    "active",
+    "disabled",
+    "focus"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error"
+  ],
   "statesNotApplicableReason": {
     "loading": "Responsabilidade do conteúdo interno dos painéis, não do divisor estrutural",
     "error": "DssSplitter é container estrutural; validação é responsabilidade do consumidor"
@@ -76,10 +85,18 @@
   "defaultPreview": {
     "props": {
       "modelValue": 50,
-      "orientation": "horizontal",
-      "limits": [10, 90],
-      "unit": "%"
-    }
+      "orientation": "horizontal"
+    },
+    "computedDimensions": {
+      "minHeight": "200px"
+    },
+    "computedTokens": {
+      "borderWidth": "--dss-border-width-thin",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Divisor redimensionável 50/50"
   },
   "auditHistory": []
 }

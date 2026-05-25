@@ -12,16 +12,19 @@
   "hasReservations": false,
   "defaultPreview": {
     "props": {
+      "name": "star",
       "size": "md"
     },
     "computedDimensions": {
-      "width": "24px",
-      "height": "24px"
+      "minHeight": "24px",
+      "minWidth": "24px"
     },
     "computedTokens": {
-      "width": "--dss-icon-size-md",
-      "height": "--dss-icon-size-md"
+      "fontSize": "--dss-icon-size-md",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
     },
-    "demoContent": "Ícone 'star'"
+    "demoContent": "Ícone 'star' tamanho md"
   }
 }

@@ -60,8 +60,12 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedTokens": {
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "none"
+    },
+    "demoContent": "Botão de scroll para o topo"
   },
   "tokens": [
     "--dss-z-index-sticky"

@@ -27,7 +27,6 @@
     "--dss-icon-size-lg",
     "--dss-border-width-thin",
     "--dss-border-width-thick",
-
     "--dss-hub-600",
     "--dss-hub-50",
     "--dss-shadow-hub-md",
@@ -114,7 +113,16 @@
     "errorHandling": "DssToast ou DssBanner para comunicar falha na atualização",
     "loadingFeedback": "Indicador interno do QPullToRefresh (handler) — não usar DssInnerLoading simultaneamente"
   },
-  "defaultPreview": "DssPullToRefresh com conteúdo em lista, marca Hub, tamanho md",
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "computedTokens": {
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Puxe para atualizar"
+  },
   "auditHistory": [
     {
       "date": "2026-05-20",
@@ -122,18 +130,74 @@
       "auditor": "Chat Estratégico DSS",
       "result": "REPROVADO — 1 NC Bloqueante (ciclo 1)",
       "ncs": [
-        { "id": "NC-01", "severity": "bloqueante", "description": "Anunciador sr-only sem classe .dss-sr-only local.", "resolution": "Adicionado .dss-sr-only em 2-composition/_base.scss com EXC-SrOnly-02 registrada.", "status": "resolvida" },
-        { "id": "NC-02", "severity": "não-bloqueante", "description": "Bloco .dss-pull-to-refresh--disabled com pointer-events: none viola Gate de Responsabilidade.", "resolution": "Bloco removido. disable é gerenciado inteiramente pelo QPullToRefresh.", "status": "resolvida" },
-        { "id": "NC-03", "severity": "não-bloqueante", "description": "1px hardcoded em forced-colors em vez de var(--dss-border-width-thin).", "resolution": "Substituído por var(--dss-border-width-thin) em 4-output/_states.scss.", "status": "resolvida" },
-        { "id": "NC-04", "severity": "não-bloqueante", "description": "beforeEach importado mas não utilizado no test.js.", "resolution": "Removido do import.", "status": "resolvida" },
-        { "id": "NC-05", "severity": "não-bloqueante", "description": "Fallback hardcoded var(--dss-opacity-disabled, 0.4).", "resolution": "Resolvida junto com NC-02 (bloco removido).", "status": "resolvida" },
-        { "id": "NC-06", "severity": "não-bloqueante", "description": "Heights em px e borders com 1px hardcoded no example.vue.", "resolution": "Heights substituídos por vh (35-55vh). Borders substituídos por var(--dss-border-width-thin).", "status": "resolvida" }
+        {
+          "id": "NC-01",
+          "severity": "bloqueante",
+          "description": "Anunciador sr-only sem classe .dss-sr-only local.",
+          "resolution": "Adicionado .dss-sr-only em 2-composition/_base.scss com EXC-SrOnly-02 registrada.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-02",
+          "severity": "não-bloqueante",
+          "description": "Bloco .dss-pull-to-refresh--disabled com pointer-events: none viola Gate de Responsabilidade.",
+          "resolution": "Bloco removido. disable é gerenciado inteiramente pelo QPullToRefresh.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-03",
+          "severity": "não-bloqueante",
+          "description": "1px hardcoded em forced-colors em vez de var(--dss-border-width-thin).",
+          "resolution": "Substituído por var(--dss-border-width-thin) em 4-output/_states.scss.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-04",
+          "severity": "não-bloqueante",
+          "description": "beforeEach importado mas não utilizado no test.js.",
+          "resolution": "Removido do import.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-05",
+          "severity": "não-bloqueante",
+          "description": "Fallback hardcoded var(--dss-opacity-disabled, 0.4).",
+          "resolution": "Resolvida junto com NC-02 (bloco removido).",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-06",
+          "severity": "não-bloqueante",
+          "description": "Heights em px e borders com 1px hardcoded no example.vue.",
+          "resolution": "Heights substituídos por vh (35-55vh). Borders substituídos por var(--dss-border-width-thin).",
+          "status": "resolvida"
+        }
       ],
       "gaps": [
-        { "id": "GAP-01", "description": "spinnerType não documentado como descartado.", "resolution": "Seção '11. Decisões Arquiteturais' adicionada ao DssPullToRefresh.md.", "status": "resolvida" },
-        { "id": "GAP-02", "description": "pre_prompt usa tokens fictícios.", "resolution": "Seção 4 do pré-prompt reescrita com tokens reais.", "status": "resolvida" },
-        { "id": "GAP-03", "description": "Golden Context sem nome no pré-prompt.", "resolution": "Golden Context corrigido para DssInfiniteScroll.", "status": "resolvida" },
-        { "id": "GAP-04", "description": "Mapeamento de color incorreto no pré-prompt (prop color em vez de data-brand).", "resolution": "Seção 8 corrigida: prop brand via data-brand, composite logic e estados atualizados.", "status": "resolvida" }
+        {
+          "id": "GAP-01",
+          "description": "spinnerType não documentado como descartado.",
+          "resolution": "Seção '11. Decisões Arquiteturais' adicionada ao DssPullToRefresh.md.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-02",
+          "description": "pre_prompt usa tokens fictícios.",
+          "resolution": "Seção 4 do pré-prompt reescrita com tokens reais.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-03",
+          "description": "Golden Context sem nome no pré-prompt.",
+          "resolution": "Golden Context corrigido para DssInfiniteScroll.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-04",
+          "description": "Mapeamento de color incorreto no pré-prompt (prop color em vez de data-brand).",
+          "resolution": "Seção 8 corrigida: prop brand via data-brand, composite logic e estados atualizados.",
+          "status": "resolvida"
+        }
       ]
     },
     {
@@ -142,7 +206,13 @@
       "auditor": "Claude Code DSS",
       "result": "APROVADO — 1 NC Não-Bloqueante corrigida",
       "ncs": [
-        { "id": "NC-01", "severity": "não-bloqueante", "description": "Documentação inconsistente sobre estado disabled após NC-02 do ciclo 1: DssPullToRefresh.md §6 mencionava opacity + pointer-events; dss.meta.json e DSSPULLTOREFRESH_API.md listavam --dss-opacity-disabled como token usado (token fantasma).", "resolution": "DssPullToRefresh.md §6 corrigido; --dss-opacity-disabled removido de dss.meta.json e DSSPULLTOREFRESH_API.md.", "status": "resolvida" }
+        {
+          "id": "NC-01",
+          "severity": "não-bloqueante",
+          "description": "Documentação inconsistente sobre estado disabled após NC-02 do ciclo 1: DssPullToRefresh.md §6 mencionava opacity + pointer-events; dss.meta.json e DSSPULLTOREFRESH_API.md listavam --dss-opacity-disabled como token usado (token fantasma).",
+          "resolution": "DssPullToRefresh.md §6 corrigido; --dss-opacity-disabled removido de dss.meta.json e DSSPULLTOREFRESH_API.md.",
+          "status": "resolvida"
+        }
       ],
       "gaps": []
     }

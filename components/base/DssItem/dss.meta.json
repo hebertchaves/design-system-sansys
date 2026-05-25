@@ -16,9 +16,21 @@
   },
   "defaultPreview": {
     "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "gap": "--dss-spacing-4",
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Item com ícone e texto"
   },
   "tokens": {
     "spacing": [

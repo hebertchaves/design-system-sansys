@@ -139,7 +139,16 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-0",
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Lista com 3 itens"
   }
 }

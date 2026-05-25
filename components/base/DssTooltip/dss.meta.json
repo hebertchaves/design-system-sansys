@@ -27,8 +27,20 @@
   ],
   "defaultPreview": {
     "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedDimensions": {
+      "minHeight": "24px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-1 --dss-spacing-2",
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-sm",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-text-body",
+      "shadow": "--dss-shadow-sm"
+    },
+    "demoContent": "Tooltip 'Informação adicional'"
   }
 }

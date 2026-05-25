@@ -80,8 +80,17 @@
     "templateStructure": "QAjaxBar como root element — gerencia internamente posicionamento fixed, hijack de XHR/fetch, animação e role=progressbar. Não é possível nem desejável wrapper div externo para este componente (EXC-Gate-01)."
   },
   "defaultPreview": {
-    "position": "top",
-    "brand": "hub",
-    "skipHijack": true
+    "props": {},
+    "computedDimensions": {
+      "minHeight": "3px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Barra de progresso de requisições AJAX"
   }
 }

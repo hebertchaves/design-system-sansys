@@ -134,10 +134,24 @@
     }
   },
   "defaultPreview": {
-    "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "props": {
+      "label": "Opções"
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "gap": "--dss-spacing-2",
+      "borderRadius": "--dss-radius-md",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-medium",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-action-primary",
+      "textColor": "--dss-text-inverse"
+    },
+    "demoContent": "Botão 'Opções' com menu dropdown"
   },
   "tokens": {
     "surface": [

@@ -65,15 +65,18 @@
       "icon": "mail"
     },
     "computedDimensions": {
-      "visual": "40px × 40px",
-      "touchTarget": "44px × 44px"
+      "minHeight": "40px",
+      "minWidth": "40px"
     },
     "computedTokens": {
       "borderRadius": "--dss-radius-full",
-      "elevation": "--dss-elevation-1",
-      "touchTarget": "--dss-touch-target-md"
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-action-primary",
+      "textColor": "--dss-text-inverse",
+      "shadow": "--dss-shadow-sm"
     },
-    "demoContent": "Ícone de e-mail em botão circular"
+    "demoContent": "FAB Action com ícone 'mail'"
   },
   "tokens": {
     "shape": [

@@ -21,9 +21,14 @@
     },
     "computedTokens": {
       "padding": "--dss-spacing-2 --dss-spacing-4",
-      "fontSize": "--dss-font-size-md",
+      "gap": "--dss-spacing-2",
       "borderRadius": "--dss-radius-sm",
-      "gap": "--dss-spacing-2"
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-medium",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-action-primary",
+      "textColor": "--dss-text-inverse"
     },
     "demoContent": "Label 'Action'"
   },

@@ -53,23 +53,59 @@
   ],
   "props": {
     "exposed": [
-      "label", "caption", "icon", "expandIcon",
-      "modelValue", "defaultOpened", "group",
-      "disable", "dense", "brand", "ariaLabel"
+      "label",
+      "caption",
+      "icon",
+      "expandIcon",
+      "modelValue",
+      "defaultOpened",
+      "group",
+      "disable",
+      "dense",
+      "brand",
+      "ariaLabel"
     ],
     "blocked": [
-      { "prop": "dark", "reason": "DSS gerencia dark mode via CSS global (body.body--dark / [data-theme='dark'])" },
-      { "prop": "headerClass", "reason": "Visual do header estritamente governado pelo DSS" },
-      { "prop": "headerStyle", "reason": "Visual do header estritamente governado pelo DSS" },
-      { "prop": "switchToggleSide", "reason": "Ícone de expansão sempre à direita — padrão DSS de consistência visual" }
+      {
+        "prop": "dark",
+        "reason": "DSS gerencia dark mode via CSS global (body.body--dark / [data-theme='dark'])"
+      },
+      {
+        "prop": "headerClass",
+        "reason": "Visual do header estritamente governado pelo DSS"
+      },
+      {
+        "prop": "headerStyle",
+        "reason": "Visual do header estritamente governado pelo DSS"
+      },
+      {
+        "prop": "switchToggleSide",
+        "reason": "Ícone de expansão sempre à direita — padrão DSS de consistência visual"
+      }
     ]
   },
   "states": {
-    "applicable": ["default", "hover", "focus", "active", "disabled", "expanded"],
+    "applicable": [
+      "default",
+      "hover",
+      "focus",
+      "active",
+      "disabled",
+      "expanded"
+    ],
     "notApplicable": [
-      { "state": "loading", "reason": "ExpansionItem não executa operações assíncronas" },
-      { "state": "error", "reason": "Validação não é responsabilidade do ExpansionItem" },
-      { "state": "indeterminate", "reason": "Estado binário (aberto/fechado) — sem indeterminado" }
+      {
+        "state": "loading",
+        "reason": "ExpansionItem não executa operações assíncronas"
+      },
+      {
+        "state": "error",
+        "reason": "Validação não é responsabilidade do ExpansionItem"
+      },
+      {
+        "state": "indeterminate",
+        "reason": "Estado binário (aberto/fechado) — sem indeterminado"
+      }
     ]
   },
   "exceptions": [
@@ -140,5 +176,25 @@
       "gaps": 3,
       "summary": "NC-01 (forced-color-adjust sem documentação) corrigido. GAP-01 (header-aria-label Quasar 2.14.x) documentado. GAP-02 (EXC-States-01 escopo print) documentado. GAP-03 (token --dss-text-secondary) resolvido pré-implementação."
     }
-  ]
+  ],
+  "defaultPreview": {
+    "props": {
+      "label": "Título",
+      "icon": "expand_more"
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Item expansível com conteúdo"
+  }
 }

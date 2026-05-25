@@ -34,5 +34,17 @@
     "Use tag prop para semântica HTML correta (section, aside, nav)"
   ],
   "phaseDescription": "Fase 2 — Nível 1 (Independente). Wrapper utilitário de responsividade. Usa $q.screen reativo. Sem tokens visuais. Lógica de visibilidade via v-if (remoção do DOM para acessibilidade).",
-  "auditHistory": []
+  "auditHistory": [],
+  "defaultPreview": {
+    "props": {
+      "show": "sm"
+    },
+    "computedDimensions": {},
+    "computedTokens": {
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "none"
+    },
+    "demoContent": "Wrapper condicional por breakpoint"
+  }
 }

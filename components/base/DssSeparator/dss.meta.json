@@ -52,8 +52,16 @@
   ],
   "defaultPreview": {
     "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedDimensions": {
+      "minHeight": "1px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-thin",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "none"
+    },
+    "demoContent": "Linha divisória horizontal"
   }
 }

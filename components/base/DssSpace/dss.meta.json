@@ -42,9 +42,15 @@
     "Usar múltiplos DssSpace em sequência — dividem o espaço igualmente; se a intenção é espaço fixo, use um único com size"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "size": "md"
+    },
     "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedTokens": {
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "none"
+    },
+    "demoContent": "Espaçamento visual entre elementos"
   }
 }

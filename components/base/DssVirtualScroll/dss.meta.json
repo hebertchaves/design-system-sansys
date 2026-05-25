@@ -14,8 +14,18 @@
     "family": "Dados e Performance"
   },
   "phaseDescription": "Nível 2 — Container de virtualização. Pré-requisito para DssInfiniteScroll (Nível 2).",
-  "statesApplicable": ["default", "loading", "empty", "disabled"],
-  "statesNotApplicable": ["hover", "focus", "active", "error"],
+  "statesApplicable": [
+    "default",
+    "loading",
+    "empty",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "error"
+  ],
   "statesNotApplicableReason": {
     "hover": "Componente container — itens filhos gerenciam seus próprios estados de hover",
     "focus": "Scroll é nativo do browser; foco gerenciado pelos itens filhos ou tabindex externo",
@@ -40,7 +50,9 @@
     {
       "id": "EXC-Gate-01",
       "rule": "Gate de Composição v2.4 — seletores internos de terceiros",
-      "selectors": [".q-virtual-scroll__content"],
+      "selectors": [
+        ".q-virtual-scroll__content"
+      ],
       "justification": ".q-virtual-scroll__content é o container DOM real dos itens virtualizados gerado exclusivamente pelo QVirtualScroll — não é acessível via slot nem prop. A regra width: 100% aplicada a ele garante que o conteúdo preencha a largura do __inner mesmo quando o Quasar aplica display: block ao elemento, evitando colapso de largura em listas com itens de tamanho variável. Sem esse seletor, listas horizontais ou com overflow quebrariam o layout.",
       "location": "2-composition/_base.scss — bloco .dss-virtual-scroll__inner"
     },
@@ -70,16 +82,19 @@
   },
   "defaultPreview": {
     "props": {
-      "items": "[Array de 1000 itens]",
+      "items": "[Array de itens]",
       "itemSize": 48,
       "type": "list"
     },
+    "computedDimensions": {
+      "minHeight": "200px"
+    },
     "computedTokens": {
-      "scrollbarWidth": "--dss-spacing-2 (8px)",
-      "scrollbarColor": "--dss-surface-muted",
-      "loadingPadding": "--dss-spacing-6 (24px)",
-      "emptyPadding": "--dss-spacing-8 (32px)"
-    }
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Lista virtualizada com 1000 itens"
   },
   "auditHistory": [
     {

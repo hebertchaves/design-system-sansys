@@ -58,7 +58,10 @@
     {
       "id": "EXC-Gate-01",
       "rule": "Gate de Composição v2.4 — seletores internos de terceiros",
-      "selectors": [".q-circular-progress__track", ".q-circular-progress__circle"],
+      "selectors": [
+        ".q-circular-progress__track",
+        ".q-circular-progress__circle"
+      ],
       "justification": "Necessário para aplicar tokens DSS (--dss-surface-muted ao track, cores semânticas ao circle) à estrutura SVG gerada internamente pelo QCircularProgress. A prop `color` e `track-color` do Quasar NÃO são passadas — governança de cores é 100% CSS DSS. Sem esses overrides, o componente perderia governança visual do DSS.",
       "location": "2-composition/_base.scss, 3-variants/_colors.scss, 4-output/_brands.scss"
     },
@@ -103,16 +106,22 @@
   ],
   "defaultPreview": {
     "props": {
-      "value": 70,
-      "color": "primary",
-      "size": "md"
+      "value": 0.7,
+      "size": "md",
+      "color": "primary"
+    },
+    "computedDimensions": {
+      "minHeight": "56px",
+      "minWidth": "56px"
     },
     "computedTokens": {
-      "width": "--dss-spacing-16 (64px)",
-      "height": "--dss-spacing-16 (64px)",
-      "trackColor": "--dss-surface-muted",
-      "circleColor": "--dss-action-primary"
-    }
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Progresso circular 70%"
   },
   "auditHistory": []
 }

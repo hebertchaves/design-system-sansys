@@ -15,11 +15,26 @@
   "phaseDescription": "Fase 2, Nível 2 — Composição de Primeiro Grau. Depende de DssIcon e DssAvatar (Fase 1). Subcomponente: DssTimelineEntry.",
   "statesApplicable": [],
   "statesNotApplicable": [
-    { "state": "hover", "reason": "Container não-interativo — sem cursor pointer" },
-    { "state": "focus", "reason": "Root não é focável; elementos internos têm foco próprio" },
-    { "state": "active", "reason": "Sem estado pressionado" },
-    { "state": "disabled", "reason": "Timeline de visualização não possui estado desabilitado" },
-    { "state": "loading", "reason": "Conteúdo estático — use DssInnerLoading externamente" }
+    {
+      "state": "hover",
+      "reason": "Container não-interativo — sem cursor pointer"
+    },
+    {
+      "state": "focus",
+      "reason": "Root não é focável; elementos internos têm foco próprio"
+    },
+    {
+      "state": "active",
+      "reason": "Sem estado pressionado"
+    },
+    {
+      "state": "disabled",
+      "reason": "Timeline de visualização não possui estado desabilitado"
+    },
+    {
+      "state": "loading",
+      "reason": "Conteúdo estático — use DssInnerLoading externamente"
+    }
   ],
   "tokens": [
     "--dss-gray-300",
@@ -79,5 +94,22 @@
     "DssBadge no slot #title de DssTimelineEntry para indicadores de status",
     "DssCard para conteúdo rico no slot default de DssTimelineEntry"
   ],
-  "auditHistory": []
+  "auditHistory": [],
+  "defaultPreview": {
+    "props": {
+      "side": "right"
+    },
+    "computedDimensions": {},
+    "computedTokens": {
+      "gap": "--dss-spacing-4",
+      "padding": "--dss-spacing-4",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "3 eventos na linha do tempo"
+  }
 }

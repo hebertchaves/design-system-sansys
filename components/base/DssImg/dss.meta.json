@@ -14,8 +14,17 @@
     "family": "Mídia e Visualização"
   },
   "phaseDescription": "Nível 1 — Container de mídia. Wrapper governado sobre QImg com lazy loading, estados de loading/error, fallback visual e border-radius via tokens.",
-  "statesApplicable": ["default", "loading", "error"],
-  "statesNotApplicable": ["hover", "focus", "active", "disabled"],
+  "statesApplicable": [
+    "default",
+    "loading",
+    "error"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled"
+  ],
   "statesNotApplicableReason": {
     "hover": "Elemento de mídia não interativo — interatividade é responsabilidade do elemento pai (link, botão)",
     "focus": "Não interativo diretamente — quando dentro de elementos interativos, o foco é gerenciado pelo pai",
@@ -57,15 +66,22 @@
   "defaultPreview": {
     "props": {
       "src": "[URL da imagem]",
-      "alt": "[Descrição da imagem]",
+      "alt": "[Descrição]",
       "fit": "cover",
       "loading": "lazy"
     },
+    "computedDimensions": {
+      "minHeight": "150px",
+      "minWidth": "200px"
+    },
     "computedTokens": {
-      "loadingBackground": "--dss-surface-disabled",
-      "errorBackground": "--dss-surface-disabled",
-      "errorIconColor": "--dss-text-subtle"
-    }
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "none"
+    },
+    "demoContent": "Imagem com alt text acessível"
   },
   "auditHistory": [
     {

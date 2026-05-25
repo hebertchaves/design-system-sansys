@@ -70,5 +70,23 @@
       "location": "4-output/_states.scss"
     }
   ],
-  "auditHistory": []
+  "auditHistory": [],
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "gap": "--dss-spacing-2",
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Barra de sistema com conteúdo"
+  }
 }

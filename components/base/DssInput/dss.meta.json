@@ -18,10 +18,17 @@
     },
     "computedDimensions": {
       "minHeight": "44px",
-      "width": "100%"
+      "minWidth": "240px"
     },
     "computedTokens": {
-      "padding": "--dss-spacing-4 --dss-spacing-4"
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "borderRadius": "--dss-radius-md",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
     },
     "demoContent": "Placeholder 'Digite aqui'"
   }

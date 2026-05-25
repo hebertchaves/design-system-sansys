@@ -19,6 +19,18 @@
           </button>
         </div>
 
+        <!-- Defaults Preview -->
+        <div class="nav-section">
+          <button
+            @click="activeComponent = 'defaults-preview'"
+            :class="['nav-item', { active: activeComponent === 'defaults-preview' }]"
+          >
+            <span class="nav-icon">🎨</span>
+            <span class="nav-label">Defaults Preview</span>
+            <span class="nav-badge">76</span>
+          </button>
+        </div>
+
         <!-- Foundation -->
         <div class="nav-section">
           <button
@@ -442,6 +454,11 @@
         <TestPageComplexity />
       </div>
 
+      <!-- Defaults Preview View -->
+      <div v-if="activeComponent === 'defaults-preview'" class="component-view">
+        <TestDefaultPreview />
+      </div>
+
       <!-- Design Tokens View -->
       <div v-if="activeComponent === 'tokens'" class="component-view">
         <TestTokens />
@@ -453,6 +470,7 @@
 <script setup>
 import { ref } from 'vue'
 import TestIndex from './TestIndex.vue'
+import TestDefaultPreview from './TestDefaultPreview.vue'
 import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'
 import TestAvatar from './TestAvatar.vue'

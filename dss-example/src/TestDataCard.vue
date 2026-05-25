@@ -411,7 +411,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { DssDataCard } from '../../components/base/DssDataCard'
+import { DssDataCard } from '../../components/stress-test/DssDataCard'
 
 // OBJ-02 — slots dinâmicos
 const activeTabObj02 = ref('resumo')

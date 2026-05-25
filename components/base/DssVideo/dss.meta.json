@@ -14,8 +14,17 @@
     "family": "Mídia e Visualização"
   },
   "phaseDescription": "Nível 1 — Container de mídia. Wrapper governado sobre QVideo com aspect ratio responsivo e border-radius via tokens.",
-  "statesApplicable": ["default"],
-  "statesNotApplicable": ["loading", "error", "hover", "focus", "active", "disabled"],
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error",
+    "hover",
+    "focus",
+    "active",
+    "disabled"
+  ],
   "statesNotApplicableReason": {
     "loading": "QVideo é um iframe — não expõe slot #loading controlável pelo DSS. Estado de loading é interno ao browser/player.",
     "error": "QVideo não expõe slot de erro. Falhas são gerenciadas internamente pelo iframe.",
@@ -47,10 +56,21 @@
   ],
   "defaultPreview": {
     "props": {
-      "src": "[URL do vídeo YouTube/Vimeo]",
-      "title": "[Descrição do vídeo]",
-      "ratio": "16/9"
-    }
+      "src": "[URL do vídeo]",
+      "title": "[Descrição]",
+      "ratio": 1.78
+    },
+    "computedDimensions": {
+      "minHeight": "180px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "none"
+    },
+    "demoContent": "Vídeo 16:9 incorporado"
   },
   "auditHistory": [
     {

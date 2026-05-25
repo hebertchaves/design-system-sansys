@@ -146,7 +146,12 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "computedTokens": {
+      "padding": "--dss-spacing-0",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Área de conteúdo principal da página"
   }
 }

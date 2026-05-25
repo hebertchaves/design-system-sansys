@@ -15,13 +15,17 @@
       "size": "md"
     },
     "computedDimensions": {
-      "width": "48px",
-      "height": "48px"
+      "minHeight": "40px",
+      "minWidth": "40px"
     },
     "computedTokens": {
-      "width": "--dss-touch-target-min",
-      "height": "--dss-touch-target-min",
-      "borderRadius": "--dss-radius-full"
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-medium",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-text-body"
     },
     "demoContent": "Iniciais 'AB'"
   }

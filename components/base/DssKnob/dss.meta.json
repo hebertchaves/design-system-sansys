@@ -106,8 +106,22 @@
     "templateStructure": "QKnob como root element — gerencia internamente SVG circular (via QCircularProgress), drag/touch, ARIA slider, e navegação por teclado. Wrapper div seria redundante e introduziria risco de conflito de posicionamento. (EXC-Gate-01)"
   },
   "defaultPreview": {
-    "modelValue": 50,
-    "brand": "hub",
-    "showValue": true
+    "props": {
+      "modelValue": 50,
+      "min": 0,
+      "max": 100
+    },
+    "computedDimensions": {
+      "minHeight": "56px",
+      "minWidth": "56px"
+    },
+    "computedTokens": {
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Knob com valor 50%"
   }
 }

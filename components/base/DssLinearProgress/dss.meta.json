@@ -14,8 +14,17 @@
     "family": "Progresso e Feedback"
   },
   "phaseDescription": "Nível 2 — Composição de base. Pré-requisito crítico para DssUploader (Nível 3).",
-  "statesApplicable": ["default", "indeterminate", "disabled"],
-  "statesNotApplicable": ["hover", "focus", "active", "loading"],
+  "statesApplicable": [
+    "default",
+    "indeterminate",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "loading"
+  ],
   "statesNotApplicableReason": {
     "hover": "Componente não interativo — Opção B (padrão DssBadge/DssSpinner)",
     "focus": "Componente não interativo — sem navegação por teclado própria",
@@ -50,7 +59,11 @@
     {
       "id": "EXC-Gate-01",
       "rule": "Gate de Composição v2.4 — seletores internos de terceiros",
-      "selectors": [".q-linear-progress", ".q-linear-progress__track", ".q-linear-progress__model"],
+      "selectors": [
+        ".q-linear-progress",
+        ".q-linear-progress__track",
+        ".q-linear-progress__model"
+      ],
       "justification": "Necessário para aplicar tokens DSS (--dss-surface-muted, --dss-radius-full, cores semânticas) à estrutura DOM gerada internamente pelo QLinearProgress. Sem esses overrides, o componente perderia governança visual do DSS.",
       "location": "2-composition/_base.scss, 3-variants/_colors.scss, 4-output/_brands.scss"
     },
@@ -92,12 +105,18 @@
       "color": "primary",
       "size": "md"
     },
+    "computedDimensions": {
+      "minHeight": "4px",
+      "minWidth": "200px"
+    },
     "computedTokens": {
-      "height": "--dss-spacing-3 (12px)",
-      "trackColor": "--dss-surface-muted",
-      "modelColor": "--dss-action-primary",
-      "borderRadius": "--dss-radius-full (9999px)"
-    }
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Barra de progresso linear 70%"
   },
   "auditHistory": []
 }

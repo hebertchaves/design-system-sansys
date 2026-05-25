@@ -96,8 +96,21 @@
     "templateStructure": "QRating como root element — gerencia internamente ARIA slider, interação touch/click/teclado, e renderização de QIcon. Wrapper div seria redundante. (EXC-Gate-01)"
   },
   "defaultPreview": {
-    "modelValue": 3,
-    "brand": "hub",
-    "max": 5
+    "props": {
+      "modelValue": 3,
+      "max": 5
+    },
+    "computedDimensions": {
+      "minHeight": "44px",
+      "minWidth": "160px"
+    },
+    "computedTokens": {
+      "gap": "--dss-spacing-1",
+      "fontSize": "--dss-font-size-xl",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Avaliação de 3 de 5 estrelas"
   }
 }

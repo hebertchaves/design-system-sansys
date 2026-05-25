@@ -10,8 +10,13 @@
   "category": "Navegação Estrutural",
   "interactive": true,
   "dependencies": {
-    "dss": ["DssButton", "DssIcon"],
-    "quasar": ["QPagination"]
+    "dss": [
+      "DssButton",
+      "DssIcon"
+    ],
+    "quasar": [
+      "QPagination"
+    ]
   },
   "gateExceptions": [
     {
@@ -70,24 +75,92 @@
     ]
   },
   "props": {
-    "modelValue": { "type": "Number", "required": true },
-    "max": { "type": "Number", "required": true },
-    "maxPages": { "type": "Number", "default": 5 },
-    "disable": { "type": "Boolean", "default": false },
-    "readonly": { "type": "Boolean", "default": false },
-    "size": { "type": "String", "values": ["xs", "sm", "md", "lg"], "default": "md" },
-    "ellipses": { "type": "Boolean", "default": true },
-    "boundaryLinks": { "type": "Boolean", "default": false },
-    "directionLinks": { "type": "Boolean", "default": true },
-    "flat": { "type": "Boolean", "default": false },
-    "outline": { "type": "Boolean", "default": false },
-    "round": { "type": "Boolean", "default": false },
-    "brand": { "type": "String", "values": ["hub", "water", "waste"] },
-    "ariaLabel": { "type": "String", "default": "Navegação por páginas" }
+    "modelValue": {
+      "type": "Number",
+      "required": true
+    },
+    "max": {
+      "type": "Number",
+      "required": true
+    },
+    "maxPages": {
+      "type": "Number",
+      "default": 5
+    },
+    "disable": {
+      "type": "Boolean",
+      "default": false
+    },
+    "readonly": {
+      "type": "Boolean",
+      "default": false
+    },
+    "size": {
+      "type": "String",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md"
+    },
+    "ellipses": {
+      "type": "Boolean",
+      "default": true
+    },
+    "boundaryLinks": {
+      "type": "Boolean",
+      "default": false
+    },
+    "directionLinks": {
+      "type": "Boolean",
+      "default": true
+    },
+    "flat": {
+      "type": "Boolean",
+      "default": false
+    },
+    "outline": {
+      "type": "Boolean",
+      "default": false
+    },
+    "round": {
+      "type": "Boolean",
+      "default": false
+    },
+    "brand": {
+      "type": "String",
+      "values": [
+        "hub",
+        "water",
+        "waste"
+      ]
+    },
+    "ariaLabel": {
+      "type": "String",
+      "default": "Navegação por páginas"
+    }
   },
   "defaultPreview": {
-    "modelValue": 1,
-    "max": 10
+    "props": {
+      "modelValue": 1,
+      "max": 10
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "gap": "--dss-spacing-1",
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-sm",
+      "fontWeight": "--dss-font-weight-medium",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Página 1 de 10"
   },
   "auditStatus": {
     "structural": "pending",

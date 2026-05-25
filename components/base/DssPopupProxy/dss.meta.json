@@ -148,11 +148,14 @@
     },
     "computedDimensions": {},
     "computedTokens": {
-      "background": "var(--dss-surface-default)",
-      "shadow": "var(--dss-elevation-3)",
-      "radius": "var(--dss-radius-md)"
+      "borderRadius": "--dss-radius-md",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-subtle",
+      "textColor": "--dss-text-body",
+      "shadow": "--dss-shadow-md"
     },
-    "demoContent": "DssList com DssItems de ações"
+    "demoContent": "Proxy de popup (Dialog em mobile, Menu em desktop)"
   },
   "auditHistory": []
 }

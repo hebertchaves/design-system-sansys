@@ -66,10 +66,23 @@
     "padding": "Padding governado por tokens internos, não exposto na API pública."
   },
   "defaultPreview": {
-    "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "props": {
+      "color": "primary",
+      "icon": "add"
+    },
+    "computedDimensions": {
+      "minHeight": "56px",
+      "minWidth": "56px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-action-primary",
+      "textColor": "--dss-text-inverse",
+      "shadow": "--dss-shadow-md"
+    },
+    "demoContent": "FAB com ícone 'add'"
   },
   "tokens": {
     "shape": [

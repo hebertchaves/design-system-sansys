@@ -64,9 +64,25 @@
     "Usar `dragRange` sem contexto visual ou instrução — usuários precisam entender que o intervalo inteiro é arrastável para usar essa affordance"
   ],
   "defaultPreview": {
-    "props": {},
-    "computedDimensions": {},
-    "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "props": {
+      "min": 0,
+      "max": 100,
+      "modelValue": {
+        "min": 25,
+        "max": 75
+      }
+    },
+    "computedDimensions": {
+      "minHeight": "44px",
+      "minWidth": "200px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Range de 25 a 75"
   }
 }

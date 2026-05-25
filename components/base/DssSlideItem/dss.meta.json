@@ -87,7 +87,23 @@
     "slotRight": "DssIcon + texto descritivo (ex: 'Arquivar')",
     "requiredAlternative": "DssButton ou menu contextual para cada ação (obrigatório para acessibilidade)"
   },
-  "defaultPreview": "DssSlideItem com slot default (DssItem), slot left (deletar) e slot right (arquivar), leftColor=error, rightColor=info",
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {
+      "minHeight": "56px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Item com ações deslizáveis (esquerda/direita)"
+  },
   "auditHistory": [
     {
       "date": "2026-05-20",

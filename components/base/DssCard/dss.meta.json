@@ -109,11 +109,20 @@
       "square": false
     },
     "computedDimensions": {
-      "minWidth": "100%"
+      "minHeight": "80px"
     },
     "computedTokens": {
-      "borderRadius": "--dss-radius-lg"
+      "padding": "--dss-spacing-6",
+      "gap": "--dss-spacing-4",
+      "borderRadius": "--dss-radius-lg",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body",
+      "shadow": "--dss-shadow-sm"
     },
-    "demoContent": "DssCardSection com texto"
+    "demoContent": "DssCardSection com texto e ações"
   }
 }

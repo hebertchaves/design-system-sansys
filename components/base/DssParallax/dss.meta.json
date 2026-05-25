@@ -66,10 +66,19 @@
   ],
   "defaultPreview": {
     "props": {
-      "src": "[URL da imagem de fundo]",
+      "src": "[URL da imagem]",
       "height": 500,
       "speed": 0.5
-    }
+    },
+    "computedDimensions": {
+      "minHeight": "200px"
+    },
+    "computedTokens": {
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Seção com efeito parallax"
   },
   "auditHistory": []
 }

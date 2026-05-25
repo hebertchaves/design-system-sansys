@@ -9,7 +9,9 @@
   "goldenReference": "DssBadge",
   "goldenContext": "DssCircularProgress",
   "quasarBase": "QInnerLoading",
-  "internalDependencies": ["DssSpinner"],
+  "internalDependencies": [
+    "DssSpinner"
+  ],
   "auditCycles": 2,
   "tokensUsed": [
     "--dss-surface-default",
@@ -93,8 +95,19 @@
     "templateStructure": "QInnerLoading como root element (EXC-Gate-01). Entry point wrapper re-exporta corretamente para 1-structure/DssInnerLoading.ts.vue."
   },
   "defaultPreview": {
-    "showing": true,
-    "color": "primary",
-    "size": "md"
+    "props": {
+      "showing": true
+    },
+    "computedDimensions": {
+      "minHeight": "48px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-4",
+      "borderRadius": "--dss-radius-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Overlay de carregamento interno"
   }
 }
