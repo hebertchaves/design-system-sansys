@@ -59,7 +59,10 @@ defineOptions({ name: 'DssSpinner', inheritAttrs: false })
 
 const props = withDefaults(defineProps<SpinnerProps>(), {
   type:      'standard',
-  color:     null,
+  // DSS Visual Standard: primary como cor default do Spinner.
+  // Quando usado dentro de DssButton (loading), o button sobrescreve
+  // via color: inherit no wrapper, garantindo contraste correto.
+  color:     'primary',
   size:      'md',
   thickness: 5,
   brand:     null,

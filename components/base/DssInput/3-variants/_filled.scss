@@ -4,51 +4,63 @@
    RESPONSABILIDADE: Estilo da variante filled (fundo sólido)
 
    CARACTERÍSTICAS:
-   - Background sólido
-   - Sem borda
+   - Background via token surface-subtle
    - Border-bottom apenas
-   - Elevação sutil
+   - Focus: borda primary + label primary (Material 3 / IBM Carbon)
    ========================================================================== */
 
 .dss-input--filled {
   .dss-input__field {
-    background-color: var(--dss-gray-100); /* Changed from gray-50 for better visibility */
+    /* DSS Visual Standard: surface-subtle para fundo de campos filled */
+    background-color: var(--dss-surface-subtle);
+    /* DSS Visual Standard: radius apenas no topo (padrão Material 3 filled) */
     border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
-    border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400); /* Darkened for better contrast */
+    border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400);
   }
 
-  /* Focus state */
+  /* Focus state — borda e label em primary */
   &.dss-input--focused .dss-input__field {
-    background-color: var(--dss-gray-200); /* Darker to show clear distinction */
+    background-color: var(--dss-surface-hover);
     border-bottom-color: var(--dss-action-primary);
     box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
   }
 
+  /* Label em primary quando focused */
+  &.dss-input--focused .dss-input__label {
+    color: var(--dss-action-primary);
+  }
+
   /* Active state */
   &:not(.dss-input--disabled):not(.dss-input--readonly):active .dss-input__field {
-    background-color: var(--dss-gray-300);
+    background-color: var(--dss-surface-active);
   }
 
   /* Error state */
   &.dss-input--error .dss-input__field {
-    border-bottom-color: var(--dss-error-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+    border-bottom-color: var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
+  }
+
+  /* Error label */
+  &.dss-input--error .dss-input__label {
+    color: var(--dss-feedback-error);
   }
 
   /* Disabled state */
   &.dss-input--disabled .dss-input__field {
-    background-color: var(--dss-gray-200);
-    border-bottom-style: dotted;
+    background-color: var(--dss-surface-muted);
+    border-bottom-style: dashed;
+    opacity: var(--dss-opacity-disabled);
   }
 
   /* Readonly state */
   &.dss-input--readonly .dss-input__field {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-surface-subtle);
     border-bottom-color: transparent;
   }
 
   /* Hover (not disabled/readonly) */
-  &:not(.dss-input--disabled):not(.dss-input--readonly):hover .dss-input__field {
-    background-color: var(--dss-gray-200);
+  &:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+    background-color: var(--dss-surface-hover);
   }
 }

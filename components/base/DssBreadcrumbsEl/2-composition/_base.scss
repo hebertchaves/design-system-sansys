@@ -12,6 +12,11 @@
 //   - EXC-02: `text-decoration: underline` no hover/active — sem token DSS
 //     para text-decoration; padrão WCAG 2.1 SC 1.4.1 para links em contexto
 //     de navegação estrutural.
+//
+// DSS Visual Standard (v2.5):
+//   Links clicáveis usam --dss-text-action (action-primary) para indicar
+//   interatividade, alinhado com IBM Carbon, Material 3 e Salesforce Lightning.
+//   O item atual (página corrente) usa text-body + font-weight-semibold.
 // =============================================================================
 
 // EXC-01: Seletor composto — ambas as classes no mesmo elemento raiz
@@ -27,19 +32,21 @@
 .dss-breadcrumbs-el {
 
   // ─── Item Clicável (to ou href presente — renderiza como <a>) ──────────
+  // DSS Visual Standard: links de navegação usam text-action (action-primary)
+  // para indicar interatividade, alinhado com IBM Carbon e Material 3.
   &.dss-breadcrumbs-el--clickable {
-    color: var(--dss-text-subtle);
+    color: var(--dss-text-action);
     text-decoration: none;
     cursor: pointer;
     transition: color var(--dss-duration-150) var(--dss-easing-standard);
 
     &:hover {
-      color: var(--dss-text-body);
+      color: var(--dss-text-action-hover);
       text-decoration: underline; // EXC-02
     }
 
     &:active {
-      color: var(--dss-text-body);
+      color: var(--dss-text-action-hover);
       text-decoration: underline; // EXC-02
     }
 

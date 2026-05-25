@@ -45,11 +45,16 @@
   overflow: hidden;
 
   // Background padrao (sera sobrescrito por cores especificas)
-  background-color: var(--dss-neutral-200);
-  color: var(--dss-neutral-700);
+  // DSS Visual Standard: surface-muted como fundo neutro do avatar sem imagem.
+  // PONTO DE ATENCAO: --dss-neutral-200 e --dss-neutral-700 nao existem no catalogo
+  // de tokens DSS. Substituidos por tokens semanticos validos.
+  background-color: var(--dss-surface-muted);
+  color: var(--dss-text-body);
 
   // Transicoes
-  transition: all var(--dss-transition-base);
+  // PONTO DE ATENCAO: --dss-transition-base nao existe no catalogo DSS.
+  // Substituido por tokens de motion validos.
+  transition: all var(--dss-duration-200) var(--dss-easing-standard);
 
   // Prevenir selecao de texto
   user-select: none;

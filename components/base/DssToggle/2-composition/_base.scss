@@ -37,6 +37,10 @@
   font-size: var(--dss-font-size-sm);
   line-height: var(--dss-line-height-normal);
 
+  /* DSS Visual Standard: cor primary no root define currentColor do track e thumb.
+     Alinhado com DssCheckbox e DssRadio. Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+  color: var(--dss-action-primary);
+
   /* Interaction */
   cursor: pointer;
   user-select: none;
@@ -118,8 +122,10 @@
   /* Bordas */
   border: var(--dss-border-width-md) solid currentColor;
 
-  /* Fundo - unchecked state */
-  background-color: transparent;
+  /* DSS Visual Standard: track unchecked usa surface-muted para contraste visual.
+     Material 3 usa surface-variant; IBM Carbon usa gray-30.
+     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+  background-color: var(--dss-surface-muted);
   color: inherit;
 
   /* Transitions */
@@ -181,6 +187,8 @@
   display: inline-flex;
   align-items: center;
   line-height: var(--dss-line-height-normal);
+  /* DSS Visual Standard: label usa cor de texto padrão, não primary. */
+  color: var(--dss-text-body);
 }
 
 /* ==========================================================================
@@ -205,19 +213,18 @@
  */
 .dss-toggle--error {
   .dss-toggle__track {
-    border-color: var(--dss-error-600);
-    color: var(--dss-error-600);
+    border-color: var(--dss-feedback-error);
+    color: var(--dss-feedback-error);
   }
-
   .dss-toggle__label {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 }
 
 .dss-toggle__error {
   display: block;
   font-size: var(--dss-font-size-xs);
-  color: var(--dss-error-600);
+  color: var(--dss-feedback-error);
   margin-top: var(--dss-spacing-0_5);
 }
 

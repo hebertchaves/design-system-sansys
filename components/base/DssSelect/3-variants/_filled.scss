@@ -4,16 +4,18 @@
    RESPONSABILIDADE: Estilo da variante filled (fundo preenchido)
 
    CARACTERÍSTICAS:
-   - Fundo preenchido (--dss-gray-100)
+   - Fundo via surface-subtle (token semântico)
    - Borda apenas na parte inferior
    - Radius apenas no topo (flat na base)
+   - Focus: borda primary + label primary (alinhado com DssInput filled)
    ========================================================================== */
 
 .dss-select--filled {
 
   .q-field__control {
-    background-color: var(--dss-gray-100);
-    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    /* DSS Visual Standard: surface-subtle para fundo de campos filled */
+    background-color: var(--dss-surface-subtle);
+    border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400);
     border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
     padding: var(--dss-spacing-3) var(--dss-spacing-4);
   }
@@ -21,7 +23,7 @@
   /* Hover */
   &:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover {
     .q-field__control {
-      background-color: var(--dss-gray-200);
+      background-color: var(--dss-surface-hover);
       border-bottom-color: var(--dss-gray-600);
     }
   }
@@ -29,7 +31,7 @@
   /* Focus state — dual hook */
   &.dss-select--focused .q-field__control,
   &.q-field--focused .q-field__control {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-hover);
     border-bottom-color: var(--dss-action-primary);
     box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
   }
@@ -43,19 +45,20 @@
   /* Error state */
   &.dss-select--error .q-field__control,
   &.q-field--error .q-field__control {
-    border-bottom-color: var(--dss-error-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+    border-bottom-color: var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
   }
 
   /* Disabled state */
   &.dss-select--disabled .q-field__control {
-    background-color: var(--dss-gray-50);
-    border-bottom-style: dotted;
+    background-color: var(--dss-surface-muted);
+    border-bottom-style: dashed;
+    opacity: var(--dss-opacity-disabled);
   }
 
   /* Readonly state */
   &.dss-select--readonly .q-field__control {
-    background-color: var(--dss-gray-50);
-    border-bottom-color: var(--dss-gray-300);
+    background-color: var(--dss-surface-subtle);
+    border-bottom-color: transparent;
   }
 }

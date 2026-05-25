@@ -31,6 +31,10 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-sm);
   line-height: var(--dss-line-height-normal);
+  /* DSS Visual Standard: cor primary no root define currentColor do controle.
+     A borda do controle unchecked usa currentColor, tornando-a primary por default.
+     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+  color: var(--dss-action-primary);
 
   /* Interaction */
   cursor: pointer;
@@ -177,6 +181,9 @@
   display: inline-flex;
   align-items: center;
   line-height: var(--dss-line-height-normal);
+  /* DSS Visual Standard: label usa cor de texto padrão, não primary.
+     O root tem color: primary para o controle, mas o label deve ser legível. */
+  color: var(--dss-text-body);
 }
 
 /* ==========================================================================

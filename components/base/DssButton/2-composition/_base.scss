@@ -24,25 +24,28 @@
 
   /* Typography */
   font-family: var(--dss-font-family-sans);
-  font-size: var(--dss-font-size-md);
+  font-size: var(--dss-font-size-sm);
   font-weight: var(--dss-font-weight-medium);
   line-height: var(--dss-line-height-tight);
-  text-transform: uppercase;
-  /* EXCEÇÃO DOCUMENTADA: letter-spacing reproduz o valor exato do Quasar Framework
-     (0.0892857143em ≈ 1.25px em 14px). Não existe token DSS equivalente.
-     Justificativa: Fidelidade visual ao Quasar q-btn. Ref: DSS_COMPONENT_ARCHITECTURE.md */
-  letter-spacing: 0.0892857143em;
+  /* DSS Visual Standard: sem uppercase — alinhado com Material 3, IBM Carbon, Salesforce Lightning.
+     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+  text-transform: none;
+  /* EXCEÇÃO DOCUMENTADA: letter-spacing neutro para text-transform: none.
+     Material 3 e IBM Carbon não usam letter-spacing em botões sem uppercase. */
+  letter-spacing: 0.01em;
   text-decoration: none;
   white-space: nowrap;
 
   /* Layout */
-  padding: var(--dss-spacing-2) var(--dss-spacing-4);
+  padding: var(--dss-spacing-2) var(--dss-spacing-5);
   min-height: var(--dss-touch-target-md); /* 44px - ✅ WCAG 2.1 AA */
   min-width: var(--dss-spacing-16); /* 64px */
 
   /* Borders */
   border: none;
-  border-radius: var(--dss-radius-sm);
+  /* DSS Visual Standard: radius-full para botões (pill shape moderno — Material 3, Salesforce).
+     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+  border-radius: var(--dss-radius-full);
 
   /* Interaction */
   cursor: pointer;

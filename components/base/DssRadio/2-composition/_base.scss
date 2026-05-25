@@ -21,7 +21,9 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-sm); // 14px
   line-height: var(--dss-line-height-normal);
-  color: var(--dss-text-primary);
+  /* DSS Visual Standard: cor primary no root define currentColor do controle.
+     Alinhado com DssCheckbox. Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+  color: var(--dss-action-primary);
   cursor: pointer;
   user-select: none;
   transition: opacity var(--dss-duration-200) var(--dss-easing-standard);
@@ -107,7 +109,8 @@
   font-family: var(--dss-font-family-sans);
   font-size: inherit;
   line-height: var(--dss-line-height-normal);
-  color: var(--dss-text-primary);
+  /* DSS Visual Standard: label usa cor de texto padrão, não primary. */
+  color: var(--dss-text-body);
   cursor: pointer;
 }
 
@@ -224,11 +227,11 @@
 .dss-radio--error {
   .dss-radio__control {
     border-color: var(--dss-error-600);
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   .dss-radio__label {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 }
 

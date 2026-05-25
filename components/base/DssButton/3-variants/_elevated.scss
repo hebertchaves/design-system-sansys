@@ -5,21 +5,20 @@
 
    CARACTERÍSTICAS:
    - Background sólido
-   - Box-shadow para elevação
+   - Box-shadow para elevação via tokens DSS
    - Hover aumenta elevação
    ========================================================================== */
 
-/* EXCEÇÃO DOCUMENTADA: box-shadow usa rgba hardcoded (Quasar elevation system).
-   Não existem tokens DSS para shadow multi-stop. Valores reproduzem Material Design
-   elevation levels (rest=2, hover=4, active=1). Ref: DSS_COMPONENT_ARCHITECTURE.md */
+/* DSS Visual Standard: usa tokens de elevação DSS para consistência com DssCard e DssFab.
+   Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
 .dss-button--elevated {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--dss-elevation-2);
 
   &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--dss-elevation-3);
   }
 
   &:active:not(.dss-button--disabled):not(.dss-button--loading) {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--dss-elevation-1);
   }
 }
