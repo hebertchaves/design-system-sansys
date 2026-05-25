@@ -39,6 +39,7 @@ import DssInfiniteScrollPage from "./pages/components/DssInfiniteScrollPage";
 import DssKnobPage from "./pages/components/DssKnobPage";
 import DssMenuPage from "./pages/components/DssMenuPage";
 import DssCarrosselPage from "./pages/components/DssCarrosselPage";
+import DssFormPage from "./pages/components/DssFormPage";
 import DssTestCadrisPage from "./pages/components/DssTestCadrisPage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
@@ -103,6 +104,7 @@ const App = () => (
             <Route path="/componentes/dss-knob" element={<DssKnobPage />} />
             <Route path="/componentes/dss-menu" element={<DssMenuPage />} />
             <Route path="/componentes/dss-carrossel" element={<DssCarrosselPage />} />
+            <Route path="/componentes/dss-form" element={<DssFormPage />} />
             <Route path="/componentes/teste-cadris" element={<DssTestCadrisPage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             
