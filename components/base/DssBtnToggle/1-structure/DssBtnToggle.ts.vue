@@ -124,9 +124,9 @@ const props = withDefaults(defineProps<BtnToggleProps>(), {
   // Variante visual
   variant: 'elevated',
 
-  // Cores — sem default (undefined = sistema Quasar/CSS aplica padrão)
-  color: undefined,
-  toggleColor: undefined,
+  // Cores — primary como default (DSS Visual Standard: cor principal de ação)
+  color: 'primary',
+  toggleColor: 'primary',
   textColor: undefined,
   toggleTextColor: undefined,
 

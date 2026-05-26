@@ -117,7 +117,7 @@ const props = withDefaults(defineProps<BtnDropdownProps>(), {
 
   // Estilo visual
   variant: 'elevated',
-  color: undefined,
+  color: 'primary', // DSS Visual Standard: cor principal de ação
   textColor: undefined,
   size: 'md',
   square: false,

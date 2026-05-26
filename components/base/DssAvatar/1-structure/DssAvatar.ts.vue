@@ -79,7 +79,7 @@ defineOptions({
 const props = withDefaults(defineProps<AvatarProps>(), {
   size: 'md',
   fontSize: null,
-  color: null,
+  color: 'primary', // DSS Visual Standard: cor principal para avatares sem imagem
   textColor: null,
   icon: null,
   square: false,

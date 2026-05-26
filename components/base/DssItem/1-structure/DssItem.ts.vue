@@ -86,7 +86,7 @@ const props = withDefaults(defineProps<ItemProps>(), {
 
   // Visual
   density: 'default',
-  color: null,
+  color: 'primary', // DSS Visual Standard: cor principal para itens ativos
   inset: false,
   divider: false,
 

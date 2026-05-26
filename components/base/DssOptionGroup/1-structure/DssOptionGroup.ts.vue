@@ -41,6 +41,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<OptionGroupProps>(), {
   type: 'radio',
+  color: 'primary', // DSS Visual Standard: cor principal de ação
   inline: false,
   disable: false,
   readonly: false,
