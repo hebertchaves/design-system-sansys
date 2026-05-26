@@ -523,3 +523,726 @@ O DSS adota a variante **Outlined** como padrão, inspirada no M3 Outlined + Car
 | LinearProgress | track | `var(--dss-gray-200)` |
 | LinearProgress | indicador | `var(--dss-action-primary)` |
 | Spinner | color | `var(--dss-action-primary)` |
+
+---
+
+## 13. Especificações Visuais Default — Componente por Componente
+
+> **Propósito desta seção:** As seções 1–12 trataram majoritariamente de **cor**. Esta seção amplia a referência visual cobrindo **TODOS** os aspectos que constroem a UI default de cada componente DSS — dimensões, padding, gap, border-radius, espessura de stroke, sombra, tipografia, iconografia e estados. Estes valores correspondem 1:1 ao que está renderizado como **default** nos playgrounds das páginas de cada componente em `src/pages/components/`.
+>
+> **Regra de leitura:** Toda linha "Valor" abaixo é o estado **default** (sem variantes aplicadas, sem brand, sem cor semântica, sem feedback). É o ponto de partida visual neutro que o agente de implementação DEVE reproduzir na Layer 2 (`_base.scss`) antes de adicionar variantes.
+>
+> **Notação:** valores em px aparecem entre parênteses como referência ao token. Tokens DSS são a fonte canônica.
+
+---
+
+### 13.1 DssButton
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Variante default | `elevated` (filled) | — |
+| `height` | 44px | `--dss-touch-target-md` |
+| `min-width` | 64px | — |
+| `padding` (horizontal) | 24px | `--dss-spacing-6` |
+| `padding` (vertical) | 0 | — |
+| `border-radius` | full (pílula) | `--dss-radius-full` |
+| `border-width` | 0 (sem borda no filled) | `--dss-border-width-none` |
+| `background` | action-primary (azul) | `--dss-action-primary` |
+| `color` | branco | `--dss-text-inverse` |
+| `font-family` | sans | `--dss-font-family-sans` |
+| `font-size` | 14px | `--dss-font-size-sm` |
+| `font-weight` | 500 | `--dss-font-weight-medium` |
+| `letter-spacing` | 0.01em | — |
+| `text-transform` | none | — |
+| `line-height` | 1 | — |
+| `gap` (ícone + label) | 8px | `--dss-spacing-2` |
+| Tamanho do ícone | 20px | — |
+| `box-shadow` | nenhum | — |
+| Hover | `brightness(0.95)` | — |
+| Focus | outline 3px action-primary, offset 2px | `--dss-focus-ring` |
+| Active | `brightness(0.90)` | — |
+| Disabled | `opacity: 0.38` | `--dss-opacity-disabled` |
+| Transition | 200ms standard | `--dss-duration-200` |
+
+---
+
+### 13.2 DssFab (Floating Action Button)
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Forma | circular | — |
+| `width` × `height` | 56px × 56px | — |
+| `padding` | 0 | — |
+| `border-radius` | full (50%) | `--dss-radius-full` |
+| `background` | action-primary | `--dss-action-primary` |
+| `color` (ícone) | branco | `--dss-text-inverse` |
+| Tamanho do ícone | 24px | — |
+| `box-shadow` | elevation-3 | `--dss-elevation-3` |
+| Hover | elevation-4 + brightness(0.95) | `--dss-elevation-4` |
+| Focus | outline 3px offset 2px | `--dss-focus-ring` |
+| Variante `mini` | 40px × 40px, ícone 20px | — |
+| Variante `extended` | height 48px, padding 0 20px, com label | — |
+
+---
+
+### 13.3 DssBtnGroup
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Layout | `display: inline-flex` | — |
+| `gap` entre botões | 0 (botões coladas) | — |
+| `border-radius` no grupo | full nas extremidades, 0 no meio | `--dss-radius-full` |
+| `border-width` interna entre botões | 1px divisor | `--dss-border-width-thin` |
+| Cor do divisor | branco a 20% opacity | — |
+| Altura dos botões | 44px (`md`) | `--dss-touch-target-md` |
+| Spread mode | botões ocupam largura total com `flex: 1` | — |
+
+---
+
+### 13.4 DssBtnDropdown
+
+Herda **100%** do `DssButton` + acréscimos:
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Ícone caret (dropdown arrow) | 16px, à direita | — |
+| `gap` entre label e caret | 4px | `--dss-spacing-1` |
+| `padding-right` (com caret) | 16px | `--dss-spacing-4` |
+| Painel popup `border-radius` | 8px | `--dss-radius-md` |
+| Painel popup `box-shadow` | elevation-3 | `--dss-elevation-3` |
+| Painel popup `padding` | 8px | `--dss-spacing-2` |
+| Painel popup `background` | surface-default | `--dss-surface-default` |
+| Painel popup `min-width` | largura do botão | — |
+| Item do painel `height` | 40px | — |
+| Item `padding` | 0 16px | `--dss-spacing-4` |
+
+---
+
+### 13.5 DssInput
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Variante default | `outlined` | — |
+| `height` | 44px | `--dss-input-height-md` |
+| `min-width` | 240px | — |
+| `padding` (horizontal) | 16px | `--dss-spacing-4` |
+| `padding` (vertical) | 8px | `--dss-spacing-2` |
+| `border-width` (repouso) | 1px | `--dss-border-width-thin` |
+| `border-width` (foco/erro) | 2px | `--dss-border-width-md` |
+| `border-color` (repouso) | gray-400 | `--dss-gray-400` |
+| `border-color` (hover) | gray-600 | `--dss-gray-600` |
+| `border-color` (foco) | action-primary | `--dss-action-primary` |
+| `border-radius` | 8px | `--dss-radius-md` |
+| `background` | transparente | — |
+| `color` (texto digitado) | text-body | `--dss-text-body` |
+| `font-size` | 14px | `--dss-font-size-md` |
+| `font-weight` | 400 (normal) | `--dss-font-weight-normal` |
+| `line-height` | 1.5 | `--dss-line-height-normal` |
+| Label flutuante: tamanho repouso | 14px | `--dss-font-size-md` |
+| Label flutuante: tamanho ativo | 12px | `--dss-font-size-sm` |
+| Label cor (repouso) | text-subtle | `--dss-text-subtle` |
+| Label cor (foco) | action-primary | `--dss-action-primary` |
+| Notch (fundo atrás do label) | surface-default, padding 0 4px | `--dss-spacing-1` |
+| Placeholder cor | text-hint | `--dss-text-hint` |
+| Ícone leading/trailing tamanho | 20px | — |
+| `gap` entre input e ícones | 8px | `--dss-spacing-2` |
+| Mensagem hint/erro: tamanho | 12px | `--dss-font-size-sm` |
+| Mensagem hint/erro: margin-top | 4px | `--dss-spacing-1` |
+
+---
+
+### 13.6 DssCheckbox
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Tamanho do controle | 18px × 18px | — |
+| `border-radius` | 4px | `--dss-radius-sm` |
+| `border-width` (unchecked) | 2px | `--dss-border-width-md` |
+| `border-color` (unchecked) | gray-500 | `--dss-gray-500` |
+| `background` (unchecked) | transparente | — |
+| `background` (checked) | action-primary | `--dss-action-primary` |
+| `border-width` (checked) | 0 (sem borda visível) | — |
+| Ícone check (checked) | 14px, branco | `--dss-text-inverse` |
+| Estado indeterminate | fundo action-primary, traço horizontal branco 10px | — |
+| Touch target (via padding/wrapper) | 44px × 44px | `--dss-touch-target-md` |
+| `gap` entre checkbox e label | 8px | `--dss-spacing-2` |
+| Label `font-size` | 14px | `--dss-font-size-md` |
+| Label cor | text-body | `--dss-text-body` |
+| Focus ring | outline 3px action-primary, offset 2px | `--dss-focus-ring` |
+
+---
+
+### 13.7 DssToggle (Switch)
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Track `width` × `height` | 52px × 32px | — |
+| Track `border-radius` | full | `--dss-radius-full` |
+| Track `border-width` (off) | 2px | `--dss-border-width-md` |
+| Track `border-color` (off) | gray-400 | `--dss-gray-400` |
+| Track `background` (off) | surface-muted | `--dss-surface-muted` |
+| Track `background` (on) | action-primary | `--dss-action-primary` |
+| Track `border-width` (on) | 0 | — |
+| Thumb tamanho (off) | 16px | — |
+| Thumb tamanho (on) | 24px | — |
+| Thumb `background` (off) | gray-500 | `--dss-gray-500` |
+| Thumb `background` (on) | branco | `--dss-text-inverse` |
+| Thumb deslocamento | 4px da borda do track | `--dss-spacing-1` |
+| Transição thumb | 200ms standard, easing spring | `--dss-duration-200` |
+| `gap` toggle ↔ label | 12px | `--dss-spacing-3` |
+
+---
+
+### 13.8 DssRange (Slider)
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Track `height` | 4px | — |
+| Track `border-radius` | full (9999px — EX-01) | `--dss-radius-full` |
+| Track `background` (não preenchido) | gray-300 | `--dss-gray-300` |
+| Track `background` (preenchido) | action-primary | `--dss-action-primary` |
+| Thumb tamanho | 20px | — |
+| Thumb `border-radius` | 50% | — |
+| Thumb `background` | action-primary | `--dss-action-primary` |
+| Thumb `box-shadow` | elevation-1 | `--dss-elevation-1` |
+| Focus ring (thumb) | 8px halo action-primary 20% opacity | — |
+| Touch target (área do thumb) | 44px | `--dss-touch-target-md` |
+| Label de valor `font-size` | 12px | `--dss-font-size-xs` |
+| Marks: tamanho | 4px ponto | — |
+| Marks: cor | gray-400 | `--dss-gray-400` |
+
+---
+
+### 13.9 DssKnob
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Tamanho default (`md`) | 80px × 80px | — |
+| Forma | circular | — |
+| Track `stroke-width` | 8px | — |
+| Track cor (não preenchido) | gray-200 | `--dss-gray-200` |
+| Track cor (preenchido) | action-primary | `--dss-action-primary` |
+| Label central `font-size` | 18px | `--dss-font-size-lg` |
+| Label central `font-weight` | 500 | `--dss-font-weight-medium` |
+| Label central cor | text-body | `--dss-text-body` |
+| Tamanhos disponíveis | xs 40, sm 60, md 80, lg 120 | — |
+
+---
+
+### 13.10 DssChip
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `height` | 32px | `--dss-compact-control-height-md` |
+| `padding` (horizontal) | 12px | `--dss-spacing-3` |
+| `border-radius` | full (pílula) | `--dss-radius-full` |
+| `border-width` | 1px | `--dss-border-width-thin` |
+| `border-color` | gray-300 | `--dss-gray-300` |
+| `background` | surface-muted | `--dss-surface-muted` |
+| `color` | text-body | `--dss-text-body` |
+| `font-size` | 12px | `--dss-font-size-xs` |
+| `font-weight` | 500 | `--dss-font-weight-medium` |
+| `gap` (ícone + label + remove) | 8px | `--dss-spacing-2` |
+| Tamanho ícone leading | 16px | — |
+| Botão de remoção: tamanho | 16px | — |
+| Touch target (`::before`) | 44px | `--dss-touch-target-md` |
+| Selected: `background` | action-primary | `--dss-action-primary` |
+| Selected: `color` | branco | `--dss-text-inverse` |
+
+---
+
+### 13.11 DssBadge
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `min-height` | 24px (altura visual) | `--dss-compact-control-height-sm` |
+| `min-width` | 24px | `--dss-compact-control-height-sm` |
+| `padding` | 2px 4px | `--dss-spacing-0_5` / `--dss-spacing-1` |
+| `border-radius` | full | `--dss-radius-full` |
+| `border-width` | 0 | — |
+| `background` | action-primary | `--dss-action-primary` |
+| `color` | branco | `--dss-text-inverse` |
+| `font-size` | 12px | `--dss-font-size-xs` |
+| `font-weight` | 500 | `--dss-font-weight-medium` |
+| `line-height` | 1 | — |
+| Variante `dot` | 8px × 8px sem texto | — |
+| `vertical-align` | middle | — |
+
+---
+
+### 13.12 DssAvatar
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Tamanho default (`md`) | 40px × 40px | — |
+| Forma | circular | — |
+| `border-radius` | 50% | — |
+| `background` (sem imagem) | action-primary-surface (primary 8%) | `--dss-action-primary-surface` |
+| `color` iniciais | action-primary | `--dss-action-primary` |
+| Iniciais `font-size` | 14px (`md`) | `--dss-font-size-md` |
+| Iniciais `font-weight` | 500 | `--dss-font-weight-medium` |
+| Imagem `object-fit` | cover | — |
+| Tamanhos | xs 24, sm 32, md 40, lg 48, xl 64 | — |
+| Badge sobreposto: posição | top-right, offset -2px | — |
+
+---
+
+### 13.13 DssCard
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `border-radius` | 12px | `--dss-radius-lg` |
+| `background` | surface-default | `--dss-surface-default` |
+| `border-width` | 0 (variante elevated default) | — |
+| `box-shadow` | elevation-1 | `--dss-elevation-1` |
+| Hover (clickable) | elevation-2 | `--dss-elevation-2` |
+| Section `padding` | 24px | `--dss-spacing-6` |
+| Section divider (entre sections) | 1px solid gray-200 | `--dss-gray-200` |
+| Actions `padding` | 16px | `--dss-spacing-4` |
+| Actions `gap` entre botões | 8px | `--dss-spacing-2` |
+| Variante `flat`: shadow | nenhum | — |
+| Variante `outlined`: border | 1px solid gray-200 | `--dss-gray-200` |
+| Variante `square`: radius | 0 | — |
+| Transição | 200ms standard | `--dss-duration-200` |
+
+---
+
+### 13.14 DssDialog (Modal)
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Backdrop (overlay) | rgba(0,0,0,0.5) | `--dss-overlay-default` |
+| Container `max-width` | 560px (`md`) | — |
+| Container `border-radius` | 12px | `--dss-radius-lg` |
+| Container `background` | surface-default | `--dss-surface-default` |
+| Container `box-shadow` | elevation-5 | `--dss-elevation-5` |
+| Container `padding` | 24px | `--dss-spacing-6` |
+| Título `font-size` | 20px | `--dss-font-size-xl` |
+| Título `font-weight` | 500 | `--dss-font-weight-medium` |
+| Título `margin-bottom` | 16px | `--dss-spacing-4` |
+| Conteúdo `font-size` | 14px | `--dss-font-size-md` |
+| Footer actions `gap` | 8px | `--dss-spacing-2` |
+| Footer actions `margin-top` | 24px | `--dss-spacing-6` |
+| Footer alignment | flex-end | — |
+| Animação entrada | scale 0.95→1 + fade 200ms | — |
+
+---
+
+### 13.15 DssDrawer
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Side default | `left` | — |
+| `width` (vertical) | 280px | — |
+| `height` (vertical) | 100vh | — |
+| `background` | surface-default | `--dss-surface-default` |
+| `box-shadow` | elevation-4 | `--dss-elevation-4` |
+| `border-radius` | 0 | — |
+| Backdrop | rgba(0,0,0,0.5) | `--dss-overlay-default` |
+| Header `padding` | 16px 24px | `--dss-spacing-4` / `--dss-spacing-6` |
+| Header `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
+| Header `font-size` | 16px | `--dss-font-size-lg` |
+| Content `padding` | 16px | `--dss-spacing-4` |
+| Animação | slide 250ms standard | `--dss-duration-250` |
+| Mini variant width | 56px | — |
+
+---
+
+### 13.16 DssMenu
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Container `min-width` | 200px | — |
+| Container `border-radius` | 8px | `--dss-radius-md` |
+| Container `background` | surface-default | `--dss-surface-default` |
+| Container `box-shadow` | elevation-3 | `--dss-elevation-3` |
+| Container `padding` | 8px 0 | `--dss-spacing-2` |
+| Item `height` | 40px | — |
+| Item `padding` | 0 16px | `--dss-spacing-4` |
+| Item `font-size` | 14px | `--dss-font-size-md` |
+| Item `color` | text-body | `--dss-text-body` |
+| Item `gap` (ícone + label) | 12px | `--dss-spacing-3` |
+| Ícone item tamanho | 20px | — |
+| Hover `background` | surface-hover | `--dss-surface-hover` |
+| Divider | 1px solid gray-200, margin 8px 0 | `--dss-gray-200` |
+| Separador de seção `font-size` | 12px text-subtle | `--dss-font-size-sm` |
+| Atalho de teclado: alinhamento | direita, color text-subtle | `--dss-text-subtle` |
+
+---
+
+### 13.17 DssTooltip
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `background` | gray-900 | `--dss-gray-900` |
+| `color` | branco | `--dss-text-inverse` |
+| `padding` | 6px 8px | `--dss-spacing-1_5` / `--dss-spacing-2` |
+| `border-radius` | 4px | `--dss-radius-sm` |
+| `font-size` | 12px | `--dss-font-size-xs` |
+| `font-weight` | 400 | `--dss-font-weight-normal` |
+| `max-width` | 240px | — |
+| `box-shadow` | elevation-2 | `--dss-elevation-2` |
+| Offset do trigger | 8px | `--dss-spacing-2` |
+| Delay show | 500ms | — |
+| Delay hide | 0ms | — |
+| Animação | fade 150ms | `--dss-duration-150` |
+
+---
+
+### 13.18 DssTabs
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Container `height` | 44px | `--dss-touch-target-md` |
+| Container `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
+| Tab `padding` | 0 16px | `--dss-spacing-4` |
+| Tab `font-size` | 14px | `--dss-font-size-md` |
+| Tab `font-weight` (ativa) | 500 | `--dss-font-weight-medium` |
+| Tab `font-weight` (inativa) | 400 | `--dss-font-weight-normal` |
+| Tab color (ativa) | action-primary | `--dss-action-primary` |
+| Tab color (inativa) | text-subtle | `--dss-text-subtle` |
+| Indicador `height` | 3px | — |
+| Indicador `border-radius` | 3px 3px 0 0 | — |
+| Indicador `background` | action-primary | `--dss-action-primary` |
+| Indicador animação | translateX 250ms standard | `--dss-duration-250` |
+| Tab `gap` (ícone + label) | 8px | `--dss-spacing-2` |
+| Hover `background` | surface-hover | `--dss-surface-hover` |
+| Setas de navegação (arrow): color | text-subtle | `--dss-text-subtle` |
+| Tab Panel `padding` | 24px | `--dss-spacing-6` |
+
+---
+
+### 13.19 DssToolbar
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `height` | 56px | — |
+| `padding` (horizontal) | 16px | `--dss-spacing-4` |
+| `background` | surface-default | `--dss-surface-default` |
+| `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
+| `box-shadow` | nenhum (flat default) | — |
+| `gap` entre itens | 8px | `--dss-spacing-2` |
+| Título `font-size` | 16px | `--dss-font-size-lg` |
+| Título `font-weight` | 500 | `--dss-font-weight-medium` |
+| Botões de ação tamanho | 40px (touch target compact) | — |
+| Variante `elevated` | + box-shadow elevation-2 | `--dss-elevation-2` |
+| Dense `height` | 48px | — |
+
+---
+
+### 13.20 DssHeader
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `height` | 64px | — |
+| `padding` (horizontal) | 24px | `--dss-spacing-6` |
+| `background` | surface-default | `--dss-surface-default` |
+| `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
+| `box-shadow` | elevation-1 | `--dss-elevation-1` |
+| Logo `height` | 32px | — |
+| Brand title `font-size` | 18px | `--dss-font-size-lg` |
+| Brand title `font-weight` | 600 | `--dss-font-weight-semibold` |
+| `gap` (logo + título) | 12px | `--dss-spacing-3` |
+| Ações à direita `gap` | 8px | `--dss-spacing-2` |
+| Avatar do usuário tamanho | 32px | — |
+
+---
+
+### 13.21 DssPage (Layout container)
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `min-height` | 100vh | — |
+| `background` | surface-base | `--dss-surface-base` |
+| `padding` | 24px | `--dss-spacing-6` |
+| Container `max-width` | 1200px | — |
+| Container alinhamento | center (margin auto) | — |
+| Section `gap` vertical | 32px | `--dss-spacing-8` |
+
+---
+
+### 13.22 DssBar
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `min-height` | 44px | `--dss-touch-target-md` |
+| `padding` | 8px 16px | `--dss-spacing-2` / `--dss-spacing-4` |
+| `background` | surface-default | `--dss-surface-default` |
+| `color` | text-body | `--dss-text-body` |
+| `font-size` | 14px | `--dss-font-size-md` |
+| `font-weight` | 400 | `--dss-font-weight-normal` |
+| `border-radius` | 0 | — |
+| `box-shadow` | elevation-1 | `--dss-elevation-1` |
+| `gap` | 8px | `--dss-spacing-2` |
+| Dense `min-height` | 32px | `--dss-compact-control-height-md` |
+
+---
+
+### 13.23 DssBreadcrumbsEl
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Container `height` | 32px | — |
+| `gap` entre itens | 8px | `--dss-spacing-2` |
+| Link `font-size` | 14px | `--dss-font-size-md` |
+| Link `font-weight` | 400 | `--dss-font-weight-normal` |
+| Link color | text-action (action-primary) | `--dss-text-action` |
+| Link decoração (repouso) | none | — |
+| Link decoração (hover) | underline | — |
+| Separador (`/` ou `>`) color | gray-400 | `--dss-gray-400` |
+| Separador `font-size` | 14px | `--dss-font-size-md` |
+| Item atual color | text-body | `--dss-text-body` |
+| Item atual `font-weight` | 500 | `--dss-font-weight-medium` |
+
+---
+
+### 13.24 DssPagination
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Item `width` × `height` | 32px × 32px | — |
+| Item `border-radius` | 4px | `--dss-radius-sm` |
+| Item `font-size` | 14px | `--dss-font-size-md` |
+| Item `font-weight` (inativo) | 400 | `--dss-font-weight-normal` |
+| Item `font-weight` (ativo) | 500 | `--dss-font-weight-medium` |
+| Item color (inativo) | text-body | `--dss-text-body` |
+| Item color (ativo) | branco | `--dss-text-inverse` |
+| Item `background` (ativo) | action-primary | `--dss-action-primary` |
+| Item `background` (hover inativo) | surface-hover | `--dss-surface-hover` |
+| `gap` entre itens | 4px | `--dss-spacing-1` |
+| Ícones de navegação tamanho | 20px | — |
+| Ellipsis (...) color | text-subtle | `--dss-text-subtle` |
+
+---
+
+### 13.25 DssFile (File upload)
+
+Herda visual de **DssInput** + acréscimos para drop zone:
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Drop zone `min-height` | 120px | — |
+| Drop zone `border` | 2px dashed gray-400 | `--dss-gray-400` |
+| Drop zone `border-radius` | 8px | `--dss-radius-md` |
+| Drop zone `background` | surface-muted | `--dss-surface-muted` |
+| Drop zone `padding` | 24px | `--dss-spacing-6` |
+| Drop zone hover/dragover: border | 2px dashed action-primary | `--dss-action-primary` |
+| Drop zone hover/dragover: background | action-primary-surface | `--dss-action-primary-surface` |
+| Ícone upload tamanho | 32px | — |
+| Lista de arquivos: item `padding` | 8px 12px | — |
+| Lista item `gap` | 8px | `--dss-spacing-2` |
+| Lista item `border-radius` | 4px | `--dss-radius-sm` |
+| Botão remover tamanho | 24px | — |
+
+---
+
+### 13.26 DssForm
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Layout default | `vertical` | — |
+| `gap` entre campos (gutter) | 16px | `--dss-spacing-4` |
+| Density default | `md` (altura controles 44px) | `--dss-compact-control-height-md` |
+| Layout `horizontal`: label width | 30% | — |
+| Layout `inline`: `gap` | 12px | `--dss-spacing-3` |
+| Submit/Reset `gap` | 8px | `--dss-spacing-2` |
+| Submit area `margin-top` | 24px | `--dss-spacing-6` |
+| Mensagem de validação `font-size` | 12px | `--dss-font-size-sm` |
+| Mensagem de validação `margin-top` | 4px | `--dss-spacing-1` |
+| Ícone de erro tamanho | 16px | — |
+
+---
+
+### 13.27 DssImg
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| `width` | 100% do contêiner | — |
+| `border-radius` | 0 (sem corte) | — |
+| `object-fit` | cover | — |
+| Placeholder (loading): `background` | gray-100 | `--dss-gray-100` |
+| Placeholder (loading): animação shimmer | 1500ms | — |
+| Erro (broken): `background` | gray-200 | `--dss-gray-200` |
+| Erro: ícone placeholder | 32px gray-500 | `--dss-gray-500` |
+| Ratio default | sem ratio fixo | — |
+| Transição fade-in | 300ms ease | `--dss-duration-300` |
+
+---
+
+### 13.28 DssVideo
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Container `border-radius` | 8px | `--dss-radius-md` |
+| Container `background` | gray-900 | `--dss-gray-900` |
+| Container aspect-ratio | 16/9 | — |
+| Controles `background` | rgba(0,0,0,0.7) gradient bottom | — |
+| Controles `padding` | 12px 16px | — |
+| Botão play tamanho | 40px | — |
+| Ícone play tamanho | 24px | — |
+| Slider de progresso `height` | 4px | — |
+| Slider de progresso `background` | rgba(255,255,255,0.3) | — |
+| Slider preenchido | action-primary | `--dss-action-primary` |
+| Texto de tempo `font-size` | 12px branco | `--dss-font-size-xs` |
+| Botão fullscreen tamanho | 32px | — |
+
+---
+
+### 13.29 DssCarrossel
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Container `border-radius` | 8px | `--dss-radius-md` |
+| Container `background` | surface-default | `--dss-surface-default` |
+| Slide `padding` | 24px | `--dss-spacing-6` |
+| Setas (arrows): tamanho | 40px circular | — |
+| Setas `background` | rgba(0,0,0,0.4) | — |
+| Setas `color` | branco | `--dss-text-inverse` |
+| Setas posição | 16px das bordas | `--dss-spacing-4` |
+| Setas hover `background` | rgba(0,0,0,0.6) | — |
+| Indicadores (dots): tamanho | 8px circular | — |
+| Indicadores `gap` | 8px | `--dss-spacing-2` |
+| Indicador inativo `background` | rgba(255,255,255,0.5) | — |
+| Indicador ativo `background` | branco | `--dss-text-inverse` |
+| Indicadores posição | 16px da borda inferior | `--dss-spacing-4` |
+| Transição entre slides | 300ms ease-in-out | `--dss-duration-300` |
+
+---
+
+### 13.30 DssInfiniteScroll
+
+Componente comportamental — sem UI visível própria, governa o gatilho de carregamento.
+
+| Aspecto | Valor default | Token |
+|---|---|---|
+| Sentinel (trigger) `height` | 1px (invisível) | — |
+| Offset (distância para disparar) | 500px antes do fim | — |
+| Spinner de loading: tamanho | 32px | — |
+| Spinner color | action-primary | `--dss-action-primary` |
+| Spinner container `padding` | 24px | `--dss-spacing-6` |
+| Spinner container alinhamento | center | — |
+| Mensagem "fim da lista" `font-size` | 12px text-subtle | `--dss-text-subtle` |
+
+---
+
+## 14. Decisões Visuais Transversais (Aplicam a TODOS os componentes)
+
+Estas regras complementam as especificações da Seção 13 e DEVEM ser aplicadas por padrão na ausência de instrução em contrário.
+
+### 14.1 Hierarquia de border-radius
+
+| Categoria | Token | Uso |
+|---|---|---|
+| Controles compactos quadrados (checkbox) | `--dss-radius-sm` (4px) | Checkbox, Pagination item |
+| Controles interativos (input, menu, tooltip) | `--dss-radius-md` (8px) | Input, Select, Menu, Tooltip, Drop zone |
+| Superfícies (card, dialog, drawer header) | `--dss-radius-lg` (12px) | Card, Dialog |
+| Pílulas (botões, chips, badges, toggle) | `--dss-radius-full` | Button, Chip, Badge, Toggle, Slider track |
+| Sem arredondamento (estrutural) | `0` | Page, Toolbar, Bar, Drawer container |
+
+### 14.2 Hierarquia de elevation (box-shadow)
+
+| Nível | Token | Uso |
+|---|---|---|
+| Nenhuma | — | Input, Chip, Badge, Checkbox, Toggle, Tabs |
+| 1 (sutil) | `--dss-elevation-1` | Card default, Header, Bar |
+| 2 (hover de card / toolbar elevated) | `--dss-elevation-2` | Card hover, Toolbar elevated, Tooltip |
+| 3 (popups) | `--dss-elevation-3` | Menu, BtnDropdown panel, FAB |
+| 4 (drawer) | `--dss-elevation-4` | Drawer, FAB hover |
+| 5 (dialog) | `--dss-elevation-5` | Dialog, Modal |
+
+### 14.3 Hierarquia de densidade (height)
+
+| Token | Valor | Componentes |
+|---|---|---|
+| `--dss-compact-control-height-xs` | 16px | Badge dot |
+| `--dss-compact-control-height-sm` | 24px | Badge, Bar dense |
+| `--dss-compact-control-height-md` | 32px | Chip, Pagination, Breadcrumb, Bar |
+| `--dss-touch-target-md` | 44px | Button, Input, Tabs, Toolbar action, Range thumb area |
+
+> **Regra de ouro:** Componentes **interativos com hit-area direta do dedo** usam 44px. Componentes **informativos ou agrupados em containers maiores** podem usar 32px/24px com touch target compensado via `::before` (WCAG 2.5.5).
+
+### 14.4 Hierarquia de spacing (gap interno)
+
+| Contexto | Valor | Token |
+|---|---|---|
+| Ícone + label dentro do mesmo controle | 8px | `--dss-spacing-2` |
+| Itens horizontais em lista compacta (toolbar, breadcrumb) | 8px | `--dss-spacing-2` |
+| Itens verticais em formulário | 16px | `--dss-spacing-4` |
+| Padding interno de superfícies (card section, dialog) | 24px | `--dss-spacing-6` |
+| Padding lateral de containers (page, header) | 24px | `--dss-spacing-6` |
+| Gap entre seções de página | 32px | `--dss-spacing-8` |
+
+### 14.5 Hierarquia de stroke (border-width)
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--dss-border-width-thin` | 1px | Divisores, borda repouso de input/chip/card outlined |
+| `--dss-border-width-md` | 2px | Borda de foco de input, borda de checkbox/radio unchecked, borda de toggle track off |
+| `--dss-border-width-thick` | 3px | Indicador de tab ativa, focus ring outline |
+
+### 14.6 Hierarquia de tipografia
+
+| Contexto | font-size | font-weight | Token size |
+|---|---|---|---|
+| Badge, tooltip, hint, mensagem de erro | 12px | 500 (badge) / 400 (resto) | `--dss-font-size-xs` |
+| Texto de controle (button, input, chip, menu, tab) | 14px | 500 (button/tab ativa) / 400 (input/menu) | `--dss-font-size-md` ou `--dss-font-size-sm` |
+| Título de toolbar, item de menu destacado | 16px | 500 | `--dss-font-size-lg` |
+| Título de header, knob central | 18px | 500–600 | `--dss-font-size-lg` |
+| Título de dialog | 20px | 500 | `--dss-font-size-xl` |
+
+### 14.7 Estados universais
+
+| Estado | Aplicação universal |
+|---|---|
+| Hover | `brightness(0.95)` em superfícies coloridas / `background: surface-hover` em superfícies neutras |
+| Active (pressed) | `brightness(0.90)` |
+| Focus | `outline: 3px solid var(--dss-focus-ring)`, `outline-offset: 2px` |
+| Disabled | `opacity: var(--dss-opacity-disabled)` (0.38), `cursor: not-allowed`, `pointer-events: none` |
+| Loading | spinner action-primary no centro, conteúdo `aria-busy="true"` |
+
+### 14.8 Iconografia
+
+| Contexto | Tamanho |
+|---|---|
+| Badge dot interno | sem ícone |
+| Chip leading/trailing | 16px |
+| Input leading/trailing | 20px |
+| Button leading/trailing | 20px |
+| Menu item, tab | 20px |
+| Toolbar action, FAB extended | 24px |
+| FAB padrão | 24px |
+| Avatar fallback (sem iniciais) | 60% do tamanho do avatar |
+| Empty state (img broken, file drop) | 32px |
+
+### 14.9 Animação e duração
+
+| Contexto | Duração | Easing |
+|---|---|---|
+| Hover/focus em controles | 150ms | standard |
+| Transição de cor/border em formulário | 200ms | standard |
+| Slide (drawer, carrossel) | 250–300ms | standard |
+| Spring (toggle thumb) | 250ms | spring |
+| Fade (tooltip, dialog) | 150–200ms | standard |
+
+---
+
+## 15. Checklist de Implementação Visual Default
+
+Antes de marcar um componente como concluído, o agente DEVE verificar:
+
+- [ ] Dimensões (`height`, `width`, `min-*`) correspondem à Seção 13 do componente
+- [ ] `padding` horizontal e vertical correspondem à Seção 13
+- [ ] `gap` interno entre elementos (ícone + label, label + caret, etc.) está aplicado
+- [ ] `border-radius` segue a hierarquia da Seção 14.1
+- [ ] `border-width` segue a hierarquia da Seção 14.5
+- [ ] `box-shadow` (se aplicável) segue a hierarquia da Seção 14.2
+- [ ] Tipografia (`font-size`, `font-weight`, `line-height`) segue a Seção 14.6
+- [ ] Tamanho dos ícones segue a Seção 14.8
+- [ ] Estados hover/focus/active/disabled implementados conforme Seção 14.7
+- [ ] Densidade (height) corresponde à categoria do componente (Seção 14.3)
+- [ ] Cor neutra default aplicada (sem brand, sem feedback) — cor só entra via prop
+- [ ] Touch target ≥ 44px (direto ou via `::before` para controles compactos)
+- [ ] Transição aplicada conforme Seção 14.9
+- [ ] Validação visual lado-a-lado com a página de documentação correspondente em `src/pages/components/`
+
+> **Regra de fechamento:** Se qualquer item acima falhar, o componente NÃO está pronto para entrega — independentemente da cor estar correta.
