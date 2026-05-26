@@ -420,47 +420,47 @@
       </div>
 
       <!-- DssButton Test View -->
-      <div v-if="activeComponent === 'button'" class="component-view">
+      <div v-else-if="activeComponent === 'button'" class="component-view">
         <TestButton />
       </div>
 
       <!-- DssBadge Test View -->
-      <div v-if="activeComponent === 'badge'" class="component-view">
+      <div v-else-if="activeComponent === 'badge'" class="component-view">
         <TestBadge />
       </div>
 
       <!-- DssAvatar Test View -->
-      <div v-if="activeComponent === 'avatar'" class="component-view">
+      <div v-else-if="activeComponent === 'avatar'" class="component-view">
         <TestAvatar />
       </div>
 
       <!-- DssCard Test View -->
-      <div v-if="activeComponent === 'card'" class="component-view">
+      <div v-else-if="activeComponent === 'card'" class="component-view">
         <TestCard />
       </div>
 
       <!-- DssDataCard Stress Test View -->
-      <div v-if="activeComponent === 'datacard'" class="component-view">
+      <div v-else-if="activeComponent === 'datacard'" class="component-view">
         <TestDataCard />
       </div>
 
       <!-- DssCadrisCard Stress Test View -->
-      <div v-if="activeComponent === 'cadriscard'" class="component-view">
+      <div v-else-if="activeComponent === 'cadriscard'" class="component-view">
         <TestCadrisCard />
       </div>
 
       <!-- DssTestPageComplexity Stress Test View -->
-      <div v-if="activeComponent === 'pagecomplexity'" class="component-view">
+      <div v-else-if="activeComponent === 'pagecomplexity'" class="component-view">
         <TestPageComplexity />
       </div>
 
       <!-- Defaults Preview View -->
-      <div v-if="activeComponent === 'defaults-preview'" class="component-view">
+      <div v-else-if="activeComponent === 'defaults-preview'" class="component-view">
         <TestDefaultPreview />
       </div>
 
       <!-- Design Tokens View -->
-      <div v-if="activeComponent === 'tokens'" class="component-view">
+      <div v-else-if="activeComponent === 'tokens'" class="component-view">
         <TestTokens />
       </div>
     </main>
@@ -481,7 +481,7 @@ import TestCadrisCard from './TestCadrisCard.vue'
 import TestPageComplexity from './TestPageComplexity.vue'
 
 // Active component state
-const activeComponent = ref('index')
+const activeComponent = ref('defaults-preview')
 
 // Expanded categories state
 const expandedCategories = ref({

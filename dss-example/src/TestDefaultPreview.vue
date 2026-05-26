@@ -279,7 +279,7 @@
             <!-- DssSlider — usa action-primary via SCSS -->
             <div class="component-item component-item--full">
               <div class="component-demo component-demo--wide">
-                <DssSlider v-model="sliderValue" :min="0" :max="100" />
+                <DssSlider v-model="sliderValue" :min="0" :max="100" aria-label="Volume" />
               </div>
               <code class="component-label">DssSlider</code>
             </div>
@@ -287,7 +287,7 @@
             <!-- DssRange — usa action-primary via SCSS -->
             <div class="component-item component-item--full">
               <div class="component-demo component-demo--wide">
-                <DssRange v-model="rangeValue" :min="0" :max="100" />
+                <DssRange v-model="rangeValue" :min="0" :max="100" aria-label="Faixa de valores" />
               </div>
               <code class="component-label">DssRange</code>
             </div>
@@ -612,7 +612,7 @@
                 <DssList class="list-sample" bordered>
                   <DssSlideItem
                     @right="() => {}"
-                    right-color="negative"
+                    right-color="error"
                   >
                     <DssItemSection>
                       <DssItemLabel>Deslize para a direita para excluir</DssItemLabel>

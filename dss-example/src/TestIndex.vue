@@ -8,7 +8,7 @@
     <main class="index-content">
       <div class="component-grid">
         <!-- DssButton Test -->
-        <router-link to="/test-button" class="component-card">
+        <div class="component-card">
           <div class="card-icon">🔘</div>
           <h2>DssButton</h2>
           <p>Teste completo de todas as variações do DssButton</p>
@@ -25,10 +25,10 @@
             <span class="badge">20 seções</span>
             <span class="badge">~100 variações</span>
           </div>
-        </router-link>
+        </div>
 
         <!-- DssBadge Test -->
-        <router-link to="/test-badge" class="component-card">
+        <div class="component-card">
           <div class="card-icon">🏷️</div>
           <h2>DssBadge</h2>
           <p>Teste completo de todas as variações do DssBadge</p>
@@ -45,10 +45,10 @@
             <span class="badge">14 seções</span>
             <span class="badge">~80 variações</span>
           </div>
-        </router-link>
+        </div>
 
         <!-- DssAvatar Test -->
-        <router-link to="/test-avatar" class="component-card">
+        <div class="component-card">
           <div class="card-icon">👤</div>
           <h2>DssAvatar</h2>
           <p>Teste completo de todas as variações do DssAvatar</p>
@@ -65,7 +65,7 @@
             <span class="badge">20 seções</span>
             <span class="badge">~90 variações</span>
           </div>
-        </router-link>
+        </div>
       </div>
 
       <!-- Estatísticas Globais -->

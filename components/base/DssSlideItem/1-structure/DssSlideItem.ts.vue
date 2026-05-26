@@ -71,10 +71,10 @@ defineExpose({
     @slide="emit('slide', $event)"
   >
     <template v-if="$slots.left" #left="scope">
-      <slot name="left" v-bind="scope" />
+      <slot name="left" v-bind="scope ?? {}" />
     </template>
     <template v-if="$slots.right" #right="scope">
-      <slot name="right" v-bind="scope" />
+      <slot name="right" v-bind="scope ?? {}" />
     </template>
     <slot />
   </QSlideItem>
