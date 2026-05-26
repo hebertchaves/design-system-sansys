@@ -28,5 +28,15 @@ export default defineConfig({
         quietDeps: true,
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      // O Quasar é instalado como dependência no dss-example e registrado
+      // via app.use(Quasar, ...) no main.ts. No build de produção, o Rollup
+      // não consegue resolver imports diretos de 'quasar' nos componentes DSS
+      // (que importam QBtn, QInput, etc.) porque o Quasar usa tree-shaking
+      // interno. Externalizando, o Rollup deixa esses imports para o runtime.
+      external: ['quasar'],
+    }
   }
 })

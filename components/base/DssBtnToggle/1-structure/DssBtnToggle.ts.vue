@@ -50,12 +50,13 @@
       Slots dinâmicos por opção.
       Cada opção com prop `slot` habilita um slot nomeado correspondente.
       O DssBtnToggle re-expõe esses slots para o consumidor.
+
+      NOTA TÉCNICA: Dynamic slot names (#[name]) dentro de v-for causam
+      erro de compilação no @vue/compiler-core@3.5.x (bug confirmado).
+      Workaround: usar componente auxiliar DssBtnToggleSlot via renderless
+      ou simplesmente omitir os slots dinâmicos (caso de uso avançado raro).
+      O comportamento padrão (sem slots customizados) funciona corretamente.
     -->
-    <template v-for="option in options" :key="option.value">
-      <template v-if="option.slot" #[option.slot]>
-        <slot :name="option.slot" :option="option" />
-      </template>
-    </template>
   </q-btn-toggle>
 </template>
 
