@@ -391,6 +391,7 @@ export default function DssBadgePage() {
     if (booleanStates.rounded) props.push("rounded");
     if (booleanStates.floating) props.push("floating");
     if (booleanStates.multiLine) props.push("multi-line");
+    if (selectedAlign !== "none") props.push(`align="${selectedAlign}"`);
 
     return `<DssBadge\n  ${props.join("\n  ")}\n/>`;
   };
