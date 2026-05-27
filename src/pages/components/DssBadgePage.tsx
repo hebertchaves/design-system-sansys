@@ -23,6 +23,7 @@ import {
   FeedbackColorPicker,
   BrandPicker,
   ToggleGroup,
+  SizeSelector,
   DSS_SEMANTIC_COLORS,
   DSS_FEEDBACK_COLORS,
   DSS_BRAND_COLORS,
