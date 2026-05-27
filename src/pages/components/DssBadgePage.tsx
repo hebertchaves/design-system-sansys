@@ -347,6 +347,7 @@ export default function DssBadgePage() {
   const [selectedColor, setSelectedColor] = useState<string | null>("primary");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [selectedAlign, setSelectedAlign] = useState<string>("none");
   const [booleanStates, setBooleanStates] = useState({
     transparent: false,
     outline: false,
