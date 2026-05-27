@@ -23,6 +23,7 @@ import {
   FeedbackColorPicker,
   BrandPicker,
   ToggleGroup,
+  SizeSelector,
   DSS_SEMANTIC_COLORS,
   DSS_FEEDBACK_COLORS,
   DSS_BRAND_COLORS,
@@ -203,6 +204,7 @@ interface DssBadgePreviewProps {
   floating?: boolean;
   multiLine?: boolean;
   brand?: string | null;
+  align?: "top" | "middle" | "bottom" | null;
 }
 
 function DssBadgePreview({
@@ -214,6 +216,7 @@ function DssBadgePreview({
   floating = false,
   multiLine = false,
   brand = null,
+  align = null,
 }: DssBadgePreviewProps) {
   // Obter cores do DSS
   const getColors = () => {
@@ -267,6 +270,7 @@ function DssBadgePreview({
       borderRadius: rounded ? "8px" : "9999px",
       minHeight: multiLine ? "24px" : "20px",
       transition: "all 0.2s ease",
+      verticalAlign: align ?? undefined,
     };
 
     if (floating) {
@@ -320,6 +324,17 @@ function DssBadgePreview({
     );
   }
 
+  // Quando align é definido, envolvemos em uma linha de texto para evidenciar o alinhamento vertical
+  if (align) {
+    return (
+      <span style={{ fontSize: "18px", color: "var(--jtech-text-body)", fontFamily: "system-ui, sans-serif" }}>
+        Texto base{" "}
+        <span style={getBadgeStyles()}>{label}</span>
+        {" "}continua aqui
+      </span>
+    );
+  }
+
   return <span style={getBadgeStyles()}>{label}</span>;
 }
 
@@ -332,6 +347,7 @@ export default function DssBadgePage() {
   const [selectedColor, setSelectedColor] = useState<string | null>("primary");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [selectedAlign, setSelectedAlign] = useState<string>("none");
   const [booleanStates, setBooleanStates] = useState({
     transparent: false,
     outline: false,
@@ -375,6 +391,7 @@ export default function DssBadgePage() {
     if (booleanStates.rounded) props.push("rounded");
     if (booleanStates.floating) props.push("floating");
     if (booleanStates.multiLine) props.push("multi-line");
+    if (selectedAlign !== "none") props.push(`align="${selectedAlign}"`);
 
     return `<DssBadge\n  ${props.join("\n  ")}\n/>`;
   };
@@ -436,6 +453,7 @@ export default function DssBadgePage() {
             floating={booleanStates.floating}
             multiLine={booleanStates.multiLine}
             brand={selectedBrand}
+            align={selectedAlign === "none" ? null : (selectedAlign as "top" | "middle" | "bottom")}
           />
         }
         controls={
@@ -464,6 +482,17 @@ export default function DssBadgePage() {
               options={toggleOptions}
               values={booleanStates}
               onToggle={toggleBooleanState}
+            />
+            <SizeSelector
+              label="Alinhamento Vertical (align)"
+              sizes={[
+                { name: "none", label: "None", isDefault: true },
+                { name: "top", label: "Top" },
+                { name: "middle", label: "Middle" },
+                { name: "bottom", label: "Bottom" },
+              ]}
+              selectedSize={selectedAlign}
+              onSelect={setSelectedAlign}
             />
           </ControlGrid>
         }
