@@ -24,10 +24,10 @@
    LAYER 3: VARIANTS
    Variantes visuais (filled, outline, flat)
    ========================================================================== */
-@use '3-variants';
+@use '3-variants' as variants;
 
 /* ==========================================================================
    LAYER 4: OUTPUT
    Brands e estados finais (dark mode, high contrast, reduced motion)
    ========================================================================== */
-@use '4-output';
+@use '4-output' as output;

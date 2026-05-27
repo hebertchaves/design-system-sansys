@@ -18,8 +18,10 @@
   }
 
   // EXC-Gate-01: Individual page buttons
+  // border-radius: radius-sm (4px) — itens de paginação são pequenos e quadrados.
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.24
   .q-pagination .q-btn {
-    border-radius: var(--dss-radius-md);
+    border-radius: var(--dss-radius-sm);
     min-width: var(--dss-compact-control-height-md);
     min-height: var(--dss-compact-control-height-md);
     font-size: var(--dss-font-size-sm);

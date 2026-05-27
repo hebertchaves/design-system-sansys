@@ -27,6 +27,13 @@
   // -------------------------------------------------------------------------
   background-color: var(--dss-surface-default) !important;
   color: var(--dss-text-body);
+
+  // -------------------------------------------------------------------------
+  // Elevação — drawer flutua sobre o conteúdo da página em modo overlay.
+  // elevation-4: nível de drawer/side panel (abaixo de modais, acima de menus).
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.15
+  // -------------------------------------------------------------------------
+  box-shadow: var(--dss-elevation-4);
 }
 
 // ---------------------------------------------------------------------------

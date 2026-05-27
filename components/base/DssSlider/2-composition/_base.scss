@@ -19,7 +19,7 @@
    DssSlider NÃO repassa `color` ao QSlider — em vez disso, sobrescreve via CSS:
    - Track fill (.q-slider__selection): var(--dss-action-primary)
    - Thumb (.q-slider__thumb): var(--dss-action-primary) via currentColor
-   - Track background: var(--dss-surface-muted) (explícito — ignora currentColor)
+   - Track background: var(--dss-gray-200) (cinza claro canônico — Ref: Seção 13.8)
    Isso garante governança DSS total e resposta automática a brand tokens.
 
    TOUCH TARGET: Opção A (interativo)
@@ -79,7 +79,7 @@
  * Precedente: DssToggle._base.scss usa border-radius: 9999px para o track.
  */
 .dss-slider .q-slider__track {
-  background-color: var(--dss-surface-muted); /* --dss-gray-200 */
+  background-color: var(--dss-gray-200); /* track inativo — cinza claro canônico M3/Carbon/Salesforce */
   border-radius: 9999px; /* EXCEÇÃO: pill shape, não tokenizável */
   overflow: hidden; /* garante que .q-slider__selection respeite o radius */
 }

@@ -44,12 +44,13 @@
   // Overflow para imagens/conteudo
   overflow: hidden;
 
-  // Background padrao (sera sobrescrito por cores especificas)
-  // DSS Visual Standard: surface-muted como fundo neutro do avatar sem imagem.
-  // PONTO DE ATENCAO: --dss-neutral-200 e --dss-neutral-700 nao existem no catalogo
-  // de tokens DSS. Substituidos por tokens semanticos validos.
-  background-color: var(--dss-surface-muted);
-  color: var(--dss-text-body);
+  // Background padrão para avatar sem imagem: tintado claro de action-primary (primary 8%).
+  // M3 usa primary-container, Carbon usa bg colorido por tipo — DSS alinha com M3.
+  // Fundo surface-muted (cinza) não tem identidade visual; action-primary-surface
+  // (tintado azul 8%) comunica identidade sem ser agressivo.
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 10 e 11.
+  background-color: var(--dss-action-primary-surface);
+  color: var(--dss-action-primary);
 
   // Transicoes
   // PONTO DE ATENCAO: --dss-transition-base nao existe no catalogo DSS.

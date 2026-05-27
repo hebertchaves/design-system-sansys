@@ -89,8 +89,9 @@
   /* Background da superfície padrão */
   background-color: var(--dss-surface-default);
 
-  /* Elevação do painel */
-  box-shadow: var(--dss-elevation-2);
+  /* Elevação do painel — elevation-3: nível de popup/menu/dropdown.
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.4 e 14.2 */
+  box-shadow: var(--dss-elevation-3);
 
   /* Border-radius do painel */
   border-radius: var(--dss-radius-md);

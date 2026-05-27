@@ -26,6 +26,12 @@
 
   // Transição suave de setas
   @include dss-transition(all, 'fast');
+
+  // Separador inferior — alinha com M3, Carbon, Salesforce que usam linha
+  // divisória entre o tab bar e o conteúdo. Reforça a hierarquia visual
+  // sem elevação (tabs são controles de navegação superficiais, não cards).
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.11
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
 }
 
 // ==========================================================================

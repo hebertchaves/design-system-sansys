@@ -23,4 +23,11 @@
   // ------------------------------------------------------------------
   background-color: var(--dss-surface-default) !important;
   color: var(--dss-text-body) !important;
+
+  // ------------------------------------------------------------------
+  // Separador superior — espelho do DssHeader (EXC-02 estendida).
+  // DssHeader tem border-bottom; DssFooter tem border-top pela simetria.
+  // M3, Carbon e Salesforce usam separador na parte superior do rodapé.
+  // ------------------------------------------------------------------
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
 }

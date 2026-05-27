@@ -42,10 +42,12 @@
   background-color: var(--dss-surface-default) !important;
 
   /* ==========================================================================
-     Elevação — modais usam elevation-4 (alta elevação sobre o conteúdo)
+     Elevação — modais usam elevation-5 (máxima elevação, acima de tudo)
+     M3, Carbon e Salesforce usam a shadow mais alta para modais.
      EXC-01: !important necessário para sobrescrever box-shadow do QDialog
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.14
      ========================================================================== */
-  box-shadow: var(--dss-shadow-modal) !important;
+  box-shadow: var(--dss-elevation-5) !important;
 
   /* ==========================================================================
      Forma

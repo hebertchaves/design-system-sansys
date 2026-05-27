@@ -37,9 +37,12 @@
   font-size: var(--dss-font-size-sm);
   line-height: var(--dss-line-height-normal);
 
-  /* DSS Visual Standard: cor primary no root define currentColor do track e thumb.
-     Alinhado com DssCheckbox e DssRadio. Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
-  color: var(--dss-action-primary);
+  /* DSS Visual Standard: cor gray-400 no root define currentColor do track unchecked.
+     Borda do track off: 2px solid gray-400 (M3, Carbon, Lightning).
+     O thumb tem cor explícita (gray-500) definida em .dss-toggle__thumb.
+     A cor primary só aparece no estado CHECKED (via bg-primary text-white no track).
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 11 e 13.7 */
+  color: var(--dss-gray-400);
 
   /* Interaction */
   cursor: pointer;
@@ -155,8 +158,10 @@
   /* Forma circular */
   border-radius: 50%; /* EXCECAO: forma circular, nao tokenizavel */
 
-  /* Fundo */
-  background-color: currentColor;
+  /* Fundo unchecked: gray-500 (cinza médio — spec M3/Carbon/Lightning).
+     Estado ON: currentColor do track (white via text-white) sobrescreve via
+     .dss-toggle__track--checked .dss-toggle__thumb abaixo. */
+  background-color: var(--dss-gray-500);
 
   /* Posicao inicial - lado esquerdo (unchecked) */
   left: var(--dss-spacing-0_5); /* 2px offset from edge */
@@ -173,7 +178,10 @@
   border-color: currentColor;
   /* Fundo aplicado via classes utilitarias (.bg-{color}) ou _brands.scss */
 
+  /* Thumb ON: currentColor herdado do track (text-white via composable = branco).
+     Sobrescreve o var(--dss-gray-500) definido no estado unchecked. */
   .dss-toggle__thumb {
+    background-color: currentColor;
     /* Move thumb para a direita */
     left: calc(100% - var(--dss-spacing-4) - var(--dss-spacing-0_5)); /* 36 - 16 - 2 = 18px */
   }

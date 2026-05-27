@@ -12,11 +12,11 @@
 // EXC-Gate-01: Seletores internos do Quasar
 //   .q-linear-progress__track e .q-linear-progress__model são estrutura
 //   interna do QLinearProgress. O DSS precisa sobrescrever esses seletores
-//   para aplicar --dss-surface-muted ao track e --dss-radius-full a ambos.
+//   para aplicar --dss-gray-200 ao track e --dss-radius-full a ambos.
 //   Exceção documentada em dss.meta.json.
 //
 // TOKENS UTILIZADOS (base):
-//   Superfície: --dss-surface-muted           (track inativo)
+//   Superfície: --dss-gray-200               (track inativo — cinza claro canônico)
 //   Forma:      --dss-radius-full             (pill shape)
 //   Opacidade:  --dss-opacity-disabled        (estado disabled)
 //   Transição:  --dss-duration-250            (transição suave)
@@ -42,10 +42,12 @@
   // garantir conformidade visual com o Design System via tokens.
 
   // Track (fundo da barra)
-  // EXC-Gate-01: seletor interno Quasar necessário para token --dss-surface-muted
+  // EXC-Gate-01: seletor interno Quasar necessário para token --dss-gray-200
+  // --dss-gray-200 (M3, Carbon, Salesforce usam cinza claro para track inativo).
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.7
   .q-linear-progress__track {
     border-radius: var(--dss-radius-full);
-    background-color: var(--dss-surface-muted);
+    background-color: var(--dss-gray-200);
     // Reset da opacidade padrão do Quasar (0.3–0.4) — cor já é muted pelo token
     opacity: 1;
   }

@@ -1,30 +1,31 @@
 <template>
   <div class="preview-page" :data-brand="activeBrand || undefined">
 
-    <!-- ===== CABEÇALHO FIXO ===== -->
-    <div class="preview-header">
+    <!-- HEADER FIXO -->
+    <header class="preview-header">
       <DssToolbar>
         <DssToolbarTitle>Defaults Preview — DSS v2.2</DssToolbarTitle>
         <DssSpace />
-        <div class="brand-selector">
-          <span class="brand-label">Brand:</span>
+        <nav class="brand-nav" aria-label="Seletor de brand">
+          <span class="brand-nav__label">Brand</span>
           <button
             v-for="b in brands"
             :key="b.value"
-            class="brand-btn"
-            :class="[`brand-btn--${b.value || 'none'}`, { 'brand-btn--active': activeBrand === b.value }]"
+            class="brand-pill"
+            :class="[`brand-pill--${b.value || 'none'}`, { 'is-active': activeBrand === b.value }]"
             @click="activeBrand = b.value"
           >{{ b.label }}</button>
-        </div>
-        <DssBadge class="q-ml-sm">{{ totalComponents }}</DssBadge>
+        </nav>
+        <DssBadge class="q-ml-sm">76</DssBadge>
       </DssToolbar>
-      <DssSeparator />
-    </div>
+    </header>
 
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-    <div class="preview-content">
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="preview-main">
 
-      <!-- ==================== 1. AÇÕES ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 1. AÇÕES                                          -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
           <span class="group-title">1. Ações</span>
@@ -32,88 +33,93 @@
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid">
+          <div class="demo-grid">
 
-            <!-- DssButton — default: variant="elevated" color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssButton>Ação Principal</DssButton>
               </div>
-              <code class="component-label">DssButton</code>
+              <code class="demo-label">DssButton</code>
             </div>
 
-            <!-- DssChip — default: variant="filled" color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssChip label="Chip" />
+            <div class="demo-cell">
+              <div class="demo-box demo-box--gap">
+                <DssButton variant="outlined">Outlined</DssButton>
+                <DssButton variant="flat">Flat</DssButton>
               </div>
-              <code class="component-label">DssChip</code>
+              <code class="demo-label">DssButton (variantes)</code>
             </div>
 
-            <!-- DssBtnGroup -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--gap">
+                <DssChip label="Chip" clickable />
+                <DssChip label="Selecionado" clickable selected />
+              </div>
+              <code class="demo-label">DssChip</code>
+            </div>
+
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssBtnGroup>
-                  <DssButton>A</DssButton>
-                  <DssButton>B</DssButton>
-                  <DssButton>C</DssButton>
+                  <DssButton>Dia</DssButton>
+                  <DssButton>Semana</DssButton>
+                  <DssButton>Mês</DssButton>
                 </DssBtnGroup>
               </div>
-              <code class="component-label">DssBtnGroup</code>
+              <code class="demo-label">DssBtnGroup</code>
             </div>
 
-            <!-- DssBtnDropdown — default: color="primary" variant="elevated" -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssBtnDropdown label="Opções">
                   <DssList>
                     <DssItem clickable v-close-popup>
-                      <DssItemSection>
-                        <DssItemLabel>Editar</DssItemLabel>
-                      </DssItemSection>
+                      <DssItemSection><DssItemLabel>Editar</DssItemLabel></DssItemSection>
                     </DssItem>
                     <DssItem clickable v-close-popup>
-                      <DssItemSection>
-                        <DssItemLabel>Excluir</DssItemLabel>
-                      </DssItemSection>
+                      <DssItemSection><DssItemLabel>Duplicar</DssItemLabel></DssItemSection>
+                    </DssItem>
+                    <DssSeparator />
+                    <DssItem clickable v-close-popup>
+                      <DssItemSection><DssItemLabel>Excluir</DssItemLabel></DssItemSection>
                     </DssItem>
                   </DssList>
                 </DssBtnDropdown>
               </div>
-              <code class="component-label">DssBtnDropdown</code>
+              <code class="demo-label">DssBtnDropdown</code>
             </div>
 
-            <!-- DssBtnToggle — default: color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssBtnToggle
                   v-model="btnToggleValue"
                   :options="[
-                    { label: 'Dia', value: 'day' },
+                    { label: 'Dia',   value: 'day'   },
                     { label: 'Semana', value: 'week' },
-                    { label: 'Mês', value: 'month' },
+                    { label: 'Mês',   value: 'month' },
                   ]"
                 />
               </div>
-              <code class="component-label">DssBtnToggle</code>
+              <code class="demo-label">DssBtnToggle</code>
             </div>
 
-            <!-- DssFab + DssFabAction — default: color="primary" -->
-            <div class="component-item">
-              <div class="component-demo component-demo--fab">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--fab">
                 <DssFab icon="add" direction="right">
                   <DssFabAction icon="edit" />
                   <DssFabAction icon="delete" />
                 </DssFab>
               </div>
-              <code class="component-label">DssFab + DssFabAction</code>
+              <code class="demo-label">DssFab + DssFabAction</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 2. INDICADORES E AVATARES ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 2. INDICADORES E AVATARES                         -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
           <span class="group-title">2. Indicadores e Avatares</span>
@@ -121,268 +127,267 @@
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid">
+          <div class="demo-grid">
 
-            <!-- DssBadge — default: color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--gap">
                 <DssBadge>99+</DssBadge>
+                <DssBadge color="positive">Novo</DssBadge>
+                <DssBadge color="negative">!</DssBadge>
               </div>
-              <code class="component-label">DssBadge</code>
+              <code class="demo-label">DssBadge</code>
             </div>
 
-            <!-- DssAvatar com iniciais — default: color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--gap">
                 <DssAvatar>JS</DssAvatar>
-              </div>
-              <code class="component-label">DssAvatar (iniciais)</code>
-            </div>
-
-            <!-- DssAvatar com ícone -->
-            <div class="component-item">
-              <div class="component-demo">
                 <DssAvatar icon="person" />
+                <DssAvatar icon="person" size="sm" />
               </div>
-              <code class="component-label">DssAvatar (ícone)</code>
+              <code class="demo-label">DssAvatar</code>
             </div>
 
-            <!-- DssIcon -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--gap">
                 <DssIcon name="home" />
+                <DssIcon name="settings" />
+                <DssIcon name="notifications" />
               </div>
-              <code class="component-label">DssIcon</code>
+              <code class="demo-label">DssIcon</code>
             </div>
 
-            <!-- DssSpinner — default: color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssSpinner />
               </div>
-              <code class="component-label">DssSpinner</code>
+              <code class="demo-label">DssSpinner</code>
             </div>
 
-            <!-- DssRating -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssRating v-model="ratingValue" :max="5" />
               </div>
-              <code class="component-label">DssRating</code>
+              <code class="demo-label">DssRating</code>
             </div>
 
-            <!-- DssKnob -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssKnob v-model="knobValue" :min="0" :max="100" />
+            <div class="demo-cell">
+              <div class="demo-box">
+                <DssKnob v-model="knobValue" :min="0" :max="100" show-value />
               </div>
-              <code class="component-label">DssKnob</code>
+              <code class="demo-label">DssKnob</code>
             </div>
 
-            <!-- DssTooltip — via botão com tooltip embutido -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssButton>
                   Hover aqui
-                  <DssTooltip>Dica contextual</DssTooltip>
+                  <DssTooltip>Dica contextual padrão</DssTooltip>
                 </DssButton>
               </div>
-              <code class="component-label">DssTooltip</code>
+              <code class="demo-label">DssTooltip</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 3. FORMULÁRIOS ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 3. FORMULÁRIOS — CAMPOS                           -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">3. Formulários</span>
-          <span class="group-desc">DssInput · DssSelect · DssTextarea · DssFile · DssCheckbox · DssRadio · DssToggle · DssOptionGroup · DssSlider · DssRange</span>
+          <span class="group-title">3. Formulários — Campos</span>
+          <span class="group-desc">DssInput · DssSelect · DssTextarea · DssFile</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
+          <div class="demo-grid demo-grid--wide">
 
-            <!-- DssInput — default: variant="outlined" -->
-            <div class="component-item">
-              <div class="component-demo component-demo--wide">
-                <DssInput label="Campo de texto" />
+            <div class="demo-cell">
+              <div class="demo-box demo-box--stretch">
+                <DssInput label="Campo de texto" class="demo-field" />
               </div>
-              <code class="component-label">DssInput</code>
+              <code class="demo-label">DssInput</code>
             </div>
 
-            <!-- DssSelect — default: variant="outlined" -->
-            <div class="component-item">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--stretch">
+                <DssInput label="Com valor" model-value="Valor preenchido" class="demo-field" />
+              </div>
+              <code class="demo-label">DssInput (com valor)</code>
+            </div>
+
+            <div class="demo-cell">
+              <div class="demo-box demo-box--stretch">
                 <DssSelect
                   v-model="selectValue"
                   :options="selectOptions"
-                  label="Selecione"
+                  label="Selecione uma opção"
+                  class="demo-field"
                 />
               </div>
-              <code class="component-label">DssSelect</code>
+              <code class="demo-label">DssSelect</code>
             </div>
 
-            <!-- DssTextarea — default: variant="outlined" -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
-                <DssTextarea label="Observações" />
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
+                <DssTextarea label="Observações" class="demo-field" />
               </div>
-              <code class="component-label">DssTextarea</code>
+              <code class="demo-label">DssTextarea</code>
             </div>
 
-            <!-- DssFile -->
-            <div class="component-item">
-              <div class="component-demo component-demo--wide">
-                <DssFile v-model="fileValue" label="Anexar arquivo" />
+            <div class="demo-cell">
+              <div class="demo-box demo-box--stretch">
+                <DssFile v-model="fileValue" label="Anexar arquivo" class="demo-field" />
               </div>
-              <code class="component-label">DssFile</code>
+              <code class="demo-label">DssFile</code>
             </div>
 
-            <!-- DssCheckbox — default: color="primary" via root -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssCheckbox v-model="checkboxValue" label="Opção" />
+          </div>
+        </DssCardSection>
+      </DssCard>
+
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 4. FORMULÁRIOS — CONTROLES                        -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <DssCard class="preview-group">
+        <DssCardSection class="group-header">
+          <span class="group-title">4. Formulários — Controles</span>
+          <span class="group-desc">DssCheckbox · DssRadio · DssToggle · DssOptionGroup · DssSlider · DssRange</span>
+        </DssCardSection>
+        <DssSeparator />
+        <DssCardSection>
+          <div class="demo-grid demo-grid--wide">
+
+            <!-- Checkbox: mostra repouso (borda cinza) + marcado (cor brand/primary) -->
+            <div class="demo-cell">
+              <div class="demo-box demo-box--states">
+                <DssCheckbox v-model="checkboxOff" label="Desmarcado" />
+                <DssCheckbox v-model="checkboxOn" label="Marcado" />
               </div>
-              <code class="component-label">DssCheckbox</code>
+              <code class="demo-label">DssCheckbox</code>
             </div>
 
-            <!-- DssRadio — default: color="primary" via root -->
-            <div class="component-item">
-              <div class="component-demo">
+            <!-- Radio: grupo com seleção — vê repouso vs selecionado -->
+            <div class="demo-cell">
+              <div class="demo-box demo-box--states">
                 <DssRadio v-model="radioValue" val="a" label="Opção A" />
+                <DssRadio v-model="radioValue" val="b" label="Opção B" />
+                <DssRadio v-model="radioValue" val="c" label="Opção C" />
               </div>
-              <code class="component-label">DssRadio</code>
+              <code class="demo-label">DssRadio</code>
             </div>
 
-            <!-- DssToggle — default: color="primary" via root -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssToggle v-model="toggleBool" label="Ativar" />
+            <!-- Toggle: mostra off (track cinza) + on (track brand/primary) -->
+            <div class="demo-cell">
+              <div class="demo-box demo-box--states">
+                <DssToggle v-model="toggleOff" label="Desativado" />
+                <DssToggle v-model="toggleOn"  label="Ativado"    />
               </div>
-              <code class="component-label">DssToggle</code>
+              <code class="demo-label">DssToggle</code>
             </div>
 
-            <!-- DssOptionGroup — default: color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--start">
                 <DssOptionGroup
                   v-model="optionGroupValue"
                   :options="optionGroupOptions"
                   type="radio"
                 />
               </div>
-              <code class="component-label">DssOptionGroup</code>
+              <code class="demo-label">DssOptionGroup (radio)</code>
             </div>
 
-            <!-- DssSlider — usa action-primary via SCSS -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
-                <DssSlider v-model="sliderValue" :min="0" :max="100" aria-label="Volume" />
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
+                <DssSlider v-model="sliderValue" :min="0" :max="100" aria-label="Volume" class="demo-field" />
               </div>
-              <code class="component-label">DssSlider</code>
+              <code class="demo-label">DssSlider</code>
             </div>
 
-            <!-- DssRange — usa action-primary via SCSS -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
-                <DssRange v-model="rangeValue" :min="0" :max="100" aria-label="Faixa de valores" />
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
+                <DssRange v-model="rangeValue" :min="0" :max="100" aria-label="Faixa de valores" class="demo-field" />
               </div>
-              <code class="component-label">DssRange</code>
+              <code class="demo-label">DssRange</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 4. PROGRESSO E FEEDBACK ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 5. PROGRESSO E FEEDBACK                           -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">4. Progresso e Feedback</span>
+          <span class="group-title">5. Progresso e Feedback</span>
           <span class="group-desc">DssLinearProgress · DssCircularProgress · DssSkeleton · DssInnerLoading · DssAjaxBar</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
+          <div class="demo-grid demo-grid--wide">
 
-            <!-- DssLinearProgress determinado — default: color="primary" -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch demo-box--col">
                 <DssLinearProgress :value="0.65" />
+                <DssLinearProgress :indeterminate="true" />
               </div>
-              <code class="component-label">DssLinearProgress (value=0.65)</code>
+              <code class="demo-label">DssLinearProgress (determinado · indeterminado)</code>
             </div>
 
-            <!-- DssLinearProgress indeterminado -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
-                <DssLinearProgress />
+            <div class="demo-cell">
+              <div class="demo-box demo-box--gap">
+                <DssCircularProgress :value="65" />
+                <DssCircularProgress :indeterminate="true" />
               </div>
-              <code class="component-label">DssLinearProgress (indeterminado)</code>
+              <code class="demo-label">DssCircularProgress</code>
             </div>
 
-            <!-- DssCircularProgress determinado — default: color="primary" -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssCircularProgress :value="0.65" />
-              </div>
-              <code class="component-label">DssCircularProgress (value=0.65)</code>
-            </div>
-
-            <!-- DssCircularProgress indeterminado -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssCircularProgress />
-              </div>
-              <code class="component-label">DssCircularProgress (indeterminado)</code>
-            </div>
-
-            <!-- DssSkeleton — usa surface-muted via SCSS -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--start">
                 <div class="skeleton-group">
                   <DssSkeleton type="text" width="80%" />
-                  <DssSkeleton type="text" width="60%" />
+                  <DssSkeleton type="text" width="55%" />
                   <DssSkeleton type="rect" class="skeleton-rect" />
                 </div>
               </div>
-              <code class="component-label">DssSkeleton</code>
+              <code class="demo-label">DssSkeleton</code>
             </div>
 
-            <!-- DssInnerLoading -->
-            <div class="component-item">
-              <div class="component-demo component-demo--relative">
-                <div class="inner-loading-host">Conteúdo carregando</div>
+            <div class="demo-cell">
+              <div class="demo-box demo-box--relative">
+                <div class="inner-loading-host">Conteúdo abaixo do overlay</div>
                 <DssInnerLoading :showing="true" />
               </div>
-              <code class="component-label">DssInnerLoading</code>
+              <code class="demo-label">DssInnerLoading</code>
             </div>
 
-            <!-- DssAjaxBar — sem estado visual estático -->
-            <div class="component-item">
-              <div class="component-demo">
-                <span class="component-note">Ativado por requisição HTTP — sem estado visual estático</span>
+            <div class="demo-cell">
+              <div class="demo-box">
+                <span class="demo-note">Ativado por requisição HTTP — sem estado visual estático</span>
               </div>
-              <code class="component-label">DssAjaxBar</code>
+              <code class="demo-label">DssAjaxBar</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 5. BANNERS E BARRAS ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 6. BANNERS E BARRAS                               -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">5. Banners e Barras</span>
+          <span class="group-title">6. Banners e Barras</span>
           <span class="group-desc">DssBanner (4 tipos) · DssBar</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
+          <div class="demo-grid demo-grid--wide">
 
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssBanner type="info">
                   <template #default>Mensagem informativa com ação disponível para o usuário.</template>
                   <template #actions>
@@ -390,11 +395,11 @@
                   </template>
                 </DssBanner>
               </div>
-              <code class="component-label">DssBanner (type="info")</code>
+              <code class="demo-label">DssBanner (type="info")</code>
             </div>
 
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssBanner type="success">
                   <template #default>Operação realizada com sucesso.</template>
                   <template #actions>
@@ -402,11 +407,11 @@
                   </template>
                 </DssBanner>
               </div>
-              <code class="component-label">DssBanner (type="success")</code>
+              <code class="demo-label">DssBanner (type="success")</code>
             </div>
 
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssBanner type="warning">
                   <template #default>Atenção: esta ação não pode ser desfeita.</template>
                   <template #actions>
@@ -415,11 +420,11 @@
                   </template>
                 </DssBanner>
               </div>
-              <code class="component-label">DssBanner (type="warning")</code>
+              <code class="demo-label">DssBanner (type="warning")</code>
             </div>
 
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssBanner type="error">
                   <template #default>Erro ao processar a solicitação. Tente novamente.</template>
                   <template #actions>
@@ -427,37 +432,39 @@
                   </template>
                 </DssBanner>
               </div>
-              <code class="component-label">DssBanner (type="error")</code>
+              <code class="demo-label">DssBanner (type="error")</code>
             </div>
 
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssBar>
-                  <span>Conteúdo da barra de sistema</span>
+                  <DssIcon name="info" />
+                  <span class="q-ml-sm">Conteúdo da barra de sistema — comunicado global</span>
                   <DssSpace />
                   <DssButton variant="flat" size="sm">Ação</DssButton>
                 </DssBar>
               </div>
-              <code class="component-label">DssBar</code>
+              <code class="demo-label">DssBar</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 6. NAVEGAÇÃO ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 7. NAVEGAÇÃO                                      -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">6. Navegação</span>
+          <span class="group-title">7. Navegação</span>
           <span class="group-desc">DssTabs · DssTab · DssTabPanels · DssTabPanel · DssBreadcrumbs · DssBreadcrumbsEl · DssPagination · DssExpansionItem · DssMenu</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
+          <div class="demo-grid demo-grid--wide">
 
-            <!-- DssTabs + DssTab + DssTabPanels + DssTabPanel -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide component-demo--col">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch demo-box--col demo-box--flush">
                 <DssTabs v-model="activeTab" align="left">
                   <DssTab name="tab1" label="Geral" />
                   <DssTab name="tab2" label="Configurações" />
@@ -469,44 +476,40 @@
                   <DssTabPanel name="tab3" class="tab-panel-content">Conteúdo da aba Avançado</DssTabPanel>
                 </DssTabPanels>
               </div>
-              <code class="component-label">DssTabs + DssTab + DssTabPanels + DssTabPanel</code>
+              <code class="demo-label">DssTabs + DssTab + DssTabPanels + DssTabPanel</code>
             </div>
 
-            <!-- DssBreadcrumbs + DssBreadcrumbsEl -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssBreadcrumbs>
                   <DssBreadcrumbsEl label="Home" href="#" />
                   <DssBreadcrumbsEl label="Serviços" href="#" />
                   <DssBreadcrumbsEl label="Detalhe" />
                 </DssBreadcrumbs>
               </div>
-              <code class="component-label">DssBreadcrumbs + DssBreadcrumbsEl</code>
+              <code class="demo-label">DssBreadcrumbs + DssBreadcrumbsEl</code>
             </div>
 
-            <!-- DssPagination -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssPagination v-model="currentPage" :max="8" boundary-links />
               </div>
-              <code class="component-label">DssPagination</code>
+              <code class="demo-label">DssPagination</code>
             </div>
 
-            <!-- DssExpansionItem -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssExpansionItem label="Seção expansível" icon="info">
                   <DssCardSection>
                     Conteúdo interno da seção expansível. Pode conter qualquer elemento DSS.
                   </DssCardSection>
                 </DssExpansionItem>
               </div>
-              <code class="component-label">DssExpansionItem</code>
+              <code class="demo-label">DssExpansionItem</code>
             </div>
 
-            <!-- DssMenu — via botão trigger -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssButton>
                   Menu
                   <DssMenu>
@@ -525,52 +528,59 @@
                   </DssMenu>
                 </DssButton>
               </div>
-              <code class="component-label">DssMenu</code>
+              <code class="demo-label">DssMenu</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 7. STEPPER ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 8. STEPPER                                        -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">7. Stepper</span>
+          <span class="group-title">8. Stepper</span>
           <span class="group-desc">DssStepper · DssStep</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
+          <div class="demo-grid demo-grid--wide">
 
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch demo-box--col">
                 <DssStepper v-model="stepperStep" flat>
                   <DssStep name="step1" title="Dados pessoais" :done="stepperStep > 1" />
-                  <DssStep name="step2" title="Endereço" :done="stepperStep > 2" />
+                  <DssStep name="step2" title="Endereço"       :done="stepperStep > 2" />
                   <DssStep name="step3" title="Confirmação" />
                 </DssStepper>
+                <div class="stepper-controls">
+                  <DssButton variant="outlined" size="sm" :disable="stepperStep === 1" @click="stepperStep--">Anterior</DssButton>
+                  <DssButton size="sm" :disable="stepperStep === 3" @click="stepperStep++">Próximo</DssButton>
+                </div>
               </div>
-              <code class="component-label">DssStepper + DssStep</code>
+              <code class="demo-label">DssStepper + DssStep</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 8. LISTAS E ESTRUTURA ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 9. LISTAS E ESTRUTURA                             -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">8. Listas e Estrutura</span>
+          <span class="group-title">9. Listas e Estrutura</span>
           <span class="group-desc">DssList · DssItem · DssItemSection · DssItemLabel · DssSlideItem · DssSeparator · DssSpace</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
+          <div class="demo-grid demo-grid--wide">
 
-            <!-- DssList + DssItem + DssItemSection + DssItemLabel -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
-                <DssList class="list-sample" bordered separator>
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
+                <DssList bordered separator class="list-sample">
                   <DssItem>
                     <DssItemSection avatar>
                       <DssAvatar icon="person" size="sm" />
@@ -598,24 +608,23 @@
                     </DssItemSection>
                     <DssItemSection>
                       <DssItemLabel>Carlos Mendes</DssItemLabel>
-                      <DssItemLabel caption>Item ativo (active=true, color="primary")</DssItemLabel>
+                      <DssItemLabel caption>Item ativo</DssItemLabel>
+                    </DssItemSection>
+                    <DssItemSection side>
+                      <DssIcon name="chevron_right" />
                     </DssItemSection>
                   </DssItem>
                 </DssList>
               </div>
-              <code class="component-label">DssList + DssItem + DssItemSection + DssItemLabel</code>
+              <code class="demo-label">DssList + DssItem + DssItemSection + DssItemLabel</code>
             </div>
 
-            <!-- DssSlideItem -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
-                <DssList class="list-sample" bordered>
-                  <DssSlideItem
-                    @right="() => {}"
-                    right-color="error"
-                  >
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
+                <DssList bordered class="list-sample">
+                  <DssSlideItem @right="() => {}" right-color="error">
                     <DssItemSection>
-                      <DssItemLabel>Deslize para a direita para excluir</DssItemLabel>
+                      <DssItemLabel>Deslize para a esquerda para excluir</DssItemLabel>
                     </DssItemSection>
                     <template #right>
                       <DssIcon name="delete" color="white" />
@@ -623,99 +632,94 @@
                   </DssSlideItem>
                 </DssList>
               </div>
-              <code class="component-label">DssSlideItem</code>
+              <code class="demo-label">DssSlideItem</code>
             </div>
 
-            <!-- DssSeparator -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssSeparator />
               </div>
-              <code class="component-label">DssSeparator</code>
+              <code class="demo-label">DssSeparator</code>
             </div>
 
-            <!-- DssSpace -->
-            <div class="component-item">
-              <div class="component-demo component-demo--inline">
+            <div class="demo-cell">
+              <div class="demo-box demo-box--inline">
                 <span class="space-label">Antes</span>
                 <DssSpace />
                 <span class="space-label">Depois</span>
               </div>
-              <code class="component-label">DssSpace</code>
+              <code class="demo-label">DssSpace</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 9. CARTÕES E SUPERFÍCIES ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 10. CARTÕES E SUPERFÍCIES                         -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">9. Cartões e Superfícies</span>
+          <span class="group-title">10. Cartões e Superfícies</span>
           <span class="group-desc">DssCard (4 variantes) · DssCardSection · DssCardActions · DssToolbar · DssToolbarTitle · DssMarkupTable</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid">
+          <div class="demo-grid">
 
-            <!-- DssCard elevated (default) -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssCard>
+            <div class="demo-cell">
+              <div class="demo-box">
+                <DssCard class="card-sample">
                   <DssCardSection>
                     <strong>Elevated</strong>
-                    <p class="card-desc">Default — com sombra</p>
+                    <p class="card-desc">Default — com sombra (elevation-1)</p>
                   </DssCardSection>
                   <DssCardActions align="right">
                     <DssButton variant="flat" size="sm">Ação</DssButton>
                   </DssCardActions>
                 </DssCard>
               </div>
-              <code class="component-label">DssCard (default)</code>
+              <code class="demo-label">DssCard (default)</code>
             </div>
 
-            <!-- DssCard outlined -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssCard variant="outlined">
+            <div class="demo-cell">
+              <div class="demo-box">
+                <DssCard variant="outlined" class="card-sample">
                   <DssCardSection>
                     <strong>Outlined</strong>
                     <p class="card-desc">Apenas borda</p>
                   </DssCardSection>
                 </DssCard>
               </div>
-              <code class="component-label">DssCard variant="outlined"</code>
+              <code class="demo-label">DssCard variant="outlined"</code>
             </div>
 
-            <!-- DssCard bordered -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssCard variant="bordered">
+            <div class="demo-cell">
+              <div class="demo-box">
+                <DssCard variant="bordered" class="card-sample">
                   <DssCardSection>
                     <strong>Bordered</strong>
                     <p class="card-desc">Borda + sombra</p>
                   </DssCardSection>
                 </DssCard>
               </div>
-              <code class="component-label">DssCard variant="bordered"</code>
+              <code class="demo-label">DssCard variant="bordered"</code>
             </div>
 
-            <!-- DssCard flat -->
-            <div class="component-item">
-              <div class="component-demo">
-                <DssCard variant="flat">
+            <div class="demo-cell">
+              <div class="demo-box">
+                <DssCard variant="flat" class="card-sample">
                   <DssCardSection>
                     <strong>Flat</strong>
                     <p class="card-desc">Sem elevação, sem borda</p>
                   </DssCardSection>
                 </DssCard>
               </div>
-              <code class="component-label">DssCard variant="flat"</code>
+              <code class="demo-label">DssCard variant="flat"</code>
             </div>
 
-            <!-- DssToolbar -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssToolbar>
                   <DssButton variant="flat" icon="menu" />
                   <DssToolbarTitle>Título da Toolbar</DssToolbarTitle>
@@ -724,12 +728,11 @@
                   <DssButton variant="flat" icon="more_vert" />
                 </DssToolbar>
               </div>
-              <code class="component-label">DssToolbar + DssToolbarTitle</code>
+              <code class="demo-label">DssToolbar + DssToolbarTitle</code>
             </div>
 
-            <!-- DssMarkupTable -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssMarkupTable flat bordered>
                   <thead>
                     <tr>
@@ -745,122 +748,101 @@
                   </tbody>
                 </DssMarkupTable>
               </div>
-              <code class="component-label">DssMarkupTable</code>
+              <code class="demo-label">DssMarkupTable</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 10. TIMELINE ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 11. TIMELINE                                      -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">10. Timeline</span>
+          <span class="group-title">11. Timeline</span>
           <span class="group-desc">DssTimeline · DssTimelineEntry</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
-
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+          <div class="demo-grid demo-grid--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch demo-box--start">
                 <DssTimeline>
-                  <DssTimelineEntry
-                    title="Pedido criado"
-                    subtitle="10/05/2026 09:00"
-                    icon="add_circle"
-                    color="primary"
-                  >
+                  <DssTimelineEntry title="Pedido criado" subtitle="10/05/2026 09:00" icon="add_circle" color="primary">
                     Pedido #1234 foi criado com sucesso.
                   </DssTimelineEntry>
-                  <DssTimelineEntry
-                    title="Em processamento"
-                    subtitle="10/05/2026 10:30"
-                    icon="autorenew"
-                    color="primary"
-                  >
+                  <DssTimelineEntry title="Em processamento" subtitle="10/05/2026 10:30" icon="autorenew" color="primary">
                     Pedido em análise pela equipe.
                   </DssTimelineEntry>
-                  <DssTimelineEntry
-                    title="Entregue"
-                    subtitle="12/05/2026 14:00"
-                    icon="check_circle"
-                    color="positive"
-                  >
+                  <DssTimelineEntry title="Entregue" subtitle="12/05/2026 14:00" icon="check_circle" color="positive">
                     Pedido entregue ao destinatário.
                   </DssTimelineEntry>
                 </DssTimeline>
               </div>
-              <code class="component-label">DssTimeline + DssTimelineEntry</code>
+              <code class="demo-label">DssTimeline + DssTimelineEntry</code>
             </div>
-
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 11. ÁRVORE ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 12. ÁRVORE                                        -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">11. Árvore</span>
+          <span class="group-title">12. Árvore</span>
           <span class="group-desc">DssTree</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
-
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
-                <DssTree
-                  :nodes="treeNodes"
-                  node-key="id"
-                  label-key="label"
-                  default-expand-all
-                />
+          <div class="demo-grid demo-grid--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch demo-box--start">
+                <DssTree :nodes="treeNodes" node-key="id" label-key="label" default-expand-all />
               </div>
-              <code class="component-label">DssTree</code>
+              <code class="demo-label">DssTree</code>
             </div>
-
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 12. MÍDIA E SCROLL ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 13. MÍDIA E SCROLL                                -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">12. Mídia e Scroll</span>
+          <span class="group-title">13. Mídia e Scroll</span>
           <span class="group-desc">DssImg · DssScrollArea · DssSplitter</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid">
+          <div class="demo-grid">
 
-            <!-- DssImg -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssImg
-                  src="https://picsum.photos/200/120"
+                  src="https://picsum.photos/240/140"
                   alt="Imagem de exemplo"
                   class="img-sample"
                 />
               </div>
-              <code class="component-label">DssImg</code>
+              <code class="demo-label">DssImg</code>
             </div>
 
-            <!-- DssScrollArea -->
-            <div class="component-item">
-              <div class="component-demo">
+            <div class="demo-cell">
+              <div class="demo-box">
                 <DssScrollArea class="scroll-sample">
                   <div v-for="i in 10" :key="i" class="scroll-row">
-                    Item {{ i }} — conteúdo de lista longa para demonstrar scroll
+                    Item {{ i }} — conteúdo para demonstrar scroll vertical
                   </div>
                 </DssScrollArea>
               </div>
-              <code class="component-label">DssScrollArea</code>
+              <code class="demo-label">DssScrollArea</code>
             </div>
 
-            <!-- DssSplitter -->
-            <div class="component-item component-item--full">
-              <div class="component-demo component-demo--wide">
+            <div class="demo-cell demo-cell--full">
+              <div class="demo-box demo-box--stretch">
                 <DssSplitter v-model="splitterRatio" class="splitter-sample">
                   <template #before>
                     <div class="splitter-pane">Painel Esquerdo</div>
@@ -870,65 +852,61 @@
                   </template>
                 </DssSplitter>
               </div>
-              <code class="component-label">DssSplitter</code>
+              <code class="demo-label">DssSplitter</code>
             </div>
 
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 13. LAYOUT ESTRUTURAL (NOTA) ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 14. LAYOUT ESTRUTURAL (requer contexto de app)    -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">13. Layout Estrutural</span>
+          <span class="group-title">14. Layout Estrutural</span>
           <span class="group-desc">Componentes que exigem contexto de aplicação completo — não renderizáveis isoladamente</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
-            <div
-              v-for="comp in layoutComponents"
-              :key="comp.name"
-              class="component-item"
-            >
-              <div class="component-demo">
-                <span class="component-note">{{ comp.note }}</span>
+          <div class="demo-grid demo-grid--wide">
+            <div v-for="comp in layoutComponents" :key="comp.name" class="demo-cell">
+              <div class="demo-box">
+                <span class="demo-note">{{ comp.note }}</span>
               </div>
-              <code class="component-label">{{ comp.name }}</code>
+              <code class="demo-label">{{ comp.name }}</code>
             </div>
           </div>
         </DssCardSection>
       </DssCard>
 
-      <!-- ==================== 14. COMPONENTES CONTEXTUAIS (NOTA) ==================== -->
+      <!-- ══════════════════════════════════════════════════ -->
+      <!-- 15. COMPONENTES CONTEXTUAIS                       -->
+      <!-- ══════════════════════════════════════════════════ -->
       <DssCard class="preview-group">
         <DssCardSection class="group-header">
-          <span class="group-title">14. Componentes Contextuais</span>
+          <span class="group-title">15. Componentes Contextuais</span>
           <span class="group-desc">Componentes que requerem interação, dados externos ou contexto específico para renderização</span>
         </DssCardSection>
         <DssSeparator />
         <DssCardSection>
-          <div class="component-grid component-grid--wide">
-            <div
-              v-for="comp in contextualComponents"
-              :key="comp.name"
-              class="component-item"
-            >
-              <div class="component-demo">
-                <span class="component-note">{{ comp.note }}</span>
+          <div class="demo-grid demo-grid--wide">
+            <div v-for="comp in contextualComponents" :key="comp.name" class="demo-cell">
+              <div class="demo-box">
+                <span class="demo-note">{{ comp.note }}</span>
               </div>
-              <code class="component-label">{{ comp.name }}</code>
+              <code class="demo-label">{{ comp.name }}</code>
             </div>
           </div>
         </DssCardSection>
       </DssCard>
 
-    </div>
+    </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 // ── Ações ──────────────────────────────────────────────────────────────────
 import { DssButton }      from '../../components/base/DssButton'
@@ -1013,29 +991,36 @@ import { DssScrollArea } from '../../components/base/DssScrollArea'
 import { DssSplitter }   from '../../components/base/DssSplitter'
 
 // ── Brand selector ─────────────────────────────────────────────────────────
-const activeBrand = ref('water')
+// Inicia neutro para exibir os defaults reais sem coloração de brand
+const activeBrand = ref('')
 const brands = [
   { value: 'hub',   label: 'Hub'   },
   { value: 'water', label: 'Water' },
   { value: 'waste', label: 'Waste' },
-  { value: '',      label: '—'     },
+  { value: '',      label: 'Neutro' },
 ]
 
-// ── Contagem total de componentes renderizados ─────────────────────────────
-const totalComponents = computed(() => 76)
-
 // ── Estado dos componentes interativos ─────────────────────────────────────
-const ratingValue       = ref(3)
-const knobValue         = ref(50)
-const checkboxValue     = ref(false)
-const radioValue        = ref('a')
-const toggleBool        = ref(false)
-const sliderValue       = ref(50)
-const rangeValue        = ref({ min: 20, max: 80 })
-const fileValue         = ref(null)
-const selectValue       = ref(null)
-const selectOptions     = ['Opção 1', 'Opção 2', 'Opção 3']
-const optionGroupValue  = ref('opt1')
+const ratingValue      = ref(3)
+const knobValue        = ref(50)
+
+// Checkbox: dois estados visíveis e interativos — repouso (cinza) e marcado (primary/brand)
+const checkboxOff      = ref(false)
+const checkboxOn       = ref(true)
+
+// Radio: grupo com seleção ativa — vê repouso vs selecionado simultaneamente
+const radioValue       = ref('a')
+
+// Toggle: dois estados visíveis e interativos — off (track cinza) e on (track primary/brand)
+const toggleOff        = ref(false)
+const toggleOn         = ref(true)
+
+const sliderValue      = ref(50)
+const rangeValue       = ref({ min: 20, max: 80 })
+const fileValue        = ref(null)
+const selectValue      = ref(null)
+const selectOptions    = ['Opção 1', 'Opção 2', 'Opção 3']
+const optionGroupValue = ref('opt1')
 const optionGroupOptions = [
   { label: 'Opção 1', value: 'opt1' },
   { label: 'Opção 2', value: 'opt2' },
@@ -1058,7 +1043,7 @@ const treeNodes = [
         label: 'Abastecimento',
         children: [
           { id: '1-1-1', label: 'ETA Norte' },
-          { id: '1-1-2', label: 'ETA Sul' },
+          { id: '1-1-2', label: 'ETA Sul'   },
         ],
       },
       {
@@ -1075,12 +1060,12 @@ const treeNodes = [
     label: 'Relatórios',
     children: [
       { id: '2-1', label: 'Mensal' },
-      { id: '2-2', label: 'Anual' },
+      { id: '2-2', label: 'Anual'  },
     ],
   },
 ]
 
-// ── Componentes estruturais (não renderizáveis isoladamente) ───────────────
+// ── Componentes estruturais ────────────────────────────────────────────────
 const layoutComponents = [
   { name: 'DssLayout',        note: 'Container raiz — envolve toda a aplicação com DssHeader/DssDrawer/DssFooter' },
   { name: 'DssPage',          note: 'Filho direto de DssLayout — define a área de conteúdo principal' },
@@ -1092,7 +1077,7 @@ const layoutComponents = [
   { name: 'DssDrawer',        note: 'Painel lateral deslizante — filho de DssLayout' },
 ]
 
-// ── Componentes contextuais (requerem interação ou dados externos) ─────────
+// ── Componentes contextuais ────────────────────────────────────────────────
 const contextualComponents = [
   { name: 'DssDialog',         note: 'Overlay modal — ativado via v-model ou plugin $q.dialog' },
   { name: 'DssPopupProxy',     note: 'Popup responsivo — menu em desktop, dialog em mobile' },
@@ -1125,21 +1110,21 @@ const contextualComponents = [
   flex-shrink: 0;
 }
 
-/* ── Seletor de brand ────────────────────────────────────────────────────── */
-.brand-selector {
+/* ── Brand nav ───────────────────────────────────────────────────────────── */
+.brand-nav {
   display: flex;
   align-items: center;
   gap: var(--dss-spacing-1);
 }
 
-.brand-label {
+.brand-nav__label {
   font-size: var(--dss-font-size-xs);
   font-weight: var(--dss-font-weight-medium);
   color: var(--dss-text-subtle);
   margin-right: var(--dss-spacing-1);
 }
 
-.brand-btn {
+.brand-pill {
   padding: var(--dss-spacing-1) var(--dss-spacing-3);
   font-size: var(--dss-font-size-xs);
   font-weight: var(--dss-font-weight-medium);
@@ -1149,21 +1134,22 @@ const contextualComponents = [
   background: transparent;
   color: var(--dss-text-subtle);
   cursor: pointer;
-  transition: all 150ms ease;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
   line-height: 1.4;
+  white-space: nowrap;
 }
 
-.brand-btn:hover {
+.brand-pill:hover {
   background: var(--dss-surface-muted);
 }
 
-.brand-btn--hub.brand-btn--active    { background: var(--dss-hub-600);   border-color: var(--dss-hub-600);   color: white; }
-.brand-btn--water.brand-btn--active  { background: var(--dss-water-500); border-color: var(--dss-water-500); color: white; }
-.brand-btn--waste.brand-btn--active  { background: var(--dss-waste-600); border-color: var(--dss-waste-600); color: white; }
-.brand-btn--none.brand-btn--active   { background: var(--dss-gray-700);  border-color: var(--dss-gray-700);  color: white; }
+.brand-pill--hub.is-active    { background: var(--dss-hub-600);   border-color: var(--dss-hub-600);   color: white; }
+.brand-pill--water.is-active  { background: var(--dss-water-500); border-color: var(--dss-water-500); color: white; }
+.brand-pill--waste.is-active  { background: var(--dss-waste-600); border-color: var(--dss-waste-600); color: white; }
+.brand-pill--none.is-active   { background: var(--dss-gray-700);  border-color: var(--dss-gray-700);  color: white; }
 
 /* ── Conteúdo principal ──────────────────────────────────────────────────── */
-.preview-content {
+.preview-main {
   flex: 1;
   overflow-y: auto;
   padding: var(--dss-spacing-4);
@@ -1172,7 +1158,7 @@ const contextualComponents = [
   gap: var(--dss-spacing-4);
 }
 
-/* ── Grupos de componentes ───────────────────────────────────────────────── */
+/* ── Grupo (card wrapper) ────────────────────────────────────────────────── */
 .preview-group {
   width: 100%;
 }
@@ -1196,87 +1182,137 @@ const contextualComponents = [
   line-height: var(--dss-line-height-normal);
 }
 
-/* ── Grid de componentes ─────────────────────────────────────────────────── */
-.component-grid {
+/* ── Grid de demos ───────────────────────────────────────────────────────── */
+.demo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--dss-spacing-4);
 }
 
-.component-grid--wide {
+.demo-grid--wide {
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
-/* ── Item de componente ──────────────────────────────────────────────────── */
-.component-item {
+/* ── Célula de demo ──────────────────────────────────────────────────────── */
+.demo-cell {
   display: flex;
   flex-direction: column;
   gap: var(--dss-spacing-2);
+  min-width: 0;
 }
 
-.component-item--full {
+.demo-cell--full {
   grid-column: 1 / -1;
 }
 
 /* ── Demo box ────────────────────────────────────────────────────────────── */
-.component-demo {
+.demo-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 64px;
+  flex-wrap: wrap;
+  min-height: 72px;
   padding: var(--dss-spacing-3);
   background-color: var(--dss-surface-default);
   border: 1px solid var(--dss-gray-200);
   border-radius: var(--dss-radius-md);
+  box-sizing: border-box;
 }
 
-.component-demo--wide {
+/* Filhos não são esticados pelo flex pai — respeita dimensões naturais */
+.demo-box > * {
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+/* Estira para ocupar largura total da célula */
+.demo-box--stretch {
   width: 100%;
   justify-content: flex-start;
 }
 
-.component-demo--col {
+/* Organiza filhos em coluna */
+.demo-box--col {
   flex-direction: column;
   align-items: stretch;
+  gap: var(--dss-spacing-3);
 }
 
-.component-demo--relative {
-  position: relative;
-  min-height: 80px;
+.demo-box--col > * {
+  flex-shrink: unset;
 }
 
-.component-demo--inline {
-  display: flex;
+/* Exibe estados lado a lado com gap */
+.demo-box--gap {
+  gap: var(--dss-spacing-3);
+}
+
+/* Alinha filhos pelo topo (timeline, tree, skeleton) */
+.demo-box--start {
+  align-items: flex-start;
+}
+
+/* Row de estados: repouso + marcado / off + on */
+.demo-box--states {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--dss-spacing-3);
+  justify-content: flex-start;
+}
+
+/* Inline (DssSpace demo) */
+.demo-box--inline {
   flex-direction: row;
-  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0;
 }
 
-.component-demo--fab {
-  min-height: 80px;
+/* Relativo para overlays */
+.demo-box--relative {
   position: relative;
+  min-height: 88px;
+}
+
+/* Fab: precisa de espaço para o botão expandido */
+.demo-box--fab {
+  min-height: 88px;
+  position: relative;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* Remove padding interno para componentes que tem borda própria (tabs, etc.) */
+.demo-box--flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Campo de formulário ocupa toda a largura da caixa */
+.demo-field {
+  width: 100%;
 }
 
 /* ── Label do componente ─────────────────────────────────────────────────── */
-.component-label {
+.demo-label {
+  display: inline-block;
   font-size: var(--dss-font-size-xs);
   font-weight: var(--dss-font-weight-medium);
+  font-family: monospace;
   color: var(--dss-text-subtle);
   background-color: var(--dss-gray-100);
   padding: 2px var(--dss-spacing-2);
   border-radius: var(--dss-radius-sm);
-  font-family: monospace;
-  display: inline-block;
   line-height: var(--dss-line-height-normal);
 }
 
-/* ── Nota de componente sem estado visual ────────────────────────────────── */
-.component-note {
+/* ── Nota (componente sem estado visual) ─────────────────────────────────── */
+.demo-note {
   font-size: var(--dss-font-size-xs);
   color: var(--dss-text-subtle);
   font-style: italic;
   text-align: center;
   line-height: var(--dss-line-height-normal);
-  padding: var(--dss-spacing-2);
+  padding: var(--dss-spacing-1) var(--dss-spacing-2);
 }
 
 /* ── Tab panel ───────────────────────────────────────────────────────────── */
@@ -1284,6 +1320,14 @@ const contextualComponents = [
   padding: var(--dss-spacing-3);
   font-size: var(--dss-font-size-sm);
   color: var(--dss-text-body);
+}
+
+/* ── Stepper controls ────────────────────────────────────────────────────── */
+.stepper-controls {
+  display: flex;
+  gap: var(--dss-spacing-2);
+  justify-content: flex-end;
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
 }
 
 /* ── Skeleton ────────────────────────────────────────────────────────────── */
@@ -1309,6 +1353,7 @@ const contextualComponents = [
   justify-content: center;
   color: var(--dss-text-subtle);
   font-size: var(--dss-font-size-sm);
+  user-select: none;
 }
 
 /* ── Lista ───────────────────────────────────────────────────────────────── */
@@ -1317,7 +1362,11 @@ const contextualComponents = [
   border-radius: var(--dss-radius-md);
 }
 
-/* ── Card desc ───────────────────────────────────────────────────────────── */
+/* ── Card interno (no demo do DssCard) ───────────────────────────────────── */
+.card-sample {
+  min-width: 160px;
+}
+
 .card-desc {
   margin: var(--dss-spacing-1) 0 0;
   font-size: var(--dss-font-size-sm);
@@ -1327,15 +1376,16 @@ const contextualComponents = [
 
 /* ── Img ─────────────────────────────────────────────────────────────────── */
 .img-sample {
-  width: 200px;
-  height: 120px;
+  width: 240px;
+  height: 140px;
   border-radius: var(--dss-radius-md);
+  object-fit: cover;
 }
 
 /* ── ScrollArea ──────────────────────────────────────────────────────────── */
 .scroll-sample {
   width: 100%;
-  height: 128px;
+  height: 136px;
   border: 1px solid var(--dss-gray-200);
   border-radius: var(--dss-radius-md);
 }
@@ -1346,6 +1396,7 @@ const contextualComponents = [
   font-size: var(--dss-font-size-sm);
   color: var(--dss-text-body);
   line-height: var(--dss-line-height-normal);
+  white-space: nowrap;
 }
 
 /* ── Splitter ────────────────────────────────────────────────────────────── */

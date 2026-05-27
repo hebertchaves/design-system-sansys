@@ -23,6 +23,11 @@
   /* Border radius - usa token genérico */
   border-radius: var(--dss-radius-lg);
 
+  /* Elevação padrão — o card elevado (default) flutua sobre a superfície.
+     Flat e Outlined variants sobrescrevem com box-shadow: none.
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.13 */
+  box-shadow: var(--dss-elevation-1);
+
   /* Overflow */
   overflow: hidden;
 

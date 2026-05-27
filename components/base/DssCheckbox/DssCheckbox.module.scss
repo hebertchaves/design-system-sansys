@@ -24,10 +24,10 @@
    LAYER 3: VARIANTS
    Sem variantes visuais na Fase 1 (arquivo obrigatorio da arquitetura)
    ========================================================================== */
-@use '3-variants';
+@use '3-variants' as variants;
 
 /* ==========================================================================
    LAYER 4: OUTPUT
    Brands e estados finais (dark mode, high contrast, reduced motion)
    ========================================================================== */
-@use '4-output';
+@use '4-output' as output;

@@ -66,29 +66,32 @@
   min-width: var(--dss-spacing-14);
   min-height: var(--dss-spacing-14);
 
-  /* Elevação padrão Material Design para FAB */
-  box-shadow: var(--dss-elevation-2);
+  /* Elevação padrão para FAB: elevation-3 (popup level).
+     FAB flutua ACIMA do conteúdo da página — elevation-3 é o nível correto.
+     M3 define FAB com elevation-3 (medium) em repouso.
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.2 e 14.2 */
+  box-shadow: var(--dss-elevation-3);
 
   /* Transição de elevação e cor */
   transition:
     box-shadow var(--dss-duration-200) var(--dss-easing-standard),
     background-color var(--dss-duration-200) var(--dss-easing-standard);
 
-  /* Hover: elevação aumenta (Material Design — FAB hover) */
+  /* Hover: elevação aumenta para elevation-4 (drawer level) */
   &:hover:not([disabled]):not(.disabled) {
-    box-shadow: var(--dss-elevation-3);
+    box-shadow: var(--dss-elevation-4);
   }
 
   /* Focus-visible: ring de foco acessível */
   &:focus-visible {
     outline: var(--dss-focus-ring);
     outline-offset: 2px;
-    box-shadow: var(--dss-elevation-2);
+    box-shadow: var(--dss-elevation-3);
   }
 
   /* Active: feedback tátil */
   &:active:not([disabled]):not(.disabled) {
-    box-shadow: var(--dss-elevation-3);
+    box-shadow: var(--dss-elevation-4);
   }
 }
 

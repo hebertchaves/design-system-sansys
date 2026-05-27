@@ -41,6 +41,17 @@
   color: var(--dss-text-body);
 
   // ------------------------------------------------------------------
+  // Separador inferior — alinha com M3, Carbon, Salesforce.
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.19
+  //
+  // EXC-Structural-01: quando DssToolbar está dentro de DssHeader,
+  // a borda inferior do DssHeader é o separador visual. A borda do
+  // DssToolbar é suprimida via seletor descendente em DssHeader/_base.scss
+  // para evitar dupla borda.
+  // ------------------------------------------------------------------
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
+
+  // ------------------------------------------------------------------
   // Variante inset — padding-inline-start ampliado
   // ------------------------------------------------------------------
   &.dss-toolbar--inset {

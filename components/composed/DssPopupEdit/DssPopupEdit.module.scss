@@ -7,5 +7,5 @@
 // =============================================================================
 
 @use './2-composition/base';
-@use './3-variants/index';
-@use './4-output/index';
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;

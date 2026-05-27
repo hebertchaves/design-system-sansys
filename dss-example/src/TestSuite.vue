@@ -1,10 +1,11 @@
 <template>
   <div class="test-suite">
     <!-- Sidebar Navigation -->
-    <aside class="test-sidebar">
+    <div class="test-sidebar">
       <div class="sidebar-header">
-        <h1>🧪 DSS Test Suite</h1>
-        <p class="version">v2.3.0</p>
+        <span class="sidebar-logo">⬡</span>
+        <div class="sidebar-title">DSS</div>
+        <span class="version">v2.3</span>
       </div>
 
       <nav class="sidebar-nav">
@@ -410,10 +411,10 @@
         <p>Design System Sansys</p>
         <p class="author">Hebert Daniel Oliveira Chaves</p>
       </div>
-    </aside>
+    </div>
 
     <!-- Main Content Area -->
-    <main class="test-content">
+    <div class="test-content">
       <!-- Index/Dashboard View -->
       <div v-if="activeComponent === 'index'" class="component-view">
         <TestIndex />
@@ -463,7 +464,7 @@
       <div v-else-if="activeComponent === 'tokens'" class="component-view">
         <TestTokens />
       </div>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -518,34 +519,53 @@ const toggleCategory = (category) => {
    SIDEBAR NAVIGATION
    ======================================== */
 .test-sidebar {
-  width: 280px;
-  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: white;
+  width: 248px;
+  height: 100vh;
+  overflow: hidden;
+  background: #131313;
+  color: #e2e2e2;
   display: flex;
   flex-direction: column;
-  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  border-right: 1px solid #232323;
   position: relative;
   z-index: 100;
-  border-right: 1px solid rgba(227, 30, 36, 0.2);
 }
 
 .sidebar-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  height: 48px;
+  border-bottom: 1px solid #1e1e1e;
 }
 
-.sidebar-header h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.5rem;
+.sidebar-logo {
+  font-size: 1.125rem;
+  line-height: 1;
+  color: #E31E24;
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 0.875rem;
   font-weight: 700;
-  line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  flex: 1;
 }
 
 .version {
-  margin: 0;
-  font-size: 0.875rem;
-  opacity: 0.85;
+  font-size: 0.625rem;
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.125rem 0.4rem;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
 }
 
 /* ========================================
@@ -553,129 +573,141 @@ const toggleCategory = (category) => {
    ======================================== */
 .sidebar-nav {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
-  padding: 1rem 0;
+  padding: 0.5rem 0.5rem 1rem;
 }
 
 .nav-section {
-  margin-bottom: 1rem;
+  margin-bottom: 0.125rem;
 }
 
-/* Base Nav Item Styles */
+/* Base Nav Item */
 .nav-item,
 .nav-category,
 .nav-subcategory {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1.5rem;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.625rem;
   background: transparent;
   border: none;
-  color: white;
+  color: rgba(255, 255, 255, 0.55);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 120ms ease, color 120ms ease;
   text-align: left;
   position: relative;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
-.nav-item:hover,
-.nav-category:hover,
-.nav-subcategory:hover {
-  background: rgba(255, 255, 255, 0.1);
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .nav-item.active {
-  background: rgba(227, 30, 36, 0.15);
-  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
 }
 
 .nav-item.active::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 56%;
+  width: 2px;
   background: #E31E24;
+  border-radius: 0 2px 2px 0;
 }
 
 /* Category Headers */
 .nav-category {
+  font-size: 0.625rem;
   font-weight: 600;
-  font-size: 0.8125rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.9;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.22);
+  padding: 0.875rem 0.625rem 0.3125rem;
+  cursor: default;
+  border-radius: 0;
+  gap: 0.375rem;
 }
 
 .nav-category:hover {
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.05);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
 }
 
-/* Subcategory Headers */
+/* Subcategory */
 .nav-subcategory {
+  font-size: 0.75rem;
   font-weight: 500;
-  font-size: 0.8125rem;
-  letter-spacing: 0.02em;
-  opacity: 0.85;
-  padding-left: 2rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 0.3125rem 0.625rem 0.3125rem 1.25rem;
+  gap: 0.375rem;
 }
 
 .nav-subcategory:hover {
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.05);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
 }
 
-/* Submenu Items */
+/* Sub-items */
 .nav-subitem {
-  padding-left: 2.5rem;
-  font-size: 0.875rem;
+  padding-left: 1.375rem;
+  font-size: 0.8125rem;
 }
 
 .nav-subsubitem {
-  padding-left: 3.5rem;
-  font-size: 0.875rem;
+  padding-left: 2rem;
+  font-size: 0.8125rem;
 }
 
-.nav-subitem:hover {
-  padding-left: 2.75rem;
-}
-
+/* Remove hover layout-shift */
+.nav-subitem:hover,
 .nav-subsubitem:hover {
-  padding-left: 3.75rem;
+  padding-left: inherit;
 }
 
 /* Submenu Containers */
 .nav-submenu,
 .nav-subsubmenu {
   overflow: hidden;
-  transition: max-height 0.3s ease;
 }
 
 /* Icons */
 .nav-icon {
-  font-size: 1.25rem;
+  font-size: 0.9375rem;
   flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 120ms ease;
+  line-height: 1;
+}
+
+.nav-item:hover .nav-icon,
+.nav-item.active .nav-icon {
+  opacity: 1;
 }
 
 .nav-label {
   flex: 1;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
-/* Chevron Indicator */
+/* Chevron */
 .chevron {
-  font-size: 1.25rem;
-  transition: transform 0.3s ease;
-  opacity: 0.7;
-  font-weight: bold;
-  margin-left: auto;
+  font-size: 0.75rem;
+  transition: transform 180ms ease;
+  opacity: 0.35;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .chevron.expanded {
@@ -684,66 +716,54 @@ const toggleCategory = (category) => {
 
 /* Badges */
 .nav-badge {
-  background: #E31E24;
-  padding: 0.125rem 0.5rem;
-  border-radius: 6px;
-  font-size: 0.6875rem;
+  font-size: 0.5625rem;
   font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+  background: rgba(227, 30, 36, 0.18);
+  color: rgba(255, 100, 100, 0.9);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  flex-shrink: 0;
 }
 
 .nav-badge.stress {
-  background: #f59e0b;
-  color: #1a1a1a;
+  background: rgba(245, 158, 11, 0.15);
+  color: rgba(245, 158, 11, 0.85);
 }
 
 /* ========================================
-   MINI STATISTICS
+   MINI STATISTICS — removidas do nav
    ======================================== */
 .stats-mini {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 0 1.5rem;
+  display: none;
 }
 
-.stat-item {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.stat-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
+.stat-item,
+.stat-value,
 .stat-label {
-  font-size: 0.8125rem;
-  opacity: 0.85;
+  display: none;
 }
 
 /* ========================================
    SIDEBAR FOOTER
    ======================================== */
 .sidebar-footer {
-  padding: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: center;
+  flex-shrink: 0;
+  padding: 0.625rem 1rem;
+  border-top: 1px solid #1e1e1e;
 }
 
 .sidebar-footer p {
   margin: 0;
-  font-size: 0.8125rem;
-  opacity: 0.85;
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.18);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
 .author {
-  margin-top: 0.25rem !important;
-  font-size: 0.75rem !important;
-  opacity: 0.7 !important;
+  color: rgba(255, 255, 255, 0.13) !important;
 }
 
 /* ========================================
@@ -751,12 +771,14 @@ const toggleCategory = (category) => {
    ======================================== */
 .test-content {
   flex: 1;
-  overflow-y: auto;
+  min-width: 0;
+  overflow: hidden;
   background: #f5f5f5;
 }
 
 .component-view {
-  min-height: 100%;
+  height: 100%;
+  overflow-y: auto;
   animation: fadeIn 0.3s ease;
 }
 
@@ -791,20 +813,20 @@ const toggleCategory = (category) => {
   background: rgba(255, 255, 255, 0.4);
 }
 
-.test-content::-webkit-scrollbar {
+.component-view::-webkit-scrollbar {
   width: 10px;
 }
 
-.test-content::-webkit-scrollbar-track {
+.component-view::-webkit-scrollbar-track {
   background: #e0e0e0;
 }
 
-.test-content::-webkit-scrollbar-thumb {
+.component-view::-webkit-scrollbar-thumb {
   background: #999;
   border-radius: 5px;
 }
 
-.test-content::-webkit-scrollbar-thumb:hover {
+.component-view::-webkit-scrollbar-thumb:hover {
   background: #777;
 }
 
@@ -813,57 +835,42 @@ const toggleCategory = (category) => {
    ======================================== */
 @media (max-width: 768px) {
   .test-sidebar {
-    width: 240px;
-  }
-
-  .sidebar-header h1 {
-    font-size: 1.25rem;
-  }
-
-  .nav-item {
-    padding: 0.75rem 1rem;
-  }
-
-  .nav-item:hover {
-    padding-left: 1.25rem;
-  }
-
-  .nav-section h3 {
-    padding: 0 1rem;
-  }
-
-  .stats-mini {
-    padding: 0 1rem;
+    width: 220px;
   }
 }
 
 @media (max-width: 480px) {
   .test-sidebar {
-    width: 60px;
+    width: 48px;
   }
 
-  .sidebar-header h1,
+  .sidebar-title,
   .version,
   .nav-label,
   .nav-badge,
-  .nav-section h3,
-  .stats-mini,
   .sidebar-footer p {
     display: none;
   }
 
   .sidebar-header {
-    padding: 1rem 0.5rem;
-    text-align: center;
+    justify-content: center;
+    padding: 0;
   }
 
-  .nav-item {
+  .sidebar-logo {
+    margin: auto;
+  }
+
+  .nav-item,
+  .nav-category,
+  .nav-subcategory {
     justify-content: center;
-    padding: 1rem 0.5rem;
+    padding: 0.625rem;
   }
 
   .nav-icon {
-    font-size: 1.5rem;
+    font-size: 1rem;
+    opacity: 1;
   }
 }
 </style>

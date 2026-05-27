@@ -37,4 +37,8 @@
   /* Fundo e cor de texto (sobrescritos por variantes/brands) */
   background-color: var(--dss-surface-default);
   color: var(--dss-text-body);
+
+  /* Elevação padrão — DssBar flutua sobre o conteúdo da página/janela.
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.22 */
+  box-shadow: var(--dss-elevation-1);
 }

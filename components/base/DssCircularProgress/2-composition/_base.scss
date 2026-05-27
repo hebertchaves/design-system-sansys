@@ -12,13 +12,14 @@
 // EXC-Gate-01: Seletores internos do Quasar
 //   .q-circular-progress__track e .q-circular-progress__circle são elementos
 //   SVG <circle> internos do QCircularProgress. O DSS precisa acessá-los para:
-//   - track: aplicar --dss-surface-muted como cor da trilha de fundo
+//   - track: aplicar --dss-gray-200 como cor da trilha de fundo
 //   - circle: aplicar tokens de cor semânticos DSS (via 3-variants/_colors.scss)
 //   Sem esses overrides, o componente perderia governança visual do DSS.
 //   Documentado em dss.meta.json.
 //
 // TOKENS UTILIZADOS (base):
-//   Superfície: --dss-surface-muted      (track — trilha de fundo)
+//   Superfície: --dss-gray-200          (track — cinza claro canônico M3/Carbon/Salesforce)
+//   Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.8
 //   Opacidade:  --dss-opacity-disabled   (estado disabled)
 //
 // NOTA SVG: círculos SVG usam `stroke` (não `background-color`) para cor.
@@ -43,9 +44,11 @@
   // Como não passamos track-color ao Quasar, aplicamos nosso token via CSS.
   // opacity: 1 garante que o Quasar não aplique opacidade reduzida no track.
 
-  // EXC-Gate-01: seletor interno Quasar — necessário para --dss-surface-muted
+  // EXC-Gate-01: seletor interno Quasar — necessário para --dss-gray-200
+  // --dss-gray-200: cinza claro canônico para track inativo (M3, Carbon, Salesforce).
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.8
   .q-circular-progress__track {
-    stroke: var(--dss-surface-muted);
+    stroke: var(--dss-gray-200);
     opacity: 1;
   }
 

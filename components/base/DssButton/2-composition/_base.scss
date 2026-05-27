@@ -36,8 +36,10 @@
   text-decoration: none;
   white-space: nowrap;
 
-  /* Layout */
-  padding: var(--dss-spacing-2) var(--dss-spacing-5);
+  /* Layout — padding horizontal 24px alinhado com M3 Filled, IBM Carbon, Salesforce.
+     Vertical 0 porque min-height (44px) governa a altura — padding vertical seria redundante.
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.1 */
+  padding: 0 var(--dss-spacing-6);
   min-height: var(--dss-touch-target-md); /* 44px - ✅ WCAG 2.1 AA */
   min-width: var(--dss-spacing-16); /* 64px */
 

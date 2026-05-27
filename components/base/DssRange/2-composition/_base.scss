@@ -44,7 +44,7 @@
 // ─── Track ────────────────────────────────────────────────────────────────────
 
 .dss-range .q-slider__track {
-  background-color: var(--dss-surface-muted);
+  background-color: var(--dss-gray-200); // track inativo — cinza claro canônico (Ref: Seção 13.8)
   border-radius: 9999px; // EX-01: pill shape do track — não tokenizável, inerente ao design de range sliders
   overflow: hidden;
 }

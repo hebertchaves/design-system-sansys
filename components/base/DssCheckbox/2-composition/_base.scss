@@ -31,10 +31,11 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-sm);
   line-height: var(--dss-line-height-normal);
-  /* DSS Visual Standard: cor primary no root define currentColor do controle.
-     A borda do controle unchecked usa currentColor, tornando-a primary por default.
-     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
-  color: var(--dss-action-primary);
+  /* DSS Visual Standard: cor gray-500 no root define currentColor do controle unchecked.
+     As três referências (M3, Carbon, Lightning) usam cinza médio na borda unchecked.
+     A cor primary só aparece no estado CHECKED (via bg-primary text-white no control).
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 11 */
+  color: var(--dss-gray-500);
 
   /* Interaction */
   cursor: pointer;

@@ -28,7 +28,7 @@
 //
 // TOKENS UTILIZADOS:
 //   Progresso:    --dss-action-primary   (arco de progresso padrão)
-//   Trilha:       --dss-surface-muted    (arco de trilha de fundo)
+//   Trilha:       --dss-gray-200         (arco de trilha de fundo — Ref: Seção 13.9)
 //   Centro:       --dss-surface-default  (fundo central do knob)
 //   Tipografia:   --dss-font-family-sans, --dss-font-size-xs, --dss-font-weight-medium
 //   Focus:        --dss-border-width-md, --dss-focus-ring
@@ -58,7 +58,7 @@
   // `opacity: 1` — Quasar pode aplicar opacidade reduzida no track via prop.
   // Garantimos que a trilha sempre seja totalmente opaca com a cor do token.
   .q-circular-progress__track {
-    stroke: var(--dss-surface-muted);
+    stroke: var(--dss-gray-200); // track não preenchido — cinza claro canônico (Ref: Seção 13.9)
     opacity: 1;
   }
 
