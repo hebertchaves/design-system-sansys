@@ -270,6 +270,7 @@ function DssBadgePreview({
       borderRadius: rounded ? "8px" : "9999px",
       minHeight: multiLine ? "24px" : "20px",
       transition: "all 0.2s ease",
+      verticalAlign: align ?? undefined,
     };
 
     if (floating) {
