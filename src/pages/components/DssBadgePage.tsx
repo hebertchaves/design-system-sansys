@@ -453,6 +453,7 @@ export default function DssBadgePage() {
             floating={booleanStates.floating}
             multiLine={booleanStates.multiLine}
             brand={selectedBrand}
+            align={selectedAlign === "none" ? null : (selectedAlign as "top" | "middle" | "bottom")}
           />
         }
         controls={
