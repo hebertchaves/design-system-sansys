@@ -204,6 +204,7 @@ interface DssBadgePreviewProps {
   floating?: boolean;
   multiLine?: boolean;
   brand?: string | null;
+  align?: "top" | "middle" | "bottom" | null;
 }
 
 function DssBadgePreview({
@@ -215,6 +216,7 @@ function DssBadgePreview({
   floating = false,
   multiLine = false,
   brand = null,
+  align = null,
 }: DssBadgePreviewProps) {
   // Obter cores do DSS
   const getColors = () => {
