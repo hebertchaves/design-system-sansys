@@ -426,7 +426,7 @@ function CardSection({ children, horizontal = false }: { children: React.ReactNo
   );
 }
 
-function CardActions({ children, align = "right" }: { children: React.ReactNode; align?: "left" | "center" | "right" | "between" | "around" }) {
+function CardActions({ children, align = "right", vertical = false }: { children: React.ReactNode; align?: "left" | "center" | "right" | "between" | "around"; vertical?: boolean }) {
   const justifyMap = {
     left: "flex-start",
     center: "center",
@@ -441,7 +441,9 @@ function CardActions({ children, align = "right" }: { children: React.ReactNode;
         padding: "12px 16px",
         borderTop: "1px solid rgba(0,0,0,0.08)",
         display: "flex",
-        justifyContent: justifyMap[align],
+        flexDirection: vertical ? "column" : "row",
+        alignItems: vertical ? "stretch" : "center",
+        justifyContent: vertical ? "flex-start" : justifyMap[align],
         gap: "8px",
       }}
     >
