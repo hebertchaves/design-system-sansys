@@ -264,7 +264,7 @@ function DssCardPreview({
         <h3 className="font-semibold text-base mb-1" style={{ color: textColor }}>Confirmação</h3>
         <p className="text-sm" style={{ color: subtextColor }}>Tem certeza que deseja continuar?</p>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Cancelar</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Confirmar</button>
       </CardActions>
@@ -280,7 +280,7 @@ function DssCardPreview({
           <p className="text-xs" style={{ color: subtextColor }}>Engenheira de Software</p>
         </div>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Mensagem</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Ver Perfil</button>
       </CardActions>
@@ -326,7 +326,7 @@ function DssCardPreview({
           ))}
         </div>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Cancelar</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Enviar</button>
       </CardActions>
@@ -377,7 +377,7 @@ function DssCardPreview({
           ))}
         </div>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Projetos</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Contatar</button>
       </CardActions>
