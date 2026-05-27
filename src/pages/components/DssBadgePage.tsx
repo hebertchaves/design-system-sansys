@@ -324,6 +324,17 @@ function DssBadgePreview({
     );
   }
 
+  // Quando align é definido, envolvemos em uma linha de texto para evidenciar o alinhamento vertical
+  if (align) {
+    return (
+      <span style={{ fontSize: "18px", color: "var(--jtech-text-body)", fontFamily: "system-ui, sans-serif" }}>
+        Texto base{" "}
+        <span style={getBadgeStyles()}>{label}</span>
+        {" "}continua aqui
+      </span>
+    );
+  }
+
   return <span style={getBadgeStyles()}>{label}</span>;
 }
 
