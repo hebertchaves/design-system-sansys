@@ -252,7 +252,7 @@ function DssCardPreview({
   // ---- Composition template renderers ----
 
   const renderBasic = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <h3 className="font-semibold text-base mb-1" style={{ color: textColor }}>Card Title</h3>
       <p className="text-sm" style={{ color: subtextColor }}>This is a basic card with simple content.</p>
     </CardSection>
@@ -260,7 +260,7 @@ function DssCardPreview({
 
   const renderActions = () => (
     <>
-      <CardSection>
+      <CardSection horizontal={horizontalSection}>
         <h3 className="font-semibold text-base mb-1" style={{ color: textColor }}>Confirmação</h3>
         <p className="text-sm" style={{ color: subtextColor }}>Tem certeza que deseja continuar?</p>
       </CardSection>
@@ -288,7 +288,7 @@ function DssCardPreview({
   );
 
   const renderStatus = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-semibold text-sm" style={{ color: textColor }}>Pedidos Pendentes</h3>
         <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold" style={{ backgroundColor: "#fabd14", color: "#1a1a1a" }}>12</span>
@@ -299,7 +299,7 @@ function DssCardPreview({
   );
 
   const renderTags = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <h3 className="font-semibold text-sm mb-2" style={{ color: textColor }}>Categorias do Projeto</h3>
       <div className="flex flex-wrap gap-1.5">
         {["Frontend", "Vue.js", "TypeScript", "DSS"].map((tag, i) => (
@@ -313,7 +313,7 @@ function DssCardPreview({
 
   const renderForm = () => (
     <>
-      <CardSection>
+      <CardSection horizontal={horizontalSection}>
         <h3 className="font-semibold text-sm mb-3" style={{ color: textColor }}>Contato</h3>
         <div className="space-y-2">
           {["Nome completo", "E-mail"].map((label, i) => (
@@ -334,7 +334,7 @@ function DssCardPreview({
   );
 
   const renderSettings = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <h3 className="font-semibold text-sm mb-3" style={{ color: textColor }}>Configurações</h3>
       <div className="space-y-3">
         {[
@@ -368,7 +368,7 @@ function DssCardPreview({
           <p className="text-xs" style={{ color: subtextColor }}>Equipe de Engenharia</p>
         </div>
       </CardSection>
-      <CardSection>
+      <CardSection horizontal={horizontalSection}>
         <div className="flex flex-wrap gap-1">
           {["Vue.js", "Node.js", "DevOps", "DSS"].map((tag, i) => (
             <span key={i} className="px-2 py-0.5 rounded-full text-[10px] font-medium" style={{ backgroundColor: i === 3 ? (accentBtnBg || "#1f86de") : (dark ? "rgba(255,255,255,0.1)" : "#f0f0f0"), color: i === 3 ? "#fff" : textColor, border: `1px solid ${dark ? "rgba(255,255,255,0.15)" : "#e0e0e0"}` }}>
