@@ -175,6 +175,8 @@ const compositionTemplates = [
 // PREVIEW DO CARD
 // ============================================================================
 
+type ActionsAlign = "left" | "center" | "right" | "between" | "around";
+
 interface DssCardPreviewProps {
   variant?: string;
   clickable?: boolean;
@@ -183,6 +185,9 @@ interface DssCardPreviewProps {
   brand?: string | null;
   semanticColor?: string | null;
   template?: string;
+  actionsAlign?: ActionsAlign;
+  verticalActions?: boolean;
+  horizontalSection?: boolean;
 }
 
 function DssCardPreview({
@@ -193,6 +198,9 @@ function DssCardPreview({
   brand = null,
   semanticColor = null,
   template = "basic",
+  actionsAlign = "right",
+  verticalActions = false,
+  horizontalSection = false,
 }: DssCardPreviewProps) {
   const [isHovered, setIsHovered] = useState(false);
 
