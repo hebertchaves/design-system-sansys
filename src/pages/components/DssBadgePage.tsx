@@ -483,6 +483,17 @@ export default function DssBadgePage() {
               values={booleanStates}
               onToggle={toggleBooleanState}
             />
+            <SizeSelector
+              label="Alinhamento Vertical (align)"
+              sizes={[
+                { name: "none", label: "None", isDefault: true },
+                { name: "top", label: "Top" },
+                { name: "middle", label: "Middle" },
+                { name: "bottom", label: "Bottom" },
+              ]}
+              selectedSize={selectedAlign}
+              onSelect={setSelectedAlign}
+            />
           </ControlGrid>
         }
         codePreview={generateCode()}
