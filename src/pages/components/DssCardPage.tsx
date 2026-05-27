@@ -729,6 +729,9 @@ export default function DssCardPage() {
             brand={selectedBrand}
             semanticColor={selectedColor}
             template={selectedTemplate}
+            actionsAlign={selectedActionsAlign as ActionsAlign}
+            verticalActions={booleanStates.verticalActions}
+            horizontalSection={booleanStates.horizontalSection}
           />
         }
         controls={
