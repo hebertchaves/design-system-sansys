@@ -1259,6 +1259,8 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-opacity-selected: var(--dss-opacity-15);
   --dss-opacity-overlay: var(--dss-opacity-50);
   --dss-opacity-backdrop: var(--dss-opacity-75);
+  --dss-overlay-dark-medium: rgba(0, 0, 0, 0.48); /* Parallax, modais — sobreposição escura média */
+  --dss-overlay-text-on-dark: rgba(255, 255, 255, 0.85); /* Texto secundário sobre overlay escuro */
   /* Opacidades para overlays de marca */
   --dss-opacity-brand-subtle: var(--dss-opacity-8);
   --dss-opacity-brand-light: var(--dss-opacity-12);
@@ -1829,6 +1831,12 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   /* Radius especial para badges (mantido por ser altamente específico) */
   --dss-radius-badge: var(--dss-radius-full);
   /* ⚠️ NOTA: Radius semânticos de componentes foram removidos (ver seção 3) */
+  /* ===========================================
+     CONSTANTES ESTRUTURAIS DE LAYOUT
+     =========================================== */
+  /* Altura real do DssToolbar = --dss-touch-target-md (44px) + 5px border/padding Quasar.
+     EX-Structural: 49px calculado — sem token de touch target com borda disponível. */
+  --dss-toolbar-height: 49px;
 }
 
 /* ==========================================================================

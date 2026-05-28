@@ -8,15 +8,17 @@
         <DssSpace />
         <nav class="brand-nav" aria-label="Seletor de brand">
           <span class="brand-nav__label">Brand</span>
-          <button
+          <DssChip
             v-for="b in brands"
             :key="b.value"
-            class="brand-pill"
-            :class="[`brand-pill--${b.value || 'none'}`, { 'is-active': activeBrand === b.value }]"
+            :label="b.label"
+            clickable
+            :selected="activeBrand === b.value"
+            :class="`brand-chip--${b.value || 'none'}`"
             @click="activeBrand = b.value"
-          >{{ b.label }}</button>
+          />
         </nav>
-        <DssBadge class="q-ml-sm">76</DssBadge>
+        <DssBadge style="margin-left: var(--dss-spacing-2)">76</DssBadge>
       </DssToolbar>
     </header>
 
@@ -149,8 +151,8 @@
             <div class="demo-cell">
               <div class="demo-box demo-box--gap">
                 <DssBadge>99+</DssBadge>
-                <DssBadge color="positive">Novo</DssBadge>
-                <DssBadge color="negative">!</DssBadge>
+                <DssBadge class="bg-positive">Novo</DssBadge>
+                <DssBadge class="bg-negative">!</DssBadge>
               </div>
               <code class="demo-label">DssBadge</code>
             </div>
@@ -456,7 +458,7 @@
               <div class="demo-box demo-box--stretch">
                 <DssBar>
                   <DssIcon name="info" />
-                  <span class="q-ml-sm">Conteúdo da barra de sistema — comunicado global</span>
+                  <span style="margin-left: var(--dss-spacing-2)">Conteúdo da barra de sistema — comunicado global</span>
                   <DssSpace />
                   <DssButton variant="flat" size="sm">Ação</DssButton>
                 </DssBar>
@@ -917,18 +919,18 @@
                   <DssButton variant="flat" icon="notifications" round aria-label="Notificações">
                     <DssBadge color="negative" floating>2</DssBadge>
                   </DssButton>
-                  <DssAvatar size="sm" class="q-ml-sm">JC</DssAvatar>
+                  <DssAvatar size="sm" style="margin-left: var(--dss-spacing-2)">JC</DssAvatar>
                 </DssToolbar>
               </DssHeader>
 
               <!-- ── DssDrawer ───────────────────────────────── -->
               <DssDrawer v-model="layoutDrawerOpen" :width="220" bordered side="left">
                 <DssToolbar class="layout-drawer-header">
-                  <DssIcon name="hexagon" class="q-mr-sm" />
+                  <DssIcon name="hexagon" style="margin-right: var(--dss-spacing-2)" />
                   <DssToolbarTitle class="layout-drawer-title">Sansys Hub</DssToolbarTitle>
                 </DssToolbar>
                 <DssSeparator />
-                <DssScrollArea style="height: calc(100% - 49px)">
+                <DssScrollArea style="height: calc(100% - var(--dss-toolbar-height))">
                   <DssList padding>
                     <DssItem clickable @click="layoutActivePage = 'dashboard'" :active="layoutActivePage === 'dashboard'">
                       <DssItemSection avatar><DssIcon name="dashboard" /></DssItemSection>
@@ -993,7 +995,7 @@
                     </DssCard>
                     <DssCard variant="outlined" class="layout-stat-card">
                       <DssCardSection class="layout-stat-content">
-                        <DssIcon name="water_drop" style="font-size: 28px" />
+                        <DssIcon name="water_drop" style="font-size: var(--dss-spacing-7)" />
                         <div>
                           <div class="layout-stat-value">1.247</div>
                           <div class="layout-stat-label">Leituras hoje</div>
@@ -1002,7 +1004,7 @@
                     </DssCard>
                     <DssCard variant="outlined" class="layout-stat-card">
                       <DssCardSection class="layout-stat-content">
-                        <DssIcon name="warning" style="font-size: 28px" />
+                        <DssIcon name="warning" style="font-size: var(--dss-spacing-7)" />
                         <div>
                           <div class="layout-stat-value">3</div>
                           <div class="layout-stat-label">Alertas ativos</div>
@@ -1032,20 +1034,20 @@
 
               <!-- ── DssPageSticky — ajuda fixo bottom-left ──── -->
               <DssPageSticky position="bottom-left" :offset="[12, 12]">
-                <DssButton round icon="help_outline" size="sm" color="primary" aria-label="Ajuda contextual da página">
+                <DssButton round icon="help_outline" size="sm" aria-label="Ajuda contextual da página">
                   <DssTooltip>Ajuda contextual</DssTooltip>
                 </DssButton>
               </DssPageSticky>
 
               <!-- ── DssPageScroller — back to top ───────────── -->
               <DssPageScroller position="bottom-right" :offset="[12, 12]" :scroll-offset="80">
-                <DssButton round icon="keyboard_arrow_up" size="sm" color="primary" aria-label="Voltar ao topo" />
+                <DssButton round icon="keyboard_arrow_up" size="sm" aria-label="Voltar ao topo" />
               </DssPageScroller>
 
               <!-- ── DssFooter ──────────────────────────────── -->
               <DssFooter bordered>
                 <DssToolbar>
-                  <DssIcon name="hexagon" style="font-size: 14px" class="q-mr-sm" />
+                  <DssIcon name="hexagon" style="font-size: var(--dss-font-size-sm); margin-right: var(--dss-spacing-2)" />
                   <span class="layout-footer-text">Design System Sansys</span>
                   <DssSpace />
                   <span class="layout-footer-text">v2.2 · © 2026 Sansys</span>
@@ -1302,7 +1304,7 @@
                   <template #default="{ currentBreakpoint, isMobile, isDesktop }">
                     <div class="ctx-responsive-row">
                       <span class="ctx-responsive-label">Breakpoint atual:</span>
-                      <DssChip :label="currentBreakpoint" color="primary" />
+                      <DssChip :label="currentBreakpoint" />
                     </div>
                     <div class="ctx-responsive-row">
                       <DssChip
@@ -1384,24 +1386,24 @@
                 <div><strong>DssAjaxBar</strong><span>skip-hijack=true; controle manual via defineExpose (start/stop); posição top nativa</span></div>
               </div>
               <div class="layout-report__item layout-report__item--warn">
-                <DssIcon name="error" class="report-icon report-icon--warn" />
-                <div><strong>DssDialog</strong><span>Componente não encontrado em components/base/ — não criado neste projeto</span></div>
+                <DssIcon name="info" class="report-icon report-icon--warn" />
+                <div><strong>DssDialog</strong><span>SELO v2.2 (Mai 2026) — requer trigger externo (v-model + DssButton); não exibível em estado estático</span></div>
               </div>
               <div class="layout-report__item layout-report__item--warn">
-                <DssIcon name="error" class="report-icon report-icon--warn" />
-                <div><strong>DssTimePicker</strong><span>Componente não encontrado em components/base/ — não criado neste projeto</span></div>
+                <DssIcon name="info" class="report-icon report-icon--warn" />
+                <div><strong>DssTimePicker</strong><span>SELO v2.2 (Mai 2026) — requer QDialog ou DssPopupProxy como wrapper; demonstração requer estado de abertura</span></div>
               </div>
               <div class="layout-report__item layout-report__item--warn">
-                <DssIcon name="error" class="report-icon report-icon--warn" />
-                <div><strong>DssDatePicker</strong><span>Componente não encontrado em components/base/ — não criado neste projeto</span></div>
+                <DssIcon name="info" class="report-icon report-icon--warn" />
+                <div><strong>DssDatePicker</strong><span>SELO v2.2 (Mai 2026) — requer QDialog ou DssPopupProxy como wrapper; demonstração requer estado de abertura</span></div>
               </div>
               <div class="layout-report__item layout-report__item--warn">
-                <DssIcon name="error" class="report-icon report-icon--warn" />
-                <div><strong>DssColorPicker</strong><span>Componente não encontrado em components/base/ — não criado neste projeto</span></div>
+                <DssIcon name="info" class="report-icon report-icon--warn" />
+                <div><strong>DssColorPicker</strong><span>SELO v2.2 (Mai 2026) — requer QDialog ou DssPopupProxy como wrapper; demonstração requer estado de abertura</span></div>
               </div>
               <div class="layout-report__item layout-report__item--warn">
-                <DssIcon name="error" class="report-icon report-icon--warn" />
-                <div><strong>DssRouteTab</strong><span>Requer vue-router instalado com rotas configuradas — não disponível no dss-example</span></div>
+                <DssIcon name="info" class="report-icon report-icon--warn" />
+                <div><strong>DssRouteTab</strong><span>SELO v2.2 (Abr 2026) — requer vue-router com rotas configuradas; não disponível no dss-example standalone</span></div>
               </div>
             </div>
           </div>
@@ -1729,29 +1731,11 @@ function stopCtxAjaxBar() {
   margin-right: var(--dss-spacing-1);
 }
 
-.brand-pill {
-  padding: var(--dss-spacing-1) var(--dss-spacing-3);
-  font-size: var(--dss-font-size-xs);
-  font-weight: var(--dss-font-weight-medium);
-  font-family: var(--dss-font-family-sans);
-  border: 1px solid var(--dss-gray-300);
-  border-radius: var(--dss-radius-full);
-  background: transparent;
-  color: var(--dss-text-subtle);
-  cursor: pointer;
-  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
-  line-height: 1.4;
-  white-space: nowrap;
-}
-
-.brand-pill:hover {
-  background: var(--dss-surface-muted);
-}
-
-.brand-pill--hub.is-active    { background: var(--dss-hub-600);   border-color: var(--dss-hub-600);   color: white; }
-.brand-pill--water.is-active  { background: var(--dss-water-500); border-color: var(--dss-water-500); color: white; }
-.brand-pill--waste.is-active  { background: var(--dss-waste-600); border-color: var(--dss-waste-600); color: white; }
-.brand-pill--none.is-active   { background: var(--dss-gray-700);  border-color: var(--dss-gray-700);  color: white; }
+/* brand-chip: DssChip como seletor de brand — sobrescreve cor de seleção por brand */
+.brand-chip--hub.dss-chip--selected    { --q-color-primary: var(--dss-hub-600); }
+.brand-chip--water.dss-chip--selected  { --q-color-primary: var(--dss-water-500); }
+.brand-chip--waste.dss-chip--selected  { --q-color-primary: var(--dss-waste-600); }
+.brand-chip--none.dss-chip--selected   { --q-color-primary: var(--dss-gray-700); }
 
 /* ── Conteúdo principal ──────────────────────────────────────────────────── */
 .preview-main {
@@ -2171,14 +2155,14 @@ function stopCtxAjaxBar() {
   border-radius: var(--dss-radius-sm);
   font-size: var(--dss-font-size-xs);
   line-height: var(--dss-line-height-normal);
-  border-left: 3px solid transparent;
+  border-left: var(--dss-border-width-thick) solid transparent;
 }
 
 .layout-report__item strong {
   display: block;
   font-weight: var(--dss-font-weight-semibold);
   color: var(--dss-text-body);
-  margin-bottom: 2px;
+  margin-bottom: var(--dss-spacing-0_5);
 }
 
 .layout-report__item span {
@@ -2198,13 +2182,13 @@ function stopCtxAjaxBar() {
 .report-icon--ok {
   color: var(--dss-feedback-success);
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: var(--dss-spacing-px);
 }
 
 .report-icon--warn {
   color: var(--dss-feedback-warning);
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: var(--dss-spacing-px);
 }
 
 /* ── Contextuais — espaço acima do relatório ──────────────────────────────── */
@@ -2232,7 +2216,7 @@ function stopCtxAjaxBar() {
 }
 .ctx-vs-icon {
   color: var(--dss-text-subtle);
-  font-size: 16px !important;
+  font-size: var(--dss-icon-size-xs) !important;
   flex-shrink: 0;
 }
 .ctx-vs-text {
@@ -2276,7 +2260,7 @@ function stopCtxAjaxBar() {
   justify-content: center;
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.48);
+  background: var(--dss-overlay-dark-medium);
   gap: var(--dss-spacing-1);
   padding: var(--dss-spacing-4);
 }
@@ -2288,7 +2272,7 @@ function stopCtxAjaxBar() {
 }
 .ctx-parallax-sub {
   font-size: var(--dss-font-size-sm);
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--dss-overlay-text-on-dark);
   text-align: center;
 }
 
@@ -2322,7 +2306,7 @@ function stopCtxAjaxBar() {
   color: var(--dss-text-subtle);
 }
 .ctx-pull-icon {
-  font-size: 16px !important;
+  font-size: var(--dss-icon-size-xs) !important;
   color: var(--dss-text-subtle);
   flex-shrink: 0;
 }

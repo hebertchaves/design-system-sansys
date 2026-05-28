@@ -189,4 +189,11 @@
   --dss-radius-badge: var(--dss-radius-full);
 
   /* ⚠️ NOTA: Radius semânticos de componentes foram removidos (ver seção 3) */
+
+  /* ===========================================
+     CONSTANTES ESTRUTURAIS DE LAYOUT
+     =========================================== */
+  /* Altura real do DssToolbar = --dss-touch-target-md (44px) + 5px border/padding Quasar.
+     EX-Structural: 49px calculado — sem token de touch target com borda disponível. */
+  --dss-toolbar-height: 49px;
 }

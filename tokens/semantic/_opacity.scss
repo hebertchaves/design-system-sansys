@@ -34,7 +34,9 @@
   --dss-opacity-selected: var(--dss-opacity-15);
   --dss-opacity-overlay: var(--dss-opacity-50);
   --dss-opacity-backdrop: var(--dss-opacity-75);
-  
+  --dss-overlay-dark-medium: rgba(0, 0, 0, 0.48);        /* Parallax, modais — sobreposição escura média */
+  --dss-overlay-text-on-dark: rgba(255, 255, 255, 0.85); /* Texto secundário sobre overlay escuro */
+
   /* Opacidades para overlays de marca */
   --dss-opacity-brand-subtle: var(--dss-opacity-8);
   --dss-opacity-brand-light: var(--dss-opacity-12);
