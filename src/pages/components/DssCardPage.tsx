@@ -175,6 +175,8 @@ const compositionTemplates = [
 // PREVIEW DO CARD
 // ============================================================================
 
+type ActionsAlign = "left" | "center" | "right" | "between" | "around";
+
 interface DssCardPreviewProps {
   variant?: string;
   clickable?: boolean;
@@ -183,6 +185,9 @@ interface DssCardPreviewProps {
   brand?: string | null;
   semanticColor?: string | null;
   template?: string;
+  actionsAlign?: ActionsAlign;
+  verticalActions?: boolean;
+  horizontalSection?: boolean;
 }
 
 function DssCardPreview({
@@ -193,6 +198,9 @@ function DssCardPreview({
   brand = null,
   semanticColor = null,
   template = "basic",
+  actionsAlign = "right",
+  verticalActions = false,
+  horizontalSection = false,
 }: DssCardPreviewProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -244,7 +252,7 @@ function DssCardPreview({
   // ---- Composition template renderers ----
 
   const renderBasic = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <h3 className="font-semibold text-base mb-1" style={{ color: textColor }}>Card Title</h3>
       <p className="text-sm" style={{ color: subtextColor }}>This is a basic card with simple content.</p>
     </CardSection>
@@ -252,11 +260,11 @@ function DssCardPreview({
 
   const renderActions = () => (
     <>
-      <CardSection>
+      <CardSection horizontal={horizontalSection}>
         <h3 className="font-semibold text-base mb-1" style={{ color: textColor }}>Confirmação</h3>
         <p className="text-sm" style={{ color: subtextColor }}>Tem certeza que deseja continuar?</p>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Cancelar</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Confirmar</button>
       </CardActions>
@@ -272,7 +280,7 @@ function DssCardPreview({
           <p className="text-xs" style={{ color: subtextColor }}>Engenheira de Software</p>
         </div>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Mensagem</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Ver Perfil</button>
       </CardActions>
@@ -280,7 +288,7 @@ function DssCardPreview({
   );
 
   const renderStatus = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-semibold text-sm" style={{ color: textColor }}>Pedidos Pendentes</h3>
         <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold" style={{ backgroundColor: "#fabd14", color: "#1a1a1a" }}>12</span>
@@ -291,7 +299,7 @@ function DssCardPreview({
   );
 
   const renderTags = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <h3 className="font-semibold text-sm mb-2" style={{ color: textColor }}>Categorias do Projeto</h3>
       <div className="flex flex-wrap gap-1.5">
         {["Frontend", "Vue.js", "TypeScript", "DSS"].map((tag, i) => (
@@ -305,7 +313,7 @@ function DssCardPreview({
 
   const renderForm = () => (
     <>
-      <CardSection>
+      <CardSection horizontal={horizontalSection}>
         <h3 className="font-semibold text-sm mb-3" style={{ color: textColor }}>Contato</h3>
         <div className="space-y-2">
           {["Nome completo", "E-mail"].map((label, i) => (
@@ -318,7 +326,7 @@ function DssCardPreview({
           ))}
         </div>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Cancelar</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Enviar</button>
       </CardActions>
@@ -326,7 +334,7 @@ function DssCardPreview({
   );
 
   const renderSettings = () => (
-    <CardSection>
+    <CardSection horizontal={horizontalSection}>
       <h3 className="font-semibold text-sm mb-3" style={{ color: textColor }}>Configurações</h3>
       <div className="space-y-3">
         {[
@@ -360,7 +368,7 @@ function DssCardPreview({
           <p className="text-xs" style={{ color: subtextColor }}>Equipe de Engenharia</p>
         </div>
       </CardSection>
-      <CardSection>
+      <CardSection horizontal={horizontalSection}>
         <div className="flex flex-wrap gap-1">
           {["Vue.js", "Node.js", "DevOps", "DSS"].map((tag, i) => (
             <span key={i} className="px-2 py-0.5 rounded-full text-[10px] font-medium" style={{ backgroundColor: i === 3 ? (accentBtnBg || "#1f86de") : (dark ? "rgba(255,255,255,0.1)" : "#f0f0f0"), color: i === 3 ? "#fff" : textColor, border: `1px solid ${dark ? "rgba(255,255,255,0.15)" : "#e0e0e0"}` }}>
@@ -369,7 +377,7 @@ function DssCardPreview({
           ))}
         </div>
       </CardSection>
-      <CardActions align="right">
+      <CardActions align={actionsAlign} vertical={verticalActions}>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: "transparent", color: dark ? "#86c0f3" : "#1f86de" }}>Projetos</button>
         <button className="px-3 py-1.5 text-xs rounded transition-all" style={{ backgroundColor: accentBtnBg || "#1f86de", color: "#ffffff" }}>Contatar</button>
       </CardActions>
@@ -418,7 +426,7 @@ function CardSection({ children, horizontal = false }: { children: React.ReactNo
   );
 }
 
-function CardActions({ children, align = "right" }: { children: React.ReactNode; align?: "left" | "center" | "right" | "between" | "around" }) {
+function CardActions({ children, align = "right", vertical = false }: { children: React.ReactNode; align?: "left" | "center" | "right" | "between" | "around"; vertical?: boolean }) {
   const justifyMap = {
     left: "flex-start",
     center: "center",
@@ -433,7 +441,9 @@ function CardActions({ children, align = "right" }: { children: React.ReactNode;
         padding: "12px 16px",
         borderTop: "1px solid rgba(0,0,0,0.08)",
         display: "flex",
-        justifyContent: justifyMap[align],
+        flexDirection: vertical ? "column" : "row",
+        alignItems: vertical ? "stretch" : "center",
+        justifyContent: vertical ? "flex-start" : justifyMap[align],
         gap: "8px",
       }}
     >
@@ -719,6 +729,9 @@ export default function DssCardPage() {
             brand={selectedBrand}
             semanticColor={selectedColor}
             template={selectedTemplate}
+            actionsAlign={selectedActionsAlign as ActionsAlign}
+            verticalActions={booleanStates.verticalActions}
+            horizontalSection={booleanStates.horizontalSection}
           />
         }
         controls={
