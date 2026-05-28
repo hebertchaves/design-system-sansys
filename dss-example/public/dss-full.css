@@ -7249,9 +7249,7 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   min-width: var(--dss-spacing-16); /* 64px */
   /* Borders */
   border: none;
-  /* DSS Visual Standard: radius-full para botões (pill shape moderno — Material 3, Salesforce).
-     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
-  border-radius: var(--dss-radius-full);
+  border-radius: var(--dss-radius-sm);
   /* Interaction */
   cursor: pointer;
   user-select: none;

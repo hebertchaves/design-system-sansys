@@ -27,7 +27,7 @@ export function GridOverlay({
   gutter = 24,
   margin = 48,
   padding = 24,
-  gutterY = 24,
+  gutterY: _gutterY = 24,
   marginY = 48,
   paddingY = 24,
   rowHeight: _rowHeight = 80,

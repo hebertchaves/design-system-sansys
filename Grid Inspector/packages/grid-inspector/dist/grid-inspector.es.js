@@ -91,52 +91,38 @@ const DEFAULT_GRID_CONFIG = {
   gutterY: 24,
   marginX: 48,
   marginY: 48,
+  paddingX: 24,
+  paddingY: 24,
   showColumns: true,
   showRows: false,
   showMargins: true,
   showBaseline: false
 };
 const NestedGridContext = createContext(null);
-function NestedGridProvider({ children }) {
-  const [selectedElement, setSelectedElement] = useState(null);
-  const [isSelectionMode, setIsSelectionMode] = useState(false);
-  const [elementGridConfigs, setElementGridConfigs] = useState(/* @__PURE__ */ new Map());
-  console.log("[NestedGrid] isSelectionMode:", isSelectionMode, "selectedElement:", selectedElement == null ? void 0 : selectedElement.id);
-  const selectedElementInfo = selectedElement ? {
-    id: selectedElement.id || "no-id",
-    className: selectedElement.className || "no-class",
-    tagName: selectedElement.tagName.toLowerCase()
-  } : null;
-  const selectedGridConfig = (selectedElement == null ? void 0 : selectedElement.id) ? elementGridConfigs.get(selectedElement.id) || DEFAULT_GRID_CONFIG : DEFAULT_GRID_CONFIG;
-  const updateSelectedGridConfig = (updates) => {
-    if (!(selectedElement == null ? void 0 : selectedElement.id)) {
-      console.warn("[NestedGrid] No selected element to update");
-      return;
-    }
-    const currentConfig = elementGridConfigs.get(selectedElement.id) || DEFAULT_GRID_CONFIG;
-    const newConfig = { ...currentConfig, ...updates };
-    console.log("[NestedGrid] Updating config for", selectedElement.id, "from:", currentConfig, "to:", newConfig);
-    const newMap = new Map(elementGridConfigs);
-    newMap.set(selectedElement.id, newConfig);
-    setElementGridConfigs(newMap);
-    applyGridConfigToElement(selectedElement, newConfig);
-  };
-  return /* @__PURE__ */ jsx(
-    NestedGridContext.Provider,
-    {
-      value: {
-        selectedElement,
-        setSelectedElement,
-        isSelectionMode,
-        setIsSelectionMode,
-        selectedElementInfo,
-        selectedGridConfig,
-        updateSelectedGridConfig,
-        elementGridConfigs
-      },
-      children
-    }
-  );
+const ELEMENT_GRID_VARS = [
+  "--element-grid-columns",
+  "--element-grid-gutter-x",
+  "--element-grid-gutter-y",
+  "--element-grid-margin-x",
+  "--element-grid-margin-y",
+  "--element-grid-show-columns",
+  "--element-grid-show-rows",
+  "--element-grid-show-margins",
+  "--element-grid-show-baseline",
+  "--dss-layout-columns",
+  "--dss-layout-gap-x",
+  "--dss-layout-gap-y",
+  "--dss-layout-margin-x",
+  "--dss-layout-margin-y",
+  "--dss-layout-padding-x",
+  "--dss-layout-padding-y"
+];
+function getElementKey(element) {
+  if (element.id) return `id:${element.id}`;
+  if (!element.dataset.gridInspectorKey) {
+    element.dataset.gridInspectorKey = `gi-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+  }
+  return `data:${element.dataset.gridInspectorKey}`;
 }
 function applyGridConfigToElement(element, config) {
   element.style.setProperty("--element-grid-columns", String(config.columns));
@@ -148,6 +134,69 @@ function applyGridConfigToElement(element, config) {
   element.style.setProperty("--element-grid-show-rows", config.showRows ? "1" : "0");
   element.style.setProperty("--element-grid-show-margins", config.showMargins ? "1" : "0");
   element.style.setProperty("--element-grid-show-baseline", config.showBaseline ? "1" : "0");
+  element.style.setProperty("--dss-layout-columns", String(config.columns));
+  element.style.setProperty("--dss-layout-gap-x", `${config.gutterX}px`);
+  element.style.setProperty("--dss-layout-gap-y", `${config.gutterY}px`);
+  element.style.setProperty("--dss-layout-margin-x", `${config.marginX}px`);
+  element.style.setProperty("--dss-layout-margin-y", `${config.marginY}px`);
+  element.style.setProperty("--dss-layout-padding-x", `${config.paddingX}px`);
+  element.style.setProperty("--dss-layout-padding-y", `${config.paddingY}px`);
+}
+function removeElementGridVars(element) {
+  ELEMENT_GRID_VARS.forEach((v) => element.style.removeProperty(v));
+  delete element.dataset.gridInspectorKey;
+}
+function NestedGridProvider({ children }) {
+  const [selectedElement, setSelectedElementState] = useState(null);
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [elementGridConfigs, setElementGridConfigs] = useState(/* @__PURE__ */ new Map());
+  const setSelectedElement = (element) => {
+    setSelectedElementState(element);
+  };
+  const selectedElementKey = selectedElement ? getElementKey(selectedElement) : null;
+  const selectedElementInfo = selectedElement ? {
+    id: selectedElement.id || selectedElement.dataset.gridInspectorKey || "no-id",
+    className: typeof selectedElement.className === "string" ? selectedElement.className : "no-class",
+    tagName: selectedElement.tagName.toLowerCase()
+  } : null;
+  const selectedGridConfig = selectedElementKey ? elementGridConfigs.get(selectedElementKey) || DEFAULT_GRID_CONFIG : DEFAULT_GRID_CONFIG;
+  const updateSelectedGridConfig = (updates) => {
+    if (!selectedElement) {
+      console.warn("[NestedGrid] No selected element to update");
+      return;
+    }
+    const key = getElementKey(selectedElement);
+    const currentConfig = elementGridConfigs.get(key) || DEFAULT_GRID_CONFIG;
+    const newConfig = { ...currentConfig, ...updates };
+    const newMap = new Map(elementGridConfigs);
+    newMap.set(key, newConfig);
+    setElementGridConfigs(newMap);
+    applyGridConfigToElement(selectedElement, newConfig);
+  };
+  const clearSelectedElement = () => {
+    if (selectedElement) {
+      removeElementGridVars(selectedElement);
+    }
+    setSelectedElementState(null);
+  };
+  return /* @__PURE__ */ jsx(
+    NestedGridContext.Provider,
+    {
+      value: {
+        selectedElement,
+        setSelectedElement,
+        isSelectionMode,
+        setIsSelectionMode,
+        selectedElementInfo,
+        selectedElementKey,
+        selectedGridConfig,
+        updateSelectedGridConfig,
+        elementGridConfigs,
+        clearSelectedElement
+      },
+      children
+    }
+  );
 }
 function useNestedGrid() {
   const context = useContext(NestedGridContext);
@@ -3282,6 +3331,7 @@ function TooltipContent({
   );
 }
 function FloatingGridInspector() {
+  var _a;
   const {
     overlay,
     setOverlay,
@@ -3303,11 +3353,15 @@ function FloatingGridInspector() {
     isSelectionMode,
     setIsSelectionMode,
     setSelectedElement,
+    selectedElement,
     selectedElementInfo,
+    selectedElementKey,
     selectedGridConfig,
-    updateSelectedGridConfig
+    updateSelectedGridConfig,
+    elementGridConfigs,
+    clearSelectedElement
   } = useNestedGrid();
-  const isEditingElement = isSelectionMode && selectedElementInfo !== null;
+  const isEditingElement = selectedElementInfo !== null;
   const gridColumns = isEditingElement ? selectedGridConfig.columns : overlay.columns;
   const gridGutter = isEditingElement ? selectedGridConfig.gutterX : overlay.gutter.x;
   const gridMargin = isEditingElement ? selectedGridConfig.marginX : overlay.margin.x;
@@ -3315,12 +3369,12 @@ function FloatingGridInspector() {
   const gridGutterY = isEditingElement ? selectedGridConfig.gutterY : overlay.gutter.y;
   const gridMarginY = isEditingElement ? selectedGridConfig.marginY : overlay.margin.y;
   const gridPaddingY = overlay.padding.y;
-  const componentGutter = component.gutter.x;
-  const componentMargin = component.margin.x;
-  const componentPadding = component.padding.x;
-  const componentGutterY = component.gutter.y;
-  const componentMarginY = component.margin.y;
-  const componentPaddingY = component.padding.y;
+  const componentGutter = isEditingElement ? selectedGridConfig.gutterX : component.gutter.x;
+  const componentMargin = isEditingElement ? selectedGridConfig.marginX : component.margin.x;
+  const componentPadding = isEditingElement ? selectedGridConfig.paddingX : component.padding.x;
+  const componentGutterY = isEditingElement ? selectedGridConfig.gutterY : component.gutter.y;
+  const componentMarginY = isEditingElement ? selectedGridConfig.marginY : component.margin.y;
+  const componentPaddingY = isEditingElement ? selectedGridConfig.paddingY : component.padding.y;
   const setGridColumns = (val) => {
     console.log("[FloatingInspector] setGridColumns:", val, "isEditingElement:", isEditingElement);
     if (isEditingElement) {
@@ -3345,7 +3399,13 @@ function FloatingGridInspector() {
       setOverlay({ margin: { ...overlay.margin, x: val } });
     }
   };
-  const setGridPadding = (val) => setOverlay({ padding: { ...overlay.padding, x: val } });
+  const setGridPadding = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ paddingX: val });
+    } else {
+      setOverlay({ padding: { ...overlay.padding, x: val } });
+    }
+  };
   const setGridGutterY = (val) => {
     if (isEditingElement) {
       updateSelectedGridConfig({ gutterY: val });
@@ -3360,13 +3420,55 @@ function FloatingGridInspector() {
       setOverlay({ margin: { ...overlay.margin, y: val } });
     }
   };
-  const setGridPaddingY = (val) => setOverlay({ padding: { ...overlay.padding, y: val } });
-  const setComponentGutter = (val) => setComponent({ gutter: { ...component.gutter, x: val } });
-  const setComponentMargin = (val) => setComponent({ margin: { ...component.margin, x: val } });
-  const setComponentPadding = (val) => setComponent({ padding: { ...component.padding, x: val } });
-  const setComponentGutterY = (val) => setComponent({ gutter: { ...component.gutter, y: val } });
-  const setComponentMarginY = (val) => setComponent({ margin: { ...component.margin, y: val } });
-  const setComponentPaddingY = (val) => setComponent({ padding: { ...component.padding, y: val } });
+  const setGridPaddingY = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ paddingY: val });
+    } else {
+      setOverlay({ padding: { ...overlay.padding, y: val } });
+    }
+  };
+  const setComponentGutter = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ gutterX: val });
+    } else {
+      setComponent({ gutter: { ...component.gutter, x: val } });
+    }
+  };
+  const setComponentMargin = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ marginX: val });
+    } else {
+      setComponent({ margin: { ...component.margin, x: val } });
+    }
+  };
+  const setComponentPadding = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ paddingX: val });
+    } else {
+      setComponent({ padding: { ...component.padding, x: val } });
+    }
+  };
+  const setComponentGutterY = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ gutterY: val });
+    } else {
+      setComponent({ gutter: { ...component.gutter, y: val } });
+    }
+  };
+  const setComponentMarginY = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ marginY: val });
+    } else {
+      setComponent({ margin: { ...component.margin, y: val } });
+    }
+  };
+  const setComponentPaddingY = (val) => {
+    if (isEditingElement) {
+      updateSelectedGridConfig({ paddingY: val });
+    } else {
+      setComponent({ padding: { ...component.padding, y: val } });
+    }
+  };
   const [panelSize, setPanelSize] = useState("expanded");
   const [isVisible, setIsVisible] = useState(true);
   const [mcpConnected, setMcpConnected] = useState(false);
@@ -3418,6 +3520,19 @@ function FloatingGridInspector() {
     a.click();
     URL.revokeObjectURL(url);
   }, [overlay, component, violations, mcpConnected]);
+  useEffect(() => {
+    if (selectedElement && selectedElementKey && !elementGridConfigs.has(selectedElementKey)) {
+      updateSelectedGridConfig({
+        columns: overlay.columns,
+        gutterX: component.gutter.x,
+        gutterY: component.gutter.y,
+        marginX: component.margin.x,
+        marginY: component.margin.y,
+        paddingX: component.padding.x,
+        paddingY: component.padding.y
+      });
+    }
+  }, [selectedElementKey]);
   const [overlayOpacity, setOverlayOpacity] = useState(60);
   const [showColumns, setShowColumns] = useState(true);
   const [showPaddingZonesX, setShowPaddingZonesX] = useState(true);
@@ -3439,10 +3554,52 @@ function FloatingGridInspector() {
       document.head.appendChild(s);
     }
     return () => {
-      var _a;
-      (_a = document.getElementById(id)) == null ? void 0 : _a.remove();
+      var _a2;
+      (_a2 = document.getElementById(id)) == null ? void 0 : _a2.remove();
     };
   }, []);
+  useEffect(() => {
+    var _a2;
+    const styleId = "grid-inspector-selection-hover";
+    if (!isSelectionMode) {
+      (_a2 = document.getElementById(styleId)) == null ? void 0 : _a2.remove();
+      document.body.style.cursor = "";
+      return;
+    }
+    document.body.style.cursor = "crosshair";
+    const s = document.createElement("style");
+    s.id = styleId;
+    s.textContent = `
+      [data-grid-debug]:not(#grid-inspector-root *):hover,
+      [id^="preview-"]:not(#grid-inspector-root *):hover {
+        outline: 2px dashed rgba(99,102,241,0.75) !important;
+        outline-offset: 3px !important;
+        cursor: crosshair !important;
+      }
+    `;
+    document.head.appendChild(s);
+    return () => {
+      var _a3;
+      (_a3 = document.getElementById(styleId)) == null ? void 0 : _a3.remove();
+      document.body.style.cursor = "";
+    };
+  }, [isSelectionMode]);
+  useEffect(() => {
+    var _a2;
+    const styleId = "grid-inspector-selection-outline";
+    (_a2 = document.getElementById(styleId)) == null ? void 0 : _a2.remove();
+    if (!selectedElement) return;
+    const selector = selectedElement.id ? `#${CSS.escape(selectedElement.id)}` : selectedElement.dataset.gridInspectorKey ? `[data-grid-inspector-key="${selectedElement.dataset.gridInspectorKey}"]` : null;
+    if (!selector) return;
+    const s = document.createElement("style");
+    s.id = styleId;
+    s.textContent = `${selector}{outline:2px solid rgba(16,185,129,0.85)!important;outline-offset:3px!important;}`;
+    document.head.appendChild(s);
+    return () => {
+      var _a3;
+      (_a3 = document.getElementById(styleId)) == null ? void 0 : _a3.remove();
+    };
+  }, [selectedElement]);
   useEffect(() => {
     if (!isSelectionMode) return;
     const handleClick = (e) => {
@@ -3450,8 +3607,16 @@ function FloatingGridInspector() {
       if (root && root.contains(e.target)) return;
       e.preventDefault();
       e.stopPropagation();
-      const el = e.target;
-      setSelectedElement(el);
+      let el = e.target;
+      let target = el;
+      while (el && el.tagName !== "BODY" && el.tagName !== "HTML") {
+        if (el.id && el.id.length > 0 || el.hasAttribute("data-grid-debug") || el.hasAttribute("data-grid-rows")) {
+          target = el;
+          break;
+        }
+        el = el.parentElement;
+      }
+      setSelectedElement(target);
       setIsSelectionMode(false);
     };
     document.addEventListener("click", handleClick, true);
@@ -3525,14 +3690,16 @@ function FloatingGridInspector() {
     root.style.setProperty("--grid-baseline", baselineGrid);
     root.style.setProperty("--grid-show-baseline", showBaselineGrid ? "1" : "0");
     const densityMult = { comfortable: 1, compact: 0.75, dense: 0.5 }[densityMode];
-    root.style.setProperty("--dss-layout-gap-x", `${Math.round(componentGutter * densityMult)}px`);
-    root.style.setProperty("--dss-layout-gap-y", `${Math.round(componentGutterY * densityMult)}px`);
-    root.style.setProperty("--dss-layout-margin-x", `${Math.round(componentMargin * densityMult)}px`);
-    root.style.setProperty("--dss-layout-margin-y", `${Math.round(componentMarginY * densityMult)}px`);
-    root.style.setProperty("--dss-layout-padding-x", `${Math.round(componentPadding * densityMult)}px`);
-    root.style.setProperty("--dss-layout-padding-y", `${Math.round(componentPaddingY * densityMult)}px`);
-    root.style.setProperty("--dss-layout-columns", overlay.columns.toString());
-    root.style.setProperty("--dss-layout-max-width", containerType === "fluid" ? "100%" : breakpointWidths[breakpoint]);
+    if (!isEditingElement) {
+      root.style.setProperty("--dss-layout-gap-x", `${Math.round(component.gutter.x * densityMult)}px`);
+      root.style.setProperty("--dss-layout-gap-y", `${Math.round(component.gutter.y * densityMult)}px`);
+      root.style.setProperty("--dss-layout-margin-x", `${Math.round(component.margin.x * densityMult)}px`);
+      root.style.setProperty("--dss-layout-margin-y", `${Math.round(component.margin.y * densityMult)}px`);
+      root.style.setProperty("--dss-layout-padding-x", `${Math.round(component.padding.x * densityMult)}px`);
+      root.style.setProperty("--dss-layout-padding-y", `${Math.round(component.padding.y * densityMult)}px`);
+      root.style.setProperty("--dss-layout-columns", overlay.columns.toString());
+      root.style.setProperty("--dss-layout-max-width", containerType === "fluid" ? "100%" : breakpointWidths[breakpoint]);
+    }
   }
   if (!isVisible) {
     return /* @__PURE__ */ jsx(
@@ -3742,255 +3909,279 @@ function FloatingGridInspector() {
               }
             )
           ] }),
-          /* @__PURE__ */ jsx(TabsContent, { value: "layout", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: /* @__PURE__ */ jsxs(Accordion, { type: "multiple", defaultValue: ["spacing-x", "spacing-y"], className: "w-full", children: [
-            /* @__PURE__ */ jsxs(AccordionItem, { value: "grid-structure", className: "border-b border-slate-100", children: [
-              /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-emerald-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Grid3x3, { size: 14, className: "text-emerald-600" }),
-                /* @__PURE__ */ jsx("span", { children: "Grid Structure" })
-              ] }) }),
-              /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx(Label, { className: "text-xs font-semibold text-slate-700 mb-2 block", children: "Columns" }),
-                  /* @__PURE__ */ jsx("div", { className: "grid grid-cols-6 gap-1.5", children: columnOptions.map((count) => /* @__PURE__ */ jsx(
-                    "button",
-                    {
-                      onClick: () => setGridColumns(count),
-                      className: `py-2 px-2 text-xs font-bold rounded-lg transition-all border-2 ${gridColumns === count ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-200/50" : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:bg-emerald-50"}`,
-                      children: count
-                    },
-                    count
-                  )) })
+          /* @__PURE__ */ jsxs(TabsContent, { value: "layout", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: [
+            isEditingElement && /* @__PURE__ */ jsxs("div", { className: "mx-4 mt-4 mb-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-lg", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-1", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-2 h-2 bg-green-500 rounded-full animate-pulse" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-xs font-bold text-green-900", children: "ESCOPO DO ELEMENTO" })
                 ] }),
-                panelSize === "expanded" && /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex-[0.7] space-y-1.5", children: [
-                    /* @__PURE__ */ jsx(Label, { htmlFor: "container-type", className: "text-xs font-semibold text-slate-700", children: "Container Type" }),
-                    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-1.5", children: ["fixed", "fluid"].map((ct) => /* @__PURE__ */ jsx(
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: () => clearSelectedElement(),
+                    className: "text-[10px] font-bold text-green-700 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded border border-green-300 hover:border-red-300 transition-all",
+                    title: "Voltar ao escopo global",
+                    children: "✕ Sair"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("p", { className: "text-xs text-green-800", children: [
+                /* @__PURE__ */ jsxs("strong", { children: [
+                  "<",
+                  selectedElementInfo == null ? void 0 : selectedElementInfo.tagName,
+                  ">"
+                ] }),
+                " #",
+                selectedElementInfo == null ? void 0 : selectedElementInfo.id
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-green-600 mt-1", children: "Sliders afetam apenas este elemento e seus filhos" })
+            ] }),
+            /* @__PURE__ */ jsxs(Accordion, { type: "multiple", defaultValue: ["spacing-x", "spacing-y"], className: "w-full", children: [
+              /* @__PURE__ */ jsxs(AccordionItem, { value: "grid-structure", className: "border-b border-slate-100", children: [
+                /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-emerald-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Grid3x3, { size: 14, className: "text-emerald-600" }),
+                  /* @__PURE__ */ jsx("span", { children: "Grid Structure" })
+                ] }) }),
+                /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx(Label, { className: "text-xs font-semibold text-slate-700 mb-2 block", children: "Columns" }),
+                    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-6 gap-1.5", children: columnOptions.map((count) => /* @__PURE__ */ jsx(
                       "button",
                       {
-                        onClick: () => setContainerType(ct),
-                        className: `py-1.5 px-2 text-xs font-bold rounded-lg transition-all border-2 ${containerType === ct ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-emerald-600 shadow-md" : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:bg-emerald-50"}`,
-                        children: ct === "fixed" ? "Fixed" : "Fluid"
+                        onClick: () => setGridColumns(count),
+                        className: `py-2 px-2 text-xs font-bold rounded-lg transition-all border-2 ${gridColumns === count ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-200/50" : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:bg-emerald-50"}`,
+                        children: count
                       },
-                      ct
+                      count
                     )) })
                   ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "flex-[0.3] space-y-1.5", children: [
-                    /* @__PURE__ */ jsxs(Label, { htmlFor: "auto-column", className: "text-xs font-semibold text-slate-700 flex items-center gap-1", children: [
-                      "Auto Column",
-                      /* @__PURE__ */ jsxs(Tooltip, { children: [
-                        /* @__PURE__ */ jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsx("button", { type: "button", className: "p-0.5 hover:bg-slate-200 rounded transition-colors", children: /* @__PURE__ */ jsx(Info, { size: 12, className: "text-slate-500" }) }) }),
-                        /* @__PURE__ */ jsxs(
-                          TooltipContent,
-                          {
-                            side: "right",
-                            className: `max-w-[280px] p-3 rounded-lg border transition-all ${autoColumnWidth ? "bg-emerald-50 border-emerald-200 text-emerald-900" : "bg-slate-800 border-slate-700 text-white"}`,
-                            sideOffset: 8,
-                            children: [
-                              /* @__PURE__ */ jsx("p", { className: "text-xs font-bold mb-1.5", children: autoColumnWidth ? "✓ Columns Flexíveis (1fr)" : "✗ Columns Fixas" }),
-                              /* @__PURE__ */ jsx("p", { className: "text-xs opacity-90", children: autoColumnWidth ? "Colunas se adaptam ao espaço disponível (grid-template-columns: repeat(N, 1fr))" : `Colunas têm largura fixa calculada: ${Math.floor(
-                                (() => {
-                                  const bp = breakpoint === "mobile" ? 375 : breakpoint === "tablet" ? 768 : breakpoint === "desktop" ? 1440 : 1920;
-                                  return bp / gridColumns;
-                                })()
-                              )}px por coluna (${breakpoint === "mobile" ? "375" : breakpoint === "tablet" ? "768" : breakpoint === "desktop" ? "1440" : "1920"}px ÷ ${gridColumns} colunas)` })
-                            ]
-                          }
-                        )
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-1", children: [
-                      /* @__PURE__ */ jsx(
-                        Switch,
+                  panelSize === "expanded" && /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex-[0.7] space-y-1.5", children: [
+                      /* @__PURE__ */ jsx(Label, { htmlFor: "container-type", className: "text-xs font-semibold text-slate-700", children: "Container Type" }),
+                      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-1.5", children: ["fixed", "fluid"].map((ct) => /* @__PURE__ */ jsx(
+                        "button",
                         {
-                          id: "auto-column",
-                          checked: autoColumnWidth,
-                          onCheckedChange: setAutoColumnWidth
-                        }
-                      ),
-                      /* @__PURE__ */ jsx("span", { className: `text-[10px] font-bold transition-colors ${autoColumnWidth ? "text-emerald-600" : "text-slate-400"}`, children: autoColumnWidth ? "1fr" : "Fixed" })
+                          onClick: () => setContainerType(ct),
+                          className: `py-1.5 px-2 text-xs font-bold rounded-lg transition-all border-2 ${containerType === ct ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-emerald-600 shadow-md" : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:bg-emerald-50"}`,
+                          children: ct === "fixed" ? "Fixed" : "Fluid"
+                        },
+                        ct
+                      )) })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex-[0.3] space-y-1.5", children: [
+                      /* @__PURE__ */ jsxs(Label, { htmlFor: "auto-column", className: "text-xs font-semibold text-slate-700 flex items-center gap-1", children: [
+                        "Auto Column",
+                        /* @__PURE__ */ jsxs(Tooltip, { children: [
+                          /* @__PURE__ */ jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsx("button", { type: "button", className: "p-0.5 hover:bg-slate-200 rounded transition-colors", children: /* @__PURE__ */ jsx(Info, { size: 12, className: "text-slate-500" }) }) }),
+                          /* @__PURE__ */ jsxs(
+                            TooltipContent,
+                            {
+                              side: "right",
+                              className: `max-w-[280px] p-3 rounded-lg border transition-all ${autoColumnWidth ? "bg-emerald-50 border-emerald-200 text-emerald-900" : "bg-slate-800 border-slate-700 text-white"}`,
+                              sideOffset: 8,
+                              children: [
+                                /* @__PURE__ */ jsx("p", { className: "text-xs font-bold mb-1.5", children: autoColumnWidth ? "✓ Columns Flexíveis (1fr)" : "✗ Columns Fixas" }),
+                                /* @__PURE__ */ jsx("p", { className: "text-xs opacity-90", children: autoColumnWidth ? "Colunas se adaptam ao espaço disponível (grid-template-columns: repeat(N, 1fr))" : `Colunas têm largura fixa calculada: ${Math.floor(
+                                  (() => {
+                                    const bp = breakpoint === "mobile" ? 375 : breakpoint === "tablet" ? 768 : breakpoint === "desktop" ? 1440 : 1920;
+                                    return bp / gridColumns;
+                                  })()
+                                )}px por coluna (${breakpoint === "mobile" ? "375" : breakpoint === "tablet" ? "768" : breakpoint === "desktop" ? "1440" : "1920"}px ÷ ${gridColumns} colunas)` })
+                              ]
+                            }
+                          )
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-1", children: [
+                        /* @__PURE__ */ jsx(
+                          Switch,
+                          {
+                            id: "auto-column",
+                            checked: autoColumnWidth,
+                            onCheckedChange: setAutoColumnWidth
+                          }
+                        ),
+                        /* @__PURE__ */ jsx("span", { className: `text-[10px] font-bold transition-colors ${autoColumnWidth ? "text-emerald-600" : "text-slate-400"}`, children: autoColumnWidth ? "1fr" : "Fixed" })
+                      ] })
+                    ] })
+                  ] }) })
+                ] }) })
+              ] }),
+              panelSize === "expanded" && /* @__PURE__ */ jsxs(AccordionItem, { value: "breakpoints", className: "border-b border-slate-100", children: [
+                /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-violet-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Layers, { size: 14, className: "text-violet-600" }),
+                  /* @__PURE__ */ jsx("span", { children: "Breakpoints" })
+                ] }) }),
+                /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsx(Label, { className: "text-xs font-semibold text-slate-700", children: "Viewport" }),
+                  /* @__PURE__ */ jsxs(ToggleGroup, { type: "single", value: breakpoint, onValueChange: handleBreakpointChange, className: "grid grid-cols-2 sm:grid-cols-4 gap-1.5", children: [
+                    /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "mobile", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Mobile" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "375px" })
+                    ] }),
+                    /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "tablet", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Tablet" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "768px" })
+                    ] }),
+                    /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "desktop", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Desktop" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "1440px" })
+                    ] }),
+                    /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "ultra", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Ultra" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "1920px" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-slate-500", children: "🔧 Define max-width do container" })
+                ] }) })
+              ] }),
+              /* @__PURE__ */ jsxs(AccordionItem, { value: "spacing-x", className: "border-b border-slate-100", children: [
+                /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-blue-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(ArrowLeftRight, { size: 14, className: "text-blue-600" }),
+                  /* @__PURE__ */ jsx("span", { children: "Spacing X" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-bold", children: "Horizontal" })
+                ] }) }),
+                /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
+                    /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
+                      "Gap X"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      Slider,
+                      {
+                        value: [componentGutter],
+                        onValueChange: ([val]) => setComponentGutter(val),
+                        min: 0,
+                        max: 64,
+                        step: 4,
+                        className: "flex-1 [&_[role=slider]]:bg-blue-600 [&_[role=slider]]:border-blue-700"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
+                      componentGutter,
+                      "px"
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
+                    /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
+                      "Padding L/R"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      Slider,
+                      {
+                        value: [componentPadding],
+                        onValueChange: ([val]) => setComponentPadding(val),
+                        min: 0,
+                        max: 96,
+                        step: 4,
+                        className: "flex-1 [&_[role=slider]]:bg-green-600 [&_[role=slider]]:border-green-700"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
+                      componentPadding,
+                      "px"
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
+                    /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
+                      "Margin"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      Slider,
+                      {
+                        value: [componentMargin],
+                        onValueChange: ([val]) => setComponentMargin(val),
+                        min: 0,
+                        max: 96,
+                        step: 4,
+                        className: "flex-1 [&_[role=slider]]:bg-orange-600 [&_[role=slider]]:border-orange-700"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-orange-700 bg-orange-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
+                      componentMargin,
+                      "px"
                     ] })
                   ] })
                 ] }) })
-              ] }) })
-            ] }),
-            panelSize === "expanded" && /* @__PURE__ */ jsxs(AccordionItem, { value: "breakpoints", className: "border-b border-slate-100", children: [
-              /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-violet-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Layers, { size: 14, className: "text-violet-600" }),
-                /* @__PURE__ */ jsx("span", { children: "Breakpoints" })
-              ] }) }),
-              /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs font-semibold text-slate-700", children: "Viewport" }),
-                /* @__PURE__ */ jsxs(ToggleGroup, { type: "single", value: breakpoint, onValueChange: handleBreakpointChange, className: "grid grid-cols-2 sm:grid-cols-4 gap-1.5", children: [
-                  /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "mobile", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
-                    /* @__PURE__ */ jsx("span", { children: "Mobile" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "375px" })
+              ] }),
+              /* @__PURE__ */ jsxs(AccordionItem, { value: "spacing-y", className: "border-0", children: [
+                /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-rose-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(ArrowUpDown, { size: 14, className: "text-rose-600" }),
+                  /* @__PURE__ */ jsx("span", { children: "Spacing Y" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-xs bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded-full font-bold", children: "Vertical" })
+                ] }) }),
+                /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
+                    /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
+                      "Gap Y"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      Slider,
+                      {
+                        value: [componentGutterY],
+                        onValueChange: ([val]) => setComponentGutterY(val),
+                        min: 0,
+                        max: 64,
+                        step: 4,
+                        className: "flex-1 [&_[role=slider]]:bg-blue-600 [&_[role=slider]]:border-blue-700"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
+                      componentGutterY,
+                      "px"
+                    ] })
                   ] }),
-                  /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "tablet", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
-                    /* @__PURE__ */ jsx("span", { children: "Tablet" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "768px" })
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
+                    /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
+                      "Padding T/B"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      Slider,
+                      {
+                        value: [componentPaddingY],
+                        onValueChange: ([val]) => setComponentPaddingY(val),
+                        min: 0,
+                        max: 96,
+                        step: 4,
+                        className: "flex-1 [&_[role=slider]]:bg-green-600 [&_[role=slider]]:border-green-700"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
+                      componentPaddingY,
+                      "px"
+                    ] })
                   ] }),
-                  /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "desktop", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
-                    /* @__PURE__ */ jsx("span", { children: "Desktop" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "1440px" })
-                  ] }),
-                  /* @__PURE__ */ jsxs(ToggleGroupItem, { value: "ultra", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
-                    /* @__PURE__ */ jsx("span", { children: "Ultra" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-[10px] opacity-70", children: "1920px" })
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
+                    /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
+                      "Margin Y"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      Slider,
+                      {
+                        value: [componentMarginY],
+                        onValueChange: ([val]) => setComponentMarginY(val),
+                        min: 0,
+                        max: 96,
+                        step: 4,
+                        className: "flex-1 [&_[role=slider]]:bg-orange-600 [&_[role=slider]]:border-orange-700"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-orange-700 bg-orange-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
+                      componentMarginY,
+                      "px"
+                    ] })
                   ] })
-                ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs text-slate-500", children: "🔧 Define max-width do container" })
-              ] }) })
-            ] }),
-            /* @__PURE__ */ jsxs(AccordionItem, { value: "spacing-x", className: "border-b border-slate-100", children: [
-              /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-blue-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(ArrowLeftRight, { size: 14, className: "text-blue-600" }),
-                /* @__PURE__ */ jsx("span", { children: "Spacing X" }),
-                /* @__PURE__ */ jsx("span", { className: "text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-bold", children: "Horizontal" })
-              ] }) }),
-              /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
-                  /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
-                    "Gap X"
-                  ] }),
-                  /* @__PURE__ */ jsx(
-                    Slider,
-                    {
-                      value: [componentGutter],
-                      onValueChange: ([val]) => {
-                        setComponent({
-                          gutter: { ...component.gutter, x: val }
-                        });
-                        setComponentGutter(val);
-                      },
-                      min: 0,
-                      max: 64,
-                      step: 4,
-                      className: "flex-1 [&_[role=slider]]:bg-blue-600 [&_[role=slider]]:border-blue-700"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
-                    componentGutter,
-                    "px"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
-                  /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
-                    "Padding L/R"
-                  ] }),
-                  /* @__PURE__ */ jsx(
-                    Slider,
-                    {
-                      value: [componentPadding],
-                      onValueChange: ([val]) => setComponentPadding(val),
-                      min: 0,
-                      max: 96,
-                      step: 4,
-                      className: "flex-1 [&_[role=slider]]:bg-green-600 [&_[role=slider]]:border-green-700"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
-                    componentPadding,
-                    "px"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
-                  /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
-                    "Margin"
-                  ] }),
-                  /* @__PURE__ */ jsx(
-                    Slider,
-                    {
-                      value: [componentMargin],
-                      onValueChange: ([val]) => setComponentMargin(val),
-                      min: 0,
-                      max: 96,
-                      step: 4,
-                      className: "flex-1 [&_[role=slider]]:bg-orange-600 [&_[role=slider]]:border-orange-700"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-orange-700 bg-orange-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
-                    componentMargin,
-                    "px"
-                  ] })
-                ] })
-              ] }) })
-            ] }),
-            /* @__PURE__ */ jsxs(AccordionItem, { value: "spacing-y", className: "border-0", children: [
-              /* @__PURE__ */ jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-rose-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(ArrowUpDown, { size: 14, className: "text-rose-600" }),
-                /* @__PURE__ */ jsx("span", { children: "Spacing Y" }),
-                /* @__PURE__ */ jsx("span", { className: "text-xs bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded-full font-bold", children: "Vertical" })
-              ] }) }),
-              /* @__PURE__ */ jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
-                  /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
-                    "Gap Y"
-                  ] }),
-                  /* @__PURE__ */ jsx(
-                    Slider,
-                    {
-                      value: [componentGutterY],
-                      onValueChange: ([val]) => setComponentGutterY(val),
-                      min: 0,
-                      max: 64,
-                      step: 4,
-                      className: "flex-1 [&_[role=slider]]:bg-blue-600 [&_[role=slider]]:border-blue-700"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
-                    componentGutterY,
-                    "px"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
-                  /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
-                    "Padding T/B"
-                  ] }),
-                  /* @__PURE__ */ jsx(
-                    Slider,
-                    {
-                      value: [componentPaddingY],
-                      onValueChange: ([val]) => setComponentPaddingY(val),
-                      min: 0,
-                      max: 96,
-                      step: 4,
-                      className: "flex-1 [&_[role=slider]]:bg-green-600 [&_[role=slider]]:border-green-700"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
-                    componentPaddingY,
-                    "px"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
-                  /* @__PURE__ */ jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
-                    "Margin Y"
-                  ] }),
-                  /* @__PURE__ */ jsx(
-                    Slider,
-                    {
-                      value: [componentMarginY],
-                      onValueChange: ([val]) => setComponentMarginY(val),
-                      min: 0,
-                      max: 96,
-                      step: 4,
-                      className: "flex-1 [&_[role=slider]]:bg-orange-600 [&_[role=slider]]:border-orange-700"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono font-bold text-orange-700 bg-orange-100 px-2 py-0.5 rounded whitespace-nowrap", children: [
-                    componentMarginY,
-                    "px"
-                  ] })
-                ] })
-              ] }) })
+                ] }) })
+              ] })
             ] })
-          ] }) }),
+          ] }),
           /* @__PURE__ */ jsxs(TabsContent, { value: "overlay", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: [
             isEditingElement && /* @__PURE__ */ jsxs("div", { className: "mx-4 mt-4 mb-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-lg", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-1", children: [
@@ -4464,30 +4655,42 @@ function FloatingGridInspector() {
                     }
                   )
                 ] }),
-                isSelectionMode && selectedElementInfo && /* @__PURE__ */ jsxs("div", { className: "p-3 bg-green-50 border border-green-200 rounded-lg space-y-1", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-2", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-2 h-2 bg-green-500 rounded-full animate-pulse" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-xs font-bold text-green-900", children: "ELEMENTO SELECIONADO" })
+                isEditingElement && /* @__PURE__ */ jsxs("div", { className: "p-3 bg-green-50 border-2 border-green-400 rounded-lg space-y-2", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-2 h-2 bg-green-500 rounded-full animate-pulse" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-xs font-bold text-green-900", children: "ELEMENTO ATIVO" })
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "button",
+                      {
+                        onClick: () => clearSelectedElement(),
+                        className: "text-[10px] font-bold text-red-600 hover:bg-red-50 px-2 py-0.5 rounded border border-red-200 transition-all",
+                        children: "✕ Sair"
+                      }
+                    )
                   ] }),
                   /* @__PURE__ */ jsxs("p", { className: "text-xs text-green-800", children: [
                     /* @__PURE__ */ jsx("strong", { children: "Tag:" }),
                     " <",
-                    selectedElementInfo.tagName,
+                    selectedElementInfo == null ? void 0 : selectedElementInfo.tagName,
                     ">"
                   ] }),
                   /* @__PURE__ */ jsxs("p", { className: "text-xs text-green-800", children: [
                     /* @__PURE__ */ jsx("strong", { children: "ID:" }),
                     " ",
-                    selectedElementInfo.id
+                    selectedElementInfo == null ? void 0 : selectedElementInfo.id
                   ] }),
                   /* @__PURE__ */ jsxs("p", { className: "text-xs text-green-800 break-all", children: [
                     /* @__PURE__ */ jsx("strong", { children: "Class:" }),
                     " ",
-                    selectedElementInfo.className.substring(0, 50),
-                    "..."
-                  ] })
+                    ((selectedElementInfo == null ? void 0 : selectedElementInfo.className) ?? "").substring(0, 50),
+                    (((_a = selectedElementInfo == null ? void 0 : selectedElementInfo.className) == null ? void 0 : _a.length) ?? 0) > 50 ? "…" : ""
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] text-green-600 border-t border-green-200 pt-2", children: "↕ Controles Layout e Overlay aplicam-se a este escopo" })
                 ] }),
-                isSelectionMode && !selectedElementInfo && /* @__PURE__ */ jsx("div", { className: "p-3 bg-blue-50 border border-blue-200 rounded-lg", children: /* @__PURE__ */ jsx("p", { className: "text-xs text-blue-700", children: "👆 Clique em qualquer elemento da página para inspecioná-lo" }) }),
+                isSelectionMode && !isEditingElement && /* @__PURE__ */ jsx("div", { className: "p-3 bg-blue-50 border border-blue-200 rounded-lg", children: /* @__PURE__ */ jsx("p", { className: "text-xs text-blue-700", children: "👆 Clique em qualquer elemento da página para inspecioná-lo" }) }),
+                !isSelectionMode && !isEditingElement && /* @__PURE__ */ jsx("div", { className: "p-3 bg-slate-50 border border-slate-200 rounded-lg", children: /* @__PURE__ */ jsx("p", { className: "text-xs text-slate-600", children: "Ative o modo de seleção e clique em um elemento para analisar seu grid de forma isolada." }) }),
                 /* @__PURE__ */ jsx("p", { className: "text-xs text-slate-500", children: "🔧 Ativa modo de seleção para manipular elementos específicos" })
               ] }) })
             ] }),
@@ -4650,7 +4853,7 @@ function GridOverlay({
   gutter = 24,
   margin = 48,
   padding = 24,
-  gutterY = 24,
+  gutterY: _gutterY = 24,
   marginY = 48,
   paddingY = 24,
   rowHeight: _rowHeight = 80,
@@ -4944,13 +5147,18 @@ function GridOverlay({
           }
         )
       ] }),
-      showMarginY && marginY > 0 && /* @__PURE__ */ jsxs(Fragment, { children: [
-        /* @__PURE__ */ jsx("div", { style: { position: "absolute", ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }, top: 0, height: marginY, zIndex: 60, pointerEvents: "none", borderBottom: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` }, children: showAnnotations && /* @__PURE__ */ jsxs("div", { style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", fontSize: 11, fontFamily: "monospace", fontWeight: 600, background: `rgba(255,255,255,${0.9 * overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: "2px 6px", borderRadius: 4, pointerEvents: "none" }, children: [
-          marginY,
-          "px margin Y"
-        ] }) }),
-        /* @__PURE__ */ jsx("div", { style: { position: "absolute", ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 }, bottom: 0, height: marginY, zIndex: 60, pointerEvents: "none", borderTop: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` } })
-      ] }),
+      showMarginY && marginY > 0 && (() => {
+        const lbTop = layoutBounds && contentBounds ? layoutBounds.top - contentBounds.top : 0;
+        const lbHeight = layoutBounds ? layoutBounds.height : (contentBounds == null ? void 0 : contentBounds.height) ?? 0;
+        const hPos = colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 };
+        return /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx("div", { style: { position: "absolute", ...hPos, top: lbTop, height: marginY, zIndex: 60, pointerEvents: "none", borderBottom: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` }, children: showAnnotations && /* @__PURE__ */ jsxs("div", { style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", fontSize: 11, fontFamily: "monospace", fontWeight: 600, background: `rgba(255,255,255,${0.9 * overlayOpacity})`, color: `rgba(194,65,12,${overlayOpacity})`, padding: "2px 6px", borderRadius: 4, pointerEvents: "none" }, children: [
+            marginY,
+            "px margin Y"
+          ] }) }),
+          /* @__PURE__ */ jsx("div", { style: { position: "absolute", ...hPos, top: lbTop + lbHeight - marginY, height: marginY, zIndex: 60, pointerEvents: "none", borderTop: `2px dashed rgba(249,115,22,${0.8 * overlayOpacity})`, backgroundColor: `rgba(253,186,116,${0.12 * overlayOpacity})` } })
+        ] });
+      })(),
       showRows && componentRows.map((row, i) => {
         const isHighlighted = highlightedElementIndex === i;
         return /* @__PURE__ */ jsx(
@@ -4997,7 +5205,10 @@ function GridOverlay({
         },
         `pad-y-${i}`
       )),
-      showGapsY && gutterY > 0 && componentRows.length > 1 && componentRows.slice(0, -1).map((row, i) => {
+      showGapsY && componentRows.length > 1 && componentRows.slice(0, -1).map((row, i) => {
+        const nextRow = componentRows[i + 1];
+        const actualGap = nextRow.top - (row.top + row.height);
+        if (actualGap < 1) return null;
         const gapTop = row.top + row.height;
         return /* @__PURE__ */ jsx(
           "div",
@@ -5007,14 +5218,14 @@ function GridOverlay({
               pointerEvents: "none",
               ...colBounds ? { left: colBounds.left, width: colBounds.width } : { left: 0, right: 0 },
               top: gapTop,
-              height: gutterY,
+              height: actualGap,
               zIndex: 18,
               backgroundColor: `rgba(191,219,254,${0.6 * overlayOpacity})`,
               borderTop: `1px solid rgba(96,165,250,${0.7 * overlayOpacity})`,
               borderBottom: `1px solid rgba(96,165,250,${0.7 * overlayOpacity})`
             },
             children: showAnnotations && i === 0 && /* @__PURE__ */ jsxs("div", { style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", fontSize: 11, fontFamily: "monospace", fontWeight: 600, background: `rgba(255,255,255,${0.9 * overlayOpacity})`, color: `rgba(37,99,235,${overlayOpacity})`, padding: "2px 6px", borderRadius: 4, whiteSpace: "nowrap", pointerEvents: "none" }, children: [
-              gutterY,
+              Math.round(actualGap),
               "px gap Y"
             ] })
           },

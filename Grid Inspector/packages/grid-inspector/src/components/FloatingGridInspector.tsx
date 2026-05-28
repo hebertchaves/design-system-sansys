@@ -44,20 +44,22 @@ export function FloatingGridInspector() {
     setHighlightedElementIndex,
   } = useGridSystem();
   
-  // 🆕 Nested Grid Context - para seleção de elementos específicos (opcional)
-  
-  // 🆕 Nested Grid Context - para seleção de elementos específicos
+  // 🆕 Nested Grid Context - para seleção e análise de elementos específicos
   const {
     isSelectionMode,
     setIsSelectionMode,
     setSelectedElement,
+    selectedElement,
     selectedElementInfo,
+    selectedElementKey,
     selectedGridConfig,
     updateSelectedGridConfig,
+    elementGridConfigs,
+    clearSelectedElement,
   } = useNestedGrid();
-  
-  // 🎯 Mode: Global Grid vs Element Grid
-  const isEditingElement = isSelectionMode && selectedElementInfo !== null;
+
+  // 🎯 Element scope is active whenever an element is selected (regardless of selection mode)
+  const isEditingElement = selectedElementInfo !== null;
   
   // 🔗 Alias grid values - NOW switches between global and element!
   const gridColumns = isEditingElement ? selectedGridConfig.columns : overlay.columns;
@@ -68,12 +70,13 @@ export function FloatingGridInspector() {
   const gridMarginY = isEditingElement ? selectedGridConfig.marginY : overlay.margin.y;
   const gridPaddingY = overlay.padding.y;
   
-  const componentGutter = component.gutter.x;
-  const componentMargin = component.margin.x;
-  const componentPadding = component.padding.x;
-  const componentGutterY = component.gutter.y;
-  const componentMarginY = component.margin.y;
-  const componentPaddingY = component.padding.y;
+  // When editing an element, Layout sliders show and write element-scoped values
+  const componentGutter = isEditingElement ? selectedGridConfig.gutterX : component.gutter.x;
+  const componentMargin = isEditingElement ? selectedGridConfig.marginX : component.margin.x;
+  const componentPadding = isEditingElement ? selectedGridConfig.paddingX : component.padding.x;
+  const componentGutterY = isEditingElement ? selectedGridConfig.gutterY : component.gutter.y;
+  const componentMarginY = isEditingElement ? selectedGridConfig.marginY : component.margin.y;
+  const componentPaddingY = isEditingElement ? selectedGridConfig.paddingY : component.padding.y;
   
   // 🔗 Alias setters - NOW switches between global and element!
   const setGridColumns = (val: number) => {
@@ -100,7 +103,10 @@ export function FloatingGridInspector() {
       setOverlay({ margin: { ...overlay.margin, x: val } });
     }
   };
-  const setGridPadding = (val: number) => setOverlay({ padding: { ...overlay.padding, x: val } });
+  const setGridPadding = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ paddingX: val }); }
+    else { setOverlay({ padding: { ...overlay.padding, x: val } }); }
+  };
   const setGridGutterY = (val: number) => {
     if (isEditingElement) {
       updateSelectedGridConfig({ gutterY: val });
@@ -115,14 +121,35 @@ export function FloatingGridInspector() {
       setOverlay({ margin: { ...overlay.margin, y: val } });
     }
   };
-  const setGridPaddingY = (val: number) => setOverlay({ padding: { ...overlay.padding, y: val } });
+  const setGridPaddingY = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ paddingY: val }); }
+    else { setOverlay({ padding: { ...overlay.padding, y: val } }); }
+  };
   
-  const setComponentGutter = (val: number) => setComponent({ gutter: { ...component.gutter, x: val } });
-  const setComponentMargin = (val: number) => setComponent({ margin: { ...component.margin, x: val } });
-  const setComponentPadding = (val: number) => setComponent({ padding: { ...component.padding, x: val } });
-  const setComponentGutterY = (val: number) => setComponent({ gutter: { ...component.gutter, y: val } });
-  const setComponentMarginY = (val: number) => setComponent({ margin: { ...component.margin, y: val } });
-  const setComponentPaddingY = (val: number) => setComponent({ padding: { ...component.padding, y: val } });
+  const setComponentGutter = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ gutterX: val }); }
+    else { setComponent({ gutter: { ...component.gutter, x: val } }); }
+  };
+  const setComponentMargin = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ marginX: val }); }
+    else { setComponent({ margin: { ...component.margin, x: val } }); }
+  };
+  const setComponentPadding = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ paddingX: val }); }
+    else { setComponent({ padding: { ...component.padding, x: val } }); }
+  };
+  const setComponentGutterY = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ gutterY: val }); }
+    else { setComponent({ gutter: { ...component.gutter, y: val } }); }
+  };
+  const setComponentMarginY = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ marginY: val }); }
+    else { setComponent({ margin: { ...component.margin, y: val } }); }
+  };
+  const setComponentPaddingY = (val: number) => {
+    if (isEditingElement) { updateSelectedGridConfig({ paddingY: val }); }
+    else { setComponent({ padding: { ...component.padding, y: val } }); }
+  };
   
   const [panelSize, setPanelSize] = useState<PanelSize>('expanded');
   const [isVisible, setIsVisible] = useState(true);
@@ -187,6 +214,22 @@ export function FloatingGridInspector() {
     URL.revokeObjectURL(url);
   }, [overlay, component, violations, mcpConnected]);
   
+  // Initialize element config from current global values whenever a new element is selected
+  useEffect(() => {
+    if (selectedElement && selectedElementKey && !elementGridConfigs.has(selectedElementKey)) {
+      updateSelectedGridConfig({
+        columns: overlay.columns,
+        gutterX: component.gutter.x,
+        gutterY: component.gutter.y,
+        marginX: component.margin.x,
+        marginY: component.margin.y,
+        paddingX: component.padding.x,
+        paddingY: component.padding.y,
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedElementKey]);
+
   // 🔧 CONTROLES ADICIONAIS QUE SERÃO IMPLEMENTADOS
   const [overlayOpacity, setOverlayOpacity] = useState(60);
   const [showColumns, setShowColumns] = useState(true);
@@ -217,6 +260,57 @@ export function FloatingGridInspector() {
     return () => { document.getElementById(id)?.remove(); };
   }, []);
 
+  // Selection mode — crosshair cursor + hover highlight on selectable elements
+  useEffect(() => {
+    const styleId = 'grid-inspector-selection-hover';
+    if (!isSelectionMode) {
+      document.getElementById(styleId)?.remove();
+      document.body.style.cursor = '';
+      return;
+    }
+
+    document.body.style.cursor = 'crosshair';
+
+    const s = document.createElement('style');
+    s.id = styleId;
+    s.textContent = `
+      [data-grid-debug]:not(#grid-inspector-root *):hover,
+      [id^="preview-"]:not(#grid-inspector-root *):hover {
+        outline: 2px dashed rgba(99,102,241,0.75) !important;
+        outline-offset: 3px !important;
+        cursor: crosshair !important;
+      }
+    `;
+    document.head.appendChild(s);
+
+    return () => {
+      document.getElementById(styleId)?.remove();
+      document.body.style.cursor = '';
+    };
+  }, [isSelectionMode]);
+
+  // Selected element — persistent green outline so the user always sees what is scoped
+  useEffect(() => {
+    const styleId = 'grid-inspector-selection-outline';
+    document.getElementById(styleId)?.remove();
+    if (!selectedElement) return;
+
+    const selector = selectedElement.id
+      ? `#${CSS.escape(selectedElement.id)}`
+      : selectedElement.dataset.gridInspectorKey
+        ? `[data-grid-inspector-key="${selectedElement.dataset.gridInspectorKey}"]`
+        : null;
+
+    if (!selector) return;
+
+    const s = document.createElement('style');
+    s.id = styleId;
+    s.textContent = `${selector}{outline:2px solid rgba(16,185,129,0.85)!important;outline-offset:3px!important;}`;
+    document.head.appendChild(s);
+
+    return () => { document.getElementById(styleId)?.remove(); };
+  }, [selectedElement]);
+
   // Selection mode — capture-phase click listener so it fires before page handlers
   useEffect(() => {
     if (!isSelectionMode) return;
@@ -226,8 +320,20 @@ export function FloatingGridInspector() {
       if (root && root.contains(e.target as Node)) return; // ignore clicks inside the panel
       e.preventDefault();
       e.stopPropagation();
-      const el = e.target as HTMLElement;
-      setSelectedElement(el);
+
+      // Walk up to the nearest meaningful ancestor (has id or data-grid-debug)
+      // so clicking a button label selects the section card, not the span
+      let el = e.target as HTMLElement;
+      let target = el;
+      while (el && el.tagName !== 'BODY' && el.tagName !== 'HTML') {
+        if ((el.id && el.id.length > 0) || el.hasAttribute('data-grid-debug') || el.hasAttribute('data-grid-rows')) {
+          target = el;
+          break;
+        }
+        el = el.parentElement as HTMLElement;
+      }
+
+      setSelectedElement(target);
       setIsSelectionMode(false);
     };
 
@@ -333,15 +439,19 @@ export function FloatingGridInspector() {
     // Layout CSS vars — afetam os componentes reais da página (NÃO a visualização do overlay)
     // Density multiplier scales all layout values
     const densityMult = { comfortable: 1, compact: 0.75, dense: 0.5 }[densityMode];
-    root.style.setProperty('--dss-layout-gap-x', `${Math.round(componentGutter * densityMult)}px`);
-    root.style.setProperty('--dss-layout-gap-y', `${Math.round(componentGutterY * densityMult)}px`);
-    root.style.setProperty('--dss-layout-margin-x', `${Math.round(componentMargin * densityMult)}px`);
-    root.style.setProperty('--dss-layout-margin-y', `${Math.round(componentMarginY * densityMult)}px`);
-    root.style.setProperty('--dss-layout-padding-x', `${Math.round(componentPadding * densityMult)}px`);
-    root.style.setProperty('--dss-layout-padding-y', `${Math.round(componentPaddingY * densityMult)}px`);
-    // Grid Structure vars — permitem que a página responda ao número de colunas e ao container type
-    root.style.setProperty('--dss-layout-columns', overlay.columns.toString());
-    root.style.setProperty('--dss-layout-max-width', containerType === 'fluid' ? '100%' : breakpointWidths[breakpoint]);
+
+    // In element scope, sliders write vars directly to the selected element via applyGridConfigToElement.
+    // :root must NOT be touched so that only the selected element and its subtree are affected.
+    if (!isEditingElement) {
+      root.style.setProperty('--dss-layout-gap-x', `${Math.round(component.gutter.x * densityMult)}px`);
+      root.style.setProperty('--dss-layout-gap-y', `${Math.round(component.gutter.y * densityMult)}px`);
+      root.style.setProperty('--dss-layout-margin-x', `${Math.round(component.margin.x * densityMult)}px`);
+      root.style.setProperty('--dss-layout-margin-y', `${Math.round(component.margin.y * densityMult)}px`);
+      root.style.setProperty('--dss-layout-padding-x', `${Math.round(component.padding.x * densityMult)}px`);
+      root.style.setProperty('--dss-layout-padding-y', `${Math.round(component.padding.y * densityMult)}px`);
+      root.style.setProperty('--dss-layout-columns', overlay.columns.toString());
+      root.style.setProperty('--dss-layout-max-width', containerType === 'fluid' ? '100%' : breakpointWidths[breakpoint]);
+    }
   }
 
   if (!isVisible) {
@@ -542,6 +652,32 @@ export function FloatingGridInspector() {
 
         {/* TAB 1 — Layout (Real Components) */}
         <TabsContent value="layout" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+
+          {/* Element scope indicator */}
+          {isEditingElement && (
+            <div className="mx-4 mt-4 mb-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-lg">
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs font-bold text-green-900">ESCOPO DO ELEMENTO</span>
+                </div>
+                <button
+                  onClick={() => clearSelectedElement()}
+                  className="text-[10px] font-bold text-green-700 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded border border-green-300 hover:border-red-300 transition-all"
+                  title="Voltar ao escopo global"
+                >
+                  ✕ Sair
+                </button>
+              </div>
+              <p className="text-xs text-green-800">
+                <strong>&lt;{selectedElementInfo?.tagName}&gt;</strong> #{selectedElementInfo?.id}
+              </p>
+              <p className="text-[10px] text-green-600 mt-1">
+                Sliders afetam apenas este elemento e seus filhos
+              </p>
+            </div>
+          )}
+
           <Accordion type="multiple" defaultValue={['spacing-x', 'spacing-y']} className="w-full">
             
             {/* Grid Structure */}
@@ -713,14 +849,7 @@ export function FloatingGridInspector() {
                     </Label>
                     <Slider
                       value={[componentGutter]}
-                      onValueChange={([val]) => {
-                        // ⚡ MIGRATED TO OBSERVABILITY: Update via GridSystemContext
-                        setComponent({
-                          gutter: { ...component.gutter, x: val }
-                        });
-                        // Keep prop setter for backward compatibility (will be removed in Phase 3)
-                        setComponentGutter(val);
-                      }}
+                      onValueChange={([val]) => setComponentGutter(val)}
                       min={0}
                       max={64}
                       step={4}
@@ -1327,25 +1456,44 @@ export function FloatingGridInspector() {
                     />
                   </div>
                   
-                  {/* Mostrar info do elemento selecionado */}
-                  {isSelectionMode && selectedElementInfo && (
-                    <div className="p-3 bg-green-50 border border-green-200 rounded-lg space-y-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span className="text-xs font-bold text-green-900">ELEMENTO SELECIONADO</span>
+                  {/* Active element scope */}
+                  {isEditingElement && (
+                    <div className="p-3 bg-green-50 border-2 border-green-400 rounded-lg space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="text-xs font-bold text-green-900">ELEMENTO ATIVO</span>
+                        </div>
+                        <button
+                          onClick={() => clearSelectedElement()}
+                          className="text-[10px] font-bold text-red-600 hover:bg-red-50 px-2 py-0.5 rounded border border-red-200 transition-all"
+                        >
+                          ✕ Sair
+                        </button>
                       </div>
-                      <p className="text-xs text-green-800"><strong>Tag:</strong> &lt;{selectedElementInfo.tagName}&gt;</p>
-                      <p className="text-xs text-green-800"><strong>ID:</strong> {selectedElementInfo.id}</p>
-                      <p className="text-xs text-green-800 break-all"><strong>Class:</strong> {selectedElementInfo.className.substring(0, 50)}...</p>
+                      <p className="text-xs text-green-800"><strong>Tag:</strong> &lt;{selectedElementInfo?.tagName}&gt;</p>
+                      <p className="text-xs text-green-800"><strong>ID:</strong> {selectedElementInfo?.id}</p>
+                      <p className="text-xs text-green-800 break-all"><strong>Class:</strong> {(selectedElementInfo?.className ?? '').substring(0, 50)}{(selectedElementInfo?.className?.length ?? 0) > 50 ? '…' : ''}</p>
+                      <p className="text-[10px] text-green-600 border-t border-green-200 pt-2">
+                        ↕ Controles Layout e Overlay aplicam-se a este escopo
+                      </p>
                     </div>
                   )}
-                  
-                  {isSelectionMode && !selectedElementInfo && (
+
+                  {/* Awaiting click */}
+                  {isSelectionMode && !isEditingElement && (
                     <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                       <p className="text-xs text-blue-700">👆 Clique em qualquer elemento da página para inspecioná-lo</p>
                     </div>
                   )}
-                  
+
+                  {/* Idle state */}
+                  {!isSelectionMode && !isEditingElement && (
+                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                      <p className="text-xs text-slate-600">Ative o modo de seleção e clique em um elemento para analisar seu grid de forma isolada.</p>
+                    </div>
+                  )}
+
                   <p className="text-xs text-slate-500">🔧 Ativa modo de seleção para manipular elementos específicos</p>
                 </div>
               </AccordionContent>
