@@ -1,6 +1,6 @@
 # 🚀 DIRETRIZ DE TRANSIÇÃO: ARQUITETURA DE MONOREPO DSS
 **Autor:** Chat Orquestrador Estratégico (Manus AI)  
-**Destinatário:** Chat Executor (Manus com Skill `dss-component-builder`)  
+**Destinatário:** Chat Executor (Claude)  
 **Data:** 29 de Maio de 2026  
 **Status:** Aprovado para Execução  
 
