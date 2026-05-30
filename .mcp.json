@@ -2,7 +2,7 @@
   "mcpServers": {
     "dss": {
       "command": "node",
-      "args": ["./mcp/build/index.js"]
+      "args": ["./packages/mcp/build/index.js"]
     },
     "github": {
       "command": "npx",

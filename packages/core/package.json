@@ -1,0 +1,55 @@
+{
+  "name": "@sansys/design-system",
+  "version": "2.3.0",
+  "description": "Design System Sansys - Vue 3 Component Library with TypeScript, Composition API, and DSS Tokens",
+  "type": "module",
+  "main": "./dist/dss.umd.js",
+  "module": "./dist/dss.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/dss.es.js",
+      "require": "./dist/dss.umd.js"
+    },
+    "./css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "components",
+    "tokens",
+    "utils",
+    "index.js"
+  ],
+  "scripts": {
+    "build:lib": "vite build --config vite.config.lib.js",
+    "build:watch": "vite build --watch --config vite.config.lib.js",
+    "type-check": "echo \"type-check disabled (legacy Vue tsconfig)\"",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.8",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "sass": "^1.97.2",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.19",
+    "vue": "^3.4.21",
+    "vue-tsc": "^3.2.2"
+  },
+  "keywords": [
+    "design-system",
+    "vue",
+    "vue3",
+    "typescript",
+    "composition-api",
+    "components",
+    "dss",
+    "sansys",
+    "tokens",
+    "wcag",
+    "accessibility"
+  ],
+  "author": "Hebert Daniel Oliveira Chaves",
+  "license": "MIT"
+}
