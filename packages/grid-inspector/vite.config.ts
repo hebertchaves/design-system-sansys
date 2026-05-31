@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,48 +13,43 @@ export default defineConfig({
       insertTypesEntry: true,
       include: ['src/**/*.ts', 'src/**/*.tsx'],
       exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+      skipDiagnostics: true,
     }),
   ],
 
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
+
+  css: {
+    postcss: {
+      plugins: [
+        tailwindcss({ config: resolve(__dirname, 'tailwind.config.js') }),
+        autoprefixer(),
+      ],
+    },
+  },
+
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(__dirname, 'src/index.tsx'),
       name: 'GridInspector',
       formats: ['es', 'umd'],
       fileName: (format) => `grid-inspector.${format}.js`,
     },
     rollupOptions: {
-      // Externalize React for NPM usage (peer dependency)
-      // But bundle it for UMD (bookmarklet standalone)
-      external: (id) => {
-        // Only externalize for ESM build
-        if (id === 'react' || id === 'react-dom' || id === 'react/jsx-runtime') {
-          return true; // External for ESM
-        }
-        return false;
-      },
+      // React é bundlado em todos os formatos (ESM + UMD) para uso
+      // auto-contido: apps Vue sem React, bookmarklet, e ambientes mistos.
+      // Não há externalizações — o bundle é sempre self-contained.
       output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          'react/jsx-runtime': 'jsxRuntime',
-        },
-        // Inject React for UMD bundle
         banner: (chunk) => {
           if (chunk.fileName.includes('umd')) {
-            return `
-/*
+            return `/*
  * @sansys/grid-inspector v1.0.0
- * Universal Grid Inspector - Standalone UMD Bundle
- * Includes React 18.3.1 (for bookmarklet usage)
- */
-(function() {
-  // Check if React is already loaded
-  if (typeof window.React === 'undefined') {
-    console.info('[Grid Inspector] Bundled React not loaded in this build. Use ESM version or ensure React is available.');
-  }
-})();
-            `.trim();
+ * Universal Grid Inspector — Standalone Bundle (React embutido)
+ */`;
           }
           return '';
         },

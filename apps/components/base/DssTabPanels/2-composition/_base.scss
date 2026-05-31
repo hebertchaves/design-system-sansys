@@ -1,0 +1,23 @@
+@import '../../../../utils/index';
+
+// ==========================================================================
+// DssTabPanels — Layer 2: Composition Base
+// ==========================================================================
+//
+// Estilos base do container DssTabPanels.
+// Seletor composto .dss-tab-panels.q-tab-panels:
+// Ambas as classes ficam no mesmo elemento raiz (<q-tab-panels :class="tabPanelsClasses">).
+// Garante especificidade para override de estilos nativos do Quasar.
+// Precedente: DssTabPanel EXC-01 (mesmo padrão de seletor composto).
+// ==========================================================================
+
+// EXC-01: background: transparent — keyword CSS semântica, sem token DSS equivalente.
+// DssTabPanels é container pass-through: herda background do pai (DssCard, layout
+// de página, etc.). O token --dss-surface-transparent não existe no catálogo DSS.
+// Override necessário para prevenir herança do tema Material do Quasar em
+// dark mode via .body--dark .q-tab-panels (seletor Quasar que DSS não utiliza —
+// DSS governa dark mode via [data-theme="dark"], não .body--dark).
+.dss-tab-panels.q-tab-panels {
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}

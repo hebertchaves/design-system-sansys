@@ -1,0 +1,62 @@
+// =============================================================================
+// DssCircularProgress — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// GOLDEN REFERENCE: DssBadge (componente não interativo)
+// GOLDEN CONTEXT:   DssLinearProgress (componente de progresso irmão)
+//
+// TOUCH TARGET: Opção B — NÃO implementado.
+//   DssCircularProgress não é interativo.
+//
+// EXC-Gate-01: Seletores internos do Quasar
+//   .q-circular-progress__track e .q-circular-progress__circle são elementos
+//   SVG <circle> internos do QCircularProgress. O DSS precisa acessá-los para:
+//   - track: aplicar --dss-gray-200 como cor da trilha de fundo
+//   - circle: aplicar tokens de cor semânticos DSS (via 3-variants/_colors.scss)
+//   Sem esses overrides, o componente perderia governança visual do DSS.
+//   Documentado em dss.meta.json.
+//
+// TOKENS UTILIZADOS (base):
+//   Superfície: --dss-gray-200          (track — cinza claro canônico M3/Carbon/Salesforce)
+//   Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.8
+//   Opacidade:  --dss-opacity-disabled   (estado disabled)
+//
+// NOTA SVG: círculos SVG usam `stroke` (não `background-color`) para cor.
+//   Opacity 1 reseta a opacidade padrão do Quasar no track (varia por versão).
+//
+// =============================================================================
+
+.dss-circular-progress {
+  // ── Display e Layout ───────────────────────────────────────────────────────
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  // ── Comportamento ──────────────────────────────────────────────────────────
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+
+  // ── EXC-Gate-01: Track (trilha de fundo do círculo) ───────────────────────
+  //
+  // .q-circular-progress__track é um SVG <circle> interno do QCircularProgress.
+  // Quasar aplica track-color via prop → inline style (se fornecido) ou opacity.
+  // Como não passamos track-color ao Quasar, aplicamos nosso token via CSS.
+  // opacity: 1 garante que o Quasar não aplique opacidade reduzida no track.
+
+  // EXC-Gate-01: seletor interno Quasar — necessário para --dss-gray-200
+  // --dss-gray-200: cinza claro canônico para track inativo (M3, Carbon, Salesforce).
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.8
+  .q-circular-progress__track {
+    stroke: var(--dss-gray-200);
+    opacity: 1;
+  }
+
+  // ── Estado: disabled ───────────────────────────────────────────────────────
+  // Opção B (não interativo): redução de opacidade sem pointer-events.
+  // --dss-opacity-disabled = 0.4 (CLAUDE.md memory — nunca 0.6)
+  &--disabled {
+    opacity: var(--dss-opacity-disabled);
+    pointer-events: none;
+  }
+}

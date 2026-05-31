@@ -1,0 +1,145 @@
+/* ==========================================================================
+   DssExpansionItem - LAYER 2: COMPOSITION (Base Styles)
+
+   Responsabilidade: Estilos fundamentais do ExpansionItem usando APENAS tokens
+   genéricos DSS. Sem cores em SCSS — cores via classes utilitárias Quasar.
+
+   ARQUITETURA DE ESTILOS:
+   1. .dss-expansion-item — container wrapper (div externo DSS)
+   2. .dss-expansion-item__qexpansion — o QExpansionItem em si
+   3. .dss-expansion-item .q-item — header interativo (gate exception)
+   4. .dss-expansion-item .q-expansion-item__content — painel de conteúdo (gate exception)
+   5. .dss-expansion-item .q-expansion-item__toggle-icon — ícone de expansão (gate exception)
+
+   GATE-EXCEPTION (VINCULANTE):
+   Os seletores que acessam .q-item, .q-expansion-item__content,
+   .q-expansion-item__toggle-icon e .q-expansion-item--expanded são elementos DOM
+   internos do QExpansionItem (Quasar Framework), não subcomponentes DSS.
+   O Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos.
+   Precedente: DssFab gateExceptions → .q-fab__trigger (selado Mai 2026).
+
+   TOUCH TARGET (WCAG 2.5.5) — Opção A:
+   Header (.q-item) tem min-height --dss-spacing-12.
+   Tamanho visual ≥ --dss-touch-target-md → Opção A (visual garante mínimo diretamente).
+   Diferente de DssFabAction (Opção B — visual < --dss-touch-target-md, usa ::before).
+   ========================================================================== */
+
+@import '../../../../utils/index';
+
+/* ==========================================================================
+   CONTAINER DO EXPANSIONITEM
+   ========================================================================== */
+
+.dss-expansion-item {
+  display: block;
+  width: 100%;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
+   QEXPANSIONITEM WRAPPER
+   ========================================================================== */
+
+.dss-expansion-item__qexpansion {
+  width: 100%;
+}
+
+/* ==========================================================================
+   HEADER (trigger interativo)
+
+   GATE-EXCEPTION: .q-item é interno do QExpansionItem — não é subcomponente DSS.
+   Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos.
+   Precedente: DssFab → .q-fab__trigger (selado Mai 2026).
+   ========================================================================== */
+
+.dss-expansion-item .q-item {
+  /* Tipografia — espelha DssItem (Golden Context) */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-normal);
+  color: var(--dss-text-body);
+
+  /* Layout — Opção A: min-height visual ≥ --dss-touch-target-md (WCAG 2.5.5) */
+  padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  min-height: var(--dss-spacing-12);
+
+  /* Transição de background */
+  transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover — overlay semitransparente sobre o header */
+.dss-expansion-item .q-item:hover:not(.disabled):not([aria-disabled="true"]) {
+  background-color: var(--dss-surface-hover);
+}
+
+/* Focus-visible — ring de foco acessível */
+.dss-expansion-item .q-item:focus-visible {
+  outline: var(--dss-focus-ring);
+  outline-offset: -2px;
+}
+
+/* Active — feedback tátil */
+.dss-expansion-item .q-item:active:not(.disabled):not([aria-disabled="true"]) {
+  background-color: var(--dss-surface-active);
+}
+
+/* ==========================================================================
+   ESTADO EXPANDED
+
+   .q-expansion-item--expanded é adicionada pelo Quasar ao .q-expansion-item
+   quando o item está aberto. Usada como seletor descendente para styling.
+
+   GATE-EXCEPTION: .q-expansion-item--expanded é classe de estado interna
+   do QExpansionItem (Quasar Framework).
+   ========================================================================== */
+
+/* Header com destaque sutil quando expandido */
+.dss-expansion-item .q-expansion-item--expanded .q-item {
+  background-color: var(--dss-surface-subtle);
+}
+
+/* Header expandido + hover — reforço visual */
+.dss-expansion-item .q-expansion-item--expanded .q-item:hover:not(.disabled):not([aria-disabled="true"]) {
+  background-color: var(--dss-surface-muted);
+}
+
+/* ==========================================================================
+   PAINEL DE CONTEÚDO
+
+   GATE-EXCEPTION: .q-expansion-item__content é interno do QExpansionItem.
+   Sem padding interno — o conteúdo do slot é responsabilidade do consumidor.
+   ========================================================================== */
+
+.dss-expansion-item .q-expansion-item__content {
+  /* Sem padding: responsabilidade do consumer (slot padrão) */
+}
+
+/* ==========================================================================
+   ÍCONE DE EXPANSÃO
+
+   GATE-EXCEPTION: .q-expansion-item__toggle-icon é interno do QExpansionItem.
+   Sobrescreve transição com token DSS e aplica cor coerente com DssItem.
+   ========================================================================== */
+
+.dss-expansion-item .q-expansion-item__toggle-icon {
+  /* Sobrescreve duração padrão Quasar com token DSS */
+  transition: transform var(--dss-duration-250) var(--dss-easing-standard);
+  color: var(--dss-text-subtle);
+}
+
+/* ==========================================================================
+   ESTADO DISABLED
+
+   Opacidade via token --dss-opacity-disabled (= 0.4, canônico DSS).
+   Pointer-events none impede interações.
+   ========================================================================== */
+
+.dss-expansion-item--disabled .q-item {
+  opacity: var(--dss-opacity-disabled);
+  pointer-events: none;
+  cursor: default;
+}

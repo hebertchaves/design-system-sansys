@@ -1,0 +1,38 @@
+/* ==========================================================================
+   DssList - LAYER 2: COMPOSITION (Base Styles)
+
+   Responsabilidade: Definir estilos base do container de lista usando
+   APENAS tokens genéricos DSS.
+
+   Filosofia DSS: Tokens = Provedores, Componentes = Consumidores
+
+   REGRAS:
+   - APENAS tokens genéricos (--dss-spacing-*, --dss-border-*, etc.)
+   - Reset e layout base
+   - ZERO valores hardcoded
+   - ZERO lógica de variantes
+   ========================================================================== */
+
+@import '../../../../utils/index';
+
+/* ==========================================================================
+   BASE LIST CONTAINER
+   ========================================================================== */
+
+.dss-list {
+  /* Reset */
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  /* Typography inheritance */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  color: var(--dss-text-body);
+
+  /* Box model */
+  box-sizing: border-box;
+}

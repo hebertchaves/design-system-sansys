@@ -1,0 +1,54 @@
+// ==========================================================================
+// DssCadrisCard — Layer 3: Variants (_variant.scss)
+// ==========================================================================
+// Variantes estruturais do componente composto.
+//
+// Variantes aplicáveis:
+//   --compact   : reduz padding interno da tabela e filtros (alta densidade)
+//   --borderless: remove bordas entre seções internas
+// ==========================================================================
+
+.dss-cadris-card {
+  // --------------------------------------------------------------------------
+  // Variante: compact
+  // Reduz o espaçamento interno para contextos de alta densidade
+  // --------------------------------------------------------------------------
+
+  &--compact {
+    .dss-cadris-card__pesquisa-section {
+      padding: var(--dss-spacing-2) var(--dss-spacing-3) 0;
+    }
+
+    .dss-cadris-card__total-label {
+      padding: var(--dss-spacing-1) var(--dss-spacing-3);
+    }
+
+    .dss-cadris-card__cell,
+    .dss-cadris-card__thead th[role='columnheader'] {
+      padding: var(--dss-spacing-2) var(--dss-spacing-3);
+    }
+
+    .dss-cadris-card__pagination {
+      padding: var(--dss-spacing-1) var(--dss-spacing-2);
+    }
+
+    .dss-cadris-card__footer {
+      padding: var(--dss-spacing-2) var(--dss-spacing-3);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Variante: borderless
+  // Remove bordas divisórias entre seções — útil quando incorporado em
+  // layouts que já possuem separadores externos
+  // --------------------------------------------------------------------------
+
+  &--borderless {
+    .dss-cadris-card__pesquisa-section,
+    .dss-cadris-card__total-label,
+    .dss-cadris-card__pagination,
+    .dss-cadris-card__footer {
+      border-color: transparent;
+    }
+  }
+}

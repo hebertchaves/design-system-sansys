@@ -1,0 +1,48 @@
+// =============================================================================
+// DssTimePicker — LAYER 4: OUTPUT (Brands)
+//
+// RESPONSABILIDADE: Variações de brand do DssTimePicker.
+//
+// Brands suportados: hub | water | waste
+//
+// Estratégia (padrão EXC-Gate-02 — DssPagination/DssCarousel):
+//   A cor do ponteiro e dos controles ativos é controlada via --q-color-primary.
+//   O override por brand substitui --q-color-primary pelo token de brand.
+//   O seletor descendant garante especificidade correta sem :deep().
+// =============================================================================
+
+[data-brand='hub'] .q-time.dss-time-picker {
+  --q-color-primary: var(--dss-hub-600);
+
+  .q-time__header {
+    background-color: var(--dss-hub-600);
+  }
+
+  .q-time__clock-position--active {
+    background-color: var(--dss-hub-600);
+  }
+}
+
+[data-brand='water'] .q-time.dss-time-picker {
+  --q-color-primary: var(--dss-water-500);
+
+  .q-time__header {
+    background-color: var(--dss-water-500);
+  }
+
+  .q-time__clock-position--active {
+    background-color: var(--dss-water-500);
+  }
+}
+
+[data-brand='waste'] .q-time.dss-time-picker {
+  --q-color-primary: var(--dss-waste-600);
+
+  .q-time__header {
+    background-color: var(--dss-waste-600);
+  }
+
+  .q-time__clock-position--active {
+    background-color: var(--dss-waste-600);
+  }
+}

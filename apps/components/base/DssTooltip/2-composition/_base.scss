@@ -1,0 +1,87 @@
+/* ==========================================================================
+   DssTooltip - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genericos
+
+   GOLDEN COMPONENT: DssBadge (Compact Control nao interativo)
+   CLASSIFICACAO: Elemento Informativo Contextual (NAO interativo)
+
+   REGRAS:
+   ✅ APENAS tokens genericos (--dss-spacing-*, --dss-radius-*, etc.)
+   ✅ Mixins reutilizaveis
+   ✅ Reset e layout base
+   ❌ ZERO valores hardcoded (exceto documentados na tabela de excecoes)
+   ❌ ZERO logica de variantes (variantes vao em 3-variants/)
+   ❌ ZERO estados interativos (hover, active, focus, disabled, loading)
+
+   DECISOES EXPLICITAS:
+   - Touch target: NAO implementado (Opcao B — nao interativo)
+   - ::before: PROIBIDO
+   - ::after: Permitido apenas para efeitos visuais passivos
+   - Estados: Apenas visible/hidden (contextuais, nao interativos)
+   ========================================================================== */
+
+/* ==========================================================================
+   TOOLTIP BASE
+   ========================================================================== */
+
+.dss-tooltip {
+  /* Display e Layout */
+  display: inline-block;
+  position: relative;
+  z-index: var(--dss-z-index-tooltip);
+
+  /* Tipografia
+   * font-size: xs (12px) — alinhado com M3, Carbon, Salesforce para tooltips.
+   *   Tooltips são elementos compactos de informação contextual, não texto corrido.
+   *   Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.17
+   * font-weight: normal (400) — DssBadge usa medium para enfase de label.
+   *   Tooltip exibe informacao contextual sem enfase especial.
+   */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-tight);
+  text-align: center;
+
+  /* Dimensoes
+   *
+   * ⚠️ EXCECAO DOCUMENTADA: max-width via var(--dss-spacing-60) = 240px
+   *
+   * 240px é o valor canônico das referências (M3, Carbon, Salesforce).
+   * --dss-spacing-60 = 15rem = 240px é o token mais próximo semanticamente.
+   * Alternativas avaliadas:
+   * - 300px (anterior) — largo demais para elemento contextual compacto
+   * - Sem max-width — tooltips ficam excessivamente largos com texto longo
+   *
+   * Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.17
+   */
+  max-width: var(--dss-spacing-60);
+  padding: var(--dss-spacing-1_5) var(--dss-spacing-2);
+
+  /* Forma
+   * border-radius: sm (4px) — cantos levemente arredondados.
+   * As três referências (M3, Carbon, Salesforce) usam 4px para tooltips.
+   * Diferencia-se de Menus/Inputs (radius-md) e superfícies (radius-lg).
+   * Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.17 e 14.1
+   */
+  border-radius: var(--dss-radius-sm);
+
+  /* Elevação
+   * elevation-2: tooltip flutua sobre o conteúdo mas abaixo de menus/FAB.
+   * Sombra sutil aumenta separação visual entre tooltip e superfície.
+   * Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 14.2
+   */
+  box-shadow: var(--dss-elevation-2);
+
+  /* Transicoes
+   * Apenas opacity — tooltip aparece/desaparece suavemente.
+   * Usa token semantico --dss-duration-tooltip para permitir ajuste
+   * global de timing de tooltips sem afetar outros componentes.
+   */
+  transition: opacity var(--dss-duration-tooltip) var(--dss-easing-standard);
+
+  /* Overflow — texto longo quebra graciosamente */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}

@@ -1,0 +1,27 @@
+// =============================================================================
+// DssLinearProgress — LAYER 3: VARIANTS — Sizes
+//
+// Altura da barra mapeada para tokens de spacing DSS.
+// A prop `size` é convertida para CSS token em Vue e passada como :size
+// ao QLinearProgress (inline style). Este arquivo mantém as classes de
+// tamanho como documentação e fallback semântico para seletores externos.
+//
+// TOKENS:
+//   xs → --dss-spacing-1  (4px)
+//   sm → --dss-spacing-2  (8px)
+//   md → --dss-spacing-3  (12px) — padrão
+//   lg → --dss-spacing-4  (16px)
+//   xl → --dss-spacing-6  (24px)
+//
+// NOTA: A altura real é aplicada via QLinearProgress :size (inline style).
+//       As classes abaixo são auxiliares para possível uso externo e para
+//       clareza semântica nos DevTools.
+// =============================================================================
+
+.dss-linear-progress {
+  &--size-xs .q-linear-progress { min-height: var(--dss-spacing-1); }
+  &--size-sm .q-linear-progress { min-height: var(--dss-spacing-2); }
+  &--size-md .q-linear-progress { min-height: var(--dss-spacing-3); }
+  &--size-lg .q-linear-progress { min-height: var(--dss-spacing-4); }
+  &--size-xl .q-linear-progress { min-height: var(--dss-spacing-6); }
+}

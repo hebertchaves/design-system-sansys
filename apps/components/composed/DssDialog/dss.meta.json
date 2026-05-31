@@ -1,0 +1,137 @@
+{
+  "component": "DssDialog",
+  "cssClass": "dss-dialog",
+  "phase": 2,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssCard",
+  "classification": {
+    "type": "Overlay Modal",
+    "category": "Overlays e Dialogs",
+    "interactive": true,
+    "note": "Interativo via v-model:open; interatividade interna pertence aos filhos (DssButton, DssInput)"
+  },
+  "phaseDescription": "Fase 2 — Nível 1 (Independente). Overlay modal baseado em QDialog do Quasar. Fornece estrutura header/body/footer via slots para composição pelo consumidor.",
+  "quasarBase": "QDialog",
+  "dependencies": [],
+  "optionalComposition": [
+    "DssButton",
+    "DssIcon",
+    "DssCard",
+    "DssInput",
+    "DssSpinner",
+    "DssList",
+    "DssItem"
+  ],
+  "tokens": [
+    "--dss-surface-default",
+    "--dss-shadow-modal",
+    "--dss-radius-lg",
+    "--dss-padding-4",
+    "--dss-padding-6",
+    "--dss-spacing-2",
+    "--dss-gray-100",
+    "--dss-gray-200",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-font-family-sans",
+    "--dss-text-body",
+    "--dss-elevation-3",
+    "--dss-hub-primary",
+    "--dss-water-primary",
+    "--dss-waste-primary"
+  ],
+  "statesApplicable": [
+    "open",
+    "closed",
+    "persistent",
+    "maximized",
+    "full-width",
+    "full-height",
+    "seamless",
+    "position-top",
+    "position-bottom",
+    "position-left",
+    "position-right"
+  ],
+  "statesNotApplicable": [
+    "hover: N/A — DssDialog não é controle interativo no root",
+    "focus: N/A — foco pertence aos filhos (DssButton, DssInput)",
+    "active: N/A — não interativo no root",
+    "disabled: N/A — diálogos não têm estado desabilitado; simplesmente não abrir",
+    "loading: N/A — usar DssSpinner dentro do slot default quando necessário"
+  ],
+  "variants": [
+    "standard (padrão)",
+    "maximized",
+    "full-width",
+    "full-height",
+    "seamless",
+    "position-top",
+    "position-bottom",
+    "position-left",
+    "position-right"
+  ],
+  "gateExceptions": [
+    {
+      "gate": "Gate de Composição v2.4 — Rule 1",
+      "rule": "Componentes compostos não devem usar componentes Quasar nativos diretamente no template",
+      "exceptionId": "EXC-Gate-01",
+      "justification": "DssDialog usa QDialog como motor de teleport, backdrop, focus-trap e gerenciamento de z-index. Não existe equivalente DSS para substituir esta infraestrutura de overlay. QDialog não renderiza nenhum elemento visual próprio no DOM final — toda a UI é construída via slot default e classes DSS."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "type": "CSSImportant",
+      "description": "!important em background-color e box-shadow no .dss-dialog",
+      "location": "2-composition/_base.scss",
+      "justification": "QDialog aplica background e box-shadow via .q-dialog__inner com especificidade CSS que sobrescreve tokens DSS. Precedente: DssMenu (EXC-01), DssSelect (panel override)."
+    },
+    {
+      "id": "EXC-02",
+      "type": "HardcodedDimension",
+      "description": "min-width: 280px, max-width: 90vw, max-height: 90vh em L2",
+      "location": "2-composition/_base.scss",
+      "justification": "Não existe token DSS para min/max width/height de overlay. 280px é valor de referência Material Design para largura mínima de diálogos usáveis. 90vw/90vh previnem que o diálogo ultrapasse os limites da tela."
+    }
+  ],
+  "compositionRecommendations": [
+    "Use DssDialog com DssButton no #footer para ações primária e secundária",
+    "Para diálogos de confirmação, use persistent: true para evitar fechamento acidental",
+    "Para formulários complexos, combine com maximized: true para maximizar o espaço disponível",
+    "Conecte aria-labelledby ao elemento de título no #header para acessibilidade",
+    "Passe brand via [data-brand] no ancestral ou wrapper — filhos herdarão automaticamente"
+  ],
+  "antiPatterns": [
+    "Não usar QBtn, QInput ou outros componentes Quasar nativos dentro do DssDialog — use DssButton, DssInput",
+    "Não aninhar mais de 2 níveis de DssDialog — avaliar fluxo alternativo",
+    "Não usar DssDialog para notificações temporárias — usar DssToast/DssSnackbar",
+    "Não usar DssDialog para tooltips/popovers — usar DssTooltip/DssMenu",
+    "Não criar dependência estrutural obrigatória nos slots — filhos são responsabilidade do consumidor"
+  ],
+  "auditHistory": [
+    {
+      "date": "2026-05-11",
+      "auditor": "Claude Code (MCP-First)",
+      "version": "1.0.0",
+      "result": "APROVADO",
+      "ncCount": 4,
+      "ncBlocking": 0,
+      "ncNonBlocking": 4,
+      "gaps": 2,
+      "ncsResolved": [
+        "NC-01: withDefaults com 8 defaults triviais false — corrigido (apenas não-triviais mantidos)",
+        "NC-02: 1px hardcoded em forced-colors → var(--dss-border-width-thin)",
+        "NC-03: 2px hardcoded em prefers-contrast → var(--dss-border-width-md)",
+        "NC-04: --dss-gray-200 ausente do tokens[] → adicionado junto com --dss-border-width-thin/md"
+      ],
+      "gapsOpen": [
+        "GAP-01: DssDialog.test.js não criado (prompt_criacao_v2.5 §6)",
+        "GAP-02: pre_prompt_dss_dialog.md sem seção ❌/✅ anti-padrões (DSS_CRITERIOS_AVALIACAO_FASE2 §1.2)"
+      ],
+      "notes": "Componente aprovado para selo após correção das 4 NCs não-bloqueantes. EXC-Gate-01 (QDialog motor) e EXC-01/02 (CSS !important, dimensões hardcoded) formalmente documentados com precedentes."
+    }
+  ]
+}

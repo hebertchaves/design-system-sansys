@@ -1,0 +1,45 @@
+/* ==========================================================================
+   DssList - MAIN MODULE (Orquestrador Final)
+
+   Filosofia DSS: Arquitetura em 4 Camadas
+
+   LAYER 1: Structure (Vue component — DssList.vue)
+   LAYER 2: Composition (Base styles e reset)
+   LAYER 3: Variants (bordered, padding, separator)
+   LAYER 4: Output (brands, states: dark mode, high-contrast, forced-colors, print)
+
+   Este arquivo importa TODAS as camadas e gera o CSS final.
+   ========================================================================== */
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants' as variants;
+
+/* Layer 4: Output */
+@use './4-output' as output;
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dss-list--bordered {
+    border-width: var(--dss-border-width-md);
+    border-color: currentColor;
+  }
+
+  .dss-list--separator > * + * {
+    border-top-width: var(--dss-border-width-md);
+    border-top-color: currentColor;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-list {
+    transition: none;
+  }
+}

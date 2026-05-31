@@ -1,0 +1,48 @@
+// ==========================================================================
+// DssToolbarTitle — Layer 4: States
+// ==========================================================================
+//
+// Estados adaptativos passivos: dark mode, alto contraste, forced-colors, print.
+// DssToolbarTitle não possui estados interativos (hover, focus, active, disabled).
+// Reage passivamente às condições de ambiente herdando cores do DssToolbar pai.
+
+// Dark mode — a cor é herdada via cascata do DssToolbar pai.
+// Nenhum override necessário: --dss-text-inverse já se aplica automaticamente
+// ao DssToolbar quando em contexto de brand colorida.
+// Em dark mode puro, o DssToolbar pai aplica --dss-text-body adequado.
+
+// Alto contraste
+@media (prefers-contrast: more) {
+  .dss-toolbar-title {
+    &.q-toolbar__title {
+      // Força herança do contraste do pai — não aplica cor própria
+      color: inherit;
+    }
+  }
+}
+
+// Forced Colors (Windows High Contrast Mode)
+@media (forced-colors: active) {
+  .dss-toolbar-title {
+    &.q-toolbar__title {
+      // ButtonText: cor de texto em contexto de botão/barra (sistema)
+      color: ButtonText;
+      // Garante que letter-spacing não cause problemas de layout em HCM
+      letter-spacing: normal;
+    }
+  }
+}
+
+// Reduced motion — DssToolbarTitle não possui animações; sem overrides necessários.
+
+// Print
+@media print {
+  .dss-toolbar-title {
+    &.q-toolbar__title {
+      color: currentColor;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+    }
+  }
+}

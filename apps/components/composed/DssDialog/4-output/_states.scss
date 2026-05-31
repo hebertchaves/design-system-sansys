@@ -1,0 +1,87 @@
+/* ==========================================================================
+   DssDialog — Layer 4: States
+   Dark mode, high-contrast, forced-colors, print, reduced-motion
+
+   REGRAS:
+   ✅ Apenas sobrescritas de tokens para estados especiais
+   ✅ forced-colors: SystemColor keywords obrigatórios
+   ❌ forced-color-adjust: none — PROIBIDO (WCAG 2.1 criterion 1.4.11)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE — via [data-theme="dark"] (classe no ancestral)
+   ========================================================================== */
+
+[data-theme="dark"] .dss-dialog {
+  background-color: var(--dss-surface-default) !important;
+
+  .dss-dialog__header,
+  .dss-dialog__footer {
+    border-color: var(--dss-gray-200);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST — via prefers-contrast: more (WCAG 1.4.11)
+   EXC-States-01: prefers-contrast: more é o valor válido (NOT "high")
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-dialog {
+    outline: var(--dss-border-width-md) solid var(--dss-text-body);
+    outline-offset: var(--dss-border-width-md);
+
+    .dss-dialog__header,
+    .dss-dialog__footer {
+      border-width: var(--dss-border-width-md);
+    }
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS — Windows High Contrast Mode (WCAG 1.4.11)
+   SystemColor keywords: ButtonText, ButtonFace, CanvasText, Canvas,
+   Highlight, HighlightText, LinkText, VisitedText
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-dialog {
+    background-color: Canvas !important;
+    color: CanvasText;
+    border: var(--dss-border-width-thin) solid ButtonText;
+    box-shadow: none !important;
+
+    .dss-dialog__header,
+    .dss-dialog__footer {
+      border-color: ButtonText;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION — prefers-reduced-motion: reduce
+   Transições já gerenciadas pelos tokens via _motion.scss
+   (--dss-duration-* → 0ms quando reduced-motion está ativo)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-dialog {
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   EXC-04: print !important necessário para garantir visibilidade em impressão
+   ========================================================================== */
+
+@media print {
+  .dss-dialog {
+    box-shadow: none !important;
+    position: static !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    border-radius: 0;
+    break-inside: avoid;
+  }
+}

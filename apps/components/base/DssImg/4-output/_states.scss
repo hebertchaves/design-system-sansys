@@ -1,0 +1,87 @@
+// =============================================================================
+// DssImg — LAYER 4: OUTPUT — States
+//
+// RESPONSABILIDADE: Dark mode, acessibilidade e media queries especiais.
+//
+// ORDEM CANÔNICA DSS:
+//   1. dark mode       ([data-theme="dark"])
+//   2. prefers-contrast: more
+//   3. prefers-reduced-motion  ← DssSpinner anima; este arquivo não anima
+//   4. print
+//   5. forced-colors   (Windows HCM)
+//
+// GOLDEN REFERENCE: DssBadge (padrão de estados em componentes não interativos)
+// GOLDEN CONTEXT:   DssInfiniteScroll (padrão de estados para containers visuais)
+//
+// NOTA: DssImg não define animações próprias.
+//   A animação de fade-in é gerenciada internamente pelo QImg.
+//   O DssSpinner de loading gerencia sua própria conformidade com reduced-motion.
+//   Portanto, prefers-reduced-motion não requer declaração explícita aqui.
+//
+// =============================================================================
+
+// =============================================================================
+// 1. DARK MODE
+// =============================================================================
+
+[data-theme="dark"] {
+  // --dss-surface-disabled e --dss-text-subtle já têm overrides de dark mode
+  // nos tokens semânticos. Nenhum override adicional necessário.
+  // Placeholder para futuras customizações de dark mode.
+}
+
+// =============================================================================
+// 2. HIGH CONTRAST (prefers-contrast: more)
+// =============================================================================
+
+@media (prefers-contrast: more) {
+  .dss-img {
+    &__error {
+      // currentColor garante contraste máximo do ícone de erro contra qualquer fundo
+      color: currentColor;
+    }
+  }
+}
+
+// =============================================================================
+// 3. REDUCED MOTION
+// =============================================================================
+
+// DssImg não define @keyframes próprios.
+// QImg gerencia o fade-in internamente.
+// DssSpinner filho gerencia sua própria conformidade.
+
+// =============================================================================
+// 4. PRINT
+// =============================================================================
+
+@media print {
+  .dss-img {
+    // O estado de loading não tem significado em contexto estático.
+    &__loading {
+      display: none;
+    }
+
+    // O estado de erro mantém visibilidade — informa que a imagem não pôde
+    // ser carregada (informação relevante mesmo em impressão).
+  }
+}
+
+// =============================================================================
+// 5. FORCED COLORS (Windows High Contrast Mode)
+// =============================================================================
+
+@media (forced-colors: active) {
+  .dss-img {
+    &__error {
+      // CanvasText garante legibilidade do ícone em qualquer tema Windows HCM
+      color: CanvasText;
+    }
+
+    &__loading,
+    &__error {
+      // Canvas garante fundo legível em Windows HCM
+      background-color: Canvas;
+    }
+  }
+}

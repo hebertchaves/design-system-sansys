@@ -1,0 +1,88 @@
+{
+  "component": "DssTimelineEntry",
+  "cssClass": "dss-timeline-entry",
+  "phase": 2,
+  "status": "conformant",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssTimeline",
+  "classification": {
+    "type": "Subcomponente de container não-interativo",
+    "category": "Visualização de Dados e Histórico",
+    "interactive": false,
+    "family": "Timeline"
+  },
+  "phaseDescription": "Fase 2, Nível 2 — Subcomponente da família Timeline. Deve ser filho direto de DssTimeline.",
+  "statesApplicable": [],
+  "statesNotApplicable": [
+    {
+      "state": "hover",
+      "reason": "Subcomponente não-interativo"
+    },
+    {
+      "state": "focus",
+      "reason": "O entry root não é focável"
+    },
+    {
+      "state": "active",
+      "reason": "Sem estado pressionado"
+    },
+    {
+      "state": "disabled",
+      "reason": "Não aplicável para itens de timeline"
+    },
+    {
+      "state": "loading",
+      "reason": "Conteúdo estático"
+    }
+  ],
+  "tokens": [
+    "--dss-font-size-lg",
+    "--dss-font-weight-semibold",
+    "--dss-text-subtle",
+    "--dss-spacing-2"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "Gate de Composição v2.4",
+      "location": "2-composition/_base.scss",
+      "value": "Selector .dss-timeline-entry--heading .q-timeline__heading-title",
+      "justification": "QTimelineEntry no modo heading renderiza .q-timeline__heading-title internamente sem CSS custom property nativa para tipografia do heading."
+    },
+    {
+      "id": "EXC-States-01",
+      "type": "Forced Colors",
+      "location": "4-output/_states.scss",
+      "value": "ButtonText em heading",
+      "justification": "Em forced-colors, heading usa ButtonText para garantir visibilidade do separador de período."
+    }
+  ],
+  "compositionRecommendations": [
+    "Usar exclusivamente como filho direto de DssTimeline",
+    "DssIcon no slot #icon para marcadores customizados",
+    "DssButton no slot default para ações contextuais",
+    "DssBadge no slot #title para indicadores de status"
+  ],
+  "auditHistory": [],
+  "defaultPreview": {
+    "props": {
+      "title": "Evento",
+      "subtitle": "Data",
+      "icon": "check"
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "gap": "--dss-spacing-2",
+      "padding": "--dss-spacing-2",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Entrada de timeline com ícone e conteúdo"
+  }
+}

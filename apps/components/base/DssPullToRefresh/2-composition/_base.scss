@@ -1,0 +1,97 @@
+/* ==========================================================================
+   DssPullToRefresh — LAYER 2: COMPOSITION (Base Styles)
+
+   MOTOR: QPullToRefresh (EXC-Gate-01: QPullToRefresh renderiza .q-pull-to-refresh como root)
+   Componente para atualização de conteúdo via gesto de puxar para baixo.
+
+   EXC-Gate-02 (a): --q-color-primary sobrescreve a cor do ícone interno do Quasar.
+   EXC-Gate-02 (b): Seletores descendentes .q-pull-to-refresh__handler e
+                    .q-pull-to-refresh__arrow para controlar o indicador visual
+                    (background, sombra, border-radius, tamanho de ícone),
+                    pois o QPullToRefresh não expõe slot para o handler.
+
+   REGRAS:
+   ✅ Tokens genéricos DSS apenas
+   ✅ Estrutura e layout base
+   ✅ Sem valores hardcoded (exceto 50% geométrico — ver EX-Structural-01)
+   ❌ Cores de brand (ficam em 4-output/_brands.scss)
+   ========================================================================== */
+
+/* ==========================================================================
+   ROOT — Comportamento geral do container
+   ========================================================================== */
+
+.dss-pull-to-refresh {
+  /* Ocupa largura total disponível */
+  width: 100%;
+  position: relative;
+
+  /* -webkit-tap: suprime o destaque de toque do browser nos gestos */
+  -webkit-tap-highlight-color: transparent;
+
+  /* EXC-Gate-02 (a): --q-color-primary governa a cor do ícone/spinner
+     interno do QPullToRefresh sem precisar passar a prop color diretamente.
+     Valor base usa o token semântico de ação primária DSS.
+     Brands sobrescrevem em 4-output/_brands.scss. */
+  --q-color-primary: var(--dss-action-primary);
+}
+
+/* ==========================================================================
+   HANDLER — Indicador circular de pull
+   EXC-Gate-02 (b): .q-pull-to-refresh__handler não é acessível via slot.
+   Quasar aplica classe bg-white !important no handler, exigindo !important
+   para garantir nosso background-color (precedência de especificidade: 2
+   classes vs 1 classe do Quasar, ambos com !important; nossa regra vence).
+   ========================================================================== */
+
+.dss-pull-to-refresh .q-pull-to-refresh__handler {
+  /* EX-Structural-01: border-radius 50% é constante geométrica para círculo.
+     Sem token DSS equivalente para formas circulares perfeitas. */
+  border-radius: 50% !important;
+
+  /* Background do indicador: superfície elevada sobre o conteúdo */
+  background-color: var(--dss-surface-default) !important;
+
+  /* Sombra para separar o indicador do conteúdo abaixo */
+  box-shadow: var(--dss-shadow-md) !important;
+
+  /* Padding padrão (md): alinhado com touch-target-md */
+  padding: var(--dss-padding-2) !important;
+}
+
+/* ==========================================================================
+   ÍCONE DENTRO DO HANDLER — Cor via --q-color-primary
+   EXC-Gate-02 (b): .q-pull-to-refresh__arrow é o ícone de refresh interno.
+   ========================================================================== */
+
+.dss-pull-to-refresh .q-pull-to-refresh__arrow {
+  /* Tamanho padrão (md) */
+  font-size: var(--dss-icon-size-md);
+}
+
+/* ==========================================================================
+   ESTADO DISABLED
+   NC-02 corrigido: A prop disable do QPullToRefresh já impede o gesto de pull
+   sem bloquear o conteúdo interno. pointer-events: none no container violaria
+   o Gate de Responsabilidade (container não pode capturar estados dos filhos).
+   Nenhum override CSS adicional é necessário.
+   ========================================================================== */
+/* (sem regras CSS — disable é gerenciado inteiramente pelo QPullToRefresh) */
+
+/* ==========================================================================
+   UTILITÁRIO SR-ONLY LOCAL
+   EXC-SrOnly-02: Não existe utilitário global DSS para sr-only.
+   Risco aceito: duplicação se outro componente DSS precisar do mesmo padrão.
+   Precedente: DssParallax EXC-SrOnly-01.
+   ========================================================================== */
+.dss-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

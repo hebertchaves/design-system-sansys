@@ -1,0 +1,10 @@
+@use './2-composition/base' as composition;
+@use './3-variants' as variants;
+@use './4-output' as output;
+
+/* ==========================================================================
+   DssButton - MODULE ORCHESTRATOR
+
+   Responsabilidade: Importar e orquestrar as 3 camadas SCSS.
+   Estados de acessibilidade são gerenciados em 4-output/_states.scss.
+   ========================================================================== */

@@ -1,0 +1,51 @@
+// =============================================================================
+// Layer 4 — Brands: DssBreadcrumbs
+// Hub (laranja) | Water (azul) | Waste (verde)
+//
+// Governança:
+//   A cor dos separadores é sobrescrita pela cor primária da marca quando
+//   o componente está dentro de um contexto brandado ([data-brand="..."]).
+//   A classe --brand-{name} no elemento permite sobrescrita direta sem
+//   dependência do contexto pai — útil para brand embedding isolado.
+//
+//   A cor dos DssBreadcrumbsEl filhos é governada pelo _brands.scss do
+//   próprio DssBreadcrumbsEl — não é responsabilidade deste arquivo.
+//
+// Brand tokens:
+//   Tokens numéricos (--dss-hub-600, etc.) usados intencionalmente, seguindo
+//   o precedente do DssBreadcrumbsEl _brands.scss e DssBtnGroup _brands.scss.
+//   Tokens semânticos de brand não estão disponíveis no catálogo DSS v2.2.
+// =============================================================================
+
+// ─── Hub (laranja) ─────────────────────────────────────────────────────────
+[data-brand="hub"] .dss-breadcrumbs .q-breadcrumbs__separator,
+.dss-breadcrumbs--brand-hub .q-breadcrumbs__separator {
+  color: var(--dss-hub-600);
+}
+
+[data-theme="dark"] [data-brand="hub"] .dss-breadcrumbs .q-breadcrumbs__separator,
+[data-theme="dark"] .dss-breadcrumbs--brand-hub .q-breadcrumbs__separator {
+  color: var(--dss-hub-400);
+}
+
+// ─── Water (azul) ──────────────────────────────────────────────────────────
+[data-brand="water"] .dss-breadcrumbs .q-breadcrumbs__separator,
+.dss-breadcrumbs--brand-water .q-breadcrumbs__separator {
+  color: var(--dss-water-500);
+}
+
+[data-theme="dark"] [data-brand="water"] .dss-breadcrumbs .q-breadcrumbs__separator,
+[data-theme="dark"] .dss-breadcrumbs--brand-water .q-breadcrumbs__separator {
+  color: var(--dss-water-400);
+}
+
+// ─── Waste (verde) ─────────────────────────────────────────────────────────
+[data-brand="waste"] .dss-breadcrumbs .q-breadcrumbs__separator,
+.dss-breadcrumbs--brand-waste .q-breadcrumbs__separator {
+  color: var(--dss-waste-600);
+}
+
+[data-theme="dark"] [data-brand="waste"] .dss-breadcrumbs .q-breadcrumbs__separator,
+[data-theme="dark"] .dss-breadcrumbs--brand-waste .q-breadcrumbs__separator {
+  color: var(--dss-waste-500);
+}

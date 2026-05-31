@@ -1,0 +1,14 @@
+// Layer 2 — Base composition
+// Token First: all values via var(--dss-*). Exceptions documented with IDs.
+
+// EXC-Gate-02: --q-color-primary override para injetar a cor de brand na barra do QAjaxBar.
+// QAjaxBar aplica background: var(--q-color-primary) via prop color="primary".
+// DSS não usa Quasar color names diretamente — sobrescrevemos --q-color-primary no escopo
+// do componente com o token semântico DSS de ação primária.
+// Padrão consistente com DssPagination (EXC-Gate-01).
+.dss-ajax-bar {
+  --q-color-primary: var(--dss-action-primary);
+
+  // Webkit tap highlight: consistente com outros componentes DSS não-interativos.
+  -webkit-tap-highlight-color: transparent;
+}

@@ -1,0 +1,11 @@
+// ==========================================================================
+// DssToolbarTitle — Layer 4: Brands
+// ==========================================================================
+//
+// DssToolbarTitle não define cores próprias.
+// A cor do texto é herdada automaticamente do DssToolbar pai via [data-brand].
+// O DssToolbar propaga [data-brand] no elemento raiz, e os tokens semânticos
+// --dss-text-body (padrão) e --dss-text-inverse (sobre brand colorida) são
+// aplicados ao container pai, sendo herdados via cascata CSS.
+//
+// Nenhum override de brand é necessário nesta camada.

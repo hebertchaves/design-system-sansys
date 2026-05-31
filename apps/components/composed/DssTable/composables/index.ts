@@ -1,0 +1,1 @@
+export { useTableClasses } from './useTableClasses'

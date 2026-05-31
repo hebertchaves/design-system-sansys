@@ -1,0 +1,145 @@
+{
+  "component": "DssUploader",
+  "cssClass": "dss-uploader",
+  "phase": 2,
+  "status": "in-progress",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssCard",
+  "classification": {
+    "type": "Composite",
+    "category": "Upload",
+    "interactive": false,
+    "note": "Não interativo em sua raiz — interatividade pertence aos filhos DssButton"
+  },
+  "phaseDescription": "Fase 2 — Nível 2 (Composição de Primeiro Grau). Orquestra DssButton, DssIcon e DssLinearProgress em uma interface unificada de upload.",
+  "dependencies": [
+    "DssButton",
+    "DssIcon",
+    "DssLinearProgress"
+  ],
+  "quasarBase": "QUploader",
+  "tokens": [
+    "--dss-surface-default",
+    "--dss-surface-hover",
+    "--dss-surface-muted",
+    "--dss-gray-100",
+    "--dss-gray-300",
+    "--dss-gray-400",
+    "--dss-gray-500",
+    "--dss-gray-600",
+    "--dss-gray-800",
+    "--dss-radius-lg",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-border-focus",
+    "--dss-padding-2",
+    "--dss-padding-4",
+    "--dss-padding-8",
+    "--dss-grid-gap-sm",
+    "--dss-spacing-20",
+    "--dss-font-size-xs",
+    "--dss-font-size-sm",
+    "--dss-font-weight-normal",
+    "--dss-elevation-1",
+    "--dss-shadow-sm",
+    "--dss-shadow-hub-sm",
+    "--dss-shadow-water-sm",
+    "--dss-shadow-waste-sm",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600",
+    "--dss-feedback-success",
+    "--dss-feedback-error",
+    "--dss-opacity-disabled",
+    "--dss-duration-150",
+    "--dss-duration-200",
+    "--dss-easing-standard"
+  ],
+  "statesApplicable": [
+    "disabled",
+    "readonly",
+    "drag-active"
+  ],
+  "statesNotApplicable": [
+    "hover (root): não interativo — aplicado apenas nos filhos DssButton",
+    "focus (root): não interativo — foco pertence aos botões internos",
+    "active (root): não interativo",
+    "loading (root): DssLinearProgress nos itens é o indicador de progresso"
+  ],
+  "variants": [
+    "elevated",
+    "outline",
+    "subtle"
+  ],
+  "gateExceptions": [
+    {
+      "gate": "Gate de Composição v2.4 — Rule 1",
+      "rule": "Componentes compostos não devem usar componentes Quasar nativos diretamente no template",
+      "exceptionId": "EXC-01",
+      "justification": "DssUploader usa QUploader como motor de upload (XHR, Fetch, validação, drag-and-drop) delegando TODA a lógica de rede ao Quasar. A UI é integralmente reconstruída via slots #header e #list obrigatórios, garantindo que QBtn, QIcon e QLinearProgress não sejam renderizados. Esta exceção é arquitetural e irremovível: não existe equivalente DSS para um motor de upload XHR."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "type": "StructuralSlot",
+      "description": "Os slots `header` e `list` do QUploader são SEMPRE sobrescritos internamente. Esta é a condição arquitetural fundamental do DssUploader: impede que QBtn, QIcon e QLinearProgress nativos do Quasar sejam renderizados no DOM final.",
+      "location": "1-structure/DssUploader.ts.vue — template slots #header e #list",
+      "justification": "Gate de Responsabilidade (pré-prompt Fase 2): o componente não deve reinventar a lógica de XHR/Fetch do Quasar, apenas envelopar a UI. A única forma de garantir conformidade DSS é reconstruir inteiramente a UI via slots."
+    },
+    {
+      "id": "EXC-Gate-01",
+      "type": "QuasarInternalSelector",
+      "description": "Seletores internos do QUploader resetados em 2-composition/_base.scss: .q-uploader, .q-uploader__header, .q-uploader__list, .q-uploader__dnd.",
+      "location": "2-composition/_base.scss — seção EXC-Gate-01",
+      "justification": "Sem esses resets, o Quasar sobrescreve border, box-shadow e background-color com valores que divergem dos tokens DSS. !important em border/box-shadow/background é necessário porque o QUploader aplica estilos inline via JS."
+    },
+    {
+      "id": "EXC-Gate-02",
+      "type": "CSSHasSelector",
+      "description": ":has(.q-uploader--dnd) em 3-variants/_variant.scss e 4-output/_brands.scss para detectar estado de drag-and-drop.",
+      "location": "3-variants/_variant.scss, 4-output/_brands.scss",
+      "justification": "QUploader aplica .q-uploader--dnd ao seu elemento raiz interno. O DssUploader precisa reagir a esse estado para atualizar a aparência do container pai. :has() é a solução CSS pura que evita lógica JS adicional. Suporte: todos os browsers modernos (Baseline 2023)."
+    },
+    {
+      "id": "EXC-TS-01",
+      "type": "TypeScriptUnsafeCast",
+      "description": "(qUploaderRef.value as any)?.pickFiles?.() em defineExpose.",
+      "location": "1-structure/DssUploader.ts.vue — defineExpose",
+      "justification": "QUploader.pickFiles() existe na API oficial do Quasar mas não está incluída nas definições de tipo do pacote quasar. O cast `as any` é necessário até que os tipos do Quasar sejam atualizados. Uso de optional chaining (?.) garante segurança em runtime."
+    }
+  ],
+  "compositionRecommendations": [
+    "Use DssUploader dentro de DssCard para contexto estrutural adicional",
+    "Combine com DssInput para formulários de upload com metadados",
+    "Passe brand via [data-brand] no ancestral ou via prop — não é necessário repetir em cada filho"
+  ],
+  "antiPatterns": [
+    "Não usar QBtn, QIcon ou QLinearProgress diretamente dentro do DssUploader — use DssButton, DssIcon, DssLinearProgress",
+    "Não sobrescrever os slots header e list do QUploader ao compor o DssUploader",
+    "Não aninhar DssUploader dentro de outro DssUploader"
+  ],
+  "auditHistory": [
+    {
+      "date": "2026-05-07",
+      "auditor": "Claude Code (modo automático)",
+      "version": "1.0.0",
+      "verdict": "APROVADO APÓS CORREÇÕES",
+      "ncs": [
+        "NC-01 (Bloqueante): forced-color-adjust: none removido de _states.scss — CORRIGIDO",
+        "NC-02 (Bloqueante): gateExceptions adicionado ao dss.meta.json — CORRIGIDO",
+        "NC-03 (Não-bloqueante): 7 defaults triviais boolean false removidos do withDefaults — CORRIGIDO",
+        "NC-04 (Não-bloqueante): import computed não utilizado removido — CORRIGIDO",
+        "NC-05 (Não-bloqueante): anotações TypeScript inválidas em slot scope removidas — CORRIGIDO",
+        "NC-06 (Não-bloqueante): 1px hardcoded no bloco forced-colors substituído por var(--dss-border-width-thin) — CORRIGIDO"
+      ],
+      "gaps": [
+        "GAP-01: pré-prompt criado em docs/governance/pre-prompts/pre_prompt_dss_uploader.md — RESOLVIDO",
+        "GAP-02: subseção Exceções aos Gates v2.4 adicionada ao DssUploader.md §10 — RESOLVIDO",
+        "GAP-03: EXC-TS-01 documentado no dss.meta.json — RESOLVIDO",
+        "GAP-04: guard scope.isUploading adicionado ao v-if do botão de upload — RESOLVIDO"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+// ==========================================================================
+// DssToolbar — Layer 4: Brands
+// ==========================================================================
+//
+// Aplica cor de fundo da brand selecionada via prop brand.
+// Quando brand está ativo, o texto muda para --dss-text-inverse (branco)
+// para garantir contraste adequado sobre fundos coloridos.
+//
+// O elemento raiz recebe [data-brand] automaticamente via template,
+// permitindo que componentes filhos (DssButton, DssIcon, etc.) herdem
+// a brand via cascade CSS.
+//
+// Padrão dual de seletor: suporta herança contextual [data-brand] no pai
+// E modificador de classe direto .dss-toolbar--brand-* no DssToolbar.
+// Paridade com DssCard (Golden Reference) e DssTab/DssStep.
+//
+// Nota de acessibilidade (WCAG 1.4.3 AA — contraste):
+// - Hub: #ef7a11 sobre branco → branco sobre #ef7a11: ~2.8:1 (texto grande/bold)
+// - Water: #026cc7 sobre branco → branco sobre #026cc7: ~7.0:1 (passes AA e AAA)
+// - Waste: #0b8154 sobre branco → branco sobre #0b8154: ~5.0:1 (passes AA)
+// Para Hub: o contraste de 2.8:1 atende WCAG AA para texto grande (≥18pt ou 14pt bold).
+// O consumidor deve garantir que o conteúdo da toolbar seja texto grande ou bold.
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Hub (laranja)
+// EXC-02 — Contraste Hub: 2.8:1 aceitável para texto grande/bold em toolbar
+// ------------------------------------------------------------------
+[data-brand='hub'] .dss-toolbar--brand-hub,
+.dss-toolbar.dss-toolbar--brand-hub {
+  background-color: var(--dss-hub-600);
+  color: var(--dss-text-inverse);
+}
+
+// ------------------------------------------------------------------
+// Water (azul) — contraste 7.0:1 (passes WCAG AA e AAA)
+// ------------------------------------------------------------------
+[data-brand='water'] .dss-toolbar--brand-water,
+.dss-toolbar.dss-toolbar--brand-water {
+  background-color: var(--dss-water-600);
+  color: var(--dss-text-inverse);
+}
+
+// ------------------------------------------------------------------
+// Waste (verde) — contraste 5.0:1 (passes WCAG AA)
+// ------------------------------------------------------------------
+[data-brand='waste'] .dss-toolbar--brand-waste,
+.dss-toolbar.dss-toolbar--brand-waste {
+  background-color: var(--dss-waste-600);
+  color: var(--dss-text-inverse);
+}

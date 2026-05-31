@@ -1,0 +1,18 @@
+/* ==========================================================================
+   DssTooltip - LAYER 3: VARIANTS (Orchestrator)
+
+   Importa todas as variantes disponiveis.
+
+   FASE 1 — Escopo minimo:
+   - multi-line: Unica variante visual. Tooltip em fase 1 e um container
+     informativo simples. Variantes adicionais (posicionamento com seta,
+     tamanhos, etc.) podem ser adicionadas em fases futuras.
+
+   PARIDADE GOLDEN: DssBadge possui 5 variantes (outline, floating, rounded,
+   transparent, multi-line). DssTooltip possui 1 (multi-line) por escopo
+   minimo. Justificativa: tooltip e container informativo passivo, nao
+   necessita variantes visuais de aparencia (outline/transparent) nem
+   posicionamento proprio (floating — posicionamento e externo).
+   ========================================================================== */
+
+@forward './multi-line';

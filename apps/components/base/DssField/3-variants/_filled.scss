@@ -1,0 +1,58 @@
+/* ==========================================================================
+   DssField — LAYER 3: VARIANT — Filled
+
+   Fundo sólido. Sem borda lateral. Border-bottom apenas.
+   Label flutua para o topo ao focar.
+   Equivalente visual de DssInput--filled.
+   ========================================================================== */
+
+.dss-field--filled {
+  .dss-field__field {
+    background-color: var(--dss-gray-100);
+    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+    border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400);
+  }
+
+  /* Hover */
+  &:not(.dss-field--disabled):not(.dss-field--readonly):not(.dss-field--focused):hover .dss-field__field {
+    background-color: var(--dss-gray-200);
+  }
+
+  /* Focus */
+  &.dss-field--focused .dss-field__field {
+    background-color: var(--dss-gray-200);
+    border-bottom-color: var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+  }
+
+  &.dss-field--focused .dss-field__label {
+    color: var(--dss-action-primary);
+  }
+
+  /* Active */
+  &:not(.dss-field--disabled):not(.dss-field--readonly):active .dss-field__field {
+    background-color: var(--dss-gray-300);
+  }
+
+  /* Error */
+  &.dss-field--error .dss-field__field {
+    border-bottom-color: var(--dss-error-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+  }
+
+  &.dss-field--error .dss-field__label {
+    color: var(--dss-error-600);
+  }
+
+  /* Disabled */
+  &.dss-field--disabled .dss-field__field {
+    background-color: var(--dss-gray-200);
+    border-bottom-style: dotted;
+  }
+
+  /* Readonly */
+  &.dss-field--readonly .dss-field__field {
+    background-color: var(--dss-gray-100);
+    border-bottom-color: transparent;
+  }
+}

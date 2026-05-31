@@ -1,0 +1,63 @@
+/* ==========================================================================
+   DssField — LAYER 3: VARIANT — Outlined
+
+   Borda completa ao redor. Fundo transparente. Label flutua sobre a borda.
+   Variante padrão — equivalente visual de DssInput--outlined.
+   ========================================================================== */
+
+.dss-field--outlined {
+  .dss-field__field {
+    background-color: transparent;
+    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border-radius: var(--dss-radius-md);
+  }
+
+  /* Hover (sem disabled/readonly/focused) */
+  &:not(.dss-field--disabled):not(.dss-field--readonly):not(.dss-field--focused):hover .dss-field__field {
+    border-color: var(--dss-gray-600);
+  }
+
+  /* Focus */
+  &.dss-field--focused .dss-field__field {
+    border-color: var(--dss-action-primary);
+    border-width: var(--dss-border-width-md);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
+  }
+
+  &.dss-field--focused .dss-field__label {
+    color: var(--dss-action-primary);
+  }
+
+  /* Active (pressionado) */
+  &:not(.dss-field--disabled):not(.dss-field--readonly):active .dss-field__field {
+    border-color: var(--dss-gray-700);
+  }
+
+  /* Error */
+  &.dss-field--error .dss-field__field {
+    border-color: var(--dss-error-600);
+    border-width: var(--dss-border-width-md);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-error-600);
+  }
+
+  &.dss-field--error .dss-field__label {
+    color: var(--dss-error-600);
+  }
+
+  /* Disabled */
+  &.dss-field--disabled .dss-field__field {
+    border-style: dotted;
+    background-color: var(--dss-gray-50);
+  }
+
+  /* Readonly */
+  &.dss-field--readonly .dss-field__field {
+    border-color: var(--dss-gray-300);
+  }
+
+  /* Notch para label flutuante (fundo atrás do texto do label) */
+  .dss-field__label--float {
+    background-color: var(--dss-surface-default);
+    padding: 0 var(--dss-spacing-1);
+  }
+}

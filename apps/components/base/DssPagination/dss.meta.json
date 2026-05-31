@@ -1,0 +1,171 @@
+{
+  "name": "DssPagination",
+  "version": "1.0.0",
+  "phase": 2,
+  "level": 1,
+  "status": "pending-audit",
+  "quasarBase": "QPagination",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssBtnGroup",
+  "category": "Navegação Estrutural",
+  "interactive": true,
+  "dependencies": {
+    "dss": [
+      "DssButton",
+      "DssIcon"
+    ],
+    "quasar": [
+      "QPagination"
+    ]
+  },
+  "gateExceptions": [
+    {
+      "gate": "Gate de Composição v2.4 — Rule 1",
+      "exceptionId": "EXC-01",
+      "justification": "QPagination is used as a motor for pagination logic. It provides no slot API for individual page buttons, making it impossible to replace internal QBtn instances with DssButton. The full rendering engine is kept intact while only CSS theming is applied via DSS tokens."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "type": "QuasarMotor",
+      "description": "QPagination used as motor — no slot API for individual page buttons. DssButton cannot be injected."
+    },
+    {
+      "id": "EXC-Gate-01",
+      "type": "QuasarInternalSelector",
+      "description": "Internal QPagination selectors overridden: .q-pagination__middle (gap), .q-pagination > .q-btn (navigation button color), .q-pagination .q-btn (radius, size, transition). --q-color-primary CSS custom property used to connect DSS brand tokens to Quasar's active button color system. In _variant.scss, 'background-color: transparent !important' is required because Quasar's .bg-primary class applies 'background: var(--q-color-primary) !important' — the !important cannot be overridden without a matching !important on the DSS side. aria-current=\"page\" is the ARIA value QPagination assigns to the active page button."
+    }
+  ],
+  "tokens": {
+    "colors": [
+      "--dss-action-primary",
+      "--dss-text-primary",
+      "--dss-text-on-primary",
+      "--dss-hub-primary",
+      "--dss-water-primary",
+      "--dss-waste-primary"
+    ],
+    "spacing": [
+      "--dss-gap-1",
+      "--dss-compact-control-height-xs",
+      "--dss-compact-control-height-sm",
+      "--dss-compact-control-height-md",
+      "--dss-compact-control-height-lg"
+    ],
+    "typography": [
+      "--dss-font-size-xs",
+      "--dss-font-size-sm",
+      "--dss-font-size-md",
+      "--dss-font-weight-medium",
+      "--dss-font-weight-bold"
+    ],
+    "shape": [
+      "--dss-radius-md",
+      "--dss-radius-full",
+      "--dss-border-width-thin",
+      "--dss-border-width-medium"
+    ],
+    "motion": [
+      "--dss-duration-150",
+      "--dss-easing-standard"
+    ],
+    "feedback": [
+      "--dss-opacity-disabled"
+    ]
+  },
+  "props": {
+    "modelValue": {
+      "type": "Number",
+      "required": true
+    },
+    "max": {
+      "type": "Number",
+      "required": true
+    },
+    "maxPages": {
+      "type": "Number",
+      "default": 5
+    },
+    "disable": {
+      "type": "Boolean",
+      "default": false
+    },
+    "readonly": {
+      "type": "Boolean",
+      "default": false
+    },
+    "size": {
+      "type": "String",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md"
+    },
+    "ellipses": {
+      "type": "Boolean",
+      "default": true
+    },
+    "boundaryLinks": {
+      "type": "Boolean",
+      "default": false
+    },
+    "directionLinks": {
+      "type": "Boolean",
+      "default": true
+    },
+    "flat": {
+      "type": "Boolean",
+      "default": false
+    },
+    "outline": {
+      "type": "Boolean",
+      "default": false
+    },
+    "round": {
+      "type": "Boolean",
+      "default": false
+    },
+    "brand": {
+      "type": "String",
+      "values": [
+        "hub",
+        "water",
+        "waste"
+      ]
+    },
+    "ariaLabel": {
+      "type": "String",
+      "default": "Navegação por páginas"
+    }
+  },
+  "defaultPreview": {
+    "props": {
+      "modelValue": 1,
+      "max": 10
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "gap": "--dss-spacing-1",
+      "borderRadius": "--dss-radius-sm",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-sm",
+      "fontWeight": "--dss-font-weight-medium",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Página 1 de 10"
+  },
+  "auditStatus": {
+    "structural": "pending",
+    "composition": "pending",
+    "documentation": "pending",
+    "accessibility": "pending"
+  }
+}

@@ -1,0 +1,34 @@
+// ==========================================================================
+// DssForm — Layer 2: Composition (Base)
+// ==========================================================================
+//
+// DssForm é um container estrutural leve. QForm renderiza como <form>
+// nativo sem superfície visual própria (sem background, sombra ou borda).
+// O CSS é mínimo: apenas layout estrutural para espaçamento entre campos.
+//
+// Compound selector (.q-form.dss-form) escopa o CSS ao QForm governado,
+// evitando colisão com forms Quasar não-governados pelo DSS.
+// Precedente: DssMenu (.q-menu.dss-menu), DssKnob (.q-knob.dss-knob).
+//
+// Tokens utilizados:
+//   --dss-form-gap: espaçamento vertical entre campos do formulário
+//     → Definido em tokens/semantic/_spacing.scss
+//     → Mapeia para --dss-spacing-4 (16px)
+//
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Container base do formulário
+// --------------------------------------------------------------------------
+
+.q-form.dss-form {
+  // Layout em coluna com espaçamento semântico entre campos.
+  // Consumidores não precisam adicionar margin-bottom nos campos —
+  // o gap do formulário gerencia o espaçamento automaticamente.
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-form-gap);
+
+  // DssForm não define width/height — esses valores são responsabilidade
+  // do consumidor (e.g., width: 100% no contexto de um DssDialog).
+}

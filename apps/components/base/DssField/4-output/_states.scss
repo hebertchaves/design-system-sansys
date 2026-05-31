@@ -1,0 +1,144 @@
+/* ==========================================================================
+   DssField — LAYER 4: OUTPUT — States
+   (dark mode, prefers-reduced-motion, prefers-contrast, forced-colors, print)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-field {
+    &--filled .dss-field__field {
+      background-color: var(--dss-gray-900);
+      border-bottom-color: var(--dss-gray-700);
+    }
+
+    &--filled.dss-field--focused .dss-field__field {
+      background-color: var(--dss-gray-800);
+    }
+
+    &--outlined .dss-field__field {
+      border-color: var(--dss-gray-600);
+    }
+
+    &--standout .dss-field__field {
+      background-color: var(--dss-gray-700);
+    }
+
+    &--standout.dss-field--focused .dss-field__field {
+      background-color: var(--dss-gray-600);
+    }
+  }
+
+  .dss-field__label {
+    color: var(--dss-text-secondary);
+  }
+
+  .dss-field__prepend,
+  .dss-field__append {
+    color: var(--dss-text-secondary);
+  }
+}
+
+/* ==========================================================================
+   PREFERS-REDUCED-MOTION (EX-States-01)
+   WCAG 2.3.3 — Animação sob Solicitação (Nível AAA, boa prática em AA)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-field,
+  .dss-field__field,
+  .dss-field__label,
+  .dss-field__spinner {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   PREFERS-CONTRAST: MORE (EX-States-02)
+   WCAG 1.4.11 — Contraste Não-Textual (Nível AA)
+   ⚠️ valor correto: "more" (não "high" — high é inválido e nunca dispara)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-field__field {
+    border-width: var(--dss-border-width-md) !important;
+    border-color: currentColor !important;
+  }
+
+  .dss-field--focused .dss-field__field {
+    outline: var(--dss-border-width-thick) solid currentColor;
+    outline-offset: var(--dss-spacing-1);
+  }
+
+  .dss-field--error .dss-field__field {
+    border-color: var(--dss-error-600) !important;
+    outline: var(--dss-border-width-thick) solid var(--dss-error-600);
+    outline-offset: var(--dss-spacing-1);
+  }
+}
+
+/* ==========================================================================
+   FORCED-COLORS: ACTIVE (EX-States-03)
+   WCAG 1.4.11 — SystemColor keywords obrigatórios
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-field__field {
+    border: var(--dss-border-width-md) solid ButtonText;
+  }
+
+  .dss-field--focused .dss-field__field {
+    border-color: Highlight;
+    outline: var(--dss-border-width-md) solid Highlight;
+  }
+
+  .dss-field--error .dss-field__field {
+    border-color: LinkText;
+  }
+
+  .dss-field--disabled .dss-field__field {
+    border-color: GrayText;
+  }
+
+  .dss-field__label {
+    color: ButtonText;
+  }
+
+  .dss-field--focused .dss-field__label {
+    color: Highlight;
+  }
+
+  .dss-field__hint {
+    color: ButtonText;
+  }
+
+  .dss-field__error {
+    color: LinkText;
+  }
+
+  .dss-field__spinner {
+    border-color: ButtonText;
+    border-top-color: Highlight;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .dss-field {
+    &--filled .dss-field__field,
+    &--standout .dss-field__field {
+      background: none !important;
+      border: var(--dss-border-width-thin) solid var(--dss-text-secondary) !important;
+    }
+
+    .dss-field__loading {
+      display: none;
+    }
+  }
+}

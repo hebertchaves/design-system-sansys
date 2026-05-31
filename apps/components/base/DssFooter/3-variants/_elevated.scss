@@ -1,0 +1,21 @@
+// ==========================================================================
+// DssFooter — Layer 3: Variante Elevated
+// ==========================================================================
+//
+// Aplica sombra de elevação projetada para CIMA para destacar o footer
+// do conteúdo da página ao rolar.
+//
+// EXC-05 — Sombra invertida (projetada para cima):
+//   O sistema de tokens DSS v2.2 não possui variante --dss-elevation-up-*
+//   para sombras projetadas para cima. O valor hardcoded abaixo é o
+//   equivalente invertido (eixo Y negado) de --dss-shadow-md
+//   (0 4px 6px rgba(0, 0, 0, 0.30)), conforme autorizado pelo pré-prompt
+//   DSS Fase 2 (DssFooter). Será substituído por --dss-elevation-up-2
+//   quando o token for adicionado ao catálogo DSS.
+//   Precedente arquitetural: DssCard usa rgba() hardcoded em dark mode (EXC-01).
+// ==========================================================================
+
+/* EXC-05 — Sombra invertida equivalente a --dss-shadow-md com Y negado */
+.dss-footer--elevated {
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.30);
+}

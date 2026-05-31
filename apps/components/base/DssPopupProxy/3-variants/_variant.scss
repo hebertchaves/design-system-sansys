@@ -1,0 +1,24 @@
+/* ==========================================================================
+   DssPopupProxy — Layer 3: Variants
+
+   RESPONSABILIDADE: Variantes visuais do popup.
+
+   GOLDEN CONTEXT: DssMenu (sem variantes visuais próprias)
+
+   NOTA ARQUITETURAL:
+   DssPopupProxy não possui variantes visuais próprias (size, density, shape).
+   A aparência do conteúdo (tamanho, densidade) é responsabilidade dos
+   componentes filhos (DssList, DssItem, DssCard) via suas próprias props.
+
+   Esta camada existe para manter a arquitetura de 4 camadas obrigatória.
+   Variantes futuras (ex: max-width semântico, padding interno) podem ser
+   adicionadas aqui sem quebrar a estrutura.
+
+   Variantes explicitamente NÃO aplicáveis:
+   - size: delegado aos filhos (DssItem, DssButton)
+   - dense: delegado aos filhos (DssItem dense)
+   - elevated: controlado via --dss-elevation-3 (fixo no L2)
+   - bordered: controlado via _states.scss (dark mode) e _brands.scss (N/A)
+   ========================================================================== */
+
+/* Sem variantes visuais nesta versão — ver nota arquitetural acima */

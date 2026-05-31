@@ -1,0 +1,35 @@
+{
+  "component": "DssChip",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS v2.2",
+  "auditMode": "Final",
+  "auditDate": "2026-01-27",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssChip",
+  "phase": 1,
+  "category": "Compact Control interativo",
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "variant": "filled",
+      "color": "primary",
+      "size": "md"
+    },
+    "computedDimensions": {
+      "minHeight": "28px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-1 --dss-spacing-3",
+      "gap": "--dss-spacing-1",
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-sm",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Label 'Chip'"
+  }
+}

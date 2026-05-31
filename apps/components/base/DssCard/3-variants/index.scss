@@ -1,0 +1,10 @@
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Index)
+
+   Importa todas as variantes do card
+   ========================================================================== */
+
+@forward './elevated';
+@forward './flat';
+@forward './bordered';
+@forward './outlined';

@@ -1,0 +1,37 @@
+// ==========================================================================
+// DssDataCard — 4-output/_states.scss
+// ==========================================================================
+//
+// Estados visuais, acessibilidade e media queries do DssDataCard.
+
+.dss-data-card {
+  // --------------------------------------------------------------------------
+  // Estado disabled
+  // O pointer-events é desabilitado no container.
+  // Os filhos interativos (DssButton, DssTab) recebem disabled via
+  // provide/inject — não via CSS cascata.
+  // --------------------------------------------------------------------------
+
+  &--disabled {
+    opacity: var(--dss-opacity-disabled);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  // Nota: o estado --loading é gerenciado exclusivamente pelo template Vue
+  // via v-if="loading" / v-else no conteúdo e showPagination no bloco de paginação.
+  // Não há CSS necessário aqui — os elementos simplesmente não existem no DOM
+  // quando loading=true.
+}
+
+// --------------------------------------------------------------------------
+// Acessibilidade — prefers-reduced-motion
+// Para usuários que preferem redução de movimento, a animação de shimmer
+// do skeleton é suprimida. Os elementos permanecem visíveis mas estáticos.
+// --------------------------------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-data-card__skeleton-line {
+    animation: none;
+  }
+}

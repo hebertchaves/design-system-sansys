@@ -1,0 +1,64 @@
+// =============================================================================
+// DssFile — LAYER 3: VARIANT — Standout
+//
+// Fundo elevado que se destaca ao ser focado. Padrão do Quasar.
+// =============================================================================
+
+.dss-file--standout {
+  .dss-file__field {
+    background-color: var(--dss-gray-100);
+    border: none;
+    border-radius: var(--dss-radius-md);
+  }
+
+  // Hover
+  &:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
+    background-color: var(--dss-gray-200);
+  }
+
+  // Foco
+  &.dss-file--focused .dss-file__field {
+    background-color: var(--dss-gray-800);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
+  }
+
+  // NC-01 fix: --dss-text-inverse-secondary e --dss-text-inverse-hint não existem.
+  // Apenas --dss-text-inverse está definido no catálogo de tokens DSS.
+  &.dss-file--focused .dss-file__label {
+    color: var(--dss-text-inverse);
+  }
+
+  &.dss-file--focused .dss-file__drop-hint {
+    color: var(--dss-text-inverse);
+  }
+
+  &.dss-file--focused .dss-file__file-name {
+    color: var(--dss-text-inverse);
+  }
+
+  // Drag ativo
+  &.dss-file--dragging .dss-file__field {
+    background-color: var(--dss-surface-hover);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
+  }
+
+  .dss-file__drag-label {
+    color: var(--dss-action-primary);
+  }
+
+  // Erro
+  // NC-03 fix: --dss-error-600 não existe. Token correto: --dss-feedback-error
+  &.dss-file--error .dss-file__field {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-feedback-error);
+  }
+
+  // Desabilitado
+  &.dss-file--disabled .dss-file__field {
+    background-color: var(--dss-gray-50);
+  }
+
+  // Readonly
+  &.dss-file--readonly .dss-file__field {
+    background-color: var(--dss-gray-50);
+  }
+}

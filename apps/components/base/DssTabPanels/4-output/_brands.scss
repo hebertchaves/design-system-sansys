@@ -1,0 +1,22 @@
+// ==========================================================================
+// DssTabPanels — Layer 4: Brands
+// ==========================================================================
+//
+// DssTabPanels é container transparente — sem brand accent visual próprio.
+//
+// Brand propagation:
+// O atributo [data-brand] é definido no DssTabs ancestral e propaga via
+// cascata CSS para os DssTabPanel filhos. DssTabPanel captura [data-brand]
+// e aplica border-left colorida com tokens numéricos de brand
+// (--dss-hub-600, --dss-water-500, etc. — conforme _brands.scss do DssTabPanel).
+//
+// DssTabPanels não precisa de regras CSS de brand porque:
+// 1. É container transparente sem superfície visual própria
+// 2. O cascade [data-brand] já alcança os DssTabPanel filhos sem intervenção
+// 3. Adicionar brand accent no container pai criaria dupla decoração com
+//    o brand accent já existente nos filhos (DssTabPanel border-left)
+//
+// Camada preservada para conformidade com a arquitetura DSS de 4 camadas.
+// Reavaliação recomendada se DssTabPanels receber variantes com superfície
+// própria (ex: fundo colorido por brand, borda superior de acento).
+// ==========================================================================

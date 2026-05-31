@@ -1,0 +1,21 @@
+/* ==========================================================================
+   DssButton - LAYER 3: VARIANT - Flat
+
+   RESPONSABILIDADE: Botão plano sem elevação
+
+   CARACTERÍSTICAS:
+   - Background transparente (seguindo padrão Quasar)
+   - Sem box-shadow
+   - Hover adiciona background light + text hover
+   - Cores gerenciadas por classes utilitárias (utils/_colors-hover.scss)
+   ========================================================================== */
+
+.dss-button--flat {
+  background-color: transparent;
+  box-shadow: none;
+
+  /* Hover e active gerenciados por:
+     - utils/_colors-hover.scss (cores semânticas)
+     - components/base/DssButton/4-output/_brands.scss (brands)
+  */
+}

@@ -1,0 +1,157 @@
+{
+  "component": "DssFabAction",
+  "cssClass": "dss-fab-action",
+  "phase": 2,
+  "status": "conformant",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssFab",
+  "goldenContextNote": "DssFab é o Golden Context por ser o componente pai direto na família FAB — DssFabAction é filho semântico e visual do DssFab. DssFab foi selado em Mai 2026 e fornece o baseline arquitetural para wrapping de QFabAction, padrões de brand e EXC-States-02.",
+  "phaseDescription": "Fase 2 — Nível 3 (FAB family). DssFabAction é filho canônico do DssFab, executando ações específicas. Não é um componente primário independente, mas parte da composição do FAB System.",
+  "classification": {
+    "type": "FAB Action (Nível 3)",
+    "category": "Action — Floating Action Button Secondary",
+    "interactive": true,
+    "family": "FAB"
+  },
+  "wrapperApproach": "WRAP QFabAction — não reconstrói o botão do zero. Justificativa: QFabAction fornece animação de entrada/saída, acessibilidade WAI-ARIA, navegação via router-link e gerenciamento de label externo nativos. Rebuilding seria duplicação de esforço sem ganho arquitetural. Precedente: DssFab (selado Mai 2026).",
+  "parentComponent": "DssFab",
+  "parentComponentNote": "DssFabAction é projetado para ser usado dentro do slot default do DssFab. Uso fora do DssFab é tecnicamente possível mas semanticamente incorreto.",
+  "statesApplicable": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error",
+    "indeterminate",
+    "expanded"
+  ],
+  "statesNotApplicableJustification": {
+    "loading": "FabAction executa ações pontuais — loading não é aplicável neste escopo.",
+    "error": "FabAction é ação flutuante secundária — estados de erro pertencem a componentes de formulário.",
+    "indeterminate": "Não aplicável a botões de ação.",
+    "expanded": "Responsabilidade do DssFab pai."
+  },
+  "touchTarget": "Opção B — O QFabAction tem tamanho visual ~40px (--dss-spacing-10), abaixo dos 44px WCAG mínimo. Touch target expandido via ::before em .q-fab__action para --dss-touch-target-md (44px). Diferente do DssFab (Opção A — 56px visual já garante o mínimo).",
+  "ariaRole": "delegado ao QFabAction — role='button' gerenciado pelo Quasar",
+  "accessibility": {
+    "keyboardNavigation": "Totalmente gerenciado pelo QFabAction: Enter/Space ativa, Tab navega entre ações",
+    "screenReader": "aria-label disponível para contextos sem texto suficientemente descritivo",
+    "ariaLabel": "Prop ariaLabel disponível — especialmente importante para ações com apenas ícone (sem label)"
+  },
+  "propsBlocked": [
+    "glossy",
+    "push",
+    "flat",
+    "outline",
+    "unelevated",
+    "padding"
+  ],
+  "propsBlockedJustification": {
+    "glossy": "Não faz parte da linguagem visual DSS v2.2.",
+    "push": "Não faz parte da linguagem visual DSS v2.2.",
+    "flat": "FabAction no DSS é sempre elevado (Material Design baseline). Variante flat não faz sentido semântico.",
+    "outline": "Idem flat.",
+    "unelevated": "Idem flat.",
+    "padding": "Padding governado por tokens internos, não exposto na API pública."
+  },
+  "defaultPreview": {
+    "props": {
+      "color": "primary",
+      "icon": "mail"
+    },
+    "computedDimensions": {
+      "minHeight": "40px",
+      "minWidth": "40px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-action-primary",
+      "textColor": "--dss-text-inverse",
+      "shadow": "--dss-shadow-sm"
+    },
+    "demoContent": "FAB Action com ícone 'mail'"
+  },
+  "tokens": {
+    "shape": [
+      "--dss-radius-full"
+    ],
+    "elevation": [
+      "--dss-elevation-1",
+      "--dss-elevation-2"
+    ],
+    "motion": [
+      "--dss-duration-200",
+      "--dss-easing-standard"
+    ],
+    "sizing": [
+      "--dss-spacing-10"
+    ],
+    "padding": [
+      "--dss-padding-4"
+    ],
+    "accessibility": [
+      "--dss-focus-ring",
+      "--dss-opacity-disabled",
+      "--dss-touch-target-md"
+    ],
+    "border": [
+      "--dss-border-width-md",
+      "--dss-border-width-thick"
+    ],
+    "brand": [
+      "--dss-hub-600",
+      "--dss-hub-400",
+      "--dss-water-500",
+      "--dss-water-400",
+      "--dss-waste-600",
+      "--dss-waste-500"
+    ]
+  },
+  "exceptions": [
+    {
+      "id": "EXC-States-01",
+      "value": "1px solid ButtonBorder",
+      "location": "4-output/_states.scss (@media forced-colors)",
+      "justification": "Forced-colors mode — system color keywords obrigatórios. Tokens CSS são ignorados pelo navegador neste modo. Padrão DssFab EXC-States-01 e DssCard EXC-04."
+    },
+    {
+      "id": "EXC-States-02",
+      "value": "outline: 2px solid white; outline-offset: 2px",
+      "location": "4-output/_states.scss ([data-theme='dark'] :focus-visible)",
+      "justification": "Fallback explícito para dark mode — não existe token --dss-focus-ring-dark no catálogo v2.2. Valor hardcoded necessário para garantir visibilidade do focus ring em fundos escuros (WCAG 2.4.7). Padrão consistente com DssFab EXC-States-02 (selado Mai 2026)."
+    }
+  ],
+  "gateExceptions": {
+    "compositionGateV24": {
+      "files": [
+        "2-composition/_base.scss",
+        "4-output/_states.scss",
+        "4-output/_brands.scss"
+      ],
+      "selectors": [
+        ".dss-fab-action__qaction .q-fab__action",
+        ".dss-fab-action__qaction .q-fab__action-icon"
+      ],
+      "justification": "Seletores .q-fab__action e .q-fab__action-icon são elementos DOM internos do QFabAction (Quasar Framework), não subcomponentes DSS. Gate de Composição v2.4 aplica-se exclusivamente a componentes DSS filhos. Precedente: DssFab gateExceptions → .q-fab__trigger (selado Mai 2026)."
+    }
+  },
+  "reservations": [
+    "Brand tokens numéricos (--dss-hub-600, etc.) — tokens semânticos de brand ainda não existem no catálogo v2.2.",
+    "Sem unit tests — componentes DSS não têm testes unitários automatizados em v2.2.",
+    "labelPosition default 'left' — compatível com direção 'up' do DssFab. Consumidores com direction='right' devem ajustar labelPosition explicitamente."
+  ],
+  "compositionRecommendations": [
+    "Usar sempre dentro do slot default do DssFab.",
+    "Fornecer ariaLabel quando apenas ícone é exibido (sem label ou externalLabel).",
+    "Para ações de navegação interna, usar prop `to` (Vue Router). Para links externos, usar `href`.",
+    "Usar externalLabel para identificar ações em FABs com direção 'up' ou 'down' — label externo aparece à esquerda por padrão."
+  ],
+  "auditHistory": []
+}

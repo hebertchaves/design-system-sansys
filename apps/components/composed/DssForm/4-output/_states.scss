@@ -1,0 +1,49 @@
+// ==========================================================================
+// DssForm — Layer 4: States (Dark mode, High contrast, Forced colors, Print)
+// ==========================================================================
+//
+// DssForm é um container estrutural sem superfície visual (sem background,
+// sombra ou borda própria). Por isso, estados de tema que afetam cor de
+// superfície NÃO se aplicam aqui — eles são responsabilidade dos filhos.
+//
+// O único estado aplicável em nível de formulário é a mídia de impressão,
+// onde o gap pode precisar de ajuste para melhor legibilidade em papel.
+//
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Dark mode — [data-theme="dark"]
+// --------------------------------------------------------------------------
+// DssForm não tem superfície visual própria. Nenhum CSS necessário.
+// Campos internos (DssInput, DssSelect, etc.) gerenciam seus próprios
+// estados de dark mode via seus respectivos _states.scss.
+
+// --------------------------------------------------------------------------
+// prefers-contrast: more
+// --------------------------------------------------------------------------
+// DssForm não tem superfície visual. Nenhum CSS necessário.
+// Contraste é responsabilidade dos filhos.
+
+// --------------------------------------------------------------------------
+// forced-colors: active
+// --------------------------------------------------------------------------
+// DssForm não tem superfície visual. Nenhum CSS necessário.
+// System color keywords são aplicados pelos filhos interativos.
+
+// --------------------------------------------------------------------------
+// prefers-reduced-motion: reduce
+// --------------------------------------------------------------------------
+// DssForm não possui animações próprias. Nenhum CSS necessário.
+
+// --------------------------------------------------------------------------
+// @media print
+// --------------------------------------------------------------------------
+
+@media print {
+  .q-form.dss-form {
+    // Remove o gap em contexto de impressão para economizar espaço vertical.
+    // EXC-Print-01: gap via --dss-gap-0 em @media print — formulários impressos
+    // não beneficiam do espaçamento interativo entre campos.
+    gap: var(--dss-gap-0);
+  }
+}

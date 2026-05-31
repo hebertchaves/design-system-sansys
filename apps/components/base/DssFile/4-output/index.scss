@@ -1,0 +1,14 @@
+// =============================================================================
+// DssFile — LAYER 4: OUTPUT — Orchestrator
+//
+// ORDEM CANÔNICA DSS:
+//   1. _brands.scss — brandabilidade (especificidade (0,2,0))
+//   2. _states.scss — dark mode + a11y (especificidade (0,3,0) para dark+brand)
+//
+// A cascata é garantida por ESPECIFICIDADE, não apenas pela ordem de importação:
+//   _states.scss: [data-theme="dark"] .dss-file--brand-x → (0,3,0)
+//   _brands.scss: [data-brand="x"], .dss-file--brand-x   → (0,2,0) / (0,1,0)
+// =============================================================================
+
+@use './brands' as brands;
+@use './states' as states;

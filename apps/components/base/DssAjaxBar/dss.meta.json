@@ -1,0 +1,96 @@
+{
+  "name": "DssAjaxBar",
+  "version": "2.2",
+  "phase": 2,
+  "level": 1,
+  "family": "Progresso e Feedback",
+  "category": "Barra de progresso global para requisições assíncronas",
+  "status": "compliant",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssLinearProgress",
+  "quasarBase": "QAjaxBar",
+  "internalDependencies": [],
+  "auditCycles": 1,
+  "tokensUsed": [
+    "--dss-action-primary",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "color",
+      "reason": "Cor governada via CSS cascade com tokens DSS via --q-color-primary override. DSS não usa Quasar color names. Substituído por prop brand DSS ('hub' | 'water' | 'waste')."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "description": "QAjaxBar como root element (não div wrapper). QAjaxBar gerencia internamente: posicionamento fixed no viewport, animação de progressão, interceptação XHR/fetch (hijack), transições de visibilidade e role='progressbar'. Duplicar esses mecanismos em wrapper div seria redundante e introduziria risco de posicionamento incorreto.",
+      "precedent": "DssInnerLoading (EXC-Gate-01 — QInnerLoading root)"
+    },
+    {
+      "id": "EXC-Gate-02",
+      "description": "color='primary' fixo passado ao QAjaxBar + override de --q-color-primary no escopo .dss-ajax-bar com var(--dss-action-primary). QAjaxBar usa background: var(--q-color-{color}) sem hook de CSS custom property DSS. DSS injeta a cor de brand via --q-color-primary override no escopo do componente.",
+      "precedent": "DssPagination (EXC-Gate-01 — --q-color-primary theming)"
+    },
+    {
+      "id": "EXC-Expose-01",
+      "description": "defineExpose({ start, stop, increment, setProgress }) — API imperativa exposta ao consumer para controle manual da barra. QAjaxBar gerencia estado internamente (progresso, visibilidade, hijack); DssAjaxBar re-expõe os 4 métodos públicos via ref para integração programática.",
+      "precedent": "DssInfiniteScroll (EXC-Expose-01)"
+    },
+    {
+      "id": "EX-States-01",
+      "description": "prefers-reduced-motion: transition:none !important; animation:none !important; 0.01ms; 1 — suprime a animação de progressão da barra e quaisquer keyframes do QAjaxBar. WCAG 2.3.3 Nível AAA.",
+      "precedent": "DssLinearProgress (EX-States-01), DssCircularProgress (EX-States-01), DssInnerLoading (EX-States-01)"
+    },
+    {
+      "id": "EX-States-02",
+      "description": "print: display:none — barra de progresso AJAX oculta em impressão. Estado de carregamento de requisição não faz sentido em documentos estáticos impressos.",
+      "precedent": "DssSkeleton (EX-States-02), DssCircularProgress (EX-States-02)"
+    },
+    {
+      "id": "EX-States-03",
+      "description": "forced-colors: background-color:Highlight; border:1px solid ButtonText. Highlight = cor de realce do sistema (equivalente à cor de ação em HCM). ButtonText = contorno visual para delimitar a barra. forced-color-adjust NÃO declarado (sem slot para proteger).",
+      "precedent": "DssCircularProgress (EX-States-03), DssInnerLoading (EX-States-03)"
+    },
+    {
+      "id": "EX-Structural-01",
+      "description": "size prop default: '2px' herdado do QAjaxBar quando size não é passado. Valor estrutural canônico para barra slim de progresso AJAX. Sem token DSS correspondente para espessura de barra global — o contexto é tão específico que um token de componente seria anti-padrão DSS.",
+      "precedent": "DssSkeleton (EX-Structural-01 — valor estrutural canônico sem token)"
+    }
+  ],
+  "statesNotApplicable": {
+    "hover": "componente não interativo — barra de progresso visual, sem resposta a cursor",
+    "focus": "não recebe foco — elemento visual puro, fixed positioned fora do fluxo de documento",
+    "active": "sem interação de pressão — não clicável por design",
+    "disabled": "estado de desabilitado semanticamente incoerente — barra AJAX representa atividade de requisição ativa; consumer controla exibição via skipHijack e API imperativa",
+    "error": "barra não representa erro — apenas progresso de requisição; consumer lida com estados de erro via outros componentes"
+  },
+  "compositionRecommendations": [
+    "Instanciar DssAjaxBar uma única vez no layout raiz da aplicação (ex: DssLayout ou App.vue) para interceptação global de requisições.",
+    "Usar :skip-hijack='true' quando controle manual for necessário (ex: operações de polling frequente, uploads com progresso determinístico).",
+    "Para operações com progresso determinístico (upload/download), usar DssLinearProgress com :value ao invés de DssAjaxBar.",
+    "Para carregamento de componentes locais (card, tabela), usar DssInnerLoading ou DssSkeleton — não DssAjaxBar.",
+    "Container pai com aria-busy='true' é responsabilidade do consumer quando controle manual via API imperativa for utilizado.",
+    "hijackFilter deve ser usado para excluir requisições de polling frequentes de acionar a barra.",
+    "A API imperativa (start/stop/increment/setProgress) é preferida sobre hijack automático em cenários de SPA com Vue Router integration."
+  ],
+  "gateExceptions": {
+    "templateStructure": "QAjaxBar como root element — gerencia internamente posicionamento fixed, hijack de XHR/fetch, animação e role=progressbar. Não é possível nem desejável wrapper div externo para este componente (EXC-Gate-01)."
+  },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {
+      "minHeight": "3px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Barra de progresso de requisições AJAX"
+  }
+}

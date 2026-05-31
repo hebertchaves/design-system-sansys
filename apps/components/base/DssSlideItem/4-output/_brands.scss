@@ -1,0 +1,19 @@
+/* ==========================================================================
+   DssSlideItem — LAYER 4: BRANDS
+   Hub (laranja), Water (azul), Waste (verde)
+
+   O DssSlideItem é primariamente um container não-brandado — suas áreas de ação
+   usam cores semânticas de feedback (error, success, warning, info), não de marca.
+   O brand é aplicado ao conteúdo interno (slot default) pelo consumer.
+
+   Porém, quando o consumer usa leftColor/rightColor sem valor explícito e o item
+   está dentro de um contexto brandado, os defaults semânticos são mantidos
+   (feedback-error para esquerda, feedback-info para direita).
+
+   Nota: sem override de brand nas áreas de ação — a semântica de feedback
+   (deletar = error, arquivar = info) tem precedência sobre identidade de marca.
+   ========================================================================== */
+
+// Sem overrides de brand nas áreas de ação — comportamento intencional.
+// As cores de feedback comunicam a natureza da ação (destrutiva, neutra, etc.)
+// independentemente da marca do produto.

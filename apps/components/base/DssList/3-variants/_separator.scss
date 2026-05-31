@@ -1,0 +1,17 @@
+/* ==========================================================================
+   DssList - LAYER 3: VARIANTS (Separator)
+
+   Responsabilidade: Aplicar divisores automáticos entre itens filhos da lista.
+
+   EXC-06: Seletor descendente .dss-list--separator > * + *
+   Justificativa: Separadores automáticos via CSS sem exigir inserção manual
+   de <DssSeparator> entre cada item. Abordagem performática e declarativa.
+   Os filhos diretos afetados são elementos com role="listitem" ou role="button"
+   (DssItem), garantindo semântica correta.
+   Alternativa rejeitada: Exigir DssSeparator manual = friction de DX.
+   ========================================================================== */
+
+/* Separador entre todos os filhos diretos, exceto o primeiro */
+.dss-list--separator > * + * {
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+}

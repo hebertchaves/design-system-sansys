@@ -1,0 +1,13 @@
+// =============================================================================
+// DssSpinner — LAYER 3: VARIANTS
+//
+// STATUS: Fase 1 — sem variantes visuais adicionais.
+//
+// As variantes de tipo (standard, dots, ios, etc.) são gerenciadas
+// pela troca do componente QSpinner* no Vue — não por CSS adicional.
+// As variantes de cor e tamanho estão na Layer 2 (composition/_base.scss).
+//
+// Fase 2 potencial:
+//   - _filled.scss: fundo colorido para contextos de overlay
+//   - _overlay.scss: spinner com backdrop para loading de página inteira
+// =============================================================================

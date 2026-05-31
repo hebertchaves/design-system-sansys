@@ -1,0 +1,51 @@
+/* ==========================================================================
+   DssPullToRefresh — LAYER 4: BRANDS
+   Hub (laranja), Water (azul), Waste (verde)
+
+   EXC-Gate-02: --q-color-primary sobrescreve a cor do ícone do QPullToRefresh.
+   O handler usa --dss-brand-light como fundo e --q-color-primary como ícone.
+
+   REGRAS:
+   ✅ Dual-selector: [data-brand="x"] .dss-pull-to-refresh (descendant, com espaço)
+   ✅ Tokens de brand numéricos (hub-600, water-500, waste-600)
+   ✅ Fundo do handler: token de superfície brandada (brand-light)
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB — Ícone laranja (--dss-hub-600), fundo superfície Hub
+   ========================================================================== */
+
+[data-brand="hub"] .dss-pull-to-refresh {
+  --q-color-primary: var(--dss-hub-600);
+}
+
+[data-brand="hub"] .dss-pull-to-refresh .q-pull-to-refresh__handler {
+  background-color: var(--dss-hub-50) !important;
+  box-shadow: var(--dss-shadow-hub-md) !important;
+}
+
+/* ==========================================================================
+   WATER — Ícone azul (--dss-water-500), fundo superfície Water
+   ========================================================================== */
+
+[data-brand="water"] .dss-pull-to-refresh {
+  --q-color-primary: var(--dss-water-500);
+}
+
+[data-brand="water"] .dss-pull-to-refresh .q-pull-to-refresh__handler {
+  background-color: var(--dss-water-50) !important;
+  box-shadow: var(--dss-shadow-water-md) !important;
+}
+
+/* ==========================================================================
+   WASTE — Ícone verde (--dss-waste-600), fundo superfície Waste
+   ========================================================================== */
+
+[data-brand="waste"] .dss-pull-to-refresh {
+  --q-color-primary: var(--dss-waste-600);
+}
+
+[data-brand="waste"] .dss-pull-to-refresh .q-pull-to-refresh__handler {
+  background-color: var(--dss-waste-50) !important;
+  box-shadow: var(--dss-shadow-waste-md) !important;
+}

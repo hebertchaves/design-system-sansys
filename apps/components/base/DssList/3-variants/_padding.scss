@@ -1,0 +1,12 @@
+/* ==========================================================================
+   DssList - LAYER 3: VARIANTS (Padding)
+
+   Responsabilidade: Variante com padding vertical nas extremidades da lista.
+   Cria espaçamento entre a borda/contexto e o primeiro/último item.
+   ========================================================================== */
+
+.dss-list--padding {
+  /* Padding vertical nas extremidades */
+  padding-top: var(--dss-spacing-2);
+  padding-bottom: var(--dss-spacing-2);
+}

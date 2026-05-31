@@ -1,0 +1,100 @@
+{
+  "component": "DssDataCard",
+  "cssClass": "dss-data-card",
+  "phase": 3,
+  "level": 1,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssDataCard",
+  "classification": {
+    "type": "Componente Composto Complexo — Golden Context da Fase 3",
+    "category": "Card de Dados / Composição Profunda",
+    "interactive": true,
+    "note": "Orquestra DssCard + DssToolbar + DssTabs + DssTabPanels + paginação interna. Implementa os 5 padrões obrigatórios da Fase 3."
+  },
+  "phaseDescription": "Fase 3 — Nível 1 (Golden Context). Componente composto que serve como baseline de auditoria para toda a Fase 3.",
+  "quasarBase": null,
+  "dependencies": {
+    "dss": [
+      "DssCard",
+      "DssCardSection",
+      "DssToolbar",
+      "DssTabs",
+      "DssTab",
+      "DssTabPanels",
+      "DssTabPanel",
+      "DssButton"
+    ],
+    "quasar": [
+      "q-space"
+    ]
+  },
+  "phase3Patterns": {
+    "inheritAttrs": true,
+    "provideInject": true,
+    "cssVariables": true,
+    "noDeepLayout": true,
+    "typedSlots": true
+  },
+  "tokens": [
+    "--dss-font-size-md",
+    "--dss-font-size-sm",
+    "--dss-font-weight-medium",
+    "--dss-text-body",
+    "--dss-text-secondary",
+    "--dss-gray-300",
+    "--dss-surface-muted",
+    "--dss-border-width-thin",
+    "--dss-radius-sm",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-opacity-disabled",
+    "--dss-line-height-xs",
+    "--dss-duration-1000",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "dark",
+      "reason": "Tema escuro governado via [data-theme='dark'] global."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Structural-01",
+      "description": "gap: 2px em __title-group. Gap geométrico mínimo entre título e subtítulo — --dss-spacing-1 (4px) é o menor token disponível e seria visualmente excessivo.",
+      "precedent": "Novo — específico de layout composto"
+    },
+    {
+      "id": "EXC-Structural-02",
+      "description": "line-height: 1.3 em __subtitle. Nenhum token DSS mapeia para 1.3. --dss-line-height-xs = 1.4 é o mais próximo mas seria visualmente incorreto para um subtítulo compacto.",
+      "precedent": "Novo — ausência de token de line-height < xs"
+    },
+    {
+      "id": "EXC-Structural-03",
+      "description": "opacity: 0.4 no @keyframes dss-data-card-shimmer. Valor de ponto médio da animação shimmer — nenhum token DSS de opacidade de animação existe. --dss-opacity-disabled (0.4) tem o mesmo valor mas semântica de estado disabled, inapropriada para contexto de animação.",
+      "precedent": "Novo — ausência de token de opacidade para animações"
+    }
+  ],
+  "statesNotApplicable": {
+    "hover": "N/A no container — interatividade pertence aos componentes filhos",
+    "focus": "N/A no container — foco gerenciado por DssButton, DssTab individualmente",
+    "active": "N/A no container"
+  },
+  "defaultPreview": {
+    "title": "Indicadores",
+    "variant": "elevated",
+    "brand": null,
+    "tabs": [],
+    "totalItems": 0
+  },
+  "createdAt": "2026-04-24",
+  "inAuditSince": "2026-05-23",
+  "sealedAt": "2026-05-23",
+  "sealPath": "DSS/docs/Compliance/seals/DssDataCard/DSSDATACARD_SELO_v2.2.md"
+}

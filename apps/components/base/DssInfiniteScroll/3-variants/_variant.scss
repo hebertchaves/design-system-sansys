@@ -1,0 +1,20 @@
+// =============================================================================
+// DssInfiniteScroll — LAYER 3: VARIANTS
+//
+// RESPONSABILIDADE: Variações visuais do DssInfiniteScroll.
+//
+// VARIANTES IMPLEMENTADAS:
+//   reverse: modo mensageiro — carrega ao atingir o topo, não o fundo.
+//            Apenas semântica comportamental; nenhum ajuste visual adicional
+//            é necessário além do já gerenciado pelo QInfiniteScroll.
+//
+// Nenhuma variante de densidade ou shape aplicável:
+//   DssInfiniteScroll é um container de conteúdo — sua densidade visual
+//   é determinada pelos itens filhos renderizados pelo consumidor.
+//
+// =============================================================================
+
+// Variante reverse: indicador de carregamento posiciona-se no topo.
+// Nenhum override CSS necessário — QInfiniteScroll gerencia a lógica interna.
+// Classe mantida como marker para extensão futura ou CSS externo do consumidor.
+// .dss-infinite-scroll--reverse { }

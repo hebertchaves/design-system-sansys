@@ -1,0 +1,113 @@
+{
+  "name": "DssInnerLoading",
+  "version": "2.2",
+  "phase": 2,
+  "level": 1,
+  "family": "Progresso e Feedback",
+  "category": "Overlay de loading para container",
+  "status": "conformant",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssCircularProgress",
+  "quasarBase": "QInnerLoading",
+  "internalDependencies": [
+    "DssSpinner"
+  ],
+  "auditCycles": 2,
+  "tokensUsed": [
+    "--dss-surface-default",
+    "--dss-font-size-sm",
+    "--dss-font-weight-medium",
+    "--dss-font-weight-bold",
+    "--dss-spacing-2",
+    "--dss-action-primary",
+    "--dss-action-secondary",
+    "--dss-feedback-error",
+    "--dss-feedback-success",
+    "--dss-feedback-warning",
+    "--dss-feedback-info",
+    "--dss-hub-600",
+    "--dss-hub-500",
+    "--dss-water-500",
+    "--dss-water-400",
+    "--dss-waste-600",
+    "--dss-waste-500",
+    "--dss-line-height-xs"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "color",
+      "reason": "Cor controlada via CSS cascade (`color` CSS property) e tokens DSS — nunca via prop Quasar que aplicaria tokens --q-color-* fora da governança DSS."
+    },
+    {
+      "quasarProp": "size",
+      "reason": "Tamanho do spinner controlado via prop `size` de DssSpinner no slot default — nunca via prop QInnerLoading."
+    },
+    {
+      "quasarProp": "label",
+      "reason": "Label renderizado no slot default do DssInnerLoading (não via prop QInnerLoading) para controle total de CSS tokenizado e acessibilidade."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "description": "QInnerLoading como root element. Provê nativamente: position:absolute, top/left/right/bottom:0, display:flex, flex-direction:column, align-items:center, justify-content:center e fade transition via Vue <Transition>. Duplicar em wrapper div seria redundante e perigoso. A classe .dss-inner-loading é aplicada no mesmo elemento .q-inner-loading.",
+      "precedent": "DssParallax, DssImg, DssVideo"
+    },
+    {
+      "id": "EX-States-01",
+      "description": "animation:none !important; transition:none !important em prefers-reduced-motion — suprime keyframes do DssSpinner (QSpinner) E transição de fade do QInnerLoading (Vue <Transition> com q-transition--fade). !important obrigatório para sobrescrever CSS global do Quasar. WCAG 2.3.3.",
+      "precedent": "DssLinearProgress (EX-States-01), DssCircularProgress (EX-States-01)"
+    },
+    {
+      "id": "EX-States-02",
+      "description": "display:none em print — overlay de loading oculto em impressão permite que o conteúdo subjacente seja impresso normalmente.",
+      "precedent": "DssCircularProgress (--indeterminate display:none em print)"
+    },
+    {
+      "id": "EX-States-03",
+      "description": "forced-colors: active — uso de SystemColor keywords (Canvas, CanvasText, ButtonText). forced-color-adjust NÃO utilizado (propriedade herdada afetaria slot customizado). WCAG 1.4.11.",
+      "precedent": "DssCircularProgress, DssLinearProgress"
+    },
+    {
+      "id": "EX-Overlay-01",
+      "description": "background-color: var(--dss-surface-default) sem opacidade. O pré-prompt referenciou rgba(var(--dss-surface-default-rgb), 0.7) que usa token fantasma (-rgb suffix não existe no catálogo DSS). Overlay sólido garante contraste máximo para todas as cores de spinner e label (WCAG AAA). --dss-surface-overlay (rgba(0,0,0,0.5)) é descartado por ser dark overlay inadequado para loading de container.",
+      "precedent": "N/A — primeira ocorrência. Padrão web canônico."
+    },
+    {
+      "id": "EX-Structural-01",
+      "description": "border-radius: inherit — valor estrutural não tokenizável. Herda border-radius do container pai para evitar overflow em containers com bordas arredondadas. Depende da geometria do pai em runtime, impossível expressar como token DSS.",
+      "precedent": "Padrão web canônico para overlays posicionados."
+    }
+  ],
+  "statesNotApplicable": {
+    "hover": "overlay não interativo — pointer-events:all bloqueia o conteúdo abaixo mas o overlay em si não possui estados de hover",
+    "focus": "nenhum elemento do overlay recebe foco — conteúdo bloqueado enquanto showing=true",
+    "active": "overlay não clicável por design",
+    "disabled": "estado 'disabled' não existe — componente ou está showing ou não está"
+  },
+  "compositionRecommendations": [
+    "Container pai DEVE ter position:relative (ou position:absolute) para que o overlay cubra apenas a área desejada.",
+    "Use prop `delay` para evitar flash de loading em operações < 300ms.",
+    "Use slot default para substituir DssSpinner por conteúdo customizado (ex: DssLinearProgress, ícone animado).",
+    "Ao usar slot customizado, o consumer é responsável pela acessibilidade do conteúdo."
+  ],
+  "gateExceptions": {
+    "templateStructure": "QInnerLoading como root element (EXC-Gate-01). Entry point wrapper re-exporta corretamente para 1-structure/DssInnerLoading.ts.vue."
+  },
+  "defaultPreview": {
+    "props": {
+      "showing": true
+    },
+    "computedDimensions": {
+      "minHeight": "48px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-4",
+      "borderRadius": "--dss-radius-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Overlay de carregamento interno"
+  }
+}

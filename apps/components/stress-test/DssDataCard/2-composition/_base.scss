@@ -1,0 +1,163 @@
+// ==========================================================================
+// DssDataCard — 2-composition/_base.scss
+// ==========================================================================
+//
+// Estilos base do DssDataCard.
+//
+// PADRÃO FASE 3 — Decisões arquiteturais documentadas:
+//
+// 1. PROIBIÇÃO DE :deep() para layout
+//    O DssDataCard NÃO usa :deep() para controlar o layout interno dos filhos.
+//    O espaçamento entre DssToolbar, DssTabs e DssCardSection é controlado
+//    por classes do próprio DssDataCard, não injetando CSS nos filhos.
+//
+// 2. CSS VARIABLES como canal de comunicação
+//    A prop `brand` propaga via [data-brand] no elemento raiz.
+//    Os filhos (DssToolbar, DssTabs) lêem a cascata CSS do DSS automaticamente.
+//
+// 3. ZERO hardcoded
+//    Todos os valores usam tokens DSS.
+//
+// EXCEÇÕES:
+// EXC-Structural-01: gap: 2px em __title-group — gap geométrico mínimo sem token
+//                    DSS correspondente (--dss-spacing-1 = 4px é o menor).
+// EXC-Structural-02: line-height: 1.3 em __subtitle — nenhum token DSS mapeia
+//                    para 1.3; usar --dss-line-height-xs (1.4) seria incorreto
+//                    visualmente para um subtítulo compacto.
+// EXC-Structural-03: opacity: 0.4 no @keyframes dss-data-card-shimmer — valor de
+//                    ponto médio da animação shimmer. Nenhum token DSS de opacidade
+//                    de animação existe. --dss-opacity-disabled (0.4) tem o mesmo
+//                    valor mas semântica diferente (estado disabled).
+
+.dss-data-card {
+  // --------------------------------------------------------------------------
+  // Layout interno
+  // --------------------------------------------------------------------------
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  // --------------------------------------------------------------------------
+  // Toolbar interna
+  // Separação visual entre toolbar e conteúdo — sem :deep()
+  // --------------------------------------------------------------------------
+
+  &__toolbar {
+    flex-shrink: 0;
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-300);
+  }
+
+  // --------------------------------------------------------------------------
+  // Área de título na toolbar
+  // --------------------------------------------------------------------------
+
+  &__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px; // EXC-Structural-01 — gap geométrico mínimo sem token
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: var(--dss-font-size-md);
+    font-weight: var(--dss-font-weight-medium);
+    color: var(--dss-text-body);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: var(--dss-line-height-xs);
+  }
+
+  &__subtitle {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3; // EXC-Structural-02 — sem token DSS para line-height 1.3
+  }
+
+  // --------------------------------------------------------------------------
+  // Abas — sem :deep(), o DssTabs cuida do próprio estilo
+  // --------------------------------------------------------------------------
+
+  &__tabs {
+    flex-shrink: 0;
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-300);
+  }
+
+  // --------------------------------------------------------------------------
+  // Conteúdo dos painéis
+  // --------------------------------------------------------------------------
+
+  &__content {
+    flex: 1;
+    min-height: 0;
+    padding: var(--dss-spacing-4);
+  }
+
+  // --------------------------------------------------------------------------
+  // Estado de loading — skeleton
+  // --------------------------------------------------------------------------
+
+  &__skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dss-spacing-3);
+    padding: var(--dss-spacing-4);
+  }
+
+  &__skeleton-line {
+    height: var(--dss-spacing-4);
+    background: var(--dss-surface-muted);
+    border-radius: var(--dss-radius-sm);
+    animation: dss-data-card-shimmer var(--dss-duration-1000) infinite linear;
+
+    &--short  { width: 40%; }
+    &--medium { width: 70%; }
+    &--full   { width: 100%; }
+  }
+
+  // --------------------------------------------------------------------------
+  // Paginação
+  // --------------------------------------------------------------------------
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--dss-spacing-1);
+    padding: var(--dss-spacing-2) var(--dss-spacing-4);
+    border-top: var(--dss-border-width-thin) solid var(--dss-gray-300);
+    flex-shrink: 0;
+  }
+
+  &__pagination-label {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+    margin-inline-end: var(--dss-spacing-2);
+    white-space: nowrap;
+  }
+
+  // --------------------------------------------------------------------------
+  // Rodapé
+  // --------------------------------------------------------------------------
+
+  &__footer {
+    padding: var(--dss-spacing-2) var(--dss-spacing-4);
+    border-top: var(--dss-border-width-thin) solid var(--dss-gray-300);
+    flex-shrink: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Animação de shimmer para skeleton
+// --------------------------------------------------------------------------
+
+@keyframes dss-data-card-shimmer {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.4; } // EXC-Structural-03 — valor de ponto médio; sem token de animação
+  100% { opacity: 1; }
+}

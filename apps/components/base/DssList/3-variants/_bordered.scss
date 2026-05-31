@@ -1,0 +1,16 @@
+/* ==========================================================================
+   DssList - LAYER 3: VARIANTS (Bordered)
+
+   Responsabilidade: Variante com borda externa + border-radius
+   ========================================================================== */
+
+.dss-list--bordered {
+  /* Borda externa delimitando a lista */
+  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
+
+  /* Border-radius apenas com bordered */
+  border-radius: var(--dss-radius-md);
+
+  /* Overflow para respeitar o radius */
+  overflow: hidden;
+}

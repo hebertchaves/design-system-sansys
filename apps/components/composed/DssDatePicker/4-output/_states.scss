@@ -1,0 +1,99 @@
+// =============================================================================
+// DssDatePicker — LAYER 4: OUTPUT (States)
+//
+// RESPONSABILIDADE: Media queries e estados de acessibilidade globais.
+//
+// Cobre:
+//   1. prefers-reduced-motion  — suprime animações de transição de views (WCAG 2.3.3)
+//   2. prefers-contrast: more  — reforça contorno e contraste
+//   3. forced-colors: active   — SystemColor keywords (WCAG 1.4.11)
+//   4. [data-theme="dark"]     — dark mode via tokens DSS
+//   5. @media print            — estilos de impressão
+// =============================================================================
+
+// ── 1. prefers-reduced-motion ─────────────────────────────────────────────────
+//
+// QDate anima transições entre views (Calendar → Months → Years) via CSS transitions.
+// Override com duration 0 suprime as animações sem intervenção JS.
+// WCAG 2.3.3 (Animação sob Solicitação — Nível AAA).
+@media (prefers-reduced-motion: reduce) {
+  .q-date.dss-date-picker,
+  .q-date.dss-date-picker * {
+    transition-duration: var(--dss-duration-0) !important;
+    animation-duration: var(--dss-duration-0) !important;
+  }
+}
+
+// ── 2. prefers-contrast: more ─────────────────────────────────────────────────
+//
+// Adiciona borda visível ao redor do calendário para melhor visibilidade.
+// Destaca o dia selecionado e os dias do intervalo com borda adicional.
+@media (prefers-contrast: more) {
+  .q-date.dss-date-picker {
+    outline: var(--dss-border-width-md) solid currentColor;
+
+    .q-date__header {
+      border-bottom: var(--dss-border-width-md) solid currentColor;
+    }
+
+    .q-date__calendar-item button {
+      outline: var(--dss-border-width-thin) solid currentColor;
+    }
+
+    .q-date__calendar-item--active button,
+    .q-date__range-from button,
+    .q-date__range-to button {
+      outline: var(--dss-border-width-md) solid currentColor;
+    }
+  }
+}
+
+// ── 3. forced-colors: active ──────────────────────────────────────────────────
+//
+// Em forced-colors, SystemColor keywords garantem visibilidade dos controles.
+// --q-color-primary não tem efeito em forced-colors; CSS SystemColors prevalecem.
+// WCAG 1.4.11 (Contraste Não-Textual — Nível AA).
+@media (forced-colors: active) {
+  .q-date.dss-date-picker {
+    border: 1px solid ButtonText;
+
+    .q-date__header {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+
+    .q-date__calendar-item--active button,
+    .q-date__range-from button,
+    .q-date__range-to button {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+
+    .q-date__range button {
+      background-color: Highlight;
+      opacity: 0.3;
+    }
+
+    &:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}
+
+// ── 4. Dark mode ──────────────────────────────────────────────────────────────
+//
+// Dark mode governado globalmente via [data-theme="dark"].
+// Tokens DSS de superfície e texto já alternam automaticamente no dark mode.
+// Nenhum override adicional necessário — os tokens de Layer 2 se ajustam.
+//
+// Nota: prop dark=true do QDate é BLOQUEADA para garantir consistência.
+
+// ── 5. Print ──────────────────────────────────────────────────────────────────
+//
+// Em impressão, DssDatePicker exibe o calendário sem superfície interativa.
+@media print {
+  .q-date.dss-date-picker {
+    border: var(--dss-border-width-thin) solid currentColor;
+    background-color: transparent;
+  }
+}

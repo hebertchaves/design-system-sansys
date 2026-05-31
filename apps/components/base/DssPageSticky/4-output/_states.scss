@@ -1,0 +1,62 @@
+// ==========================================================================
+// DssPageSticky — Layer 4: Estados Adaptativos
+// ==========================================================================
+//
+// Dark mode, high-contrast, forced-colors, print.
+// DssPageSticky não possui estados de interação (hover/focus/active).
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Dark mode
+// ------------------------------------------------------------------
+// z-index resolve corretamente em dark mode via token.
+// box-shadow (elevated) usa rgba — pode precisar de ajuste de opacidade
+// em temas escuros para manter a percepção visual de elevação.
+[data-theme='dark'] .dss-page-sticky--elevated,
+.dss-page-sticky.body--dark.dss-page-sticky--elevated {
+  // --dss-shadow-md usa rgba(0,0,0,0.30) que pode ser imperceptível em fundos escuros.
+  // Substituir por sombra com opacidade maior para dark mode.
+  box-shadow: var(--dss-shadow-lg);
+}
+
+// ------------------------------------------------------------------
+// High Contrast (prefers-contrast: more)
+// ------------------------------------------------------------------
+@media (prefers-contrast: more) {
+  .dss-page-sticky--elevated {
+    // Em alto contraste, sombra pode ser insuficiente para delimitar o elemento.
+    // Adicionar borda sutil para reforçar a separação visual.
+    outline: var(--dss-border-width-thin) solid var(--dss-gray-400);
+  }
+}
+
+// ------------------------------------------------------------------
+// Forced Colors (Windows High Contrast Mode)
+// EXC-02 — System color keywords obrigatórios neste contexto.
+// Tokens CSS são ignorados pelo navegador em forced-colors mode.
+// box-shadow é removido pelo navegador automaticamente.
+// ------------------------------------------------------------------
+@media (forced-colors: active) {
+  .dss-page-sticky--elevated {
+    // box-shadow é anulado em forced-colors mode pelo navegador.
+    // Substituir por borda com ButtonFace para manter delimitação visual.
+    box-shadow: none;
+    border: 1px solid ButtonFace; // EXC-02: valor absoluto em forced-colors
+  }
+}
+
+// ------------------------------------------------------------------
+// Print
+// EXC-03 — position: static necessário para impressão correta.
+// Tokens CSS podem não ser resolvidos em contexto de impressão.
+// ------------------------------------------------------------------
+@media print {
+  .dss-page-sticky {
+    // position: fixed impede renderização correta na impressão,
+    // pois o elemento aparece em todas as páginas impressas.
+    // EXC-03: valor hardcoded necessário — tokens ignorados em print.
+    position: static !important;
+    box-shadow: none !important;
+    z-index: auto !important;
+  }
+}

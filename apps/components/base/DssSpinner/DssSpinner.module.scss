@@ -1,0 +1,17 @@
+// DssSpinner — Orchestrador Principal SCSS
+//
+// Importa as 3 camadas na ordem obrigatória: L2 → L3 → L4.
+// ⚠️  NUNCA altere a ordem de import.
+//
+// Tokens utilizados (18 tokens):
+//   Dimensão:   --dss-icon-size-{xs, sm, md, lg, xl}
+//   Cor:        --dss-action-primary, --dss-action-secondary
+//               --dss-text-secondary
+//               --dss-feedback-{error, success, warning, info}
+//   Brand:      --dss-hub-600, --dss-hub-500
+//               --dss-water-500, --dss-water-400
+//               --dss-waste-600, --dss-waste-500
+
+@use './2-composition/base'    as base;
+@use './3-variants/index'      as variants;
+@use './4-output/index'        as output;

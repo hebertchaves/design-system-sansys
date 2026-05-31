@@ -1,0 +1,69 @@
+// ==========================================================================
+// DssFooter — Layer 4: Estados Adaptativos
+// ==========================================================================
+//
+// Dark mode, forced-colors (Windows High Contrast), print.
+// DssFooter não possui estados de interação (hover/focus/active).
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Dark mode
+// ------------------------------------------------------------------
+[data-theme='dark'] .dss-footer,
+.dss-footer.body--dark {
+  // --dss-surface-default resolve para superfície escura em dark mode.
+  // border-top usa gray-200 que no tema escuro resolve para cinza escuro.
+  background-color: var(--dss-surface-default) !important;
+  color: var(--dss-text-body) !important;
+
+  &.dss-footer--bordered {
+    border-top-color: var(--dss-gray-200);
+  }
+}
+
+// ------------------------------------------------------------------
+// High Contrast (prefers-contrast: more)
+// ------------------------------------------------------------------
+@media (prefers-contrast: more) {
+  .dss-footer--bordered {
+    border-top-width: var(--dss-border-width-md);
+  }
+}
+
+// ------------------------------------------------------------------
+// Forced Colors (Windows High Contrast Mode)
+// EXC-03 — System color keywords obrigatórios neste contexto.
+// Tokens CSS são ignorados pelo navegador em forced-colors mode.
+// ------------------------------------------------------------------
+@media (forced-colors: active) {
+  .dss-footer {
+    background-color: Canvas !important;
+    color: CanvasText !important;
+  }
+
+  .dss-footer--bordered {
+    border-top: 1px solid ButtonFace;
+  }
+
+  .dss-footer--elevated {
+    box-shadow: none;
+    border-top: 1px solid ButtonFace;
+  }
+}
+
+// ------------------------------------------------------------------
+// Print
+// EXC-04 — Valores hardcoded aceitáveis para garantir legibilidade
+// em impressão monocromática. Precedente: DssHeader, DssToolbar.
+// position: static cancela o position: fixed do QFooter para evitar
+// que o footer apareça flutuando na impressão.
+// ------------------------------------------------------------------
+@media print {
+  .dss-footer {
+    background-color: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    border-top: 1px solid #000;
+    position: static !important;
+  }
+}

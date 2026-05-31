@@ -1,0 +1,190 @@
+/* ==========================================================================
+   DssSelect - LAYER 4: OUTPUT - Brands
+
+   RESPONSABILIDADE: Brandability — Hub, Water, Waste
+
+   CARACTERÍSTICAS:
+   - Usa tokens numéricos de brand (--dss-hub-*, --dss-water-*, --dss-waste-*)
+   - Aplica accent color no foco do campo e nas opções selecionadas do painel
+   - Error state sempre usa --dss-error-600 (brand não sobrescreve erro)
+
+   ESTRUTURA DE ESCOPO:
+   1. [data-brand="x"] / .dss-select--brand-x  → campo do select
+   2. .dss-select__panel--brand-x              → painel dropdown (injetado via
+      popup-content-class, pois o QMenu é teleportado para o body)
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"],
+.dss-select--brand-hub {
+
+  &.dss-select--filled.dss-select--focused .q-field__control,
+  &.dss-select--filled.q-field--focused .q-field__control {
+    border-bottom-color: var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+  }
+
+  &.dss-select--outlined.dss-select--focused .q-field__control,
+  &.dss-select--outlined.q-field--focused .q-field__control {
+    border-color: var(--dss-hub-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-hub-600);
+  }
+
+  &.dss-select--standout.dss-select--focused .q-field__control,
+  &.dss-select--standout.q-field--focused .q-field__control {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-hub-600);
+  }
+
+  &.dss-select--borderless.dss-select--focused .q-field__control,
+  &.dss-select--borderless.q-field--focused .q-field__control {
+    border-bottom-color: var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+  }
+
+  /* Label color no foco */
+  &.dss-select--focused .q-field__label,
+  &.q-field--focused .q-field__label {
+    color: var(--dss-hub-700);
+  }
+
+  /* Error override: --dss-error-600 prevalece sobre brand por especificidade (0-3-0 vs 0-2-0).
+     Ver .dss-select.q-field--error .q-field__messages abaixo (linha ~191). */
+}
+
+/* Hint color — Hub */
+[data-brand="hub"] .dss-select .q-field__messages,
+.dss-select--brand-hub .q-field__messages {
+  color: var(--dss-hub-700);
+}
+
+/* Painel Hub — opção selecionada */
+.dss-select__panel--brand-hub {
+  .q-item--active {
+    color: var(--dss-hub-600);
+
+    .q-item__section--side .q-icon {
+      color: var(--dss-hub-600);
+    }
+  }
+}
+
+/* ==========================================================================
+   WATER BRAND (Azul)
+   ========================================================================== */
+
+[data-brand="water"],
+.dss-select--brand-water {
+
+  &.dss-select--filled.dss-select--focused .q-field__control,
+  &.dss-select--filled.q-field--focused .q-field__control {
+    border-bottom-color: var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+  }
+
+  &.dss-select--outlined.dss-select--focused .q-field__control,
+  &.dss-select--outlined.q-field--focused .q-field__control {
+    border-color: var(--dss-water-500);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-water-500);
+  }
+
+  &.dss-select--standout.dss-select--focused .q-field__control,
+  &.dss-select--standout.q-field--focused .q-field__control {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-water-500);
+  }
+
+  &.dss-select--borderless.dss-select--focused .q-field__control,
+  &.dss-select--borderless.q-field--focused .q-field__control {
+    border-bottom-color: var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+  }
+
+  /* Label color no foco */
+  &.dss-select--focused .q-field__label,
+  &.q-field--focused .q-field__label {
+    color: var(--dss-water-600);
+  }
+}
+
+/* Hint color — Water */
+[data-brand="water"] .dss-select .q-field__messages,
+.dss-select--brand-water .q-field__messages {
+  color: var(--dss-water-700);
+}
+
+/* Painel Water — opção selecionada */
+.dss-select__panel--brand-water {
+  .q-item--active {
+    color: var(--dss-water-500);
+
+    .q-item__section--side .q-icon {
+      color: var(--dss-water-500);
+    }
+  }
+}
+
+/* ==========================================================================
+   WASTE BRAND (Verde)
+   ========================================================================== */
+
+[data-brand="waste"],
+.dss-select--brand-waste {
+
+  &.dss-select--filled.dss-select--focused .q-field__control,
+  &.dss-select--filled.q-field--focused .q-field__control {
+    border-bottom-color: var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+  }
+
+  &.dss-select--outlined.dss-select--focused .q-field__control,
+  &.dss-select--outlined.q-field--focused .q-field__control {
+    border-color: var(--dss-waste-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-waste-600);
+  }
+
+  &.dss-select--standout.dss-select--focused .q-field__control,
+  &.dss-select--standout.q-field--focused .q-field__control {
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-waste-600);
+  }
+
+  &.dss-select--borderless.dss-select--focused .q-field__control,
+  &.dss-select--borderless.q-field--focused .q-field__control {
+    border-bottom-color: var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+  }
+
+  /* Label color no foco */
+  &.dss-select--focused .q-field__label,
+  &.q-field--focused .q-field__label {
+    color: var(--dss-waste-700);
+  }
+}
+
+/* Hint color — Waste */
+[data-brand="waste"] .dss-select .q-field__messages,
+.dss-select--brand-waste .q-field__messages {
+  color: var(--dss-waste-800);
+}
+
+/* Painel Waste — opção selecionada */
+.dss-select__panel--brand-waste {
+  .q-item--active {
+    color: var(--dss-waste-600);
+
+    .q-item__section--side .q-icon {
+      color: var(--dss-waste-600);
+    }
+  }
+}
+
+/* ==========================================================================
+   BRAND ERROR OVERRIDE
+   Error sempre usa --dss-error-600 independente de brand.
+   Especificidade (0-3-0) supera as regras de brand (0-2-0) — sem !important.
+   ========================================================================== */
+
+.dss-select.q-field--error .q-field__messages {
+  color: var(--dss-error-600);
+}

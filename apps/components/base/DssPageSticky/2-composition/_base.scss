@@ -1,0 +1,22 @@
+// ==========================================================================
+// DssPageSticky — Layer 2: Composição Base
+// ==========================================================================
+//
+// Estilos base do container fixo. Tokens genéricos apenas.
+// Sem referências a variantes, brands ou estados adaptativos.
+//
+// Nota de especificidade:
+//   O QPageSticky aplica z-index: 1000 via .q-page-sticky.
+//   O scoped style (data-v-xxxx) garante que .dss-page-sticky[data-v-xxxx]
+//   tenha especificidade superior a .q-page-sticky, fazendo com que
+//   --dss-z-index-sticky (1020) governe o empilhamento sem !important.
+//   Hierarquia: 1020 (sticky) < 1050 (modal) < 1070 (tooltip) — documentado
+//   em DSS_TOKEN_REFERENCE.md seção 7.15.
+// ==========================================================================
+
+.dss-page-sticky {
+  // Empilhamento governado pelo DSS.
+  // Posiciona acima de conteúdo (1) e dropdowns (1000),
+  // mas abaixo de backdrop (1040), modais (1050) e tooltips (1070).
+  z-index: var(--dss-z-index-sticky);
+}

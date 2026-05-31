@@ -1,0 +1,127 @@
+{
+  "component": "DssCircularProgress",
+  "cssClass": "dss-circular-progress",
+  "phase": 2,
+  "status": "in-progress",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssLinearProgress",
+  "classification": {
+    "type": "Indicador de Progresso circular não interativo",
+    "category": "Progresso e Feedback",
+    "interactive": false,
+    "level": 1,
+    "family": "Progresso e Feedback"
+  },
+  "phaseDescription": "Nível 1 — Indicador de progresso circular. Wrapper governado sobre QCircularProgress com suporte a determinado, indeterminado, slot de rótulo central e brandability.",
+  "statesApplicable": [
+    "default",
+    "indeterminate",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "loading",
+    "error"
+  ],
+  "statesNotApplicableReason": {
+    "hover": "Componente não interativo — Opção B (padrão DssBadge/DssLinearProgress)",
+    "focus": "Componente não interativo — sem navegação por teclado própria",
+    "active": "Componente não interativo",
+    "loading": "Este componente É o indicador de loading/progresso",
+    "error": "Estado de erro deve ser comunicado por componentes de feedback (DssBanner, DssToast) — DssCircularProgress não é um canal de erro primário"
+  },
+  "tokens": [
+    "--dss-surface-muted",
+    "--dss-opacity-disabled",
+    "--dss-spacing-10",
+    "--dss-spacing-12",
+    "--dss-spacing-16",
+    "--dss-spacing-20",
+    "--dss-spacing-24",
+    "--dss-action-primary",
+    "--dss-action-secondary",
+    "--dss-feedback-error",
+    "--dss-feedback-success",
+    "--dss-feedback-warning",
+    "--dss-feedback-info",
+    "--dss-hub-600",
+    "--dss-hub-500",
+    "--dss-water-500",
+    "--dss-water-400",
+    "--dss-waste-600",
+    "--dss-waste-500"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "rule": "Gate de Composição v2.4 — seletores internos de terceiros",
+      "selectors": [
+        ".q-circular-progress__track",
+        ".q-circular-progress__circle"
+      ],
+      "justification": "Necessário para aplicar tokens DSS (--dss-surface-muted ao track, cores semânticas ao circle) à estrutura SVG gerada internamente pelo QCircularProgress. A prop `color` e `track-color` do Quasar NÃO são passadas — governança de cores é 100% CSS DSS. Sem esses overrides, o componente perderia governança visual do DSS.",
+      "location": "2-composition/_base.scss, 3-variants/_colors.scss, 4-output/_brands.scss"
+    },
+    {
+      "id": "EX-States-01",
+      "rule": "!important em prefers-reduced-motion",
+      "value": "animation: none !important; transition: none !important",
+      "justification": "Obrigatório para sobrescrever animações CSS internas do Quasar (QCircularProgress) em contexto de acessibilidade. Sem !important, violaria WCAG 2.3.3. Precedente: DssLinearProgress (EX-States-01).",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EX-States-02",
+      "rule": "Uso de !important",
+      "value": "stroke: currentColor !important",
+      "justification": "Contexto print: garante visibilidade do arco em impressão monocromática sobrescrevendo qualquer cor de stroke. Precedente: DssLinearProgress (EX-States-02).",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EX-Code-01",
+      "rule": "Token First — JS não pode consumir CSS vars",
+      "value": "animation-speed: 250",
+      "justification": "QCircularProgress aceita velocidade de animação como número JS. Valor equivale a --dss-duration-250 (250ms). Manter sincronizado ao atualizar token de duração. Precedente: DssLinearProgress (EX-Code-01).",
+      "location": "1-structure/DssCircularProgress.ts.vue"
+    }
+  ],
+  "gateExceptions": {
+    "templateStructure": "div wrapper como root element — QCircularProgress é filho. $attrs forwarded via v-bind='$attrs' no root div. Padrão idêntico ao DssLinearProgress."
+  },
+  "propsBlocked": {
+    "dark": "Gerenciado pelo DSS via [data-theme='dark'] em _states.scss",
+    "track-color": "Governado por --dss-surface-muted — não exposto ao consumidor",
+    "color": "Governado via CSS seletor .q-circular-progress__circle { stroke: var(--dss-...) } — EXC-Gate-01",
+    "center-color": "Sem semântica DSS — transparente padrão (herda background do container)",
+    "font-size": "Proporção padrão Quasar (0.25em) é adequada e proporcional ao tamanho",
+    "rounded": "Cap style do arco — mantido no padrão Quasar (round caps)"
+  },
+  "compositionRecommendations": [
+    "DssCard — container estrutural para exibir DssCircularProgress com contexto",
+    "DssDialog — overlay modal com indicador de progresso de operação longa",
+    "DssSpinner — alternativa mais simples para estados indeterminados de menor espaço",
+    "DssLinearProgress — alternativa horizontal para barra de progresso contextual"
+  ],
+  "defaultPreview": {
+    "props": {
+      "value": 0.7,
+      "size": "md",
+      "color": "primary"
+    },
+    "computedDimensions": {
+      "minHeight": "56px",
+      "minWidth": "56px"
+    },
+    "computedTokens": {
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-action-primary"
+    },
+    "demoContent": "Progresso circular 70%"
+  },
+  "auditHistory": []
+}

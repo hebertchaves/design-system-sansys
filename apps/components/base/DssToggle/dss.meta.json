@@ -1,0 +1,35 @@
+{
+  "component": "DssToggle",
+  "dssVersion": "2.2",
+  "status": "sealed",
+  "seal": "DSS v2.2",
+  "auditMode": "Auditor DSS v2.2",
+  "auditDate": "2026-02-05",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssCheckbox",
+  "goldenContextSecondary": "DssRadio",
+  "category": "Compact Control interativo",
+  "phase": "1",
+  "classification": "Form / Selection",
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "color": "primary",
+      "size": "md"
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "gap": "--dss-spacing-2",
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-muted",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Label 'Ativar'"
+  }
+}

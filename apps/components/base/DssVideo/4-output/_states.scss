@@ -1,0 +1,10 @@
+// Layer 4 — States
+
+// prefers-contrast: more — border-radius preservado; sem impacto visual adicional.
+// Componente não tem interatividade própria — sem estados interativos a ajustar.
+
+// forced-colors: active — border-radius é propriedade geométrica; não é afetado
+// pelo modo forced-colors. Nenhuma ação necessária (forced-color-adjust: proibido no DSS).
+
+// print — iframe de vídeo não é reproduzível em papel.
+// Nenhuma ação adicional necessária: browsers ocultam iframes por padrão em print.

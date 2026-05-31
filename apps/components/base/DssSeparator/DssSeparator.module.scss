@@ -1,0 +1,25 @@
+/* ==========================================================================
+   DssSeparator — Module Orchestrator
+
+   Orquestrador principal que importa todas as camadas do componente.
+
+   ARQUITETURA DE 4 CAMADAS (ordem obrigatória L2 → L3 → L4):
+   - Layer 2: Composition (base styles — reset + horizontal default)
+   - Layer 3: Variants (vertical, colors, sizes, inset, spaced)
+   - Layer 4: Output (states — dark/contrast/motion/forced-colors, brands)
+
+   CORES: Aplicadas via modificador CSS `color` + técnica `currentColor`.
+   DssSeparator NÃO usa classes utilitárias (bg-*, text-*) pois é um elemento
+   de borda, não de preenchimento ou tipografia.
+
+   @version 1.0.0
+   ========================================================================== */
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants' as variants;
+
+/* Layer 4: Output */
+@use './4-output' as output;

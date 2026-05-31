@@ -1,0 +1,46 @@
+/* ==========================================================================
+   DssBanner — LAYER 4: BRANDS (Hub, Water, Waste)
+
+   Em contexto de marca, o banner `variant="default"` adota a superfície
+   e a cor de ação da marca. Variantes semânticas (info, success, warning,
+   error) mantêm suas cores de feedback — não são sobrescritas pela marca,
+   pois seu significado semântico tem precedência sobre branding.
+
+   PADRÃO: cascade brands-before-states (igual DssList/DssItem).
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] .dss-banner--default,
+.dss-banner--brand-hub.dss-banner--default {
+  background-color: var(--dss-surface-brand-light);
+  border-left-color: var(--dss-hub-600);
+
+  --dss-banner-icon-color: var(--dss-hub-600);
+}
+
+/* ==========================================================================
+   WATER (Azul)
+   ========================================================================== */
+
+[data-brand="water"] .dss-banner--default,
+.dss-banner--brand-water.dss-banner--default {
+  background-color: var(--dss-surface-brand-light);
+  border-left-color: var(--dss-water-500);
+
+  --dss-banner-icon-color: var(--dss-water-500);
+}
+
+/* ==========================================================================
+   WASTE (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] .dss-banner--default,
+.dss-banner--brand-waste.dss-banner--default {
+  background-color: var(--dss-surface-brand-light);
+  border-left-color: var(--dss-waste-600);
+
+  --dss-banner-icon-color: var(--dss-waste-600);
+}

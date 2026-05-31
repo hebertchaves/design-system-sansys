@@ -1,0 +1,55 @@
+// ==========================================================================
+// DssDataCard — 4-output/_brands.scss
+// ==========================================================================
+//
+// Brandabilidade: Hub, Water, Waste
+//
+// PADRÃO FASE 3 — CSS Variables como canal visual:
+// O DssDataCard define [data-brand] no elemento raiz.
+// Os filhos (DssToolbar, DssTabs) recebem brand via cascata CSS do DSS.
+// Este arquivo estiliza APENAS os elementos próprios do DssDataCard
+// (wrappers __toolbar e __tabs), não os componentes filhos.
+
+.dss-data-card {
+  // --------------------------------------------------------------------------
+  // Brand Hub — laranja
+  // --------------------------------------------------------------------------
+
+  &[data-brand='hub'] {
+    .dss-data-card__toolbar {
+      border-bottom-color: var(--dss-hub-600);
+    }
+
+    .dss-data-card__tabs {
+      border-bottom-color: var(--dss-hub-600);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Brand Water — azul
+  // --------------------------------------------------------------------------
+
+  &[data-brand='water'] {
+    .dss-data-card__toolbar {
+      border-bottom-color: var(--dss-water-500);
+    }
+
+    .dss-data-card__tabs {
+      border-bottom-color: var(--dss-water-500);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Brand Waste — verde
+  // --------------------------------------------------------------------------
+
+  &[data-brand='waste'] {
+    .dss-data-card__toolbar {
+      border-bottom-color: var(--dss-waste-600);
+    }
+
+    .dss-data-card__tabs {
+      border-bottom-color: var(--dss-waste-600);
+    }
+  }
+}

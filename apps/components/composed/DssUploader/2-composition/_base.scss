@@ -1,0 +1,271 @@
+// =============================================================================
+// DssUploader — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// GOLDEN REFERENCE: DssBadge (componente não interativo)
+// GOLDEN CONTEXT:   DssCard (container com borda, superfície e elevação)
+//
+// TOUCH TARGET: NÃO aplicável.
+//   Raiz do DssUploader não é interativa. A interatividade pertence
+//   aos filhos DssButton, que têm touch target próprio.
+//
+// EXC-Gate-01: Seletores internos do Quasar
+//   .q-uploader, .q-uploader__header e .q-uploader__list precisam ser
+//   resetados via CSS para que o container DSS controle 100% da aparência.
+//   Justificativa: sem esses resets, o Quasar sobrescreve border, shadow
+//   e background com valores que divergem dos tokens DSS.
+//
+// TOKENS UTILIZADOS (base):
+//   Superfície:   --dss-surface-default        (fundo do container)
+//   Borda:        --dss-border-width-thin       (1px)
+//                 --dss-gray-300               (cor de borda padrão)
+//   Raio:         --dss-radius-lg              (12px — alinhado ao DssCard)
+//   Espaçamento:  --dss-padding-4              (16px)
+//                 --dss-grid-gap-sm            (8px)
+//                 --dss-padding-2              (8px — padding item)
+//                 --dss-padding-8              (32px — dropzone vertical)
+//   Tipografia:   --dss-font-size-sm           (texto da dropzone)
+//                 --dss-font-size-xs           (meta do arquivo)
+//                 --dss-font-weight-normal
+//   Cor de texto: --dss-gray-600               (texto sutil)
+//   Feedback:     --dss-feedback-success       (status uploaded)
+//                 --dss-feedback-error         (status failed)
+//   Transição:    --dss-duration-150           (micro-interações)
+//                 --dss-easing-standard
+//   Opacidade:    --dss-opacity-disabled       (estado desabilitado)
+//
+// =============================================================================
+
+.dss-uploader {
+  // ── Layout e Estrutura ────────────────────────────────────────────────────
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+
+  // ── Aparência Base ────────────────────────────────────────────────────────
+  background-color: var(--dss-surface-default);
+  border-radius: var(--dss-radius-lg);
+  overflow: hidden;
+
+  border-width: var(--dss-border-width-thin);
+  border-style: solid;
+  border-color: var(--dss-gray-300);
+
+  // ── Comportamento ─────────────────────────────────────────────────────────
+  user-select: none;
+
+  // ── Estado: disabled ──────────────────────────────────────────────────────
+  &--disabled {
+    opacity: var(--dss-opacity-disabled);
+    pointer-events: none;
+  }
+
+  // ── Estado: readonly ──────────────────────────────────────────────────────
+  &--readonly {
+    cursor: default;
+  }
+
+  // ==========================================================================
+  // EXC-Gate-01: Reset dos estilos padrão do QUploader
+  // Necessário para que o container DSS controle border, shadow e background.
+  // ==========================================================================
+
+  &__engine {
+    // O QUploader renderiza seu próprio border e box-shadow que divergem
+    // do padrão DSS. Resetamos aqui para que o .dss-uploader controle.
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    width: 100%;
+
+    // EXC-Gate-01: QUploader renderiza um header nativo que usamos via slot.
+    // Como o slot #header substitui completamente o conteúdo, apenas
+    // resetamos o espaçamento padrão do elemento container do slot.
+    .q-uploader__header {
+      padding: 0;
+      background-color: transparent;
+      min-height: unset;
+    }
+
+    // EXC-Gate-01: QUploader renderiza uma lista nativa que usamos via slot.
+    // Resetamos para que nosso slot #list controle todo o layout.
+    .q-uploader__list {
+      padding: 0;
+      min-height: unset;
+    }
+
+    // EXC-Gate-01: Overlay de drag-and-drop do QUploader.
+    // Mantemos o z-index mas tornamos invisível — o CSS :has() em
+    // _variant.scss aplica o estilo visual de drag no .dss-uploader root.
+    .q-uploader__dnd {
+      border: none;
+      background: transparent;
+    }
+  }
+
+  // ==========================================================================
+  // Header (reconstituído via slot)
+  // ==========================================================================
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--dss-grid-gap-sm);
+    padding: var(--dss-padding-4);
+    border-bottom-width: var(--dss-border-width-thin);
+    border-bottom-style: solid;
+    border-bottom-color: var(--dss-gray-100);
+    min-height: unset;
+  }
+
+  &__progress-info {
+    margin-left: auto;
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-gray-600);
+  }
+
+  // ==========================================================================
+  // Dropzone (estado vazio)
+  // ==========================================================================
+
+  &__dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dss-grid-gap-sm);
+    padding: var(--dss-padding-8) var(--dss-padding-4);
+    text-align: center;
+    color: var(--dss-gray-600);
+    cursor: default;
+    transition:
+      background-color var(--dss-duration-150) var(--dss-easing-standard);
+  }
+
+  &__dropzone-text {
+    margin: 0;
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-gray-600);
+  }
+
+  &__dropzone-hint {
+    margin: 0;
+    font-size: var(--dss-font-size-xs);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-gray-500);
+  }
+
+  // ==========================================================================
+  // Lista de arquivos (reconstituída via slot)
+  // ==========================================================================
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: var(--dss-padding-2) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__file-item {
+    display: flex;
+    align-items: center;
+    gap: var(--dss-grid-gap-sm);
+    padding: var(--dss-padding-2) var(--dss-padding-4);
+    border-bottom-width: var(--dss-border-width-thin);
+    border-bottom-style: solid;
+    border-bottom-color: var(--dss-gray-100);
+    transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    // Estado: sendo enviado
+    &--uploading {
+      background-color: var(--dss-surface-default);
+    }
+
+    // Estado: concluído
+    &--uploaded {
+      background-color: transparent;
+    }
+
+    // Estado: falha
+    &--failed {
+      background-color: transparent;
+    }
+  }
+
+  &__file-icon {
+    flex-shrink: 0;
+    color: var(--dss-gray-500);
+  }
+
+  &__file-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__file-name {
+    font-size: var(--dss-font-size-sm);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-gray-800);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__file-meta {
+    font-size: var(--dss-font-size-xs);
+    font-weight: var(--dss-font-weight-normal);
+    color: var(--dss-gray-500);
+  }
+
+  &__file-progress {
+    flex-shrink: 0;
+    width: var(--dss-spacing-20);
+  }
+
+  // ── Status icons ──────────────────────────────────────────────────────────
+
+  &__status-icon {
+    flex-shrink: 0;
+
+    &--success {
+      color: var(--dss-feedback-success);
+    }
+
+    &--error {
+      color: var(--dss-feedback-error);
+    }
+  }
+
+  // ==========================================================================
+  // SR-only: região aria-live para anúncios de status
+  // ==========================================================================
+
+  &__sr-status {
+    // Padrão sr-only canônico — valores fixos intencionais (técnica de acessibilidade)
+    // --dss-spacing-px = 1px; calc negativo para margin
+    position: absolute;
+    width: var(--dss-spacing-px);
+    height: var(--dss-spacing-px);
+    padding: 0;
+    margin: calc(-1 * var(--dss-spacing-px));
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}

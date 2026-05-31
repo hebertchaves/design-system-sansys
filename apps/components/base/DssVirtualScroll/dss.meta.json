@@ -1,0 +1,114 @@
+{
+  "component": "DssVirtualScroll",
+  "cssClass": "dss-virtual-scroll",
+  "phase": 2,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssLinearProgress",
+  "classification": {
+    "type": "Container de dados virtualizado não interativo",
+    "category": "Dados e Listas",
+    "interactive": false,
+    "level": 2,
+    "family": "Dados e Performance"
+  },
+  "phaseDescription": "Nível 2 — Container de virtualização. Pré-requisito para DssInfiniteScroll (Nível 2).",
+  "statesApplicable": [
+    "default",
+    "loading",
+    "empty",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "error"
+  ],
+  "statesNotApplicableReason": {
+    "hover": "Componente container — itens filhos gerenciam seus próprios estados de hover",
+    "focus": "Scroll é nativo do browser; foco gerenciado pelos itens filhos ou tabindex externo",
+    "active": "Componente container — interação de itens é responsabilidade do consumidor",
+    "error": "Estado de erro é responsabilidade do consumidor via slot #append (ex: botão de retry). DssVirtualScroll não gerencia lógica de negócio de falha de rede. Composição recomendada: consumidor controla prop `loading` e renderiza feedback de erro no slot #append"
+  },
+  "tokens": [
+    "--dss-spacing-2",
+    "--dss-spacing-6",
+    "--dss-spacing-8",
+    "--dss-spacing-px",
+    "--dss-radius-full",
+    "--dss-surface-muted",
+    "--dss-text-subtle",
+    "--dss-opacity-disabled",
+    "--dss-duration-500",
+    "--dss-action-hub",
+    "--dss-action-water",
+    "--dss-action-waste"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "rule": "Gate de Composição v2.4 — seletores internos de terceiros",
+      "selectors": [
+        ".q-virtual-scroll__content"
+      ],
+      "justification": ".q-virtual-scroll__content é o container DOM real dos itens virtualizados gerado exclusivamente pelo QVirtualScroll — não é acessível via slot nem prop. A regra width: 100% aplicada a ele garante que o conteúdo preencha a largura do __inner mesmo quando o Quasar aplica display: block ao elemento, evitando colapso de largura em listas com itens de tamanho variável. Sem esse seletor, listas horizontais ou com overflow quebrariam o layout.",
+      "location": "2-composition/_base.scss — bloco .dss-virtual-scroll__inner"
+    },
+    {
+      "id": "EX-States-01",
+      "rule": "!important em prefers-reduced-motion",
+      "value": "animation: none !important",
+      "justification": "Obrigatório para sobrescrever @keyframes definido em _base.scss em contexto de acessibilidade. Sem !important, a animação do spinner de loading persiste mesmo com prefers-reduced-motion: reduce. Precedente: DssLinearProgress (EX-States-01), DssSpinner (EX-02).",
+      "location": "4-output/_states.scss"
+    }
+  ],
+  "gateExceptions": {
+    "templateStructure": "DssVirtualScroll delega renderização virtualizada ao QVirtualScroll. O slot padrão DSS expõe { item, index, ariaSetsize, ariaPosinset } para que o consumidor aplique semântica ARIA correta nos itens filhos.",
+    "compositionGate": "EXC-Gate-01 — ver exceptions acima."
+  },
+  "compositionRecommendations": [
+    "DssInfiniteScroll — complementar para carregamento incremental",
+    "DssSpinner — substituto para o slot #loading quando DssSpinner estiver disponível",
+    "DssList + DssItem — composição recomendada para itens de lista DSS",
+    "DssCard — container estrutural recomendado ao envolver DssVirtualScroll"
+  ],
+  "propsBlocked": {
+    "virtual-scroll-slice-ratio-before": "Gerenciado internamente pelo Quasar com valores otimizados",
+    "virtual-scroll-slice-ratio-after": "Gerenciado internamente pelo Quasar com valores otimizados",
+    "virtual-scroll-sticky-size-start": "Simplificado pelo DSS — não há caso de uso validado no ecossistema",
+    "virtual-scroll-sticky-size-end": "Simplificado pelo DSS — não há caso de uso validado no ecossistema"
+  },
+  "defaultPreview": {
+    "props": {
+      "items": "[Array de itens]",
+      "itemSize": 48,
+      "type": "list"
+    },
+    "computedDimensions": {
+      "minHeight": "200px"
+    },
+    "computedTokens": {
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Lista virtualizada com 1000 itens"
+  },
+  "auditHistory": [
+    {
+      "date": "2026-05-12",
+      "auditor": "Claude (Modo Auditor DSS)",
+      "version": "2.2.0",
+      "result": "CONFORME",
+      "cycles": 2,
+      "ncFound": 6,
+      "ncResolved": 6,
+      "gapsFound": 5,
+      "gapsResolved": 3,
+      "ressalvas": 2,
+      "sealPath": "DSS/docs/Compliance/seals/DssVirtualScroll/DSSVIRTUALSCROLL_SELO_v2.2.md"
+    }
+  ]
+}

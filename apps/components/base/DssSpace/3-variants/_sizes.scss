@@ -1,0 +1,28 @@
+/* ==========================================================================
+   DssSpace — LAYER 3: VARIANTS — Sizes
+
+   RESPONSABILIDADE: Modificadores de tamanho fixo para o modo size.
+
+   Quando a prop `size` está presente, o DssSpace muda de comportamento:
+   - flex: 0 0 auto  → não cresce, não encolhe
+   - width e height são definidos pelo token --dss-spacing-{value}
+
+   AMBAS as dimensões são definidas para suportar:
+   - flex-row containers: width aplica o espaço horizontal
+   - flex-column containers: height aplica o espaço vertical
+
+   Mapeamento direto prop → token:
+   size="px"  → var(--dss-spacing-px)  = 1px
+   size="0_5" → var(--dss-spacing-0_5) = 2px
+   size="1"   → var(--dss-spacing-1)   = 4px
+   size="4"   → var(--dss-spacing-4)   = 16px
+   ... (todos os valores do tipo SpaceSize)
+   ========================================================================== */
+
+@each $size in px, 0_5, 1, 1_5, 2, 2_5, 3, 3_5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24 {
+  .dss-space--size-#{$size} {
+    flex: 0 0 auto; /* Não cresce, não encolhe — tamanho fixo */
+    width: var(--dss-spacing-#{$size});
+    height: var(--dss-spacing-#{$size});
+  }
+}

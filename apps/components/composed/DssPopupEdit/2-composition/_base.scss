@@ -1,0 +1,68 @@
+// =============================================================================
+// DssPopupEdit — Layer 2: Composition / Base
+// =============================================================================
+//
+// Aplica tokens DSS ao container .q-popup-edit gerado pelo QPopupEdit do Quasar.
+//
+// EXC-Gate-01: QPopupEdit não expõe prop `popup-content-class` para injetar
+//   classes DSS no container teleportado. Os estilos DSS devem, portanto,
+//   selecionar diretamente `.q-popup-edit`. Precedente: DssMenu (targeting .q-menu).
+//
+// EXC-Gate-02: CSS global (não scoped) é obrigatório porque o popup é teleportado
+//   para <body> pelo QMenu interno. Seletores scoped são ineficazes neste contexto.
+//   Precedente: DssDialog (EXC-Gate-01 + CSS global), DssMenu (EXC-Gate-01).
+//
+// EXC-01: !important em background-color e box-shadow.
+//   QPopupEdit aplica estilos via .q-card (QCard interno) com especificidade
+//   CSS maior que seletores de classe simples. !important é necessário para que
+//   --dss-surface-default e --dss-elevation-3 prevaleçam.
+//   Precedente: DssDialog (EXC-01), DssMenu (EXC-01).
+//
+// EXC-02: min-width: 180px.
+//   Não existe token DSS para largura mínima de popup de edição inline.
+//   180px é o valor mínimo para conteúdo usável (ex: DssInput com rótulo).
+// =============================================================================
+
+// Seletor global: container do popup teleportado (equivalente ao .dss-dialog em DssDialog)
+.q-popup-edit {
+  // EXC-01 — tokens DSS sobrescrevendo QCard com !important
+  background-color: var(--dss-surface-default) !important;
+  box-shadow: var(--dss-elevation-3) !important;
+  border-radius: var(--dss-radius-md) !important;
+
+  // EXC-02 — sem token DSS para min-width de popup inline
+  min-width: 180px;
+
+  // Reset de padding do QCard (aplicado via padding interno das seções abaixo)
+  padding: 0 !important;
+
+  font-family: var(--dss-font-family-sans);
+
+  // -------------------------------------------------------------------------
+  // Cabeçalho (renderizado quando prop `title` é fornecida)
+  // .q-item-label--header é aplicado pelo QPopupEdit internamente
+  // -------------------------------------------------------------------------
+  .q-item-label--header {
+    padding: var(--dss-padding-4) var(--dss-padding-4) var(--dss-spacing-2);
+    color: var(--dss-text-body);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-100);
+  }
+
+  // -------------------------------------------------------------------------
+  // Área do formulário de edição (wrapper do slot #default)
+  // -------------------------------------------------------------------------
+  .q-popup-edit__form {
+    padding: var(--dss-padding-3) var(--dss-padding-4);
+  }
+
+  // -------------------------------------------------------------------------
+  // Área de botões (renderizada quando prop `buttons: true`)
+  // -------------------------------------------------------------------------
+  .q-popup-edit__buttons {
+    padding: var(--dss-spacing-2) var(--dss-padding-4) var(--dss-padding-3);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--dss-spacing-2);
+    border-top: var(--dss-border-width-thin) solid var(--dss-gray-100);
+  }
+}

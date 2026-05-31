@@ -1,0 +1,135 @@
+/* ==========================================================================
+   DSS COMPONENTS - Estilos Globais dos Componentes
+   ========================================================================== */
+
+/**
+ * NOTA: Este arquivo importa os estilos dos componentes de forma GLOBAL
+ * para uso em ambientes sem bundler (HTML puro, CDN, etc.)
+ *
+ * Para uso em aplicações Vue com bundler (Webpack/Vite),
+ * os componentes usam CSS Modules (.module.scss) automaticamente.
+ */
+
+/* ── Ações ──────────────────────────────────────────────────────────────── */
+@import 'base/DssButton/DssButton.module';
+@import 'base/DssChip/DssChip.module';
+@import 'base/DssBtnGroup/DssBtnGroup.module';
+@import 'base/DssBtnDropdown/DssBtnDropdown.module';
+@import 'base/DssBtnToggle/DssBtnToggle.module';
+@import 'base/DssFab/DssFab.module';
+@import 'base/DssFabAction/DssFabAction.module';
+
+/* ── Indicadores e Avatares ─────────────────────────────────────────────── */
+@import 'base/DssBadge/DssBadge.module';
+@import 'base/DssAvatar/DssAvatar.module';
+@import 'base/DssIcon/DssIcon.module';
+@import 'base/DssSpinner/DssSpinner.module';
+@import 'base/DssRating/DssRating.module';
+@import 'base/DssKnob/DssKnob.module';
+@import 'base/DssTooltip/DssTooltip.module';
+
+/* ── Formulários ────────────────────────────────────────────────────────── */
+@import 'base/DssField/DssField.module';
+@import 'base/DssInput/DssInput.module';
+@import 'base/DssSelect/DssSelect.module';
+@import 'base/DssTextarea/DssTextarea.module';
+@import 'base/DssFile/DssFile.module';
+@import 'base/DssCheckbox/DssCheckbox.module';
+@import 'base/DssRadio/DssRadio.module';
+@import 'base/DssToggle/DssToggle.module';
+@import 'base/DssOptionGroup/DssOptionGroup.module';
+@import 'base/DssSlider/DssSlider.module';
+@import 'base/DssRange/DssRange.module';
+
+/* ── Progresso e Feedback ───────────────────────────────────────────────── */
+@import 'base/DssLinearProgress/DssLinearProgress.module';
+@import 'base/DssCircularProgress/DssCircularProgress.module';
+@import 'base/DssSkeleton/DssSkeleton.module';
+@import 'base/DssInnerLoading/DssInnerLoading.module';
+@import 'base/DssAjaxBar/DssAjaxBar.module';
+
+/* ── Banners e Barras ───────────────────────────────────────────────────── */
+@import 'base/DssBanner/DssBanner.module';
+@import 'base/DssBar/DssBar.module';
+
+/* ── Navegação ──────────────────────────────────────────────────────────── */
+@import 'base/DssTabs/DssTabs.module';
+@import 'base/DssTab/DssTab.module';
+@import 'base/DssTabPanels/DssTabPanels.module';
+@import 'base/DssTabPanel/DssTabPanel.module';
+@import 'base/DssRouteTab/DssRouteTab.module';
+@import 'base/DssBreadcrumbs/DssBreadcrumbs.module';
+@import 'base/DssBreadcrumbsEl/DssBreadcrumbsEl.module';
+@import 'base/DssPagination/DssPagination.module';
+@import 'base/DssExpansionItem/DssExpansionItem.module';
+@import 'base/DssMenu/DssMenu.module';
+
+/* ── Stepper ────────────────────────────────────────────────────────────── */
+@import 'base/DssStepper/DssStepper.module';
+@import 'base/DssStep/DssStep.module';
+
+/* ── Listas e Estrutura ─────────────────────────────────────────────────── */
+@import 'base/DssList/DssList.module';
+@import 'base/DssItem/DssItem.module';
+@import 'base/DssItemSection/DssItemSection.module';
+@import 'base/DssItemLabel/DssItemLabel.module';
+@import 'base/DssSlideItem/DssSlideItem.module';
+@import 'base/DssSeparator/DssSeparator.module';
+@import 'base/DssSpace/DssSpace.module';
+
+/* ── Cartões e Superfícies ──────────────────────────────────────────────── */
+@import 'base/DssCard/DssCard.module';
+@import 'base/DssToolbar/DssToolbar.module';
+@import 'base/DssToolbarTitle/DssToolbarTitle.module';
+@import 'base/DssMarkupTable/DssMarkupTable.module';
+
+/* ── Timeline ───────────────────────────────────────────────────────────── */
+@import 'base/DssTimeline/DssTimeline.module';
+@import 'base/DssTimelineEntry/DssTimelineEntry.module';
+
+/* ── Árvore ─────────────────────────────────────────────────────────────── */
+@import 'base/DssTree/DssTree.module';
+
+/* ── Mídia e Visualização ───────────────────────────────────────────────── */
+@import 'base/DssImg/DssImg.module';
+@import 'base/DssVideo/DssVideo.module';
+@import 'base/DssParallax/DssParallax.module';
+
+/* ── Scroll e Layout Auxiliar ───────────────────────────────────────────── */
+@import 'base/DssScrollArea/DssScrollArea.module';
+@import 'base/DssSplitter/DssSplitter.module';
+@import 'base/DssVirtualScroll/DssVirtualScroll.module';
+@import 'base/DssInfiniteScroll/DssInfiniteScroll.module';
+@import 'base/DssPullToRefresh/DssPullToRefresh.module';
+@import 'base/DssResponsive/DssResponsive.module';
+
+/* ── Layout Estrutural ──────────────────────────────────────────────────── */
+@import 'base/DssLayout/DssLayout.module';
+@import 'base/DssHeader/DssHeader.module';
+@import 'base/DssFooter/DssFooter.module';
+@import 'base/DssDrawer/DssDrawer.module';
+@import 'base/DssPage/DssPage.module';
+@import 'base/DssPageContainer/DssPageContainer.module';
+@import 'base/DssPageSticky/DssPageSticky.module';
+@import 'base/DssPageScroller/DssPageScroller.module';
+
+/* ── Popups e Overlays ──────────────────────────────────────────────────── */
+@import 'base/DssPopupProxy/DssPopupProxy.module';
+
+/* ── Componentes Compostos ──────────────────────────────────────────────── */
+@import 'composed/DssDialog/DssDialog.module';
+@import 'composed/DssPopupEdit/DssPopupEdit.module';
+@import 'composed/DssTimePicker/DssTimePicker.module';
+@import 'composed/DssDatePicker/DssDatePicker.module';
+@import 'composed/DssColorPicker/DssColorPicker.module';
+@import 'composed/DssCarousel/DssCarousel.module';
+@import 'composed/DssUploader/DssUploader.module';
+@import 'composed/DssForm/DssForm.module';
+@import 'composed/DssTable/DssTable.module';
+@import 'composed/DssBottomSheet/DssBottomSheet.module';
+@import 'composed/DssChatMessage/DssChatMessage.module';
+@import 'composed/DssTestPageComplexity/DssTestPageComplexity.module';
+
+/* ── Stress Test / Compostos Complexos ──────────────────────────────────── */
+@import 'stress-test/DssDataCard/DssDataCard.module';
+@import 'stress-test/DssCadrisCard/DssCadrisCard.module';

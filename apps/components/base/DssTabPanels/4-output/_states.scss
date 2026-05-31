@@ -1,0 +1,61 @@
+// ==========================================================================
+// DssTabPanels — Layer 4: States
+// Dark mode, high-contrast, forced-colors, print
+// ==========================================================================
+//
+// NOTA ARQUITETURAL — Transições Vue (animated=true):
+// As classes de transição Vue (.dss-tab-panels-enter-active, .dss-tab-panels-leave-active,
+// .dss-tab-panels-enter-from, .dss-tab-panels-leave-to) e a regra prefers-reduced-motion
+// correspondente são definidas no bloco <style> global separado em
+// 1-structure/DssTabPanels.ts.vue.
+//
+// Razão: Vue aplica essas classes nos filhos do slot (DssTabPanel), que estão
+// fora do escopo data-v-xxx do root DssTabPanels. Em um bloco <style scoped>,
+// Vue adicionaria [data-v-xxx] às classes de transição, impedindo que elas
+// fossem aplicadas corretamente aos elementos do slot.
+//
+// Tokens DSS de motion utilizados nas transições (documentados aqui, aplicados lá):
+// - --dss-duration-200: duração padrão de fade entre painéis
+// - --dss-duration-0: zero duration para prefers-reduced-motion
+// - --dss-easing-standard: cubic-bezier(0.4, 0, 0.2, 1) — Material Design easing
+// ==========================================================================
+
+// ==========================================================================
+// DARK MODE
+// ==========================================================================
+// DssTabPanels é container transparente — sem estilos dark mode próprios.
+// Background herda do container pai. DssTabPanel filhos gerenciam
+// seu próprio dark mode via cascata [data-theme="dark"].
+
+// ==========================================================================
+// HIGH CONTRAST
+// ==========================================================================
+
+@media (prefers-contrast: high) {
+  .dss-tab-panels.q-tab-panels {
+    outline: var(--dss-border-width-thin) solid currentColor;
+    outline-offset: calc(-1 * var(--dss-border-width-thin));
+  }
+}
+
+// ==========================================================================
+// FORCED COLORS (Windows High Contrast Mode)
+// ==========================================================================
+
+@media (forced-colors: active) {
+  // EXC-02: 1px solid ButtonText — system color keyword obrigatório.
+  // Tokens CSS são ignorados pelo navegador em forced-colors.
+  // Torna o container DssTabPanels visível no modo de alto contraste forçado.
+  // Padrão canônico DSS. Precedente: DssTabPanel EXC-02, DssCard EXC-04.
+  .dss-tab-panels.q-tab-panels {
+    border: 1px solid ButtonText;
+  }
+}
+
+// ==========================================================================
+// PRINT
+// ==========================================================================
+// DssTabPanels não requer regras adicionais de print.
+// DssTabPanel (filho) já implementa display: block !important em @media print
+// para garantir que todos os painéis sejam visíveis ao imprimir (EXC-04 do DssTabPanel).
+// Referência: DssTabPanel.md — seção 11 (Comportamento em Impressão).

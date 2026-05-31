@@ -1,0 +1,12 @@
+// ==========================================================================
+// DssHeader — Layer 3: Variante Elevated
+// ==========================================================================
+//
+// Aplica sombra de elevação para destacar o header do conteúdo da página.
+// Usa --dss-elevation-2 (equivalente a shadow-md) — nível adequado para
+// headers/navbars que devem se sobressair sutilmente ao rolar.
+// ==========================================================================
+
+.dss-header--elevated {
+  box-shadow: var(--dss-elevation-2);
+}

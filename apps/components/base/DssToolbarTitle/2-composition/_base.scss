@@ -1,0 +1,35 @@
+// ==========================================================================
+// DssToolbarTitle — Layer 2: Base Composition
+// ==========================================================================
+//
+// EXC-01: Sobrescrita de tipografia nativa do QToolbarTitle
+// O QToolbarTitle aplica font-size: 21px, font-weight: normal, letter-spacing: 0.01em
+// via classe .q-toolbar__title. A única forma de garantir tokens DSS é via seletor
+// composto .dss-toolbar-title.q-toolbar__title.
+// Precedente canônico: DssItemLabel (EXC-01).
+
+.dss-toolbar-title {
+  // EXC-01: Seletor composto para sobrescrever tipografia nativa Quasar
+  &.q-toolbar__title {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-heading-4-size);
+    font-weight: var(--dss-heading-4-weight);
+    line-height: var(--dss-heading-4-line-height);
+    letter-spacing: normal;
+
+    // Cor não definida — herdada do DssToolbar pai (--dss-text-body ou --dss-text-inverse)
+    // conforme a brand ativa no ancestral [data-brand].
+
+    // Truncamento automático — preserva a quebra de linha nativa do QToolbarTitle
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Variante shrink: impede que o título cresça, ocupa apenas o espaço necessário
+  &--shrink {
+    &.q-toolbar__title {
+      flex: 0 0 auto;
+    }
+  }
+}

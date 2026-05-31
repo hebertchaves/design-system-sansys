@@ -1,0 +1,26 @@
+/**
+ * ==========================================================================
+ * DssAvatar - Module Orchestrator
+ * ==========================================================================
+ *
+ * Orquestrador principal que importa todas as camadas do componente.
+ *
+ * CORES: Aplicadas via classes utilitarias (.bg-*, .text-*) - Padrao Quasar
+ * Definidas em: utils/_colors.scss
+ *
+ * CAMADAS:
+ * - Layer 2: Composition (base styles)
+ * - Layer 3: Variants (brands, status)
+ * - Layer 4: Output (states, accessibility, dark mode)
+ *
+ * @version 2.2
+ */
+
+// Layer 2: Composition (base styles)
+@use './2-composition/base' as composition;
+
+// Layer 3: Variants (brands, status)
+@use './3-variants/index' as variants;
+
+// Layer 4: Output (states, accessibility, dark mode)
+@use './4-output/DssAvatar' as output;

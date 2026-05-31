@@ -1,0 +1,34 @@
+{
+  "component": "DssBadge",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS v2.2",
+  "auditMode": "Final",
+  "auditDate": "2026-01-27",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssChip",
+  "phase": 1,
+  "category": "Compact Control nao interativo",
+  "hasReservations": true,
+  "defaultPreview": {
+    "props": {
+      "color": "primary"
+    },
+    "computedDimensions": {
+      "minHeight": "24px",
+      "minWidth": "24px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-0_5 --dss-spacing-1",
+      "gap": "--dss-spacing-1",
+      "borderRadius": "--dss-radius-full",
+      "borderWidth": "--dss-border-width-none",
+      "fontSize": "--dss-font-size-xs",
+      "fontWeight": "--dss-font-weight-medium",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-action-primary",
+      "textColor": "--dss-text-inverse"
+    },
+    "demoContent": "Label '99+'"
+  }
+}

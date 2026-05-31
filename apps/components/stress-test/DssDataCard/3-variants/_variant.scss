@@ -1,0 +1,13 @@
+// ==========================================================================
+// DssDataCard — 3-variants/_variant.scss
+// ==========================================================================
+//
+// Variantes visuais do DssDataCard.
+//
+// DssDataCard não expõe variantes próprias de densidade ou tamanho —
+// a variante do container (elevated, flat, bordered) é delegada ao DssCard
+// via prop `variant`. A densidade dos componentes internos (DssTabs, DssButton)
+// é gerenciada por cada componente individualmente.
+//
+// Esta camada é mantida para conformidade com a arquitetura de 4 camadas DSS
+// e pode receber variantes futuras (ex: --compact para paginação compacta).

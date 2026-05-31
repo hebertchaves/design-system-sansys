@@ -1,0 +1,37 @@
+// =============================================================================
+// DssBreadcrumbs — MAIN MODULE (Orquestrador Final)
+//
+// Filosofia DSS: Arquitetura em 4 Camadas
+//
+// LAYER 1: Structure (Vue component — DssBreadcrumbs.ts.vue)
+// LAYER 2: Composition (Base styles — layout, gap, separator typography/color)
+// LAYER 3: Variants (gutter modifier classes — documentação BEM)
+// LAYER 4: Output (states, brands)
+//
+// Ordem obrigatória: L2 → L3 → L4
+// =============================================================================
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants/index' as variants;
+
+/* Layer 4: Output */
+@use './4-output/index' as output;
+
+// =============================================================================
+// ACCESSIBILITY ENHANCEMENTS (Container-level)
+// =============================================================================
+
+// High contrast: reforça visibilidade do container de navegação
+@media (prefers-contrast: high) {
+  .dss-breadcrumbs {
+    outline: var(--dss-border-width-thin) solid currentColor;
+    outline-offset: var(--dss-spacing-1);
+    border-radius: var(--dss-radius-sm);
+  }
+}
+
+// Reduced motion: DssBreadcrumbs não usa transitions no container.
+// Os filhos (DssBreadcrumbsEl) gerenciam suas próprias transitions.

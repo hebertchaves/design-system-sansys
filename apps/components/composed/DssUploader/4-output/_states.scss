@@ -1,0 +1,172 @@
+// =============================================================================
+// DssUploader — LAYER 4: OUTPUT — States
+//
+// RESPONSABILIDADE: Dark mode, acessibilidade e media queries especiais.
+//
+// ORDEM CANÔNICA DSS (DssLinearProgress como referência):
+//   1. Dark mode
+//   2. prefers-contrast: more
+//   3. prefers-reduced-motion
+//   4. print
+//   5. forced-colors (Windows HCM)
+//
+// GOLDEN REFERENCE: DssBadge (não interativo)
+// GOLDEN CONTEXT:   DssCard (mesma estratégia de dark mode)
+// =============================================================================
+
+// =============================================================================
+// 1. DARK MODE
+// =============================================================================
+
+[data-theme="dark"] {
+  .dss-uploader {
+    // --dss-surface-default, --dss-gray-300 e tokens de feedback têm
+    // overrides de dark mode nos tokens globais — sem override adicional.
+
+    // Borda com mais contraste em dark mode
+    border-color: var(--dss-gray-600);
+
+    &__header {
+      border-bottom-color: var(--dss-gray-700);
+    }
+
+    &__file-item {
+      border-bottom-color: var(--dss-gray-700);
+    }
+
+    &__file-name {
+      color: var(--dss-gray-200);
+    }
+
+    &__file-meta {
+      color: var(--dss-gray-400);
+    }
+
+    &__progress-info {
+      color: var(--dss-gray-400);
+    }
+
+    &__dropzone-text {
+      color: var(--dss-gray-400);
+    }
+
+    &__dropzone-hint {
+      color: var(--dss-gray-500);
+    }
+
+    &__file-icon {
+      color: var(--dss-gray-400);
+    }
+  }
+
+  // Variante elevated em dark mode
+  .dss-uploader--elevated {
+    box-shadow: var(--dss-shadow-sm);
+  }
+
+  // Variante subtle em dark mode: usa surface-muted dark
+  .dss-uploader--subtle {
+    border-color: var(--dss-gray-700);
+  }
+}
+
+// =============================================================================
+// 2. HIGH CONTRAST MODE
+// =============================================================================
+
+@media (prefers-contrast: more) {
+  .dss-uploader {
+    border-width: var(--dss-border-width-md);
+    border-color: currentColor;
+
+    &__header {
+      border-bottom-width: var(--dss-border-width-md);
+    }
+
+    &__file-item {
+      border-bottom-width: var(--dss-border-width-thin);
+    }
+  }
+}
+
+// =============================================================================
+// 3. REDUCED MOTION
+// =============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-uploader,
+  .dss-uploader * {
+    transition: none !important;
+  }
+}
+
+// =============================================================================
+// 4. PRINT
+// =============================================================================
+
+@media print {
+  .dss-uploader {
+    box-shadow: none;
+    border-color: currentColor;
+
+    // Ocultar botões de ação — não aplicáveis em contexto de impressão
+    &__header {
+      display: none;
+    }
+
+    // Lista de arquivos permanece visível para registro do estado
+    &__list {
+      display: block;
+    }
+  }
+}
+
+// =============================================================================
+// 5. FORCED COLORS (Windows High Contrast Mode)
+// =============================================================================
+
+@media (forced-colors: active) {
+  .dss-uploader {
+    // Borda visível em HCM
+    border: var(--dss-border-width-thin) solid CanvasText;
+
+    &__header {
+      border-bottom: var(--dss-border-width-thin) solid CanvasText;
+    }
+
+    &__file-item {
+      border-bottom: var(--dss-border-width-thin) solid CanvasText;
+    }
+
+    &__file-name {
+      color: CanvasText;
+    }
+
+    &__file-meta {
+      color: GrayText;
+    }
+
+    &__dropzone-text {
+      color: CanvasText;
+    }
+
+    &__dropzone-hint {
+      color: GrayText;
+    }
+
+    // Status icons em HCM usam LinkText para positivo e Highlight para negativo
+    &__status-icon--success {
+      color: LinkText;
+    }
+
+    &__status-icon--error {
+      color: Mark;
+    }
+  }
+
+  // Drag state em HCM: borda de destaque
+  .dss-uploader:has(.q-uploader--dnd) {
+    border: 2px solid Highlight;
+    background-color: Canvas;
+  }
+}

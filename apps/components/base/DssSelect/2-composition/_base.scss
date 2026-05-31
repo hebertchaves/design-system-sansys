@@ -1,0 +1,187 @@
+/* ==========================================================================
+   DssSelect - LAYER 2: COMPOSITION (Base Styles — Field)
+
+   RESPONSABILIDADE: Estilos fundamentais do campo usando APENAS tokens genéricos.
+   Sobrescreve estilos padrão do Quasar via seletores descendentes
+   aplicados a partir da classe raiz .dss-select.
+
+   ARQUITETURA:
+   - .dss-select é aplicado ao elemento raiz do QSelect (via :class)
+   - QSelect estende QField e gera internamente .q-field__control,
+     .q-field__native, .q-field__label, .q-field__bottom, etc.
+   - Este SCSS usa .dss-select .q-field__* para sobrescrever o Quasar
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-spacing-*, --dss-font-*, etc.)
+   ✅ Tokens de motion para transições
+   ❌ ZERO valores hardcoded
+   ❌ ZERO lógica de variantes (pertence à Layer 3)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   WRAPPER RAIZ (.dss-select é aplicado ao QSelect root)
+   ========================================================================== */
+
+.dss-select {
+  width: 100%;
+  font-family: var(--dss-font-family-sans);
+
+  /* ==========================================================================
+     FIELD CONTROL (container visual: borda/fundo — gerado pelo QSelect/QField)
+     ========================================================================== */
+
+  .q-field__control {
+    min-height: var(--dss-input-height-md); /* Touch Target Opção A: 44px — WCAG 2.1 AA */
+    transition:
+      border-color var(--dss-duration-200) var(--dss-easing-standard),
+      box-shadow var(--dss-duration-200) var(--dss-easing-standard),
+      background-color var(--dss-duration-200) var(--dss-easing-standard);
+    font-family: var(--dss-font-family-sans);
+  }
+
+  /* Dense: altura mínima reduzida */
+  &.dss-select--dense .q-field__control {
+    min-height: var(--dss-input-height-sm);
+  }
+
+  /* ==========================================================================
+     NATIVE DISPLAY AREA (área de exibição da seleção — .q-field__native)
+     ========================================================================== */
+
+  .q-field__native {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-md);
+    color: var(--dss-text-primary);
+    line-height: var(--dss-line-height-normal);
+    flex-wrap: wrap; /* Permite chips múltiplos em múltiplas linhas */
+    gap: var(--dss-spacing-1);
+  }
+
+  /* Dense: padding interno reduzido */
+  &.dss-select--dense .q-field__native {
+    padding: var(--dss-spacing-2) 0;
+  }
+
+  /* Placeholder do select (span vazio do QSelect) */
+  .q-field__native > span:empty::before,
+  .q-placeholder {
+    color: var(--dss-text-hint);
+    opacity: 1;
+  }
+
+  /* ==========================================================================
+     CHIPS NO CAMPO (quando useChips=true)
+     Chips nativos do QSelect estilizados com tokens DSS.
+     Para chips totalmente governados, usar slot selected-item + DssChip.
+     ========================================================================== */
+
+  .q-field__native .q-chip {
+    background-color: var(--dss-gray-100);
+    color: var(--dss-text-primary);
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-sm);
+    border-radius: var(--dss-radius-md);
+    margin: 0;
+    height: auto;
+  }
+
+  .q-field__native .q-chip__content {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-sm);
+  }
+
+  /* Ícone de remover chip */
+  .q-field__native .q-chip__icon--remove {
+    color: var(--dss-text-secondary);
+  }
+
+  /* ==========================================================================
+     LABEL (gerada pelo QSelect como .q-field__label)
+     ========================================================================== */
+
+  .q-field__label {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-md);
+    color: var(--dss-text-secondary);
+    transition: all var(--dss-duration-200) var(--dss-easing-standard);
+  }
+
+  /* ==========================================================================
+     DROPDOWN ARROW (ícone de seta do QSelect — em .q-field__append)
+     ========================================================================== */
+
+  .q-field__append {
+    color: var(--dss-text-secondary);
+  }
+
+  /* Seta rotaciona ao abrir o dropdown — dual hook para resiliência */
+  &.dss-select--focused .q-field__append .q-icon,
+  &.q-field--focused .q-field__append .q-icon {
+    transform: rotate(180deg);
+    transition: transform var(--dss-duration-200) var(--dss-easing-standard);
+  }
+
+  /* ==========================================================================
+     APPENDAGES (prepend — gerados pelo QSelect)
+     ========================================================================== */
+
+  .q-field__prepend,
+  .q-field__after {
+    color: var(--dss-text-secondary);
+  }
+
+  /* ==========================================================================
+     BOTTOM AREA (hint/error — .q-field__bottom gerado pelo QSelect)
+     ========================================================================== */
+
+  .q-field__bottom {
+    padding: var(--dss-spacing-1) var(--dss-spacing-4) 0;
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-sm);
+    line-height: var(--dss-line-height-normal);
+  }
+
+  .q-field__messages {
+    font-size: var(--dss-font-size-sm);
+    color: var(--dss-text-secondary);
+  }
+
+  /* Error message color */
+  &.q-field--error .q-field__messages {
+    color: var(--dss-error-600);
+  }
+
+  /* ==========================================================================
+     DISABLED STATE
+     ========================================================================== */
+
+  &.dss-select--disabled,
+  &.q-field--disabled {
+    opacity: var(--dss-opacity-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &.dss-select--disabled .q-field__native,
+  &.q-field--disabled .q-field__native {
+    color: var(--dss-text-disabled);
+  }
+
+  /* ==========================================================================
+     READONLY STATE
+     ========================================================================== */
+
+  &.dss-select--readonly .q-field__native,
+  &.q-field--readonly .q-field__native {
+    cursor: default;
+  }
+
+  /* ==========================================================================
+     LOADING STATE
+     ========================================================================== */
+
+  &.dss-select--loading {
+    pointer-events: none;
+  }
+}

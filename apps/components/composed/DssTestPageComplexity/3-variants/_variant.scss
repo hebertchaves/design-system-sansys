@@ -1,0 +1,42 @@
+// Layer 3 — Variants
+// Token First — zero valores hardcoded.
+
+.dss-test-page-complexity {
+  // ── Variante disabled (raiz) ─────────────────────────────────────────────
+
+  &--disabled {
+    pointer-events: none;
+    opacity: var(--dss-opacity-disabled);
+  }
+
+  // ── Variante loading (raiz) ──────────────────────────────────────────────
+
+  &--loading {
+    // Skeletons gerenciados por v-if no template — sem override CSS aqui.
+  }
+
+  // ── Views — dashboard (default) / map / schedule ─────────────────────────
+
+  &--view-dashboard,
+  &--view-map,
+  &--view-schedule {
+    // Conteúdo gerenciado por slots e v-show no template.
+  }
+
+  // ── Linha da tabela selecionada ────────────────────────────────────────────
+
+  &__table-row {
+    &--selected {
+      background-color: var(--dss-surface-selected);
+    }
+  }
+
+  // ── Chips de filtro ────────────────────────────────────────────────────────
+
+  &__filter-chip {
+    max-width: var(--dss-spacing-40);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

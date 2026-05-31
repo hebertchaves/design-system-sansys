@@ -1,0 +1,200 @@
+{
+  "component": "DssExpansionItem",
+  "cssClass": "dss-expansion-item",
+  "phase": 2,
+  "level": 2,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssItem",
+  "classification": {
+    "type": "Composite",
+    "category": "Expansão e Colapso",
+    "interactive": true,
+    "family": "Expansion"
+  },
+  "quasarBase": "QExpansionItem",
+  "architecture": "WRAP",
+  "touchTarget": {
+    "approach": "Opção A",
+    "visualSize": "--dss-spacing-12 (48px) no .q-item",
+    "mechanism": "min-height visual ≥ --dss-touch-target-md — sem ::before necessário"
+  },
+  "tokens": [
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-weight-normal",
+    "--dss-line-height-normal",
+    "--dss-text-body",
+    "--dss-text-subtle",
+    "--dss-spacing-1_5",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-12",
+    "--dss-surface-hover",
+    "--dss-surface-active",
+    "--dss-surface-subtle",
+    "--dss-surface-muted",
+    "--dss-focus-ring",
+    "--dss-duration-150",
+    "--dss-duration-250",
+    "--dss-easing-standard",
+    "--dss-opacity-disabled",
+    "--dss-touch-target-md",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-hub-600",
+    "--dss-hub-400",
+    "--dss-water-500",
+    "--dss-water-400",
+    "--dss-waste-600",
+    "--dss-waste-500"
+  ],
+  "props": {
+    "exposed": [
+      "label",
+      "caption",
+      "icon",
+      "expandIcon",
+      "modelValue",
+      "defaultOpened",
+      "group",
+      "disable",
+      "dense",
+      "brand",
+      "ariaLabel"
+    ],
+    "blocked": [
+      {
+        "prop": "dark",
+        "reason": "DSS gerencia dark mode via CSS global (body.body--dark / [data-theme='dark'])"
+      },
+      {
+        "prop": "headerClass",
+        "reason": "Visual do header estritamente governado pelo DSS"
+      },
+      {
+        "prop": "headerStyle",
+        "reason": "Visual do header estritamente governado pelo DSS"
+      },
+      {
+        "prop": "switchToggleSide",
+        "reason": "Ícone de expansão sempre à direita — padrão DSS de consistência visual"
+      }
+    ]
+  },
+  "states": {
+    "applicable": [
+      "default",
+      "hover",
+      "focus",
+      "active",
+      "disabled",
+      "expanded"
+    ],
+    "notApplicable": [
+      {
+        "state": "loading",
+        "reason": "ExpansionItem não executa operações assíncronas"
+      },
+      {
+        "state": "error",
+        "reason": "Validação não é responsabilidade do ExpansionItem"
+      },
+      {
+        "state": "indeterminate",
+        "reason": "Estado binário (aberto/fechado) — sem indeterminado"
+      }
+    ]
+  },
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "rule": "Gate de Composição v2.4",
+      "selector": ".dss-expansion-item .q-item",
+      "justification": "Elemento DOM interno do QExpansionItem (Quasar Framework). Necessário para aplicar tokens DSS de tipografia, layout, hover, active e focus ao header gerado nativamente pelo Quasar. Consistência com DssItem (Golden Context)."
+    },
+    {
+      "id": "EXC-Gate-02",
+      "rule": "Gate de Composição v2.4",
+      "selector": ".dss-expansion-item .q-expansion-item__content",
+      "justification": "Painel de conteúdo interno do QExpansionItem. Gate exception declarada para futuros overrides de padding e overflow."
+    },
+    {
+      "id": "EXC-Gate-03",
+      "rule": "Gate de Composição v2.4",
+      "selector": ".dss-expansion-item .q-expansion-item__toggle-icon",
+      "justification": "Ícone de expansão interno do QExpansionItem. Necessário para sobrescrever duração da transição de rotação com token DSS (--dss-duration-250)."
+    },
+    {
+      "id": "EXC-Gate-04",
+      "rule": "Gate de Composição v2.4",
+      "selector": ".dss-expansion-item .q-expansion-item--expanded",
+      "justification": "Classe de estado interna do QExpansionItem aplicada quando expandido. Usada como seletor descendente para estilos de expanded state e brandabilidade."
+    },
+    {
+      "id": "EXC-States-01",
+      "rule": "Token First",
+      "value": "1px, 2px, 3px; ButtonText, Highlight, HighlightText, GrayText, ButtonFace",
+      "location": "4-output/_states.scss (@media forced-colors, @media print)",
+      "justification": "Em forced-colors, CSS custom properties são ignoradas pelo browser. SystemColor keywords e valores absolutos são obrigatórios. Em print, background-color: transparent !important e display:none são necessários para reset visual — CSS variables não são processadas por agentes de impressão."
+    },
+    {
+      "id": "EXC-States-02",
+      "rule": "Dark mode focus ring",
+      "value": "outline: 2px solid white",
+      "location": "4-output/_states.scss ([data-theme='dark'])",
+      "justification": "Token --dss-focus-ring-dark não existe no catálogo DSS v2.2. Padrão consistente com DssFab, DssFabAction (selados Mai 2026)."
+    }
+  ],
+  "gateExceptions": [
+    ".dss-expansion-item .q-item",
+    ".dss-expansion-item .q-expansion-item__content",
+    ".dss-expansion-item .q-expansion-item__toggle-icon",
+    ".dss-expansion-item .q-expansion-item--expanded"
+  ],
+  "compositionRecommendations": {
+    "slotDefault": "DssCard, DssItem, DssList ou qualquer componente DSS. HTML nativo válido mas desencorajado.",
+    "slotHeader": "DssItemSection, DssItemLabel ou layout customizado. Bloqueia props label/caption/icon/expandIcon quando usado.",
+    "accordion": "Use prop 'group' com valor idêntico em múltiplos DssExpansionItem para comportamento de accordion."
+  },
+  "reservas": [
+    "Brand accent aplicado apenas quando expandido — header colapsado não exibe acento de marca.",
+    "Tokens semânticos de brand não existem no catálogo DSS v2.2 — tokens numéricos usados intencionalmente. Padrão consistente com DssFab, DssFabAction, DssCard.",
+    "Slot 'header' bypassa props label/caption/icon/expandIcon — responsabilidade total do consumidor.",
+    "Quasar gerencia aria-expanded e aria-controls no header — DSS não duplica essa lógica.",
+    "prop ariaLabel mapeia para header-aria-label do QExpansionItem (label do botão toggle).",
+    "Testado com Quasar 2.14.x. Se a prop header-aria-label não for reconhecida por versões futuras, o fallback garantido é usar o slot #header com aria-label no elemento raiz."
+  ],
+  "auditHistory": [
+    {
+      "date": "2026-05-05",
+      "auditor": "Claude Code (Sonnet 4.6) via Modo Auditor DSS v2.5",
+      "verdict": "APROVADO COM CORREÇÕES",
+      "ncs": 1,
+      "gaps": 3,
+      "summary": "NC-01 (forced-color-adjust sem documentação) corrigido. GAP-01 (header-aria-label Quasar 2.14.x) documentado. GAP-02 (EXC-States-01 escopo print) documentado. GAP-03 (token --dss-text-secondary) resolvido pré-implementação."
+    }
+  ],
+  "defaultPreview": {
+    "props": {
+      "label": "Título",
+      "icon": "expand_more"
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "borderRadius": "--dss-radius-none",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Item expansível com conteúdo"
+  }
+}

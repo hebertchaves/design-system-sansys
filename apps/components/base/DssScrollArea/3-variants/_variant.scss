@@ -1,0 +1,37 @@
+// Layer 3 — Variants
+// Variações visuais do DssScrollArea.
+
+// ─── Scrollbar sempre visível ────────────────────────────────────────────────
+//
+// Quando visible='always', a scrollbar é sempre exibida.
+// A opacidade máxima é garantida mesmo sem hover/scroll ativo.
+
+.dss-scroll-area--always-visible {
+  .q-scrollarea__bar {
+    opacity: 1 !important;
+  }
+
+  .q-scrollarea__thumb {
+    opacity: 1 !important;
+  }
+}
+
+// ─── Scrollbar nunca visível ─────────────────────────────────────────────────
+//
+// Quando visible='never', a scrollbar é completamente oculta.
+// O scroll permanece funcional via teclado/touch, apenas a barra visual é omitida.
+
+.dss-scroll-area--never-visible {
+  .q-scrollarea__bar {
+    display: none;
+  }
+}
+
+// ─── Scroll horizontal ───────────────────────────────────────────────────────
+//
+// Quando horizontal=true, o Quasar renderiza a barra horizontal.
+// Nenhum estilo adicional necessário — a track e o thumb já são estilizados
+// via seletores --h em 2-composition/_base.scss.
+//
+// Nota: quando horizontal=true, o conteúdo não quebra linha.
+// O consumidor deve garantir largura adequada no conteúdo do slot.

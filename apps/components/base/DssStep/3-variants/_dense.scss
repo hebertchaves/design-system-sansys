@@ -1,0 +1,45 @@
+// ==========================================================================
+// DssStep — Layer 3: Variante Dense
+// ==========================================================================
+//
+// Reduz dimensões do passo para contextos compactos (tabelas, sidebars).
+// O dot é reduzido para 24px, tipografia para sm, e espaçamentos menores.
+//
+// Nota: `dense` é controlado pelo QStepper pai via prop dense.
+// O Quasar aplica classes de densidade no container; este arquivo
+// sobrescreve via seletor composto quando o pai tem .q-stepper--dense.
+// ==========================================================================
+
+/* EXC-01 — seletor composto com classe interna Quasar (Gate de Composição v2.4 exception) */
+.q-stepper--dense .dss-step {
+  .q-stepper__tab {
+    padding-inline: var(--dss-spacing-3);
+    padding-block: var(--dss-spacing-2);
+    min-height: var(--dss-compact-control-height-sm);
+  }
+
+  .q-stepper__dot {
+    width: var(--dss-icon-size-md);      // 24px — reduzido de 32px
+    height: var(--dss-icon-size-md);
+    min-width: var(--dss-icon-size-md);
+    font-size: var(--dss-font-size-xs);
+
+    .q-icon {
+      font-size: var(--dss-icon-size-xs); // 16px
+    }
+  }
+
+  .q-stepper__title {
+    font-size: var(--dss-font-size-sm);
+  }
+
+  .q-stepper__caption,
+  .q-stepper__subtitle {
+    font-size: var(--dss-font-size-xs);
+  }
+
+  .q-stepper__step-content {
+    padding-block: var(--dss-spacing-2);
+    padding-inline: var(--dss-spacing-3);
+  }
+}

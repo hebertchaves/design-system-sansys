@@ -1,0 +1,58 @@
+/* ==========================================================================
+   DssTable — LAYER 3: VARIANTS
+
+   Variantes de densidade gerenciadas por DSS:
+   - compact:     density='compact' → QTable dense=true → células menores
+   - standard:    padrão (sem modificador)
+   - comfortable: density='comfortable' → células maiores que o padrão
+
+   Variantes visuais delegadas ao QTable (sem modificador DSS adicional):
+   - flat, bordered, separator → controlados via props passadas ao QTable
+   ========================================================================== */
+
+/* ==========================================================================
+   DENSITY: COMPACT (dss-table--compact)
+   QTable também aplica .q-table--dense internamente quando dense=true
+   ========================================================================== */
+
+.dss-table.dss-table--compact {
+  .q-table {
+    th {
+      padding: var(--dss-spacing-1_5) var(--dss-spacing-3);
+      font-size: var(--dss-font-size-sm);
+    }
+
+    td {
+      padding: var(--dss-spacing-1_5) var(--dss-spacing-3);
+    }
+  }
+
+  .q-table__bottom {
+    padding: var(--dss-spacing-1_5) var(--dss-spacing-3);
+  }
+}
+
+/* ==========================================================================
+   DENSITY: COMFORTABLE (dss-table--comfortable)
+   Não tem equivalente QTable — totalmente governado por DSS
+   ========================================================================== */
+
+.dss-table.dss-table--comfortable {
+  .q-table {
+    th {
+      padding: var(--dss-spacing-4) var(--dss-spacing-6);
+    }
+
+    td {
+      padding: var(--dss-spacing-4) var(--dss-spacing-6);
+    }
+  }
+
+  .q-table__top {
+    padding: var(--dss-spacing-4) var(--dss-spacing-6);
+  }
+
+  .q-table__bottom {
+    padding: var(--dss-spacing-3) var(--dss-spacing-6);
+  }
+}

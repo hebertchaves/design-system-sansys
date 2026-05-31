@@ -1,0 +1,190 @@
+// ==========================================================================
+// DssStep — Layer 4: Estados Adaptativos
+// ==========================================================================
+//
+// Dark mode, prefers-contrast, forced-colors, reduced-motion, print.
+//
+// EXC-03 — forced-colors: system color keywords obrigatórios
+//   (tokens CSS são ignorados pelo navegador em forced-colors mode).
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Dark mode
+// ------------------------------------------------------------------
+[data-theme='dark'] {
+  .dss-step {
+    /* EXC-01 — seletores Quasar (Gate de Composição v2.4 exception) */
+
+    // Dot inativo em dark: usa surface mais visível
+    .q-stepper__dot {
+      background-color: var(--dss-surface-muted);
+      color: var(--dss-text-subtle);
+    }
+
+    .q-stepper__title {
+      color: var(--dss-text-subtle);
+    }
+
+    .q-stepper__caption,
+    .q-stepper__subtitle {
+      color: var(--dss-text-subtle);
+    }
+
+    .q-stepper__line {
+      border-color: var(--dss-gray-600);
+    }
+
+    // Ativo em dark mode
+    &.q-stepper__step--active {
+      .q-stepper__dot {
+        background-color: var(--dss-action-primary);
+        color: var(--dss-text-inverse);
+      }
+
+      .q-stepper__title {
+        color: var(--dss-text-body);
+      }
+    }
+
+    // Done em dark mode — feedback-success mantém contraste adequado
+    &.dss-step--done {
+      .q-stepper__dot {
+        background-color: var(--dss-feedback-success);
+        color: var(--dss-text-inverse);
+      }
+
+      .q-stepper__line {
+        border-color: var(--dss-feedback-success);
+      }
+    }
+
+    // Error em dark mode
+    &.dss-step--error {
+      .q-stepper__dot {
+        background-color: var(--dss-feedback-error);
+        color: var(--dss-text-inverse);
+      }
+
+      .q-stepper__title {
+        color: var(--dss-feedback-error);
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// High contrast / prefers-contrast
+// ------------------------------------------------------------------
+@media (prefers-contrast: more) {
+  .dss-step {
+    .q-stepper__dot {
+      outline: var(--dss-border-width-md) solid currentColor;
+    }
+
+    &.dss-step--header-nav .q-stepper__tab:focus-visible {
+      outline-width: var(--dss-border-width-thick);
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// Forced colors (Windows High Contrast)
+// EXC-03 — system color keywords obrigatórios (tokens ignorados pelo navegador)
+// ------------------------------------------------------------------
+@media (forced-colors: active) {
+  .dss-step {
+    forced-color-adjust: auto;
+
+    /* EXC-01 + EXC-03 — seletores Quasar + system color keywords */
+    .q-stepper__dot {
+      background-color: ButtonFace;
+      color: ButtonText;
+      border: var(--dss-border-width-thin) solid ButtonText;
+    }
+
+    .q-stepper__title {
+      color: ButtonText;
+    }
+
+    .q-stepper__line {
+      border-color: ButtonText;
+    }
+
+    &.q-stepper__step--active {
+      .q-stepper__dot {
+        background-color: Highlight;
+        color: HighlightText;
+        border-color: Highlight;
+      }
+
+      .q-stepper__title {
+        color: Highlight;
+      }
+    }
+
+    &.dss-step--done {
+      .q-stepper__dot {
+        background-color: Highlight;
+        color: HighlightText;
+      }
+
+      .q-stepper__line {
+        border-color: Highlight;
+      }
+    }
+
+    &.dss-step--error {
+      .q-stepper__dot {
+        background-color: Mark;
+        color: ButtonText;
+      }
+    }
+
+    &.dss-step--disable {
+      .q-stepper__tab {
+        color: GrayText;
+        opacity: 1; // forced-colors gerencia via system colors
+      }
+    }
+
+    &.dss-step--header-nav .q-stepper__tab:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// Reduced motion
+// ------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .dss-step,
+  .dss-step .q-stepper__tab,
+  .dss-step .q-stepper__tab::after,
+  .dss-step .q-stepper__dot,
+  .dss-step .q-stepper__title,
+  .dss-step .q-stepper__line {
+    transition: none;
+  }
+}
+
+// ------------------------------------------------------------------
+// Print
+// EXC-04 — valores hardcoded para impressão monocromática
+// ------------------------------------------------------------------
+@media print {
+  .dss-step {
+    .q-stepper__dot {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+
+    .q-stepper__title {
+      color: #000 !important;
+    }
+
+    .q-stepper__caption,
+    .q-stepper__subtitle {
+      color: #000 !important;
+    }
+  }
+}

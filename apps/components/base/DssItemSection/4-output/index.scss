@@ -1,0 +1,9 @@
+/* ==========================================================================
+   DssItemSection - LAYER 4: OUTPUT (Barrel)
+
+   Ordem de importação: brands antes de states.
+   Padrão alinhado com DssList e DssCard (Golden Context).
+   ========================================================================== */
+
+@use 'brands' as brands;
+@use 'states' as states;

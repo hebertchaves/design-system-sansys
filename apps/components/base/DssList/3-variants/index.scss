@@ -1,0 +1,10 @@
+/* ==========================================================================
+   DssList - LAYER 3: VARIANTS (Orchestrator)
+
+   Importa todas as variantes visuais da lista.
+   Ordem: bordered → padding → separator
+   ========================================================================== */
+
+@use 'bordered' as bordered;
+@use 'padding' as padding;
+@use 'separator' as separator;

@@ -1,0 +1,54 @@
+// =============================================================================
+// DssInnerLoading — Layer 2: Composition (Base)
+// =============================================================================
+//
+// Estilos estruturais e de composição do overlay de loading.
+//
+// EXC-Gate-01: QInnerLoading é o root element. O seletor .dss-inner-loading
+// é aplicado diretamente no .q-inner-loading (mesmo elemento — não descendente).
+// QInnerLoading fornece nativamente: position:absolute, top/left/right/bottom:0,
+// display:flex, flex-direction:column, align-items:center, justify-content:center.
+// O DSS NÃO duplica essas propriedades — apenas adiciona o que é específico do DSS.
+//
+// EX-Overlay-01: background-color: var(--dss-surface-default) sem opacidade.
+// O pré-prompt referenciou rgba(var(--dss-surface-default-rgb), 0.7) mas o token
+// --dss-surface-default-rgb NÃO existe no catálogo DSS (variantes -rgb não são
+// geradas). Overlay sólido garante contraste máximo para todas as cores de spinner
+// e label. WCAG AAA. Escolha intencional e documentada.
+//
+// EX-Structural-01: border-radius: inherit — valor estrutural não tokenizável.
+// Herda o border-radius do container pai para evitar overflow do overlay em
+// containers com bordas arredondadas. Não pode ser expresso como token DSS
+// pois depende da geometria do pai em runtime. Precedente: padrão web canônico.
+
+.dss-inner-loading {
+  // Fundo do overlay — sólido branco (EX-Overlay-01)
+  background-color: var(--dss-surface-default);
+
+  // Herda border-radius do container pai (EX-Structural-01)
+  border-radius: inherit;
+
+  // Bloqueia todas as interações do usuário com o conteúdo abaixo do overlay
+  pointer-events: all;
+
+  // Previne seleção de texto e tap highlight em mobile
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  // Espaçamento entre spinner e label (quando ambos presentes)
+  gap: var(--dss-spacing-2);
+}
+
+// ─── Label ────────────────────────────────────────────────────────────────────
+//
+// Texto descritivo opcional exibido abaixo do spinner.
+// A cor é herdada de .dss-inner-loading via `color: inherit` (currentColor cascade).
+// font-size e font-weight são tokenizados para garantir legibilidade WCAG AA.
+
+.dss-inner-loading__label {
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-medium);
+  color: inherit;
+  line-height: var(--dss-line-height-xs);
+  text-align: center;
+}

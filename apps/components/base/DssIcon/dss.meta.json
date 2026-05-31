@@ -1,0 +1,30 @@
+{
+  "component": "DssIcon",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS/docs/Compliance/seals/DssIcon/DSSICON_SELO_v2.2.md",
+  "auditMode": "Final",
+  "auditDate": "2026-02-13",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssBadge",
+  "category": "Elemento Visual Base nao interativo",
+  "phase": 1,
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "name": "star",
+      "size": "md"
+    },
+    "computedDimensions": {
+      "minHeight": "24px",
+      "minWidth": "24px"
+    },
+    "computedTokens": {
+      "fontSize": "--dss-icon-size-md",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "none",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Ícone 'star' tamanho md"
+  }
+}

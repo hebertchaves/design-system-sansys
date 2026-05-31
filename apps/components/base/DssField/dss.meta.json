@@ -1,0 +1,159 @@
+{
+  "name": "DssField",
+  "version": "2.2",
+  "phase": 2,
+  "level": 2,
+  "family": "Formulários",
+  "category": "Wrapper estrutural de campo de formulário (chrome: label, borda, hint, error)",
+  "status": "sealed",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssInput",
+  "quasarBase": "QField (conceitual — implementação custom, sem dependência de QField)",
+  "internalDependencies": [],
+  "auditCycles": 1,
+  "tokensUsed": [
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-size-sm",
+    "--dss-line-height-normal",
+    "--dss-text-secondary",
+    "--dss-error-600",
+    "--dss-surface-default",
+    "--dss-gray-50",
+    "--dss-gray-100",
+    "--dss-gray-200",
+    "--dss-gray-300",
+    "--dss-gray-400",
+    "--dss-gray-600",
+    "--dss-gray-700",
+    "--dss-gray-800",
+    "--dss-gray-900",
+    "--dss-action-primary",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-radius-md",
+    "--dss-radius-full",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-5",
+    "--dss-spacing-8",
+    "--dss-touch-target-md",
+    "--dss-duration-200",
+    "--dss-duration-500",
+    "--dss-easing-standard",
+    "--dss-opacity-disabled",
+    "--dss-hub-600",
+    "--dss-hub-700",
+    "--dss-water-500",
+    "--dss-water-600",
+    "--dss-water-700",
+    "--dss-waste-600",
+    "--dss-waste-700",
+    "--dss-waste-800"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "rules",
+      "reason": "DssField não possui v-model interno. A validação é responsabilidade do controle interno (DssInput, select nativo, etc.) ou do formulário pai. Consumer usa as props error/errorMessage para exibir estados de erro."
+    },
+    {
+      "quasarProp": "clearable",
+      "reason": "Depende de v-model no QField — não aplicável para DssField que é um container estrutural sem modelo próprio."
+    },
+    {
+      "quasarProp": "counter / maxlength",
+      "reason": "Contador de caracteres depende do valor do controle interno — desconhecido pelo DssField sem v-model."
+    },
+    {
+      "quasarProp": "color",
+      "reason": "Substituído pelo sistema DSS de brand (prop `brand` + CSS dual-selector). Evita acoplamento ao sistema de cores do Quasar."
+    },
+    {
+      "quasarProp": "type / placeholder / autogrow",
+      "reason": "Props do controle interno (input nativo, textarea, etc.) — fora do escopo do DssField."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "description": "Implementação custom (sem QField/QInput). DssField é um wrapper estrutural puro em Vue + CSS, idêntico em arquitetura ao DssInput (Golden Context). QField foi descartado porque: (1) DssInput já é custom; (2) consistência de tokens e CSS classes exige implementação própria; (3) sem v-model nativo, QField's validation/clearable não funcionariam.",
+      "precedent": "DssInput (Golden Context) — custom implementation sem Quasar base component"
+    },
+    {
+      "id": "EX-Focus-01",
+      "description": "Focus tracking via eventos DOM `focusin`/`focusout` no wrapper raiz. `focusin` dispara quando qualquer filho recebe foco (inclui controles nativos em slots). `focusout` com verificação `contains(e.relatedTarget)` evita falsos-negativos ao navegar entre filhos do campo.",
+      "precedent": "Padrão DOM — Event bubbling. Não requer ref/emit do controle interno."
+    },
+    {
+      "id": "EX-Label-01",
+      "description": "Label flutuante depende de `hasValue` (prop boolean externa). DssField não tem v-model próprio, portanto não pode detectar automaticamente se o controle interno possui valor. Consumer sinaliza via `:has-value=\"!!model\"`. Alternativa: `stackLabel=true` para label sempre empilhada (sem flutuação).",
+      "precedent": "Padrão de container estrutural sem modelo — consumer controla estado externo."
+    },
+    {
+      "id": "EX-Structural-01",
+      "description": "Nenhum touch target `::before` no DssField — DssField é um container de campo, não um controle compacto interativo. O controle interno (nativo ou DSS) gerencia seu próprio touch target. `::before` reservado exclusivamente para controles compactos (CLAUDE.md Princípio 7).",
+      "precedent": "CLAUDE.md Princípio 7 — ::before exclusivo para touch target de controles compactos."
+    },
+    {
+      "id": "EX-States-01",
+      "description": "prefers-reduced-motion: transition/animation suprimidos em .dss-field, .dss-field__field, .dss-field__label e .dss-field__spinner. DssField anima label flutuante e borda no focus — suprimido para WCAG 2.3.3.",
+      "precedent": "DssInput (Golden Context), DssKnob, DssRating — padrão DSS para prefers-reduced-motion"
+    },
+    {
+      "id": "EX-States-02",
+      "description": "prefers-contrast: more (NOT 'high' — 'high' é inválido, nunca dispara). border-width forçado a --dss-border-width-md, focus com outline --dss-border-width-thick. WCAG 1.4.11.",
+      "precedent": "DssItemLabel, DssKnob, DssRating — padrão canônico DSS para prefers-contrast"
+    },
+    {
+      "id": "EX-States-03",
+      "description": "forced-colors: active — SystemColor keywords (ButtonText para borda padrão, Highlight para foco, LinkText para erro, GrayText para disabled). WCAG 1.4.11 Contraste Não-Textual.",
+      "precedent": "DssInput (Golden Context), DssKnob, DssRating — padrão DSS para forced-colors"
+    }
+  ],
+  "statesApplicable": {
+    "hover": "border-color/background-color altera em cada variante via :hover no wrapper. Apenas quando não disabled/readonly.",
+    "focus": "Classe .dss-field--focused via focusin/focusout. Borda/shadow muda em cada variante. Label muda de cor para action-primary (ou brand).",
+    "active": "background-color escurece em variants filled/standout via :active no wrapper.",
+    "disabled": "opacity: var(--dss-opacity-disabled); pointer-events: none. Borda pontilhada (outlined/filled).",
+    "readonly": "cursor: default. Borda atenuada. Sem hover visual. Controle interno readonly — DssField não altera sua navegabilidade.",
+    "error": "Borda/shadow em --dss-error-600. Label em --dss-error-600. Mensagem de erro com role=alert.",
+    "loading": "Spinner via .dss-field__spinner na área append. role=status + aria-label='Carregando'."
+  },
+  "statesNotApplicable": {
+    "print": "print: remove backgrounds e loading spinner. Borda normalizada para impressão."
+  },
+  "compositionRecommendations": [
+    "O slot #default recebe `{ fieldId }` via slot scope — use :id='fieldId' no controle interno para associação semântica com o label.",
+    "Use `:has-value='!!model'` para manter o label flutuante quando o controle interno tiver valor. Para controles que sempre exibem algo (select, date picker), use `has-value: true`.",
+    "Para controles que já possuem seu próprio label/hint/error (DssInput, DssSelect), NÃO aninhe dentro do DssField — eles já fornecem o chrome completo de campo.",
+    "Use DssField para controles nativos (input, textarea sem DSS wrapper) ou componentes customizados que precisam do chrome DSS.",
+    "Prefira `stack-label` para controles com conteúdo fixo (select nativo, range slider) — a flutuação não faz sentido visual nesses casos.",
+    "Em formulários acessíveis, o `fieldId` associa o `<label for>` ao controle interno. Use-o sempre: `<input :id='fieldId' />`.",
+    "O slot #prepend tem `aria-hidden='true'` (decorativo). O slot #append NÃO tem aria-hidden — hospeda conteúdo interativo (botões, toggles). Itens interativos em #prepend devem ter aria-label próprio.",
+    "O slot #default expõe `{ fieldId, ariaDescribedby }` — use ambos no controle interno: `<input :id='fieldId' :aria-describedby='ariaDescribedby' />`. O ariaDescribedby aponta automaticamente para errorId (quando error=true) ou hintId (quando há hint)."
+  ],
+  "gateExceptions": {
+    "templateStructure": "DssField usa div como root (não QField) — container estrutural custom consistente com DssInput (Golden Context). (EXC-Gate-01)"
+  },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {
+      "minHeight": "44px",
+      "minWidth": "240px"
+    },
+    "computedTokens": {
+      "padding": "--dss-spacing-2 --dss-spacing-4",
+      "borderRadius": "--dss-radius-md",
+      "borderWidth": "--dss-border-width-thin",
+      "fontSize": "--dss-font-size-md",
+      "fontWeight": "--dss-font-weight-normal",
+      "lineHeight": "--dss-line-height-normal",
+      "surface": "--dss-surface-default",
+      "textColor": "--dss-text-body"
+    },
+    "demoContent": "Campo de formulário customizado"
+  }
+}
