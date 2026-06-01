@@ -14,7 +14,7 @@
 //   Precedente: DssTab EXC-01 (seletor .dss-tab .q-tab__indicator).
 // ==========================================================================
 
-@import '../../../../utils/index';
+@use '../../../../utils/index' as utils;
 
 // ==========================================================================
 // CONTAINER BASE
@@ -25,7 +25,7 @@
   -webkit-tap-highlight-color: transparent;
 
   // Transição suave de setas
-  @include dss-transition(all, 'fast');
+  @include utils.dss-transition(all, 'fast');
 
   // Separador inferior — alinha com M3, Carbon, Salesforce que usam linha
   // divisória entre o tab bar e o conteúdo. Reforça a hierarquia visual
@@ -52,7 +52,7 @@
   -webkit-tap-highlight-color: transparent;
 
   // Transição de hover
-  @include dss-transition(background-color color, 'fast');
+  @include utils.dss-transition(background-color color, 'fast');
 
   // Hover: feedback de superfície
   @media (hover: hover) {

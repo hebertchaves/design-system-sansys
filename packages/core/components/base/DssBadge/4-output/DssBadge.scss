@@ -4,7 +4,7 @@
  */
 
 // Base styles (estrutura, layout, tipografia)
-@import '../2-composition/base';
+@use '../2-composition/base';
 
 // Color variants (cores semânticas)
-@import '../3-variants/colors';
+@use '../3-variants/colors';

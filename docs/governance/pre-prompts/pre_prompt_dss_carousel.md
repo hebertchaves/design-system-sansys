@@ -116,4 +116,35 @@ O `DssCarousel` é composto por um contêiner principal, os slides (que podem co
 | `isHovering` | Booleano indicando se o mouse está sobre o carrossel. | Visual | Mouse over |
 
 ---
+
+## 1️⃣1️⃣ REQUISITOS DE TESTES UNITÁRIOS (Gate de Qualidade) 🔒 BLOQUEANTE
+
+> ⚠️ **`DssCarousel` não pode ser selado ou homologado sem o arquivo `DssCarousel.test.js`.**
+
+### 11.1. Renderização Básica
+- [ ] Monta sem erros com `items` populado (mínimo 3 slides).
+- [ ] Monta sem erros sem nenhuma prop (usando defaults).
+- [ ] Snapshot do estado `default` no slide inicial (índice 0).
+
+### 11.2. Propagação de Props Críticas
+- [ ] `brand="hub"` aplica `data-brand="hub"` no elemento raiz.
+- [ ] `brand="water"` aplica `data-brand="water"` no elemento raiz.
+- [ ] `brand="waste"` aplica `data-brand="waste"` no elemento raiz.
+- [ ] `showNavigationArrows=false` oculta as setas de navegação.
+- [ ] `showPaginationDots=false` oculta os indicadores de paginação.
+- [ ] `loop=false` com autoplay ativo: autoplay para ao chegar no último slide.
+
+### 11.3. Lógica Composta (Composite Logic)
+- [ ] Ao clicar na seta "próximo", `currentSlideIndex` incrementa em 1 e o evento `@update:modelValue` é emitido com o novo índice.
+- [ ] Ao clicar na seta "anterior" no slide 0, com `loop=true`, o carrossel vai para o último slide.
+- [ ] Com `autoplayInterval > 0`, confirmar que o slide avança automaticamente após o intervalo definido (usar `vi.useFakeTimers()`).
+- [ ] Com `autoplayInterval > 0`, confirmar que o autoplay pausa enquanto `isHovering=true`.
+
+### 11.4. Acessibilidade (ARIA)
+- [ ] O container do carrossel possui `role="region"` e `aria-label` descritivo.
+- [ ] As setas de navegação possuem `aria-label` ("Slide anterior", "Próximo slide").
+- [ ] O slide ativo possui `aria-current="true"`.
+- [ ] A navegação por teclado (`ArrowLeft`/`ArrowRight`) alterna slides corretamente.
+
+---
 *Nota: Este documento foi revisado para garantir conformidade com as diretrizes de nomenclatura de brand (hub, water, waste) e substituição de tokens fantasmas.*

@@ -51,3 +51,34 @@ O playground (`.example.vue`) deve demonstrar a orquestração completa:
 2. **Propagação de Estado:** Demonstrar `disabled` e `loading` afetando toda a árvore interna.
 3. **Slots Dinâmicos:** Demonstrar injeção de conteúdo customizado nos slots expostos.
 4. **Brand Hub:** Demonstrar a propagação da prop `brand` para todos os filhos.
+
+---
+
+## 1️⃣1️⃣ REQUISITOS DE TESTES UNITÁRIOS (Gate de Qualidade) 🔒 BLOQUEANTE
+
+> ⚠️ **Nenhum componente da Fase 3 pode ser selado ou homologado sem o arquivo `{NomeDoComponente}.test.js` correspondente.**
+
+O arquivo de testes DEVE cobrir, no mínimo, os 4 domínios abaixo. Qualquer domínio ausente é uma **não-conformidade bloqueante (NC-01)**.
+
+### 11.1. Renderização Básica
+- [ ] O componente monta sem erros com as props mínimas obrigatórias.
+- [ ] O componente monta sem erros sem nenhuma prop (usando defaults).
+- [ ] O snapshot inicial corresponde ao estado `default`.
+
+### 11.2. Propagação de Props Críticas
+- [ ] `brand="hub"` aplica `data-brand="hub"` no elemento raiz.
+- [ ] `brand="water"` aplica `data-brand="water"` no elemento raiz.
+- [ ] `brand="waste"` aplica `data-brand="waste"` no elemento raiz.
+- [ ] `disabled` propaga corretamente para todos os componentes DSS filhos interativos.
+- [ ] `loading` aciona o estado de carregamento no(s) filho(s) responsável(is).
+
+### 11.3. Lógica Composta (Composite Logic)
+- [ ] Testar a **propagação de estados para componentes filhos** via `provide/inject`: confirmar que `disabled` injetado no composable desabilita os filhos corretos.
+- [ ] Testar que eventos emitidos pelos filhos (ex: `@click`, `@update:modelValue`) se propagam corretamente para o componente pai como eventos do componente composto.
+- [ ] Testar pelo menos **um fluxo de interação completo** (ex: preencher um campo e submeter, clicar em um item e verificar seleção).
+
+### 11.4. Acessibilidade (ARIA)
+- [ ] Validar a presença do `role` ARIA declarado na seção **6️⃣ ACESSIBILIDADE E ESTADOS**.
+- [ ] Validar a presença de `aria-label` ou `aria-labelledby` onde especificado.
+- [ ] Validar que componentes filhos com `disabled` recebem `aria-disabled="true"`.
+- [ ] Validar que o foco é gerenciado corretamente na ordem de tabulação declarada.

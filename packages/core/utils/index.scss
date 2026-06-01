@@ -3,29 +3,29 @@
    Entry point para todos os utilitarios
    ========================================================================== */
 
-/* 1. Funcoes Sass */
-@import 'functions';
+/* 1. Funcoes Sass — @forward expõe membros para consumidores via namespace */
+@forward 'functions';
 
-/* 2. Mixins principais */
-@import 'mixins';
+/* 2. Mixins principais — @forward expõe dss-transition, dss-focus-ring, etc. */
+@forward 'mixins';
 
-/* 3. Mixins de acessibilidade avancada */
-@import 'accessibility-mixins';
+/* 3. Mixins de acessibilidade avancada — @forward expõe dss-sr-only, etc. */
+@forward 'accessibility-mixins';
 
-/* 4. Classes utilitarias */
-@import 'helpers';
+/* 4. Classes utilitarias — @use: CSS output sem re-exportar membros */
+@use 'helpers';
 
 /* 5. Classes utilitarias de cores (padrão Quasar) */
-@import 'colors';
+@use 'colors';
 
 /* 5.1. Estados de hover para classes utilitarias de cores */
-@import 'colors-hover';
+@use 'colors-hover';
 
 /* 6. Utilitarios especificos de borda */
-@import 'border-helpers';
+@use 'border-helpers';
 
 /* 7. Utilitarios de layout */
-@import 'layout-helpers';
+@use 'layout-helpers';
 
 /* ==========================================================================
    NOTA: _example-showcase.scss NAO e importado aqui.

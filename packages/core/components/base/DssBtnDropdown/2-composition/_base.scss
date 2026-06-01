@@ -16,7 +16,7 @@
    de escopo do Vue. Precedente: DssBtnGroup NC-01 (Ciclo 1, Mar 2026).
    ========================================================================== */
 
-@import '../../../../utils/index';
+@use '../../../../utils/index' as utils;
 
 /* ==========================================================================
    CONTAINER DO TRIGGER

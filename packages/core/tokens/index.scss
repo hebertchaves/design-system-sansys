@@ -3,32 +3,32 @@
    ========================================================================== */
 
 /* 1. Tokens globais (cores base) */
-@import 'globals';
+@use 'globals';
 
 /* 2. Tokens semânticos principais */
-@import 'semantic/actions';
-@import 'semantic/text';
-@import 'semantic/surfaces';
-@import 'semantic/borders';
-@import 'semantic/border-widths';
-@import 'semantic/feedback';
+@use 'semantic/actions';
+@use 'semantic/text';
+@use 'semantic/surfaces';
+@use 'semantic/borders';
+@use 'semantic/border-widths';
+@use 'semantic/feedback';
 
 /* 3. Tokens de acessibilidade (Guia de Acessibilidade DSS) */
-@import 'semantic/accessibility';  /* Agrega: contrast, focus, sizing, typography */
+@use 'semantic/accessibility';  /* Agrega: contrast, focus, sizing, typography */
 
 /* 4. Tokens de layout e utilidade */
-@import 'semantic/opacity';
-@import 'semantic/shadows';
-@import 'semantic/z-index';
-@import 'semantic/motion';
-@import 'semantic/spacing';
-@import 'semantic/breakpoints';    /* Sistema de responsividade */
-@import 'semantic/gradients';      /* Opcional */
+@use 'semantic/opacity';
+@use 'semantic/shadows';
+@use 'semantic/z-index';
+@use 'semantic/motion';
+@use 'semantic/spacing';
+@use 'semantic/breakpoints';    /* Sistema de responsividade */
+@use 'semantic/gradients';      /* Opcional */
 
 /* 5. Tokens de marca */
-@import 'brand/_hub';
-@import 'brand/_water';
-@import 'brand/_waste';
+@use 'brand/_hub';
+@use 'brand/_water';
+@use 'brand/_waste';
 
 /* 6. Dark Mode Theme */
-@import 'themes/dark/colors';
+@use 'themes/dark/colors';

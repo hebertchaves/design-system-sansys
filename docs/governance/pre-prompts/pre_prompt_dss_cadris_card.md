@@ -118,3 +118,33 @@ O playground (`.example.vue`) deve demonstrar a orquestração completa:
 - **Testes de Integração:** Garantir que a interação entre os filtros e a tabela funciona conforme o esperado.
 - **Testes de Acessibilidade:** Validar o contraste de cores, navegação por teclado e leitura por leitores de tela.
 - **Testes Visuais:** Capturar screenshots em diferentes estados (default, loading, empty, error) e temas (light, dark) para garantir a consistência visual.
+
+---
+
+## 1️⃣1️⃣ REQUISITOS DE TESTES UNITÁRIOS (Gate de Qualidade) 🔒 BLOQUEANTE
+
+> ⚠️ **`DssCadrisCard` não pode ser selado ou homologado sem o arquivo `DssCadrisCard.test.js`.**
+
+### 11.1. Renderização Básica
+- [ ] Monta sem erros com props mínimas (`rows`, `columns`, `pagination`).
+- [ ] Monta sem erros sem nenhuma prop (usando defaults).
+- [ ] Snapshot do estado `default` com dados mockados.
+
+### 11.2. Propagação de Props Críticas
+- [ ] `brand="hub"` aplica `data-brand="hub"` no elemento raiz.
+- [ ] `brand="water"` aplica `data-brand="water"` no elemento raiz.
+- [ ] `brand="waste"` aplica `data-brand="waste"` no elemento raiz.
+- [ ] `loading` desabilita o botão de pesquisa e exibe skeleton na tabela.
+- [ ] `disabled` propaga para todos os `DssInput`, `DssSelect` e `DssButton` internos.
+
+### 11.3. Lógica Composta (Composite Logic)
+- [ ] Ao alterar os filtros e clicar em "Pesquisar", o evento `@search` é emitido com o objeto de filtros consolidado correto.
+- [ ] Ao interagir com `DssPagination`, o evento `@update:pagination` é emitido com os parâmetros `page` e `limit` corretos.
+- [ ] Simular falha de API: confirmar que `error-message` é exibida na área da tabela substituindo os dados.
+- [ ] `rows=[]` exibe o estado de "Nenhum resultado encontrado" no slot `empty`.
+
+### 11.4. Acessibilidade (ARIA)
+- [ ] O container principal possui `role="region"` ou equivalente conforme especificado.
+- [ ] O botão de pesquisa possui `aria-label` descritivo.
+- [ ] Com `disabled`, todos os controles internos recebem `aria-disabled="true"`.
+- [ ] A tabela possui `aria-label` ou `aria-labelledby` vinculado ao título do card.

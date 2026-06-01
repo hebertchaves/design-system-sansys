@@ -14,7 +14,7 @@
    "componentes DSS não estilizam filhos internamente".
    ========================================================================== */
 
-@import '../../../../utils/index';
+@use '../../../../utils/index' as utils;
 
 /* ==========================================================================
    CONTAINER BASE DO GRUPO
@@ -30,7 +30,7 @@
   -webkit-tap-highlight-color: transparent;
 
   /* Transição suave */
-  @include dss-transition(all, 'fast');
+  @include utils.dss-transition(all, 'fast');
 }
 
 /* ==========================================================================
