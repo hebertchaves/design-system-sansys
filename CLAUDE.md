@@ -43,8 +43,8 @@ A criação de qualquer componente DSS **exige leitura prévia** dos seguintes a
 2. `docs/reference/DSS_ARCHITECTURE.md`
 3. `docs/reference/DSS_COMPONENT_ARCHITECTURE.md`
 4. `docs/guides/DSS_IMPLEMENTATION_GUIDE.md`
-5. `docs/guides/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md`
-6. `docs/guides/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md`
+5. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md` *(arquivado pós-estabilização Fase 1)*
+6. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(arquivado pós-estabilização Fase 2)*
 7. `.github/pull_request_template.md`
 
 ⚠️ **IMPORTANTE**  
