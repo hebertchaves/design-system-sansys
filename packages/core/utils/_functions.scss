@@ -47,9 +47,9 @@
   $g: green($color) / 255;
   $b: blue($color) / 255;
   
-  $r: if($r <= 0.03928, $r / 12.92, pow(($r + 0.055) / 1.055, 2.4));
-  $g: if($g <= 0.03928, $g / 12.92, pow(($g + 0.055) / 1.055, 2.4));
-  $b: if($b <= 0.03928, $b / 12.92, pow(($b + 0.055) / 1.055, 2.4));
+  @if $r <= 0.03928 { $r: $r / 12.92; } @else { $r: pow(($r + 0.055) / 1.055, 2.4); }
+  @if $g <= 0.03928 { $g: $g / 12.92; } @else { $g: pow(($g + 0.055) / 1.055, 2.4); }
+  @if $b <= 0.03928 { $b: $b / 12.92; } @else { $b: pow(($b + 0.055) / 1.055, 2.4); }
   
   @return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
 }
@@ -59,7 +59,8 @@
  */
 @function dss-is-contrast-valid($text-color, $bg-color, $size: 'normal') {
   $ratio: dss-contrast-ratio($text-color, $bg-color);
-  $min-ratio: if($size == 'large', 3, 4.5);
+  $min-ratio: 4.5;
+  @if $size == 'large' { $min-ratio: 3; }
   
   @return $ratio >= $min-ratio;
 }

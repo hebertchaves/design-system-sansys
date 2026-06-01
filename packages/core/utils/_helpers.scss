@@ -3,6 +3,11 @@
    Classes CSS para uso direto no HTML
    ========================================================================== */
 
+// Dependência explícita: mixins usados internamente (dss-focus-ring,
+// dss-touch-target, dss-visually-hidden, dss-transition).
+// Necessário após migração de @import global para @use isolado.
+@use 'mixins' as *;
+
 /* ========== DISPLAY & LAYOUT ========== */
 .dss {
   /* Display */
