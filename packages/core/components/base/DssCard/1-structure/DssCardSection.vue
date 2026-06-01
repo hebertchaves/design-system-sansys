@@ -44,5 +44,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../DssCard.module.scss';
+@use '../DssCard.module.scss';
 </style>

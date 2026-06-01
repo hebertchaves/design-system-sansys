@@ -97,5 +97,5 @@ const cardStyles = computed<CSSProperties>(() => {
 
 <style lang="scss" scoped>
 // Import final compiled styles (Layer 4)
-@import '../DssCard.module.scss';
+@use '../DssCard.module.scss';
 </style>

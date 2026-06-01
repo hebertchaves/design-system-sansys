@@ -36,6 +36,14 @@ export default defineConfig({
     emptyOutDir: true
   },
 
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+      },
+    },
+  },
+
   resolve: {
     alias: {
       '@': resolve(__dirname, './'),

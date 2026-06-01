@@ -14,7 +14,8 @@
     "sandbox:dev": "npm run dev --workspace=@sansys/sandbox",
     "mcp:build": "npm run build --workspace=@sansys/dss-mcp",
     "mcp:start": "npm run start --workspace=@sansys/dss-mcp",
-    "build:all": "npm run core:build && npm run docs:build && npm run mcp:build"
+    "build:all": "npm run core:build && npm run docs:build && npm run mcp:build",
+    "portal:sync-docs": "node scripts/generate-portal-landing-pages.js"
   },
   "dependencies": {
     "@swc/core-linux-x64-gnu": "^1.15.8"
