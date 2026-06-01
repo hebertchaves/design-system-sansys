@@ -15,5 +15,8 @@
     "mcp:build": "npm run build --workspace=@sansys/dss-mcp",
     "mcp:start": "npm run start --workspace=@sansys/dss-mcp",
     "build:all": "npm run core:build && npm run docs:build && npm run mcp:build"
+  },
+  "dependencies": {
+    "@swc/core-linux-x64-gnu": "^1.15.8"
   }
 }

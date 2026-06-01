@@ -23,7 +23,7 @@
    Diferente do DssFab (Opção A — tamanho visual --dss-spacing-14 garante o mínimo diretamente).
    ========================================================================== */
 
-@import '../../../../utils/index';
+@use '../../../../utils/index' as utils;
 
 /* ==========================================================================
    CONTAINER DO FABACTION

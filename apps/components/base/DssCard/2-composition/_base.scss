@@ -5,7 +5,7 @@
    Filosofia DSS: Tokens = Provedores, Componentes = Consumidores
    ========================================================================== */
 
-@import '../../../../utils/index';
+@use '../../../../utils/index' as utils;
 
 /* ==========================================================================
    BASE CARD CONTAINER
@@ -35,7 +35,7 @@
   color: var(--dss-text-body);
 
   /* Transitions */
-  @include dss-transition(all, 'fast');
+  @include utils.dss-transition(all, 'fast');
 
   /* Clickable: remove tap highlight (mobile) */
   &.dss-card--clickable {

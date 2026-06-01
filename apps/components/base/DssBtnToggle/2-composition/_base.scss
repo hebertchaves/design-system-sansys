@@ -17,7 +17,7 @@
    Registrado em dss.meta.json → gateExceptions.compositionGateV24.
    ========================================================================== */
 
-@import '../../../../utils/index';
+@use '../../../../utils/index' as utils;
 
 /* ==========================================================================
    CONTAINER BASE DO GRUPO DE ALTERNÂNCIA
@@ -28,7 +28,7 @@
   -webkit-tap-highlight-color: transparent;
 
   /* Transição suave */
-  @include dss-transition(all, 'fast');
+  @include utils.dss-transition(all, 'fast');
 }
 
 /* ==========================================================================

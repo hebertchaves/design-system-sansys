@@ -24,7 +24,7 @@
    Diferente de DssFabAction (Opção B — visual < --dss-touch-target-md, usa ::before).
    ========================================================================== */
 
-@import '../../../../utils/index';
+@use '../../../../utils/index' as utils;
 
 /* ==========================================================================
    CONTAINER DO EXPANSIONITEM
