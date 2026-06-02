@@ -7,6 +7,8 @@
   ],
   "scripts": {
     "bootstrap": "npm install",
+    "dev": "npm run dev --workspace=@sansys/docs-portal",
+    "build": "npm run build --workspace=@sansys/docs-portal",
     "core:build": "npm run build:lib --workspace=@sansys/design-system",
     "core:dev": "npm run dev --workspace=@sansys/design-system",
     "docs:dev": "npm run dev --workspace=@sansys/docs-portal",
