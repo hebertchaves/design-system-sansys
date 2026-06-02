@@ -2,7 +2,7 @@
 **Autor:** Chat Orquestrador Estratégico (Manus AI)  
 **Destinatário:** Liderança Técnica e de Design do DSS  
 **Data:** 30 de Maio de 2026 | **Última Atualização:** 01 de Junho de 2026  
-**Status:** Ondas 1, 2, 3 e 4 Concluídas ✅ — DSS Pronto para Fase 3  
+**Status:** Ondas 1, 2, 3 e 4 Concluídas ✅ | Testes Legados Concluídos ✅ — DSS em Cobertura Total  
 
 ---
 
@@ -146,8 +146,8 @@ Com base no ranking de prioridades estabelecido pela auditoria, propomos o segui
 * `App.tsx` do portal atualizado com as rotas das novas páginas.
 
 **Pendências Registradas para Ondas Futuras:**
-* 35 componentes ainda sem `test.js` (família de composição, layout e utilitários) — priorizar na próxima sprint de qualidade.
 * 6 Vue SFCs do DssCard com `@import` em blocos `<style>` — já corrigidos nesta onda.
+* ~~35 componentes ainda sem `test.js`~~ — **Resolvido em sprint subsequente (02 Jun 2026).**
 
 ---
 
@@ -155,7 +155,7 @@ Com base no ranking de prioridades estabelecido pela auditoria, propomos o segui
 
 | Indicador | Antes das Ondas | Após Onda 4 | Meta |
 | :--- | :---: | :---: | :---: |
-| Componentes com `test.js` | 6 / 77 (8%) | 41 / 76 (54%) | 100% |
+| Componentes com `test.js` | 6 / 77 (8%) | **76 / 76 (100%)** | 100% ✅ |
 | Cobertura do Portal de Docs | 30 / 77 (39%) | 91 / 91 (100%) | 100% ✅ |
 | Warnings de Build Sass | Múltiplos | Zero | Zero ✅ |
 | Arquivos obsoletos em `docs/` | 13 | 0 | Zero ✅ |
