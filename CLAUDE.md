@@ -48,6 +48,7 @@ A criação de qualquer componente DSS **exige leitura prévia** dos seguintes a
 7. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md` *(arquivado pós-estabilização Fase 1)*
 8. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(arquivado pós-estabilização Fase 2)*
 9. `.github/pull_request_template.md`
+10. `docs/governance/DSS_MONOREPO_PATH_MAP.md` *(mapeamento canônico de caminhos do Monorepo — obrigatório para qualquer importação SCSS ou JS/TS entre pacotes)*
 
 ⚠️ **IMPORTANTE**  
 Nunca inferir padrões apenas observando um componente existente.  
@@ -209,6 +210,10 @@ e NÃO podem ser tratados como material opcional.
 
 7. **DSS_ARCHITECTURE_GUIDE.md**  
    → Decisões arquiteturais detalhadas e racional técnico
+
+8. **DSS_MONOREPO_PATH_MAP.md**  
+   → Mapeamento canônico de caminhos do Monorepo: regras de importação JS/TS e Sass, relação entre `packages/core` e `apps/components`, aliases do Vite e checklist de conformidade  
+   ⚠️ Consultar **sempre** que criar ou modificar importações entre pacotes
 
 ---
 
