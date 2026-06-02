@@ -21,8 +21,8 @@ import { describeGridInspector } from "./describeGridInspector.js";
 import { validateVisualContract, validate_visual_contract_schema } from "./validateVisualContract.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-// After tsup bundle: __dirname = mcp/build/ → go up 2 levels to reach DSS root
-const DSS_ROOT = resolve(__dirname, "../..");
+// After tsup bundle: __dirname = packages/mcp/build/ → go up 3 levels to reach DSS root
+const DSS_ROOT = resolve(__dirname, "../../..");
 
 // ─── Input Schemas (Zod) ──────────────────────────────────────────────────────
 

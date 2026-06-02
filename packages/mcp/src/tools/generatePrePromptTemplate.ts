@@ -322,7 +322,7 @@ Você vai criar o componente DSS \`${pascal}\` seguindo estritamente o Design Sy
 
 **Requisitos de acessibilidade:** ⟪ paste Eixo 5 here ⟫
 
-Crie todos os arquivos da arquitetura de 4 camadas em \`DSS/components/base/${pascal}/\`.
+Crie todos os arquivos da arquitetura de 4 camadas em \`DSS/packages/core/components/base/${pascal}/\`.
 \`\`\`
 `;
 }
@@ -338,7 +338,7 @@ export async function generatePrePromptTemplate(
   // Check if component dir exists and read meta
   let found = false;
   let meta: DssMeta | null = null;
-  for (const subDir of ["components/base", "components/composed"]) {
+  for (const subDir of ["packages/core/components/base", "packages/core/components/composed"]) {
     const candidate = resolve(dssRoot, subDir, pascal);
     if (existsSync(candidate)) {
       found = true;

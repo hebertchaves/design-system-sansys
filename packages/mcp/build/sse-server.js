@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import {
   createServer
-} from "./chunk-TNREW3FR.js";
+} from "./chunk-3CEX5LT3.js";
 import "./chunk-AHFFMYGG.js";
 
 // src/sse-server.ts

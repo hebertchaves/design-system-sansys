@@ -23,7 +23,7 @@ export async function queryComponent(
   // Normalize: accept "DssCard", "dsscard", "card" etc.
   const normalized = normalizeComponentName(componentName);
 
-  const componentDir = resolve(dssRoot, "components/base", normalized);
+  const componentDir = resolve(dssRoot, "packages/core/components/base", normalized);
   const metaPath = resolve(componentDir, "dss.meta.json");
   const docPath = resolve(componentDir, `${normalized}.md`);
 

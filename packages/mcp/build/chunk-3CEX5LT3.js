@@ -15,7 +15,7 @@ import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 var __dirname = dirname(fileURLToPath(import.meta.url));
-var DSS_ROOT = resolve(__dirname, "../..");
+var DSS_ROOT = resolve(__dirname, "../../..");
 var RESOURCE_MAP = {
   "dss://governance/claude": {
     path: resolve(DSS_ROOT, "CLAUDE.md"),
@@ -110,7 +110,7 @@ import { readFileSync as readFileSync2, existsSync } from "fs";
 import { resolve as resolve2 } from "path";
 async function queryComponent(componentName, dssRoot) {
   const normalized = normalizeComponentName(componentName);
-  const componentDir = resolve2(dssRoot, "components/base", normalized);
+  const componentDir = resolve2(dssRoot, "packages/core/components/base", normalized);
   const metaPath = resolve2(componentDir, "dss.meta.json");
   const docPath = resolve2(componentDir, `${normalized}.md`);
   const slug = normalized.replace(/^Dss/, "dss_").replace(/([A-Z])/g, "_$1").toLowerCase().replace(/^_/, "").replace(/dss__/, "dss_");
@@ -998,7 +998,7 @@ function analyzeScss(content, filePath, findings) {
 async function validateComponentCode(componentName, dssRoot) {
   const normalized = normalizeComponentName2(componentName);
   let componentDir = null;
-  for (const subDir of ["components/base", "components/composed"]) {
+  for (const subDir of ["packages/core/components/base", "packages/core/components/composed"]) {
     const candidate = resolve8(dssRoot, subDir, normalized);
     if (existsSync7(candidate)) {
       componentDir = candidate;
@@ -1008,7 +1008,7 @@ async function validateComponentCode(componentName, dssRoot) {
   if (!componentDir) {
     return {
       componentName: normalized,
-      componentDir: resolve8(dssRoot, "components/base", normalized),
+      componentDir: resolve8(dssRoot, "packages/core/components/base", normalized),
       found: false,
       verdict: "uncertain",
       layers: [],
@@ -1016,7 +1016,7 @@ async function validateComponentCode(componentName, dssRoot) {
         {
           severity: "error",
           rule: "COMPONENT_NOT_FOUND",
-          message: `Component directory "${normalized}" not found in components/base or components/composed.`
+          message: `Component directory "${normalized}" not found in packages/core/components/base or packages/core/components/composed.`
         }
       ],
       summary: `Component "${normalized}" not found. Verify the name or check DSS_FASEAMENTO_COMPONENTES.md.`,
@@ -1857,7 +1857,7 @@ Voc\xEA vai criar o componente DSS \`${pascal}\` seguindo estritamente o Design 
 
 **Requisitos de acessibilidade:** \u27EA paste Eixo 5 here \u27EB
 
-Crie todos os arquivos da arquitetura de 4 camadas em \`DSS/components/base/${pascal}/\`.
+Crie todos os arquivos da arquitetura de 4 camadas em \`DSS/packages/core/components/base/${pascal}/\`.
 \`\`\`
 `;
 }
@@ -1865,7 +1865,7 @@ async function generatePrePromptTemplate(componentName, dssRoot) {
   const pascal = toPascal2(componentName);
   let found = false;
   let meta = null;
-  for (const subDir of ["components/base", "components/composed"]) {
+  for (const subDir of ["packages/core/components/base", "packages/core/components/composed"]) {
     const candidate = resolve9(dssRoot, subDir, pascal);
     if (existsSync8(candidate)) {
       found = true;
@@ -1903,7 +1903,7 @@ var AUDIT_WRITE_NOTICE = [
 ].join(" ");
 async function recordAuditEvent(componentName, phase, verdict, ncs, gaps, notes, auditor, dssRoot) {
   const pascal = /^[Dd]ss[A-Z]/.test(componentName) ? componentName.charAt(0).toUpperCase() + componentName.slice(1) : `Dss${componentName.charAt(0).toUpperCase()}${componentName.slice(1)}`;
-  const componentDir = resolve10(dssRoot, "components", "base", pascal);
+  const componentDir = resolve10(dssRoot, "packages/core/components/base", pascal);
   const metaPath = join3(componentDir, "dss.meta.json");
   if (!existsSync9(metaPath)) {
     return {
@@ -1912,7 +1912,7 @@ async function recordAuditEvent(componentName, phase, verdict, ncs, gaps, notes,
       event: null,
       auditHistory: [],
       statusUpdated: false,
-      error: `dss.meta.json not found at: components/base/${pascal}/dss.meta.json`,
+      error: `dss.meta.json not found at: packages/core/components/base/${pascal}/dss.meta.json`,
       notice: AUDIT_WRITE_NOTICE
     };
   }
@@ -2136,7 +2136,7 @@ async function describeGridInspector() {
       connection_indicator: "Wifi icon (green) = MCP server online. WifiOff icon (gray) = client-side fallback active."
     },
     ci_gate: {
-      script: "Grid Inspector/packages/grid-inspector/scripts/validate-grid-ci.mjs",
+      script: "packages/grid-inspector/scripts/validate-grid-ci.mjs",
       usage_examples: [
         "node scripts/validate-grid-ci.mjs config.json",
         "cat grid-report.json | node scripts/validate-grid-ci.mjs --stdin",
@@ -2183,22 +2183,22 @@ async function describeGridInspector() {
     documentation_map: [
       {
         scope: "Overview, 5 fronts, MCP integration, CI Gate",
-        path: "Grid Inspector/README.md",
+        path: "packages/grid-inspector/README.md",
         audience: "All stakeholders, AI agents (read FIRST)"
       },
       {
         scope: "NPM package installation, API, Vue/React integration",
-        path: "Grid Inspector/packages/grid-inspector/README.md",
+        path: "packages/grid-inspector/README.md",
         audience: "Developers integrating the package"
       },
       {
         scope: "Observability signals, grid-rules-observer, MCP validator",
-        path: "Grid Inspector/src/observability/README.md",
+        path: "packages/grid-inspector/src/observability/README.md",
         audience: "Developers extending the observability layer"
       },
       {
         scope: "React DSS components inside the inspector panel",
-        path: "Grid Inspector/src/app/components/dss/README.md",
+        path: "packages/grid-inspector/src/app/components/dss/README.md",
         audience: "Developers contributing to the inspector UI"
       }
     ]
@@ -2300,7 +2300,7 @@ Until the headless browser infrastructure is merged, you MUST manually verify th
 
 // src/tools/index.ts
 var __dirname2 = dirname2(fileURLToPath2(import.meta.url));
-var DSS_ROOT2 = resolve11(__dirname2, "../..");
+var DSS_ROOT2 = resolve11(__dirname2, "../../..");
 var QueryComponentSchema = z.object({
   componentName: z.string().describe(
     'Name of the DSS component (e.g. "DssCard", "DssButton", "card"). Case-insensitive, Dss prefix optional.'

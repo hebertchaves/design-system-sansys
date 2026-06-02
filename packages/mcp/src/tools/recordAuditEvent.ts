@@ -51,7 +51,7 @@ export async function recordAuditEvent(
     ? componentName.charAt(0).toUpperCase() + componentName.slice(1)
     : `Dss${componentName.charAt(0).toUpperCase()}${componentName.slice(1)}`;
 
-  const componentDir = resolve(dssRoot, "components", "base", pascal);
+  const componentDir = resolve(dssRoot, "packages/core/components/base", pascal);
   const metaPath = join(componentDir, "dss.meta.json");
 
   if (!existsSync(metaPath)) {
@@ -61,7 +61,7 @@ export async function recordAuditEvent(
       event: null,
       auditHistory: [],
       statusUpdated: false,
-      error: `dss.meta.json not found at: components/base/${pascal}/dss.meta.json`,
+      error: `dss.meta.json not found at: packages/core/components/base/${pascal}/dss.meta.json`,
       notice: AUDIT_WRITE_NOTICE,
     };
   }
