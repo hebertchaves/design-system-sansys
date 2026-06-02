@@ -2,7 +2,7 @@
 
 ## 📋 Visão Geral
 
-O Design System Sansys (DSS) v2.2.0 é construído com uma arquitetura moderna baseada em:
+O Design System Sansys (DSS) v2.3.0 é construído com uma arquitetura moderna baseada em:
 
 - **TypeScript 5.9+** - Type safety completo
 - **Vue 3.4+ Composition API** - Reatividade e composabilidade
@@ -474,10 +474,10 @@ Garante:
 
 ### **3. Para Testar**
 
-Rode o projeto de exemplo:
+Rode a sandbox de desenvolvimento:
 ```bash
-cd dss-example
-npm run dev
+npm run sandbox:dev
+# ou: cd apps/sandbox && npm run dev
 ```
 
 Acesse: `http://localhost:5173`
@@ -486,7 +486,7 @@ Acesse: `http://localhost:5173`
 
 ## 📊 Estatísticas da Arquitetura
 
-### **Componentes Migrados v2.2.0**
+### **Componentes Migrados v2.3.0**
 
 | Componente | Arquivos TS | Composables | Tipos | Linhas |
 |------------|-------------|-------------|-------|--------|

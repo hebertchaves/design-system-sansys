@@ -1,8 +1,9 @@
 # DSS - Guia de Boas Práticas de Tokens
 
-> **📅 Criado:** Janeiro 2025
+> **📅 Criado:** Janeiro 2025 · **Atualizado:** Junho 2026 (v2.3.0 — Sass Module System)
 > **🎯 Objetivo:** Documentar as melhores práticas para criação e uso de tokens no DSS
 > **✅ Baseado em:** Material Design (Google), Polaris (Shopify), Carbon (IBM), Chakra UI
+> **⚠️ Sass Module System (Onda 3):** `@import` é **PROIBIDO**. Use `@use 'tokens/semantic/acessibilidade' as tokens;` e `@forward` em orquestradores. Localização: `packages/core/tokens/`
 
 ---
 

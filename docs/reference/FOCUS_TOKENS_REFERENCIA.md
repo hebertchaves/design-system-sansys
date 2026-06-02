@@ -1,6 +1,6 @@
 # 🎯 DSS - TOKENS DE FOCUS - REFERÊNCIA COMPLETA
 
-> **📅 Atualizado:** Janeiro 2025
+> **📅 Atualizado:** Junho 2026 (v2.3.0)
 > **🎯 Objetivo:** Tabela de referência completa de cores de focus
 > **♿ WCAG:** Todos os contrastes validados para 2.1 AA (2.4.7 Focus Visible)
 

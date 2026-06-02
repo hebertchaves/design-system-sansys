@@ -1,10 +1,12 @@
 # DSS - Referência Completa de Tokens
 
 **Design System Sansys (DSS) - Sistema Multi-Marca Sansys**
-**Versão:** v2.2.0
-**Data:** Janeiro 2025
+**Versão:** v2.3.0
+**Data:** Junho 2026
 **Tokens Documentados:** 903 tokens
 **Taxa de Conformidade com Código:** 100%
+**Localização física:** `packages/core/tokens/` (monorepo)
+**Sass Module System:** `@use 'tokens/semantic/...'` — `@import` é proibido
 
 ---
 

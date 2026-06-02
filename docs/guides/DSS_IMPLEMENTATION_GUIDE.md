@@ -1,6 +1,6 @@
 # DSS (Design System Sansys) - Guia de Implementação
 
-> **📅 Versão:** 2.1.0 - Dezembro 2024
+> **📅 Versão:** 2.3.0 - Junho 2026
 > **📊 Cobertura:** Sistema completo de tokens, utilitários, integração Quasar e acessibilidade WCAG 2.1 AA
 > **📚 Complemento:** Ver `DSS_ARCHITECTURE.md` para documentação técnica detalhada
 > **🎨 Padrão:** 100% compatível com Quasar Framework
@@ -30,7 +30,9 @@
 #### Setup Completo (Recomendado)
 ```scss
 // main.scss ou app.scss
-@import 'path/to/dss/index.scss';
+// ⚠️ Monorepo: tokens em packages/core/tokens/
+@use '@sansys/design-system/tokens' as tokens;
+@use '@sansys/design-system/utils' as utils;
 ```
 
 Isso importa:
@@ -38,16 +40,19 @@ Isso importa:
 - ✅ Todos os utilitários (mixins, funções, helpers)
 - ✅ Integração com Quasar (se disponível)
 
+> **AVISO:** `@import` está **proibido** no DSS (Onda 3 — Sass Module System).  
+> Use sempre `@use 'caminho' as alias;` para importações e `@forward 'caminho';` em orquestradores.
+
 #### Setup Parcial (Customizado)
 ```scss
-// Apenas tokens
-@import 'path/to/dss/tokens/index.scss';
+// Apenas tokens semânticos
+@use '@sansys/design-system/tokens/semantic/colors' as colors;
 
 // Apenas utilitários
-@import 'path/to/dss/utils/index.scss';
+@use '@sansys/design-system/utils' as utils;
 
-// Apenas Quasar
-@import 'path/to/dss/themes/index.scss';
+// Apenas temas Quasar
+@use '@sansys/design-system/themes' as themes;
 ```
 
 ### 2. Configuração do Quasar
@@ -75,7 +80,7 @@ module.exports = function (ctx) {
 
 ```scss
 // src/quasar-variables.sass
-@import 'path/to/dss/themes/quasar.variables.scss'
+@use '@sansys/design-system/themes/quasar.variables' as quasar-vars;
 ```
 
 ### 3. Verificação de Instalação

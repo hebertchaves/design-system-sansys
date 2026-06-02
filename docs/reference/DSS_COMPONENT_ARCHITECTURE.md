@@ -1597,7 +1597,7 @@ npm run build:css
 npm run build:lib
 
 # Verificar no navegador
-# Abrir dss-example e testar o componente
+# Abrir apps/sandbox e testar o componente
 # Hard reload: Ctrl+Shift+R
 ```
 
@@ -1648,7 +1648,7 @@ Antes de considerar o componente pronto, verifique todos os itens abaixo:
 - [ ] `npm run build:css` sem erros (CSS compilado)
 - [ ] ⚠️ **CRÍTICO**: `npm run build:lib` sem erros (componentes Vue compilados)
 - [ ] ZERO console warnings
-- [ ] Componente visível em `dss-example`
+- [ ] Componente visível em `apps/sandbox` (via `npm run sandbox:dev`)
 - [ ] Todas as variantes funcionando
 - [ ] Hard reload no navegador (Ctrl+Shift+R)
 

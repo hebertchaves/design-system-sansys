@@ -2,7 +2,7 @@
 
 > **IMPORTANTE**: O DSS agora é um projeto **totalmente independente** do Figma plugin!
 
-> **✨ NOVO v2.2.0**: Componentes modernos com **TypeScript + Composition API**!
+> **✨ v2.3.0 (Monorepo)**: 87 componentes selados, 100% TypeScript + Composition API, Sass `@use`/`@forward`!
 
 ---
 

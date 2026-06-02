@@ -1,4 +1,4 @@
-# 📊 Design System Sansys v2.0.0 - Apresentação Técnica
+# 📊 Design System Sansys v2.3.0 - Apresentação Técnica
 
 ## 🎯 Objetivo
 
@@ -8,19 +8,23 @@ Esta apresentação demonstra o **Design System Sansys (DSS)** como uma **biblio
 
 ## 📦 O que foi desenvolvido
 
-### **1. Biblioteca NPM Completa**
+### **1. Biblioteca NPM Completa (Monorepo)**
 
-- **Package:** `@sansys/design-system` v2.0.0
+- **Package:** `@sansys/design-system` v2.3.0
+- **Arquitetura:** Monorepo npm (`packages/core`, `apps/sandbox`, `apps/docs-portal`, `packages/grid-inspector`, `packages/mcp`)
 - **Formato:** ES Module + UMD (compatível com bundlers e browsers)
 - **Build System:** Vite 5 + Rollup
-- **TypeScript Ready:** Preparado para tipagens (em desenvolvimento)
+- **TypeScript:** 100% type safety com Composition API
 - **Tree-shakeable:** Importação individual de componentes
+- **Sass Module System:** 100% `@use`/`@forward` — sem `@import` legado
+- **Testes:** 100% de cobertura (76/76 componentes com `test.js` — gate de build bloqueante)
 
 ### **2. Componentes Vue 3 Disponíveis**
 
-✅ **DssButton** - Botão completo com 6 variantes
-✅ **DssCard** - Card flexível com subcomponentes
-✅ **DssInput** - Input de formulário com validação
+✅ **87 componentes selados** (Fase 1: 19 + Fase 2: 67 + Fase 3: 1 iniciada)
+✅ **DssButton**, **DssCard**, **DssInput** — exemplos de referência da Fase 1
+✅ **DssDialog**, **DssTabs**, **DssTable** — exemplos de referência da Fase 2
+✅ **DssDataCard** — primeiro composto complexo da Fase 3 (Stress Test)
 
 ### **3. Sistema de Tokens DSS**
 
@@ -101,7 +105,7 @@ dss/
 ├── vite.config.js            # ⚙️ Build config
 └── README.md                 # 📖 Documentação
 
-dss-example/                  # 🎬 Projeto de demonstração
+apps/sandbox/                 # 🎬 Sandbox de desenvolvimento (@sansys/sandbox — antiga dss-example/)
 ├── src/
 │   ├── App.vue              # Exemplos de todos os componentes
 │   └── main.js              # Setup do plugin
@@ -114,28 +118,31 @@ dss-example/                  # 🎬 Projeto de demonstração
 
 ## 🚀 Como Testar (Revisor Técnico)
 
-### **Passo 1: Verificar o Build**
+### **Passo 1: Instalar dependências do Monorepo**
 
 ```bash
-cd dss/
+# Na raiz do monorepo
 npm install
-npm run build
+```
+
+### **Passo 2: Compilar a biblioteca core**
+
+```bash
+npm run core:build
 ```
 
 **Resultado esperado:**
-- ✅ `dist/dss.es.js` - ES Module gerado
-- ✅ `dist/dss.umd.js` - UMD gerado
-- ✅ `dist/style.css` - CSS compilado
-- ✅ Source maps gerados
+- ✅ `packages/core/dist/dss.es.js` - ES Module gerado
+- ✅ `packages/core/dist/dss.umd.js` - UMD gerado
+- ✅ `packages/core/dist/style.css` - CSS compilado
 
 ---
 
-### **Passo 2: Executar Projeto Exemplo**
+### **Passo 3: Executar Sandbox**
 
 ```bash
-cd dss-example/
-npm install
-npm run dev
+npm run sandbox:dev
+# ou: cd apps/sandbox && npm run dev
 ```
 
 **Acesse:** http://localhost:5173
@@ -151,9 +158,9 @@ npm run dev
 
 ---
 
-### **Passo 3: Testar Importação Individual**
+### **Passo 4: Testar Importação Individual**
 
-Abra `dss-example/src/App.vue` e mude de plugin global para importação individual:
+Abra `apps/sandbox/src/App.vue` e mude de plugin global para importação individual:
 
 ```vue
 <script setup>
@@ -306,7 +313,7 @@ Funciona out-of-the-box, sem configuração adicional.
 
 - **[README Principal](./README.md)** - Instalação e uso básico
 - **[DssButton Docs](./components/base/DssButton/DssButton.md)** - Documentação completa do botão
-- **[Projeto Exemplo](./dss-example/README.md)** - Como executar exemplos
+- **[Sandbox](../../apps/sandbox/README.md)** - Como executar o sandbox de desenvolvimento
 - **[Tokens System](./tokens/README.md)** - Sistema de design tokens
 
 ---
@@ -330,9 +337,9 @@ Propriedade da Jtech
 
 Para o revisor técnico, verificar:
 
-- [ ] **Build bem-sucedido** - `npm run build` executa sem erros
-- [ ] **Arquivos gerados** - dist/ contém dss.es.js, dss.umd.js, style.css
-- [ ] **Projeto exemplo funciona** - `npm run dev` em dss-example/
+- [ ] **Build bem-sucedido** - `npm run core:build` executa sem erros
+- [ ] **Arquivos gerados** - `packages/core/dist/` contém dss.es.js, dss.umd.js, style.css
+- [ ] **Sandbox funciona** - `npm run sandbox:dev` sobe o ambiente em http://localhost:5173
 - [ ] **Componentes renderizam** - DssButton, DssCard, DssInput aparecem
 - [ ] **Variantes funcionam** - elevated, flat, outline, etc.
 - [ ] **Cores funcionam** - primary, secondary, accent, etc.

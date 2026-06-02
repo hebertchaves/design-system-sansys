@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)
 ![Vue](https://img.shields.io/badge/Vue-3.4+-4FC08D.svg?logo=vue.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-3178C6.svg?logo=typescript)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
@@ -237,7 +237,7 @@ const handleClick = () => console.log('Clicado!')
 
 ## 🧩 **Componentes Disponíveis**
 
-### ✨ **Migrados para TypeScript + Composition API** (v2.2.0)
+### ✨ **Migrados para TypeScript + Composition API** (v2.3.0)
 
 Os seguintes componentes foram modernizados com:
 - ✅ 100% Type Safety
@@ -336,9 +336,9 @@ Os seguintes componentes foram modernizados com:
   - Templates e exemplos práticos
 
 ### **Arquitetura e Padrões**
-- **[DSS_ARCHITECTURE_GUIDE.md](./DSS_ARCHITECTURE_GUIDE.md)** - Arquitetura em 4 camadas
-- **[DSS_IMPLEMENTATION_GUIDE.md](./DSS_IMPLEMENTATION_GUIDE.md)** - Guia completo de implementação
-- **[REFACTORING_QUASAR_PATTERN.md](./REFACTORING_QUASAR_PATTERN.md)** 🔥 - Padrão Quasar Framework (classes utilitárias)
+- **[DSS_ARCHITECTURE_GUIDE.md](./docs/guides/DSS_ARCHITECTURE_GUIDE.md)** - Arquitetura em 4 camadas
+- **[DSS_IMPLEMENTATION_GUIDE.md](./docs/guides/DSS_IMPLEMENTATION_GUIDE.md)** - Guia completo de implementação
+- **[DSS_ARCHITECTURE.md](./docs/reference/DSS_ARCHITECTURE.md)** - Referência de arquitetura técnica
 
 ### **Por Componente**
 - **[DssButton](./components/base/DssButton/README.md)** - Botão completo ✨ TypeScript
@@ -349,49 +349,63 @@ Os seguintes componentes foram modernizados com:
 
 ---
 
+## 🏗️ **Estrutura do Monorepo**
+
+O DSS é organizado como um monorepo npm com os seguintes workspaces:
+
+```
+DSS/
+├── packages/
+│   ├── core/                  ← @sansys/design-system (biblioteca principal)
+│   │   ├── components/base/   ← Fonte de verdade dos componentes
+│   │   └── tokens/            ← Tokens semânticos (packages/core/tokens/)
+│   ├── grid-inspector/        ← @sansys/grid-inspector (ferramenta de observabilidade)
+│   └── mcp/                   ← @sansys/dss-mcp (servidor MCP)
+├── apps/
+│   ├── docs-portal/           ← @sansys/docs-portal (portal de documentação)
+│   ├── sandbox/               ← @sansys/sandbox (ambiente de testes — antiga dss-example/)
+│   └── components/            ← Espelho local de componentes para desenvolvimento
+└── package.json               ← Raiz do monorepo (workspaces)
+```
+
+**Relação entre packages/core e apps/components:**  
+`packages/core/components/` é a fonte de verdade e distribuição. `apps/components/` é um espelho local usado apenas durante o desenvolvimento.
+
+---
+
 ## 🛠️ **Desenvolvimento**
 
 ```bash
-# Instalar dependências
+# Instalar todas as dependências do monorepo (raiz)
 npm install
 
-# Build completo com TypeScript type checking
-npm run build
+# Compilar a biblioteca core
+npm run core:build
 
-# Build sem type checking (mais rápido)
-npm run build:no-check
+# Subir o sandbox de desenvolvimento (ambiente de testes)
+npm run sandbox:dev
+# ou: cd apps/sandbox && npm run dev
 
-# Watch mode (recompila automaticamente)
-npm run build:watch
+# Subir o portal de documentação
+npm run docs:dev
+# ou: cd apps/docs-portal && npm run dev
 
-# Type checking isolado (sem build)
-npm run type-check
+# Build do portal de documentação
+npm run docs:build
 
-# Rodar exemplo local
-cd dss-example
-npm run dev
+# Build de todos os pacotes
+npm run build:all
+
+# Sincronizar documentação no portal
+npm run portal:sync-docs
 ```
 
-### ✨ **Desenvolvimento com TypeScript**
+### ✨ **Workflow Recomendado**
 
-**Novos Scripts Disponíveis:**
-
-```bash
-# Validar tipos TypeScript sem compilar
-npm run type-check
-
-# Build de desenvolvimento (sem minificação)
-npm run build:dev
-
-# Build em watch mode (recompila ao salvar)
-npm run build:watch
-```
-
-**Workflow Recomendado:**
-
-1. **Durante desenvolvimento**: Use `npm run build:watch` em um terminal
-2. **Antes de commit**: Execute `npm run type-check` e `npm run build`
-3. **Para testar**: Rode `cd dss-example && npm run dev`
+1. **Inicialização**: Execute `npm install` na raiz do monorepo
+2. **Durante desenvolvimento**: Use `npm run core:build` e `npm run sandbox:dev`
+3. **Antes de commit**: Execute `npm run core:build` para garantir que o build compila
+4. **Testes**: Todos os 76 componentes possuem `test.js` — gate de build bloqueante
 
 ### ⚠️ **Importante: Build de Componentes**
 

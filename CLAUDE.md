@@ -39,13 +39,15 @@ Este arquivo (**CLAUDE.md**) é um **documento normativo vinculante** para qualq
 
 A criação de qualquer componente DSS **exige leitura prévia** dos seguintes arquivos, **nesta ordem**:
 
-1. `docs/PRD_DSS.md`
+1. `docs/reference/PRD_DSS.md`
 2. `docs/reference/DSS_ARCHITECTURE.md`
 3. `docs/reference/DSS_COMPONENT_ARCHITECTURE.md`
 4. `docs/guides/DSS_IMPLEMENTATION_GUIDE.md`
-5. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md` *(arquivado pós-estabilização Fase 1)*
-6. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(arquivado pós-estabilização Fase 2)*
-7. `.github/pull_request_template.md`
+5. `docs/reference/DSS_TOKEN_REFERENCE.md`
+6. `docs/governance/CERTIFIED_COMPONENTS.md` *(índice de selos — 19/19 Fase 1 + 68/68 Fase 2)*
+7. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md` *(arquivado pós-estabilização Fase 1)*
+8. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(arquivado pós-estabilização Fase 2)*
+9. `.github/pull_request_template.md`
 
 ⚠️ **IMPORTANTE**  
 Nunca inferir padrões apenas observando um componente existente.  
@@ -59,46 +61,52 @@ O **DssButton é referência**, não fonte única de verdade.
    - ❌ Nenhum valor hardcoded (px, rem, hex, rgb)
    - ✅ Sempre `var(--dss-*)`
 
-2. **Cores seguem o padrão Quasar**
+2. **Sass Module System — @import PROIBIDO**
+   - ❌ `@import` é **estritamente proibido** em todos os arquivos SCSS novos e refatorados
+   - ✅ Usar `@use 'path/to/module' as alias;` para importações
+   - ✅ Usar `@forward 'path/to/module';` para reexportações em orquestradores
+   - Razão: `@import` está depreciado no Dart Sass 1.40+ e será removido no Sass 3.0 (Onda 3 migrou 100% do codebase)
+
+3. **Cores seguem o padrão Quasar**
    - ❌ Não criar `_colors.scss` por componente
    - ❌ Não aplicar cores no SCSS
    - ✅ Classes utilitárias globais (`bg-*`, `text-*`)
    - ✅ Aplicação via computed properties no Vue
 
-3. **Arquitetura em 4 Camadas (Obrigatória)**
+4. **Arquitetura em 4 Camadas (Obrigatória)**
    - Nenhuma camada pode ser omitida
    - Camadas com pouco conteúdo continuam existindo
 
-4. **Acessibilidade não é opcional**
+5. **Acessibilidade não é opcional**
    - WCAG 2.1 AA
    - Focus visível
    - Touch target ≥ 48px
    - Navegação por teclado
 
-5. **Brandabilidade**
+6. **Brandabilidade**
    - Componentes reagem a `[data-brand="hub|water|waste"]`
    - Tokens de brand com fallback semântico
 
-6. **Tokens Genéricos para Altura (VINCULANTE)**
+7. **Tokens Genéricos para Altura (VINCULANTE)**
    - ❌ NUNCA criar tokens específicos (`--dss-chip-height-*`, `--dss-badge-size-*`)
    - ✅ SEMPRE usar `--dss-compact-control-height-{xs,sm,md,lg}` para controles compactos
    - ⚠️ Altura visual ≠ Touch target (documentar separadamente)
    - 📖 Consulte [DSS_TOKEN_REFERENCE.md - Seção 7.13](#713-compact-controls---alturas-visuais)
 
-7. **Convenção de Pseudo-elementos (VINCULANTE)**
+8. **Convenção de Pseudo-elementos (VINCULANTE)**
    - `::before` → **RESERVADO** exclusivamente para touch target (WCAG 2.5.5)
    - `::after` → Efeitos visuais (hover, active, selected overlays)
    - ⚠️ NUNCA usar `::before` para efeitos visuais em variantes
    - 📖 Consulte [DSS_COMPONENT_ARCHITECTURE.md - Convenção de Pseudo-elementos](docs/reference/DSS_COMPONENT_ARCHITECTURE.md#convenção-de-pseudo-elementos-normativa)
 
-8. **Reutilização de Valores Não-Tokenizados (VINCULANTE)**
+9. **Reutilização de Valores Não-Tokenizados (VINCULANTE)**
    - Valores de `brightness()` DEVEM reutilizar valores da tabela canônica
    - Valores permitidos: 0.85, 0.90, 0.92, 0.95 (light), 1.10, 1.20 (dark)
    - ❌ NUNCA criar valores arbitrários (ex.: 0.93, 0.88)
    - ⚠️ Novos valores exigem justificativa explícita e aprovação
    - 📖 Consulte [DSS_COMPONENT_ARCHITECTURE.md - Valores Visuais Permitidos](docs/reference/DSS_COMPONENT_ARCHITECTURE.md#valores-visuais-permitidos-como-exceção-não-tokenizados)
 
-9. **Modelo Golden — Governanca de Auditoria (VINCULANTE)**
+10. **Modelo Golden — Governanca de Auditoria (VINCULANTE)**
    - ❌ NUNCA auditar componentes sem declarar um **Golden Context** (baseline de auditoria)
    - ✅ SEMPRE usar **Golden Reference** como baseline global para a categoria
    - ✅ SEMPRE usar **Golden Context** como baseline especifico para o componente auditado
@@ -114,7 +122,7 @@ O **DssButton é referência**, não fonte única de verdade.
    - **DssChip** — Golden Reference interativo (touch target `::before`, pseudo-elementos)
    - **DssBadge** — Golden Reference nao interativo (decisoes contextuais)
 
-10. **Entry Point Wrapper Obrigatorio (VINCULANTE)**
+11. **Entry Point Wrapper Obrigatorio (VINCULANTE)**
     - Todo componente DSS DEVE possuir um arquivo `DssNomeComponente.vue` na **raiz** do diretorio do componente
     - Este arquivo e um **re-export puro** — sem `<template>`, sem `<style>`, sem logica propria
     - Aponta para a implementacao canonica em `1-structure/DssNomeComponente.ts.vue`
@@ -129,7 +137,7 @@ O **DssButton é referência**, não fonte única de verdade.
     ```
     - 📖 Consulte [DSS_COMPONENT_ARCHITECTURE.md - Passo 7](docs/reference/DSS_COMPONENT_ARCHITECTURE.md#passo-7-entry-point-wrapper)
 
-11. **Figma como Árbitro Visual (VINCULANTE)**
+12. **Figma como Árbitro Visual (VINCULANTE)**
     - O Figma é a **fonte de verdade visual** do DSS, não apenas uma referência.
     - Em caso de ambiguidade sobre como um componente deve se parecer (ex: qual token de padding usar quando o `withDefaults` não especifica), o agente DEVE consultar o protótipo do Figma via MCP.
     - O contrato estático (`defaultPreview` no `dss.meta.json`) reflete o Figma, mas o Figma tem precedência em caso de divergência.
@@ -327,7 +335,7 @@ O componente so e considerado valido — e elegivel para auditoria e selo — se
 - [ ] Documentação normativa (DssNomeComponente.md) com Template 13.1
 - [ ] API Reference (DSSNOMECOMPONENTE_API.md) atualizada
 - [ ] Exemplo funcional (DssNomeComponente.example.vue, min. 3 cenarios)
-- [ ] **Arquivo de testes** (DssNomeComponente.test.js) existe com cobertura mínima: renderização base, props, eventos e slots
+- [ ] **Arquivo de testes** (DssNomeComponente.test.js) existe com cobertura mínima: renderização base, props, eventos e slots — **gate de build BLOQUEANTE** (100% de cobertura: 76/76 componentes possuem test.js no core)
 
 > **Nenhum componente pode receber selo DSS v2.2 sem passar por este gate.**
 > Auditorias devem verificar este checklist ANTES de iniciar analise detalhada.

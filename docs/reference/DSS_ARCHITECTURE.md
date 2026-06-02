@@ -1,9 +1,9 @@
 # DSS (Design System Sansys) - Arquitetura Completa
 
-> **📅 Última Atualização:** Janeiro 2025
-> **📊 Status:** ✅ **Sistema Base 100% Completo** + 🎨 **Dark Mode Implementado** + 🧩 **5 Componentes Base Implementados** + ✅ **Arquitetura Refatorada**
-> **🔧 Componentes Implementados:** DssButton, DssCard, DssInput, DssBadge, DssAvatar (Arquitetura de 4 Camadas)
-> **🎯 Melhorias Aplicadas:** Tokens como provedores genéricos, Componentes como consumidores, Escalabilidade infinita, Playground interativo (dss-example)
+> **📅 Última Atualização:** Junho 2026
+> **📊 Status:** ✅ **Monorepo npm** + ✅ **87 Componentes Selados** (19 Fase1 + 67 Fase2 + 1 Fase3) + ✅ **100% Cobertura de Testes** + ✅ **Sass @use/@forward (Onda 3)**
+> **🔧 Workspaces:** `packages/core` (biblioteca), `apps/sandbox` (testes), `apps/docs-portal` (documentação), `packages/grid-inspector`, `packages/mcp`
+> **🎯 Arquitetura:** Tokens como provedores genéricos, 4 Camadas obrigatórias, Brandabilidade multi-produto, Acessibilidade WCAG 2.1 AA
 
 ## 📋 Índice
 
@@ -26,8 +26,8 @@ O **DSS (Design System Sansys)** é um sistema de design completo baseado em tok
 - **Brandabilidade** (Hub, Water, Waste)
 - **Integração com Quasar Framework**
 - **Tokens semânticos** e **tokens de marca**
-- **Sistema de componentes Vue.js** (5 componentes base implementados)
-- **Playground interativo** (dss-example) para testes e demonstrações
+- **Sistema de componentes Vue.js** (87 componentes selados — Fase 1 + 2 + 3 iniciada)
+- **Sandbox interativo** (`apps/sandbox/`) para testes e demonstrações
 
 ### Princípios Fundamentais
 
@@ -363,11 +363,10 @@ dss/
 │       ├── spacing.md       # ⚠️ VAZIO - Docs de espaçamento
 │       └── accessibility.md # ⚠️ VAZIO - Docs de acessibilidade
 │
-├── dss-example/        # ✅ Playground interativo para testes
-│   ├── index.html                  # ✅ Showcase de todos os componentes
-│   ├── test-utility-classes.html   # ✅ Testes de classes utilitárias
+├── apps/sandbox/       # ✅ Sandbox interativo para testes (@sansys/sandbox — antiga dss-example/)
+│   ├── src/                        # ✅ Código Vue da sandbox
 │   ├── vite.config.js              # ✅ Configuração do Vite
-│   └── 88node_modules/             # ✅ Dependências locais
+│   └── package.json                # ✅ @sansys/sandbox
 │
 ├── themes/             # Integração com Quasar e Dark Mode
 │   ├── index.scss                  # ✅ Entry point de temas
