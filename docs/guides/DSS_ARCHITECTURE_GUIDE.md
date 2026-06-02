@@ -21,7 +21,7 @@ O DSS segue **EXATAMENTE** o padrão arquitetural do Quasar Framework para cores
 - ✅ **Componentes aplicam classes dinamicamente** via computed properties
 - ❌ **NUNCA criar arquivos de cores por componente** (`.dss-button--primary`, etc.)
 
-**Leitura obrigatória:** [`REFACTORING_QUASAR_PATTERN.md`](./REFACTORING_QUASAR_PATTERN.md) - Documentação completa da refatoração para o padrão Quasar.
+**Leitura obrigatória:** [`REFACTORING_QUASAR_PATTERN.md`](../archive/reports/REFACTORING_QUASAR_PATTERN.md) - Documentação completa da refatoração para o padrão Quasar.
 
 Todos os **novos componentes DSS** devem seguir a arquitetura em 4 camadas, inspirada no pipeline V6 do plugin Quasar-to-Figma.
 
@@ -309,7 +309,7 @@ Seguindo o padrão Quasar Framework:
 - ✅ **Cores são aplicadas via classes utilitárias globais** (`.bg-*`, `.text-*`)
 - ✅ **Classes utilitárias estão em `utils/_colors.scss`** (arquivo único)
 
-**Por quê?** Ver [`REFACTORING_QUASAR_PATTERN.md`](./REFACTORING_QUASAR_PATTERN.md) - Redução de 97% no código de cores.
+**Por quê?** Ver [`REFACTORING_QUASAR_PATTERN.md`](../archive/reports/REFACTORING_QUASAR_PATTERN.md) - Redução de 97% no código de cores.
 
 ### **Estrutura**
 1 arquivo SCSS = 1 variante (~30-80 linhas) - APENAS estrutura visual, SEM cores

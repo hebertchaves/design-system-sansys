@@ -259,7 +259,7 @@ Os seguintes componentes foram modernizados com:
 - `useComponentState` - Estados interativos
 - `useBrand` - Marcas Sansys (hub, water, waste)
 
-[📖 Ver Guia de Migração](./MIGRATION_TO_TYPESCRIPT.md)
+[📖 Ver Guia de Migração](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md)
 
 ---
 
@@ -271,7 +271,7 @@ Os seguintes componentes foram modernizados com:
 </DssButton>
 ```
 
-[📖 Documentação completa](./components/base/DssButton/DssButton.md)
+[📖 Documentação completa](./packages/core/components/base/DssButton/DssButton.md)
 
 ### **DssCard** - Card flexível com composição
 
@@ -329,7 +329,7 @@ Os seguintes componentes foram modernizados com:
 ## 📚 **Documentação**
 
 ### **🚀 TypeScript + Composition API (NOVO!)**
-- **[MIGRATION_TO_TYPESCRIPT.md](./MIGRATION_TO_TYPESCRIPT.md)** - ✨ Guia completo de migração
+- **[MIGRATION_TO_TYPESCRIPT.md](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md)** - ✨ Guia completo de migração
   - Padrões estabelecidos
   - Componentes migrados (DssButton, DssBadge, DssAvatar, DssCard, DssInput)
   - Composables globais reutilizáveis
@@ -341,11 +341,11 @@ Os seguintes componentes foram modernizados com:
 - **[DSS_ARCHITECTURE.md](./docs/reference/DSS_ARCHITECTURE.md)** - Referência de arquitetura técnica
 
 ### **Por Componente**
-- **[DssButton](./components/base/DssButton/README.md)** - Botão completo ✨ TypeScript
-- **[DssBadge](./components/base/DssBadge/README.md)** - Badge/contador ✨ TypeScript
-- **[DssAvatar](./components/base/DssAvatar/README.md)** - Avatar ✨ TypeScript
-- **[DssCard](./components/base/DssCard/README.md)** - Card ✨ TypeScript
-- **[DssInput](./components/base/DssInput/README.md)** - Input ✨ TypeScript
+- **[DssButton](./packages/core/components/base/DssButton/DssButton.md)** - Botão completo ✨ TypeScript
+- **[DssBadge](./packages/core/components/base/DssBadge/README.md)** - Badge/contador ✨ TypeScript
+- **[DssAvatar](./packages/core/components/base/DssAvatar/README.md)** - Avatar ✨ TypeScript
+- **[DssCard](./packages/core/components/base/DssCard/README.md)** - Card ✨ TypeScript
+- **[DssInput](./packages/core/components/base/DssInput/README.md)** - Input ✨ TypeScript
 
 ---
 
@@ -413,7 +413,7 @@ npm run portal:sync-docs
 
 Após modificar arquivos `.vue` ou `.ts.vue`, execute `npm run build` (ou `build:watch`) para atualizar o diretório `dist/`.
 
-**Ver:** [MIGRATION_TO_TYPESCRIPT.md](./MIGRATION_TO_TYPESCRIPT.md) para guia completo de desenvolvimento TypeScript.
+**Ver:** [MIGRATION_TO_TYPESCRIPT.md](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md) para guia completo de desenvolvimento TypeScript.
 
 ---
 

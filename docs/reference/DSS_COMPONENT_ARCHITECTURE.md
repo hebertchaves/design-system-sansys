@@ -1918,8 +1918,8 @@ Consultar **`Q_BTN_COMPLETE_SPECIFICATION.md`** para lista completa de gaps iden
 
 ### **Documentação Geral**
 - **[DSS_COMPONENT_ARCHITECTURE.md](./DSS_COMPONENT_ARCHITECTURE.md)** - Este documento (arquitetura completa)
-- **[DSS_IMPLEMENTATION_GUIDE.md](./DSS_IMPLEMENTATION_GUIDE.md)** - Setup e instalação para consumidores
-- **[REFACTORING_QUASAR_PATTERN.md](./REFACTORING_QUASAR_PATTERN.md)** - Padrão Quasar detalhado
+- **[DSS_IMPLEMENTATION_GUIDE.md](../guides/DSS_IMPLEMENTATION_GUIDE.md)** - Setup e instalação para consumidores
+- **[REFACTORING_QUASAR_PATTERN.md](../archive/reports/REFACTORING_QUASAR_PATTERN.md)** - Padrão Quasar detalhado
 - **[DSS_TOKEN_GUIDELINES.md](./DSS_TOKEN_GUIDELINES.md)** - Guia completo de tokens
 
 ### **Componentes de Referência**

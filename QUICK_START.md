@@ -84,7 +84,7 @@ import { useColorClasses, useAccessibility, useBrand } from '@sansys/design-syst
 - `useComponentState` - Estados interativos (focus, hover, active)
 - `useBrand` - Marcas Sansys (hub, water, waste)
 
-**[📖 Ver guia completo de migração](./MIGRATION_TO_TYPESCRIPT.md)**
+**[📖 Ver guia completo de migração](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md)**
 
 ---
 
