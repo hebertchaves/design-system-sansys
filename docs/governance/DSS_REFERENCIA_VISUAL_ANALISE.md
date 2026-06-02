@@ -1,1248 +1,1796 @@
-# Análise Visual das Referências de Mercado — DSS
+# DSS — Contrato Visual Canônico
 
-**Data:** 26 de Maio de 2026
-**Objetivo:** Registrar as observações visuais coletadas nas páginas de componentes das referências Material Design 3, IBM Carbon e Salesforce Lightning, com indicações concretas de como cada categoria de componente DSS deveria se parecer.
-
----
-
-## Metodologia
-
-As três referências foram analisadas diretamente em suas documentações oficiais:
-
-- **Material Design 3** — m3.material.io
-- **IBM Carbon** — carbondesignsystem.com
-- **Salesforce Lightning** — lightningdesignsystem.com
-
-Para cada categoria de componente, foram observados: forma (border-radius), cor, tipografia, espaçamento, estados interativos (hover, focus, active, disabled) e densidade visual geral.
+> **Status:** Normativo Vinculante (Hierarquia Nível 1)
+> **Versão DSS:** v2.3.0
+> **Autoridade:** Este documento é a ÚNICA fonte de verdade narrativa para o contrato visual default dos componentes DSS. Em caso de conflito com qualquer outro documento de documentação, este prevalece. Em caso de conflito com o Figma, o Figma prevalece (Princípio #12).
+> **Sincronização:** Este documento é o espelho em Markdown dos campos `defaultPreview` contidos nos arquivos `dss.meta.json` de cada componente. Alterações no `defaultPreview` de qualquer componente DEVEM ser refletidas aqui simultaneamente.
 
 ---
 
-## 1. Botões (Button, FAB, BtnToggle, BtnDropdown)
+## 1. Escopo e Definições
 
-### O que as referências mostram
+### 1.1 Definição de "Default Visual"
 
-**Material Design 3** define cinco variantes de botão com hierarquia clara:
-- **Filled** (ação principal): fundo sólido na cor primária (`#6750A4` no M3 padrão), texto branco, `border-radius: 20px` (formato de pílula completo), sem sombra por padrão, `height: 40px`, `padding: 0 24px`, `font-size: 14px`, `font-weight: 500`, `letter-spacing: 0.1px`, `text-transform: none`.
-- **Outlined** (ação secundária): fundo transparente, borda `1px solid` na cor de outline (`#79747E`), texto na cor primária, mesmo border-radius.
-- **Text** (ação terciária): sem fundo, sem borda, texto na cor primária.
-- **Elevated**: fundo `surface-container-low`, sombra `elevation level 1`.
-- **Tonal**: fundo `secondary-container`, texto `on-secondary-container`.
+O **default visual** de um componente DSS é o aspecto visual exato renderizado quando **nenhuma prop de estilo é passada explicitamente** pelo consumidor. É o estado neutro de fábrica do componente.
 
-**IBM Carbon** usa botões mais quadrados:
-- `border-radius: 0` (sem arredondamento) ou `border-radius: 4px` no Carbon v11.
-- Altura `48px` para tamanho padrão (`md`), `32px` para `sm`.
-- Fundo sólido na cor primária (`#0f62fe`), texto branco.
-- `font-size: 14px`, `font-weight: 400`, `letter-spacing: 0.16px`, `text-transform: none`.
-- Hover: fundo escurece para `#0353e9` (10% mais escuro).
-- Ícone à direita com `padding-right: 64px` para dar espaço.
+O default visual NÃO inclui:
+- Estados interativos (hover, focus, active, disabled) — estes são parte do contrato de estados.
+- Variantes semânticas (error, success, warning) — estes são ativados por props.
+- Brandabilidade (hub, water, waste) — estes são ativados por `data-brand`.
 
-**Salesforce Lightning** usa botões com `border-radius: 4px`:
-- Variante primária: fundo `#0176d3` (azul Salesforce), texto branco.
-- Variante neutra: fundo branco, borda `1px solid #dddbda`, texto escuro.
-- `height: 32px` (padrão), `padding: 0 12px`.
-- `font-size: 13px`, `font-weight: 700`, `text-transform: none`.
+O default visual SIM inclui:
+- Dimensões físicas computadas (min-height, min-width, padding, gap).
+- Tokens de cor aplicados no estado neutro.
+- Border-radius, border-width, box-shadow.
+- Tipografia (font-size, font-weight, line-height).
+- Qualquer ícone ou conteúdo estrutural presente sem props.
 
-### Como o DSS deveria se parecer
+### 1.2 Fontes de Verdade: Human-Readable vs Machine-Readable
 
-O DSS deve adotar o padrão **Material Design 3 Filled** como variante `elevated` (principal):
+| Tipo | Arquivo | Audiência | Autoridade |
+| :--- | :--- | :--- | :--- |
+| **Machine-readable** | `dss.meta.json` → campo `defaultPreview` | MCP, ferramentas de validação visual | Fonte de código |
+| **Human-readable** | Este documento (`DSS_REFERENCIA_VISUAL_ANALISE.md`) | Agentes de IA, engenheiros, designers | Espelho narrativo do JSON |
+| **Árbitro visual** | Figma (Princípio #12) | Decisões visuais em caso de divergência | Supremo |
 
-| Propriedade | Valor DSS |
-|---|---|
-| `border-radius` | `var(--dss-radius-full)` — pílula completa (20px+) |
-| `height` | `var(--dss-touch-target-md)` — 44px |
-| `padding` | `0 var(--dss-spacing-6)` — 0 24px |
-| `background` | `var(--dss-action-primary)` |
-| `color` | `var(--dss-text-inverse)` |
-| `font-size` | `var(--dss-font-size-sm)` — 14px |
-| `font-weight` | `var(--dss-font-weight-medium)` — 500 |
-| `letter-spacing` | `0.01em` |
-| `text-transform` | `none` |
-| Hover | `background: var(--dss-action-primary-hover)` |
-| Focus | `outline: 3px solid var(--dss-action-primary-focus)`, `outline-offset: 2px` |
-| Disabled | `opacity: 0.38`, `cursor: not-allowed` |
+**Regra de sincronização:** Toda alteração no `defaultPreview` de um `dss.meta.json` DEVE ser refletida na entrada correspondente da Seção 4 deste documento na mesma PR.
 
-**Variante `outlined`:** borda `1px solid var(--dss-action-primary)`, fundo transparente, texto `var(--dss-action-primary)`.
+### 1.3 Princípios de Coesão Visual
 
-**Variante `flat`/`text`:** sem borda, sem fundo, texto `var(--dss-action-primary)`.
+Estes princípios garantem unidade visual entre os 76 componentes do DSS:
+
+1. **Cor Principal (Primary):** `--dss-action-primary` é a âncora visual para ações principais, estados ativos e foco.
+2. **Forma (Border Radius):** Escala lógica — `--dss-radius-sm` (controles compactos), `--dss-radius-md` (formulários/menus), `--dss-radius-lg` (superfícies/cards), `--dss-radius-full` (pílulas/badges/botões).
+3. **Tipografia:** `text-transform: none` como padrão. Pesos entre `normal` (400) e `medium` (500) conforme hierarquia.
+4. **Feedback Visual:** Hover via `brightness(0.95)` em fundos coloridos, `--dss-surface-hover` em fundos neutros. Focus via `@include dss-focus-ring`.
+5. **Bordas e Superfícies:** `--dss-border-width-thin` (1px) com `--dss-gray-300/400` para delimitação neutra. Fundos: `--dss-surface-default` ou `--dss-surface-muted`.
+
+### 1.4 Diferença entre Default Visual, Default Funcional e Default Semântico
+
+| Tipo | Definição | Exemplo (DssButton) |
+| :--- | :--- | :--- |
+| **Default Visual** | Aspecto visual sem props de estilo | `elevated`, `primary`, `md` |
+| **Default Funcional** | Comportamento sem props comportamentais | `type="button"`, não-disabled |
+| **Default Semântico** | Papel ARIA sem props de acessibilidade | `role="button"`, `tabindex="0"` |
 
 ---
 
-## 2. Formulários (Input, Select, Textarea)
+## 2. Princípios Normativos do Design System
 
-### O que as referências mostram
+### 2.1 Token First (Princípio #1)
 
-**Material Design 3** — Text Field:
-- Duas variantes: **Filled** (fundo `surface-container-highest`, borda inferior `1px`) e **Outlined** (borda completa `1px`).
-- `border-radius` no Filled: `4px 4px 0 0` (arredondado no topo, reto na base).
-- `border-radius` no Outlined: `4px` em todos os cantos.
-- Label flutuante: cor `on-surface-variant` no repouso, cor primária no foco.
-- Borda no foco: `2px solid` na cor primária.
-- `height: 56px` (padrão), `padding: 16px`.
-- Ícones de suporte (leading/trailing) com `24px`.
+Nenhum valor hardcoded (px, rem, hex, rgb) deve aparecer em `_base.scss`, `_variants.scss` ou `_states.scss`. Todo valor visual deve ser expresso como `var(--dss-*)`.
 
-**IBM Carbon** — Text Input:
-- Variante única com borda inferior `1px solid #8d8d8d` no repouso.
-- Foco: borda inferior `2px solid #0f62fe`.
-- `height: 40px` (padrão), `padding: 0 16px`.
-- Label acima do campo (não flutuante), `font-size: 12px`, `font-weight: 400`.
-- Fundo `#f4f4f4` no repouso, `#ffffff` no foco.
-- Mensagem de erro em vermelho abaixo do campo com ícone.
+**Tokens de referência obrigatórios por propriedade:**
+- Cor → `--dss-action-*`, `--dss-text-*`, `--dss-surface-*`, `--dss-gray-*`
+- Espaçamento → `--dss-spacing-*`, `--dss-padding-*`, `--dss-gap-*`
+- Forma → `--dss-radius-*`
+- Borda → `--dss-border-width-*`
+- Sombra → `--dss-elevation-*`
+- Tipografia → `--dss-font-size-*`, `--dss-font-weight-*`, `--dss-line-height-*`
 
-**Salesforce Lightning** — Input:
-- Borda `1px solid #dddbda` no repouso.
-- Foco: borda `1px solid #1b96ff` + `box-shadow: 0 0 3px #0176d3`.
-- `height: 32px`, `border-radius: 4px`, `padding: 0 12px`.
-- Label acima do campo, `font-size: 13px`.
+### 2.2 Figma como Árbitro Visual (Princípio #12)
 
-### Como o DSS deveria se parecer
+O Figma é declarado normativamente como a **fonte de verdade visual** do DSS. Em caso de divergência entre o `defaultPreview` e o Figma, o Figma tem precedência. O campo `defaultPreview` reflete o Figma, mas o Figma vence em caso de conflito.
 
-O DSS adota a variante **Outlined** como padrão, inspirada no M3 Outlined + Carbon:
+Agentes DEVEM consultar o Figma via MCP em caso de ambiguidade sobre dimensões, espaçamentos ou cores.
 
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| `border` | Repouso | `1px solid var(--dss-gray-400)` |
-| `border` | Hover | `1px solid var(--dss-gray-600)` |
-| `border` | Foco | `2px solid var(--dss-action-primary)` |
-| `border-radius` | — | `var(--dss-radius-md)` — 8px |
-| `height` | — | `var(--dss-touch-target-md)` — 44px |
-| `padding` | — | `0 var(--dss-spacing-4)` — 0 16px |
-| `background` | Repouso | `var(--dss-surface-default)` |
-| `label color` | Repouso | `var(--dss-text-subtle)` |
-| `label color` | Foco | `var(--dss-action-primary)` |
-| `font-size` | — | `var(--dss-font-size-sm)` — 14px |
+### 2.3 Neutralidade do Default
+
+O estado default de qualquer componente usa cores neutras:
+- **Fundo:** `--dss-surface-default` (branco/neutro claro) ou `--dss-surface-muted` (cinza muito claro)
+- **Texto:** `--dss-text-body` (texto principal)
+- **Ação:** `--dss-action-primary` (azul da marca — usado como fundo em componentes interativos primários)
+
+Nenhum componente deve usar cor de feedback (error, success, warning) como default visual.
+
+### 2.4 Referências de Mercado Adotadas
+
+O DSS sintetiza padrões de três referências:
+
+| Referência | Contribuição Principal |
+| :--- | :--- |
+| **Material Design 3** | Formato de pílula para botões, `border-radius: 12px` para cards, label flutuante em inputs, paleta tonal |
+| **IBM Carbon** | Clareza de bordas em formulários, densidade controlada, contraste explícito no focus |
+| **Salesforce Lightning** | Hierarquia de densidade, estados de hover/active por brightness, separação visual de itens de lista |
 
 ---
 
-## 3. Controles de Seleção (Checkbox, Radio, Toggle)
-
-### O que as referências mostram
-
-**Material Design 3** — Checkbox:
-- Tamanho do controle: `18px × 18px`.
-- Estado unchecked: borda `2px solid on-surface-variant` (cinza médio), fundo transparente.
-- Estado checked: fundo `primary`, ícone de check branco, sem borda visível.
-- `border-radius: 2px` (levemente arredondado).
-- Estado indeterminate: fundo `primary`, traço horizontal branco.
-- Área de toque: `40px × 40px` (com ripple).
-
-**Material Design 3** — Radio:
-- Tamanho: `20px × 20px`, circular.
-- Unchecked: borda `2px solid on-surface-variant`.
-- Checked: borda `2px solid primary` + ponto interno `10px` na cor `primary`.
-
-**Material Design 3** — Switch (Toggle):
-- Track unchecked: `52px × 32px`, fundo `surface-container-highest`, borda `2px solid outline`.
-- Track checked: fundo `primary`, sem borda.
-- Thumb unchecked: `16px`, fundo `outline` (cinza), centralizado.
-- Thumb checked: `24px`, fundo `primary-container` (branco/claro), centralizado.
-- Transição suave do thumb com `spring animation`.
-
-**IBM Carbon** — Checkbox:
-- `16px × 16px`, `border-radius: 2px`.
-- Unchecked: borda `1px solid #8d8d8d`.
-- Checked: fundo `#0f62fe`, ícone branco.
-
-**IBM Carbon** — Toggle:
-- Track: `48px × 24px`, arredondado.
-- Off: fundo `#8d8d8d`.
-- On: fundo `#0f62fe`.
-- Thumb: `18px`, branco.
-
-### Como o DSS deveria se parecer
-
-**Checkbox:**
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| Tamanho | — | `18px × 18px` |
-| `border-radius` | — | `var(--dss-radius-sm)` — 4px |
-| Borda | Unchecked | `2px solid var(--dss-gray-500)` |
-| Fundo | Checked | `var(--dss-action-primary)` |
-| Ícone | Checked | branco |
-| Área de toque | — | `44px × 44px` |
-
-**Radio:**
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| Tamanho | — | `20px × 20px` |
-| Borda | Unchecked | `2px solid var(--dss-gray-500)` |
-| Borda | Checked | `2px solid var(--dss-action-primary)` |
-| Ponto interno | Checked | `10px`, `var(--dss-action-primary)` |
-
-**Toggle:**
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| Track | Off | fundo `var(--dss-surface-muted)`, borda `2px solid var(--dss-gray-400)` |
-| Track | On | fundo `var(--dss-action-primary)`, sem borda |
-| Thumb | Off | `16px`, fundo `var(--dss-gray-500)` |
-| Thumb | On | `24px`, fundo `var(--dss-text-inverse)` |
-
-> **Observação crítica:** O estado **unchecked** dos três controles deve usar `var(--dss-gray-500)` (cinza médio), **não** a cor primária. A cor primária só aparece no estado **checked/on**. O que foi implementado anteriormente (primary no unchecked) diverge das três referências.
-
----
-
-## 4. Chips e Badges
-
-### O que as referências mostram
-
-**Material Design 3** — Chip:
-- Quatro variantes: Assist, Filter, Input, Suggestion.
-- Formato: `border-radius: 8px` (não é pílula completa — é arredondado mas não oval).
-- Altura: `32px`.
-- Filter chip selecionado: fundo `secondary-container`, ícone de check à esquerda.
-- Borda no estado padrão: `1px solid outline-variant`.
-- `font-size: 14px`, `font-weight: 500`.
-
-**IBM Carbon** — Tag:
-- `border-radius: 24px` (pílula).
-- Altura: `24px`.
-- Fundo tintado por tipo (gray, blue, green, red, etc.).
-- `font-size: 12px`.
-
-**Salesforce Lightning** — Badge/Pill:
-- `border-radius: 15px` (pílula).
-- Altura: `20–24px`.
-- Fundo colorido por tipo.
-
-### Como o DSS deveria se parecer
-
-| Propriedade | Valor DSS |
-|---|---|
-| `border-radius` | `var(--dss-radius-full)` — pílula |
-| `height` | `32px` |
-| `padding` | `0 var(--dss-spacing-3)` — 0 12px |
-| Fundo (default/neutro) | `var(--dss-surface-muted)` |
-| Texto (default/neutro) | `var(--dss-text-body)` |
-| Fundo (primary/ativo) | `var(--dss-action-primary)` |
-| Texto (primary/ativo) | `var(--dss-text-inverse)` |
-| `font-size` | `var(--dss-font-size-xs)` — 12px |
-| `font-weight` | `var(--dss-font-weight-medium)` — 500 |
-
----
-
-## 5. Cards e Superfícies
-
-### O que as referências mostram
-
-**Material Design 3** — Card:
-- Três variantes: **Elevated** (sombra `elevation 1`), **Filled** (fundo `surface-container-highest`, sem sombra), **Outlined** (borda `1px solid outline-variant`).
-- `border-radius: 12px` em todos.
-- Fundo: `surface-container-low` no Elevated.
-- Hover no Elevated: `elevation 2` + overlay `on-surface` a 8%.
-- Padding interno: `16px`.
-
-**IBM Carbon** — Tile:
-- `border-radius: 0` (sem arredondamento).
-- Borda `1px solid #e0e0e0`.
-- Fundo `#f4f4f4` (clickable tile) ou `#ffffff`.
-- Hover: fundo `#e8e8e8`.
-
-**Salesforce Lightning** — Card:
-- `border-radius: 4px`.
-- Sombra: `0 2px 2px rgba(0,0,0,0.1)`.
-- Fundo branco.
-- Header com `padding: 12px 16px`, borda inferior `1px solid #dddbda`.
-
-### Como o DSS deveria se parecer
-
-| Propriedade | Valor DSS |
-|---|---|
-| `border-radius` | `var(--dss-radius-lg)` — 12px |
-| Fundo | `var(--dss-surface-default)` |
-| Sombra (elevated) | `var(--dss-elevation-1)` |
-| Sombra (hover) | `var(--dss-elevation-2)` |
-| Borda (outlined) | `1px solid var(--dss-gray-200)` |
-| Padding interno | `var(--dss-spacing-4)` — 16px |
-
----
-
-## 6. Tabs (Abas)
-
-### O que as referências mostram
-
-**Material Design 3** — Tabs:
-- Duas variantes: **Primary** (indicador embaixo, `3px`, cor primária) e **Secondary** (indicador embaixo, `2px`, cor primária).
-- Tab ativa: texto na cor primária, `font-weight: 500`.
-- Tab inativa: texto `on-surface-variant` (cinza médio), `font-weight: 400`.
-- Hover: overlay `on-surface` a 8%.
-- `height: 48px`.
-- Indicador: `border-radius: 3px 3px 0 0` na ponta.
-
-**IBM Carbon** — Tabs:
-- Indicador: borda inferior `2px solid #0f62fe` na aba ativa.
-- Tab ativa: texto `#0f62fe`, `font-weight: 600`.
-- Tab inativa: texto `#525252`.
-- `height: 40px`.
-
-**Salesforce Lightning** — Tabs:
-- Indicador: borda inferior `2px solid #0176d3`.
-- Tab ativa: texto `#0176d3`, `font-weight: 700`.
-- `height: 44px`.
-
-### Como o DSS deveria se parecer
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| Indicador | Ativo | `3px solid var(--dss-action-primary)`, `border-radius: 3px 3px 0 0` |
-| Texto | Ativo | `var(--dss-action-primary)`, `font-weight: 500` |
-| Texto | Inativo | `var(--dss-text-subtle)`, `font-weight: 400` |
-| Fundo hover | — | `var(--dss-surface-hover)` — rgba(0,0,0,0.04) |
-| `height` | — | `var(--dss-touch-target-md)` — 44px |
-
----
-
-## 7. Progresso e Spinners
-
-### O que as referências mostram
-
-**Material Design 3** — Linear Progress:
-- Track: `4px` de altura, fundo `secondary-container` (cinza claro).
-- Indicador: fundo `primary`.
-- `border-radius: 4px` em ambos.
-- Animação indeterminada: dois segmentos se movendo.
-
-**Material Design 3** — Circular Progress:
-- Traço: `4px` de espessura.
-- Cor: `primary`.
-- Animação: rotação + variação do arco.
-
-**IBM Carbon** — Loading:
-- Spinner circular, traço `4px`.
-- Cor: `#0f62fe`.
-- Track: `#c6c6c6`.
-
-### Como o DSS deveria se parecer
-
-**LinearProgress:**
-
-| Propriedade | Valor DSS |
-|---|---|
-| Altura | `4px` |
-| `border-radius` | `var(--dss-radius-full)` |
-| Cor do indicador | `var(--dss-action-primary)` |
-| Cor do track | `var(--dss-gray-200)` |
-
-**CircularProgress / Spinner:**
-
-| Propriedade | Valor DSS |
-|---|---|
-| Espessura do traço | `4px` |
-| Cor | `var(--dss-action-primary)` |
-| Cor do track | `var(--dss-gray-200)` |
-
----
-
-## 8. Navegação (Breadcrumbs, Pagination, Stepper)
-
-### O que as referências mostram
-
-**Material Design 3** — Breadcrumbs (não tem componente nativo, mas padrão de link):
-- Links: cor primária, sem sublinhado por padrão, sublinhado no hover.
-- Separador: `/` ou `>` em `on-surface-variant`.
-- Item atual: texto `on-surface` (escuro), sem link.
-
-**IBM Carbon** — Breadcrumb:
-- Links: `#0f62fe`, sem sublinhado, sublinhado no hover.
-- Separador: `/` em `#c6c6c6`.
-- Item atual: texto `#161616`, `font-weight: 400`.
-
-**Salesforce Lightning** — Breadcrumbs:
-- Links: `#0176d3`, sem sublinhado.
-- Item atual: texto `#3e3e3c`, `font-weight: 700`.
-
-**IBM Carbon** — Pagination:
-- Página ativa: fundo `#0f62fe`, texto branco.
-- Páginas inativas: fundo transparente, texto `#161616`.
-- Hover: fundo `#e8e8e8`.
-- `border-radius: 0` (Carbon) ou `4px`.
-
-**Material Design 3** — Stepper (não nativo, mas padrão):
-- Step ativo: círculo `24px`, fundo `primary`, número branco.
-- Step concluído: círculo `24px`, fundo `primary`, ícone de check branco.
-- Step inativo: círculo `24px`, borda `1px solid on-surface-variant`, número `on-surface-variant`.
-- Linha conectora: `1px solid outline-variant`.
-
-### Como o DSS deveria se parecer
-
-**Breadcrumbs:**
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| Cor do link | Repouso | `var(--dss-text-action)` — mapeia para `action-primary` |
-| Decoração | Repouso | `none` |
-| Decoração | Hover | `underline` |
-| Cor do item atual | — | `var(--dss-text-body)` |
-| `font-weight` item atual | — | `var(--dss-font-weight-medium)` |
-
-**Pagination:**
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| Fundo da página ativa | — | `var(--dss-action-primary)` |
-| Texto da página ativa | — | `var(--dss-text-inverse)` |
-| Fundo hover | — | `var(--dss-surface-hover)` |
-| `border-radius` | — | `var(--dss-radius-sm)` — 4px |
-
-**Stepper:**
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| Círculo ativo | — | fundo `var(--dss-action-primary)`, texto `var(--dss-text-inverse)` |
-| Círculo concluído | — | fundo `var(--dss-action-primary)`, ícone check branco |
-| Círculo inativo | — | borda `1px solid var(--dss-gray-400)`, texto `var(--dss-text-subtle)` |
-| Linha conectora | — | `1px solid var(--dss-gray-300)` |
-
----
-
-## 9. Listas e Itens
-
-### O que as referências mostram
-
-**Material Design 3** — List:
-- Item padrão: `height: 56px` (com suporte), `padding: 0 16px`.
-- Item ativo/selecionado: fundo `secondary-container` (tintado), texto `on-secondary-container`.
-- Hover: overlay `on-surface` a 8%.
-- Divider: `1px solid outline-variant`.
-- Leading element (avatar/ícone): `40px`, margem direita `16px`.
-
-**IBM Carbon** — List:
-- Item: `height: 40px`, `padding: 0 16px`.
-- Hover: fundo `#e8e8e8`.
-- Selecionado: fundo `#e8e8e8` + borda esquerda `4px solid #0f62fe`.
-
-**Salesforce Lightning** — List:
-- Item: `height: 32px`, `padding: 0 12px`.
-- Hover: fundo `#f3f2f2`.
-- Selecionado: texto `#0176d3`, `font-weight: 700`.
-
-### Como o DSS deveria se parecer
-
-| Propriedade | Estado | Valor DSS |
-|---|---|---|
-| `height` | — | `56px` (com suporte) / `48px` (simples) |
-| `padding` | — | `0 var(--dss-spacing-4)` — 0 16px |
-| Fundo hover | — | `var(--dss-surface-hover)` |
-| Fundo ativo | — | `var(--dss-action-primary-surface)` — primary a 8% |
-| Texto ativo | — | `var(--dss-action-primary)` |
-| Divider | — | `1px solid var(--dss-gray-200)` |
-
----
-
-## 10. Avatar e Indicadores
-
-### O que as referências mostram
-
-**Material Design 3** — Avatar (não nativo, mas padrão de profile picture):
-- Circular, `40px` padrão.
-- Sem imagem: fundo `primary-container`, iniciais em `on-primary-container`.
-- Com imagem: `object-fit: cover`, `border-radius: 50%`.
-
-**IBM Carbon** — Avatar:
-- Circular, `32px` padrão.
-- Sem imagem: fundo colorido por tipo/status.
-
-**Material Design 3** — Badge:
-- Pequeno (dot): `6px`, fundo `error`.
-- Com número: `16px height`, `border-radius: 8px`, fundo `error` ou `primary`.
-- `font-size: 11px`, `font-weight: 500`, texto branco.
-
-### Como o DSS deveria se parecer
-
-**Avatar:**
-
-| Propriedade | Valor DSS |
-|---|---|
-| `border-radius` | `50%` |
-| Tamanho padrão | `40px × 40px` |
-| Fundo (sem imagem) | `var(--dss-action-primary-surface)` — primary a 8% |
-| Texto/ícone (sem imagem) | `var(--dss-action-primary)` |
-
-> **Observação:** O fundo do avatar sem imagem deve ser o tintado claro (`action-primary-surface`), não o `surface-muted` (cinza). Isso dá identidade visual ao componente sem ser agressivo.
-
-**Badge:**
-
-| Propriedade | Valor DSS |
-|---|---|
-| `border-radius` | `var(--dss-radius-full)` |
-| `height` | `16px` |
-| `min-width` | `16px` |
-| `padding` | `0 4px` |
-| Fundo | `var(--dss-action-primary)` |
-| Texto | `var(--dss-text-inverse)` |
-| `font-size` | `11px` |
-
----
-
-## 11. Ponto Crítico: O que diverge do que foi implementado
-
-| Componente | O que foi implementado | O que as referências indicam |
-|---|---|---|
-| **Checkbox/Radio unchecked** | Borda na cor `primary` | Borda em `gray-500` (cinza médio) — primary só no checked |
-| **Toggle unchecked** | Track em `surface-muted` (cinza) | Track com borda `2px solid gray-400` + thumb cinza — correto |
-| **Avatar sem imagem** | Fundo `surface-muted` (cinza) | Fundo `action-primary-surface` (tintado claro) |
-| **Button border-radius** | `radius-full` aplicado | Correto — M3 usa pílula |
-| **Input focus** | Label muda para primary | Correto — M3 e Carbon fazem isso |
-| **Tabs indicador** | `currentColor` herdado | Deve ser explicitamente `3px solid action-primary` |
-
----
-
-## 12. Resumo: Valores Concretos por Componente
-
-| Componente | Propriedade | Valor correto |
-|---|---|---|
-| Button (primary) | background | `var(--dss-action-primary)` |
-| Button (primary) | border-radius | `var(--dss-radius-full)` |
-| Button (primary) | height | `44px` |
-| Button (primary) | font-weight | `500` |
-| Button (primary) | text-transform | `none` |
-| Input | border (repouso) | `1px solid var(--dss-gray-400)` |
-| Input | border (foco) | `2px solid var(--dss-action-primary)` |
-| Input | border-radius | `var(--dss-radius-md)` — 8px |
-| Input | label (foco) | `var(--dss-action-primary)` |
-| Checkbox | borda (unchecked) | `2px solid var(--dss-gray-500)` |
-| Checkbox | fundo (checked) | `var(--dss-action-primary)` |
-| Radio | borda (unchecked) | `2px solid var(--dss-gray-500)` |
-| Radio | borda (checked) | `2px solid var(--dss-action-primary)` |
-| Toggle | track (off) | `var(--dss-surface-muted)` + borda `2px solid var(--dss-gray-400)` |
-| Toggle | track (on) | `var(--dss-action-primary)` |
-| Card | border-radius | `var(--dss-radius-lg)` — 12px |
-| Card | box-shadow | `var(--dss-elevation-1)` |
-| Tab ativa | color | `var(--dss-action-primary)` |
-| Tab ativa | indicador | `3px solid var(--dss-action-primary)` |
-| Tab inativa | color | `var(--dss-text-subtle)` |
-| Avatar (sem imagem) | background | `var(--dss-action-primary-surface)` |
-| Avatar (sem imagem) | color | `var(--dss-action-primary)` |
-| Badge | background | `var(--dss-action-primary)` |
-| Badge | border-radius | `var(--dss-radius-full)` |
-| Breadcrumb link | color | `var(--dss-text-action)` |
-| Breadcrumb link | hover | `text-decoration: underline` |
-| Pagination ativa | background | `var(--dss-action-primary)` |
-| Stepper ativo | background | `var(--dss-action-primary)` |
-| LinearProgress | track | `var(--dss-gray-200)` |
-| LinearProgress | indicador | `var(--dss-action-primary)` |
-| Spinner | color | `var(--dss-action-primary)` |
-
----
-
-## 13. Especificações Visuais Default — Componente por Componente
-
-> **Propósito desta seção:** As seções 1–12 trataram majoritariamente de **cor**. Esta seção amplia a referência visual cobrindo **TODOS** os aspectos que constroem a UI default de cada componente DSS — dimensões, padding, gap, border-radius, espessura de stroke, sombra, tipografia, iconografia e estados. Estes valores correspondem 1:1 ao que está renderizado como **default** nos playgrounds das páginas de cada componente em `src/pages/components/`.
->
-> **Regra de leitura:** Toda linha "Valor" abaixo é o estado **default** (sem variantes aplicadas, sem brand, sem cor semântica, sem feedback). É o ponto de partida visual neutro que o agente de implementação DEVE reproduzir na Layer 2 (`_base.scss`) antes de adicionar variantes.
->
-> **Notação:** valores em px aparecem entre parênteses como referência ao token. Tokens DSS são a fonte canônica.
-
----
-
-### 13.1 DssButton
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Variante default | `elevated` (filled) | — |
-| `height` | 44px | `--dss-touch-target-md` |
-| `min-width` | 64px | — |
-| `padding` (horizontal) | 24px | `--dss-spacing-6` |
-| `padding` (vertical) | 0 | — |
-| `border-radius` | full (pílula) | `--dss-radius-full` |
-| `border-width` | 0 (sem borda no filled) | `--dss-border-width-none` |
-| `background` | action-primary (azul) | `--dss-action-primary` |
-| `color` | branco | `--dss-text-inverse` |
-| `font-family` | sans | `--dss-font-family-sans` |
-| `font-size` | 14px | `--dss-font-size-sm` |
-| `font-weight` | 500 | `--dss-font-weight-medium` |
-| `letter-spacing` | 0.01em | — |
-| `text-transform` | none | — |
-| `line-height` | 1 | — |
-| `gap` (ícone + label) | 8px | `--dss-spacing-2` |
-| Tamanho do ícone | 20px | — |
-| `box-shadow` | nenhum | — |
-| Hover | `brightness(0.95)` | — |
-| Focus | outline 3px action-primary, offset 2px | `--dss-focus-ring` |
-| Active | `brightness(0.90)` | — |
-| Disabled | `opacity: 0.38` | `--dss-opacity-disabled` |
-| Transition | 200ms standard | `--dss-duration-200` |
-
----
-
-### 13.2 DssFab (Floating Action Button)
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Forma | circular | — |
-| `width` × `height` | 56px × 56px | — |
-| `padding` | 0 | — |
-| `border-radius` | full (50%) | `--dss-radius-full` |
-| `background` | action-primary | `--dss-action-primary` |
-| `color` (ícone) | branco | `--dss-text-inverse` |
-| Tamanho do ícone | 24px | — |
-| `box-shadow` | elevation-3 | `--dss-elevation-3` |
-| Hover | elevation-4 + brightness(0.95) | `--dss-elevation-4` |
-| Focus | outline 3px offset 2px | `--dss-focus-ring` |
-| Variante `mini` | 40px × 40px, ícone 20px | — |
-| Variante `extended` | height 48px, padding 0 20px, com label | — |
-
----
-
-### 13.3 DssBtnGroup
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Layout | `display: inline-flex` | — |
-| `gap` entre botões | 0 (botões coladas) | — |
-| `border-radius` no grupo | full nas extremidades, 0 no meio | `--dss-radius-full` |
-| `border-width` interna entre botões | 1px divisor | `--dss-border-width-thin` |
-| Cor do divisor | branco a 20% opacity | — |
-| Altura dos botões | 44px (`md`) | `--dss-touch-target-md` |
-| Spread mode | botões ocupam largura total com `flex: 1` | — |
-
----
-
-### 13.4 DssBtnDropdown
-
-Herda **100%** do `DssButton` + acréscimos:
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Ícone caret (dropdown arrow) | 16px, à direita | — |
-| `gap` entre label e caret | 4px | `--dss-spacing-1` |
-| `padding-right` (com caret) | 16px | `--dss-spacing-4` |
-| Painel popup `border-radius` | 8px | `--dss-radius-md` |
-| Painel popup `box-shadow` | elevation-3 | `--dss-elevation-3` |
-| Painel popup `padding` | 8px | `--dss-spacing-2` |
-| Painel popup `background` | surface-default | `--dss-surface-default` |
-| Painel popup `min-width` | largura do botão | — |
-| Item do painel `height` | 40px | — |
-| Item `padding` | 0 16px | `--dss-spacing-4` |
-
----
-
-### 13.5 DssInput
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Variante default | `outlined` | — |
-| `height` | 44px | `--dss-input-height-md` |
-| `min-width` | 240px | — |
-| `padding` (horizontal) | 16px | `--dss-spacing-4` |
-| `padding` (vertical) | 8px | `--dss-spacing-2` |
-| `border-width` (repouso) | 1px | `--dss-border-width-thin` |
-| `border-width` (foco/erro) | 2px | `--dss-border-width-md` |
-| `border-color` (repouso) | gray-400 | `--dss-gray-400` |
-| `border-color` (hover) | gray-600 | `--dss-gray-600` |
-| `border-color` (foco) | action-primary | `--dss-action-primary` |
-| `border-radius` | 8px | `--dss-radius-md` |
-| `background` | transparente | — |
-| `color` (texto digitado) | text-body | `--dss-text-body` |
-| `font-size` | 14px | `--dss-font-size-md` |
-| `font-weight` | 400 (normal) | `--dss-font-weight-normal` |
-| `line-height` | 1.5 | `--dss-line-height-normal` |
-| Label flutuante: tamanho repouso | 14px | `--dss-font-size-md` |
-| Label flutuante: tamanho ativo | 12px | `--dss-font-size-sm` |
-| Label cor (repouso) | text-subtle | `--dss-text-subtle` |
-| Label cor (foco) | action-primary | `--dss-action-primary` |
-| Notch (fundo atrás do label) | surface-default, padding 0 4px | `--dss-spacing-1` |
-| Placeholder cor | text-hint | `--dss-text-hint` |
-| Ícone leading/trailing tamanho | 20px | — |
-| `gap` entre input e ícones | 8px | `--dss-spacing-2` |
-| Mensagem hint/erro: tamanho | 12px | `--dss-font-size-sm` |
-| Mensagem hint/erro: margin-top | 4px | `--dss-spacing-1` |
-
----
-
-### 13.6 DssCheckbox
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Tamanho do controle | 18px × 18px | — |
-| `border-radius` | 4px | `--dss-radius-sm` |
-| `border-width` (unchecked) | 2px | `--dss-border-width-md` |
-| `border-color` (unchecked) | gray-500 | `--dss-gray-500` |
-| `background` (unchecked) | transparente | — |
-| `background` (checked) | action-primary | `--dss-action-primary` |
-| `border-width` (checked) | 0 (sem borda visível) | — |
-| Ícone check (checked) | 14px, branco | `--dss-text-inverse` |
-| Estado indeterminate | fundo action-primary, traço horizontal branco 10px | — |
-| Touch target (via padding/wrapper) | 44px × 44px | `--dss-touch-target-md` |
-| `gap` entre checkbox e label | 8px | `--dss-spacing-2` |
-| Label `font-size` | 14px | `--dss-font-size-md` |
-| Label cor | text-body | `--dss-text-body` |
-| Focus ring | outline 3px action-primary, offset 2px | `--dss-focus-ring` |
-
----
-
-### 13.7 DssToggle (Switch)
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Track `width` × `height` | 52px × 32px | — |
-| Track `border-radius` | full | `--dss-radius-full` |
-| Track `border-width` (off) | 2px | `--dss-border-width-md` |
-| Track `border-color` (off) | gray-400 | `--dss-gray-400` |
-| Track `background` (off) | surface-muted | `--dss-surface-muted` |
-| Track `background` (on) | action-primary | `--dss-action-primary` |
-| Track `border-width` (on) | 0 | — |
-| Thumb tamanho (off) | 16px | — |
-| Thumb tamanho (on) | 24px | — |
-| Thumb `background` (off) | gray-500 | `--dss-gray-500` |
-| Thumb `background` (on) | branco | `--dss-text-inverse` |
-| Thumb deslocamento | 4px da borda do track | `--dss-spacing-1` |
-| Transição thumb | 200ms standard, easing spring | `--dss-duration-200` |
-| `gap` toggle ↔ label | 12px | `--dss-spacing-3` |
-
----
-
-### 13.8 DssRange (Slider)
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Track `height` | 4px | — |
-| Track `border-radius` | full (9999px — EX-01) | `--dss-radius-full` |
-| Track `background` (não preenchido) | gray-300 | `--dss-gray-300` |
-| Track `background` (preenchido) | action-primary | `--dss-action-primary` |
-| Thumb tamanho | 20px | — |
-| Thumb `border-radius` | 50% | — |
-| Thumb `background` | action-primary | `--dss-action-primary` |
-| Thumb `box-shadow` | elevation-1 | `--dss-elevation-1` |
-| Focus ring (thumb) | 8px halo action-primary 20% opacity | — |
-| Touch target (área do thumb) | 44px | `--dss-touch-target-md` |
-| Label de valor `font-size` | 12px | `--dss-font-size-xs` |
-| Marks: tamanho | 4px ponto | — |
-| Marks: cor | gray-400 | `--dss-gray-400` |
-
----
-
-### 13.9 DssKnob
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Tamanho default (`md`) | 80px × 80px | — |
-| Forma | circular | — |
-| Track `stroke-width` | 8px | — |
-| Track cor (não preenchido) | gray-200 | `--dss-gray-200` |
-| Track cor (preenchido) | action-primary | `--dss-action-primary` |
-| Label central `font-size` | 18px | `--dss-font-size-lg` |
-| Label central `font-weight` | 500 | `--dss-font-weight-medium` |
-| Label central cor | text-body | `--dss-text-body` |
-| Tamanhos disponíveis | xs 40, sm 60, md 80, lg 120 | — |
-
----
-
-### 13.10 DssChip
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `height` | 32px | `--dss-compact-control-height-md` |
-| `padding` (horizontal) | 12px | `--dss-spacing-3` |
-| `border-radius` | full (pílula) | `--dss-radius-full` |
-| `border-width` | 1px | `--dss-border-width-thin` |
-| `border-color` | gray-300 | `--dss-gray-300` |
-| `background` | surface-muted | `--dss-surface-muted` |
-| `color` | text-body | `--dss-text-body` |
-| `font-size` | 12px | `--dss-font-size-xs` |
-| `font-weight` | 500 | `--dss-font-weight-medium` |
-| `gap` (ícone + label + remove) | 8px | `--dss-spacing-2` |
-| Tamanho ícone leading | 16px | — |
-| Botão de remoção: tamanho | 16px | — |
-| Touch target (`::before`) | 44px | `--dss-touch-target-md` |
-| Selected: `background` | action-primary | `--dss-action-primary` |
-| Selected: `color` | branco | `--dss-text-inverse` |
-
----
-
-### 13.11 DssBadge
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `min-height` | 24px (altura visual) | `--dss-compact-control-height-sm` |
-| `min-width` | 24px | `--dss-compact-control-height-sm` |
-| `padding` | 2px 4px | `--dss-spacing-0_5` / `--dss-spacing-1` |
-| `border-radius` | full | `--dss-radius-full` |
-| `border-width` | 0 | — |
-| `background` | action-primary | `--dss-action-primary` |
-| `color` | branco | `--dss-text-inverse` |
-| `font-size` | 12px | `--dss-font-size-xs` |
-| `font-weight` | 500 | `--dss-font-weight-medium` |
-| `line-height` | 1 | — |
-| Variante `dot` | 8px × 8px sem texto | — |
-| `vertical-align` | middle | — |
-
----
-
-### 13.12 DssAvatar
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Tamanho default (`md`) | 40px × 40px | — |
-| Forma | circular | — |
-| `border-radius` | 50% | — |
-| `background` (sem imagem) | action-primary-surface (primary 8%) | `--dss-action-primary-surface` |
-| `color` iniciais | action-primary | `--dss-action-primary` |
-| Iniciais `font-size` | 14px (`md`) | `--dss-font-size-md` |
-| Iniciais `font-weight` | 500 | `--dss-font-weight-medium` |
-| Imagem `object-fit` | cover | — |
-| Tamanhos | xs 24, sm 32, md 40, lg 48, xl 64 | — |
-| Badge sobreposto: posição | top-right, offset -2px | — |
-
----
-
-### 13.13 DssCard
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `border-radius` | 12px | `--dss-radius-lg` |
-| `background` | surface-default | `--dss-surface-default` |
-| `border-width` | 0 (variante elevated default) | — |
-| `box-shadow` | elevation-1 | `--dss-elevation-1` |
-| Hover (clickable) | elevation-2 | `--dss-elevation-2` |
-| Section `padding` | 24px | `--dss-spacing-6` |
-| Section divider (entre sections) | 1px solid gray-200 | `--dss-gray-200` |
-| Actions `padding` | 16px | `--dss-spacing-4` |
-| Actions `gap` entre botões | 8px | `--dss-spacing-2` |
-| Variante `flat`: shadow | nenhum | — |
-| Variante `outlined`: border | 1px solid gray-200 | `--dss-gray-200` |
-| Variante `square`: radius | 0 | — |
-| Transição | 200ms standard | `--dss-duration-200` |
-
----
-
-### 13.14 DssDialog (Modal)
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Backdrop (overlay) | rgba(0,0,0,0.5) | `--dss-overlay-default` |
-| Container `max-width` | 560px (`md`) | — |
-| Container `border-radius` | 12px | `--dss-radius-lg` |
-| Container `background` | surface-default | `--dss-surface-default` |
-| Container `box-shadow` | elevation-5 | `--dss-elevation-5` |
-| Container `padding` | 24px | `--dss-spacing-6` |
-| Título `font-size` | 20px | `--dss-font-size-xl` |
-| Título `font-weight` | 500 | `--dss-font-weight-medium` |
-| Título `margin-bottom` | 16px | `--dss-spacing-4` |
-| Conteúdo `font-size` | 14px | `--dss-font-size-md` |
-| Footer actions `gap` | 8px | `--dss-spacing-2` |
-| Footer actions `margin-top` | 24px | `--dss-spacing-6` |
-| Footer alignment | flex-end | — |
-| Animação entrada | scale 0.95→1 + fade 200ms | — |
-
----
-
-### 13.15 DssDrawer
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Side default | `left` | — |
-| `width` (vertical) | 280px | — |
-| `height` (vertical) | 100vh | — |
-| `background` | surface-default | `--dss-surface-default` |
-| `box-shadow` | elevation-4 | `--dss-elevation-4` |
-| `border-radius` | 0 | — |
-| Backdrop | rgba(0,0,0,0.5) | `--dss-overlay-default` |
-| Header `padding` | 16px 24px | `--dss-spacing-4` / `--dss-spacing-6` |
-| Header `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
-| Header `font-size` | 16px | `--dss-font-size-lg` |
-| Content `padding` | 16px | `--dss-spacing-4` |
-| Animação | slide 250ms standard | `--dss-duration-250` |
-| Mini variant width | 56px | — |
-
----
-
-### 13.16 DssMenu
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Container `min-width` | 200px | — |
-| Container `border-radius` | 8px | `--dss-radius-md` |
-| Container `background` | surface-default | `--dss-surface-default` |
-| Container `box-shadow` | elevation-3 | `--dss-elevation-3` |
-| Container `padding` | 8px 0 | `--dss-spacing-2` |
-| Item `height` | 40px | — |
-| Item `padding` | 0 16px | `--dss-spacing-4` |
-| Item `font-size` | 14px | `--dss-font-size-md` |
-| Item `color` | text-body | `--dss-text-body` |
-| Item `gap` (ícone + label) | 12px | `--dss-spacing-3` |
-| Ícone item tamanho | 20px | — |
-| Hover `background` | surface-hover | `--dss-surface-hover` |
-| Divider | 1px solid gray-200, margin 8px 0 | `--dss-gray-200` |
-| Separador de seção `font-size` | 12px text-subtle | `--dss-font-size-sm` |
-| Atalho de teclado: alinhamento | direita, color text-subtle | `--dss-text-subtle` |
-
----
-
-### 13.17 DssTooltip
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `background` | gray-900 | `--dss-gray-900` |
-| `color` | branco | `--dss-text-inverse` |
-| `padding` | 6px 8px | `--dss-spacing-1_5` / `--dss-spacing-2` |
-| `border-radius` | 4px | `--dss-radius-sm` |
-| `font-size` | 12px | `--dss-font-size-xs` |
-| `font-weight` | 400 | `--dss-font-weight-normal` |
-| `max-width` | 240px | — |
-| `box-shadow` | elevation-2 | `--dss-elevation-2` |
-| Offset do trigger | 8px | `--dss-spacing-2` |
-| Delay show | 500ms | — |
-| Delay hide | 0ms | — |
-| Animação | fade 150ms | `--dss-duration-150` |
-
----
-
-### 13.18 DssTabs
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Container `height` | 44px | `--dss-touch-target-md` |
-| Container `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
-| Tab `padding` | 0 16px | `--dss-spacing-4` |
-| Tab `font-size` | 14px | `--dss-font-size-md` |
-| Tab `font-weight` (ativa) | 500 | `--dss-font-weight-medium` |
-| Tab `font-weight` (inativa) | 400 | `--dss-font-weight-normal` |
-| Tab color (ativa) | action-primary | `--dss-action-primary` |
-| Tab color (inativa) | text-subtle | `--dss-text-subtle` |
-| Indicador `height` | 3px | — |
-| Indicador `border-radius` | 3px 3px 0 0 | — |
-| Indicador `background` | action-primary | `--dss-action-primary` |
-| Indicador animação | translateX 250ms standard | `--dss-duration-250` |
-| Tab `gap` (ícone + label) | 8px | `--dss-spacing-2` |
-| Hover `background` | surface-hover | `--dss-surface-hover` |
-| Setas de navegação (arrow): color | text-subtle | `--dss-text-subtle` |
-| Tab Panel `padding` | 24px | `--dss-spacing-6` |
-
----
-
-### 13.19 DssToolbar
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `height` | 56px | — |
-| `padding` (horizontal) | 16px | `--dss-spacing-4` |
-| `background` | surface-default | `--dss-surface-default` |
-| `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
-| `box-shadow` | nenhum (flat default) | — |
-| `gap` entre itens | 8px | `--dss-spacing-2` |
-| Título `font-size` | 16px | `--dss-font-size-lg` |
-| Título `font-weight` | 500 | `--dss-font-weight-medium` |
-| Botões de ação tamanho | 40px (touch target compact) | — |
-| Variante `elevated` | + box-shadow elevation-2 | `--dss-elevation-2` |
-| Dense `height` | 48px | — |
-
----
-
-### 13.20 DssHeader
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `height` | 64px | — |
-| `padding` (horizontal) | 24px | `--dss-spacing-6` |
-| `background` | surface-default | `--dss-surface-default` |
-| `border-bottom` | 1px solid gray-200 | `--dss-gray-200` |
-| `box-shadow` | elevation-1 | `--dss-elevation-1` |
-| Logo `height` | 32px | — |
-| Brand title `font-size` | 18px | `--dss-font-size-lg` |
-| Brand title `font-weight` | 600 | `--dss-font-weight-semibold` |
-| `gap` (logo + título) | 12px | `--dss-spacing-3` |
-| Ações à direita `gap` | 8px | `--dss-spacing-2` |
-| Avatar do usuário tamanho | 32px | — |
-
----
-
-### 13.21 DssPage (Layout container)
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `min-height` | 100vh | — |
-| `background` | surface-base | `--dss-surface-base` |
-| `padding` | 24px | `--dss-spacing-6` |
-| Container `max-width` | 1200px | — |
-| Container alinhamento | center (margin auto) | — |
-| Section `gap` vertical | 32px | `--dss-spacing-8` |
-
----
-
-### 13.22 DssBar
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `min-height` | 44px | `--dss-touch-target-md` |
-| `padding` | 8px 16px | `--dss-spacing-2` / `--dss-spacing-4` |
-| `background` | surface-default | `--dss-surface-default` |
-| `color` | text-body | `--dss-text-body` |
-| `font-size` | 14px | `--dss-font-size-md` |
-| `font-weight` | 400 | `--dss-font-weight-normal` |
-| `border-radius` | 0 | — |
-| `box-shadow` | elevation-1 | `--dss-elevation-1` |
-| `gap` | 8px | `--dss-spacing-2` |
-| Dense `min-height` | 32px | `--dss-compact-control-height-md` |
-
----
-
-### 13.23 DssBreadcrumbsEl
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Container `height` | 32px | — |
-| `gap` entre itens | 8px | `--dss-spacing-2` |
-| Link `font-size` | 14px | `--dss-font-size-md` |
-| Link `font-weight` | 400 | `--dss-font-weight-normal` |
-| Link color | text-action (action-primary) | `--dss-text-action` |
-| Link decoração (repouso) | none | — |
-| Link decoração (hover) | underline | — |
-| Separador (`/` ou `>`) color | gray-400 | `--dss-gray-400` |
-| Separador `font-size` | 14px | `--dss-font-size-md` |
-| Item atual color | text-body | `--dss-text-body` |
-| Item atual `font-weight` | 500 | `--dss-font-weight-medium` |
-
----
-
-### 13.24 DssPagination
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Item `width` × `height` | 32px × 32px | — |
-| Item `border-radius` | 4px | `--dss-radius-sm` |
-| Item `font-size` | 14px | `--dss-font-size-md` |
-| Item `font-weight` (inativo) | 400 | `--dss-font-weight-normal` |
-| Item `font-weight` (ativo) | 500 | `--dss-font-weight-medium` |
-| Item color (inativo) | text-body | `--dss-text-body` |
-| Item color (ativo) | branco | `--dss-text-inverse` |
-| Item `background` (ativo) | action-primary | `--dss-action-primary` |
-| Item `background` (hover inativo) | surface-hover | `--dss-surface-hover` |
-| `gap` entre itens | 4px | `--dss-spacing-1` |
-| Ícones de navegação tamanho | 20px | — |
-| Ellipsis (...) color | text-subtle | `--dss-text-subtle` |
-
----
-
-### 13.25 DssFile (File upload)
-
-Herda visual de **DssInput** + acréscimos para drop zone:
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Drop zone `min-height` | 120px | — |
-| Drop zone `border` | 2px dashed gray-400 | `--dss-gray-400` |
-| Drop zone `border-radius` | 8px | `--dss-radius-md` |
-| Drop zone `background` | surface-muted | `--dss-surface-muted` |
-| Drop zone `padding` | 24px | `--dss-spacing-6` |
-| Drop zone hover/dragover: border | 2px dashed action-primary | `--dss-action-primary` |
-| Drop zone hover/dragover: background | action-primary-surface | `--dss-action-primary-surface` |
-| Ícone upload tamanho | 32px | — |
-| Lista de arquivos: item `padding` | 8px 12px | — |
-| Lista item `gap` | 8px | `--dss-spacing-2` |
-| Lista item `border-radius` | 4px | `--dss-radius-sm` |
-| Botão remover tamanho | 24px | — |
-
----
-
-### 13.26 DssForm
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Layout default | `vertical` | — |
-| `gap` entre campos (gutter) | 16px | `--dss-spacing-4` |
-| Density default | `md` (altura controles 44px) | `--dss-compact-control-height-md` |
-| Layout `horizontal`: label width | 30% | — |
-| Layout `inline`: `gap` | 12px | `--dss-spacing-3` |
-| Submit/Reset `gap` | 8px | `--dss-spacing-2` |
-| Submit area `margin-top` | 24px | `--dss-spacing-6` |
-| Mensagem de validação `font-size` | 12px | `--dss-font-size-sm` |
-| Mensagem de validação `margin-top` | 4px | `--dss-spacing-1` |
-| Ícone de erro tamanho | 16px | — |
-
----
-
-### 13.27 DssImg
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| `width` | 100% do contêiner | — |
-| `border-radius` | 0 (sem corte) | — |
-| `object-fit` | cover | — |
-| Placeholder (loading): `background` | gray-100 | `--dss-gray-100` |
-| Placeholder (loading): animação shimmer | 1500ms | — |
-| Erro (broken): `background` | gray-200 | `--dss-gray-200` |
-| Erro: ícone placeholder | 32px gray-500 | `--dss-gray-500` |
-| Ratio default | sem ratio fixo | — |
-| Transição fade-in | 300ms ease | `--dss-duration-300` |
-
----
-
-### 13.28 DssVideo
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Container `border-radius` | 8px | `--dss-radius-md` |
-| Container `background` | gray-900 | `--dss-gray-900` |
-| Container aspect-ratio | 16/9 | — |
-| Controles `background` | rgba(0,0,0,0.7) gradient bottom | — |
-| Controles `padding` | 12px 16px | — |
-| Botão play tamanho | 40px | — |
-| Ícone play tamanho | 24px | — |
-| Slider de progresso `height` | 4px | — |
-| Slider de progresso `background` | rgba(255,255,255,0.3) | — |
-| Slider preenchido | action-primary | `--dss-action-primary` |
-| Texto de tempo `font-size` | 12px branco | `--dss-font-size-xs` |
-| Botão fullscreen tamanho | 32px | — |
-
----
-
-### 13.29 DssCarrossel
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Container `border-radius` | 8px | `--dss-radius-md` |
-| Container `background` | surface-default | `--dss-surface-default` |
-| Slide `padding` | 24px | `--dss-spacing-6` |
-| Setas (arrows): tamanho | 40px circular | — |
-| Setas `background` | rgba(0,0,0,0.4) | — |
-| Setas `color` | branco | `--dss-text-inverse` |
-| Setas posição | 16px das bordas | `--dss-spacing-4` |
-| Setas hover `background` | rgba(0,0,0,0.6) | — |
-| Indicadores (dots): tamanho | 8px circular | — |
-| Indicadores `gap` | 8px | `--dss-spacing-2` |
-| Indicador inativo `background` | rgba(255,255,255,0.5) | — |
-| Indicador ativo `background` | branco | `--dss-text-inverse` |
-| Indicadores posição | 16px da borda inferior | `--dss-spacing-4` |
-| Transição entre slides | 300ms ease-in-out | `--dss-duration-300` |
-
----
-
-### 13.30 DssInfiniteScroll
-
-Componente comportamental — sem UI visível própria, governa o gatilho de carregamento.
-
-| Aspecto | Valor default | Token |
-|---|---|---|
-| Sentinel (trigger) `height` | 1px (invisível) | — |
-| Offset (distância para disparar) | 500px antes do fim | — |
-| Spinner de loading: tamanho | 32px | — |
-| Spinner color | action-primary | `--dss-action-primary` |
-| Spinner container `padding` | 24px | `--dss-spacing-6` |
-| Spinner container alinhamento | center | — |
-| Mensagem "fim da lista" `font-size` | 12px text-subtle | `--dss-text-subtle` |
-
----
-
-## 14. Decisões Visuais Transversais (Aplicam a TODOS os componentes)
-
-Estas regras complementam as especificações da Seção 13 e DEVEM ser aplicadas por padrão na ausência de instrução em contrário.
-
-### 14.1 Hierarquia de border-radius
-
-| Categoria | Token | Uso |
-|---|---|---|
-| Controles compactos quadrados (checkbox) | `--dss-radius-sm` (4px) | Checkbox, Pagination item |
-| Controles interativos (input, menu, tooltip) | `--dss-radius-md` (8px) | Input, Select, Menu, Tooltip, Drop zone |
-| Superfícies (card, dialog, drawer header) | `--dss-radius-lg` (12px) | Card, Dialog |
-| Pílulas (botões, chips, badges, toggle) | `--dss-radius-full` | Button, Chip, Badge, Toggle, Slider track |
-| Sem arredondamento (estrutural) | `0` | Page, Toolbar, Bar, Drawer container |
-
-### 14.2 Hierarquia de elevation (box-shadow)
-
+## 3. Tabela Mestre de Mapeamento de Tokens Canônicos
+
+### 3.1 Padrões por Categoria de Componente
+
+#### Controles de Ação (Button, Fab, BtnGroup, BtnDropdown, BtnToggle)
+| Propriedade | Token DSS | Valor | Justificativa |
+| :--- | :--- | :---: | :--- |
+| background | `--dss-action-primary` | azul | Âncora primária (M3, Carbon) |
+| color | `--dss-text-inverse` | branco | Contraste sobre primária |
+| border-radius | `--dss-radius-full` | 9999px | Formato pílula (M3 Filled Button) |
+| min-height | `--dss-touch-target-md` | 44px | WCAG 2.5.5 |
+| font-size | `--dss-font-size-sm` | 14px | Legibilidade (M3, Carbon) |
+| font-weight | `--dss-font-weight-medium` | 500 | Hierarquia tipográfica |
+| shadow (elevated) | `--dss-elevation-1` | — | Separação do fundo (M3 Elevated) |
+
+#### Formulários (Input, Select, Textarea, Field, File)
+| Propriedade | Token DSS | Valor | Justificativa |
+| :--- | :--- | :---: | :--- |
+| border (repouso) | `--dss-gray-400` | 1px solid | Delimitação neutra (Carbon) |
+| border (hover) | `--dss-gray-600` | 1px solid | Feedback de interatividade |
+| border (foco) | `--dss-action-primary` | 2px solid | Destaque do campo ativo (M3) |
+| border-radius | `--dss-radius-md` | 8px | Arredondamento sutil |
+| min-height | `--dss-touch-target-md` | 44px | WCAG 2.5.5 |
+| label-color (repouso) | `--dss-text-subtle` | — | Hierarquia visual menor |
+| label-color (foco) | `--dss-action-primary` | — | Conexão visual com campo ativo |
+| background | transparente | — | Variante outlined |
+
+#### Compact Controls (Checkbox, Radio, Toggle, Chip, Badge)
+| Propriedade | Token DSS | Valor | Justificativa |
+| :--- | :--- | :---: | :--- |
+| color (checked/ativo) | `--dss-action-primary` | — | Âncora primária |
+| border (unchecked) | `--dss-gray-500` | 2px solid | Cinza médio (M3, não primary) |
+| border-radius (checkbox) | `--dss-radius-sm` | 4px | Levemente arredondado (M3) |
+| border-radius (badge/chip) | `--dss-radius-full` | 9999px | Formato pílula |
+| touch-target | `--dss-touch-target-md` | 44px | Via `::before` (WCAG 2.5.5) |
+
+#### Superfícies e Containers (Card, Dialog, Drawer, ExpansionItem)
+| Propriedade | Token DSS | Valor | Justificativa |
+| :--- | :--- | :---: | :--- |
+| background | `--dss-surface-default` | branco/neutro | Legibilidade (M3) |
+| border-radius | `--dss-radius-lg` | 12px | Arredondamento para containers (M3) |
+| shadow (elevated) | `--dss-elevation-1` | — | Profundidade sutil (M3 Elevated) |
+| shadow (dialog) | `--dss-elevation-5` | — | Modal sobre conteúdo |
+| border (outlined) | `--dss-gray-200` | 1px solid | Delimitação discreta |
+
+#### Navegação (Tabs, Breadcrumbs, Pagination, Stepper, Menu)
+| Propriedade | Token DSS | Valor | Justificativa |
+| :--- | :--- | :---: | :--- |
+| item-ativo color | `--dss-action-primary` | — | Indicação de seleção |
+| item-inativo color | `--dss-text-subtle` | — | Hierarquia menor |
+| hover background | `--dss-surface-hover` | rgba(0,0,0,0.04) | Feedback de área clicável |
+| min-height | `--dss-touch-target-md` | 44px | WCAG 2.5.5 |
+
+#### Progresso e Feedback (LinearProgress, CircularProgress, Spinner, Skeleton, AjaxBar)
+| Propriedade | Token DSS | Valor | Justificativa |
+| :--- | :--- | :---: | :--- |
+| color (indicador) | `--dss-action-primary` | — | Cor da marca (M3) |
+| color (track) | `--dss-gray-200` | — | Track neutro discreto |
+| skeleton background | `--dss-gray-200` | — | Placeholder neutro |
+| skeleton shimmer | `--dss-gray-300` | — | Animação sutil |
+
+### 3.2 Hierarquias de Decisão Visual
+
+#### Border-Radius por Categoria
+| Categoria | Token | Valor Computado |
+| :--- | :--- | :---: |
+| Controles compactos angulares (checkbox, pagination) | `--dss-radius-sm` | 4px |
+| Formulários, menus, tooltips | `--dss-radius-md` | 8px |
+| Superfícies containers (card, dialog) | `--dss-radius-lg` | 12px |
+| Pílulas (button, chip, badge, toggle, fab) | `--dss-radius-full` | 9999px |
+| Estruturais sem arredondamento | `0` | 0px |
+
+#### Elevation (box-shadow) por Nível
 | Nível | Token | Uso |
-|---|---|---|
-| Nenhuma | — | Input, Chip, Badge, Checkbox, Toggle, Tabs |
-| 1 (sutil) | `--dss-elevation-1` | Card default, Header, Bar |
-| 2 (hover de card / toolbar elevated) | `--dss-elevation-2` | Card hover, Toolbar elevated, Tooltip |
-| 3 (popups) | `--dss-elevation-3` | Menu, BtnDropdown panel, FAB |
-| 4 (drawer) | `--dss-elevation-4` | Drawer, FAB hover |
-| 5 (dialog) | `--dss-elevation-5` | Dialog, Modal |
+| :--- | :--- | :--- |
+| 0 | — | Input, Chip, Badge, Checkbox, Toggle, Tabs |
+| 1 | `--dss-elevation-1` | Card default, Header, Bar |
+| 2 | `--dss-elevation-2` | Card hover, Toolbar elevated, Tooltip |
+| 3 | `--dss-elevation-3` | Menu, BtnDropdown panel, FAB |
+| 4 | `--dss-elevation-4` | Drawer |
+| 5 | `--dss-elevation-5` | Dialog |
 
-### 14.3 Hierarquia de densidade (height)
-
-| Token | Valor | Componentes |
-|---|---|---|
-| `--dss-compact-control-height-xs` | 16px | Badge dot |
-| `--dss-compact-control-height-sm` | 24px | Badge, Bar dense |
-| `--dss-compact-control-height-md` | 32px | Chip, Pagination, Breadcrumb, Bar |
-| `--dss-touch-target-md` | 44px | Button, Input, Tabs, Toolbar action, Range thumb area |
-
-> **Regra de ouro:** Componentes **interativos com hit-area direta do dedo** usam 44px. Componentes **informativos ou agrupados em containers maiores** podem usar 32px/24px com touch target compensado via `::before` (WCAG 2.5.5).
-
-### 14.4 Hierarquia de spacing (gap interno)
-
-| Contexto | Valor | Token |
-|---|---|---|
-| Ícone + label dentro do mesmo controle | 8px | `--dss-spacing-2` |
-| Itens horizontais em lista compacta (toolbar, breadcrumb) | 8px | `--dss-spacing-2` |
-| Itens verticais em formulário | 16px | `--dss-spacing-4` |
-| Padding interno de superfícies (card section, dialog) | 24px | `--dss-spacing-6` |
-| Padding lateral de containers (page, header) | 24px | `--dss-spacing-6` |
-| Gap entre seções de página | 32px | `--dss-spacing-8` |
-
-### 14.5 Hierarquia de stroke (border-width)
-
+#### Altura (min-height) por Density
 | Token | Valor | Uso |
-|---|---|---|
+| :--- | :---: | :--- |
+| `--dss-compact-control-height-xs` | 16px | Badge dot |
+| `--dss-compact-control-height-sm` | 24px | Badge numérico, ToolbarTitle |
+| `--dss-compact-control-height-md` | 32px | Chip, Pagination item, BreadcrumbsEl |
+| `--dss-touch-target-md` | 44px | Button, Input, Tabs, Item, Toolbar, Toolbar actions |
+
+#### Spacing (gap interno) por Contexto
+| Contexto | Token | Valor |
+| :--- | :--- | :---: |
+| Ícone + label dentro do controle | `--dss-spacing-2` | 8px |
+| Itens horizontais compactos | `--dss-spacing-2` | 8px |
+| Itens verticais em formulário | `--dss-spacing-4` | 16px |
+| Padding interno de superfícies | `--dss-spacing-6` | 24px |
+| Gap entre seções de página | `--dss-spacing-8` | 32px |
+
+#### Stroke (border-width) por Uso
+| Token | Valor | Uso |
+| :--- | :---: | :--- |
 | `--dss-border-width-thin` | 1px | Divisores, borda repouso de input/chip/card outlined |
-| `--dss-border-width-md` | 2px | Borda de foco de input, borda de checkbox/radio unchecked, borda de toggle track off |
+| `--dss-border-width-md` | 2px | Borda foco de input, borda unchecked de checkbox/radio |
 | `--dss-border-width-thick` | 3px | Indicador de tab ativa, focus ring outline |
 
-### 14.6 Hierarquia de tipografia
+#### Tipografia por Contexto
+| Contexto | font-size | font-weight |
+| :--- | :---: | :---: |
+| Badge, tooltip, hint, mensagem de erro | 12px (`--dss-font-size-xs`) | 500 (badge) / 400 (resto) |
+| Controles (button, input, chip, menu, tab) | 14px (`--dss-font-size-sm`/`-md`) | 500 (primary) / 400 (neutro) |
+| Título de toolbar | 16px (`--dss-font-size-lg`) | 500 |
+| Título de header, knob central | 18px (`--dss-font-size-lg`) | 500–600 |
+| Título de dialog | 20px (`--dss-font-size-xl`) | 500 |
 
-| Contexto | font-size | font-weight | Token size |
-|---|---|---|---|
-| Badge, tooltip, hint, mensagem de erro | 12px | 500 (badge) / 400 (resto) | `--dss-font-size-xs` |
-| Texto de controle (button, input, chip, menu, tab) | 14px | 500 (button/tab ativa) / 400 (input/menu) | `--dss-font-size-md` ou `--dss-font-size-sm` |
-| Título de toolbar, item de menu destacado | 16px | 500 | `--dss-font-size-lg` |
-| Título de header, knob central | 18px | 500–600 | `--dss-font-size-lg` |
-| Título de dialog | 20px | 500 | `--dss-font-size-xl` |
+### 3.3 Tokens Proibidos
 
-### 14.7 Estados universais
-
-| Estado | Aplicação universal |
-|---|---|
-| Hover | `brightness(0.95)` em superfícies coloridas / `background: surface-hover` em superfícies neutras |
-| Active (pressed) | `brightness(0.90)` |
-| Focus | `outline: 3px solid var(--dss-focus-ring)`, `outline-offset: 2px` |
-| Disabled | `opacity: var(--dss-opacity-disabled)` (0.38), `cursor: not-allowed`, `pointer-events: none` |
-| Loading | spinner action-primary no centro, conteúdo `aria-busy="true"` |
-
-### 14.8 Iconografia
-
-| Contexto | Tamanho |
-|---|---|
-| Badge dot interno | sem ícone |
-| Chip leading/trailing | 16px |
-| Input leading/trailing | 20px |
-| Button leading/trailing | 20px |
-| Menu item, tab | 20px |
-| Toolbar action, FAB extended | 24px |
-| FAB padrão | 24px |
-| Avatar fallback (sem iniciais) | 60% do tamanho do avatar |
-| Empty state (img broken, file drop) | 32px |
-
-### 14.9 Animação e duração
-
-| Contexto | Duração | Easing |
-|---|---|---|
-| Hover/focus em controles | 150ms | standard |
-| Transição de cor/border em formulário | 200ms | standard |
-| Slide (drawer, carrossel) | 250–300ms | standard |
-| Spring (toggle thumb) | 250ms | spring |
-| Fade (tooltip, dialog) | 150–200ms | standard |
+- ❌ Nunca usar valores hardcoded (hex, px, rem direto no SCSS)
+- ❌ Nunca usar `--dss-dark` como cor de ação principal
+- ❌ Nunca usar `--dss-gray-*` como cor de destaque/ativo
+- ❌ Nunca usar `--dss-font-weight-regular` (token inexistente → usar `--dss-font-weight-normal`)
+- ❌ Nunca usar `--dss-border-divider-*` (token inexistente → usar `--dss-gray-100/200/300`)
+- ❌ Nunca usar `--dss-action-primary-rgb` (token inexistente → usar `--dss-surface-hover/active`)
+- ❌ Nunca usar `--dss-success-500` (token inexistente → usar `--dss-feedback-success`)
+- ❌ Nunca usar `--dss-input-height-md` em novos componentes (deprecated → usar `--dss-touch-target-md`)
+- ❌ Nunca usar `--dss-padding-md/lg` (sufixo inválido → usar `--dss-padding-4`, `-6`, `-8` com sufixo numérico)
+- ⚠️ Verificar existência de `--dss-compact-control-height-*` no catálogo de tokens antes de usar
 
 ---
 
-## 15. Checklist de Implementação Visual Default
+## 4. Catálogo Canônico Componente-a-Componente
 
-Antes de marcar um componente como concluído, o agente DEVE verificar:
+> **Regra de leitura:** Cada entrada abaixo espelha **fielmente** o campo `defaultPreview` do `dss.meta.json` do componente. A tabela de tokens é derivada do `defaultPreview.computedDimensions`, das hierarquias da Seção 3, e das especificações históricas da Seção 13 do documento original (onde disponível).
+>
+> **Componentes estruturais:** Os 16 componentes marcados como "Componente estrutural adaptativo" não possuem dimensões físicas fixas — seu tamanho é determinado pelo conteúdo e pelo layout pai. Não altere o `dss.meta.json` desses componentes.
 
-- [ ] Dimensões (`height`, `width`, `min-*`) correspondem à Seção 13 do componente
-- [ ] `padding` horizontal e vertical correspondem à Seção 13
-- [ ] `gap` interno entre elementos (ícone + label, label + caret, etc.) está aplicado
-- [ ] `border-radius` segue a hierarquia da Seção 14.1
-- [ ] `border-width` segue a hierarquia da Seção 14.5
-- [ ] `box-shadow` (se aplicável) segue a hierarquia da Seção 14.2
-- [ ] Tipografia (`font-size`, `font-weight`, `line-height`) segue a Seção 14.6
-- [ ] Tamanho dos ícones segue a Seção 14.8
-- [ ] Estados hover/focus/active/disabled implementados conforme Seção 14.7
-- [ ] Densidade (height) corresponde à categoria do componente (Seção 14.3)
-- [ ] Cor neutra default aplicada (sem brand, sem feedback) — cor só entra via prop
-- [ ] Touch target ≥ 44px (direto ou via `::before` para controles compactos)
-- [ ] Transição aplicada conforme Seção 14.9
-- [ ] Validação visual lado-a-lado com a página de documentação correspondente em `src/pages/components/`
+---
 
-> **Regra de fechamento:** Se qualquer item acima falhar, o componente NÃO está pronto para entrega — independentemente da cor estar correta.
+### 4.1 DssAjaxBar
+**Categoria:** Barra de progresso global para requisições assíncronas
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** compliant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+- **Conteúdo de Demonstração:** Barra de progresso de requisições AJAX
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `3px` | defaultPreview / QAjaxBar motor |
+| **color (indicador)** | `--dss-action-primary` | — | EXC-Gate-02: `--q-color-primary` CSS override |
+| **color (hub brand)** | `--dss-hub-600` | — | 4-output/_brands.scss |
+| **color (water brand)** | `--dss-water-500` | — | 4-output/_brands.scss |
+| **color (waste brand)** | `--dss-waste-600` | — | 4-output/_brands.scss |
+
+---
+
+### 4.2 DssAvatar
+**Categoria:** Basico (Visual/Identity)
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `size="md"`
+- **Conteúdo de Demonstração:** Iniciais 'AB'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `40px` | defaultPreview |
+| **min-width** | — | `40px` | defaultPreview |
+| **border-radius** | `50%` (constante geométrica) | — | Avatar circular universal |
+| **background (sem imagem)** | `--dss-action-primary-surface` | — | Seção 13.12 / Figma |
+| **color iniciais** | `--dss-action-primary` | — | Seção 13.12 |
+| **font-size (md)** | `--dss-font-size-md` | 14px | Seção 13.12 |
+| **font-weight** | `--dss-font-weight-medium` | 500 | Seção 13.12 |
+
+---
+
+### 4.3 DssBadge
+**Categoria:** Compact Control não interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed) — Golden Reference não-interativo
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `color="primary"`
+- **Conteúdo de Demonstração:** Label '99+'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-compact-control-height-sm` | `24px` | defaultPreview |
+| **min-width** | `--dss-compact-control-height-sm` | `24px` | defaultPreview |
+| **padding** | `--dss-spacing-0_5` / `--dss-spacing-1` | `2px 4px` | Seção 13.11 |
+| **border-radius** | `--dss-radius-full` | 9999px | Seção 13.11 |
+| **background** | `--dss-action-primary` | — | Seção 13.11 |
+| **color** | `--dss-text-inverse` | branco | Seção 13.11 |
+| **font-size** | `--dss-font-size-xs` | 12px | Seção 13.11 |
+| **font-weight** | `--dss-font-weight-medium` | 500 | Seção 13.11 |
+| **line-height** | `1` | — | Seção 13.11 |
+
+---
+
+### 4.4 DssBanner
+**Categoria:** Mensagem informativa contextual
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `variant="default"`
+- **Conteúdo de Demonstração:** Mensagem informativa com ação
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `48px` | defaultPreview |
+| **background** | `--dss-surface-default` | — | Padrão categoria Superfície (Seção 3.1) |
+| **border-width** | `--dss-border-width-thin` | 1px | Seção 3.2 |
+| **border-color** | `--dss-gray-200` | — | Padrão categoria Superfície |
+| **padding** | `--dss-spacing-4` | 16px | Seção 3.2 (gap interno superfície) |
+| **font-size** | `--dss-font-size-sm` | 14px | Seção 3.2 tipografia |
+
+---
+
+### 4.5 DssBar
+**Categoria:** Barra de sistema (estrutural horizontal)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Barra de sistema com conteúdo
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.22 |
+| **padding** | `--dss-spacing-2` / `--dss-spacing-4` | `8px 16px` | Seção 13.22 |
+| **background** | `--dss-surface-default` | — | Seção 13.22 |
+| **color** | `--dss-text-body` | — | Seção 13.22 |
+| **font-size** | `--dss-font-size-md` | 14px | Seção 13.22 |
+| **box-shadow** | `--dss-elevation-1` | — | Seção 13.22 |
+| **gap** | `--dss-spacing-2` | 8px | Seção 13.22 |
+
+---
+
+### 4.6 DssBreadcrumbs
+**Categoria:** Container orquestrador de navegação (Breadcrumb Trail)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conforme
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Home / Produtos / Detalhe
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `21px` | defaultPreview (altura do texto) |
+| **gap** | `--dss-spacing-2` | 8px | Seção 13.23 / container de items |
+| **font-size** | `--dss-font-size-md` | 14px | Seção 13.23 |
+| **separador color** | `--dss-gray-400` | — | Seção 13.23 |
+
+---
+
+### 4.7 DssBreadcrumbsEl
+**Categoria:** Elemento de trilha de navegação (Breadcrumb Item)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conforme
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `label="Home"`
+- **Conteúdo de Demonstração:** Item de breadcrumb 'Home'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `17px` | defaultPreview |
+| **font-size** | `--dss-font-size-md` | 14px | Seção 13.23 |
+| **font-weight (link)** | `--dss-font-weight-normal` | 400 | Seção 13.23 |
+| **color (link)** | `--dss-text-action` | — | Seção 13.23 |
+| **color (item atual)** | `--dss-text-body` | — | Seção 13.23 |
+| **font-weight (item atual)** | `--dss-font-weight-medium` | 500 | Seção 13.23 |
+| **text-decoration (hover)** | `underline` | — | Seção 13.23 |
+
+---
+
+### 4.8 DssBtnDropdown
+**Categoria:** Action Group composto (Botão com Dropdown Integrado)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `label="Opções"`
+- **Conteúdo de Demonstração:** Botão 'Opções' com menu dropdown
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.4 |
+| **background** | `--dss-action-primary` | — | Seção 13.4 (herda DssButton) |
+| **color** | `--dss-text-inverse` | branco | Seção 13.4 |
+| **border-radius** | `--dss-radius-full` | 9999px | Seção 13.4 |
+| **painel border-radius** | `--dss-radius-md` | 8px | Seção 13.4 |
+| **painel box-shadow** | `--dss-elevation-3` | — | Seção 13.4 |
+| **painel padding** | `--dss-spacing-2` | 8px | Seção 13.4 |
+| **painel background** | `--dss-surface-default` | — | Seção 13.4 |
+| **item height** | `40px` | — | Seção 13.4 |
+| **item padding** | `--dss-spacing-4` | 0 16px | Seção 13.4 |
+
+---
+
+### 4.9 DssBtnGroup
+**Categoria:** Container de composição (Action Group)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** pre-audit
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Grupo com 3 botões
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.3 |
+| **gap** | `0` | 0px | Seção 13.3 (botões coladas) |
+| **border-radius extremidades** | `--dss-radius-full` | 9999px | Seção 13.3 |
+| **divisor interno** | `--dss-border-width-thin` | 1px | Seção 13.3 |
+
+---
+
+### 4.10 DssBtnToggle
+**Categoria:** Container de seleção exclusiva (Grupo de Alternância)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Toggle entre opções A / B / C
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **background (selecionado)** | `--dss-action-primary` | — | Padrão Action Control (Seção 3.1) |
+| **background (não selecionado)** | `--dss-surface-default` | — | Estado neutro |
+| **border-radius** | `--dss-radius-full` | 9999px | Padrão pílula (Seção 3.2) |
+
+---
+
+### 4.11 DssButton
+**Categoria:** Action Control
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed) — Golden Sample (documentação)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `variant="elevated"`, `color="primary"`, `size="md"`
+- **Conteúdo de Demonstração:** Label 'Action'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.1 |
+| **min-width** | `64px` | — | defaultPreview / Seção 13.1 |
+| **padding (horizontal)** | `--dss-spacing-6` | 24px | Seção 13.1 |
+| **border-radius** | `--dss-radius-full` | 9999px | Seção 13.1 |
+| **border-width** | `--dss-border-width-none` | 0 | Seção 13.1 (variante filled) |
+| **background** | `--dss-action-primary` | — | Seção 13.1 |
+| **color** | `--dss-text-inverse` | branco | Seção 13.1 |
+| **font-size** | `--dss-font-size-sm` | 14px | Seção 13.1 |
+| **font-weight** | `--dss-font-weight-medium` | 500 | Seção 13.1 |
+| **letter-spacing** | `0.01em` | — | Seção 13.1 |
+| **gap (ícone + label)** | `--dss-spacing-2` | 8px | Seção 13.1 |
+| **shadow** | `--dss-elevation-1` | — | Seção 13.1 (elevated) |
+| **transition** | `--dss-duration-200` | 200ms | Seção 13.1 |
+| **disabled opacity** | `--dss-opacity-disabled` | 0.4 | Seção 13.1 |
+
+---
+
+### 4.12 DssCard
+**Categoria:** Basico (Surface/Container)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conforme
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `variant="elevated"`, `square=false`
+- **Conteúdo de Demonstração:** DssCardSection com texto e ações
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `80px` | defaultPreview |
+| **border-radius** | `--dss-radius-lg` | 12px | Seção 13.13 |
+| **background** | `--dss-surface-default` | — | Seção 13.13 |
+| **border-width (outlined)** | `--dss-border-width-thin` | 1px | Seção 13.13 |
+| **border-color (outlined)** | `--dss-gray-200` | — | Seção 13.13 |
+| **box-shadow (elevated)** | `--dss-elevation-1` | — | Seção 13.13 |
+| **box-shadow (hover)** | `--dss-elevation-2` | — | Seção 13.13 |
+| **section padding** | `--dss-spacing-6` | 24px | Seção 13.13 |
+| **section divider** | `--dss-gray-200` | 1px solid | Seção 13.13 |
+| **transition** | `--dss-duration-200` | 200ms | Seção 13.13 |
+
+---
+
+### 4.13 DssCheckbox
+**Categoria:** Compact Control interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `color="primary"`, `size="md"`
+- **Conteúdo de Demonstração:** Label 'Opção'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview (touch target) |
+| **controle tamanho** | `18px × 18px` | — | Seção 13.6 |
+| **border-radius** | `--dss-radius-sm` | 4px | Seção 13.6 |
+| **border-width (unchecked)** | `--dss-border-width-md` | 2px | Seção 13.6 |
+| **border-color (unchecked)** | `--dss-gray-500` | — | Seção 13.6 |
+| **background (checked)** | `--dss-action-primary` | — | Seção 13.6 |
+| **gap (controle + label)** | `--dss-spacing-2` | 8px | Seção 13.6 |
+| **label font-size** | `--dss-font-size-md` | 14px | Seção 13.6 |
+| **label color** | `--dss-text-body` | — | Seção 13.6 |
+| **touch target** | `--dss-touch-target-md` | 44px | Via `::before` (WCAG 2.5.5) |
+
+---
+
+### 4.14 DssChip
+**Categoria:** Compact Control interativo — Golden Reference interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `variant="filled"`, `color="primary"`, `size="md"`
+- **Conteúdo de Demonstração:** Label 'Chip'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-compact-control-height-md` | `28px` | defaultPreview / Seção 13.10 |
+| **padding (horizontal)** | `--dss-spacing-3` | 12px | Seção 13.10 |
+| **border-radius** | `--dss-radius-full` | 9999px | Seção 13.10 |
+| **border-width** | `--dss-border-width-thin` | 1px | Seção 13.10 |
+| **border-color** | `--dss-gray-300` | — | Seção 13.10 |
+| **background** | `--dss-surface-muted` | — | Seção 13.10 |
+| **color** | `--dss-text-body` | — | Seção 13.10 |
+| **font-size** | `--dss-font-size-xs` | 12px | Seção 13.10 |
+| **font-weight** | `--dss-font-weight-medium` | 500 | Seção 13.10 |
+| **gap** | `--dss-spacing-2` | 8px | Seção 13.10 |
+| **selected background** | `--dss-action-primary` | — | Seção 13.10 |
+| **selected color** | `--dss-text-inverse` | branco | Seção 13.10 |
+| **touch target** | `--dss-touch-target-md` | 44px | Via `::before` (WCAG 2.5.5) |
+
+---
+
+### 4.15 DssCircularProgress
+**Categoria:** Indicador de progresso circular
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `value=0.7`, `size="md"`, `color="primary"`
+- **Conteúdo de Demonstração:** Progresso circular 70%
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `56px` | defaultPreview |
+| **min-width** | — | `56px` | defaultPreview |
+| **stroke (círculo de progresso)** | `--dss-action-primary` | — | EXC-Gate-01: CSS stroke no SVG |
+| **stroke (track)** | `--dss-gray-200` | — | Seção 3.1 Progresso |
+| **stroke-width** | `3` (unitless SVG) | — | EX-Structural-01 (sem token correspondente) |
+| **size xs** | `40px` | — | SIZE_TOKEN_MAP |
+| **size xl** | `96px` | — | SIZE_TOKEN_MAP |
+
+---
+
+### 4.16 DssDrawer
+**Categoria:** Container estrutural lateral — painel de navegação
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** pending-audit
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma — side="left" default)*
+- **Conteúdo de Demonstração:** Painel lateral com navegação
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `100vh` | — | defaultPreview |
+| **min-width** | `300px` | — | defaultPreview / Seção 13.15 |
+| **background** | `--dss-surface-default` | — | Seção 13.15 |
+| **box-shadow** | `--dss-elevation-4` | — | Seção 13.15 |
+| **border-radius** | `0` | — | Seção 13.15 (estrutural) |
+| **header padding** | `--dss-spacing-4` / `--dss-spacing-6` | 16px 24px | Seção 13.15 |
+| **header border-bottom** | `--dss-gray-200` | 1px solid | Seção 13.15 |
+| **content padding** | `--dss-spacing-4` | 16px | Seção 13.15 |
+| **animação** | `--dss-duration-250` | 250ms | Seção 13.15 |
+
+---
+
+### 4.17 DssExpansionItem
+**Categoria:** Item expansível
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `label="Título"`, `icon="expand_more"`
+- **Conteúdo de Demonstração:** Item expansível com conteúdo
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **background** | `--dss-surface-default` | — | Padrão categoria Superfície |
+| **hover background** | `--dss-surface-hover` | — | Padrão estado hover (Seção 3.2) |
+| **padding** | `--dss-spacing-4` | 16px | Padrão item interativo |
+| **border-bottom** | `--dss-gray-200` | 1px solid | Divisor entre itens |
+| **font-size** | `--dss-font-size-md` | 14px | Seção 3.2 tipografia |
+| **font-weight** | `--dss-font-weight-normal` | 400 | Estado colapsado |
+
+---
+
+### 4.18 DssFab
+**Categoria:** Floating Action Button
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `color="primary"`, `icon="add"`
+- **Conteúdo de Demonstração:** FAB com ícone 'add'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `56px` | — | defaultPreview / Seção 13.2 |
+| **min-width** | `56px` | — | defaultPreview / Seção 13.2 |
+| **border-radius** | `--dss-radius-full` | 9999px | Seção 13.2 |
+| **background** | `--dss-action-primary` | — | Seção 13.2 |
+| **color (ícone)** | `--dss-text-inverse` | branco | Seção 13.2 |
+| **box-shadow** | `--dss-elevation-3` | — | Seção 13.2 |
+| **box-shadow (hover)** | `--dss-elevation-4` | — | Seção 13.2 |
+| **ícone tamanho** | `24px` | — | Seção 13.2 |
+
+---
+
+### 4.19 DssFabAction
+**Categoria:** Ação do FAB (sub-botão)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `color="primary"`, `icon="mail"`
+- **Conteúdo de Demonstração:** FAB Action com ícone 'mail'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `40px` | defaultPreview (visual 40px < 44px) |
+| **min-width** | `--dss-touch-target-md` | `40px` | defaultPreview |
+| **border-radius** | `--dss-radius-full` | 9999px | Padrão FAB |
+| **background** | `--dss-action-primary` | — | Padrão Action Control |
+| **color** | `--dss-text-inverse` | branco | Padrão Action Control |
+| **touch target** | `--dss-touch-target-md` | 44px | Via `::before` Opção B (WCAG 2.5.5) |
+
+---
+
+### 4.20 DssField
+**Categoria:** Wrapper estrutural de campo de formulário (chrome: label, borda, hint, error)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma — campo customizado)*
+- **Conteúdo de Demonstração:** Campo de formulário customizado
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-width** | `240px` | — | defaultPreview |
+| **border** | `--dss-gray-400` | 1px solid | EXC-Gate-01 (custom, não QField) |
+| **border (foco)** | `--dss-action-primary` | 2px solid | Padrão formulário |
+| **border-radius** | `--dss-radius-md` | 8px | Padrão formulário |
+| **label color** | `--dss-text-subtle` | — | Padrão formulário |
+| **label color (foco)** | `--dss-action-primary` | — | Padrão formulário |
+| **hint font-size** | `--dss-font-size-xs` | 12px | Seção 3.2 tipografia |
+| **gray-800** | `--dss-gray-800` | — | NC-01 corrigida (meta.json) |
+
+---
+
+### 4.21 DssFile
+**Categoria:** Action Control — campo de seleção de arquivos
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Seleção de arquivo
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.25 |
+| **drop zone min-height** | `120px` | — | Seção 13.25 |
+| **drop zone border** | `--dss-gray-400` | 2px dashed | Seção 13.25 |
+| **drop zone border-radius** | `--dss-radius-md` | 8px | Seção 13.25 |
+| **drop zone background** | `--dss-surface-muted` | — | Seção 13.25 |
+| **drop zone padding** | `--dss-spacing-6` | 24px | Seção 13.25 |
+| **dragover border** | `--dss-action-primary` | 2px dashed | Seção 13.25 |
+| **dragover background** | `--dss-action-primary-surface` | — | Seção 13.25 |
+
+---
+
+### 4.22 DssFooter
+**Categoria:** Container estrutural de layout — footer fixo na base
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Rodapé com informações do sistema
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **background** | `--dss-surface-default` | — | Padrão estrutural (herda DssHeader) |
+| **border-top** | `--dss-gray-200` | 1px solid | Padrão estrutural |
+| **padding** | `--dss-spacing-4` / `--dss-spacing-6` | 16px 24px | Padrão estrutural |
+
+---
+
+### 4.23 DssHeader
+**Categoria:** Container estrutural de layout — header fixo ao topo
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Cabeçalho com logo e ações
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.20 |
+| **padding (horizontal)** | `--dss-spacing-6` | 24px | Seção 13.20 |
+| **background** | `--dss-surface-default` | — | Seção 13.20 |
+| **border-bottom** | `--dss-gray-200` | 1px solid | Seção 13.20 |
+| **box-shadow** | `--dss-elevation-1` | — | Seção 13.20 |
+| **brand title font-size** | `--dss-font-size-lg` | 18px | Seção 13.20 |
+| **brand title font-weight** | `--dss-font-weight-semibold` | 600 | Seção 13.20 |
+| **gap (logo + título)** | `--dss-spacing-3` | 12px | Seção 13.20 |
+
+---
+
+### 4.24 DssIcon
+**Categoria:** Elemento visual base não interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `name="star"`, `size="md"`
+- **Conteúdo de Demonstração:** Ícone 'star' tamanho md
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `24px` | defaultPreview |
+| **min-width** | — | `24px` | defaultPreview |
+| **color** | `color: inherit` | — | `[data-brand] .dss-icon` — herda cor do pai |
+| **font-size (md)** | `24px` | — | size prop → font-size |
+
+---
+
+### 4.25 DssImg
+**Categoria:** Elemento de exibição de imagem
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `src="[URL da imagem]"`, `alt="[Descrição]"`, `fit="cover"`, `loading="lazy"`
+- **Conteúdo de Demonstração:** Imagem com alt text acessível
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `150px` | defaultPreview |
+| **min-width** | — | `200px` | defaultPreview |
+| **border-radius** | `0` | — | Seção 13.27 (sem corte default) |
+| **object-fit** | `cover` | — | Seção 13.27 |
+| **placeholder background** | `--dss-gray-100` | — | Seção 13.27 |
+| **erro background** | `--dss-gray-200` | — | Seção 13.27 |
+| **erro ícone cor** | `--dss-gray-500` | — | Seção 13.27 |
+| **fade-in transition** | `--dss-duration-300` | 300ms | Seção 13.27 |
+
+---
+
+### 4.26 DssInfiniteScroll
+**Categoria:** Componente comportamental — scroll infinito
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `offset=500`, `debounce=100`
+- **Conteúdo de Demonstração:** Lista com carregamento infinito
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+| **spinner color** | `--dss-action-primary` | — | Seção 13.30 (currentColor) |
+| **spinner container padding** | `--dss-spacing-6` | 24px | Seção 13.30 |
+| **no-more font-size** | `--dss-font-size-xs` | 12px | Seção 13.30 |
+| **no-more color** | `--dss-text-subtle` | — | Seção 13.30 |
+
+---
+
+### 4.27 DssInnerLoading
+**Categoria:** Overlay de loading para container
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `showing=true`
+- **Conteúdo de Demonstração:** Overlay de carregamento interno
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `48px` | defaultPreview |
+| **overlay background** | `--dss-surface-default` | — | EX-Overlay-01 (sem -rgb) |
+| **color (spinner)** | `currentColor` | — | DssSpinner herda via CSS color |
+| **border-radius** | `inherit` | — | EX-Structural-01 |
+| **line-height** | `--dss-line-height-xs` | — | NC-01 corrigida |
+
+---
+
+### 4.28 DssInput
+**Categoria:** Action Control interativo — campo de texto
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `variant="outlined"`, `type="text"`, `dense=false`
+- **Conteúdo de Demonstração:** Placeholder 'Digite aqui'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-input-height-md` | `44px` | defaultPreview / Seção 13.5 |
+| **min-width** | `240px` | — | defaultPreview / Seção 13.5 |
+| **padding (horizontal)** | `--dss-spacing-4` | 16px | Seção 13.5 |
+| **border-width (repouso)** | `--dss-border-width-thin` | 1px | Seção 13.5 |
+| **border-color (repouso)** | `--dss-gray-400` | — | Seção 13.5 |
+| **border-color (hover)** | `--dss-gray-600` | — | Seção 13.5 |
+| **border-color (foco)** | `--dss-action-primary` | — | Seção 13.5 |
+| **border-width (foco)** | `--dss-border-width-md` | 2px | Seção 13.5 |
+| **border-radius** | `--dss-radius-md` | 8px | Seção 13.5 |
+| **color (texto)** | `--dss-text-body` | — | Seção 13.5 |
+| **font-size** | `--dss-font-size-md` | 14px | Seção 13.5 |
+| **label color (repouso)** | `--dss-text-subtle` | — | Seção 13.5 |
+| **label color (foco)** | `--dss-action-primary` | — | Seção 13.5 |
+
+---
+
+### 4.29 DssItem
+**Categoria:** Layout/List — item de lista interativo/não-interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** N/A
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Item com ícone e texto
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **padding** | `--dss-spacing-4` | 0 16px | Padrão item de lista (Seção 3.1) |
+| **hover background** | `--dss-surface-hover` | — | Padrão lista (Seção 3.1) |
+| **font-size** | `--dss-font-size-md` | 14px | Seção 3.2 tipografia |
+| **color** | `--dss-text-body` | — | Padrão neutro |
+
+---
+
+### 4.30 DssItemLabel
+**Categoria:** Container tipográfico para itens de lista
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Rótulo de seção de lista
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.31 DssItemSection
+**Categoria:** Container de layout interno de DssItem
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** pronto-para-auditoria
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Seção de item (avatar, conteúdo ou ação)
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.32 DssKnob
+**Categoria:** Controle rotativo para seleção de valores numéricos
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** compliant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `modelValue=50`, `min=0`, `max=100`
+- **Conteúdo de Demonstração:** Knob com valor 50%
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `56px` | — | defaultPreview / Seção 13.9 |
+| **min-width** | `56px` | — | defaultPreview / Seção 13.9 |
+| **track cor (não preenchido)** | `--dss-gray-200` | — | Seção 13.9 |
+| **track cor (preenchido)** | `--dss-action-primary` | — | Seção 13.9 (EXC-Gate-02: CSS stroke) |
+| **label central font-size** | `--dss-font-size-lg` | 18px | Seção 13.9 |
+| **label central font-weight** | `--dss-font-weight-medium` | 500 | Seção 13.9 |
+| **label central color** | `--dss-text-body` | — | Seção 13.9 |
+| **focus outline** | `--dss-border-width-thick` | 3px | EXC-Focus-01 (NC-01 corrigida) |
+
+---
+
+### 4.33 DssLayout
+**Categoria:** Layout global — container raiz de página Quasar
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Layout de página completo (header + drawer + footer)
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.34 DssLinearProgress
+**Categoria:** Indicador de progresso linear
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `value=0.7`, `color="primary"`, `size="md"`
+- **Conteúdo de Demonstração:** Barra de progresso linear 70%
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `4px` | — | defaultPreview / Seção 3.1 Progresso |
+| **min-width** | `200px` | — | defaultPreview |
+| **border-radius** | `--dss-radius-full` | 9999px | Seção 3.1 Progresso |
+| **cor indicador** | `--dss-action-primary` | — | Seção 3.1 Progresso |
+| **cor track** | `--dss-gray-200` | — | Seção 3.1 Progresso |
+
+---
+
+### 4.35 DssList
+**Categoria:** Container de layout — lista de itens
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conforme
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Lista com 3 itens
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.36 DssMarkupTable
+**Categoria:** Tabela de exibição semântica
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `density="standard"`, `bordered=true`, `separator="horizontal"`
+- **Conteúdo de Demonstração:** Tabela com thead/tbody padrão
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **width** | `100%` | — | defaultPreview |
+| **border** | `--dss-gray-200` | 1px solid | EXC-Gate-01: descendant selectors th/td |
+| **th background** | `--dss-surface-muted` | — | Padrão tabela |
+| **th font-weight** | `--dss-font-weight-medium` | 500 | Padrão tabela |
+| **td padding** | `--dss-spacing-3` / `--dss-spacing-4` | 12px 16px | Padrão densidade standard |
+| **tr hover background** | `--dss-surface-hover` | — | Padrão lista |
+| **font-size** | `--dss-font-size-sm` | 14px | Seção 3.2 tipografia |
+
+---
+
+### 4.37 DssMenu
+**Categoria:** Overlay de navegação — menu flutuante
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Menu com 3 itens
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `200px` | — | defaultPreview / Seção 13.16 |
+| **min-width** | `200px` | — | defaultPreview / Seção 13.16 |
+| **border-radius** | `--dss-radius-md` | 8px | Seção 13.16 |
+| **background** | `--dss-surface-default` | — | Seção 13.16 |
+| **box-shadow** | `--dss-elevation-3` | — | Seção 13.16 |
+| **padding** | `--dss-spacing-2` | 8px 0 | Seção 13.16 |
+| **item height** | `40px` | — | Seção 13.16 |
+| **item padding** | `--dss-spacing-4` | 0 16px | Seção 13.16 |
+| **item font-size** | `--dss-font-size-md` | 14px | Seção 13.16 |
+| **item color** | `--dss-text-body` | — | Seção 13.16 |
+| **hover background** | `--dss-surface-hover` | — | Seção 13.16 |
+| **divider** | `--dss-gray-200` | 1px solid | Seção 13.16 |
+
+---
+
+### 4.38 DssOptionGroup
+**Categoria:** Container de seleção — grupo de controles (Radio, Checkbox ou Toggle)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `type="radio"`
+- **Conteúdo de Demonstração:** Grupo de opções (radio/checkbox/toggle)
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **gap entre opções** | `--dss-spacing-2` | 8px | Padrão grupo de controles |
+
+---
+
+### 4.39 DssPage
+**Categoria:** Layout global — container de conteúdo principal
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Área de conteúdo principal da página
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.40 DssPageContainer
+**Categoria:** Layout global — container de página com offset automático
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Container com largura máxima de conteúdo
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.41 DssPageScroller
+**Categoria:** Botão de scroll para o topo
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Botão de scroll para o topo
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.42 DssPageSticky
+**Categoria:** Elemento fixo na página (sticky positioning)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Elemento fixo na página
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.43 DssPagination
+**Categoria:** Navegação estrutural por páginas
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** pending-audit
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `modelValue=1`, `max=10`
+- **Conteúdo de Demonstração:** Página 1 de 10
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **item width × height** | `32px × 32px` | — | Seção 13.24 |
+| **item border-radius** | `--dss-radius-sm` | 4px | Seção 13.24 |
+| **item font-size** | `--dss-font-size-md` | 14px | Seção 13.24 |
+| **item color (inativo)** | `--dss-text-body` | — | Seção 13.24 |
+| **item color (ativo)** | `--dss-text-inverse` | branco | Seção 13.24 |
+| **item background (ativo)** | `--dss-action-primary` | — | Seção 13.24 |
+| **item hover background** | `--dss-surface-hover` | — | Seção 13.24 |
+| **gap** | `--dss-spacing-1` | 4px | Seção 13.24 |
+| **theming** | `--q-color-primary` override CSS | — | EXC-Gate-02 (padrão QPagination) |
+
+---
+
+### 4.44 DssParallax
+**Categoria:** Efeito visual parallax
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `src="[URL da imagem]"`, `height=500`, `speed=0.5`
+- **Conteúdo de Demonstração:** Seção com efeito parallax
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `200px` | — | defaultPreview |
+| **background** | `[imagem de fundo]` | — | prop src (zero tokens — prop-driven) |
+
+*Nota: Componente usa prefers-reduced-motion via v-if/v-else (EXC-States-01 — CSS puro não suprime JS listeners QParallax).*
+
+---
+
+### 4.45 DssPopupProxy
+**Categoria:** Proxy de popup responsivo (Dialog em mobile, Menu em desktop)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `breakpoint=450`
+- **Conteúdo de Demonstração:** Proxy de popup
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+*Nota: Componente delega renderização visual para DssDialog (mobile) ou DssMenu (desktop).*
+
+---
+
+### 4.46 DssPullToRefresh
+**Categoria:** Gesto de arrastar para atualizar
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Puxe para atualizar
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+| **handler color** | `--dss-action-primary` | — | EXC-Gate-02-a: `--q-color-primary` |
+| **handler border-radius** | `50%` | — | EX-Structural-01 (constante geométrica) |
+
+---
+
+### 4.47 DssRadio
+**Categoria:** Compact Control interativo — seleção exclusiva
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** approved (Sealed)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `color="primary"`, `size="md"`
+- **Conteúdo de Demonstração:** Label 'Opção'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **controle tamanho** | `20px × 20px` | — | Seção 3.1 Compact Controls |
+| **border-radius** | `50%` | — | Circular universal |
+| **border-width (unchecked)** | `--dss-border-width-md` | 2px | Seção 3.1 Compact Controls |
+| **border-color (unchecked)** | `--dss-gray-500` | — | Seção 3.1 Compact Controls |
+| **border-color (checked)** | `--dss-action-primary` | — | Seção 3.1 |
+| **ponto interno (checked)** | `--dss-action-primary` | 10px | Seção 3.1 |
+| **touch target** | `--dss-touch-target-md` | 44px | Via `::before` (WCAG 2.5.5) |
+
+---
+
+### 4.48 DssRange
+**Categoria:** Action Control interativo — seleção de intervalo numérico
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `min=0`, `max=100`, `modelValue={min:25, max:75}`
+- **Conteúdo de Demonstração:** Range de 25 a 75
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.8 |
+| **min-width** | `200px` | — | defaultPreview / Seção 13.8 |
+| **track height** | `4px` | — | Seção 13.8 |
+| **track border-radius** | `--dss-radius-full` | 9999px | Seção 13.8 (EX-01) |
+| **track background** | `--dss-gray-300` | — | Seção 13.8 |
+| **track preenchido** | `--dss-action-primary` | — | Seção 13.8 |
+| **thumb tamanho** | `20px` | — | Seção 13.8 |
+| **thumb background** | `--dss-action-primary` | — | Seção 13.8 |
+| **thumb shadow** | `--dss-elevation-1` | — | Seção 13.8 |
+
+---
+
+### 4.49 DssRating
+**Categoria:** Controle de avaliação por ícones (estrelas ou customizados)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `modelValue=3`, `max=5`
+- **Conteúdo de Demonstração:** Avaliação de 3 de 5 estrelas
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-width** | `160px` | — | defaultPreview |
+| **cor ícone (selecionado)** | `--dss-action-primary` | — | EX-Color-01: CSS cascade puro (SEM EXC-Gate-02) |
+| **cor ícone (hub)** | `--dss-hub-600` | — | Brand dual-selector |
+| **cor ícone (water)** | `--dss-water-500` | — | Brand dual-selector |
+| **cor ícone (waste)** | `--dss-waste-600` | — | Brand dual-selector |
+
+*Nota: Props `color`/`color-selected`/`color-half` BLOQUEADAS — governança 100% CSS.*
+
+---
+
+### 4.50 DssResponsive
+**Categoria:** Wrapper condicional por breakpoint
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `show="sm"`
+- **Conteúdo de Demonstração:** Wrapper condicional por breakpoint
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.51 DssRouteTab
+**Categoria:** Elemento interativo de navegação por abas com roteamento
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conforme
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `label="Início"`, `to="/"`
+- **Conteúdo de Demonstração:** Tab de rota 'Início'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **padding** | `--dss-spacing-4` | 0 16px | Padrão tab (Seção 3.1 Navegação) |
+| **color (ativo)** | `--dss-action-primary` | — | Padrão tab |
+| **color (inativo)** | `--dss-text-subtle` | — | Padrão tab |
+| **indicador** | `--dss-action-primary` | 3px solid | Padrão tab |
+| **CSS** | Herda `DssTab.module.scss` | — | Zero CSS duplicado |
+
+---
+
+### 4.52 DssScrollArea
+**Categoria:** Área com scrollbar customizada
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `visible="auto"`, `horizontal=false`
+- **Conteúdo de Demonstração:** Área com scrollbar customizada
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `200px` | — | defaultPreview |
+| **scrollbar track color** | `--dss-gray-200` | — | `.q-scrollarea__bar` descendant |
+| **scrollbar thumb color** | `--dss-action-primary` | — | `.q-scrollarea__thumb` descendant |
+| **opacity** | `1 !important` | — | EXC-Gate-02: sobrescreve inline style JS |
+
+---
+
+### 4.53 DssSelect
+**Categoria:** Action Control interativo — campo de seleção
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `variant="outlined"`
+- **Conteúdo de Demonstração:** Placeholder 'Selecione uma opção'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-width** | `240px` | — | defaultPreview |
+| **border** | `--dss-gray-400` | 1px solid | Herda padrão DssInput |
+| **border (foco)** | `--dss-action-primary` | 2px solid | Herda padrão DssInput |
+| **border-radius** | `--dss-radius-md` | 8px | Herda padrão DssInput |
+| **painel popup** | `.dss__panel` + `popup-content-class` | — | Seletor teleportado (Seção 3 proibidos: no scoped) |
+
+---
+
+### 4.54 DssSeparator
+**Categoria:** Decorativo / Estrutural não interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Linha divisória horizontal
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `1px` | defaultPreview |
+| **border-color** | `currentColor` | — | Herda cor do pai (flexível) |
+| **border-width** | `--dss-border-width-thin` | 1px | Padrão divisor (Seção 3.2) |
+
+---
+
+### 4.55 DssSkeleton
+**Categoria:** Placeholder de carregamento (skeleton screen)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** granted (Conformant)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `type="text"`
+- **Conteúdo de Demonstração:** Bloco de texto esqueleto
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `24px` | defaultPreview |
+| **min-width** | `200px` | — | defaultPreview |
+| **background** | `--dss-surface-muted` | — | Placeholder neutro |
+| **shimmer color** | `--dss-gray-200` | — | Seção 3.1 Progresso |
+| **shimmer highlight** | `--dss-gray-300` | — | Seção 3.1 Progresso |
+| **border-radius** | `--dss-radius-sm` | 4px | CSS var chain (fallback) |
+| **prefers-contrast** | `border: 1px solid currentColor` | — | NC-01 (precedente DssBadge) |
+
+---
+
+### 4.56 DssSlideItem
+**Categoria:** Item com ações deslizáveis (esquerda/direita)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop)*
+- **Conteúdo de Demonstração:** Item com ações deslizáveis (esquerda/direita)
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `56px` | defaultPreview |
+| **background** | `--dss-surface-default` | — | Padrão item |
+| **ação background** | `--dss-action-primary` | — | Ação primária padrão |
+
+---
+
+### 4.57 DssSlider
+**Categoria:** Action Control interativo — campo de intervalo numérico
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `min=0`, `max=100`, `modelValue=50`
+- **Conteúdo de Demonstração:** Slider com valor 50
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.8 |
+| **min-width** | `200px` | — | defaultPreview |
+| **track height** | `4px` | — | Seção 13.8 |
+| **track border-radius** | `--dss-radius-full` | 9999px | Seção 13.8 |
+| **track background** | `--dss-gray-300` | — | Seção 13.8 |
+| **track preenchido** | `--dss-action-primary` | — | Seção 13.8 |
+| **thumb tamanho** | `20px` | — | Seção 13.8 |
+| **thumb background** | `--dss-action-primary` | — | Seção 13.8 |
+| **thumb shadow** | `--dss-elevation-1` | — | Seção 13.8 |
+| **touch target** | `--dss-touch-target-md` | 44px | `--dss-touch-target-md` no wrapper (não `--dss-input-height-md`) |
+
+---
+
+### 4.58 DssSpace
+**Categoria:** Elemento de layout puro não interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `size="md"`
+- **Conteúdo de Demonstração:** Espaçamento visual entre elementos
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+*Nota: 21 spacing tokens disponíveis via prop `size`.*
+
+---
+
+### 4.59 DssSpinner
+**Categoria:** Feedback de status — indicador de carregamento
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `type="standard"`, `size="md"`
+- **Conteúdo de Demonstração:** Spinner animado de carregamento
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `40px` | defaultPreview |
+| **min-width** | — | `40px` | defaultPreview |
+| **color** | `--dss-action-primary` | — | DssInnerLoading: `color: currentColor` herda pai |
+| **color (hub)** | `--dss-hub-600` | — | 4-output/_brands.scss |
+| **color (water)** | `--dss-water-500` | — | 4-output/_brands.scss |
+
+---
+
+### 4.60 DssSplitter
+**Categoria:** Divisor redimensionável (horizontal ou vertical)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `modelValue=50`, `orientation="horizontal"`
+- **Conteúdo de Demonstração:** Divisor redimensionável 50/50
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `200px` | — | defaultPreview |
+| **separator touch target** | `--dss-touch-target-md` | 44px | Via `::before` Opção B (WCAG 2.5.5) |
+| **separator background** | `--dss-gray-200` | — | Padrão divisor |
+| **tap highlight** | `-webkit-tap-highlight-color: transparent` | — | NC-02 (padrão DssChip) |
+
+---
+
+### 4.61 DssStep
+**Categoria:** Elemento interativo de navegação em stepper (wizard)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma — step 1 por padrão)*
+- **Conteúdo de Demonstração:** Etapa 1 — Informações básicas
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **círculo ativo** | `--dss-action-primary` | — | Seção 8 (Stepper) |
+| **círculo inativo border** | `--dss-gray-400` | 1px solid | Seção 8 |
+| **círculo inativo color** | `--dss-text-subtle` | — | Seção 8 |
+| **linha conectora** | `--dss-gray-300` | 1px solid | Seção 8 |
+| **cor feedback (step concluído)** | `--dss-feedback-success` | — | NÃO usar `--dss-success-500` |
+
+---
+
+### 4.62 DssStepper
+**Categoria:** Container de navegação — Stepper/Wizard
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Fluxo com 3 etapas: Dados, Revisão, Confirmação
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+*Nota: `_brands.scss` completamente comentado — brandabilidade via componentes filhos (DssStep).*
+
+---
+
+### 4.63 DssTab
+**Categoria:** Elemento interativo de navegação por abas
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** approved (Sealed)
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `label="Aba"`
+- **Conteúdo de Demonstração:** Tab 'Início'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.18 |
+| **padding** | `--dss-spacing-4` | 0 16px | Seção 13.18 |
+| **font-size** | `--dss-font-size-md` | 14px | Seção 13.18 |
+| **font-weight (ativa)** | `--dss-font-weight-medium` | 500 | Seção 13.18 |
+| **font-weight (inativa)** | `--dss-font-weight-normal` | 400 | Seção 13.18 |
+| **color (ativa)** | `--dss-action-primary` | — | Seção 13.18 |
+| **color (inativa)** | `--dss-text-subtle` | — | Seção 13.18 |
+| **indicador height** | `3px` | — | Seção 13.18 |
+| **indicador background** | `--dss-action-primary` | — | Seção 13.18 |
+| **hover background** | `--dss-surface-hover` | — | Seção 13.18 |
+
+---
+
+### 4.64 DssTabPanel
+**Categoria:** Container de conteúdo de aba (Tab Panel)
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conforme
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Conteúdo do painel de aba
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `48px` | defaultPreview |
+| **padding** | `--dss-spacing-6` | 24px | Seção 13.18 (Tab Panel padding) |
+| **background** | `--dss-surface-default` | — | Padrão categoria Superfície |
+
+---
+
+### 4.65 DssTabPanels
+**Categoria:** Container de painéis de abas
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conforme
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Container de painéis de abas
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `48px` | defaultPreview |
+| **background** | `--dss-surface-default` | — | Padrão categoria Superfície |
+
+---
+
+### 4.66 DssTabs
+**Categoria:** Container de navegação (Tab Group)
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** 3 abas: Início, Perfil, Configurações
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.18 |
+| **border-bottom** | `--dss-gray-200` | 1px solid | Seção 13.18 |
+| **indicador animação** | `--dss-duration-250` | 250ms | Seção 13.18 |
+| **gap (ícone + label)** | `--dss-spacing-2` | 8px | Seção 13.18 |
+| **setas color** | `--dss-text-subtle` | — | Seção 13.18 |
+
+---
+
+### 4.67 DssTextarea
+**Categoria:** Action Control interativo — campo multilinhas
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `variant="outlined"`
+- **Conteúdo de Demonstração:** Placeholder 'Escreva sua mensagem aqui'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | — | `88px` | defaultPreview (2+ linhas) |
+| **min-width** | `240px` | — | defaultPreview |
+| **border** | `--dss-gray-400` | 1px solid | Herda padrão DssInput |
+| **border (foco)** | `--dss-action-primary` | 2px solid | Herda padrão DssInput |
+| **border-radius** | `--dss-radius-md` | 8px | Herda padrão DssInput |
+| **padding** | `--dss-spacing-4` | 16px | Herda padrão DssInput |
+| **font-size** | `--dss-font-size-md` | 14px | Padrão formulário |
+| **resize** | `vertical` | — | Comportamento padrão textarea |
+
+---
+
+### 4.68 DssTimeline
+**Categoria:** Container de linha do tempo
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `side="right"`
+- **Conteúdo de Demonstração:** 3 eventos na linha do tempo
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.69 DssTimelineEntry
+**Categoria:** Entrada individual de linha do tempo
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** conformant
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `title="Evento"`, `subtitle="Data"`, `icon="check"`
+- **Conteúdo de Demonstração:** Entrada de timeline com ícone e conteúdo
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **ícone background** | `--dss-action-primary` | — | Padrão step/timeline ativo |
+| **ícone color** | `--dss-text-inverse` | branco | Padrão ação primária |
+| **linha conectora** | `--dss-gray-300` | 1px solid | Padrão linha temporal |
+| **título font-weight** | `--dss-font-weight-medium` | 500 | Hierarquia tipográfica |
+| **subtítulo color** | `--dss-text-subtle` | — | Hierarquia visual secundária |
+
+---
+
+### 4.70 DssToggle
+**Categoria:** Compact Control interativo — switch
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `color="primary"`, `size="md"`
+- **Conteúdo de Demonstração:** Label 'Ativar'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.7 |
+| **track width × height** | `52px × 32px` | — | Seção 13.7 |
+| **track border-radius** | `--dss-radius-full` | 9999px | Seção 13.7 |
+| **track border-width (off)** | `--dss-border-width-md` | 2px | Seção 13.7 |
+| **track border-color (off)** | `--dss-gray-400` | — | Seção 13.7 |
+| **track background (off)** | `--dss-surface-muted` | — | Seção 13.7 |
+| **track background (on)** | `--dss-action-primary` | — | Seção 13.7 |
+| **thumb tamanho (off)** | `16px` | — | Seção 13.7 |
+| **thumb tamanho (on)** | `24px` | — | Seção 13.7 |
+| **thumb background (off)** | `--dss-gray-500` | — | Seção 13.7 |
+| **thumb background (on)** | `--dss-text-inverse` | branco | Seção 13.7 |
+| **transição** | `--dss-duration-200` | 200ms | Seção 13.7 |
+
+---
+
+### 4.71 DssToolbar
+**Categoria:** Container estrutural horizontal — barra de ferramentas
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Toolbar com título e ações
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.19 |
+| **padding (horizontal)** | `--dss-spacing-4` | 16px | Seção 13.19 |
+| **background** | `--dss-surface-default` | — | Seção 13.19 |
+| **border-bottom** | `--dss-gray-200` | 1px solid | Seção 13.19 |
+| **gap** | `--dss-spacing-2` | 8px | Seção 13.19 |
+| **título font-size** | `--dss-font-size-lg` | 16px | Seção 13.19 |
+| **título font-weight** | `--dss-font-weight-medium` | 500 | Seção 13.19 |
+| **variante elevated** | `--dss-elevation-2` | — | Seção 13.19 |
+
+---
+
+### 4.72 DssToolbarTitle
+**Categoria:** Container tipográfico para barra de ferramentas
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Título da barra de ferramentas
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-compact-control-height-sm` | `24px` | defaultPreview |
+| **font-size** | `--dss-font-size-lg` | 16px | Padrão toolbar title |
+| **font-weight** | `--dss-font-weight-medium` | 500 | Padrão toolbar title |
+| **color** | `--dss-text-body` | — | Padrão neutro |
+
+---
+
+### 4.73 DssTooltip
+**Categoria:** Elemento informativo contextual não interativo
+**Fase de Entrega:** Fase 1
+**Status de Conformidade:** sealed — Golden Reference não-interativo de contexto
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo)*
+- **Conteúdo de Demonstração:** Tooltip 'Informação adicional'
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `--dss-compact-control-height-sm` | `24px` | defaultPreview / Seção 13.17 |
+| **background** | `--dss-gray-900` | — | Seção 13.17 |
+| **color** | `--dss-text-inverse` | branco | Seção 13.17 |
+| **padding** | `--dss-spacing-1_5` / `--dss-spacing-2` | 6px 8px | Seção 13.17 |
+| **border-radius** | `--dss-radius-sm` | 4px | Seção 13.17 |
+| **font-size** | `--dss-font-size-xs` | 12px | Seção 13.17 |
+| **font-weight** | `--dss-font-weight-normal` | 400 | Seção 13.17 (NÃO -regular) |
+| **max-width** | `240px` | — | Seção 13.17 |
+| **box-shadow** | `--dss-elevation-2` | — | Seção 13.17 |
+| **animação** | `--dss-duration-150` | 150ms | Seção 13.17 |
+
+---
+
+### 4.74 DssTree
+**Categoria:** Árvore hierárquica com nós expansíveis
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `nodeKey="id"`, `labelKey="label"`
+- **Conteúdo de Demonstração:** Árvore hierárquica com nós expansíveis
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | N/A — Componente estrutural adaptativo | — | — |
+| **min-width** | N/A — Componente estrutural adaptativo | — | — |
+
+---
+
+### 4.75 DssVideo
+**Categoria:** Elemento de exibição de vídeo
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `src="[URL do vídeo]"`, `title="[Descrição]"`, `ratio=1.78`
+- **Conteúdo de Demonstração:** Vídeo 16:9 incorporado
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `180px` | — | defaultPreview / Seção 13.28 |
+| **border-radius** | `--dss-radius-md` | 8px | Seção 13.28 |
+| **background** | `--dss-gray-900` | — | Seção 13.28 |
+| **aspect-ratio** | `16/9` (número, não string) | — | NC-02 corrigida: `ratio=1.78` |
+| **slider preenchido** | `--dss-action-primary` | — | Seção 13.28 |
+| **texto de tempo font-size** | `--dss-font-size-xs` | 12px | Seção 13.28 |
+
+---
+
+### 4.76 DssVirtualScroll
+**Categoria:** Lista virtualizada de alto desempenho
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `items="[Array de itens]"`, `itemSize=48`, `type="list"`
+- **Conteúdo de Demonstração:** Lista virtualizada com 1000 itens
+
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **min-height** | `200px` | — | defaultPreview |
+| **item default height** | `48px` | — | defaultPreview / itemSize |
+| **spinner color** | `--dss-action-primary` | — | CSS currentColor (padrão DssSpinner) |
+
+---
+
+## 5. Governança e Processo de Atualização
+
+### 5.1 Regra de Sincronização Obrigatória
+
+Qualquer alteração no visual de um componente DSS EXIGE:
+
+1. **Atualização do `dss.meta.json`** (`defaultPreview.props`, `defaultPreview.computedDimensions`)
+2. **Atualização da entrada na Seção 4** deste documento
+3. **Ambas as alterações na mesma PR** — nunca separadas
+
+Violação desta regra é considerada **drift de contrato visual** e bloqueia o selo da próxima auditoria.
+
+### 5.2 Como Adicionar Novos Componentes
+
+Ao criar um novo componente DSS (Fase 3+):
+
+1. Defina o `defaultPreview` completo no `dss.meta.json` **antes** de escrever qualquer SCSS.
+2. Determine a categoria do componente e aplique os padrões da Seção 3.
+3. Consulte o Figma via MCP para confirmar dimensões e tokens (Princípio #12).
+4. Adicione a entrada na Seção 4 deste documento com a tabela de tokens.
+5. Execute `validateVisualContract` (quando disponível) para validar conformidade.
+
+### 5.3 Componentes Estruturais Adaptativos
+
+Os seguintes 16 componentes possuem `computedDimensions: {}` (objeto vazio) no `dss.meta.json`, pois seu tamanho é determinado pelo conteúdo e pelo layout pai. Não adicione `computedDimensions` a esses componentes:
+
+`DssInfiniteScroll`, `DssItemLabel`, `DssItemSection`, `DssLayout`, `DssList`, `DssPage`, `DssPageContainer`, `DssPageScroller`, `DssPageSticky`, `DssPopupProxy`, `DssPullToRefresh`, `DssResponsive`, `DssSpace`, `DssStepper`, `DssTimeline`, `DssTree`
+
+### 5.4 Hierarquia de Autoridade sobre Aspectos Visuais
+
+Em caso de conflito entre fontes de informação visual:
+
+1. **Figma** (supremo — Princípio #12)
+2. **`dss.meta.json` → `defaultPreview`** (machine-readable canônico)
+3. **Este documento** (human-readable canônico)
+4. **`_base.scss` do componente** (implementação)
+5. **Qualquer outro documento** (subordinado)

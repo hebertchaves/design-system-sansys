@@ -1,3 +1,5 @@
+> 📌 **Nota de Governança:** Este é um documento vivo de acompanhamento de status. O contrato normativo contra o qual esta auditoria é realizada reside em [DSS_REFERENCIA_VISUAL_ANALISE.md](./DSS_REFERENCIA_VISUAL_ANALISE.md).
+
 # Auditoria de Padrões Visuais DSS (Defaults)
 
 **Data:** 25 de Maio de 2026

@@ -49,6 +49,7 @@ A criação de qualquer componente DSS **exige leitura prévia** dos seguintes a
 8. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(arquivado pós-estabilização Fase 2)*
 9. `.github/pull_request_template.md`
 10. `docs/governance/DSS_MONOREPO_PATH_MAP.md` *(mapeamento canônico de caminhos do Monorepo — obrigatório para qualquer importação SCSS ou JS/TS entre pacotes)*
+11. `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` *(Contrato Visual Canônico — espelho human-readable do campo `defaultPreview` de todos os 76 `dss.meta.json`. Autoridade Nível 1 sobre aspectos visuais padrão. Ler sempre que implementar ou auditar o aspecto visual default de qualquer componente.)*
 
 ⚠️ **IMPORTANTE**  
 Nunca inferir padrões apenas observando um componente existente.  
@@ -193,6 +194,9 @@ Em caso de conflito, **NUNCA devem ser ignorados ou reinterpretados**.
 
 4. **DSS_COMPONENT_ARCHITECTURE.md**  
    → Arquitetura de 4 camadas, padrões obrigatórios, anti-patterns
+
+5. **DSS_REFERENCIA_VISUAL_ANALISE.md** *(Contrato Visual Canônico)*  
+   → Única fonte de verdade narrativa sobre o contrato visual default dos 76 componentes DSS. Espelho human-readable do campo `defaultPreview` de cada `dss.meta.json`. Em caso de conflito com qualquer outro documento sobre visual padrão, **este prevalece**. Em caso de conflito com o Figma, o Figma prevalece (Princípio #12).
 
 ---
 

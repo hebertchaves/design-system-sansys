@@ -1,3 +1,5 @@
+> 📌 **Nota de Governança:** O contrato visual normativo e detalhado componente-a-componente foi consolidado em [DSS_REFERENCIA_VISUAL_ANALISE.md](./DSS_REFERENCIA_VISUAL_ANALISE.md). Este documento descreve exclusivamente a **estratégia e arquitetura de validação** (Camadas 1-3) desse contrato.
+
 # DSS Visual Contract & Validation Strategy
 
 > **📅 Criado:** Maio 2026
