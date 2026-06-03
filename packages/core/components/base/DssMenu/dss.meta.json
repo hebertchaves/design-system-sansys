@@ -206,6 +206,12 @@
           ]
         }
       ]
+    },
+    "wrapIn": {
+      "component": "DssButton",
+      "props": {
+        "label": "Opções"
+      }
     }
   },
   "previewGroup": "navegacao"

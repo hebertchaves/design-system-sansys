@@ -264,6 +264,8 @@ const activeBrand = ref('')
 .demo-box {
   position: relative;
   overflow: hidden;
+  /* Cria novo containing block para position:fixed (DssAjaxBar, DssPageSticky) */
+  transform: translateZ(0);
   display: flex;
   align-items: center;
   justify-content: center;

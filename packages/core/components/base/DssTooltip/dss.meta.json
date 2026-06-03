@@ -44,6 +44,12 @@
     "demoContent": "Tooltip 'Informação adicional'",
     "demoSlots": {
       "default": "Informação adicional"
+    },
+    "wrapIn": {
+      "component": "DssButton",
+      "props": {
+        "label": "Hover para ver tooltip"
+      }
     }
   },
   "previewGroup": "indicadores"

@@ -189,7 +189,55 @@
     "computedDimensions": {},
     "computedTokens": {},
     "demoContent": "DssPopupProxy responsivo — abre QMenu em desktop e QDialog em mobile",
-    "demoSlots": null
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssList",
+          "children": [
+            {
+              "component": "DssItem",
+              "props": {
+                "clickable": true
+              },
+              "children": [
+                {
+                  "component": "DssItemSection",
+                  "children": [
+                    {
+                      "component": "DssItemLabel",
+                      "children": "Opção 1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "DssItem",
+              "props": {
+                "clickable": true
+              },
+              "children": [
+                {
+                  "component": "DssItemSection",
+                  "children": [
+                    {
+                      "component": "DssItemLabel",
+                      "children": "Opção 2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "wrapIn": {
+      "component": "DssButton",
+      "props": {
+        "label": "Abrir popup"
+      }
+    }
   },
   "previewGroup": "contextuais"
 }

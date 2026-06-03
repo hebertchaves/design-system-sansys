@@ -33,7 +33,7 @@ import DssIcon          from '@components/base/DssIcon/DssIcon.vue'
 import DssSpinner       from '@components/base/DssSpinner/DssSpinner.vue'
 import DssRating        from '@components/base/DssRating/DssRating.vue'
 import DssKnob          from '@components/base/DssKnob/DssKnob.vue'
-// DssTooltip excluído — teleporta para body via QTooltip, dispara no hover da página
+import DssTooltip       from '@components/base/DssTooltip/DssTooltip.vue'
 
 import DssInput         from '@components/base/DssInput/DssInput.vue'
 import DssSelect        from '@components/base/DssSelect/DssSelect.vue'
@@ -51,7 +51,7 @@ import DssLinearProgress   from '@components/base/DssLinearProgress/DssLinearPro
 import DssCircularProgress from '@components/base/DssCircularProgress/DssCircularProgress.vue'
 import DssSkeleton         from '@components/base/DssSkeleton/DssSkeleton.vue'
 import DssInnerLoading     from '@components/base/DssInnerLoading/DssInnerLoading.vue'
-// DssAjaxBar excluído — position:fixed no viewport, não contível por overflow:hidden
+import DssAjaxBar          from '@components/base/DssAjaxBar/DssAjaxBar.vue'
 
 import DssBanner        from '@components/base/DssBanner/DssBanner.vue'
 import DssBar           from '@components/base/DssBar/DssBar.vue'
@@ -64,7 +64,7 @@ import DssBreadcrumbs   from '@components/base/DssBreadcrumbs/DssBreadcrumbs.vue
 import DssBreadcrumbsEl from '@components/base/DssBreadcrumbsEl/DssBreadcrumbsEl.vue'
 import DssPagination    from '@components/base/DssPagination/DssPagination.vue'
 import DssExpansionItem from '@components/base/DssExpansionItem/DssExpansionItem.vue'
-// DssMenu excluído — QMenu teleporta para body como overlay flutuante
+import DssMenu          from '@components/base/DssMenu/DssMenu.vue'
 // DssRouteTab excluído do registry — requer vue-router, indisponível no sandbox
 
 import DssStepper       from '@components/base/DssStepper/DssStepper.vue'
@@ -105,7 +105,7 @@ import DssInfiniteScroll from '@components/base/DssInfiniteScroll/DssInfiniteScr
 import DssParallax       from '@components/base/DssParallax/DssParallax.vue'
 import DssVideo          from '@components/base/DssVideo/DssVideo.vue'
 import DssPullToRefresh  from '@components/base/DssPullToRefresh/DssPullToRefresh.vue'
-// DssPopupProxy excluído — overlay responsivo que teleporta para body
+import DssPopupProxy     from '@components/base/DssPopupProxy/DssPopupProxy.vue'
 import DssField          from '@components/base/DssField/DssField.vue'
 import DssResponsive     from '@components/base/DssResponsive/DssResponsive.vue'
 
@@ -127,7 +127,7 @@ const REGISTRY = {
   DssSpinner,
   DssRating,
   DssKnob,
-  // DssTooltip: excluído — teleporta para body
+  DssTooltip,
   DssInput,
   DssSelect,
   DssTextarea,
@@ -142,7 +142,7 @@ const REGISTRY = {
   DssCircularProgress,
   DssSkeleton,
   DssInnerLoading,
-  // DssAjaxBar: excluído — position:fixed no viewport
+  DssAjaxBar,
   DssBanner,
   DssBar,
   DssTabs,
@@ -153,7 +153,7 @@ const REGISTRY = {
   DssBreadcrumbsEl,
   DssPagination,
   DssExpansionItem,
-  // DssMenu: excluído — QMenu teleporta para body
+  DssMenu,
   DssStepper,
   DssStep,
   DssList,
@@ -185,7 +185,7 @@ const REGISTRY = {
   DssParallax,
   DssVideo,
   DssPullToRefresh,
-  // DssPopupProxy: excluído — overlay que teleporta para body
+  DssPopupProxy,
   DssField,
   DssResponsive,
 }

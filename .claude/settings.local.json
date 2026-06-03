@@ -16,7 +16,8 @@
       "Read(//mnt/c/Users/hebert.chaves/DSS/apps/**)",
       "Bash(git commit -m 'fix\\(preview\\): DssAjaxBar.position corrigido para valor válido '\\\\''top'\\\\'' *)",
       "Bash(npm install *)",
-      "Bash(npm *)"
+      "Bash(npm *)",
+      "Bash(git commit -m 'fix\\(preview\\): DssDrawer.modelValue corrigido para false — estado default é fechado *)"
     ]
   },
   "enableAllProjectMcpServers": true,
