@@ -4,6 +4,34 @@
 
 ---
 
+## 🚀 Configuração Inicial do Ambiente (Monorepo)
+
+> **Execute estes comandos uma vez após clonar o repositório.**
+
+### Instalar dependências do monorepo
+
+```bash
+npm install
+```
+
+### Instalar hooks de pre-commit (obrigatório)
+
+```bash
+npm run setup:hooks
+```
+
+**Propósito de governança:** Instala o hook de pre-commit que executa automaticamente o script `scripts/sync-visual-contract.js` a cada commit. O script sincroniza o arquivo `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` (contrato visual canônico) com o campo `defaultPreview` dos `dss.meta.json` de todos os componentes. Sem esse hook, modificações nos JSONs de preview não serão refletidas no catálogo documental.
+
+### Sincronização manual do contrato visual (se necessário)
+
+```bash
+npm run sync:visual-contract
+```
+
+Executa o mesmo script do hook de forma avulsa, sem precisar fazer um commit.
+
+---
+
 ## ✅ Passo a Passo (Windows)
 
 ### Passo 1: Abrir Terminal no VSCode

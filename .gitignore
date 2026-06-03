@@ -16,3 +16,15 @@ yarn-error.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Build Outputs
+dist/
+.svelte-kit/
+.next/
+.nuxt/
+out/
+build/
+
+# Ignorar especificamente dists dentro de apps e packages
+apps/*/dist/
+packages/*/dist/

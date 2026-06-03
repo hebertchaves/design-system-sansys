@@ -400,12 +400,37 @@ npm run build:all
 npm run portal:sync-docs
 ```
 
+### 🪝 **Git Hooks e Sincronização Automatizada**
+
+Após clonar o repositório, execute o seguinte comando para instalar o hook de pre-commit:
+
+```bash
+npm run setup:hooks
+```
+
+**Por que isso é necessário?**  
+O hook de pre-commit executa automaticamente o script `scripts/sync-visual-contract.js` a cada commit. Esse script lê os campos `defaultPreview` de todos os `dss.meta.json` dos componentes e regera o catálogo Markdown `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md`, garantindo que o contrato visual canônico esteja sempre sincronizado com a fonte de verdade dos JSONs — sem risco de divergência entre documentação e código.
+
+**Fluxo resumido:**
+```
+git commit
+  └─► pre-commit hook
+        └─► scripts/sync-visual-contract.js
+              └─► Atualiza DSS_REFERENCIA_VISUAL_ANALISE.md (seção auto-gerada)
+                    └─► Arquivo adicionado ao staging e commit prossegue
+```
+
+> ⚠️ **Sem esse hook instalado**, alterações em `dss.meta.json` não serão refletidas automaticamente no contrato visual. O commit ainda funciona, mas a documentação pode ficar desatualizada.
+
+---
+
 ### ✨ **Workflow Recomendado**
 
 1. **Inicialização**: Execute `npm install` na raiz do monorepo
-2. **Durante desenvolvimento**: Use `npm run core:build` e `npm run sandbox:dev`
-3. **Antes de commit**: Execute `npm run core:build` para garantir que o build compila
-4. **Testes**: Todos os 76 componentes possuem `test.js` — gate de build bloqueante
+2. **Hooks**: Execute `npm run setup:hooks` para instalar o hook de sincronização (único por clone)
+3. **Durante desenvolvimento**: Use `npm run core:build` e `npm run sandbox:dev`
+4. **Antes de commit**: Execute `npm run core:build` para garantir que o build compila
+5. **Testes**: Todos os 76 componentes possuem `test.js` — gate de build bloqueante
 
 ### ⚠️ **Importante: Build de Componentes**
 
