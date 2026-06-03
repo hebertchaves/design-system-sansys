@@ -6997,7 +6997,7 @@ function GridSystemProvider({
     margin: ((_k = persisted == null ? void 0 : persisted.component) == null ? void 0 : _k.margin) ?? ((_l = ic2 == null ? void 0 : ic2.layout) == null ? void 0 : _l.margin) ?? { x: 0, y: 0 },
     padding: ((_m = persisted == null ? void 0 : persisted.component) == null ? void 0 : _m.padding) ?? ((_n = ic2 == null ? void 0 : ic2.layout) == null ? void 0 : _n.padding) ?? { x: 24, y: 24 }
   });
-  const [showGrid, setShowGrid] = reactExports.useState((persisted == null ? void 0 : persisted.showGrid) ?? true);
+  const [showGrid, setShowGrid] = reactExports.useState((persisted == null ? void 0 : persisted.showGrid) ?? false);
   const [autoColumnWidth, setAutoColumnWidth] = reactExports.useState((persisted == null ? void 0 : persisted.autoColumnWidth) ?? true);
   const [showInspector, setShowInspector] = reactExports.useState(true);
   const [showRows, setShowRows] = reactExports.useState(true);

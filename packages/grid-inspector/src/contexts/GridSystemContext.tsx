@@ -125,7 +125,7 @@ export function GridSystemProvider({
   });
 
   // UI State
-  const [showGrid, setShowGrid] = useState(persisted?.showGrid ?? true);
+  const [showGrid, setShowGrid] = useState(persisted?.showGrid ?? false);
   const [autoColumnWidth, setAutoColumnWidth] = useState(persisted?.autoColumnWidth ?? true);
   const [showInspector, setShowInspector] = useState(true);
   const [showRows, setShowRows] = useState(true);
