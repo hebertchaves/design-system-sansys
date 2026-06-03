@@ -22,6 +22,10 @@
     "update:meta-preview": "node scripts/update-meta-preview.cjs",
     "setup:hooks": "cp scripts/hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit && echo 'Git hooks instalados.'"
   },
+  "overrides": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  },
   "dependencies": {
     "@swc/core-linux-x64-gnu": "^1.15.8"
   }

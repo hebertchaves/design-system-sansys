@@ -14,7 +14,9 @@
       "Bash(python3 *)",
       "Bash(npm run *)",
       "Read(//mnt/c/Users/hebert.chaves/DSS/apps/**)",
-      "Bash(git commit -m 'fix\\(preview\\): DssAjaxBar.position corrigido para valor válido '\\\\''top'\\\\'' *)"
+      "Bash(git commit -m 'fix\\(preview\\): DssAjaxBar.position corrigido para valor válido '\\\\''top'\\\\'' *)",
+      "Bash(npm install *)",
+      "Bash(npm *)"
     ]
   },
   "enableAllProjectMcpServers": true,

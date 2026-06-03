@@ -26,7 +26,8 @@
       "@/*": ["./src/*"]
     },
 
-    /* Types */
+    /* Types — usa @types da raiz do monorepo para evitar conflito dual @types/react */
+    "typeRoots": ["../../node_modules/@types", "./node_modules/@types"],
     "types": ["vite/client"],
 
     /* Declaration */
