@@ -1825,7 +1825,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssDataCard | contextuais | — | — | — |
 | DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
 | DssDialog | contextuais | — | — | — |
-| DssDrawer | layout | modelValue, persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
+| DssDrawer | layout | persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
 | DssExpansionItem | navegacao | label:Expansível, icon:expand_more, modelValue | minHeight:44px | Item expansível com conteúdo |
 | DssFab | acoes | color:primary, icon:add, label:Adicionar | minHeight:56px, minWidth:56px | FAB com ícone 'add' |
 | DssFabAction | acoes | color:primary, icon:mail, label:Email | minHeight:40px, minWidth:40px | FAB Action com ícone 'mail' |
@@ -1893,5 +1893,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-03T17:31:00.118Z_
+_Gerado em: 2026-06-03T18:13:15.476Z_
 <!-- END:AUTO-GENERATED -->

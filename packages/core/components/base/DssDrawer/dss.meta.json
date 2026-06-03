@@ -196,7 +196,7 @@
   ],
   "defaultPreview": {
     "props": {
-      "modelValue": true,
+      "modelValue": false,
       "persistent": true,
       "width": 150
     },
