@@ -78,7 +78,14 @@
       "shadow": "--dss-shadow-sm"
     },
     "demoContent": "FAB Action com ícone 'mail'",
-    "demoSlots": null
+    "demoSlots": null,
+    "wrapIn": {
+      "component": "DssFab",
+      "props": {
+        "icon": "add",
+        "color": "primary"
+      }
+    }
   },
   "tokens": {
     "shape": [

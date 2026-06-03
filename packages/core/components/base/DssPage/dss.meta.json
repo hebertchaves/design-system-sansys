@@ -159,6 +159,12 @@
           "html": "<div style='padding:16px'>Conteúdo da página</div>"
         }
       ]
+    },
+    "wrapIn": {
+      "component": "DssLayout",
+      "props": {
+        "style": "height:80px;position:relative;overflow:hidden"
+      }
     }
   },
   "previewGroup": "layout"

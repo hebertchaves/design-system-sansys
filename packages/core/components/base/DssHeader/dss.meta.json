@@ -169,6 +169,12 @@
           ]
         }
       ]
+    },
+    "wrapIn": {
+      "component": "DssLayout",
+      "props": {
+        "style": "height:80px;position:relative;overflow:hidden"
+      }
     }
   },
   "previewGroup": "layout"

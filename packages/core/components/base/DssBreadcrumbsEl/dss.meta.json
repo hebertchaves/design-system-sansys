@@ -158,7 +158,11 @@
       "textColor": "--dss-text-action"
     },
     "demoContent": "Item de breadcrumb 'Home'",
-    "demoSlots": null
+    "demoSlots": null,
+    "wrapIn": {
+      "component": "DssBreadcrumbs",
+      "props": {}
+    }
   },
   "previewGroup": "navegacao"
 }

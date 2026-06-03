@@ -271,6 +271,8 @@ function buildSlots(demoSlots) {
   return slots
 }
 
+const FALLBACK_STYLE = 'color:orange;font-size:11px;font-family:monospace;padding:4px'
+
 // ── Componente ────────────────────────────────────────────────────────────────
 export default defineComponent({
   name: 'DemoRenderer',
@@ -282,38 +284,51 @@ export default defineComponent({
     },
   },
 
+  data() {
+    return { renderError: null }
+  },
+
+  // Captura erros de componentes filhos (ex: QFabAction sem QFab pai)
+  errorCaptured(err) {
+    this.renderError = err.message || String(err)
+    return false
+  },
+
   render() {
     const { meta } = this
-    const componentName = meta.component
 
+    if (this.renderError) {
+      return h('div', { style: FALLBACK_STYLE }, `⚠ ${meta?.component} (ctx)`)
+    }
+
+    const componentName = meta.component
     if (!componentName) {
-      return h(
-        'div',
-        { style: 'color:orange;font-size:11px;font-family:monospace' },
-        '⚠ meta.component ausente'
-      )
+      return h('div', { style: FALLBACK_STYLE }, '⚠ meta.component ausente')
     }
 
     const comp = REGISTRY[componentName]
-
     if (!comp) {
-      return h(
-        'div',
-        { style: 'color:orange;font-size:11px;font-family:monospace' },
-        `⚠ ${componentName}`
-      )
+      return h('div', { style: FALLBACK_STYLE }, `⚠ ${componentName}`)
     }
 
     const props = (meta.defaultPreview && meta.defaultPreview.props) || {}
     const demoSlots = meta.defaultPreview && meta.defaultPreview.demoSlots
 
-    const slots = buildSlots(demoSlots)
-
-    if (slots) {
-      return h(comp, props, slots)
+    // Suporte a wrapIn: componentes que precisam de contexto pai
+    // Ex: DssFabAction precisa de DssFab; DssStep precisa de DssStepper
+    const wrapIn = meta.defaultPreview && meta.defaultPreview.wrapIn
+    if (wrapIn) {
+      const wrapper = REGISTRY[wrapIn.component]
+      if (wrapper) {
+        const inner = buildSlots(demoSlots)
+          ? h(comp, props, buildSlots(demoSlots))
+          : h(comp, props)
+        return h(wrapper, wrapIn.props || {}, { default: () => inner })
+      }
     }
 
-    return h(comp, props)
+    const slots = buildSlots(demoSlots)
+    return slots ? h(comp, props, slots) : h(comp, props)
   },
 })
 </script>

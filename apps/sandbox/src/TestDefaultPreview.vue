@@ -90,13 +90,13 @@
 import { ref, computed } from 'vue'
 import DemoRenderer from './DemoRenderer.vue'
 
-import DssToolbar      from '@dss/DssToolbar'
-import DssToolbarTitle from '@dss/DssToolbarTitle'
-import DssSpace        from '@dss/DssSpace'
-import DssBadge        from '@dss/DssBadge'
-import DssChip         from '@dss/DssChip'
-import { DssCard, DssCardSection } from '@dss/DssCard'
-import DssSeparator    from '@dss/DssSeparator'
+import { DssToolbar }      from '@components/base/DssToolbar'
+import { DssToolbarTitle } from '@components/base/DssToolbarTitle'
+import { DssSpace }        from '@components/base/DssSpace'
+import { DssBadge }        from '@components/base/DssBadge'
+import { DssChip }         from '@components/base/DssChip'
+import { DssCard, DssCardSection } from '@components/base/DssCard'
+import { DssSeparator }    from '@components/base/DssSeparator'
 
 // ── Carregar todos os dss.meta.json via import.meta.glob ──────────────────────
 const rawMetas = import.meta.glob(

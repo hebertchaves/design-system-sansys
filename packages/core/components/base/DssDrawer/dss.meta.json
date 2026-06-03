@@ -215,7 +215,13 @@
       "textColor": "--dss-text-body"
     },
     "demoContent": "Painel lateral com navegação",
-    "demoSlots": null
+    "demoSlots": null,
+    "wrapIn": {
+      "component": "DssLayout",
+      "props": {
+        "style": "height:80px;position:relative;overflow:hidden"
+      }
+    }
   },
   "previewGroup": "layout"
 }

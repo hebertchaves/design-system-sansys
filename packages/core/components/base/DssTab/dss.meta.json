@@ -138,7 +138,13 @@
       "textColor": "--dss-text-secondary"
     },
     "demoContent": "Tab 'Início'",
-    "demoSlots": null
+    "demoSlots": null,
+    "wrapIn": {
+      "component": "DssTabs",
+      "props": {
+        "modelValue": "tab1"
+      }
+    }
   },
   "previewGroup": "navegacao"
 }

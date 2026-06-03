@@ -184,6 +184,12 @@
     "demoContent": "Etapa 1 — Informações básicas",
     "demoSlots": {
       "default": "Conteúdo da etapa."
+    },
+    "wrapIn": {
+      "component": "DssStepper",
+      "props": {
+        "modelValue": "passo1"
+      }
     }
   },
   "previewGroup": "stepper"
