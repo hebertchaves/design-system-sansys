@@ -130,7 +130,8 @@
   "defaultPreview": {
     "props": {
       "label": "Início",
-      "to": "/"
+      "to": "/",
+      "name": "inicio"
     },
     "computedDimensions": {
       "minHeight": "44px"
@@ -145,6 +146,8 @@
       "surface": "none",
       "textColor": "--dss-text-secondary"
     },
-    "demoContent": "Tab de rota 'Início'"
-  }
+    "demoContent": "Tab de rota 'Início'",
+    "demoSlots": null
+  },
+  "previewGroup": "navegacao"
 }

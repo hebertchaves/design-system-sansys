@@ -49,7 +49,8 @@ A criação de qualquer componente DSS **exige leitura prévia** dos seguintes a
 8. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(arquivado pós-estabilização Fase 2)*
 9. `.github/pull_request_template.md`
 10. `docs/governance/DSS_MONOREPO_PATH_MAP.md` *(mapeamento canônico de caminhos do Monorepo — obrigatório para qualquer importação SCSS ou JS/TS entre pacotes)*
-11. `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` *(Contrato Visual Canônico — espelho human-readable do campo `defaultPreview` de todos os 76 `dss.meta.json`. Autoridade Nível 1 sobre aspectos visuais padrão. Ler sempre que implementar ou auditar o aspecto visual default de qualquer componente.)*
+11. `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` *(Contrato Visual Canônico — espelho human-readable do campo `defaultPreview` de todos os `dss.meta.json`. A seção de dados é **auto-gerada** via `npm run sync:visual-contract`. Autoridade Nível 1 sobre aspectos visuais padrão. Ler sempre que implementar ou auditar o aspecto visual default de qualquer componente.)*
+12. `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` *(Workflow do Preview Data-Driven — descreve os campos `previewGroup` e `demoSlots` do `dss.meta.json`, o componente `DemoRenderer.vue`, os scripts de manutenção e o pre-commit hook. Leitura obrigatória antes de modificar qualquer campo de preview ou o sandbox.)*
 
 ⚠️ **IMPORTANTE**  
 Nunca inferir padrões apenas observando um componente existente.  
@@ -196,7 +197,7 @@ Em caso de conflito, **NUNCA devem ser ignorados ou reinterpretados**.
    → Arquitetura de 4 camadas, padrões obrigatórios, anti-patterns
 
 5. **DSS_REFERENCIA_VISUAL_ANALISE.md** *(Contrato Visual Canônico)*  
-   → Única fonte de verdade narrativa sobre o contrato visual default dos 76 componentes DSS. Espelho human-readable do campo `defaultPreview` de cada `dss.meta.json`. Em caso de conflito com qualquer outro documento sobre visual padrão, **este prevalece**. Em caso de conflito com o Figma, o Figma prevalece (Princípio #12).
+   → Única fonte de verdade narrativa sobre o contrato visual default dos componentes DSS. Espelho human-readable do campo `defaultPreview` de cada `dss.meta.json`. A seção de dados é auto-gerada — **nunca editar manualmente** a região delimitada por `<!-- BEGIN:AUTO-GENERATED -->`. Em caso de conflito com qualquer outro documento sobre visual padrão, **este prevalece**. Em caso de conflito com o Figma, o Figma prevalece (Princípio #12).
 
 ---
 
@@ -254,7 +255,7 @@ components/base/DssNomeComponente/
 ├── DssNomeComponente.example.vue     ← Exemplos interativos (min. 3 cenarios)
 ├── DssNomeComponente.vue             ← ENTRY POINT WRAPPER: re-export puro para 1-structure/
 ├── DSSNOMECOMPONENTE_API.md          ← API Reference (props, slots, events, tokens)
-├── dss.meta.json                     ← Metadados: Golden Context, tokens, audit status
+├── dss.meta.json                     ← Metadados: Golden Context, tokens, audit status, previewGroup, demoSlots
 ├── README.md                         ← Quick start e links
 └── index.js                          ← Barrel export (exporta wrapper + types + composables)
 ```
@@ -329,7 +330,7 @@ O componente so e considerado valido — e elegivel para auditoria e selo — se
 - [ ] **Entry Point Wrapper** (`DssNomeComponente.vue`) existe e e re-export puro
 - [ ] **Orchestrador SCSS** (`DssNomeComponente.module.scss`) importa L2 → L3 → L4 na ordem
 - [ ] **Barrel export** (`index.js`) exporta componente, types e composables
-- [ ] **dss.meta.json** existe com `goldenReference` e `goldenContext` declarados
+- [ ] **dss.meta.json** existe com `goldenReference`, `goldenContext`, `previewGroup` e `defaultPreview.demoSlots` declarados
 
 ### Gate Tecnico (Bloqueante)
 - [ ] Nenhum valor hardcoded (Token First)

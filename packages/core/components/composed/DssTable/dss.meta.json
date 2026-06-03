@@ -127,7 +127,9 @@
     "density": "standard",
     "bordered": false,
     "flat": false,
-    "separator": "horizontal"
+    "separator": "horizontal",
+    "demoSlots": null
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "contextuais"
 }

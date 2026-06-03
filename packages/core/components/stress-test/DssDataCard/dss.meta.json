@@ -91,10 +91,12 @@
     "variant": "elevated",
     "brand": null,
     "tabs": [],
-    "totalItems": 0
+    "totalItems": 0,
+    "demoSlots": null
   },
   "createdAt": "2026-04-24",
   "inAuditSince": "2026-05-23",
   "sealedAt": "2026-05-23",
-  "sealPath": "DSS/docs/Compliance/seals/DssDataCard/DSSDATACARD_SELO_v2.2.md"
+  "sealPath": "DSS/docs/Compliance/seals/DssDataCard/DSSDATACARD_SELO_v2.2.md",
+  "previewGroup": "contextuais"
 }

@@ -179,8 +179,9 @@
   ],
   "defaultPreview": {
     "props": {
-      "label": "Título",
-      "icon": "expand_more"
+      "label": "Expansível",
+      "icon": "expand_more",
+      "modelValue": true
     },
     "computedDimensions": {
       "minHeight": "44px"
@@ -195,6 +196,10 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Item expansível com conteúdo"
-  }
+    "demoContent": "Item expansível com conteúdo",
+    "demoSlots": {
+      "default": "Conteúdo expandido do item."
+    }
+  },
+  "previewGroup": "navegacao"
 }

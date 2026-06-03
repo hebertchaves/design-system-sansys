@@ -163,6 +163,18 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Toolbar com título e ações"
-  }
+    "demoContent": "Toolbar com título e ações",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssToolbarTitle",
+          "children": "Título da Toolbar"
+        },
+        {
+          "component": "DssSpace"
+        }
+      ]
+    }
+  },
+  "previewGroup": "cartoes"
 }

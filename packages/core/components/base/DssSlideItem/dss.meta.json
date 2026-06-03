@@ -102,7 +102,20 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Item com ações deslizáveis (esquerda/direita)"
+    "demoContent": "Item com ações deslizáveis (esquerda/direita)",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssItemSection",
+          "children": [
+            {
+              "component": "DssItemLabel",
+              "children": "Deslize para ver ações"
+            }
+          ]
+        }
+      ]
+    }
   },
   "auditHistory": [
     {
@@ -146,5 +159,6 @@
         }
       ]
     }
-  ]
+  ],
+  "previewGroup": "listas"
 }

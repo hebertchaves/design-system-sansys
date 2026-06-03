@@ -17,15 +17,36 @@
   },
   "phaseDescription": "Fase 2, Nível 3 — Composição de Segundo Grau. Motor: QDate (infraestrutura Quasar). Dependências internas: nenhuma (widget autossuficiente). Composição externa recomendada: DssButton (para confirmar/cancelar), DssDialog ou DssPopupProxy (para modal/trigger).",
   "statesApplicable": [
-    { "state": "hover", "location": "Células do calendário via .q-date__calendar-item button:hover e setas de navegação via .q-date__arrow button:hover" },
-    { "state": "focus", "location": "Root .q-date.dss-date-picker via :focus-visible" },
-    { "state": "disabled", "location": "Root via aria-disabled='true' — opacity: var(--dss-opacity-disabled)" },
-    { "state": "readonly", "location": "Root via .q-date--readonly — cursor: default" }
+    {
+      "state": "hover",
+      "location": "Células do calendário via .q-date__calendar-item button:hover e setas de navegação via .q-date__arrow button:hover"
+    },
+    {
+      "state": "focus",
+      "location": "Root .q-date.dss-date-picker via :focus-visible"
+    },
+    {
+      "state": "disabled",
+      "location": "Root via aria-disabled='true' — opacity: var(--dss-opacity-disabled)"
+    },
+    {
+      "state": "readonly",
+      "location": "Root via .q-date--readonly — cursor: default"
+    }
   ],
   "statesNotApplicable": [
-    { "state": "active", "reason": "QDate gerencia internamente o estado ativo dos dias selecionados e do range via EXC-Gate-02b" },
-    { "state": "loading", "reason": "QDate é síncrono — sem estado de carregamento. Para loading, consumidor deve wrapping com DssInnerLoading" },
-    { "state": "error", "reason": "DssDatePicker é widget visual; validação é responsabilidade do consumidor (ex: DssField wrapping)" }
+    {
+      "state": "active",
+      "reason": "QDate gerencia internamente o estado ativo dos dias selecionados e do range via EXC-Gate-02b"
+    },
+    {
+      "state": "loading",
+      "reason": "QDate é síncrono — sem estado de carregamento. Para loading, consumidor deve wrapping com DssInnerLoading"
+    },
+    {
+      "state": "error",
+      "reason": "DssDatePicker é widget visual; validação é responsabilidade do consumidor (ex: DssField wrapping)"
+    }
   ],
   "tokens": [
     "--dss-action-primary",
@@ -89,11 +110,22 @@
     "Usar prop options para restringir datas em calendários de negócio (apenas dias úteis, etc.)",
     "Para seleção de período, usar range=true com modelValue como objeto { from, to }"
   ],
-  "propsBlocked": ["color", "textColor", "dark", "square", "flat", "bordered"],
+  "propsBlocked": [
+    "color",
+    "textColor",
+    "dark",
+    "square",
+    "flat",
+    "bordered"
+  ],
   "defaultPreview": {
-    "props": { "modelValue": "2026/05/22" },
+    "props": {
+      "modelValue": "2026/05/22"
+    },
     "computedTokens": {
       "--q-color-primary": "var(--dss-action-primary)"
-    }
-  }
+    },
+    "demoSlots": null
+  },
+  "previewGroup": "contextuais"
 }

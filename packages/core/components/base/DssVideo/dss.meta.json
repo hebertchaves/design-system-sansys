@@ -56,7 +56,7 @@
   ],
   "defaultPreview": {
     "props": {
-      "src": "[URL do vídeo]",
+      "src": "",
       "title": "[Descrição]",
       "ratio": 1.78
     },
@@ -70,7 +70,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "none"
     },
-    "demoContent": "Vídeo 16:9 incorporado"
+    "demoContent": "Vídeo 16:9 incorporado",
+    "demoSlots": null
   },
   "auditHistory": [
     {
@@ -84,5 +85,6 @@
       "sealFile": "DSS/docs/Compliance/seals/DssVideo/DSSVIDEO_SELO_v2.2.md",
       "summary": "Auditoria inicial. 2 NCs corrigidas (forced-color-adjust removido; ratio string→número). 4 GAPs corrigidos no pré-prompt (Golden Context, API QVideo incorreta com props inexistentes, tokens fantasmas, estados N/A). 0 Ressalvas. Selo emitido."
     }
-  ]
+  ],
+  "previewGroup": "contextuais"
 }

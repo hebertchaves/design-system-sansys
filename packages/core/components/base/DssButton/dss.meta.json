@@ -30,7 +30,10 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
-    "demoContent": "Label 'Action'"
+    "demoContent": "Label 'Action'",
+    "demoSlots": {
+      "default": "Ação Principal"
+    }
   },
   "tokens": {
     "spacing": [
@@ -94,5 +97,6 @@
       "--dss-gradient-glossy",
       "--dss-gradient-glossy-active"
     ]
-  }
+  },
+  "previewGroup": "acoes"
 }

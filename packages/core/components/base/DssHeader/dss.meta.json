@@ -156,6 +156,20 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-sm"
     },
-    "demoContent": "Cabeçalho com logo e ações"
-  }
+    "demoContent": "Cabeçalho com logo e ações",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssToolbar",
+          "children": [
+            {
+              "component": "DssToolbarTitle",
+              "children": "Cabeçalho DSS"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "previewGroup": "layout"
 }

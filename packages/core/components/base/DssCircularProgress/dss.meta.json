@@ -106,7 +106,7 @@
   ],
   "defaultPreview": {
     "props": {
-      "value": 0.7,
+      "value": 70,
       "size": "md",
       "color": "primary"
     },
@@ -121,7 +121,9 @@
       "surface": "none",
       "textColor": "--dss-action-primary"
     },
-    "demoContent": "Progresso circular 70%"
+    "demoContent": "Progresso circular 70%",
+    "demoSlots": null
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "progresso"
 }

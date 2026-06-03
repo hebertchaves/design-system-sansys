@@ -14,7 +14,9 @@
     "props": {
       "variant": "outlined",
       "type": "text",
-      "dense": false
+      "dense": false,
+      "label": "Campo",
+      "placeholder": "Digite aqui"
     },
     "computedDimensions": {
       "minHeight": "44px",
@@ -30,6 +32,8 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Placeholder 'Digite aqui'"
-  }
+    "demoContent": "Placeholder 'Digite aqui'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-campos"
 }

@@ -165,7 +165,10 @@
     "--dss-waste-600"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "name": "passo1",
+      "title": "Passo 1"
+    },
     "computedDimensions": {
       "minHeight": "44px"
     },
@@ -178,6 +181,10 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Etapa 1 — Informações básicas"
-  }
+    "demoContent": "Etapa 1 — Informações básicas",
+    "demoSlots": {
+      "default": "Conteúdo da etapa."
+    }
+  },
+  "previewGroup": "stepper"
 }

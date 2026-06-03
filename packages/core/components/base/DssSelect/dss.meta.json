@@ -73,7 +73,12 @@
   ],
   "defaultPreview": {
     "props": {
-      "variant": "outlined"
+      "variant": "outlined",
+      "label": "Seleção",
+      "options": [
+        "Opção 1",
+        "Opção 2"
+      ]
     },
     "computedDimensions": {
       "minHeight": "44px",
@@ -89,6 +94,8 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Placeholder 'Selecione uma opção'"
-  }
+    "demoContent": "Placeholder 'Selecione uma opção'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-campos"
 }

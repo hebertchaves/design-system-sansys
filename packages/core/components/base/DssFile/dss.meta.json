@@ -10,7 +10,9 @@
   "goldenSample": "DssButton",
   "touchTarget": "option-a",
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "label": "Arquivo"
+    },
     "computedDimensions": {
       "minHeight": "44px"
     },
@@ -24,7 +26,8 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Seleção de arquivo"
+    "demoContent": "Seleção de arquivo",
+    "demoSlots": null
   },
   "tokens": [
     "--dss-input-height-md",
@@ -89,5 +92,7 @@
   "auditMode": "full-2-cycles",
   "auditDate": "2026-03-24",
   "seal": "DSS v2.2",
-  "hasReservations": false
+  "hasReservations": false,
+  "previewGroup": "form-campos",
+  "component": "DssFile"
 }

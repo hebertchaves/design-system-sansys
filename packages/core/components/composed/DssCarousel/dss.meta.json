@@ -17,14 +17,32 @@
   },
   "phaseDescription": "Fase 2, Nível 2 — Composição de Primeiro Grau. Depende de DssButton e DssIcon (Fase 1 — selados). Sub-componente: DssCarouselSlide (incluído neste pacote).",
   "statesApplicable": [
-    { "state": "hover", "location": "Setas e pontos de paginação (QBtn interno)" },
-    { "state": "focus", "location": "Setas e pontos de paginação (QBtn interno com foco DSS global)" },
-    { "state": "active", "location": "Setas e pontos de paginação (QBtn interno)" }
+    {
+      "state": "hover",
+      "location": "Setas e pontos de paginação (QBtn interno)"
+    },
+    {
+      "state": "focus",
+      "location": "Setas e pontos de paginação (QBtn interno com foco DSS global)"
+    },
+    {
+      "state": "active",
+      "location": "Setas e pontos de paginação (QBtn interno)"
+    }
   ],
   "statesNotApplicable": [
-    { "state": "disabled", "reason": "O carousel em si não possui estado disabled — slides individuais podem ser disable=true" },
-    { "state": "loading", "reason": "Conteúdo gerenciado pelo consumidor — use DssInnerLoading externamente se necessário" },
-    { "state": "error", "reason": "N/A — carousel é container de apresentação" }
+    {
+      "state": "disabled",
+      "reason": "O carousel em si não possui estado disabled — slides individuais podem ser disable=true"
+    },
+    {
+      "state": "loading",
+      "reason": "Conteúdo gerenciado pelo consumidor — use DssInnerLoading externamente se necessário"
+    },
+    {
+      "state": "error",
+      "reason": "N/A — carousel é container de apresentação"
+    }
   ],
   "tokens": [
     "--dss-action-primary",
@@ -143,5 +161,9 @@
       ],
       "seal": "DSSCcarousel_SELO_v2.2"
     }
-  ]
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null
+  }
 }

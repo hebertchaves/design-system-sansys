@@ -12,7 +12,8 @@
   "hasReservations": true,
   "defaultPreview": {
     "props": {
-      "size": "md"
+      "size": "md",
+      "icon": "person"
     },
     "computedDimensions": {
       "minHeight": "40px",
@@ -27,6 +28,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Iniciais 'AB'"
-  }
+    "demoContent": "Iniciais 'AB'",
+    "demoSlots": null
+  },
+  "previewGroup": "indicadores"
 }

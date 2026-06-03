@@ -5,7 +5,15 @@
       "Bash(npx sass *)",
       "Bash(awk '{print $2}')",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(xargs -I{} sh -c 'echo \"{}:\" && python3 -m json.tool {} | grep -E '\"'\"'\"component\"|\"category\"|\"demoContent\"'\"'\"' | head -3 && echo \"---\"')",
+      "Bash(node *)",
+      "Bash(grep -v \"^$\")",
+      "Bash(grep -v \"Warning\\\\|incurs\\\\|eliminate\\\\|Use \\\\`node\")",
+      "Bash(grep -v \"WARNING\\\\|Warning\\\\|incurs\\\\|eliminate\\\\|Use \\\\`node\\\\|\\\\[MODULE\")",
+      "Bash(python3 *)",
+      "Bash(npm run *)",
+      "Read(//mnt/c/Users/hebert.chaves/DSS/apps/**)"
     ]
   },
   "enableAllProjectMcpServers": true,

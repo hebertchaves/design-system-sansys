@@ -151,7 +151,50 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
-    "demoContent": "Botão 'Opções' com menu dropdown"
+    "demoContent": "Botão 'Opções' com menu dropdown",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssList",
+          "children": [
+            {
+              "component": "DssItem",
+              "props": {
+                "clickable": true
+              },
+              "children": [
+                {
+                  "component": "DssItemSection",
+                  "children": [
+                    {
+                      "component": "DssItemLabel",
+                      "children": "Editar"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "DssItem",
+              "props": {
+                "clickable": true
+              },
+              "children": [
+                {
+                  "component": "DssItemSection",
+                  "children": [
+                    {
+                      "component": "DssItemLabel",
+                      "children": "Duplicar"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   },
   "tokens": {
     "surface": [
@@ -180,5 +223,6 @@
       "--dss-waste-600",
       "--dss-waste-500"
     ]
-  }
+  },
+  "previewGroup": "acoes"
 }

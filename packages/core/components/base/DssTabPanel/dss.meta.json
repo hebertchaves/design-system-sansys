@@ -122,7 +122,9 @@
     "--dss-waste-500"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "name": "inicio"
+    },
     "computedDimensions": {
       "minHeight": "48px"
     },
@@ -136,6 +138,8 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Conteúdo do painel de aba"
-  }
+    "demoContent": "Conteúdo do painel de aba",
+    "demoSlots": null
+  },
+  "previewGroup": "navegacao"
 }

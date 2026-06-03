@@ -29,6 +29,10 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
-    "demoContent": "Label '99+'"
-  }
+    "demoContent": "Label '99+'",
+    "demoSlots": {
+      "default": "99+"
+    }
+  },
+  "previewGroup": "indicadores"
 }

@@ -62,6 +62,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "none"
     },
-    "demoContent": "Linha divisória horizontal"
-  }
+    "demoContent": "Linha divisória horizontal",
+    "demoSlots": null
+  },
+  "previewGroup": "listas"
 }

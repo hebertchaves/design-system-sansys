@@ -133,5 +133,9 @@
       ],
       "notes": "Componente aprovado para selo após correção das 4 NCs não-bloqueantes. EXC-Gate-01 (QDialog motor) e EXC-01/02 (CSS !important, dimensões hardcoded) formalmente documentados com precedentes."
     }
-  ]
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null
+  }
 }

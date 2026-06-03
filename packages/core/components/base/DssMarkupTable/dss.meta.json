@@ -169,7 +169,15 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Tabela com thead/tbody padrão"
+    "demoContent": "Tabela com thead/tbody padrão",
+    "demoSlots": {
+      "default": [
+        {
+          "html": "<thead><tr><th>Nome</th><th>Valor</th></tr></thead><tbody><tr><td>Item A</td><td>100</td></tr><tr><td>Item B</td><td>200</td></tr></tbody>"
+        }
+      ]
+    }
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "cartoes"
 }

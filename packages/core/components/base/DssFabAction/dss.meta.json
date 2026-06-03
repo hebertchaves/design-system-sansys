@@ -62,7 +62,8 @@
   "defaultPreview": {
     "props": {
       "color": "primary",
-      "icon": "mail"
+      "icon": "mail",
+      "label": "Email"
     },
     "computedDimensions": {
       "minHeight": "40px",
@@ -76,7 +77,8 @@
       "textColor": "--dss-text-inverse",
       "shadow": "--dss-shadow-sm"
     },
-    "demoContent": "FAB Action com ícone 'mail'"
+    "demoContent": "FAB Action com ícone 'mail'",
+    "demoSlots": null
   },
   "tokens": {
     "shape": [
@@ -153,5 +155,6 @@
     "Para ações de navegação interna, usar prop `to` (Vue Router). Para links externos, usar `href`.",
     "Usar externalLabel para identificar ações em FABs com direção 'up' ou 'down' — label externo aparece à esquerda por padrão."
   ],
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "acoes"
 }

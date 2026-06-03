@@ -1794,3 +1794,104 @@ Em caso de conflito entre fontes de informação visual:
 3. **Este documento** (human-readable canônico)
 4. **`_base.scss` do componente** (implementação)
 5. **Qualquer outro documento** (subordinado)
+
+<!-- BEGIN:AUTO-GENERATED — NÃO EDITAR MANUALMENTE -->
+## Seção Auto-Gerada: Contratos Visuais Default
+
+> Esta seção é regenerada automaticamente por `scripts/sync-visual-contract.js`.
+> **Não edite manualmente** — as alterações serão sobrescritas na próxima execução.
+
+| Componente | Grupo | Props Default | Dimensões | demoContent |
+|---|---|---|---|---|
+| DssAjaxBar | progresso | — | minHeight:3px | Barra de progresso de requisições AJAX |
+| DssAvatar | indicadores | size:md, icon:person | minHeight:40px, minWidth:40px | Iniciais 'AB' |
+| DssBadge | indicadores | color:primary | minHeight:24px, minWidth:24px | Label '99+' |
+| DssBanner | banners | variant:default, inline | minHeight:48px | Mensagem informativa com ação |
+| DssBar | banners | rounded | minHeight:44px | Barra de sistema com conteúdo |
+| DssBottomSheet | contextuais | — | — | — |
+| DssBreadcrumbs | navegacao | — | minHeight:21px | Home / Produtos / Detalhe |
+| DssBreadcrumbsEl | navegacao | label:Página | minHeight:17px | Item de breadcrumb 'Home' |
+| DssBtnDropdown | acoes | label:Opções | minHeight:44px | Botão 'Opções' com menu dropdown |
+| DssBtnGroup | acoes | — | minHeight:44px | Grupo com 3 botões |
+| DssBtnToggle | acoes | modelValue:opcao1, options:[…] | minHeight:44px | Toggle entre opções A / B / C |
+| DssButton | acoes | variant:elevated, color:primary, size:md | minHeight:44px, minWidth:64px | Label 'Action' |
+| DssCard | cartoes | variant:elevated | minHeight:80px | DssCardSection com texto e ações |
+| DssCarousel | contextuais | — | — | — |
+| DssChatMessage | contextuais | — | — | — |
+| DssCheckbox | form-controles | color:primary, size:md, label:Opção | minHeight:44px | Label 'Opção' |
+| DssChip | acoes | variant:filled, color:primary, size:md, label:Chip | minHeight:28px | Label 'Chip' |
+| DssCircularProgress | progresso | value:70, size:md, color:primary | minHeight:56px, minWidth:56px | Progresso circular 70% |
+| DssColorPicker | contextuais | formatModel:hex | — | — |
+| DssDataCard | contextuais | — | — | — |
+| DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
+| DssDialog | contextuais | — | — | — |
+| DssDrawer | layout | modelValue, persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
+| DssExpansionItem | navegacao | label:Expansível, icon:expand_more, modelValue | minHeight:44px | Item expansível com conteúdo |
+| DssFab | acoes | color:primary, icon:add, label:Adicionar | minHeight:56px, minWidth:56px | FAB com ícone 'add' |
+| DssFabAction | acoes | color:primary, icon:mail, label:Email | minHeight:40px, minWidth:40px | FAB Action com ícone 'mail' |
+| DssField | contextuais | — | minHeight:44px, minWidth:240px | Campo de formulário customizado |
+| DssFile | form-campos | label:Arquivo | minHeight:44px | Seleção de arquivo |
+| DssFooter | layout | — | minHeight:44px | Rodapé com informações do sistema |
+| DssForm | contextuais | — | gap:16px (via --dss-form-gap → --dss-spacing-4) | DssForm com DssInput e DssButton — container estrutural com gap semântico entre campos |
+| DssHeader | layout | — | minHeight:44px | Cabeçalho com logo e ações |
+| DssIcon | indicadores | name:star, size:md | minHeight:24px, minWidth:24px | Ícone 'star' tamanho md |
+| DssImg | midia | src:https://placehold.co/200x120, alt:Imagem demonstrativa, fit:cover, loading:lazy, width:200px | minHeight:150px, minWidth:200px | Imagem com alt text acessível |
+| DssInfiniteScroll | contextuais | offset:500, debounce:100 | — | Lista com carregamento infinito |
+| DssInnerLoading | progresso | showing, label:Carregando... | minHeight:48px | Overlay de carregamento interno |
+| DssInput | form-campos | variant:outlined, type:text, label:Campo, placeholder:Digite aqui | minHeight:44px, minWidth:240px | Placeholder 'Digite aqui' |
+| DssItem | listas | — | minHeight:44px | Item com ícone e texto |
+| DssItemLabel | listas | — | — | Rótulo de seção de lista |
+| DssItemSection | listas | — | — | Seção de item (avatar, conteúdo ou ação) |
+| DssKnob | indicadores | modelValue:50, min:0, max:100 | minHeight:56px, minWidth:56px | Knob com valor 50% |
+| DssLayout | layout | — | — | Layout de página completo (header + drawer + footer) |
+| DssLinearProgress | progresso | value:0.7, color:primary, size:md | minHeight:4px, minWidth:200px | Barra de progresso linear 70% |
+| DssList | listas | — | — | Lista com 3 itens |
+| DssMarkupTable | cartoes | density:standard, bordered, separator:horizontal | width:100% | Tabela com thead/tbody padrão |
+| DssMenu | navegacao | — | minHeight:200px, minWidth:200px | Menu com 3 itens |
+| DssOptionGroup | form-controles | type:radio, modelValue:opt1, options:[…] | minHeight:44px | Grupo de opções (radio/checkbox/toggle) |
+| DssPage | layout | — | — | Área de conteúdo principal da página |
+| DssPageContainer | layout | — | — | Container com largura máxima de conteúdo |
+| DssPageScroller | layout | — | — | Botão de scroll para o topo |
+| DssPageSticky | layout | position:bottom-right, offset:[…] | — | Elemento fixo na página |
+| DssPagination | navegacao | modelValue:1, max:10 | minHeight:44px | Página 1 de 10 |
+| DssParallax | contextuais | src:https://placehold.co/600x200, height:100, speed:0.5 | minHeight:200px | Seção com efeito parallax |
+| DssPopupEdit | contextuais | — | — | — |
+| DssPopupProxy | contextuais | breakpoint:450 | — | Proxy de popup (Dialog em mobile, Menu em desktop) |
+| DssPopupProxy | contextuais | breakpoint:450 | — | DssPopupProxy responsivo — abre QMenu em desktop e QDialog em mobile |
+| DssPullToRefresh | contextuais | — | — | Puxe para atualizar |
+| DssRadio | form-controles | color:primary, size:md, label:Opção, val:opcao | minHeight:44px | Label 'Opção' |
+| DssRange | form-controles | min:0, max:100, modelValue:{…} | minHeight:44px, minWidth:200px | Range de 25 a 75 |
+| DssRating | indicadores | modelValue:3, max:5 | minHeight:44px, minWidth:160px | Avaliação de 3 de 5 estrelas |
+| DssResponsive | contextuais | show:sm | — | Wrapper condicional por breakpoint |
+| DssRouteTab | navegacao | label:Início, to:/, name:inicio | minHeight:44px | Tab de rota 'Início' |
+| DssScrollArea | midia | visible:auto, style:height:100px;width:200px | minHeight:200px | Área com scrollbar customizada |
+| DssSelect | form-campos | variant:outlined, label:Seleção, options:[…] | minHeight:44px, minWidth:240px | Placeholder 'Selecione uma opção' |
+| DssSeparator | listas | — | minHeight:1px | Linha divisória horizontal |
+| DssSkeleton | progresso | type:text, width:200px | minHeight:24px, minWidth:200px | Bloco de texto esqueleto (placeholder de carregamento) |
+| DssSlideItem | listas | — | minHeight:56px | Item com ações deslizáveis (esquerda/direita) |
+| DssSlider | form-controles | min:0, max:100, modelValue:50 | minHeight:44px, minWidth:200px | Slider com valor 50 |
+| DssSpace | listas | size:md | — | Espaçamento visual entre elementos |
+| DssSpinner | indicadores | type:standard, size:md | minHeight:40px, minWidth:40px | Spinner animado de carregamento |
+| DssSplitter | midia | modelValue:50, orientation:horizontal, style:height:80px;width:240px | minHeight:200px | Divisor redimensionável 50/50 |
+| DssStep | stepper | name:passo1, title:Passo 1 | minHeight:44px | Etapa 1 — Informações básicas |
+| DssStepper | stepper | modelValue:passo1 | — | Fluxo com 3 etapas: Dados, Revisão, Confirmação |
+| DssTab | navegacao | label:Aba, name:tab1 | minHeight:44px | Tab 'Início' |
+| DssTable | contextuais | — | — | — |
+| DssTabPanel | navegacao | name:inicio | minHeight:48px | Conteúdo do painel de aba |
+| DssTabPanels | navegacao | modelValue:inicio | minHeight:48px | Container de painéis de abas |
+| DssTabs | navegacao | modelValue:inicio | minHeight:44px | 3 abas: Início, Perfil, Configurações |
+| DssTextarea | form-campos | variant:outlined, label:Mensagem, placeholder:Escreva aqui | minHeight:88px, minWidth:240px | Placeholder 'Escreva sua mensagem aqui' |
+| DssTimeline | timeline | side:right | — | 3 eventos na linha do tempo |
+| DssTimelineEntry | timeline | title:Evento, subtitle:Data, icon:check | minHeight:44px | Entrada de timeline com ícone e conteúdo |
+| DssTimePicker | contextuais | modelValue:14:30, format24h | — | — |
+| DssToggle | form-controles | color:primary, size:md, label:Ativar | minHeight:44px | Label 'Ativar' |
+| DssToolbar | cartoes | — | minHeight:44px | Toolbar com título e ações |
+| DssToolbarTitle | cartoes | — | minHeight:24px | Título da barra de ferramentas |
+| DssTooltip | indicadores | — | minHeight:24px | Tooltip 'Informação adicional' |
+| DssTree | arvore | nodeKey:id, labelKey:label, nodes:[…] | — | Árvore hierárquica com nós expansíveis |
+| DssUploader | contextuais | — | — | — |
+| DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
+| DssVirtualScroll | contextuais | items:[Array de itens], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
+
+_Gerado em: 2026-06-03T17:03:32.024Z_
+<!-- END:AUTO-GENERATED -->

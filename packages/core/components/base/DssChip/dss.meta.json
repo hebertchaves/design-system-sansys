@@ -14,7 +14,8 @@
     "props": {
       "variant": "filled",
       "color": "primary",
-      "size": "md"
+      "size": "md",
+      "label": "Chip"
     },
     "computedDimensions": {
       "minHeight": "28px"
@@ -30,6 +31,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Label 'Chip'"
-  }
+    "demoContent": "Label 'Chip'",
+    "demoSlots": null
+  },
+  "previewGroup": "acoes"
 }

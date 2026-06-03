@@ -166,6 +166,29 @@
       "surface": "none",
       "textColor": "--dss-text-secondary"
     },
-    "demoContent": "Home / Produtos / Detalhe"
-  }
+    "demoContent": "Home / Produtos / Detalhe",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssBreadcrumbsEl",
+          "props": {
+            "label": "Home"
+          }
+        },
+        {
+          "component": "DssBreadcrumbsEl",
+          "props": {
+            "label": "Produtos"
+          }
+        },
+        {
+          "component": "DssBreadcrumbsEl",
+          "props": {
+            "label": "Detalhe"
+          }
+        }
+      ]
+    }
+  },
+  "previewGroup": "navegacao"
 }

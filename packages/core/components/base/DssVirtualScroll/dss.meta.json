@@ -94,7 +94,8 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Lista virtualizada com 1000 itens"
+    "demoContent": "Lista virtualizada com 1000 itens",
+    "demoSlots": null
   },
   "auditHistory": [
     {
@@ -110,5 +111,6 @@
       "ressalvas": 2,
       "sealPath": "DSS/docs/Compliance/seals/DssVirtualScroll/DSSVIRTUALSCROLL_SELO_v2.2.md"
     }
-  ]
+  ],
+  "previewGroup": "contextuais"
 }

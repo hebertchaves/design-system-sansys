@@ -96,7 +96,8 @@
   },
   "defaultPreview": {
     "props": {
-      "showing": true
+      "showing": true,
+      "label": "Carregando..."
     },
     "computedDimensions": {
       "minHeight": "48px"
@@ -108,6 +109,15 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-action-primary"
     },
-    "demoContent": "Overlay de carregamento interno"
-  }
+    "demoContent": "Overlay de carregamento interno",
+    "demoSlots": {
+      "default": [
+        {
+          "html": "<div style='height:60px;width:120px;display:flex;align-items:center;justify-content:center'>Conteúdo</div>"
+        }
+      ]
+    }
+  },
+  "previewGroup": "progresso",
+  "component": "DssInnerLoading"
 }

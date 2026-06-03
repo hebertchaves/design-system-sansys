@@ -30,7 +30,20 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Item com ícone e texto"
+    "demoContent": "Item com ícone e texto",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssItemSection",
+          "children": [
+            {
+              "component": "DssItemLabel",
+              "children": "Rótulo do item"
+            }
+          ]
+        }
+      ]
+    }
   },
   "tokens": {
     "spacing": [
@@ -85,5 +98,6 @@
       "--dss-waste-600",
       "--dss-waste-500"
     ]
-  }
+  },
+  "previewGroup": "listas"
 }

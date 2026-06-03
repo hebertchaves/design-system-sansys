@@ -161,6 +161,20 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Rodapé com informações do sistema"
-  }
+    "demoContent": "Rodapé com informações do sistema",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssToolbar",
+          "children": [
+            {
+              "component": "DssToolbarTitle",
+              "children": "Rodapé DSS"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "previewGroup": "layout"
 }

@@ -53,14 +53,21 @@
     "ariaLabel": "Recomendado via $attrs quando necessário: <DssPageSticky aria-label='...'>"
   },
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "position": "bottom-right",
+      "offset": [
+        8,
+        8
+      ]
+    },
     "computedDimensions": {},
     "computedTokens": {
       "lineHeight": "--dss-line-height-normal",
       "surface": "none",
       "textColor": "none"
     },
-    "demoContent": "Elemento fixo na página"
+    "demoContent": "Elemento fixo na página",
+    "demoSlots": null
   },
   "tokens": [
     "--dss-z-index-sticky",
@@ -118,5 +125,6 @@
     "DssButton (round, com icon) — padrão FAB",
     "Div governado por tokens DSS — banner de cookies, CTA persistente"
   ],
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "layout"
 }

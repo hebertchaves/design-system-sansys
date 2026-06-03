@@ -152,6 +152,14 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Área de conteúdo principal da página"
-  }
+    "demoContent": "Área de conteúdo principal da página",
+    "demoSlots": {
+      "default": [
+        {
+          "html": "<div style='padding:16px'>Conteúdo da página</div>"
+        }
+      ]
+    }
+  },
+  "previewGroup": "layout"
 }

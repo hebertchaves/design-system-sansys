@@ -128,7 +128,9 @@
     "--dss-border-width-thin"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "modelValue": "passo1"
+    },
     "computedDimensions": {},
     "computedTokens": {
       "padding": "--dss-spacing-4",
@@ -139,6 +141,28 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Fluxo com 3 etapas: Dados, Revisão, Confirmação"
-  }
+    "demoContent": "Fluxo com 3 etapas: Dados, Revisão, Confirmação",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssStep",
+          "props": {
+            "name": "passo1",
+            "title": "Dados",
+            "done": true
+          },
+          "children": "Dados básicos."
+        },
+        {
+          "component": "DssStep",
+          "props": {
+            "name": "passo2",
+            "title": "Revisão"
+          },
+          "children": "Revise os dados."
+        }
+      ]
+    }
+  },
+  "previewGroup": "stepper"
 }

@@ -195,7 +195,11 @@
     "--dss-opacity-backdrop"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "modelValue": true,
+      "persistent": true,
+      "width": 150
+    },
     "computedDimensions": {
       "minHeight": "100vh",
       "minWidth": "300px"
@@ -210,6 +214,8 @@
       "surface": "--dss-surface-subtle",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Painel lateral com navegação"
-  }
+    "demoContent": "Painel lateral com navegação",
+    "demoSlots": null
+  },
+  "previewGroup": "layout"
 }

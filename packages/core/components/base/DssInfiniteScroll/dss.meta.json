@@ -80,7 +80,8 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Lista com carregamento infinito"
+    "demoContent": "Lista com carregamento infinito",
+    "demoSlots": null
   },
   "auditHistory": [
     {
@@ -93,5 +94,6 @@
       "result": "conformant",
       "seal": "DSS/docs/Compliance/seals/DssInfiniteScroll/DSSINFINITESCROLL_SELO_v2.2.md"
     }
-  ]
+  ],
+  "previewGroup": "contextuais"
 }

@@ -1,0 +1,16 @@
+#!/bin/sh
+# DSS pre-commit hook
+# Se algum dss.meta.json foi staged, sincroniza o DSS_REFERENCIA_VISUAL_ANALISE.md
+
+if git diff --cached --name-only | grep -q 'dss\.meta\.json'; then
+  echo "🔄 dss.meta.json alterado — sincronizando DSS_REFERENCIA_VISUAL_ANALISE.md..."
+  node scripts/sync-visual-contract.js
+  if [ $? -ne 0 ]; then
+    echo "❌ Falha ao sincronizar o contrato visual. Commit abortado."
+    exit 1
+  fi
+  git add docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md
+  echo "✅ DSS_REFERENCIA_VISUAL_ANALISE.md atualizado e staged."
+fi
+
+exit 0

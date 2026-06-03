@@ -133,6 +133,14 @@
       "surface": "none",
       "textColor": "none"
     },
-    "demoContent": "Container com largura máxima de conteúdo"
-  }
+    "demoContent": "Container com largura máxima de conteúdo",
+    "demoSlots": {
+      "default": [
+        {
+          "html": "<div style='padding:8px'>Container com offset automático</div>"
+        }
+      ]
+    }
+  },
+  "previewGroup": "layout"
 }

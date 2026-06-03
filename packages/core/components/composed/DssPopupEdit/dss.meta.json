@@ -131,5 +131,9 @@
       ],
       "notes": "Componente aprovado para selo após correção das 3 NCs não-bloqueantes. EXC-Gate-01 (QPopupEdit motor) e EXC-Gate-02 (CSS global, ausência de popup-content-class) formalmente documentados com precedentes. Todos os 4 GAPs resolvidos — GAP-01/02 retroativamente em 2026-05-11 (pré-prompt reescrito). DssPopupProxy desbloqueado."
     }
-  ]
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null
+  }
 }

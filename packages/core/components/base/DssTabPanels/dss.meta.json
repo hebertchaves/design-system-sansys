@@ -114,7 +114,9 @@
     "--dss-easing-standard"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "modelValue": "inicio"
+    },
     "computedDimensions": {
       "minHeight": "48px"
     },
@@ -125,6 +127,25 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Container de painéis de abas"
-  }
+    "demoContent": "Container de painéis de abas",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssTabPanel",
+          "props": {
+            "name": "inicio"
+          },
+          "children": "Conteúdo Início"
+        },
+        {
+          "component": "DssTabPanel",
+          "props": {
+            "name": "perfil"
+          },
+          "children": "Conteúdo Perfil"
+        }
+      ]
+    }
+  },
+  "previewGroup": "navegacao"
 }

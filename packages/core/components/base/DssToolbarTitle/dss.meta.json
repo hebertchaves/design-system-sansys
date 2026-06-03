@@ -114,6 +114,10 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Título da barra de ferramentas"
-  }
+    "demoContent": "Título da barra de ferramentas",
+    "demoSlots": {
+      "default": "Título da Barra"
+    }
+  },
+  "previewGroup": "cartoes"
 }

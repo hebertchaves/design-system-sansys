@@ -16,15 +16,36 @@
   },
   "phaseDescription": "Fase 2, Nível 3 — Composição de Terceiro Grau. Motor: QColor (infraestrutura Quasar). Dependências DSS internas: nenhuma. Dependências externas recomendadas: DssInput (para exibir o valor da cor selecionada), DssDialog ou DssPopupProxy (para uso como overlay).",
   "statesApplicable": [
-    { "state": "hover", "location": "Quadrados da paleta via .q-color-picker__palette-square:hover — filter: brightness(0.85)" },
-    { "state": "focus", "location": "Root .q-color-picker.dss-color-picker via :focus-visible; palette squares via :focus-visible" },
-    { "state": "disabled", "location": "Root via aria-disabled='true' — opacity: var(--dss-opacity-disabled)" },
-    { "state": "readonly", "location": "Root via .q-color-picker--readonly — cursor: default" }
+    {
+      "state": "hover",
+      "location": "Quadrados da paleta via .q-color-picker__palette-square:hover — filter: brightness(0.85)"
+    },
+    {
+      "state": "focus",
+      "location": "Root .q-color-picker.dss-color-picker via :focus-visible; palette squares via :focus-visible"
+    },
+    {
+      "state": "disabled",
+      "location": "Root via aria-disabled='true' — opacity: var(--dss-opacity-disabled)"
+    },
+    {
+      "state": "readonly",
+      "location": "Root via .q-color-picker--readonly — cursor: default"
+    }
   ],
   "statesNotApplicable": [
-    { "state": "active", "reason": "QColor gerencia internamente o estado ativo (cursor do espectro, thumb dos sliders) — não sobrescritível sem quebrar funcionalidade" },
-    { "state": "loading", "reason": "QColor é síncrono — sem estado de carregamento" },
-    { "state": "error", "reason": "DssColorPicker é widget visual; validação de cor é responsabilidade do consumidor (ex: DssField wrapping)" }
+    {
+      "state": "active",
+      "reason": "QColor gerencia internamente o estado ativo (cursor do espectro, thumb dos sliders) — não sobrescritível sem quebrar funcionalidade"
+    },
+    {
+      "state": "loading",
+      "reason": "QColor é síncrono — sem estado de carregamento"
+    },
+    {
+      "state": "error",
+      "reason": "DssColorPicker é widget visual; validação de cor é responsabilidade do consumidor (ex: DssField wrapping)"
+    }
   ],
   "tokens": [
     "--dss-action-primary",
@@ -85,11 +106,18 @@
     "Usar prop palette com cores da marca (hub, water, waste) para restringir seleção a paletas aprovadas",
     "Usar prop formatModel='hex' para garantir interoperabilidade com o restante do sistema"
   ],
-  "propsBlocked": ["dark", "color"],
+  "propsBlocked": [
+    "dark",
+    "color"
+  ],
   "defaultPreview": {
-    "props": { "formatModel": "hex" },
+    "props": {
+      "formatModel": "hex"
+    },
     "computedTokens": {
       "--q-color-primary": "var(--dss-action-primary)"
-    }
-  }
+    },
+    "demoSlots": null
+  },
+  "previewGroup": "contextuais"
 }

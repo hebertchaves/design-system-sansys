@@ -79,6 +79,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Slider com valor 50"
-  }
+    "demoContent": "Slider com valor 50",
+    "demoSlots": null
+  },
+  "previewGroup": "form-controles"
 }

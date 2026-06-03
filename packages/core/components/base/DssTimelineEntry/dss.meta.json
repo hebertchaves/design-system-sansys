@@ -83,6 +83,10 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Entrada de timeline com ícone e conteúdo"
-  }
+    "demoContent": "Entrada de timeline com ícone e conteúdo",
+    "demoSlots": {
+      "default": "Conteúdo do evento."
+    }
+  },
+  "previewGroup": "timeline"
 }

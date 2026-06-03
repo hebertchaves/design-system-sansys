@@ -129,7 +129,9 @@
     "--dss-waste-600"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "modelValue": "inicio"
+    },
     "computedDimensions": {
       "minHeight": "44px"
     },
@@ -143,6 +145,32 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-secondary"
     },
-    "demoContent": "3 abas: Início, Perfil, Configurações"
-  }
+    "demoContent": "3 abas: Início, Perfil, Configurações",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "inicio",
+            "label": "Início"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "perfil",
+            "label": "Perfil"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "config",
+            "label": "Config"
+          }
+        }
+      ]
+    }
+  },
+  "previewGroup": "navegacao"
 }

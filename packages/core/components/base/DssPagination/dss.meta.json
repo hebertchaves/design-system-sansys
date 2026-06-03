@@ -160,12 +160,15 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Página 1 de 10"
+    "demoContent": "Página 1 de 10",
+    "demoSlots": null
   },
   "auditStatus": {
     "structural": "pending",
     "composition": "pending",
     "documentation": "pending",
     "accessibility": "pending"
-  }
+  },
+  "previewGroup": "navegacao",
+  "component": "DssPagination"
 }

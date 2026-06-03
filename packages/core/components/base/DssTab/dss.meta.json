@@ -121,7 +121,8 @@
   ],
   "defaultPreview": {
     "props": {
-      "label": "Aba"
+      "label": "Aba",
+      "name": "tab1"
     },
     "computedDimensions": {
       "minHeight": "44px"
@@ -136,6 +137,8 @@
       "surface": "none",
       "textColor": "--dss-text-secondary"
     },
-    "demoContent": "Tab 'Início'"
-  }
+    "demoContent": "Tab 'Início'",
+    "demoSlots": null
+  },
+  "previewGroup": "navegacao"
 }

@@ -83,6 +83,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Range de 25 a 75"
-  }
+    "demoContent": "Range de 25 a 75",
+    "demoSlots": null
+  },
+  "previewGroup": "form-controles"
 }

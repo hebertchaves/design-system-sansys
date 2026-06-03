@@ -55,6 +55,8 @@
       "surface": "none",
       "textColor": "--dss-action-primary"
     },
-    "demoContent": "Spinner animado de carregamento"
-  }
+    "demoContent": "Spinner animado de carregamento",
+    "demoSlots": null
+  },
+  "previewGroup": "indicadores"
 }

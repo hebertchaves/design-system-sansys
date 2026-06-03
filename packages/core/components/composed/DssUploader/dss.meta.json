@@ -141,5 +141,9 @@
         "GAP-04: guard scope.isUploading adicionado ao v-if do botão de upload — RESOLVIDO"
       ]
     }
-  ]
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null
+  }
 }

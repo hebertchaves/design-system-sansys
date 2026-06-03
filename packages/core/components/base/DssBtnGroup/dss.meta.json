@@ -100,7 +100,23 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
-    "demoContent": "Grupo com 3 botões"
+    "demoContent": "Grupo com 3 botões",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssButton",
+          "children": "Dia"
+        },
+        {
+          "component": "DssButton",
+          "children": "Semana"
+        },
+        {
+          "component": "DssButton",
+          "children": "Mês"
+        }
+      ]
+    }
   },
   "tokens": {
     "border": [
@@ -136,5 +152,6 @@
       "location": "2-composition/_base.scss e 3-variants/_flat.scss",
       "justification": "Uso de seletores descendentes (> .dss-button) necessário para aplicar border-radius e margens contextuais de grupo, sem alterar a API interna do DssButton."
     }
-  }
+  },
+  "previewGroup": "acoes"
 }

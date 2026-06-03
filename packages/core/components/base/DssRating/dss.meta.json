@@ -111,6 +111,9 @@
       "surface": "none",
       "textColor": "--dss-action-primary"
     },
-    "demoContent": "Avaliação de 3 de 5 estrelas"
-  }
+    "demoContent": "Avaliação de 3 de 5 estrelas",
+    "demoSlots": null
+  },
+  "previewGroup": "indicadores",
+  "component": "DssRating"
 }

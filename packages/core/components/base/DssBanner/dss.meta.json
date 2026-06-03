@@ -108,7 +108,8 @@
   "auditHistory": [],
   "defaultPreview": {
     "props": {
-      "variant": "default"
+      "variant": "default",
+      "inline": true
     },
     "computedDimensions": {
       "minHeight": "48px"
@@ -124,6 +125,21 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Mensagem informativa com ação"
-  }
+    "demoContent": "Mensagem informativa com ação",
+    "demoSlots": {
+      "default": "Mensagem informativa do sistema.",
+      "action": [
+        {
+          "component": "DssButton",
+          "props": {
+            "flat": true,
+            "color": "primary",
+            "size": "sm"
+          },
+          "children": "Entendido"
+        }
+      ]
+    }
+  },
+  "previewGroup": "banners"
 }

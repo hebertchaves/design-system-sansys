@@ -41,6 +41,10 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-sm"
     },
-    "demoContent": "Tooltip 'Informação adicional'"
-  }
+    "demoContent": "Tooltip 'Informação adicional'",
+    "demoSlots": {
+      "default": "Informação adicional"
+    }
+  },
+  "previewGroup": "indicadores"
 }

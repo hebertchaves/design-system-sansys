@@ -51,6 +51,8 @@
       "surface": "none",
       "textColor": "none"
     },
-    "demoContent": "Espaçamento visual entre elementos"
-  }
+    "demoContent": "Espaçamento visual entre elementos",
+    "demoSlots": null
+  },
+  "previewGroup": "listas"
 }

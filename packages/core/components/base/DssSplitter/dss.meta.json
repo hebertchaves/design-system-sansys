@@ -85,7 +85,8 @@
   "defaultPreview": {
     "props": {
       "modelValue": 50,
-      "orientation": "horizontal"
+      "orientation": "horizontal",
+      "style": "height:80px;width:240px"
     },
     "computedDimensions": {
       "minHeight": "200px"
@@ -96,7 +97,20 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Divisor redimensionável 50/50"
+    "demoContent": "Divisor redimensionável 50/50",
+    "demoSlots": {
+      "before": [
+        {
+          "html": "<div style='padding:8px'>Esquerdo</div>"
+        }
+      ],
+      "after": [
+        {
+          "html": "<div style='padding:8px'>Direito</div>"
+        }
+      ]
+    }
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "midia"
 }

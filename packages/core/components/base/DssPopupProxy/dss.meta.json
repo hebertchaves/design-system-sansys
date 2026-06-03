@@ -155,7 +155,9 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-md"
     },
-    "demoContent": "Proxy de popup (Dialog em mobile, Menu em desktop)"
+    "demoContent": "Proxy de popup (Dialog em mobile, Menu em desktop)",
+    "demoSlots": null
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "contextuais"
 }

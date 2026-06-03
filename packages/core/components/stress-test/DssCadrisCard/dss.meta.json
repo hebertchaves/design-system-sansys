@@ -32,7 +32,8 @@
     "props": {},
     "computedDimensions": {},
     "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "demoContent": "Conteúdo padrão",
+    "demoSlots": null
   },
   "tokens": [
     "--dss-surface-muted",
@@ -83,5 +84,6 @@
     "cssVariables": true,
     "noDeepLayout": true,
     "typedSlots": true
-  }
+  },
+  "previewGroup": "contextuais"
 }

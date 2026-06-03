@@ -110,6 +110,31 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "3 eventos na linha do tempo"
-  }
+    "demoContent": "3 eventos na linha do tempo",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssTimelineEntry",
+          "props": {
+            "title": "Evento 1",
+            "subtitle": "Jan 2026",
+            "icon": "check",
+            "color": "primary"
+          },
+          "children": "Primeiro evento."
+        },
+        {
+          "component": "DssTimelineEntry",
+          "props": {
+            "title": "Evento 2",
+            "subtitle": "Fev 2026",
+            "icon": "star",
+            "color": "secondary"
+          },
+          "children": "Segundo evento."
+        }
+      ]
+    }
+  },
+  "previewGroup": "timeline"
 }

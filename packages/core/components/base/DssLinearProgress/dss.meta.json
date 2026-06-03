@@ -116,7 +116,9 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-action-primary"
     },
-    "demoContent": "Barra de progresso linear 70%"
+    "demoContent": "Barra de progresso linear 70%",
+    "demoSlots": null
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "progresso"
 }

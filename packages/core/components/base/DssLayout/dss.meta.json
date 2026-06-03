@@ -117,6 +117,8 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Layout de página completo (header + drawer + footer)"
-  }
+    "demoContent": "Layout de página completo (header + drawer + footer)",
+    "demoSlots": null
+  },
+  "previewGroup": "layout"
 }

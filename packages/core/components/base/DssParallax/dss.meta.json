@@ -66,8 +66,8 @@
   ],
   "defaultPreview": {
     "props": {
-      "src": "[URL da imagem]",
-      "height": 500,
+      "src": "https://placehold.co/600x200",
+      "height": 100,
       "speed": 0.5
     },
     "computedDimensions": {
@@ -78,7 +78,9 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Seção com efeito parallax"
+    "demoContent": "Seção com efeito parallax",
+    "demoSlots": null
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "contextuais"
 }

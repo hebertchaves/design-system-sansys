@@ -142,7 +142,7 @@
   ],
   "defaultPreview": {
     "props": {
-      "label": "Home"
+      "label": "Página"
     },
     "computedDimensions": {
       "minHeight": "17px"
@@ -157,6 +157,8 @@
       "surface": "none",
       "textColor": "--dss-text-action"
     },
-    "demoContent": "Item de breadcrumb 'Home'"
-  }
+    "demoContent": "Item de breadcrumb 'Home'",
+    "demoSlots": null
+  },
+  "previewGroup": "navegacao"
 }

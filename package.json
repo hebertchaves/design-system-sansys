@@ -17,7 +17,10 @@
     "mcp:build": "npm run build --workspace=@sansys/dss-mcp",
     "mcp:start": "npm run start --workspace=@sansys/dss-mcp",
     "build:all": "npm run core:build && npm run docs:build && npm run mcp:build",
-    "portal:sync-docs": "node scripts/generate-portal-landing-pages.js"
+    "portal:sync-docs": "node scripts/generate-portal-landing-pages.js",
+    "sync:visual-contract": "node scripts/sync-visual-contract.js",
+    "update:meta-preview": "node scripts/update-meta-preview.cjs",
+    "setup:hooks": "cp scripts/hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit && echo 'Git hooks instalados.'"
   },
   "dependencies": {
     "@swc/core-linux-x64-gnu": "^1.15.8"

@@ -122,6 +122,9 @@
       "surface": "none",
       "textColor": "--dss-action-primary"
     },
-    "demoContent": "Knob com valor 50%"
-  }
+    "demoContent": "Knob com valor 50%",
+    "demoSlots": null
+  },
+  "previewGroup": "indicadores",
+  "component": "DssKnob"
 }

@@ -17,7 +17,10 @@
   "defaultPreview": {
     "props": {
       "color": "primary",
-      "size": "md"
+      "size": "md",
+      "label": "Opção",
+      "val": "opcao",
+      "modelValue": null
     },
     "computedDimensions": {
       "minHeight": "44px"
@@ -32,6 +35,8 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Label 'Opção'"
-  }
+    "demoContent": "Label 'Opção'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-controles"
 }

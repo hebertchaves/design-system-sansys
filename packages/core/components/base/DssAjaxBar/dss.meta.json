@@ -91,6 +91,9 @@
       "surface": "none",
       "textColor": "--dss-action-primary"
     },
-    "demoContent": "Barra de progresso de requisições AJAX"
-  }
+    "demoContent": "Barra de progresso de requisições AJAX",
+    "demoSlots": null
+  },
+  "previewGroup": "progresso",
+  "component": "DssAjaxBar"
 }

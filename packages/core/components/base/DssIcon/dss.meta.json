@@ -25,6 +25,8 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Ícone 'star' tamanho md"
-  }
+    "demoContent": "Ícone 'star' tamanho md",
+    "demoSlots": null
+  },
+  "previewGroup": "indicadores"
 }

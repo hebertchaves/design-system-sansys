@@ -126,7 +126,23 @@
     }
   },
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "modelValue": "opcao1",
+      "options": [
+        {
+          "label": "A",
+          "value": "opcao1"
+        },
+        {
+          "label": "B",
+          "value": "opcao2"
+        },
+        {
+          "label": "C",
+          "value": "opcao3"
+        }
+      ]
+    },
     "computedDimensions": {
       "minHeight": "44px"
     },
@@ -139,7 +155,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Toggle entre opções A / B / C"
+    "demoContent": "Toggle entre opções A / B / C",
+    "demoSlots": null
   },
   "tokens": {
     "border": [
@@ -185,5 +202,6 @@
       "severity": "baixa",
       "blocking": false
     }
-  ]
+  ],
+  "previewGroup": "acoes"
 }

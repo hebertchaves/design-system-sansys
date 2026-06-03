@@ -29,8 +29,12 @@ DSS/ (Raiz)
 │   └── mcp/                   ← @sansys/dss-mcp (Servidor de contexto para agentes de IA)
 ├── apps/
 │   ├── docs-portal/           ← @sansys/docs-portal (Portal de documentação React/Lovable)
-│   ├── sandbox/               ← @sansys/sandbox (Ambiente de testes Vue 3 - antiga dss-example/)
-│   └── components/            ← Espelho local de componentes Vue 3 usado para desenvolvimento
+│   └── sandbox/               ← @sansys/sandbox (Ambiente de testes Vue 3 - antiga dss-example/)
+│       └── src/DemoRenderer.vue ← Renderizador data-driven (lê dss.meta.json via import.meta.glob)
+├── scripts/
+│   ├── update-meta-preview.cjs ← Injeta previewGroup + demoSlots em todos os dss.meta.json
+│   ├── sync-visual-contract.js ← Regenera seção auto-gerada do DSS_REFERENCIA_VISUAL_ANALISE.md
+│   └── hooks/pre-commit        ← Git hook: executa sync ao commitar qualquer dss.meta.json
 └── package.json               ← Arquivo raiz que define os workspaces do npm
 ```
 
@@ -49,11 +53,13 @@ Para garantir consistência e evitar quebras de build em produção, as importa�
 | **`apps/sandbox` (Desenvolvimento)** | Componentes locais | Aliases oficiais do Vite | `import { DssButton } from '@components/base/DssButton'` |
 | **`apps/sandbox` (Desenvolvimento)** | Componentes base | Alias `@dss` (Vite) | `import DssButton from '@dss/DssButton/DssButton.vue'` |
 
-### 🔍 A Regra do Espelho `apps/components`
+### 🔍 Fonte Única: `packages/core/components/`
 
-A pasta `apps/components` é um **espelho local estável** utilizado para o desenvolvimento interativo no sandbox e no portal.
-* **Desenvolvimento:** O sandbox (`apps/sandbox`) consome os componentes deste diretório durante a execução do comando `npm run sandbox:dev` para garantir feedback rápido e sem quebras de build locais.
-* **Produção / Distribuição:** A pasta `packages/core/components/base/` continua sendo a **única fonte de verdade oficial**. Nenhum componente deve ser criado ou modificado diretamente em `apps/components` sem que a alteração seja realizada primeiro no `packages/core` e espelhada.
+A pasta `packages/core/components/` é a **única fonte de verdade** para todos os componentes DSS.
+
+* **Desenvolvimento:** O sandbox (`apps/sandbox`) acessa os componentes diretamente via alias Vite `@components` → `packages/core/components/`. O SCSS é compilado ao vivo pelo Vite a partir de `packages/core/index.scss` — não existe arquivo CSS pré-compilado.
+* **Produção / Distribuição:** `packages/core/components/base/` é publicado como `@sansys/design-system`.
+* ⚠️ A pasta `apps/components/` foi **removida** na migração para o Monorepo. Não recriar.
 
 ---
 
@@ -137,6 +143,22 @@ Sempre que um novo componente for criado na Fase 3 ou revisado, o agente de IA o
 
 ---
 
-## 7. Conclusão
+## 7. Scripts de Manutenção
+
+Os scripts abaixo são parte da governança do monorepo e devem ser usados conforme descrito:
+
+| Script npm | Arquivo | Quando usar |
+| :--- | :--- | :--- |
+| `npm run sync:visual-contract` | `scripts/sync-visual-contract.js` | Após qualquer alteração em `defaultPreview` de um `dss.meta.json` |
+| `npm run update:meta-preview` | `scripts/update-meta-preview.cjs` | Ao criar um novo componente ou alterar o schema de `previewGroup`/`demoSlots` |
+| `npm run setup:hooks` | `scripts/hooks/pre-commit` | Uma vez após clonar — instala o pre-commit hook em `.git/hooks/` |
+
+> O pre-commit hook executa `sync:visual-contract` automaticamente quando `dss.meta.json` é staged. Em ambientes novos, rodar `npm run setup:hooks` é obrigatório.
+
+📖 Consulte `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` para o workflow completo.
+
+---
+
+## 8. Conclusão
 
 Este mapeamento canônico elimina qualquer ambiguidade arquitetural no DSS. Ao pautar as importações e caminhos de forma explícita e normatizada, garantimos que o ecossistema continue escalável, livre de warnings de build e totalmente compreensível para humanos e ferramentas de automação.

@@ -65,10 +65,11 @@
   ],
   "defaultPreview": {
     "props": {
-      "src": "[URL da imagem]",
-      "alt": "[Descrição]",
+      "src": "https://placehold.co/200x120",
+      "alt": "Imagem demonstrativa",
       "fit": "cover",
-      "loading": "lazy"
+      "loading": "lazy",
+      "width": "200px"
     },
     "computedDimensions": {
       "minHeight": "150px",
@@ -81,7 +82,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "none"
     },
-    "demoContent": "Imagem com alt text acessível"
+    "demoContent": "Imagem com alt text acessível",
+    "demoSlots": null
   },
   "auditHistory": [
     {
@@ -95,5 +97,6 @@
       "sealFile": "DSS/docs/Compliance/seals/DssImg/DSSIMG_SELO_v2.2.md",
       "summary": "Auditoria inicial. 0 NCs. 4 GAPs identificados e corrigidos (todos no pré-prompt: Golden Context, API incompleta, tokens fantasmas, estados N/A). 0 Ressalvas. Selo emitido."
     }
-  ]
+  ],
+  "previewGroup": "midia"
 }

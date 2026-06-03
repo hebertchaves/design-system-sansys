@@ -105,7 +105,8 @@
   },
   "defaultPreview": {
     "props": {
-      "type": "text"
+      "type": "text",
+      "width": "200px"
     },
     "computedDimensions": {
       "minHeight": "24px",
@@ -118,7 +119,8 @@
       "surface": "--dss-surface-muted",
       "textColor": "none"
     },
-    "demoContent": "Bloco de texto esqueleto (placeholder de carregamento)"
+    "demoContent": "Bloco de texto esqueleto (placeholder de carregamento)",
+    "demoSlots": null
   },
   "auditHistory": [
     {
@@ -150,5 +152,7 @@
     }
   ],
   "auditDate": "2026-05-18",
-  "seal": "DSS v2.2"
+  "seal": "DSS v2.2",
+  "previewGroup": "progresso",
+  "component": "DssSkeleton"
 }

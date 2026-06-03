@@ -70,7 +70,9 @@
   ],
   "defaultPreview": {
     "props": {
-      "variant": "outlined"
+      "variant": "outlined",
+      "label": "Mensagem",
+      "placeholder": "Escreva aqui"
     },
     "computedDimensions": {
       "minHeight": "88px",
@@ -86,6 +88,8 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Placeholder 'Escreva sua mensagem aqui'"
-  }
+    "demoContent": "Placeholder 'Escreva sua mensagem aqui'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-campos"
 }

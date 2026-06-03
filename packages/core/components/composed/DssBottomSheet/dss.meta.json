@@ -148,5 +148,9 @@
       ],
       "notes": "Motor QDialog position=bottom. Decisão arquitetural: QBottomSheet é plugin, não componente — uso direto de QDialog é a abordagem correta. EXC-Gate-01 aprovado com precedente DssDialog. 1 NC não-bloqueante corrigida antes do selo."
     }
-  ]
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null
+  }
 }

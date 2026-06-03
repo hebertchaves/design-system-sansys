@@ -134,6 +134,8 @@
     "computedTokens": {
       "--dss-form-gap": "var(--dss-spacing-4)"
     },
-    "demoContent": "DssForm com DssInput e DssButton — container estrutural com gap semântico entre campos"
-  }
+    "demoContent": "DssForm com DssInput e DssButton — container estrutural com gap semântico entre campos",
+    "demoSlots": null
+  },
+  "previewGroup": "contextuais"
 }

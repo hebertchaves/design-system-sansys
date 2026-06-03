@@ -19,15 +19,36 @@
   },
   "phaseDescription": "Fase 2, Nível 3 — Composição de Terceiro Grau. Motor: QTime (Fase 1 — infraestrutura). Dependências internas: nenhuma. Dependências externas: DssButton (para DssDialog/DssPopupProxy wrapper pelo consumidor).",
   "statesApplicable": [
-    { "state": "hover", "location": "Números do clock face via .q-time__clock-position:hover" },
-    { "state": "focus", "location": "Root .q-time.dss-time-picker via :focus-visible" },
-    { "state": "disabled", "location": "Root via aria-disabled='true' — opacity: var(--dss-opacity-disabled)" },
-    { "state": "readonly", "location": "Root via .q-time--readonly — cursor: default" }
+    {
+      "state": "hover",
+      "location": "Números do clock face via .q-time__clock-position:hover"
+    },
+    {
+      "state": "focus",
+      "location": "Root .q-time.dss-time-picker via :focus-visible"
+    },
+    {
+      "state": "disabled",
+      "location": "Root via aria-disabled='true' — opacity: var(--dss-opacity-disabled)"
+    },
+    {
+      "state": "readonly",
+      "location": "Root via .q-time--readonly — cursor: default"
+    }
   ],
   "statesNotApplicable": [
-    { "state": "active", "reason": "QTime gerencia internamente o estado ativo dos números selecionados via EXC-Gate-02b" },
-    { "state": "loading", "reason": "QTime é síncrono — sem estado de carregamento" },
-    { "state": "error", "reason": "DssTimePicker é widget visual; validação é responsabilidade do consumidor (ex: DssField wrapping)" }
+    {
+      "state": "active",
+      "reason": "QTime gerencia internamente o estado ativo dos números selecionados via EXC-Gate-02b"
+    },
+    {
+      "state": "loading",
+      "reason": "QTime é síncrono — sem estado de carregamento"
+    },
+    {
+      "state": "error",
+      "reason": "DssTimePicker é widget visual; validação é responsabilidade do consumidor (ex: DssField wrapping)"
+    }
   ],
   "tokens": [
     "--dss-action-primary",
@@ -88,11 +109,23 @@
     "Combinar com DssButton para ações 'Confirmar' / 'Cancelar' externas",
     "Usar prop options para restringir horas/minutos selecionáveis em horários de negócio"
   ],
-  "propsBlocked": ["color", "textColor", "dark", "square", "flat", "bordered"],
+  "propsBlocked": [
+    "color",
+    "textColor",
+    "dark",
+    "square",
+    "flat",
+    "bordered"
+  ],
   "defaultPreview": {
-    "props": { "modelValue": "14:30", "format24h": true },
+    "props": {
+      "modelValue": "14:30",
+      "format24h": true
+    },
     "computedTokens": {
       "--q-color-primary": "var(--dss-action-primary)"
-    }
-  }
+    },
+    "demoSlots": null
+  },
+  "previewGroup": "contextuais"
 }

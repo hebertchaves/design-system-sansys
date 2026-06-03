@@ -45,6 +45,8 @@
       "surface": "none",
       "textColor": "none"
     },
-    "demoContent": "Wrapper condicional por breakpoint"
-  }
+    "demoContent": "Wrapper condicional por breakpoint",
+    "demoSlots": null
+  },
+  "previewGroup": "contextuais"
 }

@@ -92,7 +92,8 @@
   "defaultPreview": {
     "props": {
       "visible": "auto",
-      "horizontal": false
+      "horizontal": false,
+      "style": "height:100px;width:200px"
     },
     "computedDimensions": {
       "minHeight": "200px"
@@ -104,7 +105,15 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Área com scrollbar customizada"
+    "demoContent": "Área com scrollbar customizada",
+    "demoSlots": {
+      "default": [
+        {
+          "html": "<div style='height:80px;width:160px;padding:8px'>Conteúdo com scroll personalizado</div>"
+        }
+      ]
+    }
   },
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "midia"
 }

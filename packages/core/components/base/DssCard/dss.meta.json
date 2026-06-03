@@ -123,6 +123,31 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-sm"
     },
-    "demoContent": "DssCardSection com texto e ações"
-  }
+    "demoContent": "DssCardSection com texto e ações",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssCardSection",
+          "children": "Conteúdo do card com informações."
+        },
+        {
+          "component": "DssCardActions",
+          "props": {
+            "align": "right"
+          },
+          "children": [
+            {
+              "component": "DssButton",
+              "props": {
+                "flat": true,
+                "size": "sm"
+              },
+              "children": "Ação"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "previewGroup": "cartoes"
 }

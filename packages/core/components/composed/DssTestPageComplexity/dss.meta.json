@@ -31,7 +31,8 @@
     "props": {},
     "computedDimensions": {},
     "computedTokens": {},
-    "demoContent": "Conteúdo padrão"
+    "demoContent": "Conteúdo padrão",
+    "demoSlots": null
   },
   "tokens": [
     "--dss-surface-muted",
@@ -125,5 +126,6 @@
     "1.4.0 — Grid Inspector full compliance: __sections consome --dss-layout-margin-x/y (Margin sliders operantes), __body consome --dss-layout-max-width (breakpoints/container type afetam largura real da página), ferramenta corrigida para escrever --dss-layout-columns e --dss-layout-max-width em :root",
     "1.5.0 — Container queries + overlay alignment: __body recebe container-type:inline-size/container-name:tpc-body, @media substituído por @container em __status-row e __filters-row (grids reagem à largura real do layout, não do viewport); GridOverlay corrigido: scroll listener no container overflow-y:auto, re-medição de layoutBounds ao mudar containerMaxWidth (60ms delay), retry timeout 900ms para rendering async, calculateFixedColumnWidth usa colBounds.width medido",
     "1.6.0 — Header segue breakpoint + overlay não sobrepõe painel: max-width/margin:auto/width:100% movidos de __body para .dss-test-page-complexity (root), data-grid-body movido do #dss-tpc-body para o root element (layoutBounds mede a interface inteira incluindo header); GridInspectorApp: GridOverlayBridge renderiza antes de FloatingGridInspector no DOM (painel fica acima do overlay em ordem de stacking)"
-  ]
+  ],
+  "previewGroup": "contextuais"
 }

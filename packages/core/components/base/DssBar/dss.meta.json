@@ -72,7 +72,9 @@
   ],
   "auditHistory": [],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "rounded": true
+    },
     "computedDimensions": {
       "minHeight": "44px"
     },
@@ -87,6 +89,10 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Barra de sistema com conteúdo"
-  }
+    "demoContent": "Barra de sistema com conteúdo",
+    "demoSlots": {
+      "default": "Barra com conteúdo do sistema"
+    }
+  },
+  "previewGroup": "banners"
 }

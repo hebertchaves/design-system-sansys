@@ -13,8 +13,17 @@
     "level": "Nível 2"
   },
   "family": "Conteúdo Rico",
-  "subcomponents": ["DssAvatar", "DssIcon"],
-  "statesApplicable": ["hover", "focus", "active", "selected", "disable"],
+  "subcomponents": [
+    "DssAvatar",
+    "DssIcon"
+  ],
+  "statesApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "selected",
+    "disable"
+  ],
   "statesNotApplicable": [
     "loading — não aplicável; status 'sending' cobre o feedback de envio via ícone animado"
   ],
@@ -98,5 +107,9 @@
       "gaps": 4,
       "notes": "3 NCs não-bloqueantes corrigidas no mesmo ciclo (NC-01 token fantasma no API.md, NC-02 opacity hardcoded, NC-03 withDefaults triviais). 4 GAPs registrados para Fase 3."
     }
-  ]
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null
+  }
 }

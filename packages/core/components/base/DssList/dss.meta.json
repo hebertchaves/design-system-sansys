@@ -149,6 +149,45 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Lista com 3 itens"
-  }
+    "demoContent": "Lista com 3 itens",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssItem",
+          "props": {
+            "clickable": true
+          },
+          "children": [
+            {
+              "component": "DssItemSection",
+              "children": [
+                {
+                  "component": "DssItemLabel",
+                  "children": "Item 1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "DssItem",
+          "props": {
+            "clickable": true
+          },
+          "children": [
+            {
+              "component": "DssItemSection",
+              "children": [
+                {
+                  "component": "DssItemLabel",
+                  "children": "Item 2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "previewGroup": "listas"
 }

@@ -142,7 +142,23 @@
   "defaultPreview": {
     "props": {
       "nodeKey": "id",
-      "labelKey": "label"
+      "labelKey": "label",
+      "nodes": [
+        {
+          "label": "Raiz",
+          "icon": "folder",
+          "children": [
+            {
+              "label": "Filho 1",
+              "icon": "description"
+            },
+            {
+              "label": "Filho 2",
+              "icon": "description"
+            }
+          ]
+        }
+      ]
     },
     "computedDimensions": {},
     "computedTokens": {
@@ -154,7 +170,8 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Árvore hierárquica com nós expansíveis"
+    "demoContent": "Árvore hierárquica com nós expansíveis",
+    "demoSlots": null
   },
   "auditHistory": [
     {
@@ -166,5 +183,6 @@
       "ncsBlocking": 0,
       "notes": "NC-01 corrigida: removido calc(var(--dss-touch-target-md)*0.75) do dense variant. 4 GAPs pré-prompt documentados."
     }
-  ]
+  ],
+  "previewGroup": "arvore"
 }

@@ -65,7 +65,20 @@
       "surface": "none",
       "textColor": "none"
     },
-    "demoContent": "Botão de scroll para o topo"
+    "demoContent": "Botão de scroll para o topo",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssButton",
+          "props": {
+            "round": true,
+            "color": "primary",
+            "icon": "keyboard_arrow_up",
+            "size": "sm"
+          }
+        }
+      ]
+    }
   },
   "tokens": [
     "--dss-z-index-sticky"
@@ -126,5 +139,6 @@
     "DssButton (round, color='secondary', icon='keyboard_arrow_down') — padrão Reverse",
     "Conteúdo personalizado via slot — qualquer elemento DSS com interatividade própria"
   ],
-  "auditHistory": []
+  "auditHistory": [],
+  "previewGroup": "layout"
 }

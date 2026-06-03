@@ -121,7 +121,8 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
-    "demoContent": "Puxe para atualizar"
+    "demoContent": "Puxe para atualizar",
+    "demoSlots": null
   },
   "auditHistory": [
     {
@@ -216,5 +217,6 @@
       ],
       "gaps": []
     }
-  ]
+  ],
+  "previewGroup": "contextuais"
 }
