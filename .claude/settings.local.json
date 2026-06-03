@@ -13,7 +13,8 @@
       "Bash(grep -v \"WARNING\\\\|Warning\\\\|incurs\\\\|eliminate\\\\|Use \\\\`node\\\\|\\\\[MODULE\")",
       "Bash(python3 *)",
       "Bash(npm run *)",
-      "Read(//mnt/c/Users/hebert.chaves/DSS/apps/**)"
+      "Read(//mnt/c/Users/hebert.chaves/DSS/apps/**)",
+      "Bash(git commit -m 'fix\\(preview\\): DssAjaxBar.position corrigido para valor válido '\\\\''top'\\\\'' *)"
     ]
   },
   "enableAllProjectMcpServers": true,

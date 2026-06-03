@@ -160,12 +160,18 @@
         }
       ]
     },
-    "wrapIn": {
-      "component": "DssLayout",
-      "props": {
-        "style": "height:80px;position:relative;overflow:hidden"
+    "wrapChain": [
+      {
+        "component": "DssLayout",
+        "props": {
+          "style": "height:100px;position:relative;overflow:hidden"
+        }
+      },
+      {
+        "component": "DssPageContainer",
+        "props": {}
       }
-    }
+    ]
   },
   "previewGroup": "layout"
 }

@@ -313,21 +313,34 @@ export default defineComponent({
     const props = (meta.defaultPreview && meta.defaultPreview.props) || {}
     const demoSlots = meta.defaultPreview && meta.defaultPreview.demoSlots
 
-    // Suporte a wrapIn: componentes que precisam de contexto pai
-    // Ex: DssFabAction precisa de DssFab; DssStep precisa de DssStepper
+    const slots = buildSlots(demoSlots)
+    let inner = slots ? h(comp, props, slots) : h(comp, props)
+
+    // wrapChain: array de wrappers do mais externo para o mais interno
+    // Ex: DssPage → [DssLayout, DssPageContainer]
+    const wrapChain = meta.defaultPreview && meta.defaultPreview.wrapChain
+    if (Array.isArray(wrapChain) && wrapChain.length) {
+      for (let i = wrapChain.length - 1; i >= 0; i--) {
+        const wrap = wrapChain[i]
+        const wrapper = REGISTRY[wrap.component]
+        if (wrapper) {
+          const captured = inner
+          inner = h(wrapper, wrap.props || {}, { default: () => captured })
+        }
+      }
+      return inner
+    }
+
+    // wrapIn: único nível de contexto pai
     const wrapIn = meta.defaultPreview && meta.defaultPreview.wrapIn
     if (wrapIn) {
       const wrapper = REGISTRY[wrapIn.component]
       if (wrapper) {
-        const inner = buildSlots(demoSlots)
-          ? h(comp, props, buildSlots(demoSlots))
-          : h(comp, props)
         return h(wrapper, wrapIn.props || {}, { default: () => inner })
       }
     }
 
-    const slots = buildSlots(demoSlots)
-    return slots ? h(comp, props, slots) : h(comp, props)
+    return inner
   },
 })
 </script>
