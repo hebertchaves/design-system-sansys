@@ -1,1 +1,0 @@
-export { useDssOptionGroupClasses } from './useDssOptionGroupClasses'

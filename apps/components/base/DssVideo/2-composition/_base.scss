@@ -1,8 +1,0 @@
-// Layer 2 — Base composition
-// Container de mídia não interativo. QVideo é o root element (EXC-Gate-01).
-// Sem estados interativos (hover, focus, active, disabled) — responsabilidade do elemento pai.
-
-.dss-video {
-  // QVideo já aplica position:relative + overflow:hidden internamente.
-  // Nenhum estilo adicional necessário na camada base.
-}

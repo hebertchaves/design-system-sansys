@@ -415,8 +415,8 @@
 </template>
 
 <script setup>
-import { DssCard, DssCardSection, DssCardActions } from '../../components/base/DssCard'
-import { DssButton } from '../../components/base/DssButton'
+import { DssCard, DssCardSection, DssCardActions } from '@components/base/DssCard'
+import { DssButton } from '@components/base/DssButton'
 
 const handleClick = (variant) => {
   console.log(`Card ${variant} clicado`)

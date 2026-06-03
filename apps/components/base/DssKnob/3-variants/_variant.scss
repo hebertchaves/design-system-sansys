@@ -1,8 +1,0 @@
-// Layer 3 — Variants
-// DssKnob não expõe variantes visuais adicionais nesta versão.
-//
-// Tamanho: controlado via prop `size` (string CSS passada ao QKnob → font-size no root).
-// Espessura: controlada via prop `thickness` (razão 0–1, passada ao QKnob).
-// Ângulo: controlado via prop `angle` (graus, passado ao QKnob).
-//
-// Arquivo mantido para respeitar a arquitetura obrigatória de 4 camadas DSS.

@@ -65,16 +65,16 @@
 import { ref, computed } from 'vue'
 
 // DssCadrisCard (stress-test)
-import DssCadrisCard from '../../components/stress-test/DssCadrisCard/DssCadrisCard.vue'
-import type { CadrisRow, CadrisPagination, CadrisFilters, SelectOption } from '../../components/stress-test/DssCadrisCard/types/cadriscard.types'
+import DssCadrisCard from '@components/stress-test/DssCadrisCard/DssCadrisCard.vue'
+import type { CadrisRow, CadrisPagination, CadrisFilters, SelectOption } from '@components/stress-test/DssCadrisCard/types/cadriscard.types'
 
 // DSS base components para o Profile Card
-import DssCard from '../../components/base/DssCard/DssCard.vue'
-import { DssCardSection, DssCardActions } from '../../components/base/DssCard/index.js'
-import DssAvatar from '../../components/base/DssAvatar/DssAvatar.vue'
-import DssBadge from '../../components/base/DssBadge/DssBadge.vue'
-import DssChip from '../../components/base/DssChip/DssChip.vue'
-import DssButton from '../../components/base/DssButton/DssButton.vue'
+import DssCard from '@components/base/DssCard/DssCard.vue'
+import { DssCardSection, DssCardActions } from '@components/base/DssCard/index.js'
+import DssAvatar from '@components/base/DssAvatar/DssAvatar.vue'
+import DssBadge from '@components/base/DssBadge/DssBadge.vue'
+import DssChip from '@components/base/DssChip/DssChip.vue'
+import DssButton from '@components/base/DssButton/DssButton.vue'
 
 // --------------------------------------------------------------------------
 // DssCadrisCard — dados e estado

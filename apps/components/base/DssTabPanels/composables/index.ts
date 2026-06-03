@@ -1,1 +1,0 @@
-export { useTabPanelsClasses } from './useTabPanelsClasses'

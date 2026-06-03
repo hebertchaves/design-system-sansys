@@ -1,1 +1,0 @@
-export { useTabsClasses } from './useTabsClasses'

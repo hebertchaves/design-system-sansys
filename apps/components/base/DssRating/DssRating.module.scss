@@ -1,6 +1,0 @@
-// DssRating — SCSS Orchestrator
-// Layer order MUST be: L2 → L3 → L4 (do not change)
-
-@use './2-composition/base';
-@use './3-variants/index' as variants;
-@use './4-output/index' as output;

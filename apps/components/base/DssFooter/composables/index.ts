@@ -1,1 +1,0 @@
-export { useFooterClasses } from './useFooterClasses'

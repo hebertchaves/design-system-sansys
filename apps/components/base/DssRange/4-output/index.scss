@@ -1,7 +1,0 @@
-// DssRange — Camada 4: Output Orchestrator
-//
-// Ordem obrigatória: states → brands.
-// ⚠️  Nunca inverta a ordem.
-
-@use './states' as states;
-@use './brands' as brands;

@@ -1,1 +1,0 @@
-export { useColorPickerClasses } from './useColorPickerClasses'

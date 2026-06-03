@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import '../../../packages/core/index.scss'
 import {
   Quasar,
   // Directives

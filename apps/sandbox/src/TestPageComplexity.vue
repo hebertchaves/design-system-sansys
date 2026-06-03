@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import DssTestPageComplexity from '../../components/composed/DssTestPageComplexity/DssTestPageComplexity.vue'
+import DssTestPageComplexity from '@components/composed/DssTestPageComplexity/DssTestPageComplexity.vue'
 
 const breadcrumbs = [
   { number: 1, label: 'Operacional' },

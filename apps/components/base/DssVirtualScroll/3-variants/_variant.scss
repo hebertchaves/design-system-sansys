@@ -1,9 +1,0 @@
-// Layer 3 — Variants
-// Variações visuais do DssVirtualScroll.
-
-// Variante tabela: ajusta semântica visual para layout tabular
-.dss-virtual-scroll--table {
-  .dss-virtual-scroll__inner {
-    overflow-x: auto; // Tabelas frequentemente excedem a largura disponível
-  }
-}

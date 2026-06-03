@@ -1,8 +1,0 @@
-// Layer 4 — Output orchestrator
-// Ordem canônica DSS: brands primeiro, states depois.
-// Os overrides de dark mode em _states.scss têm especificidade mais alta que _brands.scss
-// porque [data-theme="dark"] adiciona um seletor de atributo (+0,1,0 de especificidade),
-// garantindo que as versões dark dos tokens de brand (hub-500, water-400, waste-500)
-// sobrescrevam os tokens light (hub-600, water-500, waste-600) mesmo com a ordem canônica.
-@use './brands' as *;
-@use './states' as *;
