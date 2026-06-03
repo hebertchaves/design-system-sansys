@@ -1803,7 +1803,7 @@ Em caso de conflito entre fontes de informação visual:
 
 | Componente | Grupo | Props Default | Dimensões | demoContent |
 |---|---|---|---|---|
-| DssAjaxBar | progresso | position:0, color:primary | minHeight:3px | Barra de progresso de requisições AJAX |
+| DssAjaxBar | progresso | position:top, color:primary | minHeight:3px | Barra de progresso de requisições AJAX |
 | DssAvatar | indicadores | size:md, icon:person | minHeight:40px, minWidth:40px | Iniciais 'AB' |
 | DssBadge | indicadores | color:primary | minHeight:24px, minWidth:24px | Label '99+' |
 | DssBanner | banners | variant:default, inline | minHeight:48px | Mensagem informativa com ação |
@@ -1893,5 +1893,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-03T17:26:12.229Z_
+_Gerado em: 2026-06-03T17:28:51.083Z_
 <!-- END:AUTO-GENERATED -->
