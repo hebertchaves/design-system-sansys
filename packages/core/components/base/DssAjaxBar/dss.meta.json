@@ -81,7 +81,7 @@
   },
   "defaultPreview": {
     "props": {
-      "position": 0,
+      "position": "0",
       "color": "primary"
     },
     "computedDimensions": {

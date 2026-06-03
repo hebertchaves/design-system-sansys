@@ -65,7 +65,7 @@ import DssBreadcrumbsEl from '@components/base/DssBreadcrumbsEl/DssBreadcrumbsEl
 import DssPagination    from '@components/base/DssPagination/DssPagination.vue'
 import DssExpansionItem from '@components/base/DssExpansionItem/DssExpansionItem.vue'
 import DssMenu          from '@components/base/DssMenu/DssMenu.vue'
-import DssRouteTab      from '@components/base/DssRouteTab/DssRouteTab.vue'
+// DssRouteTab excluído do registry — requer vue-router, indisponível no sandbox
 
 import DssStepper       from '@components/base/DssStepper/DssStepper.vue'
 import DssStep          from '@components/base/DssStep/DssStep.vue'
@@ -154,7 +154,6 @@ const REGISTRY = {
   DssPagination,
   DssExpansionItem,
   DssMenu,
-  DssRouteTab,
   DssStepper,
   DssStep,
   DssList,
