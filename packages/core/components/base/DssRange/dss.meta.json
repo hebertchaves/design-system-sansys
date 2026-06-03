@@ -70,7 +70,8 @@
       "modelValue": {
         "min": 25,
         "max": 75
-      }
+      },
+      "aria-label": "Seleção de intervalo"
     },
     "computedDimensions": {
       "minHeight": "44px",

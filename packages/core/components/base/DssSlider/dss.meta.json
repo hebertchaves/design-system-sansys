@@ -66,7 +66,8 @@
     "props": {
       "min": 0,
       "max": 100,
-      "modelValue": 50
+      "modelValue": 50,
+      "aria-label": "Seleção de valor"
     },
     "computedDimensions": {
       "minHeight": "44px",

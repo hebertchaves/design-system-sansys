@@ -68,7 +68,9 @@
     "props": {
       "src": "https://placehold.co/600x200",
       "height": 100,
-      "speed": 0.5
+      "speed": 0.5,
+      "alt": "Imagem decorativa de fundo",
+      "decorative": true
     },
     "computedDimensions": {
       "minHeight": "200px"

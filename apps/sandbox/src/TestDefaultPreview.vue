@@ -262,6 +262,8 @@ const activeBrand = ref('')
 
 /* ── Demo box ────────────────────────────────────────────────────────────── */
 .demo-box {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;

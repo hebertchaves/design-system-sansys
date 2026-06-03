@@ -86,6 +86,12 @@
     "demoContent": "Entrada de timeline com ícone e conteúdo",
     "demoSlots": {
       "default": "Conteúdo do evento."
+    },
+    "wrapIn": {
+      "component": "DssTimeline",
+      "props": {
+        "side": "right"
+      }
     }
   },
   "previewGroup": "timeline"

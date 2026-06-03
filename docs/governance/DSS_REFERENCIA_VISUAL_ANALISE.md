@@ -1803,7 +1803,7 @@ Em caso de conflito entre fontes de informação visual:
 
 | Componente | Grupo | Props Default | Dimensões | demoContent |
 |---|---|---|---|---|
-| DssAjaxBar | progresso | — | minHeight:3px | Barra de progresso de requisições AJAX |
+| DssAjaxBar | progresso | position:0, color:primary | minHeight:3px | Barra de progresso de requisições AJAX |
 | DssAvatar | indicadores | size:md, icon:person | minHeight:40px, minWidth:40px | Iniciais 'AB' |
 | DssBadge | indicadores | color:primary | minHeight:24px, minWidth:24px | Label '99+' |
 | DssBanner | banners | variant:default, inline | minHeight:48px | Mensagem informativa com ação |
@@ -1854,22 +1854,22 @@ Em caso de conflito entre fontes de informação visual:
 | DssPageScroller | layout | — | — | Botão de scroll para o topo |
 | DssPageSticky | layout | position:bottom-right, offset:[…] | — | Elemento fixo na página |
 | DssPagination | navegacao | modelValue:1, max:10 | minHeight:44px | Página 1 de 10 |
-| DssParallax | contextuais | src:https://placehold.co/600x200, height:100, speed:0.5 | minHeight:200px | Seção com efeito parallax |
+| DssParallax | contextuais | src:https://placehold.co/600x200, height:100, speed:0.5, alt:Imagem decorativa de fundo, decorative | minHeight:200px | Seção com efeito parallax |
 | DssPopupEdit | contextuais | — | — | — |
 | DssPopupProxy | contextuais | breakpoint:450 | — | Proxy de popup (Dialog em mobile, Menu em desktop) |
 | DssPopupProxy | contextuais | breakpoint:450 | — | DssPopupProxy responsivo — abre QMenu em desktop e QDialog em mobile |
 | DssPullToRefresh | contextuais | — | — | Puxe para atualizar |
 | DssRadio | form-controles | color:primary, size:md, label:Opção, val:opcao | minHeight:44px | Label 'Opção' |
-| DssRange | form-controles | min:0, max:100, modelValue:{…} | minHeight:44px, minWidth:200px | Range de 25 a 75 |
+| DssRange | form-controles | min:0, max:100, modelValue:{…}, aria-label:Seleção de intervalo | minHeight:44px, minWidth:200px | Range de 25 a 75 |
 | DssRating | indicadores | modelValue:3, max:5 | minHeight:44px, minWidth:160px | Avaliação de 3 de 5 estrelas |
 | DssResponsive | contextuais | show:sm | — | Wrapper condicional por breakpoint |
-| DssRouteTab | navegacao | label:Início, to:/, name:inicio | minHeight:44px | Tab de rota 'Início' |
+| DssRouteTab | contextuais | label:Início, to:/, name:inicio | minHeight:44px | Tab de rota 'Início' |
 | DssScrollArea | midia | visible:auto, style:height:100px;width:200px | minHeight:200px | Área com scrollbar customizada |
 | DssSelect | form-campos | variant:outlined, label:Seleção, options:[…] | minHeight:44px, minWidth:240px | Placeholder 'Selecione uma opção' |
 | DssSeparator | listas | — | minHeight:1px | Linha divisória horizontal |
 | DssSkeleton | progresso | type:text, width:200px | minHeight:24px, minWidth:200px | Bloco de texto esqueleto (placeholder de carregamento) |
 | DssSlideItem | listas | — | minHeight:56px | Item com ações deslizáveis (esquerda/direita) |
-| DssSlider | form-controles | min:0, max:100, modelValue:50 | minHeight:44px, minWidth:200px | Slider com valor 50 |
+| DssSlider | form-controles | min:0, max:100, modelValue:50, aria-label:Seleção de valor | minHeight:44px, minWidth:200px | Slider com valor 50 |
 | DssSpace | listas | size:md | — | Espaçamento visual entre elementos |
 | DssSpinner | indicadores | type:standard, size:md | minHeight:40px, minWidth:40px | Spinner animado de carregamento |
 | DssSplitter | midia | modelValue:50, orientation:horizontal, style:height:80px;width:240px | minHeight:200px | Divisor redimensionável 50/50 |
@@ -1891,7 +1891,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssTree | arvore | nodeKey:id, labelKey:label, nodes:[…] | — | Árvore hierárquica com nós expansíveis |
 | DssUploader | contextuais | — | — | — |
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
-| DssVirtualScroll | contextuais | items:[Array de itens], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
+| DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-03T17:15:07.057Z_
+_Gerado em: 2026-06-03T17:20:24.642Z_
 <!-- END:AUTO-GENERATED -->

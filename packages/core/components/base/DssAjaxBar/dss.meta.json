@@ -80,7 +80,10 @@
     "templateStructure": "QAjaxBar como root element — gerencia internamente posicionamento fixed, hijack de XHR/fetch, animação e role=progressbar. Não é possível nem desejável wrapper div externo para este componente (EXC-Gate-01)."
   },
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "position": 0,
+      "color": "primary"
+    },
     "computedDimensions": {
       "minHeight": "3px"
     },
