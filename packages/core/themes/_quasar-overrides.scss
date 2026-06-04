@@ -1007,9 +1007,9 @@
    =========================================== */
 
 /* Text colors com nossos tokens */
-.text-primary { color: var(--quasar-primary) !important; }
-.text-secondary { color: var(--quasar-secondary) !important; }
-.text-accent { color: var(--quasar-accent) !important; }
+.text-primary { color: var(--dss-action-primary) !important; }
+.text-secondary { color: var(--dss-action-secondary) !important; }
+.text-accent { color: var(--dss-action-accent) !important; }
 .text-positive { color: var(--dss-feedback-success) !important; }
 .text-negative { color: var(--dss-feedback-error) !important; }
 .text-warning { color: var(--dss-feedback-warning) !important; }
@@ -1018,9 +1018,9 @@
 .text-light { color: var(--dss-text-subtle) !important; }
 
 /* Background colors */
-.bg-primary { background-color: var(--quasar-primary) !important; }
-.bg-secondary { background-color: var(--quasar-secondary) !important; }
-.bg-accent { background-color: var(--quasar-accent) !important; }
+.bg-primary { background-color: var(--dss-action-primary) !important; }
+.bg-secondary { background-color: var(--dss-action-secondary) !important; }
+.bg-accent { background-color: var(--dss-action-accent) !important; }
 .bg-positive { background-color: var(--dss-feedback-success) !important; }
 .bg-negative { background-color: var(--dss-feedback-error) !important; }
 .bg-warning { background-color: var(--dss-feedback-warning) !important; }
@@ -1029,9 +1029,9 @@
 .bg-light { background-color: var(--dss-gray-100) !important; }
 
 /* Border colors */
-.border-primary { border-color: var(--quasar-primary) !important; }
-.border-secondary { border-color: var(--quasar-secondary) !important; }
-.border-accent { border-color: var(--quasar-accent) !important; }
+.border-primary { border-color: var(--dss-action-primary) !important; }
+.border-secondary { border-color: var(--dss-action-secondary) !important; }
+.border-accent { border-color: var(--dss-action-accent) !important; }
 
 /* Shadows */
 .shadow-1 { box-shadow: var(--dss-shadow-sm) !important; }

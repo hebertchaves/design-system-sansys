@@ -190,3 +190,23 @@ $animation-easing: var(--dss-easing-standard) !default;
 
 $transition-duration: var(--dss-duration-base) !default;
 $transition-easing: var(--dss-easing-standard) !default;
+
+/* ===========================================
+   12. BRIDGE QUASAR CSS VARIABLES → DSS
+   Mapeia --q-* (usados internamente pelos componentes
+   Quasar) para os tokens semânticos do DSS.
+   Isso garante que QBtn, QInput, QChip, etc. usem
+   a paleta DSS sem precisar de overrides individuais.
+   =========================================== */
+
+:root {
+  --q-primary:   var(--dss-action-primary);
+  --q-secondary: var(--dss-action-secondary);
+  --q-accent:    var(--dss-action-accent);
+  --q-positive:  var(--dss-feedback-success);
+  --q-negative:  var(--dss-feedback-error);
+  --q-warning:   var(--dss-feedback-warning);
+  --q-info:      var(--dss-feedback-info);
+  --q-dark:      var(--dss-gray-900);
+  --q-dark-page: var(--dss-gray-950);
+}
