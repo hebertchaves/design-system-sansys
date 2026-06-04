@@ -449,7 +449,7 @@ const Be = /* @__PURE__ */ A({
   for (const [s, l] of a)
     t[s] = l;
   return t;
-}, xt = /* @__PURE__ */ D(Be, [["__scopeId", "data-v-9c3f7e07"]]), pe = /* @__PURE__ */ A({
+}, xt = /* @__PURE__ */ D(Be, [["__scopeId", "data-v-017dc787"]]), pe = /* @__PURE__ */ A({
   name: "DssCardSection",
   inheritAttrs: !1,
   __name: "DssCardSection.ts",
@@ -462,7 +462,7 @@ const Be = /* @__PURE__ */ A({
       b(s.$slots, "default", {}, void 0, !0)
     ], 16));
   }
-}), Dt = /* @__PURE__ */ D(pe, [["__scopeId", "data-v-9b69ab59"]]), xe = /* @__PURE__ */ A({
+}), Dt = /* @__PURE__ */ D(pe, [["__scopeId", "data-v-8b1a37c3"]]), xe = /* @__PURE__ */ A({
   name: "DssCardActions",
   inheritAttrs: !1,
   __name: "DssCardActions.ts",
@@ -476,7 +476,7 @@ const Be = /* @__PURE__ */ A({
       b(s.$slots, "default", {}, void 0, !0)
     ], 16));
   }
-}), zt = /* @__PURE__ */ D(xe, [["__scopeId", "data-v-5896aec0"]]);
+}), zt = /* @__PURE__ */ D(xe, [["__scopeId", "data-v-e04ed18f"]]);
 function De(e, { isFocused: a, hasValue: t }) {
   const s = o(() => [
     // Classe base
@@ -1327,7 +1327,7 @@ function ht(e, a, t, s, l, n) {
     b(e.$slots, "default", {}, void 0, !0)
   ], 16);
 }
-const yt = /* @__PURE__ */ D(bt, [["render", ht], ["__scopeId", "data-v-570cd789"]]), vt = {
+const yt = /* @__PURE__ */ D(bt, [["render", ht], ["__scopeId", "data-v-9973e631"]]), vt = {
   name: "DssCardSection",
   props: {
     /**
@@ -1356,7 +1356,7 @@ function gt(e, a, t, s, l, n) {
     b(e.$slots, "default", {}, void 0, !0)
   ], 2);
 }
-const mt = /* @__PURE__ */ D(vt, [["render", gt], ["__scopeId", "data-v-a4819ae3"]]), Ct = {
+const mt = /* @__PURE__ */ D(vt, [["render", gt], ["__scopeId", "data-v-f2b73f5c"]]), Ct = {
   name: "DssCardActions",
   props: {
     /**
@@ -1395,7 +1395,7 @@ function kt(e, a, t, s, l, n) {
     b(e.$slots, "default", {}, void 0, !0)
   ], 2);
 }
-const _t = /* @__PURE__ */ D(Ct, [["render", kt], ["__scopeId", "data-v-fa8188fe"]]), It = {
+const _t = /* @__PURE__ */ D(Ct, [["render", kt], ["__scopeId", "data-v-7d2667ef"]]), It = {
   install(e, a = {}) {
     e.component("DssButton", dt), e.component("DssBadge", rt), e.component("DssAvatar", ft), e.component("DssCard", yt), e.component("DssCardSection", mt), e.component("DssCardActions", _t), e.component("DssInput", Ee), e.component("DssChip", Z), a.brand && e.provide("dss-default-brand", a.brand), a.theme && e.provide("dss-default-theme", a.theme), process.env.NODE_ENV !== "production" && (console.log("✅ Design System Sansys instalado com sucesso!"), console.log("📦 Componentes registrados:", [
       "DssButton",
