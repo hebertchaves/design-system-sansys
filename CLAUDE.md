@@ -50,7 +50,8 @@ A criação de qualquer componente DSS **exige leitura prévia** dos seguintes a
 9. `.github/pull_request_template.md`
 10. `docs/governance/DSS_MONOREPO_PATH_MAP.md` *(mapeamento canônico de caminhos do Monorepo — obrigatório para qualquer importação SCSS ou JS/TS entre pacotes)*
 11. `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` *(Contrato Visual Canônico — espelho human-readable do campo `defaultPreview` de todos os `dss.meta.json`. A seção de dados é **auto-gerada** via `npm run sync:visual-contract`. Autoridade Nível 1 sobre aspectos visuais padrão. Ler sempre que implementar ou auditar o aspecto visual default de qualquer componente.)*
-12. `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` *(Workflow do Preview Data-Driven — descreve os campos `previewGroup` e `demoSlots` do `dss.meta.json`, o componente `DemoRenderer.vue`, os scripts de manutenção e o pre-commit hook. Leitura obrigatória antes de modificar qualquer campo de preview ou o sandbox.)*
+12. `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` *(Workflow do Preview Data-Driven — descreve os campos `previewGroup` e `demoSlots` do `dss.meta.json`, o componente `DemoRenderer.vue`, os scripts de manutenção e o pre-commit hook. Leitura obrigatória antes de modificar any campo de preview ou o sandbox.)*
+13. `docs/governance/PROMPT_DIRECIONADOR_ONDA8_CORRECOES_CRITICAS.md` *(Prompt Direcionador da Onda 8 — documento normativo que orienta as correções críticas de vazamento de tokens, alinhamento de cascata de CSS na sandbox, restauração do build do portal de documentação e saneamento do contrato visual.)*
 
 ⚠️ **IMPORTANTE**  
 Nunca inferir padrões apenas observando um componente existente.  
