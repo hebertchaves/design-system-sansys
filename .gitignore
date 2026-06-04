@@ -1,6 +1,8 @@
-# Compiled CSS
+# Compiled CSS (gerado por Vite/Sass — não versionar)
 index.css
 index.css.map
+# Exceção: entry point intencional do portal de documentação
+!apps/docs-portal/src/index.css
 
 # Node modules (if DSS is used standalone)
 node_modules/
