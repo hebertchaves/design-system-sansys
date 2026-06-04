@@ -156,6 +156,16 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-sm"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.20" },
+      { "property": "padding (horizontal)", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.20" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.20" },
+      { "property": "border-bottom", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.20" },
+      { "property": "box-shadow", "token": "--dss-elevation-1", "value": null, "source": "Seção 13.20" },
+      { "property": "brand title font-size", "token": "--dss-font-size-lg", "value": "18px", "source": "Seção 13.20" },
+      { "property": "brand title font-weight", "token": "--dss-font-weight-semibold", "value": "600", "source": "Seção 13.20" },
+      { "property": "gap (logo + título)", "token": "--dss-spacing-3", "value": "12px", "source": "Seção 13.20" }
+    ],
     "demoContent": "Cabeçalho com logo e ações",
     "demoSlots": {
       "default": [

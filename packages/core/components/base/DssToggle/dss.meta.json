@@ -32,6 +32,20 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.7" },
+      { "property": "track width × height", "token": "52px × 32px", "value": null, "source": "Seção 13.7" },
+      { "property": "track border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.7" },
+      { "property": "track border-width (off)", "token": "--dss-border-width-md", "value": "2px", "source": "Seção 13.7" },
+      { "property": "track border-color (off)", "token": "--dss-gray-400", "value": null, "source": "Seção 13.7" },
+      { "property": "track background (off)", "token": "--dss-surface-muted", "value": null, "source": "Seção 13.7" },
+      { "property": "track background (on)", "token": "--dss-action-primary", "value": null, "source": "Seção 13.7" },
+      { "property": "thumb tamanho (off)", "token": "16px", "value": null, "source": "Seção 13.7" },
+      { "property": "thumb tamanho (on)", "token": "24px", "value": null, "source": "Seção 13.7" },
+      { "property": "thumb background (off)", "token": "--dss-gray-500", "value": null, "source": "Seção 13.7" },
+      { "property": "thumb background (on)", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.7" },
+      { "property": "transição", "token": "--dss-duration-200", "value": "200ms", "source": "Seção 13.7" }
+    ],
     "demoContent": "Label 'Ativar'",
     "demoSlots": null
   },

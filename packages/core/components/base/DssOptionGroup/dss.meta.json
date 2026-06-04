@@ -95,6 +95,10 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "gap entre opções", "token": "--dss-spacing-2", "value": "8px", "source": "Padrão grupo de controles" }
+    ],
     "demoContent": "Grupo de opções (radio/checkbox/toggle)",
     "demoSlots": null
   },

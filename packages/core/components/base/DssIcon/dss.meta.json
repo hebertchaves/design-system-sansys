@@ -25,6 +25,12 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "24px", "source": "defaultPreview" },
+      { "property": "min-width", "token": null, "value": "24px", "source": "defaultPreview" },
+      { "property": "color", "token": "color: inherit", "value": null, "source": "`[data-brand] .dss-icon` — herda cor do pai" },
+      { "property": "font-size (md)", "token": null, "value": "24px", "source": "size prop → font-size" }
+    ],
     "demoContent": "Ícone 'star' tamanho md",
     "demoSlots": null
   },

@@ -77,6 +77,14 @@
       "textColor": "--dss-text-inverse",
       "shadow": "--dss-shadow-sm"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "40px", "source": "defaultPreview (visual 40px < 44px)" },
+      { "property": "min-width", "token": "--dss-touch-target-md", "value": "40px", "source": "defaultPreview" },
+      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Padrão FAB" },
+      { "property": "background", "token": "--dss-action-primary", "value": null, "source": "Padrão Action Control" },
+      { "property": "color", "token": "--dss-text-inverse", "value": "branco", "source": "Padrão Action Control" },
+      { "property": "touch target", "token": "--dss-touch-target-md", "value": "44px", "source": "Via `::before` Opção B (WCAG 2.5.5)" }
+    ],
     "demoContent": "FAB Action com ícone 'mail'",
     "demoSlots": null,
     "wrapIn": {

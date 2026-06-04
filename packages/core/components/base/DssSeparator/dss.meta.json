@@ -63,7 +63,12 @@
       "textColor": "none"
     },
     "demoContent": "Linha divisória horizontal",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "1px", "source": "defaultPreview" },
+      { "property": "border-color", "token": "currentColor", "value": null, "source": "Herda cor do pai (flexível)" },
+      { "property": "border-width", "token": "--dss-border-width-thin", "value": "1px", "source": "Padrão divisor (Seção 3.2)" }
+    ]
   },
   "previewGroup": "listas"
 }

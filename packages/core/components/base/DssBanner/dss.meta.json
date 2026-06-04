@@ -125,6 +125,14 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "48px", "source": "defaultPreview" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Padrão categoria Superfície (Seção 3.1)" },
+      { "property": "border-width", "token": "--dss-border-width-thin", "value": "1px", "source": "Seção 3.2" },
+      { "property": "border-color", "token": "--dss-gray-200", "value": null, "source": "Padrão categoria Superfície" },
+      { "property": "padding", "token": "--dss-spacing-4", "value": "16px", "source": "Seção 3.2 (gap interno superfície)" },
+      { "property": "font-size", "token": "--dss-font-size-sm", "value": "14px", "source": "Seção 3.2 tipografia" }
+    ],
     "demoContent": "Mensagem informativa com ação",
     "demoSlots": {
       "default": "Mensagem informativa do sistema.",

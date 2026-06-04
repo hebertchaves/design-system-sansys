@@ -110,6 +110,10 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
+      { "property": "min-width", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" }
+    ],
     "demoContent": "3 eventos na linha do tempo",
     "demoSlots": {
       "default": [

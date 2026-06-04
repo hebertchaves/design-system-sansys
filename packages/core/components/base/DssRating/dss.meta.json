@@ -112,7 +112,15 @@
       "textColor": "--dss-action-primary"
     },
     "demoContent": "Avaliação de 3 de 5 estrelas",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "min-width", "token": "160px", "value": null, "source": "defaultPreview" },
+      { "property": "cor ícone (selecionado)", "token": "--dss-action-primary", "value": null, "source": "EX-Color-01: CSS cascade puro (SEM EXC-Gate-02)" },
+      { "property": "cor ícone (hub)", "token": "--dss-hub-600", "value": null, "source": "Brand dual-selector" },
+      { "property": "cor ícone (water)", "token": "--dss-water-500", "value": null, "source": "Brand dual-selector" },
+      { "property": "cor ícone (waste)", "token": "--dss-waste-600", "value": null, "source": "Brand dual-selector" }
+    ]
   },
   "previewGroup": "indicadores",
   "component": "DssRating"

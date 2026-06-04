@@ -88,6 +88,16 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "88px", "source": "defaultPreview (2+ linhas)" },
+      { "property": "min-width", "token": "240px", "value": null, "source": "defaultPreview" },
+      { "property": "border", "token": "--dss-gray-400", "value": "1px solid", "source": "Herda padrão DssInput" },
+      { "property": "border (foco)", "token": "--dss-action-primary", "value": "2px solid", "source": "Herda padrão DssInput" },
+      { "property": "border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Herda padrão DssInput" },
+      { "property": "padding", "token": "--dss-spacing-4", "value": "16px", "source": "Herda padrão DssInput" },
+      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Padrão formulário" },
+      { "property": "resize", "token": "vertical", "value": null, "source": "Comportamento padrão textarea" }
+    ],
     "demoContent": "Placeholder 'Escreva sua mensagem aqui'",
     "demoSlots": null
   },

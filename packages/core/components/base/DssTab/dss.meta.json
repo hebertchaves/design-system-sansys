@@ -137,6 +137,18 @@
       "surface": "none",
       "textColor": "--dss-text-secondary"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.18" },
+      { "property": "padding", "token": "--dss-spacing-4", "value": "0 16px", "source": "Seção 13.18" },
+      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.18" },
+      { "property": "font-weight (ativa)", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.18" },
+      { "property": "font-weight (inativa)", "token": "--dss-font-weight-normal", "value": "400", "source": "Seção 13.18" },
+      { "property": "color (ativa)", "token": "--dss-action-primary", "value": null, "source": "Seção 13.18" },
+      { "property": "color (inativa)", "token": "--dss-text-subtle", "value": null, "source": "Seção 13.18" },
+      { "property": "indicador height", "token": "3px", "value": null, "source": "Seção 13.18" },
+      { "property": "indicador background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.18" },
+      { "property": "hover background", "token": "--dss-surface-hover", "value": null, "source": "Seção 13.18" }
+    ],
     "demoContent": "Tab 'Início'",
     "demoSlots": null,
     "wrapIn": {

@@ -133,6 +133,10 @@
       "surface": "none",
       "textColor": "none"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": null, "source": null },
+      { "property": "min-width", "token": null, "value": null, "source": null }
+    ],
     "demoContent": "Container com largura máxima de conteúdo",
     "demoSlots": {
       "default": [

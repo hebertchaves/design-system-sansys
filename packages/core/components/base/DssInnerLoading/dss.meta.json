@@ -109,6 +109,13 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-action-primary"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "48px", "source": "defaultPreview" },
+      { "property": "overlay background", "token": "--dss-surface-default", "value": null, "source": "EX-Overlay-01 (sem -rgb)" },
+      { "property": "color (spinner)", "token": "currentColor", "value": null, "source": "DssSpinner herda via CSS color" },
+      { "property": "border-radius", "token": "inherit", "value": null, "source": "EX-Structural-01" },
+      { "property": "line-height", "token": "--dss-line-height-xs", "value": null, "source": "NC-01 corrigida" }
+    ],
     "demoContent": "Overlay de carregamento interno",
     "demoSlots": {
       "default": [

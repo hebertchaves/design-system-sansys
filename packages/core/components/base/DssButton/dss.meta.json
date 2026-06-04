@@ -30,6 +30,22 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.1" },
+      { "property": "min-width", "token": "64px", "value": null, "source": "defaultPreview / Seção 13.1" },
+      { "property": "padding (horizontal)", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.1" },
+      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.1" },
+      { "property": "border-width", "token": "--dss-border-width-none", "value": "0", "source": "Seção 13.1 (variante filled)" },
+      { "property": "background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.1" },
+      { "property": "color", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.1" },
+      { "property": "font-size", "token": "--dss-font-size-sm", "value": "14px", "source": "Seção 13.1" },
+      { "property": "font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.1" },
+      { "property": "letter-spacing", "token": null, "value": "0.01em", "source": "Seção 13.1" },
+      { "property": "gap (ícone + label)", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.1" },
+      { "property": "shadow", "token": "--dss-elevation-1", "value": null, "source": "Seção 13.1 (elevated)" },
+      { "property": "transition", "token": "--dss-duration-200", "value": "200ms", "source": "Seção 13.1" },
+      { "property": "disabled opacity", "token": "--dss-opacity-disabled", "value": "0.4", "source": "Seção 13.1" }
+    ],
     "demoContent": "Label 'Action'",
     "demoSlots": {
       "default": "Ação Principal"

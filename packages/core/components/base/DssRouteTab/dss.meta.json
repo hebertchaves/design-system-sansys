@@ -147,7 +147,15 @@
       "textColor": "--dss-text-secondary"
     },
     "demoContent": "Tab de rota 'Início'",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "padding", "token": "--dss-spacing-4", "value": "0 16px", "source": "Padrão tab (Seção 3.1 Navegação)" },
+      { "property": "color (ativo)", "token": "--dss-action-primary", "value": null, "source": "Padrão tab" },
+      { "property": "color (inativo)", "token": "--dss-text-subtle", "value": null, "source": "Padrão tab" },
+      { "property": "indicador", "token": "--dss-action-primary", "value": "3px solid", "source": "Padrão tab" },
+      { "property": "CSS", "token": "Herda `DssTab.module.scss`", "value": null, "source": "Zero CSS duplicado" }
+    ]
   },
   "previewGroup": "contextuais"
 }

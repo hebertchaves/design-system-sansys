@@ -28,6 +28,15 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "40px", "source": "defaultPreview" },
+      { "property": "min-width", "token": null, "value": "40px", "source": "defaultPreview" },
+      { "property": "border-radius", "token": "50% (constante geométrica)", "value": null, "source": "Avatar circular universal" },
+      { "property": "background (sem imagem)", "token": "--dss-action-primary-surface", "value": null, "source": "Seção 13.12 / Figma" },
+      { "property": "color iniciais", "token": "--dss-action-primary", "value": null, "source": "Seção 13.12" },
+      { "property": "font-size (md)", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.12" },
+      { "property": "font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.12" }
+    ],
     "demoContent": "Iniciais 'AB'",
     "demoSlots": null
   },

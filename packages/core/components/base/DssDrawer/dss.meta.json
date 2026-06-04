@@ -214,6 +214,17 @@
       "surface": "--dss-surface-subtle",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": null, "source": "defaultPreview" },
+      { "property": "min-width", "token": null, "value": "300px", "source": "defaultPreview / Seção 13.15" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.15" },
+      { "property": "box-shadow", "token": "--dss-elevation-4", "value": null, "source": "Seção 13.15" },
+      { "property": "border-radius", "token": null, "value": "0", "source": "Seção 13.15 (estrutural)" },
+      { "property": "header padding", "token": "--dss-spacing-4 / --dss-spacing-6", "value": "16px 24px", "source": "Seção 13.15" },
+      { "property": "header border-bottom", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.15" },
+      { "property": "content padding", "token": "--dss-spacing-4", "value": "16px", "source": "Seção 13.15" },
+      { "property": "animação", "token": "--dss-duration-250", "value": "250ms", "source": "Seção 13.15" }
+    ],
     "demoContent": "Painel lateral com navegação",
     "demoSlots": null,
     "wrapIn": {

@@ -114,6 +114,12 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-compact-control-height-sm", "value": "24px", "source": "defaultPreview" },
+      { "property": "font-size", "token": "--dss-font-size-lg", "value": "16px", "source": "Padrão toolbar title" },
+      { "property": "font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Padrão toolbar title" },
+      { "property": "color", "token": "--dss-text-body", "value": null, "source": "Padrão neutro" }
+    ],
     "demoContent": "Título da barra de ferramentas",
     "demoSlots": {
       "default": "Título da Barra"

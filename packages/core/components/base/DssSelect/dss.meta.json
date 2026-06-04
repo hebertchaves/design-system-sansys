@@ -95,7 +95,15 @@
       "textColor": "--dss-text-body"
     },
     "demoContent": "Placeholder 'Selecione uma opção'",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "min-width", "token": "240px", "value": null, "source": "defaultPreview" },
+      { "property": "border", "token": "--dss-gray-400", "value": "1px solid", "source": "Herda padrão DssInput" },
+      { "property": "border (foco)", "token": "--dss-action-primary", "value": "2px solid", "source": "Herda padrão DssInput" },
+      { "property": "border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Herda padrão DssInput" },
+      { "property": "painel popup", "token": ".dss__panel + popup-content-class", "value": null, "source": "Seletor teleportado (Seção 3 proibidos: no scoped)" }
+    ]
   },
   "previewGroup": "form-campos"
 }

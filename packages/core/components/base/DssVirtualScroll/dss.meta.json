@@ -115,6 +115,11 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "200px", "value": null, "source": "defaultPreview" },
+      { "property": "item default height", "token": "48px", "value": null, "source": "defaultPreview / itemSize" },
+      { "property": "spinner color", "token": "--dss-action-primary", "value": null, "source": "CSS currentColor (padrão DssSpinner)" }
+    ],
     "demoContent": "Lista virtualizada com 1000 itens",
     "demoSlots": null
   },

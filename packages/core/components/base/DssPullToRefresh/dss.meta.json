@@ -121,6 +121,12 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
+      { "property": "min-width", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
+      { "property": "handler color", "token": "--dss-action-primary", "value": null, "source": "EXC-Gate-02-a: `--q-color-primary`" },
+      { "property": "handler border-radius", "token": "50%", "value": null, "source": "EX-Structural-01 (constante geométrica)" }
+    ],
     "demoContent": "Puxe para atualizar",
     "demoSlots": null
   },

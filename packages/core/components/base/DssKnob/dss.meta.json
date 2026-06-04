@@ -122,6 +122,16 @@
       "surface": "none",
       "textColor": "--dss-action-primary"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "56px", "value": null, "source": "defaultPreview / Seção 13.9" },
+      { "property": "min-width", "token": "56px", "value": null, "source": "defaultPreview / Seção 13.9" },
+      { "property": "track cor (não preenchido)", "token": "--dss-gray-200", "value": null, "source": "Seção 13.9" },
+      { "property": "track cor (preenchido)", "token": "--dss-action-primary", "value": null, "source": "Seção 13.9 (EXC-Gate-02: CSS stroke)" },
+      { "property": "label central font-size", "token": "--dss-font-size-lg", "value": "18px", "source": "Seção 13.9" },
+      { "property": "label central font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.9" },
+      { "property": "label central color", "token": "--dss-text-body", "value": null, "source": "Seção 13.9" },
+      { "property": "focus outline", "token": "--dss-border-width-thick", "value": "3px", "source": "EXC-Focus-01 (NC-01 corrigida)" }
+    ],
     "demoContent": "Knob com valor 50%",
     "demoSlots": null
   },

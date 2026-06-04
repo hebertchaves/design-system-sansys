@@ -26,6 +26,16 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.25" },
+      { "property": "drop zone min-height", "token": null, "value": "120px", "source": "Seção 13.25" },
+      { "property": "drop zone border", "token": "--dss-gray-400", "value": "2px dashed", "source": "Seção 13.25" },
+      { "property": "drop zone border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Seção 13.25" },
+      { "property": "drop zone background", "token": "--dss-surface-muted", "value": null, "source": "Seção 13.25" },
+      { "property": "drop zone padding", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.25" },
+      { "property": "dragover border", "token": "--dss-action-primary", "value": "2px dashed", "source": "Seção 13.25" },
+      { "property": "dragover background", "token": "--dss-action-primary-surface", "value": null, "source": "Seção 13.25" }
+    ],
     "demoContent": "Seleção de arquivo",
     "demoSlots": null
   },

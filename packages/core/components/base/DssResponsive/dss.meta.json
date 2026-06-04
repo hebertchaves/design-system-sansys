@@ -46,7 +46,11 @@
       "textColor": "none"
     },
     "demoContent": "Wrapper condicional por breakpoint",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      { "property": "min-height", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null },
+      { "property": "min-width", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null }
+    ]
   },
   "previewGroup": "contextuais"
 }

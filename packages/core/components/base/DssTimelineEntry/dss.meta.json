@@ -83,6 +83,14 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "ícone background", "token": "--dss-action-primary", "value": null, "source": "Padrão step/timeline ativo" },
+      { "property": "ícone color", "token": "--dss-text-inverse", "value": "branco", "source": "Padrão ação primária" },
+      { "property": "linha conectora", "token": "--dss-gray-300", "value": "1px solid", "source": "Padrão linha temporal" },
+      { "property": "título font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Hierarquia tipográfica" },
+      { "property": "subtítulo color", "token": "--dss-text-subtle", "value": null, "source": "Hierarquia visual secundária" }
+    ],
     "demoContent": "Entrada de timeline com ícone e conteúdo",
     "demoSlots": {
       "default": "Conteúdo do evento."

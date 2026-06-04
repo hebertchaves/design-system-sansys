@@ -151,6 +151,18 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.4" },
+      { "property": "background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.4 (herda DssButton)" },
+      { "property": "color", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.4" },
+      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.4" },
+      { "property": "painel border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Seção 13.4" },
+      { "property": "painel box-shadow", "token": "--dss-elevation-3", "value": null, "source": "Seção 13.4" },
+      { "property": "painel padding", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.4" },
+      { "property": "painel background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.4" },
+      { "property": "item height", "token": "40px", "value": null, "source": "Seção 13.4" },
+      { "property": "item padding", "token": "--dss-spacing-4", "value": "0 16px", "source": "Seção 13.4" }
+    ],
     "demoContent": "Botão 'Opções' com menu dropdown",
     "demoSlots": {
       "default": [

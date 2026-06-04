@@ -108,6 +108,10 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null },
+      { "property": "min-width", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null }
+    ],
     "demoContent": "Seção de item (avatar, conteúdo ou ação)",
     "demoSlots": {
       "default": "Conteúdo"

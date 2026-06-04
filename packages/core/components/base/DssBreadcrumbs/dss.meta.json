@@ -166,6 +166,12 @@
       "surface": "none",
       "textColor": "--dss-text-secondary"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "21px", "source": "defaultPreview (altura do texto)" },
+      { "property": "gap", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.23 / container de items" },
+      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.23" },
+      { "property": "separador color", "token": "--dss-gray-400", "value": null, "source": "Seção 13.23" }
+    ],
     "demoContent": "Home / Produtos / Detalhe",
     "demoSlots": {
       "default": [

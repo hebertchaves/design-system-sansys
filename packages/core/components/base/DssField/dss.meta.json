@@ -154,6 +154,17 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "min-width", "token": null, "value": "240px", "source": "defaultPreview" },
+      { "property": "border", "token": "--dss-gray-400", "value": "1px solid", "source": "EXC-Gate-01 (custom, não QField)" },
+      { "property": "border (foco)", "token": "--dss-action-primary", "value": "2px solid", "source": "Padrão formulário" },
+      { "property": "border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Padrão formulário" },
+      { "property": "label color", "token": "--dss-text-subtle", "value": null, "source": "Padrão formulário" },
+      { "property": "label color (foco)", "token": "--dss-action-primary", "value": null, "source": "Padrão formulário" },
+      { "property": "hint font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 3.2 tipografia" },
+      { "property": "gray-800", "token": "--dss-gray-800", "value": null, "source": "NC-01 corrigida (meta.json)" }
+    ],
     "demoContent": "Campo de formulário customizado",
     "demoSlots": null
   },

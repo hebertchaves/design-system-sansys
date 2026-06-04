@@ -138,6 +138,11 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "48px", "source": "defaultPreview" },
+      { "property": "padding", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.18 (Tab Panel padding)" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Padrão categoria Superfície" }
+    ],
     "demoContent": "Conteúdo do painel de aba",
     "demoSlots": null,
     "wrapIn": {

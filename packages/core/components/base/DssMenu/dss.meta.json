@@ -163,6 +163,20 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-sm"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "200px", "value": null, "source": "defaultPreview / Seção 13.16" },
+      { "property": "min-width", "token": "200px", "value": null, "source": "defaultPreview / Seção 13.16" },
+      { "property": "border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Seção 13.16" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.16" },
+      { "property": "box-shadow", "token": "--dss-elevation-3", "value": null, "source": "Seção 13.16" },
+      { "property": "padding", "token": "--dss-spacing-2", "value": "8px 0", "source": "Seção 13.16" },
+      { "property": "item height", "token": "40px", "value": null, "source": "Seção 13.16" },
+      { "property": "item padding", "token": "--dss-spacing-4", "value": "0 16px", "source": "Seção 13.16" },
+      { "property": "item font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.16" },
+      { "property": "item color", "token": "--dss-text-body", "value": null, "source": "Seção 13.16" },
+      { "property": "hover background", "token": "--dss-surface-hover", "value": null, "source": "Seção 13.16" },
+      { "property": "divider", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.16" }
+    ],
     "demoContent": "Menu com 3 itens",
     "demoSlots": {
       "default": [

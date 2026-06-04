@@ -80,6 +80,14 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null },
+      { "property": "min-width", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null },
+      { "property": "spinner color", "token": "--dss-action-primary", "value": null, "source": "Seção 13.30 (currentColor)" },
+      { "property": "spinner container padding", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.30" },
+      { "property": "no-more font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 13.30" },
+      { "property": "no-more color", "token": "--dss-text-subtle", "value": null, "source": "Seção 13.30" }
+    ],
     "demoContent": "Lista com carregamento infinito",
     "demoSlots": null
   },

@@ -123,6 +123,18 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-sm"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "80px", "source": "defaultPreview" },
+      { "property": "border-radius", "token": "--dss-radius-lg", "value": "12px", "source": "Seção 13.13" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.13" },
+      { "property": "border-width (outlined)", "token": "--dss-border-width-thin", "value": "1px", "source": "Seção 13.13" },
+      { "property": "border-color (outlined)", "token": "--dss-gray-200", "value": null, "source": "Seção 13.13" },
+      { "property": "box-shadow (elevated)", "token": "--dss-elevation-1", "value": null, "source": "Seção 13.13" },
+      { "property": "box-shadow (hover)", "token": "--dss-elevation-2", "value": null, "source": "Seção 13.13" },
+      { "property": "section padding", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.13" },
+      { "property": "section divider", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.13" },
+      { "property": "transition", "token": "--dss-duration-200", "value": "200ms", "source": "Seção 13.13" }
+    ],
     "demoContent": "DssCardSection com texto e ações",
     "demoSlots": {
       "default": [

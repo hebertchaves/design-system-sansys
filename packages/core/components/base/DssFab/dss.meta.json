@@ -83,6 +83,16 @@
       "textColor": "--dss-text-inverse",
       "shadow": "--dss-shadow-md"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "56px", "source": "defaultPreview / Seção 13.2" },
+      { "property": "min-width", "token": null, "value": "56px", "source": "defaultPreview / Seção 13.2" },
+      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.2" },
+      { "property": "background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.2" },
+      { "property": "color (ícone)", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.2" },
+      { "property": "box-shadow", "token": "--dss-elevation-3", "value": null, "source": "Seção 13.2" },
+      { "property": "box-shadow (hover)", "token": "--dss-elevation-4", "value": null, "source": "Seção 13.2" },
+      { "property": "ícone tamanho", "token": null, "value": "24px", "source": "Seção 13.2" }
+    ],
     "demoContent": "FAB com ícone 'add'",
     "demoSlots": {
       "default": [

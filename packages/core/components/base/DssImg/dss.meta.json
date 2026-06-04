@@ -82,6 +82,16 @@
       "surface": "--dss-surface-muted",
       "textColor": "none"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "150px", "source": "defaultPreview" },
+      { "property": "min-width", "token": null, "value": "200px", "source": "defaultPreview" },
+      { "property": "border-radius", "token": "0", "value": null, "source": "Seção 13.27 (sem corte default)" },
+      { "property": "object-fit", "token": "cover", "value": null, "source": "Seção 13.27" },
+      { "property": "placeholder background", "token": "--dss-gray-100", "value": null, "source": "Seção 13.27" },
+      { "property": "erro background", "token": "--dss-gray-200", "value": null, "source": "Seção 13.27" },
+      { "property": "erro ícone cor", "token": "--dss-gray-500", "value": null, "source": "Seção 13.27" },
+      { "property": "fade-in transition", "token": "--dss-duration-300", "value": "300ms", "source": "Seção 13.27" }
+    ],
     "demoContent": "Imagem com alt text acessível",
     "demoSlots": null
   },

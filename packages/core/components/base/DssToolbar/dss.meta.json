@@ -163,6 +163,16 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.19" },
+      { "property": "padding (horizontal)", "token": "--dss-spacing-4", "value": "16px", "source": "Seção 13.19" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.19" },
+      { "property": "border-bottom", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.19" },
+      { "property": "gap", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.19" },
+      { "property": "título font-size", "token": "--dss-font-size-lg", "value": "16px", "source": "Seção 13.19" },
+      { "property": "título font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.19" },
+      { "property": "variante elevated", "token": "--dss-elevation-2", "value": null, "source": "Seção 13.19" }
+    ],
     "demoContent": "Toolbar com título e ações",
     "demoSlots": {
       "default": [

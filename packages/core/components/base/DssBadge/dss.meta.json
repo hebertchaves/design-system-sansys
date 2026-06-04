@@ -29,6 +29,17 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-compact-control-height-sm", "value": "24px", "source": "defaultPreview" },
+      { "property": "min-width", "token": "--dss-compact-control-height-sm", "value": "24px", "source": "defaultPreview" },
+      { "property": "padding", "token": "--dss-spacing-0_5 / --dss-spacing-1", "value": "2px 4px", "source": "Seção 13.11" },
+      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.11" },
+      { "property": "background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.11" },
+      { "property": "color", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.11" },
+      { "property": "font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 13.11" },
+      { "property": "font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.11" },
+      { "property": "line-height", "token": "1", "value": null, "source": "Seção 13.11" }
+    ],
     "demoContent": "Label '99+'",
     "demoSlots": {
       "default": "99+"

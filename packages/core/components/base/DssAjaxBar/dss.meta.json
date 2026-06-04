@@ -94,6 +94,13 @@
       "surface": "none",
       "textColor": "--dss-action-primary"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "3px", "source": "defaultPreview / QAjaxBar motor" },
+      { "property": "color (indicador)", "token": "--dss-action-primary", "value": null, "source": "EXC-Gate-02: `--q-color-primary` CSS override" },
+      { "property": "color (hub brand)", "token": "--dss-hub-600", "value": null, "source": "4-output/_brands.scss" },
+      { "property": "color (water brand)", "token": "--dss-water-500", "value": null, "source": "4-output/_brands.scss" },
+      { "property": "color (waste brand)", "token": "--dss-waste-600", "value": null, "source": "4-output/_brands.scss" }
+    ],
     "demoContent": "Barra de progresso de requisições AJAX",
     "demoSlots": null
   },

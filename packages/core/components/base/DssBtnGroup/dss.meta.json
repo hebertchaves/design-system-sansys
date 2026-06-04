@@ -100,6 +100,12 @@
       "surface": "--dss-action-primary",
       "textColor": "--dss-text-inverse"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.3" },
+      { "property": "gap", "token": null, "value": "0px", "source": "Seção 13.3 (botões coladas)" },
+      { "property": "border-radius extremidades", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.3" },
+      { "property": "divisor interno", "token": "--dss-border-width-thin", "value": "1px", "source": "Seção 13.3" }
+    ],
     "demoContent": "Grupo com 3 botões",
     "demoSlots": {
       "default": [

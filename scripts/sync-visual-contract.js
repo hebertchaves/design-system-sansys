@@ -2,8 +2,14 @@
  * sync-visual-contract.js  (ESM)
  *
  * Lê todos os dss.meta.json de packages/core/components/,
- * extrai campos de defaultPreview e regenera a seção auto-gerada em
- * docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md
+ * extrai campos de defaultPreview e atualiza DSS_REFERENCIA_VISUAL_ANALISE.md em dois níveis:
+ *
+ *  1. Seção auto-gerada (resumo): delimitada por BEGIN/END:AUTO-GENERATED
+ *     → colunas: Componente | Grupo | Props Default | Dimensões | demoContent
+ *
+ *  2. Tabelas por componente (declarativas): delimitadas por BEGIN/END:VISUAL-TABLE:DssXxx
+ *     → geradas a partir de defaultPreview.visualProperties (quando presente)
+ *     → ignoradas (mantidas como estão) quando visualProperties está ausente
  *
  * Uso: node scripts/sync-visual-contract.js
  */
@@ -22,7 +28,7 @@ const VISUAL_DOC = path.join(ROOT, 'docs', 'governance', 'DSS_REFERENCIA_VISUAL_
 const BEGIN_MARKER = '<!-- BEGIN:AUTO-GENERATED — NÃO EDITAR MANUALMENTE -->'
 const END_MARKER   = '<!-- END:AUTO-GENERATED -->'
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
+// ── Helpers — seção auto-gerada (resumo) ──────────────────────────────────────
 
 /** Encontra todos os dss.meta.json recursivamente */
 function findMetaFiles(dir) {
@@ -36,7 +42,7 @@ function findMetaFiles(dir) {
   return results
 }
 
-/** Formata um objeto de props para exibição resumida */
+/** Formata objeto de props para exibição resumida */
 function fmtProps(props) {
   if (!props || typeof props !== 'object') return '—'
   const pairs = Object.entries(props)
@@ -65,8 +71,7 @@ function escapeMd(str) {
   return str.replace(/\|/g, '\\|')
 }
 
-// ── Geração da seção ───────────────────────────────────────────────────────────
-
+/** Gera a seção auto-gerada de resumo */
 function buildAutoSection(metas) {
   const now = new Date().toISOString()
 
@@ -100,6 +105,76 @@ function buildAutoSection(metas) {
   ].join('\n')
 }
 
+// ── Helpers — tabelas declarativas por componente ─────────────────────────────
+
+/**
+ * Renderiza uma célula de token:
+ * - Tokens --dss-* ficam com backtick
+ * - Valores nulos ou '—' ficam como '—'
+ * - Demais strings (ex: "N/A — Componente estrutural") ficam sem backtick
+ */
+function renderToken(raw) {
+  if (!raw || raw === '—') return '—'
+  if (raw.startsWith('--dss-')) return `\`${raw}\``
+  return raw
+}
+
+/**
+ * Renderiza uma célula de valor físico:
+ * - Valores concretos (px, %, números) ficam com backtick
+ * - Valores nulos ou '—' ficam como '—'
+ */
+function renderValue(raw) {
+  if (!raw || raw === '—') return '—'
+  return `\`${raw}\``
+}
+
+/**
+ * Gera tabela Markdown completa a partir de defaultPreview.visualProperties.
+ * Cada entrada do array:
+ * {
+ *   "property": "min-height",
+ *   "token":    "--dss-touch-target-md",   // null → '—'
+ *   "value":    "44px",                    // null → '—'
+ *   "source":   "defaultPreview / Seção 13.1" // null → '—'
+ * }
+ */
+function buildVisualTable(visualProperties) {
+  const header = [
+    '| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |',
+    '| :--- | :--- | :---: | :--- |',
+  ].join('\n')
+
+  const rows = visualProperties.map(vp => {
+    const prop   = `**${vp.property || '—'}**`
+    const token  = renderToken(vp.token  ?? null)
+    const value  = renderValue(vp.value  ?? null)
+    const source = vp.source || '—'
+    return `| ${prop} | ${token} | ${value} | ${source} |`
+  })
+
+  return header + '\n' + rows.join('\n')
+}
+
+/**
+ * Substitui o conteúdo entre <!-- BEGIN:VISUAL-TABLE:Xxx --> e <!-- END:VISUAL-TABLE:Xxx -->
+ * pela tabela gerada. Retorna o documento inalterado se os marcadores não existirem.
+ */
+function updateComponentTable(docContent, componentName, table) {
+  const beginMarker = `<!-- BEGIN:VISUAL-TABLE:${componentName} -->`
+  const endMarker   = `<!-- END:VISUAL-TABLE:${componentName} -->`
+
+  const beginIdx = docContent.indexOf(beginMarker)
+  const endIdx   = docContent.indexOf(endMarker)
+
+  if (beginIdx === -1 || endIdx === -1 || endIdx <= beginIdx) return docContent
+
+  const before = docContent.slice(0, beginIdx + beginMarker.length)
+  const after  = docContent.slice(endIdx)
+
+  return `${before}\n${table}\n${after}`
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────────
 
 function main() {
@@ -118,33 +193,48 @@ function main() {
     }
   }
 
-  // 2. Gerar nova seção
-  const newSection = buildAutoSection(metas)
-
-  // 3. Ler o documento existente
+  // 2. Ler o documento existente
   if (!fs.existsSync(VISUAL_DOC)) {
     console.error(`ERRO: documento não encontrado em ${VISUAL_DOC}`)
     process.exit(1)
   }
   let docContent = fs.readFileSync(VISUAL_DOC, 'utf-8')
 
-  // 4. Substituir ou adicionar a seção delimitada
-  const beginIdx = docContent.indexOf(BEGIN_MARKER)
-  const endIdx   = docContent.indexOf(END_MARKER)
+  // 3. Atualizar seção de resumo auto-gerado
+  const newSection = buildAutoSection(metas)
+  const beginIdx   = docContent.indexOf(BEGIN_MARKER)
+  const endIdx     = docContent.indexOf(END_MARKER)
 
   if (beginIdx !== -1 && endIdx !== -1 && endIdx > beginIdx) {
-    // Substituição: remove tudo entre os marcadores (inclusive)
     const before = docContent.slice(0, beginIdx)
     const after  = docContent.slice(endIdx + END_MARKER.length)
-    docContent = before + newSection + after
+    docContent   = before + newSection + after
     console.log('Seção auto-gerada substituída.')
   } else {
-    // Não existe — adiciona ao final
     docContent = docContent.trimEnd() + '\n\n' + newSection + '\n'
     console.log('Seção auto-gerada adicionada ao final do documento.')
   }
 
-  // 5. Gravar
+  // 4. Atualizar tabelas declarativas por componente (quando visualProperties presente)
+  let componentTablesUpdated = 0
+  for (const meta of metas) {
+    const vp = meta?.defaultPreview?.visualProperties
+    if (!Array.isArray(vp) || vp.length === 0) continue
+
+    const table   = buildVisualTable(vp)
+    const updated = updateComponentTable(docContent, meta.component, table)
+
+    if (updated !== docContent) {
+      docContent = updated
+      componentTablesUpdated++
+    }
+  }
+
+  if (componentTablesUpdated > 0) {
+    console.log(`Tabelas declarativas regeneradas: ${componentTablesUpdated} componente(s)`)
+  }
+
+  // 5. Gravar documento (único write)
   fs.writeFileSync(VISUAL_DOC, docContent, 'utf-8')
   console.log(`Documento atualizado: ${path.relative(ROOT, VISUAL_DOC)}`)
   console.log(`Total de componentes na tabela: ${metas.filter(m => m.component).length}`)

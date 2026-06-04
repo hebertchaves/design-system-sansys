@@ -155,6 +155,12 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "background (selecionado)", "token": "--dss-action-primary", "value": null, "source": "Padrão Action Control (Seção 3.1)" },
+      { "property": "background (não selecionado)", "token": "--dss-surface-default", "value": null, "source": "Estado neutro" },
+      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Padrão pílula (Seção 3.2)" }
+    ],
     "demoContent": "Toggle entre opções A / B / C",
     "demoSlots": null
   },

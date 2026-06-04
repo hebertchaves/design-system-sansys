@@ -31,6 +31,21 @@
       "surface": "--dss-surface-muted",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-compact-control-height-md", "value": "28px", "source": "defaultPreview / Seção 13.10" },
+      { "property": "padding (horizontal)", "token": "--dss-spacing-3", "value": "12px", "source": "Seção 13.10" },
+      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.10" },
+      { "property": "border-width", "token": "--dss-border-width-thin", "value": "1px", "source": "Seção 13.10" },
+      { "property": "border-color", "token": "--dss-gray-300", "value": null, "source": "Seção 13.10" },
+      { "property": "background", "token": "--dss-surface-muted", "value": null, "source": "Seção 13.10" },
+      { "property": "color", "token": "--dss-text-body", "value": null, "source": "Seção 13.10" },
+      { "property": "font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 13.10" },
+      { "property": "font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.10" },
+      { "property": "gap", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.10" },
+      { "property": "selected background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.10" },
+      { "property": "selected color", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.10" },
+      { "property": "touch target", "token": "--dss-touch-target-md", "value": "44px", "source": "Via `::before` (WCAG 2.5.5)" }
+    ],
     "demoContent": "Label 'Chip'",
     "demoSlots": null
   },

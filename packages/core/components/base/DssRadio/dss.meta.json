@@ -35,6 +35,16 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "controle tamanho", "token": null, "value": "20px × 20px", "source": "Seção 3.1 Compact Controls" },
+      { "property": "border-radius", "token": "50%", "value": null, "source": "Circular universal" },
+      { "property": "border-width (unchecked)", "token": "--dss-border-width-md", "value": "2px", "source": "Seção 3.1 Compact Controls" },
+      { "property": "border-color (unchecked)", "token": "--dss-gray-500", "value": null, "source": "Seção 3.1 Compact Controls" },
+      { "property": "border-color (checked)", "token": "--dss-action-primary", "value": null, "source": "Seção 3.1" },
+      { "property": "ponto interno (checked)", "token": "--dss-action-primary", "value": "10px", "source": "Seção 3.1" },
+      { "property": "touch target", "token": "--dss-touch-target-md", "value": "44px", "source": "Via `::before` (WCAG 2.5.5)" }
+    ],
     "demoContent": "Label 'Opção'",
     "demoSlots": null
   },

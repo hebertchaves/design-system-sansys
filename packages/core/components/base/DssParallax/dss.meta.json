@@ -80,6 +80,10 @@
       "surface": "none",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "200px", "value": null, "source": "defaultPreview" },
+      { "property": "background", "token": null, "value": "[imagem de fundo]", "source": "prop src (zero tokens — prop-driven)" }
+    ],
     "demoContent": "Seção com efeito parallax",
     "demoSlots": null
   },

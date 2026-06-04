@@ -120,7 +120,16 @@
       "textColor": "none"
     },
     "demoContent": "Bloco de texto esqueleto (placeholder de carregamento)",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      { "property": "min-height", "token": null, "value": "24px", "source": "defaultPreview" },
+      { "property": "min-width", "token": "200px", "value": null, "source": "defaultPreview" },
+      { "property": "background", "token": "--dss-surface-muted", "value": null, "source": "Placeholder neutro" },
+      { "property": "shimmer color", "token": "--dss-gray-200", "value": null, "source": "Seção 3.1 Progresso" },
+      { "property": "shimmer highlight", "token": "--dss-gray-300", "value": null, "source": "Seção 3.1 Progresso" },
+      { "property": "border-radius", "token": "--dss-radius-sm", "value": "4px", "source": "CSS var chain (fallback)" },
+      { "property": "prefers-contrast", "token": "border: 1px solid currentColor", "value": null, "source": "NC-01 (precedente DssBadge)" }
+    ]
   },
   "auditHistory": [
     {

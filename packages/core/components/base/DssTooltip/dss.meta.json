@@ -41,6 +41,18 @@
       "textColor": "--dss-text-body",
       "shadow": "--dss-shadow-sm"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-compact-control-height-sm", "value": "24px", "source": "defaultPreview / Seção 13.17" },
+      { "property": "background", "token": "--dss-gray-900", "value": null, "source": "Seção 13.17" },
+      { "property": "color", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.17" },
+      { "property": "padding", "token": "--dss-spacing-1_5 / --dss-spacing-2", "value": "6px 8px", "source": "Seção 13.17" },
+      { "property": "border-radius", "token": "--dss-radius-sm", "value": "4px", "source": "Seção 13.17" },
+      { "property": "font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 13.17" },
+      { "property": "font-weight", "token": "--dss-font-weight-normal", "value": "400", "source": "Seção 13.17 (NÃO -regular)" },
+      { "property": "max-width", "token": "240px", "value": null, "source": "Seção 13.17" },
+      { "property": "box-shadow", "token": "--dss-elevation-2", "value": null, "source": "Seção 13.17" },
+      { "property": "animação", "token": "--dss-duration-150", "value": "150ms", "source": "Seção 13.17" }
+    ],
     "demoContent": "Tooltip 'Informação adicional'",
     "demoSlots": {
       "default": "Informação adicional"

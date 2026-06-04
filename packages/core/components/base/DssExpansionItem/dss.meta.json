@@ -196,6 +196,15 @@
       "surface": "--dss-surface-default",
       "textColor": "--dss-text-body"
     },
+    "visualProperties": [
+      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
+      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Padrão categoria Superfície" },
+      { "property": "hover background", "token": "--dss-surface-hover", "value": null, "source": "Padrão estado hover (Seção 3.2)" },
+      { "property": "padding", "token": "--dss-spacing-4", "value": "16px", "source": "Padrão item interativo" },
+      { "property": "border-bottom", "token": "--dss-gray-200", "value": "1px solid", "source": "Divisor entre itens" },
+      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 3.2 tipografia" },
+      { "property": "font-weight", "token": "--dss-font-weight-normal", "value": "400", "source": "Estado colapsado" }
+    ],
     "demoContent": "Item expansível com conteúdo",
     "demoSlots": {
       "default": "Conteúdo expandido do item."
