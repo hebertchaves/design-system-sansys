@@ -1814,7 +1814,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssBtnDropdown | acoes | label:Opções | minHeight:44px | Botão 'Opções' com menu dropdown |
 | DssBtnGroup | acoes | — | minHeight:44px | Grupo com 3 botões |
 | DssBtnToggle | acoes | modelValue:opcao1, options:[…] | minHeight:44px | Toggle entre opções A / B / C |
-| DssButton | acoes | variant:elevated, color:primary, size:md | minHeight:44px, minWidth:64px | Label 'Action' |
+| DssButton | acoes | variant:elevated, color:primary, size:md | minHeight:44px, minWidth:44px | Label 'Action' |
 | DssCard | cartoes | variant:elevated | minHeight:80px | DssCardSection com texto e ações |
 | DssCarousel | contextuais | — | — | — |
 | DssChatMessage | contextuais | — | — | — |
@@ -1893,5 +1893,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-03T18:25:32.125Z_
+_Gerado em: 2026-06-04T13:03:55.591Z_
 <!-- END:AUTO-GENERATED -->

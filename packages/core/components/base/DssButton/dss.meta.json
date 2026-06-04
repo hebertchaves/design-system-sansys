@@ -17,7 +17,7 @@
     },
     "computedDimensions": {
       "minHeight": "44px",
-      "minWidth": "64px"
+      "minWidth": "44px"
     },
     "computedTokens": {
       "padding": "--dss-spacing-2 --dss-spacing-4",
