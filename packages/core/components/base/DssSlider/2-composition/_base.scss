@@ -36,6 +36,7 @@
   /* Layout */
   display: block;
   width: 100%;
+  min-width: var(--dss-min-w-md); // 200px — restrição mínima para usabilidade do slider
 
   /* Typography (hint/error messages) */
   font-family: var(--dss-font-family-sans);
@@ -79,8 +80,9 @@
  * Precedente: DssToggle._base.scss usa border-radius: 9999px para o track.
  */
 .dss-slider .q-slider__track {
+  height: var(--dss-track-height-sm); /* 4px — espessura do trilho */
   background-color: var(--dss-gray-200); /* track inativo — cinza claro canônico M3/Carbon/Salesforce */
-  border-radius: 9999px; /* EXCEÇÃO: pill shape, não tokenizável */
+  border-radius: var(--dss-radius-full); /* pill shape do track */
   overflow: hidden; /* garante que .q-slider__selection respeite o radius */
 }
 
@@ -95,7 +97,7 @@
  */
 .dss-slider .q-slider__selection {
   background-color: var(--dss-action-primary);
-  border-radius: 9999px; /* EXCEÇÃO: alinha com o track pill shape */
+  border-radius: var(--dss-radius-full); /* alinha com o track pill shape */
 }
 
 /* ==========================================================================
@@ -118,8 +120,8 @@
 
 /* Thumb SVG container — ajusta dimensões */
 .dss-slider .q-slider__thumb {
-  width: var(--dss-spacing-5);  /* 20px */
-  height: var(--dss-spacing-5); /* 20px */
+  width: var(--dss-thumb-size-md);  /* 20px */
+  height: var(--dss-thumb-size-md); /* 20px */
 }
 
 /* Círculos SVG internos do thumb (path/circle elements) */

@@ -40,16 +40,21 @@
       "show": "sm"
     },
     "computedDimensions": {},
-    "computedTokens": {
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "none"
-    },
     "demoContent": "Wrapper condicional por breakpoint",
     "demoSlots": null,
     "visualProperties": [
-      { "property": "min-height", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null },
-      { "property": "min-width", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null }
+      {
+        "property": "min-height",
+        "token": "N/A — Componente estrutural adaptativo",
+        "value": null,
+        "source": null
+      },
+      {
+        "property": "min-width",
+        "token": "N/A — Componente estrutural adaptativo",
+        "value": null,
+        "source": null
+      }
     ]
   },
   "previewGroup": "contextuais"

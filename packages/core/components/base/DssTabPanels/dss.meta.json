@@ -120,16 +120,19 @@
     "computedDimensions": {
       "minHeight": "48px"
     },
-    "computedTokens": {
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "48px", "source": "defaultPreview" },
-      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Padrão categoria Superfície" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "48px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": null,
+        "source": "Padrão categoria Superfície"
+      }
     ],
     "demoContent": "Container de painéis de abas",
     "demoSlots": {

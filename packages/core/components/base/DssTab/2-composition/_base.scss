@@ -93,7 +93,7 @@
   // ------------------------------------------------------------------
   /* EXC-01 — seletores Quasar (Gate de Composição v2.4 Regra 1 + Regra 2 exception) */
   .q-tab__indicator {
-    height: var(--dss-border-width-thick);
+    height: var(--dss-track-height-xs); /* 2px — DSS v2.4.0 (era --dss-border-width-thick = 3px) */
     background-color: currentColor;
     transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
   }

@@ -2,6 +2,7 @@
 // Apenas tokens genéricos DSS. Sem valores hardcoded. Sem cores no SCSS.
 
 .dss-virtual-scroll {
+  min-height: var(--dss-min-h-lg); // 192px — necessário para cálculo dos itens virtuais
   position: relative;
   display: flex;
   flex-direction: column;

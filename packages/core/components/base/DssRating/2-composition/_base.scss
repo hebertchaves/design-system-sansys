@@ -12,6 +12,7 @@
 // =============================================================================
 
 .dss-rating {
+  min-width: var(--dss-min-w-sm); // 160px — espaço mínimo para leitura legível da escala de avaliação
   -webkit-tap-highlight-color: transparent;
 
   // ── EX-Color-01: Ícones não-selecionados (estado base/vazio) ─────────────

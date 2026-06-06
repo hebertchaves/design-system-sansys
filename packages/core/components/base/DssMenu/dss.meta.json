@@ -152,30 +152,79 @@
       "minHeight": "200px",
       "minWidth": "200px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-2",
-      "borderRadius": "--dss-radius-md",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-subtle",
-      "textColor": "--dss-text-body",
-      "shadow": "--dss-shadow-sm"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "200px", "value": null, "source": "defaultPreview / Seção 13.16" },
-      { "property": "min-width", "token": "200px", "value": null, "source": "defaultPreview / Seção 13.16" },
-      { "property": "border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Seção 13.16" },
-      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.16" },
-      { "property": "box-shadow", "token": "--dss-elevation-3", "value": null, "source": "Seção 13.16" },
-      { "property": "padding", "token": "--dss-spacing-2", "value": "8px 0", "source": "Seção 13.16" },
-      { "property": "item height", "token": "40px", "value": null, "source": "Seção 13.16" },
-      { "property": "item padding", "token": "--dss-spacing-4", "value": "0 16px", "source": "Seção 13.16" },
-      { "property": "item font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.16" },
-      { "property": "item color", "token": "--dss-text-body", "value": null, "source": "Seção 13.16" },
-      { "property": "hover background", "token": "--dss-surface-hover", "value": null, "source": "Seção 13.16" },
-      { "property": "divider", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.16" }
+      {
+        "property": "min-height",
+        "token": "200px",
+        "value": null,
+        "source": "defaultPreview / Seção 13.16"
+      },
+      {
+        "property": "min-width",
+        "token": "--dss-min-w-md",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "8px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow",
+        "token": "--dss-elevation-3",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "padding",
+        "token": "--dss-spacing-2",
+        "value": "8px 0",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "item height",
+        "token": "40px",
+        "value": null,
+        "source": "Seção 13.16"
+      },
+      {
+        "property": "item padding",
+        "token": "--dss-spacing-4",
+        "value": "0 16px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "item font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "item color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "hover background",
+        "token": "--dss-surface-hover",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "divider",
+        "token": "--dss-gray-200",
+        "value": "1px solid",
+        "source": "4-output/_states.scss"
+      }
     ],
     "demoContent": "Menu com 3 itens",
     "demoSlots": {

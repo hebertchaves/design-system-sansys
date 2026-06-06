@@ -61,14 +61,19 @@
       ]
     },
     "computedDimensions": {},
-    "computedTokens": {
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "none"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
-      { "property": "min-width", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      }
     ],
     "demoContent": "Elemento fixo na página",
     "demoSlots": null,

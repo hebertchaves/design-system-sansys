@@ -172,22 +172,43 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-4",
-      "gap": "--dss-spacing-4",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
-      { "property": "círculo ativo", "token": "--dss-action-primary", "value": null, "source": "Seção 8 (Stepper)" },
-      { "property": "círculo inativo border", "token": "--dss-gray-400", "value": "1px solid", "source": "Seção 8" },
-      { "property": "círculo inativo color", "token": "--dss-text-subtle", "value": null, "source": "Seção 8" },
-      { "property": "linha conectora", "token": "--dss-gray-300", "value": "1px solid", "source": "Seção 8" },
-      { "property": "cor feedback (step concluído)", "token": "--dss-feedback-success", "value": null, "source": "NÃO usar `--dss-success-500`" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "círculo ativo",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "círculo inativo border",
+        "token": "--dss-gray-400",
+        "value": "1px solid",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "círculo inativo color",
+        "token": "--dss-text-subtle",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "linha conectora",
+        "token": "--dss-gray-300",
+        "value": "1px solid",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "cor feedback (step concluído)",
+        "token": "--dss-feedback-success",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      }
     ],
     "demoContent": "Etapa 1 — Informações básicas",
     "demoSlots": {

@@ -121,12 +121,23 @@
    * .dss-badge--md { height: var(--dss-icon-size-md); }
    */
 
-  /* Chips mantidos - são genéricos de altura */
-  --dss-chip-height-xs: 20px;
-  --dss-chip-height-sm: 24px;
-  --dss-chip-height-md: 28px;  /* Padrão */
-  --dss-chip-height-lg: 32px;
-  --dss-chip-height-xl: 36px;
+  /* ===========================================
+     Compact Controls — alturas visuais (WCAG 2.1 AA)
+     Usado por Badge, Chip e qualquer controle compacto não-interativo primário.
+     Alinhado ao Princípio #7 do CLAUDE.md.
+     =========================================== */
+  --dss-compact-control-height-xs: 20px;  /* Badge/Chip extra small */
+  --dss-compact-control-height-sm: 24px;  /* Badge/Chip small */
+  --dss-compact-control-height-md: 28px;  /* Badge/Chip medium (padrão) */
+  --dss-compact-control-height-lg: 32px;  /* Badge/Chip large */
+
+  /* ⚠️ DEPRECATED — use --dss-compact-control-height-* (Onda 9 — 2026-06)
+     Mantidos para compatibilidade durante migração. Remover em v3.0. */
+  --dss-chip-height-xs: var(--dss-compact-control-height-xs);
+  --dss-chip-height-sm: var(--dss-compact-control-height-sm);
+  --dss-chip-height-md: var(--dss-compact-control-height-md);
+  --dss-chip-height-lg: var(--dss-compact-control-height-lg);
+  --dss-chip-height-xl: var(--dss-compact-control-height-lg); /* xl → lg (sem diferença visual) */
 
   /* ===========================================
      7. ESPAÇAMENTO DE COMPONENTES

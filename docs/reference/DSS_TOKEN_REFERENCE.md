@@ -142,6 +142,14 @@ Os tokens DSS são **genéricos e reutilizáveis**. Componentes escolhem livreme
 - [9.4 Elevação Semântica (6 tokens)](#94-elevação-semântica)
 - [9.5 Sombras para Estados (3 tokens)](#95-sombras-para-estados)
 
+### 11. Dimensões de Controles Interativos *(DSS v2.4.0)*
+- [11.1 Track Height (4 tokens)](#111-track-height)
+- [11.2 Thumb Size (5 tokens)](#112-thumb-size)
+- [11.3 Switch Track Width (4 tokens)](#113-switch-track-width)
+- [11.4 Min Width (6 tokens)](#114-min-width)
+- [11.5 Max Width (4 tokens)](#115-max-width)
+- [11.6 Min Height (6 tokens)](#116-min-height)
+
 ### 10. Tokens Deprecados
 - [10.1 Spacing Component-Specific (16 tokens removidos)](#101-spacing-component-specific)
 - [10.2 Motion Component-Specific (2 tokens removidos)](#102-motion-component-specific)
@@ -159,146 +167,182 @@ Sistema de escala para margins, paddings e gaps. Baseado em rem (1rem = 16px).
 
 **Total: 34 tokens**
 
-| Token | Valor | Pixels | Uso Comum |
-|-------|-------|--------|-----------|
-| `--dss-spacing-0` | 0 | 0px | Reset de espaçamento |
-| `--dss-spacing-px` | 1px | 1px | Bordas finas |
-| `--dss-spacing-0_5` | 0.125rem | 2px | Espaçamento mínimo |
-| `--dss-spacing-1` | 0.25rem | 4px | Espaçamento ultra compacto |
-| `--dss-spacing-1_5` | 0.375rem | 6px | Espaçamento compacto |
-| `--dss-spacing-2` | 0.5rem | 8px | Espaçamento pequeno |
-| `--dss-spacing-2_5` | 0.625rem | 10px | Espaçamento pequeno-médio |
-| `--dss-spacing-3` | 0.75rem | 12px | Espaçamento médio |
-| `--dss-spacing-3_5` | 0.875rem | 14px | Espaçamento médio-grande |
-| `--dss-spacing-4` | 1rem | 16px | Espaçamento padrão |
-| `--dss-spacing-5` | 1.25rem | 20px | Espaçamento confortável |
-| `--dss-spacing-6` | 1.5rem | 24px | Espaçamento entre seções |
-| `--dss-spacing-7` | 1.75rem | 28px | Espaçamento grande |
-| `--dss-spacing-8` | 2rem | 32px | Espaçamento muito grande |
-| `--dss-spacing-9` | 2.25rem | 36px | Espaçamento extra grande |
-| `--dss-spacing-10` | 2.5rem | 40px | Espaçamento 2.5x |
-| `--dss-spacing-11` | 2.75rem | 44px | Espaçamento 2.75x |
-| `--dss-spacing-12` | 3rem | 48px | Espaçamento 3x |
-| `--dss-spacing-14` | 3.5rem | 56px | Espaçamento 3.5x |
-| `--dss-spacing-16` | 4rem | 64px | Espaçamento 4x |
-| `--dss-spacing-20` | 5rem | 80px | Espaçamento 5x |
-| `--dss-spacing-24` | 6rem | 96px | Espaçamento 6x |
-| `--dss-spacing-28` | 7rem | 112px | Espaçamento 7x |
-| `--dss-spacing-32` | 8rem | 128px | Espaçamento 8x |
-| `--dss-spacing-36` | 9rem | 144px | Espaçamento 9x |
-| `--dss-spacing-40` | 10rem | 160px | Espaçamento 10x |
-| `--dss-spacing-44` | 11rem | 176px | Espaçamento 11x |
-| `--dss-spacing-48` | 12rem | 192px | Espaçamento 12x |
-| `--dss-spacing-52` | 13rem | 208px | Espaçamento 13x |
-| `--dss-spacing-56` | 14rem | 224px | Espaçamento 14x |
-| `--dss-spacing-60` | 15rem | 240px | Espaçamento 15x |
-| `--dss-spacing-64` | 16rem | 256px | Espaçamento 16x |
-| `--dss-spacing-72` | 18rem | 288px | Espaçamento 18x |
-| `--dss-spacing-80` | 20rem | 320px | Espaçamento 20x |
-| `--dss-spacing-96` | 24rem | 384px | Espaçamento 24x |
+<!-- BEGIN:TOKEN-TABLE:spacing-escala-base -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-spacing-0` | `0` | `0px` | — |
+| `--dss-spacing-px` | `1px` | `1px` | para bordas finas |
+| `--dss-spacing-0_5` | `0.125rem` | `2px` | — |
+| `--dss-spacing-1` | `0.25rem` | `4px` | — |
+| `--dss-spacing-1_5` | `0.375rem` | `6px` | — |
+| `--dss-spacing-2` | `0.5rem` | `8px` | — |
+| `--dss-spacing-2_5` | `0.625rem` | `10px` | — |
+| `--dss-spacing-3` | `0.75rem` | `12px` | — |
+| `--dss-spacing-3_5` | `0.875rem` | `14px` | — |
+| `--dss-spacing-4` | `1rem` | `16px` | — |
+| `--dss-spacing-5` | `1.25rem` | `20px` | — |
+| `--dss-spacing-6` | `1.5rem` | `24px` | — |
+| `--dss-spacing-7` | `1.75rem` | `28px` | — |
+| `--dss-spacing-8` | `2rem` | `32px` | — |
+| `--dss-spacing-9` | `2.25rem` | `36px` | — |
+| `--dss-spacing-10` | `2.5rem` | `40px` | — |
+| `--dss-spacing-11` | `2.75rem` | `44px` | — |
+| `--dss-spacing-12` | `3rem` | `48px` | — |
+| `--dss-spacing-14` | `3.5rem` | `56px` | — |
+| `--dss-spacing-16` | `4rem` | `64px` | — |
+| `--dss-spacing-20` | `5rem` | `80px` | — |
+| `--dss-spacing-24` | `6rem` | `96px` | — |
+| `--dss-spacing-28` | `7rem` | `112px` | — |
+| `--dss-spacing-32` | `8rem` | `128px` | — |
+| `--dss-spacing-36` | `9rem` | `144px` | — |
+| `--dss-spacing-40` | `10rem` | `160px` | — |
+| `--dss-spacing-44` | `11rem` | `176px` | — |
+| `--dss-spacing-48` | `12rem` | `192px` | — |
+| `--dss-spacing-52` | `13rem` | `208px` | — |
+| `--dss-spacing-56` | `14rem` | `224px` | — |
+| `--dss-spacing-60` | `15rem` | `240px` | — |
+| `--dss-spacing-64` | `16rem` | `256px` | — |
+| `--dss-spacing-72` | `18rem` | `288px` | — |
+| `--dss-spacing-80` | `20rem` | `320px` | — |
+| `--dss-spacing-96` | `24rem` | `384px` | — |
+| `--dss-spacing-120` | `30rem` | `480px` | — |
+| `--dss-spacing-192` | `48rem` | `768px` | — |
+<!-- END:TOKEN-TABLE:spacing-escala-base -->
 
 ## 1.2 Espaçamentos Semânticos
 
 **Total: 4 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-container-padding` | `var(--dss-spacing-4)` | Padding de containers |
-| `--dss-section-spacing` | `var(--dss-spacing-12)` | Espaçamento entre seções |
-| `--dss-component-spacing` | `var(--dss-spacing-6)` | Espaçamento entre componentes |
+<!-- BEGIN:TOKEN-TABLE:spacing-semanticos -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-container-padding` | `var(--dss-spacing-4)` | — | — |
+| `--dss-section-spacing` | `var(--dss-spacing-12)` | — | — |
+| `--dss-component-spacing` | `var(--dss-spacing-6)` | — | — |
+| `--dss-layout-sidebar-width` | `240px` | `240px` | — |
+| `--dss-layout-sidebar-width-mini` | `64px` | `64px` | — |
+| `--dss-layout-sidebar-width-wide` | `320px` | `320px` | — |
+| `--dss-layout-header-height` | `64px` | `64px` | — |
+| `--dss-layout-header-height-dense` | `48px` | `48px` | — |
+| `--dss-layout-footer-height` | `64px` | `64px` | — |
+| `--dss-layout-footer-padding` | `var(--dss-spacing-10)` | — | — |
+| `--dss-layout-content-max-width` | `720px` | `720px` | Largura máxima para leitura confortável |
+| `--dss-layout-content-max-width-wide` | `960px` | `960px` | Largura expandida para dashboards |
+| `--dss-layout-page-margin-x` | `var(--dss-spacing-4)` | `16px` | ajustado por breakpoint |
+| `--dss-layout-page-margin-y` | `var(--dss-spacing-6)` | `24px` | ajustado por breakpoint |
+| `--dss-toolbar-height` | `49px` | `49px` | — |
+<!-- END:TOKEN-TABLE:spacing-semanticos -->
 
 ## 1.3 Grid e Gap
 
 **Total: 4 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-grid-gap-sm` | `var(--dss-spacing-2)` | Gap pequeno (8px) |
-| `--dss-grid-gap-md` | `var(--dss-spacing-4)` | Gap médio (16px) |
-| `--dss-grid-gap-lg` | `var(--dss-spacing-6)` | Gap grande (24px) |
-| `--dss-grid-gap-xl` | `var(--dss-spacing-8)` | Gap extra grande (32px) |
+<!-- BEGIN:TOKEN-TABLE:spacing-grid-gap -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-grid-gap-sm` | `var(--dss-spacing-2)` | — | — |
+| `--dss-grid-gap-md` | `var(--dss-spacing-4)` | — | — |
+| `--dss-grid-gap-lg` | `var(--dss-spacing-6)` | — | — |
+| `--dss-grid-gap-xl` | `var(--dss-spacing-8)` | — | — |
+<!-- END:TOKEN-TABLE:spacing-grid-gap -->
 
 ## 1.4 Formulários
 
 **Total: 2 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-form-gap` | `var(--dss-spacing-4)` | Gap entre campos de formulário |
-| `--dss-label-margin-bottom` | `var(--dss-spacing-1)` | Margin abaixo de labels |
+<!-- BEGIN:TOKEN-TABLE:spacing-formularios -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-form-gap` | `var(--dss-spacing-4)` | — | — |
+| `--dss-label-margin-bottom` | `var(--dss-spacing-1)` | — | — |
+<!-- END:TOKEN-TABLE:spacing-formularios -->
 
 ## 1.5 Margins
 
 **Total: 9 tokens**
 
-| Token | Valor | Pixels |
-|-------|-------|--------|
-| `--dss-margin-auto` | auto | auto |
-| `--dss-margin-0` | `var(--dss-spacing-0)` | 0px |
-| `--dss-margin-1` | `var(--dss-spacing-1)` | 4px |
-| `--dss-margin-2` | `var(--dss-spacing-2)` | 8px |
-| `--dss-margin-3` | `var(--dss-spacing-3)` | 12px |
-| `--dss-margin-4` | `var(--dss-spacing-4)` | 16px |
-| `--dss-margin-6` | `var(--dss-spacing-6)` | 24px |
-| `--dss-margin-8` | `var(--dss-spacing-8)` | 32px |
-| `--dss-margin-12` | `var(--dss-spacing-12)` | 48px |
-| `--dss-margin-16` | `var(--dss-spacing-16)` | 64px |
+<!-- BEGIN:TOKEN-TABLE:spacing-margins -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-margin-auto` | `auto` | — | — |
+| `--dss-margin-0` | `var(--dss-spacing-0)` | — | — |
+| `--dss-margin-1` | `var(--dss-spacing-1)` | — | — |
+| `--dss-margin-2` | `var(--dss-spacing-2)` | — | — |
+| `--dss-margin-3` | `var(--dss-spacing-3)` | — | — |
+| `--dss-margin-4` | `var(--dss-spacing-4)` | — | — |
+| `--dss-margin-6` | `var(--dss-spacing-6)` | — | — |
+| `--dss-margin-8` | `var(--dss-spacing-8)` | — | — |
+| `--dss-margin-12` | `var(--dss-spacing-12)` | — | — |
+| `--dss-margin-16` | `var(--dss-spacing-16)` | — | — |
+<!-- END:TOKEN-TABLE:spacing-margins -->
 
 ## 1.6 Paddings
 
 **Total: 9 tokens**
 
-| Token | Valor | Pixels |
-|-------|-------|--------|
-| `--dss-padding-0` | `var(--dss-spacing-0)` | 0px |
-| `--dss-padding-1` | `var(--dss-spacing-1)` | 4px |
-| `--dss-padding-2` | `var(--dss-spacing-2)` | 8px |
-| `--dss-padding-3` | `var(--dss-spacing-3)` | 12px |
-| `--dss-padding-4` | `var(--dss-spacing-4)` | 16px |
-| `--dss-padding-6` | `var(--dss-spacing-6)` | 24px |
-| `--dss-padding-8` | `var(--dss-spacing-8)` | 32px |
-| `--dss-padding-12` | `var(--dss-spacing-12)` | 48px |
-| `--dss-padding-16` | `var(--dss-spacing-16)` | 64px |
+<!-- BEGIN:TOKEN-TABLE:spacing-paddings -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-padding-0` | `var(--dss-spacing-0)` | — | — |
+| `--dss-padding-1` | `var(--dss-spacing-1)` | — | — |
+| `--dss-padding-2` | `var(--dss-spacing-2)` | — | — |
+| `--dss-padding-3` | `var(--dss-spacing-3)` | — | — |
+| `--dss-padding-4` | `var(--dss-spacing-4)` | — | — |
+| `--dss-padding-6` | `var(--dss-spacing-6)` | — | — |
+| `--dss-padding-8` | `var(--dss-spacing-8)` | — | — |
+| `--dss-padding-12` | `var(--dss-spacing-12)` | — | — |
+| `--dss-padding-16` | `var(--dss-spacing-16)` | — | — |
+<!-- END:TOKEN-TABLE:spacing-paddings -->
 
 ## 1.7 Gaps
 
 **Total: 8 tokens**
 
-| Token | Valor | Pixels |
-|-------|-------|--------|
-| `--dss-gap-0` | `var(--dss-spacing-0)` | 0px |
-| `--dss-gap-1` | `var(--dss-spacing-1)` | 4px |
-| `--dss-gap-2` | `var(--dss-spacing-2)` | 8px |
-| `--dss-gap-3` | `var(--dss-spacing-3)` | 12px |
-| `--dss-gap-4` | `var(--dss-spacing-4)` | 16px |
-| `--dss-gap-6` | `var(--dss-spacing-6)` | 24px |
-| `--dss-gap-8` | `var(--dss-spacing-8)` | 32px |
-| `--dss-gap-12` | `var(--dss-spacing-12)` | 48px |
+<!-- BEGIN:TOKEN-TABLE:spacing-gaps -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-gap-0` | `var(--dss-spacing-0)` | — | — |
+| `--dss-gap-1` | `var(--dss-spacing-1)` | — | — |
+| `--dss-gap-2` | `var(--dss-spacing-2)` | — | — |
+| `--dss-gap-3` | `var(--dss-spacing-3)` | — | — |
+| `--dss-gap-4` | `var(--dss-spacing-4)` | — | — |
+| `--dss-gap-6` | `var(--dss-spacing-6)` | — | — |
+| `--dss-gap-8` | `var(--dss-spacing-8)` | — | — |
+| `--dss-gap-12` | `var(--dss-spacing-12)` | — | — |
+<!-- END:TOKEN-TABLE:spacing-gaps -->
 
 ## 1.8 Acessibilidade
 
 **Total: 2 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-touch-spacing` | `var(--dss-spacing-2)` | 8px mínimo entre elementos tocáveis (WCAG) |
-| `--dss-line-height-spacing` | `calc(1em * var(--dss-line-height-base))` | Linha como espaçamento |
+<!-- BEGIN:TOKEN-TABLE:spacing-acessibilidade -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-touch-spacing-xs` | `4px` | `4px` | Espaçamento mínimo |
+| `--dss-touch-spacing-sm` | `8px` | `8px` | Espaçamento compacto |
+| `--dss-touch-spacing-md` | `12px` | `12px` | ✅ Padrão - Evita toques acidentais |
+| `--dss-touch-spacing-lg` | `16px` | `16px` | Espaçamento confortável |
+| `--dss-touch-spacing-xl` | `20px` | `20px` | Espaçamento generoso |
+<!-- END:TOKEN-TABLE:spacing-acessibilidade -->
 
 ## 1.9 Border Radius
 
 **Total: 10 tokens**
 
-| Token | Valor | Pixels | Uso |
-|-------|-------|--------|-----|
-| `--dss-radius-none` | 0 | 0px | Sem arredondamento |
-| `--dss-radius-sm` | `var(--dss-spacing-1)` | 4px | Pequeno |
-| `--dss-radius-md` | `var(--dss-spacing-2)` | 8px | Médio (padrão) |
-| `--dss-radius-lg` | `var(--dss-spacing-3)` | 12px | Grande |
-| `--dss-radius-xl` | `var(--dss-spacing-4)` | 16px | Extra grande |
-| `--dss-radius-2xl` | `var(--dss-spacing-5)` | 20px | 2x extra grande |
-| `--dss-radius-3xl` | `var(--dss-spacing-6)` | 24px | 3x extra grande |
-| `--dss-radius-full` | 9999px | 9999px | Completamente arredondado (círculo/pill) |
-| `--dss-radius-badge` | `var(--dss-radius-full)` | 9999px | Específico para badges |
+<!-- BEGIN:TOKEN-TABLE:spacing-border-radius -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-radius-none` | `0` | — | — |
+| `--dss-radius-sm` | `var(--dss-spacing-1)` | `4px` | — |
+| `--dss-radius-md` | `var(--dss-spacing-2)` | `8px` | — |
+| `--dss-radius-lg` | `var(--dss-spacing-3)` | `12px` | — |
+| `--dss-radius-xl` | `var(--dss-spacing-4)` | `16px` | — |
+| `--dss-radius-2xl` | `var(--dss-spacing-5)` | `20px` | — |
+| `--dss-radius-3xl` | `var(--dss-spacing-6)` | `24px` | — |
+| `--dss-radius-full` | `9999px` | `9999px` | — |
+| `--dss-radius-circle` | `50%` | — | Círculos perfeitos (Avatar, Radio, indicadores circulares) |
+| `--dss-radius-badge` | `var(--dss-radius-full)` | — | — |
+<!-- END:TOKEN-TABLE:spacing-border-radius -->
 
 ---
 
@@ -642,66 +686,81 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-action-primary` | `var(--dss-primary)` | Ação primária padrão |
-| `--dss-action-primary-light` | `var(--dss-primary-light)` | Ação primária clara |
-| `--dss-action-primary-disable` | `var(--dss-primary-disable)` | Ação primária desabilitada |
-| `--dss-action-primary-hover` | `var(--dss-primary-hover)` | Ação primária hover |
-| `--dss-action-primary-deep` | `var(--dss-primary-deep)` | Ação primária profunda |
-| `--dss-action-primary-focus` | `var(--dss-primary-focus)` | Ação primária foco |
+<!-- BEGIN:TOKEN-TABLE:actions-primary -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-action-primary` | `var(--dss-primary)` | — | — |
+| `--dss-action-primary-light` | `var(--dss-primary-light)` | — | — |
+| `--dss-action-primary-disable` | `var(--dss-primary-disable)` | — | — |
+| `--dss-action-primary-hover` | `var(--dss-primary-hover)` | — | — |
+| `--dss-action-primary-deep` | `var(--dss-primary-deep)` | — | — |
+| `--dss-action-primary-focus` | `var(--dss-primary-focus)` | — | — |
+| `--dss-action-primary-surface` | `rgba(31, 134, 222, 0.08)` | — | #1f86de 8% |
+<!-- END:TOKEN-TABLE:actions-primary -->
 
 ## 3.2 Secondary Actions
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-action-secondary` | `var(--dss-secondary)` | Ação secundária padrão |
-| `--dss-action-secondary-light` | `var(--dss-secondary-light)` | Ação secundária clara |
-| `--dss-action-secondary-disable` | `var(--dss-secondary-disable)` | Ação secundária desabilitada |
-| `--dss-action-secondary-hover` | `var(--dss-secondary-hover)` | Ação secundária hover |
-| `--dss-action-secondary-deep` | `var(--dss-secondary-deep)` | Ação secundária profunda |
-| `--dss-action-secondary-focus` | `var(--dss-secondary-focus)` | Ação secundária foco |
+<!-- BEGIN:TOKEN-TABLE:actions-secondary -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-action-secondary` | `var(--dss-secondary)` | — | — |
+| `--dss-action-secondary-light` | `var(--dss-secondary-light)` | — | — |
+| `--dss-action-secondary-disable` | `var(--dss-secondary-disable)` | — | — |
+| `--dss-action-secondary-hover` | `var(--dss-secondary-hover)` | — | — |
+| `--dss-action-secondary-deep` | `var(--dss-secondary-deep)` | — | — |
+| `--dss-action-secondary-focus` | `var(--dss-secondary-focus)` | — | — |
+| `--dss-action-secondary-surface` | `rgba(38, 166, 154, 0.08)` | — | #26a69a 8% |
+<!-- END:TOKEN-TABLE:actions-secondary -->
 
 ## 3.3 Tertiary Actions
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-action-tertiary` | `var(--dss-tertiary)` | Ação terciária padrão |
-| `--dss-action-tertiary-light` | `var(--dss-tertiary-light)` | Ação terciária clara |
-| `--dss-action-tertiary-disable` | `var(--dss-tertiary-disable)` | Ação terciária desabilitada |
-| `--dss-action-tertiary-hover` | `var(--dss-tertiary-hover)` | Ação terciária hover |
-| `--dss-action-tertiary-deep` | `var(--dss-tertiary-deep)` | Ação terciária profunda |
-| `--dss-action-tertiary-focus` | `var(--dss-tertiary-focus)` | Ação terciária foco |
+<!-- BEGIN:TOKEN-TABLE:actions-tertiary -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-action-tertiary` | `var(--dss-tertiary)` | — | — |
+| `--dss-action-tertiary-light` | `var(--dss-tertiary-light)` | — | — |
+| `--dss-action-tertiary-disable` | `var(--dss-tertiary-disable)` | — | — |
+| `--dss-action-tertiary-hover` | `var(--dss-tertiary-hover)` | — | — |
+| `--dss-action-tertiary-deep` | `var(--dss-tertiary-deep)` | — | — |
+| `--dss-action-tertiary-focus` | `var(--dss-tertiary-focus)` | — | — |
+| `--dss-action-tertiary-surface` | `rgba(255, 102,   7, 0.08)` | — | #ff6607 8% |
+<!-- END:TOKEN-TABLE:actions-tertiary -->
 
 ## 3.4 Accent Actions
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-action-accent` | `var(--dss-accent)` | Ação de destaque padrão |
-| `--dss-action-accent-light` | `var(--dss-accent-light)` | Ação de destaque clara |
-| `--dss-action-accent-disable` | `var(--dss-accent-disable)` | Ação de destaque desabilitada |
-| `--dss-action-accent-hover` | `var(--dss-accent-hover)` | Ação de destaque hover |
-| `--dss-action-accent-deep` | `var(--dss-accent-deep)` | Ação de destaque profunda |
-| `--dss-action-accent-focus` | `var(--dss-accent-focus)` | Ação de destaque foco |
+<!-- BEGIN:TOKEN-TABLE:actions-accent -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-action-accent` | `var(--dss-accent)` | — | — |
+| `--dss-action-accent-light` | `var(--dss-accent-light)` | — | — |
+| `--dss-action-accent-disable` | `var(--dss-accent-disable)` | — | — |
+| `--dss-action-accent-hover` | `var(--dss-accent-hover)` | — | — |
+| `--dss-action-accent-deep` | `var(--dss-accent-deep)` | — | — |
+| `--dss-action-accent-focus` | `var(--dss-accent-focus)` | — | — |
+| `--dss-action-accent-surface` | `rgba(180,  84, 196, 0.08)` | — | #b454c4 8% |
+<!-- END:TOKEN-TABLE:actions-accent -->
 
 ## 3.5 Dark Actions
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-action-dark` | `var(--dss-dark)` | Ação escura padrão |
-| `--dss-action-dark-light` | `var(--dss-dark-light)` | Ação escura clara |
-| `--dss-action-dark-disable` | `var(--dss-dark-disable)` | Ação escura desabilitada |
-| `--dss-action-dark-hover` | `var(--dss-dark-hover)` | Ação escura hover |
-| `--dss-action-dark-deep` | `var(--dss-dark-deep)` | Ação escura profunda |
-| `--dss-action-dark-focus` | `var(--dss-dark-focus)` | Ação escura foco |
+<!-- BEGIN:TOKEN-TABLE:actions-dark -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-action-dark` | `var(--dss-dark)` | — | — |
+| `--dss-action-dark-light` | `var(--dss-dark-light)` | — | — |
+| `--dss-action-dark-disable` | `var(--dss-dark-disable)` | — | — |
+| `--dss-action-dark-hover` | `var(--dss-dark-hover)` | — | — |
+| `--dss-action-dark-deep` | `var(--dss-dark-deep)` | — | — |
+| `--dss-action-dark-focus` | `var(--dss-dark-focus)` | — | — |
+| `--dss-action-dark-surface` | `rgba( 69,  69,  69, 0.08)` | — | #454545 8% |
+<!-- END:TOKEN-TABLE:actions-dark -->
 
 ## 3.6 Action Surfaces
 
@@ -711,6 +770,7 @@ Classe utilitária correspondente: `.dss-bg-primary`, `.dss-bg-secondary`, `.dss
 
 **Total: 5 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:actions-surfaces -->
 | Token | Valor | Uso típico |
 |-------|-------|------------|
 | `--dss-action-primary-surface` | `rgba(31, 134, 222, 0.08)` | Fundo de card, seção ou badge com contexto primary |
@@ -718,6 +778,7 @@ Classe utilitária correspondente: `.dss-bg-primary`, `.dss-bg-secondary`, `.dss
 | `--dss-action-tertiary-surface` | `rgba(255, 102, 7, 0.08)` | Fundo com contexto tertiary |
 | `--dss-action-accent-surface` | `rgba(180, 84, 196, 0.08)` | Fundo com contexto accent |
 | `--dss-action-dark-surface` | `rgba(69, 69, 69, 0.08)` | Fundo com contexto dark/neutro |
+<!-- END:TOKEN-TABLE:actions-surfaces -->
 
 ---
 
@@ -729,60 +790,74 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 
 **Total: 5 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-feedback-success` | `var(--dss-positive)` | Feedback de sucesso padrão |
-| `--dss-feedback-success-light` | `var(--dss-positive-light)` | Feedback de sucesso claro |
-| `--dss-feedback-success-disable` | `var(--dss-positive-disable)` | Feedback de sucesso desabilitado |
-| `--dss-feedback-success-hover` | `var(--dss-positive-hover)` | Feedback de sucesso hover |
-| `--dss-feedback-success-deep` | `var(--dss-positive-deep)` | Feedback de sucesso profundo |
+<!-- BEGIN:TOKEN-TABLE:feedback-success -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-feedback-success` | `var(--dss-positive)` | — | — |
+| `--dss-feedback-success-light` | `var(--dss-positive-light)` | — | — |
+| `--dss-feedback-success-disable` | `var(--dss-positive-disable)` | — | — |
+| `--dss-feedback-success-hover` | `var(--dss-positive-hover)` | — | — |
+| `--dss-feedback-success-deep` | `var(--dss-positive-deep)` | — | — |
+| `--dss-feedback-success-surface` | `rgba(77, 210, 40, 0.1)` | — | — |
+<!-- END:TOKEN-TABLE:feedback-success -->
 
 ## 4.2 Error
 
 **Total: 5 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-feedback-error` | `var(--dss-negative)` | Feedback de erro padrão |
-| `--dss-feedback-error-light` | `var(--dss-negative-light)` | Feedback de erro claro |
-| `--dss-feedback-error-disable` | `var(--dss-negative-disable)` | Feedback de erro desabilitado |
-| `--dss-feedback-error-hover` | `var(--dss-negative-hover)` | Feedback de erro hover |
-| `--dss-feedback-error-deep` | `var(--dss-negative-deep)` | Feedback de erro profundo |
+<!-- BEGIN:TOKEN-TABLE:feedback-error -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-feedback-error` | `var(--dss-negative)` | — | — |
+| `--dss-feedback-error-light` | `var(--dss-negative-light)` | — | — |
+| `--dss-feedback-error-disable` | `var(--dss-negative-disable)` | — | — |
+| `--dss-feedback-error-hover` | `var(--dss-negative-hover)` | — | — |
+| `--dss-feedback-error-deep` | `var(--dss-negative-deep)` | — | — |
+| `--dss-feedback-error-surface` | `rgba(216, 24, 46, 0.1)` | — | — |
+<!-- END:TOKEN-TABLE:feedback-error -->
 
 ## 4.3 Warning
 
 **Total: 5 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-feedback-warning` | `var(--dss-warning)` | Feedback de aviso padrão |
-| `--dss-feedback-warning-light` | `var(--dss-warning-light)` | Feedback de aviso claro |
-| `--dss-feedback-warning-disable` | `var(--dss-warning-disable)` | Feedback de aviso desabilitado |
-| `--dss-feedback-warning-hover` | `var(--dss-warning-hover)` | Feedback de aviso hover |
-| `--dss-feedback-warning-deep` | `var(--dss-warning-deep)` | Feedback de aviso profundo |
+<!-- BEGIN:TOKEN-TABLE:feedback-warning -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-feedback-warning` | `var(--dss-warning)` | — | — |
+| `--dss-feedback-warning-light` | `var(--dss-warning-light)` | — | — |
+| `--dss-feedback-warning-disable` | `var(--dss-warning-disable)` | — | — |
+| `--dss-feedback-warning-hover` | `var(--dss-warning-hover)` | — | — |
+| `--dss-feedback-warning-deep` | `var(--dss-warning-deep)` | — | — |
+| `--dss-feedback-warning-surface` | `rgba(250, 189, 20, 0.1)` | — | — |
+<!-- END:TOKEN-TABLE:feedback-warning -->
 
 ## 4.4 Info
 
 **Total: 5 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-feedback-info` | `var(--dss-info)` | Feedback de informação padrão |
-| `--dss-feedback-info-light` | `var(--dss-info-light)` | Feedback de informação claro |
-| `--dss-feedback-info-disable` | `var(--dss-info-disable)` | Feedback de informação desabilitado |
-| `--dss-feedback-info-hover` | `var(--dss-info-hover)` | Feedback de informação hover |
-| `--dss-feedback-info-deep` | `var(--dss-info-deep)` | Feedback de informação profundo |
+<!-- BEGIN:TOKEN-TABLE:feedback-info -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-feedback-info` | `var(--dss-info)` | — | — |
+| `--dss-feedback-info-light` | `var(--dss-info-light)` | — | — |
+| `--dss-feedback-info-disable` | `var(--dss-info-disable)` | — | — |
+| `--dss-feedback-info-hover` | `var(--dss-info-hover)` | — | — |
+| `--dss-feedback-info-deep` | `var(--dss-info-deep)` | — | — |
+| `--dss-feedback-info-surface` | `rgba(12, 196, 233, 0.1)` | — | — |
+<!-- END:TOKEN-TABLE:feedback-info -->
 
 ## 4.5 Feedback Surfaces
 
 **Total: 4 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:feedback-surfaces -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-feedback-success-surface` | rgba(77, 210, 40, 0.1) | Fundo para alertas de sucesso |
 | `--dss-feedback-error-surface` | rgba(216, 24, 46, 0.1) | Fundo para alertas de erro |
 | `--dss-feedback-warning-surface` | rgba(250, 189, 20, 0.1) | Fundo para alertas de aviso |
 | `--dss-feedback-info-surface` | rgba(12, 196, 233, 0.1) | Fundo para alertas de informação |
+<!-- END:TOKEN-TABLE:feedback-surfaces -->
 
 ## 4.6 Textos de Componentes
 
@@ -792,15 +867,13 @@ Tokens de cor de texto usados por componentes de formulário interativos e de na
 
 > **Nota:** `--dss-surface-muted` e `--dss-surface-disabled` foram movidos para a seção [4.7 Surface Hierarchy](#47-surface-hierarchy).
 
-| Token | Valor (light) | Valor (dark) | Uso |
-|-------|---------------|--------------|-----|
-| `--dss-text-hint` | — | — | Cor do texto de hint / dica abaixo de controles |
-| `--dss-text-inverse` | — | — | Cor de texto sobre fundos escuros (ex.: label tooltip do slider) |
-| `--dss-text-primary` | `var(--dss-dark)` | — | Alias semântico de `--dss-text-body` |
-| `--dss-text-secondary` | `var(--dss-dark-light)` | — | Alias semântico de `--dss-text-subtle` |
-| `--dss-text-body` | `var(--dss-dark)` | — | Texto principal — corpo e itens atuais de navegação (ex.: breadcrumb ativo, item selecionado) |
-| `--dss-text-subtle` | `var(--dss-dark-light)` | — | Texto secundário — links de navegação, labels de menor ênfase visual. Suporta dark mode via cascata. |
-| `--dss-text-disabled` | `var(--dss-gray-400)` (#d4d4d4) | `var(--dss-gray-600)` (#737373) | Cor de texto em estado desabilitado. Semântica precisa de estado — distinto de `--dss-text-subtle` (texto ativo de menor ênfase) e `--dss-text-hint` (placeholder). Usado em: `DssInput`, `DssSelect`, `DssTextarea`, `DssBreadcrumbs`, `DssFile`, `_quasar-overrides.scss`, `_helpers.scss`, `_mixins.scss`. |
+<!-- BEGIN:TOKEN-TABLE:feedback-textos -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-text-error` | `var(--dss-negative)` | — | — |
+| `--dss-text-warning` | `var(--dss-warning)` | — | — |
+| `--dss-text-info` | `var(--dss-info)` | — | — |
+<!-- END:TOKEN-TABLE:feedback-textos -->
 
 ## 4.7 Surface Hierarchy
 
@@ -814,12 +887,14 @@ Tokens de fundo e container que formam a hierarquia visual de superfícies do DS
 
 Definem os níveis de elevação visual de fundos e containers.
 
+<!-- BEGIN:TOKEN-TABLE:feedback-hierarchy -->
 | Token | Valor (light) | Valor (dark) | Uso |
 |-------|---------------|--------------|-----|
 | `--dss-surface-default` | `var(--dss-gray-50)` — #ffffff | `var(--dss-gray-800)` — #262626 | Fundo principal de containers (DssCard, DssHeader, DssDrawer, DssStepper, DssLayout, DssMenu, DssFooter e outros) |
 | `--dss-surface-subtle` | `var(--dss-gray-100)` — #fafafa | `var(--dss-gray-700)` — #525252 | Elevação suave — superfícies levemente elevadas sobre o default |
 | `--dss-surface-muted` | `var(--dss-gray-200)` — #f5f5f5 | `var(--dss-gray-600)` — #737373 | Áreas rebaixadas, tracks inativos, fundos de menor destaque |
 | `--dss-surface-overlay` | `rgba(0, 0, 0, 0.5)` | `rgba(255, 255, 255, 0.05)` | Overlay semitransparente para modais, drawers e backdrops |
+<!-- END:TOKEN-TABLE:feedback-hierarchy -->
 
 ### Estados de Superfície (4 tokens)
 
@@ -855,23 +930,41 @@ Sistema de temporização, curvas de easing e animações predefinidas.
 
 **Total: 10 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-duration-0` | 0ms | Imediato |
-| `--dss-duration-75` | 75ms | Ultra rápido |
-| `--dss-duration-100` | 100ms | Muito rápido |
-| `--dss-duration-150` | 150ms | Rápido |
-| `--dss-duration-200` | 200ms | Moderadamente rápido |
-| `--dss-duration-250` | 250ms | Base (padrão) |
-| `--dss-duration-300` | 300ms | Moderadamente lento |
-| `--dss-duration-500` | 500ms | Lento |
-| `--dss-duration-700` | 700ms | Muito lento |
-| `--dss-duration-1000` | 1000ms | Ultra lento |
+<!-- BEGIN:TOKEN-TABLE:motion-duracoes-base -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-duration-0` | `0ms` | — | Imediato |
+| `--dss-duration-75` | `75ms` | — | Ultra rápido |
+| `--dss-duration-100` | `100ms` | — | Muito rápido |
+| `--dss-duration-150` | `150ms` | — | Rápido |
+| `--dss-duration-200` | `200ms` | — | Moderadamente rápido |
+| `--dss-duration-250` | `250ms` | — | Base (padrão) |
+| `--dss-duration-300` | `300ms` | — | Moderadamente lento |
+| `--dss-duration-500` | `500ms` | — | Lento |
+| `--dss-duration-700` | `700ms` | — | Muito lento |
+| `--dss-duration-1000` | `1000ms` | — | Ultra lento |
+| `--dss-duration-instant` | `var(--dss-duration-0)` | — | — |
+| `--dss-duration-fastest` | `var(--dss-duration-75)` | — | — |
+| `--dss-duration-faster` | `var(--dss-duration-100)` | — | — |
+| `--dss-duration-fast` | `var(--dss-duration-150)` | — | — |
+| `--dss-duration-base` | `var(--dss-duration-250)` | — | Padrão WCAG amigável |
+| `--dss-duration-slow` | `var(--dss-duration-300)` | — | — |
+| `--dss-duration-slower` | `var(--dss-duration-500)` | — | — |
+| `--dss-duration-slowest` | `var(--dss-duration-700)` | — | — |
+| `--dss-duration-hover` | `var(--dss-duration-150)` | — | — |
+| `--dss-duration-focus` | `var(--dss-duration-100)` | — | — |
+| `--dss-duration-active` | `var(--dss-duration-100)` | — | — |
+| `--dss-duration-tooltip` | `var(--dss-duration-150)` | — | — |
+| `--dss-duration-base` | `var(--dss-duration-0)` | — | — |
+| `--dss-duration-fast` | `var(--dss-duration-0)` | — | — |
+| `--dss-duration-slow` | `var(--dss-duration-0)` | — | — |
+<!-- END:TOKEN-TABLE:motion-duracoes-base -->
 
 ## 5.2 Durações Semânticas
 
 **Total: 8 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:motion-duracoes-semanticas -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-duration-instant` | `var(--dss-duration-0)` | Sem animação |
@@ -882,92 +975,113 @@ Sistema de temporização, curvas de easing e animações predefinidas.
 | `--dss-duration-slow` | `var(--dss-duration-300)` | 300ms |
 | `--dss-duration-slower` | `var(--dss-duration-500)` | 500ms |
 | `--dss-duration-slowest` | `var(--dss-duration-700)` | 700ms |
+<!-- END:TOKEN-TABLE:motion-duracoes-semanticas -->
 
 ## 5.3 Durações Interativas
 
 **Total: 4 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:motion-duracoes-interativas -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-duration-hover` | `var(--dss-duration-150)` | Duração para hover |
 | `--dss-duration-focus` | `var(--dss-duration-100)` | Duração para foco |
 | `--dss-duration-active` | `var(--dss-duration-100)` | Duração para estado ativo |
 | `--dss-duration-tooltip` | `var(--dss-duration-150)` | Duração para tooltips |
+<!-- END:TOKEN-TABLE:motion-duracoes-interativas -->
 
 ## 5.4 Curvas de Easing
 
 **Total: 14 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-easing-linear` | cubic-bezier(0, 0, 1, 1) | Linear |
-| `--dss-easing-ease` | cubic-bezier(0.25, 0.1, 0.25, 1) | Ease padrão |
-| `--dss-easing-ease-in` | cubic-bezier(0.42, 0, 1, 1) | Acelera no início |
-| `--dss-easing-ease-out` | cubic-bezier(0, 0, 0.58, 1) | Desacelera no final |
-| `--dss-easing-ease-in-out` | cubic-bezier(0.42, 0, 0.58, 1) | Acelera e desacelera |
-| `--dss-easing-standard` | cubic-bezier(0.4, 0, 0.2, 1) | Material Design padrão |
-| `--dss-easing-accelerate` | cubic-bezier(0.4, 0, 1, 1) | Acelera (Material) |
-| `--dss-easing-decelerate` | cubic-bezier(0, 0, 0.2, 1) | Desacelera (Material) |
-| `--dss-easing-bounce` | cubic-bezier(0.68, -0.55, 0.265, 1.55) | Efeito bounce |
-| `--dss-easing-spring` | cubic-bezier(0.175, 0.885, 0.32, 1.275) | Efeito spring |
-| `--dss-easing-hover` | `var(--dss-easing-ease-out)` | Easing para hover |
-| `--dss-easing-focus` | `var(--dss-easing-ease-out)` | Easing para foco |
-| `--dss-easing-active` | `var(--dss-easing-ease-in)` | Easing para ativo |
-| `--dss-easing-tooltip` | `var(--dss-easing-ease-out)` | Easing para tooltips |
+<!-- BEGIN:TOKEN-TABLE:motion-easing -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-easing-linear` | `cubic-bezier(0, 0, 1, 1)` | — | — |
+| `--dss-easing-ease` | `cubic-bezier(0.25, 0.1, 0.25, 1)` | — | — |
+| `--dss-easing-ease-in` | `cubic-bezier(0.42, 0, 1, 1)` | — | — |
+| `--dss-easing-ease-out` | `cubic-bezier(0, 0, 0.58, 1)` | — | — |
+| `--dss-easing-ease-in-out` | `cubic-bezier(0.42, 0, 0.58, 1)` | — | — |
+| `--dss-easing-standard` | `cubic-bezier(0.4, 0, 0.2, 1)` | — | — |
+| `--dss-easing-accelerate` | `cubic-bezier(0.4, 0, 1, 1)` | — | — |
+| `--dss-easing-decelerate` | `cubic-bezier(0, 0, 0.2, 1)` | — | — |
+| `--dss-easing-bounce` | `cubic-bezier(0.68, -0.55, 0.265, 1.55)` | — | — |
+| `--dss-easing-spring` | `cubic-bezier(0.175, 0.885, 0.32, 1.275)` | — | — |
+| `--dss-easing-hover` | `var(--dss-easing-ease-out)` | — | — |
+| `--dss-easing-focus` | `var(--dss-easing-ease-out)` | — | — |
+| `--dss-easing-active` | `var(--dss-easing-ease-in)` | — | — |
+| `--dss-easing-modal` | `var(--dss-easing-standard)` | — | — |
+| `--dss-easing-toast` | `var(--dss-easing-ease-out)` | — | — |
+| `--dss-easing-tooltip` | `var(--dss-easing-ease-out)` | — | — |
+<!-- END:TOKEN-TABLE:motion-easing -->
 
 ## 5.5 Atrasos
 
 **Total: 9 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-delay-0` | 0ms | Sem atraso |
-| `--dss-delay-75` | 75ms | Atraso mínimo |
-| `--dss-delay-100` | 100ms | Atraso pequeno |
-| `--dss-delay-150` | 150ms | Atraso médio |
-| `--dss-delay-200` | 200ms | Atraso padrão |
-| `--dss-delay-300` | 300ms | Atraso grande |
-| `--dss-delay-500` | 500ms | Atraso muito grande |
-| `--dss-delay-700` | 700ms | Atraso extra grande |
-| `--dss-delay-1000` | 1000ms | Atraso máximo |
+<!-- BEGIN:TOKEN-TABLE:motion-atrasos -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-delay-0` | `0ms` | — | — |
+| `--dss-delay-75` | `75ms` | — | — |
+| `--dss-delay-100` | `100ms` | — | — |
+| `--dss-delay-150` | `150ms` | — | — |
+| `--dss-delay-200` | `200ms` | — | — |
+| `--dss-delay-300` | `300ms` | — | — |
+| `--dss-delay-500` | `500ms` | — | — |
+| `--dss-delay-700` | `700ms` | — | — |
+| `--dss-delay-1000` | `1000ms` | — | — |
+<!-- END:TOKEN-TABLE:motion-atrasos -->
 
 ## 5.6 Transições Semânticas
 
 **Total: 9 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-transition-fast` | all var(--dss-duration-fast) var(--dss-easing-ease-out) | Transição rápida |
-| `--dss-transition-base` | all var(--dss-duration-base) var(--dss-easing-standard) | Transição padrão |
-| `--dss-transition-slow` | all var(--dss-duration-slow) var(--dss-easing-ease-in-out) | Transição lenta |
-| `--dss-transition-color` | color var(--dss-duration-base) var(--dss-easing-ease) | Transição de cor |
-| `--dss-transition-background` | background-color var(--dss-duration-base) var(--dss-easing-ease) | Transição de fundo |
-| `--dss-transition-border` | border-color var(--dss-duration-base) var(--dss-easing-ease) | Transição de borda |
-| `--dss-transition-shadow` | box-shadow var(--dss-duration-base) var(--dss-easing-ease) | Transição de sombra |
-| `--dss-transition-transform` | transform var(--dss-duration-base) var(--dss-easing-standard) | Transição de transformação |
-| `--dss-transition-opacity` | opacity var(--dss-duration-base) var(--dss-easing-ease) | Transição de opacidade |
+<!-- BEGIN:TOKEN-TABLE:motion-transicoes -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-transition-fast` | `all var(--dss-duration-fast) var(--dss-easing-ease-out)` | — | — |
+| `--dss-transition-base` | `all var(--dss-duration-base) var(--dss-easing-standard)` | — | — |
+| `--dss-transition-slow` | `all var(--dss-duration-slow) var(--dss-easing-ease-in-out)` | — | — |
+| `--dss-transition-color` | `color var(--dss-duration-base) var(--dss-easing-ease)` | — | — |
+| `--dss-transition-background` | `background-color var(--dss-duration-base) var(--dss-easing-ease)` | — | — |
+| `--dss-transition-border` | `border-color var(--dss-duration-base) var(--dss-easing-ease)` | — | — |
+| `--dss-transition-shadow` | `box-shadow var(--dss-duration-base) var(--dss-easing-ease)` | — | — |
+| `--dss-transition-transform` | `transform var(--dss-duration-base) var(--dss-easing-standard)` | — | — |
+| `--dss-transition-opacity` | `opacity var(--dss-duration-base) var(--dss-easing-ease)` | — | — |
+| `--dss-transition-base` | `none` | — | — |
+| `--dss-transition-fast` | `none` | — | — |
+| `--dss-transition-slow` | `none` | — | — |
+<!-- END:TOKEN-TABLE:motion-transicoes -->
 
 ## 5.7 Animações Predefinidas
 
 **Total: 4 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-animation-spin` | spin 1s linear infinite | Rotação contínua (spinners) |
-| `--dss-animation-ping` | ping 1s cubic-bezier(0, 0, 0.2, 1) infinite | Pulso expandindo |
-| `--dss-animation-pulse` | pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite | Pulsação |
-| `--dss-animation-bounce` | bounce 1s infinite | Bounce infinito |
+<!-- BEGIN:TOKEN-TABLE:motion-animacoes -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-animation-spin` | `spin 1s linear infinite` | — | — |
+| `--dss-animation-ping` | `ping 1s cubic-bezier(0, 0, 0.2, 1) infinite` | — | — |
+| `--dss-animation-pulse` | `pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite` | — | — |
+| `--dss-animation-bounce` | `bounce 1s infinite` | — | — |
+| `--dss-animation-spin` | `none` | — | — |
+| `--dss-animation-pulse` | `none` | — | — |
+| `--dss-animation-bounce` | `none` | — | — |
+<!-- END:TOKEN-TABLE:motion-animacoes -->
 
 ## 5.8 Temporizadores
 
 **Total: 4 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:motion-temporizadores -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-timing-toast` | 5000ms | Duração de exibição de toasts (5s) |
 | `--dss-timing-tooltip-hide` | 300ms | Atraso para esconder tooltip |
 | `--dss-timing-debounce` | 150ms | Debounce padrão |
 | `--dss-timing-throttle` | 100ms | Throttle padrão |
+<!-- END:TOKEN-TABLE:motion-temporizadores -->
 
 > **Acessibilidade**: Todos os tokens de motion respeitam `prefers-reduced-motion: reduce`, desabilitando animações automaticamente.
 
@@ -981,71 +1095,79 @@ Sistema de fontes, tamanhos e hierarquia tipográfica baseado no Guia de Acessib
 
 **Total: 4 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-font-family-sans` | 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif | Fonte sans-serif padrão |
-| `--dss-font-family-mono` | 'Roboto Mono', 'SF Mono', Monaco, 'Courier New', monospace | Fonte monoespaçada |
-| `--dss-font-family-system` | -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif | Fonte do sistema |
-| `--dss-font-family-fallback` | sans-serif | Fallback seguro |
+<!-- BEGIN:TOKEN-TABLE:text-familias -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-font-family-mono` | `'Roboto Mono', 'SF Mono', Monaco, 'Courier New', monospace` | — | — |
+| `--dss-font-family-fallback` | `sans-serif` | — | — |
+<!-- END:TOKEN-TABLE:text-familias -->
 
 ## 6.2 Tamanhos de Fonte
 
 **Total: 9 tokens**
 
-| Token | Valor | Pixels | WCAG | Uso |
-|-------|-------|--------|------|-----|
-| `--dss-font-size-xs` | 0.75rem | 12px | ⚠️ Só rótulos | Apenas para rótulos, não corpo |
-| `--dss-font-size-sm` | 0.875rem | 14px | ⚠️ Mín. secundário | Texto secundário mínimo |
-| `--dss-font-size-md` | 1rem | 16px | ✅ **Padrão WCAG** | Padrão Quasar - corpo de texto |
-| `--dss-font-size-base` | 1rem | 16px | ✅ Alias | Alias para md |
-| `--dss-font-size-lg` | 1.125rem | 18px | ✅ Texto grande | Texto grande (contraste 3:1) |
-| `--dss-font-size-xl` | 1.25rem | 20px | ✅ | Texto extra grande |
-| `--dss-font-size-2xl` | 1.5rem | 24px | ✅ | Subtítulos |
-| `--dss-font-size-3xl` | 1.875rem | 30px | ✅ | Títulos H3 |
-| `--dss-font-size-4xl` | 2.25rem | 36px | ✅ | Títulos H1-H2 |
+<!-- BEGIN:TOKEN-TABLE:text-tamanhos -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-font-size-xs` | `0.75rem` | `12px` | Apenas para rótulos, não para corpo |
+| `--dss-font-size-sm` | `0.875rem` | `14px` | Texto secundário mínimo |
+| `--dss-font-size-md` | `1rem` | `16px` | ✅ Padrão Quasar - WCAG mínimo |
+| `--dss-font-size-base` | `1rem` | `16px` | Alias para compatibilidade |
+| `--dss-font-size-lg` | `1.125rem` | `18px` | Texto grande (3:1 contraste) |
+| `--dss-font-size-xl` | `1.25rem` | `20px` | — |
+| `--dss-font-size-2xl` | `1.5rem` | `24px` | — |
+| `--dss-font-size-3xl` | `1.875rem` | `30px` | — |
+| `--dss-font-size-4xl` | `2.25rem` | `36px` | — |
+<!-- END:TOKEN-TABLE:text-tamanhos -->
 
 ## 6.3 Pesos de Fonte
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-font-weight-light` | 300 | Texto leve (decorativo) |
-| `--dss-font-weight-normal` | 400 | **Texto corporal padrão** |
-| `--dss-font-weight-medium` | 500 | Texto médio |
-| `--dss-font-weight-semibold` | 600 | Ênfase |
-| `--dss-font-weight-bold` | 700 | **Títulos, forte ênfase** |
-| `--dss-font-weight-extrabold` | 800 | Ênfase extra |
+<!-- BEGIN:TOKEN-TABLE:text-pesos -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-font-weight-light` | `300` | — | — |
+| `--dss-font-weight-normal` | `400` | — | Texto corporal |
+| `--dss-font-weight-medium` | `500` | — | — |
+| `--dss-font-weight-semibold` | `600` | — | Ênfase |
+| `--dss-font-weight-bold` | `700` | — | Títulos, forte ênfase |
+| `--dss-font-weight-extrabold` | `800` | — | — |
+<!-- END:TOKEN-TABLE:text-pesos -->
 
 ## 6.4 Altura de Linha
 
 **Total: 10 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-line-height-tight` | 1.25 | Linhas compactas |
-| `--dss-line-height-snug` | 1.375 | Linhas ajustadas |
-| `--dss-line-height-normal` | 1.5 | **Ideal para corpo** |
-| `--dss-line-height-relaxed` | 1.625 | Linhas relaxadas |
-| `--dss-line-height-loose` | 1.75 | Acessibilidade extra |
-| `--dss-line-height-xs` | 1.4 | Para font-size-xs |
-| `--dss-line-height-sm` | 1.45 | Para font-size-sm |
-| `--dss-line-height-base` | 1.5 | **Para font-size-base** |
-| `--dss-line-height-lg` | 1.55 | Para font-size-lg |
-| `--dss-line-height-xl` | 1.6 | Para font-size-xl |
+<!-- BEGIN:TOKEN-TABLE:text-line-height -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-line-height-tight` | `1.25` | — | — |
+| `--dss-line-height-snug` | `1.375` | — | — |
+| `--dss-line-height-normal` | `1.5` | — | Ideal para corpo |
+| `--dss-line-height-relaxed` | `1.625` | — | — |
+| `--dss-line-height-loose` | `1.75` | — | Para acessibilidade extra |
+| `--dss-line-height-xs` | `1.4` | — | — |
+| `--dss-line-height-sm` | `1.45` | — | — |
+| `--dss-line-height-base` | `1.5` | — | — |
+| `--dss-line-height-lg` | `1.55` | — | — |
+| `--dss-line-height-xl` | `1.6` | — | — |
+<!-- END:TOKEN-TABLE:text-line-height -->
 
 ## 6.5 Espaçamento de Letras
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-letter-spacing-tighter` | -0.05em | Muito compacto |
-| `--dss-letter-spacing-tight` | -0.025em | Compacto |
-| `--dss-letter-spacing-normal` | 0 | **Normal (padrão)** |
-| `--dss-letter-spacing-wide` | 0.025em | Espaçado |
-| `--dss-letter-spacing-wider` | 0.05em | Muito espaçado |
-| `--dss-letter-spacing-widest` | 0.1em | Extra espaçado |
+<!-- BEGIN:TOKEN-TABLE:text-letter-spacing -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-letter-spacing-tighter` | `-0.05em` | — | — |
+| `--dss-letter-spacing-tight` | `-0.025em` | — | — |
+| `--dss-letter-spacing-normal` | `0` | — | Normal para corpo |
+| `--dss-letter-spacing-wide` | `0.025em` | — | — |
+| `--dss-letter-spacing-wider` | `0.05em` | — | — |
+| `--dss-letter-spacing-widest` | `0.1em` | — | — |
+<!-- END:TOKEN-TABLE:text-letter-spacing -->
 
 ## 6.6 Hierarquia de Títulos
 
@@ -1056,33 +1178,29 @@ Sistema de fontes, tamanhos e hierarquia tipográfica baseado no Guia de Acessib
 - **Weight**: Maior título = maior peso (H1=700 → H6=400) ✓
 - **Line-height**: Maior título = maior espaço (H1=1.5 → H6=1.1) ✓
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-heading-font-family` | `var(--dss-font-family-sans)` | Fonte para todos os títulos |
-| **H1 (Maior)** | | |
-| `--dss-heading-1-size` | `var(--dss-font-size-4xl)` | Tamanho H1 (36px) 📐 Maior |
-| `--dss-heading-1-weight` | `var(--dss-font-weight-bold)` | Peso H1 (700) ⚖️ Maior |
-| `--dss-heading-1-line-height` | 1.5 | Altura H1 📏 150% - Maior |
-| **H2** | | |
-| `--dss-heading-2-size` | `var(--dss-font-size-3xl)` | Tamanho H2 (30px) 📐 |
-| `--dss-heading-2-weight` | `var(--dss-font-weight-semibold)` | Peso H2 (600) ⚖️ |
-| `--dss-heading-2-line-height` | 1.4 | Altura H2 📏 140% |
-| **H3** | | |
-| `--dss-heading-3-size` | `var(--dss-font-size-2xl)` | Tamanho H3 (24px) 📐 |
-| `--dss-heading-3-weight` | `var(--dss-font-weight-medium)` | Peso H3 (500) ⚖️ |
-| `--dss-heading-3-line-height` | 1.3 | Altura H3 📏 130% |
-| **H4** | | |
-| `--dss-heading-4-size` | `var(--dss-font-size-xl)` | Tamanho H4 (20px) 📐 |
-| `--dss-heading-4-weight` | `var(--dss-font-weight-medium)` | Peso H4 (500) ⚖️ |
-| `--dss-heading-4-line-height` | 1.2 | Altura H4 📏 120% |
-| **H5** | | |
-| `--dss-heading-5-size` | `var(--dss-font-size-lg)` | Tamanho H5 (18px) 📐 |
-| `--dss-heading-5-weight` | `var(--dss-font-weight-normal)` | Peso H5 (400) ⚖️ |
-| `--dss-heading-5-line-height` | 1.15 | Altura H5 📏 115% |
-| **H6 (Menor)** | | |
-| `--dss-heading-6-size` | `var(--dss-font-size-base)` | Tamanho H6 (16px) 📐 Menor |
-| `--dss-heading-6-weight` | `var(--dss-font-weight-normal)` | Peso H6 (400) ⚖️ Menor |
-| `--dss-heading-6-line-height` | 1.1 | Altura H6 📏 110% - Menor |
+<!-- BEGIN:TOKEN-TABLE:text-hierarquia -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-heading-font-family` | `var(--dss-font-family-sans)` | — | — |
+| `--dss-heading-1-size` | `var(--dss-font-size-4xl)` | — | — |
+| `--dss-heading-1-weight` | `var(--dss-font-weight-bold)` | — | 700 |
+| `--dss-heading-1-line-height` | `1.5` | `150%` | Maior |
+| `--dss-heading-2-size` | `var(--dss-font-size-3xl)` | — | — |
+| `--dss-heading-2-weight` | `var(--dss-font-weight-semibold)` | — | 600 |
+| `--dss-heading-2-line-height` | `1.4` | `140%` | — |
+| `--dss-heading-3-size` | `var(--dss-font-size-2xl)` | — | — |
+| `--dss-heading-3-weight` | `var(--dss-font-weight-medium)` | — | 500 |
+| `--dss-heading-3-line-height` | `1.3` | `130%` | — |
+| `--dss-heading-4-size` | `var(--dss-font-size-xl)` | — | — |
+| `--dss-heading-4-weight` | `var(--dss-font-weight-medium)` | — | 500 |
+| `--dss-heading-4-line-height` | `1.2` | `120%` | — |
+| `--dss-heading-5-size` | `var(--dss-font-size-lg)` | — | — |
+| `--dss-heading-5-weight` | `var(--dss-font-weight-normal)` | — | 400 |
+| `--dss-heading-5-line-height` | `1.15` | `115%` | — |
+| `--dss-heading-6-size` | `var(--dss-font-size-base)` | — | — |
+| `--dss-heading-6-weight` | `var(--dss-font-weight-normal)` | — | 400 |
+| `--dss-heading-6-line-height` | `1.1` | `110%` | Menor |
+<!-- END:TOKEN-TABLE:text-hierarquia -->
 
 **📊 Escala DECRESCENTE Consistente:**
 ```
@@ -1101,10 +1219,12 @@ H6: Size=16px | Weight=400 | Line-height=1.1  (110%)  ← Menor em TUDO
 
 **Total: 2 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:text-utilitarios -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-dyslexia-friendly-spacing` | 0.075em | Espaçamento para dislexia |
 | `--dss-low-vision-scale` | 1.1 | Aumento para baixa visão |
+<!-- END:TOKEN-TABLE:text-utilitarios -->
 
 ---
 
@@ -1116,18 +1236,105 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 
 **Total: 5 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-focus-ring-width` | 3px | WCAG recomenda mínimo 2px |
-| `--dss-focus-ring-offset` | 2px | Espaço entre elemento e focus ring |
-| `--dss-focus-ring-style` | solid | Estilo da borda |
-| `--dss-focus-ring-opacity` | 0.5 | Opacidade padrão (50%) |
-| `--dss-focus-duration` | 150ms | Duração de transição |
+<!-- BEGIN:TOKEN-TABLE:accessibility-focus-base -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-focus-ring-width` | `3px` | `3px` | — |
+| `--dss-focus-ring-offset` | `2px` | `2px` | — |
+| `--dss-focus-ring-style` | `solid` | — | — |
+| `--dss-focus-ring-opacity` | `0.5` | — | — |
+| `--dss-focus-duration` | `150ms` | — | — |
+| `--dss-focus-easing` | `ease-in-out` | — | — |
+| `--dss-focus-primary` | `rgba(0, 106, 197, 0.5)` | — | — |
+| `--dss-focus-primary-rgb` | `0, 106, 197` | — | — |
+| `--dss-focus-secondary` | `rgba(5, 156, 141, 0.5)` | — | — |
+| `--dss-focus-secondary-rgb` | `5, 156, 141` | — | — |
+| `--dss-focus-tertiary` | `rgba(227, 89, 0, 0.5)` | — | — |
+| `--dss-focus-tertiary-rgb` | `227, 89, 0` | — | — |
+| `--dss-focus-accent` | `rgba(176, 46, 197, 0.5)` | — | — |
+| `--dss-focus-accent-rgb` | `176, 46, 197` | — | — |
+| `--dss-focus-positive` | `rgba(52, 195, 12, 0.5)` | — | — |
+| `--dss-focus-positive-rgb` | `52, 195, 12` | — | — |
+| `--dss-focus-negative` | `rgba(196, 0, 27, 0.5)` | — | — |
+| `--dss-focus-negative-rgb` | `196, 0, 27` | — | — |
+| `--dss-focus-warning` | `rgba(233, 171, 0, 0.6)` | — | — |
+| `--dss-focus-warning-rgb` | `233, 171, 0` | — | — |
+| `--dss-focus-info` | `rgba(13, 178, 213, 0.5)` | — | — |
+| `--dss-focus-info-rgb` | `13, 178, 213` | — | — |
+| `--dss-focus-light` | `rgba(255, 255, 255, 0.7)` | — | — |
+| `--dss-focus-light-rgb` | `255, 255, 255` | — | — |
+| `--dss-focus-dark` | `rgba(62, 62, 62, 0.5)` | — | — |
+| `--dss-focus-dark-rgb` | `62, 62, 62` | — | — |
+| `--dss-focus-inverse` | `var(--dss-focus-light)` | — | — |
+| `--dss-focus-primary` | `rgba(51, 153, 229, 0.6)` | — | — |
+| `--dss-focus-primary-rgb` | `51, 153, 229` | — | — |
+| `--dss-focus-secondary` | `rgba(38, 179, 164, 0.6)` | — | — |
+| `--dss-focus-secondary-rgb` | `38, 179, 164` | — | — |
+| `--dss-focus-tertiary` | `rgba(255, 128, 51, 0.6)` | — | — |
+| `--dss-focus-tertiary-rgb` | `255, 128, 51` | — | — |
+| `--dss-focus-accent` | `rgba(208, 102, 229, 0.6)` | — | — |
+| `--dss-focus-accent-rgb` | `208, 102, 229` | — | — |
+| `--dss-focus-positive` | `rgba(102, 229, 51, 0.6)` | — | — |
+| `--dss-focus-positive-rgb` | `102, 229, 51` | — | — |
+| `--dss-focus-negative` | `rgba(229, 51, 77, 0.6)` | — | — |
+| `--dss-focus-negative-rgb` | `229, 51, 77` | — | — |
+| `--dss-focus-warning` | `rgba(255, 198, 51, 0.7)` | — | — |
+| `--dss-focus-warning-rgb` | `255, 198, 51` | — | — |
+| `--dss-focus-info` | `rgba(51, 204, 242, 0.6)` | — | — |
+| `--dss-focus-info-rgb` | `51, 204, 242` | — | — |
+| `--dss-focus-dark` | `rgba(128, 128, 128, 0.6)` | — | — |
+| `--dss-focus-dark-rgb` | `128, 128, 128` | — | — |
+| `--dss-focus-inverse` | `var(--dss-focus-light)` | — | — |
+| `--dss-focus-primary` | `rgba(191, 89, 15, 0.5)` | — | — |
+| `--dss-focus-primary-rgb` | `191, 89, 15` | — | — |
+| `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
+| `--dss-focus-primary` | `rgba(248, 170, 63, 0.6)` | — | — |
+| `--dss-focus-primary-rgb` | `248, 170, 63` | — | — |
+| `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
+| `--dss-focus-primary` | `rgba(2, 108, 199, 0.5)` | — | — |
+| `--dss-focus-primary-rgb` | `2, 108, 199` | — | — |
+| `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
+| `--dss-focus-primary` | `rgba(56, 166, 248, 0.6)` | — | — |
+| `--dss-focus-primary-rgb` | `56, 166, 248` | — | — |
+| `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
+| `--dss-focus-primary` | `rgba(10, 114, 78, 0.5)` | — | — |
+| `--dss-focus-primary-rgb` | `10, 114, 78` | — | — |
+| `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
+| `--dss-focus-primary` | `rgba(24, 177, 115, 0.6)` | — | — |
+| `--dss-focus-primary-rgb` | `24, 177, 115` | — | — |
+| `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
+| `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
+| `--dss-focus-shadow-secondary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-secondary)` | — | — |
+| `--dss-focus-shadow-tertiary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-tertiary)` | — | — |
+| `--dss-focus-shadow-accent` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-accent)` | — | — |
+| `--dss-focus-shadow-success` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-success)` | — | — |
+| `--dss-focus-shadow-error` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-error)` | — | — |
+| `--dss-focus-shadow-warning` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-warning)` | — | — |
+| `--dss-focus-shadow-info` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-info)` | — | — |
+| `--dss-focus-shadow-light` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-light)` | — | — |
+| `--dss-focus-shadow-dark` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-dark)` | — | — |
+| `--dss-focus-ring-opacity` | `0.8` | — | — |
+| `--dss-focus-ring-width` | `4px` | `4px` | — |
+| `--dss-focus-primary` | `rgba(31, 134, 222, 0.8)` | — | — |
+| `--dss-focus-error` | `rgba(216, 24, 46, 0.8)` | — | — |
+| `--dss-focus-success` | `rgba(77, 210, 40, 0.8)` | — | — |
+| `--dss-focus-primary` | `rgba(134, 192, 243, 0.9)` | — | — |
+| `--dss-focus-error` | `rgba(255, 160, 171, 0.9)` | — | — |
+| `--dss-focus-success` | `rgba(129, 230, 99, 0.9)` | — | — |
+| `--dss-focus-primary` | `Highlight` | — | — |
+| `--dss-focus-error` | `Highlight` | — | — |
+| `--dss-focus-success` | `Highlight` | — | — |
+| `--dss-focus-warning` | `Highlight` | — | — |
+| `--dss-focus-info` | `Highlight` | — | — |
+| `--dss-focus-ring-width` | `3px` | `3px` | — |
+| `--dss-focus-ring-style` | `solid` | — | — |
+<!-- END:TOKEN-TABLE:accessibility-focus-base -->
 
 ## 7.2 Focus - Cores Semânticas
 
 **Total: 8 tokens** (Light Mode)
 
+<!-- BEGIN:TOKEN-TABLE:accessibility-focus-cores-semanticas -->
 | Token | Valor RGBA | RGB | Uso |
 |-------|------------|-----|-----|
 | `--dss-focus-primary` | rgba(0, 106, 197, 0.5) | 0, 106, 197 | Focus primary |
@@ -1138,11 +1345,13 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-focus-tertiary-rgb` | 227, 89, 0 | - | RGB para manipulação |
 | `--dss-focus-accent` | rgba(176, 46, 197, 0.5) | 176, 46, 197 | Focus accent |
 | `--dss-focus-accent-rgb` | 176, 46, 197 | - | RGB para manipulação |
+<!-- END:TOKEN-TABLE:accessibility-focus-cores-semanticas -->
 
 ## 7.3 Focus - Cores de Feedback
 
 **Total: 8 tokens** (Light Mode)
 
+<!-- BEGIN:TOKEN-TABLE:accessibility-focus-feedback -->
 | Token | Valor RGBA | RGB | Uso |
 |-------|------------|-----|-----|
 | `--dss-focus-positive` | rgba(52, 195, 12, 0.5) | 52, 195, 12 | Focus success |
@@ -1153,21 +1362,25 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-focus-warning-rgb` | 233, 171, 0 | - | RGB para manipulação |
 | `--dss-focus-info` | rgba(13, 178, 213, 0.5) | 13, 178, 213 | Focus info |
 | `--dss-focus-info-rgb` | 13, 178, 213 | - | RGB para manipulação |
+<!-- END:TOKEN-TABLE:accessibility-focus-feedback -->
 
 ## 7.4 Focus - Cores Neutras
 
 **Total: 3 tokens** (Light Mode)
 
+<!-- BEGIN:TOKEN-TABLE:accessibility-focus-neutras -->
 | Token | Valor RGBA | RGB | Uso |
 |-------|------------|-----|-----|
 | `--dss-focus-light` | rgba(255, 255, 255, 0.7) | 255, 255, 255 | Focus em fundos escuros |
 | `--dss-focus-dark` | rgba(62, 62, 62, 0.5) | 62, 62, 62 | Focus em fundos claros |
 | `--dss-focus-inverse` | `var(--dss-focus-light)` | - | Inversão automática |
+<!-- END:TOKEN-TABLE:accessibility-focus-neutras -->
 
 ## 7.5 Focus - Box Shadows
 
 **Total: 10 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:accessibility-focus-shadows -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-focus-shadow-primary` | 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary) | Shadow primary |
@@ -1180,30 +1393,34 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-focus-shadow-info` | 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-info) | Shadow info |
 | `--dss-focus-shadow-light` | 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-light) | Shadow light |
 | `--dss-focus-shadow-dark` | 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-dark) | Shadow dark |
+<!-- END:TOKEN-TABLE:accessibility-focus-shadows -->
 
 ## 7.6 Focus - Variantes com Offset
 
 **Total: 4 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:accessibility-focus-offset -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-focus-shadow-primary-offset` | 0 0 0 var(--dss-focus-ring-offset) transparent, 0 0 0 calc(...) var(--dss-focus-primary) | Offset primary |
 | `--dss-focus-shadow-error-offset` | 0 0 0 var(--dss-focus-ring-offset) transparent, 0 0 0 calc(...) var(--dss-focus-error) | Offset error |
 | `--dss-focus-shadow-success-offset` | 0 0 0 var(--dss-focus-ring-offset) transparent, 0 0 0 calc(...) var(--dss-focus-success) | Offset success |
 | `--dss-focus-shadow-warning-offset` | 0 0 0 var(--dss-focus-ring-offset) transparent, 0 0 0 calc(...) var(--dss-focus-warning) | Offset warning |
+<!-- END:TOKEN-TABLE:accessibility-focus-offset -->
 
 ## 7.7 Touch Targets
 
 **Total: 6 tokens**
 
-| Token | Valor | WCAG | Uso |
-|-------|-------|------|-----|
-| `--dss-touch-target-min` | 48px | ✅ **Recomendado** | **Mínimo recomendado para acessibilidade** |
-| `--dss-touch-target-xs` | 32px | ⚠️ Compacto | Componentes compactos (chips, badges) |
-| `--dss-touch-target-sm` | 36px | ⚠️ Denso | Botões secundários densos |
-| `--dss-touch-target-md` | 44px | ✅ Mínimo WCAG | Padrão - touch target mínimo WCAG 2.1 |
-| `--dss-touch-target-lg` | 52px | ✅ Destacado | Botões destacados |
-| `--dss-touch-target-xl` | 64px | ✅ CTAs | CTAs principais |
+<!-- BEGIN:TOKEN-TABLE:accessibility-touch-targets -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-touch-target-xs` | `32px` | `32px` | Componentes compactos (chips, badges) |
+| `--dss-touch-target-sm` | `36px` | `36px` | Botões secundários densos |
+| `--dss-touch-target-md` | `44px` | `44px` | ✅ Padrão - WCAG mínimo (44px) |
+| `--dss-touch-target-lg` | `52px` | `52px` | Botões destacados |
+| `--dss-touch-target-xl` | `64px` | `64px` | CTAs principais e ações primárias |
+<!-- END:TOKEN-TABLE:accessibility-touch-targets -->
 
 > **⚠️ IMPORTANTE**: Use `--dss-touch-target-min` (48px) como padrão para pseudo-elementos de touch target em Compact Controls. Este valor atende WCAG 2.5.5 com margem de segurança.
 
@@ -1211,69 +1428,83 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 
 **Total: 5 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-touch-spacing-xs` | 4px | Espaçamento mínimo |
-| `--dss-touch-spacing-sm` | 8px | Espaçamento compacto |
-| `--dss-touch-spacing-md` | 12px | **Padrão - evita toques acidentais** |
-| `--dss-touch-spacing-lg` | 16px | Espaçamento confortável |
-| `--dss-touch-spacing-xl` | 20px | Espaçamento generoso |
+<!-- BEGIN:TOKEN-TABLE:accessibility-touch-spacing -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-component-margin-xs` | `8px` | `8px` | — |
+| `--dss-component-margin-sm` | `12px` | `12px` | — |
+| `--dss-component-margin-md` | `16px` | `16px` | Padrão |
+| `--dss-component-margin-lg` | `24px` | `24px` | — |
+| `--dss-component-margin-xl` | `32px` | `32px` | — |
+<!-- END:TOKEN-TABLE:accessibility-touch-spacing -->
 
 ## 7.9 Input Heights
 
 **Total: 10 tokens**
 
-| Token | Valor | WCAG | Uso |
-|-------|-------|------|-----|
-| `--dss-input-height-xs` | 32px | ⚠️ | Inputs compactos |
-| `--dss-input-height-sm` | 36px | ⚠️ | Inputs densos |
-| `--dss-input-height-md` | 44px | ✅ **Mínimo WCAG** | Padrão |
-| `--dss-input-height-lg` | 52px | ✅ | Inputs destacados |
-| `--dss-input-height-xl` | 64px | ✅ | Inputs extra grandes |
-| `--dss-input-padding-horizontal-xs` | 8px | - | Padding horizontal xs |
-| `--dss-input-padding-horizontal-sm` | 10px | - | Padding horizontal sm |
-| `--dss-input-padding-horizontal-md` | 12px | - | Padding horizontal md |
-| `--dss-input-padding-horizontal-lg` | 16px | - | Padding horizontal lg |
-| `--dss-input-padding-horizontal-xl` | 20px | - | Padding horizontal xl |
+<!-- BEGIN:TOKEN-TABLE:accessibility-input-heights -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-form-control-height-xs` | `32px` | `32px` | Controles compactos |
+| `--dss-form-control-height-sm` | `36px` | `36px` | Controles densos |
+| `--dss-form-control-height-md` | `44px` | `44px` | ✅ Padrão - WCAG mínimo |
+| `--dss-form-control-height-lg` | `52px` | `52px` | Controles destacados |
+| `--dss-form-control-height-xl` | `64px` | `64px` | Controles extra grandes |
+| `--dss-input-height-xs` | `var(--dss-form-control-height-xs)` | — | — |
+| `--dss-input-height-sm` | `var(--dss-form-control-height-sm)` | — | — |
+| `--dss-input-height-md` | `var(--dss-form-control-height-md)` | — | — |
+| `--dss-input-height-lg` | `var(--dss-form-control-height-lg)` | — | — |
+| `--dss-input-height-xl` | `var(--dss-form-control-height-xl)` | — | — |
+| `--dss-component-padding-xs` | `8px` | `8px` | — |
+| `--dss-component-padding-sm` | `12px` | `12px` | — |
+| `--dss-component-padding-md` | `16px` | `16px` | Padrão |
+| `--dss-component-padding-lg` | `20px` | `20px` | — |
+| `--dss-component-padding-xl` | `24px` | `24px` | — |
+<!-- END:TOKEN-TABLE:accessibility-input-heights -->
 
 ## 7.10 Checkboxes e Controles
 
 **Total: 10 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-checkbox-size-xs` | 16px | Tamanho visual xs |
-| `--dss-checkbox-size-sm` | 18px | Tamanho visual sm |
-| `--dss-checkbox-size-md` | 20px | **Tamanho visual padrão** |
-| `--dss-checkbox-size-lg` | 24px | Tamanho visual lg |
-| `--dss-checkbox-size-xl` | 28px | Tamanho visual xl |
-| `--dss-checkbox-touch-area-xs` | 36px | Área tocável xs |
-| `--dss-checkbox-touch-area-sm` | 40px | Área tocável sm |
-| `--dss-checkbox-touch-area-md` | 44px | **Área tocável WCAG mínimo** |
-| `--dss-checkbox-touch-area-lg` | 52px | Área tocável lg |
-| `--dss-checkbox-touch-area-xl` | 60px | Área tocável xl |
+<!-- BEGIN:TOKEN-TABLE:accessibility-checkboxes -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-checkbox-size-xs` | `16px` | `16px` | — |
+| `--dss-checkbox-size-sm` | `18px` | `18px` | — |
+| `--dss-checkbox-size-md` | `20px` | `20px` | Padrão visual |
+| `--dss-checkbox-size-lg` | `24px` | `24px` | — |
+| `--dss-checkbox-size-xl` | `28px` | `28px` | — |
+| `--dss-checkbox-touch-area-xs` | `36px` | `36px` | — |
+| `--dss-checkbox-touch-area-sm` | `40px` | `40px` | — |
+| `--dss-checkbox-touch-area-md` | `44px` | `44px` | ✅ WCAG mínimo |
+| `--dss-checkbox-touch-area-lg` | `52px` | `52px` | — |
+| `--dss-checkbox-touch-area-xl` | `60px` | `60px` | — |
+<!-- END:TOKEN-TABLE:accessibility-checkboxes -->
 
 ## 7.11 Ícones
 
 **Total: 10 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-icon-size-xs` | 16px | Ícones inline |
-| `--dss-icon-size-sm` | 20px | Ícones secundários |
-| `--dss-icon-size-md` | 24px | **Padrão - ícones interativos** |
-| `--dss-icon-size-lg` | 32px | Ícones destacados |
-| `--dss-icon-size-xl` | 48px | Ícones grandes (avatares) |
-| `--dss-icon-spacing-xs` | 4px | Espaço mínimo |
-| `--dss-icon-spacing-sm` | 6px | Espaço pequeno |
-| `--dss-icon-spacing-md` | 8px | **Espaço padrão** |
-| `--dss-icon-spacing-lg` | 12px | Espaço grande |
-| `--dss-icon-spacing-xl` | 16px | Espaço extra grande |
+<!-- BEGIN:TOKEN-TABLE:accessibility-icons -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-icon-size-xs` | `16px` | `16px` | Ícones inline |
+| `--dss-icon-size-sm` | `20px` | `20px` | Ícones secundários |
+| `--dss-icon-size-md` | `24px` | `24px` | ✅ Padrão - Ícones interativos |
+| `--dss-icon-size-lg` | `32px` | `32px` | Ícones destacados |
+| `--dss-icon-size-xl` | `48px` | `48px` | Ícones grandes (avatares, etc) |
+| `--dss-icon-spacing-xs` | `4px` | `4px` | — |
+| `--dss-icon-spacing-sm` | `6px` | `6px` | — |
+| `--dss-icon-spacing-md` | `8px` | `8px` | Padrão |
+| `--dss-icon-spacing-lg` | `12px` | `12px` | — |
+| `--dss-icon-spacing-xl` | `16px` | `16px` | — |
+<!-- END:TOKEN-TABLE:accessibility-icons -->
 
 ## 7.12 Avatares
 
 **Total: 5 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:accessibility-avatares -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-avatar-size-xs` | 24px | Avatar pequeno |
@@ -1281,6 +1512,7 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-avatar-size-md` | 40px | **Avatar padrão** |
 | `--dss-avatar-size-lg` | 56px | Avatar grande |
 | `--dss-avatar-size-xl` | 80px | Avatar extra grande |
+<!-- END:TOKEN-TABLE:accessibility-avatares -->
 
 ## 7.13 Compact Controls - Alturas Visuais
 
@@ -1298,12 +1530,19 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 
 ### Definição
 
-| Token | Valor | Consumidores | Descrição |
-|-------|-------|--------------|-----------|
-| `--dss-compact-control-height-xs` | 20px | Badge, Chip (xs) | Altura mínima para controles compactos |
-| `--dss-compact-control-height-sm` | 24px | Badge, Chip (sm) | Altura pequena |
-| `--dss-compact-control-height-md` | 28px | Badge (md), Chip (md) | **Altura padrão** |
-| `--dss-compact-control-height-lg` | 32px | Badge (lg), Chip (lg) | Altura grande |
+<!-- BEGIN:TOKEN-TABLE:accessibility-compact-controls -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-compact-control-height-xs` | `20px` | `20px` | Badge/Chip extra small |
+| `--dss-compact-control-height-sm` | `24px` | `24px` | Badge/Chip small |
+| `--dss-compact-control-height-md` | `28px` | `28px` | Badge/Chip medium (padrão) |
+| `--dss-compact-control-height-lg` | `32px` | `32px` | Badge/Chip large |
+| `--dss-chip-height-xs` | `var(--dss-compact-control-height-xs)` | — | — |
+| `--dss-chip-height-sm` | `var(--dss-compact-control-height-sm)` | — | — |
+| `--dss-chip-height-md` | `var(--dss-compact-control-height-md)` | — | — |
+| `--dss-chip-height-lg` | `var(--dss-compact-control-height-lg)` | — | — |
+| `--dss-chip-height-xl` | `var(--dss-compact-control-height-lg)` | — | xl → lg (sem diferença visual) |
+<!-- END:TOKEN-TABLE:accessibility-compact-controls -->
 
 ### Filosofia de Uso
 
@@ -1366,17 +1605,19 @@ Os componentes que usam estes tokens DEVEM garantir touch target mínimo de 48×
 
 **Total: 9 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-breakpoint-xs` | 320px | Mobile pequeno, zoom 300% |
-| `--dss-breakpoint-sm` | 640px | Mobile, zoom 200% |
-| `--dss-breakpoint-md` | 768px | Tablet |
-| `--dss-breakpoint-lg` | 1024px | Desktop pequeno |
-| `--dss-breakpoint-xl` | 1280px | Desktop padrão |
-| `--dss-breakpoint-2xl` | 1536px | Desktop grande |
-| `--dss-breakpoint-zoom-200` | 800px | Para zoom 200% |
-| `--dss-breakpoint-zoom-300` | 600px | Para zoom 300% |
-| `--dss-breakpoint-reflow` | 320px | **Mínimo WCAG reflow** |
+<!-- BEGIN:TOKEN-TABLE:breakpoints -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-breakpoint-xs` | `320px` | `320px` | Mobile pequeno, zoom 300% |
+| `--dss-breakpoint-sm` | `640px` | `640px` | Mobile, zoom 200% |
+| `--dss-breakpoint-md` | `768px` | `768px` | Tablet |
+| `--dss-breakpoint-lg` | `1024px` | `1024px` | Desktop pequeno |
+| `--dss-breakpoint-xl` | `1280px` | `1280px` | Desktop padrão |
+| `--dss-breakpoint-2xl` | `1536px` | `1536px` | Desktop grande |
+| `--dss-breakpoint-zoom-200` | `800px` | `800px` | Para usuários com zoom 200% |
+| `--dss-breakpoint-zoom-300` | `600px` | `600px` | Para usuários com zoom 300% |
+| `--dss-breakpoint-reflow` | `320px` | `320px` | Mínimo para reflow (WCAG) |
+<!-- END:TOKEN-TABLE:breakpoints -->
 
 ### 7.14.1 Variáveis SCSS de Breakpoint (uso exclusivo em @media queries)
 
@@ -1392,35 +1633,41 @@ CSS custom properties não podem ser usadas diretamente em `@media` queries. Par
 
 **Total: 10 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-z-index-base` | 1 | Base |
-| `--dss-z-index-dropdown` | 1000 | Dropdowns |
-| `--dss-z-index-sticky` | 1020 | Elementos sticky |
-| `--dss-z-index-fixed` | 1030 | Elementos fixos |
-| `--dss-z-index-backdrop` | 1040 | Backdrop |
-| `--dss-z-index-modal` | 1050 | Modais |
-| `--dss-z-index-popover` | 1060 | Popovers |
-| `--dss-z-index-tooltip` | 1070 | Tooltips |
-| `--dss-z-index-notification` | 1080 | Notificações |
-| `--dss-z-index-focus` | 9999 | **Foco sempre visível** |
+<!-- BEGIN:TOKEN-TABLE:z-index -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-z-index-base` | `1` | — | — |
+| `--dss-z-index-dropdown` | `1000` | — | — |
+| `--dss-z-index-sticky` | `1020` | — | — |
+| `--dss-z-index-fixed` | `1030` | — | — |
+| `--dss-z-index-backdrop` | `1040` | — | — |
+| `--dss-z-index-modal` | `1050` | — | — |
+| `--dss-z-index-popover` | `1060` | — | — |
+| `--dss-z-index-tooltip` | `1070` | — | — |
+| `--dss-z-index-notification` | `1080` | — | — |
+| `--dss-z-index-focus` | `9999` | — | Garantir que foco fique acima |
+<!-- END:TOKEN-TABLE:z-index -->
 
 ## 7.16 Contraste - Ratios WCAG
 
 **Total: 5 tokens**
 
-| Token | Valor | WCAG | Uso |
-|-------|-------|------|-----|
-| `--dss-contrast-min-text` | 4.5 | AA | Texto normal (≤ 18pt) |
-| `--dss-contrast-min-large` | 3.0 | AA | Texto grande (> 18pt ou 14pt bold) |
-| `--dss-contrast-min-ui` | 3.0 | AA | Componentes de interface |
-| `--dss-contrast-min-graphics` | 3.0 | AA | Gráficos informativos e ícones |
-| `--dss-contrast-min-focus` | 4.5 | Recomendado | Indicadores de foco |
+<!-- BEGIN:TOKEN-TABLE:accessibility-contrast-ratios -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-contrast-safe-text` | `var(--dss-text-body)` | — | Uso seguro para texto |
+| `--dss-contrast-safe-ui` | `var(--dss-action-primary)` | — | Uso seguro para UI |
+| `--dss-contrast-safe-graphics` | `var(--dss-negative)` | — | Uso seguro para gráficos |
+| `--dss-contrast-check-small-text` | `"Garantir ≥ 4.5:1"` | — | — |
+| `--dss-contrast-check-large-text` | `"Garantir ≥ 3:1"` | — | — |
+| `--dss-contrast-check-ui` | `"Garantir ≥ 3:1"` | — | — |
+<!-- END:TOKEN-TABLE:accessibility-contrast-ratios -->
 
 ## 7.17 Contraste - Combinações Validadas
 
 **Total: 20 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:accessibility-contrast-combinacoes -->
 | Token | Valor | Status | Uso |
 |-------|-------|--------|-----|
 | `--dss-contrast-primary-on-white` | 4.6 | ✅ APROVADO | Primary sobre branco |
@@ -1443,6 +1690,7 @@ CSS custom properties não podem ser usadas diretamente em `@media` queries. Par
 | `--dss-contrast-dark-on-white` | 12.3 | ✅ APROVADO | Dark sobre branco |
 | `--dss-contrast-gray600-on-white` | 4.8 | ✅ APROVADO | Gray-600 sobre branco |
 | `--dss-contrast-gray700-on-white` | 7.3 | ✅ APROVADO | Gray-700 sobre branco |
+<!-- END:TOKEN-TABLE:accessibility-contrast-combinacoes -->
 
 ---
 
@@ -1454,33 +1702,37 @@ Sistema de bordas para todos os componentes.
 
 **Total: 7 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-border-width-none` | 0 | Sem borda |
-| `--dss-border-width-hairline` | 0.5px | Ultra fino (retina) |
-| `--dss-border-width-thin` | 1px | **Padrão** |
-| `--dss-border-width-md` | 2px | Ênfase, foco |
-| `--dss-border-width-thick` | 3px | Ênfase média |
-| `--dss-border-width-heavy` | 4px | Forte ênfase |
-| `--dss-border-width-extra-heavy` | 8px | Decorativo |
+<!-- BEGIN:TOKEN-TABLE:border-widths -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-border-width-none` | `0` | — | — |
+| `--dss-border-width-hairline` | `0.5px` | `0.5px` | — |
+| `--dss-border-width-thin` | `1px` | `1px` | — |
+| `--dss-border-width-md` | `2px` | `2px` | — |
+| `--dss-border-width-thick` | `3px` | `3px` | — |
+| `--dss-border-width-heavy` | `4px` | `4px` | — |
+| `--dss-border-width-extra-heavy` | `8px` | `8px` | — |
+<!-- END:TOKEN-TABLE:border-widths -->
 
 ## 8.2 Bordas Neutras
 
 **Total: 11 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-border-gray-50` | 1px solid var(--dss-gray-50) | Borda gray-50 |
-| `--dss-border-gray-100` | 1px solid var(--dss-gray-100) | Borda gray-100 |
-| `--dss-border-gray-200` | 1px solid var(--dss-gray-200) | Borda gray-200 |
-| `--dss-border-gray-300` | 1px solid var(--dss-gray-300) | **Borda padrão** |
-| `--dss-border-gray-400` | 1px solid var(--dss-gray-400) | Borda gray-400 |
-| `--dss-border-gray-500` | 1px solid var(--dss-gray-500) | Borda gray-500 |
-| `--dss-border-gray-600` | 1px solid var(--dss-gray-600) | Borda gray-600 |
-| `--dss-border-gray-700` | 1px solid var(--dss-gray-700) | Borda gray-700 |
-| `--dss-border-gray-800` | 1px solid var(--dss-gray-800) | Borda gray-800 |
-| `--dss-border-gray-900` | 1px solid var(--dss-gray-900) | Borda gray-900 |
-| `--dss-border-gray-950` | 1px solid var(--dss-gray-950) | Borda gray-950 |
+<!-- BEGIN:TOKEN-TABLE:borders-neutras -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-border-gray-50` | `1px solid var(--dss-gray-50)` | — | — |
+| `--dss-border-gray-100` | `1px solid var(--dss-gray-100)` | — | — |
+| `--dss-border-gray-200` | `1px solid var(--dss-gray-200)` | — | — |
+| `--dss-border-gray-300` | `1px solid var(--dss-gray-300)` | — | — |
+| `--dss-border-gray-400` | `1px solid var(--dss-gray-400)` | — | — |
+| `--dss-border-gray-500` | `1px solid var(--dss-gray-500)` | — | — |
+| `--dss-border-gray-600` | `1px solid var(--dss-gray-600)` | — | — |
+| `--dss-border-gray-700` | `1px solid var(--dss-gray-700)` | — | — |
+| `--dss-border-gray-800` | `1px solid var(--dss-gray-800)` | — | — |
+| `--dss-border-gray-900` | `1px solid var(--dss-gray-900)` | — | — |
+| `--dss-border-gray-950` | `1px solid var(--dss-gray-950)` | — | — |
+<!-- END:TOKEN-TABLE:borders-neutras -->
 
 ## 8.3 Bordas de Ação
 
@@ -1488,13 +1740,30 @@ Sistema de bordas para todos os componentes.
 
 ### Primary
 
-| Token | Valor |
-|-------|-------|
-| `--dss-border-primary-disable` | 1px solid var(--dss-primary-disable) |
-| `--dss-border-primary-light` | 1px solid var(--dss-primary-light) |
-| `--dss-border-primary` | 1px solid var(--dss-primary) |
-| `--dss-border-primary-hover` | 1px solid var(--dss-primary-hover) |
-| `--dss-border-primary-deep` | 1px solid var(--dss-primary-deep) |
+<!-- BEGIN:TOKEN-TABLE:borders-acao -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-border-primary-disable` | `1px solid var(--dss-primary-disable)` | — | — |
+| `--dss-border-primary-light` | `1px solid var(--dss-primary-light)` | — | — |
+| `--dss-border-primary` | `1px solid var(--dss-primary)` | — | — |
+| `--dss-border-primary-hover` | `1px solid var(--dss-primary-hover)` | — | — |
+| `--dss-border-primary-deep` | `1px solid var(--dss-primary-deep)` | — | — |
+| `--dss-border-secondary-disable` | `1px solid var(--dss-secondary-disable)` | — | — |
+| `--dss-border-secondary-light` | `1px solid var(--dss-secondary-light)` | — | — |
+| `--dss-border-secondary` | `1px solid var(--dss-secondary)` | — | — |
+| `--dss-border-secondary-hover` | `1px solid var(--dss-secondary-hover)` | — | — |
+| `--dss-border-secondary-deep` | `1px solid var(--dss-secondary-deep)` | — | — |
+| `--dss-border-tertiary-disable` | `1px solid var(--dss-tertiary-disable)` | — | — |
+| `--dss-border-tertiary-light` | `1px solid var(--dss-tertiary-light)` | — | — |
+| `--dss-border-tertiary` | `1px solid var(--dss-tertiary)` | — | — |
+| `--dss-border-tertiary-hover` | `1px solid var(--dss-tertiary-hover)` | — | — |
+| `--dss-border-tertiary-deep` | `1px solid var(--dss-tertiary-deep)` | — | — |
+| `--dss-border-accent-disable` | `1px solid var(--dss-accent-disable)` | — | — |
+| `--dss-border-accent-light` | `1px solid var(--dss-accent-light)` | — | — |
+| `--dss-border-accent` | `1px solid var(--dss-accent)` | — | — |
+| `--dss-border-accent-hover` | `1px solid var(--dss-accent-hover)` | — | — |
+| `--dss-border-accent-deep` | `1px solid var(--dss-accent-deep)` | — | — |
+<!-- END:TOKEN-TABLE:borders-acao -->
 
 ### Secondary
 
@@ -1532,13 +1801,30 @@ Sistema de bordas para todos os componentes.
 
 ### Positive
 
-| Token | Valor |
-|-------|-------|
-| `--dss-border-positive-disable` | 1px solid var(--dss-positive-disable) |
-| `--dss-border-positive-light` | 1px solid var(--dss-positive-light) |
-| `--dss-border-positive` | 1px solid var(--dss-positive) |
-| `--dss-border-positive-hover` | 1px solid var(--dss-positive-hover) |
-| `--dss-border-positive-deep` | 1px solid var(--dss-positive-deep) |
+<!-- BEGIN:TOKEN-TABLE:borders-feedback -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-border-positive-disable` | `1px solid var(--dss-positive-disable)` | — | — |
+| `--dss-border-positive-light` | `1px solid var(--dss-positive-light)` | — | — |
+| `--dss-border-positive` | `1px solid var(--dss-positive)` | — | — |
+| `--dss-border-positive-hover` | `1px solid var(--dss-positive-hover)` | — | — |
+| `--dss-border-positive-deep` | `1px solid var(--dss-positive-deep)` | — | — |
+| `--dss-border-negative-disable` | `1px solid var(--dss-negative-disable)` | — | — |
+| `--dss-border-negative-light` | `1px solid var(--dss-negative-light)` | — | — |
+| `--dss-border-negative` | `1px solid var(--dss-negative)` | — | — |
+| `--dss-border-negative-hover` | `1px solid var(--dss-negative-hover)` | — | — |
+| `--dss-border-negative-deep` | `1px solid var(--dss-negative-deep)` | — | — |
+| `--dss-border-warning-disable` | `1px solid var(--dss-warning-disable)` | — | — |
+| `--dss-border-warning-light` | `1px solid var(--dss-warning-light)` | — | — |
+| `--dss-border-warning` | `1px solid var(--dss-warning)` | — | — |
+| `--dss-border-warning-hover` | `1px solid var(--dss-warning-hover)` | — | — |
+| `--dss-border-warning-deep` | `1px solid var(--dss-warning-deep)` | — | — |
+| `--dss-border-info-disable` | `1px solid var(--dss-info-disable)` | — | — |
+| `--dss-border-info-light` | `1px solid var(--dss-info-light)` | — | — |
+| `--dss-border-info` | `1px solid var(--dss-info)` | — | — |
+| `--dss-border-info-hover` | `1px solid var(--dss-info-hover)` | — | — |
+| `--dss-border-info-deep` | `1px solid var(--dss-info-deep)` | — | — |
+<!-- END:TOKEN-TABLE:borders-feedback -->
 
 ### Negative
 
@@ -1576,19 +1862,43 @@ Sistema de bordas para todos os componentes.
 
 ### Hub (11 tokens)
 
-| Token | Valor |
-|-------|-------|
-| `--dss-border-hub-50` | 1px solid var(--dss-hub-50) |
-| `--dss-border-hub-100` | 1px solid var(--dss-hub-100) |
-| `--dss-border-hub-200` | 1px solid var(--dss-hub-200) |
-| `--dss-border-hub-300` | 1px solid var(--dss-hub-300) |
-| `--dss-border-hub-400` | 1px solid var(--dss-hub-400) |
-| `--dss-border-hub-500` | 1px solid var(--dss-hub-500) |
-| `--dss-border-hub-600` | 1px solid var(--dss-hub-600) |
-| `--dss-border-hub-700` | 1px solid var(--dss-hub-700) |
-| `--dss-border-hub-800` | 1px solid var(--dss-hub-800) |
-| `--dss-border-hub-900` | 1px solid var(--dss-hub-900) |
-| `--dss-border-hub-950` | 1px solid var(--dss-hub-950) |
+<!-- BEGIN:TOKEN-TABLE:borders-marca -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-border-hub-50` | `1px solid var(--dss-hub-50)` | — | — |
+| `--dss-border-hub-100` | `1px solid var(--dss-hub-100)` | — | — |
+| `--dss-border-hub-200` | `1px solid var(--dss-hub-200)` | — | — |
+| `--dss-border-hub-300` | `1px solid var(--dss-hub-300)` | — | — |
+| `--dss-border-hub-400` | `1px solid var(--dss-hub-400)` | — | — |
+| `--dss-border-hub-500` | `1px solid var(--dss-hub-500)` | — | — |
+| `--dss-border-hub-600` | `1px solid var(--dss-hub-600)` | — | — |
+| `--dss-border-hub-700` | `1px solid var(--dss-hub-700)` | — | — |
+| `--dss-border-hub-800` | `1px solid var(--dss-hub-800)` | — | — |
+| `--dss-border-hub-900` | `1px solid var(--dss-hub-900)` | — | — |
+| `--dss-border-hub-950` | `1px solid var(--dss-hub-950)` | — | — |
+| `--dss-border-water-50` | `1px solid var(--dss-water-50)` | — | — |
+| `--dss-border-water-100` | `1px solid var(--dss-water-100)` | — | — |
+| `--dss-border-water-200` | `1px solid var(--dss-water-200)` | — | — |
+| `--dss-border-water-300` | `1px solid var(--dss-water-300)` | — | — |
+| `--dss-border-water-400` | `1px solid var(--dss-water-400)` | — | — |
+| `--dss-border-water-500` | `1px solid var(--dss-water-500)` | — | — |
+| `--dss-border-water-600` | `1px solid var(--dss-water-600)` | — | — |
+| `--dss-border-water-700` | `1px solid var(--dss-water-700)` | — | — |
+| `--dss-border-water-800` | `1px solid var(--dss-water-800)` | — | — |
+| `--dss-border-water-900` | `1px solid var(--dss-water-900)` | — | — |
+| `--dss-border-water-950` | `1px solid var(--dss-water-950)` | — | — |
+| `--dss-border-waste-50` | `1px solid var(--dss-waste-50)` | — | — |
+| `--dss-border-waste-100` | `1px solid var(--dss-waste-100)` | — | — |
+| `--dss-border-waste-200` | `1px solid var(--dss-waste-200)` | — | — |
+| `--dss-border-waste-300` | `1px solid var(--dss-waste-300)` | — | — |
+| `--dss-border-waste-400` | `1px solid var(--dss-waste-400)` | — | — |
+| `--dss-border-waste-500` | `1px solid var(--dss-waste-500)` | — | — |
+| `--dss-border-waste-600` | `1px solid var(--dss-waste-600)` | — | — |
+| `--dss-border-waste-700` | `1px solid var(--dss-waste-700)` | — | — |
+| `--dss-border-waste-800` | `1px solid var(--dss-waste-800)` | — | — |
+| `--dss-border-waste-900` | `1px solid var(--dss-waste-900)` | — | — |
+| `--dss-border-waste-950` | `1px solid var(--dss-waste-950)` | — | — |
+<!-- END:TOKEN-TABLE:borders-marca -->
 
 ### Water (11 tokens)
 
@@ -1626,26 +1936,30 @@ Sistema de bordas para todos os componentes.
 
 **Total: 5 tokens**
 
-| Token | Valor |
-|-------|-------|
-| `--dss-border-dark-disable` | 1px solid var(--dss-dark-disable) |
-| `--dss-border-dark-light` | 1px solid var(--dss-dark-light) |
-| `--dss-border-dark` | 1px solid var(--dss-dark) |
-| `--dss-border-dark-hover` | 1px solid var(--dss-dark-hover) |
-| `--dss-border-dark-deep` | 1px solid var(--dss-dark-deep) |
+<!-- BEGIN:TOKEN-TABLE:borders-dark -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-border-dark-disable` | `1px solid var(--dss-dark-disable)` | — | — |
+| `--dss-border-dark-light` | `1px solid var(--dss-dark-light)` | — | — |
+| `--dss-border-dark` | `1px solid var(--dss-dark)` | — | — |
+| `--dss-border-dark-hover` | `1px solid var(--dss-dark-hover)` | — | — |
+| `--dss-border-dark-deep` | `1px solid var(--dss-dark-deep)` | — | — |
+<!-- END:TOKEN-TABLE:borders-dark -->
 
 ## 8.7 Bordas Funcionais
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-border-focus` | 2px solid var(--dss-action-primary) | Borda de foco |
-| `--dss-border-focus-subtle` | 1px solid var(--dss-action-primary) | Borda de foco sutil |
-| `--dss-border-active` | 2px solid var(--dss-action-secondary) | Borda ativa |
-| `--dss-border-selected` | 2px solid var(--dss-action-tertiary) | Borda selecionada |
-| `--dss-border-disabled` | 1px solid var(--dss-gray-300) | Borda desabilitada |
-| `--dss-border-readonly` | 1px dashed var(--dss-gray-400) | Borda somente leitura |
+<!-- BEGIN:TOKEN-TABLE:borders-funcionais -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-border-focus` | `2px solid var(--dss-action-primary)` | — | — |
+| `--dss-border-focus-subtle` | `1px solid var(--dss-action-primary)` | — | — |
+| `--dss-border-active` | `2px solid var(--dss-action-secondary)` | — | — |
+| `--dss-border-selected` | `2px solid var(--dss-action-tertiary)` | — | — |
+| `--dss-border-disabled` | `1px solid var(--dss-gray-300)` | — | — |
+| `--dss-border-readonly` | `1px dashed var(--dss-gray-400)` | — | — |
+<!-- END:TOKEN-TABLE:borders-funcionais -->
 
 ---
 
@@ -1657,21 +1971,21 @@ Sistema de profundidade visual através de sombras.
 
 **Total: 8 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-shadow-xs` | 0 0 0 1px rgba(0, 0, 0, 0.05) | Sombra mínima (borda sutil) |
-| `--dss-shadow-sm` | 0 1px 3px rgba(0, 0, 0, 0.25) | Sombra pequena |
-| `--dss-shadow-md` | 0 4px 6px rgba(0, 0, 0, 0.30) | Sombra média |
-| `--dss-shadow-lg` | 0 10px 15px rgba(0, 0, 0, 0.35) | Sombra grande |
-| `--dss-shadow-xl` | 0 20px 25px rgba(0, 0, 0, 0.40) | Sombra extra grande |
-| `--dss-shadow-2xl` | 0 25px 50px rgba(0, 0, 0, 0.45) | Sombra 2x extra grande |
-| `--dss-shadow-inner` | inset 0 2px 4px rgba(0, 0, 0, 0.06) | Sombra interna |
-| `--dss-shadow-inner-lg` | inset 0 4px 8px rgba(0, 0, 0, 0.08) | Sombra interna grande |
+<!-- BEGIN:TOKEN-TABLE:shadows-base -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-shadow-hover` | `var(--dss-shadow-md)` | — | — |
+| `--dss-shadow-active` | `var(--dss-shadow-inner)` | — | — |
+| `--dss-shadow-drag` | `0 10px 20px rgba(0, 0, 0, 0.15)` | — | — |
+| `--dss-shadow-transition` | `none` | — | — |
+| `--dss-shadow-focus` | `0 0 0 3px rgba(31, 134, 222, 0.8)` | — | — |
+<!-- END:TOKEN-TABLE:shadows-base -->
 
 ## 9.2 Sombras Semânticas
 
 **Total: 5 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:shadows-semanticas -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-shadow-focus` | 0 0 0 3px rgba(31, 134, 222, 0.5) | Sombra de foco (alternativa a outline) |
@@ -1679,6 +1993,7 @@ Sistema de profundidade visual através de sombras.
 | `--dss-shadow-focus-success` | 0 0 0 3px rgba(77, 210, 40, 0.5) | Sombra de foco em sucesso |
 | `--dss-shadow-overlay` | 0 10px 38px rgba(0, 0, 0, 0.2) | Sombra de overlay/backdrop |
 | `--dss-shadow-modal` | 0 20px 60px rgba(0, 0, 0, 0.3) | Sombra de modal |
+<!-- END:TOKEN-TABLE:shadows-semanticas -->
 
 ## 9.3 Sombras de Marca
 
@@ -1686,11 +2001,13 @@ Sistema de profundidade visual através de sombras.
 
 ### Hub
 
+<!-- BEGIN:TOKEN-TABLE:shadows-marca -->
 | Token | Valor |
 |-------|-------|
 | `--dss-shadow-hub-sm` | 0 1px 3px rgba(245, 145, 26, 0.15) |
 | `--dss-shadow-hub-md` | 0 4px 6px rgba(245, 145, 26, 0.15) |
 | `--dss-shadow-hub-lg` | 0 10px 15px rgba(245, 145, 26, 0.15) |
+<!-- END:TOKEN-TABLE:shadows-marca -->
 
 ### Water
 
@@ -1712,24 +2029,161 @@ Sistema de profundidade visual através de sombras.
 
 **Total: 6 tokens**
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--dss-elevation-0` | none | Sem elevação |
-| `--dss-elevation-1` | `var(--dss-shadow-sm)` | Elevação nível 1 (cards padrão) |
-| `--dss-elevation-2` | `var(--dss-shadow-md)` | Elevação nível 2 (cards hover) |
-| `--dss-elevation-3` | `var(--dss-shadow-lg)` | Elevação nível 3 (popovers, toasts) |
-| `--dss-elevation-4` | `var(--dss-shadow-xl)` | Elevação nível 4 (modais) |
-| `--dss-elevation-5` | `var(--dss-shadow-2xl)` | Elevação nível 5 (fullscreen) |
+<!-- BEGIN:TOKEN-TABLE:shadows-elevacao -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-elevation-0` | `none` | — | — |
+| `--dss-elevation-1` | `var(--dss-shadow-sm)` | — | — |
+| `--dss-elevation-2` | `var(--dss-shadow-md)` | — | — |
+| `--dss-elevation-3` | `var(--dss-shadow-lg)` | — | — |
+| `--dss-elevation-4` | `var(--dss-shadow-xl)` | — | — |
+| `--dss-elevation-5` | `var(--dss-shadow-2xl)` | — | — |
+<!-- END:TOKEN-TABLE:shadows-elevacao -->
 
 ## 9.5 Sombras para Estados
 
 **Total: 3 tokens**
 
+<!-- BEGIN:TOKEN-TABLE:shadows-estados -->
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-shadow-hover` | `var(--dss-shadow-md)` | Sombra em hover |
 | `--dss-shadow-active` | `var(--dss-shadow-inner)` | Sombra em estado ativo |
 | `--dss-shadow-drag` | 0 10px 20px rgba(0, 0, 0, 0.15) | Sombra durante drag |
+<!-- END:TOKEN-TABLE:shadows-estados -->
+
+---
+
+# 11. Dimensões de Controles Interativos
+
+**Versão DSS:** v2.4.0 (Junho 2026)  
+**Arquivo fonte:** `packages/core/tokens/semantic/_dimensions.scss`  
+**Filosofia:** Tokens genéricos por padrão de UI — não por componente. Um token `--dss-track-height-sm` é consumido por qualquer controle deslizante, não apenas pelo DssRange.
+
+---
+
+## 11.1 Track Height
+
+Altura do trilho em controles deslizantes lineares e indicadores de navegação.
+
+**Total: 4 tokens** *(tabela auto-gerada por `scripts/sync-tokens-to-reference.js`)*
+
+<!-- BEGIN:TOKEN-TABLE:dimensions-track-height -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-track-height-xs` | `var(--dss-spacing-0_5)` | `2px` | indicadores de tab, trilhos decorativos |
+| `--dss-track-height-sm` | `var(--dss-spacing-1)` | `4px` | progresso, range, slider padrão |
+| `--dss-track-height-md` | `var(--dss-spacing-1_5)` | `6px` | trilhos de destaque |
+| `--dss-track-height-lg` | `var(--dss-spacing-2)` | `8px` | controles de alto contraste / acessibilidade |
+<!-- END:TOKEN-TABLE:dimensions-track-height -->
+
+```scss
+// Uso nos componentes
+.dss-linear-progress__track {
+  min-height: var(--dss-track-height-sm); // 4px
+}
+.dss-tab__indicator {
+  height: var(--dss-track-height-xs); // 2px
+}
+```
+
+---
+
+## 11.2 Thumb Size
+
+Tamanho do polegar (handle) em controles arrastáveis.
+
+**Total: 5 tokens** *(tabela auto-gerada por `scripts/sync-tokens-to-reference.js`)*
+
+<!-- BEGIN:TOKEN-TABLE:dimensions-thumb-size -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-thumb-size-xs` | `var(--dss-spacing-3)` | `12px` | compacto |
+| `--dss-thumb-size-sm` | `var(--dss-spacing-4)` | `16px` | DssToggle thumb off |
+| `--dss-thumb-size-md` | `var(--dss-spacing-5)` | `20px` | DssRange / DssSlider padrão |
+| `--dss-thumb-size-lg` | `var(--dss-spacing-6)` | `24px` | DssToggle thumb on |
+| `--dss-thumb-size-xl` | `var(--dss-spacing-8)` | `32px` | reserva Fase 3 |
+<!-- END:TOKEN-TABLE:dimensions-thumb-size -->
+
+> **Nota DssToggle:** a animação de ativação transita de `--dss-thumb-size-sm` → `--dss-thumb-size-lg`, expressando semanticamente que o polegar "expande" ao ativar.
+
+---
+
+## 11.3 Switch Track Width
+
+Largura do trilho do componente toggle/switch. Altura do trilho usa `--dss-spacing-8` (32px).
+
+**Total: 4 tokens** *(tabela auto-gerada por `scripts/sync-tokens-to-reference.js`)*
+
+<!-- BEGIN:TOKEN-TABLE:dimensions-switch-track-width -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-switch-track-width-sm` | `var(--dss-spacing-12)` | `48px` | toggle compacto |
+| `--dss-switch-track-width-md` | `var(--dss-spacing-14)` | `56px` | toggle padrão |
+| `--dss-switch-track-width-lg` | `var(--dss-spacing-16)` | `64px` | toggle grande |
+| `--dss-switch-track-width-xl` | `var(--dss-spacing-20)` | `80px` | toggle extra grande |
+<!-- END:TOKEN-TABLE:dimensions-switch-track-width -->
+
+> **Breaking change visual (v2.4.0):** o valor de produção anterior era 52px. A migração para `--dss-switch-track-width-md` (56px) implica delta de +4px validado visualmente em Junho 2026.
+
+---
+
+## 11.4 Min Width
+
+Restrições mínimas de largura por contexto semântico de uso.
+
+**Total: 6 tokens** *(tabela auto-gerada por `scripts/sync-tokens-to-reference.js`)*
+
+<!-- BEGIN:TOKEN-TABLE:dimensions-min-width -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-min-w-xs` | `var(--dss-spacing-16)` | `64px` | botões e controles compactos |
+| `--dss-min-w-sm` | `var(--dss-spacing-40)` | `160px` | rating, elementos de avaliação |
+| `--dss-min-w-md` | `var(--dss-spacing-52)` | `208px` | menus, overlays, ranges |
+| `--dss-min-w-lg` | `var(--dss-spacing-60)` | `240px` | campos de formulário (Input, Select, Textarea) |
+| `--dss-min-w-xl` | `var(--dss-spacing-80)` | `320px` | painéis compactos (reserva Fase 3) |
+| `--dss-min-w-2xl` | `var(--dss-spacing-120)` | `480px` | painéis e modais (reserva Fase 3) |
+<!-- END:TOKEN-TABLE:dimensions-min-width -->
+
+> ⚠️ `--dss-min-w-md` (200px) é exceção estrutural — valor não mapeável à escala base de spacing (spacing-48 = 192px / spacing-52 = 208px). Documentado como constante semântica legítima.
+
+---
+
+## 11.5 Max Width
+
+Restrições máximas de largura por contexto semântico de uso.
+
+**Total: 4 tokens** *(tabela auto-gerada por `scripts/sync-tokens-to-reference.js`)*
+
+<!-- BEGIN:TOKEN-TABLE:dimensions-max-width -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-max-w-xs` | `var(--dss-spacing-60)` | `240px` | tooltips, popovers compactos |
+| `--dss-max-w-sm` | `var(--dss-spacing-80)` | `320px` | cards compactos |
+| `--dss-max-w-md` | `var(--dss-spacing-120)` | `480px` | painéis laterais |
+| `--dss-max-w-lg` | `var(--dss-spacing-192)` | `768px` | modais e drawers |
+<!-- END:TOKEN-TABLE:dimensions-max-width -->
+
+---
+
+## 11.6 Min Height
+
+Restrições mínimas de altura por contexto semântico.
+
+**Referência:** xs/sm para elementos não-interativos compactos; md (48px) é o **piso MD3/WCAG 2.5.5** para qualquer área interativa.
+
+**Total: 6 tokens** *(tabela auto-gerada por `scripts/sync-tokens-to-reference.js`)*
+
+<!-- BEGIN:TOKEN-TABLE:dimensions-min-height -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-min-h-xs` | `var(--dss-spacing-6)` | `24px` | elementos não-interativos compactos (IBM Carbon layout-05) |
+| `--dss-min-h-sm` | `var(--dss-spacing-10)` | `40px` | elementos compactos abaixo do mínimo WCAG (uso restrito) |
+| `--dss-min-h-md` | `var(--dss-spacing-12)` | `48px` | ✅ piso MD3/WCAG 2.5.5 — referência primária |
+| `--dss-min-h-lg` | `var(--dss-spacing-48)` | `192px` | containers overlay (menus, scroll areas, parallax) |
+| `--dss-min-h-xl` | `var(--dss-spacing-80)` | `320px` | painéis laterais e seções de conteúdo |
+| `--dss-min-h-2xl` | `var(--dss-spacing-120)` | `480px` | seções de altura completa |
+<!-- END:TOKEN-TABLE:dimensions-min-height -->
 
 ---
 

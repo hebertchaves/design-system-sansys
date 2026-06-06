@@ -19,23 +19,37 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-2 --dss-spacing-4",
-      "gap": "--dss-spacing-4",
-      "borderRadius": "--dss-radius-none",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
-      { "property": "padding", "token": "--dss-spacing-4", "value": "0 16px", "source": "Padrão item de lista (Seção 3.1)" },
-      { "property": "hover background", "token": "--dss-surface-hover", "value": null, "source": "Padrão lista (Seção 3.1)" },
-      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 3.2 tipografia" },
-      { "property": "color", "token": "--dss-text-body", "value": null, "source": "Padrão neutro" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "padding",
+        "token": "--dss-spacing-4",
+        "value": "0 16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "hover background",
+        "token": "--dss-surface-hover",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      }
     ],
     "demoContent": "Item com ícone e texto",
     "demoSlots": {

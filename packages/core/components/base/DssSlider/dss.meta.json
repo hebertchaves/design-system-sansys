@@ -73,24 +73,67 @@
       "minHeight": "44px",
       "minWidth": "200px"
     },
-    "computedTokens": {
-      "borderRadius": "--dss-radius-full",
-      "borderWidth": "--dss-border-width-none",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-muted",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.8" },
-      { "property": "min-width", "token": null, "value": "200px", "source": "defaultPreview" },
-      { "property": "track height", "token": null, "value": "4px", "source": "Seção 13.8" },
-      { "property": "track border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.8" },
-      { "property": "track background", "token": "--dss-gray-300", "value": null, "source": "Seção 13.8" },
-      { "property": "track preenchido", "token": "--dss-action-primary", "value": null, "source": "Seção 13.8" },
-      { "property": "thumb tamanho", "token": null, "value": "20px", "source": "Seção 13.8" },
-      { "property": "thumb background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.8" },
-      { "property": "thumb shadow", "token": "--dss-elevation-1", "value": null, "source": "Seção 13.8" },
-      { "property": "touch target", "token": "--dss-touch-target-md", "value": "44px", "source": "--dss-touch-target-md no wrapper (não `--dss-input-height-md`)" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "1-structure/DssSlider.ts.vue"
+      },
+      {
+        "property": "min-width",
+        "token": "--dss-min-w-md",
+        "value": "200px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track height",
+        "token": "--dss-track-height-sm",
+        "value": "4px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track border-radius",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track background",
+        "token": "--dss-gray-300",
+        "value": null,
+        "source": "4-output/_states.scss"
+      },
+      {
+        "property": "track preenchido",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb tamanho",
+        "token": "--dss-thumb-size-md",
+        "value": "20px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb background",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb shadow",
+        "token": "--dss-elevation-1",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "touch target",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "1-structure/DssSlider.ts.vue"
+      }
     ],
     "demoContent": "Slider com valor 50",
     "demoSlots": null

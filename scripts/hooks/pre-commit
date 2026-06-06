@@ -1,8 +1,37 @@
 #!/bin/sh
 # DSS pre-commit hook
-# Se algum dss.meta.json foi staged, sincroniza o DSS_REFERENCIA_VISUAL_ANALISE.md
+# Cadeia de automação: CSS → meta.json → DSS_REFERENCIA → TOKEN_REFERENCE
 
-if git diff --cached --name-only | grep -q 'dss\.meta\.json'; then
+STAGED=$(git diff --cached --name-only)
+
+# ── 1. Token SCSS alterado → regenera DSS_TOKEN_REFERENCE.md ─────────────────
+if echo "$STAGED" | grep -q 'packages/core/tokens/semantic/'; then
+  echo "🔄 Token SCSS alterado — sincronizando DSS_TOKEN_REFERENCE.md..."
+  node scripts/sync-tokens-to-reference.js
+  if [ $? -ne 0 ]; then
+    echo "❌ Falha ao sincronizar DSS_TOKEN_REFERENCE.md. Commit abortado."
+    exit 1
+  fi
+  git add docs/reference/DSS_TOKEN_REFERENCE.md
+  echo "✅ DSS_TOKEN_REFERENCE.md atualizado e staged."
+fi
+
+# ── 2. SCSS de componente alterado → valida CSS ↔ meta.json ──────────────────
+if echo "$STAGED" | grep -qE 'packages/core/components/base/.+\.scss'; then
+  echo "🔍 SCSS de componente alterado — validando CSS → meta.json..."
+  node scripts/sync-css-to-meta.js --validate
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ Divergência CSS ↔ meta.json detectada."
+    echo "   Atualize o campo 'visualProperties' no dss.meta.json do componente"
+    echo "   para refletir os tokens reais usados no CSS e tente novamente."
+    exit 1
+  fi
+  echo "✅ CSS → meta.json: validação ok."
+fi
+
+# ── 3. meta.json alterado → sincroniza DSS_REFERENCIA_VISUAL_ANALISE.md ──────
+if echo "$STAGED" | grep -q 'dss\.meta\.json'; then
   echo "🔄 dss.meta.json alterado — sincronizando DSS_REFERENCIA_VISUAL_ANALISE.md..."
   node scripts/sync-visual-contract.js
   if [ $? -ne 0 ]; then

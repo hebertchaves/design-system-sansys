@@ -42,6 +42,8 @@
   --dss-spacing-72: 18rem;                /* 288px */
   --dss-spacing-80: 20rem;                /* 320px */
   --dss-spacing-96: 24rem;                /* 384px */
+  --dss-spacing-120: 30rem;               /* 480px */
+  --dss-spacing-192: 48rem;               /* 768px */
   
   /* ===========================================
      2. ESPAÇAMENTOS SEMÂNTICOS
@@ -184,6 +186,7 @@
   --dss-radius-2xl: var(--dss-spacing-5);   /* 20px */
   --dss-radius-3xl: var(--dss-spacing-6);   /* 24px */
   --dss-radius-full: 9999px;
+  --dss-radius-circle: 50%;             /* Círculos perfeitos (Avatar, Radio, indicadores circulares) */
 
   /* Radius especial para badges (mantido por ser altamente específico) */
   --dss-radius-badge: var(--dss-radius-full);

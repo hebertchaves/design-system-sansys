@@ -78,10 +78,11 @@ This tool is currently a placeholder for the Phase 4 Visual Regression Pipeline.
 When fully implemented, it will:
 1. Mount ${componentName} in a headless browser using the props defined in \`defaultPreview.props\`.
 2. Extract actual computed dimensions (height, width) and compare against \`defaultPreview.computedDimensions\`.
-3. Extract actual computed tokens (padding, gap, radius) and compare against \`defaultPreview.computedTokens\`.
+3. Extract actual computed tokens (padding, gap, radius) and compare against \`defaultPreview.visualProperties\`.
 
 **Action Required for Agents:**
-Until the headless browser infrastructure is merged, you MUST manually verify that the SCSS in \`2-composition/_base.scss\` explicitly implements the tokens declared in the \`defaultPreview\` contract above.
+Until the headless browser infrastructure is merged, you MUST manually verify that the SCSS in \`2-composition/_base.scss\` explicitly implements the tokens declared in the \`defaultPreview.visualProperties\` array above.
+Note: \`computedTokens\` was deprecated in DSS v2.4.0 — use \`visualProperties\` as the authoritative source.
 `;
 
     return {

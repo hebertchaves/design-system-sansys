@@ -97,7 +97,7 @@
   border-radius: var(--dss-radius-md);
 
   /* Largura mínima razoável */
-  min-width: 160px; /* EXC-05 */
+  min-width: var(--dss-min-w-sm); /* 160px */
 
   /* Overflow para conteúdo com border-radius */
   overflow: hidden;

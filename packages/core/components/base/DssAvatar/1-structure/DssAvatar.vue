@@ -109,8 +109,8 @@ export default {
       } else if (this.rounded) {
         style.borderRadius = '8px'; // @deprecated - usar var(--dss-radius-md)
       } else {
-        // Padrão: circular (50%)
-        style.borderRadius = '50%';
+        // Padrão: circular — usa token semântico para círculo perfeito
+        style.borderRadius = 'var(--dss-radius-circle)';
       }
 
       return style;

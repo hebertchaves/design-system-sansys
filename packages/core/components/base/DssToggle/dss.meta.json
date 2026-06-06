@@ -22,29 +22,85 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "gap": "--dss-spacing-2",
-      "borderRadius": "--dss-radius-full",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-muted",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.7" },
-      { "property": "track width × height", "token": "52px × 32px", "value": null, "source": "Seção 13.7" },
-      { "property": "track border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.7" },
-      { "property": "track border-width (off)", "token": "--dss-border-width-md", "value": "2px", "source": "Seção 13.7" },
-      { "property": "track border-color (off)", "token": "--dss-gray-400", "value": null, "source": "Seção 13.7" },
-      { "property": "track background (off)", "token": "--dss-surface-muted", "value": null, "source": "Seção 13.7" },
-      { "property": "track background (on)", "token": "--dss-action-primary", "value": null, "source": "Seção 13.7" },
-      { "property": "thumb tamanho (off)", "token": "16px", "value": null, "source": "Seção 13.7" },
-      { "property": "thumb tamanho (on)", "token": "24px", "value": null, "source": "Seção 13.7" },
-      { "property": "thumb background (off)", "token": "--dss-gray-500", "value": null, "source": "Seção 13.7" },
-      { "property": "thumb background (on)", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.7" },
-      { "property": "transição", "token": "--dss-duration-200", "value": "200ms", "source": "Seção 13.7" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "track width",
+        "token": "--dss-spacing-9",
+        "value": "36px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track height",
+        "token": "--dss-spacing-5",
+        "value": "20px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track border-radius",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track border-width (off)",
+        "token": "--dss-border-width-md",
+        "value": "2px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track border-color (off)",
+        "token": "--dss-gray-400",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track background (off)",
+        "token": "--dss-surface-muted",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track background (on)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "thumb tamanho (off)",
+        "token": "--dss-thumb-size-sm",
+        "value": "16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb tamanho (on)",
+        "token": "--dss-thumb-size-sm",
+        "value": "16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb background (off)",
+        "token": "--dss-gray-500",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb background (on)",
+        "token": "--dss-text-inverse",
+        "value": "branco",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "transição",
+        "token": "--dss-duration-200",
+        "value": "200ms",
+        "source": "2-composition/_base.scss"
+      }
     ],
     "demoContent": "Label 'Ativar'",
     "demoSlots": null

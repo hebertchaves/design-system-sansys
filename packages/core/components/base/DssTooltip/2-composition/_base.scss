@@ -45,18 +45,11 @@
   text-align: center;
 
   /* Dimensoes
-   *
-   * ⚠️ EXCECAO DOCUMENTADA: max-width via var(--dss-spacing-60) = 240px
-   *
+   * max-width: --dss-max-w-xs (240px) — token semântico DSS v2.4.0.
    * 240px é o valor canônico das referências (M3, Carbon, Salesforce).
-   * --dss-spacing-60 = 15rem = 240px é o token mais próximo semanticamente.
-   * Alternativas avaliadas:
-   * - 300px (anterior) — largo demais para elemento contextual compacto
-   * - Sem max-width — tooltips ficam excessivamente largos com texto longo
-   *
    * Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.17
    */
-  max-width: var(--dss-spacing-60);
+  max-width: var(--dss-max-w-xs);
   padding: var(--dss-spacing-1_5) var(--dss-spacing-2);
 
   /* Forma
@@ -67,10 +60,17 @@
    */
   border-radius: var(--dss-radius-sm);
 
+  /* Superfície escura
+   * background-color: gray-900 — tooltip usa fundo escuro invariante entre brands.
+   * Definido aqui explicitamente (em vez de depender do default interno do QTooltip)
+   * para garantir governança DSS sobre a propriedade.
+   * Brands sobrescrevem via 4-output/_brands.scss.
+   */
+  background-color: var(--dss-gray-900);
+  color: var(--dss-text-inverse);
+
   /* Elevação
    * elevation-2: tooltip flutua sobre o conteúdo mas abaixo de menus/FAB.
-   * Sombra sutil aumenta separação visual entre tooltip e superfície.
-   * Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 14.2
    */
   box-shadow: var(--dss-elevation-2);
 

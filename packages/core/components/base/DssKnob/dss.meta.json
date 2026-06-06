@@ -115,22 +115,55 @@
       "minHeight": "56px",
       "minWidth": "56px"
     },
-    "computedTokens": {
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-action-primary"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "56px", "value": null, "source": "defaultPreview / Seção 13.9" },
-      { "property": "min-width", "token": "56px", "value": null, "source": "defaultPreview / Seção 13.9" },
-      { "property": "track cor (não preenchido)", "token": "--dss-gray-200", "value": null, "source": "Seção 13.9" },
-      { "property": "track cor (preenchido)", "token": "--dss-action-primary", "value": null, "source": "Seção 13.9 (EXC-Gate-02: CSS stroke)" },
-      { "property": "label central font-size", "token": "--dss-font-size-lg", "value": "18px", "source": "Seção 13.9" },
-      { "property": "label central font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.9" },
-      { "property": "label central color", "token": "--dss-text-body", "value": null, "source": "Seção 13.9" },
-      { "property": "focus outline", "token": "--dss-border-width-thick", "value": "3px", "source": "EXC-Focus-01 (NC-01 corrigida)" }
+      {
+        "property": "min-height",
+        "token": "56px",
+        "value": null,
+        "source": "defaultPreview / Seção 13.9"
+      },
+      {
+        "property": "min-width",
+        "token": "56px",
+        "value": null,
+        "source": "defaultPreview / Seção 13.9"
+      },
+      {
+        "property": "track cor (não preenchido)",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track cor (preenchido)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label central font-size",
+        "token": "--dss-font-size-lg",
+        "value": "18px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "label central font-weight",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label central color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "focus outline",
+        "token": "--dss-border-width-thick",
+        "value": "3px",
+        "source": "4-output/_states.scss"
+      }
     ],
     "demoContent": "Knob com valor 50%",
     "demoSlots": null

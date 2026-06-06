@@ -114,21 +114,49 @@
       "minHeight": "56px",
       "minWidth": "56px"
     },
-    "computedTokens": {
-      "borderRadius": "--dss-radius-full",
-      "borderWidth": "--dss-border-width-none",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-action-primary"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "56px", "source": "defaultPreview" },
-      { "property": "min-width", "token": null, "value": "56px", "source": "defaultPreview" },
-      { "property": "stroke (círculo de progresso)", "token": "--dss-action-primary", "value": null, "source": "EXC-Gate-01: CSS stroke no SVG" },
-      { "property": "stroke (track)", "token": "--dss-gray-200", "value": null, "source": "Seção 3.1 Progresso" },
-      { "property": "stroke-width", "token": null, "value": "3", "source": "EX-Structural-01 (sem token correspondente)" },
-      { "property": "size xs", "token": null, "value": "40px", "source": "SIZE_TOKEN_MAP" },
-      { "property": "size xl", "token": null, "value": "96px", "source": "SIZE_TOKEN_MAP" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "56px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": "56px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "stroke (círculo de progresso)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "3-variants/_colors.scss"
+      },
+      {
+        "property": "stroke (track)",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "stroke-width",
+        "token": null,
+        "value": "3",
+        "source": "EX-Structural-01 (sem token correspondente)"
+      },
+      {
+        "property": "size xs",
+        "token": null,
+        "value": "40px",
+        "source": "SIZE_TOKEN_MAP"
+      },
+      {
+        "property": "size xl",
+        "token": null,
+        "value": "96px",
+        "source": "SIZE_TOKEN_MAP"
+      }
     ],
     "demoContent": "Progresso circular 70%",
     "demoSlots": null

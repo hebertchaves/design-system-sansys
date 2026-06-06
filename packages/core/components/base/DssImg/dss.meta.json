@@ -75,22 +75,55 @@
       "minHeight": "150px",
       "minWidth": "200px"
     },
-    "computedTokens": {
-      "borderRadius": "--dss-radius-sm",
-      "borderWidth": "--dss-border-width-none",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-muted",
-      "textColor": "none"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "150px", "source": "defaultPreview" },
-      { "property": "min-width", "token": null, "value": "200px", "source": "defaultPreview" },
-      { "property": "border-radius", "token": "0", "value": null, "source": "Seção 13.27 (sem corte default)" },
-      { "property": "object-fit", "token": "cover", "value": null, "source": "Seção 13.27" },
-      { "property": "placeholder background", "token": "--dss-gray-100", "value": null, "source": "Seção 13.27" },
-      { "property": "erro background", "token": "--dss-gray-200", "value": null, "source": "Seção 13.27" },
-      { "property": "erro ícone cor", "token": "--dss-gray-500", "value": null, "source": "Seção 13.27" },
-      { "property": "fade-in transition", "token": "--dss-duration-300", "value": "300ms", "source": "Seção 13.27" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "150px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": "200px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "border-radius",
+        "token": "0",
+        "value": null,
+        "source": "Seção 13.27 (sem corte default)"
+      },
+      {
+        "property": "object-fit",
+        "token": "cover",
+        "value": null,
+        "source": "Seção 13.27"
+      },
+      {
+        "property": "placeholder background",
+        "token": "--dss-gray-100",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "erro background",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "erro ícone cor",
+        "token": "--dss-gray-500",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "fade-in transition",
+        "token": "--dss-duration-300",
+        "value": "300ms",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      }
     ],
     "demoContent": "Imagem com alt text acessível",
     "demoSlots": null

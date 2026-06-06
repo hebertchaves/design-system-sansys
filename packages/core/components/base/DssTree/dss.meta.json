@@ -161,18 +161,19 @@
       ]
     },
     "computedDimensions": {},
-    "computedTokens": {
-      "gap": "--dss-spacing-1",
-      "borderRadius": "--dss-radius-none",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
-      { "property": "min-width", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      }
     ],
     "demoContent": "Árvore hierárquica com nós expansíveis",
     "demoSlots": null

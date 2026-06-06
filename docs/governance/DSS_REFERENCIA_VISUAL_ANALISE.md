@@ -247,7 +247,7 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `3px` | defaultPreview / QAjaxBar motor |
-| **color (indicador)** | `--dss-action-primary` | — | EXC-Gate-02: `--q-color-primary` CSS override |
+| **color (indicador)** | `--dss-action-primary` | — | 2-composition/_base.scss |
 | **color (hub brand)** | `--dss-hub-600` | — | 4-output/_brands.scss |
 | **color (water brand)** | `--dss-water-500` | — | 4-output/_brands.scss |
 | **color (waste brand)** | `--dss-waste-600` | — | 4-output/_brands.scss |
@@ -269,11 +269,11 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `40px` | defaultPreview |
 | **min-width** | — | `40px` | defaultPreview |
-| **border-radius** | 50% (constante geométrica) | — | Avatar circular universal |
-| **background (sem imagem)** | `--dss-action-primary-surface` | — | Seção 13.12 / Figma |
-| **color iniciais** | `--dss-action-primary` | — | Seção 13.12 |
-| **font-size (md)** | `--dss-font-size-md` | `14px` | Seção 13.12 |
-| **font-weight** | `--dss-font-weight-medium` | `500` | Seção 13.12 |
+| **border-radius** | `--dss-radius-circle` | `50%` | 1-structure/DssAvatar.vue |
+| **background (sem imagem)** | `--dss-action-primary-surface` | — | 2-composition/_base.scss |
+| **color iniciais** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **font-size (md)** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **font-weight** | `--dss-font-weight-medium` | `500` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssAvatar -->
 
 ---
@@ -290,14 +290,14 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssBadge -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-compact-control-height-sm` | `24px` | defaultPreview |
-| **min-width** | `--dss-compact-control-height-sm` | `24px` | defaultPreview |
-| **padding** | `--dss-spacing-0_5 / --dss-spacing-1` | `2px 4px` | Seção 13.11 |
-| **border-radius** | `--dss-radius-full` | `9999px` | Seção 13.11 |
-| **background** | `--dss-action-primary` | — | Seção 13.11 |
-| **color** | `--dss-text-inverse` | `branco` | Seção 13.11 |
-| **font-size** | `--dss-font-size-xs` | `12px` | Seção 13.11 |
-| **font-weight** | `--dss-font-weight-medium` | `500` | Seção 13.11 |
+| **min-height** | `--dss-compact-control-height-sm` | `24px` | 2-composition/_base.scss |
+| **min-width** | `--dss-compact-control-height-sm` | `24px` | 2-composition/_base.scss |
+| **padding** | `--dss-spacing-0_5 / --dss-spacing-1` | `2px 4px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **background** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **color** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-size** | `--dss-font-size-xs` | `12px` | 2-composition/_base.scss |
+| **font-weight** | `--dss-font-weight-medium` | `500` | 2-composition/_base.scss |
 | **line-height** | 1 | — | Seção 13.11 |
 <!-- END:VISUAL-TABLE:DssBadge -->
 
@@ -316,11 +316,11 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `48px` | defaultPreview |
-| **background** | `--dss-surface-default` | — | Padrão categoria Superfície (Seção 3.1) |
-| **border-width** | `--dss-border-width-thin` | `1px` | Seção 3.2 |
+| **background** | `--dss-surface-default` | — | 2-composition/_base.scss |
+| **border-width** | `--dss-border-width-thin` | `1px` | 4-output/_states.scss |
 | **border-color** | `--dss-gray-200` | — | Padrão categoria Superfície |
-| **padding** | `--dss-spacing-4` | `16px` | Seção 3.2 (gap interno superfície) |
-| **font-size** | `--dss-font-size-sm` | `14px` | Seção 3.2 tipografia |
+| **padding** | `--dss-spacing-4` | `16px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssBanner -->
 
 ---
@@ -337,13 +337,13 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssBar -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.22 |
-| **padding** | `--dss-spacing-2 / --dss-spacing-4` | `8px 16px` | Seção 13.22 |
-| **background** | `--dss-surface-default` | — | Seção 13.22 |
-| **color** | `--dss-text-body` | — | Seção 13.22 |
-| **font-size** | `--dss-font-size-md` | `14px` | Seção 13.22 |
-| **box-shadow** | `--dss-elevation-1` | — | Seção 13.22 |
-| **gap** | `--dss-spacing-2` | `8px` | Seção 13.22 |
+| **min-height** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
+| **padding** | `--dss-spacing-2 / --dss-spacing-4` | `8px 16px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **background** | `--dss-surface-default` | — | 2-composition/_base.scss |
+| **color** | `--dss-text-body` | — | 2-composition/_base.scss |
+| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **box-shadow** | `--dss-elevation-1` | — | 2-composition/_base.scss |
+| **gap** | `--dss-spacing-2` | `8px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssBar -->
 
 ---
@@ -361,9 +361,9 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `21px` | defaultPreview (altura do texto) |
-| **gap** | `--dss-spacing-2` | `8px` | Seção 13.23 / container de items |
-| **font-size** | `--dss-font-size-md` | `14px` | Seção 13.23 |
-| **separador color** | `--dss-gray-400` | — | Seção 13.23 |
+| **gap** | `--dss-spacing-2` | `8px` | 1-structure/DssBreadcrumbs.ts.vue |
+| **font-size** | `--dss-font-size-sm` | `14px` | 2-composition/_base.scss |
+| **separador color** | `--dss-gray-400` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssBreadcrumbs -->
 
 ---
@@ -381,11 +381,11 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `17px` | defaultPreview |
-| **font-size** | `--dss-font-size-md` | `14px` | Seção 13.23 |
-| **font-weight (link)** | `--dss-font-weight-normal` | `400` | Seção 13.23 |
-| **color (link)** | `--dss-text-action` | — | Seção 13.23 |
-| **color (item atual)** | `--dss-text-body` | — | Seção 13.23 |
-| **font-weight (item atual)** | `--dss-font-weight-medium` | `500` | Seção 13.23 |
+| **font-size** | `--dss-font-size-md` | `14px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-weight (link)** | `--dss-font-weight-normal` | `400` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **color (link)** | `--dss-text-action` | — | 2-composition/_base.scss |
+| **color (item atual)** | `--dss-text-body` | — | 2-composition/_base.scss |
+| **font-weight (item atual)** | `--dss-font-weight-medium` | `500` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **text-decoration (hover)** | underline | — | Seção 13.23 |
 <!-- END:VISUAL-TABLE:DssBreadcrumbsEl -->
 
@@ -403,16 +403,17 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssBtnDropdown -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.4 |
-| **background** | `--dss-action-primary` | — | Seção 13.4 (herda DssButton) |
-| **color** | `--dss-text-inverse` | `branco` | Seção 13.4 |
-| **border-radius** | `--dss-radius-full` | `9999px` | Seção 13.4 |
-| **painel border-radius** | `--dss-radius-md` | `8px` | Seção 13.4 |
-| **painel box-shadow** | `--dss-elevation-3` | — | Seção 13.4 |
-| **painel padding** | `--dss-spacing-2` | `8px` | Seção 13.4 |
-| **painel background** | `--dss-surface-default` | — | Seção 13.4 |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **min-width** | `--dss-min-w-sm` | `160px` | 2-composition/_base.scss |
+| **background** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **color** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **border-radius** | `--dss-radius-full` | `9999px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **painel border-radius** | `--dss-radius-md` | `8px` | 2-composition/_base.scss |
+| **painel box-shadow** | `--dss-elevation-3` | — | 2-composition/_base.scss |
+| **painel padding** | `--dss-spacing-2` | `8px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **painel background** | `--dss-surface-default` | — | 2-composition/_base.scss |
 | **item height** | 40px | — | Seção 13.4 |
-| **item padding** | `--dss-spacing-4` | `0 16px` | Seção 13.4 |
+| **item padding** | `--dss-spacing-4` | `0 16px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssBtnDropdown -->
 
 ---
@@ -429,10 +430,10 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssBtnGroup -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.3 |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **gap** | — | `0px` | Seção 13.3 (botões coladas) |
-| **border-radius extremidades** | `--dss-radius-full` | `9999px` | Seção 13.3 |
-| **divisor interno** | `--dss-border-width-thin` | `1px` | Seção 13.3 |
+| **border-radius extremidades** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **divisor interno** | `--dss-border-width-thin` | `1px` | 3-variants/_flat.scss |
 <!-- END:VISUAL-TABLE:DssBtnGroup -->
 
 ---
@@ -449,10 +450,10 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssBtnToggle -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **background (selecionado)** | `--dss-action-primary` | — | Padrão Action Control (Seção 3.1) |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **background (selecionado)** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **background (não selecionado)** | `--dss-surface-default` | — | Estado neutro |
-| **border-radius** | `--dss-radius-full` | `9999px` | Padrão pílula (Seção 3.2) |
+| **border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssBtnToggle -->
 
 ---
@@ -469,20 +470,20 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssButton -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.1 |
-| **min-width** | 64px | — | defaultPreview / Seção 13.1 |
-| **padding (horizontal)** | `--dss-spacing-6` | `24px` | Seção 13.1 |
-| **border-radius** | `--dss-radius-full` | `9999px` | Seção 13.1 |
-| **border-width** | `--dss-border-width-none` | `0` | Seção 13.1 (variante filled) |
-| **background** | `--dss-action-primary` | — | Seção 13.1 |
-| **color** | `--dss-text-inverse` | `branco` | Seção 13.1 |
-| **font-size** | `--dss-font-size-sm` | `14px` | Seção 13.1 |
-| **font-weight** | `--dss-font-weight-medium` | `500` | Seção 13.1 |
+| **min-height** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
+| **min-width** | `--dss-min-w-xs` | — | 2-composition/_base.scss |
+| **padding (horizontal)** | `--dss-spacing-6` | `24px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-sm` | `9999px` | 2-composition/_base.scss |
+| **border-width** | `--dss-border-width-none` | `0` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **background** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **color** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-size** | `--dss-font-size-sm` | `14px` | 2-composition/_base.scss |
+| **font-weight** | `--dss-font-weight-medium` | `500` | 2-composition/_base.scss |
 | **letter-spacing** | — | `0.01em` | Seção 13.1 |
-| **gap (ícone + label)** | `--dss-spacing-2` | `8px` | Seção 13.1 |
-| **shadow** | `--dss-elevation-1` | — | Seção 13.1 (elevated) |
-| **transition** | `--dss-duration-200` | `200ms` | Seção 13.1 |
-| **disabled opacity** | `--dss-opacity-disabled` | `0.4` | Seção 13.1 |
+| **gap (ícone + label)** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
+| **shadow** | `--dss-elevation-1` | — | 3-variants/_elevated.scss |
+| **transition** | `--dss-duration-200` | `200ms` | 2-composition/_base.scss |
+| **disabled opacity** | `--dss-opacity-disabled` | `0.4` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssButton -->
 
 ---
@@ -500,15 +501,15 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `80px` | defaultPreview |
-| **border-radius** | `--dss-radius-lg` | `12px` | Seção 13.13 |
-| **background** | `--dss-surface-default` | — | Seção 13.13 |
-| **border-width (outlined)** | `--dss-border-width-thin` | `1px` | Seção 13.13 |
-| **border-color (outlined)** | `--dss-gray-200` | — | Seção 13.13 |
-| **box-shadow (elevated)** | `--dss-elevation-1` | — | Seção 13.13 |
-| **box-shadow (hover)** | `--dss-elevation-2` | — | Seção 13.13 |
-| **section padding** | `--dss-spacing-6` | `24px` | Seção 13.13 |
-| **section divider** | `--dss-gray-200` | `1px solid` | Seção 13.13 |
-| **transition** | `--dss-duration-200` | `200ms` | Seção 13.13 |
+| **border-radius** | `--dss-radius-lg` | `12px` | 2-composition/_base.scss |
+| **background** | `--dss-surface-default` | — | 2-composition/_base.scss |
+| **border-width (outlined)** | `--dss-border-width-thin` | `1px` | 2-composition/_base.scss |
+| **border-color (outlined)** | `--dss-gray-200` | — | 2-composition/_base.scss |
+| **box-shadow (elevated)** | `--dss-elevation-1` | — | 2-composition/_base.scss |
+| **box-shadow (hover)** | `--dss-elevation-2` | — | 3-variants/_bordered.scss |
+| **section padding** | `--dss-spacing-6` | `24px` | 2-composition/_base.scss |
+| **section divider** | `--dss-gray-200` | `1px solid` | 2-composition/_base.scss |
+| **transition** | `--dss-duration-200` | `200ms` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssCard -->
 
 ---
@@ -525,15 +526,15 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssCheckbox -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview (touch target) |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **controle tamanho** | 18px × 18px | — | Seção 13.6 |
-| **border-radius** | `--dss-radius-sm` | `4px` | Seção 13.6 |
-| **border-width (unchecked)** | `--dss-border-width-md` | `2px` | Seção 13.6 |
-| **border-color (unchecked)** | `--dss-gray-500` | — | Seção 13.6 |
-| **background (checked)** | `--dss-action-primary` | — | Seção 13.6 |
-| **gap (controle + label)** | `--dss-spacing-2` | `8px` | Seção 13.6 |
-| **label font-size** | `--dss-font-size-md` | `14px` | Seção 13.6 |
-| **label color** | `--dss-text-body` | — | Seção 13.6 |
+| **border-radius** | `--dss-radius-sm` | `4px` | 2-composition/_base.scss |
+| **border-width (unchecked)** | `--dss-border-width-md` | `2px` | 2-composition/_base.scss |
+| **border-color (unchecked)** | `--dss-gray-500` | — | 2-composition/_base.scss |
+| **background (checked)** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **gap (controle + label)** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
+| **label font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **label color** | `--dss-text-body` | — | 2-composition/_base.scss |
 | **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` (WCAG 2.5.5) |
 <!-- END:VISUAL-TABLE:DssCheckbox -->
 
@@ -551,18 +552,18 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssChip -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-compact-control-height-md` | `28px` | defaultPreview / Seção 13.10 |
-| **padding (horizontal)** | `--dss-spacing-3` | `12px` | Seção 13.10 |
-| **border-radius** | `--dss-radius-full` | `9999px` | Seção 13.10 |
-| **border-width** | `--dss-border-width-thin` | `1px` | Seção 13.10 |
-| **border-color** | `--dss-gray-300` | — | Seção 13.10 |
-| **background** | `--dss-surface-muted` | — | Seção 13.10 |
-| **color** | `--dss-text-body` | — | Seção 13.10 |
-| **font-size** | `--dss-font-size-xs` | `12px` | Seção 13.10 |
-| **font-weight** | `--dss-font-weight-medium` | `500` | Seção 13.10 |
-| **gap** | `--dss-spacing-2` | `8px` | Seção 13.10 |
-| **selected background** | `--dss-action-primary` | — | Seção 13.10 |
-| **selected color** | `--dss-text-inverse` | `branco` | Seção 13.10 |
+| **min-height** | `--dss-compact-control-height-md` | `28px` | 2-composition/_base.scss |
+| **padding (horizontal)** | `--dss-spacing-3` | `12px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **border-width** | `--dss-border-width-thin` | `1px` | 4-output/_states.scss |
+| **border-color** | `--dss-gray-300` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **background** | `--dss-surface-muted` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **color** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-size** | `--dss-font-size-sm` | `12px` | 2-composition/_base.scss |
+| **font-weight** | `--dss-font-weight-medium` | `500` | 2-composition/_base.scss |
+| **gap** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
+| **selected background** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **selected color** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` (WCAG 2.5.5) |
 <!-- END:VISUAL-TABLE:DssChip -->
 
@@ -582,8 +583,8 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `56px` | defaultPreview |
 | **min-width** | — | `56px` | defaultPreview |
-| **stroke (círculo de progresso)** | `--dss-action-primary` | — | EXC-Gate-01: CSS stroke no SVG |
-| **stroke (track)** | `--dss-gray-200` | — | Seção 3.1 Progresso |
+| **stroke (círculo de progresso)** | `--dss-action-primary` | — | 3-variants/_colors.scss |
+| **stroke (track)** | `--dss-gray-200` | — | 2-composition/_base.scss |
 | **stroke-width** | — | `3` | EX-Structural-01 (sem token correspondente) |
 | **size xs** | — | `40px` | SIZE_TOKEN_MAP |
 | **size xl** | — | `96px` | SIZE_TOKEN_MAP |
@@ -605,13 +606,13 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | — | defaultPreview |
 | **min-width** | — | `300px` | defaultPreview / Seção 13.15 |
-| **background** | `--dss-surface-default` | — | Seção 13.15 |
-| **box-shadow** | `--dss-elevation-4` | — | Seção 13.15 |
+| **background** | `--dss-surface-default` | — | 2-composition/_base.scss |
+| **box-shadow** | `--dss-elevation-4` | — | 2-composition/_base.scss |
 | **border-radius** | — | `0` | Seção 13.15 (estrutural) |
-| **header padding** | `--dss-spacing-4 / --dss-spacing-6` | `16px 24px` | Seção 13.15 |
-| **header border-bottom** | `--dss-gray-200` | `1px solid` | Seção 13.15 |
-| **content padding** | `--dss-spacing-4` | `16px` | Seção 13.15 |
-| **animação** | `--dss-duration-250` | `250ms` | Seção 13.15 |
+| **header padding** | `--dss-spacing-4 / --dss-spacing-6` | `16px 24px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **header border-bottom** | `--dss-gray-200` | `1px solid` | 3-variants/_bordered.scss |
+| **content padding** | `--dss-spacing-4` | `16px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **animação** | `--dss-duration-250` | `250ms` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssDrawer -->
 
 ---
@@ -628,13 +629,13 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssExpansionItem -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-height** | `--dss-touch-target-md` | `44px` | 3-variants/_variant.scss |
 | **background** | `--dss-surface-default` | — | Padrão categoria Superfície |
-| **hover background** | `--dss-surface-hover` | — | Padrão estado hover (Seção 3.2) |
-| **padding** | `--dss-spacing-4` | `16px` | Padrão item interativo |
+| **hover background** | `--dss-surface-hover` | — | 2-composition/_base.scss |
+| **padding** | `--dss-spacing-4` | `16px` | 2-composition/_base.scss |
 | **border-bottom** | `--dss-gray-200` | `1px solid` | Divisor entre itens |
-| **font-size** | `--dss-font-size-md` | `14px` | Seção 3.2 tipografia |
-| **font-weight** | `--dss-font-weight-normal` | `400` | Estado colapsado |
+| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **font-weight** | `--dss-font-weight-normal` | `400` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssExpansionItem -->
 
 ---
@@ -653,11 +654,11 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `56px` | defaultPreview / Seção 13.2 |
 | **min-width** | — | `56px` | defaultPreview / Seção 13.2 |
-| **border-radius** | `--dss-radius-full` | `9999px` | Seção 13.2 |
-| **background** | `--dss-action-primary` | — | Seção 13.2 |
-| **color (ícone)** | `--dss-text-inverse` | `branco` | Seção 13.2 |
-| **box-shadow** | `--dss-elevation-3` | — | Seção 13.2 |
-| **box-shadow (hover)** | `--dss-elevation-4` | — | Seção 13.2 |
+| **border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **background** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **color (ícone)** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **box-shadow** | `--dss-elevation-3` | — | 2-composition/_base.scss |
+| **box-shadow (hover)** | `--dss-elevation-4` | — | 2-composition/_base.scss |
 | **ícone tamanho** | — | `24px` | Seção 13.2 |
 <!-- END:VISUAL-TABLE:DssFab -->
 
@@ -675,12 +676,12 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssFabAction -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `40px` | defaultPreview (visual 40px < 44px) |
-| **min-width** | `--dss-touch-target-md` | `40px` | defaultPreview |
-| **border-radius** | `--dss-radius-full` | `9999px` | Padrão FAB |
+| **min-height** | `--dss-touch-target-md` | `40px` | 2-composition/_base.scss |
+| **min-width** | `--dss-touch-target-md` | `40px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
 | **background** | `--dss-action-primary` | — | Padrão Action Control |
 | **color** | `--dss-text-inverse` | `branco` | Padrão Action Control |
-| **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` Opção B (WCAG 2.5.5) |
+| **touch target** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssFabAction -->
 
 ---
@@ -697,15 +698,15 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssField -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-height** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
 | **min-width** | — | `240px` | defaultPreview |
-| **border** | `--dss-gray-400` | `1px solid` | EXC-Gate-01 (custom, não QField) |
-| **border (foco)** | `--dss-action-primary` | `2px solid` | Padrão formulário |
-| **border-radius** | `--dss-radius-md` | `8px` | Padrão formulário |
+| **border** | `--dss-gray-400` | `1px solid` | 3-variants/_filled.scss |
+| **border (foco)** | `--dss-action-primary` | `2px solid` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-md` | `8px` | 3-variants/_filled.scss |
 | **label color** | `--dss-text-subtle` | — | Padrão formulário |
-| **label color (foco)** | `--dss-action-primary` | — | Padrão formulário |
-| **hint font-size** | `--dss-font-size-xs` | `12px` | Seção 3.2 tipografia |
-| **gray-800** | `--dss-gray-800` | — | NC-01 corrigida (meta.json) |
+| **label color (foco)** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **hint font-size** | `--dss-font-size-xs` | `12px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **gray-800** | `--dss-gray-800` | — | 4-output/_states.scss |
 <!-- END:VISUAL-TABLE:DssField -->
 
 ---
@@ -722,14 +723,14 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssFile -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.25 |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **drop zone min-height** | — | `120px` | Seção 13.25 |
-| **drop zone border** | `--dss-gray-400` | `2px dashed` | Seção 13.25 |
-| **drop zone border-radius** | `--dss-radius-md` | `8px` | Seção 13.25 |
-| **drop zone background** | `--dss-surface-muted` | — | Seção 13.25 |
-| **drop zone padding** | `--dss-spacing-6` | `24px` | Seção 13.25 |
-| **dragover border** | `--dss-action-primary` | `2px dashed` | Seção 13.25 |
-| **dragover background** | `--dss-action-primary-surface` | — | Seção 13.25 |
+| **drop zone border** | `--dss-gray-400` | `2px dashed` | 3-variants/_filled.scss |
+| **drop zone border-radius** | `--dss-radius-md` | `8px` | 3-variants/_filled.scss |
+| **drop zone background** | `--dss-surface-muted` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **drop zone padding** | `--dss-spacing-6` | `24px` | 2-composition/_base.scss |
+| **dragover border** | `--dss-action-primary` | `2px dashed` | 3-variants/_borderless.scss |
+| **dragover background** | `--dss-action-primary-surface` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssFile -->
 
 ---
@@ -746,9 +747,9 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssFooter -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **background** | `--dss-surface-default` | — | Padrão estrutural (herda DssHeader) |
-| **border-top** | `--dss-gray-200` | `1px solid` | Padrão estrutural |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **background** | `--dss-surface-default` | — | 2-composition/_base.scss |
+| **border-top** | `--dss-gray-200` | `1px solid` | 2-composition/_base.scss |
 | **padding** | `--dss-spacing-4 / --dss-spacing-6` | `16px 24px` | Padrão estrutural |
 <!-- END:VISUAL-TABLE:DssFooter -->
 
@@ -766,14 +767,14 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssHeader -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.20 |
-| **padding (horizontal)** | `--dss-spacing-6` | `24px` | Seção 13.20 |
-| **background** | `--dss-surface-default` | — | Seção 13.20 |
-| **border-bottom** | `--dss-gray-200` | `1px solid` | Seção 13.20 |
-| **box-shadow** | `--dss-elevation-1` | — | Seção 13.20 |
-| **brand title font-size** | `--dss-font-size-lg` | `18px` | Seção 13.20 |
-| **brand title font-weight** | `--dss-font-weight-semibold` | `600` | Seção 13.20 |
-| **gap (logo + título)** | `--dss-spacing-3` | `12px` | Seção 13.20 |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **padding (horizontal)** | `--dss-spacing-6` | `24px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **background** | `--dss-surface-default` | — | 2-composition/_base.scss |
+| **border-bottom** | `--dss-gray-200` | `1px solid` | 2-composition/_base.scss |
+| **box-shadow** | `--dss-elevation-1` | — | 2-composition/_base.scss |
+| **brand title font-size** | `--dss-font-size-lg` | `18px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **brand title font-weight** | `--dss-font-weight-semibold` | `600` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **gap (logo + título)** | `--dss-spacing-3` | `12px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssHeader -->
 
 ---
@@ -814,10 +815,10 @@ O DSS sintetiza padrões de três referências:
 | **min-width** | — | `200px` | defaultPreview |
 | **border-radius** | 0 | — | Seção 13.27 (sem corte default) |
 | **object-fit** | cover | — | Seção 13.27 |
-| **placeholder background** | `--dss-gray-100` | — | Seção 13.27 |
-| **erro background** | `--dss-gray-200` | — | Seção 13.27 |
-| **erro ícone cor** | `--dss-gray-500` | — | Seção 13.27 |
-| **fade-in transition** | `--dss-duration-300` | `300ms` | Seção 13.27 |
+| **placeholder background** | `--dss-gray-100` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **erro background** | `--dss-gray-200` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **erro ícone cor** | `--dss-gray-500` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **fade-in transition** | `--dss-duration-300` | `300ms` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssImg -->
 
 ---
@@ -836,10 +837,10 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | N/A — Componente estrutural adaptativo | — | — |
 | **min-width** | N/A — Componente estrutural adaptativo | — | — |
-| **spinner color** | `--dss-action-primary` | — | Seção 13.30 (currentColor) |
-| **spinner container padding** | `--dss-spacing-6` | `24px` | Seção 13.30 |
-| **no-more font-size** | `--dss-font-size-xs` | `12px` | Seção 13.30 |
-| **no-more color** | `--dss-text-subtle` | — | Seção 13.30 |
+| **spinner color** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **spinner container padding** | `--dss-spacing-6` | `24px` | 2-composition/_base.scss |
+| **no-more font-size** | `--dss-font-size-xs` | `12px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **no-more color** | `--dss-text-subtle` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssInfiniteScroll -->
 
 ---
@@ -857,10 +858,10 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `48px` | defaultPreview |
-| **overlay background** | `--dss-surface-default` | — | EX-Overlay-01 (sem -rgb) |
+| **overlay background** | `--dss-surface-default` | — | 2-composition/_base.scss |
 | **color (spinner)** | currentColor | — | DssSpinner herda via CSS color |
 | **border-radius** | inherit | — | EX-Structural-01 |
-| **line-height** | `--dss-line-height-xs` | — | NC-01 corrigida |
+| **line-height** | `--dss-line-height-xs` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssInnerLoading -->
 
 ---
@@ -877,19 +878,19 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssInput -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-input-height-md` | `44px` | defaultPreview / Seção 13.5 |
-| **min-width** | 240px | — | defaultPreview / Seção 13.5 |
-| **padding (horizontal)** | `--dss-spacing-4` | `16px` | Seção 13.5 |
-| **border-width (repouso)** | `--dss-border-width-thin` | `1px` | Seção 13.5 |
-| **border-color (repouso)** | `--dss-gray-400` | — | Seção 13.5 |
-| **border-color (hover)** | `--dss-gray-600` | — | Seção 13.5 |
-| **border-color (foco)** | `--dss-action-primary` | — | Seção 13.5 |
-| **border-width (foco)** | `--dss-border-width-md` | `2px` | Seção 13.5 |
-| **border-radius** | `--dss-radius-md` | `8px` | Seção 13.5 |
-| **color (texto)** | `--dss-text-body` | — | Seção 13.5 |
-| **font-size** | `--dss-font-size-md` | `14px` | Seção 13.5 |
-| **label color (repouso)** | `--dss-text-subtle` | — | Seção 13.5 |
-| **label color (foco)** | `--dss-action-primary` | — | Seção 13.5 |
+| **min-height** | `--dss-input-height-md` | `44px` | 2-composition/_base.scss |
+| **min-width** | `--dss-min-w-lg` | `240px` | 2-composition/_base.scss |
+| **padding (horizontal)** | `--dss-spacing-4` | `16px` | 2-composition/_base.scss |
+| **border-width (repouso)** | `--dss-border-width-thin` | `1px` | 3-variants/_borderless.scss |
+| **border-color (repouso)** | `--dss-gray-400` | — | 3-variants/_borderless.scss |
+| **border-color (hover)** | `--dss-gray-600` | — | 3-variants/_outlined.scss |
+| **border-color (foco)** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **border-width (foco)** | `--dss-border-width-md` | `2px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-md` | `8px` | 3-variants/_filled.scss |
+| **color (texto)** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **label color (repouso)** | `--dss-text-subtle` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **label color (foco)** | `--dss-action-primary` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssInput -->
 
 ---
@@ -906,11 +907,11 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssItem -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **padding** | `--dss-spacing-4` | `0 16px` | Padrão item de lista (Seção 3.1) |
-| **hover background** | `--dss-surface-hover` | — | Padrão lista (Seção 3.1) |
-| **font-size** | `--dss-font-size-md` | `14px` | Seção 3.2 tipografia |
-| **color** | `--dss-text-body` | — | Padrão neutro |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **padding** | `--dss-spacing-4` | `0 16px` | 2-composition/_base.scss |
+| **hover background** | `--dss-surface-hover` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **color** | `--dss-text-body` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssItem -->
 
 ---
@@ -965,12 +966,12 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | 56px | — | defaultPreview / Seção 13.9 |
 | **min-width** | 56px | — | defaultPreview / Seção 13.9 |
-| **track cor (não preenchido)** | `--dss-gray-200` | — | Seção 13.9 |
-| **track cor (preenchido)** | `--dss-action-primary` | — | Seção 13.9 (EXC-Gate-02: CSS stroke) |
-| **label central font-size** | `--dss-font-size-lg` | `18px` | Seção 13.9 |
-| **label central font-weight** | `--dss-font-weight-medium` | `500` | Seção 13.9 |
-| **label central color** | `--dss-text-body` | — | Seção 13.9 |
-| **focus outline** | `--dss-border-width-thick` | `3px` | EXC-Focus-01 (NC-01 corrigida) |
+| **track cor (não preenchido)** | `--dss-gray-200` | — | 2-composition/_base.scss |
+| **track cor (preenchido)** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **label central font-size** | `--dss-font-size-lg` | `18px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **label central font-weight** | `--dss-font-weight-medium` | `500` | 2-composition/_base.scss |
+| **label central color** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **focus outline** | `--dss-border-width-thick` | `3px` | 4-output/_states.scss |
 <!-- END:VISUAL-TABLE:DssKnob -->
 
 ---
@@ -1005,11 +1006,11 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssLinearProgress -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | 4px | — | defaultPreview / Seção 3.1 Progresso |
-| **min-width** | 200px | — | defaultPreview |
-| **border-radius** | `--dss-radius-full` | `9999px` | Seção 3.1 Progresso |
-| **cor indicador** | `--dss-action-primary` | — | Seção 3.1 Progresso |
-| **cor track** | `--dss-gray-200` | — | Seção 3.1 Progresso |
+| **min-height** | `--dss-track-height-sm` | `4px` | 3-variants/_sizes.scss |
+| **min-width** | `--dss-min-w-md` | `200px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **cor indicador** | `--dss-action-primary` | — | 3-variants/_colors.scss |
+| **cor track** | `--dss-gray-200` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssLinearProgress -->
 
 ---
@@ -1045,12 +1046,12 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **width** | 100% | — | defaultPreview |
-| **border** | `--dss-gray-200` | `1px solid` | EXC-Gate-01: descendant selectors th/td |
+| **border** | `--dss-gray-200` | `1px solid` | 2-composition/_base.scss |
 | **th background** | `--dss-surface-muted` | — | Padrão tabela |
 | **th font-weight** | `--dss-font-weight-medium` | `500` | Padrão tabela |
-| **td padding** | `--dss-spacing-3 / --dss-spacing-4` | `12px 16px` | Padrão densidade standard |
+| **td padding** | `--dss-spacing-3 / --dss-spacing-4` | `12px 16px` | 2-composition/_base.scss |
 | **tr hover background** | `--dss-surface-hover` | — | Padrão lista |
-| **font-size** | `--dss-font-size-sm` | `14px` | Seção 3.2 tipografia |
+| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssMarkupTable -->
 
 ---
@@ -1068,17 +1069,17 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | 200px | — | defaultPreview / Seção 13.16 |
-| **min-width** | 200px | — | defaultPreview / Seção 13.16 |
-| **border-radius** | `--dss-radius-md` | `8px` | Seção 13.16 |
-| **background** | `--dss-surface-default` | — | Seção 13.16 |
-| **box-shadow** | `--dss-elevation-3` | — | Seção 13.16 |
-| **padding** | `--dss-spacing-2` | `8px 0` | Seção 13.16 |
+| **min-width** | `--dss-min-w-md` | — | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-md` | `8px` | 2-composition/_base.scss |
+| **background** | `--dss-surface-default` | — | 2-composition/_base.scss |
+| **box-shadow** | `--dss-elevation-3` | — | 2-composition/_base.scss |
+| **padding** | `--dss-spacing-2` | `8px 0` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **item height** | 40px | — | Seção 13.16 |
-| **item padding** | `--dss-spacing-4` | `0 16px` | Seção 13.16 |
-| **item font-size** | `--dss-font-size-md` | `14px` | Seção 13.16 |
-| **item color** | `--dss-text-body` | — | Seção 13.16 |
-| **hover background** | `--dss-surface-hover` | — | Seção 13.16 |
-| **divider** | `--dss-gray-200` | `1px solid` | Seção 13.16 |
+| **item padding** | `--dss-spacing-4` | `0 16px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **item font-size** | `--dss-font-size-md` | `14px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **item color** | `--dss-text-body` | — | 2-composition/_base.scss |
+| **hover background** | `--dss-surface-hover` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **divider** | `--dss-gray-200` | `1px solid` | 4-output/_states.scss |
 <!-- END:VISUAL-TABLE:DssMenu -->
 
 ---
@@ -1095,8 +1096,8 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssOptionGroup -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **gap entre opções** | `--dss-spacing-2` | `8px` | Padrão grupo de controles |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **gap entre opções** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssOptionGroup -->
 
 ---
@@ -1185,15 +1186,15 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssPagination -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **item width × height** | — | `32px × 32px` | Seção 13.24 |
-| **item border-radius** | `--dss-radius-sm` | `4px` | Seção 13.24 |
-| **item font-size** | `--dss-font-size-md` | `14px` | Seção 13.24 |
-| **item color (inativo)** | `--dss-text-body` | — | Seção 13.24 |
-| **item color (ativo)** | `--dss-text-inverse` | `branco` | Seção 13.24 |
-| **item background (ativo)** | `--dss-action-primary` | — | Seção 13.24 |
-| **item hover background** | `--dss-surface-hover` | — | Seção 13.24 |
-| **gap** | `--dss-spacing-1` | `4px` | Seção 13.24 |
+| **item border-radius** | `--dss-radius-sm` | `4px` | 2-composition/_base.scss |
+| **item font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **item color (inativo)** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **item color (ativo)** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **item background (ativo)** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **item hover background** | `--dss-surface-hover` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **gap** | `--dss-spacing-1` | `4px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **theming** | --q-color-primary | — | EXC-Gate-02 (padrão QPagination) |
 <!-- END:VISUAL-TABLE:DssPagination -->
 
@@ -1253,8 +1254,8 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | — | N/A — Componente estrutural adaptativo |
 | **min-width** | — | — | N/A — Componente estrutural adaptativo |
-| **handler color** | `--dss-action-primary` | — | EXC-Gate-02-a: `--q-color-primary` |
-| **handler border-radius** | 50% | — | EX-Structural-01 (constante geométrica) |
+| **handler color** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **handler border-radius** | `--dss-radius-circle` | `50%` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssPullToRefresh -->
 
 ---
@@ -1271,13 +1272,13 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssRadio -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **controle tamanho** | — | `20px × 20px` | Seção 3.1 Compact Controls |
-| **border-radius** | 50% | — | Circular universal |
-| **border-width (unchecked)** | `--dss-border-width-md` | `2px` | Seção 3.1 Compact Controls |
-| **border-color (unchecked)** | `--dss-gray-500` | — | Seção 3.1 Compact Controls |
-| **border-color (checked)** | `--dss-action-primary` | — | Seção 3.1 |
-| **ponto interno (checked)** | `--dss-action-primary` | `10px` | Seção 3.1 |
+| **border-radius** | `--dss-radius-circle` | `50%` | 2-composition/_base.scss |
+| **border-width (unchecked)** | `--dss-border-width-md` | `2px` | 2-composition/_base.scss |
+| **border-color (unchecked)** | `--dss-gray-500` | — | 2-composition/_base.scss |
+| **border-color (checked)** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **ponto interno (checked)** | `--dss-action-primary` | `10px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` (WCAG 2.5.5) |
 <!-- END:VISUAL-TABLE:DssRadio -->
 
@@ -1295,15 +1296,15 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssRange -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.8 |
-| **min-width** | 200px | — | defaultPreview / Seção 13.8 |
-| **track height** | 4px | — | Seção 13.8 |
-| **track border-radius** | `--dss-radius-full` | `9999px` | Seção 13.8 (EX-01) |
-| **track background** | `--dss-gray-300` | — | Seção 13.8 |
-| **track preenchido** | `--dss-action-primary` | — | Seção 13.8 |
-| **thumb tamanho** | 20px | — | Seção 13.8 |
-| **thumb background** | `--dss-action-primary` | — | Seção 13.8 |
-| **thumb shadow** | `--dss-elevation-1` | — | Seção 13.8 |
+| **min-height** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
+| **min-width** | `--dss-min-w-md` | `200px` | 2-composition/_base.scss |
+| **track height** | `--dss-track-height-sm` | `4px` | 2-composition/_base.scss |
+| **track border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **track background** | `--dss-gray-300` | — | 4-output/_states.scss |
+| **track preenchido** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **thumb tamanho** | `--dss-thumb-size-md` | `20px` | 2-composition/_base.scss |
+| **thumb background** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **thumb shadow** | `--dss-elevation-1` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssRange -->
 
 ---
@@ -1320,12 +1321,12 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssRating -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **min-width** | 160px | — | defaultPreview |
-| **cor ícone (selecionado)** | `--dss-action-primary` | — | EX-Color-01: CSS cascade puro (SEM EXC-Gate-02) |
-| **cor ícone (hub)** | `--dss-hub-600` | — | Brand dual-selector |
-| **cor ícone (water)** | `--dss-water-500` | — | Brand dual-selector |
-| **cor ícone (waste)** | `--dss-waste-600` | — | Brand dual-selector |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **min-width** | `--dss-min-w-sm` | — | 2-composition/_base.scss |
+| **cor ícone (selecionado)** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **cor ícone (hub)** | `--dss-hub-600` | — | 4-output/_brands.scss |
+| **cor ícone (water)** | `--dss-water-500` | — | 4-output/_brands.scss |
+| **cor ícone (waste)** | `--dss-waste-600` | — | 4-output/_brands.scss |
 <!-- END:VISUAL-TABLE:DssRating -->
 
 *Nota: Props `color`/`color-selected`/`color-half` BLOQUEADAS — governança 100% CSS.*
@@ -1362,8 +1363,8 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssRouteTab -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **padding** | `--dss-spacing-4` | `0 16px` | Padrão tab (Seção 3.1 Navegação) |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **padding** | `--dss-spacing-4` | `0 16px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **color (ativo)** | `--dss-action-primary` | — | Padrão tab |
 | **color (inativo)** | `--dss-text-subtle` | — | Padrão tab |
 | **indicador** | `--dss-action-primary` | `3px solid` | Padrão tab |
@@ -1404,11 +1405,11 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssSelect -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **min-width** | 240px | — | defaultPreview |
-| **border** | `--dss-gray-400` | `1px solid` | Herda padrão DssInput |
-| **border (foco)** | `--dss-action-primary` | `2px solid` | Herda padrão DssInput |
-| **border-radius** | `--dss-radius-md` | `8px` | Herda padrão DssInput |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **min-width** | `--dss-min-w-lg` | `240px` | 2-composition/_base.scss |
+| **border** | `--dss-gray-400` | `1px solid` | 3-variants/_filled.scss |
+| **border (foco)** | `--dss-action-primary` | `2px solid` | 3-variants/_borderless.scss |
+| **border-radius** | `--dss-radius-md` | `8px` | 2-composition/_base.scss |
 | **painel popup** | .dss__panel + popup-content-class | — | Seletor teleportado (Seção 3 proibidos: no scoped) |
 <!-- END:VISUAL-TABLE:DssSelect -->
 
@@ -1428,7 +1429,7 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `1px` | defaultPreview |
 | **border-color** | currentColor | — | Herda cor do pai (flexível) |
-| **border-width** | `--dss-border-width-thin` | `1px` | Padrão divisor (Seção 3.2) |
+| **border-width** | `--dss-border-width-thin` | `1px` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssSeparator -->
 
 ---
@@ -1446,11 +1447,11 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `24px` | defaultPreview |
-| **min-width** | 200px | — | defaultPreview |
-| **background** | `--dss-surface-muted` | — | Placeholder neutro |
-| **shimmer color** | `--dss-gray-200` | — | Seção 3.1 Progresso |
-| **shimmer highlight** | `--dss-gray-300` | — | Seção 3.1 Progresso |
-| **border-radius** | `--dss-radius-sm` | `4px` | CSS var chain (fallback) |
+| **min-width** | `--dss-min-w-md` | — | 2-composition/_base.scss |
+| **background** | `--dss-surface-muted` | — | 2-composition/_base.scss |
+| **shimmer color** | `--dss-gray-200` | — | 2-composition/_base.scss |
+| **shimmer highlight** | `--dss-gray-300` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **border-radius** | `--dss-radius-sm` | `4px` | 2-composition/_base.scss |
 | **prefers-contrast** | border: 1px solid currentColor | — | NC-01 (precedente DssBadge) |
 <!-- END:VISUAL-TABLE:DssSkeleton -->
 
@@ -1487,16 +1488,16 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssSlider -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.8 |
-| **min-width** | — | `200px` | defaultPreview |
-| **track height** | — | `4px` | Seção 13.8 |
-| **track border-radius** | `--dss-radius-full` | `9999px` | Seção 13.8 |
-| **track background** | `--dss-gray-300` | — | Seção 13.8 |
-| **track preenchido** | `--dss-action-primary` | — | Seção 13.8 |
-| **thumb tamanho** | — | `20px` | Seção 13.8 |
-| **thumb background** | `--dss-action-primary` | — | Seção 13.8 |
-| **thumb shadow** | `--dss-elevation-1` | — | Seção 13.8 |
-| **touch target** | `--dss-touch-target-md` | `44px` | --dss-touch-target-md no wrapper (não `--dss-input-height-md`) |
+| **min-height** | `--dss-touch-target-md` | `44px` | 1-structure/DssSlider.ts.vue |
+| **min-width** | `--dss-min-w-md` | `200px` | 2-composition/_base.scss |
+| **track height** | `--dss-track-height-sm` | `4px` | 2-composition/_base.scss |
+| **track border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **track background** | `--dss-gray-300` | — | 4-output/_states.scss |
+| **track preenchido** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **thumb tamanho** | `--dss-thumb-size-md` | `20px` | 2-composition/_base.scss |
+| **thumb background** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **thumb shadow** | `--dss-elevation-1` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **touch target** | `--dss-touch-target-md` | `44px` | 1-structure/DssSlider.ts.vue |
 <!-- END:VISUAL-TABLE:DssSlider -->
 
 ---
@@ -1535,7 +1536,7 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `40px` | defaultPreview |
 | **min-width** | — | `40px` | defaultPreview |
-| **color** | `--dss-action-primary` | — | DssInnerLoading: `color: currentColor` herda pai |
+| **color** | `--dss-action-primary` | — | 2-composition/_base.scss |
 | **color (hub)** | `--dss-hub-600` | — | 4-output/_brands.scss |
 | **color (water)** | `--dss-water-500` | — | 4-output/_brands.scss |
 <!-- END:VISUAL-TABLE:DssSpinner -->
@@ -1555,8 +1556,8 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `200px` | defaultPreview |
-| **separator touch target** | `--dss-touch-target-md` | `44px` | Via `::before` Opção B (WCAG 2.5.5) |
-| **separator background** | `--dss-gray-200` | — | Padrão divisor |
+| **separator touch target** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
+| **separator background** | `--dss-gray-200` | — | 2-composition/_base.scss |
 | **tap highlight** | — | `-webkit-tap-highlight-color: transparent` | NC-02 (padrão DssChip) |
 <!-- END:VISUAL-TABLE:DssSplitter -->
 
@@ -1574,12 +1575,12 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssStep -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
-| **círculo ativo** | `--dss-action-primary` | — | Seção 8 (Stepper) |
-| **círculo inativo border** | `--dss-gray-400` | `1px solid` | Seção 8 |
-| **círculo inativo color** | `--dss-text-subtle` | — | Seção 8 |
-| **linha conectora** | `--dss-gray-300` | `1px solid` | Seção 8 |
-| **cor feedback (step concluído)** | `--dss-feedback-success` | — | NÃO usar `--dss-success-500` |
+| **min-height** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
+| **círculo ativo** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **círculo inativo border** | `--dss-gray-400` | `1px solid` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **círculo inativo color** | `--dss-text-subtle` | — | 2-composition/_base.scss |
+| **linha conectora** | `--dss-gray-300` | `1px solid` | 2-composition/_base.scss |
+| **cor feedback (step concluído)** | `--dss-feedback-success` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssStep -->
 
 ---
@@ -1616,16 +1617,16 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssTab -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.18 |
-| **padding** | `--dss-spacing-4` | `0 16px` | Seção 13.18 |
-| **font-size** | `--dss-font-size-md` | `14px` | Seção 13.18 |
-| **font-weight (ativa)** | `--dss-font-weight-medium` | `500` | Seção 13.18 |
-| **font-weight (inativa)** | `--dss-font-weight-normal` | `400` | Seção 13.18 |
-| **color (ativa)** | `--dss-action-primary` | — | Seção 13.18 |
-| **color (inativa)** | `--dss-text-subtle` | — | Seção 13.18 |
-| **indicador height** | 3px | — | Seção 13.18 |
-| **indicador background** | `--dss-action-primary` | — | Seção 13.18 |
-| **hover background** | `--dss-surface-hover` | — | Seção 13.18 |
+| **min-height** | `--dss-touch-target-md` | `44px` | 2-composition/_base.scss |
+| **padding** | `--dss-spacing-4` | `0 16px` | 2-composition/_base.scss |
+| **font-size** | `--dss-font-size-md` | `14px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **font-weight (ativa)** | `--dss-font-weight-medium` | `500` | 2-composition/_base.scss |
+| **font-weight (inativa)** | `--dss-font-weight-normal` | `400` | 2-composition/_base.scss |
+| **color (ativa)** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **color (inativa)** | `--dss-text-subtle` | — | 2-composition/_base.scss |
+| **indicador height** | `--dss-track-height-xs` | `2px` | 2-composition/_base.scss |
+| **indicador background** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **hover background** | `--dss-surface-hover` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssTab -->
 
 ---
@@ -1643,7 +1644,7 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `48px` | defaultPreview |
-| **padding** | `--dss-spacing-6` | `24px` | Seção 13.18 (Tab Panel padding) |
+| **padding** | `--dss-spacing-6` | `24px` | 2-composition/_base.scss |
 | **background** | `--dss-surface-default` | — | Padrão categoria Superfície |
 <!-- END:VISUAL-TABLE:DssTabPanel -->
 
@@ -1679,11 +1680,11 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssTabs -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.18 |
-| **border-bottom** | `--dss-gray-200` | `1px solid` | Seção 13.18 |
-| **indicador animação** | `--dss-duration-250` | `250ms` | Seção 13.18 |
-| **gap (ícone + label)** | `--dss-spacing-2` | `8px` | Seção 13.18 |
-| **setas color** | `--dss-text-subtle` | — | Seção 13.18 |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **border-bottom** | `--dss-gray-200` | `1px solid` | 2-composition/_base.scss |
+| **indicador animação** | `--dss-duration-250` | `250ms` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **gap (ícone + label)** | `--dss-spacing-2` | `8px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **setas color** | `--dss-text-subtle` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssTabs -->
 
 ---
@@ -1701,12 +1702,12 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `88px` | defaultPreview (2+ linhas) |
-| **min-width** | 240px | — | defaultPreview |
-| **border** | `--dss-gray-400` | `1px solid` | Herda padrão DssInput |
-| **border (foco)** | `--dss-action-primary` | `2px solid` | Herda padrão DssInput |
-| **border-radius** | `--dss-radius-md` | `8px` | Herda padrão DssInput |
-| **padding** | `--dss-spacing-4` | `16px` | Herda padrão DssInput |
-| **font-size** | `--dss-font-size-md` | `14px` | Padrão formulário |
+| **min-width** | `--dss-min-w-lg` | `240px` | 2-composition/_base.scss |
+| **border** | `--dss-gray-400` | `1px solid` | 3-variants/_borderless.scss |
+| **border (foco)** | `--dss-action-primary` | `2px solid` | 3-variants/_borderless.scss |
+| **border-radius** | `--dss-radius-md` | `8px` | 3-variants/_filled.scss |
+| **padding** | `--dss-spacing-4` | `16px` | 2-composition/_base.scss |
+| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
 | **resize** | vertical | — | Comportamento padrão textarea |
 <!-- END:VISUAL-TABLE:DssTextarea -->
 
@@ -1742,12 +1743,12 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssTimelineEntry -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **ícone background** | `--dss-action-primary` | — | Padrão step/timeline ativo |
 | **ícone color** | `--dss-text-inverse` | `branco` | Padrão ação primária |
 | **linha conectora** | `--dss-gray-300` | `1px solid` | Padrão linha temporal |
 | **título font-weight** | `--dss-font-weight-medium` | `500` | Hierarquia tipográfica |
-| **subtítulo color** | `--dss-text-subtle` | — | Hierarquia visual secundária |
+| **subtítulo color** | `--dss-text-subtle` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssTimelineEntry -->
 
 ---
@@ -1764,18 +1765,19 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssToggle -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.7 |
-| **track width × height** | 52px × 32px | — | Seção 13.7 |
-| **track border-radius** | `--dss-radius-full` | `9999px` | Seção 13.7 |
-| **track border-width (off)** | `--dss-border-width-md` | `2px` | Seção 13.7 |
-| **track border-color (off)** | `--dss-gray-400` | — | Seção 13.7 |
-| **track background (off)** | `--dss-surface-muted` | — | Seção 13.7 |
-| **track background (on)** | `--dss-action-primary` | — | Seção 13.7 |
-| **thumb tamanho (off)** | 16px | — | Seção 13.7 |
-| **thumb tamanho (on)** | 24px | — | Seção 13.7 |
-| **thumb background (off)** | `--dss-gray-500` | — | Seção 13.7 |
-| **thumb background (on)** | `--dss-text-inverse` | `branco` | Seção 13.7 |
-| **transição** | `--dss-duration-200` | `200ms` | Seção 13.7 |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **track width** | `--dss-spacing-9` | `36px` | 2-composition/_base.scss |
+| **track height** | `--dss-spacing-5` | `20px` | 2-composition/_base.scss |
+| **track border-radius** | `--dss-radius-full` | `9999px` | 2-composition/_base.scss |
+| **track border-width (off)** | `--dss-border-width-md` | `2px` | 2-composition/_base.scss |
+| **track border-color (off)** | `--dss-gray-400` | — | 2-composition/_base.scss |
+| **track background (off)** | `--dss-surface-muted` | — | 2-composition/_base.scss |
+| **track background (on)** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **thumb tamanho (off)** | `--dss-thumb-size-sm` | `16px` | 2-composition/_base.scss |
+| **thumb tamanho (on)** | `--dss-thumb-size-sm` | `16px` | 2-composition/_base.scss |
+| **thumb background (off)** | `--dss-gray-500` | — | 2-composition/_base.scss |
+| **thumb background (on)** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **transição** | `--dss-duration-200` | `200ms` | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssToggle -->
 
 ---
@@ -1792,14 +1794,14 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssToolbar -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-touch-target-md` | `44px` | defaultPreview / Seção 13.19 |
-| **padding (horizontal)** | `--dss-spacing-4` | `16px` | Seção 13.19 |
-| **background** | `--dss-surface-default` | — | Seção 13.19 |
-| **border-bottom** | `--dss-gray-200` | `1px solid` | Seção 13.19 |
-| **gap** | `--dss-spacing-2` | `8px` | Seção 13.19 |
-| **título font-size** | `--dss-font-size-lg` | `16px` | Seção 13.19 |
-| **título font-weight** | `--dss-font-weight-medium` | `500` | Seção 13.19 |
-| **variante elevated** | `--dss-elevation-2` | — | Seção 13.19 |
+| **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **padding (horizontal)** | `--dss-spacing-4` | `16px` | 2-composition/_base.scss |
+| **background** | `--dss-surface-default` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **border-bottom** | `--dss-gray-200` | `1px solid` | 2-composition/_base.scss |
+| **gap** | `--dss-spacing-2` | `8px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **título font-size** | `--dss-font-size-lg` | `16px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **título font-weight** | `--dss-font-weight-medium` | `500` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **variante elevated** | `--dss-elevation-2` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssToolbar -->
 
 ---
@@ -1816,7 +1818,7 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssToolbarTitle -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-compact-control-height-sm` | `24px` | defaultPreview |
+| **min-height** | `--dss-compact-control-height-sm` | `24px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **font-size** | `--dss-font-size-lg` | `16px` | Padrão toolbar title |
 | **font-weight** | `--dss-font-weight-medium` | `500` | Padrão toolbar title |
 | **color** | `--dss-text-body` | — | Padrão neutro |
@@ -1836,16 +1838,16 @@ O DSS sintetiza padrões de três referências:
 <!-- BEGIN:VISUAL-TABLE:DssTooltip -->
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
-| **min-height** | `--dss-compact-control-height-sm` | `24px` | defaultPreview / Seção 13.17 |
-| **background** | `--dss-gray-900` | — | Seção 13.17 |
-| **color** | `--dss-text-inverse` | `branco` | Seção 13.17 |
-| **padding** | `--dss-spacing-1_5 / --dss-spacing-2` | `6px 8px` | Seção 13.17 |
-| **border-radius** | `--dss-radius-sm` | `4px` | Seção 13.17 |
-| **font-size** | `--dss-font-size-xs` | `12px` | Seção 13.17 |
-| **font-weight** | `--dss-font-weight-normal` | `400` | Seção 13.17 (NÃO -regular) |
-| **max-width** | 240px | — | Seção 13.17 |
-| **box-shadow** | `--dss-elevation-2` | — | Seção 13.17 |
-| **animação** | `--dss-duration-150` | `150ms` | Seção 13.17 |
+| **min-height** | `--dss-compact-control-height-sm` | `24px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **background** | `--dss-gray-900` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **color** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **padding** | `--dss-spacing-1_5 / --dss-spacing-2` | `6px 8px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-sm` | `4px` | 2-composition/_base.scss |
+| **font-size** | `--dss-font-size-xs` | `12px` | 2-composition/_base.scss |
+| **font-weight** | `--dss-font-weight-normal` | `400` | 2-composition/_base.scss |
+| **max-width** | `--dss-max-w-xs` | `240px` | 2-composition/_base.scss |
+| **box-shadow** | `--dss-elevation-2` | — | 2-composition/_base.scss |
+| **animação** | `--dss-duration-150` | `150ms` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssTooltip -->
 
 ---
@@ -1881,11 +1883,11 @@ O DSS sintetiza padrões de três referências:
 | Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
 | :--- | :--- | :---: | :--- |
 | **min-height** | 180px | — | defaultPreview / Seção 13.28 |
-| **border-radius** | `--dss-radius-md` | `8px` | Seção 13.28 |
-| **background** | `--dss-gray-900` | — | Seção 13.28 |
+| **border-radius** | — | `0` | CSS real: sem border-radius no default — radius só existe nos variants (dss-video--radius-*) |
+| **background** | — | — | Browser default: elemento <video> nativo tem fundo escuro — não aplicado via token DSS |
 | **aspect-ratio** | 16/9 (número, não string) | — | NC-02 corrigida: `ratio=1.78` |
-| **slider preenchido** | `--dss-action-primary` | — | Seção 13.28 |
-| **texto de tempo font-size** | `--dss-font-size-xs` | `12px` | Seção 13.28 |
+| **slider preenchido** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **texto de tempo font-size** | `--dss-font-size-xs` | `12px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 <!-- END:VISUAL-TABLE:DssVideo -->
 
 ---
@@ -2045,5 +2047,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-04T14:27:52.437Z_
+_Gerado em: 2026-06-06T01:54:17.316Z_
 <!-- END:AUTO-GENERATED -->

@@ -25,6 +25,7 @@
 
 .dss-textarea {
   width: 100%;
+  min-width: var(--dss-min-w-lg); // 240px — usabilidade mínima de campo de formulário
   font-family: var(--dss-font-family-sans);
 
   /* ==========================================================================

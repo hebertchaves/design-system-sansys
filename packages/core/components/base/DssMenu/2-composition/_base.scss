@@ -33,6 +33,9 @@
    ========================================================================== */
 
 .dss-menu {
+  min-width: var(--dss-min-w-md);  /* 208px — largura mínima de overlay para legibilidade */
+  min-height: var(--dss-min-h-lg); /* 192px — previne menu colapsado quando itens são poucos */
+
   /* ==========================================================================
      Superfície
      EXC-01: !important necessário para sobrescrever .q-menu { background: #fff }

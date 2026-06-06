@@ -139,19 +139,19 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {
-      "padding": "--dss-spacing-2 --dss-spacing-0",
-      "borderRadius": "--dss-radius-none",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": null },
-      { "property": "min-width", "token": null, "value": null, "source": null }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": null
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": null
+      }
     ],
     "demoContent": "Lista com 3 itens",
     "demoSlots": {

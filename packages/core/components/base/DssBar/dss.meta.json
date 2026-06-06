@@ -78,25 +78,49 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-2 --dss-spacing-4",
-      "gap": "--dss-spacing-2",
-      "borderRadius": "--dss-radius-none",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.22" },
-      { "property": "padding", "token": "--dss-spacing-2 / --dss-spacing-4", "value": "8px 16px", "source": "Seção 13.22" },
-      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.22" },
-      { "property": "color", "token": "--dss-text-body", "value": null, "source": "Seção 13.22" },
-      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.22" },
-      { "property": "box-shadow", "token": "--dss-elevation-1", "value": null, "source": "Seção 13.22" },
-      { "property": "gap", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.22" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "padding",
+        "token": "--dss-spacing-2 / --dss-spacing-4",
+        "value": "8px 16px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow",
+        "token": "--dss-elevation-1",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "gap",
+        "token": "--dss-spacing-2",
+        "value": "8px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      }
     ],
     "demoContent": "Barra de sistema com conteúdo",
     "demoSlots": {

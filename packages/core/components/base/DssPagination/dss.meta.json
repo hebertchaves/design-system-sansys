@@ -150,27 +150,67 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "gap": "--dss-spacing-1",
-      "borderRadius": "--dss-radius-sm",
-      "borderWidth": "--dss-border-width-thin",
-      "fontSize": "--dss-font-size-sm",
-      "fontWeight": "--dss-font-weight-medium",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
-      { "property": "item width × height", "token": null, "value": "32px × 32px", "source": "Seção 13.24" },
-      { "property": "item border-radius", "token": "--dss-radius-sm", "value": "4px", "source": "Seção 13.24" },
-      { "property": "item font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.24" },
-      { "property": "item color (inativo)", "token": "--dss-text-body", "value": null, "source": "Seção 13.24" },
-      { "property": "item color (ativo)", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.24" },
-      { "property": "item background (ativo)", "token": "--dss-action-primary", "value": null, "source": "Seção 13.24" },
-      { "property": "item hover background", "token": "--dss-surface-hover", "value": null, "source": "Seção 13.24" },
-      { "property": "gap", "token": "--dss-spacing-1", "value": "4px", "source": "Seção 13.24" },
-      { "property": "theming", "token": "--q-color-primary", "value": null, "source": "EXC-Gate-02 (padrão QPagination)" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "item width × height",
+        "token": null,
+        "value": "32px × 32px",
+        "source": "Seção 13.24"
+      },
+      {
+        "property": "item border-radius",
+        "token": "--dss-radius-sm",
+        "value": "4px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "item font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "item color (inativo)",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "item color (ativo)",
+        "token": "--dss-text-inverse",
+        "value": "branco",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "item background (ativo)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "item hover background",
+        "token": "--dss-surface-hover",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "gap",
+        "token": "--dss-spacing-1",
+        "value": "4px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "theming",
+        "token": "--q-color-primary",
+        "value": null,
+        "source": "EXC-Gate-02 (padrão QPagination)"
+      }
     ],
     "demoContent": "Página 1 de 10",
     "demoSlots": null

@@ -112,14 +112,19 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": null },
-      { "property": "min-width", "token": null, "value": null, "source": null }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": null
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": null
+      }
     ],
     "demoContent": "Layout de página completo (header + drawer + footer)",
     "demoSlots": null

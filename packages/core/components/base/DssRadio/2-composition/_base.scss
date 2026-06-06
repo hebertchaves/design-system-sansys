@@ -85,7 +85,7 @@
   width: var(--dss-spacing-5); // 20px
   height: var(--dss-spacing-5); // 20px
   border: var(--dss-border-width-md) solid currentColor;
-  border-radius: 50%; // Circular (diferencia de DssCheckbox)
+  border-radius: var(--dss-radius-circle); // Circular (diferencia de DssCheckbox)
   background-color: transparent;
   color: inherit;
   transition: all var(--dss-duration-200) var(--dss-easing-standard);
@@ -99,7 +99,7 @@
   display: block;
   width: var(--dss-spacing-2_5); // 10px
   height: var(--dss-spacing-2_5); // 10px
-  border-radius: 50%;
+  border-radius: var(--dss-radius-circle);
   background-color: currentColor;
   transition: transform var(--dss-duration-200) var(--dss-easing-standard);
 }

@@ -91,17 +91,31 @@
     "computedDimensions": {
       "minHeight": "200px"
     },
-    "computedTokens": {
-      "borderWidth": "--dss-border-width-thin",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "200px", "source": "defaultPreview" },
-      { "property": "separator touch target", "token": "--dss-touch-target-md", "value": "44px", "source": "Via `::before` Opção B (WCAG 2.5.5)" },
-      { "property": "separator background", "token": "--dss-gray-200", "value": null, "source": "Padrão divisor" },
-      { "property": "tap highlight", "token": null, "value": "-webkit-tap-highlight-color: transparent", "source": "NC-02 (padrão DssChip)" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "200px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "separator touch target",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "separator background",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "tap highlight",
+        "token": null,
+        "value": "-webkit-tap-highlight-color: transparent",
+        "source": "NC-02 (padrão DssChip)"
+      }
     ],
     "demoContent": "Divisor redimensionável 50/50",
     "demoSlots": {

@@ -12,8 +12,9 @@
 //   Documentado em dss.meta.json > gateExceptions.
 
 .dss-scroll-area {
-  // Scroll area é um container: dimensões definidas pelo consumidor via class/style.
-  // O DSS não impõe width/height — a área se adapta ao contexto de uso.
+  min-height: var(--dss-min-h-lg); // 192px — previne colapso quando conteúdo é insuficiente
+
+  // Scroll area é um container: dimensões adicionais definidas pelo consumidor via class/style.
 
   // ─── Scrollbar Track (via .q-scrollarea__bar) ──────────────────────────────
   //

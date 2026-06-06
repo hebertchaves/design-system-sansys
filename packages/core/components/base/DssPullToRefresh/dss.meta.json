@@ -76,8 +76,8 @@
     {
       "id": "EX-Structural-01",
       "type": "structuralException",
-      "description": "border-radius: 50% aplicado ao handler como constante geométrica para forma circular.",
-      "justification": "Forma circular perfeita requer 50%. Sem token DSS para esta constante geométrica. Padrão: DssKnob usa stroke-width unitless por razão similar.",
+      "description": "border-radius: --dss-radius-circle aplicado ao handler para forma circular.",
+      "justification": "Forma circular perfeita. Token --dss-radius-circle (50%) introduzido no DSS v2.4.0 resolve a constante geométrica anterior.",
       "location": "2-composition/_base.scss"
     },
     {
@@ -116,16 +116,31 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
-      { "property": "min-width", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
-      { "property": "handler color", "token": "--dss-action-primary", "value": null, "source": "EXC-Gate-02-a: `--q-color-primary`" },
-      { "property": "handler border-radius", "token": "50%", "value": null, "source": "EX-Structural-01 (constante geométrica)" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "handler color",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "handler border-radius",
+        "token": "--dss-radius-circle",
+        "value": "50%",
+        "source": "2-composition/_base.scss"
+      }
     ],
     "demoContent": "Puxe para atualizar",
     "demoSlots": null

@@ -109,19 +109,37 @@
       "minHeight": "4px",
       "minWidth": "200px"
     },
-    "computedTokens": {
-      "borderRadius": "--dss-radius-full",
-      "borderWidth": "--dss-border-width-none",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-muted",
-      "textColor": "--dss-action-primary"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "4px", "value": null, "source": "defaultPreview / Seção 3.1 Progresso" },
-      { "property": "min-width", "token": "200px", "value": null, "source": "defaultPreview" },
-      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 3.1 Progresso" },
-      { "property": "cor indicador", "token": "--dss-action-primary", "value": null, "source": "Seção 3.1 Progresso" },
-      { "property": "cor track", "token": "--dss-gray-200", "value": null, "source": "Seção 3.1 Progresso" }
+      {
+        "property": "min-height",
+        "token": "--dss-track-height-sm",
+        "value": "4px",
+        "source": "3-variants/_sizes.scss"
+      },
+      {
+        "property": "min-width",
+        "token": "--dss-min-w-md",
+        "value": "200px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "cor indicador",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "3-variants/_colors.scss"
+      },
+      {
+        "property": "cor track",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      }
     ],
     "demoContent": "Barra de progresso linear 70%",
     "demoSlots": null

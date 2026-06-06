@@ -140,12 +140,16 @@ O **DssButton é referência**, não fonte única de verdade.
     ```
     - 📖 Consulte [DSS_COMPONENT_ARCHITECTURE.md - Passo 7](docs/reference/DSS_COMPONENT_ARCHITECTURE.md#passo-7-entry-point-wrapper)
 
-12. **Figma como Árbitro Visual (VINCULANTE)**
-    - O Figma é a **fonte de verdade visual** do DSS, não apenas uma referência.
-    - Em caso de ambiguidade sobre como um componente deve se parecer (ex: qual token de padding usar quando o `withDefaults` não especifica), o agente DEVE consultar o protótipo do Figma via MCP.
-    - O contrato estático (`defaultPreview` no `dss.meta.json`) reflete o Figma, mas o Figma tem precedência em caso de divergência.
-    - ❌ NUNCA inventar ou inferir dimensões, espaçamentos ou cores baseadas em "bom senso" ou "padrões web" se o Figma estiver disponível.
-    - ✅ SEMPRE traduzir os valores absolutos do Figma (px, hex) para os tokens DSS correspondentes (Princípio #1).
+12. **CSS como Fonte de Verdade Visual (VINCULANTE)**
+    - O **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) é a **fonte de verdade visual primária** do DSS.
+    - O `meta.json` (campo `visualProperties`) é o espelho documentado do CSS — deve refletir exatamente o que o CSS implementa.
+    - `DSS_REFERENCIA_VISUAL_ANALISE.md` é derivado do `meta.json` via script automatizado — nunca é editado diretamente.
+    - O Figma permanece como ferramenta integrável via MCP (como qualquer outra ferramenta de mercado), mas **não é árbitro de decisões visuais**.
+    - Em caso de ambiguidade sobre como um componente deve se parecer, o agente DEVE consultar o CSS compilado do componente, não ferramentas externas.
+    - ❌ NUNCA inferir dimensões, espaçamentos ou cores sem consultar o CSS real do componente.
+    - ✅ SEMPRE representar no `meta.json` exatamente o que está implementado no CSS, usando os tokens DSS correspondentes (Princípio #1).
+    - ✅ O campo `source` em `visualProperties` DEVE referenciar o arquivo CSS de origem (ex: `"2-composition/_base.scss"`), não documentos externos ou seções de ferramentas de design.
+    - 📖 A cadeia de verdade é: **CSS → meta.json → DSS_REFERENCIA_VISUAL_ANALISE.md**. Toda documentação é derivada, toda alteração começa no CSS.
 
 ---
 
@@ -197,7 +201,7 @@ Em caso de conflito, **NUNCA devem ser ignorados ou reinterpretados**.
    → Arquitetura de 4 camadas, padrões obrigatórios, anti-patterns
 
 5. **DSS_REFERENCIA_VISUAL_ANALISE.md** *(Contrato Visual Canônico)*  
-   → Única fonte de verdade narrativa sobre o contrato visual default dos componentes DSS. Espelho human-readable do campo `defaultPreview` de cada `dss.meta.json`. A seção de dados é auto-gerada — **nunca editar manualmente** a região delimitada por `<!-- BEGIN:AUTO-GENERATED -->`. Em caso de conflito com qualquer outro documento sobre visual padrão, **este prevalece**. Em caso de conflito com o Figma, o Figma prevalece (Princípio #12).
+   → Espelho human-readable do campo `visualProperties` de cada `dss.meta.json`. A seção de dados é auto-gerada — **nunca editar manualmente** a região delimitada por `<!-- BEGIN:AUTO-GENERATED -->`. Em caso de conflito com qualquer outro documento sobre visual padrão, **o CSS do componente prevalece** (Princípio #12). Este documento reflete o CSS; se divergir, o CSS é a verdade.
 
 ---
 

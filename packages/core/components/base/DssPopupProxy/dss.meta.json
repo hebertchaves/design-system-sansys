@@ -147,17 +147,19 @@
       "breakpoint": 450
     },
     "computedDimensions": {},
-    "computedTokens": {
-      "borderRadius": "--dss-radius-md",
-      "borderWidth": "--dss-border-width-none",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-subtle",
-      "textColor": "--dss-text-body",
-      "shadow": "--dss-shadow-md"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
-      { "property": "min-width", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      }
     ],
     "demoContent": "Proxy de popup (Dialog em mobile, Menu em desktop)",
     "demoSlots": {

@@ -98,19 +98,32 @@
     "computedDimensions": {
       "minHeight": "200px"
     },
-    "computedTokens": {
-      "borderRadius": "--dss-radius-full",
-      "borderWidth": "--dss-border-width-none",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "demoContent": "Área com scrollbar customizada",
     "visualProperties": [
-      { "property": "min-height", "token": "200px", "value": null, "source": "defaultPreview" },
-      { "property": "scrollbar track color", "token": "--dss-gray-200", "value": null, "source": ".q-scrollarea__bar descendant" },
-      { "property": "scrollbar thumb color", "token": "--dss-action-primary", "value": null, "source": ".q-scrollarea__thumb descendant" },
-      { "property": "opacity", "token": "1 !important", "value": null, "source": "EXC-Gate-02: sobrescreve inline style JS" }
+      {
+        "property": "min-height",
+        "token": "200px",
+        "value": null,
+        "source": "defaultPreview"
+      },
+      {
+        "property": "scrollbar track color",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": ".q-scrollarea__bar descendant"
+      },
+      {
+        "property": "scrollbar thumb color",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": ".q-scrollarea__thumb descendant"
+      },
+      {
+        "property": "opacity",
+        "token": "1 !important",
+        "value": null,
+        "source": "EXC-Gate-02: sobrescreve inline style JS"
+      }
     ],
     "demoSlots": {
       "default": [

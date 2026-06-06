@@ -147,24 +147,49 @@
     "computedDimensions": {
       "minHeight": "17px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-1",
-      "borderRadius": "--dss-radius-sm",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-sm",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-text-action"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "17px", "source": "defaultPreview" },
-      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.23" },
-      { "property": "font-weight (link)", "token": "--dss-font-weight-normal", "value": "400", "source": "Seção 13.23" },
-      { "property": "color (link)", "token": "--dss-text-action", "value": null, "source": "Seção 13.23" },
-      { "property": "color (item atual)", "token": "--dss-text-body", "value": null, "source": "Seção 13.23" },
-      { "property": "font-weight (item atual)", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.23" },
-      { "property": "text-decoration (hover)", "token": "underline", "value": null, "source": "Seção 13.23" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "17px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "font-weight (link)",
+        "token": "--dss-font-weight-normal",
+        "value": "400",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "color (link)",
+        "token": "--dss-text-action",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color (item atual)",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-weight (item atual)",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "text-decoration (hover)",
+        "token": "underline",
+        "value": null,
+        "source": "Seção 13.23"
+      }
     ],
     "demoContent": "Item de breadcrumb 'Home'",
     "demoSlots": null,

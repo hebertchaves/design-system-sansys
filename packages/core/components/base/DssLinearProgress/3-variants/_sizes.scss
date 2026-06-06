@@ -7,11 +7,11 @@
 // tamanho como documentação e fallback semântico para seletores externos.
 //
 // TOKENS:
-//   xs → --dss-spacing-1  (4px)
-//   sm → --dss-spacing-2  (8px)
-//   md → --dss-spacing-3  (12px) — padrão
-//   lg → --dss-spacing-4  (16px)
-//   xl → --dss-spacing-6  (24px)
+//   xs → --dss-track-height-sm  (4px)  — alinhado ao padrão de track de controles
+//   sm → --dss-spacing-2        (8px)
+//   md → --dss-spacing-3        (12px) — padrão
+//   lg → --dss-spacing-4        (16px)
+//   xl → --dss-spacing-6        (24px)
 //
 // NOTA: A altura real é aplicada via QLinearProgress :size (inline style).
 //       As classes abaixo são auxiliares para possível uso externo e para
@@ -19,7 +19,7 @@
 // =============================================================================
 
 .dss-linear-progress {
-  &--size-xs .q-linear-progress { min-height: var(--dss-spacing-1); }
+  &--size-xs .q-linear-progress { min-height: var(--dss-track-height-sm); } /* 4px */
   &--size-sm .q-linear-progress { min-height: var(--dss-spacing-2); }
   &--size-md .q-linear-progress { min-height: var(--dss-spacing-3); }
   &--size-lg .q-linear-progress { min-height: var(--dss-spacing-4); }

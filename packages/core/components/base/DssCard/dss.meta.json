@@ -111,29 +111,67 @@
     "computedDimensions": {
       "minHeight": "80px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-6",
-      "gap": "--dss-spacing-4",
-      "borderRadius": "--dss-radius-lg",
-      "borderWidth": "--dss-border-width-thin",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body",
-      "shadow": "--dss-shadow-sm"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "80px", "source": "defaultPreview" },
-      { "property": "border-radius", "token": "--dss-radius-lg", "value": "12px", "source": "Seção 13.13" },
-      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.13" },
-      { "property": "border-width (outlined)", "token": "--dss-border-width-thin", "value": "1px", "source": "Seção 13.13" },
-      { "property": "border-color (outlined)", "token": "--dss-gray-200", "value": null, "source": "Seção 13.13" },
-      { "property": "box-shadow (elevated)", "token": "--dss-elevation-1", "value": null, "source": "Seção 13.13" },
-      { "property": "box-shadow (hover)", "token": "--dss-elevation-2", "value": null, "source": "Seção 13.13" },
-      { "property": "section padding", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.13" },
-      { "property": "section divider", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.13" },
-      { "property": "transition", "token": "--dss-duration-200", "value": "200ms", "source": "Seção 13.13" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "80px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-lg",
+        "value": "12px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width (outlined)",
+        "token": "--dss-border-width-thin",
+        "value": "1px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-color (outlined)",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow (elevated)",
+        "token": "--dss-elevation-1",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow (hover)",
+        "token": "--dss-elevation-2",
+        "value": null,
+        "source": "3-variants/_bordered.scss"
+      },
+      {
+        "property": "section padding",
+        "token": "--dss-spacing-6",
+        "value": "24px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "section divider",
+        "token": "--dss-gray-200",
+        "value": "1px solid",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "transition",
+        "token": "--dss-duration-200",
+        "value": "200ms",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      }
     ],
     "demoContent": "DssCardSection com texto e ações",
     "demoSlots": {

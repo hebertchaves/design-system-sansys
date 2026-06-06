@@ -75,23 +75,55 @@
       "minHeight": "56px",
       "minWidth": "56px"
     },
-    "computedTokens": {
-      "borderRadius": "--dss-radius-full",
-      "borderWidth": "--dss-border-width-none",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-action-primary",
-      "textColor": "--dss-text-inverse",
-      "shadow": "--dss-shadow-md"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "56px", "source": "defaultPreview / Seção 13.2" },
-      { "property": "min-width", "token": null, "value": "56px", "source": "defaultPreview / Seção 13.2" },
-      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.2" },
-      { "property": "background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.2" },
-      { "property": "color (ícone)", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.2" },
-      { "property": "box-shadow", "token": "--dss-elevation-3", "value": null, "source": "Seção 13.2" },
-      { "property": "box-shadow (hover)", "token": "--dss-elevation-4", "value": null, "source": "Seção 13.2" },
-      { "property": "ícone tamanho", "token": null, "value": "24px", "source": "Seção 13.2" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "56px",
+        "source": "defaultPreview / Seção 13.2"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": "56px",
+        "source": "defaultPreview / Seção 13.2"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "color (ícone)",
+        "token": "--dss-text-inverse",
+        "value": "branco",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "box-shadow",
+        "token": "--dss-elevation-3",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow (hover)",
+        "token": "--dss-elevation-4",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "ícone tamanho",
+        "token": null,
+        "value": "24px",
+        "source": "Seção 13.2"
+      }
     ],
     "demoContent": "FAB com ícone 'add'",
     "demoSlots": {

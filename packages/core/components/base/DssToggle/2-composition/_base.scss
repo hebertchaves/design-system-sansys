@@ -120,7 +120,7 @@
   height: var(--dss-spacing-5); /* 20px */
 
   /* Forma pill */
-  border-radius: 9999px; /* EXCECAO: pill shape, nao tokenizavel */
+  border-radius: var(--dss-radius-full);
 
   /* Bordas */
   border: var(--dss-border-width-md) solid currentColor;
@@ -152,11 +152,11 @@
   position: absolute;
 
   /* Dimensoes do thumb - proporcional ao track */
-  width: var(--dss-spacing-4); /* 16px */
-  height: var(--dss-spacing-4); /* 16px */
+  width: var(--dss-thumb-size-sm); /* 16px */
+  height: var(--dss-thumb-size-sm); /* 16px */
 
   /* Forma circular */
-  border-radius: 50%; /* EXCECAO: forma circular, nao tokenizavel */
+  border-radius: var(--dss-radius-circle);
 
   /* Fundo unchecked: gray-500 (cinza médio — spec M3/Carbon/Lightning).
      Estado ON: currentColor do track (white via text-white) sobrescreve via
@@ -251,8 +251,8 @@
   }
 
   .dss-toggle__thumb {
-    width: var(--dss-spacing-3); /* 12px */
-    height: var(--dss-spacing-3); /* 12px */
+    width: var(--dss-thumb-size-xs); /* 12px */
+    height: var(--dss-thumb-size-xs); /* 12px */
   }
 
   .dss-toggle__track--checked .dss-toggle__thumb {
@@ -271,12 +271,12 @@
   }
 
   .dss-toggle__thumb {
-    width: var(--dss-spacing-4); /* 16px */
-    height: var(--dss-spacing-4); /* 16px */
+    width: var(--dss-thumb-size-sm); /* 16px */
+    height: var(--dss-thumb-size-sm); /* 16px */
   }
 
   .dss-toggle__track--checked .dss-toggle__thumb {
-    left: calc(100% - var(--dss-spacing-4) - var(--dss-spacing-0_5));
+    left: calc(100% - var(--dss-thumb-size-sm) - var(--dss-spacing-0_5));
   }
 }
 
@@ -295,12 +295,12 @@
   }
 
   .dss-toggle__thumb {
-    width: var(--dss-spacing-5); /* 20px */
-    height: var(--dss-spacing-5); /* 20px */
+    width: var(--dss-thumb-size-md); /* 20px */
+    height: var(--dss-thumb-size-md); /* 20px */
   }
 
   .dss-toggle__track--checked .dss-toggle__thumb {
-    left: calc(100% - var(--dss-spacing-5) - var(--dss-spacing-0_5));
+    left: calc(100% - var(--dss-thumb-size-md) - var(--dss-spacing-0_5));
   }
 }
 

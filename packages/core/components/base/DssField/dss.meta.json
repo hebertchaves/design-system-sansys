@@ -144,26 +144,61 @@
       "minHeight": "44px",
       "minWidth": "240px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-2 --dss-spacing-4",
-      "borderRadius": "--dss-radius-md",
-      "borderWidth": "--dss-border-width-thin",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
-      { "property": "min-width", "token": null, "value": "240px", "source": "defaultPreview" },
-      { "property": "border", "token": "--dss-gray-400", "value": "1px solid", "source": "EXC-Gate-01 (custom, não QField)" },
-      { "property": "border (foco)", "token": "--dss-action-primary", "value": "2px solid", "source": "Padrão formulário" },
-      { "property": "border-radius", "token": "--dss-radius-md", "value": "8px", "source": "Padrão formulário" },
-      { "property": "label color", "token": "--dss-text-subtle", "value": null, "source": "Padrão formulário" },
-      { "property": "label color (foco)", "token": "--dss-action-primary", "value": null, "source": "Padrão formulário" },
-      { "property": "hint font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 3.2 tipografia" },
-      { "property": "gray-800", "token": "--dss-gray-800", "value": null, "source": "NC-01 corrigida (meta.json)" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": "240px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "border",
+        "token": "--dss-gray-400",
+        "value": "1px solid",
+        "source": "3-variants/_filled.scss"
+      },
+      {
+        "property": "border (foco)",
+        "token": "--dss-action-primary",
+        "value": "2px solid",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "8px",
+        "source": "3-variants/_filled.scss"
+      },
+      {
+        "property": "label color",
+        "token": "--dss-text-subtle",
+        "value": null,
+        "source": "Padrão formulário"
+      },
+      {
+        "property": "label color (foco)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "hint font-size",
+        "token": "--dss-font-size-xs",
+        "value": "12px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "gray-800",
+        "token": "--dss-gray-800",
+        "value": null,
+        "source": "4-output/_states.scss"
+      }
     ],
     "demoContent": "Campo de formulário customizado",
     "demoSlots": null

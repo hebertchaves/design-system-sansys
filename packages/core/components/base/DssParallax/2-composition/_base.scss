@@ -24,6 +24,8 @@
 // =============================================================================
 
 .dss-parallax {
+  min-height: var(--dss-min-h-lg); // 192px — efeito parallax requer altura mínima para funcionar
+
   // Consistência de bloco — QParallax renderiza como block por padrão.
   display: block;
 

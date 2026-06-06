@@ -132,18 +132,19 @@
       "modelValue": "passo1"
     },
     "computedDimensions": {},
-    "computedTokens": {
-      "padding": "--dss-spacing-4",
-      "gap": "--dss-spacing-4",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" },
-      { "property": "min-width", "token": null, "value": null, "source": "N/A — Componente estrutural adaptativo" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      }
     ],
     "demoContent": "Fluxo com 3 etapas: Dados, Revisão, Confirmação",
     "demoSlots": {

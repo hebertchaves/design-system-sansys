@@ -41,7 +41,7 @@
      Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.1 */
   padding: 0 var(--dss-spacing-6);
   min-height: var(--dss-touch-target-md); /* 44px - ✅ WCAG 2.1 AA */
-  min-width: var(--dss-spacing-16); /* 64px */
+  min-width: var(--dss-min-w-xs); /* 64px */
 
   /* Borders */
   border: none;

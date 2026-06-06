@@ -50,17 +50,37 @@
       "minHeight": "40px",
       "minWidth": "40px"
     },
-    "computedTokens": {
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-action-primary"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "40px", "source": "defaultPreview" },
-      { "property": "min-width", "token": null, "value": "40px", "source": "defaultPreview" },
-      { "property": "color", "token": "--dss-action-primary", "value": null, "source": "DssInnerLoading: `color: currentColor` herda pai" },
-      { "property": "color (hub)", "token": "--dss-hub-600", "value": null, "source": "4-output/_brands.scss" },
-      { "property": "color (water)", "token": "--dss-water-500", "value": null, "source": "4-output/_brands.scss" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "40px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": "40px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "color",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color (hub)",
+        "token": "--dss-hub-600",
+        "value": null,
+        "source": "4-output/_brands.scss"
+      },
+      {
+        "property": "color (water)",
+        "token": "--dss-water-500",
+        "value": null,
+        "source": "4-output/_brands.scss"
+      }
     ],
     "demoContent": "Spinner animado de carregamento",
     "demoSlots": null

@@ -151,21 +151,31 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-4",
-      "borderRadius": "--dss-radius-none",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-sm",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview" },
-      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Padrão estrutural (herda DssHeader)" },
-      { "property": "border-top", "token": "--dss-gray-200", "value": "1px solid", "source": "Padrão estrutural" },
-      { "property": "padding", "token": "--dss-spacing-4 / --dss-spacing-6", "value": "16px 24px", "source": "Padrão estrutural" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-top",
+        "token": "--dss-gray-200",
+        "value": "1px solid",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "padding",
+        "token": "--dss-spacing-4 / --dss-spacing-6",
+        "value": "16px 24px",
+        "source": "Padrão estrutural"
+      }
     ],
     "demoContent": "Rodapé com informações do sistema",
     "demoSlots": {

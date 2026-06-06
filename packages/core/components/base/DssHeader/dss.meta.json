@@ -144,27 +144,55 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-4",
-      "gap": "--dss-spacing-4",
-      "borderRadius": "--dss-radius-none",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body",
-      "shadow": "--dss-shadow-sm"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.20" },
-      { "property": "padding (horizontal)", "token": "--dss-spacing-6", "value": "24px", "source": "Seção 13.20" },
-      { "property": "background", "token": "--dss-surface-default", "value": null, "source": "Seção 13.20" },
-      { "property": "border-bottom", "token": "--dss-gray-200", "value": "1px solid", "source": "Seção 13.20" },
-      { "property": "box-shadow", "token": "--dss-elevation-1", "value": null, "source": "Seção 13.20" },
-      { "property": "brand title font-size", "token": "--dss-font-size-lg", "value": "18px", "source": "Seção 13.20" },
-      { "property": "brand title font-weight", "token": "--dss-font-weight-semibold", "value": "600", "source": "Seção 13.20" },
-      { "property": "gap (logo + título)", "token": "--dss-spacing-3", "value": "12px", "source": "Seção 13.20" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "padding (horizontal)",
+        "token": "--dss-spacing-6",
+        "value": "24px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-bottom",
+        "token": "--dss-gray-200",
+        "value": "1px solid",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow",
+        "token": "--dss-elevation-1",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "brand title font-size",
+        "token": "--dss-font-size-lg",
+        "value": "18px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "brand title font-weight",
+        "token": "--dss-font-weight-semibold",
+        "value": "600",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "gap (logo + título)",
+        "token": "--dss-spacing-3",
+        "value": "12px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      }
     ],
     "demoContent": "Cabeçalho com logo e ações",
     "demoSlots": {

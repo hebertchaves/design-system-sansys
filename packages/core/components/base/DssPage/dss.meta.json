@@ -146,15 +146,19 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {
-      "padding": "--dss-spacing-0",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": null, "source": null },
-      { "property": "min-width", "token": null, "value": null, "source": null }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": null
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": null
+      }
     ],
     "demoContent": "Área de conteúdo principal da página",
     "demoSlots": {

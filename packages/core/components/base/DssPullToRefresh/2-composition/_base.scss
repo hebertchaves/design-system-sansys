@@ -13,7 +13,7 @@
    REGRAS:
    ✅ Tokens genéricos DSS apenas
    ✅ Estrutura e layout base
-   ✅ Sem valores hardcoded (exceto 50% geométrico — ver EX-Structural-01)
+   ✅ Sem valores hardcoded (border-radius circular usa --dss-radius-circle)
    ❌ Cores de brand (ficam em 4-output/_brands.scss)
    ========================================================================== */
 
@@ -45,9 +45,8 @@
    ========================================================================== */
 
 .dss-pull-to-refresh .q-pull-to-refresh__handler {
-  /* EX-Structural-01: border-radius 50% é constante geométrica para círculo.
-     Sem token DSS equivalente para formas circulares perfeitas. */
-  border-radius: 50% !important;
+  /* --dss-radius-circle (50%) — token semântico DSS v2.4.0 para círculos perfeitos. */
+  border-radius: var(--dss-radius-circle) !important;
 
   /* Background do indicador: superfície elevada sobre o conteúdo */
   background-color: var(--dss-surface-default) !important;

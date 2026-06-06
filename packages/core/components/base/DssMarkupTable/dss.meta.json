@@ -159,24 +159,49 @@
     "computedDimensions": {
       "width": "100%"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-2 --dss-spacing-4",
-      "borderRadius": "--dss-radius-none",
-      "borderWidth": "--dss-border-width-thin",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-default",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "width", "token": "100%", "value": null, "source": "defaultPreview" },
-      { "property": "border", "token": "--dss-gray-200", "value": "1px solid", "source": "EXC-Gate-01: descendant selectors th/td" },
-      { "property": "th background", "token": "--dss-surface-muted", "value": null, "source": "Padrão tabela" },
-      { "property": "th font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Padrão tabela" },
-      { "property": "td padding", "token": "--dss-spacing-3 / --dss-spacing-4", "value": "12px 16px", "source": "Padrão densidade standard" },
-      { "property": "tr hover background", "token": "--dss-surface-hover", "value": null, "source": "Padrão lista" },
-      { "property": "font-size", "token": "--dss-font-size-sm", "value": "14px", "source": "Seção 3.2 tipografia" }
+      {
+        "property": "width",
+        "token": "100%",
+        "value": null,
+        "source": "defaultPreview"
+      },
+      {
+        "property": "border",
+        "token": "--dss-gray-200",
+        "value": "1px solid",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "th background",
+        "token": "--dss-surface-muted",
+        "value": null,
+        "source": "Padrão tabela"
+      },
+      {
+        "property": "th font-weight",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "Padrão tabela"
+      },
+      {
+        "property": "td padding",
+        "token": "--dss-spacing-3 / --dss-spacing-4",
+        "value": "12px 16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "tr hover background",
+        "token": "--dss-surface-hover",
+        "value": null,
+        "source": "Padrão lista"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      }
     ],
     "demoContent": "Tabela com thead/tbody padrão",
     "demoSlots": {

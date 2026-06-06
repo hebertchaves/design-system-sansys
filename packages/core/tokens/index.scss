@@ -17,6 +17,7 @@
 @use 'semantic/accessibility';  /* Agrega: contrast, focus, sizing, typography */
 
 /* 4. Tokens de layout e utilidade */
+@use 'semantic/dimensions';
 @use 'semantic/opacity';
 @use 'semantic/shadows';
 @use 'semantic/z-index';

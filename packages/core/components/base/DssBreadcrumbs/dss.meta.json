@@ -156,21 +156,31 @@
     "computedDimensions": {
       "minHeight": "21px"
     },
-    "computedTokens": {
-      "gap": "--dss-spacing-2",
-      "borderRadius": "--dss-radius-none",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-sm",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-text-secondary"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": null, "value": "21px", "source": "defaultPreview (altura do texto)" },
-      { "property": "gap", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.23 / container de items" },
-      { "property": "font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.23" },
-      { "property": "separador color", "token": "--dss-gray-400", "value": null, "source": "Seção 13.23" }
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "21px",
+        "source": "defaultPreview (altura do texto)"
+      },
+      {
+        "property": "gap",
+        "token": "--dss-spacing-2",
+        "value": "8px",
+        "source": "1-structure/DssBreadcrumbs.ts.vue"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-sm",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "separador color",
+        "token": "--dss-gray-400",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      }
     ],
     "demoContent": "Home / Produtos / Detalhe",
     "demoSlots": {

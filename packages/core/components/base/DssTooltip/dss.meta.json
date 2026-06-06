@@ -30,28 +30,67 @@
     "computedDimensions": {
       "minHeight": "24px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-1 --dss-spacing-2",
-      "borderRadius": "--dss-radius-sm",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-sm",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-surface-muted",
-      "textColor": "--dss-text-body",
-      "shadow": "--dss-shadow-sm"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-compact-control-height-sm", "value": "24px", "source": "defaultPreview / Seção 13.17" },
-      { "property": "background", "token": "--dss-gray-900", "value": null, "source": "Seção 13.17" },
-      { "property": "color", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.17" },
-      { "property": "padding", "token": "--dss-spacing-1_5 / --dss-spacing-2", "value": "6px 8px", "source": "Seção 13.17" },
-      { "property": "border-radius", "token": "--dss-radius-sm", "value": "4px", "source": "Seção 13.17" },
-      { "property": "font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 13.17" },
-      { "property": "font-weight", "token": "--dss-font-weight-normal", "value": "400", "source": "Seção 13.17 (NÃO -regular)" },
-      { "property": "max-width", "token": "240px", "value": null, "source": "Seção 13.17" },
-      { "property": "box-shadow", "token": "--dss-elevation-2", "value": null, "source": "Seção 13.17" },
-      { "property": "animação", "token": "--dss-duration-150", "value": "150ms", "source": "Seção 13.17" }
+      {
+        "property": "min-height",
+        "token": "--dss-compact-control-height-sm",
+        "value": "24px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-gray-900",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-inverse",
+        "value": "branco",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "padding",
+        "token": "--dss-spacing-1_5 / --dss-spacing-2",
+        "value": "6px 8px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-sm",
+        "value": "4px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-xs",
+        "value": "12px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-weight",
+        "token": "--dss-font-weight-normal",
+        "value": "400",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "max-width",
+        "token": "--dss-max-w-xs",
+        "value": "240px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow",
+        "token": "--dss-elevation-2",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "animação",
+        "token": "--dss-duration-150",
+        "value": "150ms",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      }
     ],
     "demoContent": "Tooltip 'Informação adicional'",
     "demoSlots": {

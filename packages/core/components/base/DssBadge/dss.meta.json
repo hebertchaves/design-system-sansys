@@ -18,27 +18,61 @@
       "minHeight": "24px",
       "minWidth": "24px"
     },
-    "computedTokens": {
-      "padding": "--dss-spacing-0_5 --dss-spacing-1",
-      "gap": "--dss-spacing-1",
-      "borderRadius": "--dss-radius-full",
-      "borderWidth": "--dss-border-width-none",
-      "fontSize": "--dss-font-size-xs",
-      "fontWeight": "--dss-font-weight-medium",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-action-primary",
-      "textColor": "--dss-text-inverse"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-compact-control-height-sm", "value": "24px", "source": "defaultPreview" },
-      { "property": "min-width", "token": "--dss-compact-control-height-sm", "value": "24px", "source": "defaultPreview" },
-      { "property": "padding", "token": "--dss-spacing-0_5 / --dss-spacing-1", "value": "2px 4px", "source": "Seção 13.11" },
-      { "property": "border-radius", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.11" },
-      { "property": "background", "token": "--dss-action-primary", "value": null, "source": "Seção 13.11" },
-      { "property": "color", "token": "--dss-text-inverse", "value": "branco", "source": "Seção 13.11" },
-      { "property": "font-size", "token": "--dss-font-size-xs", "value": "12px", "source": "Seção 13.11" },
-      { "property": "font-weight", "token": "--dss-font-weight-medium", "value": "500", "source": "Seção 13.11" },
-      { "property": "line-height", "token": "1", "value": null, "source": "Seção 13.11" }
+      {
+        "property": "min-height",
+        "token": "--dss-compact-control-height-sm",
+        "value": "24px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "min-width",
+        "token": "--dss-compact-control-height-sm",
+        "value": "24px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "padding",
+        "token": "--dss-spacing-0_5 / --dss-spacing-1",
+        "value": "2px 4px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-inverse",
+        "value": "branco",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-xs",
+        "value": "12px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-weight",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "line-height",
+        "token": "1",
+        "value": null,
+        "source": "Seção 13.11"
+      }
     ],
     "demoContent": "Label '99+'",
     "demoSlots": {

@@ -28,6 +28,7 @@
   // ── Display e Layout ───────────────────────────────────────────────────────
   display: block;
   width: 100%;
+  min-width: var(--dss-min-w-md); // 200px — usabilidade mínima do controle de progresso
   position: relative;
 
   // ── Comportamento ──────────────────────────────────────────────────────────

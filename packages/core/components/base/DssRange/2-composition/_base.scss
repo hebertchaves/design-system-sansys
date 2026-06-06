@@ -23,6 +23,7 @@
 .dss-range {
   display: block;
   width: 100%;
+  min-width: var(--dss-min-w-md); // 200px — restrição mínima para usabilidade do range
   font-family: var(--dss-font-family-sans);
   transition: opacity var(--dss-duration-200) var(--dss-easing-standard);
 }
@@ -44,15 +45,16 @@
 // ─── Track ────────────────────────────────────────────────────────────────────
 
 .dss-range .q-slider__track {
+  height: var(--dss-track-height-sm); // 4px — espessura do trilho
   background-color: var(--dss-gray-200); // track inativo — cinza claro canônico (Ref: Seção 13.8)
-  border-radius: 9999px; // EX-01: pill shape do track — não tokenizável, inerente ao design de range sliders
+  border-radius: var(--dss-radius-full); // pill shape do track
   overflow: hidden;
 }
 
 // Área selecionada — intervalo entre os dois thumbs
 .dss-range .q-slider__selection {
   background-color: var(--dss-action-primary);
-  border-radius: 9999px; // EX-01
+  border-radius: var(--dss-radius-full); // alinha com o track pill shape
 }
 
 // ─── Thumbs ───────────────────────────────────────────────────────────────────
@@ -65,8 +67,8 @@
 }
 
 .dss-range .q-slider__thumb {
-  width:  var(--dss-spacing-5); // 20px
-  height: var(--dss-spacing-5);
+  width:  var(--dss-thumb-size-md); // 20px
+  height: var(--dss-thumb-size-md);
 }
 
 .dss-range .q-slider__thumb-shape {

@@ -91,20 +91,31 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "borderRadius": "--dss-radius-md",
-      "borderWidth": "--dss-border-width-thin",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-medium",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "--dss-action-primary",
-      "textColor": "--dss-text-inverse"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview / Seção 13.3" },
-      { "property": "gap", "token": null, "value": "0px", "source": "Seção 13.3 (botões coladas)" },
-      { "property": "border-radius extremidades", "token": "--dss-radius-full", "value": "9999px", "source": "Seção 13.3" },
-      { "property": "divisor interno", "token": "--dss-border-width-thin", "value": "1px", "source": "Seção 13.3" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "gap",
+        "token": null,
+        "value": "0px",
+        "source": "Seção 13.3 (botões coladas)"
+      },
+      {
+        "property": "border-radius extremidades",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "divisor interno",
+        "token": "--dss-border-width-thin",
+        "value": "1px",
+        "source": "3-variants/_flat.scss"
+      }
     ],
     "demoContent": "Grupo com 3 botões",
     "demoSlots": {

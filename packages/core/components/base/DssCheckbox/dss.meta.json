@@ -20,27 +20,67 @@
     "computedDimensions": {
       "minHeight": "44px"
     },
-    "computedTokens": {
-      "gap": "--dss-spacing-2",
-      "borderRadius": "--dss-radius-sm",
-      "borderWidth": "--dss-border-width-thin",
-      "fontSize": "--dss-font-size-md",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "--dss-touch-target-md", "value": "44px", "source": "defaultPreview (touch target)" },
-      { "property": "controle tamanho", "token": "18px × 18px", "value": null, "source": "Seção 13.6" },
-      { "property": "border-radius", "token": "--dss-radius-sm", "value": "4px", "source": "Seção 13.6" },
-      { "property": "border-width (unchecked)", "token": "--dss-border-width-md", "value": "2px", "source": "Seção 13.6" },
-      { "property": "border-color (unchecked)", "token": "--dss-gray-500", "value": null, "source": "Seção 13.6" },
-      { "property": "background (checked)", "token": "--dss-action-primary", "value": null, "source": "Seção 13.6" },
-      { "property": "gap (controle + label)", "token": "--dss-spacing-2", "value": "8px", "source": "Seção 13.6" },
-      { "property": "label font-size", "token": "--dss-font-size-md", "value": "14px", "source": "Seção 13.6" },
-      { "property": "label color", "token": "--dss-text-body", "value": null, "source": "Seção 13.6" },
-      { "property": "touch target", "token": "--dss-touch-target-md", "value": "44px", "source": "Via `::before` (WCAG 2.5.5)" }
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "controle tamanho",
+        "token": "18px × 18px",
+        "value": null,
+        "source": "Seção 13.6"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-sm",
+        "value": "4px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width (unchecked)",
+        "token": "--dss-border-width-md",
+        "value": "2px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-color (unchecked)",
+        "token": "--dss-gray-500",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background (checked)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "gap (controle + label)",
+        "token": "--dss-spacing-2",
+        "value": "8px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "touch target",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "Via `::before` (WCAG 2.5.5)"
+      }
     ],
     "demoContent": "Label 'Opção'",
     "demoSlots": null

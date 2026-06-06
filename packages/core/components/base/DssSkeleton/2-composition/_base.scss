@@ -3,6 +3,7 @@
 
 .dss-skeleton {
   display: block;
+  min-width: var(--dss-min-w-md); // 200px — dimensão mínima para preview/placeholder legível
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }

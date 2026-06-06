@@ -109,17 +109,19 @@
   "defaultPreview": {
     "props": {},
     "computedDimensions": {},
-    "computedTokens": {
-      "padding": "--dss-spacing-2 --dss-spacing-4",
-      "fontSize": "--dss-font-size-sm",
-      "fontWeight": "--dss-font-weight-normal",
-      "lineHeight": "--dss-line-height-normal",
-      "surface": "none",
-      "textColor": "--dss-text-body"
-    },
     "visualProperties": [
-      { "property": "min-height", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null },
-      { "property": "min-width", "token": "N/A — Componente estrutural adaptativo", "value": null, "source": null }
+      {
+        "property": "min-height",
+        "token": "N/A — Componente estrutural adaptativo",
+        "value": null,
+        "source": null
+      },
+      {
+        "property": "min-width",
+        "token": "N/A — Componente estrutural adaptativo",
+        "value": null,
+        "source": null
+      }
     ],
     "demoContent": "Rótulo de seção de lista",
     "demoSlots": {
