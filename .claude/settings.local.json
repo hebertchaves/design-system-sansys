@@ -23,7 +23,10 @@
       "Bash(git -C /mnt/c/Users/hebert.chaves/DSS rm -r --cached apps/docs-portal/dist/)",
       "Bash(git -C /mnt/c/Users/hebert.chaves/DSS status --short)",
       "Bash(git *)",
-      "Bash(grep -rn 'font-size\\\\|border-radius\\\\|background-color\\\\|font-weight' /mnt/c/Users/hebert.chaves/DSS/packages/core/components/base/__TRACKED_VAR__/2-composition/_base.scss)"
+      "Bash(grep -rn 'font-size\\\\|border-radius\\\\|background-color\\\\|font-weight' /mnt/c/Users/hebert.chaves/DSS/packages/core/components/base/__TRACKED_VAR__/2-composition/_base.scss)",
+      "Read(//home/hebertchaves/.claude/**)",
+      "Read(//home/hebertchaves/.config/claude/**)",
+      "Bash(npx storybook@latest init --yes --package-manager npm)"
     ]
   },
   "enableAllProjectMcpServers": true,
