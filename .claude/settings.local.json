@@ -46,7 +46,9 @@
       "Bash(netstat -tlnp)",
       "Bash(curl -s --max-time 10 http://localhost:5173/)",
       "Bash(awk -F: '{sum+=$2} END{print \"semantic total:\", sum}')",
-      "Bash(xargs cat)"
+      "Bash(xargs cat)",
+      "Bash(grep -n \"rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,6\\\\}\\\\b\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestParcelamentoClaude.vue)",
+      "Bash(grep -n \"rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,6\\\\}\\\\b\\\\|style=\\\\\"\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestParcelamentoClaude.vue)"
     ]
   },
   "enableAllProjectMcpServers": true,
