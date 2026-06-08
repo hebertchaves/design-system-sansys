@@ -39,6 +39,7 @@ Este arquivo (**CLAUDE.md**) é um **documento normativo vinculante** para qualq
 
 A criação de qualquer componente DSS **exige leitura prévia** dos seguintes arquivos, **nesta ordem**:
 
+0. `docs/AGENT_QUICKSTART.md` *(ponto único de entrada — leia PRIMEIRO para orientação geral e mapa de navegação)*
 1. `docs/reference/PRD_DSS.md`
 2. `docs/reference/DSS_ARCHITECTURE.md`
 3. `docs/reference/DSS_COMPONENT_ARCHITECTURE.md`
@@ -150,6 +151,14 @@ O **DssButton é referência**, não fonte única de verdade.
     - ✅ SEMPRE representar no `meta.json` exatamente o que está implementado no CSS, usando os tokens DSS correspondentes (Princípio #1).
     - ✅ O campo `source` em `visualProperties` DEVE referenciar o arquivo CSS de origem (ex: `"2-composition/_base.scss"`), não documentos externos ou seções de ferramentas de design.
     - 📖 A cadeia de verdade é: **CSS → meta.json → DSS_REFERENCIA_VISUAL_ANALISE.md**. Toda documentação é derivada, toda alteração começa no CSS.
+
+13. **Isolamento de CSS de Terceiros via Cascade Layers (VINCULANTE)**
+    - ❌ CSS de terceiros (Quasar, fontes externas, bibliotecas de UI) NUNCA deve ser carregado fora de `@layer`
+    - ❌ CSS DSS NUNCA é envolvido em `@layer` — permanece no escopo unlayered, que tem precedência absoluta
+    - ✅ Todo CSS de terceiros DEVE ser servido dentro de `@layer vendor { ... }` (ex.: `@layer quasar { ... }`)
+    - ✅ `!important` de terceiros fica contido dentro do layer — inofensivo para o DSS
+    - ⚠️ Regras DSS unlayered vencem qualquer regra dentro de layer, independente de especificidade ou `!important`
+    - 📖 Consulte [DSS_ARCHITECTURE.md — Princípio #13](docs/reference/DSS_ARCHITECTURE.md#princípio-13--isolamento-de-css-de-terceiros-via-cascade-layers-vinculante)
 
 ---
 

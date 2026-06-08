@@ -1006,7 +1006,10 @@
    12. UTILITÁRIOS GERAIS DO QUASAR
    =========================================== */
 
-/* Text colors com nossos tokens */
+/* Defesa em profundidade (Princípio #13): estas regras são tecnicamente redundantes com a bridge
+   --q-* → --dss-* (Seção 12 de _quasar-tokens-mapping.scss), pois o @layer quasar já contém
+   os !important do Quasar. São mantidas intencionalmente como segunda linha de defesa: garantem
+   o comportamento correto caso o CSS seja carregado fora do layer (ex.: SSR, testes isolados). */
 .text-primary { color: var(--dss-action-primary) !important; }
 .text-secondary { color: var(--dss-action-secondary) !important; }
 .text-accent { color: var(--dss-action-accent) !important; }

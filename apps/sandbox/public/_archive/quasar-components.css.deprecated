@@ -1,3 +1,8 @@
+/* DEPRECATED 2026-06-06 — substituído por quasar-layered.css com @layer quasar. NÃO REINTRODUZIR.
+   Razão: com a adoção do Princípio #13 (Cascade Layers), todo CSS de terceiros deve viver dentro
+   de @layer vendor/quasar. Este arquivo não possuía o wrapper de layer e causava conflitos de
+   especificidade. Ver docs/reference/DSS_ARCHITECTURE.md — Princípio #13. */
+
 /* Quasar base CSS — somente QSlider, QRange, QLinearProgress, QCircularProgress */
 /* Gerado automaticamente. NÃO contém resets globais nem normalizações. */
 

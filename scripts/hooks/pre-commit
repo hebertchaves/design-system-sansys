@@ -42,4 +42,14 @@ if echo "$STAGED" | grep -q 'dss\.meta\.json'; then
   echo "✅ DSS_REFERENCIA_VISUAL_ANALISE.md atualizado e staged."
 fi
 
+# ── 4. Regressão visual Quasar↔DSS (testes estáticos) ────────────────────────
+if echo "$STAGED" | grep -qE 'apps/sandbox/public/|packages/core/themes/'; then
+  echo "🎨 Validando isolamento Quasar↔DSS (regressão estática)..."
+  (cd apps/sandbox && npm run test:static) || {
+    echo "❌ Regressão visual detectada. Verifique apps/sandbox/tests/regression/static/"
+    exit 1
+  }
+  echo "✅ Isolamento Quasar↔DSS: OK."
+fi
+
 exit 0

@@ -26,7 +26,9 @@
       "Bash(grep -rn 'font-size\\\\|border-radius\\\\|background-color\\\\|font-weight' /mnt/c/Users/hebert.chaves/DSS/packages/core/components/base/__TRACKED_VAR__/2-composition/_base.scss)",
       "Read(//home/hebertchaves/.claude/**)",
       "Read(//home/hebertchaves/.config/claude/**)",
-      "Bash(npx storybook@latest init --yes --package-manager npm)"
+      "Bash(npx storybook@latest init --yes --package-manager npm)",
+      "Bash(mkdir -p /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/public/_archive)",
+      "Bash(cp /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/public/quasar-components.css /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/public/_archive/quasar-components.css.deprecated)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -1541,3 +1541,51 @@ O DSS agora pode influenciar o plugin Figma:
 2. ✅ Dark mode pode ser implementado no plugin
 3. ⚠️ DssButton pode ser gerado automaticamente no Figma
 4. 🔮 Futura integração: gerar componentes Figma a partir do DSS
+
+---
+
+## Princípio #13 — Isolamento de CSS de Terceiros via Cascade Layers (VINCULANTE)
+
+### Regra
+
+- Todo CSS proveniente de bibliotecas de terceiros (Quasar, Material Icons, fontes externas, etc.) **DEVE** ser carregado dentro de `@layer vendor { ... }` (ou layer nomeado equivalente, ex.: `@layer quasar { ... }`).
+- O CSS do DSS (tokens, componentes, utilitários) **NUNCA** é envolvido em `@layer`. Permanece no escopo implícito (unlayered), que tem **precedência absoluta** sobre qualquer layer nomeado, independente de especificidade ou `!important` dentro do layer.
+
+### Racional
+
+CSS Cascade Layers (CSS WG, Baseline 2022) inverteu o modelo tradicional: **regras unlayered sempre vencem regras dentro de layers nomeados**. Isso permite que o DSS conviva com o `!important` agressivo do Quasar sem precisar de override manual por componente.
+
+Antes desta abordagem, o DSS precisava de seletores de alta especificidade (`#app .bg-primary`, `body .text-primary`) ou `!important` próprios para superar o Quasar. Com `@layer`, qualquer regra DSS sem layer vence qualquer regra Quasar dentro de `@layer quasar`, mesmo que o Quasar use `!important`.
+
+### Implementação Canônica
+
+```
+apps/sandbox/public/quasar-layered.css      ← Quasar completo empacotado em @layer quasar
+apps/sandbox/index.html                     ← carrega quasar-layered.css ANTES do bundle DSS
+packages/core/themes/_quasar-tokens-mapping.scss (Seção 12)  ← bridge --q-* → --dss-* (defesa em profundidade)
+packages/core/themes/_quasar-overrides.scss (Seção 12)       ← .bg-* / .text-* unlayered (segunda linha de defesa)
+```
+
+### Ordem de Carregamento (Crítica)
+
+```html
+<!-- 1. Quasar CSS dentro do layer — "perde" para qualquer regra unlayered -->
+<link rel="stylesheet" href="/quasar-layered.css">
+
+<!-- 2. Bundle DSS (unlayered via Vite) — vence automaticamente -->
+<script type="module" src="/src/main.js"></script>
+```
+
+### Validação Automatizada
+
+A suite de regressão em `apps/sandbox/tests/regression/` valida este princípio continuamente:
+
+- **Estática** (`tests/regression/static/layer-structure.spec.ts`): verifica via parsing de arquivo que 100% dos `!important` do Quasar estão dentro de `@layer quasar`.
+- **E2E** (`tests/regression/e2e/cascade-layers.spec.ts`): verifica em browser real (Playwright/Chromium) que `.bg-primary` renderiza com o token DSS, não com a cor padrão do Quasar.
+
+### Anti-Patterns
+
+- ❌ Envolver CSS DSS em `@layer dss { ... }` — perde precedência sobre o layer do Quasar
+- ❌ Carregar Quasar fora de layer — volta ao cenário de `!important` tóxico
+- ❌ Adicionar `!important` em componentes DSS para "vencer" o Quasar — sintoma de layer mal configurado
+- ❌ Reintroduzir `public/quasar-components.css` — arquivo arquivado em `public/_archive/` por violar este princípio

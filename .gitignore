@@ -30,3 +30,6 @@ build/
 # Ignorar especificamente dists dentro de apps e packages
 apps/*/dist/
 packages/*/dist/
+
+*storybook.log
+storybook-static
