@@ -344,6 +344,15 @@
             </button>
 
             <button
+              @click="activeComponent = 'parcelamento-claude'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'parcelamento-claude' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">receipt_long</span></span>
+              <span class="nav-label">Parcelamento Claude</span>
+              <span class="nav-badge stress">pixel</span>
+            </button>
+
+            <button
               @click="activeComponent = 'login'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'login' }]"
             >
@@ -415,6 +424,11 @@
         <TestParcelamento />
       </div>
 
+      <!-- Parcelamento Claude — pixel-love fidelity -->
+      <div v-else-if="activeComponent === 'parcelamento-claude'" class="component-view">
+        <TestParcelamentoClaude />
+      </div>
+
       <!-- Defaults Preview View -->
       <div v-else-if="activeComponent === 'defaults-preview'" class="component-view">
         <TestDefaultPreview />
@@ -441,6 +455,7 @@ import TestDataCard from './TestDataCard.vue'
 import TestCadrisCard from './TestCadrisCard.vue'
 import TestPageComplexity from './TestPageComplexity.vue'
 import TestParcelamento from './TestParcelamento.vue'
+import TestParcelamentoClaude from './TestParcelamentoClaude.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')
