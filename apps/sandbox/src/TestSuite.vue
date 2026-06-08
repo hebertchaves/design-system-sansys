@@ -335,6 +335,15 @@
 
           <div v-show="expandedCategories.patterns" class="nav-submenu">
             <button
+              @click="activeComponent = 'parcelamento'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'parcelamento' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">receipt_long</span></span>
+              <span class="nav-label">Parcelamento</span>
+              <span class="nav-badge stress">real</span>
+            </button>
+
+            <button
               @click="activeComponent = 'login'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'login' }]"
             >
@@ -401,6 +410,11 @@
         <TestPageComplexity />
       </div>
 
+      <!-- Parcelamento (Sansys Water) — pattern real -->
+      <div v-else-if="activeComponent === 'parcelamento'" class="component-view">
+        <TestParcelamento />
+      </div>
+
       <!-- Defaults Preview View -->
       <div v-else-if="activeComponent === 'defaults-preview'" class="component-view">
         <TestDefaultPreview />
@@ -426,6 +440,7 @@ import TestTokens from './TestTokens.vue'
 import TestDataCard from './TestDataCard.vue'
 import TestCadrisCard from './TestCadrisCard.vue'
 import TestPageComplexity from './TestPageComplexity.vue'
+import TestParcelamento from './TestParcelamento.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')
