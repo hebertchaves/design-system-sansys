@@ -2,11 +2,19 @@
   <div class="parcelamento-page" data-brand="water">
 
     <!-- =============================================================
-         1. APP BAR (simulação do shell Sansys Water)
+         1. APP BAR — botões round REAIS (variant flat, size md, sem dense)
          ============================================================= -->
     <header class="app-bar">
       <div class="app-bar__brand">
-        <DssIcon name="menu" size="sm" class="app-bar__menu" />
+        <DssButton
+          variant="flat"
+          round
+          size="md"
+          icon="menu"
+          color="white"
+          aria-label="Menu"
+          class="app-bar__btn"
+        />
         <div class="app-bar__logo">
           <DssIcon name="water_drop" size="sm" />
           <span class="app-bar__logo-text">
@@ -18,16 +26,26 @@
       </div>
 
       <div class="app-bar__actions">
-        <DssButton flat round dense icon="help_outline" aria-label="Ajuda">
+        <DssButton
+          variant="flat" round size="md" icon="help_outline"
+          color="white" aria-label="Ajuda" class="app-bar__btn"
+        >
           <DssTooltip>Ajuda</DssTooltip>
         </DssButton>
-        <DssButton flat round dense icon="notifications" aria-label="Notificações">
-          <DssTooltip>Notificações</DssTooltip>
+        <DssButton
+          variant="flat" round size="md" icon="notifications"
+          color="white" aria-label="Notificações" class="app-bar__btn"
+        >
+          <DssBadge color="negative" floating>4</DssBadge>
+          <DssTooltip>3 novas notificações</DssTooltip>
         </DssButton>
-        <DssButton flat round dense icon="apps" aria-label="Aplicativos">
+        <DssButton
+          variant="flat" round size="md" icon="apps"
+          color="white" aria-label="Apps" class="app-bar__btn"
+        >
           <DssTooltip>Aplicativos Sansys</DssTooltip>
         </DssButton>
-        <DssAvatar size="sm" icon="person" color="primary" />
+        <DssAvatar size="md" icon="person" color="secondary" />
       </div>
     </header>
 
@@ -49,17 +67,17 @@
     <DssCard class="client-header">
       <div class="client-header__grid">
 
-        <!-- Coluna 1 — Identificador do imóvel -->
+        <!-- Coluna 1 — Identificador -->
         <div class="client-header__id">
-          <DssAvatar size="md" icon="apartment" color="primary" />
+          <DssAvatar size="lg" icon="apartment" color="primary" />
           <div class="client-header__id-info">
             <span class="client-header__code">652701-9</span>
             <DssButton
+              variant="outlined"
               size="sm"
               color="primary"
-              icon="add"
+              icon="info"
               label="DETALHES"
-              dense
             />
           </div>
         </div>
@@ -82,11 +100,7 @@
           </div>
           <div class="kv">
             <dt>Endereço:</dt>
-            <dd>Rua logradouro do Usuário, 123 - 00000-000 - Bairro, Cidade - UF - Complemento</dd>
-          </div>
-          <div class="kv kv--muted">
-            <dt>Label:</dt>
-            <dd>Content</dd>
+            <dd>Rua logradouro do Usuário, 123 - 00000-000 - Bairro, Cidade - UF</dd>
           </div>
         </dl>
 
@@ -101,50 +115,68 @@
             <dd>00.00.0000.0000.0000.0000</dd>
           </div>
           <div class="kv">
-            <dt>Tipo de Cobrança / Tipo Unidade:</dt>
+            <dt>Tipo de Cobrança:</dt>
             <dd>Pagamento Caixa / Norma</dd>
           </div>
-          <div class="kv kv--muted">
-            <dt>Label:</dt>
-            <dd>Content</dd>
-          </div>
         </dl>
 
-        <!-- Coluna 4 — Status semânticos -->
+        <!-- Coluna 4 — Status com DssChip (variedade visual) -->
         <dl class="client-header__group">
-          <div class="kv">
+          <div class="kv kv--inline">
             <dt>Ligação água:</dt>
-            <dd><span class="status-text status-text--success">Ativa</span></dd>
+            <dd>
+              <DssChip dense size="sm" color="positive" text-color="white" icon="check_circle">
+                Ativa
+              </DssChip>
+            </dd>
           </div>
-          <div class="kv">
+          <div class="kv kv--inline">
             <dt>Ligação esgoto:</dt>
-            <dd><span class="status-text status-text--error">Inativa</span></dd>
+            <dd>
+              <DssChip dense size="sm" color="negative" text-color="white" icon="cancel">
+                Inativa
+              </DssChip>
+            </dd>
           </div>
-          <div class="kv">
+          <div class="kv kv--inline">
             <dt>Situação Lixo:</dt>
-            <dd>Ativa (Cobrança na Fatura)</dd>
-          </div>
-          <div class="kv kv--muted">
-            <dt>Label:</dt>
-            <dd>Content</dd>
+            <dd>
+              <DssChip dense size="sm" outline color="primary" icon="recycling">
+                Ativa (Fatura)
+              </DssChip>
+            </dd>
           </div>
         </dl>
 
-        <!-- Coluna 5 — Action rail -->
+        <!-- Coluna 5 — Action rail (round REAIS, variant elevated) -->
         <div class="client-header__rail">
           <DssButton
+            variant="elevated"
             color="primary"
             icon="shopping_cart"
-            dense
+            round
+            size="md"
             class="rail-btn"
           >
             <DssBadge color="negative" floating>2</DssBadge>
-            <DssTooltip>Carrinho de serviços</DssTooltip>
+            <DssTooltip>Carrinho de serviços (2)</DssTooltip>
           </DssButton>
-          <DssButton color="primary" icon="add" dense class="rail-btn">
+          <DssButton
+            variant="outlined"
+            color="primary"
+            icon="add"
+            round
+            size="md"
+          >
             <DssTooltip>Adicionar atendimento</DssTooltip>
           </DssButton>
-          <DssButton color="primary" icon="remove" dense class="rail-btn">
+          <DssButton
+            variant="flat"
+            color="primary"
+            icon="unfold_less"
+            round
+            size="md"
+          >
             <DssTooltip>Recolher cabeçalho</DssTooltip>
           </DssButton>
         </div>
@@ -152,7 +184,7 @@
     </DssCard>
 
     <!-- =============================================================
-         4. TAB NAVIGATION (módulos do atendimento)
+         4. TAB NAVIGATION — proporção dos playgrounds
          ============================================================= -->
     <DssCard class="module-tabs" flat>
       <DssTabs
@@ -173,27 +205,62 @@
     </DssCard>
 
     <!-- =============================================================
-         5. SUBHEADER + ACTION TOOLBAR
+         5. SUBHEADER + ACTION TOOLBAR — variantes diversas
          ============================================================= -->
     <section class="page-section">
       <header class="page-section__header">
-        <h2 class="page-section__title">Parcelamento</h2>
-        <span class="page-section__count">{{ rows.length }} negociações</span>
+        <div class="page-section__title-group">
+          <h2 class="page-section__title">Parcelamento</h2>
+          <DssBadge color="primary" outline>{{ rows.length }} negociações</DssBadge>
+        </div>
       </header>
 
       <div class="action-toolbar">
+        <!-- Ação primária: elevated, com label -->
         <DssButton
-          v-for="action in toolbarActions"
-          :key="action.id"
-          flat
-          dense
-          :icon="action.icon"
-          :label="action.label"
-          :color="action.color || 'primary'"
-          class="action-toolbar__btn"
-          @click="handleToolbarAction(action.id)"
+          variant="elevated"
+          color="primary"
+          icon="add_box"
+          label="Parcelar"
+          @click="handleToolbarAction('parcelar')"
         >
-          <DssTooltip>{{ action.hint }}</DssTooltip>
+          <DssTooltip>Criar novo parcelamento</DssTooltip>
+        </DssButton>
+
+        <!-- Ações secundárias: outlined -->
+        <DssButton
+          variant="outlined" color="primary" icon="calculate" label="Simular"
+          @click="handleToolbarAction('simular')"
+        />
+        <DssButton
+          variant="outlined" color="primary" icon="autorenew" label="Reparcelar"
+          @click="handleToolbarAction('reparcelar')"
+        />
+        <DssButton
+          variant="outlined" color="primary" icon="fast_forward" label="Antecipar"
+          @click="handleToolbarAction('antecipar')"
+        />
+
+        <div class="action-toolbar__spacer" />
+
+        <!-- Ações terciárias: flat round REAIS -->
+        <DssButton
+          variant="flat" round size="md" icon="print" color="primary"
+          @click="handleToolbarAction('imprimir')"
+        >
+          <DssTooltip>Imprimir extrato</DssTooltip>
+        </DssButton>
+        <DssButton
+          variant="flat" round size="md" icon="campaign" color="primary"
+          @click="handleToolbarAction('campanhas')"
+        >
+          <DssTooltip>Campanhas vigentes</DssTooltip>
+        </DssButton>
+        <DssButton
+          variant="flat" round size="md" icon="block" color="negative"
+          @click="handleToolbarAction('cancelar')"
+        >
+          <DssTooltip>Cancelar negociação</DssTooltip>
         </DssButton>
       </div>
 
@@ -201,7 +268,7 @@
            6. DATA TABLE
            ============================================================= -->
       <DssCard class="parcel-table" flat>
-        <DssMarkupTable separator="horizontal" flat dense>
+        <DssMarkupTable separator="horizontal" flat>
           <thead>
             <tr>
               <th class="col-check">
@@ -219,7 +286,7 @@
               <th>Situação</th>
               <th>Tipo Negociação</th>
               <th class="col-center">Controle Corte</th>
-              <th class="col-actions"></th>
+              <th class="col-actions">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -246,19 +313,29 @@
                 <div class="cell-sub">Nº de parcela: <strong>{{ row.numParcelas }}</strong></div>
               </td>
               <td>
-                <span :class="['status-text', `status-text--${statusToken(row.situacao)}`]">
+                <DssChip
+                  dense
+                  size="sm"
+                  :color="chipColor(row.situacao)"
+                  :text-color="chipTextColor(row.situacao)"
+                  :icon="chipIcon(row.situacao)"
+                  :outline="row.situacao === 'Cancelado'"
+                >
                   {{ row.situacao }}
-                </span>
+                </DssChip>
               </td>
-              <td>{{ row.tipo }}</td>
+              <td>
+                <DssChip dense size="sm" outline color="primary">
+                  {{ row.tipo.replace('Parcelamento ', '') }}
+                </DssChip>
+              </td>
               <td class="col-center">
                 <DssButton
-                  flat
+                  variant="flat"
                   round
-                  dense
-                  :icon="row.controleCorte ? 'block' : 'do_not_disturb_alt'"
-                  :color="row.controleCorte ? 'primary' : 'grey'"
                   size="sm"
+                  :icon="row.controleCorte ? 'gpp_bad' : 'gpp_good'"
+                  :color="row.controleCorte ? 'negative' : 'positive'"
                 >
                   <DssTooltip>
                     {{ row.controleCorte ? 'Sob controle de corte' : 'Sem controle de corte' }}
@@ -267,23 +344,21 @@
               </td>
               <td class="col-actions">
                 <DssButton
-                  flat
+                  variant="flat"
                   round
-                  dense
+                  size="sm"
                   icon="visibility"
                   color="primary"
-                  size="sm"
                   @click="openDetail(row)"
                 >
                   <DssTooltip>Visualizar parcelamento</DssTooltip>
                 </DssButton>
 
                 <DssBtnDropdown
-                  flat
-                  dense
+                  variant="flat"
                   size="sm"
                   color="primary"
-                  dropdown-icon="expand_more"
+                  dropdown-icon="more_vert"
                   no-icon-animation
                 >
                   <DssList>
@@ -314,15 +389,16 @@
         </DssMarkupTable>
       </DssCard>
 
-      <!-- Bottom action bar quando há seleção -->
+      <!-- Selection bar -->
       <transition name="fade">
         <div v-if="selected.length" class="selection-bar">
-          <span class="selection-bar__count">
-            <strong>{{ selected.length }}</strong> {{ selected.length === 1 ? 'item selecionado' : 'itens selecionados' }}
-          </span>
+          <DssChip dense color="primary" text-color="white" icon="check_circle">
+            {{ selected.length }} {{ selected.length === 1 ? 'item selecionado' : 'itens selecionados' }}
+          </DssChip>
           <DssSpace />
-          <DssButton flat color="primary" label="Limpar" @click="selected = []" />
-          <DssButton color="primary" icon="receipt_long" label="Imprimir selecionados" />
+          <DssButton variant="flat" color="primary" label="Limpar" @click="selected = []" />
+          <DssButton variant="outlined" color="primary" icon="download" label="Exportar" />
+          <DssButton variant="elevated" color="primary" icon="receipt_long" label="Imprimir selecionados" />
         </div>
       </transition>
     </section>
@@ -337,7 +413,7 @@
             <span class="detail-modal__eyebrow">Negociação</span>
             <h3 class="detail-modal__title">Parcelamento {{ detailRow?.codigo }}</h3>
           </div>
-          <DssButton flat round dense icon="close" @click="detailOpen = false" />
+          <DssButton variant="flat" round size="sm" icon="close" @click="detailOpen = false" />
         </header>
 
         <DssSeparator />
@@ -345,9 +421,14 @@
         <div class="detail-modal__body">
           <div class="detail-modal__row">
             <span class="detail-modal__label">Situação</span>
-            <span :class="['status-text', `status-text--${statusToken(detailRow?.situacao)}`]">
+            <DssChip
+              dense size="sm"
+              :color="chipColor(detailRow?.situacao)"
+              :text-color="chipTextColor(detailRow?.situacao)"
+              :icon="chipIcon(detailRow?.situacao)"
+            >
               {{ detailRow?.situacao }}
-            </span>
+            </DssChip>
           </div>
           <div class="detail-modal__row">
             <span class="detail-modal__label">Valor total</span>
@@ -370,8 +451,9 @@
         <DssSeparator />
 
         <DssCardActions align="right">
-          <DssButton flat label="Fechar" @click="detailOpen = false" />
-          <DssButton color="primary" icon="print" label="Imprimir" />
+          <DssButton variant="flat" label="Fechar" @click="detailOpen = false" />
+          <DssButton variant="outlined" color="primary" icon="download" label="Boleto" />
+          <DssButton variant="elevated" color="primary" icon="print" label="Imprimir" />
         </DssCardActions>
       </DssCard>
     </DssDialog>
@@ -394,6 +476,7 @@ import DssBreadcrumbsEl from '@components/base/DssBreadcrumbsEl/DssBreadcrumbsEl
 import DssCard from '@components/base/DssCard/DssCard.vue'
 import { DssCardActions } from '@components/base/DssCard/index.js'
 import DssCheckbox from '@components/base/DssCheckbox/DssCheckbox.vue'
+import DssChip from '@components/base/DssChip/DssChip.vue'
 import DssList from '@components/base/DssList/DssList.vue'
 import DssItem from '@components/base/DssItem/DssItem.vue'
 import DssItemSection from '@components/base/DssItemSection/DssItemSection.vue'
@@ -405,30 +488,18 @@ import DssTab from '@components/base/DssTab/DssTab.vue'
 import DssTooltip from '@components/base/DssTooltip/DssTooltip.vue'
 import DssDialog from '@components/composed/DssDialog/DssDialog.vue'
 
-// ----- Tabs de módulos -----
+// ----- Tabs -----
 const moduleTabs = [
-  { value: 'financeiro', label: 'FINANCEIRO',              icon: 'attach_money' },
-  { value: 'cadastro',   label: 'INFORMAÇÕES DE CADASTRO', icon: 'badge'        },
-  { value: 'os',         label: 'ORDEM DE SERVIÇO',        icon: 'build'        },
-  { value: 'leituras',   label: 'LEITURAS E CONSUMO',      icon: 'speed'        },
-  { value: 'cobrancas',  label: 'COBRANÇAS',               icon: 'request_quote'},
-  { value: 'atend',      label: 'ATENDIMENTOS',            icon: 'support_agent'},
+  { value: 'financeiro', label: 'Financeiro',              icon: 'attach_money' },
+  { value: 'cadastro',   label: 'Inf. de Cadastro',        icon: 'badge'        },
+  { value: 'os',         label: 'Ordem de Serviço',        icon: 'build'        },
+  { value: 'leituras',   label: 'Leituras e Consumo',      icon: 'speed'        },
+  { value: 'cobrancas',  label: 'Cobranças',               icon: 'request_quote'},
+  { value: 'atend',      label: 'Atendimentos',            icon: 'support_agent'},
 ]
 const activeModule = ref('financeiro')
 
-// ----- Toolbar de ações -----
-const toolbarActions = [
-  { id: 'parcelar',   icon: 'add_box',      label: 'Parcelar',   hint: 'Criar novo parcelamento' },
-  { id: 'simular',    icon: 'calculate',    label: 'Simular',    hint: 'Simular condições' },
-  { id: 'reparcelar', icon: 'autorenew',    label: 'Reparcelar', hint: 'Reparcelar dívida ativa' },
-  { id: 'antecipar',  icon: 'fast_forward', label: 'Antecipar',  hint: 'Antecipar parcelas' },
-  { id: 'cancelar',   icon: 'block',        label: 'Cancelar',   hint: 'Cancelar negociação', color: 'negative' },
-  { id: 'imprimir',   icon: 'print',        label: 'Imprimir',   hint: 'Imprimir extrato' },
-  { id: 'campanhas',  icon: 'campaign',     label: 'Campanhas',  hint: 'Campanhas vigentes' },
-]
-
 function handleToolbarAction(id: string) {
-  // Demo handler (no-op em produção dispararia ações reais)
   console.log('[Parcelamento] toolbar:', id)
 }
 
@@ -458,13 +529,26 @@ const rows = ref<Row[]>([
   { id: 8, codigo: '28242', valorTotal: '7.420,30',  emissao: '10/03/2024', parcelaVista: '0,00',    valorParcela: '185,50', numParcelas: 40, situacao: 'Pago',      tipo: 'Parcelamento (Normal)',     controleCorte: false },
 ])
 
-function statusToken(s?: Situacao) {
+// Mapeamento Situação → tokens semânticos DSS
+function chipColor(s?: Situacao) {
   switch (s) {
-    case 'Pago':      return 'success'
+    case 'Pago':      return 'positive'
     case 'Pendente':  return 'warning'
+    case 'Em atraso': return 'negative'
+    case 'Cancelado': return 'grey'
+    default:          return 'grey'
+  }
+}
+function chipTextColor(s?: Situacao) {
+  return s === 'Cancelado' ? 'grey-7' : 'white'
+}
+function chipIcon(s?: Situacao) {
+  switch (s) {
+    case 'Pago':      return 'check_circle'
+    case 'Pendente':  return 'schedule'
     case 'Em atraso': return 'error'
-    case 'Cancelado': return 'muted'
-    default:          return 'muted'
+    case 'Cancelado': return 'block'
+    default:          return ''
   }
 }
 
@@ -502,7 +586,9 @@ function rowAction(action: string, row: Row) {
 
 <style lang="scss" scoped>
 /* ============================================================
-   Página inteira: usa exclusivamente tokens DSS (--dss-*)
+   Página inteira: tokens DSS exclusivamente.
+   Componentes mostram variedade visual (elevated/outlined/flat,
+   round REAL, chips coloridos, hover refinado).
    ============================================================ */
 
 .parcelamento-page {
@@ -516,25 +602,30 @@ function rowAction(action: string, row: Row) {
   font-size: 0.875rem;
 }
 
-/* ---------- App bar ---------- */
+/* ---------- App bar (altura proporcional dos playgrounds) ---------- */
 .app-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--dss-spacing-2) var(--dss-spacing-4);
+  padding: var(--dss-spacing-2) var(--dss-spacing-5);
+  min-height: 56px;
   background: var(--dss-action-primary);
   color: var(--dss-text-inverse);
-  box-shadow: var(--dss-shadow-sm);
+  box-shadow: var(--dss-shadow-md);
 
   &__brand     { display: flex; align-items: center; gap: var(--dss-spacing-3); }
-  &__menu      { opacity: 0.9; }
   &__logo      { display: flex; align-items: center; gap: var(--dss-spacing-1_5); }
-  &__logo-text { font-size: 1rem; letter-spacing: 0.5px;
+  &__logo-text { font-size: 1.0625rem; letter-spacing: 0.5px;
     strong { font-weight: 700; } em { font-style: normal; font-weight: 300; opacity: 0.92; }
   }
-  &__divider   { width: 1px; height: 24px; background: rgba(255,255,255,0.35); }
-  &__title     { font-size: 1rem; font-weight: 500; margin: 0; }
-  &__actions   { display: flex; align-items: center; gap: var(--dss-spacing-1); }
+  &__divider   { width: 1px; height: 28px; background: rgba(255,255,255,0.35); }
+  &__title     { font-size: 1.0625rem; font-weight: 500; margin: 0; }
+  &__actions   { display: flex; align-items: center; gap: var(--dss-spacing-2); }
+
+  /* Force white text/icon for flat buttons on colored bar */
+  &__btn :deep(.dss-button__icon),
+  &__btn :deep(.q-btn__content) { color: var(--dss-text-inverse); }
+  &__btn:hover  { background: rgba(255,255,255,0.12); border-radius: 50%; }
 }
 
 /* ---------- Breadcrumb ---------- */
@@ -545,12 +636,13 @@ function rowAction(action: string, row: Row) {
 /* ---------- Client header card ---------- */
 .client-header {
   margin: 0 var(--dss-spacing-5);
-  padding: var(--dss-spacing-4) var(--dss-spacing-5);
-  box-shadow: var(--dss-shadow-xs);
+  padding: var(--dss-spacing-5) var(--dss-spacing-5);
+  box-shadow: var(--dss-shadow-sm);
+  border-radius: var(--dss-radius-md, 8px);
 
   &__grid {
     display: grid;
-    grid-template-columns: auto 1.6fr 1.4fr 1.4fr auto;
+    grid-template-columns: auto 1.6fr 1.4fr 1.2fr auto;
     gap: var(--dss-spacing-5);
     align-items: start;
   }
@@ -560,11 +652,11 @@ function rowAction(action: string, row: Row) {
     flex-direction: column;
     align-items: center;
     gap: var(--dss-spacing-2);
-    min-width: 132px;
+    min-width: 140px;
   }
-  &__id-info { display: flex; flex-direction: column; align-items: center; gap: var(--dss-spacing-1_5); }
+  &__id-info { display: flex; flex-direction: column; align-items: center; gap: var(--dss-spacing-2); }
   &__code {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--dss-text-body);
     letter-spacing: 0.5px;
@@ -573,18 +665,20 @@ function rowAction(action: string, row: Row) {
   &__group {
     display: flex;
     flex-direction: column;
-    gap: var(--dss-spacing-1_5);
+    gap: var(--dss-spacing-2);
     margin: 0;
   }
 
   &__rail {
     display: flex;
     flex-direction: column;
-    gap: var(--dss-spacing-1_5);
+    gap: var(--dss-spacing-2);
     padding-left: var(--dss-spacing-3);
     border-left: 1px solid var(--dss-gray-200);
   }
 }
+
+.rail-btn { position: relative; }
 
 .kv {
   display: flex;
@@ -597,25 +691,31 @@ function rowAction(action: string, row: Row) {
   dd { color: var(--dss-text-body); margin: 0;
        display: inline-flex; align-items: center; gap: var(--dss-spacing-1); }
 
+  &--inline { align-items: center; }
   &--muted dt, &--muted dd { color: var(--dss-text-muted); }
 }
 
-/* ---------- Module tabs ---------- */
+/* ---------- Module tabs (proporção dos playgrounds) ---------- */
 .module-tabs {
   margin: 0 var(--dss-spacing-5);
-  box-shadow: var(--dss-shadow-xs);
-  border-radius: var(--dss-radius-md, 6px);
+  box-shadow: var(--dss-shadow-sm);
+  border-radius: var(--dss-radius-md, 8px);
   overflow: hidden;
 
   &__bar :deep(.q-tab) {
+    min-height: 56px;
     font-weight: 500;
-    text-transform: uppercase;
-    font-size: 0.8125rem;
-    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+    letter-spacing: 0.3px;
+    text-transform: none;
+    transition: background 150ms ease;
+  }
+  &__bar :deep(.q-tab:hover):not(.q-tab--active) {
+    background: var(--dss-surface-hover);
   }
   &__bar :deep(.q-tab--active) {
-    background: var(--dss-action-primary);
-    color: var(--dss-text-inverse);
+    color: var(--dss-action-primary);
+    font-weight: 600;
   }
 }
 
@@ -628,42 +728,41 @@ function rowAction(action: string, row: Row) {
 
   &__header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     padding: var(--dss-spacing-2) 0;
     border-bottom: 2px solid var(--dss-action-primary);
   }
+  &__title-group { display: flex; align-items: center; gap: var(--dss-spacing-3); }
   &__title {
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: var(--dss-text-body);
   }
-  &__count {
-    font-size: 0.75rem;
-    color: var(--dss-text-subtle);
-  }
 }
 
-/* ---------- Action toolbar ---------- */
+/* ---------- Action toolbar (variantes diversas) ---------- */
 .action-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--dss-spacing-1);
-  padding: var(--dss-spacing-2) var(--dss-spacing-3);
-  background: var(--dss-surface-subtle);
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  padding: var(--dss-spacing-3);
+  background: var(--dss-surface-default);
   border: 1px solid var(--dss-gray-200);
-  border-radius: var(--dss-radius-md, 6px);
+  border-radius: var(--dss-radius-md, 8px);
+  box-shadow: var(--dss-shadow-xs);
 
-  &__btn { font-weight: 500; }
+  &__spacer { flex: 1; }
 }
 
 /* ---------- Data table ---------- */
 .parcel-table {
   padding: 0;
   background: var(--dss-surface-default);
-  box-shadow: var(--dss-shadow-xs);
-  border-radius: var(--dss-radius-md, 6px);
+  box-shadow: var(--dss-shadow-sm);
+  border-radius: var(--dss-radius-md, 8px);
   overflow: hidden;
 
   :deep(table) {
@@ -676,10 +775,10 @@ function rowAction(action: string, row: Row) {
     color: var(--dss-text-subtle);
     font-weight: 600;
     font-size: 0.75rem;
-    text-transform: none;
-    letter-spacing: 0;
-    padding: var(--dss-spacing-3) var(--dss-spacing-3);
-    border-bottom: 1px solid var(--dss-gray-200);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: var(--dss-spacing-3);
+    border-bottom: 2px solid var(--dss-gray-200);
     text-align: left;
   }
 
@@ -689,9 +788,12 @@ function rowAction(action: string, row: Row) {
     vertical-align: middle;
     font-size: 0.8125rem;
     color: var(--dss-text-body);
-    transition: background 120ms ease;
+    transition: background 150ms ease;
   }
 
+  :deep(tbody tr) {
+    transition: background 150ms ease;
+  }
   :deep(tbody tr:hover td) {
     background: var(--dss-surface-hover);
   }
@@ -704,22 +806,11 @@ function rowAction(action: string, row: Row) {
 .col-check   { width: 40px; }
 .col-code    { width: 80px; font-weight: 600; }
 .col-num     { text-align: left; }
-.col-center  { text-align: center; }
-.col-actions { width: 96px; text-align: right; white-space: nowrap; }
+.col-center  { text-align: center; width: 110px; }
+.col-actions { width: 110px; text-align: right; white-space: nowrap; }
 
 .cell-strong { font-weight: 600; color: var(--dss-text-body); }
 .cell-sub    { font-size: 0.6875rem; color: var(--dss-text-subtle); margin-top: 2px; }
-
-/* ---------- Status semantics (via tokens DSS) ---------- */
-.status-text {
-  font-weight: 600;
-  font-size: 0.8125rem;
-
-  &--success { color: var(--dss-feedback-success); }
-  &--warning { color: var(--dss-feedback-warning); }
-  &--error   { color: var(--dss-feedback-error);   }
-  &--muted   { color: var(--dss-text-muted); }
-}
 
 .text-danger { color: var(--dss-feedback-error); }
 
@@ -730,14 +821,11 @@ function rowAction(action: string, row: Row) {
   display: flex;
   align-items: center;
   gap: var(--dss-spacing-3);
-  padding: var(--dss-spacing-2) var(--dss-spacing-4);
+  padding: var(--dss-spacing-3) var(--dss-spacing-4);
   background: var(--dss-surface-default);
   border: 1px solid var(--dss-gray-200);
-  border-radius: var(--dss-radius-md, 6px);
-  box-shadow: var(--dss-shadow-md);
-
-  &__count { font-size: 0.8125rem; color: var(--dss-text-subtle);
-             strong { color: var(--dss-text-body); } }
+  border-radius: var(--dss-radius-md, 8px);
+  box-shadow: var(--dss-shadow-lg);
 }
 
 .fade-enter-active, .fade-leave-active { transition: opacity 160ms ease, transform 160ms ease; }
@@ -765,7 +853,7 @@ function rowAction(action: string, row: Row) {
   &__body {
     display: flex;
     flex-direction: column;
-    gap: var(--dss-spacing-2_5);
+    gap: var(--dss-spacing-3);
     padding: var(--dss-spacing-4) var(--dss-spacing-5);
   }
   &__row {
@@ -779,13 +867,5 @@ function rowAction(action: string, row: Row) {
     color: var(--dss-text-subtle);
     font-weight: 500;
   }
-}
-
-/* Rail buttons — botões redondos compactos com badge flutuante */
-.rail-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  position: relative;
 }
 </style>
