@@ -440,6 +440,7 @@ import TestTokens from './TestTokens.vue'
 import TestDataCard from './TestDataCard.vue'
 import TestCadrisCard from './TestCadrisCard.vue'
 import TestPageComplexity from './TestPageComplexity.vue'
+import TestParcelamento from './TestParcelamento.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')
