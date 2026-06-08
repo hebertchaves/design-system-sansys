@@ -410,6 +410,11 @@
         <TestPageComplexity />
       </div>
 
+      <!-- Parcelamento (Sansys Water) — pattern real -->
+      <div v-else-if="activeComponent === 'parcelamento'" class="component-view">
+        <TestParcelamento />
+      </div>
+
       <!-- Defaults Preview View -->
       <div v-else-if="activeComponent === 'defaults-preview'" class="component-view">
         <TestDefaultPreview />
