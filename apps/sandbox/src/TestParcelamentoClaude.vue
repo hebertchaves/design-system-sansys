@@ -99,7 +99,7 @@
               </div>
               <span class="pc-client-id__code">652701-9</span>
               <DssButton
-                variant="outlined" size="xs" color="primary"
+                variant="outline" size="xs" color="primary"
                 icon="add" label="DETALHES"
                 class="pc-client-id__details-btn"
               >
@@ -190,18 +190,20 @@
             <!-- Col 5 — Rail de ações -->
             <div class="pc-client-rail" role="group" aria-label="Ações rápidas">
               <div class="pc-client-rail__item">
-                <DssButton
-                  variant="elevated" size="sm" icon="shopping_cart"
-                  color="primary" round aria-label="Carrinho de serviços (2)"
-                  class="pc-client-rail__btn"
-                >
-                  <DssBadge floating color="negative" style="top:0;right:0">2</DssBadge>
-                  <DssTooltip anchor="center left" self="center right">Carrinho (2 itens)</DssTooltip>
-                </DssButton>
+                <div class="pc-badge-wrap">
+                  <DssButton
+                    variant="elevated" size="sm" icon="shopping_cart"
+                    color="primary" round aria-label="Carrinho de serviços (2)"
+                    class="pc-client-rail__btn"
+                  >
+                    <DssTooltip anchor="center left" self="center right">Carrinho (2 itens)</DssTooltip>
+                  </DssButton>
+                  <DssBadge floating color="negative" style="top:2px;right:2px;">2</DssBadge>
+                </div>
               </div>
               <div class="pc-client-rail__item">
                 <DssButton
-                  variant="outlined" size="sm" icon="add"
+                  variant="outline" size="sm" icon="add"
                   color="primary" round aria-label="Novo atendimento"
                   class="pc-client-rail__btn"
                 >
@@ -261,7 +263,7 @@
             <DssButton
               v-for="action in toolbarActions"
               :key="action.id"
-              variant="outlined"
+              variant="outline"
               size="sm"
               :icon="action.icon"
               :label="action.label"
@@ -453,11 +455,11 @@
                         <div class="pc-detail-actions">
                           <DssButton variant="flat" size="xs" color="primary"
                             label="Fechar" icon="close" @click="expandedRow = null" />
-                          <DssButton variant="outlined" size="xs" color="primary"
+                          <DssButton variant="outline" size="xs" color="primary"
                             icon="print" label="Imprimir boleto" />
-                          <DssButton variant="outlined" size="xs" color="primary"
+                          <DssButton variant="outline" size="xs" color="primary"
                             icon="history" label="Histórico" />
-                          <DssButton variant="outlined" size="xs" color="negative"
+                          <DssButton variant="outline" size="xs" color="negative"
                             icon="cancel" label="Cancelar" />
                         </div>
                       </div>
@@ -479,7 +481,7 @@
               <div class="pc-selection-bar__spacer" />
               <DssButton variant="flat" size="xs" color="primary"
                 label="Limpar seleção" @click="selected = []" />
-              <DssButton variant="outlined" size="xs" color="primary"
+              <DssButton variant="outline" size="xs" color="primary"
                 icon="download" label="Exportar" />
               <DssButton variant="elevated" size="xs" color="primary"
                 icon="print" label="Imprimir selecionados" />
@@ -552,7 +554,7 @@
 
         <DssCardActions align="right">
           <DssButton variant="flat" label="Fechar" @click="detailOpen = false" />
-          <DssButton variant="outlined" color="primary" icon="history" label="Histórico" />
+          <DssButton variant="outline" color="primary" icon="history" label="Histórico" />
           <DssButton variant="elevated" color="primary" icon="print" label="Imprimir boleto" />
         </DssCardActions>
       </DssCard>
@@ -954,6 +956,11 @@ function openDetail(row: Row) {
   &__btn  { min-width: 40px !important; }
 }
 
+.pc-badge-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
 // ── Tabs bar ─────────────────────────────────────────────────
 .pc-tabs-bar {
   margin: var(--dss-spacing-4) var(--dss-spacing-5) 0;
@@ -990,8 +997,21 @@ function openDetail(row: Row) {
     height: 3px;
   }
 
+  // Ícone e texto lado a lado (inline) — DssTabs não repassa inline-label ao q-tabs
+  :deep(.q-tab__content) {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--dss-spacing-1_5, 6px);
+  }
+
   :deep(.q-tab__icon) {
+    margin-bottom: 0;
     font-size: 1.125rem;
+  }
+
+  :deep(.q-tab__label) {
+    padding-top: 0;
+    font-size: var(--dss-font-size-xs);
   }
 }
 
