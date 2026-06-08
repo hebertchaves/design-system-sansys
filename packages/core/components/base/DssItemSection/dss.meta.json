@@ -1,7 +1,7 @@
 {
   "component": "DssItemSection",
   "dssVersion": "2.2",
-  "status": "pronto-para-auditoria",
+  "status": "pending-audit",
   "seal": null,
   "sealDate": null,
   "auditMode": "Pre-Auditoria",

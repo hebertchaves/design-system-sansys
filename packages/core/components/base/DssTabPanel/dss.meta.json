@@ -1,7 +1,7 @@
 {
   "component": "DssTabPanel",
   "dssVersion": "2.2",
-  "status": "conforme",
+  "status": "conformant",
   "seal": "DSS/docs/Compliance/seals/DssTabPanel/DSSTABPANEL_SELO_v2.2.md",
   "sealDate": "2026-04-09",
   "auditMode": "Selo DSS v2.2 Concedido",

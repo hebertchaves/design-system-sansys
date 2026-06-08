@@ -1,12 +1,8 @@
 # DssAvatar
 
-Status: ✅ Selo DSS v2.2
-Auditoria Final: 02/02/2026
-Golden Reference: DssChip
-Golden Context: DssChip
-Classificação: Basico (Visual/Identity)
+Status: ✅ Selo DSS v2.2 | Auditoria Final: 02/02/2026
 
-Componente de avatar do Design System Sansys para representacao visual de usuarios, entidades ou placeholders.
+Componente de avatar do Design System Sansys para representação visual de usuários, entidades ou placeholders.
 
 ## Quick Start
 
@@ -15,57 +11,94 @@ Componente de avatar do Design System Sansys para representacao visual de usuari
   <!-- Com iniciais -->
   <DssAvatar color="primary">JD</DssAvatar>
 
-  <!-- Com icone -->
+  <!-- Com ícone -->
   <DssAvatar icon="person" color="secondary" />
 
   <!-- Com imagem -->
-  <DssAvatar>
-    <img src="/avatar.jpg" alt="Joao Silva" />
+  <DssAvatar aria-label="João Silva">
+    <img src="/avatar.jpg" alt="João Silva" />
   </DssAvatar>
 </template>
 
 <script setup>
-import { DssAvatar } from '@/dss/components/base/DssAvatar'
+import { DssAvatar } from '@sansys/design-system'
 </script>
 ```
 
-## Documentacao
+## Quando usar
 
-| Documento | Descricao | Quando Consultar |
-|-----------|-----------|------------------|
-| [DssAvatar.md](./DssAvatar.md) | **Normativo** - Governanca, anti-patterns, decisoes | Duvidas sobre "como devo usar?", "posso fazer isso?" |
-| [DSSAVATAR_API.md](./DSSAVATAR_API.md) | **Referencial** - Props, eventos, tipos | Consulta rapida de API durante desenvolvimento |
+- Representar um usuário identificado (iniciais, foto, ícone)
+- Indicar status de presença (online, away, busy, offline)
+- Grupos de avatares sobrepostos (avatar stack)
 
-## Funcionalidades Principais
+## Quando NÃO usar
 
-- **5 tamanhos predefinidos**: xs, sm, md, lg, xl
-- **3 formas**: circular, rounded, square
-- **Status indicators**: online, away, busy, offline
-- **Brandabilidade**: Hub, Water, Waste
-- **Acessibilidade**: WCAG 2.1 AA, ARIA support
-- **TypeScript**: Totalmente tipado
+- Para ícones genéricos sem identidade → usar `DssIcon`
+- Para imagens de conteúdo (produto, banner) → usar `DssImg`
+
+## Props
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| string` | `'md'` | Tamanho predefinido ou CSS unit |
+| `fontSize` | `string \| null` | `null` | Tamanho de fonte customizado (CSS unit) |
+| `icon` | `string \| null` | `null` | Nome do ícone Material Icons |
+| `color` | `string \| null` | `null` | Cor de fundo (classes `.bg-*`) |
+| `textColor` | `string \| null` | `null` | Cor do texto/ícone (classes `.text-*`) |
+| `shape` | `'circular' \| 'rounded' \| 'square'` | `'circular'` | Forma do avatar |
+| `rounded` | `boolean` | `false` | Atalho para `shape="rounded"` |
+| `square` | `boolean` | `false` | Atalho para `shape="square"` |
+| `status` | `'online' \| 'away' \| 'busy' \| 'offline' \| null` | `null` | Indicador de status de presença |
+| `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Brand override |
+| `ariaLabel` | `string \| undefined` | `undefined` | Label ARIA para screen readers |
+| `alt` | `string \| undefined` | `undefined` | Alt text para imagens no slot |
+
+## Slots
+
+| Slot | Descrição |
+|------|-----------|
+| `default` | Conteúdo do avatar: texto (iniciais), `<img>`, ou qualquer elemento |
+
+## Events
+
+Nenhum evento emitido. `DssAvatar` é um componente de exibição puro.
+
+## Tamanhos predefinidos
+
+| Size | Width/Height | Font Size | Icon Size |
+|------|--------------|-----------|-----------|
+| `xs` | 32px | 12px | 16px |
+| `sm` | 40px | 14px | 20px |
+| `md` | 48px | 16px | 24px |
+| `lg` | 64px | 18px | 32px |
+| `xl` | 80px | 20px | 48px |
+
+## Estados Visuais
+
+| Estado | Comportamento |
+|--------|---------------|
+| **hover** | Não aplicável — DssAvatar não é interativo |
+| **focus** | Não aplicável — DssAvatar não é interativo |
+| **active** | Não aplicável — DssAvatar não é interativo |
+| **disabled** | Não aplicável — DssAvatar não é interativo |
+| **status: online** | Indicador verde `--dss-positive` no canto inferior direito |
+| **status: away** | Indicador amarelo `--dss-warning` |
+| **status: busy** | Indicador vermelho `--dss-negative` |
+| **status: offline** | Indicador cinza `--dss-neutral-400` |
+
+Quando DssAvatar é usado como gatilho de um controle interativo (ex: menu de perfil), o estado interativo é responsabilidade do componente pai.
 
 ## Exemplos
-
-### Tamanhos
-
-```vue
-<DssAvatar size="xs" color="primary">XS</DssAvatar>
-<DssAvatar size="sm" color="primary">SM</DssAvatar>
-<DssAvatar size="md" color="primary">MD</DssAvatar>
-<DssAvatar size="lg" color="primary">LG</DssAvatar>
-<DssAvatar size="xl" color="primary">XL</DssAvatar>
-```
 
 ### Formas
 
 ```vue
-<DssAvatar color="primary">JD</DssAvatar>           <!-- Circular -->
-<DssAvatar rounded color="secondary">AB</DssAvatar> <!-- Rounded -->
-<DssAvatar square color="accent">XY</DssAvatar>     <!-- Square -->
+<DssAvatar color="primary">JD</DssAvatar>            <!-- circular (default) -->
+<DssAvatar rounded color="secondary">AB</DssAvatar>  <!-- rounded -->
+<DssAvatar square color="accent">XY</DssAvatar>      <!-- square -->
 ```
 
-### Status
+### Status de presença
 
 ```vue
 <DssAvatar status="online" color="primary">JD</DssAvatar>
@@ -82,43 +115,44 @@ import { DssAvatar } from '@/dss/components/base/DssAvatar'
 <DssAvatar brand="waste" icon="person" />
 ```
 
-### Grupo de Avatares
+### Grupo de avatares (avatar stack)
 
 ```vue
 <div class="dss-avatar-group">
   <DssAvatar color="primary">JD</DssAvatar>
   <DssAvatar color="secondary">AB</DssAvatar>
-  <DssAvatar color="accent">XY</DssAvatar>
-  <DssAvatar color="info">+5</DssAvatar>
+  <DssAvatar color="accent">+5</DssAvatar>
 </div>
 ```
 
-## Estrutura de Arquivos
+## Tokens Utilizados
 
-```
-DssAvatar/
-├── 1-structure/
-│   └── DssAvatar.ts.vue      # Componente Vue
-├── 2-composition/
-│   └── _base.scss            # Estilos base
-├── 3-variants/
-│   ├── _brands.scss          # Variantes de marca
-│   ├── _status.scss          # Estilos de status
-│   └── index.scss            # Orquestrador
-├── 4-output/
-│   └── DssAvatar.scss        # Compilacao final
-├── composables/
-│   ├── useAvatarClasses.ts   # Classes CSS
-│   └── useAvatarStyles.ts    # Estilos inline
-├── types/
-│   └── avatar.types.ts       # Tipos TypeScript
-├── DssAvatar.module.scss     # Module orchestrator
-├── DssAvatar.md              # Documentacao normativa
-├── DSSAVATAR_API.md          # API reference
-├── README.md                 # Este arquivo
-└── DOCUMENTATION_CHANGELOG.md # Changelog
-```
+| Token | Uso |
+|-------|-----|
+| `--dss-compact-control-height-xs` | Dimensão xs (32px) |
+| `--dss-compact-control-height-sm` | Dimensão sm (40px) |
+| `--dss-compact-control-height-md` | Dimensão md (48px) |
+| `--dss-compact-control-height-lg` | Dimensão lg (64px) |
+| `--dss-compact-control-height-xl` | Dimensão xl (80px) |
+| `--dss-radius-full` | Forma circular |
+| `--dss-radius-md` | Forma rounded |
+| `--dss-positive` | Status online |
+| `--dss-warning` | Status away |
+| `--dss-negative` | Status busy |
+| `--dss-neutral-400` | Status offline |
+| `--dss-hub-600` | Brand Hub |
+| `--dss-water-500` | Brand Water |
+| `--dss-waste-600` | Brand Waste |
 
-## Licenca
+## Acessibilidade
 
-Propriedade da Jtech
+- Avatar identificado → fornecer `aria-label` ou garantir que o contexto o identifique
+- Avatar com imagem → `alt` descritivo na tag `<img>` dentro do slot
+- Quando usado como gatilho interativo → envolver em elemento focusável (`button`, etc.)
+
+## Documentação
+
+| Documento | Descrição |
+|-----------|-----------|
+| [DssAvatar.md](./DssAvatar.md) | Normativo — governança, anti-patterns, decisões |
+| [DSSAVATAR_API.md](./DSSAVATAR_API.md) | API Reference — props completas, tipos, tokens |

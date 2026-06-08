@@ -66,14 +66,40 @@ export const metadata = {
   description: 'Sistema de Design profissional com componentes Vue 3 e tokens DSS',
   author: 'Hebert Daniel Oliveira Chaves',
   license: 'MIT',
+  componentCount: 89,
   components: [
-    'DssButton',
-    'DssBadge',
-    'DssAvatar',
-    'DssCard',
-    'DssCardSection',
-    'DssCardActions',
-    'DssInput'
+    // Controles interativos
+    'DssButton', 'DssCheckbox', 'DssRadio', 'DssToggle', 'DssRange', 'DssSlider',
+    'DssRating', 'DssKnob', 'DssSelect', 'DssOptionGroup', 'DssBtnGroup',
+    'DssBtnToggle', 'DssBtnDropdown', 'DssFab', 'DssFabAction', 'DssPagination',
+    // Inputs e formulários
+    'DssInput', 'DssTextarea', 'DssField', 'DssFile',
+    // Exibição de dados
+    'DssChip', 'DssBadge', 'DssAvatar', 'DssIcon', 'DssImg',
+    'DssCard', 'DssCardSection', 'DssCardActions',
+    'DssList', 'DssItem', 'DssItemLabel', 'DssItemSection',
+    'DssMarkupTable', 'DssTree',
+    // Feedback e progresso
+    'DssLinearProgress', 'DssCircularProgress', 'DssSpinner', 'DssSkeleton',
+    'DssInnerLoading', 'DssAjaxBar', 'DssTooltip', 'DssMenu', 'DssPopupProxy',
+    // Layout e estrutura
+    'DssLayout', 'DssPage', 'DssPageContainer', 'DssHeader', 'DssFooter',
+    'DssDrawer', 'DssToolbar', 'DssToolbarTitle', 'DssSeparator', 'DssSpace',
+    'DssScrollArea', 'DssSplitter', 'DssResponsive', 'DssPageScroller', 'DssPageSticky',
+    // Navegação
+    'DssTabs', 'DssTab', 'DssTabPanel', 'DssTabPanels', 'DssRouteTab',
+    'DssBreadcrumbs', 'DssBreadcrumbsEl', 'DssBar', 'DssExpansionItem',
+    // Stepper
+    'DssStepper', 'DssStep',
+    // Timeline
+    'DssTimeline', 'DssTimelineEntry',
+    // Avançados
+    'DssVirtualScroll', 'DssInfiniteScroll', 'DssPullToRefresh', 'DssSlideItem',
+    'DssParallax', 'DssVideo', 'DssBanner',
+    // Compostos
+    'DssDialog', 'DssTable', 'DssCarousel', 'DssCarouselSlide',
+    'DssBottomSheet', 'DssChatMessage', 'DssColorPicker', 'DssDatePicker',
+    'DssTimePicker', 'DssForm', 'DssPopupEdit', 'DssUploader',
   ],
   brands: ['hub', 'water', 'waste'],
   accessibility: 'WCAG 2.1 AA',

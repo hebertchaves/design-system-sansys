@@ -3,6 +3,9 @@
    Classes helper para uso com componentes Quasar
    ========================================================================== */
 
+/* Mixins DSS — necessário com @use (sem namespace para manter chamadas existentes) */
+@use '../utils/mixins' as *;
+
 /* ===========================================
    1. CLASSES DE CONTEXTUALIZAÇÃO DE MARCA
    =========================================== */

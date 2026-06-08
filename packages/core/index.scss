@@ -4,13 +4,13 @@
    ========================================================================== */
 
 /* 1. Tokens base (globals, semantic, brand) + Dark Mode */
-@import 'tokens/index';
+@use 'tokens/index' as dss-tokens;
 
-/* 2. Utilitarios (mixins, functions, helpers) */
-@import 'utils/index';
+/* 2. Utilitários (mixins, functions, helpers) */
+@use 'utils/index' as dss-utils;
 
 /* 3. Temas (Quasar overrides) */
-@import 'themes/index';
+@use 'themes/index' as dss-themes;
 
 /* 4. Componentes (estilos globais) */
-@import 'components/index';
+@use 'components/index' as dss-components;

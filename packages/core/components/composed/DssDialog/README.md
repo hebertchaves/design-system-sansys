@@ -1,14 +1,8 @@
 # DssDialog
 
-Componente modal DSS — wrapper governado sobre o `QDialog` do Quasar.
+Wrapper DSS governado sobre `QDialog` do Quasar. Modal com suporte a cabeçalho, corpo e rodapé, posicionamento flexível e controle de fechamento.
 
-## Instalação
-
-```js
-import { DssDialog } from '@dss/components'
-```
-
-## Uso Básico
+## Quick Start
 
 ```vue
 <template>
@@ -36,16 +30,74 @@ function handleConfirm() { isOpen.value = false }
 </script>
 ```
 
-## Diálogo de Confirmação
+## Quando usar
+
+- Confirmações de ação destrutiva (excluir, sair, cancelar)
+- Formulários modais que requerem foco do usuário
+- Detalhes expandidos de um item sem navegar para nova tela
+- Painéis laterais ou bottom sheets (via prop `position`)
+
+## Quando NÃO usar
+
+- Para mensagens de sistema não-blocantes → usar `DssTooltip` ou notificação inline
+- Para menus e seletores simples → usar `DssMenu` ou `DssPopupProxy`
+- Para confirmações mínimas de 1 clique → usar `DssPopupEdit`
+
+## Props
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `open` | `Boolean` | `false` | `v-model:open` — controla visibilidade |
+| `persistent` | `Boolean` | `false` | Impede fechamento por clique externo ou ESC |
+| `seamless` | `Boolean` | `false` | Remove backdrop; permite interação com o fundo |
+| `maximized` | `Boolean` | `false` | Exibe em tela cheia (100vw × 100vh) |
+| `fullWidth` | `Boolean` | `false` | Ocupa 100% da largura disponível |
+| `fullHeight` | `Boolean` | `false` | Ocupa 100% da altura disponível |
+| `position` | `'standard' \| 'top' \| 'bottom' \| 'left' \| 'right'` | `'standard'` | Posição na tela |
+| `transitionEnter` | `String` | `'scale'` | Animação de entrada (ex: `'fade'`, `'slide-up'`) |
+| `transitionLeave` | `String` | `'scale'` | Animação de saída |
+| `disableEsc` | `Boolean` | `false` | Desabilita fechamento via tecla ESC |
+| `disableBackdropClick` | `Boolean` | `false` | Desabilita fechamento via clique no backdrop |
+
+## Slots
+
+| Slot | Obrigatório | Descrição |
+|------|------------|-----------|
+| `default` | Sim | Conteúdo principal do diálogo |
+| `#header` | Não | Cabeçalho — recomendado: título + botão fechar |
+| `#footer` | Não | Rodapé — recomendado: botões de ação |
+
+## Events
+
+| Evento | Payload | Descrição |
+|--------|---------|-----------|
+| `update:open` | `Boolean` | Emitido para atualizar o `v-model:open` |
+| `open` | — | Emitido após animação de entrada completar |
+| `close` | — | Emitido após animação de saída completar |
+| `before-open` | — | Emitido antes da animação de entrada iniciar |
+| `before-close` | — | Emitido antes da animação de saída iniciar |
+
+## Estados Visuais
+
+| Estado | Comportamento |
+|--------|---------------|
+| **aberto** | Exibido com backdrop e foco preso dentro do diálogo |
+| **fechado** | Desmontado do DOM após animação de saída |
+| **persistent** | Agita o diálogo ao clicar fora (feedback visual de bloqueio) |
+| **maximized** | Ocupa 100vw × 100vh, sem bordas arredondadas |
+| **seamless** | Sem backdrop; não bloqueia interação com o fundo |
+| **posicionado** | Diálogo ancorando em borda específica (top/bottom/left/right) |
+
+## Exemplos
+
+### Confirmação destrutiva
 
 ```vue
 <DssDialog v-model:open="isOpen" persistent>
   <template #header>
     <h3>Confirmar exclusão?</h3>
   </template>
-
   <p>Esta ação não pode ser desfeita.</p>
-
   <template #footer>
     <DssButton label="Cancelar" flat @click="isOpen = false" />
     <DssButton label="Excluir" color="negative" @click="handleDelete" />
@@ -53,7 +105,19 @@ function handleConfirm() { isOpen.value = false }
 </DssDialog>
 ```
 
-## Diálogo em Tela Cheia
+### Painel lateral
+
+```vue
+<DssDialog v-model:open="isOpen" position="right" full-height>
+  <template #header>
+    <h2>Filtros</h2>
+    <DssButton icon="close" flat round @click="isOpen = false" />
+  </template>
+  <!-- filtros aqui -->
+</DssDialog>
+```
+
+### Tela cheia (mobile)
 
 ```vue
 <DssDialog v-model:open="isOpen" maximized>
@@ -61,40 +125,40 @@ function handleConfirm() { isOpen.value = false }
     <h2>Formulário Completo</h2>
     <DssButton icon="close" flat round @click="isOpen = false" />
   </template>
-
-  <!-- conteúdo do formulário -->
-
+  <!-- formulário -->
   <template #footer>
-    <DssButton label="Salvar" color="hub" @click="handleSave" />
+    <DssButton label="Salvar" color="hub" block @click="handleSave" />
   </template>
 </DssDialog>
 ```
 
-## Posições
+## Tokens Utilizados
 
-```vue
-<!-- Bottom sheet style -->
-<DssDialog v-model:open="isOpen" position="bottom">
-  <p>Conteúdo na parte inferior</p>
-</DssDialog>
+| Token | Camada | Uso |
+|-------|--------|-----|
+| `--dss-surface-default` | L2 | Background do diálogo |
+| `--dss-shadow-modal` | L2 | Elevação (box-shadow) |
+| `--dss-radius-lg` | L2, L3 | Border radius |
+| `--dss-padding-4` | L2 | Padding header/footer |
+| `--dss-padding-6` | L2 | Padding body |
+| `--dss-spacing-2` | L2 | Gap entre botões do footer |
+| `--dss-gray-100` | L2 | Divisores header/footer |
+| `--dss-font-family-sans` | L2 | Tipografia |
+| `--dss-text-body` | L2 | Cor do texto |
+| `--dss-hub-primary` | L4 | Borda brand Hub |
+| `--dss-water-primary` | L4 | Borda brand Water |
+| `--dss-waste-primary` | L4 | Borda brand Waste |
 
-<!-- Side panel style -->
-<DssDialog v-model:open="isOpen" position="right" full-height>
-  <p>Painel lateral</p>
-</DssDialog>
-```
+## Acessibilidade
 
-## Props Principais
+- Foco preso dentro do diálogo enquanto aberto (focus trap nativo do QDialog)
+- Fechamento via ESC por padrão (desabilitar apenas quando necessário com `disableEsc`)
+- Role `dialog` e `aria-modal` aplicados automaticamente pelo Quasar
+- Header deve conter o título identificador do diálogo
 
-| Prop | Tipo | Padrão | Descrição |
-|------|------|--------|-----------|
-| `open` | Boolean | `false` | v-model:open — visibilidade |
-| `persistent` | Boolean | `false` | Impede fechamento por clique externo/ESC |
-| `maximized` | Boolean | `false` | Tela cheia |
-| `position` | String | `'standard'` | standard, top, bottom, left, right |
+## Documentação
 
-## Links
-
-- [Documentação Completa](./DssDialog.md)
-- [API Reference](./DSSDIALOG_API.md)
-- [Exemplos Interativos](./DssDialog.example.vue)
+| Documento | Descrição |
+|-----------|-----------|
+| [DssDialog.md](./DssDialog.md) | Normativo — governança, anti-patterns, exceções de gate |
+| [DSSDIALOG_API.md](./DSSDIALOG_API.md) | API Reference — props completas, eventos, tokens, mapeamento Quasar |

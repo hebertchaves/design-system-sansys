@@ -1,7 +1,7 @@
 {
   "component": "DssCard",
   "dssVersion": "2.2",
-  "status": "conforme",
+  "status": "conformant",
   "seal": "DSS/docs/Compliance/seals/DssCard/DSSCARD_SELO_v2.2.md",
   "sealDate": "2026-02-12",
   "auditMode": "Auditoria Final",

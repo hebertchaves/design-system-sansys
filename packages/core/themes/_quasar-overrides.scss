@@ -3,6 +3,9 @@
    Aplicação das diretrizes de acessibilidade e tokens DSS
    ========================================================================== */
 
+/* Mixins DSS — necessário com @use (sem namespace para manter chamadas existentes) */
+@use '../utils/mixins' as *;
+
 /* ===========================================
    1. BOTÕES (Q-BTN) - Conformidade WCAG 2.1 AA
    =========================================== */

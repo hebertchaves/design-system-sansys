@@ -5,7 +5,7 @@
   "level": 1,
   "family": "Progresso e Feedback",
   "category": "Placeholder de carregamento (skeleton screen)",
-  "status": "granted",
+  "status": "conformant",
   "goldenReference": "DssBadge",
   "goldenContext": "DssInnerLoading",
   "quasarBase": "QSkeleton",

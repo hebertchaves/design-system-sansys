@@ -5,7 +5,7 @@
   "level": 1,
   "family": "Inputs Especializados",
   "category": "Controle rotativo para seleção de valores numéricos",
-  "status": "compliant",
+  "status": "conformant",
   "goldenReference": "DssChip",
   "goldenContext": "DssSlider",
   "quasarBase": "QKnob",

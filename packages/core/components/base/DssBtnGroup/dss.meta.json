@@ -1,7 +1,7 @@
 {
   "component": "DssBtnGroup",
   "dssVersion": "2.2",
-  "status": "pre-audit",
+  "status": "pending-audit",
   "auditMode": "Aguardando Auditoria DSS v2.2",
   "auditDate": null,
   "goldenReference": "DssChip",

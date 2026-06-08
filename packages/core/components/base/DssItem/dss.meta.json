@@ -120,5 +120,6 @@
       "--dss-waste-500"
     ]
   },
-  "previewGroup": "listas"
+  "previewGroup": "listas",
+  "status": "conformant"
 }

@@ -5,7 +5,7 @@
   "level": 1,
   "family": "Progresso e Feedback",
   "category": "Barra de progresso global para requisições assíncronas",
-  "status": "compliant",
+  "status": "conformant",
   "goldenReference": "DssBadge",
   "goldenContext": "DssLinearProgress",
   "quasarBase": "QAjaxBar",
