@@ -335,6 +335,15 @@
 
           <div v-show="expandedCategories.patterns" class="nav-submenu">
             <button
+              @click="activeComponent = 'parcelamento'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'parcelamento' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">receipt_long</span></span>
+              <span class="nav-label">Parcelamento</span>
+              <span class="nav-badge stress">real</span>
+            </button>
+
+            <button
               @click="activeComponent = 'login'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'login' }]"
             >
