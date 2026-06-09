@@ -529,7 +529,7 @@ export function FloatingGridInspector() {
   return (
     <div
       style={{ position: 'fixed', top: '5rem', right: '1rem', zIndex: 1000000, pointerEvents: 'auto' }}
-      className={`fixed top-20 right-4 z-50 bg-white rounded-xl shadow-2xl border border-slate-200 ${widthClass} transition-all duration-300 max-h-[calc(100vh-6rem)] flex flex-col`}
+      className={`fixed top-20 right-4 z-50 bg-white rounded-xl shadow-2xl border border-slate-200 ${widthClass} transition-all duration-300 h-[calc(100vh-6rem)] overflow-hidden flex flex-col`}
     >
       {/* Header */}
       <div className={`px-5 py-3 border-b border-slate-200 flex-shrink-0 ${isEditingElement ? 'bg-gradient-to-br from-green-50 via-emerald-50 to-green-50' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50'}`}>
@@ -585,7 +585,7 @@ export function FloatingGridInspector() {
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="layout" className="w-full flex-1 flex flex-col overflow-hidden">
+      <Tabs defaultValue="layout" className="w-full flex-1 flex flex-col min-h-0">
         <TabsList className="w-full grid grid-cols-5 rounded-none border-b border-slate-200 bg-slate-50 h-auto p-0 flex-shrink-0">
           <TabsTrigger 
             value="layout" 
@@ -651,7 +651,7 @@ export function FloatingGridInspector() {
         </TabsList>
 
         {/* TAB 1 — Layout (Real Components) */}
-        <TabsContent value="layout" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+        <TabsContent value="layout" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
 
           {/* Element scope indicator */}
           {isEditingElement && (
@@ -964,7 +964,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 2 — Overlay (Didactic Grid) */}
-        <TabsContent value="overlay" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+        <TabsContent value="overlay" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
           
           {/* 🆕 Element Editing Banner */}
           {isEditingElement && (
@@ -1130,7 +1130,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 3 — Visibility */}
-        <TabsContent value="visibility" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+        <TabsContent value="visibility" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
           <Accordion type="multiple" defaultValue={['visibility-main', 'visibility-layers', 'element-grid-visibility']} className="w-full">
             
             {/* 🆕 Element Grid Visibility - Only when editing element */}
@@ -1354,7 +1354,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 4 — Advanced */}
-        <TabsContent value="advanced" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+        <TabsContent value="advanced" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
           <Accordion type="multiple" defaultValue={['advanced-brand']} className="w-full">
 
             {/* Brand Selector */}
@@ -1559,7 +1559,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 5 — Alerts (DSS compliance violations) */}
-        <TabsContent value="alerts" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+        <TabsContent value="alerts" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
           {violations.length === 0 ? (
             <div className="flex flex-col items-center justify-center gap-3 p-8 text-center">
               <CheckCircle size={32} className="text-emerald-500" />

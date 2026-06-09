@@ -48,7 +48,11 @@
       "Bash(awk -F: '{sum+=$2} END{print \"semantic total:\", sum}')",
       "Bash(xargs cat)",
       "Bash(grep -n \"rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,6\\\\}\\\\b\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestParcelamentoClaude.vue)",
-      "Bash(grep -n \"rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,6\\\\}\\\\b\\\\|style=\\\\\"\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestParcelamentoClaude.vue)"
+      "Bash(grep -n \"rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,6\\\\}\\\\b\\\\|style=\\\\\"\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestParcelamentoClaude.vue)",
+      "Bash(grep -n \"rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,\\\\}\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestAtenderSolicitacoes.vue)",
+      "Bash(grep -n \":\\\\s*[0-9]\\\\+px\\\\b\\\\|:\\\\s*[0-9]*\\\\.[0-9]*rem\\\\b\\\\|rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,6\\\\}\\\\b\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestAtenderSolicitacoes.vue)",
+      "Bash(grep \"\\\\.vue$\")",
+      "Bash(npx tsc *)"
     ]
   },
   "enableAllProjectMcpServers": true,
