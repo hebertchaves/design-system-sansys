@@ -19,7 +19,7 @@ const meta = {
     },
     round:     { control: 'boolean', table: { category: 'Aparência' } },
     rounded:   { control: 'boolean', table: { category: 'Aparência' } },
-    iconLeft:  { control: 'text',    table: { category: 'Conteúdo' } },
+    icon:      { control: 'text',    table: { category: 'Conteúdo' } },
     iconRight: { control: 'text',    table: { category: 'Conteúdo' } },
   },
   args: {
@@ -80,9 +80,9 @@ export const Estados: Story = {
 export const ComIcones: Story = {
   name: 'Com ícones',
   render: flexRow(DssButton, [
-    { label: 'Salvar',  iconLeft: 'save' },
+    { label: 'Salvar',  icon: 'save' },
     { label: 'Enviar',  iconRight: 'send' },
-    { iconLeft: 'add',  round: true },
-    { label: 'Buscar',  iconLeft: 'search', color: 'secondary', variant: 'outline' },
+    { icon: 'add',      round: true },
+    { label: 'Buscar',  icon: 'search', color: 'secondary', variant: 'outline' },
   ]),
 }

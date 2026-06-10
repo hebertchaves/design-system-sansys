@@ -61,7 +61,11 @@
       "Bash(claude update *)",
       "Bash(curl -s --max-time 3 http://127.0.0.1:3845/mcp -o /dev/null -w \"figma-desktop: %{http_code}\\\\n\")",
       "Bash(curl -s --max-time 3 http://localhost:6006/mcp -o /dev/null -w \"storybook: %{http_code}\\\\n\")",
-      "Bash(awk -F/ '{print $\\(NF-1\\)\"/\"$NF}')"
+      "Bash(awk -F/ '{print $\\(NF-1\\)\"/\"$NF}')",
+      "Bash(echo \"exit:$?\")",
+      "Bash(grep -oE '`Dss[A-Za-z]+`' /mnt/c/Users/hebert.chaves/DSS/docs/governance/CERTIFIED_COMPONENTS.md)",
+      "Bash(sed -n '85,130p' /mnt/c/Users/hebert.chaves/DSS/packages/core/themes/_quasar-tokens-mapping.scss)",
+      "Bash(sed -n '190,225p' /mnt/c/Users/hebert.chaves/DSS/packages/core/themes/_quasar-tokens-mapping.scss)"
     ]
   },
   "enableAllProjectMcpServers": true,
