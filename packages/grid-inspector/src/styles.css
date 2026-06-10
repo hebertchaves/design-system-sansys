@@ -245,3 +245,34 @@
 #grid-inspector-root * {
   box-sizing: border-box;
 }
+
+/* ==========================================================================
+   Critical layout overrides — prevent host CSS (Quasar, etc.) from breaking
+   the panel's internal flex/grid layout via leaked rules or !important.
+   ========================================================================== */
+
+/* Tabs root: must always be a vertical flex container */
+#sansys-grid-inspector-root [data-slot="tabs"] {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+/* TabsList: must always be a grid (5 equal columns) */
+#sansys-grid-inspector-root [data-slot="tabs-list"] {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  flex-shrink: 0 !important;
+}
+
+/* TabsContent: must fill width and never escape the panel horizontally */
+#sansys-grid-inspector-root [data-slot="tabs-content"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  position: static !important;
+  /* Reset any inherited --tw-enter-* animation vars from the host page */
+  --tw-enter-translate-x: 0 !important;
+  --tw-enter-translate-y: 0 !important;
+  --tw-enter-scale: 1 !important;
+  --tw-enter-rotate: 0deg !important;
+}

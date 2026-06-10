@@ -10113,7 +10113,8 @@ function Slider({
   max = 100,
   step = 1,
   disabled = false,
-  className
+  className,
+  name
 }) {
   const current = (value == null ? void 0 : value[0]) ?? (defaultValue == null ? void 0 : defaultValue[0]) ?? min;
   const pct = Math.max(0, Math.min(100, (current - min) / (max - min) * 100));
@@ -10145,6 +10146,7 @@ function Slider({
           "input",
           {
             type: "range",
+            name,
             value: current,
             min,
             max,
@@ -10632,8 +10634,12 @@ function FloatingGridInspector() {
     root.style.setProperty("--grid-show-margin-y", showMarginBoundariesY ? "1" : "0");
     root.style.setProperty("--grid-container-type", containerType);
     root.style.setProperty("--grid-auto-column-width", autoColumnWidth ? "1" : "0");
-    root.style.setProperty("--grid-gutter-x", gridGutter.toString());
-    root.style.setProperty("--grid-margin-x", gridMargin.toString());
+    root.style.setProperty("--grid-gutter-x", `${gridGutter}px`);
+    root.style.setProperty("--grid-gutter-y", `${gridGutterY}px`);
+    root.style.setProperty("--grid-padding-x", `${gridPadding}px`);
+    root.style.setProperty("--grid-padding-y", `${gridPaddingY}px`);
+    root.style.setProperty("--grid-margin-x", `${gridMargin}px`);
+    root.style.setProperty("--grid-margin-y", `${gridMarginY}px`);
     const breakpointWidths = {
       mobile: "375px",
       tablet: "768px",
@@ -10747,7 +10753,7 @@ function FloatingGridInspector() {
     "div",
     {
       style: { position: "fixed", top: "5rem", right: "1rem", zIndex: 1e6, pointerEvents: "auto" },
-      className: `fixed top-20 right-4 z-50 bg-white rounded-xl shadow-2xl border border-slate-200 ${widthClass} transition-all duration-300 max-h-[calc(100vh-6rem)] flex flex-col`,
+      className: `fixed top-20 right-4 z-50 bg-white rounded-xl shadow-2xl border border-slate-200 ${widthClass} max-w-[calc(100vw-2rem)] transition-all duration-300 h-[calc(100vh-6rem)] min-h-[240px] overflow-hidden flex flex-col`,
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `px-5 py-3 border-b border-slate-200 flex-shrink-0 ${isEditingElement ? "bg-gradient-to-br from-green-50 via-emerald-50 to-green-50" : "bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50"}`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-1", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
@@ -10794,7 +10800,7 @@ function FloatingGridInspector() {
             )
           ] })
         ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Tabs, { defaultValue: "layout", className: "w-full flex-1 flex flex-col overflow-hidden", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Tabs, { defaultValue: "layout", className: "w-full flex-1 flex flex-col min-h-0", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsList, { className: "w-full grid grid-cols-5 rounded-none border-b border-slate-200 bg-slate-50 h-auto p-0 flex-shrink-0", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs(
               TabsTrigger,
@@ -10870,7 +10876,7 @@ function FloatingGridInspector() {
               }
             )
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsContent, { value: "layout", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsContent, { value: "layout", className: "p-0 m-0 flex-1 overflow-y-auto", children: [
             isEditingElement && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-4 mt-4 mb-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-lg", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-1", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
@@ -10906,7 +10912,7 @@ function FloatingGridInspector() {
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-xs font-semibold text-slate-700 mb-2 block", children: "Columns" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-700 mb-2 block", children: "Columns" }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-6 gap-1.5", children: columnOptions.map((count) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "button",
                       {
@@ -10919,7 +10925,7 @@ function FloatingGridInspector() {
                   ] }),
                   panelSize === "expanded" && /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-[0.7] space-y-1.5", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "container-type", className: "text-xs font-semibold text-slate-700", children: "Container Type" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-700", children: "Container Type" }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-1.5", children: ["fixed", "fluid"].map((ct) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                         "button",
                         {
@@ -10975,7 +10981,7 @@ function FloatingGridInspector() {
                   /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Breakpoints" })
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-xs font-semibold text-slate-700", children: "Viewport" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-700", children: "Viewport" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(ToggleGroup, { type: "single", value: breakpoint, onValueChange: handleBreakpointChange, className: "grid grid-cols-2 sm:grid-cols-4 gap-1.5", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(ToggleGroupItem, { value: "mobile", className: "text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Mobile" }),
@@ -11005,13 +11011,14 @@ function FloatingGridInspector() {
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
                       "Gap X"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "layout-gap-x",
                         value: [componentGutter],
                         onValueChange: ([val]) => setComponentGutter(val),
                         min: 0,
@@ -11026,13 +11033,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
                       "Padding L/R"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "layout-padding-x",
                         value: [componentPadding],
                         onValueChange: ([val]) => setComponentPadding(val),
                         min: 0,
@@ -11047,13 +11055,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
                       "Margin"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "layout-margin-x",
                         value: [componentMargin],
                         onValueChange: ([val]) => setComponentMargin(val),
                         min: 0,
@@ -11077,13 +11086,14 @@ function FloatingGridInspector() {
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
                       "Gap Y"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "layout-gap-y",
                         value: [componentGutterY],
                         onValueChange: ([val]) => setComponentGutterY(val),
                         min: 0,
@@ -11098,13 +11108,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
                       "Padding T/B"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "layout-padding-y",
                         value: [componentPaddingY],
                         onValueChange: ([val]) => setComponentPaddingY(val),
                         min: 0,
@@ -11119,13 +11130,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
                       "Margin Y"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "layout-margin-y",
                         value: [componentMarginY],
                         onValueChange: ([val]) => setComponentMarginY(val),
                         min: 0,
@@ -11143,7 +11155,7 @@ function FloatingGridInspector() {
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsContent, { value: "overlay", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsContent, { value: "overlay", className: "p-0 m-0 flex-1 overflow-y-auto", children: [
             isEditingElement && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-4 mt-4 mb-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 rounded-lg", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-1", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2 h-2 bg-green-500 rounded-full animate-pulse" }),
@@ -11180,13 +11192,14 @@ function FloatingGridInspector() {
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
                       "Gap X"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "overlay-gap-x",
                         value: [gridGutter],
                         onValueChange: ([val]) => setGridGutter(val),
                         min: 0,
@@ -11201,13 +11214,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
                       "Padding X"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "overlay-padding-x",
                         value: [gridPadding],
                         onValueChange: ([val]) => setGridPadding(val),
                         min: 0,
@@ -11222,13 +11236,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
                       "Margin X"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "overlay-margin-x",
                         value: [gridMargin],
                         onValueChange: ([val]) => setGridMargin(val),
                         min: 0,
@@ -11252,13 +11267,14 @@ function FloatingGridInspector() {
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-blue-500 rounded" }),
                       "Gap Y"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "overlay-gap-y",
                         value: [gridGutterY],
                         onValueChange: ([val]) => setGridGutterY(val),
                         min: 0,
@@ -11273,13 +11289,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 bg-green-500 rounded" }),
                       "Padding Y"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "overlay-padding-y",
                         value: [gridPaddingY],
                         onValueChange: ([val]) => setGridPaddingY(val),
                         min: 0,
@@ -11294,13 +11311,14 @@ function FloatingGridInspector() {
                     ] })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(Label, { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded" }),
                       "Margin Y"
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "overlay-margin-y",
                         value: [gridMarginY],
                         onValueChange: ([val]) => setGridMarginY(val),
                         min: 0,
@@ -11318,7 +11336,7 @@ function FloatingGridInspector() {
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "visibility", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Accordion, { type: "multiple", defaultValue: ["visibility-main", "visibility-layers", "element-grid-visibility"], className: "w-full", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "visibility", className: "p-0 m-0 flex-1 overflow-y-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Accordion, { type: "multiple", defaultValue: ["visibility-main", "visibility-layers", "element-grid-visibility"], className: "w-full", children: [
             isEditingElement && /* @__PURE__ */ jsxRuntimeExports.jsxs(AccordionItem, { value: "element-grid-visibility", className: "border-b border-slate-100 bg-green-50/30", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-green-100/50 text-xs font-semibold", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2 h-2 bg-green-500 rounded-full animate-pulse" }),
@@ -11364,11 +11382,12 @@ function FloatingGridInspector() {
               ] }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-[0.7] space-y-1.5", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-xs font-semibold text-slate-700", children: "Opacity" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-700", children: "Opacity" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Slider,
                       {
+                        name: "overlay-opacity",
                         value: [overlayOpacity],
                         onValueChange: ([val]) => setOverlayOpacity(val),
                         min: 0,
@@ -11532,7 +11551,7 @@ function FloatingGridInspector() {
               ] }) })
             ] })
           ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "advanced", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Accordion, { type: "multiple", defaultValue: ["advanced-brand"], className: "w-full", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "advanced", className: "p-0 m-0 flex-1 overflow-y-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Accordion, { type: "multiple", defaultValue: ["advanced-brand"], className: "w-full", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs(AccordionItem, { value: "advanced-brand", className: "border-b border-slate-100", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionTrigger, { className: "px-4 py-2.5 hover:bg-pink-50/50 text-xs font-semibold", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(Palette, { size: 14, className: "text-pink-600" }),
@@ -11547,7 +11566,7 @@ function FloatingGridInspector() {
                 )
               ] }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-xs font-semibold text-slate-700", children: "Sansys Brand" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-700", children: "Sansys Brand" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-1.5", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "button",
@@ -11661,7 +11680,7 @@ function FloatingGridInspector() {
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Baseline Grid" })
               ] }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-xs font-semibold text-slate-700", children: "Grid Size" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-700", children: "Grid Size" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(ToggleGroup, { type: "single", value: baselineGrid, onValueChange: (v2) => v2 && setBaselineGrid(v2), className: "grid grid-cols-2 gap-1.5", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleGroupItem, { value: "4px", className: "text-xs h-8 data-[state=on]:bg-violet-600 data-[state=on]:text-white", children: "4px" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleGroupItem, { value: "8px", className: "text-xs h-8 data-[state=on]:bg-violet-600 data-[state=on]:text-white", children: "8px" })
@@ -11675,7 +11694,7 @@ function FloatingGridInspector() {
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Density Mode" })
               ] }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "px-4 pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-xs font-semibold text-slate-700", children: "Spacing Density" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-slate-700", children: "Spacing Density" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(ToggleGroup, { type: "single", value: densityMode, onValueChange: (v2) => v2 && setDensityMode(v2), className: "grid grid-cols-3 gap-1.5", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleGroupItem, { value: "comfortable", className: "text-xs h-8 data-[state=on]:bg-emerald-600 data-[state=on]:text-white", children: "Comfort" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleGroupItem, { value: "compact", className: "text-xs h-8 data-[state=on]:bg-emerald-600 data-[state=on]:text-white", children: "Compact" }),
@@ -11693,7 +11712,7 @@ function FloatingGridInspector() {
               ] }) })
             ] })
           ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsContent, { value: "alerts", className: "p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-2 duration-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsContent, { value: "alerts", className: "p-0 m-0 flex-1 overflow-y-auto", children: [
             violations.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center justify-center gap-3 p-8 text-center", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 32, className: "text-emerald-500" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-bold text-emerald-700", children: "Nenhum erro detectado" }),
@@ -11906,17 +11925,31 @@ function GridOverlay({
     if (layoutEl) resizeObserver.observe(layoutEl);
     const timeoutId = setTimeout(measureComponents, 300);
     const retryId = setTimeout(measureComponents, 900);
-    const onWindowScroll = () => requestAnimationFrame(measureComponents);
-    window.addEventListener("scroll", onWindowScroll, { passive: true });
-    const contentEl = target;
-    const onContentScroll = () => requestAnimationFrame(measureComponents);
-    contentEl.addEventListener("scroll", onContentScroll, { passive: true });
+    let scrollRafId = null;
+    const onAnyScroll = () => {
+      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+      scrollRafId = requestAnimationFrame(() => {
+        measureComponents();
+        scrollRafId = null;
+      });
+    };
+    document.addEventListener("scroll", onAnyScroll, { passive: true, capture: true });
+    window.addEventListener("scroll", onAnyScroll, { passive: true });
+    let mutationDebounce;
+    const mutationObserver = new MutationObserver(() => {
+      clearTimeout(mutationDebounce);
+      mutationDebounce = setTimeout(measureComponents, 400);
+    });
+    mutationObserver.observe(target, { childList: true, subtree: false });
     return () => {
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
       clearTimeout(timeoutId);
       clearTimeout(retryId);
-      window.removeEventListener("scroll", onWindowScroll);
-      contentEl.removeEventListener("scroll", onContentScroll);
+      clearTimeout(mutationDebounce);
+      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+      document.removeEventListener("scroll", onAnyScroll, { capture: true });
+      window.removeEventListener("scroll", onAnyScroll);
     };
   }, [contentRef, contentSelector]);
   reactExports.useEffect(() => {

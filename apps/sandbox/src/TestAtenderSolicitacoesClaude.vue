@@ -4,10 +4,10 @@
     <!-- ================================================================
          APP BAR
          ================================================================ -->
-    <header class="as-appbar" role="banner">
+    <header class="as-appbar" id="gi-appbar" data-grid-debug role="banner">
       <div class="as-appbar__left">
         <DssButton
-          variant="flat" round size="sm" icon="menu" color="white"
+          variant="flat" round size="sm" icon="menu"
           aria-label="Menu principal" class="as-appbar__icon-btn"
         />
         <div class="as-appbar__logo" aria-label="Sansys Water">
@@ -22,7 +22,7 @@
 
       <div class="as-appbar__right" role="toolbar" aria-label="Ações globais">
         <DssButton
-          variant="flat" round size="sm" icon="help_outline" color="white"
+          variant="flat" round size="sm" icon="help_outline"
           aria-label="Ajuda" class="as-appbar__icon-btn"
         >
           <DssTooltip anchor="bottom middle" self="top middle">Central de ajuda</DssTooltip>
@@ -30,7 +30,7 @@
 
         <div class="as-appbar__notif-wrap">
           <DssButton
-            variant="flat" round size="sm" icon="notifications" color="white"
+            variant="flat" round size="sm" icon="notifications"
             aria-label="2 notificações não lidas" class="as-appbar__icon-btn"
           >
             <DssTooltip anchor="bottom middle" self="top middle">Notificações</DssTooltip>
@@ -39,14 +39,14 @@
         </div>
 
         <DssButton
-          variant="flat" round size="sm" icon="apps" color="white"
+          variant="flat" round size="sm" icon="apps"
           aria-label="Aplicativos Sansys" class="as-appbar__icon-btn"
         >
           <DssTooltip anchor="bottom middle" self="top middle">Aplicativos Sansys</DssTooltip>
         </DssButton>
 
         <DssButton
-          variant="flat" round size="sm" icon="account_circle" color="white"
+          variant="flat" round size="sm" icon="account_circle"
           aria-label="Conta" class="as-appbar__icon-btn"
         >
           <DssTooltip anchor="bottom middle" self="top middle">Minha conta</DssTooltip>
@@ -60,10 +60,10 @@
     <div class="as-layout">
 
       <!-- SIDE NAV -->
-      <nav class="as-sidenav" aria-label="Módulos de navegação">
+      <nav class="as-sidenav" id="gi-sidenav" data-grid-debug aria-label="Módulos de navegação">
         <DssButton
           v-for="item in sideNav" :key="item.icon"
-          variant="flat" round size="sm" :icon="item.icon" color="white"
+          variant="flat" round size="sm" :icon="item.icon"
           :aria-label="item.label" class="as-sidenav__btn"
           :class="{ 'as-sidenav__btn--active': item.active }"
           :aria-current="item.active ? 'page' : undefined"
@@ -73,10 +73,11 @@
       </nav>
 
       <!-- MAIN CONTENT -->
-      <main class="as-main" id="main-content">
+      <main class="as-main" id="main-content" data-grid-body>
+        <div class="as-page-rows" data-grid-rows>
 
         <!-- BREADCRUMB -->
-        <nav class="as-breadcrumb" aria-label="Etapas do atendimento">
+        <nav class="as-breadcrumb" id="gi-breadcrumb" data-grid-debug aria-label="Etapas do atendimento">
           <DssBreadcrumbs separator="›" active-color="primary">
             <DssBreadcrumbsEl label="Iniciar Atendimento" icon="filter_1" />
             <DssBreadcrumbsEl label="Pesquisar Registro"  icon="filter_2" />
@@ -86,7 +87,7 @@
         </nav>
 
         <!-- CLIENT HEADER CARD -->
-        <div class="as-client-card" role="region" aria-label="Dados do cliente">
+        <div class="as-client-card" id="gi-client-card" data-grid-debug role="region" aria-label="Dados do cliente">
           <div class="as-client-card__grid">
 
             <!-- Col 1: Identificação -->
@@ -203,7 +204,7 @@
         </div>
 
         <!-- MODULE TABS BAR -->
-        <div class="as-tabs-bar" role="navigation" aria-label="Módulos do atendimento">
+        <div class="as-tabs-bar" id="gi-tabs-bar" data-grid-debug role="navigation" aria-label="Módulos do atendimento">
           <DssTabs
             v-model="activeTab"
             dense
@@ -220,30 +221,24 @@
           </DssTabs>
         </div>
 
-        <!-- PAGE CONTENT -->
-        <div class="as-content">
+        <!-- Section Header (row direto em as-page-rows) -->
+        <div class="as-section-header" id="gi-section-header" data-grid-debug>
+          <h2 class="as-section-title">Atender Solicitações</h2>
+        </div>
 
-          <!-- Section Header -->
-          <div class="as-section-header">
-            <h2 class="as-section-title">Atender Solicitações</h2>
-          </div>
+        <!-- Action Toolbar (row direto em as-page-rows) -->
+        <div class="as-toolbar" id="gi-toolbar" data-grid-debug role="toolbar" aria-label="Ações da seção">
+          <DssButton variant="outline" color="primary" icon="print"         label="Imprimir 2ª via"  size="sm" class="as-toolbar__btn" />
+          <DssButton variant="outline" color="primary" icon="file_download" label="Exportar"         size="sm" class="as-toolbar__btn" />
+          <DssButton variant="outline" color="primary" icon="filter_list"   label="Filtrar"          size="sm" class="as-toolbar__btn" />
+          <DssButton variant="outline" color="primary" icon="add_circle"    label="Nova Solicitação" size="sm" class="as-toolbar__btn" />
+          <DssButton variant="outline" color="negative" icon="cancel"       label="Cancelar"         size="sm" class="as-toolbar__btn" />
+          <DssButton variant="outline" color="primary" icon="mail"          label="Enviar por e-mail" size="sm" class="as-toolbar__btn" />
+          <DssButton variant="outline" color="primary" icon="campaign"      label="Campanhas"        size="sm" class="as-toolbar__btn" />
+        </div>
 
-          <!-- Action Toolbar -->
-          <div class="as-toolbar" role="toolbar" aria-label="Ações da seção">
-            <DssButton variant="outline" color="primary" icon="print"         label="Imprimir 2ª via"  size="sm" class="as-toolbar__btn" />
-            <DssButton variant="outline" color="primary" icon="file_download" label="Exportar"         size="sm" class="as-toolbar__btn" />
-            <DssButton variant="outline" color="primary" icon="filter_list"   label="Filtrar"          size="sm" class="as-toolbar__btn" />
-            <DssButton variant="outline" color="primary" icon="add_circle"    label="Nova Solicitação" size="sm" class="as-toolbar__btn" />
-            <DssButton variant="outline" color="negative" icon="cancel"       label="Cancelar"         size="sm" class="as-toolbar__btn" />
-            <DssButton variant="outline" color="primary" icon="mail"          label="Enviar por e-mail" size="sm" class="as-toolbar__btn" />
-            <DssButton variant="outline" color="primary" icon="campaign"      label="Campanhas"        size="sm" class="as-toolbar__btn" />
-          </div>
-
-          <!-- Table Wrapper -->
-          <div class="as-table-wrap">
-
-            <!-- Table Header -->
-            <div class="as-tgrid as-tgrid--header" role="row">
+        <!-- Table Header (row direto em as-page-rows) -->
+        <div class="as-tgrid as-tgrid--header" id="gi-table-header" data-grid-debug role="row">
               <div class="as-tcell as-tcell--check" role="columnheader">
                 <DssCheckbox
                   v-model="allSelected"
@@ -262,15 +257,17 @@
               <div class="as-tcell as-tcell--actions" role="columnheader">Ações</div>
             </div>
 
-            <!-- Table Rows -->
-            <DssExpansionItem
-              v-for="row in filteredRows"
-              :key="row.id"
-              class="as-trow"
-              :class="{ 'as-trow--selected': selected.includes(row.id) }"
-              expand-icon="keyboard_arrow_down"
-              header-class="as-trow__header"
-            >
+        <!-- Table Rows (rows diretos em as-page-rows) -->
+        <DssExpansionItem
+          v-for="(row, idx) in filteredRows"
+          :key="row.id"
+          :id="'gi-trow-' + row.id"
+          data-grid-debug
+          class="as-trow"
+          :class="{ 'as-trow--selected': selected.includes(row.id), 'as-trow--last': idx === filteredRows.length - 1 }"
+          expand-icon="keyboard_arrow_down"
+          header-class="as-trow__header"
+        >
               <template #header>
                 <div class="as-tgrid" role="row">
 
@@ -313,7 +310,7 @@
                     <DssButton
                       variant="flat" round size="sm"
                       :icon="row.foto ? 'photo_camera' : 'no_photography'"
-                      :color="row.foto ? 'primary' : 'grey-5'"
+                      :color="row.foto ? 'primary' : 'dark'"
                       :disable="!row.foto"
                       class="as-action-btn"
                     >
@@ -329,7 +326,7 @@
                   <div class="as-tcell as-tcell--actions" @click.stop role="cell">
                     <DssButton
                       variant="flat" round size="sm"
-                      icon="visibility" color="secondary"
+                      icon="visibility" color="primary"
                       class="as-action-btn"
                       @click="openDetail(row)"
                     >
@@ -391,22 +388,20 @@
 
             </DssExpansionItem>
 
+        <!-- Selection bar -->
+        <transition name="as-float">
+          <div v-if="selected.length" class="as-selection-bar" role="status" aria-live="polite">
+            <DssChip dense color="primary" text-color="white" icon="check_circle">
+              {{ selected.length }} {{ selected.length === 1 ? 'fatura selecionada' : 'faturas selecionadas' }}
+            </DssChip>
+            <DssSpace />
+            <DssButton variant="flat"     color="primary"  label="Limpar seleção"  @click="selected = []" />
+            <DssButton variant="outline"  color="primary"  icon="download" label="Baixar PDFs" />
+            <DssButton variant="elevated" color="primary"  icon="print"    label="Imprimir 2ª via" />
           </div>
+        </transition>
 
-          <!-- Selection bar -->
-          <transition name="as-float">
-            <div v-if="selected.length" class="as-selection-bar" role="status" aria-live="polite">
-              <DssChip dense color="primary" text-color="white" icon="check_circle">
-                {{ selected.length }} {{ selected.length === 1 ? 'fatura selecionada' : 'faturas selecionadas' }}
-              </DssChip>
-              <DssSpace />
-              <DssButton variant="flat"     color="primary"  label="Limpar seleção"  @click="selected = []" />
-              <DssButton variant="outline"  color="primary"  icon="download" label="Baixar PDFs" />
-              <DssButton variant="elevated" color="primary"  icon="print"    label="Imprimir 2ª via" />
-            </div>
-          </transition>
-
-        </div>
+        </div><!-- /.as-page-rows -->
       </main>
     </div>
 
@@ -651,6 +646,14 @@ function rowAction(action: string, row: Row) { console.log('[AtenderClaude]', ac
     overflow: hidden;
     color: var(--dss-text-inverse) !important;
 
+    // Force ícone interno do DssButton a usar a cor inversa.
+    // Necessário porque DssButton defaulta color="primary"; sem prop color
+    // o ícone ficaria azul sobre fundo azul (invisível).
+    :deep(.dss-button__icon),
+    :deep(.q-icon) {
+      color: var(--dss-text-inverse) !important;
+    }
+
     &::after {
       content: '';
       position: absolute;
@@ -693,6 +696,11 @@ function rowAction(action: string, row: Row) { console.log('[AtenderClaude]', ac
     color: var(--dss-text-inverse) !important;
     opacity: var(--dss-opacity-70);
     transition: opacity var(--dss-duration-200) var(--dss-easing-standard);
+
+    :deep(.dss-button__icon),
+    :deep(.q-icon) {
+      color: var(--dss-text-inverse) !important;
+    }
 
     &::after {
       content: '';
@@ -934,18 +942,20 @@ function rowAction(action: string, row: Row) { console.log('[AtenderClaude]', ac
   }
 }
 
-// ── Page Content ─────────────────────────────────────────────────
-.as-content {
+// ── Page Rows (flat data-grid-rows container) ─────────────────────
+.as-page-rows {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--dss-spacing-3);
-  padding: var(--dss-spacing-4) var(--dss-spacing-5) var(--dss-spacing-10);
+  // Layout vars: controlled by Grid Inspector Layout tab sliders
+  row-gap: var(--dss-layout-gap-y, 0px);
+  max-width: var(--dss-layout-max-width, 100%);
+  padding-bottom: var(--dss-spacing-10);
 }
 
 // ── Section Header ────────────────────────────────────────────────
 .as-section-header {
-  padding-bottom: var(--dss-spacing-2);
+  padding: var(--dss-spacing-4) var(--dss-layout-margin-x, var(--dss-spacing-5)) var(--dss-spacing-2);
   border-bottom: var(--dss-border-width-thin) solid var(--dss-border-default);
 }
 
@@ -978,7 +988,8 @@ function rowAction(action: string, row: Row) { console.log('[AtenderClaude]', ac
   flex-wrap: wrap;
   align-items: center;
   gap: var(--dss-spacing-1_5);
-  padding: var(--dss-spacing-2_5) var(--dss-spacing-3);
+  padding: var(--dss-layout-padding-y, var(--dss-spacing-2_5)) var(--dss-layout-padding-x, var(--dss-spacing-3));
+  margin: var(--dss-layout-margin-y, var(--dss-spacing-3)) var(--dss-layout-margin-x, var(--dss-spacing-5)) 0;
   background: var(--dss-surface-default);
   border: var(--dss-border-width-thin) solid var(--dss-border-default);
   border-radius: var(--dss-radius-sm);
@@ -995,12 +1006,27 @@ function rowAction(action: string, row: Row) { console.log('[AtenderClaude]', ac
 }
 
 // ── Table ────────────────────────────────────────────────────────
-.as-table-wrap {
-  background: var(--dss-surface-default);
+// Card visual distribuído pelas rows achatadas (sem wrapper as-table-wrap)
+.as-tgrid--header {
+  margin: var(--dss-layout-margin-y, var(--dss-spacing-3)) var(--dss-layout-margin-x, var(--dss-spacing-5)) 0;
   border: var(--dss-border-width-thin) solid var(--dss-border-default);
-  border-radius: var(--dss-radius-sm);
-  overflow: hidden;
+  border-bottom: none;
+  border-radius: var(--dss-radius-sm) var(--dss-radius-sm) 0 0;
   box-shadow: var(--dss-shadow-xs);
+  overflow: hidden;
+}
+
+.as-trow {
+  margin: 0 var(--dss-layout-margin-x, var(--dss-spacing-5));
+  border-left: var(--dss-border-width-thin) solid var(--dss-border-default);
+  border-right: var(--dss-border-width-thin) solid var(--dss-border-default);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-default);
+
+  // Última row fecha o card com border-radius
+  &.as-trow--last {
+    border-radius: 0 0 var(--dss-radius-sm) var(--dss-radius-sm);
+    overflow: hidden;
+  }
 }
 
 // Grid de colunas da tabela
@@ -1017,10 +1043,11 @@ function rowAction(action: string, row: Row) { console.log('[AtenderClaude]', ac
     1.2fr                   // data pagamento
     var(--dss-spacing-24);  // ações 96px
   align-items: center;
-  gap: var(--dss-spacing-3);
+  row-gap: var(--dss-spacing-2);
+  column-gap: var(--dss-layout-gap-x, var(--dss-spacing-3));
 
-  // 10px → spacing-2_5
-  padding: var(--dss-spacing-2_5) var(--dss-spacing-3);
+  // padding-y/x respondem aos sliders do Grid Inspector
+  padding: var(--dss-layout-padding-y, var(--dss-spacing-2_5)) var(--dss-layout-padding-x, var(--dss-spacing-3));
 
   &--header {
     background: var(--dss-surface-subtle);

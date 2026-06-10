@@ -300,6 +300,12 @@ export default defineComponent({
       return h('div', { style: FALLBACK_STYLE }, `⚠ ${meta?.component} (ctx)`)
     }
 
+    // previewHtml: representação estática para componentes contextuais/overlay
+    const previewHtml = meta.defaultPreview && meta.defaultPreview.previewHtml
+    if (previewHtml) {
+      return h('div', { innerHTML: previewHtml, style: 'width:100%;display:flex;align-items:center;justify-content:center' })
+    }
+
     const componentName = meta.component
     if (!componentName) {
       return h('div', { style: FALLBACK_STYLE }, '⚠ meta.component ausente')

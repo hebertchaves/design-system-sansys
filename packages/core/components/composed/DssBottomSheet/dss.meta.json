@@ -151,6 +151,8 @@
   ],
   "previewGroup": "contextuais",
   "defaultPreview": {
-    "demoSlots": null
+    "props": {},
+    "demoSlots": null,
+    "previewHtml": "<div style='width:100%;background:var(--dss-surface-default);border-radius:12px 12px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.15);padding:16px;display:flex;flex-direction:column;gap:8px'><div style='width:40px;height:4px;background:var(--dss-gray-300);border-radius:2px;margin:0 auto 8px'></div><div style='font-size:13px;font-weight:600;color:var(--dss-text-body);margin-bottom:4px'>Bottom Sheet</div><div style='font-size:12px;color:var(--dss-text-subtle)'>Conteúdo do painel inferior com ações contextuais.</div><div style='display:flex;gap:8px;margin-top:4px'><button style='flex:1;background:var(--dss-action-primary);color:white;border:none;padding:8px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit'>Confirmar</button><button style='flex:1;border:1px solid var(--dss-gray-300);background:transparent;color:var(--dss-text-body);padding:8px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit'>Cancelar</button></div></div>"
   }
 }

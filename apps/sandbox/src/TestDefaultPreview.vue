@@ -112,30 +112,13 @@
     ═══════════════════════════════════════════════════════════════════ -->
     <div class="dp-body">
 
-      <!-- Sticky section navigation -->
-      <aside class="dp-nav" aria-label="Navegação por seção">
-        <div class="dp-nav__title">Seções</div>
-        <ul class="dp-nav__list">
-          <li v-for="g in GROUPS" :key="g.id">
-            <a
-              :href="`#dp-${g.id}`"
-              :class="['dp-nav__link', { 'is-empty': !grouped[g.id]?.length, 'is-active': activeSection === g.id }]"
-              @click.prevent="scrollTo(g.id)"
-            >
-              <span class="dp-nav__index">{{ g.index }}</span>
-              <span class="dp-nav__name">{{ g.shortTitle }}</span>
-              <span class="dp-nav__count">{{ grouped[g.id]?.length || 0 }}</span>
-            </a>
-          </li>
-        </ul>
-      </aside>
-
       <!-- Sections -->
       <main class="dp-main" :data-density="density">
         <template v-for="group in GROUPS" :key="group.id">
           <section
             v-if="visibleGrouped[group.id]?.length || !query"
             :id="`dp-${group.id}`"
+            :data-group="group.id"
             class="dp-section"
           >
             <div class="dp-section__head">
@@ -183,6 +166,24 @@
           </section>
         </template>
       </main>
+
+      <!-- Sticky section navigation -->
+      <aside class="dp-nav" aria-label="Navegação por seção">
+        <div class="dp-nav__title">Seções</div>
+        <ul class="dp-nav__list">
+          <li v-for="g in GROUPS" :key="g.id">
+            <a
+              :href="`#dp-${g.id}`"
+              :class="['dp-nav__link', { 'is-empty': !grouped[g.id]?.length, 'is-active': activeSection === g.id }]"
+              @click.prevent="scrollTo(g.id)"
+            >
+              <span class="dp-nav__index">{{ g.index }}</span>
+              <span class="dp-nav__name">{{ g.shortTitle }}</span>
+              <span class="dp-nav__count">{{ grouped[g.id]?.length || 0 }}</span>
+            </a>
+          </li>
+        </ul>
+      </aside>
     </div>
   </div>
 </template>
@@ -564,7 +565,7 @@ onBeforeUnmount(() => observer?.disconnect())
   margin: 0 auto;
   padding: var(--dss-spacing-5) var(--dss-spacing-6) var(--dss-spacing-8);
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 1fr 240px;
   gap: var(--dss-spacing-5);
   align-items: flex-start;
 }
@@ -739,7 +740,6 @@ onBeforeUnmount(() => observer?.disconnect())
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 .dp-main[data-density="comfortable"] .dp-grid {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--dss-spacing-4);
 }
 
@@ -782,6 +782,66 @@ onBeforeUnmount(() => observer?.disconnect())
   padding: var(--dss-spacing-3);
 }
 .dp-card__stage > * { flex-shrink: 0; }
+
+/* ── Grid responsivo por grupo ─────────────────────────────────────────── */
+/* Indicadores/avatares: compactos */
+.dp-section[data-group="indicadores"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+/* Ações (botões, chips, fab): compacto-médio */
+.dp-section[data-group="acoes"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+/* Form campos: largos */
+.dp-section[data-group="form-campos"] .dp-grid,
+.dp-section[data-group="form-controles"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+/* Progresso: largos */
+.dp-section[data-group="progresso"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+/* Banners e steppers: coluna única */
+.dp-section[data-group="banners"] .dp-grid,
+.dp-section[data-group="stepper"] .dp-grid {
+  grid-template-columns: 1fr;
+}
+/* Navegação: largos */
+.dp-section[data-group="navegacao"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+/* Listas */
+.dp-section[data-group="listas"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+/* Cards, timelines, mídia */
+.dp-section[data-group="cartoes"] .dp-grid,
+.dp-section[data-group="timeline"] .dp-grid,
+.dp-section[data-group="midia"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+/* Árvore */
+.dp-section[data-group="arvore"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+/* Layout estrutural: largos, stage alto */
+.dp-section[data-group="layout"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+}
+.dp-section[data-group="layout"] .dp-card__stage {
+  min-height: 180px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  overflow: hidden;
+}
+/* Componentes contextuais: largos, stage alto */
+.dp-section[data-group="contextuais"] .dp-grid {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+.dp-section[data-group="contextuais"] .dp-card__stage {
+  min-height: 160px;
+}
 
 .dp-card__footer {
   display: flex;

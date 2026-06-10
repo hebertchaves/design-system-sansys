@@ -125,6 +125,17 @@ if (import.meta.env.DEV) {
       debug: false,
       config: {
         contentSelector: '.test-content',
+        // Initial layout values that match the page's actual DSS spacing:
+        // margin-x = --dss-spacing-5 (20px), gap-y = 0 (no row gap by default).
+        // These ensure Layout tab sliders start from the real rendered state.
+        layout: {
+          // Valores que espelham os tokens DSS padrão das páginas de teste:
+          // margin-x = --dss-spacing-5 (20px), margin-y = --dss-spacing-4 (16px)
+          // gap-x = --dss-spacing-3 (12px), padding-x/y = --dss-spacing-3/2 (12px/8px)
+          margin: { x: 20, y: 16 },
+          gutter: { x: 12, y: 8 },
+          padding: { x: 12, y: 8 },
+        },
       },
     });
   });

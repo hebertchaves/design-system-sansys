@@ -1,174 +1,173 @@
 <template>
   <div class="atender-page" data-brand="water">
 
-    <!-- 1. APP BAR -->
-    <header class="app-bar">
+    <!-- 1. APP BAR — fora de data-grid-body (não é linha de conteúdo) -->
+    <header class="app-bar" data-grid-debug>
       <div class="app-bar__brand">
-        <DssButton variant="flat" round size="md" icon="menu" color="white" aria-label="Menu" class="app-bar__btn" />
+        <DssButton variant="flat" round size="md" icon="menu" aria-label="Menu" class="app-bar__btn" />
         <div class="app-bar__logo">
           <DssIcon name="water_drop" size="sm" />
           <span class="app-bar__logo-text"><strong>sansys</strong><em>water</em></span>
         </div>
         <div class="app-bar__divider" />
-        <DssButton variant="flat" size="sm" icon="cached" label="Atualizar CFG" color="white" class="app-bar__btn" />
+        <DssButton variant="flat" size="sm" icon="cached" label="Atualizar CFG" class="app-bar__btn" />
         <DssChip dense size="sm" color="warning" text-color="white" class="app-bar__env">HOMOLOGAÇÃO</DssChip>
-        <DssButton variant="flat" size="sm" icon="cached" label="Atualizador" color="white" class="app-bar__btn" />
+        <DssButton variant="flat" size="sm" icon="cached" label="Atualizador" class="app-bar__btn" />
       </div>
 
       <div class="app-bar__actions">
-        <DssButton variant="flat" round size="md" icon="help" color="white" aria-label="Ajuda" class="app-bar__btn">
+        <DssButton variant="flat" round size="md" icon="help" aria-label="Ajuda" class="app-bar__btn">
           <DssTooltip>Ajuda</DssTooltip>
         </DssButton>
-        <DssButton variant="flat" round size="md" icon="dashboard" color="white" aria-label="Alternar função" class="app-bar__btn">
+        <DssButton variant="flat" round size="md" icon="dashboard" aria-label="Alternar função" class="app-bar__btn">
           <DssTooltip>Alternar função ativa</DssTooltip>
         </DssButton>
         <DssAvatar size="md" icon="person" color="secondary" />
       </div>
     </header>
 
-    <!-- Faixa de alerta global (certificado) -->
-    <div class="env-banner" role="status">
-      <DssIcon name="error_outline" size="sm" />
-      <span>Seu certificado não foi encontrado. Por favor, atualize os dados da sua empresa.</span>
-      <DssButton variant="flat" size="sm" label="Atualizar agora" color="white" />
-    </div>
+    <!-- CONTAINER DE REFERÊNCIA DO GRID INSPECTOR (colunas X) -->
+    <main class="page-body" data-grid-body>
 
-    <!-- 2. BREADCRUMB + AÇÕES SUPERIORES -->
-    <div class="page-top">
-      <nav class="page-breadcrumb" aria-label="Trilha de atendimento">
-        <DssBreadcrumbs separator="›" active-color="primary">
-          <DssBreadcrumbsEl label="Iniciar Atendimento" icon="looks_one" />
-          <DssBreadcrumbsEl label="Pesquisar Registro" icon="looks_two" />
-          <DssBreadcrumbsEl label="Atender Solicitações" icon="looks_3" />
-          <DssBreadcrumbsEl label="Registrar e Finalizar" icon="looks_4" />
-        </DssBreadcrumbs>
-      </nav>
+      <div class="page-rows" data-grid-rows>
 
-      <div class="page-top__actions">
-        <DssChip dense size="sm" color="negative" text-color="white" icon="phonelink_erase">
-          Telefonia inativa
-        </DssChip>
-        <DssButton
-          variant="elevated"
-          color="primary"
-          icon="open_in_new"
-          label="Nova Aba"
-          size="sm"
-        >
-          <DssTooltip>Abrir atendimento em nova aba</DssTooltip>
-        </DssButton>
-      </div>
-    </div>
+        <!-- ROW 2: Breadcrumb + ações superiores -->
+        <div class="page-top" data-grid-debug>
+          <nav class="page-breadcrumb" aria-label="Trilha de atendimento">
+            <DssBreadcrumbs separator="›" active-color="primary">
+              <DssBreadcrumbsEl label="Iniciar Atendimento" icon="looks_one" />
+              <DssBreadcrumbsEl label="Pesquisar Registro" icon="looks_two" />
+              <DssBreadcrumbsEl label="Atender Solicitações" icon="looks_3" />
+              <DssBreadcrumbsEl label="Registrar e Finalizar" icon="looks_4" />
+            </DssBreadcrumbs>
+          </nav>
 
-    <!-- 3. CLIENT HEADER CARD -->
-    <DssCard class="client-header">
-      <div class="client-header__grid">
-        <!-- Identificação -->
-        <div class="client-header__id">
-          <div class="client-header__id-icon">
-            <DssIcon name="location_city" size="lg" color="primary" />
-          </div>
-          <span class="client-header__code">1-9</span>
-          <DssButton variant="flat" size="xs" color="secondary" label="+ DETALHES" />
-        </div>
-
-        <!-- Coluna 2 — pessoas/endereço -->
-        <dl class="client-header__group">
-          <div class="kv">
-            <dt>Morador:</dt>
-            <dd>ROGERIO ONIESKO</dd>
-          </div>
-          <div class="kv">
-            <dt>Titular:</dt>
-            <dd>
-              ROGERIO ONIESKO
-              <DssIcon name="portrait" size="xs" color="primary" />
-            </dd>
-          </div>
-          <div class="kv">
-            <dt>Endereço:</dt>
-            <dd>Acesso ENTRADA DO MANANCIAL ETA - AC SN, ALEXANDRA - Paranaguá</dd>
-          </div>
-        </dl>
-
-        <!-- Coluna 3 — técnicos -->
-        <dl class="client-header__group">
-          <div class="kv"><dt>Rota Leitura:</dt><dd>2213.000960</dd></div>
-          <div class="kv"><dt>Localização:</dt><dd>01.02.0025.0045.0080.0010</dd></div>
-          <div class="kv"><dt>Hidrômetro:</dt><dd>Y18S289669</dd></div>
-        </dl>
-
-        <!-- Coluna 4 — situações (chips) -->
-        <dl class="client-header__group">
-          <div class="kv kv--inline">
-            <dt>Ligação Água:</dt>
-            <dd>
-              <DssChip dense size="sm" color="positive" text-color="white" icon="check_circle">Ativa</DssChip>
-            </dd>
-          </div>
-          <div class="kv kv--inline">
-            <dt>Ligação Esgoto:</dt>
-            <dd>
-              <DssChip dense size="sm" outline color="grey-7" icon="remove">Sem informação</DssChip>
-            </dd>
-          </div>
-          <div class="kv kv--inline">
-            <dt>Situação Lixo:</dt>
-            <dd>
-              <DssChip dense size="sm" outline color="warning" icon="schedule">Pendente</DssChip>
-            </dd>
-          </div>
-        </dl>
-
-        <!-- Coluna 5 — action rail -->
-        <div class="client-header__rail">
-          <div class="rail-btn-wrap">
-            <DssButton variant="elevated" color="primary" icon="shopping_cart" round size="md">
-              <DssTooltip>Carrinho de atendimento</DssTooltip>
+          <div class="page-top__actions">
+            <DssChip dense size="sm" color="negative" text-color="white" icon="phonelink_erase">
+              Telefonia inativa
+            </DssChip>
+            <DssButton
+              variant="elevated"
+              color="primary"
+              icon="open_in_new"
+              label="Nova Aba"
+              size="sm"
+            >
+              <DssTooltip>Abrir atendimento em nova aba</DssTooltip>
             </DssButton>
-            <DssBadge color="negative" floating>3</DssBadge>
           </div>
-          <DssButton variant="outline" color="primary" icon="add" round size="md">
-            <DssTooltip>Nova solicitação</DssTooltip>
-          </DssButton>
-          <DssButton variant="flat" color="primary" icon="close" round size="md">
-            <DssTooltip>Encerrar atendimento</DssTooltip>
-          </DssButton>
         </div>
-      </div>
-    </DssCard>
 
-    <!-- 4. STATUS SUMMARY (situações por totais) -->
-    <section class="status-strip" aria-label="Resumo por situação de fatura">
-      <button
-        v-for="s in statusSummary"
-        :key="s.key"
-        class="status-pill"
-        :class="['status-pill--' + s.tone, { 'status-pill--active': activeStatus === s.key }]"
-        @click="activeStatus = s.key"
-      >
-        <div class="status-pill__label">{{ s.label }} <span>({{ s.count }})</span></div>
-        <div class="status-pill__value">R$ {{ s.value }}</div>
-      </button>
-    </section>
+        <!-- ROW 3: Card de identificação do cliente -->
+        <DssCard class="client-header" data-grid-debug>
+          <div class="client-header__grid">
+            <!-- Identificação -->
+            <div class="client-header__id">
+              <div class="client-header__id-icon">
+                <DssIcon name="location_city" size="lg" color="primary" />
+              </div>
+              <span class="client-header__code">1-9</span>
+              <DssButton variant="flat" size="xs" color="secondary" label="+ DETALHES" />
+            </div>
 
-    <!-- 5. EXPANDABLE GRID -->
-    <section class="page-section">
-      <header class="page-section__header">
-        <div class="page-section__title-group">
-          <h2 class="page-section__title">Faturas / Consumo</h2>
-          <DssBadge color="primary" outline>{{ filteredRows.length }} faturas</DssBadge>
-        </div>
-        <div class="page-section__tools">
-          <DssButton variant="outline" color="primary" icon="filter_list" label="Filtrar" size="sm" />
-          <DssButton variant="outline" color="primary" icon="file_download" label="Exportar" size="sm" />
-          <DssButton variant="elevated" color="primary" icon="print" label="Imprimir 2ª via" size="sm" />
-        </div>
-      </header>
+            <!-- Coluna 2 — pessoas/endereço -->
+            <dl class="client-header__group">
+              <div class="kv">
+                <dt>Morador:</dt>
+                <dd>ROGERIO ONIESKO</dd>
+              </div>
+              <div class="kv">
+                <dt>Titular:</dt>
+                <dd>
+                  ROGERIO ONIESKO
+                  <DssIcon name="portrait" size="xs" color="primary" />
+                </dd>
+              </div>
+              <div class="kv">
+                <dt>Endereço:</dt>
+                <dd>Acesso ENTRADA DO MANANCIAL ETA - AC SN, ALEXANDRA - Paranaguá</dd>
+              </div>
+            </dl>
 
-      <DssCard class="faturas-table" flat>
-        <!-- Header row -->
-        <div class="faturas-grid faturas-grid--header">
+            <!-- Coluna 3 — técnicos -->
+            <dl class="client-header__group">
+              <div class="kv"><dt>Rota Leitura:</dt><dd>2213.000960</dd></div>
+              <div class="kv"><dt>Localização:</dt><dd>01.02.0025.0045.0080.0010</dd></div>
+              <div class="kv"><dt>Hidrômetro:</dt><dd>Y18S289669</dd></div>
+            </dl>
+
+            <!-- Coluna 4 — situações (chips) -->
+            <dl class="client-header__group">
+              <div class="kv kv--inline">
+                <dt>Ligação Água:</dt>
+                <dd>
+                  <DssChip dense size="sm" color="positive" text-color="white" icon="check_circle">Ativa</DssChip>
+                </dd>
+              </div>
+              <div class="kv kv--inline">
+                <dt>Ligação Esgoto:</dt>
+                <dd>
+                  <DssChip dense size="sm" outline color="secondary" icon="remove">Sem informação</DssChip>
+                </dd>
+              </div>
+              <div class="kv kv--inline">
+                <dt>Situação Lixo:</dt>
+                <dd>
+                  <DssChip dense size="sm" outline color="warning" icon="schedule">Pendente</DssChip>
+                </dd>
+              </div>
+            </dl>
+
+            <!-- Coluna 5 — action rail -->
+            <div class="client-header__rail">
+              <div class="rail-btn-wrap">
+                <DssButton variant="elevated" color="primary" icon="shopping_cart" round size="md">
+                  <DssTooltip>Carrinho de atendimento</DssTooltip>
+                </DssButton>
+                <DssBadge color="negative" floating>3</DssBadge>
+              </div>
+              <DssButton variant="outline" color="primary" icon="add" round size="md">
+                <DssTooltip>Nova solicitação</DssTooltip>
+              </DssButton>
+              <DssButton variant="flat" color="primary" icon="close" round size="md">
+                <DssTooltip>Encerrar atendimento</DssTooltip>
+              </DssButton>
+            </div>
+          </div>
+        </DssCard>
+
+        <!-- ROW 4: Status summary (filtro por situação) -->
+        <section class="status-strip" aria-label="Resumo por situação de fatura" data-grid-debug>
+          <button
+            v-for="s in statusSummary"
+            :key="s.key"
+            class="status-pill"
+            :class="['status-pill--' + s.tone, { 'status-pill--active': activeStatus === s.key }]"
+            @click="activeStatus = s.key"
+          >
+            <div class="status-pill__label">{{ s.label }} <span>({{ s.count }})</span></div>
+            <div class="status-pill__value">R$ {{ s.value }}</div>
+          </button>
+        </section>
+
+        <!-- ROW 5: Cabeçalho da seção de faturas -->
+        <header class="section-header" data-grid-debug>
+          <div class="section-header__title-group">
+            <div class="section-header__title">Faturas / Consumo</div>
+            <DssBadge color="primary" outline>{{ filteredRows.length }} faturas</DssBadge>
+          </div>
+          <div class="section-header__tools">
+            <DssButton variant="outline" color="primary" icon="filter_list" label="Filtrar" size="sm" />
+            <DssButton variant="outline" color="primary" icon="file_download" label="Exportar" size="sm" />
+            <DssButton variant="elevated" color="primary" icon="print" label="Imprimir 2ª via" size="sm" />
+          </div>
+        </header>
+
+        <!-- TABELA: container selecionável + rows do overlay Y -->
+        <div class="faturas-table" data-grid-debug data-grid-rows>
+
+        <!-- Cabeçalho de colunas da tabela -->
+        <div class="faturas-grid faturas-grid--header" data-grid-debug>
           <div class="cell cell--check">
             <DssCheckbox
               v-model="allSelected"
@@ -187,10 +186,12 @@
           <div class="cell cell--actions">Ações</div>
         </div>
 
-        <!-- Data rows -->
+        <!-- ROWS 7..N: Linhas de dados (filhos diretos de [data-grid-rows]) -->
         <DssExpansionItem
           v-for="row in filteredRows"
           :key="row.id"
+          :id="`gi-trow-${row.id}`"
+          data-grid-debug
           class="fatura-row"
           :class="{ 'fatura-row--selected': selected.includes(row.id) }"
           expand-icon="keyboard_arrow_down"
@@ -240,7 +241,7 @@
                 <DssButton
                   variant="flat" round size="md"
                   :icon="row.foto ? 'photo_camera' : 'no_photography'"
-                  :color="row.foto ? 'primary' : 'grey-5'"
+                  :color="row.foto ? 'primary' : 'dark'"
                   :disable="!row.foto"
                   @click="openFoto(row)"
                 >
@@ -254,7 +255,7 @@
               </div>
 
               <div class="cell cell--actions" @click.stop>
-                <DssButton variant="flat" round size="sm" icon="visibility" color="secondary" @click="openDetail(row)">
+                <DssButton variant="flat" round size="sm" icon="visibility" color="primary" @click="openDetail(row)">
                   <DssTooltip>Visualizar fatura</DssTooltip>
                 </DssButton>
                 <DssBtnDropdown
@@ -306,23 +307,26 @@
             </div>
           </DssCard>
         </DssExpansionItem>
-      </DssCard>
 
-      <!-- Selection bar -->
-      <transition name="fade">
-        <div v-if="selected.length" class="selection-bar">
-          <DssChip dense color="primary" text-color="white" icon="check_circle">
-            {{ selected.length }} {{ selected.length === 1 ? 'fatura selecionada' : 'faturas selecionadas' }}
-          </DssChip>
-          <DssSpace />
-          <DssButton variant="flat" color="primary" label="Limpar" @click="selected = []" />
-          <DssButton variant="outline" color="primary" icon="download" label="Baixar PDFs" />
-          <DssButton variant="elevated" color="primary" icon="print" label="Imprimir 2ª via" />
-        </div>
-      </transition>
-    </section>
+        </div><!-- /faturas-table -->
 
-    <!-- MODAL DETALHE -->
+        <!-- Barra de seleção (fora da tabela) -->
+        <transition name="fade">
+          <div v-if="selected.length" class="selection-bar" data-grid-debug>
+            <DssChip dense color="primary" text-color="white" icon="check_circle">
+              {{ selected.length }} {{ selected.length === 1 ? 'fatura selecionada' : 'faturas selecionadas' }}
+            </DssChip>
+            <DssSpace />
+            <DssButton variant="flat" color="primary" label="Limpar" @click="selected = []" />
+            <DssButton variant="outline" color="primary" icon="download" label="Baixar PDFs" />
+            <DssButton variant="elevated" color="primary" icon="print" label="Imprimir 2ª via" />
+          </div>
+        </transition>
+
+      </div><!-- /page-rows -->
+    </main><!-- /page-body -->
+
+    <!-- MODAL DETALHE — fora de [data-grid-rows] e [data-grid-body] -->
     <DssDialog v-model:open="detailOpen" maximized-width="640px">
       <DssCard class="detail-modal">
         <header class="detail-modal__header">
@@ -445,8 +449,8 @@ function chipColor(s?: Situacao) {
     case 'Quitada':   return 'positive'
     case 'Em aberto': return 'warning'
     case 'Em atraso': return 'negative'
-    case 'Cancelada': return 'grey-5'
-    default:          return 'grey-5'
+    case 'Cancelada': return 'secondary'
+    default:          return 'secondary'
   }
 }
 function chipText(s?: Situacao) {
@@ -492,15 +496,13 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
 .atender-page {
   display: flex;
   flex-direction: column;
-  gap: var(--dss-spacing-4);
-  padding: 0 0 var(--dss-spacing-12);
   background: var(--dss-surface-muted);
   min-height: 100%;
   color: var(--dss-text-body);
   font-size: var(--dss-font-size-sm);
 }
 
-/* App bar */
+/* ── App bar ──────────────────────────────────────────────────────────── */
 .app-bar {
   display: flex;
   align-items: center;
@@ -527,9 +529,17 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
   }
   &__actions { display: flex; align-items: center; gap: var(--dss-spacing-2); }
   &__env     { letter-spacing: 0.5px; font-weight: var(--dss-font-weight-bold); }
-  &__btn :deep(.dss-button__icon),
-  &__btn :deep(.q-btn__content) { color: var(--dss-text-inverse); }
+
+  /* Botões em fundo escuro: cor forçada via :deep para ignorar color prop interna do Quasar */
   &__btn {
+    color: var(--dss-text-inverse) !important;
+
+    :deep(.dss-button__icon),
+    :deep(.q-icon),
+    :deep(.q-btn__content) {
+      color: var(--dss-text-inverse) !important;
+    }
+
     position: relative;
     overflow: hidden;
     &::after {
@@ -546,7 +556,29 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
   }
 }
 
-/* Faixa de aviso */
+/* ── Page body (referência Grid Inspector) ────────────────────────────── */
+.page-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Page rows (container de linhas do overlay Y) ────────────────────── */
+.page-rows {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--dss-layout-gap-y, 0px);
+  max-width: var(--dss-layout-max-width, 100%);
+  padding-bottom: var(--dss-spacing-12);
+}
+
+/* ── Container da tabela (selecionável no Select Mode + rows do overlay Y) ── */
+.faturas-table {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--dss-layout-gap-y, 0px);
+}
+
+/* ── Faixa de aviso de ambiente ───────────────────────────────────────── */
 .env-banner {
   display: flex;
   align-items: center;
@@ -557,37 +589,40 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
   color: var(--dss-text-inverse);
   font-weight: var(--dss-font-weight-medium);
   font-size: var(--dss-font-size-sm);
-  padding: var(--dss-spacing-1_5) var(--dss-spacing-4);
+  padding: var(--dss-spacing-1_5) var(--dss-layout-padding-x, var(--dss-spacing-4));
 }
 
-/* Linha breadcrumb + ações */
+/* ── Breadcrumb + ações superiores ────────────────────────────────────── */
 .page-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--dss-spacing-3) var(--dss-spacing-5) 0;
+  /* Margem horizontal via token de layout — fallback = var(--dss-spacing-5) */
+  padding: var(--dss-spacing-3) var(--dss-layout-margin-x, var(--dss-spacing-5)) 0;
+  margin-top: var(--dss-layout-margin-y, var(--dss-spacing-4));
   gap: var(--dss-spacing-4);
   flex-wrap: wrap;
 
   &__actions { display: flex; align-items: center; gap: var(--dss-spacing-2); }
 }
 
-/* Client card */
+/* ── Card de identificação do cliente ────────────────────────────────── */
 .client-header {
-  margin: 0 var(--dss-spacing-5);
-  padding: var(--dss-spacing-5);
+  /* Margem horizontal via token de layout — atualiza com o slider */
+  margin: 0 var(--dss-layout-margin-x, var(--dss-spacing-5));
+  padding: var(--dss-layout-padding-y, var(--dss-spacing-5)) var(--dss-layout-padding-x, var(--dss-spacing-5));
   box-shadow: var(--dss-shadow-sm);
   border-radius: var(--dss-radius-md);
 
   &__grid {
     display: grid;
     grid-template-columns: auto 1.6fr 1.3fr 1.2fr auto;
-    gap: var(--dss-spacing-5);
+    gap: var(--dss-layout-gap-y, var(--dss-spacing-5)) var(--dss-layout-gap-x, var(--dss-spacing-5));
     align-items: start;
   }
   &__id {
     display: flex; flex-direction: column; align-items: center;
-    gap: var(--dss-spacing-2); min-width: var(--dss-spacing-28);
+    gap: var(--dss-spacing-2);
   }
   &__id-icon {
     width: var(--dss-spacing-14); height: var(--dss-spacing-14);
@@ -608,7 +643,7 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
 
 .kv {
   display: flex; flex-wrap: wrap; gap: var(--dss-spacing-1_5);
-  font-size: var(--dss-font-size-sm);
+  font-size: var(--dss-font-size-xs);
   line-height: var(--dss-line-height-xs);
   dt { color: var(--dss-text-subtle); font-weight: var(--dss-font-weight-medium); }
   dd { color: var(--dss-text-body); margin: 0;
@@ -616,17 +651,18 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
   &--inline { align-items: center; }
 }
 
-/* Status strip */
+/* ── Status strip ─────────────────────────────────────────────────────── */
 .status-strip {
-  margin: 0 var(--dss-spacing-5);
+  /* Margem horizontal via token de layout */
+  margin: 0 var(--dss-layout-margin-x, var(--dss-spacing-5));
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: var(--dss-spacing-2);
+  gap: var(--dss-layout-gap-x, var(--dss-spacing-2));
 }
 .status-pill {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: var(--dss-spacing-1);
-  padding: var(--dss-spacing-3) var(--dss-spacing-2);
+  padding: var(--dss-layout-padding-y, var(--dss-spacing-3)) var(--dss-layout-padding-x, var(--dss-spacing-2));
   background: var(--dss-surface-default);
   border: var(--dss-border-gray-200);
   border-radius: var(--dss-radius-md);
@@ -657,28 +693,20 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
   }
 }
 
-/* Section */
-.page-section {
-  margin: 0 var(--dss-spacing-5);
-  display: flex; flex-direction: column; gap: var(--dss-spacing-3);
+/* ── Cabeçalho da seção de faturas ────────────────────────────────────── */
+.section-header {
+  /* Margem horizontal via token de layout */
+  margin: 0 var(--dss-layout-margin-x, var(--dss-spacing-5));
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--dss-layout-padding-y, var(--dss-spacing-2)) 0;
+  border-bottom: var(--dss-border-width-md) solid var(--dss-action-primary);
 
-  &__header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: var(--dss-spacing-2) 0;
-    border-bottom: var(--dss-border-width-md) solid var(--dss-action-primary);
-  }
   &__title-group { display: flex; align-items: center; gap: var(--dss-spacing-3); }
   &__title { margin: 0; font-size: var(--dss-font-size-lg); font-weight: var(--dss-font-weight-semibold); }
   &__tools { display: flex; gap: var(--dss-spacing-2); }
 }
 
-/* Faturas grid */
-.faturas-table {
-  padding: var(--dss-spacing-2);
-  background: var(--dss-surface-default);
-  box-shadow: var(--dss-shadow-sm);
-  border-radius: var(--dss-radius-md);
-}
+/* ── Grade de colunas (header e linhas de dados) ─────────────────────── */
 .faturas-grid {
   display: grid;
   grid-template-columns:
@@ -692,11 +720,14 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
     1.2fr
     var(--dss-spacing-28);
   align-items: center;
-  gap: var(--dss-spacing-3);
-  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  row-gap: var(--dss-spacing-2);
+  column-gap: var(--dss-layout-gap-x, var(--dss-spacing-3));
+  padding: var(--dss-layout-padding-y, var(--dss-spacing-2)) var(--dss-layout-padding-x, var(--dss-spacing-3));
   width: 100%;
 
+  /* Margem horizontal via token de layout — atualiza com o slider */
   &--header {
+    margin: 0 var(--dss-layout-margin-x, var(--dss-spacing-5));
     background: var(--dss-surface-subtle);
     color: var(--dss-text-subtle);
     font-size: var(--dss-font-size-xs);
@@ -726,10 +757,12 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
 .muted  { color: var(--dss-text-subtle); }
 .mono   { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: var(--dss-font-size-xs); }
 
+/* ── Linha de fatura (filho direto de [data-grid-rows]) ──────────────── */
 .fatura-row {
+  /* Margem horizontal via token de layout — fallback = var(--dss-spacing-5) */
+  margin: 0 var(--dss-layout-margin-x, var(--dss-spacing-5));
   border: var(--dss-border-gray-200);
   border-radius: var(--dss-radius-md);
-  margin-top: var(--dss-spacing-2);
   transition: var(--dss-transition-fast);
   background: var(--dss-surface-default);
 
@@ -741,12 +774,12 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
 
   &__detail {
     background: var(--dss-surface-subtle);
-    padding: var(--dss-spacing-4) var(--dss-spacing-5);
+    padding: var(--dss-layout-padding-y, var(--dss-spacing-4)) var(--dss-layout-padding-x, var(--dss-spacing-5));
     border-top: var(--dss-border-gray-200);
   }
 }
 .detail-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--dss-spacing-3) var(--dss-spacing-5);
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--dss-layout-gap-y, var(--dss-spacing-3)) var(--dss-layout-gap-x, var(--dss-spacing-5));
 }
 .detail-kv {
   display: flex; flex-direction: column; gap: var(--dss-spacing-0_5);
@@ -765,11 +798,12 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
   }
 }
 
-/* Selection bar */
+/* ── Barra de seleção ─────────────────────────────────────────────────── */
 .selection-bar {
   position: sticky; bottom: var(--dss-spacing-3);
+  margin: 0 var(--dss-layout-margin-x, var(--dss-spacing-5));
   display: flex; align-items: center; gap: var(--dss-spacing-3);
-  padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  padding: var(--dss-layout-padding-y, var(--dss-spacing-3)) var(--dss-layout-padding-x, var(--dss-spacing-4));
   background: var(--dss-surface-default);
   border: var(--dss-border-gray-200);
   border-radius: var(--dss-radius-md);
@@ -783,7 +817,7 @@ function rowAction(a: string, r: Row) { console.log('[Atender] row action', a, r
 
 .text-danger { color: var(--dss-feedback-error); }
 
-/* Modal */
+/* ── Modal de detalhe ─────────────────────────────────────────────────── */
 .detail-modal {
   width: 100%; max-width: min(560px, 95vw);
   &__header {

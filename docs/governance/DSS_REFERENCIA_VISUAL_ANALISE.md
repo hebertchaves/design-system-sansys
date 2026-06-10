@@ -1979,7 +1979,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssDataCard | contextuais | — | — | — |
 | DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
 | DssDialog | contextuais | — | — | — |
-| DssDrawer | layout | persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
+| DssDrawer | layout | modelValue, persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
 | DssExpansionItem | navegacao | label:Expansível, icon:expand_more, modelValue | minHeight:44px | Item expansível com conteúdo |
 | DssFab | acoes | color:primary, icon:add, label:Adicionar | minHeight:56px, minWidth:56px | FAB com ícone 'add' |
 | DssFabAction | acoes | color:primary, icon:mail, label:Email | minHeight:40px, minWidth:40px | FAB Action com ícone 'mail' |
@@ -1997,7 +1997,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssItemLabel | listas | — | — | Rótulo de seção de lista |
 | DssItemSection | listas | — | — | Seção de item (avatar, conteúdo ou ação) |
 | DssKnob | indicadores | modelValue:50, min:0, max:100 | minHeight:56px, minWidth:56px | Knob com valor 50% |
-| DssLayout | layout | — | — | Layout de página completo (header + drawer + footer) |
+| DssLayout | layout | style:height:200px;position:relative;overflow:hidden;display:block | — | Layout de página completo (header + drawer + footer) |
 | DssLinearProgress | progresso | value:0.7, color:primary, size:md | minHeight:4px, minWidth:200px | Barra de progresso linear 70% |
 | DssList | listas | — | — | Lista com 3 itens |
 | DssMarkupTable | cartoes | density:standard, bordered, separator:horizontal | width:100% | Tabela com thead/tbody padrão |
@@ -2047,5 +2047,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-08T17:07:46.581Z_
+_Gerado em: 2026-06-10T13:02:25.808Z_
 <!-- END:AUTO-GENERATED -->

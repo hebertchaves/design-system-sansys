@@ -110,7 +110,7 @@
     }
   ],
   "defaultPreview": {
-    "props": {},
+    "props": { "style": "height:200px;position:relative;overflow:hidden;display:block" },
     "computedDimensions": {},
     "visualProperties": [
       {
@@ -127,7 +127,46 @@
       }
     ],
     "demoContent": "Layout de página completo (header + drawer + footer)",
-    "demoSlots": null
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssHeader",
+          "props": { "elevated": true },
+          "children": [
+            {
+              "component": "DssToolbar",
+              "children": [
+                { "component": "DssToolbarTitle", "children": "Layout DSS" },
+                { "component": "DssButton", "props": { "flat": true, "icon": "menu", "dense": true } }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "DssPageContainer",
+          "children": [
+            {
+              "component": "DssPage",
+              "props": { "padding": true },
+              "children": [
+                { "html": "<p style='font-size:11px;margin:0;color:var(--dss-text-subtle)'>Conteúdo da página</p>" }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "DssFooter",
+          "children": [
+            {
+              "component": "DssToolbar",
+              "children": [
+                { "component": "DssToolbarTitle", "children": "Footer" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   },
   "previewGroup": "layout"
 }

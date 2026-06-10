@@ -196,7 +196,7 @@
   ],
   "defaultPreview": {
     "props": {
-      "modelValue": false,
+      "modelValue": true,
       "persistent": true,
       "width": 150
     },
@@ -261,7 +261,31 @@
       }
     ],
     "demoContent": "Painel lateral com navegação",
-    "demoSlots": null,
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssItem",
+          "props": { "clickable": true },
+          "children": [
+            { "component": "DssItemSection", "children": [{ "component": "DssItemLabel", "children": "Início" }] }
+          ]
+        },
+        {
+          "component": "DssItem",
+          "props": { "clickable": true },
+          "children": [
+            { "component": "DssItemSection", "children": [{ "component": "DssItemLabel", "children": "Relatórios" }] }
+          ]
+        },
+        {
+          "component": "DssItem",
+          "props": { "clickable": true },
+          "children": [
+            { "component": "DssItemSection", "children": [{ "component": "DssItemLabel", "children": "Configurações" }] }
+          ]
+        }
+      ]
+    },
     "wrapIn": {
       "component": "DssLayout",
       "props": {

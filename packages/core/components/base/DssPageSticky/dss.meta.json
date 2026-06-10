@@ -76,7 +76,14 @@
       }
     ],
     "demoContent": "Elemento fixo na página",
-    "demoSlots": null,
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssButton",
+          "props": { "round": true, "color": "primary", "icon": "keyboard_arrow_up", "size": "sm" }
+        }
+      ]
+    },
     "wrapIn": {
       "component": "DssLayout",
       "props": {

@@ -159,22 +159,40 @@ export function GridOverlay({
     // Retry for async Vue component rendering (e.g. Vite HMR, lazy imports)
     const retryId = setTimeout(measureComponents, 900);
 
-    // Re-measure on window scroll
-    const onWindowScroll = () => requestAnimationFrame(measureComponents);
-    window.addEventListener('scroll', onWindowScroll, { passive: true });
+    // Re-measure on ANY scroll anywhere on the page (capture phase catches scroll events
+    // from overflow:auto/scroll containers that don't bubble to window).
+    // Uses rAF so we re-measure once per frame even if many scroll events fire at once.
+    let scrollRafId: number | null = null;
+    const onAnyScroll = () => {
+      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+      scrollRafId = requestAnimationFrame(() => {
+        measureComponents();
+        scrollRafId = null;
+      });
+    };
+    document.addEventListener('scroll', onAnyScroll, { passive: true, capture: true });
+    window.addEventListener('scroll', onAnyScroll, { passive: true });
 
-    // Re-measure on scroll inside the content element (overflow-y: auto containers
-    // like .test-content do NOT fire window scroll events)
-    const contentEl = target as HTMLElement;
-    const onContentScroll = () => requestAnimationFrame(measureComponents);
-    contentEl.addEventListener('scroll', onContentScroll, { passive: true });
+    // Re-measure when the host page swaps its component view (v-else-if / SPA navigation).
+    // ResizeObserver only fires on size changes — when the container is a fixed-size shell
+    // (flex: 1) and only its children change, no resize event fires. MutationObserver
+    // on direct children catches the component swap; debounced to let Vue/Quasar settle.
+    let mutationDebounce: ReturnType<typeof setTimeout>;
+    const mutationObserver = new MutationObserver(() => {
+      clearTimeout(mutationDebounce);
+      mutationDebounce = setTimeout(measureComponents, 400);
+    });
+    mutationObserver.observe(target as HTMLElement, { childList: true, subtree: false });
 
     return () => {
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
       clearTimeout(timeoutId);
       clearTimeout(retryId);
-      window.removeEventListener('scroll', onWindowScroll);
-      contentEl.removeEventListener('scroll', onContentScroll);
+      clearTimeout(mutationDebounce!);
+      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+      document.removeEventListener('scroll', onAnyScroll, { capture: true });
+      window.removeEventListener('scroll', onAnyScroll);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentRef, contentSelector]);

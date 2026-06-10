@@ -7,7 +7,8 @@ interface SliderProps {
     step?: number;
     disabled?: boolean;
     className?: string;
+    name?: string;
 }
-declare function Slider({ value, defaultValue, onValueChange, min, max, step, disabled, className, }: SliderProps): import("react/jsx-runtime").JSX.Element;
+declare function Slider({ value, defaultValue, onValueChange, min, max, step, disabled, className, name, }: SliderProps): import("react/jsx-runtime").JSX.Element;
 export { Slider };
 //# sourceMappingURL=slider.d.ts.map

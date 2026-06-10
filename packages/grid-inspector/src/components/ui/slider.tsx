@@ -9,6 +9,7 @@ interface SliderProps {
   step?: number;
   disabled?: boolean;
   className?: string;
+  name?: string;
 }
 
 function Slider({
@@ -20,6 +21,7 @@ function Slider({
   step = 1,
   disabled = false,
   className,
+  name,
 }: SliderProps) {
   const current = value?.[0] ?? defaultValue?.[0] ?? min;
   const pct = Math.max(0, Math.min(100, ((current - min) / (max - min)) * 100));
@@ -50,6 +52,7 @@ function Slider({
       {/* Transparent native range input for interaction */}
       <input
         type="range"
+        name={name}
         value={current}
         min={min}
         max={max}

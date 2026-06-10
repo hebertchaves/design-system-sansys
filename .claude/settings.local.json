@@ -52,7 +52,16 @@
       "Bash(grep -n \"rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,\\\\}\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestAtenderSolicitacoes.vue)",
       "Bash(grep -n \":\\\\s*[0-9]\\\\+px\\\\b\\\\|:\\\\s*[0-9]*\\\\.[0-9]*rem\\\\b\\\\|rgba\\(\\\\|#[0-9a-fA-F]\\\\{3,6\\\\}\\\\b\" /mnt/c/Users/hebert.chaves/DSS/apps/sandbox/src/TestAtenderSolicitacoes.vue)",
       "Bash(grep \"\\\\.vue$\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(xargs ls -la)",
+      "Bash(npx vue-tsc *)",
+      "Bash(sed -n '35,60p' /mnt/c/Users/hebert.chaves/DSS/packages/core/components/base/DssIcon/types/icon.types.ts)",
+      "Bash(sed -n '27,55p' /mnt/c/Users/hebert.chaves/DSS/packages/core/components/base/DssChip/types/chip.types.ts)",
+      "Bash(code *)",
+      "Bash(claude update *)",
+      "Bash(curl -s --max-time 3 http://127.0.0.1:3845/mcp -o /dev/null -w \"figma-desktop: %{http_code}\\\\n\")",
+      "Bash(curl -s --max-time 3 http://localhost:6006/mcp -o /dev/null -w \"storybook: %{http_code}\\\\n\")",
+      "Bash(awk -F/ '{print $\\(NF-1\\)\"/\"$NF}')"
     ]
   },
   "enableAllProjectMcpServers": true,

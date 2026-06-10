@@ -376,15 +376,6 @@
               <span class="nav-label">Atender Solicitações</span>
               <span class="nav-badge stress">real</span>
             </button>
-
-            <button
-              @click="activeComponent = 'atender-solicitacoes-claude'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'atender-solicitacoes-claude' }]"
-            >
-              <span class="nav-icon"><span class="material-icons">support_agent</span></span>
-              <span class="nav-label">Atender Solicitações Claude</span>
-              <span class="nav-badge">claude</span>
-            </button>
           </div>
         </div>
       </nav>
@@ -452,11 +443,6 @@
         <TestAtenderSolicitacoes />
       </div>
 
-      <!-- Atender Solicitações Claude -->
-      <div v-else-if="activeComponent === 'atender-solicitacoes-claude'" class="component-view">
-        <TestAtenderSolicitacoesClaude />
-      </div>
-
       <!-- Defaults Preview View -->
       <div v-else-if="activeComponent === 'defaults-preview'" class="component-view">
         <TestDefaultPreview />
@@ -485,7 +471,6 @@ import TestPageComplexity from './TestPageComplexity.vue'
 import TestParcelamento from './TestParcelamento.vue'
 import TestParcelamentoClaude from './TestParcelamentoClaude.vue'
 import TestAtenderSolicitacoes from './TestAtenderSolicitacoes.vue'
-import TestAtenderSolicitacoesClaude from './TestAtenderSolicitacoesClaude.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')

@@ -410,9 +410,13 @@ export function FloatingGridInspector() {
     // 🆕 Aplicar auto column width (1fr vs largura fixa)
     root.style.setProperty('--grid-auto-column-width', autoColumnWidth ? '1' : '0');
     
-    // 🆕 Aplicar gutter e margin para cálculo de larguras fixas
-    root.style.setProperty('--grid-gutter-x', gridGutter.toString());
-    root.style.setProperty('--grid-margin-x', gridMargin.toString());
+    // Aplicar todos os valores de gutter, padding e margin do overlay
+    root.style.setProperty('--grid-gutter-x', `${gridGutter}px`);
+    root.style.setProperty('--grid-gutter-y', `${gridGutterY}px`);
+    root.style.setProperty('--grid-padding-x', `${gridPadding}px`);
+    root.style.setProperty('--grid-padding-y', `${gridPaddingY}px`);
+    root.style.setProperty('--grid-margin-x', `${gridMargin}px`);
+    root.style.setProperty('--grid-margin-y', `${gridMarginY}px`);
     
     // Aplicar breakpoint
     const breakpointWidths = {
@@ -529,7 +533,7 @@ export function FloatingGridInspector() {
   return (
     <div
       style={{ position: 'fixed', top: '5rem', right: '1rem', zIndex: 1000000, pointerEvents: 'auto' }}
-      className={`fixed top-20 right-4 z-50 bg-white rounded-xl shadow-2xl border border-slate-200 ${widthClass} transition-all duration-300 h-[calc(100vh-6rem)] overflow-hidden flex flex-col`}
+      className={`fixed top-20 right-4 z-50 bg-white rounded-xl shadow-2xl border border-slate-200 ${widthClass} max-w-[calc(100vw-2rem)] transition-all duration-300 h-[calc(100vh-6rem)] min-h-[240px] overflow-hidden flex flex-col`}
     >
       {/* Header */}
       <div className={`px-5 py-3 border-b border-slate-200 flex-shrink-0 ${isEditingElement ? 'bg-gradient-to-br from-green-50 via-emerald-50 to-green-50' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50'}`}>
@@ -651,7 +655,7 @@ export function FloatingGridInspector() {
         </TabsList>
 
         {/* TAB 1 — Layout (Real Components) */}
-        <TabsContent value="layout" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
+        <TabsContent value="layout" className="p-0 m-0 flex-1 overflow-y-auto">
 
           {/* Element scope indicator */}
           {isEditingElement && (
@@ -691,7 +695,7 @@ export function FloatingGridInspector() {
               <AccordionContent className="px-4 pb-3">
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-xs font-semibold text-slate-700 mb-2 block">Columns</Label>
+                    <span className="text-xs font-semibold text-slate-700 mb-2 block">Columns</span>
                     <div className="grid grid-cols-6 gap-1.5">
                       {columnOptions.map((count) => (
                         <button
@@ -715,9 +719,9 @@ export function FloatingGridInspector() {
                       <div className="flex items-center gap-3">
                         {/* Container Type - 70% do espaço */}
                         <div className="flex-[0.7] space-y-1.5">
-                          <Label htmlFor="container-type" className="text-xs font-semibold text-slate-700">
+                          <span className="text-xs font-semibold text-slate-700">
                             Container Type
-                          </Label>
+                          </span>
                           <div className="grid grid-cols-2 gap-1.5">
                             {(['fixed', 'fluid'] as const).map((ct) => (
                               <button
@@ -804,7 +808,7 @@ export function FloatingGridInspector() {
                 </AccordionTrigger>
                 <AccordionContent className="px-4 pb-3">
                   <div className="space-y-2">
-                    <Label className="text-xs font-semibold text-slate-700">Viewport</Label>
+                    <span className="text-xs font-semibold text-slate-700">Viewport</span>
                     <ToggleGroup type="single" value={breakpoint} onValueChange={handleBreakpointChange} className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                       <ToggleGroupItem value="mobile" className="text-xs h-auto py-1.5 px-2 data-[state=on]:bg-violet-600 data-[state=on]:text-white flex flex-col items-center gap-0.5 leading-tight">
                         <span>Mobile</span>
@@ -843,11 +847,12 @@ export function FloatingGridInspector() {
                   
                   {/* Gap X - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100">
-                    <Label className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-blue-500 rounded"></div>
                       Gap X
-                    </Label>
+                    </span>
                     <Slider
+                      name="layout-gap-x"
                       value={[componentGutter]}
                       onValueChange={([val]) => setComponentGutter(val)}
                       min={0}
@@ -860,11 +865,12 @@ export function FloatingGridInspector() {
 
                   {/* Padding L/R - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100">
-                    <Label className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-green-500 rounded"></div>
                       Padding L/R
-                    </Label>
+                    </span>
                     <Slider
+                      name="layout-padding-x"
                       value={[componentPadding]}
                       onValueChange={([val]) => setComponentPadding(val)}
                       min={0}
@@ -877,11 +883,12 @@ export function FloatingGridInspector() {
 
                   {/* Margin - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100">
-                    <Label className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded"></div>
                       Margin
-                    </Label>
+                    </span>
                     <Slider
+                      name="layout-margin-x"
                       value={[componentMargin]}
                       onValueChange={([val]) => setComponentMargin(val)}
                       min={0}
@@ -909,11 +916,12 @@ export function FloatingGridInspector() {
                   
                   {/* Gap Y - BLUE (mesma cor de Gap X) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100">
-                    <Label className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-blue-500 rounded"></div>
                       Gap Y
-                    </Label>
+                    </span>
                     <Slider
+                      name="layout-gap-y"
                       value={[componentGutterY]}
                       onValueChange={([val]) => setComponentGutterY(val)}
                       min={0}
@@ -926,11 +934,12 @@ export function FloatingGridInspector() {
 
                   {/* Padding T/B - FULL HORIZONTAL - GREEN (mesma cor de Padding L/R) */}
                   <div className="flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100">
-                    <Label className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-green-500 rounded"></div>
                       Padding T/B
-                    </Label>
+                    </span>
                     <Slider
+                      name="layout-padding-y"
                       value={[componentPaddingY]}
                       onValueChange={([val]) => setComponentPaddingY(val)}
                       min={0}
@@ -943,11 +952,12 @@ export function FloatingGridInspector() {
 
                   {/* Margin Y - ORANGE (mesma cor de Margin X) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100">
-                    <Label className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded"></div>
                       Margin Y
-                    </Label>
+                    </span>
                     <Slider
+                      name="layout-margin-y"
                       value={[componentMarginY]}
                       onValueChange={([val]) => setComponentMarginY(val)}
                       min={0}
@@ -964,7 +974,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 2 — Overlay (Didactic Grid) */}
-        <TabsContent value="overlay" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
+        <TabsContent value="overlay" className="p-0 m-0 flex-1 overflow-y-auto">
           
           {/* 🆕 Element Editing Banner */}
           {isEditingElement && (
@@ -1009,11 +1019,12 @@ export function FloatingGridInspector() {
                   
                   {/* Gap X - BLUE (espelha Gap X do Layout) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100">
-                    <Label className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-blue-500 rounded"></div>
                       Gap X
-                    </Label>
+                    </span>
                     <Slider
+                      name="overlay-gap-x"
                       value={[gridGutter]}
                       onValueChange={([val]) => setGridGutter(val)}
                       min={0}
@@ -1026,11 +1037,12 @@ export function FloatingGridInspector() {
 
                   {/* Padding X - GREEN (espelha Padding L/R do Layout) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100">
-                    <Label className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-green-500 rounded"></div>
                       Padding X
-                    </Label>
+                    </span>
                     <Slider
+                      name="overlay-padding-x"
                       value={[gridPadding]}
                       onValueChange={([val]) => setGridPadding(val)}
                       min={0}
@@ -1043,11 +1055,12 @@ export function FloatingGridInspector() {
 
                   {/* Margin X - ORANGE (espelha Margin L/R do Layout) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100">
-                    <Label className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded"></div>
                       Margin X
-                    </Label>
+                    </span>
                     <Slider
+                      name="overlay-margin-x"
                       value={[gridMargin]}
                       onValueChange={([val]) => setGridMargin(val)}
                       min={0}
@@ -1075,11 +1088,12 @@ export function FloatingGridInspector() {
                   
                   {/* Gap Y - BLUE (mesma cor de Gap X) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-blue-50/50 rounded-lg border border-blue-100">
-                    <Label className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-blue-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-blue-500 rounded"></div>
                       Gap Y
-                    </Label>
+                    </span>
                     <Slider
+                      name="overlay-gap-y"
                       value={[gridGutterY]}
                       onValueChange={([val]) => setGridGutterY(val)}
                       min={0}
@@ -1092,11 +1106,12 @@ export function FloatingGridInspector() {
 
                   {/* Padding Y - GREEN (espelha Padding T/B do Layout) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-green-50/50 rounded-lg border border-green-100">
-                    <Label className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-green-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 bg-green-500 rounded"></div>
                       Padding Y
-                    </Label>
+                    </span>
                     <Slider
+                      name="overlay-padding-y"
                       value={[gridPaddingY]}
                       onValueChange={([val]) => setGridPaddingY(val)}
                       min={0}
@@ -1109,11 +1124,12 @@ export function FloatingGridInspector() {
 
                   {/* Margin Y - ORANGE (mesma cor de Margin X) - FULL HORIZONTAL */}
                   <div className="flex items-center gap-3 p-2.5 bg-orange-50/50 rounded-lg border border-orange-100">
-                    <Label className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-xs font-semibold text-orange-900 flex items-center gap-1.5 whitespace-nowrap">
                       <div className="w-2.5 h-2.5 border-2 border-dashed border-orange-500 rounded"></div>
                       Margin Y
-                    </Label>
+                    </span>
                     <Slider
+                      name="overlay-margin-y"
                       value={[gridMarginY]}
                       onValueChange={([val]) => setGridMarginY(val)}
                       min={0}
@@ -1130,7 +1146,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 3 — Visibility */}
-        <TabsContent value="visibility" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
+        <TabsContent value="visibility" className="p-0 m-0 flex-1 overflow-y-auto">
           <Accordion type="multiple" defaultValue={['visibility-main', 'visibility-layers', 'element-grid-visibility']} className="w-full">
             
             {/* 🆕 Element Grid Visibility - Only when editing element */}
@@ -1190,9 +1206,10 @@ export function FloatingGridInspector() {
                 <div className="flex items-center gap-3">
                   {/* Opacity - 70% do espaço */}
                   <div className="flex-[0.7] space-y-1.5">
-                    <Label className="text-xs font-semibold text-slate-700">Opacity</Label>
+                    <span className="text-xs font-semibold text-slate-700">Opacity</span>
                     <div className="flex items-center gap-2">
                       <Slider
+                        name="overlay-opacity"
                         value={[overlayOpacity]}
                         onValueChange={([val]) => setOverlayOpacity(val)}
                         min={0}
@@ -1354,7 +1371,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 4 — Advanced */}
-        <TabsContent value="advanced" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
+        <TabsContent value="advanced" className="p-0 m-0 flex-1 overflow-y-auto">
           <Accordion type="multiple" defaultValue={['advanced-brand']} className="w-full">
 
             {/* Brand Selector */}
@@ -1374,7 +1391,7 @@ export function FloatingGridInspector() {
               </AccordionTrigger>
               <AccordionContent className="px-4 pb-3">
                 <div className="space-y-2">
-                  <Label className="text-xs font-semibold text-slate-700">Sansys Brand</Label>
+                  <span className="text-xs font-semibold text-slate-700">Sansys Brand</span>
                   <div className="grid grid-cols-2 gap-1.5">
                     {/* None */}
                     <button
@@ -1508,7 +1525,7 @@ export function FloatingGridInspector() {
               </AccordionTrigger>
               <AccordionContent className="px-4 pb-3">
                 <div className="space-y-2">
-                  <Label className="text-xs font-semibold text-slate-700">Grid Size</Label>
+                  <span className="text-xs font-semibold text-slate-700">Grid Size</span>
                   <ToggleGroup type="single" value={baselineGrid} onValueChange={(v) => v && setBaselineGrid(v as any)} className="grid grid-cols-2 gap-1.5">
                     <ToggleGroupItem value="4px" className="text-xs h-8 data-[state=on]:bg-violet-600 data-[state=on]:text-white">
                       4px
@@ -1531,7 +1548,7 @@ export function FloatingGridInspector() {
               </AccordionTrigger>
               <AccordionContent className="px-4 pb-3">
                 <div className="space-y-2">
-                  <Label className="text-xs font-semibold text-slate-700">Spacing Density</Label>
+                  <span className="text-xs font-semibold text-slate-700">Spacing Density</span>
                   <ToggleGroup type="single" value={densityMode} onValueChange={(v) => v && setDensityMode(v as any)} className="grid grid-cols-3 gap-1.5">
                     <ToggleGroupItem value="comfortable" className="text-xs h-8 data-[state=on]:bg-emerald-600 data-[state=on]:text-white">
                       Comfort
@@ -1559,7 +1576,7 @@ export function FloatingGridInspector() {
         </TabsContent>
 
         {/* TAB 5 — Alerts (DSS compliance violations) */}
-        <TabsContent value="alerts" className="p-0 m-0 flex-1 overflow-y-auto animate-in fade-in-0 duration-200">
+        <TabsContent value="alerts" className="p-0 m-0 flex-1 overflow-y-auto">
           {violations.length === 0 ? (
             <div className="flex flex-col items-center justify-center gap-3 p-8 text-center">
               <CheckCircle size={32} className="text-emerald-500" />

@@ -135,7 +135,22 @@
       "--dss-form-gap": "var(--dss-spacing-4)"
     },
     "demoContent": "DssForm com DssInput e DssButton — container estrutural com gap semântico entre campos",
-    "demoSlots": null
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssInput",
+          "props": { "label": "Nome completo", "dense": true, "outlined": true }
+        },
+        {
+          "component": "DssSelect",
+          "props": { "label": "Tipo", "dense": true, "outlined": true, "options": ["Pessoa Física", "Pessoa Jurídica"] }
+        },
+        {
+          "component": "DssButton",
+          "props": { "color": "primary", "label": "Enviar", "size": "sm" }
+        }
+      ]
+    }
   },
   "previewGroup": "contextuais"
 }
