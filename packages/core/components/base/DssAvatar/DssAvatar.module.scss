@@ -23,4 +23,4 @@
 @use './3-variants/index' as variants;
 
 // Layer 4: Output (states, accessibility, dark mode)
-@use './4-output/DssAvatar' as output;
+@use './4-output/index' as output;
