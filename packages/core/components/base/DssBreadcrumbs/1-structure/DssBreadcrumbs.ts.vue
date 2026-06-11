@@ -140,14 +140,3 @@ const breadcrumbsStyle = computed(() => ({
     </template>
   </q-breadcrumbs>
 </template>
-
-<style lang="scss">
-/*
-  Sem `scoped` — este componente usa seletores descendentes para estilizar
-  os separadores injetados pelo QBreadcrumbs (EXC-01) e sobrescrever o gap
-  do container (EXC-02). Com scoped, os elementos injetados pelo Quasar
-  não recebem o atributo de escopo Vue e os seletores não produziriam efeito.
-  Padrão idêntico ao DssBtnGroup (1-structure/DssBtnGroup.ts.vue).
-*/
-@import '../DssBreadcrumbs.module.scss';
-</style>

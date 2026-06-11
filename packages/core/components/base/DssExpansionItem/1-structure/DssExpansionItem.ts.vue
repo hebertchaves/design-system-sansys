@@ -114,13 +114,3 @@ const emit = defineEmits<ExpansionItemEmits>()
 
 const { expansionItemClasses } = useExpansionItemClasses(props)
 </script>
-
-<style lang="scss">
-// Import final compiled styles (Layer 4 output)
-// NOTA: Sem `scoped` — necessário para que seletores
-// .dss-expansion-item .q-item e .dss-expansion-item .q-expansion-item__content
-// funcionem. Com scoped, seletores em elementos Quasar internos não recebem
-// o atributo data-v-xxx e ficam inaplicáveis.
-// Precedente: DssFab, DssFabAction (mesma razão, selados Mai 2026).
-@import '../DssExpansionItem.module.scss';
-</style>

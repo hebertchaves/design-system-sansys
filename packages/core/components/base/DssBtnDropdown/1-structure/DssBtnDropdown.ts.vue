@@ -166,12 +166,3 @@ const { btnDropdownClasses } = useBtnDropdownClasses(props)
 // useBtnDropdownVariantProps recebe o valor estático — o computed externo rastreia props.variant.
 const variantProps = computed(() => useBtnDropdownVariantProps(props.variant).value)
 </script>
-
-<style lang="scss">
-// Import final compiled styles (Layer 4 output)
-// NOTA: Sem `scoped` — necessário para que popup-content-class e seletores
-// globais de painel funcionem. Com scoped, o Vue adiciona data-v-xxx apenas
-// ao template deste componente, mas o painel é teleportado para o body e
-// não recebe este atributo. Precedente: DssBtnGroup NC-01 (Ciclo 1, Mar 2026).
-@import '../DssBtnDropdown.module.scss';
-</style>

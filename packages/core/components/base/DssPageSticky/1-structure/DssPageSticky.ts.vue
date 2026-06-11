@@ -85,7 +85,3 @@ defineSlots<PageStickySlots>()
 
 const { stickyClasses } = usePageStickyClasses(props)
 </script>
-
-<style lang="scss" scoped>
-@import '../DssPageSticky.module.scss';
-</style>

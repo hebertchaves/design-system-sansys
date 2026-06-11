@@ -39,6 +39,15 @@
  */
 
 // ============================================================================
+// CSS DA BIBLIOTECA (tokens + themes + componentes)
+// ============================================================================
+// Sem esta importação o bundle da lib (vite.config.lib.js) emite um
+// dist/style.css sem nenhum token :root — consumidores receberiam
+// var(--dss-*) indefinidas (bloqueante #2 da Auditoria Final Jun/2026).
+
+import './index.scss'
+
+// ============================================================================
 // EXPORTAR TODOS OS COMPONENTES
 // ============================================================================
 

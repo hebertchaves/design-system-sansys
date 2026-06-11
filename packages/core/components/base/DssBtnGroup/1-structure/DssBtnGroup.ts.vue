@@ -105,12 +105,3 @@ const props = withDefaults(defineProps<BtnGroupProps>(), {
 
 const { btnGroupClasses } = useBtnGroupClasses(props)
 </script>
-
-<style lang="scss">
-// Import final compiled styles (Layer 4 output)
-// NOTA: Sem `scoped` — este componente usa seletores globais para estilizar
-// filhos DssButton passados via <slot>. Com scoped, os filhos não recebem o
-// atributo de escopo do Vue e nenhum seletor `.dss-btn-group > .dss-button`
-// produziria efeito. Padrão documentado em 2-composition/_base.scss.
-@import '../DssBtnGroup.module.scss';
-</style>

@@ -163,18 +163,3 @@ const emit = defineEmits<BtnToggleEmits>()
 
 const { btnToggleClasses, variantProps } = useBtnToggleClasses(props)
 </script>
-
-<style lang="scss">
-/**
- * Import final compiled styles (Layer 4 output)
- *
- * NOTA: Sem `scoped` — este componente usa seletores globais para estilizar
- * botões internos (.q-btn-item) renderizados pelo QBtnToggle.
- * Com <style scoped>, os filhos não receberiam o atributo de escopo Vue
- * e nenhum seletor `.dss-btn-toggle > .q-btn-item` produziria efeito.
- *
- * Precedente: DssBtnGroup NC-01 (Ciclo 1, Mar 2026) — mesma causa raiz.
- * Precedente: DssBtnDropdown (Ciclo 1, Mar 2026) — mesmo padrão para painel.
- */
-@import '../DssBtnToggle.module.scss';
-</style>

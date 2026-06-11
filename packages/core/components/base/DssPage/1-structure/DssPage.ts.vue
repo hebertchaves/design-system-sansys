@@ -75,7 +75,3 @@ defineSlots<PageSlots>()
 
 const { pageClasses } = usePageClasses(props)
 </script>
-
-<style lang="scss" scoped>
-@import '../DssPage.module.scss';
-</style>

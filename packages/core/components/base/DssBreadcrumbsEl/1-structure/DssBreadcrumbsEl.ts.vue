@@ -71,7 +71,3 @@ const { breadcrumbsElClasses } = useBreadcrumbsElClasses(props)
     <slot>{{ label }}</slot>
   </q-breadcrumbs-el>
 </template>
-
-<style lang="scss" scoped>
-@import '../DssBreadcrumbsEl.module.scss';
-</style>

@@ -121,7 +121,3 @@ const effectiveDuration = computed(() =>
   prefersReducedMotion.value ? 0 : props.duration
 )
 </script>
-
-<style lang="scss" scoped>
-@import '../DssPageScroller.module.scss';
-</style>

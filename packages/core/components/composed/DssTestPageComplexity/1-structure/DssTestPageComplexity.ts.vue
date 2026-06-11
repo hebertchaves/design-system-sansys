@@ -565,7 +565,3 @@ function handleRowView(row: ServiceOrderRow) {
     </div><!-- /__body -->
   </div>
 </template>
-
-<style lang="scss">
-@import '../DssTestPageComplexity.module.scss';
-</style>

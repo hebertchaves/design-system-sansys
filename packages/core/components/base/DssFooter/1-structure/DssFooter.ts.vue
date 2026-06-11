@@ -50,7 +50,3 @@ const { footerClasses } = useFooterClasses(props)
     <slot />
   </q-footer>
 </template>
-
-<style lang="scss" scoped>
-@import '../DssFooter.module.scss';
-</style>

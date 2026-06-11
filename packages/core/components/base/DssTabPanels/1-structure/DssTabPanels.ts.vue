@@ -160,26 +160,6 @@ const DSS_TRANSITION = 'dss-tab-panels' as const
   </q-tab-panels>
 </template>
 
-<style lang="scss" scoped>
-/**
- * Uso de <style scoped> alinhado com Golden Reference (DssCard) e DssTabPanel.
- * Com <q-tab-panels> como root (Level 1 DOM pattern), Vue adiciona data-v-xxx
- * ao elemento raiz — estilos do módulo ficam escopados ao componente.
- *
- * SEPARAÇÃO OBRIGATÓRIA (ver bloco <style> global abaixo):
- * Este bloco scoped cobre via DssTabPanels.module.scss:
- *   - background transparent (2-composition/_base.scss)
- *   - high-contrast outline (4-output/_states.scss)
- *   - forced-colors border (4-output/_states.scss)
- *
- * O bloco <style> global (não scoped) cobre:
- *   - Classes de transição Vue (.dss-tab-panels-enter-active, etc.)
- *   - prefers-reduced-motion para transições
- * Essas classes NÃO podem ser scoped — Vue as aplica nos filhos do slot.
- */
-@import '../DssTabPanels.module.scss';
-</style>
-
 <style lang="scss">
 /**
  * Classes de transição Vue — NÃO scoped (obrigatório).

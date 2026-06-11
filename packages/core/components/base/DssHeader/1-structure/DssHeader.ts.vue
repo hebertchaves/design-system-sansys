@@ -50,7 +50,3 @@ const { headerClasses } = useHeaderClasses(props)
     <slot />
   </q-header>
 </template>
-
-<style lang="scss" scoped>
-@import '../DssHeader.module.scss';
-</style>

@@ -146,12 +146,3 @@ const emit = defineEmits<{
 
 const { fabClasses } = useFabClasses(props)
 </script>
-
-<style lang="scss">
-// Import final compiled styles (Layer 4 output)
-// NOTA: Sem `scoped` — necessário para que seletores .dss-fab__qfab .q-fab__trigger
-// funcionem. Com scoped, seletores em elementos Quasar internos não recebem
-// o atributo data-v-xxx e ficam inaplicáveis.
-// Precedente: DssBtnDropdown (mesma razão).
-@import '../DssFab.module.scss';
-</style>

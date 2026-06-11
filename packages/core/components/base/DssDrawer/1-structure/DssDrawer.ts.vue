@@ -144,8 +144,3 @@ function onUpdate(val: boolean): void {
     <slot />
   </q-drawer>
 </template>
-
-<style lang="scss">
-/* Não-scoped: necessário para alcançar .q-drawer__backdrop (elemento interno do QDrawer) */
-@import '../DssDrawer.module.scss';
-</style>

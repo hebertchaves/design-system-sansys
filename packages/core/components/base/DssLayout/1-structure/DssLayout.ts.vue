@@ -79,7 +79,3 @@ const { layoutClasses } = useLayoutClasses(props)
     <slot />
   </q-layout>
 </template>
-
-<style lang="scss" scoped>
-@import '../DssLayout.module.scss';
-</style>

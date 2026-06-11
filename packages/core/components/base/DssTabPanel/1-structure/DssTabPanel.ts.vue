@@ -102,23 +102,3 @@ const { tabPanelClasses } = useTabPanelClasses(props)
     <slot />
   </q-tab-panel>
 </template>
-
-<style lang="scss" scoped>
-/**
- * Uso de <style scoped> intencional e documentado.
- *
- * Alinha-se com o Golden Reference (DssCard), que também usa <style scoped>
- * com @import do módulo principal. O scoped garante que o Vue adicione
- * `data-v-xxx` ao elemento raiz (<q-tab-panel>) e a seus filhos diretos,
- * evitando vazamento de estilos para componentes irmãos na mesma página.
- *
- * Com <q-tab-panel> como root (Level 1 pattern), o comportamento scoped é:
- * - `.dss-tab-panel.q-tab-panel[data-v-xxx]` → elemento raiz ✅
- * - `[data-brand] .dss-tab-panel.q-tab-panel[data-v-xxx]` → cascade ancestral ✅
- * - `[data-theme] .dss-tab-panel.q-tab-panel[data-v-xxx]` → cascade ancestral ✅
- *
- * Divergência vs. DssTab (sem <style>): DssTab delega ao módulo global.
- * DssTabPanel usa scoped por decisão de alinhamento com DssCard (Golden Reference).
- */
-@import '../DssTabPanel.module.scss';
-</style>
