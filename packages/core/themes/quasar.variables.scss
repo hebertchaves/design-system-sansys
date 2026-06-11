@@ -4,16 +4,16 @@
    ========================================================================== */
 
 // Importar mapeamento de tokens
-@import 'quasar-tokens-mapping';
+@use 'quasar-tokens-mapping';
 
 /* ===========================================
    1. CONFIGURAÇÕES GERAIS DO QUASAR
    =========================================== */
 
 // Brand
-$primary: var(--quasar-primary) !default;
-$secondary: var(--quasar-secondary) !default;
-$accent: var(--quasar-accent) !default;
+$primary: var(--dss-primary) !default;
+$secondary: var(--dss-secondary) !default;
+$accent: var(--dss-accent) !default;
 
 // Semantic colors
 $positive: var(--dss-feedback-success) !default;
@@ -103,8 +103,8 @@ $tabs-min-height: var(--dss-touch-target-min) !default;
 $tabs-font-size: var(--dss-font-size-sm) !default;
 $tabs-font-weight: var(--dss-font-weight-medium) !default;
 $tabs-active-font-weight: var(--dss-font-weight-semibold) !default;
-$tabs-active-color: var(--quasar-primary) !default;
-$tabs-indicator-color: var(--quasar-primary) !default;
+$tabs-active-color: var(--dss-primary) !default;
+$tabs-indicator-color: var(--dss-primary) !default;
 $tabs-indicator-height: 3px !default;
 
 // Menus
@@ -116,13 +116,13 @@ $menu-item-padding: var(--dss-spacing-2) var(--dss-spacing-3) !default;
 $menu-item-min-height: var(--dss-touch-target-min) !default;
 $menu-item-font-size: var(--dss-font-size-base) !default;
 $menu-item-active-bg: var(--dss-surface-selected) !default;
-$menu-item-active-color: var(--quasar-primary) !default;
+$menu-item-active-color: var(--dss-primary) !default;
 
 // Progress
 $progress-border-radius: var(--dss-radius-full) !default;
 $progress-height: 4px !default;
 $progress-track-bg: var(--dss-surface-muted) !default;
-$progress-model-bg: var(--quasar-primary) !default;
+$progress-model-bg: var(--dss-primary) !default;
 $progress-model-transition: width 0.3s var(--dss-easing-standard) !default;
 
 /* ===========================================
@@ -275,7 +275,7 @@ $breakpoint-zoom-300: 600px !default;  // Para usuários com zoom 300%
 
 // Focus ring
 $focus-ring-width: 3px !default;
-$focus-ring-color: rgba(var(--quasar-primary), 0.5) !default;
+$focus-ring-color: color-mix(in srgb, var(--dss-primary) 50%, transparent) !default;
 $focus-ring-style: solid !default;
 
 // Touch target minimum size

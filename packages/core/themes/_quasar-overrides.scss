@@ -39,11 +39,11 @@
   
   /* Botão primário com lógica brand × semantic */
   &--primary {
-    background-color: var(--quasar-primary) !important;
+    background-color: var(--dss-primary) !important;
     color: white !important;
     
     &:hover:not(.disabled):not([disabled]) {
-      background-color: var(--quasar-primary-hover, var(--dss-action-primary-hover)) !important;
+      background-color: var(--dss-action-primary-hover) !important;
     }
     
     &:active:not(.disabled):not([disabled]) {
@@ -60,7 +60,7 @@
   
   /* Botão secundário */
   &--secondary {
-    background-color: var(--quasar-secondary) !important;
+    background-color: var(--dss-secondary) !important;
     color: white !important;
     
     &:hover:not(.disabled):not([disabled]) {
@@ -71,12 +71,12 @@
   /* Botão outline */
   &--outline {
     &-primary {
-      color: var(--quasar-primary) !important;
-      border: 2px solid var(--quasar-primary) !important;
+      color: var(--dss-primary) !important;
+      border: 2px solid var(--dss-primary) !important;
       background-color: transparent !important;
       
       &:hover:not(.disabled):not([disabled]) {
-        background-color: rgba(var(--quasar-primary), 0.1) !important;
+        background-color: color-mix(in srgb, var(--dss-primary) 10%, transparent) !important;
       }
     }
   }
@@ -84,10 +84,10 @@
   /* Botão flat */
   &--flat {
     &-primary {
-      color: var(--quasar-primary) !important;
+      color: var(--dss-primary) !important;
       
       &:hover:not(.disabled):not([disabled]) {
-        background-color: rgba(var(--quasar-primary), 0.1) !important;
+        background-color: color-mix(in srgb, var(--dss-primary) 10%, transparent) !important;
       }
     }
   }
@@ -508,7 +508,7 @@
   /* Tabs */
   &__indicator {
     height: 3px !important;
-    background-color: var(--quasar-primary) !important;
+    background-color: var(--dss-primary) !important;
     border-radius: var(--dss-radius-full) !important;
   }
   
@@ -533,12 +533,12 @@
     /* Tab ativa */
     &--active {
       .q-tab__label {
-        color: var(--quasar-primary) !important;
+        color: var(--dss-primary) !important;
         font-weight: var(--dss-font-weight-semibold) !important;
       }
       
       .q-icon {
-        color: var(--quasar-primary) !important;
+        color: var(--dss-primary) !important;
       }
     }
     
@@ -611,7 +611,7 @@
     /* Ativo/selecionado */
     &--active {
       background-color: var(--dss-surface-selected) !important;
-      color: var(--quasar-primary) !important;
+      color: var(--dss-primary) !important;
       font-weight: var(--dss-font-weight-semibold) !important;
     }
     
@@ -685,10 +685,10 @@
         /* Coluna ordenada */
         &.sorted {
           background-color: var(--dss-surface-selected) !important;
-          color: var(--quasar-primary) !important;
+          color: var(--dss-primary) !important;
           
           .q-table__sort-icon {
-            color: var(--quasar-primary) !important;
+            color: var(--dss-primary) !important;
           }
         }
         
@@ -888,7 +888,7 @@
   
   /* Model */
   &__model {
-    background-color: var(--quasar-primary) !important;
+    background-color: var(--dss-primary) !important;
     transition: width 0.3s var(--dss-easing-standard) !important;
     
     /* Cores semânticas */
@@ -916,7 +916,7 @@
 }
 
 .q-spinner {
-  color: var(--quasar-primary) !important;
+  color: var(--dss-primary) !important;
   
   /* Tamanhos */
   &--sm {

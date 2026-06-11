@@ -327,7 +327,7 @@ export default {
 
 <style lang="scss" scoped>
 /* Importar estilos de showcase (apenas para exemplos) */
-@import '../../../utils/example-showcase';
+@use '../../../utils/example-showcase' as *;
 
 /* Estilos adicionais especificos deste exemplo */
 .dss-badge-examples {

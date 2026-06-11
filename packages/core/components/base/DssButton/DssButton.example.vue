@@ -204,7 +204,7 @@ export default {
 
 <style lang="scss" scoped>
 /* Importar estilos de showcase (apenas para exemplos) */
-@import '../../../utils/example-showcase';
+@use '../../../utils/example-showcase' as *;
 
 /* Estilos adicionais específicos deste exemplo */
 .dss-button-examples {

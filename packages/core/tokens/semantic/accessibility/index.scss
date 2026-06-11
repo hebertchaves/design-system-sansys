@@ -17,7 +17,7 @@
 // - Brandability (Hub, Water, Waste)
 // - High contrast mode
 // Tokens: --dss-focus-*, --dss-focus-shadow-*, --dss-focus-ring-*
-@import 'focus';
+@use 'focus';
 
 // -----------------------------------------------------------------------------
 // CONTRAST RATIOS (WCAG 1.4.3, 1.4.6)
@@ -26,7 +26,7 @@
 // - Minimos WCAG: 4.5:1 (texto), 3:1 (UI)
 // - Combinacoes aprovadas documentadas
 // Tokens: --dss-contrast-min-*, --dss-contrast-*-on-*
-@import 'contrast';
+@use 'contrast';
 
 // -----------------------------------------------------------------------------
 // TOUCH TARGETS (WCAG 2.5.5)
@@ -35,7 +35,7 @@
 // - Minimo: 44x44px (WCAG)
 // - Ideal: 48x48px
 // Tokens: --dss-touch-target-*, --dss-touch-spacing-*
-@import 'sizing';
+@use 'sizing';
 
 // -----------------------------------------------------------------------------
 // TYPOGRAPHY (WCAG 1.4.4, 1.4.12)
@@ -45,7 +45,7 @@
 // - Espacamento legivel
 // - Suporte a zoom 200%
 // Tokens: --dss-font-size-*-min, --dss-line-height-*
-@import 'typography';
+@use 'typography';
 
 // =============================================================================
 // NOTAS DE USO
@@ -55,13 +55,13 @@
 
 ## Opcao 1: Importar todos
 ```scss
-@import 'tokens/semantic/accessibility';
+@use 'tokens/semantic/accessibility';
 ```
 
 ## Opcao 2: Importar especificos
 ```scss
-@import 'tokens/semantic/accessibility/focus';
-@import 'tokens/semantic/accessibility/contrast';
+@use 'tokens/semantic/accessibility/focus';
+@use 'tokens/semantic/accessibility/contrast';
 ```
 
 # Conformidade WCAG 2.1 AA

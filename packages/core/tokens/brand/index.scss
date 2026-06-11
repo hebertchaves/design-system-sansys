@@ -7,9 +7,9 @@
    1. IMPORTAR TODOS OS ARQUIVOS DE MARCA
    =========================================== */
 
-@import 'hub';
-@import 'water';
-@import 'waste';
+@use 'hub';
+@use 'water';
+@use 'waste';
 
 /* ===========================================
    2. CLASSES PARA FORÇAR MARCA ESPECÍFICA

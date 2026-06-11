@@ -222,7 +222,7 @@ export default {
 
 <style lang="scss" scoped>
 /* Importar estilos de showcase (apenas para exemplos) */
-@import '../../../utils/example-showcase';
+@use '../../../utils/example-showcase' as *;
 
 .dss-tooltip-examples {
   max-width: 1200px;

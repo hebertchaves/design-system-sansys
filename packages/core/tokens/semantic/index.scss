@@ -8,51 +8,51 @@
    =========================================== */
 
 /* Ações e interações */
-@import 'actions';
+@use 'actions';
 
 /* Texto e tipografia */
-@import 'text';
+@use 'text';
 
 /* Superfícies e backgrounds */
-@import 'surfaces';
+@use 'surfaces';
 
 /* Bordas */
-@import 'borders';
+@use 'borders';
 
 /* Espessuras de borda */
-@import 'border-widths';
+@use 'border-widths';
 
 /* Feedback e estados */
-@import 'feedback';
+@use 'feedback';
 
 /* ===========================================
    2. TOKENS DE LAYOUT E UTILIDADE
    =========================================== */
 
 /* Opacidade */
-@import 'opacity';
+@use 'opacity';
 
 /* Sombras e elevação */
-@import 'shadows';
+@use 'shadows';
 
 /* Z-index */
-@import 'z-index';
+@use 'z-index';
 
 /* Motion e animações */
-@import 'motion';
+@use 'motion';
 
 /* Espaçamento */
-@import 'spacing';
+@use 'spacing';
 
 /* Breakpoints responsivos */
-@import 'breakpoints';
+@use 'breakpoints';
 
 /* Gradientes */
-@import 'gradients';
+@use 'gradients';
 
 /* ===========================================
    3. TOKENS DE ACESSIBILIDADE (WCAG 2.1 AA)
    =========================================== */
 
 /* Agrega: contrast, focus, sizing, typography */
-@import 'accessibility/index';
+@use 'accessibility/index';

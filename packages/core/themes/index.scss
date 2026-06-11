@@ -4,13 +4,13 @@
    ========================================================================== */
 
 /* 1. Mapeamento de tokens Quasar → DSS */
-@import 'quasar-tokens-mapping';
+@use 'quasar-tokens-mapping';
 
 /* 2. Sobrescritas de componentes Quasar */
-@import 'quasar-overrides';
+@use 'quasar-overrides';
 
 /* 3. Utilitários específicos para Quasar */
-@import 'quasar-utilities';
+@use 'quasar-utilities';
 
 /* 4. Importar Quasar variables com nossas customizações */
 // Nota: Este arquivo será incluído na build do Quasar

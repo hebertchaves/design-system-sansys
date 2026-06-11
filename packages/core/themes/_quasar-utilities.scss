@@ -156,11 +156,11 @@
         
         &--active {
           background-color: var(--dss-surface-selected);
-          color: var(--quasar-primary);
+          color: var(--dss-primary);
           font-weight: var(--dss-font-weight-semibold);
           
           .q-icon {
-            color: var(--quasar-primary);
+            color: var(--dss-primary);
           }
         }
         
