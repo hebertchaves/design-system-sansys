@@ -57,9 +57,9 @@ import type {
   QUploaderExtendedFile,
 } from '../types/uploader.types'
 import { useUploaderClasses } from '../composables/useUploaderClasses'
-import DssButton from '../../base/DssButton/DssButton.vue'
-import DssIcon from '../../base/DssIcon/DssIcon.vue'
-import DssLinearProgress from '../../base/DssLinearProgress/DssLinearProgress.vue'
+import DssButton from '../../../base/DssButton/DssButton.vue'
+import DssIcon from '../../../base/DssIcon/DssIcon.vue'
+import DssLinearProgress from '../../../base/DssLinearProgress/DssLinearProgress.vue'
 
 // ─── Component Options ────────────────────────────────────────────────────
 
