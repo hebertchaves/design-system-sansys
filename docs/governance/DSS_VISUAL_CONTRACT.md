@@ -3,7 +3,8 @@
 # DSS Visual Contract & Validation Strategy
 
 > **📅 Criado:** Maio 2026
-> **🎯 Objetivo:** Definir a estratégia de validação contínua para garantir que o código dos componentes DSS corresponda à fonte de verdade visual (Figma).
+> **🎯 Objetivo:** Definir a estratégia de validação contínua para garantir que a documentação e os artefatos derivados correspondam à fonte de verdade visual: o **CSS do componente** (Princípio #12 do `CLAUDE.md`).
+> **⚠️ Revisão (Jun/2026 — Onda P0/T6):** o Figma foi rebaixado na hierarquia — é ferramenta integrável via MCP, sem autoridade normativa.
 
 ---
 
@@ -11,7 +12,7 @@
 
 Historicamente, o DSS sofria de ambiguidades visuais porque o contrato de dimensões e espaçamentos residia apenas no código SCSS (`_base.scss`). Isso gerava dois problemas:
 1. **Inferência por Agentes:** Agentes de IA precisavam inferir o aspecto visual a partir de tokens compostos.
-2. **Desatualização Silenciosa:** Se um designer alterasse o Figma, o código ficava desatualizado sem que nenhum teste falhasse.
+2. **Desatualização Silenciosa:** Alterações no CSS não eram refletidas na documentação derivada sem que nenhum teste falhasse.
 
 ## 2. A Solução em 3 Camadas
 
@@ -20,11 +21,11 @@ Para resolver isso, o DSS implementa uma governança visual em três camadas:
 ### Camada 1: Contrato Estático (`defaultPreview`)
 Todo componente DSS possui um campo `defaultPreview` em seu `dss.meta.json`. Este campo declara explicitamente as dimensões computadas, tokens aplicados e props padrão esperadas para a renderização canônica do componente.
 
-### Camada 2: Árbitro Visual (Figma)
-O Figma é declarado normativamente como a **fonte de verdade visual** (Princípio #11 do `CLAUDE.md`). Em caso de divergência entre o `defaultPreview` e o Figma, o Figma tem precedência. Agentes DEVEM consultar o Figma via MCP em caso de ambiguidade.
+### Camada 2: Árbitro Visual (CSS do componente)
+O **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) é declarado normativamente como a **fonte de verdade visual** (Princípio #12 do `CLAUDE.md`). Em caso de divergência entre o `defaultPreview` e o CSS, o CSS tem precedência. Agentes DEVEM consultar o CSS compilado em caso de ambiguidade. O Figma é ferramenta de apoio via MCP, sem autoridade decisória.
 
 ### Camada 3: Validação Contínua (Screenshot Testing)
-A validação contínua garante que o código renderizado corresponda ao contrato estático e, por extensão, ao Figma.
+A validação contínua garante que o contrato estático (`defaultPreview`) e a documentação derivada correspondam ao código renderizado — a fonte de verdade.
 
 ## 3. Estratégia de Validação Contínua
 
@@ -45,4 +46,4 @@ A validação contínua será implementada através de uma tool MCP dedicada: `v
 
 1. **Implementar `validateVisualContract`:** Desenvolver o script Node.js e a tool MCP correspondente.
 2. **Integração CI/CD:** Adicionar a validação visual ao pipeline de CI do repositório.
-3. **Sincronização Figma-JSON:** Explorar automação para atualizar o `defaultPreview` diretamente a partir de mudanças no Figma via API.
+3. **Sincronização CSS-JSON:** Explorar automação para atualizar o `defaultPreview` diretamente a partir do CSS compilado do componente (cadeia CSS → meta.json → contrato visual).

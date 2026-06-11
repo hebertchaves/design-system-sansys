@@ -2,7 +2,7 @@
 
 > **Status:** Normativo Vinculante (Hierarquia Nível 1)
 > **Versão DSS:** v2.3.0
-> **Autoridade:** Este documento é a ÚNICA fonte de verdade narrativa para o contrato visual default dos componentes DSS. Em caso de conflito com qualquer outro documento de documentação, este prevalece. Em caso de conflito com o Figma, o Figma prevalece (Princípio #12).
+> **Autoridade:** Este documento é a ÚNICA fonte de verdade narrativa para o contrato visual default dos componentes DSS. Em caso de conflito com qualquer outro documento de documentação, este prevalece. Em caso de conflito com o CSS do componente, **o CSS prevalece** (Princípio #12 — este documento é derivado: a cadeia de verdade é CSS → meta.json → este documento).
 > **Sincronização:** Este documento é o espelho em Markdown dos campos `defaultPreview` contidos nos arquivos `dss.meta.json` de cada componente. Alterações no `defaultPreview` de qualquer componente DEVEM ser refletidas aqui simultaneamente.
 
 ---
@@ -31,7 +31,7 @@ O default visual SIM inclui:
 | :--- | :--- | :--- | :--- |
 | **Machine-readable** | `dss.meta.json` → campo `defaultPreview` | MCP, ferramentas de validação visual | Fonte de código |
 | **Human-readable** | Este documento (`DSS_REFERENCIA_VISUAL_ANALISE.md`) | Agentes de IA, engenheiros, designers | Espelho narrativo do JSON |
-| **Árbitro visual** | Figma (Princípio #12) | Decisões visuais em caso de divergência | Supremo |
+| **Árbitro visual** | CSS do componente (`2-composition/_base.scss` e camadas seguintes — Princípio #12) | Decisões visuais em caso de divergência | Supremo |
 
 **Regra de sincronização:** Toda alteração no `defaultPreview` de um `dss.meta.json` DEVE ser refletida na entrada correspondente da Seção 4 deste documento na mesma PR.
 
@@ -69,11 +69,11 @@ Nenhum valor hardcoded (px, rem, hex, rgb) deve aparecer em `_base.scss`, `_vari
 - Sombra → `--dss-elevation-*`
 - Tipografia → `--dss-font-size-*`, `--dss-font-weight-*`, `--dss-line-height-*`
 
-### 2.2 Figma como Árbitro Visual (Princípio #12)
+### 2.2 CSS como Fonte de Verdade Visual (Princípio #12)
 
-O Figma é declarado normativamente como a **fonte de verdade visual** do DSS. Em caso de divergência entre o `defaultPreview` e o Figma, o Figma tem precedência. O campo `defaultPreview` reflete o Figma, mas o Figma vence em caso de conflito.
+O **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) é declarado normativamente como a **fonte de verdade visual** do DSS. Em caso de divergência entre o `defaultPreview` e o CSS, o CSS tem precedência. O campo `defaultPreview` reflete o CSS, e o CSS vence em caso de conflito.
 
-Agentes DEVEM consultar o Figma via MCP em caso de ambiguidade sobre dimensões, espaçamentos ou cores.
+Agentes DEVEM consultar o CSS compilado do componente em caso de ambiguidade sobre dimensões, espaçamentos ou cores. O Figma permanece como ferramenta integrável via MCP (como qualquer outra ferramenta de mercado), **sem autoridade normativa** sobre decisões visuais.
 
 ### 2.3 Neutralidade do Default
 
@@ -1929,7 +1929,7 @@ Ao criar um novo componente DSS (Fase 3+):
 
 1. Defina o `defaultPreview` completo no `dss.meta.json` **antes** de escrever qualquer SCSS.
 2. Determine a categoria do componente e aplique os padrões da Seção 3.
-3. Consulte o Figma via MCP para confirmar dimensões e tokens (Princípio #12).
+3. Consulte o CSS do componente (`2-composition/_base.scss` e camadas seguintes) para confirmar dimensões e tokens (Princípio #12). O Figma pode ser consultado via MCP como apoio, sem autoridade decisória.
 4. Adicione a entrada na Seção 4 deste documento com a tabela de tokens.
 5. Execute `validateVisualContract` (quando disponível) para validar conformidade.
 
@@ -1943,11 +1943,15 @@ Os seguintes 16 componentes possuem `computedDimensions: {}` (objeto vazio) no `
 
 Em caso de conflito entre fontes de informação visual:
 
-1. **Figma** (supremo — Princípio #12)
-2. **`dss.meta.json` → `defaultPreview`** (machine-readable canônico)
-3. **Este documento** (human-readable canônico)
-4. **`_base.scss` do componente** (implementação)
-5. **Qualquer outro documento** (subordinado)
+1. **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) — supremo (Princípio #12)
+2. **`dss.meta.json` → `defaultPreview`** (machine-readable — espelho documentado do CSS)
+3. **Este documento** (human-readable — derivado do meta.json via `npm run sync:visual-contract`)
+4. **Qualquer outro documento** (subordinado)
+
+> O **Figma está fora da cadeia de autoridade**: é ferramenta integrável via
+> MCP, como qualquer outra ferramenta de mercado, sem poder decisório sobre
+> aspectos visuais. Toda alteração visual começa no CSS; toda documentação é
+> derivada (cadeia: **CSS → meta.json → este documento**).
 
 <!-- BEGIN:AUTO-GENERATED — NÃO EDITAR MANUALMENTE -->
 ## Seção Auto-Gerada: Contratos Visuais Default
@@ -2047,5 +2051,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-11T19:41:17.004Z_
+_Gerado em: 2026-06-11T22:44:30.213Z_
 <!-- END:AUTO-GENERATED -->
