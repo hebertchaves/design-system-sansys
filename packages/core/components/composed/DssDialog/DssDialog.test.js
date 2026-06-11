@@ -7,7 +7,7 @@
  * Golden Reference: DssChip
  * Golden Context: DssCard
  */
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssDialog from './1-structure/DssDialog.ts.vue'
@@ -60,33 +60,47 @@ describe('DssDialog', () => {
   // =========================================================================
   // 3. Slots e Condicionalidade
   // =========================================================================
-  it('renderiza conteúdo via slot default', () => {
+  // NOTA (Onda P0/T4): QDialog teleporta o conteúdo para <body> — as buscas
+  // devem ser feitas em document.body, com o dialog aberto (open: true).
+  // As versões anteriores destes testes usavam wrapper.find() e só passavam
+  // porque o registro global do Quasar não existia no runner (q-dialog não
+  // resolvia e os filhos renderizavam inline).
+  it('renderiza conteúdo via slot default', async () => {
     const wrapper = mount(DssDialog, {
+      props: { open: true },
       slots: {
         default: '<div class="test-content">conteúdo do diálogo</div>'
       }
     })
-    expect(wrapper.find('.test-content').exists()).toBe(true)
+    await wrapper.vm.$nextTick()
+    expect(document.body.querySelector('.test-content')).not.toBeNull()
+    wrapper.unmount()
   })
 
-  it('renderiza header apenas quando slot é fornecido', () => {
+  it('renderiza header apenas quando slot é fornecido', async () => {
     const wrapper = mount(DssDialog, {
+      props: { open: true },
       slots: {
         header: '<div class="test-header">Título</div>'
       }
     })
-    expect(wrapper.find('.dss-dialog__header').exists()).toBe(true)
-    expect(wrapper.find('.test-header').exists()).toBe(true)
+    await wrapper.vm.$nextTick()
+    expect(document.body.querySelector('.dss-dialog__header')).not.toBeNull()
+    expect(document.body.querySelector('.test-header')).not.toBeNull()
+    wrapper.unmount()
   })
 
-  it('renderiza footer apenas quando slot é fornecido', () => {
+  it('renderiza footer apenas quando slot é fornecido', async () => {
     const wrapper = mount(DssDialog, {
+      props: { open: true },
       slots: {
         footer: '<div class="test-footer">Ações</div>'
       }
     })
-    expect(wrapper.find('.dss-dialog__footer').exists()).toBe(true)
-    expect(wrapper.find('.test-footer').exists()).toBe(true)
+    await wrapper.vm.$nextTick()
+    expect(document.body.querySelector('.dss-dialog__footer')).not.toBeNull()
+    expect(document.body.querySelector('.test-footer')).not.toBeNull()
+    wrapper.unmount()
   })
 
   // =========================================================================
@@ -150,5 +164,72 @@ describe('DssDialog', () => {
     const wrapper = mount(DssDialog)
     const propsOptions = Object.keys(wrapper.vm.$props)
     expect(propsOptions).not.toContain('square')
+  })
+
+  // =========================================================================
+  // Brand em conteúdo teleportado (Onda P0/T4 — bloqueante A8)
+  // O QDialog teleporta o conteúdo para <body>; o acento de brand é
+  // resolvido pelo composable useTeleportedBrand e aplicado via :data-brand
+  // no root .dss-dialog. Ver DSS_IMPLEMENTATION_GUIDE.md — Brandabilidade.
+  // =========================================================================
+  describe('Brand em conteúdo teleportado', () => {
+    // QDialog desmontado em estado aberto deixa o portal no body durante a
+    // transição — remover portais órfãos para não contaminar as asserções.
+    beforeEach(() => {
+      document.body.querySelectorAll('.dss-dialog').forEach((el) => {
+        const portal = el.closest('[id^="q-portal"]')
+        ;(portal ?? el).remove()
+      })
+    })
+
+    it('aplica o data-brand do <body> (norma) no root teleportado', async () => {
+      document.body.dataset.brand = 'water'
+      const wrapper = mount(DssDialog, {
+        props: { open: true },
+        slots: { default: 'Conteúdo' }
+      })
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
+      const dialogs = document.body.querySelectorAll('.dss-dialog')
+      const teleported = dialogs[dialogs.length - 1]
+      expect(teleported).not.toBeNull()
+      expect(teleported.getAttribute('data-brand')).toBe('water')
+      wrapper.unmount()
+      delete document.body.dataset.brand
+    })
+
+    it('usa fallback de container legado quando o body não tem data-brand', async () => {
+      delete document.body.dataset.brand
+      const host = document.createElement('div')
+      host.dataset.brand = 'hub'
+      document.body.appendChild(host)
+      const wrapper = mount(DssDialog, {
+        props: { open: true },
+        slots: { default: 'Conteúdo' }
+      })
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
+      const dialogs = document.body.querySelectorAll('.dss-dialog')
+      const teleported = dialogs[dialogs.length - 1]
+      expect(teleported).not.toBeNull()
+      expect(teleported.getAttribute('data-brand')).toBe('hub')
+      wrapper.unmount()
+      host.remove()
+    })
+
+    it('omite data-brand quando o documento não declara brand', async () => {
+      delete document.body.dataset.brand
+      const wrapper = mount(DssDialog, {
+        props: { open: true },
+        slots: { default: 'Conteúdo' }
+      })
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
+      const dialogs = document.body.querySelectorAll('.dss-dialog')
+      const teleported = dialogs[dialogs.length - 1]
+      expect(teleported).not.toBeNull()
+      expect(teleported.hasAttribute('data-brand')).toBe(false)
+      wrapper.unmount()
+    })
   })
 })

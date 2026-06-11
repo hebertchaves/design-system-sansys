@@ -1200,6 +1200,29 @@ Todos os componentes Quasar ganham automaticamente:
 
 O DSS suporta 3 marcas: **Hub** (Laranja), **Water** (Azul), **Waste** (Verde).
 
+### ⚠️ NORMA: `data-brand` no `<body>` (VINCULANTE para apps com overlays)
+
+Componentes de overlay (**DssDialog, DssBottomSheet, DssPopupEdit**) são
+**teleportados para o `<body>`** pelo Quasar — eles saem da subárvore do
+container da aplicação. Se `data-brand` estiver apenas em um wrapper interno
+(ex.: `#app`), os seletores `[data-brand="x"] .dss-dialog` **não casam** com o
+conteúdo teleportado e o acento de marca falha silenciosamente.
+
+```js
+// ✅ CORRETO — brand no body: cobre toda a aplicação, inclusive teleports
+document.body.dataset.brand = 'water'
+
+// ⚠️ LEGADO — brand em wrapper interno: overlays dependem do fallback
+// defensivo (useTeleportedBrand), que detecta o primeiro [data-brand]
+// do documento e o reaplica no root teleportado
+```
+
+Os três overlays incluem a defesa `useTeleportedBrand()` (composable global,
+`composables/useTeleportedBrand.ts`), que resolve o brand efetivo do documento
+e o aplica via `:data-brand` no root teleportado — mas a **norma** é aplicar
+no `<body>`. Wrappers internos continuam válidos para conteúdo não teleportado
+(cards, botões, formulários).
+
 ### Uso via Data Attribute
 
 ```html

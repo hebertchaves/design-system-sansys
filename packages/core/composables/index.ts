@@ -29,3 +29,7 @@ export type { ComponentStateOptions } from './useComponentState'
 // Brand Management
 export { useBrand, getBrandColor, BRAND_COLORS } from './useBrand'
 export type { SansysBrand } from './useBrand'
+
+// Brand para conteúdo teleportado (overlays — Onda P0/T4)
+export { useTeleportedBrand } from './useTeleportedBrand'
+export type { UseTeleportedBrandReturn } from './useTeleportedBrand'

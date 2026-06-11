@@ -17,6 +17,7 @@
     :validate="props.validate"
     :touch-position="props.touchPosition"
     :disable="props.disable"
+    :data-brand="effectiveBrand"
     v-bind="$attrs"
     @update:model-value="emit('update:modelValue', $event)"
     @save="(val, initVal) => emit('save', val, initVal)"
@@ -90,6 +91,7 @@
  */
 
 import { ref } from 'vue'
+import { useTeleportedBrand } from '../../../../composables/useTeleportedBrand'
 import type { DssPopupEditProps, DssPopupEditEmits, DssPopupEditSlots, DssPopupEditExpose } from '../types/popupedit.types'
 
 // ==========================================================================
@@ -128,6 +130,9 @@ defineSlots<DssPopupEditSlots>()
 // ==========================================================================
 
 const popupEditRef = ref<{ set: () => void; cancel: () => void } | null>(null)
+
+// Brand para conteúdo teleportado (Onda P0/T4 — ver composable)
+const { effectiveBrand } = useTeleportedBrand()
 
 // ==========================================================================
 // EXPOSE

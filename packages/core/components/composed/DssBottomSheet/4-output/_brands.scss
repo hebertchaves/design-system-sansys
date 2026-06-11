@@ -20,7 +20,8 @@
    HUB (Laranja)
    ========================================================================== */
 
-[data-brand="hub"] .dss-bottom-sheet {
+[data-brand="hub"] .dss-bottom-sheet,
+.dss-bottom-sheet[data-brand="hub"] {
   .dss-bottom-sheet__handle {
     background-color: var(--dss-hub-600);
   }
@@ -34,7 +35,8 @@
    WATER (Azul)
    ========================================================================== */
 
-[data-brand="water"] .dss-bottom-sheet {
+[data-brand="water"] .dss-bottom-sheet,
+.dss-bottom-sheet[data-brand="water"] {
   .dss-bottom-sheet__handle {
     background-color: var(--dss-water-500);
   }
@@ -48,7 +50,8 @@
    WASTE (Verde)
    ========================================================================== */
 
-[data-brand="waste"] .dss-bottom-sheet {
+[data-brand="waste"] .dss-bottom-sheet,
+.dss-bottom-sheet[data-brand="waste"] {
   .dss-bottom-sheet__handle {
     background-color: var(--dss-waste-600);
   }

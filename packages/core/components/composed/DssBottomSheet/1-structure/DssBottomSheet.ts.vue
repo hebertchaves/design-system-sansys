@@ -16,7 +16,7 @@
     @before-show="emit('before-open')"
     @before-hide="emit('before-close')"
   >
-    <div :class="sheetClasses">
+    <div :class="sheetClasses" :data-brand="effectiveBrand">
       <!-- Handle visual de arrasto — slot customizável ou padrão -->
       <div class="dss-bottom-sheet__handle-area" aria-hidden="true">
         <slot name="handle">
@@ -101,6 +101,7 @@
 import { computed, useSlots } from 'vue'
 import type { DssBottomSheetProps, DssBottomSheetEmits, DssBottomSheetSlots } from '../types/bottomsheet.types'
 import { useBottomSheetClasses } from '../composables/useBottomSheetClasses'
+import { useTeleportedBrand } from '../../../../composables/useTeleportedBrand'
 
 // ==========================================================================
 // COMPONENT OPTIONS
@@ -140,6 +141,9 @@ const slots = useSlots()
 // ==========================================================================
 
 const { sheetClasses } = useBottomSheetClasses(props)
+
+// Brand para conteúdo teleportado (Onda P0/T4 — ver composable)
+const { effectiveBrand } = useTeleportedBrand()
 
 // ==========================================================================
 // COMPUTED

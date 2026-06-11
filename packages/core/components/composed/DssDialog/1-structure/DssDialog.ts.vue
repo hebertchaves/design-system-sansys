@@ -18,7 +18,7 @@
     @before-show="emit('before-open')"
     @before-hide="emit('before-close')"
   >
-    <div :class="dialogClasses">
+    <div :class="dialogClasses" :data-brand="effectiveBrand">
       <!-- Slot Header: título, botão fechar — responsabilidade do consumidor -->
       <div v-if="hasHeader" class="dss-dialog__header">
         <slot name="header" />
@@ -89,6 +89,7 @@
 import { computed, useSlots } from 'vue'
 import type { DssDialogProps, DssDialogEmits, DssDialogSlots } from '../types/dialog.types'
 import { useDialogClasses } from '../composables/useDialogClasses'
+import { useTeleportedBrand } from '../../../../composables/useTeleportedBrand'
 
 // ==========================================================================
 // COMPONENT OPTIONS
@@ -128,6 +129,9 @@ const slots = useSlots()
 // ==========================================================================
 
 const { dialogClasses } = useDialogClasses(props)
+
+// Brand para conteúdo teleportado (Onda P0/T4 — ver composable)
+const { effectiveBrand } = useTeleportedBrand()
 
 // ==========================================================================
 // COMPUTED

@@ -240,32 +240,37 @@ describe('DssChip', () => {
       expect(wrapper.find('.custom-content').exists()).toBe(true)
     })
 
-    it('renders icon slot', () => {
+    // NOTA (Onda P0): a implementação canônica (rebuild próprio, não wrapper
+    // de QChip) NÃO possui slots nomeados de ícone — ícones são definidos
+    // pelas props icon / iconRight / iconRemove. Os testes anteriores
+    // exercitavam slots inexistentes e só "passavam" porque o runner não
+    // tinha registro Quasar (gate de testes inexecutável até a Onda P0).
+    it('renderiza ícone esquerdo via prop icon (sem slot nomeado)', () => {
       const wrapper = mount(DssChip, {
-        slots: {
-          icon: '<i class="custom-icon">custom_icon</i>'
-        }
+        props: { icon: 'star', label: 'Chip' }
       })
-      expect(wrapper.find('.custom-icon').exists()).toBe(true)
+      const icon = wrapper.find('.dss-chip__icon--left')
+      expect(icon.exists()).toBe(true)
+      expect(icon.text()).toBe('star')
     })
 
-    it('renders icon-right slot', () => {
+    it('renderiza ícone direito via prop iconRight (sem slot nomeado)', () => {
       const wrapper = mount(DssChip, {
-        slots: {
-          'icon-right': '<i class="custom-right-icon">custom_right</i>'
-        }
+        props: { iconRight: 'arrow_drop_down', label: 'Chip' }
       })
-      expect(wrapper.find('.custom-right-icon').exists()).toBe(true)
+      const icon = wrapper.find('.dss-chip__icon--right')
+      expect(icon.exists()).toBe(true)
+      expect(icon.text()).toBe('arrow_drop_down')
     })
 
-    it('renders icon-remove slot', () => {
+    it('renderiza botão de remover com ícone via prop iconRemove', () => {
       const wrapper = mount(DssChip, {
-        props: { removable: true },
-        slots: {
-          'icon-remove': '<i class="custom-remove">custom_remove</i>'
-        }
+        props: { removable: true, iconRemove: 'close', label: 'Chip' }
       })
-      expect(wrapper.find('.custom-remove').exists()).toBe(true)
+      expect(wrapper.find('.dss-chip__remove').exists()).toBe(true)
+      const icon = wrapper.find('.dss-chip__icon--remove')
+      expect(icon.exists()).toBe(true)
+      expect(icon.text()).toBe('close')
     })
   })
 

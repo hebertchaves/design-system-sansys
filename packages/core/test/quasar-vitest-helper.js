@@ -9,12 +9,26 @@
  * Referência: https://github.com/quasarframework/quasar-testing (unit-vitest)
  */
 import { config } from '@vue/test-utils'
-import { Quasar } from 'quasar'
+import * as quasarExports from 'quasar'
 import { beforeAll, afterAll } from 'vitest'
+
+const { Quasar } = quasarExports
+
+// Componentes DSS usam <q-*> nos templates sem import local (registro
+// global feito pelo app via app.use(Quasar)). Nos testes, replicamos o
+// registro global passando todos os QComponents para o install do plugin.
+const quasarComponents = Object.fromEntries(
+  Object.entries(quasarExports).filter(
+    ([name, value]) => /^Q[A-Z]/.test(name) && value && typeof value === 'object'
+  )
+)
 
 export function installQuasar(options = {}) {
   beforeAll(() => {
-    config.global.plugins.unshift([Quasar, options])
+    config.global.plugins.unshift([
+      Quasar,
+      { components: quasarComponents, ...options },
+    ])
   })
   afterAll(() => {
     const idx = config.global.plugins.findIndex(

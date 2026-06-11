@@ -180,13 +180,23 @@ describe('DssPopupEdit', () => {
   // =========================================================================
   // 5. Slot
   // =========================================================================
-  it('renderiza conteúdo via slot default', () => {
+  it('renderiza conteúdo via slot default quando aberto', async () => {
+    // NOTA (Onda P0): QPopupEdit só renderiza o conteúdo quando ABERTO, em
+    // popup teleportado para <body>. O teste anterior usava wrapper.find()
+    // sem abrir o popup e só "passava" porque o runner não tinha registro
+    // Quasar (gate de testes inexecutável até a Onda P0).
     const wrapper = mount(DssPopupEdit, {
       slots: {
         default: '<input class="test-input" value="editando" />'
       }
     })
-    expect(wrapper.find('.test-input').exists()).toBe(true)
+    const qPopup = wrapper.findComponent({ name: 'QPopupEdit' })
+    expect(qPopup.exists()).toBe(true)
+    qPopup.vm.show()
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+    expect(document.body.querySelector('.test-input')).not.toBeNull()
+    wrapper.unmount()
   })
 
   // =========================================================================
