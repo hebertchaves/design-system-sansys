@@ -37,3 +37,7 @@ export function installQuasar(options = {}) {
     if (idx !== -1) config.global.plugins.splice(idx, 1)
   })
 }
+
+// Alias da API antiga do kit de testes Quasar (alguns testes DSS usam
+// installQuasarPlugin; outros, installQuasar — mesma função)
+export const installQuasarPlugin = installQuasar

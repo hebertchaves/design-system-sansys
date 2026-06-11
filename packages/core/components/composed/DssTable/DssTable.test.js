@@ -62,10 +62,12 @@ describe('DssTable', () => {
 
   // ─── Props: selection ────────────────────────────────────────────────────
 
-  it('não passa selection ao QTable quando selection="none" (padrão)', () => {
+  it('não força selection no QTable quando selection="none" (padrão)', () => {
     const wrapper = mount(DssTable, { props: { rows, columns } })
     const qTable = wrapper.findComponent({ name: 'QTable' })
-    expect(qTable.props('selection')).toBeUndefined()
+    // DssTable passa undefined; o QTable aplica seu próprio default 'none'.
+    // (props('selection') devolve o default do QTable, nunca undefined.)
+    expect(qTable.props('selection')).toBe('none')
   })
 
   it('passa selection="multiple" ao QTable quando especificado', () => {
@@ -210,6 +212,45 @@ describe('DssTable', () => {
     const wrapper = mount(DssTable, { props: { rows, columns } })
     expect(wrapper.find('thead').exists()).toBe(true)
     expect(wrapper.find('tbody').exists()).toBe(true)
+  })
+
+  // =========================================================================
+  // Slots dinâmicos (Onda P0/T5 — NC-A9-01)
+  // O contrato Quasar de células personalizadas usa nomes dinâmicos
+  // (body-cell-[name]); a lista fixa anterior os descartava silenciosamente.
+  // =========================================================================
+  describe('Slots dinâmicos body-cell-[name]', () => {
+    it('repassa slot body-cell-[name] ao QTable (ações por linha)', () => {
+      const wrapper = mount(DssTable, {
+        props: { rows, columns },
+        slots: {
+          [`body-cell-${columns[0].name}`]:
+            '<td class="celula-acoes"><button class="acao-editar">editar</button></td>'
+        }
+      })
+      expect(wrapper.find('.acao-editar').exists()).toBe(true)
+    })
+
+    it('repassa slot header-cell-[name] ao QTable', () => {
+      const wrapper = mount(DssTable, {
+        props: { rows, columns },
+        slots: {
+          [`header-cell-${columns[0].name}`]:
+            '<th class="header-custom">Coluna Custom</th>'
+        }
+      })
+      expect(wrapper.find('.header-custom').exists()).toBe(true)
+    })
+
+    it('mantém slots nomeados estáticos funcionando (top)', () => {
+      const wrapper = mount(DssTable, {
+        props: { rows, columns },
+        slots: {
+          top: '<div class="topo-custom">Topo</div>'
+        }
+      })
+      expect(wrapper.find('.topo-custom').exists()).toBe(true)
+    })
   })
 
 })

@@ -31,64 +31,16 @@
     @row-dblclick="(evt, row, index) => emit('row-dblclick', evt, row, index)"
     @row-contextmenu="(evt, row, index) => emit('row-contextmenu', evt, row, index)"
   >
-    <template v-if="$slots.top" #top="slotProps">
-      <slot name="top" v-bind="slotProps" />
-    </template>
+    <!--
+      Forwarding DINÂMICO de todos os slots do QTable (padrão DssTree).
 
-    <template v-if="$slots['top-left']" #top-left="slotProps">
-      <slot name="top-left" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['top-right']" #top-right="slotProps">
-      <slot name="top-right" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['top-row']" #top-row="slotProps">
-      <slot name="top-row" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['top-selection']" #top-selection="slotProps">
-      <slot name="top-selection" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots.header" #header="slotProps">
-      <slot name="header" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['header-cell']" #header-cell="slotProps">
-      <slot name="header-cell" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots.body" #body="slotProps">
-      <slot name="body" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['body-row']" #body-row="slotProps">
-      <slot name="body-row" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['body-cell']" #body-cell="slotProps">
-      <slot name="body-cell" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['no-data']" #no-data="slotProps">
-      <slot name="no-data" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots.loading" #loading>
-      <slot name="loading" />
-    </template>
-
-    <template v-if="$slots.pagination" #pagination="slotProps">
-      <slot name="pagination" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots.bottom" #bottom="slotProps">
-      <slot name="bottom" v-bind="slotProps" />
-    </template>
-
-    <template v-if="$slots['bottom-row']" #bottom-row="slotProps">
-      <slot name="bottom-row" v-bind="slotProps" />
+      Substitui a lista fixa anterior, que silenciosamente descartava os
+      slots dinâmicos do contrato Quasar — body-cell-[name],
+      header-cell-[name] e body-selection — quebrando o caminho documentado
+      de ações por linha (NC-A9-01, bloqueante da Auditoria Final Jun/2026).
+    -->
+    <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
+      <slot :name="name" v-bind="slotData || {}" />
     </template>
   </q-table>
 </template>
