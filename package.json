@@ -19,6 +19,7 @@
     "build:all": "npm run core:build && npm run docs:build && npm run mcp:build",
     "portal:sync-docs": "node scripts/generate-portal-landing-pages.js",
     "sync:visual-contract": "node scripts/sync-visual-contract.js",
+    "sync:portal-tokens": "node scripts/sync-portal-tokens.mjs",
     "sync:css-to-meta": "node scripts/sync-css-to-meta.js --fix-sources",
     "sync:tokens-to-reference": "node scripts/sync-tokens-to-reference.js",
     "validate:css-meta": "node scripts/sync-css-to-meta.js --validate",

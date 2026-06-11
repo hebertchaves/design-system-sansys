@@ -10,3 +10,7 @@ import DssIcon from './DssIcon.vue'
 
 export { DssIcon }
 export default DssIcon
+
+// Types e composables (Gate Estrutural do CLAUDE.md — completado na Onda P0/T7.4)
+export type * from './types/icon.types'
+export * from './composables'
