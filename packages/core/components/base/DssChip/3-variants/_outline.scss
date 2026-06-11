@@ -19,12 +19,12 @@
   /* Hover effect para variante outline */
   &.dss-chip--clickable:hover {
     background-color: currentColor;
-    color: white;
+    color: var(--dss-text-inverse);
 
     /* Manter a borda com a cor original */
     .dss-chip__label,
     .dss-chip__icon {
-      color: white;
+      color: var(--dss-text-inverse);
     }
   }
 
@@ -42,7 +42,7 @@
 
     .dss-chip__label,
     .dss-chip__icon {
-      color: white;
+      color: var(--dss-text-inverse);
     }
   }
 
@@ -52,7 +52,7 @@
 
     &:hover {
       background-color: currentColor;
-      color: white;
+      color: var(--dss-text-inverse);
     }
   }
 }
