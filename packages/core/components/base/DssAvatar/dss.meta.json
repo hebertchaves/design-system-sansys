@@ -36,7 +36,7 @@
         "property": "border-radius",
         "token": "--dss-radius-circle",
         "value": "50%",
-        "source": "1-structure/DssAvatar.vue"
+        "source": "1-structure/DssAvatar.ts.vue"
       },
       {
         "property": "background (sem imagem)",

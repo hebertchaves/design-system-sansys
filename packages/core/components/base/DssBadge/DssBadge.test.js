@@ -231,16 +231,18 @@ describe('DssBadge', () => {
       expect(wrapper.text()).toContain('Custom Content')
     })
 
-    it('label prop tem prioridade sobre slot quando ambos são fornecidos', () => {
+    it('slot tem prioridade sobre label quando ambos são fornecidos', () => {
       const wrapper = mount(DssBadge, {
         props: { label: 'Label' },
         slots: {
           default: 'Slot'
         }
       })
-      // O Quasar QBadge mostra o label E o slot
-      // DssBadge segue o mesmo comportamento
-      expect(wrapper.text()).toContain('Label')
+      // Implementação canônica: <slot>{{ label }}</slot> — convenção Vue de
+      // fallback: o conteúdo do slot substitui o label quando ambos existem.
+      // (A asserção anterior refletia o comportamento da implementação legada.)
+      expect(wrapper.text()).toContain('Slot')
+      expect(wrapper.text()).not.toContain('Label')
     })
   })
 

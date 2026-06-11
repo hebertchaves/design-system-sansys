@@ -269,7 +269,7 @@ O DSS sintetiza padrões de três referências:
 | :--- | :--- | :---: | :--- |
 | **min-height** | — | `40px` | defaultPreview |
 | **min-width** | — | `40px` | defaultPreview |
-| **border-radius** | `--dss-radius-circle` | `50%` | 1-structure/DssAvatar.vue |
+| **border-radius** | `--dss-radius-circle` | `50%` | 1-structure/DssAvatar.ts.vue |
 | **background (sem imagem)** | `--dss-action-primary-surface` | — | 2-composition/_base.scss |
 | **color iniciais** | `--dss-action-primary` | — | 2-composition/_base.scss |
 | **font-size (md)** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
@@ -2047,5 +2047,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-10T13:02:25.808Z_
+_Gerado em: 2026-06-11T19:41:17.004Z_
 <!-- END:AUTO-GENERATED -->
