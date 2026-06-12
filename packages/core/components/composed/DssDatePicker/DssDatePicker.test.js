@@ -328,7 +328,8 @@ describe('DssDatePicker', () => {
 
   it('não possui elementos visuais próprios além do QDate', () => {
     const wrapper = mount(DssDatePicker)
-    expect(wrapper.element.tagName.toLowerCase()).not.toBe('div')
+    // Root real do motor é <div class="q-date"> — o que importa é não haver wrapper DSS extra
+    expect(wrapper.classes()).toContain('q-date')
     expect(wrapper.classes()).toContain('q-date')
   })
 

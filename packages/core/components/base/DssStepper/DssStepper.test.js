@@ -27,6 +27,8 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssStepper from './1-structure/DssStepper.ts.vue'
+import { h } from 'vue'
+import { QStep } from 'quasar'
 
 installQuasar()
 
@@ -232,9 +234,10 @@ describe('DssStepper — Prop ariaLabel', () => {
 
 describe('DssStepper — Slots', () => {
   it('renderiza conteúdo no slot default', () => {
+    // O QStepper renderiza apenas filhos QStep — conteúdo solto é descartado
     const wrapper = mountStepper(
-      {},
-      { default: '<div class="step-content">Passo</div>' }
+      { modelValue: 's1' },
+      { default: () => h(QStep, { name: 's1', title: 'Passo 1' }, () => h('div', { class: 'step-content' }, 'Passo')) }
     )
     expect(wrapper.find('.step-content').exists()).toBe(true)
   })

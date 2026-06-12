@@ -10,7 +10,12 @@
 
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { h } from 'vue'
+import { QTab, QTabs } from 'quasar'
+import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssTabs from './DssTabs.vue'
+
+installQuasar()
 
 // ==========================================================================
 // ESTRUTURA E RENDERIZAÇÃO
@@ -143,7 +148,7 @@ describe('DssTabs — Emits', () => {
     })
 
     // Simula emissão interna do q-tabs
-    await wrapper.findComponent({ name: 'QTabs' }).vm.$emit('update:modelValue', 'tab2')
+    await wrapper.findComponent(QTabs).vm.$emit('update:modelValue', 'tab2')
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')[0]).toEqual(['tab2'])
   })
@@ -173,9 +178,10 @@ describe('DssTabs — Slots', () => {
 describe('DssTabs — Acessibilidade', () => {
   it('herda role tablist do QTabs nativo', () => {
     const wrapper = mount(DssTabs, {
-      props: { modelValue: 'tab1' }
+      props: { modelValue: 'tab1' },
+      slots: { default: () => h(QTab, { name: 'tab1', label: 'Tab 1' }) }
     })
-    // QTabs renderiza role="tablist" nativamente
+    // QTabs renderiza role="tablist" (requer ao menos uma aba filho)
     expect(wrapper.find('[role="tablist"]').exists()).toBe(true)
   })
 

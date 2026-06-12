@@ -115,7 +115,9 @@ describe('DssRange', () => {
       const wrapper = mount(DssRange, {
         props: { modelValue: defaultValue }
       })
-      const thumbs = wrapper.findAll('[role="slider"]')
+      // Contrato real do QRange: role="slider" é único (no root); os dois
+      // cursores são elementos .q-slider__thumb
+      const thumbs = wrapper.findAll('.q-slider__thumb')
       expect(thumbs.length).toBeGreaterThanOrEqual(2)
     })
 

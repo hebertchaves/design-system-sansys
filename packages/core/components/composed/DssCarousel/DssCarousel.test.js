@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { h } from 'vue'
+import { QCarouselSlide } from 'quasar'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssCarousel from './DssCarousel.vue'
 import DssCarouselSlide from './DssCarouselSlide.vue'
@@ -117,7 +119,8 @@ describe('DssCarousel — slots', () => {
     const wrapper = mount(DssCarousel, {
       props: { modelValue: 'slide1' },
       slots: {
-        default: '<div class="test-content">Conteúdo</div>',
+        // O QCarousel renderiza apenas filhos QCarouselSlide (slide ativo)
+        default: () => h(QCarouselSlide, { name: 'slide1' }, () => h('div', { class: 'test-content' }, 'Conteúdo')),
       },
     })
     expect(wrapper.find('.test-content').exists()).toBe(true)

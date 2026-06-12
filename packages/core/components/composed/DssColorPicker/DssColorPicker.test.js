@@ -227,7 +227,8 @@ describe('DssColorPicker', () => {
   it('passa color=primary fixo ao QColor (EXC-Gate-02)', () => {
     const wrapper = mount(DssColorPicker)
     const qColor = wrapper.findComponent({ name: 'QColor' })
-    expect(qColor.props('color')).toBe('primary')
+    // QColor não declara prop color — o valor fixo chega como atributo DOM
+    expect(qColor.attributes('color')).toBe('primary')
   })
 
   it('não aceita prop color via $attrs (bloqueada)', () => {
@@ -236,7 +237,8 @@ describe('DssColorPicker', () => {
     })
     // color="primary" fixo deve prevalecer sobre $attrs (v-bind antes dos explícitos)
     const qColor = wrapper.findComponent({ name: 'QColor' })
-    expect(qColor.props('color')).toBe('primary')
+    // QColor não declara prop color — o valor fixo chega como atributo DOM
+    expect(qColor.attributes('color')).toBe('primary')
   })
 
   // ── Gate de Responsabilidade ──────────────────────────────────────────────

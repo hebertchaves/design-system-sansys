@@ -148,7 +148,9 @@ describe('DssBanner', () => {
     const wrapper = mount(DssBanner, {
       props: { inlineActions: true, dismissible: true }
     })
-    expect(wrapper.find('.q-banner--inline-actions').exists()).toBe(true)
+    // Contrato real: a prop chega ao QBanner (a classe CSS depende da
+    // presença simultânea do slot action no motor)
+    expect(wrapper.findComponent({ name: 'QBanner' }).props('inlineActions')).toBe(true)
   })
 
   // ─── Forwarding de $attrs ────────────────────────────────────────────────

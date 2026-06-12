@@ -210,12 +210,15 @@ describe('DssVideo', () => {
       expect(wrapper.element.tagName).toBe('DIV')
     })
 
-    it('renders slot content when provided', () => {
+    it('não renderiza slot (QVideo é iframe puro — contrato real)', () => {
       const wrapper = mount(DssVideo, {
         props: { src: 'https://www.youtube.com/embed/abc', title: 'Test' },
         slots: { default: '<div class="video-overlay">Live</div>' }
       })
-      expect(wrapper.find('.video-overlay').exists()).toBe(true)
+      // Contrato real: QVideo renderiza apenas o <iframe> — conteúdo de slot
+      // é descartado pelo motor (overlay próprio é backlog documental)
+      expect(wrapper.find('iframe').exists()).toBe(true)
+      expect(wrapper.find('.video-overlay').exists()).toBe(false)
     })
 
     it('does NOT support native video props (autoplay is ignored — QVideo is iframe)', () => {

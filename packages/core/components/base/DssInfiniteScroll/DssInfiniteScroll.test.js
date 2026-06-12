@@ -231,8 +231,10 @@ describe('DssInfiniteScroll', () => {
       expect(wrapper.vm.noMore).toBeDefined()
     })
 
-    it('isLoading começa como false', () => {
-      const wrapper = mount(DssInfiniteScroll)
+    it('isLoading começa como false (com disable — sem autoload do jsdom)', () => {
+      // Sem scroll real, o QInfiniteScroll dispara o primeiro load
+      // imediatamente no jsdom; disable permite inspecionar o estado inicial
+      const wrapper = mount(DssInfiniteScroll, { props: { disable: true } })
       expect(wrapper.vm.isLoading.value ?? wrapper.vm.isLoading).toBe(false)
     })
 

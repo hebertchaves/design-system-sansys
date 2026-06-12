@@ -87,7 +87,7 @@ describe('DssOptionGroup', () => {
         const wrapper = mount(DssOptionGroup, {
           props: { options: sampleOptions, modelValue: null, disable: true }
         })
-        expect(wrapper.classes().join(' ')).toContain('disabled')
+        expect(wrapper.classes()).toContain('dss-option-group--disable')
       })
 
       it('applies dense state when dense=true', () => {
@@ -199,18 +199,16 @@ describe('DssOptionGroup', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
-      const wrapper = mount(DssOptionGroup, {
-        props: { options: sampleOptions, modelValue: null, brand }
-      })
-      expect(wrapper.attributes('data-brand')).toBe(brand)
-    })
-
-    it('does not set data-brand when brand is null', () => {
+    // Contrato real: DssOptionGroup DELEGA o brand aos controles filhos
+    // (checkbox/radio/toggle internos) — _brands.scss vazio é intencional
+    // (relatório A7) e não há classe/atributo de brand no root.
+    it('não possui prop brand — herança 100% contextual via [data-brand] ancestral', () => {
       const wrapper = mount(DssOptionGroup, {
         props: { options: sampleOptions, modelValue: null }
       })
+      expect('brand' in wrapper.props()).toBe(false)
       expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 })

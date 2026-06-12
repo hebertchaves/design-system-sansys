@@ -76,13 +76,16 @@ describe('DssMenu', () => {
   // 3. Slots
   // =========================================================================
 
-  it('renderiza conteúdo via slot default', () => {
-    const wrapper = mount(DssMenu, {
-      slots: {
-        default: '<div class="test-content">conteúdo do menu</div>'
-      }
-    })
-    expect(wrapper.find('.test-content').exists()).toBe(true)
+  it('renderiza conteúdo via slot default quando aberto', async () => {
+    // QMenu renderiza o conteúdo apenas ABERTO, teleportado para <body>,
+    // ancorado no elemento pai (Onda P2/G3.2)
+    const host = mount(
+      { components: { DssMenu }, template: '<div><button>anchor</button><DssMenu :model-value="true"><div class="test-content">conteúdo do menu</div></DssMenu></div>' }
+    )
+    await host.vm.$nextTick()
+    await host.vm.$nextTick()
+    expect(document.body.querySelector('.test-content')).not.toBeNull()
+    host.unmount()
   })
 
   // =========================================================================

@@ -125,23 +125,33 @@ describe('DssImg', () => {
       expect(wrapper.find('.custom-loading').exists()).toBe(true)
     })
 
-    it('renders custom error slot content', () => {
+    it('renders custom error slot content', async () => {
       const wrapper = mount(DssImg, {
         props: { src: 'broken.jpg', alt: 'Test' },
         slots: {
           error: '<div class="custom-error">Erro ao carregar</div>'
         }
       })
+      // O slot error renderiza após o evento error do <img> interno
+      await wrapper.find('img').trigger('error')
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.custom-error').exists()).toBe(true)
     })
 
-    it('renders default slot (overlay) content', () => {
+    it('renders default slot (overlay) content', async () => {
       const wrapper = mount(DssImg, {
         props: { src: 'img.jpg', alt: 'Test' },
         slots: {
           default: '<span class="overlay-label">Nova</span>'
         }
       })
+      // O slot default (overlay) renderiza após o load do <img> interno
+      const img = wrapper.find('img')
+      // QImg só conclui quando target.complete === true (poll de 50ms)
+      Object.defineProperty(img.element, 'complete', { value: true, configurable: true })
+      await img.trigger('load')
+      await new Promise((r) => setTimeout(r, 60))
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.overlay-label').exists()).toBe(true)
     })
   })

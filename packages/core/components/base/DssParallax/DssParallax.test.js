@@ -36,7 +36,7 @@ const QParallaxStub = {
   name: 'QParallax',
   template: '<div class="q-parallax" v-bind="$attrs"><slot /></div>',
   inheritAttrs: false,
-  props: ['src', 'height', 'speed', 'scrollTarget', 'class']
+  props: ['src', 'height', 'speed', 'scrollTarget']
 }
 
 describe('DssParallax', () => {

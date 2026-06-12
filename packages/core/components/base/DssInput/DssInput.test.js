@@ -264,24 +264,26 @@ describe('DssInput', () => {
   // ===========================================================================
 
   describe('Brand', () => {
+    // Contrato real: brand aplica CLASSE dss-input--brand-* no root
+    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
     it('sets data-brand="hub" when brand=hub', () => {
       const wrapper = mount(DssInput, { props: { brand: 'hub' } })
-      expect(wrapper.attributes('data-brand')).toBe('hub')
+      expect(wrapper.classes()).toContain('dss-input--brand-hub')
     })
 
     it('sets data-brand="water" when brand=water', () => {
       const wrapper = mount(DssInput, { props: { brand: 'water' } })
-      expect(wrapper.attributes('data-brand')).toBe('water')
+      expect(wrapper.classes()).toContain('dss-input--brand-water')
     })
 
     it('sets data-brand="waste" when brand=waste', () => {
       const wrapper = mount(DssInput, { props: { brand: 'waste' } })
-      expect(wrapper.attributes('data-brand')).toBe('waste')
+      expect(wrapper.classes()).toContain('dss-input--brand-waste')
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssInput)
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 })

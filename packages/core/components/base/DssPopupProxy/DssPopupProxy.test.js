@@ -160,13 +160,16 @@ describe('DssPopupProxy', () => {
   // 4. Slots
   // =========================================================================
 
-  it('renderiza conteúdo via slot default', () => {
-    const wrapper = mount(DssPopupProxy, {
-      slots: {
-        default: '<div class="test-slot-content">conteúdo do popup</div>'
-      }
-    })
-    expect(wrapper.find('.test-slot-content').exists()).toBe(true)
+  it('renderiza conteúdo via slot default quando aberto', async () => {
+    // QPopupProxy renderiza o conteúdo apenas ABERTO, teleportado para
+    // <body>, ancorado no pai (Onda P2/G3.2)
+    const host = mount(
+      { components: { DssPopupProxy }, template: '<div><button>anchor</button><DssPopupProxy :model-value="true"><div class="test-slot-content">conteúdo do popup</div></DssPopupProxy></div>' }
+    )
+    await host.vm.$nextTick()
+    await host.vm.$nextTick()
+    expect(document.body.querySelector('.test-slot-content')).not.toBeNull()
+    host.unmount()
   })
 
   // =========================================================================

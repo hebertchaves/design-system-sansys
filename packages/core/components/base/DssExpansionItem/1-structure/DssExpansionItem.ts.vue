@@ -100,6 +100,10 @@ const props = withDefaults(defineProps<ExpansionItemProps>(), {
   disable: false,
   dense: false,
   brand: null,
+  // undefined explícito: sem isso o cast booleano do Vue transforma a
+  // ausência em false, forçando modo CONTROLADO fechado e ignorando
+  // defaultOpened (bug real corrigido na Onda P2/G3.2)
+  modelValue: undefined,
 })
 
 // ==========================================================================

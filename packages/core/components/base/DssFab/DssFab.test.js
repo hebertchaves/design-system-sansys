@@ -82,7 +82,7 @@ describe('DssFab', () => {
       const wrapper = mount(DssFab, {
         props: { modelValue: false }
       })
-      wrapper.find('.dss-fab__qfab').vm.$emit('update:modelValue', true)
+      wrapper.findComponent({ name: 'QFab' }).vm.$emit('update:modelValue', true)
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
     })
@@ -91,7 +91,7 @@ describe('DssFab', () => {
       const wrapper = mount(DssFab, {
         props: { modelValue: true }
       })
-      wrapper.find('.dss-fab__qfab').vm.$emit('update:modelValue', false)
+      wrapper.findComponent({ name: 'QFab' }).vm.$emit('update:modelValue', false)
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
     })
@@ -187,28 +187,28 @@ describe('DssFab', () => {
 
     it('emite show ao abrir o FAB', async () => {
       const wrapper = mount(DssFab)
-      wrapper.find('.dss-fab__qfab').vm.$emit('show')
+      wrapper.findComponent({ name: 'QFab' }).vm.$emit('show')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('show')).toBeDefined()
     })
 
     it('emite hide ao fechar o FAB', async () => {
       const wrapper = mount(DssFab)
-      wrapper.find('.dss-fab__qfab').vm.$emit('hide')
+      wrapper.findComponent({ name: 'QFab' }).vm.$emit('hide')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('hide')).toBeDefined()
     })
 
     it('emite before-show antes da abertura', async () => {
       const wrapper = mount(DssFab)
-      wrapper.find('.dss-fab__qfab').vm.$emit('before-show')
+      wrapper.findComponent({ name: 'QFab' }).vm.$emit('before-show')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('before-show')).toBeDefined()
     })
 
     it('emite before-hide antes do fechamento', async () => {
       const wrapper = mount(DssFab)
-      wrapper.find('.dss-fab__qfab').vm.$emit('before-hide')
+      wrapper.findComponent({ name: 'QFab' }).vm.$emit('before-hide')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('before-hide')).toBeDefined()
     })

@@ -197,7 +197,9 @@ describe('DssTabPanels', () => {
           </DssTabPanels>
         `
       })
-      expect(wrapper.findAll('.dss-tab-panel').length).toBe(3)
+      // Contrato real: o QTabPanels renderiza SOMENTE o painel ativo
+      expect(wrapper.findAll('.dss-tab-panel').length).toBe(1)
+      expect(wrapper.find('.p1').exists()).toBe(true)
     })
   })
 

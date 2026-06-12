@@ -5,9 +5,11 @@
     v-bind="$attrs"
   >
     <slot />
-    <template v-if="$slots.subtitle" #subtitle>
+    <!-- QToolbarTitle NÃO possui slot subtitle — o conteúdo era descartado
+         silenciosamente. Renderização própria (Onda P2/G3.2). -->
+    <span v-if="$slots.subtitle" class="dss-toolbar-title__subtitle">
       <slot name="subtitle" />
-    </template>
+    </span>
   </q-toolbar-title>
 </template>
 

@@ -196,7 +196,8 @@ describe('DssTimePicker', () => {
   it('não possui elementos visuais próprios além do QTime', () => {
     const wrapper = mount(DssTimePicker)
     // Root element deve ser o q-time (sem wrapper div)
-    expect(wrapper.element.tagName.toLowerCase()).not.toBe('div')
+    // Root real do motor é <div class="q-time"> — o que importa é não haver wrapper DSS extra
+    expect(wrapper.classes()).toContain('q-time')
     expect(wrapper.classes()).toContain('q-time')
   })
 

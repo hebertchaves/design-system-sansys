@@ -87,11 +87,11 @@ describe('DssPullToRefresh', () => {
       const qPullToRefresh = wrapper.findComponent({ name: 'QPullToRefresh' })
 
       // Captura o done wrapper DSS
-      let dssWrapperDone: () => void
+      let dssWrapperDone
       const done = vi.fn(() => {})
       await qPullToRefresh.vm.$emit('refresh', done)
       const emitted = wrapper.emitted('refresh')
-      dssWrapperDone = emitted![0][0] as () => void
+      dssWrapperDone = emitted[0][0]
 
       await flushPromises()
       const announcer = wrapper.find('[role="status"]')

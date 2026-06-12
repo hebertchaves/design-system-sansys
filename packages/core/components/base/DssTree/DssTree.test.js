@@ -100,7 +100,9 @@ describe('DssTree', () => {
   it('não passa tickStrategy ao QTree quando tickStrategy="none" (padrão)', () => {
     const wrapper = mount(DssTree, { props: { nodes } })
     const qTree = wrapper.findComponent({ name: 'QTree' })
-    expect(qTree.props('tickStrategy')).toBeUndefined()
+    // DssTree passa undefined; o QTree aplica seu próprio default 'none'
+    // (props() devolve o default do motor, nunca undefined)
+    expect(qTree.props('tickStrategy')).toBe('none')
   })
 
   it('passa tickStrategy="leaf" ao QTree quando especificado', () => {

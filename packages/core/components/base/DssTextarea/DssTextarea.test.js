@@ -143,7 +143,7 @@ describe('DssTextarea', () => {
   describe('Accessibility', () => {
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssTextarea)
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 
@@ -152,14 +152,16 @@ describe('DssTextarea', () => {
   // ===========================================================================
 
   describe('Brand', () => {
+    // Contrato real: brand aplica CLASSE dss-textarea--brand-* no root
+    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
     it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
       const wrapper = mount(DssTextarea, { props: { brand } })
-      expect(wrapper.attributes('data-brand')).toBe(brand)
+      expect(wrapper.classes()).toContain(`dss-textarea--brand-${brand}`)
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssTextarea)
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 })

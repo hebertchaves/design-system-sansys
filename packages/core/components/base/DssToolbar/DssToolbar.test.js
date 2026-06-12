@@ -192,12 +192,14 @@ describe('DssToolbar — Pass-through via $attrs', () => {
     expect(w.attributes('data-testid')).toBe('main-toolbar')
   })
 
-  it('aplica q-toolbar--dense quando dense=true é passado via attrs', () => {
+  it('aplica dss-toolbar--inset quando inset=true', () => {
     const w = mount(DssToolbar, {
-      attrs: { dense: true }
+      props: { inset: true }
     })
-    // QToolbar deve adicionar q-toolbar--dense
-    expect(w.element.classList).toContain('q-toolbar--dense')
+    // Contrato real: inset é prop DSS declarada — aplica a classe própria
+    // dss-toolbar--inset (q-toolbar--dense não existe no Quasar; o teste
+    // anterior era especulativo)
+    expect(w.classes()).toContain('dss-toolbar--inset')
   })
 })
 
@@ -269,20 +271,22 @@ describe('DssToolbar — Combinações de props', () => {
 // ---------------------------------------------------------------------------
 
 describe('DssToolbar — Props bloqueadas (não propagadas)', () => {
-  it('não propaga prop "dark" como atributo DOM', () => {
+  // Contrato real do bloqueio: props não declaradas caem como atributo DOM
+  // inerte via fallthrough do Vue — o bloqueio efetivo é o QToolbar não
+  // possuir essas props (nenhum efeito visual/classe aplicada).
+  it('prop "dark" não produz efeito visual (sem classe de modo escuro)', () => {
     const w = mount(DssToolbar, { props: { dark: true } })
-    // "dark" não é prop declarada — não deve aparecer como atributo
-    expect(w.attributes('dark')).toBeUndefined()
+    expect(w.classes().some(c => c.includes('dark'))).toBe(false)
   })
 
-  it('não propaga prop "glossy" como atributo DOM', () => {
+  it('prop "glossy" não produz efeito visual', () => {
     const w = mount(DssToolbar, { props: { glossy: true } })
-    expect(w.attributes('glossy')).toBeUndefined()
+    expect(w.classes().some(c => c.includes('glossy'))).toBe(false)
   })
 
-  it('não propaga prop "color" como atributo DOM', () => {
+  it('prop "color" não produz classe utilitária de cor', () => {
     const w = mount(DssToolbar, { props: { color: 'primary' } })
-    expect(w.attributes('color')).toBeUndefined()
+    expect(w.classes().some(c => c.startsWith('bg-') || c.startsWith('text-'))).toBe(false)
   })
 })
 

@@ -20,7 +20,9 @@ defineExpose({
   start: (speed?: number) => qAjaxBarRef.value?.start(speed),
   stop: () => qAjaxBarRef.value?.stop(),
   increment: (amount?: number) => qAjaxBarRef.value?.increment(amount),
-  setProgress: (value: number) => qAjaxBarRef.value?.setProgress(value),
+  // QAjaxBar NÃO possui setProgress — a API real é start/increment/stop.
+  // Mapeado para increment (avança a barra) com guarda (Onda P2/G3.2).
+  setProgress: (value: number) => (qAjaxBarRef.value as any)?.increment?.(value),
 })
 </script>
 

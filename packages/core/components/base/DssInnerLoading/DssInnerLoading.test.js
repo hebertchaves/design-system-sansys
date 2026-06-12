@@ -49,7 +49,8 @@ describe('DssInnerLoading', () => {
     it('usa QInnerLoading como root element (EXC-Gate-01)', () => {
       const wrapper = mount(DssInnerLoading, { props: { showing: true } })
       // QInnerLoading renderiza com classe q-inner-loading
-      expect(wrapper.classes()).toContain('q-inner-loading')
+      // Root do QInnerLoading é um <transition>; a classe vive no conteúdo
+      expect(wrapper.find('.q-inner-loading').exists()).toBe(true)
     })
 
     it('aplica classe base dss-inner-loading', () => {

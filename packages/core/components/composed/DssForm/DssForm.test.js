@@ -87,7 +87,8 @@ describe('DssForm — Props', () => {
   describe('greedy', () => {
     it('não ativa greedy por padrão', () => {
       const wrapper = mountForm()
-      expect(wrapper.props('greedy')).toBeUndefined()
+      // prop boolean declarada: default do Vue é false (não undefined)
+      expect(wrapper.props('greedy')).toBe(false)
     })
 
     it('repassa greedy=true ao QForm quando definido', () => {
@@ -99,7 +100,7 @@ describe('DssForm — Props', () => {
   describe('noErrorFocus', () => {
     it('não ativa noErrorFocus por padrão', () => {
       const wrapper = mountForm()
-      expect(wrapper.props('noErrorFocus')).toBeUndefined()
+      expect(wrapper.props('noErrorFocus')).toBe(false)
     })
 
     it('repassa noErrorFocus=true ao QForm quando definido', () => {
@@ -163,9 +164,13 @@ describe('DssForm — Emits', () => {
     expect(event).toBeInstanceOf(Event)
   })
 
-  it('o evento reset inclui o Event como payload', async () => {
+  it('reemite reset do QForm com o Event como payload', async () => {
     const wrapper = mountForm()
-    await wrapper.find('form').trigger('reset')
+    // O QForm emite 'reset' pelo seu pipeline interno (resetValidation),
+    // não pelo evento DOM nativo — exercitamos o forwarding do wrapper
+    const resetEvent = new Event('reset')
+    wrapper.findComponent(QForm).vm.$emit('reset', resetEvent)
+    await wrapper.vm.$nextTick()
     const [event] = wrapper.emitted('reset')[0]
     expect(event).toBeInstanceOf(Event)
   })

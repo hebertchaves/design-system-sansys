@@ -52,9 +52,9 @@ describe('DssField', () => {
         expect(wrapper.classes().join(' ')).toContain('readonly')
       })
 
-      it('applies dense class when dense=true', () => {
-        const wrapper = mount(DssField, { props: { dense: true } })
-        expect(wrapper.classes().join(' ')).toContain('dense')
+      it('applies dense class when size="sm" (contrato real — não há prop dense)', () => {
+        const wrapper = mount(DssField, { props: { size: 'sm' } })
+        expect(wrapper.classes()).toContain('dss-field--dense')
       })
 
       it('applies error class when error=true', () => {
@@ -210,14 +210,16 @@ describe('DssField', () => {
   // ===========================================================================
 
   describe('Brand', () => {
+    // Contrato real: brand aplica CLASSE dss-field--brand-* no root
+    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
     it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
       const wrapper = mount(DssField, { props: { brand } })
-      expect(wrapper.attributes('data-brand')).toBe(brand)
+      expect(wrapper.classes()).toContain(`dss-field--brand-${brand}`)
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssField)
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 })

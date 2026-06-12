@@ -135,8 +135,11 @@ describe('DssMarkupTable — Props Visuais', () => {
   })
 
   it('prop wrapCells passa para QMarkupTable como wrap-cells', () => {
-    const wrapper = mountTable({ wrapCells: true })
-    expect(wrapper.html()).toContain('wrap')
+    // Contrato real: wrapCells=false aplica q-table--no-wrap; true a REMOVE
+    const wrapped = mountTable({ wrapCells: true })
+    expect(wrapped.classes()).not.toContain('q-table--no-wrap')
+    const noWrap = mountTable({ wrapCells: false })
+    expect(noWrap.classes()).toContain('q-table--no-wrap')
   })
 })
 

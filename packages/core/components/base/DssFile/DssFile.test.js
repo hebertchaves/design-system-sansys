@@ -157,10 +157,10 @@ describe('DssFile', () => {
       const wrapper = mount(DssFile, {
         props: { ariaLabel: 'Selecionar arquivo de currículo' }
       })
-      const qFile = wrapper.find('.dss-file__q-file')
-      if (qFile.exists()) {
-        expect(qFile.attributes('aria-label')).toBe('Selecionar arquivo de currículo')
-      }
+      // Contrato real: o QFile aplica aria-label no <input> nativo interno
+      const input = wrapper.find('input')
+      expect(input.exists()).toBe(true)
+      expect(input.attributes('aria-label')).toBe('Selecionar arquivo de currículo')
     })
 
     it('drop hint area is aria-hidden (decorativo)', () => {
@@ -173,14 +173,15 @@ describe('DssFile', () => {
       }
     })
 
-    it('sets tabindex -1 when disabled', () => {
+    it('remove o foco por teclado quando disabled (contrato real do QFile)', () => {
       const wrapper = mount(DssFile, {
         props: { disabled: true }
       })
-      const qFile = wrapper.find('.dss-file__q-file')
-      if (qFile.exists()) {
-        expect(qFile.attributes('tabindex')).toBe('-1')
-      }
+      // O alvo focável é .q-field__native; desabilitado, o tabindex deixa
+      // de ser 0 (removido ou -1 conforme a versão do Quasar)
+      const native = wrapper.find('.q-field__native')
+      expect(native.exists()).toBe(true)
+      expect(native.attributes('tabindex')).not.toBe('0')
     })
   })
 
@@ -189,14 +190,16 @@ describe('DssFile', () => {
   // ===========================================================================
 
   describe('Brand', () => {
+    // Contrato real: brand aplica CLASSE dss-file--brand-* no root
+    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
     it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
       const wrapper = mount(DssFile, { props: { brand } })
-      expect(wrapper.attributes('data-brand')).toBe(brand)
+      expect(wrapper.classes()).toContain(`dss-file--brand-${brand}`)
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssFile)
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 })

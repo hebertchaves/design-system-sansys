@@ -122,7 +122,10 @@ describe('DssSelect', () => {
       const wrapper = mount(DssSelect, {
         props: { options: sampleOptions, ariaLabel: 'Selecione um item' }
       })
-      expect(wrapper.attributes('aria-label')).toBe('Selecione um item')
+      // Contrato real: o QSelect aplica aria-label no alvo focável interno
+      const native = wrapper.find('[aria-label]')
+      expect(native.exists()).toBe(true)
+      expect(native.attributes('aria-label')).toBe('Selecione um item')
     })
 
     it('is keyboard navigable (has tabindex)', () => {
@@ -139,32 +142,34 @@ describe('DssSelect', () => {
   // ===========================================================================
 
   describe('Brand', () => {
+    // Contrato real: brand aplica CLASSE dss-select--brand-* no root
+    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
     it('sets data-brand="hub"', () => {
       const wrapper = mount(DssSelect, {
         props: { options: sampleOptions, brand: 'hub' }
       })
-      expect(wrapper.attributes('data-brand')).toBe('hub')
+      expect(wrapper.classes()).toContain('dss-select--brand-hub')
     })
 
     it('sets data-brand="water"', () => {
       const wrapper = mount(DssSelect, {
         props: { options: sampleOptions, brand: 'water' }
       })
-      expect(wrapper.attributes('data-brand')).toBe('water')
+      expect(wrapper.classes()).toContain('dss-select--brand-water')
     })
 
     it('sets data-brand="waste"', () => {
       const wrapper = mount(DssSelect, {
         props: { options: sampleOptions, brand: 'waste' }
       })
-      expect(wrapper.attributes('data-brand')).toBe('waste')
+      expect(wrapper.classes()).toContain('dss-select--brand-waste')
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssSelect, {
         props: { options: sampleOptions }
       })
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 

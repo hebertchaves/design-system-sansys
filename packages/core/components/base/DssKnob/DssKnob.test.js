@@ -161,11 +161,12 @@ describe('DssKnob', () => {
       expect(tabindex).not.toBe('-1')
     })
 
-    it('sets tabindex -1 when disabled', () => {
+    it('marca disabled via classe + aria-disabled (contrato real do QKnob)', () => {
       const wrapper = mount(DssKnob, {
         props: { modelValue: 50, disable: true }
       })
-      expect(wrapper.attributes('tabindex')).toBe('-1')
+      expect(wrapper.classes()).toContain('disabled')
+      expect(wrapper.attributes('aria-disabled')).toBe('true')
     })
   })
 
@@ -174,18 +175,20 @@ describe('DssKnob', () => {
   // ===========================================================================
 
   describe('Brand', () => {
+    // Contrato real: brand aplica CLASSE dss-knob--brand-* no root
+    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
     it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
       const wrapper = mount(DssKnob, {
         props: { modelValue: 50, brand }
       })
-      expect(wrapper.attributes('data-brand')).toBe(brand)
+      expect(wrapper.classes()).toContain(`dss-knob--brand-${brand}`)
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssKnob, {
         props: { modelValue: 50 }
       })
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })
 

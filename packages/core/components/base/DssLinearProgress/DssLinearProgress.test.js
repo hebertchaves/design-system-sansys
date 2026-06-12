@@ -181,7 +181,8 @@ describe('DssLinearProgress', () => {
     it('aria-valuemax=100 definido pelo Quasar', () => {
       const wrapper = mount(DssLinearProgress, { props: { value: 0.5 } })
       const progressbar = wrapper.find('[role="progressbar"]')
-      expect(progressbar.attributes('aria-valuemax')).toBe('100')
+      // Contrato real do QLinearProgress: escala normalizada 0–1
+      expect(progressbar.attributes('aria-valuemax')).toBe('1')
     })
 
     it('aria-valuenow presente quando value é fornecido (normalizado para 0-100)', () => {

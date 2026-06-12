@@ -57,4 +57,12 @@ for (const proto of [Element.prototype, typeof SVGElement !== 'undefined' ? SVGE
   if (!proto) continue
   if (!proto.beginElement) proto.beginElement = () => {}
   if (!proto.endElement) proto.endElement = () => {}
+  // QInfiniteScroll pausa/retoma animações dos <svg> do slot loading
+  if (!proto.pauseAnimations) proto.pauseAnimations = () => {}
+  if (!proto.unpauseAnimations) proto.unpauseAnimations = () => {}
+}
+
+// ── HTMLImageElement.decode (QImg espera a promise antes de exibir o slot) ──
+if (typeof HTMLImageElement !== 'undefined' && !HTMLImageElement.prototype.decode) {
+  HTMLImageElement.prototype.decode = function decode() { return Promise.resolve() }
 }

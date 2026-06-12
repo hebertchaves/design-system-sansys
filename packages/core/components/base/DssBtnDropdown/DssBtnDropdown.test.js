@@ -182,28 +182,28 @@ describe('DssBtnDropdown', () => {
     it('emite show quando painel e aberto', async () => {
       const wrapper = mount(DssBtnDropdown)
       // Simula o evento show propagado pelo QBtnDropdown
-      wrapper.find('.dss-btn-dropdown__trigger').vm.$emit('show')
+      wrapper.findComponent({ name: 'QBtnDropdown' }).vm.$emit('show')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('show')).toBeDefined()
     })
 
     it('emite hide quando painel e fechado', async () => {
       const wrapper = mount(DssBtnDropdown)
-      wrapper.find('.dss-btn-dropdown__trigger').vm.$emit('hide')
+      wrapper.findComponent({ name: 'QBtnDropdown' }).vm.$emit('hide')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('hide')).toBeDefined()
     })
 
     it('emite before-show antes da abertura do painel', async () => {
       const wrapper = mount(DssBtnDropdown)
-      wrapper.find('.dss-btn-dropdown__trigger').vm.$emit('before-show')
+      wrapper.findComponent({ name: 'QBtnDropdown' }).vm.$emit('before-show')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('before-show')).toBeDefined()
     })
 
     it('emite before-hide antes do fechamento do painel', async () => {
       const wrapper = mount(DssBtnDropdown)
-      wrapper.find('.dss-btn-dropdown__trigger').vm.$emit('before-hide')
+      wrapper.findComponent({ name: 'QBtnDropdown' }).vm.$emit('before-hide')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('before-hide')).toBeDefined()
     })
@@ -214,11 +214,16 @@ describe('DssBtnDropdown', () => {
   // ===========================================================================
 
   describe('Slots', () => {
-    it('renderiza conteudo do slot default (painel do dropdown)', () => {
+    it('renderiza conteudo do slot default (painel do dropdown)', async () => {
       const wrapper = mount(DssBtnDropdown, {
         slots: { default: '<div class="panel-content">Menu item</div>' }
       })
-      expect(wrapper.find('.panel-content').exists()).toBe(true)
+      // Painel renderiza somente ABERTO, teleportado para <body> (QMenu)
+      wrapper.findComponent({ name: 'QBtnDropdown' }).vm.show()
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
+      expect(document.body.querySelector('.panel-content')).not.toBeNull()
+      wrapper.unmount()
     })
 
     it('renderiza conteudo do slot label no trigger', () => {
