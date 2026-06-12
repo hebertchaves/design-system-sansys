@@ -22,7 +22,7 @@
   "scripts": {
     "build:lib": "vite build --config vite.config.lib.js",
     "build:watch": "vite build --watch --config vite.config.lib.js",
-    "type-check": "echo \"type-check disabled (legacy Vue tsconfig)\"",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json",
     "lint": "eslint .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
