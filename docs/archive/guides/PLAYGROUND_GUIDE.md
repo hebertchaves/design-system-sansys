@@ -1,3 +1,8 @@
+> ⚠️ **ARQUIVADO (Onda P2 — Jun/2026):** este guia descrevia os playgrounds
+> standalone de `packages/core/examples/` (pré-monorepo), removidos junto com
+> os artefatos CSS compilados de que dependiam. O playground atual é o
+> **sandbox**: `npm run sandbox:dev` (ver QUICK_START.md).
+
 # 🎨 DSS Components Playground - Guia de Uso
 
 **Arquivo:** `playground-standalone.html`

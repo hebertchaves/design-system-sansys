@@ -18,6 +18,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      // Raiz do core — Regra de Ouro do DSS_MONOREPO_PATH_MAP (sem imports
+      // relativos inter-pacote; criado na Onda P2)
+      '@core': resolve(__dirname, '../../packages/core'),
       '@dss': resolve(__dirname, '../../packages/core/components/base'),
       '@components': resolve(__dirname, '../../packages/core/components'),
       'react': resolve(__dirname, 'node_modules/react'),
@@ -32,7 +35,9 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         quietDeps: true,
-        silenceDeprecations: ['import'],
+        // silenceDeprecations: ['import'] REMOVIDO (Onda P2): o codebase
+        // migrou 100% para @use na Onda P0/T7.1 — silenciar deprecações
+        // voltaria a mascarar regressões (princípio anti-máscara).
       }
     }
   },
