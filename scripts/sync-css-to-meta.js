@@ -30,7 +30,13 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname  = path.dirname(__filename)
 
 const ROOT            = path.resolve(__dirname, '..')
-const COMPONENTS_BASE = path.join(ROOT, 'packages', 'core', 'components', 'base')
+// Onda P1/G2: cobre também composed/ e stress-test/ (antes só base/ — os
+// visualProperties dos composed ficavam fora da validação do catálogo)
+const COMPONENTS_DIRS = [
+  path.join(ROOT, 'packages', 'core', 'components', 'base'),
+  path.join(ROOT, 'packages', 'core', 'components', 'composed'),
+  path.join(ROOT, 'packages', 'core', 'components', 'stress-test'),
+]
 // Todos os diretórios/arquivos que definem tokens --dss-*
 const TOKENS_DIRS = [
   path.join(ROOT, 'packages', 'core', 'tokens', 'semantic'),
@@ -189,7 +195,7 @@ function buildTokenCatalog() {
 
 function runValidate() {
   const catalog  = buildTokenCatalog()
-  const compDirs = findComponentDirs(COMPONENTS_BASE)
+  const compDirs = COMPONENTS_DIRS.flatMap(findComponentDirs)
   const errors   = []
   let   checked  = 0
 
@@ -237,7 +243,7 @@ function runValidate() {
 
 function runValidateStrict() {
   const catalog  = buildTokenCatalog()
-  const compDirs = findComponentDirs(COMPONENTS_BASE)
+  const compDirs = COMPONENTS_DIRS.flatMap(findComponentDirs)
   const errors   = []
   let   checked  = 0
 
@@ -286,7 +292,7 @@ function runValidateStrict() {
 // ── Modo: fix-sources ──────────────────────────────────────────────────────────
 
 function runFixSources() {
-  const compDirs  = findComponentDirs(COMPONENTS_BASE)
+  const compDirs  = COMPONENTS_DIRS.flatMap(findComponentDirs)
   let   totalFixed = 0
   let   totalComps = 0
 

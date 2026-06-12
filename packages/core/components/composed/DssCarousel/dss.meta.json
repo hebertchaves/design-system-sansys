@@ -164,6 +164,20 @@
   ],
   "previewGroup": "contextuais",
   "defaultPreview": {
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background-color",
+        "token": "--dss-surface-muted",
+        "value": "#f5f5f5",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   }
 }

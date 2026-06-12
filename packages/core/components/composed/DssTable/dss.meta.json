@@ -128,7 +128,21 @@
     "bordered": false,
     "flat": false,
     "separator": "horizontal",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-body",
+        "value": "#454545",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   },
   "auditHistory": [],
   "previewGroup": "contextuais"

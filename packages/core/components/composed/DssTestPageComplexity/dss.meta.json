@@ -32,7 +32,21 @@
     "computedDimensions": {},
     "computedTokens": {},
     "demoContent": "Conteúdo padrão",
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "background-color",
+        "token": "--dss-surface-default",
+        "value": "#ffffff",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "max-width",
+        "token": null,
+        "value": "100% (fallback — variável --dss-layout-max-width é injetada em runtime pelo @sansys/grid-inspector, não pertence ao catálogo)",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   },
   "tokens": [
     "--dss-surface-muted",

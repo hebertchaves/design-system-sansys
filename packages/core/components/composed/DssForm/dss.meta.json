@@ -139,18 +139,42 @@
       "default": [
         {
           "component": "DssInput",
-          "props": { "label": "Nome completo", "dense": true, "outlined": true }
+          "props": {
+            "label": "Nome completo",
+            "dense": true,
+            "outlined": true
+          }
         },
         {
           "component": "DssSelect",
-          "props": { "label": "Tipo", "dense": true, "outlined": true, "options": ["Pessoa Física", "Pessoa Jurídica"] }
+          "props": {
+            "label": "Tipo",
+            "dense": true,
+            "outlined": true,
+            "options": [
+              "Pessoa Física",
+              "Pessoa Jurídica"
+            ]
+          }
         },
         {
           "component": "DssButton",
-          "props": { "color": "primary", "label": "Enviar", "size": "sm" }
+          "props": {
+            "color": "primary",
+            "label": "Enviar",
+            "size": "sm"
+          }
         }
       ]
-    }
+    },
+    "visualProperties": [
+      {
+        "property": "gap",
+        "token": "--dss-form-gap",
+        "value": "1rem",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   },
   "previewGroup": "contextuais"
 }

@@ -144,6 +144,32 @@
   ],
   "previewGroup": "contextuais",
   "defaultPreview": {
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "background-color",
+        "token": "--dss-surface-default",
+        "value": "#ffffff",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-lg",
+        "value": "0.75rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width",
+        "token": "--dss-border-width-thin",
+        "value": "1px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-color",
+        "token": "--dss-gray-300",
+        "value": "#e5e5e5",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   }
 }

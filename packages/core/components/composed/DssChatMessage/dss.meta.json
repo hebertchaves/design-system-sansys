@@ -110,6 +110,20 @@
   ],
   "previewGroup": "contextuais",
   "defaultPreview": {
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "gap",
+        "token": "--dss-spacing-2",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "transition",
+        "token": "--dss-duration-200",
+        "value": "200ms",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   }
 }

@@ -117,7 +117,21 @@
     "computedTokens": {
       "--q-color-primary": "var(--dss-action-primary)"
     },
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "background-color",
+        "token": "--dss-surface-default",
+        "value": "#ffffff",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   },
   "previewGroup": "contextuais"
 }

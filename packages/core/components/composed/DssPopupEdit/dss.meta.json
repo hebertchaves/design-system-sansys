@@ -134,6 +134,32 @@
   ],
   "previewGroup": "contextuais",
   "defaultPreview": {
-    "demoSlots": null
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "background-color",
+        "token": "--dss-surface-default",
+        "value": "#ffffff",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow",
+        "token": "--dss-elevation-3",
+        "value": "0 10px 15px rgba(0, 0, 0, 0.35)",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-family",
+        "token": "--dss-font-family-sans",
+        "value": "'Inter', -apple-system, BlinkMacSystemFont,\n                         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   }
 }

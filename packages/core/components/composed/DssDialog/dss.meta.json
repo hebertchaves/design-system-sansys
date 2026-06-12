@@ -138,6 +138,32 @@
   "defaultPreview": {
     "props": {},
     "demoSlots": null,
-    "previewHtml": "<div style='width:100%;max-width:320px;background:var(--dss-surface-default);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.18);padding:20px;display:flex;flex-direction:column;gap:12px'><div style='font-size:13px;font-weight:600;color:var(--dss-text-body)'>Confirmar ação</div><div style='font-size:12px;color:var(--dss-text-subtle)'>Esta operação não pode ser desfeita. Deseja continuar?</div><div style='display:flex;gap:8px;justify-content:flex-end'><button style='border:1px solid var(--dss-action-primary);background:transparent;color:var(--dss-action-primary);padding:5px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit'>Cancelar</button><button style='background:var(--dss-action-primary);color:white;border:none;padding:5px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit'>Confirmar</button></div></div>"
+    "previewHtml": "<div style='width:100%;max-width:320px;background:var(--dss-surface-default);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.18);padding:20px;display:flex;flex-direction:column;gap:12px'><div style='font-size:13px;font-weight:600;color:var(--dss-text-body)'>Confirmar ação</div><div style='font-size:12px;color:var(--dss-text-subtle)'>Esta operação não pode ser desfeita. Deseja continuar?</div><div style='display:flex;gap:8px;justify-content:flex-end'><button style='border:1px solid var(--dss-action-primary);background:transparent;color:var(--dss-action-primary);padding:5px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit'>Cancelar</button><button style='background:var(--dss-action-primary);color:white;border:none;padding:5px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit'>Confirmar</button></div></div>",
+    "visualProperties": [
+      {
+        "property": "background-color",
+        "token": "--dss-surface-default",
+        "value": "#ffffff",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "box-shadow",
+        "token": "--dss-elevation-5",
+        "value": "0 25px 50px rgba(0, 0, 0, 0.45)",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-lg",
+        "value": "0.75rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-body",
+        "value": "#454545",
+        "source": "2-composition/_base.scss"
+      }
+    ]
   }
 }
