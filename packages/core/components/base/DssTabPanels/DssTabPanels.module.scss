@@ -1,8 +1,8 @@
 // ==========================================================================
 // DssTabPanels — Orchestrador Principal (L2 → L3 → L4)
 // ==========================================================================
-// Este arquivo é importado via @import em 1-structure/DssTabPanels.ts.vue
-// no bloco <style scoped>.
+// Este módulo é carregado globalmente via @forward em components/index.scss
+// (estratégia única de carga adotada na Onda P0/T1 — sem @import em SFC).
 //
 // Ordem obrigatória DSS: Composition → Variants → Output
 // ==========================================================================

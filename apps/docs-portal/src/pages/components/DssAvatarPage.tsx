@@ -138,7 +138,7 @@ const anatomyData = {
 }`,
   },
   output: {
-    files: ["4-output/DssAvatar.scss", "_states.scss", "_accessibility.scss"],
+    files: ["4-output/index.scss", "_states.scss", "_brands.scss"],
     description: "Camada final que aplica estados interativos e acessibilidade.",
     responsibilities: [
       "Estados hover, focus, active para avatares clicáveis",
