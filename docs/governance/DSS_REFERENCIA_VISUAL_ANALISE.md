@@ -1911,6 +1911,221 @@ O DSS sintetiza padrões de três referências:
 
 ---
 
+---
+
+## 4-B. Componentes Compostos (adicionados na Onda P1 — Jun/2026)
+
+> Entradas 4.77–4.88: os composed não possuíam seção declarativa neste
+> documento (débito sistêmico D). Tabelas geradas a partir de
+> `defaultPreview.visualProperties` via `npm run sync:visual-contract`.
+### 4.77 DssBottomSheet
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssBottomSheet -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **background-color** | `--dss-surface-default` | `#ffffff` | 2-composition/_base.scss |
+| **box-shadow** | `--dss-shadow-modal` | `0 20px 60px rgba(0, 0, 0, 0.3)` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-lg` | `0.75rem` | 2-composition/_base.scss |
+| **color** | `--dss-text-body` | `#454545` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssBottomSheet -->
+
+---
+
+### 4.78 DssCarousel
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssCarousel -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **border-radius** | `--dss-radius-md` | `0.5rem` | 2-composition/_base.scss |
+| **background-color** | `--dss-surface-muted` | `#f5f5f5` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssCarousel -->
+
+---
+
+### 4.79 DssChatMessage
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssChatMessage -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **gap** | `--dss-spacing-2` | `0.5rem` | 2-composition/_base.scss |
+| **transition** | `--dss-duration-200` | `200ms` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssChatMessage -->
+
+---
+
+### 4.80 DssColorPicker
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `formatModel="hex"`
+
+<!-- BEGIN:VISUAL-TABLE:DssColorPicker -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **background-color** | `--dss-surface-default` | `#ffffff` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-md` | `0.5rem` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssColorPicker -->
+
+---
+
+### 4.81 DssDatePicker
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `modelValue="2026/05/22"`
+
+<!-- BEGIN:VISUAL-TABLE:DssDatePicker -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **background-color** | `--dss-surface-default` | `#ffffff` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-md` | `0.5rem` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssDatePicker -->
+
+---
+
+### 4.82 DssDialog
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssDialog -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **background-color** | `--dss-surface-default` | `#ffffff` | 2-composition/_base.scss |
+| **box-shadow** | `--dss-elevation-5` | `0 25px 50px rgba(0, 0, 0, 0.45)` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-lg` | `0.75rem` | 2-composition/_base.scss |
+| **color** | `--dss-text-body` | `#454545` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssDialog -->
+
+---
+
+### 4.83 DssForm
+**Categoria:** Container de Formulário — wrapper governado sobre QForm do Quasar
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssForm -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **gap** | `--dss-form-gap` | `1rem` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssForm -->
+
+---
+
+### 4.84 DssPopupEdit
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssPopupEdit -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **background-color** | `--dss-surface-default` | `#ffffff` | 2-composition/_base.scss |
+| **box-shadow** | `--dss-elevation-3` | `0 10px 15px rgba(0, 0, 0, 0.35)` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-md` | `0.5rem` | 2-composition/_base.scss |
+| **font-family** | `--dss-font-family-sans` | `'Inter', -apple-system, BlinkMacSystemFont,
+                         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssPopupEdit -->
+
+---
+
+### 4.85 DssTable
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssTable -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **border-radius** | `--dss-radius-md` | `0.5rem` | 2-composition/_base.scss |
+| **color** | `--dss-text-body` | `#454545` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssTable -->
+
+---
+
+### 4.86 DssTestPageComplexity
+**Categoria:** composed
+**Fase de Entrega:** Fase 3
+**Status de Conformidade:** review
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssTestPageComplexity -->
+<!-- END:VISUAL-TABLE:DssTestPageComplexity -->
+
+---
+
+### 4.87 DssTimePicker
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** sealed
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** `modelValue="14:30"`, `format24h=true`
+
+<!-- BEGIN:VISUAL-TABLE:DssTimePicker -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **background-color** | `--dss-surface-default` | `#ffffff` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-md` | `0.5rem` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssTimePicker -->
+
+---
+
+### 4.88 DssUploader
+**Categoria:** Composto
+**Fase de Entrega:** Fase 2
+**Status de Conformidade:** in-progress
+
+**Configuração de Preview Padrão (defaultPreview):**
+- **Props Aplicadas:** *(nenhuma prop de estilo — renderização padrão)*
+
+<!-- BEGIN:VISUAL-TABLE:DssUploader -->
+| Propriedade | Token DSS Aplicado | Valor Físico Computado | Origem/Justificativa |
+| :--- | :--- | :---: | :--- |
+| **background-color** | `--dss-surface-default` | `#ffffff` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-lg` | `0.75rem` | 2-composition/_base.scss |
+| **border-width** | `--dss-border-width-thin` | `1px` | 2-composition/_base.scss |
+| **border-color** | `--dss-gray-300` | `#e5e5e5` | 2-composition/_base.scss |
+<!-- END:VISUAL-TABLE:DssUploader -->
+
+---
+
 ## 5. Governança e Processo de Atualização
 
 ### 5.1 Regra de Sincronização Obrigatória
@@ -2050,5 +2265,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-12T13:49:28.178Z_
+_Gerado em: 2026-06-12T14:07:51.909Z_
 <!-- END:AUTO-GENERATED -->
