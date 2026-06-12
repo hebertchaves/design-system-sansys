@@ -233,3 +233,35 @@ describe('DssDialog', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssDialog — Teclado (WCAG 2.1.1)', () => {
+  it('ESC fecha o dialog aberto (update:open false)', async () => {
+    const wrapper = mount(DssDialog, {
+      props: { open: true },
+      slots: { default: 'Conteúdo' }
+    })
+    await new Promise((r) => setTimeout(r, 400)) // transição de abertura
+    // O runner de ESC do Quasar escuta keydown+keyup no window
+    window.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 27 }))
+    window.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 27 }))
+    await wrapper.vm.$nextTick()
+    expect(wrapper.emitted('update:open')?.[0]).toEqual([false])
+    wrapper.unmount()
+  })
+
+  it('disableEsc bloqueia o fechamento por ESC (no-esc-dismiss no motor)', async () => {
+    const wrapper = mount(DssDialog, {
+      props: { open: true, disableEsc: true },
+      slots: { default: 'Conteúdo' }
+    })
+    await new Promise((r) => setTimeout(r, 400))
+    window.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 27 }))
+    window.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 27 }))
+    await wrapper.vm.$nextTick()
+    expect(wrapper.emitted('update:open')).toBeUndefined()
+    wrapper.unmount()
+  })
+})

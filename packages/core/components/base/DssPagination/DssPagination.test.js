@@ -211,3 +211,23 @@ describe('DssPagination — Metadados', () => {
     expect(wrapper.vm.$options.name).toBe('DssPagination')
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssPagination — Teclado (WCAG 2.1.1)', () => {
+  it('botões de página são <button> nativos focáveis', () => {
+    const wrapper = mount(DssPagination, { props: { modelValue: 2, max: 5 } })
+    const buttons = wrapper.findAll('button')
+    expect(buttons.length).toBeGreaterThan(0)
+    expect(buttons.every(b => b.attributes('tabindex') !== '-1')).toBe(true)
+  })
+
+  it('ativação de um botão de página emite update:modelValue', async () => {
+    const wrapper = mount(DssPagination, { props: { modelValue: 2, max: 5 } })
+    const target = wrapper.findAll('button').find(b => b.text().trim() === '3')
+    expect(target).toBeTruthy()
+    await target.trigger('click')
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([3])
+  })
+})

@@ -187,3 +187,20 @@ describe('DssSlider', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssSlider — Teclado (WCAG 2.1.1)', () => {
+  it('ArrowRight incrementa o valor (update:modelValue)', async () => {
+    const wrapper = mount(DssSlider, { props: { modelValue: 50 } })
+    await wrapper.find('.q-slider__track-container').trigger('keydown', { keyCode: 39 })
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([51])
+  })
+
+  it('ArrowLeft decrementa o valor', async () => {
+    const wrapper = mount(DssSlider, { props: { modelValue: 50 } })
+    await wrapper.find('.q-slider__track-container').trigger('keydown', { keyCode: 37 })
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([49])
+  })
+})

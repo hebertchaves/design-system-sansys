@@ -141,3 +141,21 @@ describe('DssMenu', () => {
     expect(propsOptions).not.toContain('square')
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssMenu — Teclado (WCAG 2.1.1)', () => {
+  it('ESC fecha o menu aberto (update:modelValue false)', async () => {
+    const host = mount(
+      { components: { DssMenu }, template: '<div><button>anchor</button><DssMenu :model-value="true"><div>conteúdo</div></DssMenu></div>' }
+    )
+    await new Promise((r) => setTimeout(r, 350)) // aguarda transição de abertura
+    window.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 27 }))
+    window.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 27 }))
+    await host.vm.$nextTick()
+    const menu = host.findComponent(DssMenu)
+    expect(menu.emitted('update:modelValue')?.[0]).toEqual([false])
+    host.unmount()
+  })
+})

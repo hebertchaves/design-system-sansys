@@ -1,5 +1,22 @@
 import { describe, it, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { h } from 'vue'
+import { QLayout } from 'quasar'
+import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
+import DssDrawer from './1-structure/DssDrawer.ts.vue'
 import { useDrawerClasses } from './composables/useDrawerClasses'
+
+installQuasar()
+
+// QDrawer exige a cadeia QLayout (padrão de contexto da Onda P2)
+function mountInLayout(component, options = {}) {
+  const { props } = options
+  const host = mount(QLayout, {
+    props: { view: 'hHh lpR fFf' },
+    slots: { default: () => h(component, { ...(props || {}) }) },
+  })
+  return host.findComponent(component)
+}
 
 // ==========================================================================
 // DssDrawer — Testes
@@ -149,5 +166,21 @@ describe('DssDrawer — Comportamentos Implícitos', () => {
     const cssSelector = '.dss-drawer--bordered.dss-drawer--right'
     expect(cssSelector).toContain('right')
     expect(cssSelector).toContain('bordered')
+  })
+})
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssDrawer — Teclado (WCAG 2.1.1)', () => {
+  it('ESC fecha o drawer em modo overlay (update:modelValue false)', async () => {
+    const wrapper = mountInLayout(DssDrawer, {
+      props: { modelValue: true, overlay: true, behavior: 'mobile' }
+    })
+    await new Promise((r) => setTimeout(r, 400))
+    window.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 27 }))
+    window.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 27 }))
+    await wrapper.vm.$nextTick()
+    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
   })
 })

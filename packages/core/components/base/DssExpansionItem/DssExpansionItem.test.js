@@ -286,3 +286,21 @@ describe('DssExpansionItem', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssExpansionItem — Teclado (WCAG 2.1.1)', () => {
+  it('Enter no cabeçalho alterna a expansão (update:modelValue)', async () => {
+    const wrapper = mount(DssExpansionItem, { props: { label: 'Detalhes' } })
+    await wrapper.find('.q-item').trigger('keyup', { keyCode: 13 })
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([true])
+  })
+
+  it('cabeçalho expõe aria-expanded e é focável', () => {
+    const wrapper = mount(DssExpansionItem, { props: { label: 'Detalhes' } })
+    const header = wrapper.find('.q-item')
+    expect(header.attributes('tabindex')).toBe('0')
+    expect(header.attributes('aria-expanded')).toBe('false')
+  })
+})

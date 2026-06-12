@@ -194,3 +194,18 @@ describe('DssSelect', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssSelect — Teclado (WCAG 2.1.1)', () => {
+  it('ArrowDown no alvo focável abre o menu de opções', async () => {
+    const wrapper = mount(DssSelect, {
+      props: { modelValue: null, options: ['Hub', 'Water'] }
+    })
+    await wrapper.find('[tabindex="0"]').trigger('keydown', { keyCode: 40 })
+    await wrapper.vm.$nextTick()
+    expect(document.body.querySelector('.q-menu')).not.toBeNull()
+    wrapper.unmount()
+  })
+})

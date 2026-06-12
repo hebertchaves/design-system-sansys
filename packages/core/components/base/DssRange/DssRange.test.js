@@ -172,3 +172,22 @@ describe('DssRange', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssRange — Teclado (WCAG 2.1.1)', () => {
+  it('ArrowRight no cursor focado emite update:modelValue', async () => {
+    const wrapper = mount(DssRange, {
+      props: { modelValue: { min: 20, max: 80 } },
+      attachTo: document.body
+    })
+    // O QRange só processa setas com um cursor FOCADO (foco real + evento)
+    const thumb = wrapper.find('[tabindex]')
+    thumb.element.focus()
+    await thumb.trigger('focus')
+    await thumb.trigger('keydown', { keyCode: 39 })
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([{ min: 21, max: 80 }])
+    wrapper.unmount()
+  })
+})

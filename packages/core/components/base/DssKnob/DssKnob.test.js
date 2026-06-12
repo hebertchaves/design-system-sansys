@@ -207,3 +207,22 @@ describe('DssKnob', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssKnob — Teclado (WCAG 2.1.1)', () => {
+  it('ArrowUp incrementa o valor (update:modelValue)', async () => {
+    const wrapper = mount(DssKnob, { props: { modelValue: 50 } })
+    await wrapper.trigger('keydown', { keyCode: 38 })
+    await wrapper.trigger('keyup', { keyCode: 38 })
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([51])
+  })
+
+  it('ArrowDown decrementa o valor', async () => {
+    const wrapper = mount(DssKnob, { props: { modelValue: 50 } })
+    await wrapper.trigger('keydown', { keyCode: 40 })
+    await wrapper.trigger('keyup', { keyCode: 40 })
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([49])
+  })
+})

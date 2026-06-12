@@ -287,3 +287,17 @@ describe('DssInput', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssInput — Teclado (WCAG 2.1.1)', () => {
+  it('possui input nativo focável que recebe digitação', async () => {
+    const wrapper = mount(DssInput, { props: { modelValue: '' } })
+    const input = wrapper.find('input')
+    expect(input.exists()).toBe(true)
+    expect(input.attributes('tabindex')).not.toBe('-1')
+    await input.setValue('teclado')
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['teclado'])
+  })
+})

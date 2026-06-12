@@ -233,3 +233,21 @@ describe('DssRadio', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssRadio — Teclado (WCAG 2.1.1)', () => {
+  it('possui input nativo radio focável (tabindex 0)', () => {
+    const wrapper = mount(DssRadio, { props: { modelValue: 'a', val: 'b', label: 'Opção B' } })
+    const input = wrapper.find('input[type="radio"]')
+    expect(input.exists()).toBe(true)
+    expect(input.attributes('tabindex')).toBe('0')
+  })
+
+  it('seleção via input nativo emite update:modelValue com val', async () => {
+    const wrapper = mount(DssRadio, { props: { modelValue: 'a', val: 'b', label: 'Opção B' } })
+    await wrapper.find('input[type="radio"]').setValue(true)
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['b'])
+  })
+})

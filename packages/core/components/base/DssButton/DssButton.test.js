@@ -728,3 +728,25 @@ describe('DssButton', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssButton — Teclado (WCAG 2.1.1)', () => {
+  // Botão NATIVO: Enter/Space são ativação do user-agent — o contrato
+  // testável é a semântica focável correta.
+  it('é um <button> nativo focável (tabindex 0)', () => {
+    const wrapper = mount(DssButton, { props: { label: 'Salvar' } })
+    expect(wrapper.element.tagName).toBe('BUTTON')
+    expect(wrapper.attributes('tabindex')).toBe('0')
+  })
+
+  it('sai do fluxo de tabulação quando disabled', () => {
+    const wrapper = mount(DssButton, { props: { label: 'Salvar', disabled: true } })
+    expect(
+      wrapper.attributes('disabled') !== undefined ||
+      wrapper.attributes('tabindex') === '-1' ||
+      wrapper.attributes('aria-disabled') === 'true'
+    ).toBe(true)
+  })
+})

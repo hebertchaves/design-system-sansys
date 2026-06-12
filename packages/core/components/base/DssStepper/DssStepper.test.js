@@ -293,3 +293,25 @@ describe('DssStepper — Metadados', () => {
     expect(wrapper.vm.$options.name).toBe('DssStepper')
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssStepper — Teclado (WCAG 2.1.1)', () => {
+  it('LIMITAÇÃO DO MOTOR: cabeçalhos do QStepper não recebem foco nativo', () => {
+    // O QStepper renderiza os cabeçalhos como divs clicáveis SEM tabindex —
+    // navegação por teclado entre etapas não é provida pelo motor (alerta
+    // WCAG 2.1.1 registrado; este teste trava o contrato para sinalizar
+    // qualquer mudança futura do Quasar).
+    const wrapper = mountStepper(
+      { modelValue: 's1' },
+      { default: () => [
+        h(QStep, { name: 's1', title: 'Etapa 1' }, () => 'a'),
+        h(QStep, { name: 's2', title: 'Etapa 2' }, () => 'b'),
+      ] }
+    )
+    const headers = wrapper.findAll('.q-stepper__tab')
+    expect(headers.length).toBe(2)
+    expect(headers.every(t => t.attributes('tabindex') === undefined)).toBe(true)
+  })
+})

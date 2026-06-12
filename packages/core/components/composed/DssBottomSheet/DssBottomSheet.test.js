@@ -216,3 +216,22 @@ describe('DssBottomSheet', () => {
     expect(wrapper.vm.$options?.inheritAttrs ?? false).toBe(false)
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssBottomSheet — Teclado (WCAG 2.1.1)', () => {
+  it('ESC fecha o bottom sheet aberto (update:open false)', async () => {
+    const wrapper = mount(DssBottomSheet, {
+      props: { open: true },
+      slots: { default: 'Conteúdo' }
+    })
+    await new Promise((r) => setTimeout(r, 400))
+    // Runner de ESC do Quasar escuta keydown+keyup no window
+    window.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 27 }))
+    window.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 27 }))
+    await wrapper.vm.$nextTick()
+    expect(wrapper.emitted('update:open')?.[0]).toEqual([false])
+    wrapper.unmount()
+  })
+})

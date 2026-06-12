@@ -464,3 +464,23 @@ describe('DssCheckbox', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssCheckbox — Teclado (WCAG 2.1.1)', () => {
+  // Input NATIVO (checkbox): Space é ativação do user-agent — o contrato
+  // testável é o input focável + ativação alterar o modelo.
+  it('possui input nativo focável (tabindex 0)', () => {
+    const wrapper = mount(DssCheckbox, { props: { modelValue: false, label: 'Aceito' } })
+    const input = wrapper.find('input')
+    expect(input.exists()).toBe(true)
+    expect(input.attributes('tabindex')).toBe('0')
+  })
+
+  it('ativação do input nativo emite update:modelValue', async () => {
+    const wrapper = mount(DssCheckbox, { props: { modelValue: false, label: 'Aceito' } })
+    await wrapper.find('input').setValue(true)
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual([true])
+  })
+})

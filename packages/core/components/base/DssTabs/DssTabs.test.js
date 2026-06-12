@@ -246,3 +246,21 @@ describe('DssTabs — Entry Point Wrapper', () => {
     expect(wrapper.default).toBe(implementation.default)
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssTabs — Teclado (WCAG 2.1.1)', () => {
+  it('ArrowRight move o foco para a próxima aba (roving tabindex)', async () => {
+    const wrapper = mount(DssTabs, {
+      props: { modelValue: 'a' },
+      slots: { default: () => [h(QTab, { name: 'a', label: 'A' }), h(QTab, { name: 'b', label: 'B' })] },
+      attachTo: document.body,
+    })
+    const tabs = wrapper.findAll('.q-tab')
+    tabs[0].element.focus()
+    await tabs[0].trigger('keydown', { keyCode: 39 })
+    expect(document.activeElement).toBe(tabs[1].element)
+    wrapper.unmount()
+  })
+})

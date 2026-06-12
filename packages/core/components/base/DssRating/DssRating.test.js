@@ -212,3 +212,16 @@ describe('DssRating', () => {
     })
   })
 })
+
+// ==========================================================================
+// Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
+// ==========================================================================
+describe('DssRating — Teclado (WCAG 2.1.1)', () => {
+  it('seta + Enter no radio da estrela alteram o valor (update:modelValue)', async () => {
+    const wrapper = mount(DssRating, { props: { modelValue: 2, max: 5 } })
+    const star = wrapper.find('[role="radio"]')
+    await star.trigger('keyup', { keyCode: 39 }) // move a seleção
+    await star.trigger('keyup', { keyCode: 13 }) // confirma (Enter)
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+  })
+})
