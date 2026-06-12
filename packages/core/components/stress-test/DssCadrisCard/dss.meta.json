@@ -2,7 +2,7 @@
   "name": "DssCadrisCard",
   "version": "1.0.0",
   "phase": 3,
-  "status": "sealed",
+  "status": "in-progress",
   "classification": {
     "type": "Composite",
     "category": "Data / Search",

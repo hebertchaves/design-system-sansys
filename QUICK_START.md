@@ -1,186 +1,123 @@
-# 🚀 Quick Start - DSS (Design System Sansys)
+# 🚀 Quick Start — DSS (Design System Sansys)
 
-> **IMPORTANTE**: O DSS agora é um projeto **totalmente independente** do Figma plugin!
+> **✨ v2.3.0 (Monorepo)**: 91 componentes (88 selados), TypeScript + Composition API, Sass `@use`/`@forward`, CSS Cascade Layers para isolamento do Quasar.
 
-> **✨ v2.3.0 (Monorepo)**: 87 componentes selados, 100% TypeScript + Composition API, Sass `@use`/`@forward`!
-
----
-
-## ⚡ 3 Passos para Testar o DssButton
-
-### 📁 Estrutura do Projeto
-
-```
-quasar-to-figma-converter/
-├── package.json          ← Figma plugin
-└── dss/
-    ├── package.json      ← DSS (independente)
-    ├── index.scss
-    ├── test-dss-button.html
-    └── ...
-```
+> ♻️ **Reescrito na Onda P1 (Jun/2026)** — a versão anterior referenciava a estrutura pré-monorepo (`quasar-to-figma-converter/dss/`), que não existe mais.
 
 ---
 
-## ✅ FAÇA isso (correto)
+## ⚡ Comece em 3 passos
 
-#### Passo 1: Navegar até o diretório DSS
-
-```bash
-cd dss
-```
-
-#### Passo 2: Instalar dependências do DSS (apenas uma vez)
+### Passo 1 — Instalar dependências (raiz do monorepo, uma vez)
 
 ```bash
 npm install
 ```
 
-Isso instalará o SASS localmente para o DSS.
-
-#### Passo 3: Compilar SCSS → CSS
+### Passo 2 — Subir o sandbox (playground de componentes)
 
 ```bash
-npm run build
+npm run sandbox:dev
 ```
 
-**Resultado esperado**:
-```
-Compiled index.scss to index.css.
-```
+O Vite imprime a URL local (ex.: `http://localhost:5173`). O sandbox compila o
+SCSS do core ao vivo e carrega o Quasar isolado em `@layer quasar`.
 
-#### Passo 3: Abrir no Navegador
+### Passo 3 — Explorar
 
-**Opção A - Live Server no VSCode (Recomendado)**:
-1. Instale a extensão "Live Server" no VSCode
-2. Abra `dss/test-dss-button.html`
-3. Clique com botão direito → "Open with Live Server"
-
-**Opção B - Duplo Clique**:
-1. Abra o Windows Explorer
-2. Navegue: `C:\Users\hebert.chaves\quasar-to-figma-converter\V5\V5-2.0.2\dss\`
-3. Duplo clique em `test-dss-button.html`
+- **TestSuite**: índice de páginas de teste por componente
+- Troque **brand** (Hub/Water/Waste) e **tema** (light/dark) pelos controles das páginas
 
 ---
 
-## ✨ Componentes TypeScript + Composition API (v2.2.0)
+## 🗺️ Estrutura do Monorepo
 
-Os seguintes componentes foram **modernizados** com 100% type safety:
-
-- **DssButton** - Botão com 6 variantes
-- **DssBadge** - Badge/contador
-- **DssAvatar** - Avatar com imagem/texto
-- **DssCard** + subcomponentes (DssCardSection, DssCardActions)
-- **DssInput** - Input de formulário
-
-### Composables Globais Reutilizáveis
-
-```javascript
-import { useColorClasses, useAccessibility, useBrand } from '@sansys/design-system'
+```
+DSS/
+├── packages/
+│   ├── core/              ← @sansys/design-system (componentes, tokens, themes)
+│   │   ├── components/    ← base/ · composed/ · stress-test/
+│   │   ├── tokens/        ← Design tokens (--dss-*)
+│   │   └── themes/        ← Bridge Quasar (--q-* → --dss-*)
+│   ├── mcp/               ← Servidor MCP do DSS
+│   └── grid-inspector/    ← Utilitário de inspeção de grid
+├── apps/
+│   ├── sandbox/           ← Playground Vue (dev)
+│   └── docs-portal/       ← Portal de documentação (React + Tailwind)
+└── docs/                  ← Normativos, guias e governança
 ```
 
-- `useColorClasses` - Gerenciamento de cores DSS
-- `useAccessibility` - Atributos WCAG 2.1 AA
-- `useComponentState` - Estados interativos (focus, hover, active)
-- `useBrand` - Marcas Sansys (hub, water, waste)
+---
 
-**[📖 Ver guia completo de migração](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md)**
+## 🔧 Comandos principais
+
+| Comando | O que faz |
+|---|---|
+| `npm run sandbox:dev` | Playground de componentes (Vue + Vite) |
+| `npm run docs:dev` | Portal de documentação local |
+| `npm run core:build` | Build da lib (`packages/core/dist/` — js + css com tokens) |
+| `npm run docs:build` | Build do portal |
+| `npm run build:all` | Core + portal + MCP |
+| `npx vitest run --project unit` *(em `packages/core`)* | Testes unitários dos componentes |
+| `npm run sync:all` | Sincroniza tokens → meta.json → contrato visual |
+| `npm run sync:portal-tokens` | Sincroniza tokens do core para o docs-portal |
+| `npm run setup:hooks` | Instala o pre-commit hook (sync automático do contrato visual) |
 
 ---
 
-## 🎯 O Que Você Verá
+## 📦 Consumindo a lib
 
-✅ DssButton com:
-- 8 cores (primary, secondary, tertiary, accent, positive, negative, warning, info)
-- 5 tamanhos (xs, sm, md, lg, xl)
-- 4 variantes (filled, outlined, flat, unelevated)
-- Estados (normal, loading, disabled)
-- Ícones Material Icons
-- Toggle Dark Mode
-- Brandabilidade (Hub, Water, Waste)
+```js
+// Plugin global (todos os componentes)
+import DesignSystemSansys from '@sansys/design-system'
+import '@sansys/design-system/css' // tokens + estilos (dist/style.css)
 
----
-
-## 🌙 Testar Dark Mode
-
-Clique no botão "🌙 Dark Mode" no canto superior direito e observe:
-- Background muda de branco para cinza escuro
-- Texto muda de preto para branco
-- Botões se ajustam automaticamente
-- Contraste WCAG 2.1 AA mantido
-
----
-
-## 🔧 Auto-recompilação (Desenvolvimento)
-
-No diretório `dss/`, execute:
-
-```bash
-npm run watch
+app.use(DesignSystemSansys)
 ```
 
-Deixe rodando. Sempre que salvar um SCSS, o CSS é atualizado!
+```vue
+<!-- Ou por componente (tree-shakeable) -->
+<script setup>
+import { DssButton } from '@sansys/design-system'
+</script>
 
----
-
-## 🐛 Troubleshooting
-
-### "npm: command not found"
-
-**Solução**: Certifique-se de estar no diretório `dss/`:
-```bash
-cd dss
-npm install
+<template>
+  <DssButton color="primary" label="Salvar" />
+</template>
 ```
 
-### "Estilos não aparecem"
+**Brandabilidade:** aplique `data-brand` no `<body>` (norma — cobre overlays
+teleportados como DssDialog):
 
-**Solução**: Verifique se `index.css` existe:
-```bash
-ls index.css
+```js
+document.body.dataset.brand = 'water' // hub | water | waste
 ```
 
-Se não existir, compile novamente:
-```bash
-npm run build
-```
+---
 
-### "Material Icons não aparecem"
+## 🆘 Problemas comuns
 
-**Solução**: Verifique conexão com internet (ícones vêm do CDN do Google)
+### "Componente sem estilo no meu app"
+Confirme a importação do CSS da lib (`@sansys/design-system/css`). Sem ela,
+as variáveis `--dss-*` não existem.
+
+### "Brand não aplica em Dialog/BottomSheet"
+`data-brand` precisa estar no `<body>` (conteúdo é teleportado para fora do
+`#app`). Ver `docs/guides/DSS_IMPLEMENTATION_GUIDE.md` — Brandabilidade.
+
+### "Sass não compila"
+Use Node 20+ e reinstale na raiz (`npm install`). O monorepo usa
+`sass-embedded` via workspaces.
 
 ---
 
-## ✅ Checklist
+## 📚 Próximos passos
 
-Após abrir `test-dss-button.html`:
-
-- [ ] Página carrega sem erros
-- [ ] Todos os botões aparecem com estilos
-- [ ] Ícones Material Icons funcionam
-- [ ] Dark mode toggle funciona
-- [ ] Focus ring aparece ao navegar com Tab
-
----
-
-## 📚 Mais Documentação
-
-### ✨ TypeScript + Composition API (NOVO!)
-- **`MIGRATION_TO_TYPESCRIPT.md`**: Guia completo de migração TypeScript
-  - Componentes migrados (DssButton, DssBadge, DssAvatar, DssCard, DssInput)
-  - Composables globais reutilizáveis
-  - Templates e exemplos práticos
-
-### Arquitetura e Implementação
-- **`DSS_ARCHITECTURE.md`**: Arquitetura em 4 camadas
-- **`DSS_IMPLEMENTATION_GUIDE.md`**: Guia de implementação completo
-- **`REFACTORING_QUASAR_PATTERN.md`**: Padrão Quasar Framework
-
-### Testes e Setup
-- **Este arquivo**: Quick start sem erros
-- **`INSTRUCOES_TESTE_DSSBUTTON.md`**: Instruções detalhadas
-- **`GUIA_SETUP_VSCODE.md`**: Setup completo com Vite
-
----
-
-**🎉 Agora execute `npm run dss:build` e abra `test-dss-button.html`!**
+| Documento | Para quê |
+|---|---|
+| `docs/AGENT_QUICKSTART.md` | Ponto de entrada para agentes de IA |
+| `docs/reference/DSS_ARCHITECTURE.md` | Arquitetura do sistema |
+| `docs/reference/DSS_TOKEN_REFERENCE.md` | Catálogo oficial de tokens |
+| `docs/guides/DSS_IMPLEMENTATION_GUIDE.md` | Tokens, estados, acessibilidade, brand |
+| `docs/governance/CERTIFIED_COMPONENTS.md` | Índice de selos por componente |
+| `CLAUDE.md` | Regras normativas para agentes |

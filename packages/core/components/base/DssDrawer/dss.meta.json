@@ -1,7 +1,7 @@
 {
   "component": "DssDrawer",
   "dssVersion": "2.2",
-  "status": "pending-audit",
+  "status": "sealed",
   "auditMode": "Pendente Auditoria DSS v2.2",
   "goldenReference": "DssHeader",
   "goldenReferenceJustification": "DssHeader é o Golden Reference para DssDrawer: ambos são containers estruturais de layout de página não-interativos que encapsulam primitivos Quasar de layout (QHeader / QDrawer), bloqueiam prop `color`/`dark`, governam fundo via --dss-surface-default (!important), e delegam interatividade e brand aos componentes filhos. DssHeader recebeu Selo DSS v2.2 (Abr 2026) e serve como baseline direto para esta auditoria.",
@@ -265,23 +265,53 @@
       "default": [
         {
           "component": "DssItem",
-          "props": { "clickable": true },
+          "props": {
+            "clickable": true
+          },
           "children": [
-            { "component": "DssItemSection", "children": [{ "component": "DssItemLabel", "children": "Início" }] }
+            {
+              "component": "DssItemSection",
+              "children": [
+                {
+                  "component": "DssItemLabel",
+                  "children": "Início"
+                }
+              ]
+            }
           ]
         },
         {
           "component": "DssItem",
-          "props": { "clickable": true },
+          "props": {
+            "clickable": true
+          },
           "children": [
-            { "component": "DssItemSection", "children": [{ "component": "DssItemLabel", "children": "Relatórios" }] }
+            {
+              "component": "DssItemSection",
+              "children": [
+                {
+                  "component": "DssItemLabel",
+                  "children": "Relatórios"
+                }
+              ]
+            }
           ]
         },
         {
           "component": "DssItem",
-          "props": { "clickable": true },
+          "props": {
+            "clickable": true
+          },
           "children": [
-            { "component": "DssItemSection", "children": [{ "component": "DssItemLabel", "children": "Configurações" }] }
+            {
+              "component": "DssItemSection",
+              "children": [
+                {
+                  "component": "DssItemLabel",
+                  "children": "Configurações"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -293,5 +323,6 @@
       }
     }
   },
-  "previewGroup": "layout"
+  "previewGroup": "layout",
+  "sealDate": "2026-04-20"
 }

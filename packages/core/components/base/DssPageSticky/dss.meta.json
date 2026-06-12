@@ -2,7 +2,7 @@
   "component": "DssPageSticky",
   "cssClass": "dss-page-sticky",
   "dssVersion": "2.2",
-  "status": "in-progress",
+  "status": "sealed",
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente utilitário de layout de Nível 4 (Composição de Terceiro Grau). Wrapper DSS governado sobre QPageSticky. Depende estruturalmente de DssLayout, DssPageContainer e DssPage.",
   "goldenReference": "DssBadge",
@@ -80,7 +80,12 @@
       "default": [
         {
           "component": "DssButton",
-          "props": { "round": true, "color": "primary", "icon": "keyboard_arrow_up", "size": "sm" }
+          "props": {
+            "round": true,
+            "color": "primary",
+            "icon": "keyboard_arrow_up",
+            "size": "sm"
+          }
         }
       ]
     },
@@ -148,5 +153,6 @@
     "Div governado por tokens DSS — banner de cookies, CTA persistente"
   ],
   "auditHistory": [],
-  "previewGroup": "layout"
+  "previewGroup": "layout",
+  "sealDate": "2026-04-23"
 }

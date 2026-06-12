@@ -1,8 +1,12 @@
 # 🛡️ Laudo de Prontidão para Produção (Production Readiness Review)
 **Design System Sansys (DSS) — Versão Normativa v2.3.0**  
 **Autor:** Chat Orquestrador Estratégico (Manus AI)  
-**Veredicto:** ✅ APROVADO PARA PRODUÇÃO — Todas as ondas de engenharia e governança concluídas com sucesso  
-**Data:** Junho de 2026
+**Veredicto:** ✅ APROVADO PARA PRODUÇÃO — ver **Adendo v2 (Seção 7)**, que substitui o veredicto original  
+**Data:** Junho de 2026 (original: 02/06 · Adendo v2: 12/06)
+
+> ⚠️ **AVISO DE VERSÃO:** Este laudo foi emitido em 02/06/2026, **antes** da Onda 8
+> e da Auditoria Final de 10–11/06/2026, que refutou parte das alegações das
+> Seções 5–6 (detalhes no Adendo v2). O veredicto vigente é o da **Seção 7**.
 
 ---
 
@@ -94,3 +98,47 @@ Esta atividade deve ser executada pelo chat executor (Claude) de forma imediata.
 | Caminhos do MCP | ✅ 100% corretos |
 | Guias Normativos Atualizados para Monorepo | ✅ 100% |
 | Mapa Canônico de Caminhos (`DSS_MONOREPO_PATH_MAP.md`) | ✅ Publicado e referenciado no `CLAUDE.md` |
+
+---
+
+## 7. ADENDO v2 — Pós-Auditoria Final e Onda P0 (12/06/2026)
+
+### 7.1 Por que este adendo existe
+
+O laudo original (Seções 1–6) foi emitido em 02/06/2026. A **Onda 8** (criada em
+04/06) e a **Auditoria Final de 10–11/06/2026** (12 agentes + síntese,
+`audit-reports/AUDITORIA_FINAL_CONSOLIDADA_JUNHO_2026.md`) vieram DEPOIS — e a
+auditoria **refutou alegações centrais das Seções 5–6**, emitindo veredicto
+❌ BLOQUEADO com 16 bloqueantes. Este adendo corrige o registro histórico e
+estabelece o veredicto vigente.
+
+### 7.2 Retificações ao Scorecard original (Seção 6)
+
+| Alegação original | Realidade apurada (10–11/06) |
+| :--- | :--- |
+| "Build de Produção limpo — zero erros" | ❌ O HEAD **não compilava** (imports quebrados no DssUploader); `dist/style.css` saía **sem nenhum token `:root`** |
+| "Cobertura de Testes 100% (76/76)" | ❌ A contagem media **existência de arquivos**, não execução. O gate de testes **nunca foi executável** (sem projeto vitest para `*.test.js`, sem `@vue/test-utils` instalado). Contagem real de arquivos: 88/91 |
+| "Warnings de Build Sass — Zero" | ❌ 7+ deprecation warnings de `@import` ativos no build |
+| Demais indicadores (links, espelho, MCP paths) | ✅ Confirmados pela auditoria |
+
+### 7.3 O que foi feito desde então
+
+1. **Onda 8** (04–06/06): CSS Cascade Layers, bridge de tokens, index.css do portal.
+2. **Auditoria Final** (10–11/06): 13 relatórios em `audit-reports/AUDITORIA_FINAL_*` — veredicto ❌ BLOQUEADO.
+3. **Onda P0** (11/06, commits `7ee0ceb..0d8d423`): 12/12 bloqueantes corrigidos — tokens no dist, DssButton com ARIA, brand em overlays teleportados, DssTable slots dinâmicos, `@use` 100%, namespace `--quasar-*` eliminado, barrels completos (25 comps), drift do docs-portal zerado, **infraestrutura de testes criada** (projeto `unit` + shim Quasar), hierarquia visual corrigida (CSS supremo — Figma rebaixado a ferramenta MCP, Princípio #12).
+4. **Reauditoria dirigida independente** (11/06, `audit-reports/REAUDITORIA_DIRIGIDA_P0.md`): 15 verificações com cláusulas anti-máscara — **12/12 confirmados, zero regressões, zero deprecation warnings, 329/329 testes nos componentes tocados**.
+5. **Push para o GitHub origin** (`edb13d3..418a7fa`) em 11/06.
+
+### 7.4 Veredicto vigente
+
+> ✅ **APROVADO PARA PRODUÇÃO (v2)** — com base em evidência executada, não declarativa:
+> build do HEAD verde com zero warnings, artefato `dist` íntegro (tokens + componentes,
+> sem duplicação), gate de testes executável e verde nos componentes auditados, e
+> reauditoria independente sem achados bloqueantes.
+>
+> **Condições conhecidas (backlog ativo, não bloqueante):** a suíte completa de testes
+> dos demais componentes será executada e estabilizada na Onda P2 (testes de teclado
+> incluídos); itens de infra/DX (type-check real, lockfiles, MCP `validate_visual_contract`)
+> listados na Seção 3 do consolidado.
+
+**Cadeia de evidência:** `AUDITORIA_FINAL_CONSOLIDADA_JUNHO_2026.md` → `PROMPT_DIRECIONADOR_ONDA_P0_CORRECOES_BLOQUEANTES.md` → `ONDA_P0_RELATORIO_EXECUCAO.md` → `REAUDITORIA_DIRIGIDA_P0.md`.

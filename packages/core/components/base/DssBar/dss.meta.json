@@ -2,7 +2,7 @@
   "component": "DssBar",
   "cssClass": "dss-bar",
   "phase": 2,
-  "status": "conformant",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssToolbar",
@@ -127,5 +127,6 @@
       "default": "Barra com conteúdo do sistema"
     }
   },
-  "previewGroup": "banners"
+  "previewGroup": "banners",
+  "sealDate": "2026-05-20"
 }

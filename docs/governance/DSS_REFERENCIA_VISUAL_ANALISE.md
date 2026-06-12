@@ -2015,7 +2015,6 @@ Em caso de conflito entre fontes de informação visual:
 | DssParallax | contextuais | src:https://placehold.co/600x200, height:100, speed:0.5, alt:Imagem decorativa de fundo, decorative | minHeight:200px | Seção com efeito parallax |
 | DssPopupEdit | contextuais | — | — | — |
 | DssPopupProxy | contextuais | breakpoint:450 | — | Proxy de popup (Dialog em mobile, Menu em desktop) |
-| DssPopupProxy | contextuais | breakpoint:450 | — | DssPopupProxy responsivo — abre QMenu em desktop e QDialog em mobile |
 | DssPullToRefresh | contextuais | — | — | Puxe para atualizar |
 | DssRadio | form-controles | color:primary, size:md, label:Opção, val:opcao | minHeight:44px | Label 'Opção' |
 | DssRange | form-controles | min:0, max:100, modelValue:{…}, aria-label:Seleção de intervalo | minHeight:44px, minWidth:200px | Range de 25 a 75 |
@@ -2051,5 +2050,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-11T22:55:52.727Z_
+_Gerado em: 2026-06-12T13:34:30.207Z_
 <!-- END:AUTO-GENERATED -->

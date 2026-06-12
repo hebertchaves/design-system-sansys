@@ -32,7 +32,7 @@
 
 ---
 
-## Fase 2 — Componentes Compostos (67/68 — 99%) ✅
+## Fase 2 — Componentes Compostos (68/68 — 100%) ✅
 
 | Componente | Nível | Categoria | Data do Selo | Golden Reference | Golden Context | Observação |
 |---|---|---|---|---|---|---|
@@ -42,21 +42,21 @@
 | `DssBtnToggle` | 1 | Botões e Controles de Grupo | 27/03/2026 | — | DssButton | — |
 | `DssOptionGroup` | 1 | Botões e Controles de Grupo | 27/03/2026 | — | DssCheckbox | — |
 | `DssItemSection` | 1 | Lista e Itens | 01/04/2026 | — | DssItem | — |
-| `DssItemLabel` | 1 | Lista e Itens | **20/04/2026** | — | DssItem | **Selado hoje** |
+| `DssItemLabel` | 1 | Lista e Itens | 20/04/2026 | — | DssItem | — |
 | `DssList` | 1 | Lista e Itens | 31/03/2026 | — | DssItem | — |
 | `DssTab` | 1 | Tabs | 01/04/2026 | — | DssChip | — |
 | `DssTabPanel` | 1 | Tabs | 09/04/2026 | — | DssTab | — |
 | `DssBreadcrumbsEl` | 1 | Navegação Estrutural | 10/04/2026 | — | DssChip | — |
-| `DssStep` | 1 | Navegação Estrutural | **20/04/2026** | — | DssTabs | **Selado hoje** |
+| `DssStep` | 1 | Navegação Estrutural | 20/04/2026 | — | DssTabs | — |
 | `DssToolbar` | 1 | Estrutura de Página | 16/04/2026 | DssCard | DssTabs | 4 gaps de pré-prompt corrigidos |
 | `DssTabs` | 2 | Tabs | 02/04/2026 | — | DssTab | — |
 | `DssTabPanels` | 2 | Tabs | 09/04/2026 | — | DssTabPanel | — |
 | `DssRouteTab` | 2 | Tabs | 10/04/2026 | — | DssTab | — |
 | `DssBreadcrumbs` | 2 | Navegação | 11/04/2026 | — | DssBreadcrumbsEl | — |
 | `DssMenu` | 2 | Navegação / Overlays | 18/04/2026 | DssTooltip | DssList | CSS global por teleport QMenu |
-| `DssHeader` | 3 | Estrutura de Página | 17/04/2026 | DssCard | DssToolbar | 2 NCs resolvidas; GAP-03 escalado |
+| `DssHeader` | 3 | Estrutura de Página | 17/04/2026 | DssCard | DssToolbar | 2 NCs resolvidas; GAP-03 resolvido na Onda P0/T1 (carga única global de CSS) |
 | `DssFooter` | 3 | Estrutura de Página | 18/04/2026 | DssCard | DssHeader | EXC-05: sombra upward pendente token |
-| `DssDrawer` | 3 | Estrutura de Página | **20/04/2026** | — | DssList | **Selado hoje** |
+| `DssDrawer` | 3 | Estrutura de Página | 20/04/2026 | — | DssList | — |
 | `DssLayout` | 4 | Layout Global | 20/04/2026 | — | DssHeader + DssFooter | Selado — desbloqueia DssPage |
 | `DssPageScroller` | 4 | Layout Global | 26/04/2026 | DssBadge | DssPageSticky | 3 NCs resolvidas |
 | `DssFab` | 2 | Action Group Composto — FAB interativo | 04/05/2026 | DssChip | DssButton | EXC: .q-fab__actions para direção; extension hooks sem CSS |
@@ -93,6 +93,7 @@
 | `DssPullToRefresh` | 1 | Interação Gestual | 20/05/2026 | DssChip | DssScrollArea | QPullToRefresh root; EXC-Gate-02a --q-color-primary; WARN-A11Y-01 gesto não acessível via teclado |
 | `DssSlideItem` | 1 | Interação Gestual | 20/05/2026 | DssBadge | DssList | Item de lista com ações deslizáveis (swipe) |
 | `DssTimeline` | 2 | Visualização de Dados | 21/05/2026 | DssBadge | DssList | Container de linha do tempo cronológica |
+| `DssBottomSheet` | 2 | Overlays e Dialogs | 21/05/2026 | DssChip | DssDialog | Selo físico em docs/Compliance/seals/ — entrada reconciliada na Onda P1 (estava fora do índice, gerando o falso 67/68) |
 | `DssTimelineEntry` | 2 | Visualização de Dados | 21/05/2026 | DssBadge | DssTimeline | Subcomponente entrada da DssTimeline (evento individual) |
 | `DssChatMessage` | 2 | Visualização de Dados | 21/05/2026 | DssBadge | DssCard | Widget de mensagem de chat |
 | `DssCarousel` | 2 | Mídia e Visualização | 21/05/2026 | DssChip | DssTabs | Container de slides com navegação interativa |

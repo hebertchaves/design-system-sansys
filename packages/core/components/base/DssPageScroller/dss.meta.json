@@ -2,7 +2,7 @@
   "component": "DssPageScroller",
   "cssClass": "dss-page-scroller",
   "dssVersion": "2.2",
-  "status": "in-progress",
+  "status": "sealed",
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente utilitário de layout de Nível 4 (Composição de Terceiro Grau). Wrapper DSS governado sobre QPageScroller. Exibe elemento flutuante baseado em scroll. Depende estruturalmente de DssLayout, DssPageContainer e DssPage. Nota: A prop duration tem como default o valor 250, que corresponde ao token --dss-duration-base. Em iterações futuras, avaliar binding dinâmico via getComputedStyle.",
   "goldenReference": "DssBadge",
@@ -155,5 +155,6 @@
     "Conteúdo personalizado via slot — qualquer elemento DSS com interatividade própria"
   ],
   "auditHistory": [],
-  "previewGroup": "layout"
+  "previewGroup": "layout",
+  "sealDate": "2026-04-26"
 }
