@@ -22,6 +22,8 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssBreadcrumbs from './1-structure/DssBreadcrumbs.ts.vue'
+import { h } from 'vue'
+import DssBreadcrumbsEl from '../DssBreadcrumbsEl/1-structure/DssBreadcrumbsEl.ts.vue'
 
 installQuasar()
 
@@ -29,8 +31,20 @@ installQuasar()
 // HELPERS
 // ==========================================================================
 
+/**
+ * QBreadcrumbs não renderiza NADA sem itens filhos (render condicional do
+ * Quasar) — o helper anterior montava vazio e todo find() falhava
+ * (Onda P2/G3.2). Uso canônico: sempre com DssBreadcrumbsEl no slot.
+ */
 function mountBreadcrumbs(props = {}, slots = {}) {
-  return mount(DssBreadcrumbs, { props, slots })
+  const finalSlots = {
+    default: () => [
+      h(DssBreadcrumbsEl, { label: 'Início', to: '/' }),
+      h(DssBreadcrumbsEl, { label: 'Página atual' }),
+    ],
+    ...slots,
+  }
+  return mount(DssBreadcrumbs, { props, slots: finalSlots })
 }
 
 // ==========================================================================
@@ -203,18 +217,14 @@ describe('DssBreadcrumbs — Slots', () => {
 
 describe('DssBreadcrumbs — Forwarding de $attrs', () => {
   it('encaminha aria-label para o q-breadcrumbs', () => {
-    const wrapper = mount(DssBreadcrumbs, {
-      attrs: { 'aria-label': 'Navegação do site' }
-    })
+    const wrapper = mountBreadcrumbs({ 'aria-label': 'Navegação do site' })
     // inheritAttrs: false — o $attrs é forwarded ao q-breadcrumbs interno
-    // O q-breadcrumbs renderiza um <nav>, verificamos o atributo no componente
     expect(wrapper.find('.dss-breadcrumbs').exists()).toBe(true)
+    expect(wrapper.attributes('aria-label')).toBe('Navegação do site')
   })
 
   it('encaminha data-testid via $attrs', () => {
-    const wrapper = mount(DssBreadcrumbs, {
-      attrs: { 'data-testid': 'main-breadcrumbs' }
-    })
+    const wrapper = mountBreadcrumbs({ 'data-testid': 'main-breadcrumbs' })
     // data-testid deve aparecer no elemento nav gerado pelo q-breadcrumbs
     const nav = wrapper.find('nav')
     if (nav.exists()) {

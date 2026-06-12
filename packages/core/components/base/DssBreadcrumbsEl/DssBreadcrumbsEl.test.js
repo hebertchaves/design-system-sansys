@@ -196,8 +196,11 @@ describe('DssBreadcrumbsEl — Forwarding de $attrs', () => {
 // ==========================================================================
 
 describe('DssBreadcrumbsEl — Metadados', () => {
-  it('possui o nome correto do componente', () => {
+  it('usa name QBreadcrumbsEl — contrato do motor (separadores do QBreadcrumbs)', () => {
+    // O QBreadcrumbs injeta separadores identificando filhos por
+    // vnode.type.name === 'QBreadcrumbsEl'. O name interno é intencional
+    // (NC corrigida na Onda P2/G3.2 — sem ele, separadores nunca renderizam).
     const wrapper = mountEl()
-    expect(wrapper.vm.$options.name).toBe('DssBreadcrumbsEl')
+    expect(wrapper.vm.$options.name).toBe('QBreadcrumbsEl')
   })
 })

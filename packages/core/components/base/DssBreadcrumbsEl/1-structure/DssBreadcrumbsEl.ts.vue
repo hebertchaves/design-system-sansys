@@ -20,10 +20,26 @@ import type {
   BreadcrumbsElEmits,
   BreadcrumbsElSlots,
 } from '../types/breadcrumbs-el.types'
+// Import local com identificador distinto: com name:'QBreadcrumbsEl' neste
+// componente, a tag <q-breadcrumbs-el> resolveria por AUTO-REFERÊNCIA
+// (recursão infinita). QBreadcrumbsElBase aponta para o motor Quasar real.
+import { QBreadcrumbsEl as QBreadcrumbsElBase } from 'quasar'
 import { useBreadcrumbsElClasses } from '../composables'
 import DssIcon from '../../DssIcon/DssIcon.vue'
 
-defineOptions({ name: 'DssBreadcrumbsEl', inheritAttrs: false })
+/**
+ * ⚠️ name: 'QBreadcrumbsEl' É INTENCIONAL (NC corrigida na Onda P2/G3.2).
+ *
+ * O QBreadcrumbs identifica os itens por `vnode.type.name === 'QBreadcrumbsEl'`
+ * (quasar.client.js, render do QBreadcrumbs) para contar os filhos e injetar
+ * os SEPARADORES entre eles. Com o nome 'DssBreadcrumbsEl', nenhum separador
+ * era renderizado — em produção inclusive (bug real descoberto quando a suíte
+ * de testes rodou pela primeira vez).
+ *
+ * O componente continua exportado como DssBreadcrumbsEl (barrel/registro);
+ * apenas o `name` interno espelha o contrato do motor Quasar.
+ */
+defineOptions({ name: 'QBreadcrumbsEl', inheritAttrs: false })
 
 const props = withDefaults(defineProps<BreadcrumbsElProps>(), {
   disable: false,
@@ -42,7 +58,7 @@ const { breadcrumbsElClasses } = useBreadcrumbsElClasses(props)
     raiz do QBreadcrumbsEl (renderizado como <a> ou <div>) via class binding.
     EXC-01: Seletor composto .dss-breadcrumbs-el.q-breadcrumbs__el no SCSS.
   -->
-  <q-breadcrumbs-el
+  <QBreadcrumbsElBase
     class="dss-breadcrumbs-el"
     :class="breadcrumbsElClasses"
     :to="to"
@@ -69,5 +85,5 @@ const { breadcrumbsElClasses } = useBreadcrumbsElClasses(props)
       O slot sobrepõe o `label` quando conteúdo personalizado é fornecido.
     -->
     <slot>{{ label }}</slot>
-  </q-breadcrumbs-el>
+  </QBreadcrumbsElBase>
 </template>

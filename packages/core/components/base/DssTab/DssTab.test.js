@@ -12,6 +12,8 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
+import { h } from 'vue'
+import { QTabs } from 'quasar'
 import DssTab from './DssTab.vue'
 
 installQuasar()
@@ -20,11 +22,26 @@ installQuasar()
 // HELPERS
 // ==========================================================================
 
+/**
+ * QTab exige o contexto de injeção do QTabs pai (uso canônico). O helper
+ * anterior montava standalone e passava `default: undefined` — slot
+ * inválido para o test-utils (Onda P2/G3.2).
+ */
 function mountTab(props = {}, slots = {}) {
-  return mount(DssTab, {
-    props: { name: 'test', ...props },
-    slots: { default: undefined, ...slots }
+  const childSlots = Object.fromEntries(
+    Object.entries(slots).map(([name, content]) => [
+      name,
+      typeof content === 'string' ? () => h('span', { innerHTML: content }) : content,
+    ])
+  )
+  const host = mount(QTabs, {
+    props: { modelValue: null },
+    slots: {
+      default: () =>
+        h(DssTab, { name: 'test', ...props }, Object.keys(childSlots).length ? childSlots : undefined),
+    },
   })
+  return host.findComponent(DssTab)
 }
 
 // ==========================================================================
@@ -175,10 +192,7 @@ describe('DssTab — Classes compostas', () => {
 
 describe('DssTab — Forwarding de $attrs', () => {
   it('encaminha atributos data-* para o elemento raiz', () => {
-    const wrapper = mount(DssTab, {
-      props: { name: 'test' },
-      attrs: { 'data-testid': 'tab-item' }
-    })
+    const wrapper = mountTab({ 'data-testid': 'tab-item' })
     expect(wrapper.attributes('data-testid')).toBe('tab-item')
   })
 })
@@ -189,10 +203,7 @@ describe('DssTab — Forwarding de $attrs', () => {
 
 describe('DssTab — Slot default', () => {
   it('renderiza conteúdo customizado no slot default', () => {
-    const wrapper = mount(DssTab, {
-      props: { name: 'test' },
-      slots: { default: '<span>Custom</span>' }
-    })
+    const wrapper = mountTab({}, { default: '<span>Custom</span>' })
     expect(wrapper.find('span').exists()).toBe(true)
     expect(wrapper.find('span').text()).toBe('Custom')
   })

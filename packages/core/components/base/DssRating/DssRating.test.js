@@ -6,7 +6,7 @@
  * - Props: modelValue, max, size, disable, readonly, noReset, iconSelected, iconHalf, icon, brand
  * - Value/Model: v-model numérico (1 a max)
  * - Eventos: update:modelValue
- * - Acessibilidade: role="slider" (QRating nativo), aria-valuemin/max/now, tabindex
+ * - Acessibilidade: role="radiogroup" + radios por estrela (QRating real)
  * - Brands: Hub, Water, Waste
  *
  * NOTA: DssRating usa QRating como root element (EXC-Gate-01).
@@ -72,7 +72,9 @@ describe('DssRating', () => {
         const wrapper = mount(DssRating, {
           props: { modelValue: 3, readonly: true }
         })
-        expect(wrapper.classes().join(' ')).toContain('readonly')
+        // QRating real: readonly = classe --non-editable + aria-readonly
+        expect(wrapper.classes()).toContain('q-rating--non-editable')
+        expect(wrapper.attributes('aria-readonly')).toBe('true')
       })
 
       it('renders with value 0 (no stars selected)', () => {
@@ -137,47 +139,38 @@ describe('DssRating', () => {
   // ===========================================================================
 
   describe('Accessibility', () => {
-    it('has role="slider" (managed by QRating)', () => {
+    // Contrato ARIA real do QRating (testes anteriores assumiam role="slider"
+    // especulativamente — o motor expõe radiogroup com um radio por estrela):
+    it('has role="radiogroup" (managed by QRating)', () => {
       const wrapper = mount(DssRating, {
         props: { modelValue: 3 }
       })
-      expect(wrapper.attributes('role')).toBe('slider')
+      expect(wrapper.attributes('role')).toBe('radiogroup')
     })
 
-    it('sets aria-valuemin=1', () => {
-      const wrapper = mount(DssRating, {
-        props: { modelValue: 3 }
-      })
-      expect(wrapper.attributes('aria-valuemin')).toBe('1')
-    })
-
-    it('sets aria-valuemax equal to max', () => {
+    it('renderiza um radio por estrela com aria-label e aria-checked', () => {
       const wrapper = mount(DssRating, {
         props: { modelValue: 3, max: 5 }
       })
-      expect(wrapper.attributes('aria-valuemax')).toBe('5')
+      const radios = wrapper.findAll('[role="radio"]')
+      expect(radios).toHaveLength(5)
+      expect(radios[0].attributes('aria-label')).toBeTruthy()
+      expect(radios[0].attributes('aria-checked')).toBeDefined()
     })
 
-    it('sets aria-valuenow equal to modelValue', () => {
-      const wrapper = mount(DssRating, {
-        props: { modelValue: 4 }
-      })
-      expect(wrapper.attributes('aria-valuenow')).toBe('4')
-    })
-
-    it('is keyboard focusable by default', () => {
+    it('estrelas são focáveis por teclado (tabindex=0) por padrão', () => {
       const wrapper = mount(DssRating, {
         props: { modelValue: 3 }
       })
-      const tabindex = wrapper.attributes('tabindex')
-      expect(tabindex).not.toBe('-1')
+      expect(wrapper.find('[role="radio"]').attributes('tabindex')).toBe('0')
     })
 
-    it('sets tabindex -1 when disabled', () => {
+    it('remove foco por teclado quando disable=true', () => {
       const wrapper = mount(DssRating, {
         props: { modelValue: 3, disable: true }
       })
-      expect(wrapper.attributes('tabindex')).toBe('-1')
+      const tabindex = wrapper.find('[role="radio"]').attributes('tabindex')
+      expect(tabindex === '-1' || tabindex === undefined).toBe(true)
     })
   })
 
@@ -186,18 +179,20 @@ describe('DssRating', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
+    // Contrato real: a prop brand aplica CLASSE dss-rating--brand-* no root
+    // (padrão dos demais componentes DSS); não há atributo data-brand próprio.
+    it.each(['hub', 'water', 'waste'])('aplica classe dss-rating--brand-%s', (brand) => {
       const wrapper = mount(DssRating, {
         props: { modelValue: 3, brand }
       })
-      expect(wrapper.attributes('data-brand')).toBe(brand)
+      expect(wrapper.classes()).toContain(`dss-rating--brand-${brand}`)
     })
 
-    it('does not set data-brand when brand is null', () => {
+    it('não aplica classe de brand quando brand é null', () => {
       const wrapper = mount(DssRating, {
         props: { modelValue: 3 }
       })
-      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.classes().some(c => c.startsWith('dss-rating--brand-'))).toBe(false)
     })
   })
 

@@ -19,7 +19,11 @@ export default defineConfig({
         // Testes unitários dos componentes DSS (gate de build do CLAUDE.md).
         // Antes da Onda P0 não existia projeto para os *.test.js — o gate
         // nunca foi executável (achado da Auditoria Final Jun/2026).
-        plugins: [vue()],
+        // comments:false — paridade com o build de produção: os templates
+        // 1-structure têm comentários HTML antes do root; em modo dev o Vue
+        // os preserva, o root vira fragment e o test-utils devolve
+        // classes()=[]/element=container (falso negativo em massa — G3.2).
+        plugins: [vue({ template: { compilerOptions: { comments: false } } })],
         resolve: {
           alias: {
             // O pacote oficial exige vitest ^1||^2||^3 (repo usa v4).
@@ -42,6 +46,9 @@ export default defineConfig({
           environment: 'jsdom',
           globals: true,
           include: ['components/**/*.test.js'],
+          // Shims de APIs de browser ausentes no jsdom (scroll, observers,
+          // matchMedia) — ver o arquivo para o racional (Onda P2/G3.2)
+          setupFiles: [path.join(dirname, 'test/setup-unit.js')],
         },
       },
       {

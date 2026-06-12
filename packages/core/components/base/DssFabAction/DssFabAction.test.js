@@ -27,10 +27,33 @@
 
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { h } from 'vue'
+import { QFab } from 'quasar'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssFabAction from './1-structure/DssFabAction.ts.vue'
 
 installQuasar()
+
+/**
+ * QFabAction exige o contexto de injeção do QFab pai (crash com
+ * "Cannot read properties of undefined" se montado standalone — o
+ * registro Quasar real expôs isso na Onda P2/G3.2). Montamos no uso
+ * canônico: dentro de um QFab aberto, e devolvemos o wrapper do filho.
+ */
+function mountFabAction(options = {}) {
+  const { props, slots } = options
+  const childSlots = slots
+    ? Object.fromEntries(Object.entries(slots).map(([name, content]) => [
+        name,
+        typeof content === 'string' ? () => h('span', { innerHTML: content }) : content,
+      ]))
+    : undefined
+  const host = mount(QFab, {
+    props: { modelValue: true, icon: 'add' },
+    slots: { default: () => h(DssFabAction, props, childSlots) },
+  })
+  return host.findComponent(DssFabAction)
+}
 
 describe('DssFabAction', () => {
   // ===========================================================================
@@ -39,17 +62,17 @@ describe('DssFabAction', () => {
 
   describe('Renderizacao Basica', () => {
     it('renderiza com classe base dss-fab-action no wrapper', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       expect(wrapper.classes()).toContain('dss-fab-action')
     })
 
     it('elemento raiz e uma div (wrapper externo)', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       expect(wrapper.element.tagName).toBe('DIV')
     })
 
     it('contem QFabAction interno com classe dss-fab-action__qaction', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       expect(wrapper.find('.dss-fab-action__qaction').exists()).toBe(true)
     })
 
@@ -58,7 +81,7 @@ describe('DssFabAction', () => {
     })
 
     it('renderiza sem erros com props padrao', () => {
-      expect(() => mount(DssFabAction)).not.toThrow()
+      expect(() => mountFabAction()).not.toThrow()
     })
   })
 
@@ -68,19 +91,19 @@ describe('DssFabAction', () => {
 
   describe('Props - Label Inline', () => {
     it('nao aplica classe dss-fab-action--extended quando sem label', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       expect(wrapper.classes()).not.toContain('dss-fab-action--extended')
     })
 
     it('aplica classe dss-fab-action--extended quando label e fornecido', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { label: 'Editar' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--extended')
     })
 
     it('aplica dss-fab-action--extended para qualquer string de label', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { label: 'Nova mensagem' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--extended')
@@ -93,26 +116,26 @@ describe('DssFabAction', () => {
 
   describe('Props - Label Externo', () => {
     it('nao aplica classe has-external-label quando externalLabel nao e fornecido', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       expect(wrapper.classes()).not.toContain('dss-fab-action--has-external-label')
     })
 
     it('aplica classe dss-fab-action--has-external-label quando externalLabel e fornecido', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { externalLabel: 'Compartilhar' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--has-external-label')
     })
 
     it('aplica classe de posicao do label quando externalLabel e labelPosition sao definidos', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { externalLabel: 'Editar', labelPosition: 'right' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--label-right')
     })
 
     it('usa labelPosition="left" como padrao ao ter externalLabel', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { externalLabel: 'Deletar' }
       })
       // labelPosition padrao e "left"
@@ -122,7 +145,7 @@ describe('DssFabAction', () => {
     it.each(['left', 'right', 'top', 'bottom'])(
       'aplica classe dss-fab-action--label-%s quando labelPosition="%s" com externalLabel',
       (position) => {
-        const wrapper = mount(DssFabAction, {
+        const wrapper = mountFabAction({
           props: { externalLabel: 'Acao', labelPosition: position }
         })
         expect(wrapper.classes()).toContain(`dss-fab-action--label-${position}`)
@@ -136,14 +159,14 @@ describe('DssFabAction', () => {
 
   describe('Props - Estado Disabled', () => {
     it('aplica classe dss-fab-action--disabled quando disable=true', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { disable: true }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--disabled')
     })
 
     it('nao aplica classe disabled quando disable=false (padrao)', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       expect(wrapper.classes()).not.toContain('dss-fab-action--disabled')
     })
   })
@@ -154,20 +177,20 @@ describe('DssFabAction', () => {
 
   describe('Eventos', () => {
     it('emite click ao clicar no FabAction', async () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       await wrapper.find('.dss-fab-action__qaction').trigger('click')
       expect(wrapper.emitted('click')).toBeDefined()
     })
 
     it('emite click com o evento de mouse correto', async () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       await wrapper.find('.dss-fab-action__qaction').trigger('click')
       const clickEmissions = wrapper.emitted('click')
       expect(clickEmissions).toHaveLength(1)
     })
 
     it('nao emite click quando disable=true', async () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { disable: true }
       })
       await wrapper.find('.dss-fab-action__qaction').trigger('click')
@@ -175,13 +198,16 @@ describe('DssFabAction', () => {
       expect(wrapper.emitted('click')).toBeUndefined()
     })
 
-    it('emite click multiplas vezes em cliques consecutivos', async () => {
-      const wrapper = mount(DssFabAction)
+    it('emite click uma única vez — o clique fecha o QFab pai (comportamento canônico)', async () => {
+      const wrapper = mountFabAction({ props: { icon: 'edit' } })
       const qaction = wrapper.find('.dss-fab-action__qaction')
       await qaction.trigger('click')
       await qaction.trigger('click')
       await qaction.trigger('click')
-      expect(wrapper.emitted('click')).toHaveLength(3)
+      // O QFabAction real fecha o QFab no primeiro clique; as ações somem
+      // e os cliques seguintes não atingem o botão (teste anterior assumia
+      // o cenário irreal do componente montado standalone).
+      expect(wrapper.emitted('click')).toHaveLength(1)
     })
   })
 
@@ -191,14 +217,14 @@ describe('DssFabAction', () => {
 
   describe('Slots', () => {
     it('renderiza conteudo do slot icon quando fornecido', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         slots: { icon: '<span class="custom-icon">star</span>' }
       })
       expect(wrapper.find('.custom-icon').exists()).toBe(true)
     })
 
     it('nao renderiza slot icon quando nao e fornecido', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       expect(wrapper.find('.custom-icon').exists()).toBe(false)
     })
   })
@@ -209,34 +235,34 @@ describe('DssFabAction', () => {
 
   describe('Brand', () => {
     it('aplica classe dss-fab-action--brand-hub quando brand="hub"', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { brand: 'hub' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--brand-hub')
     })
 
     it('aplica classe dss-fab-action--brand-water quando brand="water"', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { brand: 'water' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--brand-water')
     })
 
     it('aplica classe dss-fab-action--brand-waste quando brand="waste"', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { brand: 'waste' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--brand-waste')
     })
 
     it('nao aplica classe de brand quando brand=null (padrao)', () => {
-      const wrapper = mount(DssFabAction)
+      const wrapper = mountFabAction()
       const classes = wrapper.classes().join(' ')
       expect(classes).not.toContain('dss-fab-action--brand-')
     })
 
     it('classes de brand sao aplicadas no wrapper externo (div), nao no QFabAction interno', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { brand: 'hub' }
       })
       // Classe de brand deve estar no wrapper raiz
@@ -253,7 +279,7 @@ describe('DssFabAction', () => {
 
   describe('Casos de Borda', () => {
     it('combina label, disable e brand corretamente', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { label: 'Editar', disable: true, brand: 'water' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--extended')
@@ -262,7 +288,7 @@ describe('DssFabAction', () => {
     })
 
     it('combina externalLabel com brand', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { externalLabel: 'Compartilhar', brand: 'waste' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--has-external-label')
@@ -270,7 +296,7 @@ describe('DssFabAction', () => {
     })
 
     it('label inline e externalLabel podem coexistir', () => {
-      const wrapper = mount(DssFabAction, {
+      const wrapper = mountFabAction({
         props: { label: 'Editar', externalLabel: 'Editar item', labelPosition: 'right' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--extended')

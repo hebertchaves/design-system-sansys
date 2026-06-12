@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DssToolbar — Snapshot > snapshot: toolbar brand hub 1`] = `"<div class="q-toolbar row no-wrap items-center dss-toolbar dss-toolbar--brand-hub" role="toolbar" data-brand="hub"></div>"`;
+
+exports[`DssToolbar — Snapshot > snapshot: toolbar inset + brand water 1`] = `"<div class="q-toolbar row no-wrap items-center dss-toolbar dss-toolbar--inset dss-toolbar--brand-water" role="toolbar" data-brand="water"></div>"`;
+
+exports[`DssToolbar — Snapshot > snapshot: toolbar padrão 1`] = `"<div class="q-toolbar row no-wrap items-center dss-toolbar" role="toolbar"></div>"`;

@@ -21,26 +21,50 @@
 
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { h } from 'vue'
+import { QTabs } from 'quasar'
+import { createRouter, createMemoryHistory } from 'vue-router'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssRouteTab from './1-structure/DssRouteTab.ts.vue'
 
 installQuasar()
 
+/**
+ * QRouteTab exige vue-router ativo (useRoute/useRouter) e o contexto do
+ * QTabs pai — montado standalone quebra em verifyRouteModel (Onda P2/G3.2).
+ * Router de memória com rotas genéricas cobre os caminhos dos testes.
+ */
+function makeRouter() {
+  return createRouter({
+    history: createMemoryHistory(),
+    routes: [
+      { path: '/', component: { template: '<div />' } },
+      { path: '/:path(.*)*', component: { template: '<div />' } },
+    ],
+  })
+}
+
 // ==========================================================================
 // HELPERS
 // ==========================================================================
 
-const routerStubs = {
-  RouterLink: { template: '<a><slot /></a>' },
-  RouterView: { template: '<div />' }
-}
-
 function mountRouteTab(props = {}, slots = {}) {
-  return mount(DssRouteTab, {
-    props: { name: 'home', ...props },
-    slots,
-    global: { stubs: routerStubs }
+  const childSlots = Object.fromEntries(
+    Object.entries(slots).map(([name, content]) => [
+      name,
+      typeof content === 'string' ? () => h('span', { innerHTML: content }) : content,
+    ])
+  )
+  const host = mount(QTabs, {
+    props: { modelValue: null },
+    slots: {
+      default: () =>
+        h(DssRouteTab, { name: 'home', to: '/', ...props },
+          Object.keys(childSlots).length ? childSlots : undefined),
+    },
+    global: { plugins: [makeRouter()] },
   })
+  return host.findComponent(DssRouteTab)
 }
 
 // ==========================================================================
@@ -226,11 +250,7 @@ describe('DssRouteTab — Classes compostas', () => {
 
 describe('DssRouteTab — Slot default', () => {
   it('renderiza conteúdo customizado no slot default', () => {
-    const wrapper = mount(DssRouteTab, {
-      props: { name: 'test' },
-      slots: { default: '<span class="custom-tab">Custom</span>' },
-      global: { stubs: routerStubs }
-    })
+    const wrapper = mountRouteTab({ name: 'test' }, { default: '<span class="custom-tab">Custom</span>' })
     expect(wrapper.find('.custom-tab').exists()).toBe(true)
     expect(wrapper.find('.custom-tab').text()).toBe('Custom')
   })
@@ -242,11 +262,7 @@ describe('DssRouteTab — Slot default', () => {
 
 describe('DssRouteTab — Forwarding de $attrs', () => {
   it('encaminha data-testid para o elemento raiz', () => {
-    const wrapper = mount(DssRouteTab, {
-      props: { name: 'test' },
-      attrs: { 'data-testid': 'route-tab-item' },
-      global: { stubs: routerStubs }
-    })
+    const wrapper = mountRouteTab({ 'data-testid': 'route-tab-item' })
     expect(wrapper.attributes('data-testid')).toBe('route-tab-item')
   })
 })
