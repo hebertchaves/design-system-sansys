@@ -55,7 +55,7 @@
 
       &:focus-visible {
         outline: 2px solid ButtonText;
-        outline-offset: 2px;
+        outline-offset: var(--dss-focus-ring-offset);
       }
     }
 

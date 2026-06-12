@@ -109,7 +109,7 @@
   //   2. outline DSS via :focus-visible — padrão DssChip (Golden Reference)
   &.q-knob--editable:focus-visible {
     outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
-    outline-offset: 2px;
+    outline-offset: var(--dss-focus-ring-offset);
     border-radius: 50%; // garante que o outline segue o contorno circular
   }
 

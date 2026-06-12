@@ -21,7 +21,7 @@
 
     &:focus-visible {
       outline: 2px solid white; /* EXC-States-02: Fallback explícito para dark mode */
-      outline-offset: 2px;
+      outline-offset: var(--dss-focus-ring-offset);
     }
   }
 }
@@ -43,7 +43,7 @@
 @media (prefers-contrast: more) {
   .dss-fab-action__qaction .q-fab__action {
     outline: var(--dss-border-width-md) solid currentColor;
-    outline-offset: 2px;
+    outline-offset: var(--dss-focus-ring-offset);
   }
 }
 

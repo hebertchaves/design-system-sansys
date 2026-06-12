@@ -234,7 +234,7 @@ a.dss-avatar,
        de acessibilidade com valores absolutos.
        Ref: DssAvatar.md Secao 14, EXC-03 */
     outline: 2px solid var(--dss-focus-ring);
-    outline-offset: 2px;
+    outline-offset: var(--dss-focus-ring-offset);
   }
 }
 

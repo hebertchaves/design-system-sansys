@@ -85,7 +85,7 @@
   /* Focus-visible: ring de foco acessível */
   &:focus-visible {
     outline: var(--dss-focus-ring);
-    outline-offset: 2px;
+    outline-offset: var(--dss-focus-ring-offset);
     box-shadow: var(--dss-elevation-3);
   }
 

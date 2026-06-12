@@ -189,7 +189,7 @@
 
     &:focus-visible {
       outline: 2px solid var(--dss-action-primary);
-      outline-offset: 2px;
+      outline-offset: var(--dss-focus-ring-offset);
     }
 
     &:disabled {
@@ -425,7 +425,7 @@
 
     &:focus-visible {
       outline: 2px solid var(--dss-action-primary);
-      outline-offset: 2px;
+      outline-offset: var(--dss-focus-ring-offset);
       border-radius: var(--dss-radius-sm);
     }
   }
@@ -475,7 +475,7 @@
 
     &:focus-visible {
       outline: 2px solid var(--dss-action-primary);
-      outline-offset: 2px;
+      outline-offset: var(--dss-focus-ring-offset);
     }
 
     &:disabled {

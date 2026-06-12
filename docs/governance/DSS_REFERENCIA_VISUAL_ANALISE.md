@@ -2180,7 +2180,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssAvatar | indicadores | size:md, icon:person | minHeight:48px, minWidth:48px | Iniciais 'AB' |
 | DssBadge | indicadores | color:primary | minHeight:24px, minWidth:24px | Label '99+' |
 | DssBanner | banners | variant:default, inline | minHeight:48px | Mensagem informativa com ação |
-| DssBar | banners | rounded | minHeight:44px | Barra de sistema com conteúdo |
+| DssBar | layout | rounded | minHeight:44px | Barra de sistema com conteúdo |
 | DssBottomSheet | contextuais | — | — | — |
 | DssBreadcrumbs | navegacao | — | minHeight:21px | Home / Produtos / Detalhe |
 | DssBreadcrumbsEl | navegacao | label:Página | minHeight:17px | Item de breadcrumb 'Home' |
@@ -2198,7 +2198,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssDataCard | contextuais | — | — | — |
 | DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
 | DssDialog | contextuais | — | — | — |
-| DssDrawer | layout | modelValue, persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
+| DssDrawer | layout | persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
 | DssExpansionItem | navegacao | label:Expansível, icon:expand_more, modelValue | minHeight:44px | Item expansível com conteúdo |
 | DssFab | acoes | color:primary, icon:add, label:Adicionar | minHeight:56px, minWidth:56px | FAB com ícone 'add' |
 | DssFabAction | acoes | color:primary, icon:mail, label:Email | minHeight:40px, minWidth:40px | FAB Action com ícone 'mail' |
@@ -2257,13 +2257,13 @@ Em caso de conflito entre fontes de informação visual:
 | DssTimelineEntry | timeline | title:Evento, subtitle:Data, icon:check | minHeight:44px | Entrada de timeline com ícone e conteúdo |
 | DssTimePicker | contextuais | modelValue:14:30, format24h | — | — |
 | DssToggle | form-controles | color:primary, size:md, label:Ativar | minHeight:44px | Label 'Ativar' |
-| DssToolbar | cartoes | — | minHeight:44px | Toolbar com título e ações |
-| DssToolbarTitle | cartoes | — | minHeight:24px | Título da barra de ferramentas |
+| DssToolbar | layout | — | minHeight:44px | Toolbar com título e ações |
+| DssToolbarTitle | layout | — | minHeight:24px | Título da barra de ferramentas |
 | DssTooltip | indicadores | — | minHeight:24px | Tooltip 'Informação adicional' |
 | DssTree | arvore | nodeKey:id, labelKey:label, nodes:[…] | — | Árvore hierárquica com nós expansíveis |
 | DssUploader | contextuais | — | — | — |
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-12T14:07:51.909Z_
+_Gerado em: 2026-06-12T19:39:13.338Z_
 <!-- END:AUTO-GENERATED -->

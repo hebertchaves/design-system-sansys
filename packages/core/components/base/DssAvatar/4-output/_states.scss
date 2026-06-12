@@ -68,7 +68,7 @@
   .dss-avatar[role="button"]:focus-visible {
     /* Outline com valor absoluto - tokens ignorados em forced-colors */
     outline: 3px solid Highlight;
-    outline-offset: 2px;
+    outline-offset: var(--dss-focus-ring-offset);
   }
 
   /* Brands nao se aplicam em forced-colors - sistema controla cores */

@@ -17,5 +17,6 @@
 
 /* EXC-05 — Sombra invertida equivalente a --dss-shadow-md com Y negado */
 .dss-footer--elevated {
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.30);
+  /* EXC-05 RESOLVIDA (Onda P2/G4.4): valor tokenizado no catálogo */
+  box-shadow: var(--dss-shadow-up-md);
 }
