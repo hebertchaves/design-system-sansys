@@ -1,6 +1,9 @@
 import { z } from "zod";
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const validate_visual_contract_schema = {
   name: "validate_visual_contract",
@@ -17,29 +20,36 @@ export const validate_visual_contract_schema = {
   },
 };
 
+// Raiz do monorepo: DSS_ROOT (env) ou relativo ao bundle. Após o tsup,
+// __dirname = packages/mcp/build/ → 3 níveis até a raiz (mesmo padrão de
+// resources/index.ts). O bug anterior usava process.cwd() relativo,
+// quebrando fora do diretório esperado (achado A12; Onda P2/G4.3).
+const DSS_ROOT = process.env.DSS_ROOT ?? path.resolve(__dirname, "../../..");
+const COMPONENT_GROUPS = ["base", "composed", "stress-test"];
+
 export async function validateVisualContract(args: any) {
   const { componentName } = args;
-  const componentDir = path.join(process.cwd(), "..", "components", "base", componentName);
-  const metaPath = path.join(componentDir, "dss.meta.json");
 
-  if (!fs.existsSync(metaPath)) {
-    // Tenta em composed
-    const composedDir = path.join(process.cwd(), "..", "components", "composed", componentName);
-    const composedMetaPath = path.join(composedDir, "dss.meta.json");
-    if (!fs.existsSync(composedMetaPath)) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Error: Component ${componentName} not found or missing dss.meta.json.`,
-          },
-        ],
-        isError: true,
-      };
+  let actualMetaPath: string | null = null;
+  for (const group of COMPONENT_GROUPS) {
+    const candidate = path.join(DSS_ROOT, "packages", "core", "components", group, componentName, "dss.meta.json");
+    if (fs.existsSync(candidate)) {
+      actualMetaPath = candidate;
+      break;
     }
   }
 
-  const actualMetaPath = fs.existsSync(metaPath) ? metaPath : path.join(process.cwd(), "..", "components", "composed", componentName, "dss.meta.json");
+  if (actualMetaPath === null) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Error: Component ${componentName} not found or missing dss.meta.json (searched ${COMPONENT_GROUPS.join(", ")} under ${DSS_ROOT}).`,
+        },
+      ],
+      isError: true,
+    };
+  }
 
   try {
     const metaContent = fs.readFileSync(actualMetaPath, "utf8");
@@ -65,7 +75,7 @@ export async function validateVisualContract(args: any) {
     const report = `
 # Visual Contract Validation Report: ${componentName}
 
-**Status:** ⚠️ PENDING INFRASTRUCTURE
+**Status:** ⚠️ PENDING INFRASTRUCTURE — resposta DECLARATIVA, sem renderização real. NÃO usar como critério de aceite (A12/Onda P2).
 **Contract Found:** Yes
 
 ## Declared Contract (defaultPreview)
