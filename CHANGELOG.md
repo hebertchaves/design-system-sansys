@@ -7,7 +7,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
-## [Não lançado] — Estabilização Pré-Produção (Junho/2026)
+## [2.4.0] - 2026-06-13 — Estabilização Pré-Produção
 
 > Ciclo de auditoria e correção que antecedeu a migração para o GitLab
 > corporativo. Detalhes completos em `docs/governance/audit-reports/`.

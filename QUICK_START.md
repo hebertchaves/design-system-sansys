@@ -1,6 +1,6 @@
 # 🚀 Quick Start — DSS (Design System Sansys)
 
-> **✨ v2.3.0 (Monorepo)**: 91 componentes (88 selados), TypeScript + Composition API, Sass `@use`/`@forward`, CSS Cascade Layers para isolamento do Quasar.
+> **✨ v2.4.0 (Monorepo)**: 91 componentes (88 selados), TypeScript + Composition API, Sass `@use`/`@forward`, CSS Cascade Layers para isolamento do Quasar.
 
 > ♻️ **Reescrito na Onda P1 (Jun/2026)** — a versão anterior referenciava a estrutura pré-monorepo (`quasar-to-figma-converter/dss/`), que não existe mais.
 

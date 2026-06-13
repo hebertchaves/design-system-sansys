@@ -5,8 +5,8 @@
  * ==========================================================================
  *
  * @author Hebert Daniel Oliveira Chaves
- * @license MIT
- * @version 2.0.0
+ * @license UNLICENSED
+ * @version 2.4.0
  *
  * @description
  * Design System completo baseado em tokens semânticos, com componentes
@@ -63,7 +63,7 @@ export { default } from './components/index.js'
 // VERSÃO DA BIBLIOTECA
 // ============================================================================
 
-export const version = '2.2.0'
+export const version = '2.4.0'
 
 // ============================================================================
 // METADADOS
@@ -71,10 +71,10 @@ export const version = '2.2.0'
 
 export const metadata = {
   name: 'Design System Sansys',
-  version: '2.2.0',
+  version: '2.4.0',
   description: 'Sistema de Design profissional com componentes Vue 3 e tokens DSS',
   author: 'Hebert Daniel Oliveira Chaves',
-  license: 'MIT',
+  license: 'UNLICENSED',
   componentCount: 89,
   components: [
     // Controles interativos
