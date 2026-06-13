@@ -1,0 +1,108 @@
+// =============================================================================
+// DssTimePicker — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// GOLDEN REFERENCE: DssChip (componente interativo — focus, hover, disabled)
+// GOLDEN CONTEXT:   DssKnob (QMotor root, color="primary" fixo + --q-color-primary override)
+//
+// EXC-Gate-02: --q-color-primary override.
+//   QTime usa --q-color-primary para colorir os controles ativos:
+//   - Fundo do número selecionado (hora/minuto/segundo)
+//   - Ponteiro do relógio (linha e círculo)
+//   - Fundo do header
+//   Override via CSS custom property na classe raiz .dss-time-picker.
+//   Padrão idêntico ao DssPagination, DssAjaxBar e DssCarousel.
+//
+// EXC-Gate-02b: Descendant selectors para elementos internos do QTime.
+//   QTime não fornece CSS custom property hooks nativos para as partes
+//   internas listadas abaixo. Descendant selectors são o único mecanismo
+//   de override CSS disponível.
+//
+// TOKENS UTILIZADOS:
+//   Cor primária (override): --dss-action-primary (via --q-color-primary)
+//   Superfície:              --dss-surface-default, --dss-surface-hover
+//   Tipografia:              --dss-text-body
+//   Border-radius:           --dss-radius-md
+//   Focus:                   --dss-focus-ring, --dss-border-width-md
+//   Disabled:                --dss-opacity-disabled
+//   Transição:               --dss-duration-hover, --dss-easing-hover
+// =============================================================================
+
+.q-time.dss-time-picker {
+  // ── EXC-Gate-02: Override da cor primária do Quasar ───────────────────────
+  //
+  // QTime usa --q-color-primary (resolvida a partir da prop color="primary")
+  // para colorir o ponteiro, o número ativo e o header.
+  // Substituímos pelo token semântico DSS.
+  --q-color-primary: var(--dss-action-primary);
+
+  // ── Superfície do clock face ──────────────────────────────────────────────
+  background-color: var(--dss-surface-default);
+  border-radius: var(--dss-radius-md);
+
+  // ── EXC-Gate-02b: Header do time picker ───────────────────────────────────
+  //
+  // QTime renderiza o header (.q-time__header) com background-color herdado de
+  // --q-color-primary via classe text-primary. Override necessário para garantir
+  // uso do token correto DSS.
+  .q-time__header {
+    background-color: var(--dss-action-primary);
+    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+  }
+
+  // ── EXC-Gate-02b: Texto do header (hora/minuto selecionado) ───────────────
+  .q-time__header-label {
+    color: var(--dss-surface-default);
+  }
+
+  // ── EXC-Gate-02b: Separador AM/PM e texto secundário ─────────────────────
+  .q-time__header-ampm {
+    color: var(--dss-surface-default);
+    opacity: 0.7;
+  }
+
+  // ── EXC-Gate-02b: Números do clock face ──────────────────────────────────
+  //
+  // .q-time__clock-position — cada número no relógio
+  .q-time__clock-position {
+    color: var(--dss-text-body);
+    transition:
+      background-color var(--dss-duration-hover) var(--dss-easing-hover),
+      color var(--dss-duration-hover) var(--dss-easing-hover);
+  }
+
+  // ── EXC-Gate-02b: Número ativo (selecionado) ─────────────────────────────
+  //
+  // QTime aplica text-primary ao número ativo via JS de classe Quasar.
+  // Garantimos que usa o token DSS sobreescrevendo a class text-primary do Quasar.
+  .q-time__clock-position--active {
+    background-color: var(--dss-action-primary);
+    color: var(--dss-surface-default);
+  }
+
+  // ── EXC-Gate-02b: Hover nos números ──────────────────────────────────────
+  .q-time__clock-position:not(.q-time__clock-position--active):hover {
+    background-color: var(--dss-surface-hover);
+  }
+
+  // ── Focus — padrão DssChip (Golden Reference) ────────────────────────────
+  &:focus-visible {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline-offset: var(--dss-focus-ring-offset);
+  }
+
+  // ── Disabled ──────────────────────────────────────────────────────────────
+  //
+  // QTime adiciona aria-disabled="true" e pointer-events:none quando disable=true.
+  &[aria-disabled='true'] {
+    opacity: var(--dss-opacity-disabled);
+  }
+
+  // ── Readonly ──────────────────────────────────────────────────────────────
+  //
+  // QTime adiciona .q-time--readonly quando readonly=true.
+  &.q-time--readonly {
+    cursor: default;
+  }
+}

@@ -1,0 +1,32 @@
+// EXC-Gate-01: Quasar button variant overrides for flat, outline, round modes.
+// QPagination does not expose per-button slot — variant styles must target internals.
+// !important required: Quasar's .bg-primary class applies background with !important.
+// aria-current="page" is the ARIA value QPagination sets on the active page button.
+.dss-pagination {
+  &--flat {
+    // EXC-Gate-01: flat variant — active button uses text color, no filled background
+    .q-pagination .q-btn[aria-current="page"],
+    .q-pagination .q-btn.bg-primary {
+      background-color: transparent !important;
+      color: var(--dss-action-primary);
+      font-weight: var(--dss-font-weight-bold);
+    }
+  }
+
+  &--outline {
+    // EXC-Gate-01: outline variant — active button border matches action-primary
+    .q-pagination .q-btn[aria-current="page"],
+    .q-pagination .q-btn.bg-primary {
+      background-color: transparent !important;
+      border: var(--dss-border-width-thin) solid var(--dss-action-primary);
+      color: var(--dss-action-primary);
+    }
+  }
+
+  &--round {
+    // EXC-Gate-01: round variant — circular page buttons
+    .q-pagination .q-btn {
+      border-radius: var(--dss-radius-full);
+    }
+  }
+}

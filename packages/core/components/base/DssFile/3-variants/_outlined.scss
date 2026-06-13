@@ -1,0 +1,63 @@
+// =============================================================================
+// DssFile — LAYER 3: VARIANT — Outlined (padrão)
+//
+// Borda completa ao redor do campo, fundo transparente.
+// Área de drag-and-drop usa borda tracejada para distinguir do estado padrão.
+// =============================================================================
+
+.dss-file--outlined {
+  .dss-file__field {
+    background-color: transparent;
+    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border-radius: var(--dss-radius-md);
+  }
+
+  // Hover (não desabilitado/readonly/focado)
+  &:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
+    border-color: var(--dss-gray-600);
+  }
+
+  // Foco
+  &.dss-file--focused .dss-file__field {
+    border-color: var(--dss-action-primary);
+    border-width: var(--dss-border-width-md);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
+  }
+
+  // Drag ativo — borda tracejada + fundo hover
+  &.dss-file--dragging .dss-file__field {
+    border-style: dashed;
+    border-color: var(--dss-action-primary);
+    border-width: var(--dss-border-width-md);
+    background-color: var(--dss-surface-hover);
+  }
+
+  .dss-file__drag-label {
+    color: var(--dss-action-primary);
+  }
+
+  // Erro
+  &.dss-file--error .dss-file__field {
+    border-color: var(--dss-feedback-error);
+    border-width: var(--dss-border-width-md);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-feedback-error);
+  }
+
+  // Desabilitado
+  &.dss-file--disabled .dss-file__field {
+    border-style: dotted;
+    background-color: var(--dss-gray-50);
+  }
+
+  // Readonly
+  &.dss-file--readonly .dss-file__field {
+    border-color: var(--dss-gray-300);
+    border-style: dashed;
+  }
+
+  // Label notch (flutuante)
+  .dss-file__label--float {
+    background-color: var(--dss-surface-default);
+    padding: 0 var(--dss-spacing-1);
+  }
+}

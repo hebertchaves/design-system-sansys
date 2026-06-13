@@ -1,0 +1,18 @@
+/* ==========================================================================
+   DssPopupProxy — Layer 4: Output — Brands
+
+   RESPONSABILIDADE: Estilos de marca (hub, water, waste).
+
+   NOTA ARQUITETURAL:
+   DssPopupProxy delega brand inteiramente aos seus filhos (DssList, DssItem,
+   DssCard). O container do popup em si é uma superfície neutra
+   (--dss-surface-default) que enquadra o conteúdo de marca.
+
+   O atributo [data-brand] é aplicado nos componentes filhos (DssItem via prop
+   `brand`, DssButton via prop `color`), não no DssPopupProxy.
+
+   Esta camada existe para manter a arquitetura de 4 camadas obrigatória.
+   Precedente: DssMenu (brands delegados aos filhos).
+   ========================================================================== */
+
+/* Brand delegado aos filhos (DssList, DssItem, DssCard) — sem regras nesta versão */

@@ -1,0 +1,75 @@
+/* ==========================================================================
+   DssInput - LAYER 3: VARIANT - Outlined
+
+   RESPONSABILIDADE: Estilo da variante outlined (borda completa)
+
+   CARACTERÍSTICAS:
+   - Border completa ao redor
+   - Fundo transparente
+   - Label flutua sobre a borda
+   - Focus: borda primary + label primary (padrão Material 3 / IBM Carbon)
+   ========================================================================== */
+
+.dss-input--outlined {
+  .dss-input__field {
+    background-color: transparent;
+    /* DSS Visual Standard: border-color via token semântico de borda neutra */
+    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    /* DSS Visual Standard: radius-md para inputs — alinhado com IBM Carbon e Salesforce */
+    border-radius: var(--dss-radius-md);
+  }
+
+  /* Focus state — label e borda em primary (Material 3 / IBM Carbon) */
+  &.dss-input--focused .dss-input__field {
+    border-color: var(--dss-action-primary);
+    border-width: var(--dss-border-width-md);
+    /* DSS Visual Standard: focus ring via box-shadow (Material 3 pattern) */
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
+  }
+
+  /* Label em primary quando focused */
+  &.dss-input--focused .dss-input__label {
+    color: var(--dss-action-primary);
+  }
+
+  /* Active state */
+  &:not(.dss-input--disabled):not(.dss-input--readonly):active .dss-input__field {
+    border-color: var(--dss-action-primary);
+  }
+
+  /* Error state */
+  &.dss-input--error .dss-input__field {
+    border-color: var(--dss-feedback-error);
+    border-width: var(--dss-border-width-md);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-feedback-error);
+  }
+
+  /* Error label */
+  &.dss-input--error .dss-input__label {
+    color: var(--dss-feedback-error);
+  }
+
+  /* Disabled state */
+  &.dss-input--disabled .dss-input__field {
+    border-style: dashed;
+    background-color: var(--dss-surface-muted);
+    opacity: var(--dss-opacity-disabled);
+  }
+
+  /* Readonly state */
+  &.dss-input--readonly .dss-input__field {
+    border-color: var(--dss-gray-300);
+    background-color: var(--dss-surface-subtle);
+  }
+
+  /* Hover (not disabled/readonly/focused) */
+  &:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+    border-color: var(--dss-gray-600);
+  }
+
+  /* Label notch effect — fundo para cobrir a borda sob o label flutuante */
+  .dss-input__label--float {
+    background-color: var(--dss-surface-default);
+    padding: 0 var(--dss-spacing-1);
+  }
+}

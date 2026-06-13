@@ -1,0 +1,132 @@
+/* ==========================================================================
+   DSS - TOKENS DE GRADIENTE
+   Gradientes pré-definidos para uso consistente
+
+   ⚠️ IMPORTANTE - FILOSOFIA DE TOKENS:
+   Este arquivo contém APENAS tokens genéricos e reutilizáveis.
+   Componentes ESCOLHEM quais tokens usar em seus arquivos .module.scss.
+
+   ❌ NÃO CRIAR: --dss-gradient-button-primary
+   ✅ CRIAR: --dss-gradient-primary-vertical
+   ✅ USAR NO COMPONENTE: background: var(--dss-gradient-primary-vertical);
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. GRADIENTES NEUTROS
+     =========================================== */
+  --dss-gradient-gray-vertical: linear-gradient(180deg, var(--dss-gray-50) 0%, var(--dss-gray-100) 100%);
+  --dss-gradient-gray-horizontal: linear-gradient(90deg, var(--dss-gray-50) 0%, var(--dss-gray-100) 100%);
+  --dss-gradient-gray-diagonal: linear-gradient(135deg, var(--dss-gray-50) 0%, var(--dss-gray-100) 100%);
+
+  --dss-gradient-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  --dss-gradient-overlay-light: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 100%);
+
+  /* ===========================================
+     2. GRADIENTES DE AÇÃO (Semânticos)
+     =========================================== */
+  /* Primary */
+  --dss-gradient-primary-vertical: linear-gradient(180deg, var(--dss-primary-light) 0%, var(--dss-primary) 100%);
+  --dss-gradient-primary-horizontal: linear-gradient(90deg, var(--dss-primary-light) 0%, var(--dss-primary) 100%);
+  --dss-gradient-primary-diagonal: linear-gradient(135deg, var(--dss-primary-light) 0%, var(--dss-primary) 100%);
+  --dss-gradient-primary-deep: linear-gradient(135deg, var(--dss-primary) 0%, var(--dss-primary-deep) 100%);
+
+  /* Secondary */
+  --dss-gradient-secondary-vertical: linear-gradient(180deg, var(--dss-secondary-light) 0%, var(--dss-secondary) 100%);
+  --dss-gradient-secondary-horizontal: linear-gradient(90deg, var(--dss-secondary-light) 0%, var(--dss-secondary) 100%);
+  --dss-gradient-secondary-diagonal: linear-gradient(135deg, var(--dss-secondary-light) 0%, var(--dss-secondary) 100%);
+
+  /* Tertiary */
+  --dss-gradient-tertiary-vertical: linear-gradient(180deg, var(--dss-tertiary-light) 0%, var(--dss-tertiary) 100%);
+  --dss-gradient-tertiary-horizontal: linear-gradient(90deg, var(--dss-tertiary-light) 0%, var(--dss-tertiary) 100%);
+  --dss-gradient-tertiary-diagonal: linear-gradient(135deg, var(--dss-tertiary-light) 0%, var(--dss-tertiary) 100%);
+
+  /* Accent */
+  --dss-gradient-accent-vertical: linear-gradient(180deg, var(--dss-accent-light) 0%, var(--dss-accent) 100%);
+  --dss-gradient-accent-horizontal: linear-gradient(90deg, var(--dss-accent-light) 0%, var(--dss-accent) 100%);
+  --dss-gradient-accent-diagonal: linear-gradient(135deg, var(--dss-accent-light) 0%, var(--dss-accent) 100%);
+
+  /* ===========================================
+     3. GRADIENTES DE FEEDBACK
+     =========================================== */
+  --dss-gradient-success-vertical: linear-gradient(180deg, var(--dss-positive-light) 0%, var(--dss-positive) 100%);
+  --dss-gradient-success-diagonal: linear-gradient(135deg, var(--dss-positive-light) 0%, var(--dss-positive) 100%);
+
+  --dss-gradient-error-vertical: linear-gradient(180deg, var(--dss-negative-light) 0%, var(--dss-negative) 100%);
+  --dss-gradient-error-diagonal: linear-gradient(135deg, var(--dss-negative-light) 0%, var(--dss-negative) 100%);
+
+  --dss-gradient-warning-vertical: linear-gradient(180deg, var(--dss-warning-light) 0%, var(--dss-warning) 100%);
+  --dss-gradient-warning-diagonal: linear-gradient(135deg, var(--dss-warning-light) 0%, var(--dss-warning) 100%);
+
+  --dss-gradient-info-vertical: linear-gradient(180deg, var(--dss-info-light) 0%, var(--dss-info) 100%);
+  --dss-gradient-info-diagonal: linear-gradient(135deg, var(--dss-info-light) 0%, var(--dss-info) 100%);
+
+  /* ===========================================
+     4. GRADIENTES DE MARCA
+     =========================================== */
+  /* Hub (Laranja) */
+  --dss-gradient-hub-vertical: linear-gradient(180deg, var(--dss-hub-300) 0%, var(--dss-hub-500) 100%);
+  --dss-gradient-hub-horizontal: linear-gradient(90deg, var(--dss-hub-300) 0%, var(--dss-hub-500) 100%);
+  --dss-gradient-hub-diagonal: linear-gradient(135deg, var(--dss-hub-300) 0%, var(--dss-hub-500) 100%);
+  --dss-gradient-hub-deep: linear-gradient(135deg, var(--dss-hub-500) 0%, var(--dss-hub-700) 100%);
+  --dss-gradient-hub-subtle: linear-gradient(135deg, var(--dss-hub-50) 0%, var(--dss-hub-100) 100%);
+
+  /* Water (Azul) */
+  --dss-gradient-water-vertical: linear-gradient(180deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-water-horizontal: linear-gradient(90deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-water-diagonal: linear-gradient(135deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-water-deep: linear-gradient(135deg, var(--dss-water-500) 0%, var(--dss-water-700) 100%);
+  --dss-gradient-water-subtle: linear-gradient(135deg, var(--dss-water-50) 0%, var(--dss-water-100) 100%);
+
+  /* Waste (Verde) */
+  --dss-gradient-waste-vertical: linear-gradient(180deg, var(--dss-waste-300) 0%, var(--dss-waste-500) 100%);
+  --dss-gradient-waste-horizontal: linear-gradient(90deg, var(--dss-waste-300) 0%, var(--dss-waste-500) 100%);
+  --dss-gradient-waste-diagonal: linear-gradient(135deg, var(--dss-waste-300) 0%, var(--dss-waste-500) 100%);
+  --dss-gradient-waste-deep: linear-gradient(135deg, var(--dss-waste-500) 0%, var(--dss-waste-700) 100%);
+  --dss-gradient-waste-subtle: linear-gradient(135deg, var(--dss-waste-50) 0%, var(--dss-waste-100) 100%);
+
+  /* ===========================================
+     5. GRADIENTES DE ÊNFASE
+     =========================================== */
+  --dss-gradient-shine: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+
+  --dss-gradient-border: linear-gradient(90deg,
+    var(--dss-primary) 0%,
+    var(--dss-secondary) 50%,
+    var(--dss-tertiary) 100%
+  );
+
+  /* Glossy effect - Efeito brilhante para botões */
+  --dss-gradient-glossy: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.12) 51%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+
+  --dss-gradient-glossy-active: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+
+  /* ===========================================
+     6. MÁSCARAS DE GRADIENTE
+     =========================================== */
+  --dss-gradient-mask-top: linear-gradient(180deg, black 0%, transparent 100%);
+  --dss-gradient-mask-bottom: linear-gradient(0deg, black 0%, transparent 100%);
+  --dss-gradient-mask-left: linear-gradient(90deg, black 0%, transparent 100%);
+  --dss-gradient-mask-right: linear-gradient(270deg, black 0%, transparent 100%);
+
+  --dss-gradient-fade-top: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  --dss-gradient-fade-bottom: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+// ==========================================================================
+// EXEMPLOS DE USO - Ver documentação em DSS_IMPLEMENTATION_GUIDE.md
+// ==========================================================================

@@ -1,0 +1,31 @@
+/* ==========================================================================
+   DssBottomSheet — Layer 3: Variants
+
+   VARIANTES IMPLEMENTADAS:
+   - --square: cantos superiores quadrados (substitui arredondamento padrão)
+   - --maximized: altura total da tela (gerenciada pelo QDialog, reforçada aqui)
+
+   VARIANTES AUSENTES (justificadas):
+   - dense: N/A — bottom sheets são containers de composição, não controles compactos.
+     Densidade de elementos internos é responsabilidade dos filhos (DssItem dense, etc.)
+   ========================================================================== */
+
+/* ==========================================================================
+   VARIANTE: Cantos Quadrados
+   Sobrescreve o border-radius padrão para cantos superiores retos
+   Não usa prop `square` do QDialog — gerenciamos via classe CSS DSS
+   ========================================================================== */
+
+.dss-bottom-sheet--square {
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   VARIANTE: Maximizado
+   Em modo maximizado, a altura cobre a tela inteira — remove max-height
+   ========================================================================== */
+
+.dss-bottom-sheet--maximized {
+  max-height: 100dvh;
+  border-radius: 0;
+}

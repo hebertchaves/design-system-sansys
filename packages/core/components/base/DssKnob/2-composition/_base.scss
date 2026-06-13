@@ -1,0 +1,139 @@
+// =============================================================================
+// DssKnob — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// GOLDEN REFERENCE: DssChip (componente interativo — touch target, focus, hover)
+// GOLDEN CONTEXT:   DssSlider (componente interativo de valor numérico por drag)
+//
+// TOUCH TARGET: Opção A — O knob em si É o touch target.
+//   QKnob renderiza um elemento circular com `size` (default: ~50px via font-size).
+//   O consumidor deve garantir size >= var(--dss-touch-target-md) (44px).
+//   Default do QKnob (50px) já atende WCAG 2.5.5 sem ::before adicional.
+//   Documentado como N/A para ::before DSS (QKnob já usa ::before para focus visual).
+//
+// EXC-Gate-01: Seletores descendentes para arcos SVG internos do QCircularProgress.
+//   .q-circular-progress__circle — arco de progresso (valor atual)
+//   .q-circular-progress__track  — trilha de fundo do arco
+//   .q-circular-progress__center — círculo de fundo central (área de valor)
+//   .q-circular-progress__text   — container do slot de valor central
+//   CSS `stroke`/`fill` têm precedência sobre SVG attributes; `color` herdado via currentColor.
+//
+// EXC-Gate-02: color="primary", track-color="grey-3", center-color="white" fixos no template.
+//   Garante renderização dos círculos SVG; CSS sobrescreve as cores com tokens DSS.
+//
+// EXC-Focus-01: QKnob usa .q-knob--editable::before + box-shadow para focus visual.
+//   DSS neutraliza o box-shadow do ::before e aplica outline em :focus-visible no root.
+//   Padrão DssChip: outline: var(--dss-border-width-md) solid var(--dss-focus-ring).
+//
+// TOKENS UTILIZADOS:
+//   Progresso:    --dss-action-primary   (arco de progresso padrão)
+//   Trilha:       --dss-gray-200         (arco de trilha de fundo — Ref: Seção 13.9)
+//   Centro:       --dss-surface-default  (fundo central do knob)
+//   Tipografia:   --dss-font-family-sans, --dss-font-size-xs, --dss-font-weight-medium
+//   Focus:        --dss-border-width-md, --dss-focus-ring
+//   Disabled:     --dss-opacity-disabled (0.4)
+// =============================================================================
+
+.dss-knob {
+  // ── Comportamento base ──────────────────────────────────────────────────────
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+
+  // ── EXC-Gate-01: Arco de progresso (valor atual) ───────────────────────────
+  //
+  // QCircularProgress: <circle class="q-circular-progress__circle text-primary"
+  //                           stroke="currentColor" fill="transparent" />
+  // CSS `stroke` sobrescreve o SVG attribute `stroke="currentColor"`.
+  // `text-primary` → `color: var(--q-color-primary)` → seria o currentColor,
+  // mas nossa rule CSS tem precedência sobre SVG presentation attributes.
+  .q-circular-progress__circle {
+    stroke: var(--dss-action-primary);
+  }
+
+  // ── EXC-Gate-01: Trilha de fundo ─────────────────────────────────────────
+  //
+  // QCircularProgress: <circle class="q-circular-progress__track text-grey-3"
+  //                           stroke="currentColor" fill="transparent" />
+  // `opacity: 1` — Quasar pode aplicar opacidade reduzida no track via prop.
+  // Garantimos que a trilha sempre seja totalmente opaca com a cor do token.
+  .q-circular-progress__track {
+    stroke: var(--dss-gray-200); // track não preenchido — cinza claro canônico (Ref: Seção 13.9)
+    opacity: 1;
+  }
+
+  // ── EXC-Gate-01: Fundo central do knob ────────────────────────────────────
+  //
+  // QCircularProgress: <circle class="q-circular-progress__center text-white"
+  //                           fill="currentColor" />
+  // CSS `fill` sobrescreve o SVG attribute `fill="currentColor"`.
+  .q-circular-progress__center {
+    fill: var(--dss-surface-default);
+  }
+
+  // ── Tipografia do valor central ────────────────────────────────────────────
+  //
+  // QCircularProgress: <div class="q-circular-progress__text" style="font-size: ...">
+  // Quando `font-size` prop não é passada ao QKnob, o inline style não é aplicado.
+  // CSS token DSS prevalece.
+  .q-circular-progress__text {
+    font-family: var(--dss-font-family-sans);
+    font-size: var(--dss-font-size-xs);
+    font-weight: var(--dss-font-weight-medium);
+  }
+
+  // ── Hover — feedback visual no SVG ─────────────────────────────────────────
+  //
+  // filter: brightness(0.95) aplicado ao SVG (não ao texto central).
+  // Valor canônico DSS: 0.95 para hover (EX-Structural-01, tabela canônica).
+  // Precedente: DssChip (hover brightness 0.95 no chip visual).
+  &.q-knob--editable:hover .q-circular-progress__svg {
+    filter: brightness(0.95);
+  }
+
+  // ── Active — dragging/pressionando ────────────────────────────────────────
+  //
+  // filter: brightness(0.90) — valor canônico DSS (EX-Structural-01).
+  // Precedente: DssChip (active brightness 0.90).
+  &.q-knob--editable:active .q-circular-progress__svg {
+    filter: brightness(0.90);
+  }
+
+  // ── Focus — EXC-Focus-01 ──────────────────────────────────────────────────
+  //
+  // QKnob aplica `outline: 0` em `.q-knob--editable` e usa `::before + box-shadow`
+  // para o anel de foco. DSS reserva `::before` para touch target (WCAG 2.5.5),
+  // mas QKnob (root element via EXC-Gate-01) já usa `::before` internamente.
+  // Resolução:
+  //   1. box-shadow do ::before neutralizado abaixo (box-shadow: none !important)
+  //   2. outline DSS via :focus-visible — padrão DssChip (Golden Reference)
+  &.q-knob--editable:focus-visible {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline-offset: var(--dss-focus-ring-offset);
+    border-radius: 50%; // garante que o outline segue o contorno circular
+  }
+
+  // EXC-Focus-01: neutraliza focus box-shadow do QKnob (::before)
+  // `!important` necessário para sobrescrever o box-shadow do :focus:before do Quasar.
+  &.q-knob--editable::before {
+    box-shadow: none !important;
+  }
+
+  // ── Disabled ───────────────────────────────────────────────────────────────
+  //
+  // QKnob adiciona `aria-disabled="true"` e a classe `no-pointer-events`
+  // (pointer-events: none) quando `disable=true`.
+  // DSS adiciona opacidade reduzida. cursor:not-allowed é suprimido por pointer-events:none.
+  &[aria-disabled="true"] {
+    opacity: var(--dss-opacity-disabled);
+  }
+
+  // ── Readonly / não-editável ────────────────────────────────────────────────
+  //
+  // QKnob adiciona `no-pointer-events` quando readonly=true ou disable=true.
+  // .q-knob--editable apenas existe quando interativo.
+  // cursor: default sinaliza estado não-editável visualmente.
+  &:not(.q-knob--editable) {
+    cursor: default;
+  }
+}

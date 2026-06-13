@@ -1,0 +1,74 @@
+// =============================================================================
+// DssKnob — LAYER 4: OUTPUT — Brands
+//
+// Brandability: Hub (laranja), Water (azul), Waste (verde).
+//
+// PADRÃO: Idêntico ao DssCircularProgress.
+//   - Seletor via prop (.dss-knob--brand-*): mesma posição que .dss-knob
+//   - Seletor via [data-brand] ancestral: descendente com espaço
+//
+// Brand sobrescreve APENAS:
+//   1. Cor do arco de progresso (.q-circular-progress__circle stroke)
+//   2. Cor do outline de foco (:focus-visible outline-color)
+//
+// Track (.q-circular-progress__track) e center (.q-circular-progress__center)
+// PERMANECEM com tokens semânticos padrão (surface-muted / surface-default)
+// — hierarquia visual preservada independente de brand.
+//
+// EXC-Gate-01: seletores descendentes de QCircularProgress necessários.
+// TOKENS: Numéricos de brand (precedente DssCircularProgress, DssLinearProgress).
+// =============================================================================
+
+// =============================================================================
+// HUB BRAND (Laranja)
+// =============================================================================
+
+// Via prop: <DssKnob brand="hub" />
+.dss-knob--brand-hub {
+  .q-circular-progress__circle { stroke: var(--dss-hub-600); }
+
+  &.q-knob--editable:focus-visible { outline-color: var(--dss-hub-600); }
+}
+
+// Via herança contextual: <div data-brand="hub"><DssKnob /></div>
+[data-brand="hub"] .dss-knob {
+  .q-circular-progress__circle { stroke: var(--dss-hub-600); }
+
+  &.q-knob--editable:focus-visible { outline-color: var(--dss-hub-600); }
+}
+
+// =============================================================================
+// WATER BRAND (Azul)
+// =============================================================================
+
+// Via prop: <DssKnob brand="water" />
+.dss-knob--brand-water {
+  .q-circular-progress__circle { stroke: var(--dss-water-500); }
+
+  &.q-knob--editable:focus-visible { outline-color: var(--dss-water-500); }
+}
+
+// Via herança contextual: <div data-brand="water"><DssKnob /></div>
+[data-brand="water"] .dss-knob {
+  .q-circular-progress__circle { stroke: var(--dss-water-500); }
+
+  &.q-knob--editable:focus-visible { outline-color: var(--dss-water-500); }
+}
+
+// =============================================================================
+// WASTE BRAND (Verde)
+// =============================================================================
+
+// Via prop: <DssKnob brand="waste" />
+.dss-knob--brand-waste {
+  .q-circular-progress__circle { stroke: var(--dss-waste-600); }
+
+  &.q-knob--editable:focus-visible { outline-color: var(--dss-waste-600); }
+}
+
+// Via herança contextual: <div data-brand="waste"><DssKnob /></div>
+[data-brand="waste"] .dss-knob {
+  .q-circular-progress__circle { stroke: var(--dss-waste-600); }
+
+  &.q-knob--editable:focus-visible { outline-color: var(--dss-waste-600); }
+}

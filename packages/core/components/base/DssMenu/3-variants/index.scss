@@ -1,0 +1,15 @@
+/* ==========================================================================
+   DssMenu — Layer 3: Variants
+
+   RESPONSABILIDADE: Variantes visuais do componente.
+
+   NOTA ARQUITETURAL:
+   DssMenu não possui variantes CSS próprias nesta versão (DSS v2.2).
+   O posicionamento (fit, cover, anchor, self) é gerenciado internamente
+   pelo QMenu via props e não requer CSS adicional.
+
+   Esta camada existe para manter a arquitetura de 4 camadas obrigatória do DSS.
+   Variantes futuras (ex: dense, compact) podem ser adicionadas aqui.
+   ========================================================================== */
+
+/* Sem variantes CSS nesta versão — QMenu gerencia posicionamento internamente */

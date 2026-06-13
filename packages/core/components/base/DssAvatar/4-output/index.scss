@@ -1,0 +1,17 @@
+/**
+ * ==========================================================================
+ * DssAvatar - LAYER 4: OUTPUT (Orchestrator)
+ * ==========================================================================
+ *
+ * Orquestrador da Layer 4 que compila:
+ * - _states.scss (acessibilidade: prefers-contrast, forced-colors, reduced-motion, dark mode)
+ * - _brands.scss (overrides de marca na saida)
+ *
+ * NOTA: Layers 2 (composition) e 3 (variants) sao importadas
+ * pelo module orchestrator (DssAvatar.module.scss).
+ *
+ * @version 2.2
+ */
+
+@use './states';
+@use './brands';

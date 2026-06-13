@@ -1,0 +1,132 @@
+// =============================================================================
+// DssSpinner — LAYER 4: OUTPUT — States
+//
+// RESPONSABILIDADE: Dark mode, acessibilidade e media queries especiais
+//
+// ORDEM CANÔNICA DSS:
+//   1. dark mode
+//   2. prefers-contrast: more
+//   3. prefers-reduced-motion        ← CRÍTICO para DssSpinner
+//   4. print
+//   5. forced-colors (Windows HCM)
+//
+// GOLDEN REFERENCE: DssIcon (mesma estrutura de states)
+// =============================================================================
+
+// =============================================================================
+// 1. DARK MODE
+// =============================================================================
+
+[data-theme="dark"] {
+  // Tokens semânticos já fazem o trabalho via currentColor e cascade.
+  // Spinners de cor 'inherit' herdam a cor do texto do contexto,
+  // que por sua vez já foi adaptada pelo dark mode do sistema.
+
+  // Nenhum override adicional necessário para o spinner base.
+
+  // =============================================================================
+  // BRAND OVERRIDES — Dark mode (tokens ~500, mais claros para contraste em fundo escuro)
+  // =============================================================================
+
+  /* Hub dark: 600 → 500 para contraste em fundo escuro */
+  .dss-spinner--brand-hub.dss-spinner,
+  [data-brand="hub"] .dss-spinner {
+    color: var(--dss-hub-500);
+  }
+
+  /* Water dark: 500 → 400 para contraste em fundo escuro */
+  .dss-spinner--brand-water.dss-spinner,
+  [data-brand="water"] .dss-spinner {
+    color: var(--dss-water-400);
+  }
+
+  /* Waste dark: 600 → 500 para contraste em fundo escuro */
+  .dss-spinner--brand-waste.dss-spinner,
+  [data-brand="waste"] .dss-spinner {
+    color: var(--dss-waste-500);
+  }
+}
+
+// =============================================================================
+// 2. HIGH CONTRAST MODE
+// =============================================================================
+
+@media (prefers-contrast: more) {
+  // Placeholder — Fase 1: sem comportamento diferenciado para prefers-contrast.
+  // opacity: 1 é o valor default; esta regra não altera comportamento em runtime.
+  //
+  // Mantida como declaração explícita de intenção: DssSpinner NUNCA deve ter
+  // opacity reduzida, mesmo em future overrides de alta densidade ou esmaecimento.
+  // Re-introduzir regras CSS reais aqui quando variantes com opacity forem criadas.
+  .dss-spinner {
+    opacity: 1;
+  }
+}
+
+// =============================================================================
+// 3. REDUCED MOTION (WCAG 2.3.3 — CRÍTICO)
+// =============================================================================
+
+/*
+ * CONTEXTO DE ACESSIBILIDADE: prefers-reduced-motion: reduce
+ *
+ * Quasar aplica keyframes de animação via CSS interno nos elementos SVG
+ * do spinner. O DssSpinner NÃO controla esses keyframes diretamente.
+ *
+ * EX-02: animation: none !important; transition: none !important
+ *   !important é obrigatório para sobrescrever as animações CSS do Quasar
+ *   que chegam com especificidade igual ou maior que classes DSS.
+ *   Sem !important, usuários com prefers-reduced-motion=reduce continuariam
+ *   vendo animações, violando WCAG 2.3.3 (Animation from Interactions).
+ *   Precedente: DssIcon (mesma técnica em 4-output/_states.scss).
+ */
+@media (prefers-reduced-motion: reduce) {
+  .dss-spinner,
+  .dss-spinner * {
+    animation: none !important;       // EX-02: ver cabeçalho
+    transition: none !important;      // EX-02: ver cabeçalho
+    animation-duration: 0.01ms !important; // fallback para animações via JS
+    animation-iteration-count: 1 !important;
+  }
+}
+
+// =============================================================================
+// 4. PRINT
+// =============================================================================
+
+@media print {
+  .dss-spinner {
+    // Spinners não devem aparecer em impressão — são indicadores de estado
+    // transitório sem significado em contexto estático.
+    display: none;
+  }
+}
+
+// =============================================================================
+// 5. FORCED COLORS (Windows High Contrast Mode)
+// =============================================================================
+
+/*
+ * CONTEXTO DE ACESSIBILIDADE: forced-colors: active
+ *
+ * Em Windows High Contrast Mode, o navegador IGNORA tokens CSS custom properties.
+ * O spinner usa ButtonText (cor de sistema) para garantir visibilidade.
+ *
+ * Referência: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors
+ * Precedente: DssIcon (mesma abordagem)
+ */
+@media (forced-colors: active) {
+  .dss-spinner {
+    // Tokens CSS são ignorados — usa cor de sistema para garantir visibilidade.
+    color: ButtonText;
+  }
+
+  // Brands não se aplicam em forced-colors — sistema controla as cores.
+  // Seletores compound (.dss-spinner--brand-x.dss-spinner) com especificidade
+  // (0,2,0) — paridade com os seletores de brand em _brands.scss.
+  .dss-spinner--brand-hub.dss-spinner,
+  .dss-spinner--brand-water.dss-spinner,
+  .dss-spinner--brand-waste.dss-spinner {
+    color: ButtonText;
+  }
+}

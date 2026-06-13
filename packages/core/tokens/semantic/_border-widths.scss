@@ -1,0 +1,73 @@
+/* ==========================================================================
+   DSS - TOKENS DE ESPESSURA DE BORDA
+   Sistema de escala genérica para border-width
+
+   ⚠️ FILOSOFIA: Tokens = Provedores, Componentes = Consumidores
+   Este arquivo contém APENAS a escala genérica de espessuras.
+   Componentes escolhem qual token usar baseado em suas necessidades.
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     ESCALA BASE DE BORDER-WIDTH
+     Baseada em boas práticas do mercado:
+     - 0px: Sem borda
+     - 0.5px: Ultra fino (retina displays)
+     - 1px: Padrão (a maioria dos casos)
+     - 2px: Ênfase, foco, destaque
+     - 3px: Ênfase média
+     - 4px: Forte ênfase
+     - 8px: Elementos decorativos
+     =========================================== */
+  --dss-border-width-none: 0;
+  --dss-border-width-hairline: 0.5px;         /* 0.5px */
+  --dss-border-width-thin: 1px;               /* 1px */
+  --dss-border-width-md: 2px;                 /* 2px */
+  --dss-border-width-thick: 3px;              /* 3px */
+  --dss-border-width-heavy: 4px;              /* 4px */
+  --dss-border-width-extra-heavy: 8px;        /* 8px */
+}
+
+/* ==========================================================================
+   EXEMPLOS DE USO NOS COMPONENTES
+   ==========================================================================
+
+   ✅ COMPONENTES ESCOLHEM qual token usar:
+
+   // DssButton - Outline variant
+   .dss-button--outline {
+     border-width: var(--dss-border-width-thin);  // 1px
+     border-style: solid;
+     border-color: currentColor;
+   }
+
+   // DssInput - Estados diferentes
+   .dss-input {
+     border-width: var(--dss-border-width-thin);  // 1px padrão
+
+     &:focus {
+       border-width: var(--dss-border-width-md);  // 2px no foco
+     }
+
+     &.error {
+       border-width: var(--dss-border-width-md);  // 2px no erro
+     }
+   }
+
+   // DssCard
+   .dss-card {
+     border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+   }
+
+   // Focus rings (acessibilidade)
+   .component:focus-visible {
+     outline: var(--dss-border-width-md) solid var(--dss-primary);
+     outline-offset: 2px;
+   }
+
+   // DssDivider - Linha fina
+   .dss-divider {
+     border-bottom: var(--dss-border-width-hairline) solid var(--dss-gray-300);
+   }
+
+   ========================================================================== */

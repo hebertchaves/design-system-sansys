@@ -1,0 +1,11 @@
+// ==========================================================================
+// DssTabPanels — Orchestrador Principal (L2 → L3 → L4)
+// ==========================================================================
+// Este módulo é carregado globalmente via @forward em components/index.scss
+// (estratégia única de carga adotada na Onda P0/T1 — sem @import em SFC).
+//
+// Ordem obrigatória DSS: Composition → Variants → Output
+// ==========================================================================
+@use './2-composition/base' as dss-tab-panels-composition;
+@use './3-variants/index' as dss-tab-panels-variants;
+@use './4-output/index' as dss-tab-panels-output;

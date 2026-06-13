@@ -1,0 +1,22 @@
+// ==========================================================================
+// DssTabPanel — MAIN MODULE (Orquestrador Final)
+// ==========================================================================
+//
+// Filosofia DSS: Arquitetura em 4 Camadas
+//
+// LAYER 1: Structure (Vue — DssTabPanel.ts.vue)
+// LAYER 2: Composition (Base styles — _base.scss)
+// LAYER 3: Variants (Reservado — index.scss vazio em v1.0.0)
+// LAYER 4: Output (States, Brands — _states.scss, _brands.scss)
+//
+// Importação obrigatória na ordem L2 → L3 → L4.
+// ==========================================================================
+
+// Layer 2: Composition
+@use './2-composition/base' as composition;
+
+// Layer 3: Variants (sem variantes em v1.0.0 — camada preservada)
+@use './3-variants' as variants;
+
+// Layer 4: Output
+@use './4-output' as output;

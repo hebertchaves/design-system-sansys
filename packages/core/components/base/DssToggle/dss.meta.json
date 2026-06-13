@@ -1,0 +1,109 @@
+{
+  "component": "DssToggle",
+  "dssVersion": "2.2",
+  "status": "sealed",
+  "seal": "DSS v2.2",
+  "auditMode": "Auditor DSS v2.2",
+  "auditDate": "2026-02-05",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssCheckbox",
+  "goldenContextSecondary": "DssRadio",
+  "category": "Compact Control interativo",
+  "phase": "1",
+  "classification": "Form / Selection",
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "color": "primary",
+      "size": "md",
+      "label": "Ativar",
+      "modelValue": false
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "track width",
+        "token": "--dss-spacing-9",
+        "value": "36px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track height",
+        "token": "--dss-spacing-5",
+        "value": "20px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track border-radius",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track border-width (off)",
+        "token": "--dss-border-width-md",
+        "value": "2px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track border-color (off)",
+        "token": "--dss-gray-400",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track background (off)",
+        "token": "--dss-surface-muted",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track background (on)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "thumb tamanho (off)",
+        "token": "--dss-thumb-size-sm",
+        "value": "16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb tamanho (on)",
+        "token": "--dss-thumb-size-sm",
+        "value": "16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb background (off)",
+        "token": "--dss-gray-500",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "thumb background (on)",
+        "token": "--dss-text-inverse",
+        "value": "branco",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "transição",
+        "token": "--dss-duration-200",
+        "value": "200ms",
+        "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "Label 'Ativar'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-controles"
+}

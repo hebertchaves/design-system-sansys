@@ -1,0 +1,39 @@
+{
+  "name": "design-system-sansys-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "bootstrap": "npm install",
+    "dev": "npm run dev --workspace=@sansys/docs-portal",
+    "build": "npm run build --workspace=@sansys/docs-portal",
+    "core:build": "npm run build:lib --workspace=@sansys/design-system",
+    "core:dev": "npm run dev --workspace=@sansys/design-system",
+    "docs:dev": "npm run dev --workspace=@sansys/docs-portal",
+    "docs:build": "npm run build --workspace=@sansys/docs-portal",
+    "sandbox:dev": "npm run dev --workspace=@sansys/sandbox",
+    "mcp:build": "npm run build --workspace=@sansys/dss-mcp",
+    "mcp:start": "npm run start --workspace=@sansys/dss-mcp",
+    "build:all": "npm run core:build && npm run docs:build && npm run mcp:build",
+    "portal:sync-docs": "node scripts/generate-portal-landing-pages.js",
+    "sync:visual-contract": "node scripts/sync-visual-contract.js",
+    "sync:portal-tokens": "node scripts/sync-portal-tokens.mjs",
+    "sync:css-to-meta": "node scripts/sync-css-to-meta.js --fix-sources",
+    "sync:tokens-to-reference": "node scripts/sync-tokens-to-reference.js",
+    "validate:css-meta": "node scripts/sync-css-to-meta.js --validate",
+    "sync:all": "node scripts/sync-tokens-to-reference.js && node scripts/sync-css-to-meta.js --fix-sources && node scripts/sync-visual-contract.js",
+    "inject:token-markers": "node scripts/inject-token-table-markers.js",
+    "update:meta-preview": "node scripts/update-meta-preview.cjs",
+    "setup:hooks": "cp scripts/hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit && echo 'Git hooks instalados.'"
+  },
+  "type": "module",
+  "overrides": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@swc/core-linux-x64-gnu": "^1.15.8"
+  }
+}

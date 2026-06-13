@@ -1,0 +1,71 @@
+{
+  "name": "@sansys/design-system",
+  "version": "2.4.0",
+  "description": "Design System Sansys - Vue 3 Component Library with TypeScript, Composition API, and DSS Tokens",
+  "type": "module",
+  "main": "./dist/dss.umd.js",
+  "module": "./dist/dss.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/dss.es.js",
+      "require": "./dist/dss.umd.js"
+    },
+    "./css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "components",
+    "tokens",
+    "utils",
+    "index.js"
+  ],
+  "scripts": {
+    "build:lib": "vite build --config vite.config.lib.js",
+    "build:watch": "vite build --watch --config vite.config.lib.js",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.2.1",
+    "@storybook/addon-a11y": "^10.4.2",
+    "@storybook/addon-docs": "^10.4.2",
+    "@storybook/addon-onboarding": "^10.4.2",
+    "@storybook/addon-vitest": "^10.4.2",
+    "@storybook/vue3-vite": "^10.4.2",
+    "@types/node": "^25.0.8",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitest/browser-playwright": "^4.1.8",
+    "@vitest/coverage-v8": "^4.1.8",
+    "@vue/test-utils": "^2.4.11",
+    "jsdom": "^29.1.1",
+    "playwright": "^1.60.0",
+    "sass-embedded": "^1.97.2",
+    "storybook": "^10.4.2",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.19",
+    "vitest": "^4.1.8",
+    "vue": "^3.4.21",
+    "vue-router": "^4.6.4",
+    "vue-tsc": "^3.2.2"
+  },
+  "keywords": [
+    "design-system",
+    "vue",
+    "vue3",
+    "typescript",
+    "composition-api",
+    "components",
+    "dss",
+    "sansys",
+    "tokens",
+    "wcag",
+    "accessibility"
+  ],
+  "author": "Hebert Daniel Oliveira Chaves",
+  "license": "UNLICENSED"
+}

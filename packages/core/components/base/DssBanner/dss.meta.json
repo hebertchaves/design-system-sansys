@@ -1,0 +1,172 @@
+{
+  "component": "DssBanner",
+  "cssClass": "dss-banner",
+  "phase": 2,
+  "status": "conformant",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssBadge",
+  "classification": {
+    "type": "Informativo / Feedback",
+    "category": "Notificações e Alertas",
+    "interactive": false,
+    "family": "Notificações e Alertas",
+    "level": 1
+  },
+  "motor": "QBanner",
+  "phaseDescription": "Fase 2 — Nível 1 — Independente. Depende apenas de componentes da Fase 1 (DssIcon, DssButton).",
+  "tokens": [
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-weight-normal",
+    "--dss-line-height-md",
+    "--dss-padding-4",
+    "--dss-padding-2",
+    "--dss-gap-3",
+    "--dss-spacing-0_5",
+    "--dss-border-width-heavy",
+    "--dss-text-body",
+    "--dss-surface-default",
+    "--dss-surface-subtle",
+    "--dss-surface-brand-light",
+    "--dss-gray-300",
+    "--dss-gray-700",
+    "--dss-feedback-info",
+    "--dss-feedback-info-deep",
+    "--dss-feedback-info-surface",
+    "--dss-feedback-success",
+    "--dss-feedback-success-deep",
+    "--dss-feedback-success-surface",
+    "--dss-feedback-warning",
+    "--dss-feedback-warning-deep",
+    "--dss-feedback-warning-surface",
+    "--dss-feedback-error",
+    "--dss-feedback-error-deep",
+    "--dss-feedback-error-surface",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600",
+    "--dss-duration-250",
+    "--dss-easing-standard"
+  ],
+  "statesApplicable": [
+    "default (variant: default/info/success/warning/error)",
+    "dismissible",
+    "dense",
+    "rounded"
+  ],
+  "statesNotApplicable": [
+    "hover — componente não-interativo",
+    "active — componente não-interativo",
+    "focus — o banner root não é focável (apenas os elementos internos como DssButton são focáveis)",
+    "loading — componente de exibição estática",
+    "disabled — não faz sentido semanticamente para um banner"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "gateException",
+      "description": "Descendant selectors .q-banner__avatar, .q-banner__content, .q-banner__actions para controlar layout interno do QBanner motor.",
+      "justification": "QBanner não expõe props ou slots raiz para controlar gap e alinhamento das subáreas sem seletores descendentes.",
+      "location": "2-composition/_base.scss"
+    },
+    {
+      "id": "EXC-Gate-02",
+      "type": "gateException",
+      "description": "Descendant selector .dss-banner.q-banner--dense para ajustar padding no modo compacto.",
+      "justification": "QBanner aplica a classe .q-banner--dense internamente ao elemento raiz; precisamos combinar com nossa classe para ajustar padding.",
+      "location": "3-variants/_variant.scss"
+    },
+    {
+      "id": "EXC-States-01",
+      "type": "statesException",
+      "description": "Em forced-colors mode, border-left usa SystemColor 'ButtonText' (valor hardcoded CSS System Color).",
+      "justification": "Valores de System Colors são permitidos como exceção estrutural em forced-colors conforme WCAG 1.4.11 e padrão DSS.",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EXC-04",
+      "type": "printException",
+      "description": "Em @media print, background-color e border usam !important para garantir visibilidade na impressão.",
+      "justification": "Navegadores removem backgrounds e cores em impressão por padrão. !important necessário para sobrescrever inline styles do QBanner.",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EX-Color-01",
+      "type": "colorException",
+      "description": "CSS custom property --dss-banner-icon-color definida em .dss-banner para propagar cor do ícone por variante.",
+      "justification": "O ícone está em uma subárvore QBanner; a custom property permite cascata sem :deep() (gate de composição v2.4).",
+      "location": "2-composition/_base.scss + 3-variants/_variant.scss"
+    }
+  ],
+  "compositionRecommendations": [
+    "Use DssIcon no slot 'avatar' para substituir o ícone padrão",
+    "Use DssButton no slot 'actions' para ações personalizadas",
+    "Não aninhe DssBanner dentro de DssDialog — prefira DssDialog com slot de conteúdo",
+    "Múltiplos banners: use q-gutter-y-sm entre instâncias"
+  ],
+  "auditHistory": [],
+  "defaultPreview": {
+    "props": {
+      "variant": "default",
+      "inline": true
+    },
+    "computedDimensions": {
+      "minHeight": "48px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "48px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width",
+        "token": "--dss-border-width-thin",
+        "value": "1px",
+        "source": "4-output/_states.scss"
+      },
+      {
+        "property": "border-color",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "Padrão categoria Superfície"
+      },
+      {
+        "property": "padding",
+        "token": "--dss-spacing-4",
+        "value": "16px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "Mensagem informativa com ação",
+    "demoSlots": {
+      "default": "Mensagem informativa do sistema.",
+      "action": [
+        {
+          "component": "DssButton",
+          "props": {
+            "flat": true,
+            "color": "primary",
+            "size": "sm"
+          },
+          "children": "Entendido"
+        }
+      ]
+    }
+  },
+  "previewGroup": "banners"
+}

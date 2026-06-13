@@ -1,0 +1,243 @@
+{
+  "component": "DssPullToRefresh",
+  "cssClass": "dss-pull-to-refresh",
+  "phase": 2,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssInfiniteScroll",
+  "motor": "QPullToRefresh",
+  "classification": {
+    "type": "Interativo — Wrapper de Interação Gestual",
+    "category": "Interação Gestual",
+    "family": "Interação Gestual",
+    "level": 1,
+    "interactive": true
+  },
+  "phaseDescription": "Fase 2 — Nível 1 — Independente. Depende apenas de componentes da Fase 1 (nenhum componente DSS usado internamente).",
+  "tokens": [
+    "--dss-action-primary",
+    "--dss-surface-default",
+    "--dss-shadow-md",
+    "--dss-padding-1",
+    "--dss-padding-2",
+    "--dss-padding-3",
+    "--dss-icon-size-sm",
+    "--dss-icon-size-md",
+    "--dss-icon-size-lg",
+    "--dss-border-width-thin",
+    "--dss-border-width-thick",
+    "--dss-hub-600",
+    "--dss-hub-50",
+    "--dss-shadow-hub-md",
+    "--dss-water-500",
+    "--dss-water-50",
+    "--dss-shadow-water-md",
+    "--dss-waste-600",
+    "--dss-waste-50",
+    "--dss-shadow-waste-md"
+  ],
+  "statesApplicable": [
+    "idle",
+    "pulling",
+    "ready",
+    "refreshing",
+    "done",
+    "disabled"
+  ],
+  "statesNotApplicable": [
+    "hover — handler não tem estado hover visual próprio",
+    "focus — handler é gerado pelo QPullToRefresh sem foco próprio (não é alvo de teclado)",
+    "active — pulling/ready são os equivalentes; sem CSS :active separado",
+    "loading — estado refreshing é o equivalente"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "gateException",
+      "description": "QPullToRefresh como elemento root do componente DSS.",
+      "justification": "Motor necessário para o comportamento de pull-to-refresh (gestão de eventos de toque, limiares, animação). Sem ele, o componente não pode existir.",
+      "location": "1-structure/DssPullToRefresh.ts.vue"
+    },
+    {
+      "id": "EXC-Gate-02-a",
+      "type": "gateException",
+      "description": "--q-color-primary CSS variable override para governar a cor do ícone interno do QPullToRefresh.",
+      "justification": "QPullToRefresh não expõe hook CSS para a cor do ícone; a prop `color` é bloqueada no DSS. Padrão canônico estabelecido por DssPagination e DssAjaxBar.",
+      "location": "2-composition/_base.scss, 4-output/_brands.scss"
+    },
+    {
+      "id": "EXC-Gate-02-b",
+      "type": "gateException",
+      "description": "Descendant selectors .q-pull-to-refresh__handler e .q-pull-to-refresh__arrow para estilizar o indicador visual.",
+      "justification": "O handler é interno ao QPullToRefresh sem slot API. Única forma de controlar background, border-radius, shadow, padding e tamanho de ícone.",
+      "location": "2-composition/_base.scss, 3-variants/_variant.scss, 4-output/_brands.scss"
+    },
+    {
+      "id": "EX-Structural-01",
+      "type": "structuralException",
+      "description": "border-radius: --dss-radius-circle aplicado ao handler para forma circular.",
+      "justification": "Forma circular perfeita. Token --dss-radius-circle (50%) introduzido no DSS v2.4.0 resolve a constante geométrica anterior.",
+      "location": "2-composition/_base.scss"
+    },
+    {
+      "id": "EXC-States-01",
+      "type": "statesException",
+      "description": "prefers-reduced-motion suprimido via CSS (animation-duration: 0.01ms !important).",
+      "justification": "A animação do handler é CSS-based (rotação do ícone via classes Quasar), portanto CSS puro é suficiente. Diferente do DssParallax cujos JS listeners exigem v-if/v-else.",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EXC-States-02",
+      "type": "statesException",
+      "description": "forced-colors usa SystemColor keywords (ButtonFace, ButtonText).",
+      "justification": "Obrigatório conforme WCAG 1.4.11. Padrão canônico DSS.",
+      "location": "4-output/_states.scss"
+    },
+    {
+      "id": "EXC-Expose-01",
+      "type": "exposeException",
+      "description": "defineExpose do método trigger() do QPullToRefresh.",
+      "justification": "API imperativa necessária para ativar refresh programaticamente (ex: botão de atualização alternativo acessível). Padrão: DssInfiniteScroll, DssScrollArea.",
+      "location": "1-structure/DssPullToRefresh.ts.vue"
+    }
+  ],
+  "accessibilityNotes": {
+    "wcag": "2.1 AA",
+    "criticalWarning": "O gesto de puxar não é acessível via teclado. Toda interface com DssPullToRefresh DEVE fornecer um botão de atualização alternativo.",
+    "ariaLive": "polite — anunciador sr-only interno",
+    "ariaBusy": "true durante estado refreshing"
+  },
+  "compositionRecommendations": {
+    "requiredAdjacent": "DssButton com ícone refresh (alternativa acessível por teclado — OBRIGATÓRIO)",
+    "errorHandling": "DssToast ou DssBanner para comunicar falha na atualização",
+    "loadingFeedback": "Indicador interno do QPullToRefresh (handler) — não usar DssInnerLoading simultaneamente"
+  },
+  "defaultPreview": {
+    "props": {},
+    "computedDimensions": {},
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "handler color",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "handler border-radius",
+        "token": "--dss-radius-circle",
+        "value": "50%",
+        "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "Puxe para atualizar",
+    "demoSlots": null
+  },
+  "auditHistory": [
+    {
+      "date": "2026-05-20",
+      "version": "v2.2",
+      "auditor": "Chat Estratégico DSS",
+      "result": "REPROVADO — 1 NC Bloqueante (ciclo 1)",
+      "ncs": [
+        {
+          "id": "NC-01",
+          "severity": "bloqueante",
+          "description": "Anunciador sr-only sem classe .dss-sr-only local.",
+          "resolution": "Adicionado .dss-sr-only em 2-composition/_base.scss com EXC-SrOnly-02 registrada.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-02",
+          "severity": "não-bloqueante",
+          "description": "Bloco .dss-pull-to-refresh--disabled com pointer-events: none viola Gate de Responsabilidade.",
+          "resolution": "Bloco removido. disable é gerenciado inteiramente pelo QPullToRefresh.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-03",
+          "severity": "não-bloqueante",
+          "description": "1px hardcoded em forced-colors em vez de var(--dss-border-width-thin).",
+          "resolution": "Substituído por var(--dss-border-width-thin) em 4-output/_states.scss.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-04",
+          "severity": "não-bloqueante",
+          "description": "beforeEach importado mas não utilizado no test.js.",
+          "resolution": "Removido do import.",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-05",
+          "severity": "não-bloqueante",
+          "description": "Fallback hardcoded var(--dss-opacity-disabled, 0.4).",
+          "resolution": "Resolvida junto com NC-02 (bloco removido).",
+          "status": "resolvida"
+        },
+        {
+          "id": "NC-06",
+          "severity": "não-bloqueante",
+          "description": "Heights em px e borders com 1px hardcoded no example.vue.",
+          "resolution": "Heights substituídos por vh (35-55vh). Borders substituídos por var(--dss-border-width-thin).",
+          "status": "resolvida"
+        }
+      ],
+      "gaps": [
+        {
+          "id": "GAP-01",
+          "description": "spinnerType não documentado como descartado.",
+          "resolution": "Seção '11. Decisões Arquiteturais' adicionada ao DssPullToRefresh.md.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-02",
+          "description": "pre_prompt usa tokens fictícios.",
+          "resolution": "Seção 4 do pré-prompt reescrita com tokens reais.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-03",
+          "description": "Golden Context sem nome no pré-prompt.",
+          "resolution": "Golden Context corrigido para DssInfiniteScroll.",
+          "status": "resolvida"
+        },
+        {
+          "id": "GAP-04",
+          "description": "Mapeamento de color incorreto no pré-prompt (prop color em vez de data-brand).",
+          "resolution": "Seção 8 corrigida: prop brand via data-brand, composite logic e estados atualizados.",
+          "status": "resolvida"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "version": "v2.2",
+      "auditor": "Claude Code DSS",
+      "result": "APROVADO — 1 NC Não-Bloqueante corrigida",
+      "ncs": [
+        {
+          "id": "NC-01",
+          "severity": "não-bloqueante",
+          "description": "Documentação inconsistente sobre estado disabled após NC-02 do ciclo 1: DssPullToRefresh.md §6 mencionava opacity + pointer-events; dss.meta.json e DSSPULLTOREFRESH_API.md listavam --dss-opacity-disabled como token usado (token fantasma).",
+          "resolution": "DssPullToRefresh.md §6 corrigido; --dss-opacity-disabled removido de dss.meta.json e DSSPULLTOREFRESH_API.md.",
+          "status": "resolvida"
+        }
+      ],
+      "gaps": []
+    }
+  ],
+  "previewGroup": "contextuais"
+}

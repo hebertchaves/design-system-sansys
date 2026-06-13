@@ -1,0 +1,137 @@
+{
+  "component": "DssColorPicker",
+  "cssClass": "dss-color-picker",
+  "phase": 2,
+  "level": 3,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssDatePicker",
+  "goldenContextJustification": "DssDatePicker é o Golden Context mais próximo para DssColorPicker: ambos usam um componente Quasar como root direto sem wrapper div (EXC-Gate-01 — QDate e QColor respectivamente), ambos passam color='primary' fixo internamente e sobrescrevem --q-color-primary via CSS DSS (EXC-Gate-02), ambos são widgets visuais interativos de seleção (date picker e color picker), ambos usam v-bind='$attrs' antes dos attrs explícitos para garantir precedência das props fixas, e ambos usam CSS global (não scoped) com descendant selectors para elementos internos do Quasar. A diferença central é que DssDatePicker renderiza um calendário enquanto DssColorPicker renderiza um espectro de cores com sliders.",
+  "classification": {
+    "type": "Widget visual interativo de seleção de cor",
+    "category": "Seletores e Pickers",
+    "interactive": true,
+    "family": "ColorPicker"
+  },
+  "phaseDescription": "Fase 2, Nível 3 — Composição de Terceiro Grau. Motor: QColor (infraestrutura Quasar). Dependências DSS internas: nenhuma. Dependências externas recomendadas: DssInput (para exibir o valor da cor selecionada), DssDialog ou DssPopupProxy (para uso como overlay).",
+  "statesApplicable": [
+    {
+      "state": "hover",
+      "location": "Quadrados da paleta via .q-color-picker__palette-square:hover — filter: brightness(0.85)"
+    },
+    {
+      "state": "focus",
+      "location": "Root .q-color-picker.dss-color-picker via :focus-visible; palette squares via :focus-visible"
+    },
+    {
+      "state": "disabled",
+      "location": "Root via aria-disabled='true' — opacity: var(--dss-opacity-disabled)"
+    },
+    {
+      "state": "readonly",
+      "location": "Root via .q-color-picker--readonly — cursor: default"
+    }
+  ],
+  "statesNotApplicable": [
+    {
+      "state": "active",
+      "reason": "QColor gerencia internamente o estado ativo (cursor do espectro, thumb dos sliders) — não sobrescritível sem quebrar funcionalidade"
+    },
+    {
+      "state": "loading",
+      "reason": "QColor é síncrono — sem estado de carregamento"
+    },
+    {
+      "state": "error",
+      "reason": "DssColorPicker é widget visual; validação de cor é responsabilidade do consumidor (ex: DssField wrapping)"
+    }
+  ],
+  "tokens": [
+    "--dss-action-primary",
+    "--dss-surface-default",
+    "--dss-radius-md",
+    "--dss-radius-sm",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-opacity-disabled",
+    "--dss-focus-ring",
+    "--dss-duration-hover",
+    "--dss-easing-hover",
+    "--dss-duration-0",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "Gate de Composição v2.4",
+      "location": "1-structure/DssColorPicker.ts.vue",
+      "value": "QColor como root element — sem wrapper div",
+      "justification": "QColor gerencia internamente: interface de espectro de cores com canvas, sliders de matiz (hue) e transparência (alpha), campos de entrada numérica para R/G/B/H/S/L/V, paleta de cores, conversão entre formatos (hex, rgb, hsl, hsv, hexa, rgba, hsla, hsva), navegação por teclado e ARIA. Sem alternativa em componentes DSS básicos."
+    },
+    {
+      "id": "EXC-Gate-02",
+      "type": "CSS Custom Property Override",
+      "location": "2-composition/_base.scss",
+      "value": "--q-color-primary: var(--dss-action-primary) via .q-color-picker.dss-color-picker",
+      "justification": "QColor usa --q-color-primary para o indicador da aba ativa nos QTabs internos. color='primary' fixo garante presença de todos elementos visuais no DOM. Override idêntico ao padrão DssPagination, DssAjaxBar, DssCarousel, DssTimePicker e DssDatePicker."
+    },
+    {
+      "id": "EXC-Gate-02b",
+      "type": "Gate de Composição v2.4 — Descendant Selector",
+      "location": "2-composition/_base.scss",
+      "value": ".dss-color-picker .q-color-picker__palette-square, .q-color-picker__header",
+      "justification": "QColor não fornece CSS custom property hooks nativos para partes internas (palette squares, header border-radius). Descendant selectors são o único mecanismo de override CSS disponível. Padrão DssTimePicker (EXC-Gate-02b — clock positions) e DssDatePicker (EXC-Gate-02b — calendar items)."
+    },
+    {
+      "id": "EX-Structural-01",
+      "type": "Valor Visual Não-Tokenizado",
+      "location": "2-composition/_base.scss",
+      "value": "filter: brightness(0.85) nos .q-color-picker__palette-square:hover",
+      "justification": "DSS não possui token de filter/brightness para hover em elementos de cor saturada. brightness(0.85) é valor canônico da tabela DSS (hover light). Análogo ao DssCarousel EX-Structural-01 (opacity: 0.6) e DssTimePicker EX-Structural-01 (opacity: 0.7)."
+    }
+  ],
+  "gateExceptions": [
+    "EXC-Gate-01: QColor como root (motor insubstituível de color picker)",
+    "EXC-Gate-02: --q-color-primary override (padrão DssPagination/DssAjaxBar/DssCarousel/DssTimePicker/DssDatePicker)",
+    "EXC-Gate-02b: descendant selectors para palette-square e header (sem CSS hook nativo no QColor)",
+    "EX-Structural-01: filter: brightness(0.85) para hover nos quadrados de paleta (sem token DSS de brightness)"
+  ],
+  "compositionRecommendations": [
+    "Combinar externamente com DssInput para exibir o valor da cor selecionada em formato HEX/RGB/HSL",
+    "Usar dentro de DssDialog ou DssPopupProxy para criar um color picker com trigger/overlay",
+    "Combinar com DssButton para ações 'Confirmar' / 'Cancelar' externas",
+    "Usar prop palette com cores da marca (hub, water, waste) para restringir seleção a paletas aprovadas",
+    "Usar prop formatModel='hex' para garantir interoperabilidade com o restante do sistema"
+  ],
+  "propsBlocked": [
+    "dark",
+    "color"
+  ],
+  "defaultPreview": {
+    "props": {
+      "formatModel": "hex"
+    },
+    "computedTokens": {
+      "--q-color-primary": "var(--dss-action-primary)"
+    },
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "background-color",
+        "token": "--dss-surface-default",
+        "value": "#ffffff",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      }
+    ]
+  },
+  "previewGroup": "contextuais"
+}

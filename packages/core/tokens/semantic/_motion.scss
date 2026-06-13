@@ -1,0 +1,184 @@
+/* ==========================================================================
+   DSS - TOKENS DE ANIMAÇÃO E TEMPORIZAÇÃO
+   Sistema consistente para movimento e transições
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. DURAÇÕES (TEMPO)
+     =========================================== */
+  --dss-duration-0: 0ms;                  /* Imediato */
+  --dss-duration-75: 75ms;                /* Ultra rápido */
+  --dss-duration-100: 100ms;              /* Muito rápido */
+  --dss-duration-150: 150ms;              /* Rápido */
+  --dss-duration-200: 200ms;              /* Moderadamente rápido */
+  --dss-duration-250: 250ms;              /* Base (padrão) */
+  --dss-duration-300: 300ms;              /* Moderadamente lento */
+  --dss-duration-500: 500ms;              /* Lento */
+  --dss-duration-700: 700ms;              /* Muito lento */
+  --dss-duration-1000: 1000ms;            /* Ultra lento */
+  
+  /* ===========================================
+     2. DURAÇÕES SEMÂNTICAS
+     =========================================== */
+  --dss-duration-instant: var(--dss-duration-0);
+  --dss-duration-fastest: var(--dss-duration-75);
+  --dss-duration-faster: var(--dss-duration-100);
+  --dss-duration-fast: var(--dss-duration-150);
+  --dss-duration-base: var(--dss-duration-250);    /* Padrão WCAG amigável */
+  --dss-duration-slow: var(--dss-duration-300);
+  --dss-duration-slower: var(--dss-duration-500);
+  --dss-duration-slowest: var(--dss-duration-700);
+  
+  /* Durações para estados interativos */
+  --dss-duration-hover: var(--dss-duration-150);
+  --dss-duration-focus: var(--dss-duration-100);
+  --dss-duration-active: var(--dss-duration-100);
+  --dss-duration-tooltip: var(--dss-duration-150);
+
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 4)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (2 tokens component-specific):
+   * --dss-duration-modal           → Use: var(--dss-duration-slow)
+   * --dss-duration-toast           → Use: var(--dss-duration-slow)
+   *
+   * MAPEAMENTO DE SUBSTITUIÇÃO:
+   * --dss-duration-modal (300ms)   → --dss-duration-slow (300ms)
+   * --dss-duration-toast (300ms)   → --dss-duration-slow (300ms)
+   *
+   * ✅ EXEMPLO DE USO NOS COMPONENTES:
+   *
+   * // DssModal.module.scss
+   * .dss-modal {
+   *   transition: opacity var(--dss-duration-slow) var(--dss-easing-standard);
+   *
+   *   &-enter {
+   *     animation: fadeIn var(--dss-duration-slow) var(--dss-easing-standard);
+   *   }
+   * }
+   *
+   * // DssToast.module.scss
+   * .dss-toast {
+   *   transition: transform var(--dss-duration-slow) var(--dss-easing-ease-out);
+   *
+   *   &-enter {
+   *     animation: slideIn var(--dss-duration-slow);
+   *   }
+   * }
+   *
+   * 📚 GUIA DE MIGRAÇÃO:
+   *
+   * Se você tinha:
+   *   transition: all var(--dss-duration-modal);
+   *
+   * Substitua por:
+   *   transition: all var(--dss-duration-slow);  // refatoração Jan 2025 Sprint 4
+   *
+   * Escolha a duração baseada na velocidade desejada:
+   *   --dss-duration-fast (150ms):    Interações rápidas (hover, focus)
+   *   --dss-duration-base (250ms):    Transições padrão
+   *   --dss-duration-slow (300ms):    Animações de entrada/saída
+   *   --dss-duration-slower (500ms):  Animações complexas
+   *
+   * ✨ BENEFÍCIOS:
+   *
+   * 1. REUTILIZAÇÃO: Qualquer componente pode usar qualquer duração
+   * 2. CONSISTÊNCIA: Sistema unificado de temporização
+   * 3. MANUTENÇÃO: Mudanças em durações afetam todos os componentes
+   * 4. EXTENSIBILIDADE: Novos componentes sabem exatamente qual token usar
+   * 5. ACESSIBILIDADE: prefers-reduced-motion afeta todos automaticamente
+   */
+  
+  /* ===========================================
+     3. CURVAS DE EASING (ACELERAÇÃO)
+     =========================================== */
+  /* Curvas padrão */
+  --dss-easing-linear: cubic-bezier(0, 0, 1, 1);
+  --dss-easing-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --dss-easing-ease-in: cubic-bezier(0.42, 0, 1, 1);
+  --dss-easing-ease-out: cubic-bezier(0, 0, 0.58, 1);
+  --dss-easing-ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  
+  /* Curvas de material design */
+  --dss-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dss-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --dss-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  
+  /* Curvas para interações */
+  --dss-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --dss-easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* ===========================================
+     4. EASING SEMÂNTICO
+     =========================================== */
+  --dss-easing-hover: var(--dss-easing-ease-out);
+  --dss-easing-focus: var(--dss-easing-ease-out);
+  --dss-easing-active: var(--dss-easing-ease-in);
+  --dss-easing-modal: var(--dss-easing-standard);
+  --dss-easing-toast: var(--dss-easing-ease-out);
+  --dss-easing-tooltip: var(--dss-easing-ease-out);
+  
+  /* ===========================================
+     5. ATRASOS (DELAYS)
+     =========================================== */
+  --dss-delay-0: 0ms;
+  --dss-delay-75: 75ms;
+  --dss-delay-100: 100ms;
+  --dss-delay-150: 150ms;
+  --dss-delay-200: 200ms;
+  --dss-delay-300: 300ms;
+  --dss-delay-500: 500ms;
+  --dss-delay-700: 700ms;
+  --dss-delay-1000: 1000ms;
+  
+  /* ===========================================
+     6. TRANSIÇÕES SEMÂNTICAS
+     =========================================== */
+  --dss-transition-fast: all var(--dss-duration-fast) var(--dss-easing-ease-out);
+  --dss-transition-base: all var(--dss-duration-base) var(--dss-easing-standard);
+  --dss-transition-slow: all var(--dss-duration-slow) var(--dss-easing-ease-in-out);
+  
+  /* Transições específicas */
+  --dss-transition-color: color var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-background: background-color var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-border: border-color var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-shadow: box-shadow var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-transform: transform var(--dss-duration-base) var(--dss-easing-standard);
+  --dss-transition-opacity: opacity var(--dss-duration-base) var(--dss-easing-ease);
+  
+  /* ===========================================
+     7. ANIMAÇÕES PREDEFINIDAS
+     =========================================== */
+  --dss-animation-spin: spin 1s linear infinite;
+  --dss-animation-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --dss-animation-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --dss-animation-bounce: bounce 1s infinite;
+  
+  /* ===========================================
+     8. PREFERÊNCIAS DO USUÁRIO (WCAG)
+     =========================================== */
+  /* Respeitar prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    --dss-duration-base: var(--dss-duration-0);
+    --dss-duration-fast: var(--dss-duration-0);
+    --dss-duration-slow: var(--dss-duration-0);
+    --dss-transition-base: none;
+    --dss-transition-fast: none;
+    --dss-transition-slow: none;
+    --dss-animation-spin: none;
+    --dss-animation-pulse: none;
+    --dss-animation-bounce: none;
+  }
+  
+  /* ===========================================
+     9. TEMPORIZADORES PARA FEEDBACK
+     =========================================== */
+  --dss-timing-toast: 5000ms;             /* 5 segundos para toasts */
+  --dss-timing-tooltip-hide: 300ms;       /* Delay para esconder tooltip */
+  --dss-timing-debounce: 150ms;           /* Debounce padrão */
+  --dss-timing-throttle: 100ms;           /* Throttle padrão */
+}

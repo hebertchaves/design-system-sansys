@@ -1,0 +1,11 @@
+// =============================================================================
+// DssFile — LAYER 3: VARIANTS — Orchestrator
+//
+// Importa todas as variantes visuais do DssFile.
+// Ordem: da mais comum para a menos comum.
+// =============================================================================
+
+@use './outlined' as outlined;
+@use './filled' as filled;
+@use './standout' as standout;
+@use './borderless' as borderless;

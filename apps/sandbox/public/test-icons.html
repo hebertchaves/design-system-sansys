@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste de Ícones - DssButton</title>
+
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
+
+  <!-- CSS do DSS -->
+  <link rel="stylesheet" href="/dss-full.css?v=2.0.8">
+
+  <style>
+    body {
+      padding: 2rem;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .test-section {
+      background: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .test-section h2 {
+      margin: 0 0 1rem 0;
+      color: #333;
+    }
+
+    .button-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .debug-info {
+      background: #f0f0f0;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 Teste de Ícones - DssButton</h1>
+
+  <!-- Teste 1: HTML puro com todas as classes -->
+  <div class="test-section">
+    <h2>Teste 1: HTML Puro (sem Vue)</h2>
+    <div class="button-grid">
+      <!-- Ícone à esquerda apenas -->
+      <button class="dss-button dss-button--elevated dss-button--primary dss-button--md">
+        <span class="dss-button__icon dss-button__icon--left">favorite</span>
+        <span class="dss-button__label">Ícone Left</span>
+      </button>
+
+      <!-- Ícone à direita apenas -->
+      <button class="dss-button dss-button--elevated dss-button--primary dss-button--md">
+        <span class="dss-button__label">Ícone Right</span>
+        <span class="dss-button__icon dss-button__icon--right">send</span>
+      </button>
+
+      <!-- Ambos os lados -->
+      <button class="dss-button dss-button--elevated dss-button--primary dss-button--md">
+        <span class="dss-button__icon dss-button__icon--left">arrow_back</span>
+        <span class="dss-button__label">Ambos os Lados</span>
+        <span class="dss-button__icon dss-button__icon--right">arrow_forward</span>
+      </button>
+
+      <!-- Apenas ícone -->
+      <button class="dss-button dss-button--elevated dss-button--primary dss-button--md dss-button--icon-only">
+        <span class="dss-button__icon">star</span>
+      </button>
+    </div>
+
+    <div class="debug-info">
+      ✅ Se os ícones aparecerem aqui, o CSS está correto<br>
+      ❌ Se não aparecerem, há problema no CSS ou Material Icons
+    </div>
+  </div>
+
+  <!-- Teste 2: Verificar Material Icons -->
+  <div class="test-section">
+    <h2>Teste 2: Material Icons (sem classes DSS)</h2>
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <span class="material-icons">favorite</span>
+      <span class="material-icons">send</span>
+      <span class="material-icons">arrow_back</span>
+      <span class="material-icons">arrow_forward</span>
+      <span class="material-icons">star</span>
+    </div>
+
+    <div class="debug-info">
+      ✅ Se aparecerem ícones aqui, Material Icons está carregado<br>
+      ❌ Se aparecer texto, Material Icons não está funcionando
+    </div>
+  </div>
+
+  <!-- Teste 3: Inspecionar DOM -->
+  <div class="test-section">
+    <h2>Teste 3: Inspeção do DOM</h2>
+    <p>Abra o DevTools (F12) e inspecione o botão abaixo:</p>
+
+    <button class="dss-button dss-button--elevated dss-button--primary dss-button--md" id="inspect-me">
+      <span class="dss-button__icon dss-button__icon--left">favorite</span>
+      <span class="dss-button__label">Label</span>
+      <span class="dss-button__icon dss-button__icon--right">send</span>
+    </button>
+
+    <div class="debug-info">
+      <strong>Verificar no DevTools:</strong><br>
+      1. Os 3 spans estão renderizados?<br>
+      2. As classes estão aplicadas corretamente?<br>
+      3. O CSS está sendo aplicado (computed styles)?<br>
+      4. Há algum erro no console?
+    </div>
+  </div>
+
+  <script>
+    // Debug: Mostrar estrutura do botão no console
+    const btn = document.getElementById('inspect-me');
+    console.log('🔍 Estrutura do botão:', btn);
+    console.log('📦 Children:', btn.children);
+    console.log('🎨 Classes:', btn.className);
+
+    // Verificar se Material Icons está carregado
+    const testIcon = document.createElement('span');
+    testIcon.className = 'material-icons';
+    testIcon.textContent = 'favorite';
+    document.body.appendChild(testIcon);
+
+    setTimeout(() => {
+      const computedFont = window.getComputedStyle(testIcon).fontFamily;
+      console.log('🔤 Fonte do ícone:', computedFont);
+
+      if (computedFont.includes('Material Icons')) {
+        console.log('✅ Material Icons está carregado!');
+      } else {
+        console.log('❌ Material Icons NÃO está carregado!');
+      }
+
+      document.body.removeChild(testIcon);
+    }, 100);
+  </script>
+</body>
+</html>

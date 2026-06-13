@@ -1,0 +1,148 @@
+/* ==========================================================================
+   DssTooltip - LAYER 4: OUTPUT - States
+
+   RESPONSABILIDADE: Estados especiais e acessibilidade
+
+   CLASSIFICACAO: Elemento Informativo Contextual (NAO interativo)
+
+   ESTADOS APLICAVEIS:
+   - visible: controlado externamente via v-show (nao requer CSS)
+   - hidden: controlado externamente via v-show (display: none automatico)
+
+   ESTADOS EXPLICITAMENTE NAO APLICAVEIS:
+   - hover: tooltip nao responde a hover proprio
+   - active: tooltip nao tem estado ativo
+   - disabled: tooltip nao pode ser desabilitado
+   - loading: tooltip nao tem estado de carregamento
+   - focus: tooltip nao recebe foco (nao navegavel por teclado)
+   - checked: tooltip nao e selecionavel
+
+   CARACTERISTICAS:
+   - Dark mode
+   - High contrast mode (prefers-contrast: more)
+   - Forced colors (Windows High Contrast Mode)
+   - Reduced motion
+   - Print (tooltips ocultos em impressao)
+
+   CONVENCOES:
+   - Tooltip NAO e interativo por design (decisao arquitetural DSS v2.2)
+   - Touch target e responsabilidade do elemento disparador
+   - ::before PROIBIDO (decisao congelada)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-tooltip {
+    /* Tokens semanticos ja fazem a maior parte do trabalho.
+       Em dark mode, tooltip com bg-dark permanece escuro.
+       Ajustar apenas se necessario para brands. */
+  }
+
+  /* Brands em dark mode podem precisar de ajustes de contraste */
+  .dss-tooltip--brand-hub {
+    background-color: var(--dss-hub-500);
+  }
+
+  .dss-tooltip--brand-water {
+    background-color: var(--dss-water-400);
+  }
+
+  .dss-tooltip--brand-waste {
+    background-color: var(--dss-waste-500);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE
+   ========================================================================== */
+
+/*
+ * ⚠️ CONTEXTO DE ACESSIBILIDADE: prefers-contrast: more
+ *
+ * Em high contrast, tooltips recebem borda para garantir
+ * visibilidade maxima contra qualquer fundo.
+ *
+ * Excecoes documentadas:
+ * - font-weight: 700 → Nao existe token de font-weight para high contrast
+ *   (mesma excecao documentada no DssBadge Golden)
+ */
+@media (prefers-contrast: more) {
+  .dss-tooltip {
+    border: var(--dss-border-width-md) solid currentColor !important;
+    /*
+     * ⚠️ EXCECAO DOCUMENTADA: font-weight hardcoded para high contrast
+     * Nao existe token --dss-font-weight-* especifico para acessibilidade.
+     * Valor 700 (bold) garante legibilidade em contextos de alto contraste.
+     * Paridade: Mesma excecao do DssBadge Golden.
+     */
+    font-weight: 700;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-tooltip,
+  .dss-tooltip * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+   ========================================================================== */
+
+/*
+ * ⚠️ CONTEXTO DE ACESSIBILIDADE: forced-colors: active
+ *
+ * Em Windows High Contrast Mode, o navegador IGNORA cores CSS customizadas.
+ * Valores como ButtonText, Highlight, GrayText sao keywords do sistema.
+ *
+ * Bordas usam valores absolutos porque:
+ * 1. Tokens CSS custom properties sao ignorados em forced-colors
+ * 2. Valores precisam ser visiveis no tema de alto contraste do usuario
+ *
+ * Paridade: Estrutura identica ao DssBadge Golden.
+ *
+ * Referencia: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors
+ */
+@media (forced-colors: active) {
+  .dss-tooltip {
+    /* Usa cores do sistema — tokens CSS sao ignorados neste contexto */
+    border: 2px solid ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+
+  /* Brands nao se aplicam em forced-colors — sistema controla cores */
+  .dss-tooltip--brand-hub,
+  .dss-tooltip--brand-water,
+  .dss-tooltip--brand-waste {
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+/*
+ * Tooltips sao informacao contextual de interface, nao relevantes
+ * em contexto de impressao. Ocultar para evitar ruido visual.
+ *
+ * DIVERGENCIA DO GOLDEN: DssBadge nao oculta em print porque badges
+ * podem conter informacao relevante (contadores, status). Tooltips
+ * sao informacao auxiliar vinculada a interacao — sem utilidade em papel.
+ */
+@media print {
+  .dss-tooltip {
+    display: none !important;
+  }
+}

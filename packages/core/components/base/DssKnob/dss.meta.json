@@ -1,0 +1,173 @@
+{
+  "name": "DssKnob",
+  "version": "2.2",
+  "phase": 2,
+  "level": 1,
+  "family": "Inputs Especializados",
+  "category": "Controle rotativo para seleção de valores numéricos",
+  "status": "conformant",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssSlider",
+  "quasarBase": "QKnob",
+  "internalDependencies": [],
+  "auditCycles": 1,
+  "tokensUsed": [
+    "--dss-action-primary",
+    "--dss-surface-muted",
+    "--dss-surface-default",
+    "--dss-font-family-sans",
+    "--dss-font-size-xs",
+    "--dss-font-weight-medium",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-focus-ring",
+    "--dss-opacity-disabled",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "color",
+      "reason": "Cor do arco de progresso governada via CSS (stroke: var(--dss-action-primary)). DSS não usa Quasar color names. Valor fixo 'primary' passado internamente para garantir renderização do SVG circle. Substituído por prop brand DSS ('hub' | 'water' | 'waste')."
+    },
+    {
+      "quasarProp": "track-color",
+      "reason": "Cor da trilha de fundo governada via CSS (stroke: var(--dss-surface-muted)). Valor fixo 'grey-3' passado internamente para garantir renderização do .q-circular-progress__track SVG circle (omitido se undefined). Consumer não consegue sobrescrever."
+    },
+    {
+      "quasarProp": "center-color",
+      "reason": "Cor do fundo central governada via CSS (fill: var(--dss-surface-default)). Valor fixo 'white' passado internamente para garantir renderização do .q-circular-progress__center SVG circle (omitido se undefined). Consumer não consegue sobrescrever."
+    },
+    {
+      "quasarProp": "font-size",
+      "reason": "Tipografia do valor central governada via CSS com tokens DSS (font-family-sans, font-size-xs, font-weight-medium). Não passar a prop garante que o inline style do QKnob não seja aplicado, deixando o CSS DSS prevalecer."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "description": "QKnob como root element — sem wrapper div. QKnob gerencia internamente: navegação por teclado (ArrowUp/Down/Left/Right, PageUp/Down, Home/End), drag por touch e mouse, ARIA (role=slider, aria-valuemin/max/now), e representação SVG circular via QCircularProgress. Adicionalmente, seletores CSS descendentes (.q-circular-progress__circle, __track, __center, __text) são o único ponto de override de cores e tipografia dos elementos SVG internos. Padrão DssInfiniteScroll/DssAjaxBar (root Quasar).",
+      "precedent": "DssInfiniteScroll (EXC-Gate-01), DssAjaxBar (EXC-Gate-01), DssCircularProgress (EXC-Gate-01)"
+    },
+    {
+      "id": "EXC-Gate-02",
+      "description": "color='primary', track-color='grey-3', center-color='white' fixos passados ao QKnob. QCircularProgress só renderiza os círculos SVG se as props correspondentes NÃO forem undefined/transparent. DSS precisa que os elementos existam no DOM para aplicar os overrides CSS de stroke/fill. Após renderização, CSS (stroke/fill property) sobrescreve SVG attributes (stroke='currentColor', fill='currentColor') com precedência garantida. Consumer não consegue sobrescrever via prop (bloqueadas). Padrão DssCircularProgress (governa 100% via CSS sem passar color ao Quasar — DssKnob adapta: passa valor fixo para renderização, sobrescreve via CSS).",
+      "precedent": "DssCircularProgress (EXC-Gate-02 — stroke CSS override), DssPagination (EXC-Gate-01 — --q-color-primary override)"
+    },
+    {
+      "id": "EXC-Focus-01",
+      "description": "QKnob usa .q-knob--editable::before + box-shadow para anel de foco visual (padrão Quasar). DSS reserva ::before exclusivamente para touch target (WCAG 2.5.5, CLAUDE.md Princípio 7). Como QKnob IS o root element (EXC-Gate-01), impossível separar o ::before do Quasar do ::before DSS no mesmo elemento. Resolução: (1) ::before box-shadow neutralizado via box-shadow: none !important no CSS DSS; (2) outline DSS aplicado diretamente no root em :focus-visible com border-radius:50%. Padrão DssChip (Golden Reference): outline var(--dss-border-width-md) solid var(--dss-focus-ring).",
+      "precedent": "DssChip (:focus-visible outline — Golden Reference)"
+    },
+    {
+      "id": "EX-Structural-01",
+      "description": "Hover/active: filter:brightness(0.95/0.90) aplicados ao .q-circular-progress__svg. Valores canônicos DSS da tabela de brightness (CLAUDE.md Princípio 8): 0.95 para hover e 0.90 para active. Consistente com DssChip (Golden Reference) que usa os mesmos valores. Adicionalmente, stroke-width:3 em prefers-contrast:more — valor canônico mínimo para arcos SVG visíveis sem token DSS correspondente.",
+      "precedent": "DssChip (hover brightness 0.95, active brightness 0.90)"
+    },
+    {
+      "id": "EX-States-01",
+      "description": "prefers-reduced-motion: transition/animation suprimidos no root e em todos os filhos via `* { transition: none !important; animation: none !important; animation-duration: 0.01ms !important }`. O `*` é necessário pois o QKnob/QCircularProgress anima o stroke-dashoffset do .q-circular-progress__circle via transition — elemento que DSS não controla diretamente sem seletor global. WCAG 2.3.3 (Animação sob Solicitação).",
+      "precedent": "DssLinearProgress (EX-States-01), DssAjaxBar (EX-States-01)"
+    },
+    {
+      "id": "EX-States-02",
+      "description": "forced-colors: SystemColor keywords para arcos SVG (Highlight para arco de progresso, ButtonText para trilha, Canvas para centro) e outline (Highlight). forced-color-adjust NÃO declarado — sem slot a proteger, herança correta. WCAG 1.4.11 (Contraste Não-Textual — Nível AA).",
+      "precedent": "DssCircularProgress (EX-States-03), DssAjaxBar (EX-States-03)"
+    },
+    {
+      "id": "EX-States-03",
+      "description": "prefers-contrast: more — stroke-width:3 nos arcos SVG (.q-circular-progress__circle e .q-circular-progress__track) e outline-width:var(--dss-border-width-thick) no focus. stroke-width é valor canônico SVG unitless sem token DSS correspondente (espessura de arco SVG — contexto muito específico). outline-width usa var(--dss-border-width-thick) = 3px. Necessário para garantir visibilidade da barra fina em alto contraste.",
+      "precedent": "DssBadge (prefers-contrast: more — border currentColor), DssCircularProgress (NC-01 corrigido)"
+    }
+  ],
+  "statesApplicable": {
+    "hover": "filter: brightness(0.95) no .q-circular-progress__svg; cursor: pointer gerenciado pelo QKnob via .q-knob--editable",
+    "focus": "outline: var(--dss-border-width-md) solid var(--dss-focus-ring) em :focus-visible; border-radius:50%; ::before box-shadow neutralizado (EXC-Focus-01)",
+    "active": "filter: brightness(0.90) no .q-circular-progress__svg durante pressão/drag",
+    "disabled": "opacity: var(--dss-opacity-disabled) = 0.4; QKnob adiciona pointer-events:none via .no-pointer-events class"
+  },
+  "statesNotApplicable": {
+    "loading": "QKnob é um controle síncrono — não tem estado de carregamento; valor é atualizado em tempo real durante drag",
+    "error": "QKnob não fornece mecanismo nativo de validação; estado de erro é responsabilidade do formulário pai (wrapper com aria-invalid, DssInput, etc.)",
+    "readonly": "Gerenciado internamente pelo QKnob via .no-pointer-events class (pointer-events:none) + cursor:default DSS; sem alteração visual de opacidade — readonly ≠ disabled semanticamente",
+    "print": "Controle interativo SVG — comportamento de impressão delegado ao browser; sem display:none (o valor pode ser relevante em documentos impressos)"
+  },
+  "compositionRecommendations": [
+    "Usar v-model para ligação bidirecional do valor numérico.",
+    "O slot default exibe o valor atual por padrão; customizar para unidade (ex: '%', '°C') ou ícone contextual.",
+    "Para formulários acessíveis, adicionar aria-label ou aria-labelledby no wrapper ou diretamente na prop (forwarded via $attrs ao QKnob).",
+    "Para controles de alta frequência (polling, animação), usar instant-feedback para desativar a animação de transição do arco.",
+    "Garantir size >= 44px (var(--dss-touch-target-md)) para conformidade WCAG 2.5.5 — default do QKnob (~50px) já atende.",
+    "Combinar com DssTooltip para exibir valores exatos durante drag sem poluir o layout.",
+    "Evitar múltiplas instâncias sem espaçamento adequado — o knob precisa de área de interação isolada."
+  ],
+  "gateExceptions": {
+    "templateStructure": "QKnob como root element — gerencia internamente SVG circular (via QCircularProgress), drag/touch, ARIA slider, e navegação por teclado. Wrapper div seria redundante e introduziria risco de conflito de posicionamento. (EXC-Gate-01)"
+  },
+  "defaultPreview": {
+    "props": {
+      "modelValue": 50,
+      "min": 0,
+      "max": 100
+    },
+    "computedDimensions": {
+      "minHeight": "56px",
+      "minWidth": "56px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "56px",
+        "value": null,
+        "source": "defaultPreview / Seção 13.9"
+      },
+      {
+        "property": "min-width",
+        "token": "56px",
+        "value": null,
+        "source": "defaultPreview / Seção 13.9"
+      },
+      {
+        "property": "track cor (não preenchido)",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "track cor (preenchido)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label central font-size",
+        "token": "--dss-font-size-lg",
+        "value": "18px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "label central font-weight",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label central color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "focus outline",
+        "token": "--dss-border-width-thick",
+        "value": "3px",
+        "source": "4-output/_states.scss"
+      }
+    ],
+    "demoContent": "Knob com valor 50%",
+    "demoSlots": null
+  },
+  "previewGroup": "indicadores",
+  "component": "DssKnob"
+}

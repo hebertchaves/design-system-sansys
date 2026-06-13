@@ -1,0 +1,24 @@
+/* ==========================================================================
+   DssButton - LAYER 3: VARIANT - Elevated (Default)
+
+   RESPONSABILIDADE: Botão com elevação/shadow
+
+   CARACTERÍSTICAS:
+   - Background sólido
+   - Box-shadow para elevação via tokens DSS
+   - Hover aumenta elevação
+   ========================================================================== */
+
+/* DSS Visual Standard: usa tokens de elevação DSS para consistência com DssCard e DssFab.
+   Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+.dss-button--elevated {
+  box-shadow: var(--dss-elevation-2);
+
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: var(--dss-elevation-3);
+  }
+
+  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: var(--dss-elevation-1);
+  }
+}

@@ -1,0 +1,85 @@
+/* ==========================================================================
+   DSS - TOKENS DE DIMENSÕES DE CONTROLES INTERATIVOS
+   Famílias de dimensões para padrões recorrentes de UI (DSS v2.4.0)
+
+   Categorias:
+     1. Track Height      — trilhos de controles deslizantes e indicadores
+     2. Thumb Size        — polegar/handle de controles arrastáveis
+     3. Switch Track Width — largura do trilho do toggle/switch
+     4. Min Width         — restrições mínimas de largura por contexto semântico
+     5. Max Width         — restrições máximas de largura por contexto semântico
+   ========================================================================== */
+
+:root {
+  /* ===========================================
+     1. TRACK HEIGHT
+     Usado em: DssLinearProgress, DssRange, DssSlider, DssTab (indicador)
+     Derivado do spacing scale (onde possível).
+     =========================================== */
+  --dss-track-height-xs: var(--dss-spacing-0_5);  /*  2px — indicadores de tab, trilhos decorativos */
+  --dss-track-height-sm: var(--dss-spacing-1);     /*  4px — progresso, range, slider padrão */
+  --dss-track-height-md: var(--dss-spacing-1_5);   /*  6px — trilhos de destaque */
+  --dss-track-height-lg: var(--dss-spacing-2);     /*  8px — controles de alto contraste / acessibilidade */
+
+  /* ===========================================
+     2. THUMB SIZE
+     Usado em: DssRange, DssSlider; aliases semânticos para DssToggle.
+     DssToggle: thumb off = sm (16px) → thumb on = lg (24px).
+     =========================================== */
+  --dss-thumb-size-xs: var(--dss-spacing-3);   /* 12px — compacto */
+  --dss-thumb-size-sm: var(--dss-spacing-4);   /* 16px — DssToggle thumb off */
+  --dss-thumb-size-md: var(--dss-spacing-5);   /* 20px — DssRange / DssSlider padrão */
+  --dss-thumb-size-lg: var(--dss-spacing-6);   /* 24px — DssToggle thumb on */
+  --dss-thumb-size-xl: var(--dss-spacing-8);   /* 32px — reserva Fase 3 */
+
+  /* ===========================================
+     3. SWITCH TRACK WIDTH
+     Largura do trilho do componente toggle/switch.
+     Valores ancorados no spacing scale (Opção A — aprovada em Junho 2026).
+     NOTA: o valor anterior de produção era 52px; md (56px) foi validado visualmente.
+     =========================================== */
+  --dss-switch-track-width-sm: var(--dss-spacing-12);  /* 48px — toggle compacto */
+  --dss-switch-track-width-md: var(--dss-spacing-14);  /* 56px — toggle padrão */
+  --dss-switch-track-width-lg: var(--dss-spacing-16);  /* 64px — toggle grande */
+  --dss-switch-track-width-xl: var(--dss-spacing-20);  /* 80px — toggle extra grande */
+
+  /* ===========================================
+     4. MIN-WIDTH
+     Restrições mínimas de largura por contexto semântico.
+     Derivado do spacing scale; 200px é exceção estrutural (fora da escala base).
+     =========================================== */
+  --dss-min-w-xs: var(--dss-spacing-16);   /*  64px — botões e controles compactos */
+  --dss-min-w-sm: var(--dss-spacing-40);   /* 160px — rating, elementos de avaliação */
+  --dss-min-w-md: var(--dss-spacing-52);   /* 208px — menus, overlays, ranges */
+  --dss-min-w-lg: var(--dss-spacing-60);   /* 240px — campos de formulário (Input, Select, Textarea) */
+  --dss-min-w-xl: var(--dss-spacing-80);   /* 320px — painéis compactos (reserva Fase 3) */
+  --dss-min-w-2xl: var(--dss-spacing-120);                  /* 480px — painéis e modais (reserva Fase 3) */
+
+  /* ===========================================
+     5. MAX-WIDTH
+     Restrições máximas de largura por contexto semântico.
+     =========================================== */
+  --dss-max-w-xs: var(--dss-spacing-60);   /* 240px — tooltips, popovers compactos */
+  --dss-max-w-sm: var(--dss-spacing-80);   /* 320px — cards compactos */
+  --dss-max-w-md: var(--dss-spacing-120);                   /* 480px — painéis laterais */
+  --dss-max-w-lg: var(--dss-spacing-192);  /* 768px — modais e drawers */
+
+  /* ===========================================
+     6. MIN-HEIGHT
+     Restrições mínimas de altura por contexto semântico.
+
+     Referência de mercado (âncoras semânticas):
+       xs → Material Design 3: mínimo de área de toque acessível (48dp)
+       sm → Material Design 3: FAB, elementos contidos de ação (56dp)
+       md → Material Design 3: barra de navegação inferior (80dp)
+       lg → 200px — containers de overlay/conteúdo (constante estrutural ⚠️)
+       xl → painéis e seções de média altura
+       2xl → seções de altura completa
+     =========================================== */
+  --dss-min-h-xs: var(--dss-spacing-6);    /*  24px — elementos não-interativos compactos (IBM Carbon layout-05) */
+  --dss-min-h-sm: var(--dss-spacing-10);   /*  40px — elementos compactos abaixo do mínimo WCAG (uso restrito) */
+  --dss-min-h-md: var(--dss-spacing-12);   /*  48px — ✅ piso MD3/WCAG 2.5.5 — referência primária */
+  --dss-min-h-lg: var(--dss-spacing-48);   /* 192px — containers overlay (menus, scroll areas, parallax) */
+  --dss-min-h-xl: var(--dss-spacing-80);   /* 320px — painéis laterais e seções de conteúdo */
+  --dss-min-h-2xl: var(--dss-spacing-120);                  /* 480px — seções de altura completa */
+}

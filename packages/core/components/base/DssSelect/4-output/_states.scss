@@ -1,0 +1,227 @@
+/* ==========================================================================
+   DssSelect - LAYER 4: OUTPUT - States
+
+   RESPONSABILIDADE: Estados especiais (dark mode, high contrast, a11y)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-select {
+
+    /* Filled variant em dark mode */
+    &.dss-select--filled .q-field__control {
+      background-color: var(--dss-gray-900);
+      border-bottom-color: var(--dss-gray-700);
+    }
+
+    &.dss-select--filled.dss-select--focused .q-field__control,
+    &.dss-select--filled.q-field--focused .q-field__control {
+      background-color: var(--dss-gray-800);
+    }
+
+    /* Outlined variant em dark mode */
+    &.dss-select--outlined .q-field__control {
+      border-color: var(--dss-gray-600);
+    }
+
+    /* Standout em dark mode */
+    &.dss-select--standout .q-field__control {
+      background-color: var(--dss-gray-700);
+    }
+
+    &.dss-select--standout.dss-select--focused .q-field__control,
+    &.dss-select--standout.q-field--focused .q-field__control {
+      background-color: var(--dss-gray-600);
+    }
+
+    /* Texto em dark mode */
+    .q-field__native {
+      color: var(--dss-text-inverse);
+    }
+
+    /* Placeholder em dark mode */
+    .q-placeholder {
+      color: var(--dss-text-inverse-hint);
+    }
+
+    /* Label em dark mode */
+    .q-field__label {
+      color: var(--dss-text-inverse-secondary);
+    }
+
+    /* Appendages em dark mode */
+    .q-field__prepend,
+    .q-field__append,
+    .q-field__after {
+      color: var(--dss-text-inverse-secondary);
+    }
+
+    /* Messages (hint) em dark mode */
+    &:not(.q-field--error) .q-field__messages {
+      color: var(--dss-text-inverse-secondary);
+    }
+
+    /* Chips em dark mode */
+    .q-field__native .q-chip {
+      background-color: var(--dss-gray-700);
+      color: var(--dss-text-inverse);
+    }
+  }
+
+  /* Painel dropdown em dark mode */
+  .dss-select__panel {
+    background-color: var(--dss-gray-800);
+    border-color: var(--dss-gray-700);
+
+    .q-item {
+      color: var(--dss-text-inverse);
+    }
+
+    .q-item__label--caption {
+      color: var(--dss-text-inverse-secondary);
+    }
+
+    .q-item--active {
+      background-color: var(--dss-gray-700);
+      color: var(--dss-text-action);
+    }
+  }
+}
+
+/* ==========================================================================
+   FOCUS VISIBLE (A11Y — teclado)
+   ========================================================================== */
+
+.dss-select:has(:focus-visible) .q-field__control {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline-offset: var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-select .q-field__control {
+    border-width: var(--dss-border-width-md) !important;
+    border-color: currentColor !important;
+  }
+
+  .dss-select.dss-select--focused .q-field__control,
+  .dss-select.q-field--focused .q-field__control {
+    outline: var(--dss-border-width-thick) solid var(--dss-action-primary);
+    outline-offset: var(--dss-spacing-1);
+  }
+
+  .dss-select .q-field__native {
+    color: currentColor;
+  }
+
+  /* Painel em high contrast */
+  .dss-select__panel {
+    border-width: var(--dss-border-width-md);
+    border-color: currentColor;
+
+    .q-item--active {
+      outline: var(--dss-border-width-thin) solid currentColor;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-select .q-field__control,
+  .dss-select .q-field__label,
+  .dss-select .q-field__append .q-icon {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .dss-select__panel .q-item {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  .dss-select {
+    &.dss-select--filled .q-field__control,
+    &.dss-select--standout .q-field__control {
+      background: none !important;
+      border: var(--dss-border-width-thin) solid var(--dss-text-primary) !important;
+      box-shadow: none !important;
+    }
+
+    &.dss-select--outlined .q-field__control {
+      box-shadow: none !important;
+    }
+  }
+
+  /* Painel não deve aparecer na impressão */
+  .dss-select__panel {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast)
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  /* Não usar forced-color-adjust: none — permite que o browser aplique
+     corretamente as system colors nos filhos do QSelect não mapeados
+     (ícones internos, spinner, etc.). Padrão estabelecido no DssTextarea. */
+
+  .dss-select .q-field__control {
+    border: var(--dss-border-width-md) solid ButtonText;
+  }
+
+  .dss-select.dss-select--focused .q-field__control,
+  .dss-select.q-field--focused .q-field__control {
+    border-color: Highlight;
+    outline: var(--dss-border-width-md) solid Highlight;
+  }
+
+  .dss-select.dss-select--error .q-field__control,
+  .dss-select.q-field--error .q-field__control {
+    border-color: LinkText;
+  }
+
+  .dss-select.dss-select--disabled .q-field__control {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  .dss-select .q-field__native {
+    color: FieldText;
+    background-color: Field;
+  }
+
+  .dss-select .q-field__label {
+    color: FieldText;
+  }
+
+  /* Painel em forced-colors */
+  .dss-select__panel {
+    border: var(--dss-border-width-md) solid ButtonText;
+    background-color: Field;
+
+    .q-item {
+      color: FieldText;
+    }
+
+    .q-item--active {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}

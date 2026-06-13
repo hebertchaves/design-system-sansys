@@ -1,0 +1,8 @@
+// Layer 2 — Base composition
+// DssResponsive is a logic-only wrapper with no visual tokens.
+// All visual responsibility belongs to slotted consumer components.
+
+.dss-responsive {
+  // Intentionally empty — this component adds no visual styling.
+  // display/layout is inherited from the rendered tag and $attrs.
+}

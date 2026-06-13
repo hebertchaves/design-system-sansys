@@ -1,0 +1,149 @@
+{
+  "component": "DssTable",
+  "cssClass": "dss-table",
+  "phase": 2,
+  "level": 4,
+  "status": "sealed",
+  "auditDate": "2026-05-22",
+  "seal": "docs/Compliance/seals/DssTable/DSSTABLE_SELO_v2.2.md",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssMarkupTable",
+  "classification": {
+    "type": "Tabela interativa",
+    "category": "Tabelas e Dados",
+    "interactive": true,
+    "note": "Interativo via seleção, ordenação, filtro e paginação. Motor QTable do Quasar."
+  },
+  "phaseDescription": "Fase 2 — Nível 4 (Dependente). Tabela interativa baseada em QTable do Quasar. Suporta ordenação, paginação, filtro, seleção e virtual scroll.",
+  "quasarBase": "QTable",
+  "dependencies": [],
+  "optionalComposition": [
+    "DssInput",
+    "DssCheckbox",
+    "DssPagination",
+    "DssSpinner",
+    "DssIcon"
+  ],
+  "tokens": [
+    "--dss-action-primary",
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-size-sm",
+    "--dss-font-weight-semibold",
+    "--dss-text-body",
+    "--dss-gray-50",
+    "--dss-gray-100",
+    "--dss-gray-200",
+    "--dss-gray-700",
+    "--dss-gray-800",
+    "--dss-radius-md",
+    "--dss-spacing-1_5",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-6",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-touch-target-md",
+    "--dss-duration-250",
+    "--dss-hub-50",
+    "--dss-hub-200",
+    "--dss-hub-600",
+    "--dss-hub-700",
+    "--dss-hub-900",
+    "--dss-water-50",
+    "--dss-water-200",
+    "--dss-water-500",
+    "--dss-water-700",
+    "--dss-water-900",
+    "--dss-waste-50",
+    "--dss-waste-200",
+    "--dss-waste-600",
+    "--dss-waste-700",
+    "--dss-waste-900"
+  ],
+  "propsBlocked": [
+    {
+      "quasarProp": "dark",
+      "reason": "Tema escuro governado via [data-theme='dark'] global. DSS não usa prop dark de componente — o tema é aplicado na raiz da aplicação."
+    },
+    {
+      "quasarProp": "color",
+      "reason": "Cor governada via CSS cascade com tokens DSS via --q-color-primary override. DSS não usa Quasar color names."
+    },
+    {
+      "quasarProp": "square",
+      "reason": "DssTable sempre usa --dss-radius-md. Remover bordas arredondadas viola a identidade visual DSS."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "description": "Seletores descendentes obrigatórios (.dss-table .q-table, .q-table th, .q-table td, .q-table tbody tr) para estilizar o DOM interno do QTable. QTable renderiza uma estrutura de tabela HTML complexa internamente que não pode ser substituída por slots em todas as partes. Precedente: DssMarkupTable (EXC-Gate-01).",
+      "precedent": "DssMarkupTable (EXC-Gate-01)"
+    },
+    {
+      "id": "EXC-Gate-02",
+      "description": "--q-color-primary: var(--dss-action-primary) no escopo .dss-table. QTable usa internamente --q-color-primary para governar: checkboxes de seleção (QCheckbox interno), ícones de ordenação ativos, indicadores de paginação. DSS injeta a cor de ação via --q-color-primary para manter governança sem substituir o QCheckbox interno. Precedente: DssPagination, DssAjaxBar (EXC-Gate-02).",
+      "precedent": "DssPagination (EXC-Gate-02), DssAjaxBar (EXC-Gate-02)"
+    },
+    {
+      "id": "EXC-01",
+      "description": "Dark mode — border-bottom do thead usa rgba(255,255,255,0.15) e border-bottom das células usa rgba(255,255,255,0.06). Não existe token DSS equivalente para separadores com opacidade em dark mode. Valores derivados do padrão Material Design para tabelas em dark mode.",
+      "precedent": "DssMarkupTable (EXC-01)"
+    },
+    {
+      "id": "EXC-02",
+      "description": "Forced-colors — palavras-chave de cor do sistema (Canvas, CanvasText, ButtonText, Highlight, HighlightText) são obrigatórias em @media (forced-colors: active). Tokens CSS DSS são ignorados pelo user agent neste contexto. Padrão WCAG 1.4.11 / Windows High Contrast.",
+      "precedent": "DssMarkupTable (EXC-02)"
+    },
+    {
+      "id": "EXC-03",
+      "description": "Print — display:block e overflow:visible no .dss-table para evitar quebra de layout de impressão. Valor de display não tokenizável em contexto de impressão.",
+      "precedent": "DssMarkupTable (EXC-03)"
+    },
+    {
+      "id": "EXC-04",
+      "description": "Print — border: 1px solid currentColor em th/td. Token --dss-border-width-thin não aplicável em contexto de impressão onde o UA pode ignorar custom properties.",
+      "precedent": "DssMarkupTable (EXC-04)"
+    },
+    {
+      "id": "EXC-Expose-01",
+      "description": "defineExpose({ requestServerInteraction, resetVirtualScroll, scrollTo, clearSelection, sort }) — API imperativa exposta ao consumer para controle programático. Segue padrão EXC-Expose-01 dos componentes que necessitam de controle imperativo (DssScrollArea, DssInfiniteScroll).",
+      "precedent": "DssScrollArea (EXC-Expose-01), DssInfiniteScroll (EXC-Expose-01)"
+    }
+  ],
+  "statesNotApplicable": {
+    "hover": "Estados de hover aplicam-se às linhas da tabela (tr:hover), não ao container raiz",
+    "focus": "Focus aplicado individualmente em células de cabeçalho clicáveis (th[tabindex]:focus-visible)",
+    "active": "Não aplicável ao container — interatividade pertence às linhas e controles internos",
+    "disabled": "Tabelas não têm estado disabled — linhas individuais podem ter classes disabled via slot",
+    "loading": "Estado de loading implementado via QTable (prop loading) + overlay interno"
+  },
+  "gateExceptions": {
+    "templateStructure": "QTable como motor. Toda a estrutura interna (thead/tbody/tfoot, células, paginação, filtros) é gerenciada pelo QTable. Estilização via descendant selectors (EXC-Gate-01) e --q-color-primary override (EXC-Gate-02)."
+  },
+  "defaultPreview": {
+    "density": "standard",
+    "bordered": false,
+    "flat": false,
+    "separator": "horizontal",
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-body",
+        "value": "#454545",
+        "source": "2-composition/_base.scss"
+      }
+    ]
+  },
+  "auditHistory": [],
+  "previewGroup": "contextuais"
+}

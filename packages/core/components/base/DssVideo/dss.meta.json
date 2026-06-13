@@ -1,0 +1,121 @@
+{
+  "component": "DssVideo",
+  "cssClass": "dss-video",
+  "phase": 2,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssImg",
+  "classification": {
+    "type": "Container de mídia não interativo",
+    "category": "Mídia e Visualização",
+    "interactive": false,
+    "level": 1,
+    "family": "Mídia e Visualização"
+  },
+  "phaseDescription": "Nível 1 — Container de mídia. Wrapper governado sobre QVideo com aspect ratio responsivo e border-radius via tokens.",
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error",
+    "hover",
+    "focus",
+    "active",
+    "disabled"
+  ],
+  "statesNotApplicableReason": {
+    "loading": "QVideo é um iframe — não expõe slot #loading controlável pelo DSS. Estado de loading é interno ao browser/player.",
+    "error": "QVideo não expõe slot de erro. Falhas são gerenciadas internamente pelo iframe.",
+    "hover": "Elemento de mídia não interativo — interatividade é responsabilidade do elemento pai",
+    "focus": "Não interativo diretamente — quando dentro de elementos interativos, o foco é gerenciado pelo pai",
+    "active": "Elemento de mídia — sem estado ativo próprio",
+    "disabled": "Sem semântica de disable para elementos de mídia — o consumidor remove ou oculta o vídeo quando necessário"
+  },
+  "tokens": [
+    "--dss-radius-sm",
+    "--dss-radius-md",
+    "--dss-radius-lg",
+    "--dss-radius-full"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "rule": "Gate de Composição v2.4 — componente filho DSS como root element",
+      "detail": "QVideo é usado como root element direto (sem div wrapper). $attrs são forwarded via v-bind=$attrs no QVideo. QVideo renderiza como <div> com position:relative + overflow:hidden já aplicados — clip de border-radius funciona sem redeclaração.",
+      "location": "1-structure/DssVideo.ts.vue — template root"
+    }
+  ],
+  "gateExceptions": {
+    "templateStructure": "QVideo é root element direto. Wrapper div extra omitido intencionalmente — QVideo renderiza <div> com overflow:hidden já aplicado."
+  },
+  "compositionRecommendations": [
+    "DssCard — container estrutural recomendado ao envolver DssVideo (ex: card de produto com vídeo)",
+    "DssImg — alternativa para imagens estáticas na mesma família Mídia e Visualização"
+  ],
+  "defaultPreview": {
+    "props": {
+      "src": "",
+      "title": "[Descrição]",
+      "ratio": 1.78
+    },
+    "computedDimensions": {
+      "minHeight": "180px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "180px",
+        "value": null,
+        "source": "defaultPreview / Seção 13.28"
+      },
+      {
+        "property": "border-radius",
+        "token": null,
+        "value": "0",
+        "source": "CSS real: sem border-radius no default — radius só existe nos variants (dss-video--radius-*)"
+      },
+      {
+        "property": "background",
+        "token": null,
+        "value": null,
+        "source": "Browser default: elemento <video> nativo tem fundo escuro — não aplicado via token DSS"
+      },
+      {
+        "property": "aspect-ratio",
+        "token": "16/9 (número, não string)",
+        "value": null,
+        "source": "NC-02 corrigida: `ratio=1.78`"
+      },
+      {
+        "property": "slider preenchido",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "texto de tempo font-size",
+        "token": "--dss-font-size-xs",
+        "value": "12px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      }
+    ],
+    "demoContent": "Vídeo 16:9 incorporado",
+    "demoSlots": null
+  },
+  "auditHistory": [
+    {
+      "cycle": 1,
+      "date": "2026-05-13",
+      "auditor": "Claude (DSS Agent)",
+      "ncs": 2,
+      "gaps": 4,
+      "ressalvas": 0,
+      "result": "conformant",
+      "sealFile": "DSS/docs/Compliance/seals/DssVideo/DSSVIDEO_SELO_v2.2.md",
+      "summary": "Auditoria inicial. 2 NCs corrigidas (forced-color-adjust removido; ratio string→número). 4 GAPs corrigidos no pré-prompt (Golden Context, API QVideo incorreta com props inexistentes, tokens fantasmas, estados N/A). 0 Ressalvas. Selo emitido."
+    }
+  ],
+  "previewGroup": "contextuais"
+}

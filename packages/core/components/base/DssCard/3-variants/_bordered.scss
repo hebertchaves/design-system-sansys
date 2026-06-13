@@ -1,0 +1,26 @@
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Bordered)
+
+   Responsabilidade: Variante com borda + elevação
+   ========================================================================== */
+
+.dss-card--bordered {
+  /* Border */
+  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
+
+  /* Elevation mantida */
+  box-shadow: var(--dss-elevation-1);
+
+  /* Hover */
+  &.dss-card--clickable:hover {
+    border-color: var(--dss-gray-400);
+    box-shadow: var(--dss-elevation-2);
+    cursor: pointer;
+  }
+
+  /* Active */
+  &.dss-card--clickable:active {
+    border-color: var(--dss-action-primary);
+    box-shadow: var(--dss-shadow-active);
+  }
+}

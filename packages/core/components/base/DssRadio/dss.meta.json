@@ -1,0 +1,82 @@
+{
+  "component": "DssRadio",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS/docs/Compliance/seals/DssRadio/DSSRADIO_SELO_v2.2.md",
+  "auditMode": "completed",
+  "auditDate": "2026-02-05",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssCheckbox",
+  "goldenContextSecondary": "DssChip",
+  "category": "Compact Control interativo",
+  "phase": "Fase 1",
+  "classification": "Form / Selection",
+  "hasReservations": false,
+  "createdDate": "2026-02-04",
+  "sealDate": "2026-02-05",
+  "defaultPreview": {
+    "props": {
+      "color": "primary",
+      "size": "md",
+      "label": "Opção",
+      "val": "opcao",
+      "modelValue": null
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "controle tamanho",
+        "token": null,
+        "value": "20px × 20px",
+        "source": "Seção 3.1 Compact Controls"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-circle",
+        "value": "50%",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width (unchecked)",
+        "token": "--dss-border-width-md",
+        "value": "2px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-color (unchecked)",
+        "token": "--dss-gray-500",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-color (checked)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "ponto interno (checked)",
+        "token": "--dss-action-primary",
+        "value": "10px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "touch target",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "Via `::before` (WCAG 2.5.5)"
+      }
+    ],
+    "demoContent": "Label 'Opção'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-controles"
+}

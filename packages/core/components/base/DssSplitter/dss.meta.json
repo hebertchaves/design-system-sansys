@@ -1,0 +1,136 @@
+{
+  "component": "DssSplitter",
+  "cssClass": "dss-splitter",
+  "phase": 2,
+  "status": "in-progress",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssSlider",
+  "classification": {
+    "type": "Divisor redimensionável entre dois painéis de layout",
+    "category": "Layout Auxiliar",
+    "interactive": true,
+    "level": 1,
+    "family": "Layout Auxiliar"
+  },
+  "phaseDescription": "Nível 1 — Container interativo de divisão. Permite redimensionamento dinâmico entre dois painéis via arrastar/teclado.",
+  "statesApplicable": [
+    "default",
+    "hover",
+    "active",
+    "disabled",
+    "focus"
+  ],
+  "statesNotApplicable": [
+    "loading",
+    "error"
+  ],
+  "statesNotApplicableReason": {
+    "loading": "Responsabilidade do conteúdo interno dos painéis, não do divisor estrutural",
+    "error": "DssSplitter é container estrutural; validação é responsabilidade do consumidor"
+  },
+  "tokens": [
+    "--dss-gray-200",
+    "--dss-gray-400",
+    "--dss-gray-500",
+    "--dss-gray-600",
+    "--dss-gray-700",
+    "--dss-gray-800",
+    "--dss-gray-900",
+    "--dss-duration-250",
+    "--dss-easing-ease-out",
+    "--dss-touch-target-md",
+    "--dss-opacity-disabled",
+    "--dss-focus-shadow-primary",
+    "--dss-action-hub",
+    "--dss-action-water",
+    "--dss-action-waste"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "rule": "Gate de Composição v2.4 — componente Quasar como root element",
+      "detail": "QSplitter é usado como root element direto (sem div wrapper). $attrs são forwarded via v-bind=$attrs no q-splitter. Evita DOM desnecessário e preserva o comportamento de drag nativo do Quasar. Precedente: DssScrollArea, DssInfiniteScroll.",
+      "location": "1-structure/DssSplitter.ts.vue — template root"
+    },
+    {
+      "id": "EXC-Gate-02",
+      "rule": "Seletores descendentes de elementos internos do Quasar",
+      "detail": ".q-splitter__separator é elemento interno do Quasar sem CSS custom property hooks públicos. Estilizado via CSS global com descendant selectors (.dss-splitter .q-splitter__separator). Sem :deep() — SCSS é global via module.scss. Cobre: background-color, hover, active, focus-visible (box-shadow), disabled, dark mode, forced-colors, brands.",
+      "location": "2-composition/_base.scss, 4-output/_states.scss, 4-output/_brands.scss"
+    },
+    {
+      "id": "EXC-States-01",
+      "rule": "Dark mode: focus ring via outline ao invés de --dss-focus-shadow-primary",
+      "detail": "Token --dss-focus-shadow-primary-dark não existe no DSS. Dark mode usa 'outline: 2px solid white' hardcoded como exceção estrutural. Precedente: DssToggle, DssSlider (padrão consolidado DSS).",
+      "location": "4-output/_states.scss — [data-theme='dark'] .q-splitter__separator:focus-visible"
+    }
+  ],
+  "gateExceptions": {
+    "templateStructure": "QSplitter é root element direto. Wrapper div extra omitido intencionalmente para preservar o layout flex nativo do Quasar e o comportamento de drag detection.",
+    "compositionGate": "Sem imports de componentes DSS filhos. Os slots before, after e separator aceitam qualquer conteúdo arbitrário."
+  },
+  "propsBlocked": {
+    "separator-class": "Governado via CSS DSS (EXC-Gate-02). Consumidor não deve sobrescrever.",
+    "separator-style": "Governado via CSS DSS (EXC-Gate-02). Consumidor não deve sobrescrever.",
+    "dark": "Governado via tokens DSS em 4-output/_states.scss com [data-theme='dark'].",
+    "before-class": "Consumidor usa class/style diretamente no conteúdo do slot before.",
+    "after-class": "Consumidor usa class/style diretamente no conteúdo do slot after."
+  },
+  "compositionRecommendations": [
+    "DssCard — container recomendado dentro de cada painel",
+    "DssScrollArea — recomendado para conteúdo longo dentro dos painéis",
+    "DssLayout — contexto pai recomendado para DssSplitter com height: 100vh"
+  ],
+  "defaultPreview": {
+    "props": {
+      "modelValue": 50,
+      "orientation": "horizontal",
+      "style": "height:80px;width:240px"
+    },
+    "computedDimensions": {
+      "minHeight": "200px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "200px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "separator touch target",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "separator background",
+        "token": "--dss-gray-200",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "tap highlight",
+        "token": null,
+        "value": "-webkit-tap-highlight-color: transparent",
+        "source": "NC-02 (padrão DssChip)"
+      }
+    ],
+    "demoContent": "Divisor redimensionável 50/50",
+    "demoSlots": {
+      "before": [
+        {
+          "html": "<div style='padding:8px'>Esquerdo</div>"
+        }
+      ],
+      "after": [
+        {
+          "html": "<div style='padding:8px'>Direito</div>"
+        }
+      ]
+    }
+  },
+  "auditHistory": [],
+  "previewGroup": "midia"
+}

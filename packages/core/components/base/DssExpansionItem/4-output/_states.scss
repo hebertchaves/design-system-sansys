@@ -1,0 +1,112 @@
+/* ==========================================================================
+   DssExpansionItem - LAYER 4: STATES
+
+   Responsabilidade: dark mode, prefers-reduced-motion, prefers-contrast,
+   forced-colors e print.
+
+   EXC-States-01: Valores 1px e SystemColor keywords em forced-colors são
+   exceções documentadas — CSS custom properties são ignoradas pelo browser
+   em forced-colors mode.
+
+   EXC-States-02 (dark mode focus):
+   Token --dss-focus-ring-dark NÃO existe no catálogo DSS v2.2.
+   Dark mode usa outline: 2px solid white hardcoded.
+   Padrão consistente com DssFab, DssFabAction (selados Mai 2026).
+
+   GATE-EXCEPTION: .q-item, .q-expansion-item__toggle-icon são internos
+   do QExpansionItem (Quasar Framework).
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE — data-theme="dark"
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-expansion-item .q-item:focus-visible {
+    outline: 2px solid white; /* EXC-States-02 */
+    outline-offset: -2px;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION (WCAG 2.3.3)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-expansion-item .q-item {
+    transition: none;
+  }
+
+  .dss-expansion-item .q-expansion-item__toggle-icon {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-expansion-item .q-item {
+    border-bottom: var(--dss-border-width-thin) solid currentColor;
+  }
+
+  .dss-expansion-item .q-item:hover:not(.disabled):not([aria-disabled="true"]) {
+    outline: var(--dss-border-width-md) solid currentColor;
+    outline-offset: -2px;
+  }
+
+  .dss-expansion-item .q-item:focus-visible {
+    outline-width: var(--dss-border-width-thick);
+    outline-offset: calc(-1 * var(--dss-border-width-thick));
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+   EXC-States-01: valores 1px/2px/3px e SystemColor keywords — CSS custom
+   properties são ignoradas em forced-colors, valores absolutos são necessários.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-expansion-item .q-item {
+    color: ButtonText;
+    background-color: ButtonFace;
+    border-bottom: 1px solid ButtonText; /* EXC-States-01 */
+  }
+
+  .dss-expansion-item .q-item:hover:not(.disabled):not([aria-disabled="true"]) {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  .dss-expansion-item .q-item:focus-visible {
+    outline: 2px solid Highlight; /* EXC-States-01 */
+    outline-offset: -2px;
+  }
+
+  .dss-expansion-item .q-expansion-item--expanded .q-item {
+    background-color: ButtonFace;
+    border-left: 3px solid Highlight; /* EXC-States-01 */
+  }
+
+  .dss-expansion-item--disabled .q-item {
+    color: GrayText;
+    border-color: GrayText;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   EXC-States-01: display:none em print é exceção documentada.
+   ========================================================================== */
+
+@media print {
+  .dss-expansion-item .q-item {
+    background-color: transparent !important; /* EXC-States-01 */
+  }
+
+  .dss-expansion-item .q-expansion-item__toggle-icon {
+    display: none; /* EXC-States-01 — ícone de expansão irrelevante em print */
+  }
+}

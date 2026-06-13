@@ -1,0 +1,3167 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+/* ==========================================================================
+   TOKENS DSS — sincronizados do core (packages/core/tokens/index.scss)
+   Gerado por: npm run sync:portal-tokens — NÃO EDITAR MANUALMENTE.
+   Antes da Onda P0/T7.6 este arquivo mantinha 355 declarações --dss-*
+   copiadas à mão, 13 delas divergentes do core (drift de paleta).
+   ========================================================================== */
+/* BEGIN:DSS-TOKENS-AUTO-GENERATED */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-06-11. */
+/* @layer base: paridade com a estratégia Tailwind v4 do portal. */
+@layer base {
+@charset "UTF-8";
+/* ==========================================================================
+   DSS (Design System Sansys) - ENTRY POINT PRINCIPAL
+   ========================================================================== */
+/* 1. Tokens globais (cores base) */
+/* ==========================================================================
+   DSS (Design System Sansys) - TOKENS GLOBAIS
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. ESCALA DE CINZA (SUPORTE GERAL)
+     =========================================== */
+  --dss-gray-50: #ffffff;
+  --dss-gray-100: #fafafa;
+  --dss-gray-200: #f5f5f5;
+  --dss-gray-300: #e5e5e5;
+  --dss-gray-400: #d4d4d4;
+  --dss-gray-500: #a3a3a3;
+  --dss-gray-600: #737373;
+  --dss-gray-700: #525252;
+  --dss-gray-800: #262626;
+  --dss-gray-900: #0a0a0a;
+  --dss-gray-950: #000000;
+  /* ===========================================
+     2. PALETAS DE MARCA (HUB, WATER, WASTE)
+     =========================================== */
+  /* Hub (Laranja/Marrom) */
+  --dss-hub-50: #fff9ed;
+  --dss-hub-100: #fef2d6;
+  --dss-hub-200: #fde2ab;
+  --dss-hub-300: #fbcb76;
+  --dss-hub-400: #f8aa3f;
+  --dss-hub-500: #f5911a;
+  --dss-hub-600: #ef7a11;
+  --dss-hub-700: #bf590f;
+  --dss-hub-800: #984614;
+  --dss-hub-900: #7a3614;
+  --dss-hub-950: #421d08;
+  /* Water (Azul) */
+  --dss-water-50: #f0f7ff;
+  --dss-water-100: #e0eefe;
+  --dss-water-200: #badefd;
+  --dss-water-300: #7dc4fc;
+  --dss-water-400: #38a6f8;
+  --dss-water-500: #0e88e4;
+  --dss-water-600: #026cc7;
+  --dss-water-700: #0356a1;
+  --dss-water-800: #074a85;
+  --dss-water-900: #0c3e6e;
+  --dss-water-950: #082749;
+  /* Waste (Verde) */
+  --dss-waste-50: #edfcf4;
+  --dss-waste-100: #d3f8e2;
+  --dss-waste-200: #abefcb;
+  --dss-waste-300: #74e1ae;
+  --dss-waste-400: #3ccb8d;
+  --dss-waste-500: #18b173;
+  --dss-waste-600: #0b8154;
+  --dss-waste-700: #0a724e;
+  --dss-waste-800: #0a5b3e;
+  --dss-waste-900: #0a4a34;
+  --dss-waste-950: #042a1e;
+  /* ===========================================
+     3. CORES SEMÂNTICAS BASE
+     =========================================== */
+  /* Primary (Azul Principal) */
+  --dss-primary-disable: #b3dcff;
+  --dss-primary-light: #86c0f3;
+  --dss-primary: #1f86de;
+  --dss-primary-hover: #0f5295;
+  --dss-primary-deep: #0a3a6a;
+  --dss-primary-focus:#006AC5;
+  /* Secondary (Verde/Turquesa) */
+  --dss-secondary-disable: #b5ece4;
+  --dss-secondary-light: #6ddbcb;
+  --dss-secondary: #26a69a;
+  --dss-secondary-hover: #1c857e;
+  --dss-secondary-deep: #116761;
+  --dss-secondary-focus: #009C8D;
+  /* Tertiary (Laranja) */
+  --dss-tertiary-disable: #ffd2b5;
+  --dss-tertiary-light: #ff9452;
+  --dss-tertiary: #ff6607;
+  --dss-tertiary-hover: #de5500;
+  --dss-tertiary-deep: #E95900;
+  /* Accent (Roxo/Púrpura) */
+  --dss-accent-disable: #f0ddf4;
+  --dss-accent-light: #e3bceb;
+  --dss-accent: #b454c4;
+  --dss-accent-hover: #883b90;
+  --dss-accent-deep: #642f6a;
+  --dss-accent-deep: #B02EC5;
+  /* Dark (Cinza/Preto) */
+  --dss-dark-disable: #d7d7d7;
+  --dss-dark-light: #b0b0b0;
+  --dss-dark: #454545;
+  --dss-dark-hover: #313131;
+  --dss-dark-deep: #1d1d1d;
+  --dss-dark-deep: #3E3E3E;
+  /* Positive (Verde) */
+  --dss-positive-disable: #dbf8d1;
+  --dss-positive-light: #b9f2a4;
+  --dss-positive: #4dd228;
+  --dss-positive-hover: #27910D;
+  --dss-positive-deep: #246714;
+  --dss-positive-deep: #34C30C;
+  /* Negative (Vermelho) */
+  --dss-negative-disable: #ffcfd4;
+  --dss-negative-light: #ffa0ab;
+  --dss-negative: #d8182e;
+  --dss-negative-hover: #a01424;
+  --dss-negative-deep: #720e19;
+  --dss-negative-deep: #C40016;
+  /* Warning (Amarelo/Laranja) */
+  --dss-warning-disable: #fff9c3;
+  --dss-warning-light: #fff488;
+  --dss-warning: #fabd14;
+  --dss-warning-hover: #dd8e02;
+  --dss-warning-deep: #E9AB00;
+  /* Info (Azul Claro) */
+  --dss-info-disable: #d2f6fc;
+  --dss-info-light: #a7effa;
+  --dss-info: #0cc4e9;
+  --dss-info-hover: #0c8bae;
+  --dss-info-deep: #00B2D5;
+}
+
+/* 2. Tokens semânticos principais */
+/* ==========================================================================
+   DSS - TOKENS DE AÇÃO
+   ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
+   ========================================================================== */
+:root {
+  /* Primary Action - Azul (#1F86DE) */
+  --dss-action-primary: var(--dss-primary);
+  --dss-action-primary-light: var(--dss-primary-light);
+  --dss-action-primary-disable: var(--dss-primary-disable);
+  --dss-action-primary-hover: var(--dss-primary-hover);
+  --dss-action-primary-deep: var(--dss-primary-deep);
+  --dss-action-primary-focus: var(--dss-primary-focus);
+  /* Secondary Action - Verde (#26A69A) */
+  --dss-action-secondary: var(--dss-secondary);
+  --dss-action-secondary-light: var(--dss-secondary-light);
+  --dss-action-secondary-disable: var(--dss-secondary-disable);
+  --dss-action-secondary-hover: var(--dss-secondary-hover);
+  --dss-action-secondary-deep: var(--dss-secondary-deep);
+  --dss-action-secondary-focus: var(--dss-secondary-focus);
+  /* Tertiary Action - Laranja (#FF6607) */
+  --dss-action-tertiary: var(--dss-tertiary);
+  --dss-action-tertiary-light: var(--dss-tertiary-light);
+  --dss-action-tertiary-disable: var(--dss-tertiary-disable);
+  --dss-action-tertiary-hover: var(--dss-tertiary-hover);
+  --dss-action-tertiary-deep: var(--dss-tertiary-deep);
+  --dss-action-tertiary-focus: var(--dss-tertiary-focus);
+  /* Accent Action - Roxo (#B454C4) */
+  --dss-action-accent: var(--dss-accent);
+  --dss-action-accent-light: var(--dss-accent-light);
+  --dss-action-accent-disable: var(--dss-accent-disable);
+  --dss-action-accent-hover: var(--dss-accent-hover);
+  --dss-action-accent-deep: var(--dss-accent-deep);
+  --dss-action-accent-focus: var(--dss-accent-focus);
+  /* Dark Action - cinza escuro (#454545) */
+  --dss-action-dark: var(--dss-dark);
+  --dss-action-dark-light: var(--dss-dark-light);
+  --dss-action-dark-disable: var(--dss-dark-disable);
+  --dss-action-dark-hover: var(--dss-dark-hover);
+  --dss-action-dark-deep: var(--dss-dark-deep);
+  --dss-action-dark-focus: var(--dss-dark-focus);
+  /* Action Surfaces — fundo tintado a 8% por cor de ação */
+  --dss-action-primary-surface: rgba(31, 134, 222, 0.08); /* #1f86de 8% */
+  --dss-action-secondary-surface: rgba(38, 166, 154, 0.08); /* #26a69a 8% */
+  --dss-action-tertiary-surface: rgba(255, 102, 7, 0.08); /* #ff6607 8% */
+  --dss-action-accent-surface: rgba(180, 84, 196, 0.08); /* #b454c4 8% */
+  --dss-action-dark-surface: rgba( 69, 69, 69, 0.08); /* #454545 8% */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE TEXTO
+   Hierarquia tipográfica - SISTEMA PRÓPRIO
+   ========================================================================== */
+:root {
+  /* Text Hierarchy */
+  --dss-text-primary: var(--dss-dark); /* #454545 - Alias semântico de --dss-text-body */
+  --dss-text-secondary: var(--dss-dark-light); /* #B0B0B0 - Alias semântico de --dss-text-subtle */
+  --dss-text-body: var(--dss-dark); /* #454545 - Texto principal */
+  --dss-text-subtle: var(--dss-dark-light); /* #B0B0B0 - Texto secundário */
+  --dss-text-muted: var(--dss-dark-disable); /* #D7D7D7 - Texto terciário */
+  --dss-text-inverse: var(--dss-gray-50); /* #ffffff - Texto claro */
+  /* Text States */
+  --dss-text-disabled: var(--dss-gray-400); /* #d4d4d4 - Texto desabilitado */
+  /* Text Actions */
+  --dss-text-action: var(--dss-action-primary); /* Links padrão */
+  --dss-text-action-hover: var(--dss-action-primary-hover);
+  --dss-text-action-alt: var(--dss-action-secondary); /* Links alternativos */
+  /* Text Feedback */
+  --dss-text-success: var(--dss-positive);
+  --dss-text-error: var(--dss-negative);
+  --dss-text-warning: var(--dss-warning);
+  --dss-text-info: var(--dss-info);
+  /* Text Brand (para uso em contextos específicos) */
+  --dss-text-brand-hub: var(--dss-hub-500);
+  --dss-text-brand-water: var(--dss-water-500);
+  --dss-text-brand-waste: var(--dss-waste-500);
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE SUPERFÍCIE
+   Fundos e containers - SISTEMA PRÓPRIO
+   ========================================================================== */
+:root {
+  /* Surface Hierarchy */
+  --dss-surface-default: var(--dss-gray-50); /* #ffffff - Fundo principal */
+  --dss-surface-subtle: var(--dss-gray-100); /* #fafafa - Elevação suave */
+  --dss-surface-muted: var(--dss-gray-200); /* #f5f5f5 - Áreas rebaixadas */
+  --dss-surface-overlay: rgba(0, 0, 0, 0.5); /* Overlay escuro */
+  /* Surface States */
+  --dss-surface-hover: rgba(0, 0, 0, 0.04);
+  --dss-surface-active: rgba(0, 0, 0, 0.08);
+  --dss-surface-selected: rgba(31, 134, 222, 0.12); /* Primary com 12% opacidade */
+  --dss-surface-disabled: var(--dss-gray-200); /* #f5f5f5 */
+  /* Surface Brand — transparent fora de contexto [data-brand]; sobrescrito por tokens/brand/_*.scss */
+  --dss-surface-brand-subtle: transparent;
+  --dss-surface-brand-light: transparent;
+  --dss-surface-brand-medium: transparent;
+  --dss-surface-brand-strong: transparent;
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE BORDA
+   Suporte para TODAS as cores disponíveis
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. BORDAS NEUTRAS (ESCALA DE CINZA COMPLETA)
+     =========================================== */
+  --dss-border-gray-50: 1px solid var(--dss-gray-50);
+  --dss-border-gray-100: 1px solid var(--dss-gray-100);
+  --dss-border-gray-200: 1px solid var(--dss-gray-200);
+  --dss-border-gray-300: 1px solid var(--dss-gray-300);
+  --dss-border-gray-400: 1px solid var(--dss-gray-400);
+  --dss-border-gray-500: 1px solid var(--dss-gray-500);
+  --dss-border-gray-600: 1px solid var(--dss-gray-600);
+  --dss-border-gray-700: 1px solid var(--dss-gray-700);
+  --dss-border-gray-800: 1px solid var(--dss-gray-800);
+  --dss-border-gray-900: 1px solid var(--dss-gray-900);
+  --dss-border-gray-950: 1px solid var(--dss-gray-950);
+  /* ===========================================
+     2. BORDAS DE AÇÃO (COM TODAS AS VARIAÇÕES)
+     =========================================== */
+  /* Primary - TODAS as variações */
+  --dss-border-primary-disable: 1px solid var(--dss-primary-disable);
+  --dss-border-primary-light: 1px solid var(--dss-primary-light);
+  --dss-border-primary: 1px solid var(--dss-primary);
+  --dss-border-primary-hover: 1px solid var(--dss-primary-hover);
+  --dss-border-primary-deep: 1px solid var(--dss-primary-deep);
+  /* Secondary - TODAS as variações */
+  --dss-border-secondary-disable: 1px solid var(--dss-secondary-disable);
+  --dss-border-secondary-light: 1px solid var(--dss-secondary-light);
+  --dss-border-secondary: 1px solid var(--dss-secondary);
+  --dss-border-secondary-hover: 1px solid var(--dss-secondary-hover);
+  --dss-border-secondary-deep: 1px solid var(--dss-secondary-deep);
+  /* Tertiary - TODAS as variações */
+  --dss-border-tertiary-disable: 1px solid var(--dss-tertiary-disable);
+  --dss-border-tertiary-light: 1px solid var(--dss-tertiary-light);
+  --dss-border-tertiary: 1px solid var(--dss-tertiary);
+  --dss-border-tertiary-hover: 1px solid var(--dss-tertiary-hover);
+  --dss-border-tertiary-deep: 1px solid var(--dss-tertiary-deep);
+  /* Accent - TODAS as variações */
+  --dss-border-accent-disable: 1px solid var(--dss-accent-disable);
+  --dss-border-accent-light: 1px solid var(--dss-accent-light);
+  --dss-border-accent: 1px solid var(--dss-accent);
+  --dss-border-accent-hover: 1px solid var(--dss-accent-hover);
+  --dss-border-accent-deep: 1px solid var(--dss-accent-deep);
+  /* ===========================================
+     3. BORDAS DE FEEDBACK (COM TODAS AS VARIAÇÕES)
+     =========================================== */
+  /* Positive - TODAS as variações */
+  --dss-border-positive-disable: 1px solid var(--dss-positive-disable);
+  --dss-border-positive-light: 1px solid var(--dss-positive-light);
+  --dss-border-positive: 1px solid var(--dss-positive);
+  --dss-border-positive-hover: 1px solid var(--dss-positive-hover);
+  --dss-border-positive-deep: 1px solid var(--dss-positive-deep);
+  /* Negative - TODAS as variações */
+  --dss-border-negative-disable: 1px solid var(--dss-negative-disable);
+  --dss-border-negative-light: 1px solid var(--dss-negative-light);
+  --dss-border-negative: 1px solid var(--dss-negative);
+  --dss-border-negative-hover: 1px solid var(--dss-negative-hover);
+  --dss-border-negative-deep: 1px solid var(--dss-negative-deep);
+  /* Warning - TODAS as variações */
+  --dss-border-warning-disable: 1px solid var(--dss-warning-disable);
+  --dss-border-warning-light: 1px solid var(--dss-warning-light);
+  --dss-border-warning: 1px solid var(--dss-warning);
+  --dss-border-warning-hover: 1px solid var(--dss-warning-hover);
+  --dss-border-warning-deep: 1px solid var(--dss-warning-deep);
+  /* Info - TODAS as variações */
+  --dss-border-info-disable: 1px solid var(--dss-info-disable);
+  --dss-border-info-light: 1px solid var(--dss-info-light);
+  --dss-border-info: 1px solid var(--dss-info);
+  --dss-border-info-hover: 1px solid var(--dss-info-hover);
+  --dss-border-info-deep: 1px solid var(--dss-info-deep);
+  /* ===========================================
+     4. BORDAS DE MARCA (ESCALA COMPLETA)
+     =========================================== */
+  /* Hub - TODOS os tons da escala */
+  --dss-border-hub-50: 1px solid var(--dss-hub-50);
+  --dss-border-hub-100: 1px solid var(--dss-hub-100);
+  --dss-border-hub-200: 1px solid var(--dss-hub-200);
+  --dss-border-hub-300: 1px solid var(--dss-hub-300);
+  --dss-border-hub-400: 1px solid var(--dss-hub-400);
+  --dss-border-hub-500: 1px solid var(--dss-hub-500);
+  --dss-border-hub-600: 1px solid var(--dss-hub-600);
+  --dss-border-hub-700: 1px solid var(--dss-hub-700);
+  --dss-border-hub-800: 1px solid var(--dss-hub-800);
+  --dss-border-hub-900: 1px solid var(--dss-hub-900);
+  --dss-border-hub-950: 1px solid var(--dss-hub-950);
+  /* Water - TODOS os tons da escala */
+  --dss-border-water-50: 1px solid var(--dss-water-50);
+  --dss-border-water-100: 1px solid var(--dss-water-100);
+  --dss-border-water-200: 1px solid var(--dss-water-200);
+  --dss-border-water-300: 1px solid var(--dss-water-300);
+  --dss-border-water-400: 1px solid var(--dss-water-400);
+  --dss-border-water-500: 1px solid var(--dss-water-500);
+  --dss-border-water-600: 1px solid var(--dss-water-600);
+  --dss-border-water-700: 1px solid var(--dss-water-700);
+  --dss-border-water-800: 1px solid var(--dss-water-800);
+  --dss-border-water-900: 1px solid var(--dss-water-900);
+  --dss-border-water-950: 1px solid var(--dss-water-950);
+  /* Waste - TODOS os tons da escala */
+  --dss-border-waste-50: 1px solid var(--dss-waste-50);
+  --dss-border-waste-100: 1px solid var(--dss-waste-100);
+  --dss-border-waste-200: 1px solid var(--dss-waste-200);
+  --dss-border-waste-300: 1px solid var(--dss-waste-300);
+  --dss-border-waste-400: 1px solid var(--dss-waste-400);
+  --dss-border-waste-500: 1px solid var(--dss-waste-500);
+  --dss-border-waste-600: 1px solid var(--dss-waste-600);
+  --dss-border-waste-700: 1px solid var(--dss-waste-700);
+  --dss-border-waste-800: 1px solid var(--dss-waste-800);
+  --dss-border-waste-900: 1px solid var(--dss-waste-900);
+  --dss-border-waste-950: 1px solid var(--dss-waste-950);
+  /* ===========================================
+     5. BORDAS DE DARK (COM TODAS AS VARIAÇÕES)
+     =========================================== */
+  --dss-border-dark-disable: 1px solid var(--dss-dark-disable);
+  --dss-border-dark-light: 1px solid var(--dss-dark-light);
+  --dss-border-dark: 1px solid var(--dss-dark);
+  --dss-border-dark-hover: 1px solid var(--dss-dark-hover);
+  --dss-border-dark-deep: 1px solid var(--dss-dark-deep);
+  /* ===========================================
+     6. BORDAS FUNCIONAIS (ESTADOS)
+     =========================================== */
+  --dss-border-focus: 2px solid var(--dss-action-primary);
+  --dss-border-focus-subtle: 1px solid var(--dss-action-primary);
+  --dss-border-active: 2px solid var(--dss-action-secondary);
+  --dss-border-selected: 2px solid var(--dss-action-tertiary);
+  --dss-border-disabled: 1px solid var(--dss-gray-300);
+  --dss-border-readonly: 1px dashed var(--dss-gray-400);
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 2)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (12 tokens):
+   *
+   * === INPUTS (6 tokens) ===
+   * --dss-border-input-default     → Use: 1px solid var(--dss-gray-300)
+   * --dss-border-input-hover       → Use: 1px solid var(--dss-gray-400)
+   * --dss-border-input-focus       → Use: 2px solid var(--dss-action-primary)
+   * --dss-border-input-error       → Use: 2px solid var(--dss-negative)
+   * --dss-border-input-success     → Use: 2px solid var(--dss-positive)
+   * --dss-border-input-disabled    → Use: 1px solid var(--dss-gray-200)
+   *
+   * === CARDS (3 tokens) ===
+   * --dss-border-card-default      → Use: 1px solid var(--dss-gray-200)
+   * --dss-border-card-elevated     → Use: 1px solid var(--dss-gray-300)
+   * --dss-border-card-selected     → Use: 2px solid var(--dss-action-primary)
+   *
+   * === DIVIDERS (3 tokens) ===
+   * --dss-border-divider-subtle    → Use: 1px solid var(--dss-gray-100)
+   * --dss-border-divider-default   → Use: 1px solid var(--dss-gray-200)
+   * --dss-border-divider-strong    → Use: 1px solid var(--dss-gray-300)
+   *
+   * ✅ EXEMPLO DE USO NOS COMPONENTES:
+   *
+   * // DssInput.module.scss
+   * .dss-input {
+   *   border: 1px solid var(--dss-gray-300);  // default
+   *
+   *   &:hover:not(:disabled) {
+   *     border: 1px solid var(--dss-gray-400);
+   *   }
+   *
+   *   &:focus {
+   *     border: 2px solid var(--dss-action-primary);
+   *   }
+   *
+   *   &.error {
+   *     border: 2px solid var(--dss-negative);
+   *   }
+   *
+   *   &.success {
+   *     border: 2px solid var(--dss-positive);
+   *   }
+   *
+   *   &:disabled {
+   *     border: 1px solid var(--dss-gray-200);
+   *   }
+   * }
+   *
+   * // DssCard.module.scss
+   * .dss-card {
+   *   border: 1px solid var(--dss-gray-200);  // default
+   *
+   *   &.elevated {
+   *     border: 1px solid var(--dss-gray-300);
+   *   }
+   *
+   *   &.selected {
+   *     border: 2px solid var(--dss-action-primary);
+   *   }
+   * }
+   *
+   * // DssDivider.module.scss
+   * .dss-divider {
+   *   border-bottom: 1px solid var(--dss-gray-200);  // default
+   *
+   *   &.subtle {
+   *     border-bottom: 1px solid var(--dss-gray-100);
+   *   }
+   *
+   *   &.strong {
+   *     border-bottom: 1px solid var(--dss-gray-300);
+   *   }
+   * }
+   *
+   * ✅ BENEFÍCIOS:
+   * - Escalabilidade: 100 componentes = mesmos tokens de border
+   * - Flexibilidade: Componentes escolhem espessura e cor livremente
+   * - Manutenibilidade: Mudanças isoladas nos componentes
+   * - Clareza: Valores explícitos (gray-300, 1px vs 2px)
+   *
+   * 📚 Referência: AUDITORIA_DSS_JAN_2025.md
+   *               SPRINT_2_RELATORIO_JAN_2025.md
+   *               DSS_TOKEN_GUIDELINES.md
+   */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE ESPESSURA DE BORDA
+   Sistema de escala genérica para border-width
+
+   ⚠️ FILOSOFIA: Tokens = Provedores, Componentes = Consumidores
+   Este arquivo contém APENAS a escala genérica de espessuras.
+   Componentes escolhem qual token usar baseado em suas necessidades.
+   ========================================================================== */
+:root {
+  /* ===========================================
+     ESCALA BASE DE BORDER-WIDTH
+     Baseada em boas práticas do mercado:
+     - 0px: Sem borda
+     - 0.5px: Ultra fino (retina displays)
+     - 1px: Padrão (a maioria dos casos)
+     - 2px: Ênfase, foco, destaque
+     - 3px: Ênfase média
+     - 4px: Forte ênfase
+     - 8px: Elementos decorativos
+     =========================================== */
+  --dss-border-width-none: 0;
+  --dss-border-width-hairline: 0.5px; /* 0.5px */
+  --dss-border-width-thin: 1px; /* 1px */
+  --dss-border-width-md: 2px; /* 2px */
+  --dss-border-width-thick: 3px; /* 3px */
+  --dss-border-width-heavy: 4px; /* 4px */
+  --dss-border-width-extra-heavy: 8px; /* 8px */
+}
+
+/* ==========================================================================
+   EXEMPLOS DE USO NOS COMPONENTES
+   ==========================================================================
+
+   ✅ COMPONENTES ESCOLHEM qual token usar:
+
+   // DssButton - Outline variant
+   .dss-button--outline {
+     border-width: var(--dss-border-width-thin);  // 1px
+     border-style: solid;
+     border-color: currentColor;
+   }
+
+   // DssInput - Estados diferentes
+   .dss-input {
+     border-width: var(--dss-border-width-thin);  // 1px padrão
+
+     &:focus {
+       border-width: var(--dss-border-width-md);  // 2px no foco
+     }
+
+     &.error {
+       border-width: var(--dss-border-width-md);  // 2px no erro
+     }
+   }
+
+   // DssCard
+   .dss-card {
+     border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+   }
+
+   // Focus rings (acessibilidade)
+   .component:focus-visible {
+     outline: var(--dss-border-width-md) solid var(--dss-primary);
+     outline-offset: 2px;
+   }
+
+   // DssDivider - Linha fina
+   .dss-divider {
+     border-bottom: var(--dss-border-width-hairline) solid var(--dss-gray-300);
+   }
+
+   ========================================================================== */
+/* ==========================================================================
+   DSS - TOKENS DE FEEDBACK
+   Estados e alertas - SISTEMA PRÓPRIO
+   ========================================================================== */
+:root {
+  /* Feedback Positive - Sucesso */
+  --dss-feedback-success: var(--dss-positive);
+  --dss-feedback-success-light: var(--dss-positive-light);
+  --dss-feedback-success-disable: var(--dss-positive-disable);
+  --dss-feedback-success-hover: var(--dss-positive-hover);
+  --dss-feedback-success-deep: var(--dss-positive-deep);
+  /* Feedback Negative - Erro */
+  --dss-feedback-error: var(--dss-negative);
+  --dss-feedback-error-light: var(--dss-negative-light);
+  --dss-feedback-error-disable: var(--dss-negative-disable);
+  --dss-feedback-error-hover: var(--dss-negative-hover);
+  --dss-feedback-error-deep: var(--dss-negative-deep);
+  /* Feedback Warning - Atenção */
+  --dss-feedback-warning: var(--dss-warning);
+  --dss-feedback-warning-light: var(--dss-warning-light);
+  --dss-feedback-warning-disable: var(--dss-warning-disable);
+  --dss-feedback-warning-hover: var(--dss-warning-hover);
+  --dss-feedback-warning-deep: var(--dss-warning-deep);
+  /* Feedback Info - Informação */
+  --dss-feedback-info: var(--dss-info);
+  --dss-feedback-info-light: var(--dss-info-light);
+  --dss-feedback-info-disable: var(--dss-info-disable);
+  --dss-feedback-info-hover: var(--dss-info-hover);
+  --dss-feedback-info-deep: var(--dss-info-deep);
+  /* Feedback Surfaces (para fundos de alertas) */
+  --dss-feedback-success-surface: rgba(77, 210, 40, 0.1);
+  --dss-feedback-error-surface: rgba(216, 24, 46, 0.1);
+  --dss-feedback-warning-surface: rgba(250, 189, 20, 0.1);
+  --dss-feedback-info-surface: rgba(12, 196, 233, 0.1);
+}
+
+/* 3. Tokens de acessibilidade (Guia de Acessibilidade DSS) */
+:root {
+  /* Dimensões do Focus Ring */
+  --dss-focus-ring-width: 3px;
+  --dss-focus-ring-offset: 2px;
+  --dss-focus-ring-style: solid;
+  --dss-focus-ring-opacity: 0.5;
+  /* Duração de transição (respeita prefers-reduced-motion via mixins) */
+  --dss-focus-duration: 150ms;
+  --dss-focus-easing: ease-in-out;
+}
+
+:root {
+  /* Primary Focus (Ações principais - Azul) */
+  --dss-focus-primary: rgba(0, 106, 197, 0.5);
+  --dss-focus-primary-rgb: 0, 106, 197;
+  /* Secondary Focus (Ações secundárias - Verde/Turquesa) */
+  --dss-focus-secondary: rgba(5, 156, 141, 0.5);
+  --dss-focus-secondary-rgb: 5, 156, 141;
+  /* Tertiary Focus (Ações terciárias - Laranja) */
+  --dss-focus-tertiary: rgba(227, 89, 0, 0.5);
+  --dss-focus-tertiary-rgb: 227, 89, 0;
+  /* Accent Focus (Ações de destaque - Roxo) */
+  --dss-focus-accent: rgba(176, 46, 197, 0.5);
+  --dss-focus-accent-rgb: 176, 46, 197;
+}
+
+:root {
+  /* Success/Positive Focus (Ações positivas - Verde) */
+  --dss-focus-positive: rgba(52, 195, 12, 0.5);
+  --dss-focus-positive-rgb: 52, 195, 12;
+  /* Error/Negative Focus (Ações negativas - Vermelho) */
+  --dss-focus-negative: rgba(196, 0, 27, 0.5);
+  --dss-focus-negative-rgb: 196, 0, 27;
+  /* Warning Focus (Avisos - Amarelo) */
+  --dss-focus-warning: rgba(233, 171, 0, 0.6);
+  --dss-focus-warning-rgb: 233, 171, 0;
+  /* Info Focus (Informações - Azul Claro) */
+  --dss-focus-info: rgba(13, 178, 213, 0.5);
+  --dss-focus-info-rgb: 13, 178, 213;
+}
+
+:root {
+  /* Light Focus (Para fundos escuros) */
+  --dss-focus-light: rgba(255, 255, 255, 0.7);
+  --dss-focus-light-rgb: 255, 255, 255;
+  /* Dark Focus (Para fundos claros - Cinza Escuro) */
+  --dss-focus-dark: rgba(62, 62, 62, 0.5);
+  --dss-focus-dark-rgb: 62, 62, 62;
+  /* Inverse Focus (Inversão automática) */
+  --dss-focus-inverse: var(--dss-focus-light);
+}
+
+[data-theme=dark] {
+  /* Primary Focus - Versão mais clara (Azul) */
+  --dss-focus-primary: rgba(51, 153, 229, 0.6);
+  --dss-focus-primary-rgb: 51, 153, 229;
+  /* Secondary Focus - Versão mais clara (Verde/Turquesa) */
+  --dss-focus-secondary: rgba(38, 179, 164, 0.6);
+  --dss-focus-secondary-rgb: 38, 179, 164;
+  /* Tertiary Focus - Versão mais clara (Laranja) */
+  --dss-focus-tertiary: rgba(255, 128, 51, 0.6);
+  --dss-focus-tertiary-rgb: 255, 128, 51;
+  /* Accent Focus - Versão mais clara (Roxo) */
+  --dss-focus-accent: rgba(208, 102, 229, 0.6);
+  --dss-focus-accent-rgb: 208, 102, 229;
+  /* Success/Positive Focus - Versão mais clara (Verde) */
+  --dss-focus-positive: rgba(102, 229, 51, 0.6);
+  --dss-focus-positive-rgb: 102, 229, 51;
+  /* Error/Negative Focus - Versão mais clara (Vermelho) */
+  --dss-focus-negative: rgba(229, 51, 77, 0.6);
+  --dss-focus-negative-rgb: 229, 51, 77;
+  /* Warning Focus - Versão mais clara (Amarelo) */
+  --dss-focus-warning: rgba(255, 198, 51, 0.7);
+  --dss-focus-warning-rgb: 255, 198, 51;
+  /* Info Focus - Versão mais clara (Azul Claro) */
+  --dss-focus-info: rgba(51, 204, 242, 0.6);
+  --dss-focus-info-rgb: 51, 204, 242;
+  /* Dark Focus - Versão mais clara para dark mode */
+  --dss-focus-dark: rgba(128, 128, 128, 0.6);
+  --dss-focus-dark-rgb: 128, 128, 128;
+  /* Inverse Focus (Inversão em dark mode) */
+  --dss-focus-inverse: var(--dss-focus-light);
+}
+
+[data-brand=hub] {
+  --dss-focus-primary: rgba(191, 89, 15, 0.5);
+  --dss-focus-primary-rgb: 191, 89, 15;
+  /* Redefinir shadow composto para usar nova cor */
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+  /* Dark Mode - Versão mais clara */
+}
+[data-brand=hub][data-theme=dark] {
+  --dss-focus-primary: rgba(248, 170, 63, 0.6);
+  --dss-focus-primary-rgb: 248, 170, 63;
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+[data-brand=water] {
+  --dss-focus-primary: rgba(2, 108, 199, 0.5);
+  --dss-focus-primary-rgb: 2, 108, 199;
+  /* Redefinir shadow composto para usar nova cor */
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+  /* Dark Mode - Versão mais clara */
+}
+[data-brand=water][data-theme=dark] {
+  --dss-focus-primary: rgba(56, 166, 248, 0.6);
+  --dss-focus-primary-rgb: 56, 166, 248;
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+[data-brand=waste] {
+  --dss-focus-primary: rgba(10, 114, 78, 0.5);
+  --dss-focus-primary-rgb: 10, 114, 78;
+  /* Redefinir shadow composto para usar nova cor */
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+  /* Dark Mode - Versão mais clara */
+}
+[data-brand=waste][data-theme=dark] {
+  --dss-focus-primary: rgba(24, 177, 115, 0.6);
+  --dss-focus-primary-rgb: 24, 177, 115;
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+:root {
+  /* Primary Focus Shadow */
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+  /* Secondary Focus Shadow */
+  --dss-focus-shadow-secondary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-secondary);
+  /* Tertiary Focus Shadow */
+  --dss-focus-shadow-tertiary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-tertiary);
+  /* Accent Focus Shadow */
+  --dss-focus-shadow-accent: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-accent);
+  /* Success Focus Shadow */
+  --dss-focus-shadow-success: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-success);
+  /* Error Focus Shadow */
+  --dss-focus-shadow-error: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-error);
+  /* Warning Focus Shadow */
+  --dss-focus-shadow-warning: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-warning);
+  /* Info Focus Shadow */
+  --dss-focus-shadow-info: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-info);
+  /* Light Focus Shadow */
+  --dss-focus-shadow-light: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-light);
+  /* Dark Focus Shadow */
+  --dss-focus-shadow-dark: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-dark);
+}
+
+:root {
+  /* Focus Ring com Offset (espaço entre elemento e anel) */
+  --dss-focus-shadow-primary-offset: 0 0 0 var(--dss-focus-ring-offset) transparent,
+                                       0 0 0 calc(var(--dss-focus-ring-offset) + var(--dss-focus-ring-width)) var(--dss-focus-primary);
+  --dss-focus-shadow-error-offset: 0 0 0 var(--dss-focus-ring-offset) transparent,
+                                     0 0 0 calc(var(--dss-focus-ring-offset) + var(--dss-focus-ring-width)) var(--dss-focus-error);
+  --dss-focus-shadow-success-offset: 0 0 0 var(--dss-focus-ring-offset) transparent,
+                                       0 0 0 calc(var(--dss-focus-ring-offset) + var(--dss-focus-ring-width)) var(--dss-focus-success);
+  --dss-focus-shadow-warning-offset: 0 0 0 var(--dss-focus-ring-offset) transparent,
+                                       0 0 0 calc(var(--dss-focus-ring-offset) + var(--dss-focus-ring-width)) var(--dss-focus-warning);
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    /* Aumentar opacidade em modo alto contraste */
+    --dss-focus-ring-opacity: 0.8;
+    --dss-focus-ring-width: 4px;
+    /* Cores mais fortes */
+    --dss-focus-primary: rgba(31, 134, 222, 0.8);
+    --dss-focus-error: rgba(216, 24, 46, 0.8);
+    --dss-focus-success: rgba(77, 210, 40, 0.8);
+  }
+  [data-theme=dark] {
+    --dss-focus-primary: rgba(134, 192, 243, 0.9);
+    --dss-focus-error: rgba(255, 160, 171, 0.9);
+    --dss-focus-success: rgba(129, 230, 99, 0.9);
+  }
+}
+@media (forced-colors: active) {
+  :root {
+    /* Em modo de cores forçadas, usar cores do sistema */
+    --dss-focus-primary: Highlight;
+    --dss-focus-error: Highlight;
+    --dss-focus-success: Highlight;
+    --dss-focus-warning: Highlight;
+    --dss-focus-info: Highlight;
+    --dss-focus-ring-width: 3px;
+    --dss-focus-ring-style: solid;
+  }
+}
+/*
+# Como Usar os Tokens de Focus
+
+## 1. Via Mixin (RECOMENDADO - usa prefers-reduced-motion)
+```scss
+.my-button {
+  @include dss-focus-ring('primary');
+}
+```
+
+## 2. Diretamente com Tokens
+```scss
+.my-button {
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--dss-focus-shadow-primary);
+  }
+}
+```
+
+## 3. Com Offset (Espaço entre elemento e anel)
+```scss
+.my-input {
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--dss-focus-shadow-primary-offset);
+  }
+}
+```
+
+## 4. Customizado com RGB
+```scss
+.my-link {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 var(--dss-focus-ring-width)
+                rgba(var(--dss-focus-primary-rgb), 0.7); // Customizar opacidade
+  }
+}
+```
+
+# Validação de Contraste WCAG
+
+Todas as cores de focus foram validadas para garantir contraste mínimo de 3:1 com
+elementos adjacentes (WCAG 2.1 AA - Critério 1.4.11 Non-text Contrast).
+
+## Contrastes Validados (vs fundo branco):
+- Focus Primary (#1F86DE @ 50%): 3.2:1 ✅
+- Focus Error (#D8182E @ 50%): 4.1:1 ✅
+- Focus Success (#4DD228 @ 50%): 3.5:1 ✅
+- Focus Warning (#FFC107 @ 60%): 3.8:1 ✅
+
+## Contrastes em Dark Mode (vs fundo #262626):
+- Focus Primary (#86C0F3 @ 60%): 5.2:1 ✅
+- Focus Error (#FFA0AB @ 60%): 4.8:1 ✅
+- Focus Success (#81E663 @ 60%): 6.1:1 ✅
+
+# Referências:
+- WCAG 2.1 AA: https://www.w3.org/WAI/WCAG21/quickref/#focus-visible
+- Q-BTN Gap Analysis: Q_BTN_COMPLETE_SPECIFICATION.md - Gap #2
+*/
+/* ==========================================================================
+   DSS - TOKENS DE CONTRASTE
+   Conformidade WCAG 2.1 AA - Baseado na Página 7 do Guia de Acessibilidade DSS
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. RATIOS MÍNIMOS WCAG 2.1 AA
+     =========================================== */
+  --dss-contrast-min-text: 4.5; /* Texto normal (≤ 18pt) */
+  --dss-contrast-min-large: 3.0; /* Texto grande (> 18pt ou 14pt bold) */
+  --dss-contrast-min-ui: 3.0; /* Componentes de interface */
+  --dss-contrast-min-graphics: 3.0; /* Gráficos informativos e ícones */
+  --dss-contrast-min-focus: 4.5; /* Indicadores de foco (recomendado) */
+  /* ===========================================
+     2. COMBINAÇÕES PRÉ-VALIDADAS
+     Status: ✅ APROVADO | ⚠️ LIMÍTROFE | ❌ REJEITADO
+     =========================================== */
+  /* ---------- AÇÃO ---------- */
+  /* Primary */
+  --dss-contrast-primary-on-white: 4.6; /* ✅ APROVADO */
+  --dss-contrast-primary-on-gray50: 4.8; /* ✅ APROVADO */
+  --dss-contrast-primary-on-gray100: 3.9; /* ❌ NÃO USAR PARA TEXTO NORMAL */
+  /* Secondary */
+  --dss-contrast-secondary-on-white: 3.2; /* ⚠️ SÓ PARA TEXTO GRANDE */
+  --dss-contrast-secondary-on-gray50: 3.4; /* ⚠️ SÓ PARA TEXTO GRANDE */
+  /* Tertiary */
+  --dss-contrast-tertiary-on-white: 3.1; /* ⚠️ SÓ PARA TEXTO GRANDE */
+  --dss-contrast-tertiary-on-gray50: 3.3; /* ⚠️ SÓ PARA TEXTO GRANDE */
+  /* ---------- FEEDBACK ---------- */
+  /* Positive */
+  --dss-contrast-positive-on-white: 2.4; /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-positive-on-gray900: 7.8; /* ✅ APROVADO (texto claro sobre escuro) */
+  /* Negative */
+  --dss-contrast-negative-on-white: 7.1; /* ✅ APROVADO */
+  --dss-contrast-negative-on-gray50: 7.5; /* ✅ APROVADO */
+  /* Warning */
+  --dss-contrast-warning-on-white: 1.9; /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-warning-on-gray900: 11.2; /* ✅ APROVADO (texto claro sobre escuro) */
+  /* Info */
+  --dss-contrast-info-on-white: 1.8; /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-info-on-gray900: 9.6; /* ✅ APROVADO (texto claro sobre escuro) */
+  /* ---------- MARCA ---------- */
+  /* Hub */
+  --dss-contrast-hub500-on-white: 2.9; /* ❌ NUNCA USAR PARA TEXTO */
+  --dss-contrast-hub500-on-gray900: 8.3; /* ✅ APROVADO (texto claro sobre escuro) */
+  /* Water */
+  --dss-contrast-water500-on-white: 4.6; /* ✅ APROVADO */
+  --dss-contrast-water500-on-gray900: 11.1; /* ✅ APROVADO */
+  /* Waste */
+  --dss-contrast-waste500-on-white: 3.1; /* ⚠️ SÓ PARA TEXTO GRANDE */
+  --dss-contrast-waste500-on-gray900: 7.4; /* ✅ APROVADO */
+  /* ---------- NEUTROS ---------- */
+  /* Dark */
+  --dss-contrast-dark-on-white: 12.3; /* ✅ APROVADO */
+  --dss-contrast-dark-on-gray50: 10.1; /* ✅ APROVADO */
+  /* Gray */
+  --dss-contrast-gray600-on-white: 4.8; /* ✅ APROVADO */
+  --dss-contrast-gray700-on-white: 7.3; /* ✅ APROVADO */
+  /* ===========================================
+     3. CLASSES DE UTILIDADE PARA CONTROLE DE CONTRASTE
+     =========================================== */
+  --dss-contrast-safe-text: var(--dss-text-body); /* Uso seguro para texto */
+  --dss-contrast-safe-ui: var(--dss-action-primary); /* Uso seguro para UI */
+  --dss-contrast-safe-graphics: var(--dss-negative); /* Uso seguro para gráficos */
+  /* ===========================================
+     4. MIXINS E FUNÇÕES (para uso em SCSS)
+     =========================================== */
+  /* Nota: Estas variáveis são para documentação,
+     a implementação real será em _mixins.scss */
+  --dss-contrast-check-small-text: "Garantir ≥ 4.5:1";
+  --dss-contrast-check-large-text: "Garantir ≥ 3:1";
+  --dss-contrast-check-ui: "Garantir ≥ 3:1";
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE TAMANHOS (QUASAR-COMPATIBLE)
+   Escala xs/sm/md/lg/xl alinhada ao Quasar Framework
+   Acessibilidade WCAG 2.1 AA garantida via defaults, não nomenclatura
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. ÁREAS TOCÁVEIS (TOUCH TARGETS)
+     Escala compatível com Quasar: xs, sm, md, lg, xl
+     ✅ WCAG 2.1 AA (SC 2.5.5): Mínimo 44×44px - garantido em 'md' (padrão)
+     =========================================== */
+  --dss-touch-target-xs: 32px; /* Componentes compactos (chips, badges) */
+  --dss-touch-target-sm: 36px; /* Botões secundários densos */
+  --dss-touch-target-md: 44px; /* ✅ Padrão - WCAG mínimo (44px) */
+  --dss-touch-target-lg: 52px; /* Botões destacados */
+  --dss-touch-target-xl: 64px; /* CTAs principais e ações primárias */
+  /* Espaçamento entre elementos tocáveis */
+  --dss-touch-spacing-xs: 4px; /* Espaçamento mínimo */
+  --dss-touch-spacing-sm: 8px; /* Espaçamento compacto */
+  --dss-touch-spacing-md: 12px; /* ✅ Padrão - Evita toques acidentais */
+  --dss-touch-spacing-lg: 16px; /* Espaçamento confortável */
+  --dss-touch-spacing-xl: 20px; /* Espaçamento generoso */
+  /* ===========================================
+     2. FORM CONTROLS (Inputs, Selects, Textareas)
+     Escala genérica para TODOS os controles de formulário
+     ✅ WCAG 2.1 AA: Altura mínima 44px - garantido em 'md' (padrão)
+     =========================================== */
+  /* Alturas genéricas para form controls */
+  --dss-form-control-height-xs: 32px; /* Controles compactos */
+  --dss-form-control-height-sm: 36px; /* Controles densos */
+  --dss-form-control-height-md: 44px; /* ✅ Padrão - WCAG mínimo */
+  --dss-form-control-height-lg: 52px; /* Controles destacados */
+  --dss-form-control-height-xl: 64px; /* Controles extra grandes */
+  /* Padding genérico para form controls */
+  --dss-form-control-padding-horizontal-xs: 8px;
+  --dss-form-control-padding-horizontal-sm: 10px;
+  --dss-form-control-padding-horizontal-md: 12px; /* Padrão */
+  --dss-form-control-padding-horizontal-lg: 16px;
+  --dss-form-control-padding-horizontal-xl: 20px;
+  --dss-form-control-padding-vertical-xs: 4px;
+  --dss-form-control-padding-vertical-sm: 6px;
+  --dss-form-control-padding-vertical-md: 8px; /* Padrão */
+  --dss-form-control-padding-vertical-lg: 12px;
+  --dss-form-control-padding-vertical-xl: 16px;
+  /* ⚠️ DEPRECATED: Mantidos para compatibilidade (remover em v3.0.0) */
+  --dss-input-height-xs: var(--dss-form-control-height-xs);
+  --dss-input-height-sm: var(--dss-form-control-height-sm);
+  --dss-input-height-md: var(--dss-form-control-height-md);
+  --dss-input-height-lg: var(--dss-form-control-height-lg);
+  --dss-input-height-xl: var(--dss-form-control-height-xl);
+  /* ===========================================
+     3. CHECKBOXES, RADIOS E CONTROLES
+     Escala size="xs|sm|md|lg|xl"
+     ✅ WCAG 2.1 AA: Área tocável mínima 44×44px via padding
+     =========================================== */
+  /* Tamanho visual do controle */
+  --dss-checkbox-size-xs: 16px;
+  --dss-checkbox-size-sm: 18px;
+  --dss-checkbox-size-md: 20px; /* Padrão visual */
+  --dss-checkbox-size-lg: 24px;
+  --dss-checkbox-size-xl: 28px;
+  /* Área tocável total (controle + padding) */
+  --dss-checkbox-touch-area-xs: 36px;
+  --dss-checkbox-touch-area-sm: 40px;
+  --dss-checkbox-touch-area-md: 44px; /* ✅ WCAG mínimo */
+  --dss-checkbox-touch-area-lg: 52px;
+  --dss-checkbox-touch-area-xl: 60px;
+  /* ===========================================
+     4. ÍCONES E GRÁFICOS
+     Escala size="xs|sm|md|lg|xl"
+     =========================================== */
+  --dss-icon-size-xs: 16px; /* Ícones inline */
+  --dss-icon-size-sm: 20px; /* Ícones secundários */
+  --dss-icon-size-md: 24px; /* ✅ Padrão - Ícones interativos */
+  --dss-icon-size-lg: 32px; /* Ícones destacados */
+  --dss-icon-size-xl: 48px; /* Ícones grandes (avatares, etc) */
+  /* Espaço mínimo ao redor de ícones */
+  --dss-icon-spacing-xs: 4px;
+  --dss-icon-spacing-sm: 6px;
+  --dss-icon-spacing-md: 8px; /* Padrão */
+  --dss-icon-spacing-lg: 12px;
+  --dss-icon-spacing-xl: 16px;
+  /* ===========================================
+     5. ❌ REMOVIDO: AVATARES (Component-Specific)
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 2
+   *
+   * Tokens removidos (5 tokens):
+   * - --dss-avatar-size-xs/sm/md/lg/xl
+   *
+   * CORREÇÃO: Componentes devem calcular tamanhos com:
+   * .dss-avatar--xs { width: var(--dss-icon-size-sm); height: var(--dss-icon-size-sm); }
+   * .dss-avatar--md { width: var(--dss-icon-size-xl); height: var(--dss-icon-size-xl); }
+   */
+  /* ===========================================
+     6. ❌ REMOVIDO: BADGES (Component-Specific)
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 2
+   *
+   * Tokens removidos (5 tokens):
+   * - --dss-badge-size-xs/sm/md/lg/xl
+   *
+   * CORREÇÃO: Badges devem usar tokens genéricos:
+   * .dss-badge--xs { height: calc(var(--dss-icon-size-xs) + 4px); }
+   * .dss-badge--md { height: var(--dss-icon-size-md); }
+   */
+  /* ===========================================
+     Compact Controls — alturas visuais (WCAG 2.1 AA)
+     Usado por Badge, Chip e qualquer controle compacto não-interativo primário.
+     Alinhado ao Princípio #7 do CLAUDE.md.
+     =========================================== */
+  --dss-compact-control-height-xs: 20px; /* Badge/Chip extra small */
+  --dss-compact-control-height-sm: 24px; /* Badge/Chip small */
+  --dss-compact-control-height-md: 28px; /* Badge/Chip medium (padrão) */
+  --dss-compact-control-height-lg: 32px; /* Badge/Chip large */
+  /* ⚠️ DEPRECATED — use --dss-compact-control-height-* (Onda 9 — 2026-06)
+     Mantidos para compatibilidade durante migração. Remover em v3.0. */
+  --dss-chip-height-xs: var(--dss-compact-control-height-xs);
+  --dss-chip-height-sm: var(--dss-compact-control-height-sm);
+  --dss-chip-height-md: var(--dss-compact-control-height-md);
+  --dss-chip-height-lg: var(--dss-compact-control-height-lg);
+  --dss-chip-height-xl: var(--dss-compact-control-height-lg); /* xl → lg (sem diferença visual) */
+  /* ===========================================
+     7. ESPAÇAMENTO DE COMPONENTES
+     Escala size="xs|sm|md|lg|xl"
+     =========================================== */
+  --dss-component-padding-xs: 8px;
+  --dss-component-padding-sm: 12px;
+  --dss-component-padding-md: 16px; /* Padrão */
+  --dss-component-padding-lg: 20px;
+  --dss-component-padding-xl: 24px;
+  /* Margens entre componentes */
+  --dss-component-margin-xs: 8px;
+  --dss-component-margin-sm: 12px;
+  --dss-component-margin-md: 16px; /* Padrão */
+  --dss-component-margin-lg: 24px;
+  --dss-component-margin-xl: 32px;
+  /* ===========================================
+     8. BREAKPOINTS PARA ACESSIBILIDADE
+     Suporte para zoom e reflow de conteúdo
+     ✅ WCAG 2.1 AA (SC 1.4.10): Reflow
+     =========================================== */
+  --dss-breakpoint-xs: 320px; /* Mobile pequeno, zoom 300% */
+  --dss-breakpoint-sm: 640px; /* Mobile, zoom 200% */
+  --dss-breakpoint-md: 768px; /* Tablet */
+  --dss-breakpoint-lg: 1024px; /* Desktop pequeno */
+  --dss-breakpoint-xl: 1280px; /* Desktop padrão */
+  --dss-breakpoint-2xl: 1536px; /* Desktop grande */
+  /* Breakpoints específicos para zoom */
+  --dss-breakpoint-zoom-200: 800px; /* Para usuários com zoom 200% */
+  --dss-breakpoint-zoom-300: 600px; /* Para usuários com zoom 300% */
+  --dss-breakpoint-reflow: 320px; /* Mínimo para reflow (WCAG) */
+  /* ===========================================
+     9. Z-INDEX PARA ELEMENTOS INTERATIVOS
+     Garantir que elementos focados fiquem visíveis
+     =========================================== */
+  --dss-z-index-base: 1;
+  --dss-z-index-dropdown: 1000;
+  --dss-z-index-sticky: 1020;
+  --dss-z-index-fixed: 1030;
+  --dss-z-index-backdrop: 1040;
+  --dss-z-index-modal: 1050;
+  --dss-z-index-popover: 1060;
+  --dss-z-index-tooltip: 1070;
+  --dss-z-index-notification: 1080;
+  --dss-z-index-focus: 9999; /* Garantir que foco fique acima */
+  /* ===========================================
+     📚 DOCUMENTAÇÃO - WCAG 2.1 AA
+     =========================================== */
+  /*
+   * ✅ CONFORMIDADE WCAG 2.1 AA GARANTIDA VIA DEFAULTS:
+   *
+   * 1. SC 2.5.5 (Target Size)
+   *    - Mínimo: 44×44px
+   *    - Default: --dss-touch-target-md (44px)
+   *    - Uso: <DssButton size="md"> ou <DssButton> (md é padrão)
+   *
+   * 2. SC 1.4.10 (Reflow)
+   *    - Conteúdo deve refluir em 320px sem scroll horizontal
+   *    - Breakpoint: --dss-breakpoint-reflow (320px)
+   *
+   * 3. SC 1.4.12 (Text Spacing)
+   *    - Espaçamento adequado entre elementos
+   *    - Default: --dss-component-margin-md (16px)
+   *
+   * ⚠️ COMPONENTES QUE PODEM SER < 44px:
+   * - Badges: Não são ações primárias (apenas informação)
+   * - Chips: Podem ser removíveis mas não são touch targets principais
+   * - Ícones inline: Apenas decorativos, não interativos
+   * - Checkboxes: Tamanho visual 20px, mas área tocável 44px via padding
+   *
+   * 📖 Referências:
+   * - WCAG 2.1: https://www.w3.org/WAI/WCAG21/quickref/
+   * - Guia de Acessibilidade DSS: Páginas 8-9 (Tipografia e Legibilidade)
+   * - Quasar Framework: https://quasar.dev/style/spacing
+   */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE TIPOGRAFIA ACESSÍVEL
+   Baseado na Página 8 do Guia de Acessibilidade DSS (Tipografia e Legibilidade)
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. FAMÍLIAS DE FONTE (Página 8)
+     "Fontes sans-serif preferidas para melhor legibilidade em telas"
+     =========================================== */
+  --dss-font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont,
+                         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --dss-font-family-mono: 'Roboto Mono', 'SF Mono', Monaco, 'Courier New', monospace;
+  --dss-font-family-system: -apple-system, BlinkMacSystemFont,
+                           'Segoe UI', Roboto, sans-serif;
+  /* Fallback seguro */
+  --dss-font-family-fallback: sans-serif;
+  /* ===========================================
+     2. TAMANHOS DE FONTE (Página 8)
+     "Mínimo 16px para texto do corpo, 14px para texto secundário"
+     Escala compatível com Quasar: xs, sm, md, lg, xl
+     ✅ WCAG 2.1 AA: Mínimo 16px para corpo - garantido em 'md' (padrão)
+     =========================================== */
+  --dss-font-size-xs: 0.75rem; /* 12px - Apenas para rótulos, não para corpo */
+  --dss-font-size-sm: 0.875rem; /* 14px - Texto secundário mínimo */
+  --dss-font-size-md: 1rem; /* 16px - ✅ Padrão Quasar - WCAG mínimo */
+  --dss-font-size-base: 1rem; /* 16px - Alias para compatibilidade */
+  --dss-font-size-lg: 1.125rem; /* 18px - Texto grande (3:1 contraste) */
+  --dss-font-size-xl: 1.25rem; /* 20px */
+  --dss-font-size-2xl: 1.5rem; /* 24px */
+  --dss-font-size-3xl: 1.875rem; /* 30px */
+  --dss-font-size-4xl: 2.25rem; /* 36px */
+  /* ===========================================
+     3. PESOS DE FONTE (Página 8)
+     "Regular (400) para texto do corpo, Negrito (600+) para ênfase"
+     =========================================== */
+  --dss-font-weight-light: 300;
+  --dss-font-weight-normal: 400; /* Texto corporal */
+  --dss-font-weight-medium: 500;
+  --dss-font-weight-semibold: 600; /* Ênfase */
+  --dss-font-weight-bold: 700; /* Títulos, forte ênfase */
+  --dss-font-weight-extrabold: 800;
+  /* ===========================================
+     4. ALTURA DE LINHA E ESPAÇAMENTO (Página 8)
+     "1,4 a 1,6 vezes o tamanho da fonte para legibilidade ideal"
+     =========================================== */
+  --dss-line-height-tight: 1.25;
+  --dss-line-height-snug: 1.375;
+  --dss-line-height-normal: 1.5; /* Ideal para corpo */
+  --dss-line-height-relaxed: 1.625;
+  --dss-line-height-loose: 1.75; /* Para acessibilidade extra */
+  /* Altura de linha por tamanho de fonte */
+  --dss-line-height-xs: 1.4;
+  --dss-line-height-sm: 1.45;
+  --dss-line-height-base: 1.5;
+  --dss-line-height-lg: 1.55;
+  --dss-line-height-xl: 1.6;
+  /* ===========================================
+     5. ESPAÇAMENTO DE LETRAS (Página 8)
+     "Espaçamento normal, evitar fontes condensadas para texto do corpo"
+     =========================================== */
+  --dss-letter-spacing-tighter: -0.05em;
+  --dss-letter-spacing-tight: -0.025em;
+  --dss-letter-spacing-normal: 0; /* Normal para corpo */
+  --dss-letter-spacing-wide: 0.025em;
+  --dss-letter-spacing-wider: 0.05em;
+  --dss-letter-spacing-widest: 0.1em;
+  /* ===========================================
+     6. HIERARQUIA TIPOGRÁFICA SEMÂNTICA
+     =========================================== */
+  /* Títulos - Sempre use hierarquia semântica */
+  --dss-heading-font-family: var(--dss-font-family-sans);
+  /* H1 - Maior em tudo (size, weight, line-height) */
+  --dss-heading-1-size: var(--dss-font-size-4xl);
+  --dss-heading-1-weight: var(--dss-font-weight-bold); /* 700 */
+  --dss-heading-1-line-height: 1.5; /* 150% - Maior */
+  /* H2 */
+  --dss-heading-2-size: var(--dss-font-size-3xl);
+  --dss-heading-2-weight: var(--dss-font-weight-semibold); /* 600 */
+  --dss-heading-2-line-height: 1.4; /* 140% */
+  /* H3 */
+  --dss-heading-3-size: var(--dss-font-size-2xl);
+  --dss-heading-3-weight: var(--dss-font-weight-medium); /* 500 */
+  --dss-heading-3-line-height: 1.3; /* 130% */
+  /* H4 */
+  --dss-heading-4-size: var(--dss-font-size-xl);
+  --dss-heading-4-weight: var(--dss-font-weight-medium); /* 500 */
+  --dss-heading-4-line-height: 1.2; /* 120% */
+  /* H5 */
+  --dss-heading-5-size: var(--dss-font-size-lg);
+  --dss-heading-5-weight: var(--dss-font-weight-normal); /* 400 */
+  --dss-heading-5-line-height: 1.15; /* 115% */
+  /* H6 - Menor em tudo (size, weight, line-height) */
+  --dss-heading-6-size: var(--dss-font-size-base);
+  --dss-heading-6-weight: var(--dss-font-weight-normal); /* 400 */
+  --dss-heading-6-line-height: 1.1; /* 110% - Menor */
+  /* ===========================================
+     7. UTILITÁRIOS PARA LEGIBILIDADE
+     =========================================== */
+  /* Para usuários com dislexia */
+  --dss-dyslexia-friendly-spacing: 0.075em;
+  --dss-dyslexia-friendly-weight: var(--dss-font-weight-normal);
+  /* Para baixa visão */
+  --dss-low-vision-scale: 1.1; /* Aumento base para baixa visão */
+  /* Respeitar prefers-reduced-motion para texto */
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dss-text-transition-duration: 0ms;
+    --dss-text-transition-timing: linear;
+  }
+}
+:root {
+  /* Suporte a zoom do navegador */
+  font-size: clamp(100%, 1rem + 0.5vw, 125%); /* Ajuste progressivo para zoom */
+}
+
+/*
+# Importar Tokens de Acessibilidade
+
+## Opcao 1: Importar todos
+```scss
+@use 'tokens/semantic/accessibility';
+```
+
+## Opcao 2: Importar especificos
+```scss
+@use 'tokens/semantic/accessibility/focus';
+@use 'tokens/semantic/accessibility/contrast';
+```
+
+# Conformidade WCAG 2.1 AA
+
+Este modulo garante conformidade com os seguintes criterios:
+
+- ✅ 2.4.7 Focus Visible (Level AA)
+- ✅ 1.4.3 Contrast (Minimum) (Level AA)
+- ✅ 1.4.6 Contrast (Enhanced) (Level AAA)
+- ✅ 2.5.5 Target Size (Level AAA)
+- ✅ 1.4.4 Resize Text (Level AA)
+- ✅ 1.4.12 Text Spacing (Level AA)
+
+# Auditoria
+
+Para auditar conformidade:
+```bash
+grep -r "dss-focus\|dss-contrast\|dss-touch" components/
+```
+
+# Documentacao
+
+Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
+*/
+/* Agrega: contrast, focus, sizing, typography */
+/* 4. Tokens de layout e utilidade */
+/* ==========================================================================
+   DSS - TOKENS DE DIMENSÕES DE CONTROLES INTERATIVOS
+   Famílias de dimensões para padrões recorrentes de UI (DSS v2.4.0)
+
+   Categorias:
+     1. Track Height      — trilhos de controles deslizantes e indicadores
+     2. Thumb Size        — polegar/handle de controles arrastáveis
+     3. Switch Track Width — largura do trilho do toggle/switch
+     4. Min Width         — restrições mínimas de largura por contexto semântico
+     5. Max Width         — restrições máximas de largura por contexto semântico
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. TRACK HEIGHT
+     Usado em: DssLinearProgress, DssRange, DssSlider, DssTab (indicador)
+     Derivado do spacing scale (onde possível).
+     =========================================== */
+  --dss-track-height-xs: var(--dss-spacing-0_5); /*  2px — indicadores de tab, trilhos decorativos */
+  --dss-track-height-sm: var(--dss-spacing-1); /*  4px — progresso, range, slider padrão */
+  --dss-track-height-md: var(--dss-spacing-1_5); /*  6px — trilhos de destaque */
+  --dss-track-height-lg: var(--dss-spacing-2); /*  8px — controles de alto contraste / acessibilidade */
+  /* ===========================================
+     2. THUMB SIZE
+     Usado em: DssRange, DssSlider; aliases semânticos para DssToggle.
+     DssToggle: thumb off = sm (16px) → thumb on = lg (24px).
+     =========================================== */
+  --dss-thumb-size-xs: var(--dss-spacing-3); /* 12px — compacto */
+  --dss-thumb-size-sm: var(--dss-spacing-4); /* 16px — DssToggle thumb off */
+  --dss-thumb-size-md: var(--dss-spacing-5); /* 20px — DssRange / DssSlider padrão */
+  --dss-thumb-size-lg: var(--dss-spacing-6); /* 24px — DssToggle thumb on */
+  --dss-thumb-size-xl: var(--dss-spacing-8); /* 32px — reserva Fase 3 */
+  /* ===========================================
+     3. SWITCH TRACK WIDTH
+     Largura do trilho do componente toggle/switch.
+     Valores ancorados no spacing scale (Opção A — aprovada em Junho 2026).
+     NOTA: o valor anterior de produção era 52px; md (56px) foi validado visualmente.
+     =========================================== */
+  --dss-switch-track-width-sm: var(--dss-spacing-12); /* 48px — toggle compacto */
+  --dss-switch-track-width-md: var(--dss-spacing-14); /* 56px — toggle padrão */
+  --dss-switch-track-width-lg: var(--dss-spacing-16); /* 64px — toggle grande */
+  --dss-switch-track-width-xl: var(--dss-spacing-20); /* 80px — toggle extra grande */
+  /* ===========================================
+     4. MIN-WIDTH
+     Restrições mínimas de largura por contexto semântico.
+     Derivado do spacing scale; 200px é exceção estrutural (fora da escala base).
+     =========================================== */
+  --dss-min-w-xs: var(--dss-spacing-16); /*  64px — botões e controles compactos */
+  --dss-min-w-sm: var(--dss-spacing-40); /* 160px — rating, elementos de avaliação */
+  --dss-min-w-md: var(--dss-spacing-52); /* 208px — menus, overlays, ranges */
+  --dss-min-w-lg: var(--dss-spacing-60); /* 240px — campos de formulário (Input, Select, Textarea) */
+  --dss-min-w-xl: var(--dss-spacing-80); /* 320px — painéis compactos (reserva Fase 3) */
+  --dss-min-w-2xl: var(--dss-spacing-120); /* 480px — painéis e modais (reserva Fase 3) */
+  /* ===========================================
+     5. MAX-WIDTH
+     Restrições máximas de largura por contexto semântico.
+     =========================================== */
+  --dss-max-w-xs: var(--dss-spacing-60); /* 240px — tooltips, popovers compactos */
+  --dss-max-w-sm: var(--dss-spacing-80); /* 320px — cards compactos */
+  --dss-max-w-md: var(--dss-spacing-120); /* 480px — painéis laterais */
+  --dss-max-w-lg: var(--dss-spacing-192); /* 768px — modais e drawers */
+  /* ===========================================
+     6. MIN-HEIGHT
+     Restrições mínimas de altura por contexto semântico.
+
+     Referência de mercado (âncoras semânticas):
+       xs → Material Design 3: mínimo de área de toque acessível (48dp)
+       sm → Material Design 3: FAB, elementos contidos de ação (56dp)
+       md → Material Design 3: barra de navegação inferior (80dp)
+       lg → 200px — containers de overlay/conteúdo (constante estrutural ⚠️)
+       xl → painéis e seções de média altura
+       2xl → seções de altura completa
+     =========================================== */
+  --dss-min-h-xs: var(--dss-spacing-6); /*  24px — elementos não-interativos compactos (IBM Carbon layout-05) */
+  --dss-min-h-sm: var(--dss-spacing-10); /*  40px — elementos compactos abaixo do mínimo WCAG (uso restrito) */
+  --dss-min-h-md: var(--dss-spacing-12); /*  48px — ✅ piso MD3/WCAG 2.5.5 — referência primária */
+  --dss-min-h-lg: var(--dss-spacing-48); /* 192px — containers overlay (menus, scroll areas, parallax) */
+  --dss-min-h-xl: var(--dss-spacing-80); /* 320px — painéis laterais e seções de conteúdo */
+  --dss-min-h-2xl: var(--dss-spacing-120); /* 480px — seções de altura completa */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE OPACIDADE
+   Sistema padronizado para transparências
+   ========================================================================== */
+:root {
+  /* Escala de opacidade (0-100) */
+  --dss-opacity-0: 0;
+  --dss-opacity-5: 0.05;
+  --dss-opacity-10: 0.1;
+  --dss-opacity-15: 0.15;
+  --dss-opacity-20: 0.2;
+  --dss-opacity-25: 0.25;
+  --dss-opacity-30: 0.3;
+  --dss-opacity-35: 0.35;
+  --dss-opacity-40: 0.4;
+  --dss-opacity-45: 0.45;
+  --dss-opacity-50: 0.5;
+  --dss-opacity-55: 0.55;
+  --dss-opacity-60: 0.6;
+  --dss-opacity-65: 0.65;
+  --dss-opacity-70: 0.7;
+  --dss-opacity-75: 0.75;
+  --dss-opacity-80: 0.8;
+  --dss-opacity-85: 0.85;
+  --dss-opacity-90: 0.9;
+  --dss-opacity-95: 0.95;
+  --dss-opacity-100: 1;
+  /* Opacidades semânticas */
+  --dss-opacity-disabled: var(--dss-opacity-40);
+  --dss-opacity-hover: var(--dss-opacity-10);
+  --dss-opacity-active: var(--dss-opacity-20);
+  --dss-opacity-selected: var(--dss-opacity-15);
+  --dss-opacity-overlay: var(--dss-opacity-50);
+  --dss-opacity-backdrop: var(--dss-opacity-75);
+  --dss-overlay-dark-medium: rgba(0, 0, 0, 0.48); /* Parallax, modais — sobreposição escura média */
+  --dss-overlay-text-on-dark: rgba(255, 255, 255, 0.85); /* Texto secundário sobre overlay escuro */
+  /* Opacidades para overlays de marca */
+  --dss-opacity-brand-subtle: var(--dss-opacity-8);
+  --dss-opacity-brand-light: var(--dss-opacity-12);
+  --dss-opacity-brand-medium: var(--dss-opacity-16);
+  --dss-opacity-brand-strong: var(--dss-opacity-24);
+  /* Funções de utilidade (para referência) */
+  --dss-opacity-function-hover: "opacity: var(--dss-opacity-hover)";
+  --dss-opacity-function-disabled: "opacity: var(--dss-opacity-disabled)";
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE SOMBRA E ELEVAÇÃO
+   Sistema de profundidade visual
+   ========================================================================== */
+/**
+ * ESTRATÉGIA DE OPACIDADE:
+ * Light Mode: Opacidades médias (25%-45%) para sombras visíveis mas sutis
+ * Dark Mode: Opacidades altas (50%-90%) para melhor contraste em fundo escuro
+ *
+ * Light Mode usa metade da opacidade do Dark Mode para manter proporção visual
+ */
+:root {
+  /* ===========================================
+     1. SOMBRAS BASE (ELEVAÇÃO) - LIGHT MODE
+     =========================================== */
+  --dss-shadow-xs: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25); /* Dark: 0.5 */
+  --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.30); /* Dark: 0.6 */
+  --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.35); /* Dark: 0.7 */
+  --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.40); /* Dark: 0.8 */
+  --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.45); /* Dark: 0.9 */
+  /* Sombras internas (inset) */
+  --dss-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  --dss-shadow-inner-lg: inset 0 4px 8px rgba(0, 0, 0, 0.08);
+  /* ===========================================
+     2. SOMBRAS SEMÂNTICAS
+     =========================================== */
+  /* Foco (alternativa a outline) */
+  --dss-shadow-focus: 0 0 0 3px rgba(31, 134, 222, 0.5);
+  --dss-shadow-focus-error: 0 0 0 3px rgba(216, 24, 46, 0.5);
+  --dss-shadow-focus-success: 0 0 0 3px rgba(77, 210, 40, 0.5);
+  /* Overlay/backdrop */
+  --dss-shadow-overlay: 0 10px 38px rgba(0, 0, 0, 0.2);
+  --dss-shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.3);
+  /* ===========================================
+     3. SOMBRAS DE MARCA
+     =========================================== */
+  /* Hub (Laranja) */
+  --dss-shadow-hub-sm: 0 1px 3px rgba(245, 145, 26, 0.15);
+  --dss-shadow-hub-md: 0 4px 6px rgba(245, 145, 26, 0.15);
+  --dss-shadow-hub-lg: 0 10px 15px rgba(245, 145, 26, 0.15);
+  /* Water (Azul) */
+  --dss-shadow-water-sm: 0 1px 3px rgba(14, 136, 228, 0.15);
+  --dss-shadow-water-md: 0 4px 6px rgba(14, 136, 228, 0.15);
+  --dss-shadow-water-lg: 0 10px 15px rgba(14, 136, 228, 0.15);
+  /* Waste (Verde) */
+  --dss-shadow-waste-sm: 0 1px 3px rgba(24, 177, 115, 0.15);
+  --dss-shadow-waste-md: 0 4px 6px rgba(24, 177, 115, 0.15);
+  --dss-shadow-waste-lg: 0 10px 15px rgba(24, 177, 115, 0.15);
+  /* ===========================================
+     4. ELEVAÇÃO SEMÂNTICA
+     =========================================== */
+  --dss-elevation-0: none;
+  --dss-elevation-1: var(--dss-shadow-sm);
+  --dss-elevation-2: var(--dss-shadow-md);
+  --dss-elevation-3: var(--dss-shadow-lg);
+  --dss-elevation-4: var(--dss-shadow-xl);
+  --dss-elevation-5: var(--dss-shadow-2xl);
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 3)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (5 tokens):
+   *
+   * === CARDS (2 tokens) ===
+   * --dss-elevation-card           → Use: var(--dss-elevation-1)
+   * --dss-elevation-card-hover     → Use: var(--dss-elevation-2)
+   *
+   * === MODAIS (1 token) ===
+   * --dss-elevation-modal          → Use: var(--dss-elevation-4)
+   *
+   * === TOOLTIPS (1 token) ===
+   * --dss-elevation-tooltip        → Use: var(--dss-elevation-2)
+   *
+   * === TOASTS (1 token) ===
+   * --dss-elevation-toast          → Use: var(--dss-elevation-3)
+   *
+   * ✅ EXEMPLO DE USO NOS COMPONENTES:
+   *
+   * // DssCard.module.scss
+   * .dss-card {
+   *   box-shadow: var(--dss-elevation-1);  // default
+   *
+   *   &:hover {
+   *     box-shadow: var(--dss-elevation-2);
+   *   }
+   *
+   *   &--elevated {
+   *     box-shadow: var(--dss-elevation-2);
+   *   }
+   *
+   *   &--floating {
+   *     box-shadow: var(--dss-elevation-3);
+   *   }
+   * }
+   *
+   * // DssModal.module.scss
+   * .dss-modal {
+   *   box-shadow: var(--dss-elevation-4);  // alta elevação
+   *
+   *   &--fullscreen {
+   *     box-shadow: var(--dss-elevation-5);  // máxima elevação
+   *   }
+   * }
+   *
+   * // DssTooltip.module.scss
+   * .dss-tooltip {
+   *   box-shadow: var(--dss-elevation-2);  // média elevação
+   * }
+   *
+   * // DssToast.module.scss
+   * .dss-toast {
+   *   box-shadow: var(--dss-elevation-3);  // alta elevação
+   *
+   *   &--important {
+   *     box-shadow: var(--dss-elevation-4);  // muito alta
+   *   }
+   * }
+   *
+   * ✅ BENEFÍCIOS:
+   * - Escalabilidade: 100 componentes = mesmos 6 tokens de elevação
+   * - Flexibilidade: Componentes escolhem nível de elevação livremente
+   * - Manutenibilidade: Mudanças isoladas nos componentes
+   * - Clareza: Níveis explícitos (elevation-1, elevation-2, elevation-3, etc.)
+   * - Consistência: Sistema unificado de profundidade visual
+   *
+   * 📚 Referência: AUDITORIA_DSS_JAN_2025.md
+   *               SPRINT_3_RELATORIO_JAN_2025.md
+   *               DSS_TOKEN_GUIDELINES.md
+   */
+  /* ===========================================
+     5. SOMBRAS PARA ESTADOS
+     =========================================== */
+  --dss-shadow-hover: var(--dss-shadow-md);
+  --dss-shadow-active: var(--dss-shadow-inner);
+  --dss-shadow-drag: 0 10px 20px rgba(0, 0, 0, 0.15);
+  /* ===========================================
+     6. PREFERÊNCIAS DO USUÁRIO
+     =========================================== */
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dss-shadow-transition: none;
+  }
+}
+@media (prefers-contrast: high) {
+  :root {
+    --dss-shadow-focus: 0 0 0 3px rgba(31, 134, 222, 0.8);
+  }
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE Z-INDEX
+   Sistema de camadas para controle de profundidade
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. CAMADAS BASE
+     =========================================== */
+  --dss-z-index-auto: auto;
+  --dss-z-index-0: 0;
+  --dss-z-index-10: 10;
+  --dss-z-index-20: 20;
+  --dss-z-index-30: 30;
+  --dss-z-index-40: 40;
+  --dss-z-index-50: 50;
+  /* ===========================================
+     2. CAMADAS SEMÂNTICAS (ORDENADAS)
+     =========================================== */
+  --dss-z-index-below: -1; /* Para elementos que devem ficar atrás */
+  --dss-z-index-default: 0; /* Posição padrão do documento */
+  --dss-z-index-above: 1; /* Acima do padrão */
+  /* Elementos flutuantes básicos */
+  --dss-z-index-dropdown: 1000; /* Dropdowns, selects */
+  --dss-z-index-sticky: 1020; /* Elementos sticky */
+  --dss-z-index-fixed: 1030; /* Elementos fixed */
+  /* Overlays e backdrops */
+  --dss-z-index-backdrop: 1040; /* Backdrops de modais/drawers */
+  --dss-z-index-offcanvas: 1050; /* Offcanvas/sidebars */
+  --dss-z-index-modal: 1060; /* Modais/dialogs */
+  --dss-z-index-popover: 1070; /* Popovers, tooltips */
+  --dss-z-index-tooltip: 1080; /* Tooltips (acima de popovers) */
+  /* Notificações e alerts */
+  --dss-z-index-toast: 1090; /* Toasts/notificações */
+  --dss-z-index-alert: 1100; /* Alerts importantes */
+  /* Níveis máximos */
+  --dss-z-index-maximum: 9999; /* Para casos extremos */
+  /* ===========================================
+     3. CAMADAS PARA COMPONENTES ESPECÍFICOS
+     =========================================== */
+  /* Navegação */
+  --dss-z-index-navbar: 1030; /* Navbar fixa */
+  --dss-z-index-sidebar: 1040; /* Sidebar overlay */
+  /* Formulários */
+  --dss-z-index-form-control: 10; /* Para inputs com dropdown */
+  --dss-z-index-datepicker: 1050; /* Datepickers */
+  /* Loaders e overlays */
+  --dss-z-index-loader: 1100; /* Loaders de página inteira */
+  --dss-z-index-progress: 50; /* Progress bars fixas */
+  /* ===========================================
+     4. CAMADAS DE FOCO E INTERATIVIDADE
+     =========================================== */
+  --dss-z-index-focus: 9999; /* Garantir que foco fique visível */
+  /* ===========================================
+     5. UTILITÁRIOS
+     =========================================== */
+  --dss-z-index-hide: -9999; /* Para esconder elementos completamente */
+  --dss-z-index-behind: -1; /* Colocar atrás do elemento pai */
+  --dss-z-index-front: 9999; /* Trazer para frente */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE ANIMAÇÃO E TEMPORIZAÇÃO
+   Sistema consistente para movimento e transições
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. DURAÇÕES (TEMPO)
+     =========================================== */
+  --dss-duration-0: 0ms; /* Imediato */
+  --dss-duration-75: 75ms; /* Ultra rápido */
+  --dss-duration-100: 100ms; /* Muito rápido */
+  --dss-duration-150: 150ms; /* Rápido */
+  --dss-duration-200: 200ms; /* Moderadamente rápido */
+  --dss-duration-250: 250ms; /* Base (padrão) */
+  --dss-duration-300: 300ms; /* Moderadamente lento */
+  --dss-duration-500: 500ms; /* Lento */
+  --dss-duration-700: 700ms; /* Muito lento */
+  --dss-duration-1000: 1000ms; /* Ultra lento */
+  /* ===========================================
+     2. DURAÇÕES SEMÂNTICAS
+     =========================================== */
+  --dss-duration-instant: var(--dss-duration-0);
+  --dss-duration-fastest: var(--dss-duration-75);
+  --dss-duration-faster: var(--dss-duration-100);
+  --dss-duration-fast: var(--dss-duration-150);
+  --dss-duration-base: var(--dss-duration-250); /* Padrão WCAG amigável */
+  --dss-duration-slow: var(--dss-duration-300);
+  --dss-duration-slower: var(--dss-duration-500);
+  --dss-duration-slowest: var(--dss-duration-700);
+  /* Durações para estados interativos */
+  --dss-duration-hover: var(--dss-duration-150);
+  --dss-duration-focus: var(--dss-duration-100);
+  --dss-duration-active: var(--dss-duration-100);
+  --dss-duration-tooltip: var(--dss-duration-150);
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 4)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (2 tokens component-specific):
+   * --dss-duration-modal           → Use: var(--dss-duration-slow)
+   * --dss-duration-toast           → Use: var(--dss-duration-slow)
+   *
+   * MAPEAMENTO DE SUBSTITUIÇÃO:
+   * --dss-duration-modal (300ms)   → --dss-duration-slow (300ms)
+   * --dss-duration-toast (300ms)   → --dss-duration-slow (300ms)
+   *
+   * ✅ EXEMPLO DE USO NOS COMPONENTES:
+   *
+   * // DssModal.module.scss
+   * .dss-modal {
+   *   transition: opacity var(--dss-duration-slow) var(--dss-easing-standard);
+   *
+   *   &-enter {
+   *     animation: fadeIn var(--dss-duration-slow) var(--dss-easing-standard);
+   *   }
+   * }
+   *
+   * // DssToast.module.scss
+   * .dss-toast {
+   *   transition: transform var(--dss-duration-slow) var(--dss-easing-ease-out);
+   *
+   *   &-enter {
+   *     animation: slideIn var(--dss-duration-slow);
+   *   }
+   * }
+   *
+   * 📚 GUIA DE MIGRAÇÃO:
+   *
+   * Se você tinha:
+   *   transition: all var(--dss-duration-modal);
+   *
+   * Substitua por:
+   *   transition: all var(--dss-duration-slow);  // refatoração Jan 2025 Sprint 4
+   *
+   * Escolha a duração baseada na velocidade desejada:
+   *   --dss-duration-fast (150ms):    Interações rápidas (hover, focus)
+   *   --dss-duration-base (250ms):    Transições padrão
+   *   --dss-duration-slow (300ms):    Animações de entrada/saída
+   *   --dss-duration-slower (500ms):  Animações complexas
+   *
+   * ✨ BENEFÍCIOS:
+   *
+   * 1. REUTILIZAÇÃO: Qualquer componente pode usar qualquer duração
+   * 2. CONSISTÊNCIA: Sistema unificado de temporização
+   * 3. MANUTENÇÃO: Mudanças em durações afetam todos os componentes
+   * 4. EXTENSIBILIDADE: Novos componentes sabem exatamente qual token usar
+   * 5. ACESSIBILIDADE: prefers-reduced-motion afeta todos automaticamente
+   */
+  /* ===========================================
+     3. CURVAS DE EASING (ACELERAÇÃO)
+     =========================================== */
+  /* Curvas padrão */
+  --dss-easing-linear: cubic-bezier(0, 0, 1, 1);
+  --dss-easing-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --dss-easing-ease-in: cubic-bezier(0.42, 0, 1, 1);
+  --dss-easing-ease-out: cubic-bezier(0, 0, 0.58, 1);
+  --dss-easing-ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  /* Curvas de material design */
+  --dss-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dss-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --dss-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  /* Curvas para interações */
+  --dss-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --dss-easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* ===========================================
+     4. EASING SEMÂNTICO
+     =========================================== */
+  --dss-easing-hover: var(--dss-easing-ease-out);
+  --dss-easing-focus: var(--dss-easing-ease-out);
+  --dss-easing-active: var(--dss-easing-ease-in);
+  --dss-easing-modal: var(--dss-easing-standard);
+  --dss-easing-toast: var(--dss-easing-ease-out);
+  --dss-easing-tooltip: var(--dss-easing-ease-out);
+  /* ===========================================
+     5. ATRASOS (DELAYS)
+     =========================================== */
+  --dss-delay-0: 0ms;
+  --dss-delay-75: 75ms;
+  --dss-delay-100: 100ms;
+  --dss-delay-150: 150ms;
+  --dss-delay-200: 200ms;
+  --dss-delay-300: 300ms;
+  --dss-delay-500: 500ms;
+  --dss-delay-700: 700ms;
+  --dss-delay-1000: 1000ms;
+  /* ===========================================
+     6. TRANSIÇÕES SEMÂNTICAS
+     =========================================== */
+  --dss-transition-fast: all var(--dss-duration-fast) var(--dss-easing-ease-out);
+  --dss-transition-base: all var(--dss-duration-base) var(--dss-easing-standard);
+  --dss-transition-slow: all var(--dss-duration-slow) var(--dss-easing-ease-in-out);
+  /* Transições específicas */
+  --dss-transition-color: color var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-background: background-color var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-border: border-color var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-shadow: box-shadow var(--dss-duration-base) var(--dss-easing-ease);
+  --dss-transition-transform: transform var(--dss-duration-base) var(--dss-easing-standard);
+  --dss-transition-opacity: opacity var(--dss-duration-base) var(--dss-easing-ease);
+  /* ===========================================
+     7. ANIMAÇÕES PREDEFINIDAS
+     =========================================== */
+  --dss-animation-spin: spin 1s linear infinite;
+  --dss-animation-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --dss-animation-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --dss-animation-bounce: bounce 1s infinite;
+  /* ===========================================
+     8. PREFERÊNCIAS DO USUÁRIO (WCAG)
+     =========================================== */
+  /* Respeitar prefers-reduced-motion */
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dss-duration-base: var(--dss-duration-0);
+    --dss-duration-fast: var(--dss-duration-0);
+    --dss-duration-slow: var(--dss-duration-0);
+    --dss-transition-base: none;
+    --dss-transition-fast: none;
+    --dss-transition-slow: none;
+    --dss-animation-spin: none;
+    --dss-animation-pulse: none;
+    --dss-animation-bounce: none;
+  }
+}
+:root {
+  /* ===========================================
+     9. TEMPORIZADORES PARA FEEDBACK
+     =========================================== */
+  --dss-timing-toast: 5000ms; /* 5 segundos para toasts */
+  --dss-timing-tooltip-hide: 300ms; /* Delay para esconder tooltip */
+  --dss-timing-debounce: 150ms; /* Debounce padrão */
+  --dss-timing-throttle: 100ms; /* Throttle padrão */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE ESPAÇAMENTO
+   Sistema de escala para margins, paddings e gaps
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. ESCALA BASE (REM BASED - 1rem = 16px)
+     =========================================== */
+  --dss-spacing-0: 0; /* 0px */
+  --dss-spacing-px: 1px; /* 1px - para bordas finas */
+  --dss-spacing-0_5: 0.125rem; /* 2px */
+  --dss-spacing-1: 0.25rem; /* 4px */
+  --dss-spacing-1_5: 0.375rem; /* 6px */
+  --dss-spacing-2: 0.5rem; /* 8px */
+  --dss-spacing-2_5: 0.625rem; /* 10px */
+  --dss-spacing-3: 0.75rem; /* 12px */
+  --dss-spacing-3_5: 0.875rem; /* 14px */
+  --dss-spacing-4: 1rem; /* 16px */
+  --dss-spacing-5: 1.25rem; /* 20px */
+  --dss-spacing-6: 1.5rem; /* 24px */
+  --dss-spacing-7: 1.75rem; /* 28px */
+  --dss-spacing-8: 2rem; /* 32px */
+  --dss-spacing-9: 2.25rem; /* 36px */
+  --dss-spacing-10: 2.5rem; /* 40px */
+  --dss-spacing-11: 2.75rem; /* 44px */
+  --dss-spacing-12: 3rem; /* 48px */
+  --dss-spacing-14: 3.5rem; /* 56px */
+  --dss-spacing-16: 4rem; /* 64px */
+  --dss-spacing-20: 5rem; /* 80px */
+  --dss-spacing-24: 6rem; /* 96px */
+  --dss-spacing-28: 7rem; /* 112px */
+  --dss-spacing-32: 8rem; /* 128px */
+  --dss-spacing-36: 9rem; /* 144px */
+  --dss-spacing-40: 10rem; /* 160px */
+  --dss-spacing-44: 11rem; /* 176px */
+  --dss-spacing-48: 12rem; /* 192px */
+  --dss-spacing-52: 13rem; /* 208px */
+  --dss-spacing-56: 14rem; /* 224px */
+  --dss-spacing-60: 15rem; /* 240px */
+  --dss-spacing-64: 16rem; /* 256px */
+  --dss-spacing-72: 18rem; /* 288px */
+  --dss-spacing-80: 20rem; /* 320px */
+  --dss-spacing-96: 24rem; /* 384px */
+  --dss-spacing-120: 30rem; /* 480px */
+  --dss-spacing-192: 48rem; /* 768px */
+  /* ===========================================
+     2. ESPAÇAMENTOS SEMÂNTICOS
+     =========================================== */
+  /* Container e layout */
+  --dss-container-padding: var(--dss-spacing-4);
+  --dss-section-spacing: var(--dss-spacing-12);
+  --dss-component-spacing: var(--dss-spacing-6);
+  /* Grid e gap */
+  --dss-grid-gap-sm: var(--dss-spacing-2);
+  --dss-grid-gap-md: var(--dss-spacing-4);
+  --dss-grid-gap-lg: var(--dss-spacing-6);
+  --dss-grid-gap-xl: var(--dss-spacing-8);
+  /* ===========================================
+     2.1 LAYOUT ESTRUTURAL
+     Tokens para componentes de layout de página
+     =========================================== */
+  /* Sidebar */
+  --dss-layout-sidebar-width: 240px;
+  --dss-layout-sidebar-width-mini: 64px;
+  --dss-layout-sidebar-width-wide: 320px;
+  /* Header */
+  --dss-layout-header-height: 64px;
+  --dss-layout-header-height-dense: 48px;
+  /* Footer */
+  --dss-layout-footer-height: 64px;
+  --dss-layout-footer-padding: var(--dss-spacing-10);
+  /* Content */
+  --dss-layout-content-max-width: 720px; /* Largura máxima para leitura confortável */
+  --dss-layout-content-max-width-wide: 960px; /* Largura expandida para dashboards */
+  /* Page margins responsivos (valores base) */
+  --dss-layout-page-margin-x: var(--dss-spacing-4); /* 16px - ajustado por breakpoint */
+  --dss-layout-page-margin-y: var(--dss-spacing-6); /* 24px - ajustado por breakpoint */
+  /* ===========================================
+     3. ESPAÇAMENTO GENÉRICO PARA FORMULÁRIOS
+     =========================================== */
+  /* Form e labels */
+  --dss-form-gap: var(--dss-spacing-4);
+  --dss-label-margin-bottom: var(--dss-spacing-1);
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Tokens = Provedores, Componentes = Consumidores
+   *
+   * ❌ REMOVIDOS (16 tokens):
+   * --dss-button-padding-x          → Use: var(--dss-spacing-4)
+   * --dss-button-padding-y          → Use: var(--dss-spacing-2)
+   * --dss-button-padding-compact-x  → Use: var(--dss-spacing-3)
+   * --dss-button-padding-compact-y  → Use: var(--dss-spacing-1_5)
+   * --dss-input-padding-x           → Use: var(--dss-spacing-3)
+   * --dss-input-padding-y           → Use: var(--dss-spacing-2)
+   * --dss-input-height              → Use: var(--dss-spacing-10)
+   * --dss-card-padding              → Use: var(--dss-spacing-6)
+   * --dss-card-padding-compact      → Use: var(--dss-spacing-4)
+   * --dss-modal-padding             → Use: var(--dss-spacing-6)
+   * --dss-modal-header-padding      → Use: var(--dss-spacing-6) var(--dss-spacing-6) var(--dss-spacing-4)
+   * --dss-modal-body-padding        → Use: var(--dss-spacing-6)
+   * --dss-modal-footer-padding      → Use: var(--dss-spacing-4) var(--dss-spacing-6) var(--dss-spacing-6)
+   * --dss-radius-button             → Use: var(--dss-radius-md)
+   * --dss-radius-input              → Use: var(--dss-radius-md)
+   * --dss-radius-card               → Use: var(--dss-radius-lg)
+   *
+   * ✅ BENEFÍCIOS:
+   * - Escalabilidade: 100 componentes = mesmos tokens
+   * - Flexibilidade: Componentes escolhem livremente
+   * - Manutenibilidade: Mudanças isoladas nos componentes
+   *
+   * 📚 Referência: AUDITORIA_DSS_JAN_2025.md
+   *               REFATORACAO_COMPLETA_JAN_2025.md
+   *               DSS_TOKEN_GUIDELINES.md
+   */
+  /* ===========================================
+     4. MARGINS SEMÂNTICAS
+     =========================================== */
+  --dss-margin-auto: auto;
+  --dss-margin-0: var(--dss-spacing-0);
+  --dss-margin-1: var(--dss-spacing-1);
+  --dss-margin-2: var(--dss-spacing-2);
+  --dss-margin-3: var(--dss-spacing-3);
+  --dss-margin-4: var(--dss-spacing-4);
+  --dss-margin-6: var(--dss-spacing-6);
+  --dss-margin-8: var(--dss-spacing-8);
+  --dss-margin-12: var(--dss-spacing-12);
+  --dss-margin-16: var(--dss-spacing-16);
+  /* ===========================================
+     5. PADDINGS SEMÂNTICOS
+     =========================================== */
+  --dss-padding-0: var(--dss-spacing-0);
+  --dss-padding-1: var(--dss-spacing-1);
+  --dss-padding-2: var(--dss-spacing-2);
+  --dss-padding-3: var(--dss-spacing-3);
+  --dss-padding-4: var(--dss-spacing-4);
+  --dss-padding-6: var(--dss-spacing-6);
+  --dss-padding-8: var(--dss-spacing-8);
+  --dss-padding-12: var(--dss-spacing-12);
+  --dss-padding-16: var(--dss-spacing-16);
+  /* ===========================================
+     6. GAPS SEMÂNTICOS (FLEX/GRID)
+     =========================================== */
+  --dss-gap-0: var(--dss-spacing-0);
+  --dss-gap-1: var(--dss-spacing-1);
+  --dss-gap-2: var(--dss-spacing-2);
+  --dss-gap-3: var(--dss-spacing-3);
+  --dss-gap-4: var(--dss-spacing-4);
+  --dss-gap-6: var(--dss-spacing-6);
+  --dss-gap-8: var(--dss-spacing-8);
+  --dss-gap-12: var(--dss-spacing-12);
+  /* ===========================================
+     7. ESPAÇAMENTO PARA ACESSIBILIDADE
+     =========================================== */
+  /* Touch spacing (WCAG) */
+  --dss-touch-spacing: var(--dss-spacing-2); /* 8px mínimo entre elementos tocáveis */
+  /* Line height como spacing (para tipografia) */
+  --dss-line-height-spacing: calc(1em * var(--dss-line-height-base));
+  /* ===========================================
+     8. BORDER RADIUS (relacionado a spacing)
+     UPDATED: JAN 2025 - Valores mais visíveis e práticos
+     =========================================== */
+  --dss-radius-none: 0;
+  --dss-radius-sm: var(--dss-spacing-1); /* 4px */
+  --dss-radius-md: var(--dss-spacing-2); /* 8px */
+  --dss-radius-lg: var(--dss-spacing-3); /* 12px */
+  --dss-radius-xl: var(--dss-spacing-4); /* 16px */
+  --dss-radius-2xl: var(--dss-spacing-5); /* 20px */
+  --dss-radius-3xl: var(--dss-spacing-6); /* 24px */
+  --dss-radius-full: 9999px;
+  --dss-radius-circle: 50%; /* Círculos perfeitos (Avatar, Radio, indicadores circulares) */
+  /* Radius especial para badges (mantido por ser altamente específico) */
+  --dss-radius-badge: var(--dss-radius-full);
+  /* ⚠️ NOTA: Radius semânticos de componentes foram removidos (ver seção 3) */
+  /* ===========================================
+     CONSTANTES ESTRUTURAIS DE LAYOUT
+     =========================================== */
+  /* Altura real do DssToolbar = --dss-touch-target-md (44px) + 5px border/padding Quasar.
+     EX-Structural: 49px calculado — sem token de touch target com borda disponível. */
+  --dss-toolbar-height: 49px;
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE BREAKPOINTS
+   Sistema de responsividade alinhado com Tailwind CSS
+   Atualizado: Janeiro 2025
+   ========================================================================== */
+:root {
+  /* ===========================================
+     BREAKPOINTS PRINCIPAIS
+     Alinhado com Tailwind CSS + Suporte 4K
+     =========================================== */
+  /* Extra Small (Mobile Portrait) - Mínimo suportado: 320px */
+  --dss-breakpoint-xs: 320px;
+  --dss-breakpoint-xs-min: 320px;
+  --dss-breakpoint-xs-max: 639px;
+  /* Small (Mobile Landscape / Tablet Portrait) - Tailwind: 640px */
+  --dss-breakpoint-sm: 640px;
+  --dss-breakpoint-sm-min: 640px;
+  --dss-breakpoint-sm-max: 1023px;
+  /* Medium (Tablet Landscape / Desktop Small) */
+  --dss-breakpoint-md: 1024px;
+  --dss-breakpoint-md-min: 1024px;
+  --dss-breakpoint-md-max: 1439px;
+  /* Large (Desktop) */
+  --dss-breakpoint-lg: 1440px;
+  --dss-breakpoint-lg-min: 1440px;
+  --dss-breakpoint-lg-max: 1919px;
+  /* Extra Large (Large Desktop) */
+  --dss-breakpoint-xl: 1920px;
+  --dss-breakpoint-xl-min: 1920px;
+  --dss-breakpoint-xl-max: 3839px;
+  /* 4K (Ultra HD Displays) */
+  --dss-breakpoint-4k: 3840px;
+  --dss-breakpoint-4k-min: 3840px;
+  /* ===========================================
+     BREAKPOINTS DE ZOOM (WCAG 2.1 AA)
+     Para suporte a zoom 200%/300%
+     =========================================== */
+  /* Zoom 200% - Elementos devem se adaptar */
+  --dss-breakpoint-zoom-200: calc(var(--dss-breakpoint-md) * 0.5); /* ~512px */
+  /* Zoom 300% - Elementos devem se adaptar */
+  --dss-breakpoint-zoom-300: calc(var(--dss-breakpoint-md) * 0.33); /* ~338px */
+  /* ===========================================
+     CONTAINER MAX-WIDTH
+     Larguras máximas proporcionais a 4K
+     Limite de legibilidade: 1600px
+     =========================================== */
+  --dss-container-xs: 100%; /* Fluid em mobile */
+  --dss-container-sm: 608px; /* ~95% de 640px */
+  --dss-container-md: 960px; /* ~94% de 1024px */
+  --dss-container-lg: 1280px; /* ~89% de 1440px */
+  --dss-container-xl: 1600px; /* Limite de legibilidade */
+  --dss-container-4k: 1600px; /* Mesmo limite para 4K */
+  /* ===========================================
+     GUTTER / SPACING POR BREAKPOINT
+     Espaçamento lateral responsivo
+     =========================================== */
+  --dss-gutter-xs: var(--dss-spacing-2, 8px); /* 8px */
+  --dss-gutter-sm: var(--dss-spacing-4, 16px); /* 16px */
+  --dss-gutter-md: var(--dss-spacing-6, 24px); /* 24px */
+  --dss-gutter-lg: var(--dss-spacing-8, 32px); /* 32px */
+  --dss-gutter-xl: var(--dss-spacing-10, 40px); /* 40px */
+  --dss-gutter-4k: var(--dss-spacing-12, 48px); /* 48px */
+  /* ===========================================
+     SISTEMA DE COLUNAS RESPONSIVAS
+     Grid 4/8/12 colunas por breakpoint
+     =========================================== */
+  --dss-grid-columns-xs: 4; /* Mobile: 4 colunas */
+  --dss-grid-columns-sm: 8; /* Tablet: 8 colunas */
+  --dss-grid-columns-md: 12; /* Desktop: 12 colunas */
+  --dss-grid-columns-lg: 12; /* Wide: 12 colunas */
+  --dss-grid-columns-xl: 12; /* Ultrawide: 12 colunas */
+  --dss-grid-columns-4k: 12; /* 4K: 12 colunas */
+  /* ===========================================
+     ORIENTAÇÃO
+     Tokens para landscape/portrait
+     =========================================== */
+  --dss-orientation-portrait: portrait;
+  --dss-orientation-landscape: landscape;
+}
+
+/* ===========================================
+   MIXINS SASS PARA BREAKPOINTS
+   Uso: @include dss-breakpoint-up('md') { ... }
+   =========================================== */
+/**
+ * Breakpoint maior ou igual (mobile-first)
+ * @param {string} $size - xs, sm, md, lg, xl, 4k
+ */
+/**
+ * Breakpoint menor ou igual (desktop-first)
+ * @param {string} $size - xs, sm, md, lg, xl, 4k
+ */
+/**
+ * Breakpoint entre dois tamanhos (range)
+ * @param {string} $min - xs, sm, md, lg, xl, 4k
+ * @param {string} $max - xs, sm, md, lg, xl, 4k
+ */
+/**
+ * Breakpoint apenas para um tamanho específico
+ * @param {string} $size - xs, sm, md, lg, xl, 4k
+ */
+/**
+ * Orientação do dispositivo
+ * @param {string} $orientation - portrait, landscape
+ */
+/**
+ * Touch device (sem mouse preciso)
+ */
+/**
+ * Desktop (com mouse preciso)
+ */
+/**
+ * High DPI / Retina displays
+ */
+/* ===========================================
+   TABELA DE REFERÊNCIA RÁPIDA
+   =========================================== */
+/*
+| Breakpoint | Min Width | Max Width | Container | Gutter | Colunas |
+|------------|-----------|-----------|-----------|--------|---------|
+| XS         | 320px     | 639px     | 100%      | 8px    | 4       |
+| SM         | 640px     | 1023px    | 608px     | 16px   | 8       |
+| MD         | 1024px    | 1439px    | 960px     | 24px   | 12      |
+| LG         | 1440px    | 1919px    | 1280px    | 32px   | 12      |
+| XL         | 1920px    | 3839px    | 1600px    | 40px   | 12      |
+| 4K         | 3840px    | ∞         | 1600px    | 48px   | 12      |
+*/
+/* ===========================================
+   EXEMPLOS DE USO
+   =========================================== */
+/*
+// Mobile-first approach (recomendado)
+.my-component {
+  padding: var(--dss-spacing-2);
+
+  @include dss-breakpoint-up('sm') {
+    padding: var(--dss-spacing-4);
+  }
+
+  @include dss-breakpoint-up('md') {
+    padding: var(--dss-spacing-6);
+  }
+
+  @include dss-breakpoint-up('lg') {
+    padding: var(--dss-spacing-8);
+  }
+
+  @include dss-breakpoint-up('4k') {
+    padding: var(--dss-spacing-12);
+  }
+}
+
+// Desktop-first approach
+.my-component {
+  font-size: 18px;
+
+  @include dss-breakpoint-down('md') {
+    font-size: 16px;
+  }
+
+  @include dss-breakpoint-down('sm') {
+    font-size: 14px;
+  }
+}
+
+// Range específico (tablet)
+.tablet-only {
+  @include dss-breakpoint-between('sm', 'md') {
+    display: block;
+  }
+}
+
+// Apenas mobile
+.mobile-only {
+  @include dss-breakpoint-only('xs') {
+    display: block;
+  }
+}
+
+// Orientação
+.landscape-view {
+  @include dss-orientation('landscape') {
+    flex-direction: row;
+  }
+}
+
+// Touch vs Desktop
+.interactive-element {
+  @include dss-touch-device {
+    // Aumentar área de toque
+    padding: var(--dss-spacing-4);
+  }
+
+  @include dss-desktop-device {
+    // Área menor para mouse preciso
+    padding: var(--dss-spacing-2);
+  }
+}
+
+// Retina displays
+.icon {
+  background-image: url('icon.png');
+
+  @include dss-retina {
+    background-image: url('icon@2x.png');
+  }
+}
+*/
+/* Sistema de responsividade */
+/* ==========================================================================
+   DSS - TOKENS DE GRADIENTE
+   Gradientes pré-definidos para uso consistente
+
+   ⚠️ IMPORTANTE - FILOSOFIA DE TOKENS:
+   Este arquivo contém APENAS tokens genéricos e reutilizáveis.
+   Componentes ESCOLHEM quais tokens usar em seus arquivos .module.scss.
+
+   ❌ NÃO CRIAR: --dss-gradient-button-primary
+   ✅ CRIAR: --dss-gradient-primary-vertical
+   ✅ USAR NO COMPONENTE: background: var(--dss-gradient-primary-vertical);
+   ========================================================================== */
+:root {
+  /* ===========================================
+     1. GRADIENTES NEUTROS
+     =========================================== */
+  --dss-gradient-gray-vertical: linear-gradient(180deg, var(--dss-gray-50) 0%, var(--dss-gray-100) 100%);
+  --dss-gradient-gray-horizontal: linear-gradient(90deg, var(--dss-gray-50) 0%, var(--dss-gray-100) 100%);
+  --dss-gradient-gray-diagonal: linear-gradient(135deg, var(--dss-gray-50) 0%, var(--dss-gray-100) 100%);
+  --dss-gradient-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  --dss-gradient-overlay-light: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 100%);
+  /* ===========================================
+     2. GRADIENTES DE AÇÃO (Semânticos)
+     =========================================== */
+  /* Primary */
+  --dss-gradient-primary-vertical: linear-gradient(180deg, var(--dss-primary-light) 0%, var(--dss-primary) 100%);
+  --dss-gradient-primary-horizontal: linear-gradient(90deg, var(--dss-primary-light) 0%, var(--dss-primary) 100%);
+  --dss-gradient-primary-diagonal: linear-gradient(135deg, var(--dss-primary-light) 0%, var(--dss-primary) 100%);
+  --dss-gradient-primary-deep: linear-gradient(135deg, var(--dss-primary) 0%, var(--dss-primary-deep) 100%);
+  /* Secondary */
+  --dss-gradient-secondary-vertical: linear-gradient(180deg, var(--dss-secondary-light) 0%, var(--dss-secondary) 100%);
+  --dss-gradient-secondary-horizontal: linear-gradient(90deg, var(--dss-secondary-light) 0%, var(--dss-secondary) 100%);
+  --dss-gradient-secondary-diagonal: linear-gradient(135deg, var(--dss-secondary-light) 0%, var(--dss-secondary) 100%);
+  /* Tertiary */
+  --dss-gradient-tertiary-vertical: linear-gradient(180deg, var(--dss-tertiary-light) 0%, var(--dss-tertiary) 100%);
+  --dss-gradient-tertiary-horizontal: linear-gradient(90deg, var(--dss-tertiary-light) 0%, var(--dss-tertiary) 100%);
+  --dss-gradient-tertiary-diagonal: linear-gradient(135deg, var(--dss-tertiary-light) 0%, var(--dss-tertiary) 100%);
+  /* Accent */
+  --dss-gradient-accent-vertical: linear-gradient(180deg, var(--dss-accent-light) 0%, var(--dss-accent) 100%);
+  --dss-gradient-accent-horizontal: linear-gradient(90deg, var(--dss-accent-light) 0%, var(--dss-accent) 100%);
+  --dss-gradient-accent-diagonal: linear-gradient(135deg, var(--dss-accent-light) 0%, var(--dss-accent) 100%);
+  /* ===========================================
+     3. GRADIENTES DE FEEDBACK
+     =========================================== */
+  --dss-gradient-success-vertical: linear-gradient(180deg, var(--dss-positive-light) 0%, var(--dss-positive) 100%);
+  --dss-gradient-success-diagonal: linear-gradient(135deg, var(--dss-positive-light) 0%, var(--dss-positive) 100%);
+  --dss-gradient-error-vertical: linear-gradient(180deg, var(--dss-negative-light) 0%, var(--dss-negative) 100%);
+  --dss-gradient-error-diagonal: linear-gradient(135deg, var(--dss-negative-light) 0%, var(--dss-negative) 100%);
+  --dss-gradient-warning-vertical: linear-gradient(180deg, var(--dss-warning-light) 0%, var(--dss-warning) 100%);
+  --dss-gradient-warning-diagonal: linear-gradient(135deg, var(--dss-warning-light) 0%, var(--dss-warning) 100%);
+  --dss-gradient-info-vertical: linear-gradient(180deg, var(--dss-info-light) 0%, var(--dss-info) 100%);
+  --dss-gradient-info-diagonal: linear-gradient(135deg, var(--dss-info-light) 0%, var(--dss-info) 100%);
+  /* ===========================================
+     4. GRADIENTES DE MARCA
+     =========================================== */
+  /* Hub (Laranja) */
+  --dss-gradient-hub-vertical: linear-gradient(180deg, var(--dss-hub-300) 0%, var(--dss-hub-500) 100%);
+  --dss-gradient-hub-horizontal: linear-gradient(90deg, var(--dss-hub-300) 0%, var(--dss-hub-500) 100%);
+  --dss-gradient-hub-diagonal: linear-gradient(135deg, var(--dss-hub-300) 0%, var(--dss-hub-500) 100%);
+  --dss-gradient-hub-deep: linear-gradient(135deg, var(--dss-hub-500) 0%, var(--dss-hub-700) 100%);
+  --dss-gradient-hub-subtle: linear-gradient(135deg, var(--dss-hub-50) 0%, var(--dss-hub-100) 100%);
+  /* Water (Azul) */
+  --dss-gradient-water-vertical: linear-gradient(180deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-water-horizontal: linear-gradient(90deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-water-diagonal: linear-gradient(135deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-water-deep: linear-gradient(135deg, var(--dss-water-500) 0%, var(--dss-water-700) 100%);
+  --dss-gradient-water-subtle: linear-gradient(135deg, var(--dss-water-50) 0%, var(--dss-water-100) 100%);
+  /* Waste (Verde) */
+  --dss-gradient-waste-vertical: linear-gradient(180deg, var(--dss-waste-300) 0%, var(--dss-waste-500) 100%);
+  --dss-gradient-waste-horizontal: linear-gradient(90deg, var(--dss-waste-300) 0%, var(--dss-waste-500) 100%);
+  --dss-gradient-waste-diagonal: linear-gradient(135deg, var(--dss-waste-300) 0%, var(--dss-waste-500) 100%);
+  --dss-gradient-waste-deep: linear-gradient(135deg, var(--dss-waste-500) 0%, var(--dss-waste-700) 100%);
+  --dss-gradient-waste-subtle: linear-gradient(135deg, var(--dss-waste-50) 0%, var(--dss-waste-100) 100%);
+  /* ===========================================
+     5. GRADIENTES DE ÊNFASE
+     =========================================== */
+  --dss-gradient-shine: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  --dss-gradient-border: linear-gradient(90deg,
+    var(--dss-primary) 0%,
+    var(--dss-secondary) 50%,
+    var(--dss-tertiary) 100%
+  );
+  /* Glossy effect - Efeito brilhante para botões */
+  --dss-gradient-glossy: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.12) 51%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  --dss-gradient-glossy-active: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  /* ===========================================
+     6. MÁSCARAS DE GRADIENTE
+     =========================================== */
+  --dss-gradient-mask-top: linear-gradient(180deg, black 0%, transparent 100%);
+  --dss-gradient-mask-bottom: linear-gradient(0deg, black 0%, transparent 100%);
+  --dss-gradient-mask-left: linear-gradient(90deg, black 0%, transparent 100%);
+  --dss-gradient-mask-right: linear-gradient(270deg, black 0%, transparent 100%);
+  --dss-gradient-fade-top: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  --dss-gradient-fade-bottom: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+/* Opcional */
+/* 5. Tokens de marca */
+/* ==========================================================================
+   DSS - TOKENS DE MARCA HUB
+   Sobrescritas para contexto Sansys Hub (Laranja/Marrom)
+   ========================================================================== */
+[data-brand=hub] {
+  /* ===========================================
+     1. TOKENS DE AÇÃO (ACTION TOKENS)
+     Primary actions usam cores da marca Hub
+     =========================================== */
+  --dss-action-primary: var(--dss-hub-600); /* #ef7a11 */
+  --dss-action-primary-light: var(--dss-hub-300); /* #fbcb76 */
+  --dss-action-primary-disable: var(--dss-hub-200); /* #fde2ab */
+  --dss-action-primary-hover: var(--dss-hub-800); /* #984614 */
+  --dss-action-primary-deep: var(--dss-hub-900); /* #7a3614 */
+  --dss-action-primary-bg: var(--dss-hub-50); /* #fff9ed */
+  --dss-action-primary-text: white;
+  /* Secondary e tertiary mantêm cores semânticas */
+  --dss-action-secondary: var(--dss-secondary); /* Mantém verde semântico */
+  --dss-action-tertiary: var(--dss-tertiary); /* Mantém laranja semântico */
+  --dss-action-accent: var(--dss-accent); /* Mantém roxo semântico */
+  /* ===========================================
+     2. TOKENS DE MARCA ESPECÍFICOS
+     =========================================== */
+  --dss-brand-primary: var(--dss-hub-600);
+  --dss-brand-secondary: var(--dss-hub-300);
+  --dss-brand-tertiary: var(--dss-hub-800);
+  --dss-brand-accent: var(--dss-hub-400);
+  --dss-brand-light: var(--dss-hub-100);
+  --dss-brand-lighter: var(--dss-hub-50);
+  --dss-brand-dark: var(--dss-hub-900);
+  --dss-brand-darker: var(--dss-hub-950);
+  --dss-brand-hover: var(--dss-hub-700); /* Estado hover sobre primary — #bf590f */
+  --dss-brand-disable: var(--dss-hub-200); /* Estado desabilitado — #fde2ab */
+  --dss-brand-deep: var(--dss-hub-800); /* Estado active/pressionado — #984614 */
+  --dss-brand-background: var(--dss-hub-50);
+  --dss-brand-surface: var(--dss-hub-100);
+  --dss-brand-border: var(--dss-hub-200);
+  --dss-brand-text: var(--dss-hub-900);
+  /* ===========================================
+     3. TOKENS DE SUPERFÍCIE BRANDÁVEIS
+     =========================================== */
+  --dss-surface-brand-subtle: rgba(239, 122, 17, 0.08); /* Hub-600 8% */
+  --dss-surface-brand-light: rgba(239, 122, 17, 0.12); /* Hub-600 12% */
+  --dss-surface-brand-medium: rgba(239, 122, 17, 0.16); /* Hub-600 16% */
+  --dss-surface-brand-strong: rgba(239, 122, 17, 0.24); /* Hub-600 24% */
+  --dss-surface-brand-primary: var(--dss-hub-50);
+  --dss-surface-brand-secondary: var(--dss-hub-100);
+  /* ===========================================
+     4. TOKENS DE TEXTO BRANDÁVEIS
+     =========================================== */
+  --dss-text-brand-primary: var(--dss-hub-800);
+  --dss-text-brand-secondary: var(--dss-hub-600);
+  --dss-text-brand-tertiary: var(--dss-hub-500);
+  --dss-text-brand-accent: var(--dss-hub-300);
+  --dss-text-brand-on-dark: white;
+  --dss-text-brand-on-light: var(--dss-hub-900);
+  /* ===========================================
+     5. TOKENS DE BORDA BRANDÁVEIS
+     =========================================== */
+  --dss-border-brand-primary: var(--dss-hub-300);
+  --dss-border-brand-secondary: var(--dss-hub-200);
+  --dss-border-brand-accent: var(--dss-hub-600);
+  --dss-border-brand-focus: var(--dss-hub-600);
+  --dss-border-brand-error: var(--dss-negative); /* Mantém vermelho semântico */
+  /* ===========================================
+     6. TOKENS DE SOMBRA BRANDÁVEIS
+     =========================================== */
+  --dss-shadow-brand-sm: 0 1px 3px rgba(239, 122, 17, 0.15);
+  --dss-shadow-brand-md: 0 4px 6px rgba(239, 122, 17, 0.15);
+  --dss-shadow-brand-lg: 0 10px 15px rgba(239, 122, 17, 0.15);
+  --dss-shadow-brand-xl: 0 20px 25px rgba(239, 122, 17, 0.15);
+  --dss-elevation-brand-1: 0 1px 3px rgba(239, 122, 17, 0.15);
+  --dss-elevation-brand-2: 0 4px 6px rgba(239, 122, 17, 0.15);
+  /* ===========================================
+     7. TOKENS DE FOCO BRANDÁVEIS
+     =========================================== */
+  --dss-focus-ring-brand: 0 0 0 3px rgba(239, 122, 17, 0.5);
+  --dss-focus-ring-brand-inset: inset 0 0 0 3px rgba(239, 122, 17, 0.5);
+  --dss-outline-focus-brand: 2px solid var(--dss-hub-600);
+  /* ===========================================
+     8. GRADIENTES BRANDÁVEIS
+     =========================================== */
+  --dss-gradient-brand-vertical: linear-gradient(180deg, var(--dss-hub-400) 0%, var(--dss-hub-600) 100%);
+  --dss-gradient-brand-horizontal: linear-gradient(90deg, var(--dss-hub-400) 0%, var(--dss-hub-600) 100%);
+  --dss-gradient-brand-diagonal: linear-gradient(135deg, var(--dss-hub-400) 0%, var(--dss-hub-600) 100%);
+  --dss-gradient-brand-radial: radial-gradient(circle, var(--dss-hub-400) 0%, var(--dss-hub-600) 100%);
+  --dss-gradient-brand-light: linear-gradient(135deg, var(--dss-hub-50) 0%, var(--dss-hub-100) 100%);
+  --dss-gradient-brand-dark: linear-gradient(135deg, var(--dss-hub-600) 0%, var(--dss-hub-800) 100%);
+  /* ===========================================
+     9. ❌ REMOVIDO: TOKENS DE COMPONENTES BRANDÁVEIS
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 1
+   *
+   * Tokens removidos (14 tokens --dss-component-*):
+   * - --dss-component-btn-primary-bg
+   * - --dss-component-btn-primary-hover
+   * - --dss-component-btn-primary-active
+   * - --dss-component-btn-primary-text
+   * - --dss-component-card-bg
+   * - --dss-component-card-border
+   * - --dss-component-card-header-bg
+   * - --dss-component-header-bg
+   * - --dss-component-header-text
+   * - --dss-component-header-border
+   * - --dss-component-footer-bg
+   * - --dss-component-footer-text
+   * - --dss-component-sidebar-bg
+   * - --dss-component-sidebar-border
+   *
+   * CORREÇÃO: Componentes devem consumir tokens genéricos:
+   * .dss-button { background: var(--dss-action-primary); }
+   * .dss-card { background: var(--dss-surface-default); }
+   */
+  /* ===========================================
+     10. TOKENS PARA QUASAR (INTEGRAÇÃO)
+     =========================================== */
+  --quasar-primary: var(--dss-hub-600);
+  --quasar-primary-hover: var(--dss-hub-700);
+  --quasar-primary-active: var(--dss-hub-800);
+  --quasar-primary-disable: var(--dss-hub-200);
+  /* ===========================================
+     11. ACESSIBILIDADE - CONTRASTE ESPECÍFICO
+     =========================================== */
+  /* Nota: Hub-600 (#ef7a11) tem contraste 3.8:1 com branco (apenas para UI grande)
+      Portanto, NÃO usar para texto normal. Apenas para UI elements grandes. */
+  --dss-contrast-brand-primary-on-white: 3.8; /* ⚠️ Apenas UI grande */
+  --dss-contrast-brand-primary-on-dark: 10.2; /* ✅ Excelente sobre fundo escuro */
+  /* Combinações aprovadas para Hub */
+  --dss-contrast-safe-brand-text: var(--dss-hub-900); /* #7a3614 sobre branco = 11.6:1 ✅ */
+  --dss-contrast-safe-brand-bg: var(--dss-hub-600); /* Para backgrounds apenas */
+  --dss-contrast-safe-brand-ui: var(--dss-hub-700); /* #bf590f sobre branco = 5.2:1 ✅ (UI grande) */
+  /* ===========================================
+     12. CLASSES DE UTILIDADE ESPECÍFICAS
+     =========================================== */
+}
+[data-brand=hub] .dss-brand-hub-only {
+  /* Classes que só aparecem no contexto Hub */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE MARCA WATER
+   Sobrescritas para contexto Sansys Water (Azul)
+   ========================================================================== */
+[data-brand=water] {
+  /* ===========================================
+     1. TOKENS DE AÇÃO (ACTION TOKENS)
+     Primary actions usam cores da marca Water
+     =========================================== */
+  --dss-action-primary: var(--dss-water-500); /* #0e88e4 */
+  --dss-action-primary-light: var(--dss-water-300); /* #7dc4fc */
+  --dss-action-primary-disable: var(--dss-water-200); /* #badefd */
+  --dss-action-primary-hover: var(--dss-water-700); /* #0356a1 */
+  --dss-action-primary-deep: var(--dss-water-800); /* #074a85 */
+  --dss-action-primary-bg: var(--dss-water-50); /* #f0f7ff */
+  --dss-action-primary-text: white;
+  /* Secondary e tertiary mantêm cores semânticas */
+  --dss-action-secondary: var(--dss-secondary); /* Mantém verde semântico */
+  --dss-action-tertiary: var(--dss-tertiary); /* Mantém laranja semântico */
+  --dss-action-accent: var(--dss-accent); /* Mantém roxo semântico */
+  /* ===========================================
+     2. TOKENS DE MARCA ESPECÍFICOS
+     =========================================== */
+  --dss-brand-primary: var(--dss-water-500);
+  --dss-brand-secondary: var(--dss-water-300);
+  --dss-brand-tertiary: var(--dss-water-700);
+  --dss-brand-accent: var(--dss-water-400);
+  --dss-brand-light: var(--dss-water-100);
+  --dss-brand-lighter: var(--dss-water-50);
+  --dss-brand-dark: var(--dss-water-800);
+  --dss-brand-darker: var(--dss-water-900);
+  --dss-brand-hover: var(--dss-water-600); /* Estado hover sobre primary — #026cc7 */
+  --dss-brand-disable: var(--dss-water-200); /* Estado desabilitado — #badefd */
+  --dss-brand-deep: var(--dss-water-800); /* Estado active/pressionado — #074a85 */
+  --dss-brand-background: var(--dss-water-50);
+  --dss-brand-surface: var(--dss-water-100);
+  --dss-brand-border: var(--dss-water-200);
+  --dss-brand-text: var(--dss-water-800);
+  /* ===========================================
+     3. TOKENS DE SUPERFÍCIE BRANDÁVEIS
+     =========================================== */
+  --dss-surface-brand-subtle: rgba(14, 136, 228, 0.08); /* Water-500 8% */
+  --dss-surface-brand-light: rgba(14, 136, 228, 0.12); /* Water-500 12% */
+  --dss-surface-brand-medium: rgba(14, 136, 228, 0.16); /* Water-500 16% */
+  --dss-surface-brand-strong: rgba(14, 136, 228, 0.24); /* Water-500 24% */
+  --dss-surface-brand-primary: var(--dss-water-50);
+  --dss-surface-brand-secondary: var(--dss-water-100);
+  /* ===========================================
+     4. TOKENS DE TEXTO BRANDÁVEIS
+     =========================================== */
+  --dss-text-brand-primary: var(--dss-water-700);
+  --dss-text-brand-secondary: var(--dss-water-500);
+  --dss-text-brand-tertiary: var(--dss-water-400);
+  --dss-text-brand-accent: var(--dss-water-300);
+  --dss-text-brand-on-dark: white;
+  --dss-text-brand-on-light: var(--dss-water-800);
+  /* ===========================================
+     5. TOKENS DE BORDA BRANDÁVEIS
+     =========================================== */
+  --dss-border-brand-primary: var(--dss-water-300);
+  --dss-border-brand-secondary: var(--dss-water-200);
+  --dss-border-brand-accent: var(--dss-water-500);
+  --dss-border-brand-focus: var(--dss-water-500);
+  --dss-border-brand-error: var(--dss-negative); /* Mantém vermelho semântico */
+  /* ===========================================
+     6. TOKENS DE SOMBRA BRANDÁVEIS
+     =========================================== */
+  --dss-shadow-brand-sm: 0 1px 3px rgba(14, 136, 228, 0.15);
+  --dss-shadow-brand-md: 0 4px 6px rgba(14, 136, 228, 0.15);
+  --dss-shadow-brand-lg: 0 10px 15px rgba(14, 136, 228, 0.15);
+  --dss-shadow-brand-xl: 0 20px 25px rgba(14, 136, 228, 0.15);
+  --dss-elevation-brand-1: 0 1px 3px rgba(14, 136, 228, 0.15);
+  --dss-elevation-brand-2: 0 4px 6px rgba(14, 136, 228, 0.15);
+  /* ===========================================
+     7. TOKENS DE FOCO BRANDÁVEIS
+     =========================================== */
+  --dss-focus-ring-brand: 0 0 0 3px rgba(14, 136, 228, 0.5);
+  --dss-focus-ring-brand-inset: inset 0 0 0 3px rgba(14, 136, 228, 0.5);
+  --dss-outline-focus-brand: 2px solid var(--dss-water-500);
+  /* ===========================================
+     8. GRADIENTES BRANDÁVEIS
+     =========================================== */
+  --dss-gradient-brand-vertical: linear-gradient(180deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-brand-horizontal: linear-gradient(90deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-brand-diagonal: linear-gradient(135deg, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-brand-radial: radial-gradient(circle, var(--dss-water-300) 0%, var(--dss-water-500) 100%);
+  --dss-gradient-brand-light: linear-gradient(135deg, var(--dss-water-50) 0%, var(--dss-water-100) 100%);
+  --dss-gradient-brand-dark: linear-gradient(135deg, var(--dss-water-500) 0%, var(--dss-water-700) 100%);
+  /* ===========================================
+     9. ❌ REMOVIDO: TOKENS DE COMPONENTES BRANDÁVEIS
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 1
+   *
+   * Tokens removidos (14 tokens --dss-component-*):
+   * - --dss-component-btn-primary-bg
+   * - --dss-component-btn-primary-hover
+   * - --dss-component-btn-primary-active
+   * - --dss-component-btn-primary-text
+   * - --dss-component-card-bg
+   * - --dss-component-card-border
+   * - --dss-component-card-header-bg
+   * - --dss-component-header-bg
+   * - --dss-component-header-text
+   * - --dss-component-header-border
+   * - --dss-component-footer-bg
+   * - --dss-component-footer-text
+   * - --dss-component-sidebar-bg
+   * - --dss-component-sidebar-border
+   *
+   * CORREÇÃO: Componentes devem consumir tokens genéricos:
+   * .dss-button { background: var(--dss-action-primary); }
+   * .dss-card { background: var(--dss-surface-default); }
+   */
+  /* ===========================================
+     10. TOKENS PARA QUASAR (INTEGRAÇÃO)
+     =========================================== */
+  --quasar-primary: var(--dss-water-500);
+  --quasar-primary-hover: var(--dss-water-600);
+  --quasar-primary-active: var(--dss-water-700);
+  --quasar-primary-disable: var(--dss-water-200);
+  /* ===========================================
+     11. ACESSIBILIDADE - CONTRASTE ESPECÍFICO
+     =========================================== */
+  /* Water-500 (#0e88e4) tem contraste 4.6:1 com branco (aceitável para texto grande) */
+  --dss-contrast-brand-primary-on-white: 4.6; /* ⚠️ Aceitável para texto grande (18pt+) */
+  --dss-contrast-brand-primary-on-dark: 11.1; /* ✅ Excelente contraste sobre fundo escuro */
+  /* Combinações aprovadas para Water */
+  --dss-contrast-safe-brand-text: var(--dss-water-800); /* #074a85 sobre branco = 9.1:1 ✅ */
+  --dss-contrast-safe-brand-bg: var(--dss-water-500); /* Para backgrounds e UI */
+  --dss-contrast-safe-brand-ui: var(--dss-water-600); /* #026cc7 sobre branco = 7.1:1 ✅ */
+  /* ===========================================
+     12. CLASSES DE UTILIDADE ESPECÍFICAS
+     =========================================== */
+}
+[data-brand=water] .dss-brand-water-only {
+  /* Classes que só aparecem no contexto Water */
+}
+
+/* ==========================================================================
+   DSS - TOKENS DE MARCA WASTE
+   Sobrescritas para contexto Sansys Waste (Verde)
+   ========================================================================== */
+[data-brand=waste] {
+  /* ===========================================
+     1. TOKENS DE AÇÃO (ACTION TOKENS)
+     Primary actions usam cores da marca Waste
+     =========================================== */
+  --dss-action-primary: var(--dss-waste-600); /* #0b8154 */
+  --dss-action-primary-light: var(--dss-waste-300); /* #74e1ae */
+  --dss-action-primary-disable: var(--dss-waste-200); /* #abefcb */
+  --dss-action-primary-hover: var(--dss-waste-800); /* #0a5b3e */
+  --dss-action-primary-deep: var(--dss-waste-900); /* #094932 */
+  --dss-action-primary-bg: var(--dss-waste-50); /* #edfcf4 */
+  --dss-action-primary-text: var(--dss-gray-50);
+  /* Secondary e tertiary mantêm cores semânticas */
+  --dss-action-secondary: var(--dss-secondary); /* Mantém verde semântico (similar) */
+  --dss-action-tertiary: var(--dss-tertiary); /* Mantém laranja semântico */
+  --dss-action-accent: var(--dss-accent); /* Mantém roxo semântico */
+  /* ===========================================
+     2. TOKENS DE MARCA ESPECÍFICOS
+     =========================================== */
+  --dss-brand-primary: var(--dss-waste-600);
+  --dss-brand-secondary: var(--dss-waste-300);
+  --dss-brand-tertiary: var(--dss-waste-800);
+  --dss-brand-accent: var(--dss-waste-400);
+  --dss-brand-light: var(--dss-waste-100);
+  --dss-brand-lighter: var(--dss-waste-50);
+  --dss-brand-dark: var(--dss-waste-900);
+  --dss-brand-darker: var(--dss-waste-950);
+  --dss-brand-hover: var(--dss-waste-700); /* Estado hover sobre primary — #0a724e */
+  --dss-brand-disable: var(--dss-waste-200); /* Estado desabilitado — #abefcb */
+  --dss-brand-deep: var(--dss-waste-800); /* Estado active/pressionado — #0a5b3e */
+  --dss-brand-background: var(--dss-waste-50);
+  --dss-brand-surface: var(--dss-waste-100);
+  --dss-brand-border: var(--dss-waste-200);
+  --dss-brand-text: var(--dss-waste-900);
+  /* ===========================================
+     3. TOKENS DE SUPERFÍCIE BRANDÁVEIS
+     =========================================== */
+  --dss-surface-brand-subtle: rgba(11, 129, 84, 0.08); /* Waste-600 8% */
+  --dss-surface-brand-light: rgba(11, 129, 84, 0.12); /* Waste-600 12% */
+  --dss-surface-brand-medium: rgba(11, 129, 84, 0.16); /* Waste-600 16% */
+  --dss-surface-brand-strong: rgba(11, 129, 84, 0.24); /* Waste-600 24% */
+  --dss-surface-brand-primary: var(--dss-waste-50);
+  --dss-surface-brand-secondary: var(--dss-waste-100);
+  /* ===========================================
+     4. TOKENS DE TEXTO BRANDÁVEIS
+     =========================================== */
+  --dss-text-brand-primary: var(--dss-waste-800);
+  --dss-text-brand-secondary: var(--dss-waste-600);
+  --dss-text-brand-tertiary: var(--dss-waste-500);
+  --dss-text-brand-accent: var(--dss-waste-300);
+  --dss-text-brand-on-dark: var(--dss-gray-50);
+  --dss-text-brand-on-light: var(--dss-waste-900);
+  /* ===========================================
+     5. TOKENS DE BORDA BRANDÁVEIS
+     =========================================== */
+  --dss-border-brand-primary: var(--dss-waste-300);
+  --dss-border-brand-secondary: var(--dss-waste-200);
+  --dss-border-brand-accent: var(--dss-waste-600);
+  --dss-border-brand-focus: var(--dss-waste-600);
+  --dss-border-brand-error: var(--dss-negative); /* Mantém vermelho semântico */
+  /* ===========================================
+     6. TOKENS DE SOMBRA BRANDÁVEIS
+     =========================================== */
+  --dss-shadow-brand-sm: 0 1px 3px rgba(11, 129, 84, 0.15);
+  --dss-shadow-brand-md: 0 4px 6px rgba(11, 129, 84, 0.15);
+  --dss-shadow-brand-lg: 0 10px 15px rgba(11, 129, 84, 0.15);
+  --dss-shadow-brand-xl: 0 20px 25px rgba(11, 129, 84, 0.15);
+  --dss-elevation-brand-1: 0 1px 3px rgba(11, 129, 84, 0.15);
+  --dss-elevation-brand-2: 0 4px 6px rgba(11, 129, 84, 0.15);
+  /* ===========================================
+     7. TOKENS DE FOCO BRANDÁVEIS
+     =========================================== */
+  --dss-focus-ring-brand: 0 0 0 3px rgba(11, 129, 84, 0.5);
+  --dss-focus-ring-brand-inset: inset 0 0 0 3px rgba(11, 129, 84, 0.5);
+  --dss-outline-focus-brand: 2px solid var(--dss-waste-600);
+  /* ===========================================
+     8. GRADIENTES BRANDÁVEIS
+     =========================================== */
+  --dss-gradient-brand-vertical: linear-gradient(180deg, var(--dss-waste-400) 0%, var(--dss-waste-600) 100%);
+  --dss-gradient-brand-horizontal: linear-gradient(90deg, var(--dss-waste-400) 0%, var(--dss-waste-600) 100%);
+  --dss-gradient-brand-diagonal: linear-gradient(135deg, var(--dss-waste-400) 0%, var(--dss-waste-600) 100%);
+  --dss-gradient-brand-radial: radial-gradient(circle, var(--dss-waste-400) 0%, var(--dss-waste-600) 100%);
+  --dss-gradient-brand-light: linear-gradient(135deg, var(--dss-waste-50) 0%, var(--dss-waste-200) 100%);
+  --dss-gradient-brand-dark: linear-gradient(135deg, var(--dss-waste-600) 0%, var(--dss-waste-800) 100%);
+  /* ===========================================
+     9. ❌ REMOVIDO: TOKENS DE COMPONENTES BRANDÁVEIS
+     =========================================== */
+  /* ANTI-PADRÃO CORRIGIDO - Sprint 1
+   *
+   * Tokens removidos (14 tokens --dss-component-*):
+   * - --dss-component-btn-primary-bg
+   * - --dss-component-btn-primary-hover
+   * - --dss-component-btn-primary-active
+   * - --dss-component-btn-primary-text
+   * - --dss-component-card-bg
+   * - --dss-component-card-border
+   * - --dss-component-card-header-bg
+   * - --dss-component-header-bg
+   * - --dss-component-header-text
+   * - --dss-component-header-border
+   * - --dss-component-footer-bg
+   * - --dss-component-footer-text
+   * - --dss-component-sidebar-bg
+   * - --dss-component-sidebar-border
+   *
+   * CORREÇÃO: Componentes devem consumir tokens genéricos:
+   * .dss-button { background: var(--dss-action-primary); }
+   * .dss-card { background: var(--dss-surface-default); }
+   */
+  /* ===========================================
+     10. TOKENS PARA QUASAR (INTEGRAÇÃO)
+     =========================================== */
+  --quasar-primary: var(--dss-waste-600);
+  --quasar-primary-hover: var(--dss-waste-800);
+  --quasar-primary-active: var(--dss-waste-700);
+  --quasar-primary-disable: var(--dss-waste-200);
+  /* ===========================================
+     11. ACESSIBILIDADE - CONTRASTE ESPECÍFICO
+     =========================================== */
+  /* Waste-600 (#0b8154) tem contraste 6.1:1 com branco (aprovado WCAG AA) */
+  --dss-contrast-brand-primary-on-white: 6.1; /* ✅ Aprovado WCAG AA */
+  --dss-contrast-brand-primary-on-dark: 10.5; /* ✅ Excelente sobre fundo escuro */
+  /* Combinações aprovadas para Waste */
+  --dss-contrast-safe-brand-text: var(--dss-waste-900); /* #094932 sobre branco = 11.8:1 ✅ */
+  --dss-contrast-safe-brand-bg: var(--dss-waste-600); /* Para backgrounds e UI */
+  --dss-contrast-safe-brand-ui: var(--dss-waste-700); /* #0a724e sobre branco = 7.9:1 ✅ */
+  /* ===========================================
+     12. CLASSES DE UTILIDADE ESPECÍFICAS
+     =========================================== */
+}
+[data-brand=waste] .dss-brand-waste-only {
+  /* Classes que só aparecem no contexto Waste */
+}
+
+/* 6. Dark Mode Theme */
+/* ==========================================================================
+   DSS - DARK THEME - COLORS
+   Cores otimizadas para funcionarem tanto em light quanto dark mode
+   ========================================================================== */
+/**
+ * ESTRATÉGIA DARK MODE:
+ *
+ * 1. Cores de ação (primary, secondary, tertiary, accent) e feedback
+ *    (positive, negative, warning, info) NÃO mudam - foram escolhidas
+ *    para funcionar bem em ambos os modos
+ *
+ * 2. Cores de brand (hub, water, waste) NÃO mudam quando usadas em
+ *    componentes com background (filled, unelevated)
+ *
+ * 3. EXCEÇÕES que precisam de versões mais claras:
+ *    - Waste em contextos "vazados" (flat, outline) ou texto direto
+ *    - Dark em contextos "vazados" (flat, outline) ou texto direto
+ *    - Variações -deep de qualquer cor
+ */
+[data-theme=dark] {
+  /* ===========================================
+     BACKGROUNDS / SURFACES
+     Inverter de claro (gray-50) para escuro (gray-800)
+     =========================================== */
+  --dss-surface-default: var(--dss-gray-800); /* #262626 - Fundo principal */
+  --dss-surface-subtle: var(--dss-gray-700); /* #525252 - Elevação suave */
+  --dss-surface-muted: var(--dss-gray-600); /* #737373 - Áreas rebaixadas */
+  --dss-surface-disabled: var(--dss-gray-700); /* #525252 - Desabilitado */
+  /* Overlays invertidos */
+  --dss-surface-overlay: rgba(255, 255, 255, 0.05);
+  --dss-surface-hover: rgba(255, 255, 255, 0.08);
+  --dss-surface-active: rgba(255, 255, 255, 0.12);
+  --dss-surface-selected: rgba(31, 134, 222, 0.24);
+  /* ===========================================
+     TEXT COLORS
+     Inverter de escuro (dark) para claro (gray-200)
+     =========================================== */
+  --dss-text-body: var(--dss-gray-200); /* #f5f5f5 - Texto principal */
+  --dss-text-subtle: var(--dss-gray-400); /* #d4d4d4 - Texto secundário */
+  --dss-text-muted: var(--dss-gray-500); /* #a3a3a3 - Texto terciário */
+  --dss-text-inverse: var(--dss-gray-900); /* #0a0a0a - Texto escuro */
+  --dss-text-disabled: var(--dss-gray-600); /* #737373 - Desabilitado */
+  /* ===========================================
+     BORDERS
+     Inverter de claro (gray-300) para médio (gray-600)
+     =========================================== */
+  --dss-border-default: var(--dss-gray-600); /* #737373 */
+  --dss-border-subtle: var(--dss-gray-700); /* #525252 */
+  --dss-border-strong: var(--dss-gray-500); /* #a3a3a3 */
+  --dss-border-disabled: var(--dss-gray-700); /* #525252 */
+  /* ===========================================
+     ACTIONS - MANTÉM CORES ORIGINAIS
+     Cores escolhidas para funcionar bem em light e dark
+     =========================================== */
+  /* Primary (Azul) - NÃO MUDA */
+  /* --dss-action-primary: mantém valor original */
+  /* --dss-action-primary-hover: mantém valor original */
+  /* --dss-action-primary-deep: mantém valor original */
+  --dss-action-primary-disable: var(--dss-gray-600);
+  /* Secondary (Verde/Turquesa) - NÃO MUDA */
+  /* --dss-action-secondary: mantém valor original */
+  /* --dss-action-secondary-hover: mantém valor original */
+  /* --dss-action-secondary-deep: mantém valor original */
+  --dss-action-secondary-disable: var(--dss-gray-600);
+  /* Tertiary (Laranja) - NÃO MUDA */
+  /* --dss-action-tertiary: mantém valor original */
+  /* --dss-action-tertiary-hover: mantém valor original */
+  /* --dss-action-tertiary-deep: mantém valor original */
+  --dss-action-tertiary-disable: var(--dss-gray-600);
+  /* Accent (Roxo) - NÃO MUDA */
+  /* --dss-action-accent: mantém valor original */
+  /* --dss-action-accent-hover: mantém valor original */
+  /* --dss-action-accent-deep: mantém valor original */
+  --dss-action-accent-disable: var(--dss-gray-600);
+  /* Dark - USA VERSÃO LIGHT em contextos sem background */
+  /* Nota: Em botões filled/unelevated mantém, em flat/outline usa -light */
+  /* Implementado via classes específicas dos componentes */
+  /* ===========================================
+     FEEDBACK - MANTÉM CORES ORIGINAIS
+     Cores escolhidas para funcionar bem em light e dark
+     =========================================== */
+  /* Success (Verde) - NÃO MUDA */
+  /* --dss-feedback-success: mantém valor original */
+  /* --dss-feedback-success-hover: mantém valor original */
+  /* Error (Vermelho) - NÃO MUDA */
+  /* --dss-feedback-error: mantém valor original */
+  /* --dss-feedback-error-hover: mantém valor original */
+  /* Warning (Amarelo) - NÃO MUDA */
+  /* --dss-feedback-warning: mantém valor original */
+  /* --dss-feedback-warning-hover: mantém valor original */
+  /* Info (Azul Claro) - NÃO MUDA */
+  /* --dss-feedback-info: mantém valor original */
+  /* --dss-feedback-info-hover: mantém valor original */
+  /* ===========================================
+     SHADOWS (mais sutis em dark mode)
+     =========================================== */
+  --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6);
+  --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.7);
+  --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.8);
+  --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.9);
+  /* ===========================================
+     ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 3)
+     =========================================== */
+  /*
+   * REFATORAÇÃO: Dark mode agora usa tokens genéricos automaticamente
+   *
+   * ❌ REMOVIDOS (3 sobrescritas de dark mode):
+   * --dss-elevation-card           → Usa: var(--dss-elevation-1) automaticamente
+   * --dss-elevation-card-hover     → Usa: var(--dss-elevation-2) automaticamente
+   * --dss-elevation-modal          → Usa: var(--dss-elevation-4) automaticamente
+   *
+   * Os tokens genéricos herdam as sombras base do dark mode:
+   * --dss-elevation-1 = var(--dss-shadow-sm) = rgba(0,0,0,0.5) em dark
+   * --dss-elevation-2 = var(--dss-shadow-md) = rgba(0,0,0,0.6) em dark
+   * --dss-elevation-4 = var(--dss-shadow-xl) = rgba(0,0,0,0.8) em dark
+   */
+  /* ===========================================
+     INPUT/FORM COLORS
+     =========================================== */
+  --dss-input-background: var(--dss-gray-700); /* #525252 */
+  --dss-input-border: var(--dss-gray-600); /* #737373 */
+  --dss-input-border-hover: var(--dss-gray-500); /* #a3a3a3 */
+  --dss-input-border-focus: var(--dss-action-primary); /* Mantém primary original */
+  --dss-input-text: var(--dss-gray-200); /* #f5f5f5 */
+  --dss-input-placeholder: var(--dss-gray-500); /* #a3a3a3 */
+}
+
+/* ===========================================
+   EXCEÇÃO: WASTE em contextos "vazados"
+   Usar waste-500 (mais claro) para flat/outline/texto
+   =========================================== */
+[data-theme=dark][data-brand=waste] {
+  /* Texto direto com cor Waste precisa ser mais claro */
+  --dss-text-brand-primary: var(--dss-waste-500); /* #18b173 (mais claro que -600) */
+  /* Para componentes sem background mantém a cor original */
+  /* Isso será aplicado via classes específicas .dss-button--flat, .dss-button--outlined */
+}
+
+/* ===========================================
+   VALIDAÇÃO WCAG 2.1 AA
+
+   Contrastes validados para dark mode:
+   - text-body (#f5f5f5) sobre surface-default (#262626): 12.6:1 ✅ AAA
+   - text-subtle (#d4d4d4) sobre surface-default (#262626): 9.8:1 ✅ AAA
+   - text-muted (#a3a3a3) sobre surface-default (#262626): 5.7:1 ✅ AA
+   - primary (#1f86de) sobre surface-default (#262626): 4.8:1 ✅ AA
+   - secondary (#26a69a) sobre surface-default (#262626): 4.5:1 ✅ AA
+   - tertiary (#ff6607) sobre surface-default (#262626): 5.2:1 ✅ AA
+   - hub-600 (#ef7a11) sobre surface-default (#262626): 5.9:1 ✅ AA
+   - water-500 (#0e88e4) sobre surface-default (#262626): 4.8:1 ✅ AA
+   - waste-600 (#0b8154) sobre surface-default (#262626): 4.6:1 ✅ AA
+   - waste-500 (#18b173) sobre surface-default (#262626): 5.5:1 ✅ AA (para flat/outline)
+   - border-default (#737373) sobre surface-default (#262626): 3.4:1 ✅ UI
+
+   NOTA: Todas as cores de ação e feedback mantêm contraste adequado
+   em dark mode SEM precisar de versões "light"!
+   =========================================== */
+}
+/* END:DSS-TOKENS-AUTO-GENERATED */
+
+/* ==========================================================================
+   TOKENS PRÓPRIOS DO PORTAL (Tailwind/shadcn mappings, Jtech UI, sidebar)
+   Os tokens --dss-* do design system vêm do bloco auto-gerado acima.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    /* ===========================================
+       TAILWIND MAPPINGS - Tema ESCURO Jtech (DEFAULT)
+       O :root define o tema DARK como padrão
+       =========================================== */
+
+    /* Background & Foreground - DARK Theme */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 92%;
+
+    /* Cards & Popovers */
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 92%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 92%;
+
+    /* Primary - Jtech Vermelho */
+    --primary: 348 75% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - DSS Water Blue */
+    --secondary: 205 75% 49%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted */
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 60%;
+
+    /* Accent - Jtech Vermelho Light */
+    --accent: 348 60% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive - DSS Negative */
+    --destructive: 352 79% 47%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 0 0% 18%;
+    --input: 0 0% 14%;
+    --ring: 348 75% 45%;
+
+    --radius: 0.5rem;
+
+    /* =========================================
+       JTECH UI STYLE - Sidebar & Header
+       Baseado no site institucional Jtech
+       ========================================= */
+    
+    /* Jtech accent color (vermelho) */
+    --dss-jtech-accent: #C41E3A;
+    --dss-jtech-accent-hover: #9D1830;
+    --dss-jtech-accent-light: #E8495A;
+    
+    /* Header - PRETO (Jtech real) */
+    --dss-header-bg: #0A0A0A;
+    --dss-header-text: #ffffff;
+    --dss-header-muted: rgba(255, 255, 255, 0.6);
+    --dss-header-border: rgba(255, 255, 255, 0.08);
+    
+    /* Sidebar - Cinza escuro (Jtech style) */
+    --sidebar-background: 0 0% 7%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-primary: 348 75% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 92%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 348 75% 45%;
+    --sidebar-muted: 0 0% 55%;
+    
+    /* Page background - Cinza muito escuro (Jtech style) */
+    --dss-page-bg: #141414;
+    --dss-page-bg-alt: #1A1A1A;
+
+    /* =========================================
+       JTECH UI TYPOGRAPHY - Títulos & Subtítulos
+       Padrão visual do site institucional
+       ========================================= */
+    
+    /* Títulos - Escala de cinza clara (white/gray) */
+    --jtech-heading-primary: #FFFFFF;
+    --jtech-heading-secondary: #E5E5E5;
+    --jtech-heading-tertiary: #B3B3B3;
+    
+    /* Subtítulos e texto - Cinza médio */
+    --jtech-text-body: #999999;
+    --jtech-text-muted: #666666;
+    --jtech-text-subtle: #4D4D4D;
+    
+    /* Accent para destaques em títulos */
+    --jtech-accent-text: var(--dss-jtech-accent);
+    --jtech-accent-text-light: var(--dss-jtech-accent-light);
+    
+    /* Badges e labels */
+    --jtech-badge-bg: rgba(196, 30, 58, 0.15);
+    --jtech-badge-text: var(--dss-jtech-accent-light);
+    --jtech-badge-border: rgba(196, 30, 58, 0.3);
+    
+    /* Cards e containers (estrutura, não demo) */
+    --jtech-card-bg: rgba(255, 255, 255, 0.03);
+    --jtech-card-border: rgba(255, 255, 255, 0.08);
+    --jtech-card-hover-border: rgba(196, 30, 58, 0.4);
+
+    /* DSS Code blocks */
+    --dss-code-bg: 0 0% 10%;
+    --dss-code-border: 0 0% 18%;
+  }
+
+  /* ===========================================
+     LIGHT MODE - TEMA CLARO
+     Quando data-theme="light" é aplicado ao <html>
+     =========================================== */
+  [data-theme="light"] {
+    /* Background & Foreground - LIGHT Theme */
+    --background: 0 0% 96%;
+    --foreground: 0 0% 15%;
+
+    /* Cards & Popovers */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    /* Primary - Jtech Vermelho */
+    --primary: 348 75% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - DSS Water Blue */
+    --secondary: 205 75% 49%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted */
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Accent - Jtech Vermelho Light */
+    --accent: 0 0% 94%;
+    --accent-foreground: 348 75% 45%;
+
+    /* Destructive - DSS Negative */
+    --destructive: 352 79% 47%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 0 0% 85%;
+    --input: 0 0% 90%;
+    --ring: 348 75% 45%;
+    
+    /* =========================================
+       JTECH UI STYLE - Sidebar & Header (LIGHT)
+       ========================================= */
+    
+    /* Header - Mantém PRETO (contraste) */
+    --dss-header-bg: #0A0A0A;
+    --dss-header-text: #ffffff;
+    --dss-header-muted: rgba(255, 255, 255, 0.6);
+    --dss-header-border: rgba(255, 255, 255, 0.08);
+    
+    /* Sidebar - Claro */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 348 75% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 348 75% 45%;
+    --sidebar-muted: 0 0% 50%;
+    
+    /* Page background - Cinza claro */
+    --dss-page-bg: #F5F5F5;
+    --dss-page-bg-alt: #EBEBEB;
+
+    /* =========================================
+       JTECH UI TYPOGRAPHY - LIGHT MODE
+       Cores invertidas para fundo claro
+       ========================================= */
+    
+    /* Títulos - Escala de cinza escura */
+    --jtech-heading-primary: #1A1A1A;
+    --jtech-heading-secondary: #2D2D2D;
+    --jtech-heading-tertiary: #525252;
+    
+    /* Subtítulos e texto - Cinza médio/escuro */
+    --jtech-text-body: #4A4A4A;
+    --jtech-text-muted: #737373;
+    --jtech-text-subtle: #9A9A9A;
+    
+    /* Badges e labels - Light mode */
+    --jtech-badge-bg: rgba(196, 30, 58, 0.08);
+    --jtech-badge-text: #C41E3A;
+    --jtech-badge-border: rgba(196, 30, 58, 0.25);
+    
+    /* Cards e containers - Light mode */
+    --jtech-card-bg: rgba(0, 0, 0, 0.02);
+    --jtech-card-border: rgba(0, 0, 0, 0.08);
+    --jtech-card-hover-border: rgba(196, 30, 58, 0.4);
+
+    /* DSS Code blocks - Light mode */
+    --dss-code-bg: 0 0% 96%;
+    --dss-code-border: 0 0% 88%;
+    
+  }
+
+  /* ===========================================
+     DARK MODE - TOKENS DSS
+     =========================================== */
+  .dark,
+  [data-theme="dark"] {
+
+    /* Tailwind mappings */
+    --background: 0 0% 15%;
+    --foreground: 0 0% 96%;
+
+    --card: 0 0% 18%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 18%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 205 75% 55%;
+    --primary-foreground: 0 0% 10%;
+
+    --secondary: 175 62% 45%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 0 0% 22%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 293 45% 60%;
+    --accent-foreground: 0 0% 10%;
+
+    --destructive: 352 70% 50%;
+    --destructive-foreground: 0 0% 96%;
+
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 205 75% 55%;
+
+    /* Dark mode - Header & Sidebar */
+    --dss-header-bg: #0e0e0e;
+    --dss-header-text: #ffffff;
+    --dss-header-muted: rgba(255, 255, 255, 0.6);
+    --dss-header-border: rgba(255, 255, 255, 0.08);
+    
+    --sidebar-background: 0 0% 9%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 205 75% 60%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 215 25% 18%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 215 20% 20%;
+    --sidebar-ring: 205 75% 60%;
+    --sidebar-muted: 0 0% 55%;
+    
+    --dss-page-bg: #1a1a1a;
+    --dss-page-bg-alt: #252525;
+
+    --dss-code-bg: 0 0% 18%;
+    --dss-code-border: 0 0% 28%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom scrollbar for sidebar */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--sidebar-border));
+  border-radius: 2px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--sidebar-muted));
+}
+
+/* Code blocks styling */
+.code-block {
+  @apply font-mono text-sm rounded-md;
+  background: hsl(var(--dss-code-bg));
+  border: 1px solid hsl(var(--dss-code-border));
+}
+
+/* ===========================================
+   CLASSES DE MARCA DSS
+   =========================================== */
+.dss-brand-hub {
+  --dss-action-primary: var(--dss-hub-600);
+  --dss-action-primary-light: var(--dss-hub-300);
+  --dss-action-primary-disable: var(--dss-hub-200);
+  --dss-action-primary-hover: var(--dss-hub-700);
+  --dss-action-primary-deep: var(--dss-hub-900);
+}
+
+.dss-brand-water {
+  --dss-action-primary: var(--dss-water-500);
+  --dss-action-primary-light: var(--dss-water-300);
+  --dss-action-primary-disable: var(--dss-water-200);
+  --dss-action-primary-hover: var(--dss-water-600);
+  --dss-action-primary-deep: var(--dss-water-800);
+}
+
+.dss-brand-waste {
+  --dss-action-primary: var(--dss-waste-600);
+  --dss-action-primary-light: var(--dss-waste-300);
+  --dss-action-primary-disable: var(--dss-waste-200);
+  --dss-action-primary-hover: var(--dss-waste-800);
+  --dss-action-primary-deep: var(--dss-waste-900);
+}

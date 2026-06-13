@@ -1,0 +1,18 @@
+/* ==========================================================================
+   DssFab - LAYER 3: VARIANTS — Extended FAB
+
+   Quando a prop `label` é fornecida, o FAB muda de circular para pill.
+   O QFab já renderiza a forma pill nativamente; este arquivo apenas
+   garante que os tokens DSS corretos sejam aplicados.
+
+   A classe .dss-fab--extended é adicionada pelo composable useFabClasses
+   quando props.label está preenchido.
+   ========================================================================== */
+
+/* ==========================================================================
+   EXTENDED FAB (Ícone + Label — formato pill)
+   ========================================================================== */
+
+.q-fab--extended .q-fab__trigger {
+  padding: 0 var(--dss-padding-4);
+}

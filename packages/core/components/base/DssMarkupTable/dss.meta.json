@@ -1,0 +1,217 @@
+{
+  "component": "DssMarkupTable",
+  "cssClass": "dss-markup-table",
+  "phase": 2,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenReferenceNote": "Pré-prompt especificou DssChip, mas DssMarkupTable é não-interativo. DssBadge é o Golden Reference correto para componentes de exibição estática conforme DSS_COMPONENT_ARCHITECTURE.md.",
+  "goldenContext": "DssList",
+  "goldenContextJustification": "DssMarkupTable é um container estrutural não-interativo, assim como DssList. Ambos envolvem conteúdo de slot sem adicionar interatividade própria, aplicando tokens de espaçamento, borda e tipografia.",
+  "category": "Tabela de Exibição Semântica",
+  "phaseDescription": "Fase 2 — Nível 1 — Família: Tabela Simples. Wrapper DSS sobre QMarkupTable para tabelas HTML semânticas estilizadas.",
+  "classification": {
+    "type": "base",
+    "category": "Superfície de Dados Tabulares (não-interativa)",
+    "interactive": false
+  },
+  "quasarMotor": "QMarkupTable",
+  "quasarMotorNote": "EXC-Gate-01: QMarkupTable é o motor de renderização. CSS descendente obrigatório para governar slot content.",
+  "hasReservations": false,
+  "gateExceptions": [
+    "EXC-Gate-01: QMarkupTable como motor — seletores descendentes (th, td, tr, thead, tbody, tfoot) são obrigatórios para estilizar o slot content"
+  ],
+  "subcomponents": [],
+  "compositionRequirements": [],
+  "compositionRecommendations": [
+    "DssBadge (status nas células)",
+    "DssChip (tags categóricas)",
+    "DssIcon (ícones de status)",
+    "DssPagination (quando paginado pelo consumidor)",
+    "DssTooltip (detalhes em hover de célula)"
+  ],
+  "props": {
+    "DssMarkupTable": [
+      "density",
+      "flat",
+      "bordered",
+      "separator",
+      "square",
+      "wrapCells",
+      "brand"
+    ],
+    "blocked": {
+      "dark": "Gerenciado globalmente via [data-theme='dark']. Prop não exposta por decisão arquitetural DSS.",
+      "dense": "Substituído por 'density' com três níveis semânticos (compact / standard / comfortable)."
+    }
+  },
+  "statesApplicable": [
+    "default"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "error"
+  ],
+  "statesNotApplicableJustification": "DssMarkupTable é uma tabela de exibição estática não-interativa. Todos os estados interativos (hover em linhas, foco em células, click, disabled) pertencem ao conteúdo de slot (consumer responsibility). Loading/error são responsabilidade do consumidor via DssInnerLoading ou DssSkeleton.",
+  "accessibility": {
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "N/A — componente não-interativo (sem touch target próprio)",
+    "keyboardNavigation": "N/A — navegação pertence ao conteúdo de slot (consumer responsibility)",
+    "ariaRole": "table (provido nativamente pelo elemento <table> HTML)",
+    "ariaAttributes": "scope='col' / scope='row' nos <th> são responsabilidade do consumidor",
+    "semanticHTML": "Consumer deve usar <thead>, <tbody>, <tfoot>, <th scope='col'>, <th scope='row'> conforme HTML semântico"
+  },
+  "tokensUsed": [
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-size-sm",
+    "--dss-font-weight-semibold",
+    "--dss-font-weight-bold",
+    "--dss-text-body",
+    "--dss-text-inverse",
+    "--dss-gray-50",
+    "--dss-gray-100",
+    "--dss-gray-200",
+    "--dss-gray-700",
+    "--dss-gray-800",
+    "--dss-gray-200",
+    "--dss-radius-md",
+    "--dss-spacing-1_5",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-6",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-hub-50",
+    "--dss-hub-200",
+    "--dss-hub-700",
+    "--dss-hub-900",
+    "--dss-water-50",
+    "--dss-water-200",
+    "--dss-water-700",
+    "--dss-water-900",
+    "--dss-waste-50",
+    "--dss-waste-200",
+    "--dss-waste-700",
+    "--dss-waste-900"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "structural",
+      "selector": ".dss-markup-table table, .dss-markup-table th, .dss-markup-table td, .dss-markup-table thead, .dss-markup-table tbody, .dss-markup-table tfoot, .dss-markup-table tr",
+      "location": "2-composition/_base.scss, 3-variants/_density.scss, 4-output/_brands.scss, 4-output/_states.scss",
+      "justification": "QMarkupTable é o motor de renderização. Seletores descendentes são obrigatórios para governar o conteúdo semântico de slot (th, td, tr, thead, tbody, tfoot). Alternativa rejeitada: recriar estrutura de tabela sem QMarkupTable aumenta complexidade e rompe consistência com o ecossistema Quasar."
+    },
+    {
+      "id": "EXC-01",
+      "value": "rgba(255, 255, 255, 0.15)",
+      "location": "4-output/_states.scss",
+      "justification": "Dark mode header border — aplicado em thead e tfoot. Bordas de separação em dark mode requerem white com alpha. Nenhum token DSS fornece white com alpha parcial equivalente. Padrão idêntico ao DssList EXC-01 e DssCard EXC-02."
+    },
+    {
+      "id": "EXC-02",
+      "value": "rgba(255, 255, 255, 0.06)",
+      "location": "4-output/_states.scss",
+      "justification": "Dark mode row separator. Divisores em dark = white com baixa opacidade. Padrão idêntico ao DssList EXC-02."
+    },
+    {
+      "id": "EXC-03",
+      "value": "var(--dss-border-width-md) solid ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode border. System keywords obrigatórios — tokens CSS são ignorados em forced-colors. Padrão canônico DSS (DssList EXC-03, DssBadge)."
+    },
+    {
+      "id": "EXC-04",
+      "value": "1px solid ButtonText",
+      "location": "4-output/_states.scss",
+      "justification": "Forced-colors mode row separator. Valor absoluto obrigatório em forced-colors (tokens CSS ignorados)."
+    },
+    {
+      "id": "EXC-05",
+      "value": "1px solid currentColor",
+      "location": "4-output/_states.scss",
+      "justification": "Print mode border. Garante visibilidade da tabela na impressão independente de cor de fundo. Valor absoluto necessário pois currentColor depende da cascata de impressão."
+    }
+  ],
+  "antiPatterns": [
+    "Usar QTable (DssTable) quando se precisa apenas de exibição estática sem sorting/filtering/pagination",
+    "Usar <table> HTML nativo sem DssMarkupTable quando no contexto DSS",
+    "Omitir scope='col' / scope='row' nos elementos <th> (viola WCAG 1.3.1)",
+    "Aplicar cores diretamente nas células via style inline — usar classes utilitárias DSS",
+    "Usar DssMarkupTable para dados que requerem ordenação, filtro ou paginação — usar DssTable"
+  ],
+  "compositionMatrix": {
+    "role": "Superfície de exibição de dados tabulares estáticos",
+    "provides": "slots para thead/tbody/tfoot, tokens de espaçamento e tipografia, brandabilidade de cabeçalho",
+    "doesNotProvide": "ordenação, filtro, paginação, seleção de linhas, carregamento de dados (pertence ao DssTable)"
+  },
+  "defaultPreview": {
+    "props": {
+      "density": "standard",
+      "bordered": true,
+      "separator": "horizontal"
+    },
+    "computedDimensions": {
+      "width": "100%"
+    },
+    "visualProperties": [
+      {
+        "property": "width",
+        "token": "100%",
+        "value": null,
+        "source": "defaultPreview"
+      },
+      {
+        "property": "border",
+        "token": "--dss-gray-200",
+        "value": "1px solid",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "th background",
+        "token": "--dss-surface-muted",
+        "value": null,
+        "source": "Padrão tabela"
+      },
+      {
+        "property": "th font-weight",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "Padrão tabela"
+      },
+      {
+        "property": "td padding",
+        "token": "--dss-spacing-3 / --dss-spacing-4",
+        "value": "12px 16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "tr hover background",
+        "token": "--dss-surface-hover",
+        "value": null,
+        "source": "Padrão lista"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "Tabela com thead/tbody padrão",
+    "demoSlots": {
+      "default": [
+        {
+          "html": "<thead><tr><th>Nome</th><th>Valor</th></tr></thead><tbody><tr><td>Item A</td><td>100</td></tr><tr><td>Item B</td><td>200</td></tr></tbody>"
+        }
+      ]
+    }
+  },
+  "auditHistory": [],
+  "previewGroup": "cartoes"
+}

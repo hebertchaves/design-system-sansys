@@ -1,0 +1,80 @@
+// =============================================================================
+// DssParallax — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais do container de paralaxe.
+//
+// GOLDEN REFERENCE: DssBadge  (componente não interativo)
+// GOLDEN CONTEXT:   DssVideo  (container de mídia não interativo, mesma família)
+//
+// TOUCH TARGET: NÃO IMPLEMENTADO.
+//   DssParallax é um efeito visual não interativo.
+//   Quando usado dentro de elementos interativos, o touch target é
+//   responsabilidade do elemento pai.
+//
+// NOTA ARQUITETURAL:
+//   QParallax é o root element quando prefers-reduced-motion não está ativo.
+//   O fallback estático (.dss-parallax--static) é um <div> que replica
+//   o comportamento visual sem scroll listeners.
+//
+// TOKENS UTILIZADOS:
+//   Nenhum token de spacing/color é necessário na camada base —
+//   dimensões vêm das props `src` e `height` (prop-driven).
+//   background-size e background-position são valores estruturais fixos.
+//
+// =============================================================================
+
+.dss-parallax {
+  min-height: var(--dss-min-h-lg); // 192px — efeito parallax requer altura mínima para funcionar
+
+  // Consistência de bloco — QParallax renderiza como block por padrão.
+  display: block;
+
+  // QParallax já aplica position:relative e overflow:hidden internamente.
+  // Redeclaramos para o fallback estático e para garantir consistência.
+  position: relative;
+  overflow: hidden;
+
+  // Consistência com Golden Reference (DssBadge) — remove tap highlight.
+  -webkit-tap-highlight-color: transparent;
+
+  // ── Fallback estático (prefers-reduced-motion: reduce) ──────────────────
+  // Quando o QParallax é substituído pelo <div> estático, aplicamos
+  // background-size e background-position para replicar a aparência.
+  // background-image e height são injetados via style binding (prop-driven).
+
+  &--static {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  // ── Slot overlay ─────────────────────────────────────────────────────────
+  // QParallax posiciona o conteúdo do slot como overlay centralizado.
+  // Para o fallback estático, replicamos o mesmo comportamento.
+
+  &--static > *:not(.dss-sr-only) {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// ── Screen Reader Only ──────────────────────────────────────────────────────
+// Utilitário para o texto alternativo da imagem de fundo.
+// CSS backgrounds são invisíveis a leitores de tela —
+// este span transmite o conteúdo semântico da imagem.
+// Padrão WCAG SR-only: visualmente oculto mas acessível.
+
+.dss-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

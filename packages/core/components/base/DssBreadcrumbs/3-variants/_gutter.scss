@@ -1,0 +1,30 @@
+// =============================================================================
+// Layer 3 — Variante Gutter: DssBreadcrumbs
+//
+// ARQUITETURA INTENCIONAL: As classes BEM .dss-breadcrumbs--gutter-sm/md/lg
+// são geradas pelo composable useBreadcrumbsClasses e aplicadas ao elemento
+// raiz como marcadores de rastreabilidade BEM. O comportamento VISUAL de gutter
+// é implementado exclusivamente via CSS custom property --dss-breadcrumbs-gap,
+// injetada como inline style no template (Layer 1 — 1-structure/DssBreadcrumbs.ts.vue).
+//
+// Por que as classes não disparam CSS aqui:
+//   1. O valor de gap já está definido na CSS custom property do inline style
+//   2. Definir gap duas vezes (aqui e no inline style) criaria duplicação desnecessária
+//   3. A CSS custom property permite override externo sem aumentar especificidade CSS
+//
+// Por que as classes existem no DOM:
+//   1. Rastreabilidade BEM — inspecionar o elemento revela o gutter ativo
+//   2. Possível uso futuro em media queries (ex: reduzir gap em mobile)
+//   3. Consistência com outros modificadores de layout DSS
+//
+// @see composables/useBreadcrumbsClasses.ts — geração das classes BEM
+// @see 1-structure/DssBreadcrumbs.ts.vue — injeção do inline style com --dss-breadcrumbs-gap
+// @see 2-composition/_base.scss — consumo de --dss-breadcrumbs-gap via gap: var(...)
+// =============================================================================
+
+// As classes abaixo são geradas pelo composable mas não definem CSS aqui.
+// Documentadas apenas para conformidade estrutural do Layer 3.
+
+// .dss-breadcrumbs--gutter-sm  → --dss-breadcrumbs-gap: var(--dss-spacing-2) = 8px
+// .dss-breadcrumbs--gutter-md  → --dss-breadcrumbs-gap: var(--dss-spacing-3) = 12px (default)
+// .dss-breadcrumbs--gutter-lg  → --dss-breadcrumbs-gap: var(--dss-spacing-4) = 16px

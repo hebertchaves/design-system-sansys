@@ -1,0 +1,35 @@
+/* ==========================================================================
+   DssTimelineEntry — LAYER 2: COMPOSITION (Base Styles)
+
+   MOTOR: QTimelineEntry (EXC-Gate-01)
+   Subcomponente da DssTimeline — representa um evento individual na linha
+   do tempo. Não-interativo — sem touch target próprio.
+
+   REGRAS:
+   ✅ Tokens genéricos DSS apenas
+   ✅ Estrutura e espaçamento base
+   ✅ Sem valores hardcoded
+   ❌ Cores (ficam em 4-output/ via herança de .dss-timeline)
+   ✅ Touch target: N/A — não-interativo
+   ========================================================================== */
+
+/* ==========================================================================
+   TIMELINE ENTRY BASE — Layout e Espaçamento
+   ========================================================================== */
+
+.dss-timeline-entry {
+  /* As cores de título, subtítulo e dot são herdadas de .dss-timeline
+     via custom properties e descendant selectors (EXC-Gate-01).
+     Este componente não redefine cores diretamente. */
+}
+
+/* ==========================================================================
+   HEADING — Entrada tipo separador/cabeçalho
+   ========================================================================== */
+
+.dss-timeline-entry--heading .q-timeline__heading-title {
+  font-size: var(--dss-font-size-lg);
+  font-weight: var(--dss-font-weight-semibold);
+  color: var(--dss-text-subtle);
+  padding: var(--dss-spacing-2) 0;
+}

@@ -1,0 +1,57 @@
+// =============================================================================
+// DssFile — LAYER 3: VARIANT — Filled
+//
+// Fundo preenchido com borda inferior. Padrão Material Design.
+// =============================================================================
+
+.dss-file--filled {
+  .dss-file__field {
+    background-color: var(--dss-gray-100);
+    border: none;
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+  }
+
+  // Hover
+  &:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
+    background-color: var(--dss-gray-200);
+  }
+
+  // Foco
+  &.dss-file--focused .dss-file__field {
+    background-color: var(--dss-gray-50);
+    border-bottom-color: var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+  }
+
+  // Drag ativo
+  &.dss-file--dragging .dss-file__field {
+    background-color: var(--dss-surface-hover);
+    border-bottom-color: var(--dss-action-primary);
+    border-bottom-style: dashed;
+    border-bottom-width: var(--dss-border-width-md);
+  }
+
+  .dss-file__drag-label {
+    color: var(--dss-action-primary);
+  }
+
+  // Erro
+  &.dss-file--error .dss-file__field {
+    border-bottom-color: var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
+  }
+
+  // Desabilitado
+  &.dss-file--disabled .dss-file__field {
+    background-color: var(--dss-gray-50);
+    border-bottom-style: dotted;
+  }
+
+  // Readonly
+  &.dss-file--readonly .dss-file__field {
+    background-color: var(--dss-gray-50);
+    border-bottom-style: dashed;
+    border-bottom-color: var(--dss-gray-300);
+  }
+}

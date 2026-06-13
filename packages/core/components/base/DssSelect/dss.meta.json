@@ -1,0 +1,129 @@
+{
+  "component": "DssSelect",
+  "dssVersion": "2.2.0",
+  "status": "conformant",
+  "seal": "DSS/docs/Compliance/seals/DssSelect/DSSSELECT_SELO_v2.2.md",
+  "auditMode": "full",
+  "auditDate": "2026-03-20",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssInput",
+  "phase": 1,
+  "category": "Action Control interativo — campo de seleção",
+  "touchTarget": "Option A — interativo, min-height: var(--dss-input-height-md) no .q-field__control",
+  "hasReservations": null,
+  "exceptions": [],
+  "tokensUsed": [
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-size-sm",
+    "--dss-line-height-normal",
+    "--dss-input-height-md",
+    "--dss-input-height-sm",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-text-primary",
+    "--dss-text-secondary",
+    "--dss-text-hint",
+    "--dss-text-disabled",
+    "--dss-text-inverse",
+    "--dss-text-inverse-hint",
+    "--dss-text-inverse-secondary",
+    "--dss-text-action",
+    "--dss-gray-50",
+    "--dss-gray-100",
+    "--dss-gray-200",
+    "--dss-gray-300",
+    "--dss-gray-400",
+    "--dss-gray-600",
+    "--dss-gray-700",
+    "--dss-gray-800",
+    "--dss-gray-900",
+    "--dss-radius-md",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-border-width-thick",
+    "--dss-border-gray-200",
+    "--dss-action-primary",
+    "--dss-error-600",
+    "--dss-opacity-disabled",
+    "--dss-focus-ring",
+    "--dss-surface-default",
+    "--dss-surface-hover",
+    "--dss-surface-selected",
+    "--dss-duration-200",
+    "--dss-easing-standard",
+    "--dss-elevation-3",
+    "--dss-z-index-dropdown",
+    "--dss-hub-600",
+    "--dss-hub-700",
+    "--dss-water-500",
+    "--dss-water-600",
+    "--dss-water-700",
+    "--dss-waste-600",
+    "--dss-waste-700",
+    "--dss-waste-800"
+  ],
+  "antiPatterns": [
+    "Usar DssSelect para inputs de texto livre — use DssInput ou DssTextarea",
+    "Tentar sobrescrever o dropdown via CSS externo sem usar .dss-select__panel — o QMenu é teleportado para o body e requer a classe injetada via popup-content-class",
+    "Usar use-chips sem DssChip no slot selected-item quando chips governados pelo DSS são necessários — os chips nativos do QSelect não possuem governança DSS completa",
+    "Combinar emitValue=true sem mapOptions=true — o QSelect não conseguirá exibir o label correto da opção selecionada"
+  ],
+  "defaultPreview": {
+    "props": {
+      "variant": "outlined",
+      "label": "Seleção",
+      "options": [
+        "Opção 1",
+        "Opção 2"
+      ]
+    },
+    "computedDimensions": {
+      "minHeight": "44px",
+      "minWidth": "240px"
+    },
+    "demoContent": "Placeholder 'Selecione uma opção'",
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "min-width",
+        "token": "--dss-min-w-lg",
+        "value": "240px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border",
+        "token": "--dss-gray-400",
+        "value": "1px solid",
+        "source": "3-variants/_filled.scss"
+      },
+      {
+        "property": "border (foco)",
+        "token": "--dss-action-primary",
+        "value": "2px solid",
+        "source": "3-variants/_borderless.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "8px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "painel popup",
+        "token": ".dss__panel + popup-content-class",
+        "value": null,
+        "source": "Seletor teleportado (Seção 3 proibidos: no scoped)"
+      }
+    ]
+  },
+  "previewGroup": "form-campos"
+}

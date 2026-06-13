@@ -1,0 +1,74 @@
+/* ==========================================================================
+   DssBar — LAYER 4: STATES
+   Dark mode, prefers-contrast, forced-colors, prefers-reduced-motion, print
+
+   ESTADOS N/A (barra é container — elementos internos gerenciam seus estados):
+   - hover: N/A — barra não tem cursor próprio
+   - active: N/A — barra não tem estado pressionado
+   - focus: N/A — barra não é focável (elementos internos têm foco próprio)
+   - loading: N/A — componente de estrutura
+   - disabled: N/A — barra não é desabilitável
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   Tokens de superfície e texto são geridos pelo cascade global de tokens
+   (tokens/themes/dark/_colors.scss). Nenhum override manual necessário.
+   ========================================================================== */
+
+// Dark mode: --dss-surface-default e --dss-text-body são geridos pelo
+// cascade global de tokens (tokens/themes/dark/_colors.scss).
+// Nenhum override manual necessário.
+
+/* ==========================================================================
+   HIGH CONTRAST / FORCED COLORS (WCAG 1.4.11)
+   EXC-States-01: Em forced-colors, usa system colors para garantir visibilidade.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-bar {
+    background-color: ButtonFace;
+    color: ButtonText;
+    border-bottom: 1px solid ButtonText;
+  }
+
+  .dss-bar--elevated {
+    /* Sombra não visível em forced-colors — usar borda como substituto */
+    box-shadow: none;
+    outline: 1px solid ButtonText;
+  }
+}
+
+/* ==========================================================================
+   PREFERS-CONTRAST: MORE (WCAG 1.4.6)
+   Reforça a separação visual com borda inferior de contraste alto.
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-bar {
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-700);
+  }
+}
+
+/* ==========================================================================
+   PREFERS-REDUCED-MOTION
+   DssBar não possui animações próprias — N/A declarado.
+   ========================================================================== */
+
+// N/A — DssBar não possui transitions ou animations próprias.
+
+/* ==========================================================================
+   PRINT
+   EXC-04: Força borda e remove sombra para garantir visibilidade na impressão.
+   ========================================================================== */
+
+@media print {
+  .dss-bar {
+    background-color: transparent !important;
+    border-bottom: var(--dss-border-width-thin) solid currentColor !important;
+  }
+
+  .dss-bar--elevated {
+    box-shadow: none !important;
+  }
+}

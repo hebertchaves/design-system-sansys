@@ -1,0 +1,25 @@
+/* ==========================================================================
+   DssTooltip - Module Orchestrator
+   ==========================================================================
+
+   Orquestrador principal que importa todas as camadas do componente.
+
+   ARQUITETURA DE 4 CAMADAS:
+   - Layer 2: Composition (base styles)
+   - Layer 3: Variants (multi-line)
+   - Layer 4: Output (brands, states)
+
+   CORES: Aplicadas via classes utilitarias (.bg-*, .text-*) — Padrao Quasar
+   Definidas em: utils/_colors.scss
+
+   @version 2.2.0
+   ========================================================================== */
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants' as variants;
+
+/* Layer 4: Output */
+@use './4-output' as output;

@@ -1,0 +1,70 @@
+{
+  "component": "DssAvatar",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS v2.2",
+  "auditMode": "Final",
+  "auditDate": "2026-02-02",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssChip",
+  "phase": 1,
+  "category": "Basico (Visual/Identity)",
+  "hasReservations": true,
+  "defaultPreview": {
+    "props": {
+      "size": "md",
+      "icon": "person"
+    },
+    "computedDimensions": {
+      "minHeight": "48px",
+      "minWidth": "48px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": null,
+        "value": "40px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": "40px",
+        "source": "defaultPreview"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-circle",
+        "value": "50%",
+        "source": "1-structure/DssAvatar.ts.vue"
+      },
+      {
+        "property": "background (sem imagem)",
+        "token": "--dss-action-primary-surface",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color iniciais",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-size (md)",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-weight",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "Iniciais 'AB'",
+    "demoSlots": null
+  },
+  "previewGroup": "indicadores"
+}

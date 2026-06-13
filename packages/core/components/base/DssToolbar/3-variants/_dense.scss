@@ -1,0 +1,23 @@
+// ==========================================================================
+// DssToolbar — Layer 3: Variante Dense
+// ==========================================================================
+//
+// Reduz a altura da toolbar para contextos compactos.
+// `dense` é passado via $attrs para o QToolbar pai, que aplica
+// a classe .q-toolbar--dense no elemento raiz.
+// Este arquivo reage a essa classe Quasar via seletor composto (EXC-01).
+//
+// Nota: dense NÃO é uma prop explícita do DssToolbar — é encaminhado
+// via v-bind="$attrs". O consumidor passa :dense="true" ao DssToolbar
+// e o QToolbar aplica .q-toolbar--dense nativamente.
+// ==========================================================================
+
+/* EXC-01 — Seletor composto com classe interna Quasar (Gate de Composição v2.4 exception) */
+.dss-toolbar.q-toolbar--dense {
+  min-height: var(--dss-spacing-10);       // 40px — reduzido de 56px
+  padding-inline: var(--dss-spacing-3);    // 12px — reduzido de 16px
+
+  &.dss-toolbar--inset {
+    padding-inline-start: var(--dss-spacing-4);  // 16px — reduzido de 24px
+  }
+}

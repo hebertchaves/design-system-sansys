@@ -1,0 +1,6 @@
+// Orchestrador SCSS principal — DssTestPageComplexity
+// Ordem obrigatória: L2 → L3 → L4
+
+@use './2-composition/base'    as base;
+@use './3-variants/index'      as variants;
+@use './4-output/index'        as output;

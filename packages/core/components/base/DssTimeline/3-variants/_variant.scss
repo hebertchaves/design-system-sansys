@@ -1,0 +1,29 @@
+/* ==========================================================================
+   DssTimeline — LAYER 3: VARIANTS
+   Variantes visuais: layout dense, comfortable, loose.
+
+   REGRAS:
+   ✅ Tokens genéricos DSS apenas
+   ✅ Sem valores hardcoded
+   ========================================================================== */
+
+/* ==========================================================================
+   DENSE — Espaçamento compacto entre os itens
+   ========================================================================== */
+
+.dss-timeline.dss-timeline--dense .q-timeline__content {
+  padding-bottom: var(--dss-spacing-3);
+}
+
+/* ==========================================================================
+   COMFORTABLE — Espaçamento equilibrado (padrão do QTimeline)
+   Nenhum override necessário — é o padrão do Quasar.
+   ========================================================================== */
+
+/* ==========================================================================
+   LOOSE — Espaçamento generoso entre os itens
+   ========================================================================== */
+
+.dss-timeline.dss-timeline--loose .q-timeline__content {
+  padding-bottom: var(--dss-spacing-8);
+}

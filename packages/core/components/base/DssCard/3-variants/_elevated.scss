@@ -1,0 +1,22 @@
+/* ==========================================================================
+   DssCard - LAYER 3: VARIANTS (Elevated)
+
+   Responsabilidade: Variante com elevação (padrão do Quasar)
+   Usa tokens genéricos de elevation
+   ========================================================================== */
+
+.dss-card--elevated {
+  /* Elevation padrão */
+  box-shadow: var(--dss-elevation-1);
+
+  /* Hover elevation (se clickable) */
+  &.dss-card--clickable:hover {
+    box-shadow: var(--dss-elevation-2);
+    cursor: pointer;
+  }
+
+  /* Active state */
+  &.dss-card--clickable:active {
+    box-shadow: var(--dss-shadow-active);
+  }
+}

@@ -1,0 +1,292 @@
+// =============================================================================
+// DssFile — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos
+//
+// TOKENS UTILIZADOS (22 tokens):
+//   Dimensão   : --dss-input-height-md, --dss-input-height-sm
+//   Espaçamento: --dss-spacing-1..6, --dss-spacing-4, --dss-spacing-5
+//   Tipografia : --dss-font-family-sans, --dss-font-size-sm, --dss-font-size-md
+//                --dss-line-height-normal
+//   Cor base   : --dss-text-primary, --dss-text-secondary, --dss-text-hint
+//                --dss-text-disabled
+//   Bordas     : --dss-border-width-md, --dss-radius-md, --dss-radius-full
+//   Motion     : --dss-duration-200, --dss-duration-300, --dss-easing-standard
+//   Estado     : --dss-opacity-disabled
+//
+// REGRAS:
+//   ✅ APENAS tokens genéricos
+//   ✅ Tokens de motion para transições
+//   ✅ Reset e layout base
+//   ❌ ZERO valores hardcoded
+//   ❌ ZERO lógica de variantes
+//   ❌ ZERO lógica de estados (dark, focus, brand)
+//
+// GOLDEN CONTEXT: DssInput (mesma estrutura base)
+// =============================================================================
+
+// =============================================================================
+// WRAPPER BASE
+// =============================================================================
+
+.dss-file {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--dss-font-family-sans);
+}
+
+// =============================================================================
+// CAMPO PRINCIPAL (QFile override)
+//
+// O QFile é renderizado em modo borderless — DssFile controla toda a aparência
+// via CSS. O .dss-file__field sobrepõe visualmente ao QFile.
+// =============================================================================
+
+.dss-file__q-file {
+  // QFile em modo transparente — herda aparência do wrapper DSS
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+
+  // Desabilitado: sem interação
+  .dss-file--disabled & {
+    pointer-events: none;
+  }
+
+  // Readonly: sem interação
+  .dss-file--readonly & {
+    pointer-events: none;
+  }
+}
+
+// =============================================================================
+// CAMPO VISUAL (camada de apresentação)
+// =============================================================================
+
+.dss-file__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--dss-input-height-md); // 44px — WCAG 2.5.5 touch target
+  gap: var(--dss-spacing-2);
+  padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  transition: all var(--dss-duration-300) var(--dss-easing-standard);
+
+  .dss-file--dense & {
+    min-height: var(--dss-input-height-sm); // 36px — modo compacto
+    padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  }
+}
+
+// =============================================================================
+// LABEL FLUTUANTE
+// =============================================================================
+
+.dss-file__label {
+  position: absolute;
+  left: var(--dss-spacing-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--dss-font-size-md);
+  color: var(--dss-text-secondary);
+  pointer-events: none;
+  transition: all var(--dss-duration-200) var(--dss-easing-standard);
+  transform-origin: left top;
+  cursor: pointer;
+
+  // Flutuante quando há valor ou foco
+  &--float {
+    top: var(--dss-spacing-2);
+    transform: translateY(0) scale(0.75);
+    font-size: var(--dss-font-size-sm);
+  }
+
+  // Sempre no topo (stackLabel)
+  &--stack {
+    position: static;
+    transform: none;
+    font-size: var(--dss-font-size-sm);
+    margin-bottom: var(--dss-spacing-1);
+  }
+}
+
+// =============================================================================
+// DICA DE DRAG-AND-DROP (estado sem valor)
+// =============================================================================
+
+.dss-file__drop-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  color: var(--dss-text-hint);
+  font-size: var(--dss-font-size-md);
+  line-height: var(--dss-line-height-normal);
+  pointer-events: none;
+  user-select: none;
+}
+
+.dss-file__drop-icon {
+  font-size: var(--dss-font-size-md);
+  flex-shrink: 0;
+}
+
+.dss-file__drop-text {
+  font-size: var(--dss-font-size-md);
+}
+
+// =============================================================================
+// NOME(S) DO(S) ARQUIVO(S) SELECIONADO(S)
+// =============================================================================
+
+.dss-file__value {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.dss-file__file-name {
+  color: var(--dss-text-primary);
+  font-size: var(--dss-font-size-md);
+  line-height: var(--dss-line-height-normal);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// =============================================================================
+// SLOTS PREPEND / APPEND
+// =============================================================================
+
+.dss-file__prepend,
+.dss-file__append {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2; // Acima do QFile transparente
+}
+
+.dss-file__prepend {
+  padding-left: var(--dss-spacing-3);
+  color: var(--dss-text-secondary);
+}
+
+.dss-file__append {
+  padding-right: var(--dss-spacing-3);
+  color: var(--dss-text-secondary);
+  gap: var(--dss-spacing-2);
+}
+
+// =============================================================================
+// BOTÃO DE LIMPAR
+// =============================================================================
+
+.dss-file__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dss-spacing-6);
+  height: var(--dss-spacing-6);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--dss-text-secondary);
+  font-size: var(--dss-font-size-xl);
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--dss-radius-full);
+  transition: all var(--dss-duration-200) var(--dss-easing-standard);
+  z-index: 2; // Acima do QFile transparente
+
+  &:hover {
+    background-color: var(--dss-gray-100);
+    color: var(--dss-text-primary);
+  }
+
+  // GAP-01: --dss-focus-ring é o token de focus ring do DSS.
+  // Precedente: DssInput (Golden Context, selado Jan 2026) usa este mesmo token
+  // em .q-field__control:focus-within. Token definido em tokens/semantic/_focus.scss.
+  &:focus-visible {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline-offset: var(--dss-spacing-1);
+  }
+}
+
+// =============================================================================
+// OVERLAY DE DRAG ATIVO
+// =============================================================================
+
+.dss-file__drag-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.dss-file__drag-label {
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-medium);
+  pointer-events: none;
+  user-select: none;
+}
+
+// =============================================================================
+// ÁREA INFERIOR (hint / erro)
+// =============================================================================
+
+.dss-file__bottom {
+  display: flex;
+  flex-direction: column;
+  padding: var(--dss-spacing-1) var(--dss-spacing-4) 0;
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-normal);
+  min-height: var(--dss-spacing-5);
+}
+
+.dss-file__hint {
+  color: var(--dss-text-secondary);
+}
+
+// NC-03 fix: --dss-error-600 não existe no catálogo DSS.
+// Token correto: --dss-feedback-error (= var(--dss-negative) = #d8182e)
+.dss-file__error {
+  color: var(--dss-feedback-error);
+}
+
+// =============================================================================
+// ESTADO DISABLED
+// =============================================================================
+
+.dss-file--disabled {
+  opacity: var(--dss-opacity-disabled);
+  cursor: not-allowed;
+
+  .dss-file__field {
+    pointer-events: none;
+  }
+}
+
+// =============================================================================
+// ESTADO READONLY
+// =============================================================================
+
+.dss-file--readonly {
+  .dss-file__field {
+    cursor: default;
+  }
+
+  .dss-file__drop-hint {
+    display: none; // Sem dica de arrastar em modo readonly
+  }
+}

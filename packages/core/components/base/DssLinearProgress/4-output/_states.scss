@@ -1,0 +1,135 @@
+// =============================================================================
+// DssLinearProgress — LAYER 4: OUTPUT — States
+//
+// RESPONSABILIDADE: Dark mode, acessibilidade e media queries especiais.
+//
+// ORDEM CANÔNICA DSS:
+//   1. dark mode
+//   2. prefers-contrast: more
+//   3. prefers-reduced-motion        ← CRÍTICO (QLinearProgress anima via CSS Quasar)
+//   4. print
+//   5. forced-colors (Windows HCM)
+//
+// GOLDEN REFERENCE: DssSpinner (mesma estrutura para prefers-reduced-motion)
+// =============================================================================
+
+// =============================================================================
+// 1. DARK MODE
+// =============================================================================
+
+[data-theme="dark"] {
+  // --dss-surface-muted já tem valor dark (--dss-gray-600 = #737373).
+  // Tokens semânticos de ação e feedback também têm overrides de dark mode.
+  // Nenhum override adicional necessário para cores semânticas.
+
+  // Brand dark: tokens ~500/400 para contraste em fundo escuro
+  // Padrão idêntico ao DssSpinner (Golden Context)
+
+  .dss-linear-progress--brand-hub.dss-linear-progress,
+  [data-brand="hub"] .dss-linear-progress {
+    .q-linear-progress__model { background-color: var(--dss-hub-500); }
+  }
+
+  .dss-linear-progress--brand-water.dss-linear-progress,
+  [data-brand="water"] .dss-linear-progress {
+    .q-linear-progress__model { background-color: var(--dss-water-400); }
+  }
+
+  .dss-linear-progress--brand-waste.dss-linear-progress,
+  [data-brand="waste"] .dss-linear-progress {
+    .q-linear-progress__model { background-color: var(--dss-waste-500); }
+  }
+}
+
+// =============================================================================
+// 2. HIGH CONTRAST MODE
+// =============================================================================
+
+@media (prefers-contrast: more) {
+  // Barra de progresso com contraste máximo: track com borda visível.
+  // Nenhum override de opacidade — componente não usa opacity em estado normal.
+  .dss-linear-progress {
+    .q-linear-progress__track {
+      outline: 1px solid currentColor;
+    }
+  }
+}
+
+// =============================================================================
+// 3. REDUCED MOTION (WCAG 2.3.3 — CRÍTICO)
+// =============================================================================
+
+/*
+ * CONTEXTO DE ACESSIBILIDADE: prefers-reduced-motion: reduce
+ *
+ * QLinearProgress aplica keyframes de animação (estado indeterminate)
+ * via CSS interno do Quasar. O DssLinearProgress NÃO controla esses keyframes.
+ *
+ * EX-States-01: animation: none !important; transition: none !important
+ *   !important é obrigatório para sobrescrever as animações CSS do Quasar
+ *   que chegam com especificidade igual ou maior.
+ *   Sem !important, usuários com prefers-reduced-motion=reduce continuariam
+ *   vendo animações, violando WCAG 2.3.3 (Animation from Interactions).
+ *   Precedente: DssSpinner (mesma técnica — EX-02).
+ */
+@media (prefers-reduced-motion: reduce) {
+  .dss-linear-progress,
+  .dss-linear-progress * {
+    animation: none !important;                    // EX-States-01
+    transition: none !important;                   // EX-States-01
+    animation-duration: 0.01ms !important;         // fallback para animações JS
+    animation-iteration-count: 1 !important;
+  }
+}
+
+// =============================================================================
+// 4. PRINT
+// =============================================================================
+
+@media print {
+  // Barras de progresso indeterminadas não têm significado em contexto estático.
+  // Barras determinadas são preservadas para mostrar estado do processo.
+  .dss-linear-progress--indeterminate {
+    display: none;
+  }
+
+  // Garante que a barra determinada seja visível em preto e branco.
+  .dss-linear-progress .q-linear-progress__model {
+    background-color: currentColor !important;
+  }
+}
+
+// =============================================================================
+// 5. FORCED COLORS (Windows High Contrast Mode)
+// =============================================================================
+
+/*
+ * CONTEXTO DE ACESSIBILIDADE: forced-colors: active
+ *
+ * Em Windows High Contrast Mode, CSS custom properties são ignoradas.
+ * Usamos SystemColor keywords para garantir visibilidade:
+ *   - Model (barra ativa): CanvasText — texto do sistema (preto/branco)
+ *   - Track (fundo): Canvas com borda CanvasText — garante delimitação visível
+ *
+ * Referência: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors
+ * Pré-prompt normativo: "CanvasText para o model, Canvas com borda para o track"
+ */
+@media (forced-colors: active) {
+  .dss-linear-progress {
+    .q-linear-progress__model {
+      background-color: CanvasText;
+    }
+
+    .q-linear-progress__track {
+      background-color: Canvas;
+      border: 1px solid CanvasText;
+    }
+  }
+
+  // Brands não se aplicam em forced-colors — sistema controla as cores.
+  .dss-linear-progress--brand-hub.dss-linear-progress,
+  .dss-linear-progress--brand-water.dss-linear-progress,
+  .dss-linear-progress--brand-waste.dss-linear-progress {
+    .q-linear-progress__model { background-color: CanvasText; }
+  }
+}

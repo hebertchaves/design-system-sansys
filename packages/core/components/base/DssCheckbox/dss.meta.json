@@ -1,0 +1,89 @@
+{
+  "component": "DssCheckbox",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS v2.2",
+  "auditMode": "Final",
+  "auditDate": "2026-02-01",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssChip",
+  "phase": 1,
+  "category": "Compact Control interativo",
+  "hasReservations": true,
+  "defaultPreview": {
+    "props": {
+      "color": "primary",
+      "size": "md",
+      "label": "Opção",
+      "modelValue": false
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "controle tamanho",
+        "token": "18px × 18px",
+        "value": null,
+        "source": "Seção 13.6"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-sm",
+        "value": "4px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width (unchecked)",
+        "token": "--dss-border-width-md",
+        "value": "2px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-color (unchecked)",
+        "token": "--dss-gray-500",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background (checked)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "gap (controle + label)",
+        "token": "--dss-spacing-2",
+        "value": "8px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "touch target",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "Via `::before` (WCAG 2.5.5)"
+      }
+    ],
+    "demoContent": "Label 'Opção'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-controles"
+}

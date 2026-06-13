@@ -1,0 +1,28 @@
+/* ==========================================================================
+   DssButton - LAYER 3: VARIANT - Outline
+
+   RESPONSABILIDADE: Botão com borda, background transparente
+
+   CARACTERÍSTICAS:
+   - Background transparente
+   - Border colorida
+   - Hover preenche background
+   ========================================================================== */
+
+.dss-button--outline {
+  background-color: transparent;
+  border-width: var(--dss-border-width-thin);
+  border-style: solid;
+  border-color: currentColor;
+  box-shadow: none;
+
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+    /* DSS Visual Standard: overlay via surface-hover token — consistênte com DssItem e DssChip.
+       Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
+    background-color: var(--dss-surface-hover);
+  }
+
+  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    background-color: var(--dss-surface-active);
+  }
+}

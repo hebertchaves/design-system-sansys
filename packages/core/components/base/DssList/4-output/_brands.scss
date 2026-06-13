@@ -1,0 +1,67 @@
+/* ==========================================================================
+   DssList - LAYER 4: OUTPUT (Brands)
+
+   Responsabilidade: Variações de marca (Hub, Water, Waste).
+   Aplicado apenas quando a lista tem bordered=true — o acento de marca
+   só faz sentido visual com uma borda delimitando a lista.
+
+   Padrão DSS: seletor contextual [data-brand] + seletor direto .dss-list--brand-*
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] .dss-list--brand-hub,
+.dss-list--brand-hub {
+  /* Acento de marca aplicado com bordered */
+  &.dss-list--bordered {
+    border-color: var(--dss-hub-300);
+    border-left-color: var(--dss-hub-600);
+    border-left-width: var(--dss-border-width-thick);
+  }
+}
+
+/* ==========================================================================
+   WATER BRAND (Azul)
+   ========================================================================== */
+
+[data-brand="water"] .dss-list--brand-water,
+.dss-list--brand-water {
+  &.dss-list--bordered {
+    border-color: var(--dss-water-200);
+    border-left-color: var(--dss-water-500);
+    border-left-width: var(--dss-border-width-thick);
+  }
+}
+
+/* ==========================================================================
+   WASTE BRAND (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] .dss-list--brand-waste,
+.dss-list--brand-waste {
+  &.dss-list--bordered {
+    border-color: var(--dss-waste-200);
+    border-left-color: var(--dss-waste-600);
+    border-left-width: var(--dss-border-width-thick);
+  }
+}
+
+/* ==========================================================================
+   DARK MODE - BRAND ADJUSTMENTS
+   ========================================================================== */
+
+[data-theme="dark"] {
+  .dss-list--brand-hub.dss-list--bordered {
+    border-left-color: var(--dss-hub-400);
+  }
+
+  .dss-list--brand-water.dss-list--bordered {
+    border-left-color: var(--dss-water-400);
+  }
+
+  .dss-list--brand-waste.dss-list--bordered {
+    border-left-color: var(--dss-waste-500);
+  }
+}

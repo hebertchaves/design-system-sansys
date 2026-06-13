@@ -1,0 +1,30 @@
+{
+  "name": "@sansys/sandbox",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sandbox de testes para o Design System Sansys",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:static": "vitest run --config vitest.config.ts",
+    "test:e2e": "playwright test",
+    "test:regression": "npm run test:static && npm run test:e2e"
+  },
+  "dependencies": {
+    "@sansys/design-system": "*",
+    "quasar": "^2.19.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sass": "^1.99.0",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@quasar/vite-plugin": "^1.12.0",
+    "@sansys/grid-inspector": "file:../../packages/grid-inspector",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.0",
+    "vitest": "^2.0.0",
+    "@playwright/test": "^1.48.0"
+  }
+}

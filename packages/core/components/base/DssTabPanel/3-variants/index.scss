@@ -1,0 +1,20 @@
+// ==========================================================================
+// DssTabPanel — Layer 3: Variants (Orchestrador)
+// ==========================================================================
+//
+// O DssTabPanel é um container estrutural não-interativo de escopo mínimo.
+// Não possui variantes visuais na versão inicial (v1.0.0).
+//
+// Justificativa de ausência de variantes:
+// - O DssTabPanel é um container de conteúdo — seu papel é fornecer
+//   espaçamento consistente e contexto de layout, não variação visual.
+// - Variantes de background, borda ou sombra pertencem ao DssTabPanels
+//   (container pai, Fase 2) ou aos componentes filhos compostos.
+// - Uma variante `flush` (sem padding) pode ser introduzida em v1.1.0
+//   se o roadmap DSS exigir. Documentar como evolução futura.
+//
+// Camada mantida por obrigatoriedade arquitetural DSS:
+// "Camadas com pouco conteúdo continuam existindo." — CLAUDE.md
+// ==========================================================================
+
+// (Sem variantes na v1.0.0 — camada reservada para evolução futura)

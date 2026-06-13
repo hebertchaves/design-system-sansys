@@ -1,0 +1,109 @@
+/* ==========================================================================
+   DssPopupProxy — Layer 2: Composition (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais do popup usando tokens genéricos DSS.
+
+   GOLDEN REFERENCE: DssChip (componente interativo)
+   GOLDEN CONTEXT: DssMenu (overlay QMenu — baseline específico)
+   CLASSIFICAÇÃO: Overlay Responsivo (Nível 2 — wrapper QPopupProxy)
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-elevation-*, --dss-radius-*, --dss-surface-*)
+   ✅ Reset e layout base para modo menu e modo dialog
+   ❌ ZERO valores hardcoded não documentados (Token First)
+   ❌ ZERO lógica de variantes (vão em 3-variants/)
+   ❌ ZERO estados interativos (hover, active, focus, disabled)
+
+   MODO DUPLO DO QPopupProxy:
+   QPopupProxy internamente decide entre dois motores:
+   - QMenu (viewport >= breakpoint, padrão 450px): popup flutuante
+   - QDialog (viewport < breakpoint): modal com backdrop
+
+   Modo QMenu (Desktop):
+   A classe .dss-popup-proxy é aplicada ao elemento raiz do QMenu teleportado.
+   Os seletores .dss-popup-proxy funcionam diretamente neste contexto.
+
+   Modo QDialog (Mobile — EXC-Gate-01):
+   A classe .dss-popup-proxy é aplicada ao elemento raiz do QDialog (.q-dialog).
+   O painel visível fica dentro de .q-dialog__inner, exigindo seletor descendente.
+   Precedente: DssDialog (EXC-Gate-01), DssBtnDropdown (popup-content-class pattern).
+
+   EXCEÇÕES DOCUMENTADAS:
+   EXC-01 — !important em background-color e box-shadow (modo menu)
+   O QMenu aplica background e box-shadow via .q-menu com especificidade
+   CSS equivalente à classe .dss-popup-proxy. Uso de !important é necessário
+   para garantir que --dss-surface-default e --dss-elevation-3 prevaleçam.
+   Precedente: DssMenu (EXC-01), DssFooter (EXC-02), DssHeader (EXC-02).
+
+   EXC-Gate-01 — Seletores descendentes para modo dialog
+   QDialog não expõe hook CSS direto no painel interno. Seletor descendente
+   .q-dialog.dss-popup-proxy .q-dialog__inner é necessário para estilizar
+   o painel visível em modo dialog.
+   ========================================================================== */
+
+/* ==========================================================================
+   MODO MENU (Desktop: viewport >= breakpoint)
+   .dss-popup-proxy aplica-se ao elemento .q-menu teleportado para <body>.
+   ========================================================================== */
+
+.dss-popup-proxy {
+  /* ==========================================================================
+     Superfície
+     EXC-01: !important necessário para sobrescrever .q-menu { background: #fff }
+     do Quasar com especificidade equivalente.
+     Precedente: DssMenu (EXC-01).
+     ========================================================================== */
+  background-color: var(--dss-surface-default) !important;
+
+  /* ==========================================================================
+     Elevação
+     EXC-01: !important necessário para sobrescrever box-shadow do .q-menu.
+     --dss-elevation-3 posiciona o overlay acima do conteúdo da página.
+     ========================================================================== */
+  box-shadow: var(--dss-elevation-3) !important;
+
+  /* ==========================================================================
+     Forma
+     Bordas arredondadas — alinhadas ao DssMenu e demais overlays DSS.
+     ========================================================================== */
+  border-radius: var(--dss-radius-md);
+
+  /* ==========================================================================
+     Overflow
+     Garante que border-radius seja respeitado pelos filhos (DssList, DssItem).
+     ========================================================================== */
+  overflow: hidden;
+
+  /* ==========================================================================
+     Tipografia — herança de contexto
+     ========================================================================== */
+  font-family: var(--dss-font-family-sans);
+  color: var(--dss-text-body);
+}
+
+/* ==========================================================================
+   MODO DIALOG (Mobile: viewport < breakpoint) — EXC-Gate-01
+   .dss-popup-proxy é aplicada ao .q-dialog (container de posicionamento).
+   O painel visível é .q-dialog__inner — seletor descendente necessário.
+   Precedente: DssDialog (EXC-Gate-01), DssBtnDropdown (popup-content-class).
+   ========================================================================== */
+
+.q-dialog.dss-popup-proxy {
+  .q-dialog__inner {
+    /* Superfície — sem !important pois QDialog não sobrescreve o inner */
+    background-color: var(--dss-surface-default);
+
+    /* Elevação */
+    box-shadow: var(--dss-elevation-3);
+
+    /* Forma */
+    border-radius: var(--dss-radius-md);
+
+    /* Overflow */
+    overflow: hidden;
+
+    /* Tipografia */
+    font-family: var(--dss-font-family-sans);
+    color: var(--dss-text-body);
+  }
+}

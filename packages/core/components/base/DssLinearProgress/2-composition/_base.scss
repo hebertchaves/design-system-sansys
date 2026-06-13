@@ -1,0 +1,79 @@
+// =============================================================================
+// DssLinearProgress — LAYER 2: COMPOSITION (Base Styles)
+//
+// RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos DSS.
+//
+// GOLDEN REFERENCE: DssBadge (componente não interativo)
+// GOLDEN CONTEXT:   DssSpinner (componente de feedback não interativo)
+//
+// TOUCH TARGET: Opção B — NÃO implementado.
+//   DssLinearProgress não é interativo.
+//
+// EXC-Gate-01: Seletores internos do Quasar
+//   .q-linear-progress__track e .q-linear-progress__model são estrutura
+//   interna do QLinearProgress. O DSS precisa sobrescrever esses seletores
+//   para aplicar --dss-gray-200 ao track e --dss-radius-full a ambos.
+//   Exceção documentada em dss.meta.json.
+//
+// TOKENS UTILIZADOS (base):
+//   Superfície: --dss-gray-200               (track inativo — cinza claro canônico)
+//   Forma:      --dss-radius-full             (pill shape)
+//   Opacidade:  --dss-opacity-disabled        (estado disabled)
+//   Transição:  --dss-duration-250            (transição suave)
+//               --dss-easing-standard         (curva de easing)
+//
+// =============================================================================
+
+.dss-linear-progress {
+  // ── Display e Layout ───────────────────────────────────────────────────────
+  display: block;
+  width: 100%;
+  min-width: var(--dss-min-w-md); // 200px — usabilidade mínima do controle de progresso
+  position: relative;
+
+  // ── Comportamento ──────────────────────────────────────────────────────────
+  user-select: none;
+
+  // ── EXC-Gate-01: Override da estrutura interna do Quasar ──────────────────
+  //
+  // O QLinearProgress renderiza `.q-linear-progress` como seu elemento raiz,
+  // com `.q-linear-progress__track` (fundo) e `.q-linear-progress__model`
+  // (barra de progresso) como filhos. O DSS precisa acessá-los para aplicar
+  // tokens de cor e forma. Justificativa: sem esses overrides, não é possível
+  // garantir conformidade visual com o Design System via tokens.
+
+  // Track (fundo da barra)
+  // EXC-Gate-01: seletor interno Quasar necessário para token --dss-gray-200
+  // --dss-gray-200 (M3, Carbon, Salesforce usam cinza claro para track inativo).
+  // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.7
+  .q-linear-progress__track {
+    border-radius: var(--dss-radius-full);
+    background-color: var(--dss-gray-200);
+    // Reset da opacidade padrão do Quasar (0.3–0.4) — cor já é muted pelo token
+    opacity: 1;
+  }
+
+  // Model (barra de progresso ativa)
+  // EXC-Gate-01: seletor interno Quasar necessário para border-radius e cor
+  .q-linear-progress__model {
+    border-radius: var(--dss-radius-full);
+    // background-color definido por variante de cor em 3-variants/_colors.scss
+    transition: width var(--dss-duration-250) var(--dss-easing-standard),
+                transform var(--dss-duration-250) var(--dss-easing-standard);
+  }
+
+  // Inner (elemento raiz do QLinearProgress)
+  // EXC-Gate-01: seletor interno Quasar necessário para border-radius
+  .q-linear-progress {
+    border-radius: var(--dss-radius-full);
+    display: block;
+  }
+
+  // ── Estado: disabled ───────────────────────────────────────────────────────
+  // Opção B (não interativo): redução de opacidade sem pointer-events.
+  // --dss-opacity-disabled = 0.4 (CLAUDE.md memory — nunca 0.6)
+  &--disabled {
+    opacity: var(--dss-opacity-disabled);
+    pointer-events: none;
+  }
+}

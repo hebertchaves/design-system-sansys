@@ -1,0 +1,129 @@
+{
+  "component": "DssChatMessage",
+  "cssClass": "dss-chat-message",
+  "phase": 2,
+  "status": "sealed",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssCarousel",
+  "classification": {
+    "type": "Componente Composto Interativo",
+    "category": "Conteúdo Rico",
+    "interactive": true,
+    "level": "Nível 2"
+  },
+  "family": "Conteúdo Rico",
+  "subcomponents": [
+    "DssAvatar",
+    "DssIcon"
+  ],
+  "statesApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "selected",
+    "disable"
+  ],
+  "statesNotApplicable": [
+    "loading — não aplicável; status 'sending' cobre o feedback de envio via ícone animado"
+  ],
+  "tokens": [
+    "--dss-spacing-0_5",
+    "--dss-spacing-1",
+    "--dss-spacing-1_5",
+    "--dss-spacing-2",
+    "--dss-spacing-2_5",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-font-family-sans",
+    "--dss-font-size-xs",
+    "--dss-font-size-sm",
+    "--dss-font-size-md",
+    "--dss-font-weight-normal",
+    "--dss-font-weight-semibold",
+    "--dss-line-height-md",
+    "--dss-line-height-tight",
+    "--dss-radius-sm",
+    "--dss-radius-lg",
+    "--dss-radius-full",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-shadow-sm",
+    "--dss-surface-default",
+    "--dss-surface-dark",
+    "--dss-text-body",
+    "--dss-text-subtle",
+    "--dss-text-inverse",
+    "--dss-gray-200",
+    "--dss-gray-600",
+    "--dss-feedback-error",
+    "--dss-focus-ring",
+    "--dss-opacity-disabled",
+    "--dss-opacity-70",
+    "--dss-duration-150",
+    "--dss-duration-200",
+    "--dss-duration-slowest",
+    "--dss-easing-standard",
+    "--dss-easing-ease-in-out",
+    "--dss-hub-primary",
+    "--dss-hub-on-primary",
+    "--dss-water-primary",
+    "--dss-water-on-primary",
+    "--dss-waste-primary",
+    "--dss-waste-on-primary"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Arch-01",
+      "type": "Sem motor Quasar",
+      "location": "1-structure/DssChatMessage.ts.vue",
+      "value": "N/A",
+      "justification": "QChatMessage do Quasar é limitado demais para os requisitos do DSS: texto como array de strings, ausência de slots ricos, sem suporte a status icons ou estados de entrega. Implementado como HTML semântico customizado com DssAvatar e DssIcon."
+    }
+  ],
+  "compositionRecommendations": {
+    "container": "role='list' ou role='feed' no elemento pai — obrigatório para WCAG",
+    "slots": {
+      "default": "Conteúdo rico de mensagem (imagem, link, formulário)",
+      "avatar": "Avatar customizado (bot icon, sistema, etc.)",
+      "actions": "DssButton flat/icon para responder, encaminhar, excluir",
+      "sender-name": "Nome formatado com badge, link, etc."
+    },
+    "antiPatterns": [
+      "Usar DssChatMessage fora de um contêiner role='list' ou role='feed'",
+      "Passar cores hardcoded via prop — usar brand context ou classes DSS",
+      "Criar múltiplas instâncias sem key para otimização de re-render",
+      "Usar slot default para conteúdo simples quando prop message é suficiente"
+    ]
+  },
+  "phaseDescription": "Fase 2 — Nível 2, Família Conteúdo Rico. Depende de DssAvatar (Fase 1, selado).",
+  "auditHistory": [
+    {
+      "date": "2026-05-21",
+      "protocol": "v2.5",
+      "result": "APROVADO",
+      "ncsBlocking": 0,
+      "ncsNonBlocking": 3,
+      "gaps": 4,
+      "notes": "3 NCs não-bloqueantes corrigidas no mesmo ciclo (NC-01 token fantasma no API.md, NC-02 opacity hardcoded, NC-03 withDefaults triviais). 4 GAPs registrados para Fase 3."
+    }
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "gap",
+        "token": "--dss-spacing-2",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "transition",
+        "token": "--dss-duration-200",
+        "value": "200ms",
+        "source": "2-composition/_base.scss"
+      }
+    ]
+  }
+}

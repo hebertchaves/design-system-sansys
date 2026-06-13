@@ -1,0 +1,79 @@
+/* ==========================================================================
+   DssTimeline — LAYER 2: COMPOSITION (Base Styles)
+
+   MOTOR: QTimeline (EXC-Gate-01)
+   Componente container de linha do tempo que exibe eventos em sequência
+   cronológica. Não-interativo — sem touch target, hover ou focus no root.
+
+   EXC-Gate-01: Descendant selectors .q-timeline__* são obrigatórios para
+   controlar cores da linha conectora e dos marcadores sem :deep() (gate de
+   composição v2.4).
+
+   REGRAS:
+   ✅ Tokens genéricos DSS apenas
+   ✅ Estrutura, layout e tipografia base
+   ✅ Sem valores hardcoded
+   ❌ Cores (ficam em 3-variants/ e 4-output/)
+   ✅ Touch target: N/A — componente container não-interativo
+   ========================================================================== */
+
+/* ==========================================================================
+   TIMELINE BASE — Estrutura, Tipografia e Tokens de Cor Internos
+   ========================================================================== */
+
+.dss-timeline {
+  /* Token de cor para a linha conectora — sobrescrito em _brands.scss */
+  --dss-timeline-line-color: var(--dss-gray-300);
+
+  /* Token de cor para o marcador/ponto — sobrescrito em _brands.scss */
+  --dss-timeline-dot-color: var(--dss-gray-400);
+
+  /* Tipografia base */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-md);
+
+  /* Cor de texto padrão */
+  color: var(--dss-text-body);
+}
+
+/* ==========================================================================
+   EXC-Gate-01 — Overrides de subáreas do QTimeline
+   Justificativa: QTimeline renderiza .q-timeline__connector e .q-timeline__dot
+   internamente; não há prop ou CSS custom property nativa para controlar as
+   cores do conector e do marcador sem selectors descendentes.
+   ========================================================================== */
+
+/* Linha conectora entre os itens */
+.dss-timeline .q-timeline__connector {
+  background-color: var(--dss-timeline-line-color);
+}
+
+/* Marcador/ponto de cada entrada */
+.dss-timeline .q-timeline__dot {
+  background-color: var(--dss-timeline-dot-color);
+  border-color: var(--dss-timeline-dot-color);
+  color: var(--dss-text-inverse);
+}
+
+/* Título de cada entrada */
+.dss-timeline .q-timeline__title {
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-semibold);
+  color: var(--dss-text-body);
+  margin-bottom: var(--dss-spacing-1);
+}
+
+/* Subtítulo (data/hora) de cada entrada */
+.dss-timeline .q-timeline__subtitle {
+  font-size: var(--dss-font-size-sm);
+  color: var(--dss-text-subtle);
+  margin-bottom: var(--dss-spacing-2);
+}
+
+/* Conteúdo principal de cada entrada */
+.dss-timeline .q-timeline__content {
+  padding-bottom: var(--dss-spacing-6);
+  color: var(--dss-text-body);
+}

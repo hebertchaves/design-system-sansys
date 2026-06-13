@@ -1,0 +1,64 @@
+/* ==========================================================================
+   DssSlideItem — LAYER 2: COMPOSITION (Base Styles)
+
+   MOTOR: QSlideItem (EXC-Gate-01: QSlideItem renderiza .q-slide-item como root)
+   Item de lista com ações reveladas por gesto de swipe (deslizamento horizontal).
+   Casos de uso: deletar item, arquivar, marcar como lido.
+
+   EXC-Gate-02 (a): Descendant selectors .q-slide-item__left e .q-slide-item__right
+                    para sobrescrever background-color das áreas de ação com !important.
+                    O QSlideItem aplica bg-{color} (classe Quasar) nas áreas; sem !important
+                    a especificidade é insuficiente para override.
+
+   EXC-Gate-02 (b): CSS variables --dss-slide-item-left-bg e --dss-slide-item-right-bg
+                    injetadas via inline style pelo Vue para governar cor por prop.
+                    Padrão: error (esquerda) e info (direita).
+
+   REGRAS:
+   ✅ Tokens genéricos DSS apenas
+   ✅ Sem valores hardcoded
+   ❌ Cores de brand (ficam em 4-output/_brands.scss)
+   ========================================================================== */
+
+/* ==========================================================================
+   ROOT — Comportamento geral do container
+   ========================================================================== */
+
+.dss-slide-item {
+  width: 100%;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
+   ÁREAS DE AÇÃO — Left e Right
+   EXC-Gate-02 (a): background-color !important sobrescreve bg-{color} do Quasar.
+   EXC-Gate-02 (b): variáveis CSS injetadas inline pelo componente Vue.
+   ========================================================================== */
+
+.dss-slide-item .q-slide-item__left {
+  background-color: var(--dss-slide-item-left-bg, var(--dss-feedback-error)) !important;
+  color: var(--dss-text-inverse);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--dss-padding-4);
+  gap: var(--dss-gap-2);
+}
+
+.dss-slide-item .q-slide-item__right {
+  background-color: var(--dss-slide-item-right-bg, var(--dss-feedback-info)) !important;
+  color: var(--dss-text-inverse);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--dss-padding-4);
+  gap: var(--dss-gap-2);
+}
+
+/* ==========================================================================
+   ESTADO DISABLED
+   O QSlideItem bloqueia gestos internamente via prop :disable — nenhum override
+   CSS adicional é necessário para o gesto. pointer-events: none no conteúdo
+   violaria o Gate de Responsabilidade (container não captura estado dos filhos).
+   Precedente: DssPullToRefresh NC-02 (removido por mesma razão).
+   ========================================================================== */
+/* (sem regras CSS — disable é gerenciado inteiramente pelo QSlideItem) */

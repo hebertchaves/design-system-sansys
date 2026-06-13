@@ -1,0 +1,78 @@
+// =============================================================================
+// DssDatePicker — LAYER 4: OUTPUT (Brands)
+//
+// RESPONSABILIDADE: Variações de brand do DssDatePicker.
+//
+// Brands suportados: hub | water | waste
+//
+// Estratégia (padrão EXC-Gate-02 — DssPagination/DssCarousel/DssTimePicker):
+//   A cor do calendário (header, dia selecionado, range) é controlada via --q-color-primary.
+//   O override por brand substitui --q-color-primary pelo token de brand.
+//   O seletor descendant garante especificidade correta sem :deep().
+// =============================================================================
+
+[data-brand='hub'] .q-date.dss-date-picker {
+  --q-color-primary: var(--dss-hub-600);
+
+  .q-date__header {
+    background-color: var(--dss-hub-600);
+  }
+
+  .q-date__calendar-item--active button,
+  .q-date__range-from button,
+  .q-date__range-to button {
+    background-color: var(--dss-hub-600);
+  }
+
+  .q-date__event {
+    background-color: var(--dss-hub-600);
+  }
+
+  .q-date__today {
+    background-color: var(--dss-hub-600);
+  }
+}
+
+[data-brand='water'] .q-date.dss-date-picker {
+  --q-color-primary: var(--dss-water-500);
+
+  .q-date__header {
+    background-color: var(--dss-water-500);
+  }
+
+  .q-date__calendar-item--active button,
+  .q-date__range-from button,
+  .q-date__range-to button {
+    background-color: var(--dss-water-500);
+  }
+
+  .q-date__event {
+    background-color: var(--dss-water-500);
+  }
+
+  .q-date__today {
+    background-color: var(--dss-water-500);
+  }
+}
+
+[data-brand='waste'] .q-date.dss-date-picker {
+  --q-color-primary: var(--dss-waste-600);
+
+  .q-date__header {
+    background-color: var(--dss-waste-600);
+  }
+
+  .q-date__calendar-item--active button,
+  .q-date__range-from button,
+  .q-date__range-to button {
+    background-color: var(--dss-waste-600);
+  }
+
+  .q-date__event {
+    background-color: var(--dss-waste-600);
+  }
+
+  .q-date__today {
+    background-color: var(--dss-waste-600);
+  }
+}

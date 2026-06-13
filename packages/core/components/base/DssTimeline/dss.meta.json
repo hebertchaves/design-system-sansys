@@ -1,0 +1,144 @@
+{
+  "component": "DssTimeline",
+  "cssClass": "dss-timeline",
+  "phase": 2,
+  "status": "conformant",
+  "dssVersion": "2.2",
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssBanner",
+  "classification": {
+    "type": "Container não-interativo de dados temporais",
+    "category": "Visualização de Dados e Histórico",
+    "interactive": false,
+    "family": "Timeline"
+  },
+  "phaseDescription": "Fase 2, Nível 2 — Composição de Primeiro Grau. Depende de DssIcon e DssAvatar (Fase 1). Subcomponente: DssTimelineEntry.",
+  "statesApplicable": [],
+  "statesNotApplicable": [
+    {
+      "state": "hover",
+      "reason": "Container não-interativo — sem cursor pointer"
+    },
+    {
+      "state": "focus",
+      "reason": "Root não é focável; elementos internos têm foco próprio"
+    },
+    {
+      "state": "active",
+      "reason": "Sem estado pressionado"
+    },
+    {
+      "state": "disabled",
+      "reason": "Timeline de visualização não possui estado desabilitado"
+    },
+    {
+      "state": "loading",
+      "reason": "Conteúdo estático — use DssInnerLoading externamente"
+    }
+  ],
+  "tokens": [
+    "--dss-gray-300",
+    "--dss-gray-400",
+    "--dss-gray-600",
+    "--dss-gray-700",
+    "--dss-hub-600",
+    "--dss-hub-800",
+    "--dss-water-500",
+    "--dss-water-700",
+    "--dss-waste-600",
+    "--dss-waste-800",
+    "--dss-text-body",
+    "--dss-text-subtle",
+    "--dss-text-inverse",
+    "--dss-font-family-sans",
+    "--dss-font-size-md",
+    "--dss-font-size-sm",
+    "--dss-font-weight-normal",
+    "--dss-font-weight-semibold",
+    "--dss-line-height-md",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-6",
+    "--dss-spacing-8",
+    "--dss-border-width-thin"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "Gate de Composição v2.4",
+      "location": "2-composition/_base.scss",
+      "value": "Descendant selectors .q-timeline__*",
+      "justification": "QTimeline renderiza estrutura interna (conector, ponto, título, subtítulo) sem CSS custom properties nativas para controle de cor. Descendant selectors são obrigatórios para governança de tokens DSS."
+    },
+    {
+      "id": "EXC-States-01",
+      "type": "Forced Colors",
+      "location": "4-output/_states.scss",
+      "value": "ButtonText, Canvas, CanvasText",
+      "justification": "Em forced-colors, valores SystemColor garantem visibilidade do contraste estrutural da timeline."
+    },
+    {
+      "id": "EXC-04",
+      "type": "Print !important",
+      "location": "4-output/_states.scss",
+      "value": "!important em background-color e border",
+      "justification": "Necessário para sobrescrever remoção de background pelo navegador em modo de impressão."
+    }
+  ],
+  "compositionRecommendations": [
+    "DssTimelineEntry como único filho direto válido",
+    "DssIcon no marcador via prop icon",
+    "DssAvatar no marcador via prop avatar",
+    "DssButton para ações contextuais no slot default de cada DssTimelineEntry",
+    "DssBadge no slot #title de DssTimelineEntry para indicadores de status",
+    "DssCard para conteúdo rico no slot default de DssTimelineEntry"
+  ],
+  "auditHistory": [],
+  "defaultPreview": {
+    "props": {
+      "side": "right"
+    },
+    "computedDimensions": {},
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      }
+    ],
+    "demoContent": "3 eventos na linha do tempo",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssTimelineEntry",
+          "props": {
+            "title": "Evento 1",
+            "subtitle": "Jan 2026",
+            "icon": "check",
+            "color": "primary"
+          },
+          "children": "Primeiro evento."
+        },
+        {
+          "component": "DssTimelineEntry",
+          "props": {
+            "title": "Evento 2",
+            "subtitle": "Fev 2026",
+            "icon": "star",
+            "color": "secondary"
+          },
+          "children": "Segundo evento."
+        }
+      ]
+    }
+  },
+  "previewGroup": "timeline"
+}

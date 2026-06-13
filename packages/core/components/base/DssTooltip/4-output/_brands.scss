@@ -1,0 +1,57 @@
+/* ==========================================================================
+   DssTooltip - LAYER 4: OUTPUT - Brands
+
+   RESPONSABILIDADE: Brandability (Hub, Water, Waste)
+
+   PARIDADE GOLDEN: Estrutura identica a DssBadge 4-output/_brands.scss
+   - Usa tokens genericos de brand
+   - Aplica cor da brand ao tooltip
+   - Suporta contexto data-brand e prop brand
+
+   CARACTERISTICAS:
+   - Usa tokens semanticos de brand (--dss-{brand}-*)
+   - Aplica fundo da brand com texto claro
+   - NÃO usa tokens numericos proprietarios
+
+   TOKENS DE BRAND UTILIZADOS:
+   - --dss-hub-600 (Hub: laranja)
+   - --dss-water-500 (Water: azul)
+   - --dss-waste-600 (Waste: verde)
+   - --dss-gray-50 (texto claro sobre fundo de brand)
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Orange)
+   ========================================================================== */
+
+[data-brand="hub"],
+.dss-tooltip--brand-hub {
+  &.dss-tooltip {
+    background-color: var(--dss-hub-600);
+    color: var(--dss-gray-50);
+  }
+}
+
+/* ==========================================================================
+   WATER BRAND (Blue)
+   ========================================================================== */
+
+[data-brand="water"],
+.dss-tooltip--brand-water {
+  &.dss-tooltip {
+    background-color: var(--dss-water-500);
+    color: var(--dss-gray-50);
+  }
+}
+
+/* ==========================================================================
+   WASTE BRAND (Green)
+   ========================================================================== */
+
+[data-brand="waste"],
+.dss-tooltip--brand-waste {
+  &.dss-tooltip {
+    background-color: var(--dss-waste-600);
+    color: var(--dss-gray-50);
+  }
+}

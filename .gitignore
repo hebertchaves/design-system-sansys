@@ -1,0 +1,35 @@
+# Compiled CSS (gerado por Vite/Sass — não versionar)
+index.css
+index.css.map
+# Exceção: entry point intencional do portal de documentação
+!apps/docs-portal/src/index.css
+
+# Node modules (if DSS is used standalone)
+node_modules/
+
+# Package lock
+package-lock.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build Outputs
+dist/
+.svelte-kit/
+.next/
+.nuxt/
+out/
+build/
+
+# Ignorar especificamente dists dentro de apps e packages
+apps/*/dist/
+packages/*/dist/
+
+*storybook.log
+storybook-static

@@ -1,0 +1,14 @@
+/**
+ * DssSelect — SCSS Module Orchestrator
+ *
+ * Ordem obrigatória DSS: L2 (composition) → L3 (variants) → L4 (output)
+ *
+ * L2 inclui dois parciais:
+ *   - _base:  estilos base do campo (QField)
+ *   - _panel: estilos base do painel dropdown (QMenu via popup-content-class)
+ */
+
+@use './2-composition/base' as base;
+@use './2-composition/panel' as panel;
+@use './3-variants' as variants;
+@use './4-output' as output;

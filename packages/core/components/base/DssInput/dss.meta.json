@@ -1,0 +1,109 @@
+{
+  "component": "DssInput",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS/docs/Compliance/seals/DssInput/DSSINPUT_SELO_v2.2.md",
+  "auditMode": "Final",
+  "auditDate": "2026-02-04",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssChip",
+  "category": "Action Control (interativo)",
+  "phase": 1,
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "variant": "outlined",
+      "type": "text",
+      "dense": false,
+      "label": "Campo",
+      "placeholder": "Digite aqui"
+    },
+    "computedDimensions": {
+      "minHeight": "44px",
+      "minWidth": "240px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "--dss-input-height-md",
+        "value": "44px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "min-width",
+        "token": "--dss-min-w-lg",
+        "value": "240px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "padding (horizontal)",
+        "token": "--dss-spacing-4",
+        "value": "16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width (repouso)",
+        "token": "--dss-border-width-thin",
+        "value": "1px",
+        "source": "3-variants/_borderless.scss"
+      },
+      {
+        "property": "border-color (repouso)",
+        "token": "--dss-gray-400",
+        "value": null,
+        "source": "3-variants/_borderless.scss"
+      },
+      {
+        "property": "border-color (hover)",
+        "token": "--dss-gray-600",
+        "value": null,
+        "source": "3-variants/_outlined.scss"
+      },
+      {
+        "property": "border-color (foco)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width (foco)",
+        "token": "--dss-border-width-md",
+        "value": "2px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "8px",
+        "source": "3-variants/_filled.scss"
+      },
+      {
+        "property": "color (texto)",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-md",
+        "value": "14px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "label color (repouso)",
+        "token": "--dss-text-subtle",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "label color (foco)",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "Placeholder 'Digite aqui'",
+    "demoSlots": null
+  },
+  "previewGroup": "form-campos"
+}

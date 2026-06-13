@@ -1,0 +1,103 @@
+// ==========================================================================
+// DssChatMessage — Layer 4: States
+// ==========================================================================
+//
+// RESPONSABILIDADE: Modos contextuais — dark mode, high-contrast, forced-colors, print
+// ==========================================================================
+
+// ==========================================================================
+// DARK MODE
+// ==========================================================================
+
+@media (prefers-color-scheme: dark) {
+  .dss-chat-message--received .dss-chat-message__bubble {
+    background-color: var(--dss-surface-dark);
+    color: var(--dss-text-inverse);
+  }
+
+  .dss-chat-message--mine .dss-chat-message__bubble {
+    background-color: var(--dss-gray-600);
+    color: var(--dss-text-inverse);
+  }
+
+  .dss-chat-message__timestamp {
+    color: var(--dss-text-subtle);
+  }
+}
+
+[data-theme='dark'] {
+  .dss-chat-message--received .dss-chat-message__bubble {
+    background-color: var(--dss-surface-dark);
+    color: var(--dss-text-inverse);
+  }
+
+  .dss-chat-message--mine .dss-chat-message__bubble {
+    background-color: var(--dss-gray-600);
+    color: var(--dss-text-inverse);
+  }
+
+  .dss-chat-message__timestamp {
+    color: var(--dss-text-subtle);
+  }
+}
+
+// ==========================================================================
+// ALTO CONTRASTE
+// ==========================================================================
+
+@media (prefers-contrast: more) {
+  .dss-chat-message__bubble {
+    border: var(--dss-border-width-thin) solid currentColor;
+  }
+
+  .dss-chat-message__sender-name {
+    font-weight: var(--dss-font-weight-bold);
+  }
+}
+
+// ==========================================================================
+// FORCED COLORS (WCAG 1.4.11 — Windows High Contrast)
+// ==========================================================================
+
+@media (forced-colors: active) {
+  .dss-chat-message__bubble {
+    border: 1px solid ButtonText;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  .dss-chat-message__status--error {
+    color: LinkText;
+  }
+}
+
+// ==========================================================================
+// REDUCED MOTION
+// ==========================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-chat-message__status--sending {
+    animation: none;
+    opacity: var(--dss-opacity-70);
+  }
+
+  .dss-chat-message__bubble,
+  .dss-chat-message {
+    transition: none;
+  }
+}
+
+// ==========================================================================
+// PRINT
+// ==========================================================================
+
+@media print {
+  .dss-chat-message__actions {
+    display: none;
+  }
+
+  .dss-chat-message__bubble {
+    box-shadow: none;
+    border: var(--dss-border-width-thin) solid currentColor;
+  }
+}

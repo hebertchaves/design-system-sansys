@@ -1,0 +1,183 @@
+{
+  "component": "DssCarousel",
+  "cssClass": "dss-carousel",
+  "phase": 2,
+  "status": "sealed",
+  "auditMode": "prompt_auditoria_v2.5",
+  "auditDate": "2026-05-21",
+  "seal": "DSS/docs/Compliance/seals/DssCarousel/DSSCAROUSEL_SELO_v2.2.md",
+  "dssVersion": "2.2",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssBottomSheet",
+  "classification": {
+    "type": "Componente de exibição interativo com navegação",
+    "category": "Conteúdo Rico",
+    "interactive": true,
+    "family": "Carousel"
+  },
+  "phaseDescription": "Fase 2, Nível 2 — Composição de Primeiro Grau. Depende de DssButton e DssIcon (Fase 1 — selados). Sub-componente: DssCarouselSlide (incluído neste pacote).",
+  "statesApplicable": [
+    {
+      "state": "hover",
+      "location": "Setas e pontos de paginação (QBtn interno)"
+    },
+    {
+      "state": "focus",
+      "location": "Setas e pontos de paginação (QBtn interno com foco DSS global)"
+    },
+    {
+      "state": "active",
+      "location": "Setas e pontos de paginação (QBtn interno)"
+    }
+  ],
+  "statesNotApplicable": [
+    {
+      "state": "disabled",
+      "reason": "O carousel em si não possui estado disabled — slides individuais podem ser disable=true"
+    },
+    {
+      "state": "loading",
+      "reason": "Conteúdo gerenciado pelo consumidor — use DssInnerLoading externamente se necessário"
+    },
+    {
+      "state": "error",
+      "reason": "N/A — carousel é container de apresentação"
+    }
+  ],
+  "tokens": [
+    "--dss-action-primary",
+    "--dss-gray-400",
+    "--dss-gray-600",
+    "--dss-gray-700",
+    "--dss-hub-600",
+    "--dss-water-500",
+    "--dss-waste-600",
+    "--dss-surface-muted",
+    "--dss-surface-hover",
+    "--dss-radius-md",
+    "--dss-radius-sm",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-duration-hover",
+    "--dss-duration-base",
+    "--dss-duration-0",
+    "--dss-easing-hover",
+    "--dss-easing-standard"
+  ],
+  "exceptions": [
+    {
+      "id": "EXC-Gate-01",
+      "type": "Gate de Composição v2.4",
+      "location": "1-structure/DssCarousel.ts.vue",
+      "value": "QCarousel, QCarouselSlide como motores",
+      "justification": "QCarousel e QCarouselSlide são infraestrutura insubstituível de gerenciamento de slides, transições e gestos. Sem alternativa em componentes DSS básicos."
+    },
+    {
+      "id": "EXC-Gate-02a",
+      "type": "CSS Custom Property Override",
+      "location": "2-composition/_base.scss",
+      "value": "--q-color-primary override via .dss-carousel",
+      "justification": "QCarousel usa --q-color-primary (via --q-primary) para colorir os controles QBtn internamente. Override idêntico ao padrão DssPagination e DssAjaxBar."
+    },
+    {
+      "id": "EXC-Gate-02b",
+      "type": "Gate de Composição v2.4 — Descendant Selector",
+      "location": "2-composition/_base.scss",
+      "value": ".dss-carousel .q-carousel__navigation-icon:not(.q-carousel__navigation-icon--active) { color: var(--dss-gray-400) !important }",
+      "justification": "QCarousel aplica color='primary' a TODOS os dots de paginação sem diferenciar ativo/inativo. Não há CSS custom property nativa para controlar a cor dos dots inativos individualmente. Descendant selector com !important é obrigatório."
+    },
+    {
+      "id": "EXC-Gate-02c",
+      "type": "Gate de Composição v2.4 — Descendant Selector",
+      "location": "2-composition/_base.scss",
+      "value": ".dss-carousel .q-carousel__arrow .q-focus-helper",
+      "justification": "Q-focus-helper é o pseudo-elemento de hover/active interno do QBtn. Override necessário para calibrar opacidade do overlay nos botões de seta do carousel."
+    },
+    {
+      "id": "EXC-States-01",
+      "type": "Prefers-Reduced-Motion",
+      "location": "4-output/_states.scss",
+      "value": "transition-duration: var(--dss-duration-0) !important em .q-transition--* classes",
+      "justification": "QCarousel usa classes de transição Vue (.q-transition--*) que aplicam CSS transitions internamente. Override com duração 0 é o único mecanismo CSS para desabilitar as animações sem intervenção JS no componente pai."
+    },
+    {
+      "id": "EXC-States-02",
+      "type": "Forced Colors",
+      "location": "4-output/_states.scss",
+      "value": "SystemColor keywords: ButtonText, Highlight",
+      "justification": "Em forced-colors, SystemColor keywords (ButtonText, Highlight) garantem visibilidade dos controles sem necessidade de forced-color-adjust. Idêntico ao padrão dos outros componentes não-interativos do DSS."
+    },
+    {
+      "id": "EX-Structural-01",
+      "type": "Valor Visual Não-Tokenizado",
+      "location": "2-composition/_base.scss",
+      "value": "opacity: 0.6 (thumbnail inativo), opacity: 1 (thumbnail ativo/hover)",
+      "justification": "DSS não possui token de opacidade para estados visuais de miniaturas. opacity: 0.6 é um valor de design canonicamente estabelecido para indicar estado inativo em UI de thumbnails (padrão amplamente adotado). opacity: 1 é identidade matemática."
+    },
+    {
+      "id": "EX-Structural-02",
+      "type": "Valor Estrutural Não-Tokenizado",
+      "location": "3-variants/_variant.scss",
+      "value": "z-index: 1 em .q-carousel__arrow",
+      "justification": "DSS não possui tokens de z-index. z-index: 1 é valor estrutural mínimo para garantir que as setas de navegação fiquem sobre o conteúdo dos slides. Valor constante sem semântica de design."
+    }
+  ],
+  "compositionRecommendations": [
+    "DssCarouselSlide como único filho direto válido do DssCarousel",
+    "QCarouselControl para controles de navegação customizados dentro do slot default",
+    "DssInnerLoading externamente para estados de loading do carousel",
+    "DssImg dentro dos slides para imagens com lazy loading e acessibilidade",
+    "DssButton externamente para ações adicionais (ex: 'Ver mais') relacionadas ao slide ativo"
+  ],
+  "gateExceptions": [
+    "EXC-Gate-01: QCarousel como motor (infraestrutura insubstituível)",
+    "EXC-Gate-02a: --q-color-primary override (padrão DssPagination/DssAjaxBar)",
+    "EXC-Gate-02b: descendant selector para dots inativos (sem CSS hook nativo)",
+    "EXC-Gate-02c: descendant selector para q-focus-helper das setas",
+    "EXC-States-01: prefers-reduced-motion — override classes Vue transition do QCarousel",
+    "EXC-States-02: forced-colors — SystemColor keywords para controles",
+    "EX-Structural-01: opacity: 0.6 para thumbnails (sem token DSS de opacidade visual)",
+    "EX-Structural-02: z-index: 1 para setas (sem token DSS de z-index)"
+  ],
+  "auditHistory": [
+    {
+      "version": "v2.5",
+      "date": "2026-05-21",
+      "auditor": "Claude Code",
+      "result": "APROVADO",
+      "ncs": [
+        "NC-01 (non-blocking, corrigida): vi importado sem uso em DssCarousel.test.js",
+        "NC-02 (non-blocking, corrigida): max-width: 500px hardcoded em 4 locais do example.vue"
+      ],
+      "gaps": [
+        "GAP-01: Pré-prompt não nomeava DssBottomSheet explicitamente como Golden Context",
+        "GAP-02: Pré-prompt listava tokens fantasmas (--dss-text-hub, --dss-action-hub, --dss-action-hub-surface)",
+        "GAP-03: WCAG 2.2.2 autoplay sem botão de pausa (documentado como GAP-01 no .md, Fase 3)",
+        "GAP-04: Ausência de aria-live region para mudança de slide (documentado como GAP-03 no .md, Fase 3)",
+        "GAP-05: example.vue Cenário 4 usa q-card/q-avatar em vez de DssCard/DssAvatar"
+      ],
+      "seal": "DSSCcarousel_SELO_v2.2"
+    }
+  ],
+  "previewGroup": "contextuais",
+  "defaultPreview": {
+    "demoSlots": null,
+    "visualProperties": [
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "0.5rem",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background-color",
+        "token": "--dss-surface-muted",
+        "value": "#f5f5f5",
+        "source": "2-composition/_base.scss"
+      }
+    ]
+  }
+}

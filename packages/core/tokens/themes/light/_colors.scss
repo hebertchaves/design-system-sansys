@@ -1,0 +1,48 @@
+/* ==========================================================================
+   DSS - LIGHT THEME - COLORS
+   ========================================================================== */
+
+/**
+ * IMPORTANTE:
+ *
+ * O light theme usa os tokens PADRÃO já definidos em:
+ * - tokens/globals.scss (cores base)
+ * - tokens/semantic/_text.scss (cores de texto)
+ * - tokens/semantic/_surfaces.scss (backgrounds)
+ * - tokens/semantic/_borders.scss (bordas)
+ * - tokens/semantic/_actions.scss (ações)
+ * - tokens/semantic/_feedback.scss (feedback)
+ *
+ * Este arquivo existe apenas como REFERÊNCIA e para simetria
+ * com o dark theme. Nenhuma sobrescrita é necessária.
+ *
+ * Se precisar forçar light theme explicitamente, use:
+ * <html data-theme="light">
+ *
+ * Isso garantirá que o dark mode não seja aplicado automaticamente
+ * via prefers-color-scheme.
+ */
+
+:root,
+[data-theme="light"] {
+  /*
+   * Light theme = valores padrão do sistema
+   * Nada precisa ser sobrescrito aqui.
+   *
+   * Todos os tokens já estão definidos corretamente:
+   * - --dss-text-body: var(--dss-dark)
+   * - --dss-surface-default: var(--dss-white)
+   * - --dss-action-primary: var(--dss-primary)
+   * - etc.
+   */
+}
+
+/**
+ * FUTURO: Se precisar de variações do light theme
+ * (ex: light-high-contrast), definir aqui:
+ *
+ * [data-theme="light-high-contrast"] {
+ *   --dss-text-body: var(--dss-gray-950);
+ *   --dss-border-default: var(--dss-gray-800);
+ * }
+ */

@@ -1,0 +1,20 @@
+// ==========================================================================
+// DssMenu — Orchestrador Principal SCSS
+// ==========================================================================
+//
+// Importa as 4 camadas na ordem obrigatória: L2 → L3 → L4.
+//
+// NOTA IMPORTANTE: Este arquivo é importado GLOBALMENTE via
+// components/index.scss. Estilos scoped seriam ineficazes para conteúdo
+// teleportado ao body pelo QMenu. Todos os seletores usam .dss-menu
+// como escopo.
+// ==========================================================================
+
+/* Layer 2: Composição Base */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variantes */
+@use './3-variants' as variants;
+
+/* Layer 4: Output (brands, states) */
+@use './4-output' as output;

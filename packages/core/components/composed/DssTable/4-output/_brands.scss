@@ -1,0 +1,160 @@
+/* ==========================================================================
+   DssTable — LAYER 4: BRANDS
+
+   Brand customizations via [data-brand="hub|water|waste"]
+
+   Padrão de aplicação:
+   - Cabeçalho recebe background e cor do brand
+   - Linhas selecionadas recebem fundo 50 do brand
+   - --q-color-primary (EXC-Gate-02) recebe token de ação do brand
+   ========================================================================== */
+
+/* ==========================================================================
+   BRAND: HUB
+   ========================================================================== */
+
+[data-brand='hub'] .dss-table {
+  --q-color-primary: var(--dss-hub-600);
+
+  .q-table {
+    thead {
+      background-color: var(--dss-hub-50);
+    }
+
+    th {
+      color: var(--dss-hub-700);
+      border-bottom-color: var(--dss-hub-200);
+
+      .q-table__sort-icon {
+        color: var(--dss-hub-700);
+      }
+
+      &.sorted .q-table__sort-icon {
+        color: var(--dss-hub-600);
+      }
+    }
+
+    tbody tr.selected {
+      background-color: var(--dss-hub-50);
+    }
+  }
+}
+
+/* dark + hub */
+[data-theme='dark'][data-brand='hub'] .dss-table,
+[data-theme='dark'] [data-brand='hub'] .dss-table {
+  .q-table {
+    thead {
+      background-color: var(--dss-hub-900);
+    }
+
+    th {
+      color: var(--dss-hub-200);
+      border-bottom-color: var(--dss-hub-700);
+    }
+
+    tbody tr.selected {
+      background-color: var(--dss-hub-900);
+    }
+  }
+}
+
+/* ==========================================================================
+   BRAND: WATER
+   ========================================================================== */
+
+[data-brand='water'] .dss-table {
+  --q-color-primary: var(--dss-water-500);
+
+  .q-table {
+    thead {
+      background-color: var(--dss-water-50);
+    }
+
+    th {
+      color: var(--dss-water-700);
+      border-bottom-color: var(--dss-water-200);
+
+      .q-table__sort-icon {
+        color: var(--dss-water-700);
+      }
+
+      &.sorted .q-table__sort-icon {
+        color: var(--dss-water-500);
+      }
+    }
+
+    tbody tr.selected {
+      background-color: var(--dss-water-50);
+    }
+  }
+}
+
+/* dark + water */
+[data-theme='dark'][data-brand='water'] .dss-table,
+[data-theme='dark'] [data-brand='water'] .dss-table {
+  .q-table {
+    thead {
+      background-color: var(--dss-water-900);
+    }
+
+    th {
+      color: var(--dss-water-200);
+      border-bottom-color: var(--dss-water-700);
+    }
+
+    tbody tr.selected {
+      background-color: var(--dss-water-900);
+    }
+  }
+}
+
+/* ==========================================================================
+   BRAND: WASTE
+   ========================================================================== */
+
+[data-brand='waste'] .dss-table {
+  --q-color-primary: var(--dss-waste-600);
+
+  .q-table {
+    thead {
+      background-color: var(--dss-waste-50);
+    }
+
+    th {
+      color: var(--dss-waste-700);
+      border-bottom-color: var(--dss-waste-200);
+
+      .q-table__sort-icon {
+        color: var(--dss-waste-700);
+      }
+
+      &.sorted .q-table__sort-icon {
+        color: var(--dss-waste-600);
+      }
+    }
+
+    tbody tr.selected {
+      background-color: var(--dss-waste-50);
+    }
+  }
+}
+
+/* dark + waste */
+[data-theme='dark'][data-brand='waste'] .dss-table,
+[data-theme='dark'] [data-brand='waste'] .dss-table {
+  .q-table {
+    thead {
+      background-color: var(--dss-waste-900);
+    }
+
+    th {
+      color: var(--dss-waste-200);
+      border-bottom-color: var(--dss-waste-700);
+    }
+
+    tbody tr.selected {
+      background-color: var(--dss-waste-900);
+    }
+  }
+}

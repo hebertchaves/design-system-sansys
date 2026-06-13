@@ -1,0 +1,129 @@
+/* ==========================================================================
+   DssButton - LAYER 4: OUTPUT - Brands
+
+   RESPONSABILIDADE: Brandability (Hub, Water, Waste)
+
+   CARACTERÍSTICAS:
+   - Usa tokens genéricos de brand
+   - Aplica cor da brand ao botão
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB BRAND (Orange)
+   ========================================================================== */
+
+[data-brand="hub"],
+.dss-button--brand-hub {
+  &.dss-button {
+    background-color: var(--dss-hub-600);
+    color: var(--dss-gray-50);
+
+    &.dss-button--flat {
+      background-color: transparent;
+      color: var(--dss-hub-600);
+    }
+
+    &.dss-button--outline {
+      background-color: transparent;
+      border-width: var(--dss-border-width-thin);
+      border-style: solid;
+      border-color: currentColor;
+      box-shadow: none;
+      color: var(--dss-hub-600);
+    }
+
+    &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-hub-700);
+
+      &.dss-button--flat {
+        background-color: var(--dss-hub-100);
+        color: var(--dss-hub-800);
+      }
+
+      &.dss-button--outline {
+        background-color: var(--dss-hub-100);
+        color: var(--dss-hub-800);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   WATER BRAND (Blue)
+   ========================================================================== */
+
+[data-brand="water"],
+.dss-button--brand-water {
+  &.dss-button {
+    background-color: var(--dss-water-500);
+    color: var(--dss-gray-50);;
+
+    &.dss-button--flat {
+      background-color: transparent;
+      color: var(--dss-water-500);
+    }
+
+    &.dss-button--outline {
+      background-color: transparent;
+      border-width: var(--dss-border-width-thin);
+      border-style: solid;
+      border-color: currentColor;
+      box-shadow: none;
+      color: var(--dss-water-500);
+    }
+
+    &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-water-600);
+
+      &.dss-button--flat {
+        background-color: var(--dss-water-100);
+        color: var(--dss-water-800);
+      }
+
+      &.dss-button--outline {
+        background-color: var(--dss-water-100);
+        color: var(--dss-water-800);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   WASTE BRAND (Green)
+   ========================================================================== */
+
+[data-brand="waste"],
+.dss-button--brand-waste {
+  &.dss-button {
+    background-color: var(--dss-waste-600);
+    color: var(--dss-gray-50);
+
+    &.dss-button--flat {
+      background-color: transparent;
+      color: var(--dss-waste-600);
+    }
+
+    &.dss-button--outline {
+      background-color: transparent;
+      border-width: var(--dss-border-width-thin);
+      border-style: solid;
+      border-color: currentColor;
+      box-shadow: none;
+      color: var(--dss-waste-600);
+    }
+
+    &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-waste-800);
+
+      &.dss-button--flat {
+        background-color: var(--dss-waste-100);
+        color: var(--dss-waste-800);
+      }
+
+      &.dss-button--outline {
+        background-color: var(--dss-waste-100);
+        color: var(--dss-waste-800);
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+// ==========================================================================
+// DssDataCard — 3-variants/_brand.scss
+// ==========================================================================
+//
+// Variantes de marca do DssDataCard.
+//
+// STRESS TEST — Propagação de brand sem prop drilling:
+// O DssDataCard define [data-brand] no elemento raiz.
+// O CSS global do DSS propaga a cor para DssToolbar e DssTabs via cascata.
+// Nenhuma prop `brand` é passada manualmente para os filhos.
+
+.dss-data-card {
+  // --------------------------------------------------------------------------
+  // Brand Hub — laranja
+  // --------------------------------------------------------------------------
+
+  &[data-brand='hub'] {
+    .dss-data-card__toolbar {
+      border-bottom-color: var(--dss-hub-500, #ef7a11);
+    }
+
+    .dss-data-card__tabs {
+      border-bottom-color: var(--dss-hub-500, #ef7a11);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Brand Water — azul
+  // --------------------------------------------------------------------------
+
+  &[data-brand='water'] {
+    .dss-data-card__toolbar {
+      border-bottom-color: var(--dss-water-500, #026cc7);
+    }
+
+    .dss-data-card__tabs {
+      border-bottom-color: var(--dss-water-500, #026cc7);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Brand Waste — verde
+  // --------------------------------------------------------------------------
+
+  &[data-brand='waste'] {
+    .dss-data-card__toolbar {
+      border-bottom-color: var(--dss-waste-500, #0b8154);
+    }
+
+    .dss-data-card__tabs {
+      border-bottom-color: var(--dss-waste-500, #0b8154);
+    }
+  }
+}

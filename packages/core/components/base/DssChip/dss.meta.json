@@ -1,0 +1,107 @@
+{
+  "component": "DssChip",
+  "dssVersion": "2.2",
+  "status": "approved",
+  "seal": "DSS v2.2",
+  "auditMode": "Final",
+  "auditDate": "2026-01-27",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssChip",
+  "phase": 1,
+  "category": "Compact Control interativo",
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "variant": "filled",
+      "color": "primary",
+      "size": "md",
+      "label": "Chip"
+    },
+    "computedDimensions": {
+      "minHeight": "28px"
+    },
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "--dss-compact-control-height-md",
+        "value": "28px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "padding (horizontal)",
+        "token": "--dss-spacing-3",
+        "value": "12px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-full",
+        "value": "9999px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-width",
+        "token": "--dss-border-width-thin",
+        "value": "1px",
+        "source": "4-output/_states.scss"
+      },
+      {
+        "property": "border-color",
+        "token": "--dss-gray-300",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-muted",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "color",
+        "token": "--dss-text-body",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "font-size",
+        "token": "--dss-font-size-sm",
+        "value": "12px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-weight",
+        "token": "--dss-font-weight-medium",
+        "value": "500",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "gap",
+        "token": "--dss-spacing-2",
+        "value": "8px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "selected background",
+        "token": "--dss-action-primary",
+        "value": null,
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "selected color",
+        "token": "--dss-text-inverse",
+        "value": "branco",
+        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+      },
+      {
+        "property": "touch target",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "Via `::before` (WCAG 2.5.5)"
+      }
+    ],
+    "demoContent": "Label 'Chip'",
+    "demoSlots": null
+  },
+  "previewGroup": "acoes"
+}

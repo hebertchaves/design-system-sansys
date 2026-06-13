@@ -1,0 +1,35 @@
+/* ==========================================================================
+   DSS (Design System Sansys) - ENTRY POINT PRINCIPAL
+   ========================================================================== */
+
+/* 1. Tokens globais (cores base) */
+@use 'globals';
+
+/* 2. Tokens semânticos principais */
+@use 'semantic/actions';
+@use 'semantic/text';
+@use 'semantic/surfaces';
+@use 'semantic/borders';
+@use 'semantic/border-widths';
+@use 'semantic/feedback';
+
+/* 3. Tokens de acessibilidade (Guia de Acessibilidade DSS) */
+@use 'semantic/accessibility';  /* Agrega: contrast, focus, sizing, typography */
+
+/* 4. Tokens de layout e utilidade */
+@use 'semantic/dimensions';
+@use 'semantic/opacity';
+@use 'semantic/shadows';
+@use 'semantic/z-index';
+@use 'semantic/motion';
+@use 'semantic/spacing';
+@use 'semantic/breakpoints';    /* Sistema de responsividade */
+@use 'semantic/gradients';      /* Opcional */
+
+/* 5. Tokens de marca */
+@use 'brand/_hub';
+@use 'brand/_water';
+@use 'brand/_waste';
+
+/* 6. Dark Mode Theme */
+@use 'themes/dark/colors';

@@ -1,0 +1,10 @@
+/* ==========================================================================
+   DssAvatar - LAYER 3: VARIANTS (Orchestrator)
+
+   Importa todas as variantes disponíveis:
+   - status: online, away, busy, offline
+
+   @version 2.2
+   ========================================================================== */
+
+@forward './status';

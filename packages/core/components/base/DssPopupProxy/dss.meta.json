@@ -1,0 +1,217 @@
+{
+  "component": "DssPopupProxy",
+  "cssClass": "dss-popup-proxy",
+  "dssVersion": "2.2",
+  "status": "sealed",
+  "auditDate": "2026-05-22",
+  "seal": "docs/Compliance/seals/DssPopupProxy/DSSPOPUPPROXY_SELO_v2.2.md",
+  "phase": 2,
+  "phaseDescription": "Fase 2 — Overlay Responsivo de Nível 2 (Composição de Primeiro Grau). Wrapper DSS governado sobre QPopupProxy do Quasar. Decide entre QMenu (desktop: viewport >= breakpoint) e QDialog (mobile: viewport < breakpoint). Estilos globais para ambos os modos.",
+  "goldenReference": "DssChip",
+  "goldenReferenceJustification": "DssChip é o Golden Reference interativo do DSS. DssPopupProxy, embora seja um container não-interativo, é filho de um elemento interativo (DssButton) e herda as regras de auditoria transversal do Golden Reference.",
+  "goldenContext": "DssMenu",
+  "goldenContextJustification": "DssMenu é o overlay de navegação mais próximo do DssPopupProxy: ambos teleportam para <body>, usam QMenu como motor (modo desktop do DssPopupProxy), aplicam os mesmos tokens de superfície (--dss-surface-default, --dss-elevation-3, --dss-radius-md), e seguem o padrão de CSS global (sem <style scoped>). A conformidade do DssPopupProxy é auditada em relação ao DssMenu como baseline específico.",
+  "classification": {
+    "type": "Overlay Responsivo",
+    "category": "Overlay / Composição (Nível 2)",
+    "interactive": false
+  },
+  "motor": {
+    "quasarComponent": "QPopupProxy",
+    "desktopMode": "QMenu (viewport >= breakpoint)",
+    "mobileMode": "QDialog (viewport < breakpoint)",
+    "defaultBreakpoint": 450
+  },
+  "propsExposed": [
+    "open",
+    "breakpoint",
+    "target",
+    "noParentEvent",
+    "contextMenu",
+    "persistent",
+    "noFocus",
+    "noRefocus",
+    "autoClose",
+    "anchor",
+    "self",
+    "offset",
+    "fit",
+    "cover",
+    "maxHeight",
+    "maxWidth",
+    "transitionShow",
+    "transitionHide",
+    "scrollTarget"
+  ],
+  "propsBlocked": [
+    "dark",
+    "square"
+  ],
+  "propsBlockedJustification": {
+    "dark": "Modo escuro governado globalmente via [data-theme='dark']. Prop dark bloqueada para garantir consistência com o sistema de temas DSS.",
+    "square": "Cantos quadrados violam o token --dss-radius-md que define a identidade visual de overlays no DSS v2.2."
+  },
+  "statesApplicable": [
+    "visible",
+    "hidden"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading",
+    "checked",
+    "indeterminate"
+  ],
+  "statesNotApplicableJustification": "DssPopupProxy é container overlay não-interativo. Estados de interação (hover/focus/active) pertencem aos filhos (DssItem, DssButton). disabled/loading/checked/indeterminate não se aplicam a containers overlay responsivos.",
+  "accessibility": {
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "N/A — container overlay não-interativo",
+    "role": "menu (modo QMenu) ou dialog (modo QDialog) — herdado nativamente pelo Quasar",
+    "keyboardNavigation": "Gerenciada pelo QMenu/QDialog nativamente (Esc fecha, Tab navega entre focáveis)",
+    "ariaLabel": "Recomendado via $attrs: <DssPopupProxy aria-label='Menu de ações'>. O componente repassa $attrs corretamente via v-bind."
+  },
+  "teleportBehavior": {
+    "teleportsTo": "body",
+    "cssScoping": "Estilos carregados globalmente via components/index.scss. Seletor .dss-popup-proxy escopa os estilos no elemento teleportado.",
+    "zIndexManagement": "Gerenciado pelo Quasar via QMenu/QDialog — DssPopupProxy NÃO altera z-index.",
+    "positioningManagement": "Gerenciado pelo Quasar via QMenu/QDialog — DssPopupProxy NÃO altera position."
+  },
+  "compositionRecommendations": [
+    "DssList + DssItem (modo menu — padrão básico)",
+    "DssSeparator (divisão entre grupos de itens em modo menu)",
+    "DssCard (modo dialog — container visual com padding)",
+    "DssButton (ações de confirmação/cancelamento em modo dialog)"
+  ],
+  "compositionNote": "DssPopupProxy fornece o container QPopupProxy com governança DSS. O slot default deve receber DssList com DssItems (modo menu) ou DssCard com conteúdo (modo dialog). Uso de HTML nativo (<ul>, <li>) diretamente viola o Gate de Composição v2.4.",
+  "antiPatterns": [
+    "Usar HTML nativo (<ul>, <li>, <div>) diretamente no slot sem DssList/DssCard",
+    "Adicionar texto solto diretamente no slot sem container semântico",
+    "Sobrescrever z-index do QPopupProxy/QMenu/QDialog",
+    "Usar prop bloqueada `dark` ou `square`",
+    "Instanciar DssPopupProxy fora de um contexto de elemento trigger"
+  ],
+  "gateExceptions": {
+    "gateExc01": "QPopupProxy como motor (EXC — wrapper Nível 2 sobre primitivo Quasar de overlay responsivo).",
+    "gateExc01Dialog": "Seletores descendentes .q-dialog.dss-popup-proxy .q-dialog__inner para modo dialog (EXC-Gate-01). QDialog não expõe hook CSS direto no painel. Precedente: DssDialog.",
+    "responsibilityGate": "DssPopupProxy é 100% não-interativo como container. Nenhum estado hover/focus/active definido. Toda interatividade é responsabilidade dos filhos.",
+    "exposeExc01": "defineExpose para show/hide/toggle/currentComponent (EXC-Expose-01). API imperativa necessária para controle programático. Padrão: DssScrollArea, DssAjaxBar, DssInfiniteScroll."
+  },
+  "exceptions": [
+    {
+      "id": "EXC-01",
+      "description": "Uso de !important em background-color e box-shadow no modo menu",
+      "value": "background-color: var(--dss-surface-default) !important; box-shadow: var(--dss-elevation-3) !important",
+      "location": "2-composition/_base.scss (.dss-popup-proxy)",
+      "gatesViolated": [],
+      "justification": "QMenu aplica background e box-shadow via .q-menu com especificidade CSS equivalente. Para garantir que os tokens DSS prevaleçam, !important é necessário. Precedente: DssMenu (EXC-01), DssFooter."
+    },
+    {
+      "id": "EXC-Gate-01",
+      "description": "Seletores descendentes para modo dialog",
+      "value": ".q-dialog.dss-popup-proxy .q-dialog__inner { ... }",
+      "location": "2-composition/_base.scss, 4-output/_states.scss",
+      "gatesViolated": [],
+      "justification": "QDialog não expõe hook CSS direto no painel visível (.q-dialog__inner). Seletor descendente é necessário para estilizar o painel em modo dialog. Precedente: DssDialog (EXC-Gate-01)."
+    },
+    {
+      "id": "EXC-02",
+      "description": "System color keywords em forced-colors mode",
+      "value": "Canvas, CanvasText, ButtonText",
+      "location": "4-output/_states.scss — @media (forced-colors: active)",
+      "gatesViolated": [],
+      "justification": "Forced-colors mode. System color keywords obrigatórios — tokens CSS são ignorados pelo navegador. Padrão canônico DSS. Precedente: DssMenu (EXC-02), DssTooltip (EXC-03), DssCard."
+    },
+    {
+      "id": "EXC-Expose-01",
+      "description": "defineExpose de show, hide, toggle, currentComponent",
+      "value": "show(evt?), hide(evt?), toggle(evt?), currentComponent getter",
+      "location": "1-structure/DssPopupProxy.ts.vue",
+      "gatesViolated": [],
+      "justification": "API imperativa necessária para controle programático do overlay. Padrão estabelecido em DssInfiniteScroll, DssScrollArea, DssAjaxBar."
+    }
+  ],
+  "tokensUsed": [
+    "--dss-surface-default",
+    "--dss-elevation-3",
+    "--dss-radius-md",
+    "--dss-font-family-sans",
+    "--dss-text-body",
+    "--dss-border-width-thin",
+    "--dss-gray-200",
+    "--dss-border-width-md"
+  ],
+  "defaultPreview": {
+    "props": {
+      "breakpoint": 450
+    },
+    "computedDimensions": {},
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      },
+      {
+        "property": "min-width",
+        "token": null,
+        "value": null,
+        "source": "N/A — Componente estrutural adaptativo"
+      }
+    ],
+    "demoContent": "Proxy de popup (Dialog em mobile, Menu em desktop)",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssList",
+          "children": [
+            {
+              "component": "DssItem",
+              "props": {
+                "clickable": true
+              },
+              "children": [
+                {
+                  "component": "DssItemSection",
+                  "children": [
+                    {
+                      "component": "DssItemLabel",
+                      "children": "Opção 1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "DssItem",
+              "props": {
+                "clickable": true
+              },
+              "children": [
+                {
+                  "component": "DssItemSection",
+                  "children": [
+                    {
+                      "component": "DssItemLabel",
+                      "children": "Opção 2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "wrapIn": {
+      "component": "DssButton",
+      "props": {
+        "label": "Abrir popup"
+      }
+    }
+  },
+  "auditHistory": [],
+  "previewGroup": "contextuais"
+}

@@ -1,93 +1,451 @@
-# base-dss
+# 🎨 Design System Sansys (DSS)
 
+<div align="center">
 
+![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)
+![Vue](https://img.shields.io/badge/Vue-3.4+-4FC08D.svg?logo=vue.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-3178C6.svg?logo=typescript)
+![License](https://img.shields.io/badge/license-Proprietary-red.svg)
+![WCAG](https://img.shields.io/badge/WCAG-2.1%20AA-success.svg)
 
-## Getting started
+**Sistema de Design profissional com TypeScript + Composition API, tokens semânticos e acessibilidade WCAG 2.1 AA**
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+[Documentação](#-documentação) •
+[Instalação](#-instalação) •
+[Componentes](#-componentes) •
+[Exemplos](#-exemplos)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+</div>
 
-## Add your files
+---
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## ✨ **Características**
+
+- 🚀 **TypeScript + Composition API** - 6 componentes migrados com 100% type safety
+- ✅ **Composables Reutilizáveis** - 18 composables (14 locais + 4 globais)
+- ✅ **Componentes Vue 3** - Composition API (novos) + Options API (legado)
+- ✅ **Tokens DSS** - Sistema completo de design tokens semânticos
+- ✅ **Acessibilidade WCAG 2.1 AA** - Touch targets, contraste, navegação por teclado
+- ✅ **Brandabilidade** - Hub 🟠, Water 🔵, Waste 🟢
+- ✅ **Dark Mode Support** - Temas claro e escuro
+- ✅ **TypeScript First** - Tipagens completas, autocomplete inteligente
+- ✅ **Tree-shakeable** - Importe apenas o que você usa
+- ✅ **Zero Hardcoded Values** - 100% baseado em tokens
+- ✅ **Arquitetura em 4 Camadas** - Structure → Composition → Variants → Output
+- 🔥 **Padrão Quasar Framework** - Classes utilitárias globais (97% de redução de código)
+
+---
+
+## 🏛️ Preview & Context Technical Governance
+
+The DSS (Design System Structure) is not merely a UI component library.  
+It is a governed architectural system built on structured context, systemic state, and formal observability.
+
+### 🔐 Context Is Mandatory
+
+Core DSS hooks such as:
+
+- useGridSystem()
+- useThemeSystem()
+- useTokenSystem()
+
+require their respective Providers.
+
+If used outside their Provider scope, they intentionally throw an error:
+
+useGridSystem must be used within GridSystemProvider
+
+This strict behavior protects:
+
+- State integrity  
+- Layout consistency  
+- Token compliance  
+- Observability reliability  
+- Architectural guarantees  
+
+The DSS does not support silent fallbacks or optional context execution.
+
+---
+
+### 🧩 Component Classification
+
+#### 🟢 Self-Contained Components
+
+Components that do not depend on system Providers and do not participate in systemic governance.
+
+Examples:
+- Button  
+- Badge  
+- Card  
+- Icon  
+
+Safe for isolated preview.  
+Can be rendered independently.
+
+---
+
+#### 🟡 Context-Bound Components
+
+Components that:
+
+- Depend on Providers  
+- Emit DSS observability signals  
+- Participate in compliance layers  
+- Modify systemic state  
+
+Examples:
+- FloatingGridInspector  
+- Layout overlays  
+- Governance panels  
+- Token debuggers  
+
+Must run within the official DSS application tree.  
+Not supported in isolated preview environments.
+
+---
+
+### 🧪 Preview Policy
+
+The official DSS runtime is:
+
+index.html → main.tsx → Providers → Application Tree
+
+Preview tools that render components outside this structure are considered non-official environments.
+
+The DSS does not:
+
+- Add conditional Providers  
+- Mock context automatically  
+- Modify exports to satisfy preview tools  
+- Suppress architectural errors  
+
+If preview is required for context-bound components, a dedicated Playground wrapper must be created explicitly.
+
+Full policy available at:
+
+./DSS_ARCHITECTURE.md#preview--context-technical-governance
+
+ 
+---
+
+## Governance & Observability
+
+The DSS is governed by explicit observability rules.
+
+If you are building tools, agents or integrations,
+refer to:
+- DSS_OBSERVABILITY_BASELINE.md
+
+---
+
+## 📦 **Instalação**
+
+### NPM
+
+```bash
+npm install @sansys/design-system
+```
+
+### Yarn
+
+```bash
+yarn add @sansys/design-system
+```
+
+### PNPM
+
+```bash
+pnpm add @sansys/design-system
+```
+
+---
+
+## 🚀 **Quick Start**
+
+### **Opção 1: Plugin Global (Recomendado)**
+
+Registra todos os componentes globalmente no app Vue.
+
+```javascript
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+// Importar plugin e CSS
+import DesignSystemSansys from '@sansys/design-system'
+import '@sansys/design-system/css'
+
+const app = createApp(App)
+
+// Registrar plugin
+app.use(DesignSystemSansys, {
+  brand: 'hub' // opcional: hub, water, waste
+})
+
+app.mount('#app')
+```
+
+```vue
+<!-- App.vue -->
+<template>
+  <!-- Componentes disponíveis globalmente -->
+  <DssButton color="primary" @click="handleClick">
+    Clique Aqui
+  </DssButton>
+
+  <DssCard variant="elevated">
+    <DssCardSection>
+      <h2>Meu Card</h2>
+      <DssInput v-model="nome" variant="outlined" label="Nome" />
+    </DssCardSection>
+  </DssCard>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const nome = ref('')
+
+function handleClick() {
+  console.log('Botão clicado!')
+}
+</script>
+```
+
+---
+
+### **Opção 2: Importação Individual (Tree-shaking)**
+
+Importe apenas os componentes que você precisa.
+
+```vue
+<template>
+  <DssButton color="primary" @click="handleClick">
+    Clique Aqui
+  </DssButton>
+</template>
+
+<script setup>
+import { DssButton } from '@sansys/design-system'
+import '@sansys/design-system/css'
+
+const handleClick = () => console.log('Clicado!')
+</script>
+```
+
+---
+
+## 🧩 **Componentes Disponíveis**
+
+### ✨ **Migrados para TypeScript + Composition API** (v2.3.0)
+
+Os seguintes componentes foram modernizados com:
+- ✅ 100% Type Safety
+- ✅ Composition API
+- ✅ Composables reutilizáveis
+- ✅ Autocomplete inteligente
+- ✅ Documentação JSDoc inline
+
+**Componentes Modernizados:**
+- ✅ **DssButton** - Botão com 6 variantes + 3 composables
+- ✅ **DssBadge** - Badge/contador com 1 composable
+- ✅ **DssAvatar** - Avatar com 2 composables
+- ✅ **DssCard** + subcomponentes - Sistema completo com 5 composables
+- ✅ **DssInput** - Formulário com 3 composables
+
+**Composables Globais Disponíveis:**
+- `useColorClasses` - Gerenciamento de cores DSS
+- `useAccessibility` - Atributos WCAG 2.1 AA
+- `useComponentState` - Estados interativos
+- `useBrand` - Marcas Sansys (hub, water, waste)
+
+[📖 Ver Guia de Migração](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md)
+
+---
+
+### **DssButton** - Botão completo com 6 variantes
+
+```vue
+<DssButton variant="elevated" color="primary" size="md">
+  Clique Aqui
+</DssButton>
+```
+
+[📖 Documentação completa](./packages/core/components/base/DssButton/DssButton.md)
+
+### **DssCard** - Card flexível com composição
+
+```vue
+<DssCard variant="elevated">
+  <DssCardSection>
+    <h2>Título</h2>
+  </DssCardSection>
+  <DssCardActions>
+    <DssButton color="primary">OK</DssButton>
+  </DssCardActions>
+</DssCard>
+```
+
+### **DssInput** - Input de formulário com validação
+
+```vue
+<DssInput
+  v-model="nome"
+  variant="outlined"
+  label="Nome"
+  :error="nome.length < 3"
+  error-message="Mínimo 3 caracteres"
+/>
+```
+
+---
+
+## 🎨 **Brandabilidade**
+
+```vue
+<!-- Hub (Laranja) -->
+<DssButton brand="hub" color="primary">Hub</DssButton>
+
+<!-- Water (Azul) -->
+<DssButton brand="water" color="primary">Water</DssButton>
+
+<!-- Waste (Verde) -->
+<DssButton brand="waste" color="primary">Waste</DssButton>
+```
+
+---
+
+## ♿ **Acessibilidade WCAG 2.1 AA**
+
+- ✅ Contraste 4.5:1
+- ✅ Touch targets 48×48px
+- ✅ Navegação por teclado
+- ✅ Focus visível
+- ✅ ARIA labels
+- ✅ Reduced motion support
+
+---
+
+## 📚 **Documentação**
+
+### **🚀 TypeScript + Composition API (NOVO!)**
+- **[MIGRATION_TO_TYPESCRIPT.md](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md)** - ✨ Guia completo de migração
+  - Padrões estabelecidos
+  - Componentes migrados (DssButton, DssBadge, DssAvatar, DssCard, DssInput)
+  - Composables globais reutilizáveis
+  - Templates e exemplos práticos
+
+### **Arquitetura e Padrões**
+- **[DSS_ARCHITECTURE_GUIDE.md](./docs/guides/DSS_ARCHITECTURE_GUIDE.md)** - Arquitetura em 4 camadas
+- **[DSS_IMPLEMENTATION_GUIDE.md](./docs/guides/DSS_IMPLEMENTATION_GUIDE.md)** - Guia completo de implementação
+- **[DSS_ARCHITECTURE.md](./docs/reference/DSS_ARCHITECTURE.md)** - Referência de arquitetura técnica
+
+### **Por Componente**
+- **[DssButton](./packages/core/components/base/DssButton/DssButton.md)** - Botão completo ✨ TypeScript
+- **[DssBadge](./packages/core/components/base/DssBadge/README.md)** - Badge/contador ✨ TypeScript
+- **[DssAvatar](./packages/core/components/base/DssAvatar/README.md)** - Avatar ✨ TypeScript
+- **[DssCard](./packages/core/components/base/DssCard/README.md)** - Card ✨ TypeScript
+- **[DssInput](./packages/core/components/base/DssInput/README.md)** - Input ✨ TypeScript
+
+---
+
+## 🏗️ **Estrutura do Monorepo**
+
+O DSS é organizado como um monorepo npm com os seguintes workspaces:
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/veolia.com/brasil/jtech/sansys/design-system-sansys/base-dss.git
-git branch -M main
-git push -uf origin main
+DSS/
+├── packages/
+│   ├── core/                  ← @sansys/design-system (biblioteca principal)
+│   │   ├── components/base/   ← Fonte de verdade dos componentes
+│   │   └── tokens/            ← Tokens semânticos (packages/core/tokens/)
+│   ├── grid-inspector/        ← @sansys/grid-inspector (ferramenta de observabilidade)
+│   └── mcp/                   ← @sansys/dss-mcp (servidor MCP)
+├── apps/
+│   ├── docs-portal/           ← @sansys/docs-portal (portal de documentação)
+│   ├── sandbox/               ← @sansys/sandbox (ambiente de testes — antiga dss-example/)
+│   └── components/            ← Espelho local de componentes para desenvolvimento
+└── package.json               ← Raiz do monorepo (workspaces)
 ```
 
-## Integrate with your tools
+**Relação entre packages/core e apps/components:**  
+`packages/core/components/` é a fonte de verdade e distribuição. `apps/components/` é um espelho local usado apenas durante o desenvolvimento.
 
-* [Set up project integrations](https://gitlab.com/veolia.com/brasil/jtech/sansys/design-system-sansys/base-dss/-/settings/integrations)
+---
 
-## Collaborate with your team
+## 🛠️ **Desenvolvimento**
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```bash
+# Instalar todas as dependências do monorepo (raiz)
+npm install
 
-## Test and Deploy
+# Compilar a biblioteca core
+npm run core:build
 
-Use the built-in continuous integration in GitLab.
+# Subir o sandbox de desenvolvimento (ambiente de testes)
+npm run sandbox:dev
+# ou: cd apps/sandbox && npm run dev
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+# Subir o portal de documentação
+npm run docs:dev
+# ou: cd apps/docs-portal && npm run dev
 
-***
+# Build do portal de documentação
+npm run docs:build
 
-# Editing this README
+# Build de todos os pacotes
+npm run build:all
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+# Sincronizar documentação no portal
+npm run portal:sync-docs
+```
 
-## Suggestions for a good README
+### 🪝 **Git Hooks e Sincronização Automatizada**
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Após clonar o repositório, execute o seguinte comando para instalar o hook de pre-commit:
 
-## Name
-Choose a self-explaining name for your project.
+```bash
+npm run setup:hooks
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+**Por que isso é necessário?**  
+O hook de pre-commit executa automaticamente o script `scripts/sync-visual-contract.js` a cada commit. Esse script lê os campos `defaultPreview` de todos os `dss.meta.json` dos componentes e regera o catálogo Markdown `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md`, garantindo que o contrato visual canônico esteja sempre sincronizado com a fonte de verdade dos JSONs — sem risco de divergência entre documentação e código.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+**Fluxo resumido:**
+```
+git commit
+  └─► pre-commit hook
+        └─► scripts/sync-visual-contract.js
+              └─► Atualiza DSS_REFERENCIA_VISUAL_ANALISE.md (seção auto-gerada)
+                    └─► Arquivo adicionado ao staging e commit prossegue
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+> ⚠️ **Sem esse hook instalado**, alterações em `dss.meta.json` não serão refletidas automaticamente no contrato visual. O commit ainda funciona, mas a documentação pode ficar desatualizada.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+---
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### ✨ **Workflow Recomendado**
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+1. **Inicialização**: Execute `npm install` na raiz do monorepo
+2. **Hooks**: Execute `npm run setup:hooks` para instalar o hook de sincronização (único por clone)
+3. **Durante desenvolvimento**: Use `npm run core:build` e `npm run sandbox:dev`
+4. **Antes de commit**: Execute `npm run core:build` para garantir que o build compila
+5. **Testes**: Todos os 76 componentes possuem `test.js` — gate de build bloqueante
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### ⚠️ **Importante: Build de Componentes**
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+**Componentes `.ts.vue` são compilados automaticamente pelo Vite!**
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Após modificar arquivos `.vue` ou `.ts.vue`, execute `npm run build` (ou `build:watch`) para atualizar o diretório `dist/`.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+**Ver:** [MIGRATION_TO_TYPESCRIPT.md](./docs/archive/reports/MIGRATION_TO_TYPESCRIPT.md) para guia completo de desenvolvimento TypeScript.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+---
 
-## License
-For open source projects, say how it is licensed.
+## 📝 **Licença**
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Software **proprietário e de uso interno** — Copyright © 2025–2026
+**JTECH - SOLUÇÕES EM INFORMÁTICA LTDA**. Todos os direitos reservados.
+Ver [LICENSE](./LICENSE) para os termos completos.
+
+Desenvolvido por Hebert Daniel Oliveira Chaves.

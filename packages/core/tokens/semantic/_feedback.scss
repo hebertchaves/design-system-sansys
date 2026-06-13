@@ -1,0 +1,40 @@
+/* ==========================================================================
+   DSS - TOKENS DE FEEDBACK
+   Estados e alertas - SISTEMA PRÓPRIO
+   ========================================================================== */
+
+:root {
+  /* Feedback Positive - Sucesso */
+  --dss-feedback-success: var(--dss-positive);
+  --dss-feedback-success-light: var(--dss-positive-light);
+  --dss-feedback-success-disable: var(--dss-positive-disable);
+  --dss-feedback-success-hover: var(--dss-positive-hover);
+  --dss-feedback-success-deep: var(--dss-positive-deep);
+  
+  /* Feedback Negative - Erro */
+  --dss-feedback-error: var(--dss-negative);
+  --dss-feedback-error-light: var(--dss-negative-light);
+  --dss-feedback-error-disable: var(--dss-negative-disable);
+  --dss-feedback-error-hover: var(--dss-negative-hover);
+  --dss-feedback-error-deep: var(--dss-negative-deep);
+  
+  /* Feedback Warning - Atenção */
+  --dss-feedback-warning: var(--dss-warning);
+  --dss-feedback-warning-light: var(--dss-warning-light);
+  --dss-feedback-warning-disable: var(--dss-warning-disable);
+  --dss-feedback-warning-hover: var(--dss-warning-hover);
+  --dss-feedback-warning-deep: var(--dss-warning-deep);
+  
+  /* Feedback Info - Informação */
+  --dss-feedback-info: var(--dss-info);
+  --dss-feedback-info-light: var(--dss-info-light);
+  --dss-feedback-info-disable: var(--dss-info-disable);
+  --dss-feedback-info-hover: var(--dss-info-hover);
+  --dss-feedback-info-deep: var(--dss-info-deep);
+  
+  /* Feedback Surfaces (para fundos de alertas) */
+  --dss-feedback-success-surface: rgba(77, 210, 40, 0.1);
+  --dss-feedback-error-surface: rgba(216, 24, 46, 0.1);
+  --dss-feedback-warning-surface: rgba(250, 189, 20, 0.1);
+  --dss-feedback-info-surface: rgba(12, 196, 233, 0.1);
+}

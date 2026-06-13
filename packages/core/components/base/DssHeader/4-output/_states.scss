@@ -1,0 +1,67 @@
+// ==========================================================================
+// DssHeader — Layer 4: Estados Adaptativos
+// ==========================================================================
+//
+// Dark mode, forced-colors (Windows High Contrast), print.
+// DssHeader não possui estados de interação (hover/focus/active).
+// ==========================================================================
+
+// ------------------------------------------------------------------
+// Dark mode
+// ------------------------------------------------------------------
+[data-theme='dark'] .dss-header,
+.dss-header.body--dark {
+  // --dss-surface-default resolve para superfície escura em dark mode.
+  // border-bottom usa gray-200 que no tema escuro resolve para cinza escuro.
+  background-color: var(--dss-surface-default) !important;
+  color: var(--dss-text-body) !important;
+
+  &.dss-header--bordered {
+    border-bottom-color: var(--dss-gray-200);
+  }
+}
+
+// ------------------------------------------------------------------
+// High Contrast (prefers-contrast: more)
+// ------------------------------------------------------------------
+@media (prefers-contrast: more) {
+  .dss-header--bordered {
+    border-bottom-width: var(--dss-border-width-md);
+  }
+}
+
+// ------------------------------------------------------------------
+// Forced Colors (Windows High Contrast Mode)
+// EXC-03 — System color keywords obrigatórios neste contexto.
+// Tokens CSS são ignorados pelo navegador em forced-colors mode.
+// ------------------------------------------------------------------
+@media (forced-colors: active) {
+  .dss-header {
+    background-color: Canvas !important;
+    color: CanvasText !important;
+  }
+
+  .dss-header--bordered {
+    border-bottom: 1px solid ButtonFace;
+  }
+
+  .dss-header--elevated {
+    box-shadow: none;
+    border-bottom: 1px solid ButtonFace;
+  }
+}
+
+// ------------------------------------------------------------------
+// Print
+// EXC-04 — Valores hardcoded aceitáveis para garantir legibilidade
+// em impressão monocromática. Precedente: DssToolbar, DssTab, DssStep.
+// ------------------------------------------------------------------
+@media print {
+  .dss-header {
+    background-color: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #000;
+    position: static !important;
+  }
+}

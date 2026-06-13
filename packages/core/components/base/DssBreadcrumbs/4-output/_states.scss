@@ -1,0 +1,52 @@
+// =============================================================================
+// Layer 4 — States: DssBreadcrumbs
+// Dark mode, prefers-contrast, forced-colors, prefers-reduced-motion, print
+//
+// Gate de Responsabilidade v2.4:
+//   DssBreadcrumbs NÃO possui estados interativos próprios (hover, focus, active,
+//   disabled, loading). Esses estados são responsabilidade exclusiva dos
+//   DssBreadcrumbsEl filhos.
+//
+//   Este arquivo gerencia apenas estados de contexto do container:
+//   dark mode, forced-colors, high contrast, reduced motion, print.
+// =============================================================================
+
+// ─── Dark Mode ────────────────────────────────────────────────────────────────
+// Os tokens semânticos --dss-text-subtle e --dss-text-body já incluem valores
+// de dark mode via cascata de [data-theme="dark"]. Nenhum override adicional
+// necessário para a cor dos separadores.
+// O gap (--dss-breadcrumbs-gap) não precisa de ajuste em dark mode.
+// Nenhum override necessário no Layer 4 para dark mode.
+
+// ─── prefers-reduced-motion ───────────────────────────────────────────────────
+// DssBreadcrumbs não usa transitions próprias.
+// Transitions dos filhos (DssBreadcrumbsEl) são gerenciadas pelo DssBreadcrumbsEl.
+
+// ─── prefers-contrast: high ───────────────────────────────────────────────────
+@media (prefers-contrast: high) {
+  .dss-breadcrumbs .q-breadcrumbs__separator {
+    // Reforça separadores em alto contraste com a cor atual do contexto
+    // (herda da cor do texto do container)
+    font-weight: var(--dss-font-weight-bold);
+  }
+}
+
+// ─── forced-colors: active ────────────────────────────────────────────────────
+// System color keywords obrigatórios — tokens CSS são ignorados pelo navegador.
+// Padrão canônico DSS. Precedente: DssBreadcrumbsEl _states.scss, DssBtnGroup _states.scss.
+@media (forced-colors: active) {
+  .dss-breadcrumbs .q-breadcrumbs__separator {
+    // EXC-03: GrayText — system color keyword obrigatório em forced-colors.
+    // Tokens CSS (--dss-text-subtle) são ignorados pelo browser neste modo.
+    // Padrão canônico: DssBreadcrumbsEl (GrayText), DssBtnGroup (ButtonText).
+    color: GrayText; /* EXC-03 */
+  }
+}
+
+// ─── print ────────────────────────────────────────────────────────────────────
+@media print {
+  .dss-breadcrumbs .q-breadcrumbs__separator {
+    // Separadores visíveis na impressão com cor de texto padrão
+    color: inherit;
+  }
+}

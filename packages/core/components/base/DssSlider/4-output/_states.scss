@@ -1,0 +1,186 @@
+/* ==========================================================================
+   DssSlider - LAYER 4: OUTPUT (States)
+
+   RESPONSABILIDADE: Estilos para estados especiais
+   (dark mode, high contrast, forced-colors, reduced-motion, print)
+
+   GOLDEN REFERENCE: DssToggle._states.scss (track/thumb pattern)
+   GOLDEN CONTEXT: DssInput._states.scss (form field pattern)
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  /*
+   * EXCEÇÃO DOCUMENTADA: brightness(1.10) / brightness(1.20)
+   * Em dark mode, fundos escuros precisam ser CLAREADOS no hover/active.
+   * Valores canônicos DSS. Referência: CLAUDE.md Princípio #8.
+   * Precedente: DssToggle._states.scss
+   */
+  .dss-slider:not(.dss-slider--disabled):not(.dss-slider--readonly) {
+    .q-slider:hover {
+      .q-slider__selection {
+        filter: brightness(1.1);
+      }
+
+      .q-slider__thumb-shape {
+        filter: brightness(1.1);
+      }
+    }
+  }
+
+  /* Hint em dark mode */
+  .dss-slider__hint {
+    color: var(--dss-text-hint);
+  }
+
+  /* Error message em dark mode — --dss-feedback-error já é semântico */
+  .dss-slider__error {
+    color: var(--dss-feedback-error);
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE (prefers-contrast: more)
+   ========================================================================== */
+
+/*
+ * Em high contrast, bordas e outlines são aumentados para visibilidade máxima.
+ *
+ * EXCEÇÃO DOCUMENTADA: saturate(1.2)
+ * Valor canônico DSS. Referência: CLAUDE.md Princípio #8.
+ * Precedente: DssToggle._states.scss
+ */
+@media (prefers-contrast: more) {
+  /* Track mais espesso em high contrast */
+  .dss-slider .q-slider__track {
+    outline: var(--dss-border-width-thin) solid currentColor;
+    outline-offset: var(--dss-spacing-0_5);
+  }
+
+  /* Focus ring mais forte */
+  .dss-slider .q-slider__focus-ring {
+    box-shadow: 0 0 0 var(--dss-border-width-thick) var(--dss-action-primary);
+    outline: var(--dss-border-width-md) solid var(--dss-action-primary);
+  }
+
+  /* Cores mais saturadas para o controle ativo */
+  .dss-slider .q-slider__selection {
+    filter: saturate(1.2);
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-slider .q-slider__track,
+  .dss-slider .q-slider__selection,
+  .dss-slider .q-slider__thumb-container {
+    transition: none !important;
+  }
+
+  .dss-slider {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  .dss-slider {
+    /* Remove efeitos para impressão */
+    filter: none;
+  }
+
+  /* Label tooltip oculto na impressão */
+  .dss-slider .q-slider__pin {
+    display: none !important;
+  }
+
+  /* Fundo do track visível */
+  .dss-slider .q-slider__track {
+    background-color: var(--dss-gray-300);
+  }
+
+  /* Fill da seleção com cor de impressão */
+  .dss-slider .q-slider__selection {
+    background-color: var(--dss-gray-700);
+  }
+
+  /* Thumb legível na impressão */
+  .dss-slider .q-slider__thumb-shape {
+    fill: var(--dss-gray-900);
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast)
+   ========================================================================== */
+
+/*
+ * CONTEXTO DE ACESSIBILIDADE: forced-colors: active
+ *
+ * Em Windows High Contrast Mode, o navegador ignora CSS custom properties.
+ * Valores como ButtonText, Highlight, GrayText são keywords do sistema.
+ *
+ * EXCEÇÃO DOCUMENTADA: 2px, 3px
+ * Tokens CSS são ignorados em forced-colors mode.
+ * Referência: DSS_COMPONENT_ARCHITECTURE.md
+ * Precedente: DssToggle._states.scss, DssTextarea._states.scss
+ */
+@media (forced-colors: active) {
+  .dss-slider .q-slider__track {
+    background-color: ButtonFace;
+    border: 2px solid ButtonText;
+  }
+
+  .dss-slider .q-slider__selection {
+    background-color: Highlight;
+  }
+
+  .dss-slider .q-slider__thumb-shape {
+    fill: ButtonText;
+  }
+
+  .dss-slider .q-slider__focus-ring {
+    outline: 3px solid Highlight;
+    box-shadow: none;
+  }
+
+  /* Disabled */
+  .dss-slider--disabled .q-slider__track {
+    border-color: GrayText;
+  }
+
+  .dss-slider--disabled .q-slider__selection {
+    background-color: GrayText;
+  }
+
+  .dss-slider--disabled .q-slider__thumb-shape {
+    fill: GrayText;
+  }
+
+  /* Error */
+  .dss-slider--error .q-slider__selection {
+    background-color: LinkText;
+  }
+
+  .dss-slider--error .q-slider__thumb-shape {
+    fill: LinkText;
+  }
+
+  /* Messages */
+  .dss-slider__error {
+    color: LinkText;
+  }
+
+  .dss-slider__hint {
+    color: GrayText;
+  }
+}

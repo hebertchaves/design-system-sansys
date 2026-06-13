@@ -1,0 +1,62 @@
+/* ==========================================================================
+   DssBottomSheet — Layer 4: Brands
+   Hub, Water, Waste — variações de brand via [data-brand]
+
+   REGRAS:
+   ✅ Seletor descendente: [data-brand="x"] .dss-bottom-sheet
+   ✅ Apenas override de tokens de border (handle e header)
+   ✅ DssBottomSheet é overlay de container — sem hover/active no root
+   ❌ Não criar tokens brand-específicos de shadow ou radius
+
+   NOTA ARQUITETURAL:
+   DssBottomSheet é classificado como não-interativo em sua raiz.
+   Brand se manifesta principalmente via handle colorido e na borda
+   do header, além de ser herdado pelos filhos (DssButton, DssList, etc.).
+   Quando o consumidor passar [data-brand] via ancestral, os tokens de
+   brand estarão disponíveis para componentes filhos automaticamente.
+   ========================================================================== */
+
+/* ==========================================================================
+   HUB (Laranja)
+   ========================================================================== */
+
+[data-brand="hub"] .dss-bottom-sheet,
+.dss-bottom-sheet[data-brand="hub"] {
+  .dss-bottom-sheet__handle {
+    background-color: var(--dss-hub-600);
+  }
+
+  .dss-bottom-sheet__header {
+    border-bottom-color: var(--dss-hub-primary, var(--dss-gray-100));
+  }
+}
+
+/* ==========================================================================
+   WATER (Azul)
+   ========================================================================== */
+
+[data-brand="water"] .dss-bottom-sheet,
+.dss-bottom-sheet[data-brand="water"] {
+  .dss-bottom-sheet__handle {
+    background-color: var(--dss-water-500);
+  }
+
+  .dss-bottom-sheet__header {
+    border-bottom-color: var(--dss-water-primary, var(--dss-gray-100));
+  }
+}
+
+/* ==========================================================================
+   WASTE (Verde)
+   ========================================================================== */
+
+[data-brand="waste"] .dss-bottom-sheet,
+.dss-bottom-sheet[data-brand="waste"] {
+  .dss-bottom-sheet__handle {
+    background-color: var(--dss-waste-600);
+  }
+
+  .dss-bottom-sheet__header {
+    border-bottom-color: var(--dss-waste-primary, var(--dss-gray-100));
+  }
+}

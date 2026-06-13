@@ -1,0 +1,19 @@
+// Brand tokens — override --q-color-primary per brand context.
+// Descendant selector: [data-brand="x"] .dss-pagination (brand set on ancestor)
+// Same-element selector: .dss-pagination[data-brand="x"] (brand set on component root)
+// EXC-Gate-01: --q-color-primary is the QPagination internal CSS custom property for active buttons.
+
+[data-brand="hub"] .dss-pagination,
+.dss-pagination[data-brand="hub"] {
+  --q-color-primary: var(--dss-hub-primary);
+}
+
+[data-brand="water"] .dss-pagination,
+.dss-pagination[data-brand="water"] {
+  --q-color-primary: var(--dss-water-primary);
+}
+
+[data-brand="waste"] .dss-pagination,
+.dss-pagination[data-brand="waste"] {
+  --q-color-primary: var(--dss-waste-primary);
+}

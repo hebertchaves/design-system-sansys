@@ -1,0 +1,125 @@
+/* ==========================================================================
+   DssMarkupTable - LAYER 4: OUTPUT (States)
+
+   Responsabilidade: Estados especiais de renderização.
+   DssMarkupTable é não-interativo — não possui hover/focus/active próprios.
+   Esta camada cobre dark mode e high-contrast (estados ambientais).
+
+   Estados N/A (justificativa): hover, focus, active, disabled, loading
+   — DssMarkupTable é uma tabela de exibição estática. Toda interatividade
+   de linha/célula é responsabilidade do conteúdo de slot (consumer).
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] .dss-markup-table {
+  color: var(--dss-text-inverse);
+
+  thead {
+    background-color: var(--dss-gray-800);
+
+    th {
+      color: var(--dss-gray-200);
+      /* EXC-01: rgba(255, 255, 255, 0.15) — Dark mode header border.
+         Justificativa: Bordas de separação em dark mode requerem white com alpha.
+         Nenhum token DSS fornece white com alpha parcial equivalente.
+         Padrão idêntico ao DssList EXC-01 e DssCard EXC-02. */
+      border-bottom-color: rgba(255, 255, 255, 0.15); /* EXC-01 */
+    }
+  }
+
+  tbody tr {
+    /* EXC-02: rgba(255, 255, 255, 0.06) — Dark mode row separator.
+       Justificativa: Separadores em dark mode = white com baixa opacidade.
+       Padrão idêntico ao DssList EXC-02. */
+    border-bottom-color: rgba(255, 255, 255, 0.06); /* EXC-02 */
+  }
+
+  tfoot {
+    background-color: var(--dss-gray-800);
+    border-top-color: rgba(255, 255, 255, 0.15); /* EXC-01 */
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE (prefers-contrast: more)
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-markup-table {
+    th {
+      font-weight: var(--dss-font-weight-bold);
+      border-bottom-width: var(--dss-border-width-md);
+      border-bottom-color: currentColor;
+    }
+
+    tbody tr {
+      border-bottom-width: var(--dss-border-width-thin);
+      border-bottom-color: currentColor;
+    }
+
+    tfoot {
+      border-top-width: var(--dss-border-width-md);
+      border-top-color: currentColor;
+    }
+  }
+}
+
+/* ==========================================================================
+   FORCED-COLORS MODE (Windows High Contrast)
+   Padrão DssBadge (Golden Reference não-interativo):
+   system keywords obrigatórios — tokens CSS são ignorados neste modo.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-markup-table {
+    thead {
+      background-color: Canvas;
+
+      th {
+        color: CanvasText;
+        border-bottom: var(--dss-border-width-md) solid ButtonText; /* EXC-03 */
+      }
+    }
+
+    tbody tr {
+      border-bottom: 1px solid ButtonText; /* EXC-04: valor absoluto obrigatório em forced-colors */
+    }
+
+    tfoot {
+      background-color: Canvas;
+      border-top: var(--dss-border-width-md) solid ButtonText; /* EXC-03 */
+    }
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .dss-markup-table {
+    box-shadow: none;
+    border: 1px solid currentColor; /* EXC-05: print mode, borda visível */
+
+    thead {
+      background-color: transparent;
+      print-color-adjust: exact;
+
+      th {
+        border-bottom-color: currentColor;
+      }
+    }
+
+    tbody tr {
+      border-bottom-color: currentColor;
+    }
+
+    tfoot {
+      background-color: transparent;
+      border-top-color: currentColor;
+    }
+  }
+}

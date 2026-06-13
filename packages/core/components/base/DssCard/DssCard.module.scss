@@ -1,0 +1,41 @@
+/* ==========================================================================
+   DssCard - MAIN MODULE (Orquestrador Final)
+
+   Filosofia DSS: Arquitetura em 4 Camadas
+
+   LAYER 1: Structure (Vue components - DssCard.vue, DssCardSection.vue, etc.)
+   LAYER 2: Composition (Base styles e mixins)
+   LAYER 3: Variants (elevated, flat, bordered, outlined)
+   LAYER 4: Output (states, brands, orchestration)
+
+   Este arquivo importa TODAS as camadas e gera o CSS final.
+
+   Total estimado: ~200 linhas (vs ~800 em monolitico)
+   ========================================================================== */
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants' as variants;
+
+/* Layer 4: Output */
+@use './4-output' as output;
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dss-card {
+    border: var(--dss-border-width-md) solid currentColor;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dss-card {
+    transition: none;
+  }
+}

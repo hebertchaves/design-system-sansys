@@ -1,0 +1,11 @@
+// =============================================================================
+// DssPopupEdit — Orchestrador Principal
+//
+// Importa L2 → L3 → L4 (ordem canônica DSS).
+// Este arquivo é carregado globalmente via components/index.scss.
+// CSS global é obrigatório: conteúdo é teleportado para <body> via QMenu interno.
+// =============================================================================
+
+@use './2-composition/base';
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;
