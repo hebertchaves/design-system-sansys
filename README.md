@@ -5,7 +5,7 @@
 ![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)
 ![Vue](https://img.shields.io/badge/Vue-3.4+-4FC08D.svg?logo=vue.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-3178C6.svg?logo=typescript)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red.svg)
 ![WCAG](https://img.shields.io/badge/WCAG-2.1%20AA-success.svg)
 
 **Sistema de Design profissional com TypeScript + Composition API, tokens semânticos e acessibilidade WCAG 2.1 AA**
@@ -444,6 +444,8 @@ Após modificar arquivos `.vue` ou `.ts.vue`, execute `npm run build` (ou `build
 
 ## 📝 **Licença**
 
-Propriedade da Jtech
+Software **proprietário e de uso interno** — Copyright © 2025–2026
+**JTECH - SOLUÇÕES EM INFORMÁTICA LTDA**. Todos os direitos reservados.
+Ver [LICENSE](./LICENSE) para os termos completos.
 
-Desenvolvido por Hebert Daniel Oliveira Chaves
+Desenvolvido por Hebert Daniel Oliveira Chaves.

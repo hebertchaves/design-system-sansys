@@ -7,6 +7,54 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [Não lançado] — Estabilização Pré-Produção (Junho/2026)
+
+> Ciclo de auditoria e correção que antecedeu a migração para o GitLab
+> corporativo. Detalhes completos em `docs/governance/audit-reports/`.
+
+### 🛡️ Auditoria Final + Onda P0 (bloqueantes)
+- **Auditoria de 12 agentes** (10–11/jun) emitiu veredicto ❌ BLOQUEADO com
+  16 bloqueantes; reauditoria independente confirmou a correção dos 12 da
+  Seção 2 sem regressões.
+- **Fixed:** `dist/style.css` saía **sem nenhum token `:root`** (consumidores
+  recebiam `var(--dss-*)` indefinidas) — entry da lib agora importa o SCSS.
+- **Fixed:** wrapper do `DssButton` entregava versão **sem ARIA**; `DssChip`
+  (Golden Reference) tinha `color: white` literal; `DssTable` não repassava
+  slots dinâmicos `body-cell-*`; brand falhava em overlays teleportados
+  (Dialog/BottomSheet/PopupEdit).
+- **Changed:** migração 100% de `@import` → `@use`/`@forward`; eliminação do
+  namespace `--quasar-*` em favor da bridge `--dss-*`; barrels de 25
+  componentes completados (types + composables).
+- **Changed (governança):** o **CSS do componente** é a fonte de verdade
+  visual suprema (Princípio #12); o Figma foi rebaixado a ferramenta MCP sem
+  autoridade normativa.
+
+### 📚 Onda P1 (saneamento documental)
+- CERTIFIED_COMPONENTS reconciliado (Fase 2 → 68/68); metas de selo
+  alinhados ao índice; `visualProperties` adicionados aos 12 composed;
+  `QUICK_START.md` reescrito para o monorepo; adendo v2 do laudo de produção.
+
+### ✅ Onda P2 (testes e infraestrutura)
+- **Gate de testes tornou-se executável pela primeira vez** — suíte unitária
+  saiu de inexistente para **2553 testes (90 arquivos), 100% verde**, incluindo
+  cobertura de **teclado WCAG 2.1.1** em 18 componentes interativos.
+- **Bugs reais de produção** descobertos pela suíte e corrigidos: separadores
+  do `DssBreadcrumbs` nunca renderizavam; `DssExpansionItem` ignorava
+  `defaultOpened`; `DssAjaxBar` expunha método inexistente; `DssToolbarTitle`
+  descartava o slot `subtitle`.
+- **Added:** `type-check` real com `vue-tsc` (baseline de 66 erros pré-existentes
+  documentada); shims jsdom; alias `@core` no sandbox; `.gitlab-ci.yml`.
+- **Fixed:** bug de cwd do MCP `validate_visual_contract`.
+- **Changed:** `--dss-focus-ring-offset` aplicado em 19 pontos; novo token
+  `--dss-shadow-up-md` (resolve EXC-05 do DssFooter).
+
+### 📄 Governança de repositório (primeiro contato)
+- **Added:** `LICENSE` proprietário (JTECH - SOLUÇÕES EM INFORMÁTICA LTDA);
+  READMEs de `packages/core`, `packages/mcp` e `apps/docs-portal`.
+- **Changed:** badge e `package.json` de MIT → proprietário (UNLICENSED).
+
+---
+
 ## [2.3.0] - 2025-01-13
 
 ### ✨ Added - DssCard Component

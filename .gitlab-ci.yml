@@ -1,0 +1,80 @@
+# ==========================================================================
+# Pipeline CI do Design System Sansys (DSS)
+# ==========================================================================
+# Gates que se tornaram REAIS nas Ondas P0–P2 (antes inexecutáveis):
+#   - build da lib (tokens no dist)
+#   - suíte unitária (2553 testes, projeto "unit")
+#   - validação meta.json ↔ catálogo de tokens
+#   - type-check (informativo até a baseline da Onda P2.1 zerar)
+#
+# Node 20 (engine usado no desenvolvimento). Cache de node_modules por lock.
+# ==========================================================================
+
+default:
+  image: node:20
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules/
+      - packages/core/node_modules/
+
+stages:
+  - install
+  - build
+  - test
+  - quality
+
+# --------------------------------------------------------------------------
+install:
+  stage: install
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+      - packages/core/node_modules/
+    expire_in: 1 hour
+
+# --------------------------------------------------------------------------
+build:core:
+  stage: build
+  needs: ["install"]
+  script:
+    - npm run core:build
+  artifacts:
+    paths:
+      - packages/core/dist/
+    expire_in: 1 day
+
+build:portal:
+  stage: build
+  needs: ["install"]
+  script:
+    - npm run docs:build
+
+# --------------------------------------------------------------------------
+test:unit:
+  stage: test
+  needs: ["install"]
+  script:
+    - cd packages/core && npx vitest run --project unit
+  # 2553 testes — gate bloqueante (CLAUDE.md: test.js é gate de build)
+
+# --------------------------------------------------------------------------
+validate:visual-contract:
+  stage: quality
+  needs: ["install"]
+  script:
+    - npm run validate:css-meta
+
+type-check:
+  stage: quality
+  needs: ["install"]
+  # INFORMATIVO até a Onda P2.1 zerar a baseline de 66 erros pré-existentes
+  # (docs/governance/audit-reports/TYPECHECK_BASELINE_P2.md). allow_failure
+  # evita bloquear a pipeline por débito conhecido — mas mantém o sinal visível.
+  allow_failure: true
+  script:
+    - cd packages/core && npm run type-check
