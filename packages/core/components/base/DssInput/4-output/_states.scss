@@ -35,9 +35,15 @@
     }
   }
 
-  /* Text colors in dark mode */
+  /* Text colors in dark mode — text-body é claro no tema dark (gray-200).
+     NÃO usar --dss-text-inverse: ele é gray-900 (ESCURO) no dark, deixando o
+     texto invisível sobre o campo escuro. Vence o _standout por ordem (L4 > L3). */
   .dss-input__native {
-    color: var(--dss-text-inverse);
+    color: var(--dss-text-body);
+    /* Faz o navegador renderizar a UI nativa do input (indicador de calendário/
+       relógio em date/time/datetime-local e spinners de number) em tom claro,
+       contrastando com o campo escuro. */
+    color-scheme: dark;
 
     &::placeholder {
       color: var(--dss-text-inverse-hint);

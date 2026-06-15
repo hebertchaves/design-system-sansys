@@ -10,11 +10,17 @@
   --dss-text-body: var(--dss-dark);               /* #454545 - Texto principal */
   --dss-text-subtle: var(--dss-dark-light);       /* #B0B0B0 - Texto secundário */
   --dss-text-muted: var(--dss-dark-disable);      /* #D7D7D7 - Texto terciário */
-  --dss-text-inverse: var(--dss-gray-50);         /* #ffffff - Texto claro */
-  
+  --dss-text-inverse: var(--dss-gray-50);         /* #ffffff - Texto claro (sobre fundos escuros) */
+  --dss-text-inverse-secondary: var(--dss-gray-100); /* #fafafa - Texto claro secundário (label em standout/dark) */
+  --dss-text-inverse-hint: var(--dss-gray-400);   /* #d4d4d4 - Placeholder/hint sobre fundo escuro */
+
   /* Text States */
   --dss-text-disabled: var(--dss-gray-400);       /* #d4d4d4 - Texto desabilitado */
-  
+  --dss-text-hint: var(--dss-gray-500);           /* #a3a3a3 - Placeholder/dica (texto transitório) */
+
+  /* Text On-Color (sobre fundos de cor sólida) */
+  --dss-text-on-primary: var(--dss-gray-50);      /* #ffffff - Texto sobre action-primary */
+
   /* Text Actions */
   --dss-text-action: var(--dss-action-primary);     /* Links padrão */
   --dss-text-action-hover: var(--dss-action-primary-hover);

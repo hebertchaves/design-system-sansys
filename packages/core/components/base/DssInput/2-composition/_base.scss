@@ -36,7 +36,7 @@
   width: 100%;
   min-height: var(--dss-input-height-md); /* 44px - ✅ WCAG 2.1 AA */
   gap: var(--dss-spacing-2);
-  transition: all var(--dss-duration-300) var(--dss-easing-standard);
+  transition: all var(--dss-duration-150) var(--dss-easing-standard);
 }
 
 /* Dense variant reduces height */
@@ -76,7 +76,9 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: var(--dss-font-size-md);
-  color: var(--dss-text-secondary);
+  /* gray-600 (#737373 ~4.7:1 em branco) — 1 tom mais escuro que text-secondary
+     (#B0B0B0 ~2.6:1, reprovava WCAG AA). 2 tons (gray-500) voltaria a reprovar. */
+  color: var(--dss-gray-600);
   pointer-events: none;
   transition: all var(--dss-duration-200) var(--dss-easing-standard);
   transform-origin: left top;
@@ -185,6 +187,23 @@
   padding-right: var(--dss-spacing-3);
   color: var(--dss-text-secondary);
   gap: var(--dss-spacing-2);
+}
+
+/* Com prepend/append, o padding lateral do control SOMA com o gap do field +
+   padding do slot → espaço excessivo entre ícone e texto (mesmo empilhamento
+   que estourava a altura). Zera o lado correspondente; o gap (8px) basta. */
+.dss-input__prepend + .dss-input__control {
+  padding-left: 0;
+}
+
+.dss-input__control:has(+ .dss-input__append) {
+  padding-right: 0;
+}
+
+/* Com prepend, a label também alinha ao texto (sem o recuo de 16px), evitando
+   coluna deslocada à direita do ícone. */
+.dss-input__prepend + .dss-input__control .dss-input__label {
+  left: 0;
 }
 
 /* ==========================================================================

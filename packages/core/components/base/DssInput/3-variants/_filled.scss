@@ -14,7 +14,7 @@
     /* DSS Visual Standard: surface-subtle para fundo de campos filled */
     background-color: var(--dss-surface-subtle);
     /* DSS Visual Standard: radius apenas no topo (padrão Material 3 filled) */
-    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+    border-radius: var(--dss-radius-sm) var(--dss-radius-sm) 0 0;
     border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400);
   }
 
@@ -46,11 +46,10 @@
     color: var(--dss-feedback-error);
   }
 
-  /* Disabled state */
+  /* Disabled state — opacity só no wrapper (evita empilhamento 0.4×0.4). */
   &.dss-input--disabled .dss-input__field {
     background-color: var(--dss-surface-muted);
     border-bottom-style: dashed;
-    opacity: var(--dss-opacity-disabled);
   }
 
   /* Readonly state */

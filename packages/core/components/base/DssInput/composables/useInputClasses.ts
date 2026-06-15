@@ -39,7 +39,7 @@ export function useInputClasses(
    * - dss-input--readonly: somente leitura
    * - dss-input--dense: versão compacta
    * - dss-input--loading: carregando
-   * - dss-input--filled: tem valor
+   * - dss-input--has-value: tem valor (NÃO usar --filled: colide com a variante filled)
    * - dss-input--brand-{brand}: marca Sansys
    */
   const wrapperClasses = computed(() => {
@@ -58,7 +58,7 @@ export function useInputClasses(
         'dss-input--readonly': props.readonly,
         'dss-input--dense': props.dense,
         'dss-input--loading': props.loading,
-        'dss-input--filled': hasValue.value,
+        'dss-input--has-value': hasValue.value,
         [`dss-input--brand-${props.brand}`]: props.brand
       }
     ]
@@ -71,7 +71,12 @@ export function useInputClasses(
    * - dss-input__label: classe base
    * - dss-input__label--stack: label sempre no topo
    * - dss-input__label--float: label flutua quando focado/preenchido
+   *
+   * Tipos com UI nativa/placeholder sempre visível (date pickers, etc.): a label
+   * flutua permanentemente, pois centralizada em repouso sobreporia o placeholder.
    */
+  const ALWAYS_FLOAT_TYPES = ['date', 'time', 'datetime-local', 'month', 'week']
+
   const labelClasses = computed(() => {
     return [
       // Classe base
@@ -80,7 +85,8 @@ export function useInputClasses(
       // Classes condicionais
       {
         'dss-input__label--stack': props.stackLabel,
-        'dss-input__label--float': hasValue.value || isFocused.value
+        'dss-input__label--float':
+          hasValue.value || isFocused.value || ALWAYS_FLOAT_TYPES.includes(props.type)
       }
     ]
   })

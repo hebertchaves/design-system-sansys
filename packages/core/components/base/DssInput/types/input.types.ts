@@ -311,7 +311,7 @@ export interface InputWrapperClasses {
   'dss-input--readonly': boolean
   'dss-input--dense': boolean
   'dss-input--loading': boolean
-  'dss-input--filled': boolean
+  'dss-input--has-value': boolean
   [key: `dss-input--${string}`]: boolean
 }
 

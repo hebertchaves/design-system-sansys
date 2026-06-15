@@ -15,8 +15,8 @@
     background-color: transparent;
     /* DSS Visual Standard: border-color via token semântico de borda neutra */
     border: var(--dss-border-width-thin) solid var(--dss-gray-400);
-    /* DSS Visual Standard: radius-md para inputs — alinhado com IBM Carbon e Salesforce */
-    border-radius: var(--dss-radius-md);
+    /* DSS Visual Standard: radius-sm (4px) — cantos mais sóbrios (ref. Figma Make) */
+    border-radius: var(--dss-radius-sm);
   }
 
   /* Focus state — label e borda em primary (Material 3 / IBM Carbon) */
@@ -49,11 +49,11 @@
     color: var(--dss-feedback-error);
   }
 
-  /* Disabled state */
+  /* Disabled state — opacity NÃO aqui (já aplicada no wrapper .dss-input--disabled;
+     empilhar 0.4×0.4=0.16 deixava o campo quase invisível sobre fundo branco). */
   &.dss-input--disabled .dss-input__field {
     border-style: dashed;
     background-color: var(--dss-surface-muted);
-    opacity: var(--dss-opacity-disabled);
   }
 
   /* Readonly state */

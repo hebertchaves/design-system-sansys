@@ -42,16 +42,22 @@
         "source": "2-composition/_base.scss"
       },
       {
+        "property": "padding (vertical)",
+        "token": null,
+        "value": "0",
+        "source": "2-composition/_base.scss"
+      },
+      {
         "property": "border-width (repouso)",
         "token": "--dss-border-width-thin",
         "value": "1px",
-        "source": "3-variants/_borderless.scss"
+        "source": "3-variants/_outlined.scss"
       },
       {
         "property": "border-color (repouso)",
         "token": "--dss-gray-400",
         "value": null,
-        "source": "3-variants/_borderless.scss"
+        "source": "3-variants/_outlined.scss"
       },
       {
         "property": "border-color (hover)",
@@ -63,25 +69,43 @@
         "property": "border-color (foco)",
         "token": "--dss-action-primary",
         "value": null,
-        "source": "2-composition/_base.scss"
+        "source": "3-variants/_outlined.scss"
       },
       {
         "property": "border-width (foco)",
         "token": "--dss-border-width-md",
         "value": "2px",
-        "source": "2-composition/_base.scss"
+        "source": "3-variants/_outlined.scss"
       },
       {
         "property": "border-radius",
-        "token": "--dss-radius-md",
-        "value": "8px",
-        "source": "3-variants/_filled.scss"
+        "token": "--dss-radius-sm",
+        "value": "4px",
+        "source": "3-variants/_outlined.scss"
+      },
+      {
+        "property": "box-shadow (foco)",
+        "token": null,
+        "value": "0 0 0 1px",
+        "source": "3-variants/_outlined.scss"
+      },
+      {
+        "property": "outline (foco a11y)",
+        "token": "--dss-border-width-md",
+        "value": "2px",
+        "source": "4-output/_states.scss"
+      },
+      {
+        "property": "outline-offset (foco a11y)",
+        "token": "--dss-spacing-1",
+        "value": "4px",
+        "source": "4-output/_states.scss"
       },
       {
         "property": "color (texto)",
-        "token": "--dss-text-body",
+        "token": "--dss-text-primary",
         "value": null,
-        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+        "source": "2-composition/_base.scss"
       },
       {
         "property": "font-size",
@@ -90,16 +114,22 @@
         "source": "2-composition/_base.scss"
       },
       {
+        "property": "transition",
+        "token": "--dss-duration-150",
+        "value": "150ms",
+        "source": "2-composition/_base.scss"
+      },
+      {
         "property": "label color (repouso)",
-        "token": "--dss-text-subtle",
+        "token": "--dss-gray-600",
         "value": null,
-        "source": "via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss"
+        "source": "2-composition/_base.scss"
       },
       {
         "property": "label color (foco)",
         "token": "--dss-action-primary",
         "value": null,
-        "source": "2-composition/_base.scss"
+        "source": "3-variants/_outlined.scss"
       }
     ],
     "demoContent": "Placeholder 'Digite aqui'",

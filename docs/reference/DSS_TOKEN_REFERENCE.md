@@ -678,6 +678,33 @@ Sistema padronizado de transparências com escala de 0 a 100 e tokens semântico
 
 ---
 
+## 2.5 Cores de Texto
+
+Cores semânticas de texto — hierarquia, estados, on-color (sobre fundo escuro/cor sólida), links e marca. Tabela auto-gerada de `tokens/semantic/_text.scss` via `npm run sync:tokens-to-reference`.
+
+<!-- BEGIN:TOKEN-TABLE:text-cores -->
+| Token | Valor | px | Descrição |
+|---|---|---|---|
+| `--dss-text-primary` | `var(--dss-dark)` | — | #454545 - Alias semântico de --dss-text-body |
+| `--dss-text-secondary` | `var(--dss-dark-light)` | — | #B0B0B0 - Alias semântico de --dss-text-subtle |
+| `--dss-text-body` | `var(--dss-dark)` | — | #454545 - Texto principal |
+| `--dss-text-subtle` | `var(--dss-dark-light)` | — | #B0B0B0 - Texto secundário |
+| `--dss-text-muted` | `var(--dss-dark-disable)` | — | #D7D7D7 - Texto terciário |
+| `--dss-text-inverse` | `var(--dss-gray-50)` | — | #ffffff - Texto claro (sobre fundos escuros) |
+| `--dss-text-inverse-secondary` | `var(--dss-gray-100)` | — | #fafafa - Texto claro secundário (label em standout/dark) |
+| `--dss-text-inverse-hint` | `var(--dss-gray-400)` | — | #d4d4d4 - Placeholder/hint sobre fundo escuro |
+| `--dss-text-disabled` | `var(--dss-gray-400)` | — | #d4d4d4 - Texto desabilitado |
+| `--dss-text-on-primary` | `var(--dss-gray-50)` | — | #ffffff - Texto sobre action-primary |
+| `--dss-text-action` | `var(--dss-action-primary)` | — | Links padrão |
+| `--dss-text-action-hover` | `var(--dss-action-primary-hover)` | — | — |
+| `--dss-text-action-alt` | `var(--dss-action-secondary)` | — | Links alternativos |
+| `--dss-text-brand-hub` | `var(--dss-hub-500)` | — | — |
+| `--dss-text-brand-water` | `var(--dss-water-500)` | — | — |
+| `--dss-text-brand-waste` | `var(--dss-waste-500)` | — | — |
+<!-- END:TOKEN-TABLE:text-cores -->
+
+---
+
 # 3. Actions
 
 Cores para ações primárias, secundárias, terciárias e de destaque.
@@ -870,6 +897,8 @@ Tokens de cor de texto usados por componentes de formulário interativos e de na
 <!-- BEGIN:TOKEN-TABLE:feedback-textos -->
 | Token | Valor | px | Descrição |
 |---|---|---|---|
+| `--dss-text-hint` | `var(--dss-gray-500)` | — | #a3a3a3 - Placeholder/dica (texto transitório) |
+| `--dss-text-success` | `var(--dss-positive)` | — | — |
 | `--dss-text-error` | `var(--dss-negative)` | — | — |
 | `--dss-text-warning` | `var(--dss-warning)` | — | — |
 | `--dss-text-info` | `var(--dss-info)` | — | — |

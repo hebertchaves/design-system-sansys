@@ -881,16 +881,21 @@ O DSS sintetiza padrões de três referências:
 | **min-height** | `--dss-input-height-md` | `44px` | 2-composition/_base.scss |
 | **min-width** | `--dss-min-w-lg` | `240px` | 2-composition/_base.scss |
 | **padding (horizontal)** | `--dss-spacing-4` | `16px` | 2-composition/_base.scss |
-| **border-width (repouso)** | `--dss-border-width-thin` | `1px` | 3-variants/_borderless.scss |
-| **border-color (repouso)** | `--dss-gray-400` | — | 3-variants/_borderless.scss |
+| **padding (vertical)** | — | `0` | 2-composition/_base.scss |
+| **border-width (repouso)** | `--dss-border-width-thin` | `1px` | 3-variants/_outlined.scss |
+| **border-color (repouso)** | `--dss-gray-400` | — | 3-variants/_outlined.scss |
 | **border-color (hover)** | `--dss-gray-600` | — | 3-variants/_outlined.scss |
-| **border-color (foco)** | `--dss-action-primary` | — | 2-composition/_base.scss |
-| **border-width (foco)** | `--dss-border-width-md` | `2px` | 2-composition/_base.scss |
-| **border-radius** | `--dss-radius-md` | `8px` | 3-variants/_filled.scss |
-| **color (texto)** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
+| **border-color (foco)** | `--dss-action-primary` | — | 3-variants/_outlined.scss |
+| **border-width (foco)** | `--dss-border-width-md` | `2px` | 3-variants/_outlined.scss |
+| **border-radius** | `--dss-radius-sm` | `4px` | 3-variants/_outlined.scss |
+| **box-shadow (foco)** | — | `0 0 0 1px` | 3-variants/_outlined.scss |
+| **outline (foco a11y)** | `--dss-border-width-md` | `2px` | 4-output/_states.scss |
+| **outline-offset (foco a11y)** | `--dss-spacing-1` | `4px` | 4-output/_states.scss |
+| **color (texto)** | `--dss-text-primary` | — | 2-composition/_base.scss |
 | **font-size** | `--dss-font-size-md` | `16px` | 2-composition/_base.scss |
-| **label color (repouso)** | `--dss-text-subtle` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
-| **label color (foco)** | `--dss-action-primary` | — | 2-composition/_base.scss |
+| **transition** | `--dss-duration-150` | `150ms` | 2-composition/_base.scss |
+| **label color (repouso)** | `--dss-gray-600` | — | 2-composition/_base.scss |
+| **label color (foco)** | `--dss-action-primary` | — | 3-variants/_outlined.scss |
 <!-- END:VISUAL-TABLE:DssInput -->
 
 ---
@@ -2265,5 +2270,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-15T17:19:52.421Z_
+_Gerado em: 2026-06-15T20:20:26.425Z_
 <!-- END:AUTO-GENERATED -->
