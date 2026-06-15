@@ -54,11 +54,16 @@
   flex-direction: column;
   flex: 1;
   justify-content: center;
-  padding: var(--dss-spacing-4) var(--dss-spacing-4);
+  /* Padding vertical = 0: a reserva da label flutuante vem do padding-top do
+     input nativo (--dss-spacing-5). Evita o empilhamento que estourava a altura.
+     Horizontal mantido em --dss-spacing-4. min-height do field é o teto real. */
+  padding: 0 var(--dss-spacing-4);
 }
 
 .dss-input--dense .dss-input__control {
-  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  /* Mesmo princípio do default: padding vertical = 0; a reserva da label
+     flutuante (menor no dense) vem do padding-top do input nativo abaixo. */
+  padding: 0 var(--dss-spacing-3);
 }
 
 /* ==========================================================================
@@ -79,7 +84,9 @@
 
 /* Floating label (when focused or filled) */
 .dss-input__label--float {
-  top: var(--dss-spacing-2);
+  /* spacing-1 (4px): aproxima a label da borda superior e abre respiro
+     entre a label e a caixa de texto (antes spacing-2 deixava a label colada). */
+  top: var(--dss-spacing-1);
   transform: translateY(0) scale(0.75);
   font-size: var(--dss-font-size-sm);
 }
@@ -123,6 +130,26 @@
 /* With floating label, add top padding */
 .dss-input:not(.dss-input__label--stack) .dss-input__native {
   padding-top: var(--dss-spacing-5);
+}
+
+/* Dense: reserva vertical da label flutuante reduzida (mesma especificidade,
+   declarada depois → vence). Mantém o campo compacto sem colidir a label. */
+.dss-input--dense:not(.dss-input__label--stack) .dss-input__native {
+  padding-top: var(--dss-spacing-3);
+}
+
+/* Dense: fonte 14px (sm) em vez de 16px (md). Reduz a linha de texto
+   (24px → 21px) e o tamanho da label, eliminando a sobreposição no campo compacto. */
+.dss-input--dense .dss-input__native {
+  font-size: var(--dss-font-size-sm);
+}
+
+.dss-input--dense .dss-input__label {
+  font-size: var(--dss-font-size-sm);
+}
+
+.dss-input--dense .dss-input__label--float {
+  font-size: var(--dss-font-size-xs);
 }
 
 /* Disabled state */

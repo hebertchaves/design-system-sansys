@@ -888,7 +888,7 @@ O DSS sintetiza padrões de três referências:
 | **border-width (foco)** | `--dss-border-width-md` | `2px` | 2-composition/_base.scss |
 | **border-radius** | `--dss-radius-md` | `8px` | 3-variants/_filled.scss |
 | **color (texto)** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
-| **font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **font-size** | `--dss-font-size-md` | `16px` | 2-composition/_base.scss |
 | **label color (repouso)** | `--dss-text-subtle` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **label color (foco)** | `--dss-action-primary` | — | 2-composition/_base.scss |
 <!-- END:VISUAL-TABLE:DssInput -->
@@ -2265,5 +2265,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-13T12:54:14.047Z_
+_Gerado em: 2026-06-15T17:19:52.421Z_
 <!-- END:AUTO-GENERATED -->

@@ -358,7 +358,7 @@ O componente so e considerado valido — e elegivel para auditoria e selo — se
 - [ ] Documentação normativa (DssNomeComponente.md) com Template 13.1
 - [ ] API Reference (DSSNOMECOMPONENTE_API.md) atualizada
 - [ ] Exemplo funcional (DssNomeComponente.example.vue, min. 3 cenarios)
-- [ ] **Arquivo de testes** (DssNomeComponente.test.js) existe com cobertura mínima: renderização base, props, eventos e slots — **gate de build BLOQUEANTE**. Execução: `npx vitest run --project unit` a partir de `packages/core` (projeto criado na Onda P0 — antes disso o gate não era executável). Cobertura de arquivos: 88/91 (pendentes: DssUploader, DssCadrisCard, DssTestPageComplexity — Onda P2)
+- [ ] **Arquivo de testes** (DssNomeComponente.test.js) existe com cobertura mínima: renderização base, props, eventos e slots — **gate de build BLOQUEANTE**. Execução: `npx vitest run --project unit` a partir de `packages/core` (projeto criado na Onda P0 — antes disso o gate não era executável). Cobertura de arquivos: 89/89 componentes (100%). Os arquivos `DssCadrisCard` e `DssTestPageComplexity` são fixtures/páginas de teste — não são componentes de uso e estão fora do escopo de cobertura por decisão de governança (jun/2026).
 
 > **Nenhum componente pode receber selo DSS v2.2 sem passar por este gate.**
 > Auditorias devem verificar este checklist ANTES de iniciar analise detalhada.

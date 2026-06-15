@@ -172,7 +172,15 @@
       "Bash(grep -n \"keyCodes\\\\$2\\\\|keyCodes\\\\b\" ../../node_modules/quasar/dist/quasar.client.js)",
       "Bash(awk '/q-slider__focus/,0' ../../node_modules/quasar/dist/quasar.client.js)",
       "Bash(awk -F': ' '{print $2}')",
-      "Bash(awk -F: '{print $4}')"
+      "Bash(awk -F: '{print $4}')",
+      "Bash(echo \"package.json: $\\(python3 -c \"import json;print\\(json.load\\(open\\('packages/core/package.json'\\)\\)['version']\\)\"\\)\")",
+      "Bash(grep -iE \"lovable|work in progress|^[a-f0-9]+ update$|wip\")",
+      "Bash(claude mcp *)",
+      "Bash(echo \"---EXIT:$?---\")",
+      "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:6006/)",
+      "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:6006/mcp)",
+      "Bash(awk '/computedDimensions × token/{f=1} /SEM token correspondente/{f=2} f==1{print} f==2{print}')",
+      "Bash(awk '/computedDimensions × token/{f=1} /SEM token/{f=0} f')"
     ]
   },
   "enableAllProjectMcpServers": true,

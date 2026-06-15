@@ -21,9 +21,11 @@
     "sync:visual-contract": "node scripts/sync-visual-contract.js",
     "sync:portal-tokens": "node scripts/sync-portal-tokens.mjs",
     "sync:css-to-meta": "node scripts/sync-css-to-meta.js --fix-sources",
+    "sync:token-values": "node scripts/sync-token-values.js --fix",
     "sync:tokens-to-reference": "node scripts/sync-tokens-to-reference.js",
     "validate:css-meta": "node scripts/sync-css-to-meta.js --validate",
-    "sync:all": "node scripts/sync-tokens-to-reference.js && node scripts/sync-css-to-meta.js --fix-sources && node scripts/sync-visual-contract.js",
+    "validate:token-values": "node scripts/sync-token-values.js --audit",
+    "sync:all": "node scripts/sync-tokens-to-reference.js && node scripts/sync-css-to-meta.js --fix-sources && node scripts/sync-token-values.js --fix && node scripts/sync-visual-contract.js",
     "inject:token-markers": "node scripts/inject-token-table-markers.js",
     "update:meta-preview": "node scripts/update-meta-preview.cjs",
     "setup:hooks": "cp scripts/hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit && echo 'Git hooks instalados.'"
