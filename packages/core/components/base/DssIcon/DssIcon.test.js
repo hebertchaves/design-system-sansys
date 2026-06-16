@@ -51,6 +51,27 @@ describe('DssIcon', () => {
       })
     })
 
+    // Inline mode tests (CCI §2.2 — sizing dirigido pelo host)
+    describe('inline mode', () => {
+      it('applies dss-icon--inline class when inline=true', () => {
+        const wrapper = mount(DssIcon, { props: { name: 'home', inline: true } })
+        expect(wrapper.classes()).toContain('dss-icon--inline')
+      })
+
+      it('does NOT emit the size token class when inline=true', () => {
+        const wrapper = mount(DssIcon, {
+          props: { name: 'home', inline: true, size: 'lg' }
+        })
+        expect(wrapper.classes()).not.toContain('dss-icon--lg')
+        expect(wrapper.classes()).not.toContain('dss-icon--md')
+      })
+
+      it('does not apply inline class by default', () => {
+        const wrapper = mount(DssIcon, { props: { name: 'home' } })
+        expect(wrapper.classes()).not.toContain('dss-icon--inline')
+      })
+    })
+
     // Color tests
     describe('color', () => {
       it('applies text-{color} class when color prop is set (no brand)', () => {
@@ -131,6 +152,30 @@ describe('DssIcon', () => {
         })
         expect(wrapper.classes()).toContain('dss-icon--decorative')
       })
+
+      // CCI §2.1 — decorative e SOMENTE a11y; nao aplica estilo inline de opacidade
+      it('does not set an inline opacity style when decorative=true', () => {
+        const wrapper = mount(DssIcon, {
+          props: { name: 'home', decorative: true }
+        })
+        expect(wrapper.element.style.opacity).toBe('')
+      })
+    })
+  })
+
+  // ===========================================================================
+  // EMBEDDED COMPOSITION TESTS (CCI §2.4 — passthrough de classe do host)
+  // ===========================================================================
+
+  describe('Embedded composition', () => {
+    it('merges a host-provided class onto the root span', () => {
+      const wrapper = mount(DssIcon, {
+        props: { name: 'home', inline: true, decorative: true },
+        attrs: { class: 'dss-button__icon dss-button__icon--left' }
+      })
+      expect(wrapper.classes()).toContain('dss-icon')
+      expect(wrapper.classes()).toContain('dss-button__icon')
+      expect(wrapper.classes()).toContain('dss-button__icon--left')
     })
   })
 

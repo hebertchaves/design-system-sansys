@@ -42,3 +42,20 @@
   height: var(--dss-icon-size-xl);
   font-size: var(--dss-icon-size-xl);
 }
+
+/* ==========================================================================
+   INLINE - Sizing dirigido pelo host (CCI §2.2)
+
+   Usado ao embutir DssIcon em outro componente DSS. O icone escala com a
+   font-size do host (1em); as classes de token (--xs..xl) nao sao emitidas
+   no modo inline (ver composables/useIconClasses.ts).
+
+   Vem depois das classes de size e da base — vence .dss-icon (mesma
+   especificidade, ordem de cascata) garantindo override do width/height base.
+   ========================================================================== */
+
+.dss-icon--inline {
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+}

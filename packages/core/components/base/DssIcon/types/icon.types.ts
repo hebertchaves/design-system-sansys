@@ -106,6 +106,20 @@ export interface IconProps {
    */
   color?: IconColor | null
 
+  /**
+   * Modo inline (sizing dirigido pelo host)
+   * Quando true: width/height = 1em e font-size = inherit — o icone
+   * escala com a font-size do componente host. As classes de tamanho
+   * (--xs..xl) sao ignoradas.
+   *
+   * Uso OBRIGATORIO ao embutir DssIcon dentro de outro componente DSS
+   * (DssButton, DssChip, DssAvatar, DssCheckbox...).
+   *
+   * @see docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md (§2.2)
+   * @default false (standalone usa o token de size)
+   */
+  inline?: boolean
+
   // ========================================
   // Brand
   // ========================================

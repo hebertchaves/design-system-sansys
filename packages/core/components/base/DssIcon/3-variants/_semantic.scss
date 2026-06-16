@@ -22,9 +22,15 @@
 
 /* ==========================================================================
    ICONE DECORATIVO
-   Icones decorativos tem opacidade reduzida para indicar papel auxiliar
+
+   A flag `decorative` controla EXCLUSIVAMENTE acessibilidade (aria-hidden) —
+   NAO altera aparencia (CCI §2.1, Decisao Travada #1, jun/2026).
+
+   O antigo dim de 60% foi REMOVIDO: era anti-pattern (escurecia icones
+   significativos e arriscava contraste). Nao ha prop substituto — dim de
+   icone nao e necessidade atual.
+
+   @see docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md (§2.1, §7)
    ========================================================================== */
 
-.dss-icon--decorative {
-  opacity: var(--dss-opacity-60);
-}
+/* (sem regra visual — decorative e somente semantica de a11y) */

@@ -1082,6 +1082,38 @@ min-height: var(--dss-compact-control-height-lg);  /* 32px */
 
 > **Consequência**: Se um arquivo de variante usar `::before`, o touch target da Camada 2 será sobrescrito, quebrando acessibilidade WCAG 2.5.5.
 
+### Composição de Ícones (NORMATIVA — Princípio #14)
+
+> **⚠️ REGRA VINCULANTE**: O DSS possui **um único primitivo de ícone** — o `DssIcon`. Nenhum componente reimplementa a renderização de glifo. Detalhamento completo em [DSS_ICON_COMPOSITION_CONTRACT.md](../governance/DSS_ICON_COMPOSITION_CONTRACT.md) (Nível 1).
+
+**Cadeia canônica de renderização:**
+
+```
+icon (prop string) ──► <DssIcon :name inline decorative /> ──► QIcon ──► glifo
+slot (#icon-*)      ──► conteúdo arbitrário (recomendado: <DssIcon>)
+```
+
+| Regra | Obrigação |
+|-------|-----------|
+| **Prop de ícone** | DEVE renderizar internamente `<DssIcon :name inline decorative />`. API pública inalterada. |
+| **Glifo cru** | ❌ PROIBIDO `<span>` com nome interpolado ou `font-family: 'Material Icons'` em SCSS de componente. |
+| **Slot** | Componente com ícone expõe slot(s) nomeado(s) (`#icon-left`…); slot com conteúdo tem precedência sobre o prop. |
+| **a11y** | Ícone embutido é `decorative` quando o host tem label/`aria-label`. `decorative` controla **somente** `aria-hidden` — NUNCA aparência (sem dim de opacidade). |
+| **Sizing embedded** | Usar `inline` no `DssIcon` → escala com a `font-size` do host (1em). |
+
+#### Racional Técnico
+
+O `QBtn` do Quasar delega ícone ao `QIcon` (`h(QIcon, { name })`). O DSS segue o mesmo modelo via `DssIcon` → `QIcon`, ganhando o parser de formatos (ligadura, `mdi-`, `img:`, `svguse:`, SVG), a11y consistente e tokenização. Reimplementar o glifo como `<span>` cru perde o parser, diverge no modelo de a11y e duplica o acoplamento à biblioteca de ícones — anti-pattern que motivou este princípio.
+
+#### Gate de verificação
+
+```bash
+# Deve retornar zero para qualquer componente:
+grep -rn "Material Icons" packages/core/components/base/DssNomeComponente/**/*.scss
+```
+
+> **Consequência**: Componente que renderiza glifo fora do `DssIcon` não passa no gate e não é elegível para selo.
+
 ### Valores Visuais Permitidos como Exceção (Não-Tokenizados)
 
 > **⚠️ TABELA CANÔNICA**: Esta é a fonte única de verdade para valores visuais sem token DSS equivalente. Novos componentes DEVEM reutilizar valores desta tabela.

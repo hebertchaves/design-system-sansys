@@ -34,18 +34,23 @@ export function useIconClasses(props: Readonly<IconProps>) {
       colorClass = `text-${props.color}`
     }
 
+    // Tamanho: no modo inline o sizing e dirigido pelo host (1em),
+    // entao NAO emitimos a classe de token de size (CCI §2.2).
+    const sizeClass = props.inline ? '' : `dss-icon--${props.size ?? 'md'}`
+
     return [
       // Classe base
       'dss-icon',
 
-      // Classe de tamanho
-      `dss-icon--${props.size ?? 'md'}`,
+      // Classe de tamanho (omitida quando inline)
+      sizeClass,
 
       // Classe de cor (utilitaria DSS)
       colorClass,
 
       // Classes condicionais
       {
+        'dss-icon--inline': props.inline,
         'dss-icon--spin': props.spin,
         'dss-icon--pulse': props.pulse,
         'dss-icon--decorative': props.decorative,

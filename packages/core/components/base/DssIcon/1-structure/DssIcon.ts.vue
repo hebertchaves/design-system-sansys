@@ -60,6 +60,7 @@ const props = withDefaults(defineProps<IconProps>(), {
   // Visual
   size: 'md',
   color: null,
+  inline: false,
 
   // Brand
   brand: null,

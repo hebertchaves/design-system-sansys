@@ -57,10 +57,10 @@
     opacity: 1;
   }
 
-  /* Icones decorativos mantem reducao de opacidade mesmo em high contrast */
-  .dss-icon--decorative {
-    opacity: var(--dss-opacity-75);
-  }
+  /*
+   * Icones decorativos NAO recebem dim (CCI §2.1) — `decorative` e somente
+   * semantica de a11y. Regra de opacidade removida para alinhar ao primitivo.
+   */
 }
 
 /* ==========================================================================

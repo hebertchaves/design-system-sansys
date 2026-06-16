@@ -52,6 +52,7 @@ A criação de qualquer componente DSS **exige leitura prévia** dos seguintes a
 10. `docs/governance/DSS_MONOREPO_PATH_MAP.md` *(mapeamento canônico de caminhos do Monorepo — obrigatório para qualquer importação SCSS ou JS/TS entre pacotes)*
 11. `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` *(Contrato Visual Canônico — espelho human-readable do campo `defaultPreview` de todos os `dss.meta.json`. A seção de dados é **auto-gerada** via `npm run sync:visual-contract`. Autoridade Nível 1 sobre aspectos visuais padrão. Ler sempre que implementar ou auditar o aspecto visual default de qualquer componente.)*
 12. `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` *(Workflow do Preview Data-Driven — descreve os campos `previewGroup` e `demoSlots` do `dss.meta.json`, o componente `DemoRenderer.vue`, os scripts de manutenção e o pre-commit hook. Leitura obrigatória antes de modificar any campo de preview ou o sandbox.)*
+13. `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md` *(Contrato de Composição de Ícone — materializa o Princípio #14. Define o `DssIcon` como primitivo único de ícone, as regras de prop/slot/a11y, a proibição de glifo cru e o gate de verificação. Leitura obrigatória antes de implementar ou modificar qualquer renderização de ícone em componente.)*
 
 ⚠️ **IMPORTANTE**  
 Nunca inferir padrões apenas observando um componente existente.  
@@ -160,6 +161,16 @@ O **DssButton é referência**, não fonte única de verdade.
     - ⚠️ Regras DSS unlayered vencem qualquer regra dentro de layer, independente de especificidade ou `!important`
     - 📖 Consulte [DSS_ARCHITECTURE.md — Princípio #13](docs/reference/DSS_ARCHITECTURE.md#princípio-13--isolamento-de-css-de-terceiros-via-cascade-layers-vinculante)
 
+14. **Composição de Ícones (VINCULANTE)**
+    - O DSS possui **um único primitivo de ícone**: o `DssIcon`. Nenhum componente reimplementa a renderização de glifo.
+    - ✅ Todo prop de ícone (`icon`, `iconRight`, `iconSelected`, `iconRemove`, etc.) DEVE renderizar internamente `<DssIcon :name inline decorative />`
+    - ❌ NUNCA renderizar glifo em `<span>` cru nem interpolar nome de ícone como texto em template
+    - ❌ NUNCA declarar `font-family: 'Material Icons'` (ou outra fonte de ícone) em SCSS de componente — o glifo é responsabilidade do `DssIcon` → `QIcon`
+    - ✅ Componentes com ícone expõem **slot(s) nomeado(s)** de escape (ex.: `#icon-left`); slot com conteúdo tem precedência sobre o prop; consumidor NUNCA escreve span de glifo à mão
+    - ✅ Ícone embutido é `decorative` quando o host tem label/`aria-label`; `decorative` controla **somente** a11y (`aria-hidden`), NUNCA aparência
+    - ⚠️ **Gate (deve retornar zero):** `grep -rn "Material Icons" packages/core/components/base/DssNomeComponente/**/*.scss`
+    - 📖 Consulte [DSS_ICON_COMPOSITION_CONTRACT.md](docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md) *(Contrato de Composição de Ícone — Nível 1)*
+
 ---
 
 ## 🎯 Escopo Funcional Mínimo (DEFINIÇÃO OFICIAL)
@@ -211,6 +222,9 @@ Em caso de conflito, **NUNCA devem ser ignorados ou reinterpretados**.
 
 5. **DSS_REFERENCIA_VISUAL_ANALISE.md** *(Contrato Visual Canônico)*  
    → Espelho human-readable do campo `visualProperties` de cada `dss.meta.json`. A seção de dados é auto-gerada — **nunca editar manualmente** a região delimitada por `<!-- BEGIN:AUTO-GENERATED -->`. Em caso de conflito com qualquer outro documento sobre visual padrão, **o CSS do componente prevalece** (Princípio #12). Este documento reflete o CSS; se divergir, o CSS é a verdade.
+
+6. **DSS_ICON_COMPOSITION_CONTRACT.md** *(Contrato de Composição de Ícone — Princípio #14)*  
+   → Autoridade máxima sobre renderização de ícone. Define o `DssIcon` como primitivo único, o contrato prop/slot/a11y e a proibição de glifo cru (`font-family: 'Material Icons'` em componente). Em caso de conflito sobre como um ícone deve ser renderizado, este documento e o CSS do componente prevalecem.
 
 ---
 
