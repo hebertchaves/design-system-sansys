@@ -337,20 +337,35 @@ describe('DssButton', () => {
    * ==========================================================================
    */
   describe('Ícones', () => {
-    it('renderiza ícone esquerdo quando icon está definido', () => {
+    it('renderiza ícone esquerdo via composição DssIcon quando icon está definido (CCI §3.1)', () => {
       const wrapper = mount(DssButton, {
         props: { icon: 'add', label: 'Add' }
       })
-      expect(wrapper.find('.dss-button__icon--left').exists()).toBe(true)
-      expect(wrapper.find('.dss-button__icon--left').text()).toBe('add')
+      const icon = wrapper.find('.dss-button__icon--left')
+      // O ícone agora é o root do DssIcon (passthrough de classe), não mais
+      // um <span> Material Icons cru. Glifo vem do DssIcon → QIcon.
+      expect(icon.exists()).toBe(true)
+      expect(icon.classes()).toContain('dss-icon')
+      expect(icon.classes()).toContain('dss-icon--inline')
+      expect(wrapper.find('.dss-icon__inner').exists()).toBe(true)
     })
 
-    it('renderiza ícone direito quando iconRight está definido', () => {
+    it('renderiza ícone direito via composição DssIcon quando iconRight está definido (CCI §3.1)', () => {
       const wrapper = mount(DssButton, {
         props: { iconRight: 'arrow_forward', label: 'Next' }
       })
-      expect(wrapper.find('.dss-button__icon--right').exists()).toBe(true)
-      expect(wrapper.find('.dss-button__icon--right').text()).toBe('arrow_forward')
+      const icon = wrapper.find('.dss-button__icon--right')
+      expect(icon.exists()).toBe(true)
+      expect(icon.classes()).toContain('dss-icon')
+      expect(icon.classes()).toContain('dss-icon--inline')
+      expect(wrapper.find('.dss-icon__inner').exists()).toBe(true)
+    })
+
+    it('ícone composto é decorativo (aria-hidden) — a11y CCI §3.3', () => {
+      const wrapper = mount(DssButton, {
+        props: { icon: 'add', label: 'Add' }
+      })
+      expect(wrapper.find('.dss-button__icon--left').attributes('aria-hidden')).toBe('true')
     })
 
     it('renderiza ambos os ícones simultaneamente', () => {
@@ -380,6 +395,65 @@ describe('DssButton', () => {
         }
       })
       expect(wrapper.classes()).not.toContain('dss-button--icon-only')
+    })
+  })
+
+  /**
+   * ==========================================================================
+   * 9b. ÍCONES — SLOTS NOMEADOS (CCI §3.2)
+   * ==========================================================================
+   */
+  describe('Ícones - Slots Nomeados (CCI §3.2)', () => {
+    it('renderiza conteúdo do slot #icon-left', () => {
+      const wrapper = mount(DssButton, {
+        props: { label: 'Salvar' },
+        slots: { 'icon-left': '<i class="custom-left-icon"></i>' }
+      })
+      const icon = wrapper.find('.dss-button__icon--left')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('.custom-left-icon').exists()).toBe(true)
+    })
+
+    it('renderiza conteúdo do slot #icon-right', () => {
+      const wrapper = mount(DssButton, {
+        props: { label: 'Próximo' },
+        slots: { 'icon-right': '<i class="custom-right-icon"></i>' }
+      })
+      const icon = wrapper.find('.dss-button__icon--right')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('.custom-right-icon').exists()).toBe(true)
+    })
+
+    it('slot #icon-left tem precedência sobre a prop icon (CCI §3.2)', () => {
+      const wrapper = mount(DssButton, {
+        props: { icon: 'add', label: 'Salvar' },
+        slots: { 'icon-left': '<i class="custom-left-icon"></i>' }
+      })
+      const icon = wrapper.find('.dss-button__icon--left')
+      // Quando o slot tem conteúdo, o DssIcon da prop NÃO é renderizado.
+      expect(icon.find('.custom-left-icon').exists()).toBe(true)
+      expect(icon.classes()).not.toContain('dss-icon')
+    })
+
+    it('slot #icon-right tem precedência sobre a prop iconRight (CCI §3.2)', () => {
+      const wrapper = mount(DssButton, {
+        props: { iconRight: 'arrow_forward', label: 'Próximo' },
+        slots: { 'icon-right': '<i class="custom-right-icon"></i>' }
+      })
+      const icon = wrapper.find('.dss-button__icon--right')
+      expect(icon.find('.custom-right-icon').exists()).toBe(true)
+      expect(icon.classes()).not.toContain('dss-icon')
+    })
+
+    it('slot default (label) não é afetado pelos slots de ícone', () => {
+      const wrapper = mount(DssButton, {
+        slots: {
+          default: 'Conteúdo',
+          'icon-left': '<i class="custom-left-icon"></i>'
+        }
+      })
+      expect(wrapper.find('.dss-button__label').text()).toContain('Conteúdo')
+      expect(wrapper.find('.custom-left-icon').exists()).toBe(true)
     })
   })
 

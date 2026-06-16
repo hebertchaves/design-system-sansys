@@ -78,16 +78,16 @@ Componente de botão completo com suporte a acessibilidade WCAG 2.1 AA, brandabi
 | Slot | Descrição | Uso |
 |------|-----------|-----|
 | `default` | Conteúdo principal do botão | Label com formatação customizada |
-| `icon` | Ícone customizado à esquerda | SVG, Font Awesome, outros |
-| `icon-right` | Ícone customizado à direita | SVG, Font Awesome, outros |
+| `icon-left` | Ícone customizado à esquerda | `DssIcon`, SVG, outros (precedência sobre a prop `icon`) |
+| `icon-right` | Ícone customizado à direita | `DssIcon`, SVG, outros (precedência sobre a prop `icon-right`) |
 
 ### Subcomponentes DSS Utilizados
 
-**Nenhum** - DssButton é um componente atômico que não depende de outros componentes DSS.
+**`DssIcon`** — O DssButton compõe o primitivo `DssIcon` para renderizar os ícones (`icon`, `icon-right`), conforme o **Contrato de Composição de Ícone (CCI §3.1)** e o **Princípio #14 — Composição de Ícones**. O ícone é embutido em modo `inline` (escala com a `font-size` do botão) e `decorative` (`aria-hidden`, pois o botão já possui label textual). O glifo é resolvido pela cadeia `DssIcon → QIcon`; o DssButton não declara mais `font-family: 'Material Icons'`.
 
 **Dependências externas:**
 - Quasar Framework `q-btn` (internamente)
-- Material Icons (recomendado, mas opcional)
+- A biblioteca de ícones (Material Icons recomendada) é resolvida pelo `DssIcon → QIcon`
 
 ---
 
@@ -216,8 +216,8 @@ O DssButton utiliza tokens das seguintes categorias:
 | Slot | Descrição | Uso Recomendado |
 |------|-----------|-----------------|
 | `default` | Conteúdo principal do botão | Label com formatação HTML customizada |
-| `icon` | Ícone customizado à esquerda | SVG, Font Awesome, Ionicons |
-| `icon-right` | Ícone customizado à direita | SVG, Font Awesome, Ionicons |
+| `icon-left` | Ícone customizado à esquerda (precedência sobre a prop `icon`) | `DssIcon`, SVG customizado |
+| `icon-right` | Ícone customizado à direita (precedência sobre a prop `icon-right`) | `DssIcon`, SVG customizado |
 
 ---
 
@@ -628,17 +628,29 @@ Incluir no projeto:
 
 **Ícones disponíveis:** https://fonts.google.com/icons
 
-#### Ícones Customizados via Slots
+#### Ícones Customizados via Slots (CCI §3.2)
+
+O slot nomeado tem **precedência** sobre a prop correspondente. O conteúdo
+recomendado é o próprio `DssIcon` ou um SVG — nunca um `<span>` de glifo cru.
 
 ```vue
 <template>
+  <!-- SVG customizado à esquerda -->
   <DssButton color="primary">
-    <template #icon>
+    <template #icon-left>
       <svg width="24" height="24" viewBox="0 0 24 24">
         <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
       </svg>
     </template>
     Protegido
+  </DssButton>
+
+  <!-- DssIcon explícito à direita -->
+  <DssButton color="primary">
+    Continuar
+    <template #icon-right>
+      <DssIcon name="arrow_forward" inline decorative />
+    </template>
   </DssButton>
 </template>
 ```

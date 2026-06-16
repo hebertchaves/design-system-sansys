@@ -102,3 +102,23 @@ O componente **DssCheckbox** atende integralmente aos requisitos do Design Syste
 Este arquivo e um registro historico imexivel. Qualquer alteracao requer nova auditoria completa.
 
 **Design System Sansys — Governanca DSS v2.2**
+
+---
+
+## Adendo — Migracao CCI v2.4.0 (Junho 2026)
+
+> Adendo registrado sobre o selo v2.2 imutavel. Documenta a migracao de composicao de icone (Principio #14 / DSS_ICON_COMPOSITION_CONTRACT.md) aplicada na Fase 2. O selo v2.2 permanece valido; este adendo atualiza apenas os fatos afetados pela migracao.
+
+**Mudanca:** Os glifos internos `check` (marcado) e `remove` (indeterminate) deixaram de ser `<span class="material-icons">` cru e passaram a ser compostos via `<DssIcon inline decorative>` (CCI §3.1). Marcas visuais internas fixas — **sem** API publica de icone (decisao travada #3 do CCI §7; zero props novos).
+
+**Fatos deste selo atualizados pela migracao:**
+- "Componente atomico sem dependencias de outros componentes DSS" → **DssCheckbox agora compoe `DssIcon`** (CCI §5 item 7). A atomicidade comportamental permanece; a renderizacao de glifo e delegada ao primitivo `DssIcon`.
+- `font-family: 'Material Icons'` removido de `2-composition/_base.scss` (proibido pelo CCI §3.4) — `grep -rn "Material Icons" --include="*.scss"` retorna **zero**.
+- Excecao **EXC-03** (`font-weight: normal`, requisito da fonte de icones) **removida** — deixou de existir no `_base.scss`. Total de excecoes: **6** (EXC-01, EXC-02, EXC-04, EXC-05, EXC-06, EXC-07). Linhas de referencia de EXC-01/EXC-06 reindexadas.
+- Testes de classe `material-icons`/glifo cru migrados para asseracoes de composicao (`dss-icon`, `dss-icon--inline`, `.dss-icon__inner`).
+
+**Inalterado:** API publica (`v-model`, props, evento, slot `default`), acessibilidade (WCAG 2.1 AA, `aria-hidden`, touch target via `::before`) e o aspecto visual do check/dash. Gate CCI §5: `npx sass` OK, `npx vitest run --project unit` 63/63 PASS, grep Material Icons (scss) = zero.
+
+**Selo de aspecto visual default (defaultPreview):** `modelValue: false` (unchecked) — preview **nao** contem glifo; portanto `dss.meta.json` → `visualProperties.source` **nao** foi repontado (CCI §5 item 3 = N/A) e `sync:visual-contract` **nao** foi executado (item 4 = no-op).
+
+Ref.: `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md`

@@ -111,10 +111,14 @@ describe('DssAvatar', () => {
       expect(wrapper.find('.dss-avatar__icon').text()).toBe('person')
     })
 
-    it('icon span has material-icons class', () => {
+    it('renders the icon via DssIcon composition (CCI §3.1)', () => {
       const wrapper = mount(DssAvatar, { props: { icon: 'account_circle' } })
       const icon = wrapper.find('.dss-avatar__icon')
-      expect(icon.classes()).toContain('material-icons')
+      // O ícone agora é o root do DssIcon (passthrough de classe), não mais
+      // um <span> Material Icons cru. Glifo vem do DssIcon → QIcon.
+      expect(icon.classes()).toContain('dss-icon')
+      expect(icon.classes()).toContain('dss-icon--inline')
+      expect(wrapper.find('.dss-icon__inner').exists()).toBe(true)
     })
 
     it('icon span has aria-hidden="true"', () => {

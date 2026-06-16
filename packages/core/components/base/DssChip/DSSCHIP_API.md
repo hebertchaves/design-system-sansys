@@ -25,6 +25,13 @@ O `DssChip` é um wrapper DSS baseado no QChip, com **API pública governada pel
 <DssChip icon="settings" aria-label="Configurações" />
 ```
 
+> **Renderização de ícone (CCI / Princípio #14):** todas as posições de ícone
+> (`icon`, `icon-right`, `icon-remove`, `icon-selected`) são renderizadas
+> internamente pelo primitivo **`DssIcon`** (`inline` + `decorative`), nunca como
+> `<span>` de glifo cru. A API pública (string com nome do ícone) permanece
+> idêntica. Aceita qualquer formato suportado pelo QIcon (Material Icons, `mdi-`,
+> `img:`, `svguse:`, etc.).
+
 ---
 
 ### **Variantes Visuais**
@@ -240,9 +247,13 @@ function handleRemove(event) {
 | Slot | Descrição |
 |------|-----------|
 | `default` | Conteúdo principal do chip (substitui `label`) |
-| `icon` | Ícone customizado à esquerda |
-| `icon-right` | Ícone customizado à direita |
-| `icon-remove` | Ícone customizado do botão remover |
+| `icon-left` | Ícone customizado à esquerda. **Tem precedência sobre a prop `icon`** (CCI §3.2). Conteúdo recomendado: `<DssIcon>` ou SVG. |
+| `icon-right` | Ícone customizado à direita. **Tem precedência sobre a prop `icon-right`** (CCI §3.2). Conteúdo recomendado: `<DssIcon>` ou SVG. |
+
+> **Posições internas (`selected` / `remove`):** não expõem slot nomeado.
+> Permanecem dirigidas pelas props `icon-selected` / `icon-remove` por serem
+> marca visual interna de comportamento (seleção / remoção), não pontos de
+> extensão arbitrários de conteúdo. Decisão documentada na migração v2.4.0.
 
 **Exemplo:**
 ```vue
@@ -251,10 +262,17 @@ function handleRemove(event) {
   <strong>Texto</strong> <em>Formatado</em>
 </DssChip>
 
-<!-- Ícone customizado -->
+<!-- Ícone esquerdo customizado via slot (precedência sobre a prop icon) -->
 <DssChip label="Custom Icon">
-  <template #icon>
-    <svg width="16" height="16" viewBox="0 0 16 16">
+  <template #icon-left>
+    <DssIcon name="star" inline decorative />
+  </template>
+</DssChip>
+
+<!-- SVG arbitrário no slot -->
+<DssChip label="Custom SVG">
+  <template #icon-right>
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
       <circle cx="8" cy="8" r="8" fill="currentColor"/>
     </svg>
   </template>
@@ -338,7 +356,7 @@ O DssChip implementa um subconjunto curado das props do QChip:
 **Baseado em**: QChip (Quasar Framework)
 **Governança**: Design System Sansys
 
-**Última atualização:** Janeiro 2025
+**Última atualização:** Junho 2026
 **Changelog:**
 - ✅ Implementação inicial seguindo arquitetura DSS de 4 camadas
 - ✅ 3 variantes visuais (filled, outline, flat)
@@ -346,6 +364,7 @@ O DssChip implementa um subconjunto curado das props do QChip:
 - ✅ Suporte a brands (hub, water, waste)
 - ✅ Acessibilidade WCAG 2.1 AA
 - ✅ Estados: clickable, selected, removable, disabled, dense
+- ✅ **v2.4.0** — Migração da renderização de ícone para composição via `DssIcon` (CCI / Princípio #14); slots nomeados `#icon-left` e `#icon-right` adicionados
 
 ---
 

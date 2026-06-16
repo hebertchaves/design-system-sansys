@@ -75,24 +75,14 @@
 }
 
 .dss-button__icon {
+  /* LAYOUT/SIZING apenas. O glifo é renderizado pelo DssIcon → QIcon
+     (CCI §3.1 — Composição de Ícones). O bloco de fonte de ícone foi removido
+     daqui; o host controla apenas posicionamento e tamanho.
+     `font-size` dimensiona o DssIcon embutido (inline → 1em escala com a fonte). */
   display: inline-flex;
   align-items: center;
   font-size: var(--dss-font-size-lg);
   line-height: 1;
-
-  /* Material Icons */
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'liga';
 }
 
 /* Icon positioning - Ordem natural do DOM (como Quasar) */

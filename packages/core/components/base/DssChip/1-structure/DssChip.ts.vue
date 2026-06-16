@@ -14,36 +14,55 @@
     @keydown.space.prevent="handleClick"
   >
     <!-- Selected icon (decorative - hidden from screen readers) -->
-    <span
-      v-if="showSelectedIcon"
+    <!--
+      Slot #icon-left tem precedência sobre a prop (CCI §3.2). Quando o slot é
+      fornecido, ele substitui tanto o ícone esquerdo quanto o ícone de selected
+      (ambos ocupam a posição inicial do chip).
+    -->
+    <DssIcon
+      v-if="showSelectedIcon && !$slots['icon-left']"
+      :name="computedIconSelected"
+      inline
+      decorative
       class="dss-chip__icon dss-chip__icon--selected"
-      aria-hidden="true"
-    >
-      {{ computedIconSelected }}
-    </span>
+    />
 
-    <!-- Icon Left (decorative - hidden from screen readers) -->
+    <!-- Icon Left (decorative - hidden from screen readers) — composto via DssIcon (CCI §3.1) -->
     <span
-      v-if="computedIconLeft && !showSelectedIcon"
+      v-if="$slots['icon-left'] && !showSelectedIcon"
       class="dss-chip__icon dss-chip__icon--left"
       aria-hidden="true"
     >
-      {{ computedIconLeft }}
+      <slot name="icon-left" />
     </span>
+    <DssIcon
+      v-else-if="computedIconLeft && !showSelectedIcon"
+      :name="computedIconLeft"
+      inline
+      decorative
+      class="dss-chip__icon dss-chip__icon--left"
+    />
 
     <!-- Label/Content -->
     <span v-if="label || $slots.default" class="dss-chip__label">
       <slot>{{ label }}</slot>
     </span>
 
-    <!-- Icon Right (decorative - hidden from screen readers) -->
+    <!-- Icon Right (decorative - hidden from screen readers) — composto via DssIcon (CCI §3.1) -->
     <span
-      v-if="computedIconRight && !showRemoveButton"
+      v-if="$slots['icon-right'] && !showRemoveButton"
       class="dss-chip__icon dss-chip__icon--right"
       aria-hidden="true"
     >
-      {{ computedIconRight }}
+      <slot name="icon-right" />
     </span>
+    <DssIcon
+      v-else-if="computedIconRight && !showRemoveButton"
+      :name="computedIconRight"
+      inline
+      decorative
+      class="dss-chip__icon dss-chip__icon--right"
+    />
 
     <!-- Remove button -->
     <button
@@ -54,9 +73,12 @@
       :disabled="disable"
       @click.stop="handleRemove"
     >
-      <span class="dss-chip__icon dss-chip__icon--remove" aria-hidden="true">
-        {{ computedIconRemove }}
-      </span>
+      <DssIcon
+        :name="computedIconRemove"
+        inline
+        decorative
+        class="dss-chip__icon dss-chip__icon--remove"
+      />
     </button>
 
     <!-- Ripple effect (decorative - hidden from screen readers) -->
@@ -93,6 +115,7 @@
 import { computed, useSlots } from 'vue'
 import type { ChipProps, ChipEmits } from '../types/chip.types'
 import { useChipClasses } from '../composables'
+import DssIcon from '../../DssIcon/DssIcon.vue'
 
 // ==========================================================================
 // COMPONENT NAME

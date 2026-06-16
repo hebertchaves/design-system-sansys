@@ -83,7 +83,7 @@ Wrapper DSS baseado no QAvatar, com API publica governada pelo DSS. Componente d
 ### Partes Internas
 
 1. **Root (`.dss-avatar`)**: Container principal com forma e tamanho
-2. **Icon (`.dss-avatar__icon`)**: Icone Material Icons (quando prop `icon`)
+2. **Icon (`.dss-avatar__icon`)**: Ícone renderizado via `DssIcon` (composição — CCI §3.1) quando a prop `icon` é fornecida
 3. **Content (`.dss-avatar__content`)**: Conteudo do slot (texto, imagem, etc.)
 4. **Status (`.dss-avatar__status`)**: Indicador de status (quando prop `status`)
 
@@ -95,11 +95,11 @@ Wrapper DSS baseado no QAvatar, com API publica governada pelo DSS. Componente d
 
 ### Subcomponentes DSS Utilizados
 
-**Nenhum** - DssAvatar e um componente atomico que nao depende de outros componentes DSS.
+- **`DssIcon`** — renderiza o glifo quando a prop `icon` é fornecida (modo `inline decorative`, composição via CCI §3.1). O DssAvatar não reimplementa renderização de ícone (Princípio #14).
 
 **Dependencias externas:**
 - Vue 3 (Composition API)
-- Material Icons (para prop `icon`)
+- Material Icons — biblioteca de nomes de ícone, resolvida pelo `DssIcon` → `QIcon` (não há `font-family` de ícone no SCSS do DssAvatar)
 
 ---
 

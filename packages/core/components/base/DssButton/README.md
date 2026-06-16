@@ -50,8 +50,8 @@ import { DssButton } from '@sansys/design-system'
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
 | `label` | `string` | — | Texto do botão |
-| `icon` | `string` | — | Ícone antes do label (Material Icons) |
-| `iconRight` | `string` | — | Ícone após o label |
+| `icon` | `string` | — | Ícone antes do label (renderizado via `DssIcon` — CCI §3.1) |
+| `iconRight` | `string` | — | Ícone após o label (renderizado via `DssIcon` — CCI §3.1) |
 | `color` | `string` | `'primary'` | Cor semântica ou de brand (`hub`, `water`, `waste`) |
 | `variant` | `'elevated' \| 'flat' \| 'outline' \| 'unelevated' \| 'push' \| 'glossy'` | `'elevated'` | Variante visual |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Tamanho do botão |
@@ -71,6 +71,8 @@ import { DssButton } from '@sansys/design-system'
 | Slot | Descrição |
 |------|-----------|
 | `default` | Conteúdo customizado (substitui `label` + ícones) |
+| `icon-left` | Ícone customizado à esquerda — precedência sobre a prop `icon` (CCI §3.2) |
+| `icon-right` | Ícone customizado à direita — precedência sobre a prop `iconRight` (CCI §3.2) |
 | `loading` | Slot customizado para estado de loading |
 
 ## Events

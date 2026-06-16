@@ -83,16 +83,22 @@ Wrapper DSS baseado no QChip, com API pública governada pelo Design System Sans
 | Slot | Descrição | Uso |
 |------|-----------|-----|
 | `default` | Conteúdo principal do chip | Label com formatação customizada |
-| `icon` | Ícone customizado à esquerda | SVG, Font Awesome, outros |
-| `icon-right` | Ícone customizado à direita | SVG, Font Awesome, outros |
-| `icon-remove` | Ícone customizado do botão remover | SVG customizado |
+| `icon-left` | Ícone customizado à esquerda (precedência sobre a prop `icon`) | `<DssIcon>`, SVG |
+| `icon-right` | Ícone customizado à direita (precedência sobre a prop `icon-right`) | `<DssIcon>`, SVG |
+
+> As posições internas `selected` e `remove` **não** expõem slot nomeado — são
+> dirigidas pelas props `icon-selected` / `icon-remove`. São marca visual de
+> comportamento, não pontos de extensão de conteúdo (decisão da migração v2.4.0).
 
 ### Subcomponentes DSS Utilizados
 
-**Nenhum** - DssChip é um componente atômico que não depende de outros componentes DSS.
+- **`DssIcon`** — primitivo único de ícone do DSS. Desde a v2.4.0 (CCI / Princípio #14),
+  todas as posições de ícone do DssChip (`icon`, `icon-right`, `icon-remove`,
+  `icon-selected`) são renderizadas via `DssIcon` (`inline` + `decorative`),
+  substituindo os antigos `<span>` de glifo cru.
 
-**Dependências externas:**
-- Material Icons (recomendado, mas opcional)
+**Dependências externas (via DssIcon → QIcon):**
+- Biblioteca de glifos (Material Icons recomendada, mas o QIcon aceita `mdi-`, `img:`, `svguse:`, etc.)
 
 ---
 
@@ -770,7 +776,7 @@ function removeTag(tag) {
   clickable
   @click="handleClick"
 >
-  <template #icon>
+  <template #icon-left>
     <CustomSVG />
   </template>
   Meu Chip

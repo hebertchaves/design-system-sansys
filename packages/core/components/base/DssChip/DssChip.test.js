@@ -13,7 +13,12 @@
 
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssChip from './1-structure/DssChip.ts.vue'
+
+// DssChip compõe DssIcon → QIcon (CCI / Princípio #14). O registro Quasar é
+// necessário para que o QIcon interno renderize nos testes.
+installQuasar()
 
 describe('DssChip', () => {
   // ===========================================================================
@@ -103,27 +108,32 @@ describe('DssChip', () => {
       })
     })
 
-    // Icon tests
+    // Icon tests — agora compostos via DssIcon (CCI §3.1).
+    // O glifo deixou de ser <span> cru; a posição é a raiz do DssIcon
+    // (passthrough de classe) e o glifo vem do QIcon interno.
     describe('icons', () => {
-      it('renders left icon', () => {
+      it('renders left icon via DssIcon composition', () => {
         const wrapper = mount(DssChip, {
           props: { icon: 'star' }
         })
         const icon = wrapper.find('.dss-chip__icon--left')
         expect(icon.exists()).toBe(true)
-        expect(icon.text()).toBe('star')
+        expect(icon.classes()).toContain('dss-icon')
+        expect(icon.classes()).toContain('dss-icon--inline')
+        expect(wrapper.find('.dss-chip__icon--left .dss-icon__inner').exists()).toBe(true)
       })
 
-      it('renders right icon', () => {
+      it('renders right icon via DssIcon composition', () => {
         const wrapper = mount(DssChip, {
           props: { iconRight: 'arrow_forward' }
         })
         const icon = wrapper.find('.dss-chip__icon--right')
         expect(icon.exists()).toBe(true)
-        expect(icon.text()).toBe('arrow_forward')
+        expect(icon.classes()).toContain('dss-icon')
+        expect(wrapper.find('.dss-chip__icon--right .dss-icon__inner').exists()).toBe(true)
       })
 
-      it('renders selected icon when selected', () => {
+      it('renders selected icon via DssIcon when selected', () => {
         const wrapper = mount(DssChip, {
           props: {
             selected: true,
@@ -132,7 +142,15 @@ describe('DssChip', () => {
         })
         const icon = wrapper.find('.dss-chip__icon--selected')
         expect(icon.exists()).toBe(true)
-        expect(icon.text()).toBe('check')
+        expect(icon.classes()).toContain('dss-icon')
+        expect(wrapper.find('.dss-chip__icon--selected .dss-icon__inner').exists()).toBe(true)
+      })
+
+      it('icons are decorative (aria-hidden) on the DssIcon root', () => {
+        const wrapper = mount(DssChip, {
+          props: { icon: 'star' }
+        })
+        expect(wrapper.find('.dss-chip__icon--left').attributes('aria-hidden')).toBe('true')
       })
     })
 
@@ -152,7 +170,7 @@ describe('DssChip', () => {
         expect(wrapper.find('.dss-chip__remove').exists()).toBe(false)
       })
 
-      it('applies custom remove icon', () => {
+      it('applies custom remove icon via DssIcon composition', () => {
         const wrapper = mount(DssChip, {
           props: {
             removable: true,
@@ -160,7 +178,9 @@ describe('DssChip', () => {
           }
         })
         const removeIcon = wrapper.find('.dss-chip__icon--remove')
-        expect(removeIcon.text()).toBe('delete')
+        expect(removeIcon.exists()).toBe(true)
+        expect(removeIcon.classes()).toContain('dss-icon')
+        expect(wrapper.find('.dss-chip__icon--remove .dss-icon__inner').exists()).toBe(true)
       })
     })
   })
@@ -240,37 +260,87 @@ describe('DssChip', () => {
       expect(wrapper.find('.custom-content').exists()).toBe(true)
     })
 
-    // NOTA (Onda P0): a implementação canônica (rebuild próprio, não wrapper
-    // de QChip) NÃO possui slots nomeados de ícone — ícones são definidos
-    // pelas props icon / iconRight / iconRemove. Os testes anteriores
-    // exercitavam slots inexistentes e só "passavam" porque o runner não
-    // tinha registro Quasar (gate de testes inexecutável até a Onda P0).
-    it('renderiza ícone esquerdo via prop icon (sem slot nomeado)', () => {
+    // CCI §3.2 — slots nomeados #icon-left e #icon-right adicionados na
+    // migração para composição de ícone. Têm precedência sobre as props
+    // icon / iconRight. As posições internas (selected / remove) permanecem
+    // dirigidas por prop (decisão documentada no relatório de migração).
+    it('renderiza ícone esquerdo via prop icon (composto via DssIcon)', () => {
       const wrapper = mount(DssChip, {
         props: { icon: 'star', label: 'Chip' }
       })
       const icon = wrapper.find('.dss-chip__icon--left')
       expect(icon.exists()).toBe(true)
-      expect(icon.text()).toBe('star')
+      expect(icon.classes()).toContain('dss-icon')
     })
 
-    it('renderiza ícone direito via prop iconRight (sem slot nomeado)', () => {
+    it('renderiza ícone direito via prop iconRight (composto via DssIcon)', () => {
       const wrapper = mount(DssChip, {
         props: { iconRight: 'arrow_drop_down', label: 'Chip' }
       })
       const icon = wrapper.find('.dss-chip__icon--right')
       expect(icon.exists()).toBe(true)
-      expect(icon.text()).toBe('arrow_drop_down')
+      expect(icon.classes()).toContain('dss-icon')
     })
 
-    it('renderiza botão de remover com ícone via prop iconRemove', () => {
+    it('renderiza botão de remover com ícone via prop iconRemove (composto via DssIcon)', () => {
       const wrapper = mount(DssChip, {
         props: { removable: true, iconRemove: 'close', label: 'Chip' }
       })
       expect(wrapper.find('.dss-chip__remove').exists()).toBe(true)
       const icon = wrapper.find('.dss-chip__icon--remove')
       expect(icon.exists()).toBe(true)
-      expect(icon.text()).toBe('close')
+      expect(icon.classes()).toContain('dss-icon')
+    })
+
+    // Slot #icon-left (CCI §3.2)
+    it('renderiza conteúdo do slot #icon-left dentro de .dss-chip__icon--left', () => {
+      const wrapper = mount(DssChip, {
+        props: { label: 'Chip' },
+        slots: { 'icon-left': '<i class="custom-left">L</i>' }
+      })
+      const icon = wrapper.find('.dss-chip__icon--left')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('.custom-left').exists()).toBe(true)
+    })
+
+    it('slot #icon-left tem precedência sobre a prop icon', () => {
+      const wrapper = mount(DssChip, {
+        props: { icon: 'star', label: 'Chip' },
+        slots: { 'icon-left': '<i class="custom-left">L</i>' }
+      })
+      const icon = wrapper.find('.dss-chip__icon--left')
+      // É o <span> do slot, não a raiz do DssIcon (sem classe dss-icon)
+      expect(icon.classes()).not.toContain('dss-icon')
+      expect(icon.find('.custom-left').exists()).toBe(true)
+    })
+
+    it('slot #icon-left é decorativo (aria-hidden)', () => {
+      const wrapper = mount(DssChip, {
+        props: { label: 'Chip' },
+        slots: { 'icon-left': '<i class="custom-left">L</i>' }
+      })
+      expect(wrapper.find('.dss-chip__icon--left').attributes('aria-hidden')).toBe('true')
+    })
+
+    // Slot #icon-right (CCI §3.2)
+    it('renderiza conteúdo do slot #icon-right dentro de .dss-chip__icon--right', () => {
+      const wrapper = mount(DssChip, {
+        props: { label: 'Chip' },
+        slots: { 'icon-right': '<i class="custom-right">R</i>' }
+      })
+      const icon = wrapper.find('.dss-chip__icon--right')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('.custom-right').exists()).toBe(true)
+    })
+
+    it('slot #icon-right tem precedência sobre a prop iconRight', () => {
+      const wrapper = mount(DssChip, {
+        props: { iconRight: 'arrow_forward', label: 'Chip' },
+        slots: { 'icon-right': '<i class="custom-right">R</i>' }
+      })
+      const icon = wrapper.find('.dss-chip__icon--right')
+      expect(icon.classes()).not.toContain('dss-icon')
+      expect(icon.find('.custom-right').exists()).toBe(true)
     })
   })
 

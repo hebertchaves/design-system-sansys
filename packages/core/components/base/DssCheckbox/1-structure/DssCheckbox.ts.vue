@@ -33,19 +33,23 @@
       :class="controlClasses"
       aria-hidden="true"
     >
-      <!-- Check mark icon (real element - NOT pseudo-element) -->
-      <span
+      <!-- Check mark glyph — marca visual interna fixa, composta via DssIcon (CCI §3.1) -->
+      <DssIcon
         v-if="isChecked"
-        class="dss-checkbox__check material-icons"
-        aria-hidden="true"
-      >check</span>
+        name="check"
+        inline
+        decorative
+        class="dss-checkbox__check"
+      />
 
-      <!-- Indeterminate dash icon (real element - NOT pseudo-element) -->
-      <span
+      <!-- Indeterminate dash glyph — marca visual interna fixa, composta via DssIcon (CCI §3.1) -->
+      <DssIcon
         v-if="isIndeterminate"
-        class="dss-checkbox__dash material-icons"
-        aria-hidden="true"
-      >remove</span>
+        name="remove"
+        inline
+        decorative
+        class="dss-checkbox__dash"
+      />
     </span>
 
     <!-- Label RIGHT (default position) -->
@@ -87,6 +91,7 @@
 import { computed, ref, useSlots, watchEffect } from 'vue'
 import type { CheckboxProps, CheckboxEmits } from '../types/checkbox.types'
 import { useCheckboxClasses } from '../composables'
+import DssIcon from '../../DssIcon/DssIcon.vue'
 
 // ==========================================================================
 // COMPONENT NAME

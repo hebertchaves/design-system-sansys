@@ -53,9 +53,9 @@ O **DssChip** é um componente de chip/tag para exibição de informações comp
 | Parte | Descrição | Obrigatório |
 |-------|-----------|-------------|
 | **Container** | Frame principal com padding e bordas | Sim |
-| **Icon** | Ícone opcional à esquerda (slot `icon`) | Não |
+| **Icon** | Ícone opcional à esquerda (prop `icon` ou slot `icon-left`) | Não |
 | **Label** | Texto principal ou conteúdo (slot `default`) | Sim* |
-| **Icon Right** | Ícone opcional à direita (slot `icon-right`) | Não |
+| **Icon Right** | Ícone opcional à direita (prop `icon-right` ou slot `icon-right`) | Não |
 | **Remove Button** | Botão de remoção (quando `removable`) | Não |
 
 *Obrigatório: `label` ou slot `default` deve existir, exceto quando há `aria-label`.
@@ -144,9 +144,13 @@ O **DssChip** é um componente de chip/tag para exibição de informações comp
 | Slot | Descrição |
 |------|-----------|
 | `default` | Conteúdo customizado (substitui `label`) |
-| `icon` | Ícone customizado à esquerda |
-| `icon-right` | Ícone customizado à direita |
-| `icon-remove` | Ícone customizado do botão remover |
+| `icon-left` | Ícone customizado à esquerda — precedência sobre a prop `icon` (CCI §3.2) |
+| `icon-right` | Ícone customizado à direita — precedência sobre a prop `iconRight` (CCI §3.2) |
+
+> As posições `selected` e `remove` são dirigidas por prop (`iconSelected` /
+> `iconRemove`) e não expõem slot. Desde a v2.4.0, todas as posições de ícone
+> são renderizadas via **`DssIcon`** (CCI / Princípio #14), não mais como `<span>`
+> de glifo cru.
 
 ---
 

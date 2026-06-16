@@ -77,26 +77,18 @@
 }
 
 .dss-chip__icon {
+  /*
+   * Glifo renderizado via DssIcon → QIcon (CCI / Princípio #14).
+   * Esta classe controla APENAS layout e sizing (passthrough na raiz do
+   * DssIcon embutido com `inline`). A definição de fonte de glifo vive no
+   * DssIcon — NUNCA declarar `font-family` de glifo aqui.
+   */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: var(--dss-font-size-md);
   line-height: 1;
   flex-shrink: 0;
-
-  /* Material Icons */
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'liga';
 }
 
 /* Icon positioning */

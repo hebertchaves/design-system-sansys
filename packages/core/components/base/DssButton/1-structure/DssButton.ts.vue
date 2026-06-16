@@ -43,28 +43,44 @@
       ></span>
     </span>
 
-    <!-- Icon Left (decorative - hidden from screen readers) -->
+    <!-- Icon Left — composto via DssIcon (CCI §3.1 / §3.2).
+         Slot #icon-left tem precedência sobre a prop icon (CCI §3.2). -->
     <span
-      v-if="computedIconLeft && !loading"
+      v-if="$slots['icon-left'] && !loading"
       class="dss-button__icon dss-button__icon--left"
       aria-hidden="true"
     >
-      {{ computedIconLeft }}
+      <slot name="icon-left"></slot>
     </span>
+    <DssIcon
+      v-else-if="computedIconLeft && !loading"
+      :name="computedIconLeft"
+      inline
+      decorative
+      class="dss-button__icon dss-button__icon--left"
+    />
 
     <!-- Label/Content -->
     <span v-if="label || $slots.default" class="dss-button__label">
       <slot>{{ label }}</slot>
     </span>
 
-    <!-- Icon Right (decorative - hidden from screen readers) -->
+    <!-- Icon Right — composto via DssIcon (CCI §3.1 / §3.2).
+         Slot #icon-right tem precedência sobre a prop iconRight (CCI §3.2). -->
     <span
-      v-if="computedIconRight && !loading"
+      v-if="$slots['icon-right'] && !loading"
       class="dss-button__icon dss-button__icon--right"
       aria-hidden="true"
     >
-      {{ computedIconRight }}
+      <slot name="icon-right"></slot>
     </span>
+    <DssIcon
+      v-else-if="computedIconRight && !loading"
+      :name="computedIconRight"
+      inline
+      decorative
+      class="dss-button__icon dss-button__icon--right"
+    />
 
     <!-- Ripple effect (decorative - hidden from screen readers) -->
     <span v-if="ripple" class="dss-button__ripple" aria-hidden="true"></span>
@@ -106,6 +122,7 @@ import {
   useButtonComponent,
   useButtonProgress
 } from '../composables'
+import DssIcon from '../../DssIcon/DssIcon.vue'
 
 // ==========================================================================
 // COMPONENT NAME

@@ -119,32 +119,20 @@
    ========================================================================== */
 
 /*
- * Icones de check e dash sao <span> com Material Icons.
+ * Glifos de check e dash sao compostos via <DssIcon inline decorative>
+ * (CCI §3.1). A renderizacao do glifo (via QIcon, no DssIcon) e
+ * responsabilidade do DssIcon — este componente NAO declara font-family.
+ *
+ * Aqui mantemos apenas: SIZING (font-size dirige o glifo via inline=1em),
+ * COR (herda do controle: text-white/brand) e LINE-HEIGHT.
  * NUNCA usar ::after para renderizar checkmark ou dash.
  * Convenção DSS: ::after reservado para efeitos visuais.
  */
 .dss-checkbox__check,
 .dss-checkbox__dash {
-  /* Material Icons font */
-  font-family: 'Material Icons';
-  /*
-   * EXCECAO DOCUMENTADA: font-weight: normal
-   * Requisito tecnico da fonte Material Icons.
-   * Precedente: DssChip._base.scss
-   */
-  font-weight: normal;
-  font-style: normal;
+  /* Sizing: como DssIcon e inline (1em), o font-size do host dimensiona o glifo */
   font-size: var(--dss-font-size-sm); /* 14px */
   line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'liga';
 
   /* Cor do icone - herda do pai (text-white via composable ou token de brand) */
   color: inherit;

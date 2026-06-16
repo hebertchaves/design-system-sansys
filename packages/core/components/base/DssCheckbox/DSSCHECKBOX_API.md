@@ -180,6 +180,8 @@ function onValueChange(newValue) {
 |------|-----------|
 | `default` | Conteúdo customizado do label. Sobrescreve prop `label` quando presente |
 
+> **Sem slot de ícone.** Os glifos `check` (marcado) e `remove` (indeterminate) são **marcas visuais internas fixas**, compostas via `<DssIcon inline decorative>` (CCI §3.1). Não há API pública de ícone — por decisão travada (#3 do CCI §7), este refactor **não** adiciona props `checked-icon`/`indeterminate-icon`. Paridade com o Quasar fica para uma mudança aditiva futura.
+
 **Exemplo:**
 ```vue
 <!-- Slot default com HTML -->

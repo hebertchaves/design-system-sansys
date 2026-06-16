@@ -163,6 +163,16 @@ O conceito unico "Golden Component" foi formalizado em tres conceitos distintos 
 - **Golden Context para Fase 3:** DssDataCard torna-se a referência de composição para componentes aninhados em profundidade
 - **Testes:** 100% de cobertura incluindo todos os subcomponentes internos
 
+### Composição de Ícone — Princípio #14 / CCI (16 Jun 2026)
+
+Migração de governança que tornou o **`DssIcon` o primitivo único de renderização de ícone** (ver [DSS_ICON_COMPOSITION_CONTRACT.md](./DSS_ICON_COMPOSITION_CONTRACT.md)). Os componentes de referência foram **re-certificados** sob o novo princípio:
+
+- **DssChip** (Golden Reference interativo) — as 4 posições de ícone (`icon`, `iconRight`, `iconSelected`, `iconRemove`) passaram a compor `DssIcon`; slots `#icon-left`/`#icon-right` adicionados; `font-family: 'Material Icons'` removido do SCSS. Gate verde (sass OK, 53/53, grep zero). Como Golden Reference, **modela a composição de ícone via DssIcon** — reimplementar glifo em `<span>` cru passa a ser anti-pattern proibido (Princípio #14).
+- **DssButton** (Golden Sample de documentação) — `icon`/`iconRight` compõem `DssIcon`; slots `#icon-left`/`#icon-right`; SCSS limpo. Gate verde (sass OK, 99/99, grep zero). Como Golden Sample, **modela a documentação** dessa composição.
+- Piloto **DssAvatar** e **DssCheckbox** migrados no mesmo lote (não-Golden).
+
+> **Diretriz vinculante:** nenhum componente DSS reimplementa renderização de ícone. O glifo é responsabilidade do `DssIcon` → `QIcon`. Ver Princípio #14 (CLAUDE.md) e CCI §3.
+
 ---
 
 ## 6. Documentos Relacionados

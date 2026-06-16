@@ -6,6 +6,51 @@
 
 ---
 
+## [2.4.0] — Junho 2026 — Composição de Ícone via DssIcon (CCI / Princípio #14)
+
+**Motivo:** Migração da renderização de ícone do DssChip para o primitivo único
+`DssIcon`, conforme o **Contrato de Composição de Ícone (CCI)** e o **Princípio #14**.
+DssChip é **Golden Reference interativo** — esta migração exige re-certificação.
+
+### Alterações de código
+- **`1-structure/DssChip.ts.vue`** — as **quatro** posições de ícone
+  (`icon` esquerdo, `iconRight`, `iconSelected`, `iconRemove`) deixaram de ser
+  `<span>` de glifo cru com `{{ }}` e passaram a ser compostas via
+  `<DssIcon :name="..." inline decorative class="dss-chip__icon dss-chip__icon--{pos}" />`.
+  Import canônico: `import DssIcon from '../../DssIcon/DssIcon.vue'`.
+  A11y preservada (ícones decorativos / `aria-hidden`). API pública inalterada.
+- **`2-composition/_base.scss`** — removidos `font-family: 'Material Icons'`,
+  `font-feature-settings: 'liga'` e demais propriedades de fonte de glifo da regra
+  `.dss-chip__icon`. Mantidos layout/sizing e os modificadores de posição
+  (`--left/--right/--selected/--remove`). A fonte do glifo agora vive no DssIcon.
+
+### Capacidade nova (aditiva)
+- Slots nomeados **`#icon-left`** e **`#icon-right`** (CCI §3.2), com **precedência**
+  sobre as props `icon` / `iconRight`. Conteúdo recomendado: `<DssIcon>` ou SVG.
+- **Decisão de escopo:** as posições internas `selected` e `remove` **não** expõem
+  slot nomeado — são marca visual de comportamento (seleção / remoção), não pontos
+  de extensão de conteúdo arbitrário. Permanecem dirigidas por `iconSelected` /
+  `iconRemove`. (Ver relatório de migração.)
+
+### Testes
+- `DssChip.test.js` — `installQuasar()` adicionado (necessário para o QIcon interno
+  renderizar). Asserções de glifo cru (`icon.text() === 'star'`) substituídas por
+  asserções de composição (`classes()` contém `dss-icon` + `.dss-icon__inner` existe).
+  Adicionada cobertura dos slots `#icon-left` / `#icon-right`, incluindo precedência
+  sobre prop e decoratividade (`aria-hidden`).
+
+### Documentação
+- `DSSCHIP_API.md`, `README.md`, `DssChip.md` atualizados: seção de slots
+  (`#icon-left` / `#icon-right`), nota de composição via DssIcon, e correção de
+  "Subcomponentes DSS Utilizados" (era **"Nenhum"** → agora declara `DssIcon`).
+
+### Meta / Contrato Visual
+- `dss.meta.json` **não alterado**: o `defaultPreview` do DssChip usa apenas
+  `label` (sem ícone), logo não há `source` de ícone para repontar (CCI §5 item 3
+  → **N/A**). `sync:visual-contract` não executado (consolidação pelo orquestrador).
+
+---
+
 ## 🆕 Implementação Inicial
 
 ### ✅ 1. Arquitetura de 4 Camadas Implementada

@@ -89,11 +89,15 @@
 }
 
 /* ========================================
-   ICONE (Material Icons)
+   ICONE (wrapper de layout)
    ======================================== */
 
+// O glifo agora e renderizado pelo DssIcon (DssIcon -> QIcon), conforme
+// o Contrato de Composicao de Icone (CCI §3.1). Esta classe e aplicada
+// na raiz do DssIcon (passthrough de classe, CCI §2.4) e mantem apenas
+// o layout/sizing do wrapper. O font-size define o tamanho do icone
+// herdado pelo DssIcon inline (font-size: inherit, CCI §2.2).
 .dss-avatar__icon {
-  font-family: 'Material Icons';
   font-size: var(--dss-icon-size-md);
   line-height: 1;
   display: flex;
@@ -102,9 +106,6 @@
 
   // Prevenir selecao do icone
   user-select: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 /* ========================================

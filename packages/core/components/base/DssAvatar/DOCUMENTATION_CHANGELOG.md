@@ -4,6 +4,15 @@ Historico de alteracoes na documentacao do componente DssAvatar.
 
 ---
 
+## [2.4.0] - Junho 2026
+
+### Alterado (Princípio #14 — Composição de Ícones / CCI, componente PILOTO da Fase 2)
+- Renderização de ícone migrada de `<span>` Material Icons cru para composição via **`DssIcon`** (`inline decorative`). API pública (`icon="..."`) inalterada.
+- Removido `font-family: 'Material Icons'` de `2-composition/_base.scss` (proibido pelo CCI §3.4). Glifo agora resolvido por `DssIcon` → `QIcon`.
+- Seção "Subcomponentes DSS Utilizados" atualizada: DssAvatar agora compõe `DssIcon`.
+- Teste de classe `material-icons` substituído por teste de composição via DssIcon.
+- Ref.: `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md`
+
 ## [2.2.1] - Janeiro 2026
 
 ### Corrigido (Auditoria DSS v2.2)

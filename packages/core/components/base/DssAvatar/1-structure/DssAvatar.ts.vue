@@ -7,15 +7,15 @@
     :aria-label="ariaLabel"
     @click="handleClick"
   >
-    <!-- Ícone (se fornecido) -->
-    <span
+    <!-- Ícone (se fornecido) — composto via DssIcon (CCI §3.1) -->
+    <DssIcon
       v-if="icon"
-      class="dss-avatar__icon material-icons"
+      :name="icon"
+      inline
+      decorative
+      class="dss-avatar__icon"
       :style="iconStyle"
-      aria-hidden="true"
-    >
-      {{ icon }}
-    </span>
+    />
 
     <!-- Conteúdo (texto, imagem, etc.) -->
     <div v-if="!icon" :style="contentStyle" class="dss-avatar__content">
@@ -63,6 +63,7 @@ import { ref } from 'vue'
 import type { AvatarProps, AvatarExpose } from '../types/avatar.types'
 import { useAvatarClasses } from '../composables/useAvatarClasses'
 import { useAvatarStyles } from '../composables/useAvatarStyles'
+import DssIcon from '../../DssIcon/DssIcon.vue'
 
 // ==========================================================================
 // COMPONENT NAME

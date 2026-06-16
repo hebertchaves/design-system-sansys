@@ -30,7 +30,7 @@ Componente de checkbox do Design System Sansys baseado em `<input type="checkbox
 - ✅ **Brandabilidade multi-marca** — Suporte automático a Hub, Water, Waste
 - ✅ **3 modos de operação** — Toggle simples (boolean), ciclo de 3 estados (unchecked → checked → indeterminate), modo grupo (array)
 - ✅ **Tokens rastreáveis** — Tokens de compact control, espaçamento, tipografia, bordas, motion e acessibilidade
-- ✅ **Ícones como elementos reais** — Check (✓) e dash (—) são `<span class="material-icons">`, NUNCA pseudo-elementos
+- ✅ **Ícones como elementos reais** — Check (✓) e dash (—) são compostos via `<DssIcon inline decorative>` (CCI §3.1), NUNCA pseudo-elementos. Os glifos `check`/`remove` são marcas visuais internas fixas (não API pública).
 
 ---
 
@@ -75,8 +75,8 @@ Componente de checkbox do Design System Sansys baseado em `<input type="checkbox
 1. **Root (`<label class="dss-checkbox">`)**: Elemento raiz. `<label>` vincula automaticamente o input nativo.
 2. **Native Input (`<input type="checkbox" class="dss-checkbox__native">`)**: Input oculto via sr-only. Controla foco, teclado, `aria-checked`, `indeterminate`.
 3. **Control Indicator (`<span class="dss-checkbox__control">`)**: Caixa visual do checkbox. `aria-hidden="true"`.
-4. **Check Icon (`<span class="dss-checkbox__check material-icons">`)**: Ícone "check" do Material Icons quando marcado. Elemento real `<span>`, NUNCA pseudo-elemento.
-5. **Dash Icon (`<span class="dss-checkbox__dash material-icons">`)**: Ícone "remove" do Material Icons quando indeterminate. Elemento real `<span>`, NUNCA pseudo-elemento.
+4. **Check Icon (`<DssIcon name="check" inline decorative class="dss-checkbox__check">`)**: Glifo "check" quando marcado, composto via DssIcon (CCI §3.1). Elemento real (raiz `<span>` do DssIcon), NUNCA pseudo-elemento.
+5. **Dash Icon (`<DssIcon name="remove" inline decorative class="dss-checkbox__dash">`)**: Glifo "remove" quando indeterminate, composto via DssIcon (CCI §3.1). Elemento real (raiz `<span>` do DssIcon), NUNCA pseudo-elemento.
 6. **Label (`<span class="dss-checkbox__label">`)**: Texto do label. Renderizado apenas quando há conteúdo (prop `label` ou slot `default`).
 
 ### Slots Disponíveis
@@ -87,10 +87,10 @@ Componente de checkbox do Design System Sansys baseado em `<input type="checkbox
 
 ### Subcomponentes DSS Utilizados
 
-**Nenhum** — DssCheckbox é um componente atômico que não depende de outros componentes DSS.
+- **`DssIcon`** — Renderiza os glifos internos `check` (marcado) e `remove` (indeterminate) via `<DssIcon inline decorative>` (CCI §3.1). Os glifos são marcas visuais internas fixas, **não** expostas como API pública (decisão travada #3 do CCI §7 — sem props `checked-icon`/`indeterminate-icon` neste refactor). O DssIcon encapsula o parser de formatos do QIcon e o modelo de a11y do DSS.
 
 **Dependências externas:**
-- Material Icons (obrigatória para ícones de check e dash)
+- A renderização do glifo (Material Icons via QIcon) é responsabilidade interna do `DssIcon`; o DssCheckbox não declara `font-family` nem acopla diretamente à biblioteca de ícones.
 
 ---
 
@@ -170,12 +170,11 @@ Valores não-tokenizados presentes no SCSS do componente, com justificativa téc
 
 | ID | Valor | Arquivo | Linha | Racional |
 |----|-------|---------|-------|----------|
-| EXC-01 | `brightness(0.95)` | `_base.scss` | 275 | Valor canônico DSS para hover de controles interativos em light mode. Ref: CLAUDE.md Princípio #8 |
+| EXC-01 | `brightness(0.95)` | `_base.scss` | 271 | Valor canônico DSS para hover de controles interativos em light mode. Ref: CLAUDE.md Princípio #8 |
 | EXC-02 | `brightness(1.10)` | `_states.scss` | 33 | Valor canônico DSS para hover em dark mode (clareia fundos escuros). Ref: CLAUDE.md Princípio #8 |
-| EXC-03 | `font-weight: normal` | `_base.scss` | 130 | Requisito técnico da fonte Material Icons. Precedente: DssChip `_base.scss` |
 | EXC-04 | `saturate(1.2)` | `_states.scss` | 83 | Valor canônico DSS para high contrast mode. Ref: CLAUDE.md Princípio #8 |
 | EXC-05 | `2px`, `3px` hardcoded | `_states.scss` | 156, 181 | Tokens CSS custom properties são ignorados em `forced-colors: active`. Precedente: DssChip `_states.scss` |
-| EXC-06 | `brightness(0.90)` | `_base.scss` | 289 | Valor canônico DSS para active state de controles interativos em light mode. Precedente: DssChip `_base.scss`. Ref: CLAUDE.md Princípio #8 |
+| EXC-06 | `brightness(0.90)` | `_base.scss` | 285 | Valor canônico DSS para active state de controles interativos em light mode. Precedente: DssChip `_base.scss`. Ref: CLAUDE.md Princípio #8 |
 | EXC-07 | `brightness(1.20)` | `_states.scss` | 45 | Valor canônico DSS para active state em dark mode (clareia fundos escuros). Precedente: DssChip `_states.scss`. Ref: CLAUDE.md Princípio #8 |
 
 ### 🔗 Links Rápidos
@@ -419,7 +418,10 @@ O DssCheckbox utiliza `<input type="checkbox">` nativo, que provê automaticamen
     aria-label="Aceitar termos"
   />
   <span class="dss-checkbox__control" aria-hidden="true">
-    <span class="dss-checkbox__check material-icons" aria-hidden="true">check</span>
+    <!-- DssIcon name="check" inline decorative → raiz <span class="dss-checkbox__check dss-icon ..." aria-hidden="true"> -->
+    <span class="dss-checkbox__check dss-icon dss-icon--inline" aria-hidden="true">
+      <i class="dss-icon__inner q-icon ...">check</i>
+    </span>
   </span>
   <span class="dss-checkbox__label">Aceitar termos</span>
 </label>
@@ -869,7 +871,7 @@ const selection = ref<string[]>([])
 
 ### Problema: Ícones de check/dash não aparecem
 
-**Causa:** Material Icons não está carregada.
+**Causa:** A fonte de ícones (Material Icons), usada pelo `DssIcon` → QIcon para renderizar os glifos `check`/`remove`, não está carregada.
 
 **Solução:**
 ```html

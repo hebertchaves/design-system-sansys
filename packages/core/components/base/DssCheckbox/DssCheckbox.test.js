@@ -142,20 +142,27 @@ describe('DssCheckbox', () => {
       expect(wrapper.classes()).toContain('dss-checkbox--checked')
     })
 
-    it('renders check icon when checked', () => {
+    it('renders check icon via DssIcon composition when checked (CCI §3.1)', () => {
       const wrapper = mount(DssCheckbox, {
         props: { modelValue: true }
       })
-      expect(wrapper.find('.dss-checkbox__check').exists()).toBe(true)
-      expect(wrapper.find('.dss-checkbox__check').text()).toBe('check')
+      const check = wrapper.find('.dss-checkbox__check')
+      expect(check.exists()).toBe(true)
+      // Glifo agora vem do DssIcon → QIcon (composição), não mais <span> cru.
+      expect(check.classes()).toContain('dss-icon')
+      expect(check.classes()).toContain('dss-icon--inline')
+      expect(check.find('.dss-icon__inner').exists()).toBe(true)
     })
 
-    it('renders dash icon when indeterminate', () => {
+    it('renders dash icon via DssIcon composition when indeterminate (CCI §3.1)', () => {
       const wrapper = mount(DssCheckbox, {
         props: { modelValue: null }
       })
-      expect(wrapper.find('.dss-checkbox__dash').exists()).toBe(true)
-      expect(wrapper.find('.dss-checkbox__dash').text()).toBe('remove')
+      const dash = wrapper.find('.dss-checkbox__dash')
+      expect(dash.exists()).toBe(true)
+      expect(dash.classes()).toContain('dss-icon')
+      expect(dash.classes()).toContain('dss-icon--inline')
+      expect(dash.find('.dss-icon__inner').exists()).toBe(true)
     })
 
     it('does not render icons when unchecked', () => {
@@ -408,22 +415,26 @@ describe('DssCheckbox', () => {
   // ===========================================================================
 
   describe('Structure', () => {
-    it('check icon is a real <span> element, not a pseudo-element', () => {
+    it('check icon is a real element (DssIcon composition), not a pseudo-element', () => {
       const wrapper = mount(DssCheckbox, {
         props: { modelValue: true }
       })
       const check = wrapper.find('.dss-checkbox__check')
+      // Raiz do DssIcon é um <span> (single-root); o glifo é renderizado
+      // pelo DssIcon → QIcon, não por pseudo-elemento.
       expect(check.element.tagName).toBe('SPAN')
-      expect(check.classes()).toContain('material-icons')
+      expect(check.classes()).toContain('dss-icon')
+      expect(check.find('.dss-icon__inner').exists()).toBe(true)
     })
 
-    it('dash icon is a real <span> element, not a pseudo-element', () => {
+    it('dash icon is a real element (DssIcon composition), not a pseudo-element', () => {
       const wrapper = mount(DssCheckbox, {
         props: { modelValue: null }
       })
       const dash = wrapper.find('.dss-checkbox__dash')
       expect(dash.element.tagName).toBe('SPAN')
-      expect(dash.classes()).toContain('material-icons')
+      expect(dash.classes()).toContain('dss-icon')
+      expect(dash.find('.dss-icon__inner').exists()).toBe(true)
     })
 
     it('native input uses sr-only class pattern', () => {

@@ -1,5 +1,30 @@
 # DssButton - Changelog da Documentação
 
+## [2.4.0] — Junho 2026 — Composição de Ícone (CCI / Princípio #14)
+
+**Motivo:** Migração da renderização de ícone para o primitivo `DssIcon`,
+conforme o **Contrato de Composição de Ícone (CCI §3.1/§3.2)** e o
+**Princípio #14 — Composição de Ícones**. Re-certificação do Golden Reference.
+
+**Mudanças:**
+- ✅ Props `icon` / `icon-right` agora renderizam `<DssIcon inline decorative>` em vez de `<span>` com glifo cru. **API pública inalterada** (correção de encanamento, não breaking change).
+- ✅ Removido o bloco de fonte de ícone (`font-family: 'Material Icons'`, `font-feature-settings: 'liga'`, etc.) de `.dss-button__icon` em `2-composition/_base.scss`. A regra mantém apenas layout/sizing; o glifo vem de `DssIcon → QIcon`.
+- ✅ Adicionados slots nomeados `#icon-left` e `#icon-right` (CCI §3.2) — quando preenchidos, têm precedência sobre a prop correspondente. Slot `default` (label) preservado.
+- ✅ Seção "Subcomponentes DSS Utilizados" corrigida de **"Nenhum"** para **`DssIcon`** (era factualmente incorreta após a migração).
+- ✅ Slot legado `#icon` renomeado para `#icon-left` na documentação e nos exemplos (alinhamento com o template).
+- ✅ Acessibilidade preservada: ícone permanece `decorative` (`aria-hidden`), pois o botão possui label textual (CCI §3.3).
+- ✅ Testes migrados: asserções de glifo cru substituídas por asserção de composição (`.dss-icon` + `.dss-icon__inner`); adicionados testes de slots nomeados.
+
+**Arquivos atualizados:**
+- `1-structure/DssButton.ts.vue` (template + import `DssIcon`)
+- `2-composition/_base.scss` (remoção do bloco de fonte de ícone)
+- `DssButton.test.js` (asserções de composição + slots)
+- `DssButton.md`, `DSSBUTTON_API.md`, `README.md`, selo de conformidade
+
+**Nota meta:** O `defaultPreview` do DssButton **não inclui ícone** (preview = label "Ação Principal"); portanto, conforme CCI §5 item 3 (condicional), **não há `visualProperties.source` de ícone para repontar** e o `dss.meta.json` não foi alterado.
+
+---
+
 **Data:** Janeiro 2025
 **Versão:** DSS v2.1.0
 **Motivo:** Sincronização da documentação com código lapidado

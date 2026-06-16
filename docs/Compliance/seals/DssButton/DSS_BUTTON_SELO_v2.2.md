@@ -145,3 +145,22 @@ Não pode ser editado após emissão. Alterações no componente invalidam o sel
 Nova auditoria gera novo selo em novo arquivo.
 
 **Design System Sansys — Governança DSS v2.2**
+
+---
+
+## Adendo — Migração CCI v2.4.0 (16 Junho 2026)
+
+> Adendo registrado sobre o selo v2.2 imutável. Documenta a migração de composição de ícone (Princípio #14 / `DSS_ICON_COMPOSITION_CONTRACT.md`) aplicada na Fase 2. O selo v2.2 permanece válido; este adendo atualiza apenas os fatos afetados.
+
+**Mudança:** As props `icon`/`iconRight` deixaram de renderizar glifo em `<span>` Material Icons cru e passaram a compor `<DssIcon inline decorative>` (CCI §3.1). Adicionados slots nomeados `#icon-left`/`#icon-right` com precedência sobre a prop (CCI §3.2). API pública (`icon="save"`) inalterada.
+
+**Fatos atualizados pela migração:**
+- "Subcomponentes DSS Utilizados: Nenhum" → **DssButton agora compõe `DssIcon`** (CCI §5 item 7).
+- `font-family: 'Material Icons'` + `font-feature-settings: 'liga'` removidos de `2-composition/_base.scss` (CCI §3.4) — `grep "Material Icons" --include="*.scss"` retorna **zero**.
+- Testes de glifo cru migrados para asserção de composição (`dss-icon`, `dss-icon--inline`, `.dss-icon__inner`) + cobertura dos slots nomeados.
+
+**Papel Golden:** como **Golden Sample** (Template 13.1), o DssButton agora **modela a documentação** da composição de ícone via DssIcon.
+
+**Inalterado:** API pública, acessibilidade (WCAG 2.1 AA, `aria-hidden` nos ícones decorativos, touch target). `dss.meta.json` não repontado — `defaultPreview` é label, sem ícone (CCI §5 item 3 = N/A; `sync:visual-contract` = no-op). Gate CCI §5: `npx sass` OK, `npx vitest` 99/99, grep zero.
+
+Ref.: `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md`

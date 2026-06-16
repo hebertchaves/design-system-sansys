@@ -303,13 +303,26 @@ function handleClick(event) {
 | Slot | Descrição |
 |------|-----------|
 | `default` | Conteúdo principal do botão (substitui `label`) |
+| `icon-left` | Ícone customizado à esquerda. Precedência sobre a prop `icon` (CCI §3.2) |
+| `icon-right` | Ícone customizado à direita. Precedência sobre a prop `icon-right` (CCI §3.2) |
 
 **Exemplo:**
 ```vue
 <DssButton>
   <strong>Texto</strong> <em>Formatado</em>
 </DssButton>
+
+<!-- Ícone customizado via slot nomeado (DssIcon recomendado) -->
+<DssButton label="Continuar">
+  <template #icon-right>
+    <DssIcon name="arrow_forward" inline decorative />
+  </template>
+</DssButton>
 ```
+
+> **Composição de ícone (CCI §3.1):** As props `icon` / `icon-right` renderizam
+> internamente um `DssIcon` (`inline decorative`). O glifo é resolvido por
+> `DssIcon → QIcon`; o DssButton não declara `font-family` de ícone.
 
 ---
 

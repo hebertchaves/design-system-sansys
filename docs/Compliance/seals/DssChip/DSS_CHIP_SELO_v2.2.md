@@ -110,3 +110,24 @@ O componente **DssChip** esta em total conformidade com o Design System Sansys v
 Este arquivo e um registro historico imexivel. Qualquer alteracao requer nova auditoria completa.
 
 **Design System Sansys — Governanca DSS v2.2**
+
+---
+
+## Adendo — Migracao CCI v2.4.0 (16 Junho 2026)
+
+> Adendo registrado sobre o selo v2.2 imutavel. Documenta a migracao de composicao de icone (Principio #14 / `DSS_ICON_COMPOSITION_CONTRACT.md`) aplicada na Fase 2. O selo v2.2 permanece valido; este adendo atualiza apenas os fatos afetados.
+
+**Mudanca:** As quatro posicoes de icone (`icon`, `iconRight`, `iconSelected`, `iconRemove`) deixaram de renderizar glifo em `<span>` Material Icons cru e passaram a compor `<DssIcon inline decorative>` (CCI §3.1). Adicionados slots nomeados `#icon-left`/`#icon-right` com precedencia sobre a prop. API publica inalterada.
+
+**Decisao de design (CCI §3.2, "use julgamento"):** **nao** foram expostos slots para `selected`/`remove` — sao marca visual de **comportamento** (estado de selecao / acao de remocao), nao pontos de extensao de conteudo arbitrario. Permanecem dirigidos por `iconSelected`/`iconRemove`, agora compostos via DssIcon.
+
+**Fatos atualizados pela migracao:**
+- "Subcomponentes DSS Utilizados: Nenhum" → **DssChip agora compoe `DssIcon`** (CCI §5 item 7).
+- `font-family: 'Material Icons'` + `font-feature-settings` removidos de `2-composition/_base.scss` (CCI §3.4) — `grep "Material Icons" --include="*.scss"` retorna **zero**.
+- Testes de glifo cru migrados para composicao (`dss-icon`, `.dss-icon__inner`) + cobertura dos slots novos.
+
+**Papel Golden:** como **Golden Reference interativo**, o DssChip agora **modela a arquitetura** da composicao de icone via DssIcon — reimplementar glifo em `<span>` cru e anti-pattern proibido (Principio #14).
+
+**Inalterado:** API publica, acessibilidade (WCAG 2.1 AA, `aria-hidden`, touch target via `::before`). `dss.meta.json` nao repontado — `defaultPreview` e label, sem icone (CCI §5 item 3 = N/A; `sync:visual-contract` = no-op). Gate CCI §5: `npx sass` OK, `npx vitest` 53/53, grep zero.
+
+Ref.: `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md`

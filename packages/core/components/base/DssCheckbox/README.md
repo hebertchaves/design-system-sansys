@@ -55,8 +55,8 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 | **Root (`<label>`)** | Elemento raiz, vincula automaticamente o input | Sim |
 | **Native Input** | `<input type="checkbox">` oculto (sr-only), foco e teclado | Sim |
 | **Control** | Caixa visual do checkbox (`aria-hidden="true"`) | Sim |
-| **Check Icon** | `<span class="material-icons">check</span>` (quando checked) | Condicional |
-| **Dash Icon** | `<span class="material-icons">remove</span>` (quando indeterminate) | Condicional |
+| **Check Icon** | `<DssIcon name="check" inline decorative>` (quando checked) | Condicional |
+| **Dash Icon** | `<DssIcon name="remove" inline decorative>` (quando indeterminate) | Condicional |
 | **Label** | Texto via prop `label` ou slot `default` | Recomendado* |
 
 *Recomendado: `label`, slot `default` ou `aria-label` deve existir para acessibilidade.
@@ -96,7 +96,6 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 |----|-------|---------|----------|
 | EXC-01 | `brightness(0.95)` | `_base.scss` | Hover em light mode (canônico DSS) |
 | EXC-02 | `brightness(1.10)` | `_states.scss` | Hover em dark mode (canônico DSS) |
-| EXC-03 | `font-weight: normal` | `_base.scss` | Requisito Material Icons |
 | EXC-04 | `saturate(1.2)` | `_states.scss` | High contrast mode (canônico DSS) |
 | EXC-05 | `2px`, `3px` | `_states.scss` | Tokens ignorados em `forced-colors: active` |
 | EXC-06 | `brightness(0.90)` | `_base.scss` | Active em light mode (canônico DSS) |
@@ -307,7 +306,7 @@ const settings = reactive({ autoSave: true, spellCheck: false, darkMode: false }
 
 ### Problema: Ícones não aparecem
 
-**Causa:** Material Icons não carregada.
+**Causa:** A fonte de ícones (Material Icons), usada pelo `DssIcon` → QIcon para renderizar `check`/`remove`, não está carregada.
 **Solução:** Adicionar `<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">`.
 
 ### Problema: Modo grupo não funciona
