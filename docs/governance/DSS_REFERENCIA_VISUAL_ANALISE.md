@@ -894,7 +894,7 @@ O DSS sintetiza padrões de três referências:
 | **color (texto)** | `--dss-text-primary` | — | 2-composition/_base.scss |
 | **font-size** | `--dss-font-size-md` | `16px` | 2-composition/_base.scss |
 | **transition** | `--dss-duration-150` | `150ms` | 2-composition/_base.scss |
-| **label color (repouso)** | `--dss-gray-600` | — | 2-composition/_base.scss |
+| **label color (repouso)** | `--dss-text-secondary` | — | 2-composition/_base.scss |
 | **label color (foco)** | `--dss-action-primary` | — | 3-variants/_outlined.scss |
 <!-- END:VISUAL-TABLE:DssInput -->
 
@@ -1414,7 +1414,7 @@ O DSS sintetiza padrões de três referências:
 | **min-width** | `--dss-min-w-lg` | `240px` | 2-composition/_base.scss |
 | **border** | `--dss-gray-400` | `1px solid` | 3-variants/_filled.scss |
 | **border (foco)** | `--dss-action-primary` | `2px solid` | 3-variants/_borderless.scss |
-| **border-radius** | `--dss-radius-md` | `8px` | 2-composition/_base.scss |
+| **border-radius** | `--dss-radius-sm` | `4px` | 3-variants/_outlined.scss |
 | **painel popup** | .dss__panel + popup-content-class | — | Seletor teleportado (Seção 3 proibidos: no scoped) |
 <!-- END:VISUAL-TABLE:DssSelect -->
 
@@ -2270,5 +2270,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-06-15T20:20:26.425Z_
+_Gerado em: 2026-06-16T13:35:03.470Z_
 <!-- END:AUTO-GENERATED -->

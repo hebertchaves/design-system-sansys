@@ -14,8 +14,8 @@
   .q-field__control {
     background-color: var(--dss-gray-100);
     border: none;
-    border-radius: var(--dss-radius-md);
-    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    border-radius: var(--dss-radius-sm);
+    padding: 0 var(--dss-spacing-4); /* vertical 0: evita estouro de altura do q-field */
     transition:
       background-color var(--dss-duration-200) var(--dss-easing-standard),
       box-shadow var(--dss-duration-200) var(--dss-easing-standard);

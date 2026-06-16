@@ -6,9 +6,9 @@
 :root {
   /* Text Hierarchy */
   --dss-text-primary: var(--dss-dark);            /* #454545 - Alias semântico de --dss-text-body */
-  --dss-text-secondary: var(--dss-dark-light);    /* #B0B0B0 - Alias semântico de --dss-text-subtle */
+  --dss-text-secondary: var(--dss-gray-600);      /* #737373 - Texto secundário (~4.7:1, WCAG AA). Antes #B0B0B0 reprovava (~2.6:1) */
   --dss-text-body: var(--dss-dark);               /* #454545 - Texto principal */
-  --dss-text-subtle: var(--dss-dark-light);       /* #B0B0B0 - Texto secundário */
+  --dss-text-subtle: var(--dss-gray-600);         /* #737373 - Texto sutil legível (WCAG AA). Antes #B0B0B0 reprovava */
   --dss-text-muted: var(--dss-dark-disable);      /* #D7D7D7 - Texto terciário */
   --dss-text-inverse: var(--dss-gray-50);         /* #ffffff - Texto claro (sobre fundos escuros) */
   --dss-text-inverse-secondary: var(--dss-gray-100); /* #fafafa - Texto claro secundário (label em standout/dark) */

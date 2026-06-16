@@ -37,9 +37,9 @@
       background-color: var(--dss-gray-600);
     }
 
-    /* Texto em dark mode */
+    /* Texto em dark mode — text-body é claro no tema dark (não text-inverse=escuro) */
     .q-field__native {
-      color: var(--dss-text-inverse);
+      color: var(--dss-text-body);
     }
 
     /* Placeholder em dark mode */
@@ -67,7 +67,7 @@
     /* Chips em dark mode */
     .q-field__native .q-chip {
       background-color: var(--dss-gray-700);
-      color: var(--dss-text-inverse);
+      color: var(--dss-text-body);
     }
   }
 
@@ -77,7 +77,7 @@
     border-color: var(--dss-gray-700);
 
     .q-item {
-      color: var(--dss-text-inverse);
+      color: var(--dss-text-body);
     }
 
     .q-item__label--caption {

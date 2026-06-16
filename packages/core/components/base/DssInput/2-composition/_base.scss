@@ -76,9 +76,9 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: var(--dss-font-size-md);
-  /* gray-600 (#737373 ~4.7:1 em branco) — 1 tom mais escuro que text-secondary
-     (#B0B0B0 ~2.6:1, reprovava WCAG AA). 2 tons (gray-500) voltaria a reprovar. */
-  color: var(--dss-gray-600);
+  /* Token semântico — agora --dss-text-secondary = gray-600 (#737373 ~4.7:1, WCAG AA).
+     Padrão único com os demais form controls. */
+  color: var(--dss-text-secondary);
   pointer-events: none;
   transition: all var(--dss-duration-200) var(--dss-easing-standard);
   transform-origin: left top;

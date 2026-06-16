@@ -36,9 +36,10 @@
       background-color: var(--dss-gray-600);
     }
 
-    /* Texto do textarea em dark mode */
+    /* Texto do textarea em dark mode — text-body é claro no tema dark.
+       NÃO usar --dss-text-inverse (=gray-900 escuro no dark → texto sumia). */
     .q-field__native {
-      color: var(--dss-text-inverse);
+      color: var(--dss-text-body);
 
       &::placeholder {
         color: var(--dss-text-inverse-hint);

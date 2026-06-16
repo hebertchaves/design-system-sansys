@@ -41,6 +41,7 @@
     "--dss-gray-800",
     "--dss-gray-900",
     "--dss-radius-md",
+    "--dss-radius-sm",
     "--dss-border-width-thin",
     "--dss-border-width-md",
     "--dss-border-width-thick",
@@ -113,9 +114,9 @@
       },
       {
         "property": "border-radius",
-        "token": "--dss-radius-md",
-        "value": "8px",
-        "source": "2-composition/_base.scss"
+        "token": "--dss-radius-sm",
+        "value": "4px",
+        "source": "3-variants/_outlined.scss"
       },
       {
         "property": "painel popup",

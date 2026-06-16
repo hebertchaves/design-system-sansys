@@ -413,6 +413,11 @@
         <TestInput />
       </div>
 
+      <!-- DssSelect Test View -->
+      <div v-else-if="activeComponent === 'select'" class="component-view">
+        <TestSelect />
+      </div>
+
       <!-- DssCard Test View -->
       <div v-else-if="activeComponent === 'card'" class="component-view">
         <TestCard />
@@ -469,6 +474,7 @@ import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestInput from './TestInput.vue'
+import TestSelect from './TestSelect.vue'
 import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
 import TestDataCard from './TestDataCard.vue'

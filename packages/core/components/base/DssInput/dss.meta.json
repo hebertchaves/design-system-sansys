@@ -121,7 +121,7 @@
       },
       {
         "property": "label color (repouso)",
-        "token": "--dss-gray-600",
+        "token": "--dss-text-secondary",
         "value": null,
         "source": "2-composition/_base.scss"
       },

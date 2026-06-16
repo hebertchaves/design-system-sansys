@@ -17,8 +17,11 @@
   .q-field__control {
     background-color: transparent;
     border: var(--dss-border-width-thin) solid var(--dss-gray-400);
-    border-radius: var(--dss-radius-md);
-    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    border-radius: var(--dss-radius-sm);
+    /* Padding vertical = 0 (mesmo princípio do DssInput): o spacing-3 vertical
+       estourava a altura do q-field. A altura vem do control-container/native +
+       min-height; horizontal mantido em spacing-4. */
+    padding: 0 var(--dss-spacing-4);
   }
 
   /* Hover (não desabilitado, não readonly, não focado) */
@@ -50,11 +53,11 @@
     box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-feedback-error);
   }
 
-  /* Disabled state */
+  /* Disabled state — opacity só no wrapper (.dss-select--disabled); evita
+     empilhamento 0.4×0.4=0.16 que deixava o campo quase invisível. */
   &.dss-select--disabled .q-field__control {
     border-style: dashed;
     background-color: var(--dss-surface-muted);
-    opacity: var(--dss-opacity-disabled);
   }
 
   /* Readonly state */

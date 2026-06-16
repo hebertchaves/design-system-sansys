@@ -15,7 +15,7 @@
     border: none;
     border-bottom: var(--dss-border-width-thin) solid transparent;
     border-radius: 0;
-    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    padding: 0 var(--dss-spacing-4); /* vertical 0: evita estouro de altura do q-field */
   }
 
   /* Hover */
