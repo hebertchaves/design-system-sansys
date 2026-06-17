@@ -31,12 +31,13 @@
     }
   }
 
-  /* Focus state — dual hook: nossa classe + classe do QField */
+  /* Focus state — dual hook: nossa classe + classe do QField.
+     Indicador único: borda 2px action-primary. SEM box-shadow (o anel de 1px
+     duplicava visualmente a borda no foco). */
   &.dss-select--focused .q-field__control,
   &.q-field--focused .q-field__control {
     border-color: var(--dss-action-primary);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
   }
 
   /* Focus: label color */

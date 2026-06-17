@@ -137,10 +137,10 @@
   /* Margin bottom padrão */
   margin-bottom: var(--dss-spacing-4) !important;
   
-  /* Label acessível */
+  /* Label acessível — padrão único com o DssInput: secundário, peso normal */
   &__label {
-    color: var(--dss-text-body) !important;
-    font-weight: var(--dss-font-weight-medium) !important;
+    color: var(--dss-text-secondary) !important;
+    font-weight: var(--dss-font-weight-normal) !important;
     font-size: var(--dss-font-size-base) !important;
     margin-bottom: var(--dss-spacing-1) !important;
     
@@ -153,50 +153,37 @@
   /* Container do input */
   &__control {
     min-height: var(--dss-input-height-min) !important;
-    border-radius: var(--dss-radius-md) !important; /* refatoração Jan 2025 Sprint 1 */
+    border-radius: var(--dss-radius-sm) !important; /* alinhado ao DssInput (radius-sm) */
 
-    /* Border com nossos tokens - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
-    &:before {
-      border-color: var(--dss-gray-300) !important;
-      border-width: 1px !important;
-    }
-
-    &:hover:before {
-      border-color: var(--dss-gray-400) !important;
+    /* Quasar desenha a BORDA no :before (repouso) e o HIGHLIGHT DE FOCO no :after
+       (border currentColor=q-primary quando .q-field--highlighted). AMBOS duplicam
+       a borda que o COMPONENTE desenha (3-variants/*.scss). Neutralizados aqui p/
+       evitar borda dupla (repouso e foco). NÃO são a11y — o foco vem do estado do
+       componente + focus-ring. */
+    &:before,
+    &:after {
+      display: none !important;
     }
   }
-  
-  /* Input em foco - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
-  &.q-field--focused {
-    .q-field__control:before {
-      border-color: var(--dss-action-primary) !important;
-      border-width: 2px !important;
-    }
 
+  /* Foco — anel de foco a11y (box-shadow :focus-visible). A borda azul de foco
+     é desenhada pelo componente (.dss-{comp}--focused). */
+  &.q-field--focused {
     @include dss-focus-ring('primary');
   }
 
-  /* Input com erro - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+  /* Erro — feedback textual (a borda de erro é do componente) */
   &.q-field--error {
-    .q-field__control:before {
-      border-color: var(--dss-negative) !important;
-      border-width: 2px !important;
-    }
-    
     .q-field__label,
     .q-field__messages {
       color: var(--dss-negative) !important;
     }
-    
+
     @include dss-focus-ring('error');
   }
-  
-  /* Input com sucesso - usa tokens genéricos (refatoração Jan 2025 Sprint 2) */
+
+  /* Sucesso — feedback textual */
   &.q-field--success {
-    .q-field__control:before {
-      border-color: var(--dss-positive) !important;
-    }
-    
     .q-field__messages {
       color: var(--dss-positive) !important;
     }
