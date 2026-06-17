@@ -46,7 +46,7 @@
  * ==========================================================================
  */
 
-import { ref, computed, useSlots } from 'vue'
+import { ref, computed, useSlots, onBeforeUnmount } from 'vue'
 import { QSelect } from 'quasar'
 import type { SelectProps, SelectEmits, SelectExpose } from '../types/select.types'
 import { useSelectClasses, useSelectState, useSelectActions } from '../composables'
@@ -167,6 +167,37 @@ const panelClasses = computed(() => {
 })
 
 // ==========================================================================
+// DROPDOWN — manter ancorado ao campo durante o scroll
+// ==========================================================================
+
+/**
+ * Re-ancora o dropdown ao campo quando a página (ou qualquer container) rola.
+ *
+ * O QMenu do Quasar reposiciona no scroll apenas dos scroll-parents que ele
+ * detecta; em layouts com container de scroll customizado o menu "descola"
+ * (fica parado enquanto o campo rola). Usamos captura (3º arg = true) para
+ * detectar scroll em QUALQUER container e chamamos updateMenuPosition() do
+ * QSelect, mantendo o dropdown colado abaixo do campo.
+ */
+function repositionMenu(): void {
+  qSelectRef.value?.updateMenuPosition?.()
+}
+
+function onPopupShow(): void {
+  emit('popup-show')
+  window.addEventListener('scroll', repositionMenu, true)
+}
+
+function onPopupHide(): void {
+  emit('popup-hide')
+  window.removeEventListener('scroll', repositionMenu, true)
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', repositionMenu, true)
+})
+
+// ==========================================================================
 // EXPOSE
 // ==========================================================================
 
@@ -217,8 +248,8 @@ defineExpose<SelectExpose>({
     @focus="handleFocus"
     @blur="handleBlur"
     @clear="emit('clear')"
-    @popup-show="emit('popup-show')"
-    @popup-hide="emit('popup-hide')"
+    @popup-show="onPopupShow"
+    @popup-hide="onPopupHide"
   >
     <!-- Passthrough dinâmico de todos os slots para o QSelect -->
     <template v-for="(_, name) in slots" :key="name" #[name]="slotProps">
