@@ -18,6 +18,19 @@
     "storybook": {
       "type": "http",
       "url": "http://localhost:6006/mcp"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--headless",
+        "--isolated",
+        "--viewport",
+        "1280x720",
+        "--executablePath",
+        "/home/hebertchaves/.cache/chrome-devtools-mcp/chrome"
+      ]
     }
   }
 }
