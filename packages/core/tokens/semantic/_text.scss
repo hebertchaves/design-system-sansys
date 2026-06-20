@@ -15,7 +15,7 @@
   --dss-text-inverse-hint: var(--dss-gray-400);   /* #d4d4d4 - Placeholder/hint sobre fundo escuro */
 
   /* Text States */
-  --dss-text-disabled: var(--dss-gray-400);       /* #d4d4d4 - Texto desabilitado */
+  --dss-text-disabled: var(--dss-gray-600);       /* #737373 - Texto desabilitado (subido 2 tons: gray-400 → gray-600 p/ legibilidade; alinhado ao dark mode) */
   --dss-text-hint: var(--dss-gray-500);           /* #a3a3a3 - Placeholder/dica (texto transitório) */
 
   /* Text On-Color (sobre fundos de cor sólida) */

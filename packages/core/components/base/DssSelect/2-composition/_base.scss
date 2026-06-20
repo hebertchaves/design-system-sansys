@@ -46,11 +46,20 @@
     min-height: var(--dss-input-height-sm);
   }
 
-  /* Reserva de topo p/ a label flutuante (o auto-height do Quasar não aplica os
-     24px nativos aqui): empurra o valor selecionado p/ baixo, evitando a
-     sobreposição com a label. O native flex-shrink absorve → não cresce altura. */
+  /* Reserva de topo p/ a label flutuante — alinhada ao DssInput (spacing-3, o
+     mesmo padding-top do native do DssInput). O native absorve a reserva → não
+     cresce a altura. Default e dense usam o mesmo passo (spacing-3); antes o
+     default usava spacing-5 (reserva/altura maiores que o DssInput). */
   &.q-field--float .q-field__control-container {
-    padding-top: var(--dss-spacing-5);
+    padding-top: var(--dss-spacing-3);
+  }
+
+  /* Dense: reserva da label flutuante menor (spacing-2). A reserva default
+     (spacing-3) era grande demais p/ o campo compacto → o native menor não a
+     absorvia e o compacto preenchido crescia. spacing-2 mantém o compacto na
+     mesma altura do repouso, sem afetar o default (que permanece spacing-3). */
+  &.dss-select--dense.q-field--float .q-field__control-container {
+    padding-top: var(--dss-spacing-2);
   }
 
   /* ==========================================================================
@@ -66,9 +75,13 @@
     gap: var(--dss-spacing-1);
   }
 
-  /* Dense: padding interno reduzido */
+  /* Dense: alinhado ao DssInput — sem padding vertical simétrico (o
+     `padding: spacing-2 0` antigo inflava a altura no estado preenchido, fazendo
+     o compacto crescer acima do default) e valor em font-size sm (= native dense
+     do DssInput). A reserva da label flutuante vem do control-container abaixo. */
   &.dss-select--dense .q-field__native {
-    padding: var(--dss-spacing-2) 0;
+    padding: 0;
+    font-size: var(--dss-font-size-sm);
   }
 
   /* Placeholder do select (span vazio do QSelect) */
@@ -76,6 +89,13 @@
   .q-placeholder {
     color: var(--dss-text-hint);
     opacity: 1;
+  }
+
+  /* Placeholder em repouso via display-value (sem use-input). A classe é
+     aplicada pela estrutura quando o campo está vazio e há placeholder; pinta o
+     valor exibido (que é o texto do placeholder) como hint. Ver structure. */
+  &.dss-select--placeholder .q-field__native {
+    color: var(--dss-text-hint);
   }
 
   /* ==========================================================================
@@ -91,7 +111,10 @@
     font-size: var(--dss-font-size-sm);
     border-radius: var(--dss-radius-md);
     margin: 0;
-    height: auto;
+    /* Altura compacta (20px = QChip dense 24px − 4px): evita que o chip
+       sobreponha a label flutuante no modo multiple + use-chips. */
+    height: var(--dss-compact-control-height-xs);
+    min-height: var(--dss-compact-control-height-xs);
   }
 
   .q-field__native .q-chip__content {
@@ -113,6 +136,53 @@
     font-size: var(--dss-font-size-md);
     color: var(--dss-text-secondary);
     transition: all var(--dss-duration-200) var(--dss-easing-standard);
+  }
+
+  /* Repouso (não-float): centraliza verticalmente a label no campo, mesmo
+     princípio do DssInput (top:50% + translateY(-50%)). O `top:18px` nativo do
+     Quasar é calibrado para a label menor dele; com a label DSS (font-size-md,
+     line-height 25px) ela cai ~2,5px abaixo do centro. O escopo `:not(.q-field--float)`
+     deixa o estado flutuante 100% governado pelo Quasar — só o repouso é ajustado. */
+  &:not(.q-field--float) .q-field__label {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Tamanho da label flutuante alinhado ao DssInput. O _quasar-overrides força
+     `font-size: var(--dss-font-size-base) !important` em toda .q-field__label;
+     por isso precisamos de `!important` + maior especificidade para alinhar:
+     - flutuante (default): sm
+     - dense (repouso e flutuante): sm */
+  &.q-field--float .q-field__label {
+    font-size: var(--dss-font-size-sm) !important;
+    /* Posição da label flutuante IDÊNTICA ao DssInput: ancorada no topo
+       (spacing-0), escala a partir do topo-esquerda. O Quasar flutua com
+       `top:18px` + `transform: translateY(-40%) scale(0.75)` — calibrado p/ o
+       campo de 56px antigo; no campo compacto (47px) isso jogava a label p/
+       baixo, colando no valor. Adotamos o MESMO modelo do DssInput
+       (`translateY(0)`): sem o -40% não há "estouro" do box, então o top correto
+       é `spacing-0` (igual ao input) — não `spacing-2`, que só compensava o -40%. */
+    top: var(--dss-spacing-0);
+    transform: translateY(0) scale(0.75);
+    transform-origin: left top;
+  }
+
+  /* Dense (repouso e flutuante): label em sm. Antes o flutuante caía p/ xs —
+     pequeno demais; mantemos sm também ao flutuar (igual ao DssInput dense). */
+  &.dss-select--dense .q-field__label {
+    font-size: var(--dss-font-size-sm) !important;
+  }
+
+  /* Altura do campo alinhada ao DssInput. O Quasar fixa o .q-field__marginal
+     (coluna do append/prepend, ex.: seta do dropdown) em 56px (40px dense), o que
+     DITA a altura do campo acima do token (control ficava 58px/42px). Alinhamos a
+     marginal à altura-alvo do token → campo ~44px/36px, igual ao DssInput. */
+  .q-field__marginal {
+    height: var(--dss-input-height-md);
+  }
+
+  &.dss-select--dense .q-field__marginal {
+    height: var(--dss-input-height-sm);
   }
 
   /* ==========================================================================
@@ -139,6 +209,28 @@
     color: var(--dss-text-secondary);
   }
 
+  /* Espaçamento do ícone PREPEND (dentro do campo). Por padrão o ícone ficava
+     longe da borda (o control tem padding-left spacing-4 = 16px) e colado ao
+     texto. Alvo: 4px da borda + 4px da caixa de texto.
+     - control com prepend: padding-left = spacing-1 (4px da borda)
+     - prepend: padding-right = spacing-1 (4px do native) */
+  .q-field__control:has(.q-field__prepend) {
+    padding-left: var(--dss-spacing-1);
+  }
+
+  .q-field__prepend {
+    padding-right: var(--dss-spacing-1);
+  }
+
+  /* ==========================================================================
+     BEFORE (slot externo, antes do campo)
+     ========================================================================== */
+
+  /* Garante separação mínima entre o ícone/slot `before` e a caixa do campo. */
+  .q-field__before {
+    padding-right: var(--dss-spacing-2);
+  }
+
   /* ==========================================================================
      BOTTOM AREA (hint/error — .q-field__bottom gerado pelo QSelect)
      ========================================================================== */
@@ -157,16 +249,19 @@
 
   /* Error message color */
   &.q-field--error .q-field__messages {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   /* ==========================================================================
      DISABLED STATE
      ========================================================================== */
 
+  /* Indicação ÚNICA de disabled (mesmo padrão do DssInput): SEM opacity no
+     wrapper. O fade vem da cor de texto desabilitada (--dss-text-disabled =
+     gray-600) + borda tracejada + fundo muted das variantes. Evita empilhar
+     opacity do DSS com a do Quasar e mantém label/valor legíveis. */
   &.dss-select--disabled,
   &.q-field--disabled {
-    opacity: var(--dss-opacity-disabled);
     cursor: not-allowed;
     pointer-events: none;
   }

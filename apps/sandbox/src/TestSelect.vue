@@ -1,125 +1,235 @@
 <template>
-  <div class="ts-page" :data-theme="isDark ? 'dark' : undefined">
-    <header class="ts-hero">
-      <div>
-        <h1 class="ts-title">DssSelect — Playground</h1>
-        <p class="ts-sub">Inspeção real do wrapper Quasar <code>q-field</code> (auto-height). Compare a altura com o DssInput.</p>
-      </div>
-      <button class="ts-toggle" type="button" @click="isDark = !isDark">
-        {{ isDark ? '☀ Light' : '☾ Dark' }}
-      </button>
-    </header>
+  <PlaygroundLayout
+    title="DssSelect — Playground"
+    code="base/DssSelect"
+    :sections="SECTIONS"
+    :kpis="KPIS"
+  >
+    <!-- ── 01. Variantes ───────────────────────────────────────────────── -->
+    <PgSection id="variantes" index="01" title="Variantes Visuais" :count="VARIANTS.length"
+      desc="4 variantes (outlined, filled, standout, borderless) controladas pela prop variant. Default: outlined.">
+      <PgGrid>
+        <PgTile v-for="v in VARIANTS" :key="v" :code="`variant=&quot;${v}&quot;`">
+          <DssSelect :variant="v" :label="capitalize(v)" :options="opts" v-model="m[`var-${v}`]" />
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-    <!-- Comparação direta de altura: Input vs Select (mesma label) -->
-    <section class="ts-section">
-      <h2 class="ts-h2">Altura: DssInput × DssSelect (outlined, com label)</h2>
-      <div class="ts-grid">
-        <DemoTile code="DssInput outlined">
-          <DssInput variant="outlined" label="Campo" v-model="txt" />
-        </DemoTile>
-        <DemoTile code="DssSelect outlined" data-probe="select-outlined">
-          <DssSelect variant="outlined" label="Seleção" :options="opts" v-model="sel" />
-        </DemoTile>
-      </div>
-    </section>
+    <!-- ── 02. Densidade ───────────────────────────────────────────────── -->
+    <PgSection id="densidade" index="02" title="Densidade" :count="2"
+      desc="Prop dense reduz a altura do controle. Altura padrão 44px (touch-target WCAG 2.5.5); compacto 36px.">
+      <PgGrid>
+        <PgTile code="default (44px)">
+          <DssSelect label="Confortável" :options="opts" v-model="m.denseOff" />
+        </PgTile>
+        <PgTile code="dense (36px)">
+          <DssSelect dense label="Compacto" :options="opts" v-model="m.denseOn" />
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-    <!-- Variantes -->
-    <section class="ts-section">
-      <h2 class="ts-h2">Variantes</h2>
-      <div class="ts-grid">
-        <DemoTile v-for="v in VARIANTS" :key="v" :code="`variant=${v}`">
-          <DssSelect :variant="v" label="Seleção" :options="opts" v-model="sel" />
-        </DemoTile>
-      </div>
-    </section>
+    <!-- ── 03. Label & Placeholder ─────────────────────────────────────── -->
+    <PgSection id="label" index="03" title="Label & Placeholder" :count="3"
+      desc="Floating label (padrão), stack-label fixo no topo e placeholder exibido enquanto não há seleção.">
+      <PgGrid>
+        <PgTile code="label (floating)">
+          <DssSelect label="Seleção" :options="opts" v-model="m.lblFloat" />
+        </PgTile>
+        <PgTile code="stack-label">
+          <DssSelect label="Categoria" stack-label placeholder="Escolha uma opção" :options="opts" v-model="m.lblStack" />
+        </PgTile>
+        <PgTile code="placeholder only">
+          <DssSelect placeholder="Sem label, só placeholder" :options="opts" v-model="m.lblPh" />
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-    <!-- Densidade -->
-    <section class="ts-section">
-      <h2 class="ts-h2">Densidade</h2>
-      <div class="ts-grid">
-        <DemoTile code="default (44px)">
-          <DssSelect variant="outlined" label="Confortável" :options="opts" v-model="sel" />
-        </DemoTile>
-        <DemoTile code="dense">
-          <DssSelect variant="outlined" dense label="Compacto" :options="opts" v-model="sel" />
-        </DemoTile>
-      </div>
-    </section>
+    <!-- ── 04. Hint & Mensagens ────────────────────────────────────────── -->
+    <PgSection id="hint" index="04" title="Hint & Mensagens" :count="2"
+      desc="hint (texto de ajuda) e required (aria-required + asterisco). A área inferior é reservada para mensagens.">
+      <PgGrid>
+        <PgTile code="hint">
+          <DssSelect label="Estado" hint="Selecione a unidade federativa" :options="opts" v-model="m.hint1" />
+        </PgTile>
+        <PgTile code="required">
+          <DssSelect label="Campo obrigatório" required hint="Seleção obrigatória" :options="opts" v-model="m.hint2" />
+        </PgTile>
+      </PgGrid>
+    </PgSection>
 
-    <!-- Estados -->
-    <section class="ts-section">
-      <h2 class="ts-h2">Estados</h2>
-      <div class="ts-grid">
-        <DemoTile code="disabled">
-          <DssSelect variant="outlined" disabled label="Desabilitado" :options="opts" v-model="sel" />
-        </DemoTile>
-        <DemoTile code="com valor">
-          <DssSelect variant="outlined" label="Preenchido" :options="opts" v-model="selFilled" />
-        </DemoTile>
+    <!-- ── 05. Estados ─────────────────────────────────────────────────── -->
+    <PgSection id="estados" index="05" title="Estados" :count="5"
+      desc="error (+ error-message), disabled, readonly, loading e o estado base focável. A área inferior é reservada para evitar layout-shift.">
+      <PgGrid>
+        <PgTile code=":error=&quot;true&quot;">
+          <DssSelect label="Categoria" :error="true" error-message="Selecione uma categoria válida" :options="opts" v-model="m.stError" />
+        </PgTile>
+        <PgTile code=":disabled=&quot;true&quot;">
+          <DssSelect label="Desabilitado" disabled :options="opts" v-model="m.stDisabled" />
+        </PgTile>
+        <PgTile code=":readonly=&quot;true&quot;">
+          <DssSelect label="Somente leitura" readonly :options="opts" v-model="m.stReadonly" />
+        </PgTile>
+        <PgTile code=":loading=&quot;true&quot;">
+          <DssSelect label="Carregando…" loading :options="opts" v-model="m.stLoading" />
+        </PgTile>
+        <PgTile code="base (focável)">
+          <DssSelect label="Estado base" :options="opts" v-model="m.stBase" />
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
+    <!-- ── 06. Clearable ───────────────────────────────────────────────── -->
+    <PgSection id="clearable" index="06" title="Clearable" :count="2"
+      desc="Prop clearable exibe o botão × quando há seleção, permitindo voltar ao estado vazio. Emite o evento clear.">
+      <PgGrid>
+        <PgTile code="clearable (com valor)">
+          <DssSelect label="Limpável" clearable :options="opts" v-model="m.clear1" />
+        </PgTile>
+        <PgTile code="clearable + filled">
+          <DssSelect variant="filled" label="Filtro" clearable :options="opts" v-model="m.clear2" />
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
+    <!-- ── 07. Seleção Múltipla ────────────────────────────────────────── -->
+    <PgSection id="multipla" index="07" title="Seleção Múltipla" :count="2"
+      desc="Prop multiple permite várias seleções; use-chips renderiza cada item como um chip removível dentro do campo.">
+      <PgGrid>
+        <PgTile code="multiple">
+          <DssSelect label="Tags" multiple :options="opts" v-model="m.multi1" />
+        </PgTile>
+        <PgTile code="multiple + use-chips">
+          <DssSelect label="Tags (chips)" multiple use-chips :options="opts" v-model="m.multi2" />
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
+    <!-- ── 08. Slots ───────────────────────────────────────────────────── -->
+    <PgSection id="slots" index="08" title="Slots" :count="SLOTS.length"
+      desc="prepend e append (dentro do campo), before e after (fora), além de option/selected-item para render customizado.">
+      <PgGrid>
+        <PgTile code="#prepend (ícone)">
+          <DssSelect label="Localidade" :options="opts" v-model="m.slotPrepend">
+            <template #prepend><span class="material-icons pg-slot-icon">place</span></template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#append (ícone)">
+          <DssSelect label="Filtro" :options="opts" v-model="m.slotAppend">
+            <template #append><span class="material-icons pg-slot-icon">filter_list</span></template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#before (ícone externo)">
+          <DssSelect label="Categoria" :options="opts" v-model="m.slotBefore">
+            <template #before><span class="material-icons pg-slot-icon">category</span></template>
+          </DssSelect>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
+    <!-- ── 09. Brandabilidade ──────────────────────────────────────────── -->
+    <PgSection id="brand" index="09" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
+      desc="Prop brand sobrescreve o accent de foco. Reage também a [data-brand] global (use as pílulas do topo).">
+      <div v-for="brand in BRAND_KEYS" :key="brand" class="pg-brand-block">
+        <div class="pg-brand-block__head">
+          <span :class="['pg-brand-block__dot', `is-${brand}`]" aria-hidden="true"></span>
+          <h3 class="pg-brand-block__title">{{ brandLabel(brand) }}</h3>
+          <code class="pg-brand-block__code">brand="{{ brand }}"</code>
+        </div>
+        <PgGrid>
+          <PgTile code="outlined + focus accent">
+            <DssSelect :brand="brand" variant="outlined" :label="`${capitalize(brand)} select`"
+              hint="Foque para ver o accent" :options="opts" v-model="m[`brand-${brand}-o`]" />
+          </PgTile>
+          <PgTile code="filled + focus accent">
+            <DssSelect :brand="brand" variant="filled" :label="`${capitalize(brand)} select`"
+              hint="Foque para ver o accent" :options="opts" v-model="m[`brand-${brand}-f`]" />
+          </PgTile>
+        </PgGrid>
       </div>
-    </section>
-  </div>
+    </PgSection>
+
+    <!-- ── 10. Matriz Variante × Estado ────────────────────────────────── -->
+    <PgSection id="matriz" index="10" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
+      desc="Cobertura combinatória para inspeção visual rápida: cada variante em base, erro, desabilitado e readonly.">
+      <div v-for="v in VARIANTS" :key="v" class="pg-matrix-row">
+        <div class="pg-matrix-row__label"><code>{{ v }}</code></div>
+        <div class="pg-matrix-row__items">
+          <DssSelect
+            v-for="st in MATRIX_STATES"
+            :key="v + st.key"
+            :variant="v"
+            :label="st.label"
+            :options="opts"
+            :error="st.key === 'error'"
+            :error-message="st.key === 'error' ? 'Inválido' : undefined"
+            :disabled="st.key === 'disabled'"
+            :readonly="st.key === 'readonly'"
+            v-model="m[`mx-${v}-${st.key}`]"
+            class="pg-matrix-field"
+          />
+        </div>
+      </div>
+    </PgSection>
+  </PlaygroundLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, h } from 'vue'
-import DssInput  from '@components/base/DssInput/DssInput.vue'
+import { reactive } from 'vue'
+
+// Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssSelect from '@components/base/DssSelect/DssSelect.vue'
 
+// Template reutilizável das páginas de teste
+import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
+
+// ──────────────────────────────────────────────────────────────────────────
+// API canônica do DssSelect (vide types/select.types.ts)
+// ──────────────────────────────────────────────────────────────────────────
 const VARIANTS = ['outlined', 'filled', 'standout', 'borderless'] as const
+const SLOTS = ['prepend', 'append', 'before', 'after', 'option', 'selected-item', 'no-option'] as const
+const BRAND_KEYS = ['hub', 'water', 'waste'] as const
 
-const isDark = ref(false)
-const txt = ref('')
-const sel = ref(null)
-const selFilled = ref('Opção 1')
-const opts = ['Opção 1', 'Opção 2', 'Opção 3']
+const opts = ['Opção 1', 'Opção 2', 'Opção 3', 'Opção 4']
 
-const DemoTile = (_props: { code: string }, { slots }: any) => h(
-  'div', { class: 'ts-tile' }, [
-    h('div', { class: 'ts-tile__stage' }, slots.default?.()),
-    h('code', { class: 'ts-tile__code' }, _props.code),
-  ]
-)
-DemoTile.props = ['code']
+const MATRIX_STATES = [
+  { key: 'base',     label: 'Base' },
+  { key: 'error',    label: 'Erro' },
+  { key: 'disabled', label: 'Disabled' },
+  { key: 'readonly', label: 'Readonly' },
+] as const
+
+const SECTIONS = [
+  { id: 'variantes', index: '01', title: 'Variantes' },
+  { id: 'densidade', index: '02', title: 'Densidade' },
+  { id: 'label',     index: '03', title: 'Label & Placeholder' },
+  { id: 'hint',      index: '04', title: 'Hint & Mensagens' },
+  { id: 'estados',   index: '05', title: 'Estados' },
+  { id: 'clearable', index: '06', title: 'Clearable' },
+  { id: 'multipla',  index: '07', title: 'Seleção Múltipla' },
+  { id: 'slots',     index: '08', title: 'Slots' },
+  { id: 'brand',     index: '09', title: 'Brandabilidade' },
+  { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+]
+
+const KPIS = [
+  { value: SECTIONS.length, label: 'Seções' },
+  { value: VARIANTS.length, label: 'Variantes' },
+  { value: SLOTS.length,    label: 'Slots' },
+]
+
+// Estado dos v-model — mapa reativo único (chaves criadas sob demanda).
+// Selects únicos usam string|null; múltiplos usam array.
+const m = reactive<Record<string, any>>({
+  denseOff: null, denseOn: null,
+  lblFloat: 'Opção 1', lblStack: null, lblPh: null,
+  hint1: null, hint2: null,
+  stError: null, stDisabled: 'Opção 2', stReadonly: 'Opção 1', stLoading: null, stBase: null,
+  clear1: 'Opção 2', clear2: 'Opção 3',
+  multi1: ['Opção 1', 'Opção 3'], multi2: ['Opção 2', 'Opção 4'],
+  slotPrepend: null, slotAppend: null, slotBefore: null,
+})
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+const brandLabel = (b: string) => ({ hub: '🟠 Hub', water: '🔵 Water', waste: '🟢 Waste' }[b] || b)
 </script>
-
-<style scoped>
-.ts-page {
-  min-height: 100%;
-  background: var(--dss-surface-subtle);
-  color: var(--dss-text-body);
-  font-family: var(--dss-font-family-sans);
-  padding: var(--dss-spacing-6);
-}
-[data-theme="dark"].ts-page { background: var(--dss-gray-900); }
-.ts-hero {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: var(--dss-spacing-6);
-}
-.ts-title { font-size: var(--dss-font-size-2xl); margin: 0; }
-.ts-sub { color: var(--dss-text-secondary); margin: var(--dss-spacing-1) 0 0; }
-.ts-toggle {
-  border: var(--dss-border-width-thin) solid var(--dss-gray-400);
-  background: transparent; color: inherit; cursor: pointer;
-  padding: var(--dss-spacing-2) var(--dss-spacing-3);
-  border-radius: var(--dss-radius-sm);
-}
-.ts-section { margin-bottom: var(--dss-spacing-8); }
-.ts-h2 { font-size: var(--dss-font-size-lg); margin: 0 0 var(--dss-spacing-3); }
-.ts-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--dss-spacing-4);
-}
-.ts-tile {
-  background: var(--dss-surface-default);
-  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
-  border-radius: var(--dss-radius-md);
-  padding: var(--dss-spacing-4);
-}
-[data-theme="dark"] .ts-tile { background: var(--dss-gray-800); border-color: var(--dss-gray-700); }
-.ts-tile__stage { margin-bottom: var(--dss-spacing-3); }
-.ts-tile__code {
-  font-size: var(--dss-font-size-xs); color: var(--dss-text-secondary);
-  font-family: var(--dss-font-family-mono, monospace);
-}
-</style>

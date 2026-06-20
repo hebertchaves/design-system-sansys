@@ -46,7 +46,7 @@
  * ==========================================================================
  */
 
-import { ref, computed, useSlots, onBeforeUnmount } from 'vue'
+import { ref, computed, useSlots, onBeforeUnmount, onMounted, watch, nextTick } from 'vue'
 import { QSelect } from 'quasar'
 import type { SelectProps, SelectEmits, SelectExpose } from '../types/select.types'
 import { useSelectClasses, useSelectState, useSelectActions } from '../composables'
@@ -166,6 +166,31 @@ const panelClasses = computed(() => {
   return classes.join(' ')
 })
 
+/**
+ * PLACEHOLDER em repouso (sem `use-input`).
+ *
+ * O QSelect só renderiza o `<input>` — único portador do atributo `placeholder`
+ * — quando `use-input` é true. Como o DssSelect é um select de seleção (não
+ * filtrável), o `placeholder` nunca aparecia. Solução: quando o campo está vazio
+ * e não há label flutuante competindo (sem label, ou stack-label), exibimos o
+ * placeholder via `display-value` e o pintamos como hint pela classe
+ * `dss-select--placeholder` (ver _base.scss / _states.scss).
+ */
+const isEmptySelection = computed(() => {
+  const v = props.modelValue
+  return props.multiple
+    ? !(Array.isArray(v) && v.length > 0)
+    : (v === null || v === undefined || v === '')
+})
+
+const showingPlaceholder = computed(() =>
+  !!props.placeholder && isEmptySelection.value && (props.stackLabel || !props.label)
+)
+
+const placeholderDisplay = computed(() =>
+  showingPlaceholder.value ? props.placeholder : undefined
+)
+
 // ==========================================================================
 // DROPDOWN — manter ancorado ao campo durante o scroll
 // ==========================================================================
@@ -198,6 +223,51 @@ onBeforeUnmount(() => {
 })
 
 // ==========================================================================
+// VALOR LEGÍVEL — neutraliza o dim do Quasar no native de exibição
+// ==========================================================================
+
+/**
+ * Sem `use-input`, o QSelect renderiza o valor selecionado num
+ * `<div class="q-field__native" disabled>`. O atributo `disabled` aciona a regra
+ * do Quasar `[disabled] { opacity: .6 !important }` (servida em `@layer quasar`),
+ * deixando o VALOR de um campo HABILITADO apagado — diferente do DssInput, cujo
+ * valor fica em cor cheia. Por ser `!important` dentro de layer, CSS DSS unlayered
+ * não sobrescreve (só inline ou um layer declarado antes de `quasar`).
+ *
+ * `disabled` num `<div>` não tem efeito funcional (o alvo de foco/teclado é outro
+ * elemento) — serve só para o estilo. Por isso, quando o campo NÃO está
+ * desabilitado, removemos o atributo para o valor herdar a cor cheia (text-primary,
+ * igual ao DssInput). Quando o campo está desabilitado de fato, mantemos — o dim
+ * do estado disabled é coerente (ver `.dss-select--disabled`).
+ */
+function normalizeNativeDisabled(): void {
+  if (props.disabled) return
+  const root = qSelectRef.value?.$el as HTMLElement | undefined
+  root?.querySelector('.q-field__native[disabled]')?.removeAttribute('disabled')
+}
+
+/**
+ * Emite a atualização do valor e, num select de seleção ÚNICA, tira o foco do
+ * campo após a interação — o padrão do QSelect é manter o foco (exigindo clique
+ * fora p/ sair). Aplica-se tanto ao SELECIONAR uma opção quanto ao LIMPAR
+ * (clearable → null): em ambos o campo deve voltar ao estado default. Em
+ * `multiple` o foco permanece (várias escolhas em sequência).
+ */
+function handleModelUpdate(value: unknown): void {
+  emit('update:modelValue', value as SelectProps['modelValue'])
+  if (!props.multiple) {
+    nextTick(() => blur())
+  }
+}
+
+onMounted(() => nextTick(normalizeNativeDisabled))
+watch(
+  () => [props.modelValue, props.disabled],
+  () => nextTick(normalizeNativeDisabled),
+  { deep: true }
+)
+
+// ==========================================================================
 // EXPOSE
 // ==========================================================================
 
@@ -215,9 +285,10 @@ defineExpose<SelectExpose>({
 <template>
   <QSelect
     ref="qSelectRef"
-    :class="wrapperClasses"
+    :class="[wrapperClasses, { 'dss-select--placeholder': showingPlaceholder }]"
     :popup-content-class="panelClasses"
     :model-value="modelValue"
+    :display-value="placeholderDisplay"
     :options="options"
     :option-value="optionValue"
     :option-label="optionLabel"
@@ -244,7 +315,7 @@ defineExpose<SelectExpose>({
     :aria-label="ariaLabel || undefined"
     :aria-required="required ? 'true' : undefined"
     v-bind="$attrs"
-    @update:model-value="emit('update:modelValue', $event)"
+    @update:model-value="handleModelUpdate"
     @focus="handleFocus"
     @blur="handleBlur"
     @clear="emit('clear')"

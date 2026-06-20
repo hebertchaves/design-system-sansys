@@ -33,3 +33,7 @@ packages/*/dist/
 
 *storybook.log
 storybook-static
+
+# Claude Code — config local/pessoal (allowlist de permissões por máquina)
+# settings.json (compartilhado) permanece versionado; .local é por máquina
+.claude/settings.local.json

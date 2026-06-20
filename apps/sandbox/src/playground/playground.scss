@@ -1,0 +1,520 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   PLAYGROUND TEMPLATE — estilos globais compartilhados (.pg-*)
+
+   Estilos da "casca" das páginas de teste de componentes (hero compacto, menu
+   interno retrátil + busca, grid de tiles, matriz). São GLOBAIS (namespace
+   `.pg-`) de propósito: os tiles/sections são preenchidos via <slot>, e estilo
+   scoped não alcança conteúdo de slot. O namespace `.pg-` evita colisões.
+
+   ACCENT GLOBAL: var --pg-accent (#1d4971 no light, #1e71be no dark). Todos os
+   detalhes de marca da casca referenciam essa var — trocar aqui propaga a todas
+   as páginas que usam o template.
+
+   Fonte canônica: derivado da página DssSelect aprovada (jun/2026).
+═══════════════════════════════════════════════════════════════════════════ */
+
+.pg-page {
+  /* Accent canônico do template */
+  --pg-accent: #1d4971;
+  --pg-accent-12: color-mix(in srgb, #1d4971 12%, transparent);
+  --pg-accent-18: color-mix(in srgb, #1d4971 18%, transparent);
+  --pg-accent-28: color-mix(in srgb, #1d4971 28%, transparent);
+  /* Raios reduzidos (grid mais "duro"/compacto) */
+  --pg-radius-sm: 3px;
+  --pg-radius: 5px;
+  --pg-radius-lg: 7px;
+  /* Altura aproximada do hero sticky compacto — usada p/ alinhar nav e scroll */
+  --pg-hero-h: 60px;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--dss-surface-subtle);
+  color: var(--dss-text-body);
+  font-family: var(--dss-font-family-sans);
+  transition: background-color .25s ease, color .25s ease;
+  scroll-behavior: smooth;
+}
+
+/* ── HERO — linha única compacta ───────────────────────────────────────── */
+.pg-hero {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(180deg,
+    var(--dss-surface-default) 0%,
+    var(--dss-surface-default) 60%,
+    color-mix(in srgb, var(--dss-surface-default) 92%, transparent) 100%);
+  border-bottom: 1px solid var(--dss-gray-200);
+  backdrop-filter: saturate(140%) blur(8px);
+}
+.pg-hero__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--dss-spacing-2) var(--dss-spacing-4);
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-4);
+  flex-wrap: wrap;
+}
+
+.pg-hero__brand { display: flex; align-items: center; gap: var(--dss-spacing-2); min-width: 0; }
+.pg-hero__logo {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--pg-accent);
+  filter: drop-shadow(0 1px 4px var(--pg-accent-28));
+  flex-shrink: 0;
+}
+.pg-hero__titles { min-width: 0; }
+/* Título drasticamente reduzido — hierarquia mantida via peso/cor */
+.pg-hero__title {
+  font-size: 0.9375rem;
+  font-weight: var(--dss-font-weight-bold);
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--pg-accent);
+  white-space: nowrap;
+}
+.pg-hero__subtitle {
+  margin: 1px 0 0;
+  font-size: 0.6875rem;
+  color: var(--dss-text-subtle);
+  white-space: nowrap;
+}
+.pg-hero__subtitle code {
+  font-family: var(--dss-font-family-mono, monospace);
+  font-size: 0.9em;
+  background: var(--dss-surface-muted);
+  padding: 0 4px;
+  border-radius: var(--pg-radius-sm);
+}
+
+/* KPIs compactos com cara de KPI — chip com valor em destaque + label */
+.pg-kpis {
+  display: flex;
+  align-self: stretch;   /* casa a altura dos chips com o bloco título+descrição */
+  align-items: stretch;
+  gap: var(--dss-spacing-2);
+}
+.pg-kpi {
+  display: inline-flex;
+  align-items: center;   /* número + texto na MESMA linha */
+  gap: 5px;
+  padding: 0 12px;       /* sem padding vertical: a altura vem do stretch (= título+desc) */
+  background: var(--dss-surface-muted);
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--pg-radius);
+  white-space: nowrap;
+}
+.pg-kpi__value {
+  font-size: 1.0625rem;
+  font-weight: var(--dss-font-weight-bold);
+  line-height: 1;
+  color: var(--pg-accent);
+}
+.pg-kpi__label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dss-text-subtle);
+}
+
+/* Controles do hero — empurrados para a direita; KPIs ficam junto do título */
+.pg-hero__controls { display: flex; align-items: center; gap: var(--dss-spacing-2); margin-left: auto; }
+.pg-hero__actions { display: flex; gap: 4px; }
+.pg-icon-btn {
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--pg-radius);
+  border: 1px solid var(--dss-gray-200);
+  background: var(--dss-surface-default);
+  color: var(--dss-text-body);
+  cursor: pointer;
+  transition: all .18s ease;
+}
+.pg-icon-btn:hover { background: var(--dss-surface-muted); border-color: var(--dss-gray-300); }
+.pg-icon-btn[aria-pressed="true"] { background: var(--pg-accent-12); border-color: var(--pg-accent-28); color: var(--pg-accent); }
+.pg-icon-btn .material-icons { font-size: 18px; }
+
+/* Brand pills */
+.pg-brand-pills {
+  display: inline-flex; gap: 3px; padding: 3px;
+  background: var(--dss-surface-muted);
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--pg-radius);
+}
+.pg-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 9px; border: none; background: transparent;
+  border-radius: var(--pg-radius-sm);
+  font-size: 0.6875rem; font-weight: var(--dss-font-weight-medium);
+  color: var(--dss-text-subtle); cursor: pointer;
+  transition: all .18s ease;
+}
+.pg-pill:hover { color: var(--dss-text-body); }
+.pg-pill.is-active {
+  background: var(--dss-surface-default); color: var(--pg-accent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--dss-gray-900) 12%, transparent);
+}
+.pg-pill__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dss-gray-400); }
+.pg-pill--hub   .pg-pill__dot { background: var(--dss-hub-600); }
+.pg-pill--water .pg-pill__dot { background: var(--dss-water-500); }
+.pg-pill--waste .pg-pill__dot { background: var(--dss-waste-600); }
+
+/* ── BODY ──────────────────────────────────────────────────────────────── */
+.pg-body {
+  max-width: 1440px; width: 100%; margin: 0 auto;
+  padding: var(--dss-spacing-3) var(--dss-spacing-4) var(--dss-spacing-6);
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--dss-spacing-3);
+  align-items: flex-start;
+  transition: grid-template-columns .18s ease;
+}
+.pg-body.is-nav-collapsed { grid-template-columns: 44px 1fr; }
+@media (max-width: 960px) {
+  .pg-body { grid-template-columns: 1fr; }
+  .pg-nav { display: none; }
+}
+
+/* Sidebar / menu interno */
+.pg-nav {
+  position: sticky; top: calc(var(--pg-hero-h) + var(--dss-spacing-2)); align-self: start;
+  background: var(--dss-surface-default);
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--pg-radius-lg);
+  padding: var(--dss-spacing-2);
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+.pg-nav__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 4px;
+  padding: 2px 2px 0;
+}
+.pg-nav__title {
+  font-size: 0.625rem; font-weight: var(--dss-font-weight-bold);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--dss-text-subtle);
+}
+.pg-nav__toggle {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: none; background: transparent;
+  border-radius: var(--pg-radius-sm);
+  color: var(--dss-text-subtle); cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.pg-nav__toggle:hover { background: var(--pg-accent-12); color: var(--pg-accent); }
+.pg-nav__toggle .material-icons { font-size: 16px; }
+
+/* Filtro buscar seção (dentro do menu interno) */
+.pg-nav__search {
+  position: relative;
+  margin: var(--dss-spacing-2) 0;
+}
+.pg-nav__search-icon {
+  position: absolute; left: 7px; top: 50%; transform: translateY(-50%);
+  color: var(--dss-text-subtle); font-size: 15px !important; pointer-events: none;
+}
+.pg-nav__search-input {
+  width: 100%; height: 30px; padding: 0 26px 0 26px;
+  border-radius: var(--pg-radius);
+  border: 1px solid var(--dss-gray-300);
+  background: var(--dss-surface-default);
+  color: var(--dss-text-body);
+  font-size: 0.75rem; font-family: inherit;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.pg-nav__search-input::placeholder { color: var(--dss-text-subtle); }
+.pg-nav__search-input:focus {
+  outline: none;
+  border-color: var(--pg-accent);
+  box-shadow: 0 0 0 3px var(--pg-accent-18);
+}
+.pg-nav__search-clear {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--pg-radius-sm); border: none; background: transparent;
+  color: var(--dss-text-subtle); cursor: pointer;
+}
+.pg-nav__search-clear:hover { background: var(--dss-surface-muted); color: var(--dss-text-body); }
+.pg-nav__search-clear .material-icons { font-size: 15px; }
+
+.pg-nav__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1px; }
+.pg-nav__link {
+  display: grid; grid-template-columns: 20px 1fr;
+  align-items: center; gap: 7px;
+  padding: 5px 8px; border-radius: var(--pg-radius-sm);
+  text-decoration: none; color: var(--dss-text-body);
+  font-size: 0.75rem;
+  transition: background-color .15s ease, color .15s ease;
+  cursor: pointer; position: relative;
+}
+.pg-nav__link:hover { background: var(--dss-surface-muted); }
+.pg-nav__link.is-active {
+  background: var(--pg-accent-12);
+  color: var(--pg-accent);
+  font-weight: var(--dss-font-weight-semibold);
+}
+.pg-nav__link.is-active::before {
+  content: ""; position: absolute;
+  left: -2px; top: 6px; bottom: 6px;
+  width: 2px; border-radius: 2px;
+  background: var(--pg-accent);
+}
+.pg-nav__link.is-hidden { opacity: 0.35; }
+.pg-nav__index {
+  font-size: 10px; font-weight: var(--dss-font-weight-bold);
+  color: var(--dss-text-subtle);
+  font-family: var(--dss-font-family-mono, monospace);
+  text-align: center;
+}
+.pg-nav__link.is-active .pg-nav__index { color: var(--pg-accent); }
+.pg-nav__name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Menu interno COLAPSADO — só índices */
+.pg-nav.is-collapsed { padding: var(--dss-spacing-2) 4px; }
+.pg-nav.is-collapsed .pg-nav__title { display: none; }
+.pg-nav.is-collapsed .pg-nav__head { justify-content: center; }
+.pg-nav.is-collapsed .pg-nav__name { display: none; }
+.pg-nav.is-collapsed .pg-nav__link {
+  grid-template-columns: 1fr; justify-items: center; padding: 6px 2px;
+}
+
+/* Main */
+.pg-main { display: flex; flex-direction: column; gap: var(--dss-spacing-4); min-width: 0; }
+
+.pg-section {
+  scroll-margin-top: calc(var(--pg-hero-h) + var(--dss-spacing-3));
+  background: var(--dss-surface-default);
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--pg-radius-lg);
+  padding: var(--dss-spacing-4);
+  animation: pg-fade-up .35s ease both;
+}
+@keyframes pg-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* SectionHead — renderizado pelo PgSection (componente real → estilo global). */
+.pg-section__head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--dss-spacing-3);
+  margin-bottom: var(--dss-spacing-3);
+  padding-bottom: var(--dss-spacing-2);
+  border-bottom: 1px dashed var(--dss-gray-200);
+}
+.pg-section__heading { display: flex; gap: var(--dss-spacing-2); align-items: flex-start; }
+.pg-section__index {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: var(--pg-radius-sm);
+  background: var(--pg-accent-12);
+  color: var(--pg-accent);
+  font-family: var(--dss-font-family-mono, monospace);
+  font-weight: var(--dss-font-weight-bold);
+  font-size: var(--dss-font-size-sm);
+  flex-shrink: 0;
+}
+.pg-section__title {
+  margin: 0; font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-semibold); line-height: 1.2;
+  color: var(--pg-accent);
+}
+.pg-section__desc {
+  margin: 3px 0 0; font-size: var(--dss-font-size-sm);
+  color: var(--dss-text-subtle); max-width: 64ch;
+}
+.pg-section__badge {
+  font-size: var(--dss-font-size-xs); font-weight: var(--dss-font-weight-semibold);
+  padding: 3px 9px; border-radius: 999px;
+  background: var(--pg-accent-12); color: var(--pg-accent);
+  white-space: nowrap;
+}
+.pg-section__badge span { font-weight: var(--dss-font-weight-regular); color: var(--dss-text-subtle); }
+
+/* Grid de tiles */
+.pg-grid {
+  display: grid;
+  gap: var(--dss-spacing-3);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+.pg-main[data-density="comfortable"] .pg-grid {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--dss-spacing-4);
+}
+
+.pg-tile {
+  display: flex; flex-direction: column; /* sem gap — separador justaposto ao stage */
+  background: var(--dss-surface-default);
+  border: 1px solid var(--dss-gray-200);
+  border-radius: var(--pg-radius);
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.pg-tile:hover {
+  border-color: var(--dss-gray-300);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--dss-gray-900) 6%, transparent),
+    0 6px 18px color-mix(in srgb, var(--dss-gray-900) 7%, transparent);
+}
+.pg-tile__stage {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: stretch; justify-content: center;
+  gap: var(--dss-spacing-2);
+  min-height: 104px;
+  padding: var(--dss-spacing-4);
+  background:
+    linear-gradient(var(--dss-surface-subtle), var(--dss-surface-subtle)),
+    repeating-linear-gradient(45deg,
+      transparent 0 8px,
+      color-mix(in srgb, var(--dss-gray-300) 8%, transparent) 8px 9px);
+  transform: translateZ(0);
+}
+.pg-main[data-density="compact"] .pg-tile__stage { min-height: 88px; padding: var(--dss-spacing-3); }
+.pg-tile__code {
+  display: block;
+  font-family: var(--dss-font-family-mono, monospace);
+  font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-subtle);
+  background: var(--dss-surface-default);
+  padding: 5px var(--dss-spacing-3);
+  border-top: 1px solid var(--dss-gray-200);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Tooltip dos itens do menu interno retraído — balão <div> próprio (à direita),
+   MESMA UI do menu principal. Não usa QTooltip de propósito: os estilos default
+   do Quasar (preto/grande, com !important em @layer) venciam o CSS unlayered. */
+.pg-navtip {
+  position: fixed;
+  z-index: 1000;
+  transform: translateY(-50%);
+  background: #1d4971;          /* azul principal */
+  color: #fff;
+  font-size: 0.6875rem;         /* tamanho intermediário */
+  font-weight: var(--dss-font-weight-medium);
+  line-height: 1.4;
+  padding: 3px 9px;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px color-mix(in srgb, #000 22%, transparent);
+  animation: pg-navtip-in 200ms ease;
+}
+@keyframes pg-navtip-in {
+  from { opacity: 0; transform: translateY(-50%) translateX(-5px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+/* Ícones / utilidades dentro de slots */
+.pg-slot-icon { font-size: 20px; color: var(--dss-text-subtle); }
+.pg-char-count { font-size: var(--dss-font-size-xs); color: var(--dss-text-subtle); white-space: nowrap; }
+
+/* Brand blocks */
+.pg-brand-block { margin-bottom: var(--dss-spacing-4); }
+.pg-brand-block:last-child { margin-bottom: 0; }
+.pg-brand-block__head {
+  display: flex; align-items: center; gap: var(--dss-spacing-2);
+  margin-bottom: var(--dss-spacing-2);
+  padding-bottom: var(--dss-spacing-2);
+  border-bottom: 1px solid var(--dss-gray-200);
+}
+.pg-brand-block__dot { width: 11px; height: 11px; border-radius: 50%; }
+.pg-brand-block__dot.is-hub   { background: var(--dss-hub-600); }
+.pg-brand-block__dot.is-water { background: var(--dss-water-500); }
+.pg-brand-block__dot.is-waste { background: var(--dss-waste-600); }
+.pg-brand-block__title {
+  margin: 0; font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-semibold);
+}
+.pg-brand-block__code {
+  margin-left: auto;
+  font-family: var(--dss-font-family-mono, monospace);
+  font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-subtle);
+  background: var(--dss-surface-muted);
+  padding: 2px 7px; border-radius: var(--pg-radius-sm);
+}
+
+/* Matriz — campos adaptam-se ao container (sem distorção). `minmax(0, 1fr)`
+   permite os items encolherem dentro da célula (o default `minmax(auto, 1fr)`
+   respeita a min-width intrínseca do QField, estourando a célula). */
+.pg-matrix-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+  padding: var(--dss-spacing-3) 0;
+  border-bottom: 1px dashed var(--dss-gray-200);
+}
+.pg-matrix-row:last-child { border-bottom: none; }
+.pg-matrix-row__label { line-height: 1; }
+.pg-matrix-row__label code {
+  font-family: var(--dss-font-family-mono, monospace);
+  font-size: var(--dss-font-size-sm);
+  color: var(--pg-accent);
+  background: var(--pg-accent-12);
+  padding: 3px 8px;
+  border-radius: var(--pg-radius-sm);
+}
+/* Linhas responsivas: `auto-fit` distribui quantas colunas couberem (≥200px) e
+   quebra linha quando não há espaço — os campos se espalham em telas largas e se
+   reorganizam nas estreitas, sem overlap nem limite fixo de 2/linha. */
+.pg-matrix-row__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--dss-spacing-2);
+}
+/* O campo DSS tem min-width próprio (240px); dentro da matriz ele precisa poder
+   encolher até a célula, senão estoura a coluna e sobrepõe os vizinhos.
+
+   ⚠️ Não basta a classe .pg-matrix-field: os componentes têm `inheritAttrs:false`
+   e o DssInput repassa `$attrs` para o <input> INTERNO (não para a raiz), então a
+   classe cai no input e não zera o min-width da raiz `.dss-input`. (O DssSelect
+   repassa $attrs na raiz, por isso a classe funcionava só nele.)
+
+   Por isso miramos a RAIZ REAL do componente — filho direto da grid de items —
+   independente de onde a classe aterrissa. Vale para Select, Input e futuros.
+   O ancestral `.pg-page` eleva a especificidade p/ (0,2,0): sem ele, `> *`
+   (0,1,0) empata com `.dss-input`/`.dss-select` (0,1,0) e perde por ordem. */
+.pg-page .pg-matrix-row__items > * { width: 100%; min-width: 0; }
+.pg-matrix-field { width: 100%; min-width: 0; }
+
+/* ── DARK MODE ─────────────────────────────────────────────────────────── */
+.pg-page[data-theme="dark"] {
+  /* Em dark mode o accent #1d4971 (escuro) tem baixo contraste sobre fundos
+     escuros — troca para #1e71be (mais claro). Todos os usos referenciam
+     --pg-accent / --pg-accent-*, então basta redefinir as vars aqui. */
+  --pg-accent: #1e71be;
+  --pg-accent-12: color-mix(in srgb, #1e71be 14%, transparent);
+  --pg-accent-18: color-mix(in srgb, #1e71be 22%, transparent);
+  --pg-accent-28: color-mix(in srgb, #1e71be 32%, transparent);
+  background: var(--dss-surface-subtle, #0f1115);
+}
+.pg-page[data-theme="dark"] .pg-tile__stage {
+  background:
+    linear-gradient(var(--dss-surface-subtle), var(--dss-surface-subtle)),
+    repeating-linear-gradient(45deg,
+      transparent 0 8px,
+      color-mix(in srgb, var(--dss-gray-100) 14%, transparent) 8px 9px);
+}
+
+/* ── RESPONSIVO ────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .pg-hero__inner { padding: var(--dss-spacing-2) var(--dss-spacing-3); }
+  .pg-kpis { margin-left: 0; }
+  .pg-body { padding: var(--dss-spacing-3); }
+  .pg-section { padding: var(--dss-spacing-3); }
+  .pg-grid { grid-template-columns: 1fr !important; gap: var(--dss-spacing-2) !important; }
+  .pg-matrix-row { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-page, .pg-section, .pg-tile, .pg-icon-btn { animation: none !important; transition: none !important; }
+}

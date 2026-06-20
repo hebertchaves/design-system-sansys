@@ -136,9 +136,13 @@
      DISABLED STATE (global — sobrescreve Quasar)
      ========================================================================== */
 
+  /* Indicação ÚNICA de disabled (mesmo padrão do DssInput/DssSelect): SEM opacity
+     no wrapper. Empilhar o 0.4 do DSS com o `opacity: .6 !important` que o Quasar
+     impõe no nativo `[disabled]` (regra layered, não sobrescrevível por CSS
+     unlayered) dava 0.24 → texto/label ilegíveis. O fade fica por conta da cor
+     desabilitada (--dss-text-disabled = gray-600) + borda/fundo das variantes. */
   &.dss-textarea--disabled,
   &.q-field--disabled {
-    opacity: var(--dss-opacity-disabled);
     cursor: not-allowed;
     pointer-events: none;
   }

@@ -31,8 +31,8 @@
 
   /* Error state */
   &.dss-input--error .dss-input__field {
-    border-bottom-color: var(--dss-error-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+    border-bottom-color: var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
   }
 
   /* Disabled state */
@@ -51,9 +51,8 @@
     border-bottom-color: var(--dss-gray-400);
   }
 
-  /* Remove padding from control (já que não há container visual) */
-  .dss-input__control {
-    padding-left: 0;
-    padding-right: 0;
-  }
+  /* Mantém o padding horizontal do base (`padding: 0 spacing-4`): mesmo sem
+     borda visível, o texto precisa do mesmo recuo das demais variantes — antes
+     `padding-left: 0` deixava o valor colado à esquerda (como se encostado numa
+     borda inexistente). Não sobrescrevemos mais o padding horizontal aqui. */
 }

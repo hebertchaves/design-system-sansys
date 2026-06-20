@@ -9,6 +9,14 @@ export default defineConfig({
     quasar()
   ],
   server: {
+    // WSL2 + repositório em /mnt/c (drive Windows): o inotify NÃO dispara de
+    // forma confiável nesse mount, então o HMR não detecta mudanças de arquivo
+    // (causa raiz dos "stale" — só atualizava ao reiniciar o dev). Polling força
+    // o Vite a varrer os arquivos e resolve o HMR de forma definitiva.
+    watch: {
+      usePolling: true,
+      interval: 300,
+    },
     proxy: {
       '/api': 'http://localhost:3001',
     },

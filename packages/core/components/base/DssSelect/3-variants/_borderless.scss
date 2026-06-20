@@ -41,8 +41,8 @@
   /* Error state */
   &.dss-select--error .q-field__control,
   &.q-field--error .q-field__control {
-    border-bottom-color: var(--dss-error-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+    border-bottom-color: var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
   }
 
   /* Readonly state */

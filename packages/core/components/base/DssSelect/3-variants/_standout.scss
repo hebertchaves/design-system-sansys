@@ -1,18 +1,24 @@
 /* ==========================================================================
    DssSelect - LAYER 3: VARIANT - Standout
 
-   RESPONSABILIDADE: Estilo da variante standout (destaque no foco)
+   RESPONSABILIDADE: Estilo da variante standout (alto contraste)
 
    CARACTERÍSTICAS:
-   - Fundo sutil em repouso (--dss-gray-100)
+   - Fundo escuro (--dss-gray-800) — destaque em toolbars/headers
+   - Texto/ícones em tom inverso (claro) para contraste sobre o fundo escuro
+   - Box-shadow primary no foco
    - Sem borda visível
-   - Box-shadow pronunciado no foco — visual de "destaque"
+
+   GOLDEN CONTEXT: DssInput standout — esta variante é o espelho do modelo de
+   produção do DssInput (fundo escuro + texto inverso), NÃO um fundo claro sutil.
+   O fundo claro (gray-100) tornava o standout visualmente idêntico ao borderless
+   no light mode e ilegível no hover em dark mode.
    ========================================================================== */
 
 .dss-select--standout {
 
   .q-field__control {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-gray-800);
     border: none;
     border-radius: var(--dss-radius-sm);
     padding: 0 var(--dss-spacing-4); /* vertical 0: evita estouro de altura do q-field */
@@ -21,17 +27,36 @@
       box-shadow var(--dss-duration-200) var(--dss-easing-standard);
   }
 
+  /* Texto/label/ícones claros sobre o fundo escuro */
+  .q-field__native,
+  .q-field__input {
+    color: var(--dss-text-inverse);
+  }
+
+  .q-field__label {
+    color: var(--dss-text-inverse-secondary);
+  }
+
+  .q-placeholder {
+    color: var(--dss-text-inverse-hint);
+  }
+
+  .q-field__prepend,
+  .q-field__append {
+    color: var(--dss-text-inverse-secondary);
+  }
+
   /* Hover */
   &:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover {
     .q-field__control {
-      background-color: var(--dss-gray-200);
+      background-color: var(--dss-gray-700);
     }
   }
 
   /* Focus state — dual hook */
   &.dss-select--focused .q-field__control,
   &.q-field--focused .q-field__control {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-gray-700);
     box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
   }
 
@@ -44,17 +69,17 @@
   /* Error state */
   &.dss-select--error .q-field__control,
   &.q-field--error .q-field__control {
-    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-error-600);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-feedback-error);
   }
 
   /* Disabled state */
   &.dss-select--disabled .q-field__control {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-gray-900);
   }
 
   /* Readonly state */
   &.dss-select--readonly .q-field__control {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-gray-800);
     box-shadow: none;
   }
 }

@@ -19,12 +19,12 @@
     border-radius: var(--dss-radius-sm);
   }
 
-  /* Focus state — label e borda em primary (Material 3 / IBM Carbon) */
+  /* Focus state — indicador único: borda 2px action-primary. SEM box-shadow: o
+     anel de 1px duplicava visualmente a borda no foco (mesma decisão do
+     DssSelect outlined). O foco de teclado tem o outline :focus-visible (a11y). */
   &.dss-input--focused .dss-input__field {
     border-color: var(--dss-action-primary);
     border-width: var(--dss-border-width-md);
-    /* DSS Visual Standard: focus ring via box-shadow (Material 3 pattern) */
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
   }
 
   /* Label em primary quando focused */
@@ -67,9 +67,9 @@
     border-color: var(--dss-gray-600);
   }
 
-  /* Label notch effect — fundo para cobrir a borda sob o label flutuante */
-  .dss-input__label--float {
-    background-color: var(--dss-surface-default);
-    padding: 0 var(--dss-spacing-1);
-  }
+  /* Label flutuante SEM fundo (notch). A label fica DENTRO do campo (top:
+     spacing-0, abaixo da borda superior), então não precisa de fundo para
+     "cortar" a borda. O fundo branco (surface-default) só aparecia em telas de
+     fundo não-branco como um retângulo branco indesejado. Transparente por
+     padrão; o efeito notch, se necessário, deve ser pontual — nunca default. */
 }

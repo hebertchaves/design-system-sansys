@@ -42,10 +42,14 @@
     box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
   }
 
-  /* Error state */
+  /* Error state — mesma lógica das outras variantes: mantém o fundo do campo e
+     sinaliza o erro com indicador vermelho. No standout o "contorno" é o
+     box-shadow (como no focus), então o erro é um anel vermelho. Usa
+     `--dss-feedback-error` (definido); os tokens antigos `--dss-error-900/600`
+     NÃO existem → as declarações ficavam inválidas e o campo zerava p/
+     transparente (sem fundo, sem anel). */
   &.dss-input--error .dss-input__field {
-    background-color: var(--dss-error-900);
-    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-error-600);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-feedback-error);
   }
 
   /* Active state */

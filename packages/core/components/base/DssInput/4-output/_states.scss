@@ -10,28 +10,51 @@
 
 [data-theme="dark"] {
   .dss-input {
-    /* Filled variant in dark mode */
+    /* Filled em dark. O stage atrás do campo é surface-subtle (= gray-700) no
+       dark; o filled usa um fill UM TOM MAIS CLARO (gray-600), legível como
+       "preenchido" e NUNCA preto (gray-900 sumia no fundo escuro). Underline
+       gray-800 só em REPOUSO; no foco prevalece a borda do variant (L3) graças
+       ao `:not(--focused)`. Alinhado ao DssSelect. */
     &--filled .dss-input__field {
-      background-color: var(--dss-gray-900);
-      border-bottom-color: var(--dss-gray-700);
+      background-color: var(--dss-gray-600);
+    }
+
+    &--filled:not(.dss-input--focused) .dss-input__field {
+      border-bottom-color: var(--dss-gray-800);
     }
 
     &--filled.dss-input--focused .dss-input__field {
-      background-color: var(--dss-gray-800);
+      background-color: var(--dss-gray-600);
     }
 
-    /* Outlined variant in dark mode */
-    &--outlined .dss-input__field {
+    /* Outlined variant in dark mode — borda neutra só em repouso (no foco
+       prevalece a borda action-primary/brand do L3). */
+    &--outlined:not(.dss-input--focused) .dss-input__field {
       border-color: var(--dss-gray-600);
     }
 
-    /* Standout becomes lighter in dark mode */
+    /* Outlined hover em dark. Sem isto, o hover do L3 (gray-600) coincidia com a
+       borda de repouso do dark (gray-600) → hover invisível. gray-400 (mais
+       clara) torna o hover perceptível. */
+    &--outlined:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+      border-color: var(--dss-gray-400);
+    }
+
+    /* Standout em dark — variant de DESTAQUE: fundo preto (gray-900), claramente
+       mais escuro que o stage (gray-700), espelhando o light mode (chip escuro).
+       Antes era gray-700 = mesma cor do stage → parecia "claro"/sumia. */
     &--standout .dss-input__field {
-      background-color: var(--dss-gray-700);
+      background-color: var(--dss-gray-900);
+    }
+
+    /* Standout hover em dark — clareia um tom (gray-800) para feedback de
+       interação sem perder o caráter escuro. */
+    &--standout:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
+      background-color: var(--dss-gray-800);
     }
 
     &--standout.dss-input--focused .dss-input__field {
-      background-color: var(--dss-gray-600);
+      background-color: var(--dss-gray-800);
     }
   }
 
