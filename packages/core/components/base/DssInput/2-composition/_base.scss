@@ -86,9 +86,9 @@
 
 /* Floating label (when focused or filled) */
 .dss-input__label--float {
-  /* spacing-1 (4px): aproxima a label da borda superior e abre respiro
-     entre a label e a caixa de texto (antes spacing-2 deixava a label colada). */
-  top: var(--dss-spacing-1);
+  /* spacing-0 (0px): label flutuante ancorada no topo do campo, reduzindo o gap
+     entre label e caixa de texto e a altura total do campo. */
+  top: var(--dss-spacing-0);
   transform: translateY(0) scale(0.75);
   font-size: var(--dss-font-size-sm);
 }
@@ -131,7 +131,7 @@
 
 /* With floating label, add top padding */
 .dss-input:not(.dss-input__label--stack) .dss-input__native {
-  padding-top: var(--dss-spacing-5);
+  padding-top: var(--dss-spacing-3);
 }
 
 /* Dense: reserva vertical da label flutuante reduzida (mesma especificidade,
@@ -146,12 +146,10 @@
   font-size: var(--dss-font-size-sm);
 }
 
+/* Dense (repouso e flutuante): label em sm. Antes o flutuante caía p/ xs —
+   pequeno demais; mantemos sm também ao flutuar. */
 .dss-input--dense .dss-input__label {
   font-size: var(--dss-font-size-sm);
-}
-
-.dss-input--dense .dss-input__label--float {
-  font-size: var(--dss-font-size-xs);
 }
 
 /* Disabled state */
@@ -255,15 +253,21 @@
 }
 
 .dss-input__error {
-  color: var(--dss-error-600);
+  color: var(--dss-feedback-error);
 }
 
 /* ==========================================================================
    DISABLED STATE
    ========================================================================== */
 
+/* Indicação ÚNICA de disabled: borda tracejada + fundo muted (variantes) + cor
+   de texto/label desabilitada. NÃO aplicamos opacity no wrapper — o Quasar já
+   impõe `opacity: .6` no nativo `[disabled]` (regra layered+!important, que CSS
+   unlayered não consegue sobrescrever). Empilhar o 0.4 do wrapper resultava em
+   0.4×0.6 = 0.24 (texto/label ilegíveis). Sem o multiplicador do DSS, sobra a
+   indicação única do Quasar (.6) sobre texto já escurecido (--dss-text-disabled
+   = gray-600), mantendo legibilidade. */
 .dss-input--disabled {
-  opacity: var(--dss-opacity-disabled);
   cursor: not-allowed;
 
   .dss-input__field {

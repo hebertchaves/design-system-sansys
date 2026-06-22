@@ -66,13 +66,14 @@
     border-color: var(--dss-gray-300);
   }
 
-  /* Label notch — fundo para "cortar" a borda atrás da label flutuante */
+  /* Label SEM fundo (notch) por padrão. A label flutuante fica DENTRO do campo
+     (abaixo da borda superior, não sobre ela), então não precisa de fundo para
+     "cortar" a borda. O fundo branco (surface-default) só aparecia em telas de
+     fundo não-branco (ex.: campo disabled com fundo muted) como um retângulo
+     branco indesejado. Mantemos transparente; se algum layout específico exigir
+     o efeito notch (label sobre a borda), o fundo deve ser aplicado pontualmente,
+     nunca como default. */
   .q-field__label {
     background-color: transparent;
-  }
-
-  &.q-field--float .q-field__label {
-    background-color: var(--dss-surface-default);
-    padding: 0 var(--dss-spacing-1);
   }
 }

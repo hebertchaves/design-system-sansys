@@ -1,14 +1,24 @@
 <template>
-  <div class="test-suite">
+  <div class="test-suite" :class="{ 'is-collapsed': sidebarCollapsed }">
     <!-- Sidebar Navigation -->
     <div class="test-sidebar">
       <div class="sidebar-header">
         <span class="sidebar-logo">⬡</span>
         <div class="sidebar-title">DSS</div>
         <span class="version">v2.3</span>
+        <button
+          class="sidebar-collapse"
+          type="button"
+          :title="sidebarCollapsed ? 'Expandir menu' : 'Retrair menu'"
+          :aria-label="sidebarCollapsed ? 'Expandir menu' : 'Retrair menu'"
+          :aria-expanded="!sidebarCollapsed"
+          @click="sidebarCollapsed = !sidebarCollapsed"
+        >
+          <span class="material-icons">{{ sidebarCollapsed ? 'chevron_right' : 'chevron_left' }}</span>
+        </button>
       </div>
 
-      <nav class="sidebar-nav">
+      <nav class="sidebar-nav" @mouseover="onNavOver" @mouseout="onNavOut">
         <!-- Dashboard -->
         <div class="nav-section">
           <button
@@ -463,6 +473,13 @@
         <TestTokens />
       </div>
     </div>
+
+    <!-- Tooltip dos itens (modo retraído) — balão fixo à direita do item -->
+    <div
+      v-if="navTip.show"
+      class="nav-tooltip"
+      :style="{ top: navTip.y + 'px', left: navTip.x + 'px' }"
+    >{{ navTip.text }}</div>
   </div>
 </template>
 
@@ -487,23 +504,43 @@ import TestAtenderSolicitacoes from './TestAtenderSolicitacoes.vue'
 // Active component state
 const activeComponent = ref('defaults-preview')
 
-// Expanded categories state
+// Sidebar collapse state (retrair lateralmente)
+const sidebarCollapsed = ref(false)
+
+// Expanded categories state — todos os grupos expandidos por padrão
 const expandedCategories = ref({
-  foundation: false,
+  foundation: true,
   components: true,
   buttonsActions: true,
   displayFeedback: true,
   dataDisplay: true,
-  formsInput: false,
-  layout: false,
-  navigation: false,
+  formsInput: true,
+  layout: true,
+  navigation: true,
   phase3: true,
-  patterns: false
+  patterns: true
 })
 
 // Toggle category expansion
 const toggleCategory = (category) => {
   expandedCategories.value[category] = !expandedCategories.value[category]
+}
+
+// Tooltip estilizado (à direita) nos itens da sidebar quando retraída — mesma
+// aparência/velocidade do menu interno. Usa delegação de evento + 1 balão fixo:
+// evita anotar ~31 botões e escapa do overflow:hidden via position: fixed.
+const navTip = ref({ show: false, text: '', x: 0, y: 0 })
+function onNavOver(e) {
+  if (!sidebarCollapsed.value) return
+  const item = e.target.closest?.('.nav-item')
+  if (!item) return
+  const label = item.querySelector('.nav-label')?.textContent?.trim()
+  if (!label) return
+  const r = item.getBoundingClientRect()
+  navTip.value = { show: true, text: label, x: r.right + 10, y: r.top + r.height / 2 }
+}
+function onNavOut(e) {
+  if (!e.relatedTarget?.closest?.('.nav-item')) navTip.value.show = false
 }
 </script>
 
@@ -533,6 +570,7 @@ const toggleCategory = (category) => {
   border-right: 1px solid #232323;
   position: relative;
   z-index: 100;
+  transition: width 180ms ease;
 }
 
 .sidebar-header {
@@ -548,7 +586,7 @@ const toggleCategory = (category) => {
 .sidebar-logo {
   font-size: 1.125rem;
   line-height: 1;
-  color: #E31E24;
+  color: #1d4971;
   flex-shrink: 0;
 }
 
@@ -569,6 +607,85 @@ const toggleCategory = (category) => {
   border-radius: 4px;
   letter-spacing: 0.02em;
   flex-shrink: 0;
+}
+
+/* Botão retrair lateralmente */
+.sidebar-collapse {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.sidebar-collapse:hover {
+  background: rgba(29, 73, 113, 0.25);
+  color: #ffffff;
+}
+.sidebar-collapse .material-icons {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ── Estado COLAPSADO ──────────────────────────────────────────────── */
+.test-suite.is-collapsed .test-sidebar {
+  width: 52px;
+}
+.test-suite.is-collapsed .sidebar-title,
+.test-suite.is-collapsed .version,
+.test-suite.is-collapsed .nav-label,
+.test-suite.is-collapsed .nav-badge,
+.test-suite.is-collapsed .chevron,
+.test-suite.is-collapsed .nav-category,
+.test-suite.is-collapsed .nav-subcategory,
+.test-suite.is-collapsed .sidebar-footer p {
+  display: none;
+}
+.test-suite.is-collapsed .sidebar-header {
+  flex-direction: column;
+  height: auto;
+  padding: 0.5rem 0;
+  gap: 0.375rem;
+}
+.test-suite.is-collapsed .nav-item,
+.test-suite.is-collapsed .nav-category,
+.test-suite.is-collapsed .nav-subcategory {
+  justify-content: center;
+  padding: 0.4375rem;
+}
+/* Em colapso, todos os submenus ficam achatados na mesma coluna de ícones */
+.test-suite.is-collapsed .nav-submenu,
+.test-suite.is-collapsed .nav-subsubmenu {
+  display: block !important;
+}
+
+/* Tooltip dos itens no modo retraído — à direita, mesma aparência/velocidade do
+   menu interno (azul principal, tamanho intermediário, 200ms). */
+.nav-tooltip {
+  position: fixed;
+  z-index: 1000;
+  transform: translateY(-50%);
+  background: #1d4971;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 3px 9px;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  animation: nav-tooltip-in 200ms ease;
+}
+@keyframes nav-tooltip-in {
+  from { opacity: 0; transform: translateY(-50%) translateX(-5px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 
 /* ========================================
@@ -623,7 +740,7 @@ const toggleCategory = (category) => {
   transform: translateY(-50%);
   height: 56%;
   width: 2px;
-  background: #E31E24;
+  background: #1d4971;
   border-radius: 0 2px 2px 0;
 }
 
@@ -633,7 +750,9 @@ const toggleCategory = (category) => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.22);
+  /* Token DSS mais próximo do branco sem ser branco (gray-50 = #fff): gray-100.
+     Antes rgba(255,255,255,0.22) — cinza-escuro sem contraste no fundo #131313. */
+  color: var(--dss-gray-100);
   padding: 0.75rem 0.625rem 0.25rem;
   cursor: default;
   border-radius: 0;
@@ -642,7 +761,7 @@ const toggleCategory = (category) => {
 
 .nav-category:hover {
   background: transparent;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--dss-gray-50);
   cursor: pointer;
 }
 
@@ -650,14 +769,14 @@ const toggleCategory = (category) => {
 .nav-subcategory {
   font-size: 0.75rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--dss-gray-100);
   padding: 0.3125rem 0.625rem 0.3125rem 0.75rem;
   gap: 0.375rem;
 }
 
 .nav-subcategory:hover {
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--dss-gray-50);
 }
 
 /* Sub-items */
@@ -707,19 +826,19 @@ const toggleCategory = (category) => {
 }
 
 .nav-item:hover .nav-icon {
-  background: rgba(227, 30, 36, 0.12);
+  background: rgba(29, 73, 113, 0.18);
 }
 
 .nav-item:hover .nav-icon .material-icons {
-  color: rgba(248, 100, 100, 0.9);
+  color: rgba(111, 168, 220, 0.95);
 }
 
 .nav-item.active .nav-icon {
-  background: rgba(227, 30, 36, 0.16);
+  background: rgba(29, 73, 113, 0.24);
 }
 
 .nav-item.active .nav-icon .material-icons {
-  color: #f87171;
+  color: #6fa8dc;
 }
 
 .nav-category .nav-icon {
@@ -761,8 +880,8 @@ const toggleCategory = (category) => {
   letter-spacing: 0.02em;
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
-  background: rgba(227, 30, 36, 0.18);
-  color: rgba(255, 100, 100, 0.9);
+  background: rgba(29, 73, 113, 0.20);
+  color: #6fa8dc;
   text-transform: uppercase;
   flex-shrink: 0;
 }

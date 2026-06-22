@@ -11,35 +11,65 @@
 [data-theme="dark"] {
   .dss-select {
 
-    /* Filled variant em dark mode */
+    /* Filled variant em dark mode. O stage atrás do campo é surface-subtle
+       (= gray-700) no dark; por isso o filled usa um fill UM TOM MAIS CLARO
+       (gray-600), legível como "preenchido" e NUNCA preto. O preto/destaque é
+       responsabilidade do standout (abaixo). Underline visível (gray-800) só em
+       REPOUSO; no foco a borda do variant (action-primary / brand) do L3
+       prevalece (guard `:not(--focused)`). */
     &.dss-select--filled .q-field__control {
-      background-color: var(--dss-gray-900);
-      border-bottom-color: var(--dss-gray-700);
+      background-color: var(--dss-gray-600);
+    }
+
+    &.dss-select--filled:not(.dss-select--focused):not(.q-field--focused) .q-field__control {
+      border-bottom-color: var(--dss-gray-800);
     }
 
     &.dss-select--filled.dss-select--focused .q-field__control,
     &.dss-select--filled.q-field--focused .q-field__control {
-      background-color: var(--dss-gray-800);
+      background-color: var(--dss-gray-600);
     }
 
-    /* Outlined variant em dark mode */
-    &.dss-select--outlined .q-field__control {
+    /* Outlined variant em dark mode — borda neutra só em repouso (no foco
+       prevalece a borda action-primary/brand do L3). */
+    &.dss-select--outlined:not(.dss-select--focused):not(.q-field--focused) .q-field__control {
       border-color: var(--dss-gray-600);
     }
 
-    /* Standout em dark mode */
+    /* Outlined hover em dark mode. Sem esta regra, o hover do L3 (gray-600)
+       coincidia com a borda de repouso do dark (gray-600) → hover "invisível".
+       No dark a borda mais clara (gray-400) torna o hover perceptível. */
+    &.dss-select--outlined:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover .q-field__control {
+      border-color: var(--dss-gray-400);
+    }
+
+    /* Standout em dark mode — É o variant de DESTAQUE: fundo preto (gray-900),
+       claramente mais escuro que o stage (gray-700), espelhando o light mode
+       (chip escuro sobre fundo claro). É aqui que vive o comportamento "fica
+       preto", não no filled. */
     &.dss-select--standout .q-field__control {
-      background-color: var(--dss-gray-700);
+      background-color: var(--dss-gray-900);
+    }
+
+    /* Standout hover/focus em dark mode — clareia um tom (gray-800) para dar
+       feedback de interação sem perder o caráter escuro. */
+    &.dss-select--standout:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover .q-field__control {
+      background-color: var(--dss-gray-800);
     }
 
     &.dss-select--standout.dss-select--focused .q-field__control,
     &.dss-select--standout.q-field--focused .q-field__control {
-      background-color: var(--dss-gray-600);
+      background-color: var(--dss-gray-800);
     }
 
     /* Texto em dark mode — text-body é claro no tema dark (não text-inverse=escuro) */
     .q-field__native {
       color: var(--dss-text-body);
+    }
+
+    /* Placeholder em repouso (display-value) em dark mode — mantém o tom hint. */
+    &.dss-select--placeholder .q-field__native {
+      color: var(--dss-text-inverse-hint);
     }
 
     /* Placeholder em dark mode */
