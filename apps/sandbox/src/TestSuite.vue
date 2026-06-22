@@ -750,7 +750,9 @@ function onNavOut(e) {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.22);
+  /* Token DSS mais próximo do branco sem ser branco (gray-50 = #fff): gray-100.
+     Antes rgba(255,255,255,0.22) — cinza-escuro sem contraste no fundo #131313. */
+  color: var(--dss-gray-100);
   padding: 0.75rem 0.625rem 0.25rem;
   cursor: default;
   border-radius: 0;
@@ -759,7 +761,7 @@ function onNavOut(e) {
 
 .nav-category:hover {
   background: transparent;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--dss-gray-50);
   cursor: pointer;
 }
 
@@ -767,14 +769,14 @@ function onNavOut(e) {
 .nav-subcategory {
   font-size: 0.75rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--dss-gray-100);
   padding: 0.3125rem 0.625rem 0.3125rem 0.75rem;
   gap: 0.375rem;
 }
 
 .nav-subcategory:hover {
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--dss-gray-50);
 }
 
 /* Sub-items */

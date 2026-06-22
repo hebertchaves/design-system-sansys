@@ -9,21 +9,24 @@
     ══════════════════════════════════════════════════════════════════ -->
     <header class="pg-hero">
       <div class="pg-hero__inner">
-        <div class="pg-hero__brand">
-          <span class="pg-hero__logo" aria-hidden="true">◉</span>
-          <div class="pg-hero__titles">
-            <h1 class="pg-hero__title">{{ title }}</h1>
-            <p class="pg-hero__subtitle">
-              {{ subtitle }} <code v-if="code">{{ code }}</code>
-            </p>
+        <!-- Bloco da esquerda (cresce com flex:1 e empurra os controles à direita) -->
+        <div class="pg-hero__lead">
+          <div class="pg-hero__brand">
+            <span class="pg-hero__logo" aria-hidden="true">◉</span>
+            <div class="pg-hero__titles">
+              <h1 class="pg-hero__title">{{ title }}</h1>
+              <p class="pg-hero__subtitle">
+                {{ subtitle }} <code v-if="code">{{ code }}</code>
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- KPIs (valor + label na mesma linha; altura = bloco do título) -->
-        <div class="pg-kpis">
-          <div v-for="(kpi, i) in kpis" :key="i" class="pg-kpi">
-            <span class="pg-kpi__value">{{ kpi.value }}</span>
-            <span class="pg-kpi__label">{{ kpi.label }}</span>
+          <!-- KPIs (valor + label na mesma linha; altura = bloco do título) -->
+          <div class="pg-kpis">
+            <div v-for="(kpi, i) in kpis" :key="i" class="pg-kpi">
+              <span class="pg-kpi__value">{{ kpi.value }}</span>
+              <span class="pg-kpi__label">{{ kpi.label }}</span>
+            </div>
           </div>
         </div>
 

@@ -54,8 +54,27 @@
   padding: var(--dss-spacing-2) var(--dss-spacing-4);
   display: flex;
   align-items: center;
-  gap: var(--dss-spacing-4);
+  justify-content: space-between;  /* lead à esquerda, controles à direita */
+  /* gap aqui é só o ESPAÇO MÍNIMO entre lead e controles (o space-between
+     distribui a sobra quando há espaço). Mantê-lo pequeno evita que o bloco
+     quebre cedo demais por poucos px; a quebra graciosa (flex-wrap) só ocorre
+     quando realmente não cabe. column-gap pequeno, row-gap maior p/ o caso
+     em que os controles quebram para baixo. */
+  column-gap: var(--dss-spacing-2);
+  row-gap: var(--dss-spacing-3);
   flex-wrap: wrap;
+}
+
+/* Bloco da esquerda (brand + KPIs). NÃO cresce (`flex-grow: 0`) — o
+   `justify-content: space-between` do inner já joga os controles para a direita,
+   sem `margin-left: auto`. Pode encolher (`min-width: 0`); quando o espaço
+   aperta, o gap colapsa e os controles quebram linha (flex-wrap) — sem overflow. */
+.pg-hero__lead {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-4);
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .pg-hero__brand { display: flex; align-items: center; gap: var(--dss-spacing-2); min-width: 0; }
@@ -121,21 +140,27 @@
   color: var(--dss-text-subtle);
 }
 
-/* Controles do hero — empurrados para a direita; KPIs ficam junto do título */
-.pg-hero__controls { display: flex; align-items: center; gap: var(--dss-spacing-2); margin-left: auto; }
+/* Controles do hero — vão à direita porque o .pg-hero__lead cresce (flex:1).
+   `flex-shrink: 0` mantém o bloco íntegro; quebra para a linha de baixo quando
+   o lead já encolheu ao máximo (graças ao flex-wrap do inner). */
+.pg-hero__controls { display: flex; align-items: center; gap: var(--dss-spacing-2); flex-shrink: 0; }
 .pg-hero__actions { display: flex; gap: 4px; }
+/* Quadrado fixo 36px = altura do grupo de brand pills. Antes usava
+   align-self:stretch + aspect-ratio, mas num flex-item isso resultava em largura
+   errada (~67px) e quebrava o alinhamento dos controles. */
 .pg-icon-btn {
-  width: 32px; height: 32px;
+  width: 36px; height: 36px;
+  flex-shrink: 0;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: var(--pg-radius);
-  border: 1px solid var(--dss-gray-200);
+  border: 1px solid var(--pg-accent-28);   /* borda no azul principal (dos titles) */
   background: var(--dss-surface-default);
-  color: var(--dss-text-body);
+  color: var(--pg-accent);                  /* ícone no azul principal */
   cursor: pointer;
   transition: all .18s ease;
 }
-.pg-icon-btn:hover { background: var(--dss-surface-muted); border-color: var(--dss-gray-300); }
-.pg-icon-btn[aria-pressed="true"] { background: var(--pg-accent-12); border-color: var(--pg-accent-28); color: var(--pg-accent); }
+.pg-icon-btn:hover { background: var(--pg-accent-12); border-color: var(--pg-accent); }
+.pg-icon-btn[aria-pressed="true"] { background: var(--pg-accent-12); border-color: var(--pg-accent); color: var(--pg-accent); }
 .pg-icon-btn .material-icons { font-size: 18px; }
 
 /* Brand pills */
@@ -503,6 +528,12 @@
     repeating-linear-gradient(45deg,
       transparent 0 8px,
       color-mix(in srgb, var(--dss-gray-100) 14%, transparent) 8px 9px);
+}
+/* KPIs em dark — sem o fundo claro (surface-muted vira gray-600 ~claro no dark e
+   parecia "branco"); chip outline transparente com borda sutil. */
+.pg-page[data-theme="dark"] .pg-kpi {
+  background: transparent;
+  border-color: var(--dss-gray-700);
 }
 
 /* ── RESPONSIVO ────────────────────────────────────────────────────────── */

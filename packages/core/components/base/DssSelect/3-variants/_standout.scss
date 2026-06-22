@@ -27,14 +27,22 @@
       box-shadow var(--dss-duration-200) var(--dss-easing-standard);
   }
 
-  /* Texto/label/ícones claros sobre o fundo escuro */
+  /* Texto/label/ícones claros sobre o fundo escuro. */
   .q-field__native,
   .q-field__input {
     color: var(--dss-text-inverse);
   }
 
+  /* `!important` OBRIGATÓRIO só no LABEL: o _quasar-overrides.scss força
+     globalmente `.q-field__label { color: text-secondary !important }`. Sem
+     `!important` o label do standout caía em cinza (baixo contraste), diferente
+     do DssInput (que usa classe própria `.dss-input__label`, fora do alcance do
+     override). themes carregam antes de components → `!important` + ordem vence.
+     O native NÃO leva `!important`: `.q-field__native` (valor do QSelect) não é
+     alvo do override global, e no dark o _states corrige p/ text-body sem
+     `!important` — um `!important` aqui faria o valor sumir no dark. */
   .q-field__label {
-    color: var(--dss-text-inverse-secondary);
+    color: var(--dss-text-inverse-secondary) !important;
   }
 
   .q-placeholder {
@@ -60,10 +68,10 @@
     box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
   }
 
-  /* Focus: label color */
+  /* Focus: label color (!important pelo mesmo motivo do override global acima) */
   &.dss-select--focused .q-field__label,
   &.q-field--focused .q-field__label {
-    color: var(--dss-action-primary);
+    color: var(--dss-action-primary) !important;
   }
 
   /* Error state */
