@@ -33,16 +33,16 @@
     color: var(--dss-text-inverse);
   }
 
-  /* `!important` OBRIGATÓRIO só no LABEL: o _quasar-overrides.scss força
-     globalmente `.q-field__label { color: text-secondary !important }`. Sem
-     `!important` o label do standout caía em cinza (baixo contraste), diferente
-     do DssInput (que usa classe própria `.dss-input__label`, fora do alcance do
-     override). themes carregam antes de components → `!important` + ordem vence.
-     O native NÃO leva `!important`: `.q-field__native` (valor do QSelect) não é
-     alvo do override global, e no dark o _states corrige p/ text-body sem
-     `!important` — um `!important` aqui faria o valor sumir no dark. */
+  /* T3: SEM !important no label de repouso. O override global que justificava o
+     `!important` (`_quasar-overrides.scss { .q-field__label color: text-secondary
+     !important }`) foi REMOVIDO no T1 (commit c911678). Competidores atuais:
+     - light: base `.dss-select .q-field__label` (0,2,0, L2) → o standout (0,2,0, L3)
+       vence por ordem;
+     - dark: `[data-theme=dark] .dss-select .q-field__label` (0,3,0, L4) vence sempre,
+       e com o MESMO valor (text-inverse-secondary) → sem mudança.
+     Nenhum competidor `!important` → `!important` aqui era redundante. */
   .q-field__label {
-    color: var(--dss-text-inverse-secondary) !important;
+    color: var(--dss-text-inverse-secondary);
   }
 
   .q-placeholder {
@@ -68,7 +68,13 @@
     box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
   }
 
-  /* Focus: label color (!important pelo mesmo motivo do override global acima) */
+  /* Focus: label color. KEEP (T3) — load-bearing APENAS no dark+foco: este seletor
+     `.dss-select--standout.dss-select--focused .q-field__label` (0,3,0, L3) EMPATA em
+     especificidade com a regra dark de `4-output/_states.scss`
+     `[data-theme=dark] .dss-select .q-field__label` (0,3,0, L4). Como o _states (L4)
+     carrega DEPOIS, sem `!important` ele venceria o empate e o label de foco cairia
+     para text-inverse-secondary (cinza) em vez de action-primary no dark. Em light o
+     seletor já vence por especificidade — o `!important` só é necessário no dark. */
   &.dss-select--focused .q-field__label,
   &.q-field--focused .q-field__label {
     color: var(--dss-action-primary) !important;

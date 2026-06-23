@@ -1,13 +1,22 @@
 // EXC-Gate-01: Quasar button variant overrides for flat, outline, round modes.
 // QPagination does not expose per-button slot — variant styles must target internals.
-// !important required: Quasar's .bg-primary class applies background with !important.
 // aria-current="page" is the ARIA value QPagination sets on the active page button.
+//
+// T3 (higiene !important): o `!important` em `background-color: transparent` foi
+// REMOVIDO. Pelo FATO DE CASCATA, o `.bg-primary{…!important}` do Quasar está em
+// @layer quasar e VENCE qualquer unlayered (layered important > unlayered important):
+// no ramo `.bg-primary` o transparent já era INSUFICIENTE (inerte, não load-bearing);
+// no ramo `[aria-current]` puro o seletor DSS (0,4,0) vence a base por especificidade
+// mesmo normal. Validado por resolvedor layer-aware (0 mudança de computed em ambos).
+// Nota: a intenção "botão ativo transparente" no flat/outline já é derrotada pelo
+// `.bg-primary !important` do Quasar quando o botão ativo recebe `.bg-primary` —
+// isso é conflito DSS×Quasar-important (fix = layer/JS), FORA do escopo da higiene.
 .dss-pagination {
   &--flat {
     // EXC-Gate-01: flat variant — active button uses text color, no filled background
     .q-pagination .q-btn[aria-current="page"],
     .q-pagination .q-btn.bg-primary {
-      background-color: transparent !important;
+      background-color: transparent;
       color: var(--dss-action-primary);
       font-weight: var(--dss-font-weight-bold);
     }
@@ -17,7 +26,7 @@
     // EXC-Gate-01: outline variant — active button border matches action-primary
     .q-pagination .q-btn[aria-current="page"],
     .q-pagination .q-btn.bg-primary {
-      background-color: transparent !important;
+      background-color: transparent;
       border: var(--dss-border-width-thin) solid var(--dss-action-primary);
       color: var(--dss-action-primary);
     }
