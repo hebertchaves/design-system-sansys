@@ -1,6 +1,6 @@
 # HANDOFF — Higiene de `!important` (continuidade)
 
-**Última atualização:** 22 de Junho de 2026
+**Última atualização:** 23 de Junho de 2026
 **Branch:** `import/dss-v2.4.0`
 **Documento-mãe (ler primeiro):** [`PROMPT_DIRECIONADOR_HIGIENE_IMPORTANT.md`](./PROMPT_DIRECIONADOR_HIGIENE_IMPORTANT.md)
 **Auditoria de origem:** [`audit-reports/AUDITORIA_IMPORTANT_HIGIENE_JUNHO_2026.md`](./audit-reports/AUDITORIA_IMPORTANT_HIGIENE_JUNHO_2026.md)
@@ -13,12 +13,18 @@
 
 | Métrica | Valor |
 |---|---|
-| `!important` em `packages/core` no início | **1025** |
-| `!important` agora | **681** |
-| Removidos (T1 + T2a), com 0 regressão | **344** |
-| Restantes estimados como removíveis | ~205 (T2b ~56 · T3 ~43 · T4 ~106 dos 146) |
+| `!important` (declarações) em `packages/core` no início | **1025** |
+| `!important` (declarações) agora | **557** |
+| Removidos (T1 + T2a + T2b), com 0 regressão | **392** (290 + 54 + 48) |
+| Restantes estimados como removíveis | ~149 (T3 ~43 · T4 ~106 dos 146) |
 
-Comando de medição: `grep -rc "!important" packages/core --include="*.scss" | awk -F: '{s+=$2} END{print s}'`
+Comando de medição (declarações reais, robusto a comentários): `grep -rhoE "!important[;}]" packages/core --include="*.scss" | wc -l`
+
+> ⚠️ O comando antigo (`grep -rc "!important"`) conta **linhas**, inflando o número
+> com comentários `KEEP:`/explicativos que citam a palavra. Use a contagem de
+> **declarações** (`!important[;}]`) como métrica canônica daqui em diante. O T2b
+> adicionou ~14 linhas de comentário com a palavra → a métrica antiga marcaria 647,
+> mas a remoção real de declarações foi **−48**.
 
 ---
 
@@ -28,6 +34,7 @@ Comando de medição: `grep -rc "!important" packages/core --include="*.scss" | 
 |---|---|---|---|
 | `c911678` | **T1** | `themes/_quasar-overrides.scss` (estrutural, seções 1–11) | 290 |
 | `fc57e76` | **T2a** | `utils/_colors.scss` + `_quasar-overrides.scss` §12 (utilitárias puras) | 54 |
+| `b9ec0cf` | **T2b** | `utils/_colors-hover.scss` (hover/active botão+badge) | 48 |
 
 Cada `!important` mantido por motivo tem comentário `KEEP:` no código.
 
@@ -39,10 +46,13 @@ Cada `!important` mantido por motivo tem comentário `KEEP:` no código.
 - [x] **T0 — Pré-requisito de segurança (bloqueante):** Quasar 100% em `@layer quasar` em todos os entry points (sandbox via `quasar-layered.css`; docs-portal é React puro sem Quasar). Regressão estática do Princípio #13 passou. **Premissa de remoção válida.**
 - [x] **T1 — `_quasar-overrides.scss` seções 1–11 (estrutural):** 342→52. Validado **0 regressão** nos 88 componentes em estado default por 2 métodos independentes. 10 keepers documentados (`KEEP:`): opacity de disabled ×4, line-height `.q-item__label`, `.q-btn`{min-height,min-width,padding}, `.q-field__control`{min-height,border-radius}.
 - [x] **T2a — utilitárias globais puras:** `_colors.scss` (25→0) + `_quasar-overrides.scss` §12 (-29). Validado por detector invertido (0 mudança).
+- [x] **T2b — `_colors-hover.scss` (56→8, −48):** commit `b9ec0cf`. Removido o `!important` de hover/active de botão e badge; **mantidos 8** (`background` do hover de badge **outline/transparent**). Validado por **resolvedor de cascata layer-aware em CSSOM** (não o detector simples — ver §5) com 0 mudança de computed-style; diff normalizado idêntico ao HEAD (só `!important` tocado); `npx sass` OK. **Verdito por grupo:**
+  - FILLED (`.bg-*`, 24): **inerte** — Quasar `.bg-X{…!important}` em `@layer quasar` vence qualquer unlayered (layered important > unlayered important) → remover não muda nada.
+  - FLAT/OUTLINE (`.text-*`, 24): `background` vence por especificidade (0,5,0/0,3,0) sobre normais; `color` é dominada por `.text-X` layered do Quasar → ambos redundantes/inertes.
+  - **KEEP (8):** `background` do hover de badge outline/transparent compete contra a base **unlayered** `.dss-badge--outline/--transparent{ background-color: transparent !important }` (DssBadge/3-variants). Ambos unlayered → sem `!important` a base venceria e o fill de hover sumiria. **Resolver no T3** (ao tratar o `!important` da base do badge, estes 8 viram redundantes).
 
 ### ⏳ Pendente
-- [ ] **T2b — `_colors-hover.scss` (56):** estados hover/active de botão/badge (`.dss-button:hover.bg-primary{…!important}`). **Análise de cascata = remoção segura** (a regra hover unlayered é inerte vs `.bg-primary!important` layered do Quasar, OU vence a base por especificidade 0,3,0 com/sem `!important`). **Falta:** confirmação empírica com `:hover` ativo (hover-tool + recompile) antes de aplicar.
-- [ ] **T2b — `_quasar-utilities.scss` (26):** **MISTO, não tratar como utilitária pura:**
+- [ ] **T2b/sobra — `_quasar-utilities.scss` (26):** **MISTO, não tratar como utilitária pura:**
   - `.dss-high-contrast` / `.dss-reduced-motion` → **A11Y, MANTER** (mesma natureza da seção 13).
   - `--quasar-*` custom-props de brand → pertencem ao **T4**, não ao T2.
   - Sobra pouca coisa de fato removível aqui.
@@ -89,6 +99,25 @@ Cada `!important` mantido por motivo tem comentário `KEEP:` no código.
 ```
 
 - Rodar via chrome-devtools MCP (`evaluate_script`) na **Defaults Preview** (renderiza os 88 componentes em estado default).
+
+> ⚠️ **LIÇÃO T2b — o detector simples acima é LAYER-BLIND.** Ele compara só
+> especificidade+ordem e **ignora `@layer`**. Para qualquer lote que compita contra
+> utilitárias `.bg-*`/`.text-*` do **Quasar** (que vivem em `@layer quasar` com
+> `!important`), ele dá **falso positivo de mudança**: rankeia o `!important` unlayered
+> do DSS acima do `!important` layered do Quasar — o inverso do FATO DE CASCATA. No T2b
+> isso marcou erroneamente os FILLED como "load-bearing".
+>
+> **Método correto (usado e validado no T2b): resolvedor de cascata LAYER-AWARE + MEDIA-GUARDED.**
+> Coleta recursiva das regras taggeando `layered` (recursão em `CSSLayerBlockRule`);
+> respeita `@media` via `window.matchMedia(...).matches` (senão `@media print{…!important}`
+> de `4-output/_states.scss` contamina como competidor falso); simula `:hover`/`:active`
+> removendo só esses pseudos do `.matches()`; resolve o vencedor de `background-color`
+> por **winScore** = important?(layered?5:4):(layered?2:3) → especificidade → ordem.
+> Testa elementos **sintéticos** (`document.createElement` com as classes exatas de cada
+> variante) — assim cobre flat/outline/badge-outline mesmo que a página não os renderize,
+> e dispensa `:hover` real (que é instável: re-render + uid stale movem o ponteiro).
+> Compara o vencedor **com** vs **sem** o `!important` da regra-alvo; valor igual ⇒ remover,
+> diferente ⇒ KEEP. Script completo no histórico desta sessão (T2b).
 - **Estados não-default** (campo disabled/erro, hover/active, menu/dialog/tooltip abertos) NÃO renderizam na Defaults Preview. As páginas "playground"/pattern (Login Forms, Atender) renderizam 0 `q-field` consultável. Para esses: usar o **hover-tool** do MCP (`:hover` real) + o detector, ou o **file-toggle** (original × editado) com DOM idêntico. **NÃO** injetar classe Quasar crua (`.q-field--error`) — dá artefato, pois os componentes usam estado próprio `.dss-*`.
 
 ---
@@ -109,19 +138,21 @@ Você é o executor da continuidade da Higiene de !important do DSS. Estado e m�
 em docs/governance/HANDOFF_HIGIENE_IMPORTANT.md — LEIA-O PRIMEIRO, junto com o documento-mãe
 docs/governance/PROMPT_DIRECIONADOR_HIGIENE_IMPORTANT.md e a seção "FATO DE CASCATA VINCULANTE".
 
-Já feito (não refazer): T0 (verde), T1 (commit c911678, -290), T2a (commit fc57e76, -54).
-Placar: 1025 → 681 !important, 0 regressão.
+Já feito (não refazer): T0 (verde), T1 (c911678, -290), T2a (fc57e76, -54), T2b (b9ec0cf, -48).
+Placar: 1025 → 557 declarações de !important, 0 regressão.
 
 Sua missão, em LOTES pequenos com validação antes de cada commit:
-1. T2b — _colors-hover.scss (56): aplicar remoção (cascata já indica seguro), CONFIRMANDO com
-   :hover real via hover-tool + detector invertido. _quasar-utilities.scss: MANTER os blocos
-   a11y (.dss-high-contrast/.dss-reduced-motion) e deixar as custom-props de brand para o T4.
-2. T3 — _layout-helpers.scss (18) + 3-variants/ (25): trocar !important por especificidade.
-3. T4 — tokens/brand/index.scss (~146): analisar ordem .dss-brand-x vs [data-brand=x].
+1. T3 — _layout-helpers.scss (18) + 3-variants/ (25): trocar !important por especificidade.
+   INCLUI a base do badge `.dss-badge--outline/--transparent{ background-color: transparent !important }`
+   — ao tratá-la, os 8 KEEP do T2b (_colors-hover.scss) também viram redundantes; revalidar e remover.
+2. T4 — tokens/brand/index.scss (~146): analisar ordem .dss-brand-x vs [data-brand=x].
+3. Sobra do T2: _quasar-utilities.scss (26) — MANTER blocos a11y (.dss-high-contrast/.dss-reduced-motion);
+   custom-props de brand pertencem ao T4.
 
 Regras de ouro:
-- Validação por lote é OBRIGATÓRIA (detector invertido CSSOM sem recompile; ou file-toggle com
-  DOM idêntico). Qualquer diferença de computed-style = reverter a linha e documentar como KEEP.
+- Validação por lote é OBRIGATÓRIA. Para lotes que tocam utilitárias .bg-*/.text- (Quasar layered),
+  use o RESOLVEDOR LAYER-AWARE da §5 — NÃO o detector simples (que é layer-blind e dá falso positivo).
+  Qualquer diferença de computed-style = reverter a linha e documentar como KEEP.
 - Gate de build = `npx sass packages/core/index.scss` (NÃO depender do vitest — infra trava).
 - Subir dev server FRESH para validar; matar ao terminar. Sempre navegar por URL explícita.
 - Atualizar este HANDOFF e a memória project-important-audit ao fim de cada lote.
