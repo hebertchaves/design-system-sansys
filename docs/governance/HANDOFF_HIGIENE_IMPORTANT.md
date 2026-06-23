@@ -14,9 +14,28 @@
 | Métrica | Valor |
 |---|---|
 | `!important` (declarações) em `packages/core` no início | **1025** |
-| `!important` (declarações reais) agora | **344** |
-| Removidos (T1+T2a+T2b+T3+T4), com 0 regressão | **T1-T3: -425 · T4 brand: -10 · brand/index deletado: -147 (era código morto)** |
-| Restantes | buckets diferidos (a11y/forced-colors, 2-composition EXC, utilitários de componente) |
+| `!important` (declarações reais) agora | **335** |
+| Removidos (T1+T2a+T2b+T3+T4+buckets), com 0 regressão | **T1-T3: -425 · T4 brand: -10 · brand/index deletado: -147 · buckets util/brand: -10** |
+| Restantes | **335, TODOS KEEP-por-design ou EXC diferido** (ver "Estado final" abaixo) |
+
+### Estado final dos buckets (23/jun/2026) — remoções seguras ESGOTADAS
+
+| Bucket | Qtd | Veredito |
+|---|---|---|
+| `4-output/_states` (`@media` forced-colors/prefers-contrast/reduced-motion/print) | 237 | **KEEP** — a11y WCAG (verificado: 100% gated, 0 strays) |
+| `2-composition` overlays | 40 | **KEEP/DEFER** — EXC-01/02 deliberados; brigam com `!important` LAYERED/`style` inline do Quasar ou com keepers globais do T1. Clarear exigiria mexer nos keepers do T1 / na ordem de layers (decisão arquitetural, fora da higiene) |
+| `_quasar-overrides` | 22 | **KEEP** — keepers do T1 (opacity/disabled/estrutural vs Quasar important) |
+| `_layout-helpers` | 17 | **KEEP** — utilitárias de visibilidade forçantes (`.dss-hide-*/.dss-show-*`) |
+| `_quasar-utilities` | 12 | **KEEP** — `.q-drawer width` (vence inline) + `.dss-form-group` (não-usada, incerta) + 9 a11y |
+| `4-output/_brands` | 3 | **KEEP** — PullToRefresh box-shadow (load-bearing vs base EXC-Gate-02) |
+| `3-variants` | 2 | **KEEP** — Select foco (vs dark `_states`) + Dialog seamless (vs base EXC-01) |
+| `tokens/`, `utils/_colors*`, … | ~2 | resíduos a11y/keeper |
+
+> **Conclusão:** todas as remoções de baixo risco/redundantes/inertes foram feitas. O que resta
+> é **legítimo** (a11y) ou **intencional** (EXC que combatem o Quasar layered/inline). Reduzir
+> além disso NÃO é higiene de `!important` — é decisão arquitetural (declarar uma `@layer dss`
+> ANTES de `quasar` p/ neutralizar o important layered do Quasar, e então reavaliar os EXC do
+> 2-composition + os keepers do T1). Ver "Fora do Escopo" no PROMPT_DIRECIONADOR.
 
 Comando de medição CANÔNICO (declarações reais, exclui comentários): 
 `grep -rhnE "^\s+[a-zA-Z-]+:[^;{]*!important" packages/core --include="*.scss" | grep -vE "^\s*[0-9]+:\s*(//|\*|/\*)" | wc -l`
