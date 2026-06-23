@@ -20,7 +20,13 @@
 }
 
 [data-brand="hub"] .dss-pull-to-refresh .q-pull-to-refresh__handler {
-  background-color: var(--dss-hub-50) !important;
+  /* T4: `background-color` sem !important — era INSUFICIENTE (o Quasar aplica
+     `.bg-white !important` LAYERED no handler, que vence qualquer unlayered;
+     validado: handler renderiza branco com/sem o !important). `box-shadow` MANTÉM
+     !important (KEEP): compete contra a base unlayered EXC-Gate-02
+     `.dss-pull-to-refresh .q-pull-to-refresh__handler { box-shadow: shadow-md !important }`
+     (2-composition); sem !important cai p/ shadow-md. Revisar com o EXC-Gate-02. */
+  background-color: var(--dss-hub-50);
   box-shadow: var(--dss-shadow-hub-md) !important;
 }
 
@@ -33,7 +39,7 @@
 }
 
 [data-brand="water"] .dss-pull-to-refresh .q-pull-to-refresh__handler {
-  background-color: var(--dss-water-50) !important;
+  background-color: var(--dss-water-50);
   box-shadow: var(--dss-shadow-water-md) !important;
 }
 
@@ -46,6 +52,6 @@
 }
 
 [data-brand="waste"] .dss-pull-to-refresh .q-pull-to-refresh__handler {
-  background-color: var(--dss-waste-50) !important;
+  background-color: var(--dss-waste-50);
   box-shadow: var(--dss-shadow-waste-md) !important;
 }

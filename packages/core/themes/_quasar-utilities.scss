@@ -22,11 +22,14 @@
   --quasar-primary: var(--dss-brand-primary);
   --quasar-primary-hover: var(--dss-brand-primary-hover);
 
+  /* nota (T3/T4): `.q-btn--primary` NÃO é emitido pelo Quasar (0 ocorrências no
+     quasar-layered.css e em templates) — bloco provavelmente morto. !important
+     removido; se confirmado morto, candidato a remoção do bloco em limpeza futura. */
   &.q-btn--primary {
-    background-color: var(--dss-brand-primary) !important;
-    
+    background-color: var(--dss-brand-primary);
+
     &:hover:not(.disabled):not([disabled]) {
-      background-color: var(--dss-brand-primary-hover) !important;
+      background-color: var(--dss-brand-primary-hover);
     }
   }
 }
@@ -282,10 +285,12 @@
   }
   
   &--compact {
+    /* T4: sem !important — Quasar `.q-table th,td { padding: 7px 16px }` é NORMAL;
+       o seletor DSS (0,3,0) unlayered já vence o Quasar layered normal. */
     .q-table {
       th, td {
-        padding: var(--dss-spacing-2) !important;
-        font-size: var(--dss-font-size-sm) !important;
+        padding: var(--dss-spacing-2);
+        font-size: var(--dss-font-size-sm);
       }
     }
   }

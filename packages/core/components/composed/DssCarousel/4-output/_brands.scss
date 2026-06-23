@@ -23,7 +23,8 @@
 
 [data-brand="hub"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
 .dss-carousel--brand-hub .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
-  color: var(--dss-hub-600) !important;
+  /* T4: sem !important — seletor (0,4,0) vence por especificidade (validado: 0 mudança). */
+  color: var(--dss-hub-600);
 }
 
 [data-brand="hub"] .dss-carousel .q-carousel__thumbnail--active,
@@ -42,7 +43,7 @@
 
 [data-brand="water"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
 .dss-carousel--brand-water .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
-  color: var(--dss-water-500) !important;
+  color: var(--dss-water-500);
 }
 
 [data-brand="water"] .dss-carousel .q-carousel__thumbnail--active,
@@ -61,7 +62,7 @@
 
 [data-brand="waste"] .dss-carousel .q-carousel__navigation-icon.q-carousel__navigation-icon--active,
 .dss-carousel--brand-waste .q-carousel__navigation-icon.q-carousel__navigation-icon--active {
-  color: var(--dss-waste-600) !important;
+  color: var(--dss-waste-600);
 }
 
 [data-brand="waste"] .dss-carousel .q-carousel__thumbnail--active,
