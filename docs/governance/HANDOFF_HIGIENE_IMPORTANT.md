@@ -14,17 +14,18 @@
 | Métrica | Valor |
 |---|---|
 | `!important` (declarações) em `packages/core` no início | **1025** |
-| `!important` (declarações) agora | **557** |
-| Removidos (T1 + T2a + T2b), com 0 regressão | **392** (290 + 54 + 48) |
-| Restantes estimados como removíveis | ~149 (T3 ~43 · T4 ~106 dos 146) |
+| `!important` (declarações reais) agora | **501** |
+| Removidos (T1 + T2a + T2b + T3), com 0 regressão | **~474** (290 + 54 + 48 + 33 + ajustes de métrica) |
+| Restantes estimados como removíveis | ~106 (T4: tokens/brand dos 146) + buckets diferidos |
 
-Comando de medição (declarações reais, robusto a comentários): `grep -rhoE "!important[;}]" packages/core --include="*.scss" | wc -l`
+Comando de medição CANÔNICO (declarações reais, exclui comentários): 
+`grep -rhnE "^\s+[a-zA-Z-]+:[^;{]*!important" packages/core --include="*.scss" | grep -vE "^\s*[0-9]+:\s*(//|\*|/\*)" | wc -l`
 
-> ⚠️ O comando antigo (`grep -rc "!important"`) conta **linhas**, inflando o número
-> com comentários `KEEP:`/explicativos que citam a palavra. Use a contagem de
-> **declarações** (`!important[;}]`) como métrica canônica daqui em diante. O T2b
-> adicionou ~14 linhas de comentário com a palavra → a métrica antiga marcaria 647,
-> mas a remoção real de declarações foi **−48**.
+> ⚠️ **Evolução da métrica.** `grep -rc "!important"` conta **linhas** (inclui comentários);
+> `grep -rhoE "!important[;}]"` conta **tokens** mas ainda casa `…!important}` embutido em
+> comentários (ex.: `opacity:0!important}`). A métrica canônica agora é a de **declarações
+> reais** acima (linha `prop: valor !important`, excluindo comentários). Por ela: início
+> 1025 → **501**. Os comentários KEEP/explicativos inflam as métricas antigas em ~25.
 
 ---
 
@@ -35,6 +36,11 @@ Comando de medição (declarações reais, robusto a comentários): `grep -rhoE 
 | `c911678` | **T1** | `themes/_quasar-overrides.scss` (estrutural, seções 1–11) | 290 |
 | `fc57e76` | **T2a** | `utils/_colors.scss` + `_quasar-overrides.scss` §12 (utilitárias puras) | 54 |
 | `b9ec0cf` | **T2b** | `utils/_colors-hover.scss` (hover/active botão+badge) | 48 |
+| `94389f9` | **T3·L1** | `DssBadge/3-variants` (outline+transparent) + `_colors-hover` (destrava T2b) | 12 |
+| `ef06f34` | **T3·L2** | `utils/_layout-helpers.scss` (`--fluid`; 17 utilitárias de visibilidade = KEEP) | 1 |
+| `eaa30ee` | **T3·L3** | `DssScrollArea` + `DssPullToRefresh` + `DssStepper` /3-variants | 5 |
+| `96d69d0` | **T3·L4** | `DssPagination` (-2) + `DssSelect/standout` (-1, foco=KEEP) | 3 |
+| `568579d` | **T3·L5** | `DssDialog/3-variants` (dimensões; seamless box-shadow=KEEP) | 12 |
 
 Cada `!important` mantido por motivo tem comentário `KEEP:` no código.
 
@@ -51,8 +57,14 @@ Cada `!important` mantido por motivo tem comentário `KEEP:` no código.
   - FLAT/OUTLINE (`.text-*`, 24): `background` vence por especificidade (0,5,0/0,3,0) sobre normais; `color` é dominada por `.text-X` layered do Quasar → ambos redundantes/inertes.
   - **KEEP (8):** `background` do hover de badge outline/transparent compete contra a base **unlayered** `.dss-badge--outline/--transparent{ background-color: transparent !important }` (DssBadge/3-variants). Ambos unlayered → sem `!important` a base venceria e o fill de hover sumiria. **Resolver no T3** (ao tratar o `!important` da base do badge, estes 8 viram redundantes).
 
+- [x] **T3 — `_layout-helpers.scss` (-1) + `3-variants/` (-32) = -33:** commits `94389f9`,`ef06f34`,`eaa30ee`,`96d69d0`,`568579d`. Validado por **resolvedor layer-aware** (sintético, árvores DOM p/ combinadores descendentes/child) + análise on-disk (servidor stale não serve casos que dependem de regras removidas no T1, ex.: Select label). **Removidos:** badge outline/transparent base (4) + colors-hover badge (8); container `--fluid` (1); ScrollArea/PullToRefresh/Stepper (5); Pagination flat/outline (2); Select standout label-repouso (1); Dialog dimensões (12). **KEEP documentados (19):**
+  - `_layout-helpers` `display:none` ×17 — utilitárias de visibilidade responsiva (forçantes, como `.hidden` do Quasar; vencem o `display` do componente que carrega depois).
+  - `DssSelect/standout` label-**foco** (1) — empata (0,3,0) com `[data-theme=dark] .dss-select .q-field__label` de `4-output/_states` (L4, depois); sem `!important` cairia p/ cinza no dark+foco.
+  - `DssDialog/seamless` box-shadow (1) — compete c/ base unlayered EXC-01 `.dss-dialog{box-shadow:elevation-5 !important}` (2-composition); revisar quando o EXC-01 da base for tratado.
+  - **Padrão recorrente confirmado:** wrappers de Quasar onde a prop-alvo do Quasar é `!important` LAYERED (`.bg-primary`, `.q-dialog__inner--*{max-*:100%!important}`) → o `!important` DSS é **insuficiente/inerte** (não vencia) → remover é no-op. Onde Quasar é normal → DSS unlayered vence → redundante.
+
 ### ⏳ Pendente
-- [ ] **T2b/sobra — `_quasar-utilities.scss` (26):** **MISTO, não tratar como utilitária pura:**
+- [ ] **Sobra do T2 — `_quasar-utilities.scss` (26):** **MISTO, não tratar como utilitária pura:**
   - `.dss-high-contrast` / `.dss-reduced-motion` → **A11Y, MANTER** (mesma natureza da seção 13).
   - `--quasar-*` custom-props de brand → pertencem ao **T4**, não ao T2.
   - Sobra pouca coisa de fato removível aqui.
@@ -138,16 +150,22 @@ Você é o executor da continuidade da Higiene de !important do DSS. Estado e m�
 em docs/governance/HANDOFF_HIGIENE_IMPORTANT.md — LEIA-O PRIMEIRO, junto com o documento-mãe
 docs/governance/PROMPT_DIRECIONADOR_HIGIENE_IMPORTANT.md e a seção "FATO DE CASCATA VINCULANTE".
 
-Já feito (não refazer): T0 (verde), T1 (c911678, -290), T2a (fc57e76, -54), T2b (b9ec0cf, -48).
-Placar: 1025 → 557 declarações de !important, 0 regressão.
+Já feito (não refazer): T0 (verde), T1 (c911678, -290), T2a (fc57e76, -54),
+T2b (b9ec0cf, -48), T3 (5 lotes: 94389f9/ef06f34/eaa30ee/96d69d0/568579d, -33).
+Placar: 1025 → 501 declarações reais de !important, 0 regressão.
 
 Sua missão, em LOTES pequenos com validação antes de cada commit:
-1. T3 — _layout-helpers.scss (18) + 3-variants/ (25): trocar !important por especificidade.
-   INCLUI a base do badge `.dss-badge--outline/--transparent{ background-color: transparent !important }`
-   — ao tratá-la, os 8 KEEP do T2b (_colors-hover.scss) também viram redundantes; revalidar e remover.
-2. T4 — tokens/brand/index.scss (~146): analisar ordem .dss-brand-x vs [data-brand=x].
-3. Sobra do T2: _quasar-utilities.scss (26) — MANTER blocos a11y (.dss-high-contrast/.dss-reduced-motion);
-   custom-props de brand pertencem ao T4.
+1. T4 — tokens/brand/index.scss (~146): custom-props `--dss-*: var(…) !important` em
+   `.dss-brand-hub/water/waste`. Analisar ordem `.dss-brand-x` × `[data-brand=x]` e se
+   há definição CONCORRENTE (custom-prop !important só importa se houver). Provável que
+   muitos sejam redundantes (mesma especificidade 0,1,0 → ordem decide), mas alguns podem
+   ser intenção de override explícito → KEEP+doc. ATENÇÃO: token !important não move
+   computed-style diretamente — o resolvedor precisa medir a PROP final que consome o token.
+2. Sobra do T2: _quasar-utilities.scss (26) — MANTER blocos a11y (.dss-high-contrast/
+   .dss-reduced-motion); custom-props de brand pertencem ao T4.
+3. (Opcional) 2-composition EXC (ex.: DssDialog EXC-01 box-shadow/bg; Header/Footer EXC-02):
+   intra-DSS deliberados — só mexer com análise caso a caso; ao tratar o EXC-01 do Dialog,
+   revalidar o KEEP do seamless (T3) que depende dele.
 
 Regras de ouro:
 - Validação por lote é OBRIGATÓRIA. Para lotes que tocam utilitárias .bg-*/.text- (Quasar layered),
