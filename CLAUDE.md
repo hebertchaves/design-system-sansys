@@ -37,6 +37,13 @@ Este arquivo (**CLAUDE.md**) é um **documento normativo vinculante** para qualq
 
 ## 🚨 Leitura Obrigatória (ANTES de criar qualquer componente)
 
+> ### 🎯 Adequando a UI de um componente (variantes / dark mode / cascade Quasar)?
+> **Leia `docs/governance/DSS_UI_ADEQUACAO_CHECKLIST.md` ANTES de editar SCSS/variantes.**
+> - **Razão:** padrões de erro de cascade DSS×Quasar, dark mode e standout recorreram
+>   em DssInput/DssSelect; o checklist mapeia sintoma → causa-raiz → fix canônico.
+> - **Gate (por componente, LIGHT e DARK):** rodar o "Gate de adequação" do checklist
+>   antes de marcar a UI como pronta.
+
 A criação de qualquer componente DSS **exige leitura prévia** dos seguintes arquivos, **nesta ordem**:
 
 0. `docs/AGENT_QUICKSTART.md` *(ponto único de entrada — leia PRIMEIRO para orientação geral e mapa de navegação)*
