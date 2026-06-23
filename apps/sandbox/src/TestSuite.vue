@@ -216,6 +216,14 @@
               </button>
 
               <button
+                @click="activeComponent = 'textarea'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'textarea' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">notes</span></span>
+                <span class="nav-label">DssTextarea</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'checkbox'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'checkbox' }]"
               >
@@ -428,6 +436,11 @@
         <TestSelect />
       </div>
 
+      <!-- DssTextarea Test View -->
+      <div v-else-if="activeComponent === 'textarea'" class="component-view">
+        <TestTextarea />
+      </div>
+
       <!-- DssCard Test View -->
       <div v-else-if="activeComponent === 'card'" class="component-view">
         <TestCard />
@@ -492,6 +505,7 @@ import TestBadge from './TestBadge.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestInput from './TestInput.vue'
 import TestSelect from './TestSelect.vue'
+import TestTextarea from './TestTextarea.vue'
 import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
 import TestDataCard from './TestDataCard.vue'

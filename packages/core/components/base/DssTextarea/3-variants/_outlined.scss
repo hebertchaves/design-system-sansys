@@ -46,15 +46,17 @@
   /* Error state */
   &.dss-textarea--error .q-field__control,
   &.q-field--error .q-field__control {
-    border-color: var(--dss-error-600);
+    border-color: var(--dss-feedback-error);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-error-600);
+    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-feedback-error);
   }
 
-  /* Disabled state */
+  /* Disabled state. Usa --dss-surface-muted (semântico: remapeia no dark p/
+     gray-600) em vez de gray-50 fixo — gray-50 renderizava um retângulo BRANCO no
+     dark. Paridade com o golden (DssInput/DssSelect outlined disabled). */
   &.dss-textarea--disabled .q-field__control {
     border-style: dotted;
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-muted);
   }
 
   /* Readonly state */

@@ -127,9 +127,10 @@
     color: var(--dss-text-secondary);
   }
 
-  /* Error message color */
+  /* Error message color. Usa --dss-feedback-error (definido); --dss-error-600
+     NÃO existe → a cor caía para transparente/herdada. */
   &.q-field--error .q-field__messages {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   /* ==========================================================================

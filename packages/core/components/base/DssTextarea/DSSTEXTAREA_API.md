@@ -103,7 +103,7 @@ type TextareaBrand = 'hub' | 'water' | 'waste'
 - `--dss-text-inverse`, `--dss-text-inverse-secondary`, `--dss-text-inverse-hint` (dark mode)
 - `--dss-gray-50` a `--dss-gray-900` (fundos, bordas)
 - `--dss-action-primary` (foco padrão)
-- `--dss-error-600` (estado de erro)
+- `--dss-feedback-error` (estado de erro)
 - `--dss-focus-ring` (outline de acessibilidade)
 - `--dss-surface-default` (label notch em outlined)
 - `--dss-opacity-disabled` (0.4)

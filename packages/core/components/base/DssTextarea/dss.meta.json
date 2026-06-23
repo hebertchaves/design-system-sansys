@@ -47,7 +47,7 @@
     "--dss-border-width-md",
     "--dss-border-width-thick",
     "--dss-action-primary",
-    "--dss-error-600",
+    "--dss-feedback-error",
     "--dss-opacity-disabled",
     "--dss-focus-ring",
     "--dss-surface-default",
