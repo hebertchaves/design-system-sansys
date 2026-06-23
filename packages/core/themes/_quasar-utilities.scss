@@ -10,11 +10,18 @@
    1. CLASSES DE CONTEXTUALIZAÇÃO DE MARCA
    =========================================== */
 
-/* Aplicar tokens de marca em qualquer componente */
+/* Aplicar tokens de marca em qualquer componente.
+   T4 (jun/2026): custom-props de marca SEM !important. A classe `.dss-brand-*`
+   define `--quasar-primary` DIRETAMENTE no elemento; set direto sempre vence o
+   valor HERDADO do contexto `[data-brand]` (`_quasar-tokens-mapping.scss`) ou de
+   `:root` — independente de `!important`. Validado por detector inheritance-aware
+   (getComputedStyle), inclusive no caso extremo `[data-brand=x]`+classe no mesmo
+   elemento: 0 mudança. (O brand/index.scss "rico" era código morto — ver
+   docs/governance/ALERTA_BRAND_INDEX_NAO_IMPORTADO.md.) */
 .dss-brand-hub {
-  --quasar-primary: var(--dss-brand-primary) !important;
-  --quasar-primary-hover: var(--dss-brand-primary-hover) !important;
-  
+  --quasar-primary: var(--dss-brand-primary);
+  --quasar-primary-hover: var(--dss-brand-primary-hover);
+
   &.q-btn--primary {
     background-color: var(--dss-brand-primary) !important;
     
@@ -25,21 +32,22 @@
 }
 
 .dss-brand-water {
-  --quasar-primary: var(--dss-brand-primary) !important;
-  --quasar-primary-hover: var(--dss-brand-primary-hover) !important;
+  --quasar-primary: var(--dss-brand-primary);
+  --quasar-primary-hover: var(--dss-brand-primary-hover);
 }
 
 .dss-brand-waste {
-  --quasar-primary: var(--dss-brand-primary) !important;
-  --quasar-primary-hover: var(--dss-brand-primary-hover) !important;
+  --quasar-primary: var(--dss-brand-primary);
+  --quasar-primary-hover: var(--dss-brand-primary-hover);
 }
 
 /* Forçar modo semantic (ignorar brand context) */
 .dss-mode-semantic {
-  --quasar-primary: var(--dss-action-primary) !important;
-  --quasar-primary-hover: var(--dss-action-primary-hover) !important;
-  --quasar-secondary: var(--dss-action-secondary) !important;
-  --quasar-accent: var(--dss-action-accent) !important;
+  /* T4: idem — set direto na classe vence o herdado, sem !important. */
+  --quasar-primary: var(--dss-action-primary);
+  --quasar-primary-hover: var(--dss-action-primary-hover);
+  --quasar-secondary: var(--dss-action-secondary);
+  --quasar-accent: var(--dss-action-accent);
 }
 
 /* ===========================================
