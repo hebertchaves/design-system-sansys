@@ -6,13 +6,17 @@
 // Quando visible='always', a scrollbar é sempre exibida.
 // A opacidade máxima é garantida mesmo sem hover/scroll ativo.
 
+// T3: sem !important — o Quasar define `.q-scrollarea__bar/__thumb { opacity: .2 }`
+// como NORMAL (em @layer quasar); o seletor DSS (0,2,0) unlayered já vence sem
+// !important. (O único important do Quasar aqui é `--invisible{opacity:0!important}`,
+// que a variante always-visible não dispara — usa o prop `visible` do QScrollArea.)
 .dss-scroll-area--always-visible {
   .q-scrollarea__bar {
-    opacity: 1 !important;
+    opacity: 1;
   }
 
   .q-scrollarea__thumb {
-    opacity: 1 !important;
+    opacity: 1;
   }
 }
 
