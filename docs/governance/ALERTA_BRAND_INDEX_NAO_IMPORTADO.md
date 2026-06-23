@@ -2,7 +2,7 @@
 
 **Data:** 23 de Junho de 2026
 **Origem:** Higiene de `!important` — Lote T4 (alvo era `tokens/brand/index.scss`, ~149 `!important`)
-**Status:** ⛔ **T4 BLOQUEADO** neste arquivo até decisão de governança. Requer averiguação.
+**Status:** ✅ **RESOLVIDO** — arquivo deletado (commit `7e3ce27`, 23/jun/2026). Ver seção 8.
 **Severidade:** Média-alta (lacuna funcional latente em feature de brandabilidade; blast-radius atual baixo).
 
 ---
@@ -68,15 +68,23 @@ Como o arquivo não é carregado, essa feature está **apenas parcialmente entre
 
 ---
 
-## 4. Causa provável (a confirmar)
+## 4. Causa (CONFIRMADA via git) — nunca foi ligado desde a criação
 
-`brand/index.scss` foi tocado pela migração `@import → @use` (commit `2cdeb1a` —
-"fix(core): migra @import legado para @use e elimina namespace --quasar-*", Onda P0) e pela
-consolidação de pastas (`76d3235`). Hipótese: com `@import` (global), o `brand/index` era
-puxado para o bundle; ao migrar para `@use` (explícito/escopado), o `@use 'brand/index'`
-**não foi religado** em `tokens/index.scss` (ou foi substituído por `_hub/_water/_waste`).
-A duplicata `.dss-brand-*` em `_quasar-utilities.scss` (2 props) **mascarou** a regressão, pois
-as classes "ainda existiam" no CSS — só que incompletas.
+A arqueologia git **descartou** a hipótese de regressão pela migração `@import→@use`:
+
+- `git log --all -S "brand/index" -- '*.scss'` → **vazio**: a string `brand/index` nunca foi
+  adicionada/removida em nenhum `.scss`.
+- `git log --all -S "@use 'brand'"` / `"@import 'brand'"` / `"tokens/brand"` → **todos vazios**:
+  nunca houve import "bare" que resolvesse para `brand/index.scss`.
+- `brand/index.scss` foi **criado no primeiro commit** (`63e4e07 "DSS compartilhado"`) e
+  `tokens/index.scss` **sempre** importou apenas `brand/_hub/_water/_waste` (`@import` no
+  `4450383`, depois `@use` no `9e12a87`) — **nunca** `brand/index`.
+
+**Veredito:** o arquivo é um **scaffold órfão desde a origem** — foi escrito junto do esqueleto
+inicial do DSS, mas **nunca foi conectado ao build**. Não há "regressão a restaurar": a versão
+viva `.dss-brand-*` (2 props) sempre veio de `_quasar-utilities.scss`. Isso **simplifica a
+decisão**: "religar para restaurar" não se aplica (nunca rodou); a feature de override local
+**nunca foi entregue** de fato.
 
 ---
 
@@ -109,6 +117,31 @@ as classes "ainda existiam" no CSS — só que incompletas.
 3. Até a decisão, **não deletar** o arquivo (tem mixins/funções de aparência intencional e
    documentação de uma feature) nem religá-lo às cegas (mudaria cor/sombra/foco de marca em
    qualquer consumidor que use as classes).
+
+---
+
+## 8. Resolução (23/jun/2026, commit `7e3ce27`)
+
+**Decisão: arquivo deletado.** A averiguação (seção 4) provou que era órfão desde a origem
+(nunca rodou) e a comparação token-a-token provou que é **totalmente descartável** — não há
+nada que melhore o `[data-brand]`:
+
+| Comparação | Resultado |
+|---|---|
+| Tokens em `[data-brand=hub]` (`_hub.scss`, vivo) | **66** |
+| Tokens em `.dss-brand-hub` (index, morto) | **26** — todos subconjunto do vivo |
+| Tokens que o index tinha e o vivo não | **0** (nada a salvar) |
+| Divergências de valor | **2**, e DESATUALIZADAS no morto (`--dss-action-primary-hover`, `--dss-brand-tertiary`: `hub-700` vs canônico `hub-800`) |
+
+Salvaguarda antes da remoção: 0 imports (SCSS/JS/TS), 0 usos de mixins/funções/classes
+exclusivas; `npx sass` compila bundle idêntico; as 4 classes `.dss-brand-*`/`.dss-mode-semantic`
+**vivas** (via `_quasar-utilities.scss`) permanecem no CSS.
+
+**Pendência menor remanescente (não-bloqueante):** a feature de **override LOCAL de marca**
+(`.dss-brand-*` aplicada a um subtree) e o **opt-out semântico** (`.dss-mode-semantic`) só
+existem hoje de forma parcial (4 props `--quasar-*` em `_quasar-utilities.scss`). Se o produto
+**precisar** desses padrões no futuro, é uma **feature nova** a especificar sobre o `[data-brand]`
+(que já é o mecanismo canônico e completo) — não uma restauração. Registrado para roadmap.
 
 ---
 

@@ -14,9 +14,9 @@
 | Métrica | Valor |
 |---|---|
 | `!important` (declarações) em `packages/core` no início | **1025** |
-| `!important` (declarações reais) agora | **501** |
-| Removidos (T1 + T2a + T2b + T3), com 0 regressão | **~474** (290 + 54 + 48 + 33 + ajustes de métrica) |
-| Restantes estimados como removíveis | ~106 (T4: tokens/brand dos 146) + buckets diferidos |
+| `!important` (declarações reais) agora | **344** |
+| Removidos (T1+T2a+T2b+T3+T4), com 0 regressão | **T1-T3: -425 · T4 brand: -10 · brand/index deletado: -147 (era código morto)** |
+| Restantes | buckets diferidos (a11y/forced-colors, 2-composition EXC, utilitários de componente) |
 
 Comando de medição CANÔNICO (declarações reais, exclui comentários): 
 `grep -rhnE "^\s+[a-zA-Z-]+:[^;{]*!important" packages/core --include="*.scss" | grep -vE "^\s*[0-9]+:\s*(//|\*|/\*)" | wc -l`
@@ -41,6 +41,10 @@ Comando de medição CANÔNICO (declarações reais, exclui comentários):
 | `eaa30ee` | **T3·L3** | `DssScrollArea` + `DssPullToRefresh` + `DssStepper` /3-variants | 5 |
 | `96d69d0` | **T3·L4** | `DssPagination` (-2) + `DssSelect/standout` (-1, foco=KEEP) | 3 |
 | `568579d` | **T3·L5** | `DssDialog/3-variants` (dimensões; seamless box-shadow=KEEP) | 12 |
+| `7e3ce27` | **T4·pré** | **deleta** `tokens/brand/index.scss` (código morto desde a origem — ver ALERTA) | 147† |
+| `16c5042` | **T4** | `themes/_quasar-utilities.scss` brand custom-props (`.dss-brand-*`/`.dss-mode-semantic`) | 10 |
+
+† 147 eram declarações em **código não-compilado** (não afetavam runtime) — remoção é higiene de repo, não de bundle.
 
 Cada `!important` mantido por motivo tem comentário `KEEP:` no código.
 
@@ -151,24 +155,26 @@ em docs/governance/HANDOFF_HIGIENE_IMPORTANT.md — LEIA-O PRIMEIRO, junto com o
 docs/governance/PROMPT_DIRECIONADOR_HIGIENE_IMPORTANT.md e a seção "FATO DE CASCATA VINCULANTE".
 
 Já feito (não refazer): T0 (verde), T1 (c911678, -290), T2a (fc57e76, -54),
-T2b (b9ec0cf, -48), T3 (5 lotes: 94389f9/ef06f34/eaa30ee/96d69d0/568579d, -33).
-Placar: 1025 → 501 declarações reais de !important, 0 regressão.
+T2b (b9ec0cf, -48), T3 (5 lotes: 94389f9/ef06f34/eaa30ee/96d69d0/568579d, -33),
+T4 (deleta brand/index morto: 7e3ce27; brand custom-props vivos: 16c5042, -10).
+Placar: 1025 → 344 declarações reais de !important, 0 regressão.
 
 Sua missão, em LOTES pequenos com validação antes de cada commit:
-1. ⛔ **T4 — BLOQUEADO.** O alvo `tokens/brand/index.scss` (~149 !important) é **CÓDIGO MORTO**:
-   não é importado por nada (`tokens/index.scss` só puxa `brand/_hub/_water/_waste`, não
-   `brand/index`). As classes `.dss-brand-*` VIVAS vêm de `themes/_quasar-utilities.scss`
-   (só 2 props: `--quasar-primary`+hover). Limpar !important de código morto é inócuo. Há
-   também LACUNA FUNCIONAL (override local de marca parcialmente entregue). Ver
-   `docs/governance/ALERTA_BRAND_INDEX_NAO_IMPORTADO.md` — exige decisão de governança
-   (religar vs descontinuar) ANTES de qualquer higiene neste arquivo. T4 reescopado: o único
-   `.dss-brand-*` vivo com !important está em `_quasar-utilities.scss` (e mesmo lá é redundante
-   — set direto na classe vence o herdado de `[data-brand]`).
-2. Sobra do T2: _quasar-utilities.scss (26) — MANTER blocos a11y (.dss-high-contrast/
-   .dss-reduced-motion); custom-props de brand pertencem ao T4.
-3. (Opcional) 2-composition EXC (ex.: DssDialog EXC-01 box-shadow/bg; Header/Footer EXC-02):
-   intra-DSS deliberados — só mexer com análise caso a caso; ao tratar o EXC-01 do Dialog,
-   revalidar o KEEP do seamless (T3) que depende dele.
+1. ✅ **T4 — CONCLUÍDO (reescopado).** O alvo original `tokens/brand/index.scss` (~147 !important)
+   era **CÓDIGO MORTO desde a origem** (nunca importado; confirmado via git) → **deletado**
+   (`7e3ce27`). Ver `docs/governance/ALERTA_BRAND_INDEX_NAO_IMPORTADO.md` (achado, evidências,
+   comparação que provou descartável, resolução). O único `.dss-brand-*` VIVO com !important
+   estava em `themes/_quasar-utilities.scss` → 10 custom-props removidos (`16c5042`), validados
+   redundantes por detector inheritance-aware (set direto vence herdado de `[data-brand]`).
+2. Buckets DIFERIDOS restantes (cada um exige análise própria; baixo retorno/alto cuidado):
+   - `_quasar-utilities.scss` — 7 utilitários de componente: `.dss-brand-hub .q-btn--primary`
+     bg (2, provável dead/inerte), `.dss-sidebar-accessible .q-drawer { width !important }`
+     (1, **provável KEEP** — vence o style INLINE do QDrawer), `.dss-form-group--error/--success`
+     border (2), `.dss-data-table--compact` padding/font (2). a11y `.dss-high-contrast`/
+     `.dss-reduced-motion` (9) = KEEP definitivo.
+   - 2-composition EXC (DssDialog EXC-01 box-shadow/bg; Header/Footer EXC-02): intra-DSS
+     deliberados; ao tratar o EXC-01 do Dialog, revalidar o KEEP do seamless (T3) que depende dele.
+   - 4-output `@media (forced-colors)`/`prefers-contrast` (~260): a11y WCAG = NÃO MEXER.
 
 Regras de ouro:
 - Validação por lote é OBRIGATÓRIA. Para lotes que tocam utilitárias .bg-*/.text- (Quasar layered),
