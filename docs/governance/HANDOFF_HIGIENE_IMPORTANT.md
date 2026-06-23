@@ -155,12 +155,15 @@ T2b (b9ec0cf, -48), T3 (5 lotes: 94389f9/ef06f34/eaa30ee/96d69d0/568579d, -33).
 Placar: 1025 → 501 declarações reais de !important, 0 regressão.
 
 Sua missão, em LOTES pequenos com validação antes de cada commit:
-1. T4 — tokens/brand/index.scss (~146): custom-props `--dss-*: var(…) !important` em
-   `.dss-brand-hub/water/waste`. Analisar ordem `.dss-brand-x` × `[data-brand=x]` e se
-   há definição CONCORRENTE (custom-prop !important só importa se houver). Provável que
-   muitos sejam redundantes (mesma especificidade 0,1,0 → ordem decide), mas alguns podem
-   ser intenção de override explícito → KEEP+doc. ATENÇÃO: token !important não move
-   computed-style diretamente — o resolvedor precisa medir a PROP final que consome o token.
+1. ⛔ **T4 — BLOQUEADO.** O alvo `tokens/brand/index.scss` (~149 !important) é **CÓDIGO MORTO**:
+   não é importado por nada (`tokens/index.scss` só puxa `brand/_hub/_water/_waste`, não
+   `brand/index`). As classes `.dss-brand-*` VIVAS vêm de `themes/_quasar-utilities.scss`
+   (só 2 props: `--quasar-primary`+hover). Limpar !important de código morto é inócuo. Há
+   também LACUNA FUNCIONAL (override local de marca parcialmente entregue). Ver
+   `docs/governance/ALERTA_BRAND_INDEX_NAO_IMPORTADO.md` — exige decisão de governança
+   (religar vs descontinuar) ANTES de qualquer higiene neste arquivo. T4 reescopado: o único
+   `.dss-brand-*` vivo com !important está em `_quasar-utilities.scss` (e mesmo lá é redundante
+   — set direto na classe vence o herdado de `[data-brand]`).
 2. Sobra do T2: _quasar-utilities.scss (26) — MANTER blocos a11y (.dss-high-contrast/
    .dss-reduced-motion); custom-props de brand pertencem ao T4.
 3. (Opcional) 2-composition EXC (ex.: DssDialog EXC-01 box-shadow/bg; Header/Footer EXC-02):
