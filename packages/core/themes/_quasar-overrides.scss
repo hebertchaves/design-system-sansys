@@ -200,8 +200,7 @@
       }
     }
     
-    .q-field__label,
-    .q-input__control {
+    .q-field__label {
       color: var(--dss-text-disabled);
     }
   }
@@ -220,24 +219,17 @@
     color: var(--dss-text-subtle);
   }
   
-  /* Input interno */
-  .q-input__control {
-    min-height: var(--dss-input-height-min);
-  }
-  
-  .q-input__native,
-  .q-textarea__native {
-    color: var(--dss-text-body);
-    font-size: var(--dss-font-size-base);
-    line-height: var(--dss-line-height-base);
-    padding: var(--dss-spacing-2) var(--dss-spacing-3); /* refatoração Jan 2025 Sprint 1 */
-    
-    /* Placeholder */
-    &::placeholder {
-      color: var(--dss-text-muted);
-      opacity: 1;
-    }
-  }
+  /* NOTA (jun/2026): NÃO existe `.q-input__control`, `.q-input__native` nem
+     `.q-textarea__native` no Quasar 2.x. O QInput (inclusive type="textarea")
+     renderiza o controle como `.q-field__control` e o nativo como
+     `.q-field__native` (input/QInput.js L461). Os antigos seletores aqui eram
+     INERTES (não casavam nada) — removidos. Além disso, `--dss-input-height-min`
+     nunca foi definido, então o `min-height` global era no-op de qualquer forma.
+     Cor/tamanho/line-height/padding do nativo são responsabilidade de cada
+     componente (ex.: `.dss-textarea .q-field__native` em 2-composition/_base.scss);
+     não há baseline global de propósito — evita regressão e mantém o controle no
+     componente. Se um baseline global for desejado, adicionar deliberadamente em
+     `.q-field__native` após varredura visual. */
 }
 
 /* ===========================================
