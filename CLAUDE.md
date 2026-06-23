@@ -35,35 +35,41 @@ Este arquivo (**CLAUDE.md**) é um **documento normativo vinculante** para qualq
 
 ---
 
-## 🚨 Leitura Obrigatória (ANTES de criar qualquer componente)
+## 🚨 Leitura por Tarefa (Progressive Disclosure)
 
-> ### 🎯 Adequando a UI de um componente (variantes / dark mode / cascade Quasar)?
-> **Leia `docs/governance/DSS_UI_ADEQUACAO_CHECKLIST.md` ANTES de editar SCSS/variantes.**
-> - **Razão:** padrões de erro de cascade DSS×Quasar, dark mode e standout recorreram
->   em DssInput/DssSelect; o checklist mapeia sintoma → causa-raiz → fix canônico.
-> - **Gate (por componente, LIGHT e DARK):** rodar o "Gate de adequação" do checklist
->   antes de marcar a UI como pronta.
+A criação/edição de componentes **NÃO** exige reler todos os docs toda vez. Leia o
+**NÚCLEO** sempre; consulte o **CONDICIONAL** só pelo que a tarefa atual exige.
 
-A criação de qualquer componente DSS **exige leitura prévia** dos seguintes arquivos, **nesta ordem**:
+### NÚCLEO (sempre, antes de qualquer trabalho)
 
-0. `docs/AGENT_QUICKSTART.md` *(ponto único de entrada — leia PRIMEIRO para orientação geral e mapa de navegação)*
-1. `docs/reference/PRD_DSS.md`
-2. `docs/reference/DSS_ARCHITECTURE.md`
-3. `docs/reference/DSS_COMPONENT_ARCHITECTURE.md`
-4. `docs/guides/DSS_IMPLEMENTATION_GUIDE.md`
-5. `docs/reference/DSS_TOKEN_REFERENCE.md`
-6. `docs/governance/CERTIFIED_COMPONENTS.md` *(índice de selos — 19/19 Fase 1 + 68/68 Fase 2)*
-7. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md` *(arquivado pós-estabilização Fase 1)*
-8. `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(arquivado pós-estabilização Fase 2)*
-9. `.github/pull_request_template.md`
-10. `docs/governance/DSS_MONOREPO_PATH_MAP.md` *(mapeamento canônico de caminhos do Monorepo — obrigatório para qualquer importação SCSS ou JS/TS entre pacotes)*
-11. `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` *(Contrato Visual Canônico — espelho human-readable do campo `defaultPreview` de todos os `dss.meta.json`. A seção de dados é **auto-gerada** via `npm run sync:visual-contract`. Autoridade Nível 1 sobre aspectos visuais padrão. Ler sempre que implementar ou auditar o aspecto visual default de qualquer componente.)*
-12. `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` *(Workflow do Preview Data-Driven — descreve os campos `previewGroup` e `demoSlots` do `dss.meta.json`, o componente `DemoRenderer.vue`, os scripts de manutenção e o pre-commit hook. Leitura obrigatória antes de modificar any campo de preview ou o sandbox.)*
-13. `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md` *(Contrato de Composição de Ícone — materializa o Princípio #14. Define o `DssIcon` como primitivo único de ícone, as regras de prop/slot/a11y, a proibição de glifo cru e o gate de verificação. Leitura obrigatória antes de implementar ou modificar qualquer renderização de ícone em componente.)*
+- `docs/AGENT_QUICKSTART.md` — ponto único de entrada + mapa de navegação *(Fase 1)*
+- Este `CLAUDE.md` — Princípios Fundamentais + Hierarquia de Autoridade (abaixo)
+
+> Os papéis e a precedência de cada doc normativo vivem na **Hierarquia de Autoridade**
+> (mais abaixo) — não são repetidos aqui.
+
+### CONDICIONAL (leia ANTES da tarefa correspondente)
+
+| Vou… | Leia ANTES | Origem |
+|---|---|---|
+| Criar componente do zero | `docs/reference/PRD_DSS.md`, `docs/reference/DSS_ARCHITECTURE.md`, `docs/reference/DSS_COMPONENT_ARCHITECTURE.md`, `docs/guides/DSS_IMPLEMENTATION_GUIDE.md` | Fase 1 |
+| Usar/citar tokens | `docs/reference/DSS_TOKEN_REFERENCE.md` | Fase 1 |
+| Importar SCSS/JS entre pacotes | `docs/governance/DSS_MONOREPO_PATH_MAP.md` | Onda Monorepo |
+| Mexer no aspecto visual default | `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` | Fase 2 |
+| Mexer em preview / sandbox | `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` | Fase 2 |
+| Renderizar/alterar ícone | `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md` | Princípio #14 |
+| **Adequar UI** (variantes/dark/cascade Quasar) | `docs/governance/DSS_UI_ADEQUACAO_CHECKLIST.md` *(rode o "Gate de adequação", LIGHT e DARK)* | Onda Higiene (jun/2026) |
+| Abrir PR | `.github/pull_request_template.md` | — |
+| Consultar status de selos | `docs/governance/CERTIFIED_COMPONENTS.md` *(índice de selos)* | Fase 1/2 |
+
+### Histórico (arquivado — só se investigar decisão de fase anterior)
+
+- `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_basios_fase_1.md` *(estabilização Fase 1)*
+- `docs/archive/reports/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` *(estabilização Fase 2)*
 
 ⚠️ **IMPORTANTE**  
 Nunca inferir padrões apenas observando um componente existente.  
-O **DssButton é referência**, não fonte única de verdade.
+O **DssButton é referência (Golden Sample de documentação)**, não fonte única de verdade.
 
 ---
 
