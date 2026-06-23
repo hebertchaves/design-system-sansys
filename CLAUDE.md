@@ -59,6 +59,8 @@ A criação/edição de componentes **NÃO** exige reler todos os docs toda vez.
 | Mexer em preview / sandbox | `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` | Fase 2 |
 | Renderizar/alterar ícone | `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md` | Princípio #14 |
 | **Adequar UI** (variantes/dark/cascade Quasar) | `docs/governance/DSS_UI_ADEQUACAO_CHECKLIST.md` *(rode o "Gate de adequação", LIGHT e DARK)* | Onda Higiene (jun/2026) |
+| **Adequar UI de composto** (Fase 3) | `docs/governance/DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md` *(delta — herda o checklist de campo por peça interna + costuras/brand/primitivos)* | Onda Higiene / Fase 3 |
+| Criar/orquestrar composto (arquitetura) | `docs/governance/DSS_GUIA_COMPOSICAO_FASE3.md` *(5 padrões + riscos de overlay/overflow)* | Fase 3 |
 | Abrir PR | `.github/pull_request_template.md` | — |
 | Consultar status de selos | `docs/governance/CERTIFIED_COMPONENTS.md` *(índice de selos)* | Fase 1/2 |
 
