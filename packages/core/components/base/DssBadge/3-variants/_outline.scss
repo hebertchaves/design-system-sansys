@@ -10,9 +10,11 @@
    ========================================================================== */
 
 .dss-badge--outline {
-  background-color: transparent !important;
+  /* T3: sem !important — a base .dss-badge não define background/box-shadow e o
+     badge não emite .q-badge, então não há competidor a vencer (intra-DSS). */
+  background-color: transparent;
   border: var(--dss-border-width-md) solid currentColor;
-  box-shadow: none !important;
+  box-shadow: none;
 
   /*
    * ⚠️ EXCEÇÃO DOCUMENTADA: Compensação de padding para borda

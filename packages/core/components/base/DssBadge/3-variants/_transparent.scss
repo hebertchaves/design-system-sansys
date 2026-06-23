@@ -10,8 +10,10 @@
    ========================================================================== */
 
 .dss-badge--transparent {
-  background-color: transparent !important;
-  box-shadow: none !important;
+  /* T3: sem !important — a base .dss-badge não define background/box-shadow e o
+     badge não emite .q-badge, então não há competidor a vencer (intra-DSS). */
+  background-color: transparent;
+  box-shadow: none;
 
   /* Borda fina para manter visibilidade */
   border: var(--dss-border-width-thin) solid currentColor;

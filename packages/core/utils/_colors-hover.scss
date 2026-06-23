@@ -20,12 +20,10 @@
      (0,5,0 / 0,3,0) sobre os competidores normais (utilitária 0,1,0, variante 0,4,0).
    Validado por resolvedor de cascata layer-aware (CSSOM) — 0 mudança de computed.
 
-   ⚠️ EXCEÇÃO (KEEP): o `background` do hover de badge OUTLINE/TRANSPARENT mantém
-   !important porque compete contra a base intra-DSS
-   `.dss-badge--outline/--transparent { background-color: transparent !important }`
-   (DssBadge/3-variants). Ambos unlayered → quem decide é o !important+especificidade.
-   Sem !important aqui, a base `transparent !important` venceria e o preenchimento
-   de hover sumiria. Revisar quando o T3 tratar o !important da base do badge.
+   T3 (jun/2026): o `background` do hover de badge outline/transparent também perdeu
+   o !important. Antes ele competia contra a base `.dss-badge--outline/--transparent
+   { background-color: transparent !important }`; como o T3 removeu o !important dessa
+   base, o hover (0,3,0) já vence a base (0,1,0) por especificidade. 0 mudança de computed.
    ========================================================================== */
 
 /* ==========================================================================
@@ -194,47 +192,46 @@
 
 .dss-badge--outline:hover,
 .dss-badge--transparent:hover {
-  /* KEEP (T2b): `background` mantém !important — compete contra a base unlayered
-     `.dss-badge--outline/--transparent { background-color: transparent !important }`.
-     Sem !important, a base venceria e o preenchimento de hover sumiria.
-     `color` NÃO precisa: é dominado por .text-X do Quasar (@layer, !important). */
+  /* T3: sem !important — vence a base `.dss-badge--outline/--transparent` (0,1,0,
+     já sem !important) por especificidade (0,3,0). `color` é dominada por .text-X
+     layered do Quasar (inerte). */
   &.text-primary {
-    background: var(--dss-primary-light) !important;
+    background: var(--dss-primary-light);
     color: var(--dss-primary-hover);
   }
 
   &.text-secondary {
-    background: var(--dss-secondary-light) !important;
+    background: var(--dss-secondary-light);
     color: var(--dss-secondary-hover);
   }
 
   &.text-tertiary {
-    background: var(--dss-tertiary-light) !important;
+    background: var(--dss-tertiary-light);
     color: var(--dss-tertiary-hover);
   }
 
   &.text-accent {
-    background: var(--dss-accent-light) !important;
+    background: var(--dss-accent-light);
     color: var(--dss-accent-hover);
   }
 
   &.text-positive {
-    background: var(--dss-positive-light) !important;
+    background: var(--dss-positive-light);
     color: var(--dss-positive-hover);
   }
 
   &.text-negative {
-    background: var(--dss-negative-light) !important;
+    background: var(--dss-negative-light);
     color: var(--dss-negative-hover);
   }
 
   &.text-warning {
-    background: var(--dss-warning-light) !important;
+    background: var(--dss-warning-light);
     color: var(--dss-warning-hover);
   }
 
   &.text-info {
-    background: var(--dss-info-light) !important;
+    background: var(--dss-info-light);
     color: var(--dss-info-hover);
   }
 }
