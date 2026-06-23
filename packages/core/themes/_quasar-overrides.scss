@@ -1000,43 +1000,43 @@
    --q-* → --dss-* (Seção 12 de _quasar-tokens-mapping.scss), pois o @layer quasar já contém
    os !important do Quasar. São mantidas intencionalmente como segunda linha de defesa: garantem
    o comportamento correto caso o CSS seja carregado fora do layer (ex.: SSR, testes isolados). */
-.text-primary { color: var(--dss-action-primary) !important; }
-.text-secondary { color: var(--dss-action-secondary) !important; }
-.text-accent { color: var(--dss-action-accent) !important; }
-.text-positive { color: var(--dss-feedback-success) !important; }
-.text-negative { color: var(--dss-feedback-error) !important; }
-.text-warning { color: var(--dss-feedback-warning) !important; }
-.text-info { color: var(--dss-feedback-info) !important; }
-.text-dark { color: var(--dss-text-body) !important; }
-.text-light { color: var(--dss-text-subtle) !important; }
+.text-primary { color: var(--dss-action-primary); }
+.text-secondary { color: var(--dss-action-secondary); }
+.text-accent { color: var(--dss-action-accent); }
+.text-positive { color: var(--dss-feedback-success); }
+.text-negative { color: var(--dss-feedback-error); }
+.text-warning { color: var(--dss-feedback-warning); }
+.text-info { color: var(--dss-feedback-info); }
+.text-dark { color: var(--dss-text-body); }
+.text-light { color: var(--dss-text-subtle); }
 
 /* Background colors */
-.bg-primary { background-color: var(--dss-action-primary) !important; }
-.bg-secondary { background-color: var(--dss-action-secondary) !important; }
-.bg-accent { background-color: var(--dss-action-accent) !important; }
-.bg-positive { background-color: var(--dss-feedback-success) !important; }
-.bg-negative { background-color: var(--dss-feedback-error) !important; }
-.bg-warning { background-color: var(--dss-feedback-warning) !important; }
-.bg-info { background-color: var(--dss-feedback-info) !important; }
-.bg-dark { background-color: var(--dss-gray-900) !important; }
-.bg-light { background-color: var(--dss-gray-100) !important; }
+.bg-primary { background-color: var(--dss-action-primary); }
+.bg-secondary { background-color: var(--dss-action-secondary); }
+.bg-accent { background-color: var(--dss-action-accent); }
+.bg-positive { background-color: var(--dss-feedback-success); }
+.bg-negative { background-color: var(--dss-feedback-error); }
+.bg-warning { background-color: var(--dss-feedback-warning); }
+.bg-info { background-color: var(--dss-feedback-info); }
+.bg-dark { background-color: var(--dss-gray-900); }
+.bg-light { background-color: var(--dss-gray-100); }
 
 /* Border colors */
-.border-primary { border-color: var(--dss-action-primary) !important; }
-.border-secondary { border-color: var(--dss-action-secondary) !important; }
-.border-accent { border-color: var(--dss-action-accent) !important; }
+.border-primary { border-color: var(--dss-action-primary); }
+.border-secondary { border-color: var(--dss-action-secondary); }
+.border-accent { border-color: var(--dss-action-accent); }
 
 /* Shadows */
-.shadow-1 { box-shadow: var(--dss-shadow-sm) !important; }
-.shadow-2 { box-shadow: var(--dss-shadow-md) !important; }
-.shadow-3 { box-shadow: var(--dss-shadow-lg) !important; }
-.shadow-4 { box-shadow: var(--dss-shadow-xl) !important; }
-.shadow-5 { box-shadow: var(--dss-shadow-2xl) !important; }
+.shadow-1 { box-shadow: var(--dss-shadow-sm); }
+.shadow-2 { box-shadow: var(--dss-shadow-md); }
+.shadow-3 { box-shadow: var(--dss-shadow-lg); }
+.shadow-4 { box-shadow: var(--dss-shadow-xl); }
+.shadow-5 { box-shadow: var(--dss-shadow-2xl); }
 
 /* Rounded */
-.rounded-borders { border-radius: var(--dss-radius-md) !important; }
-.rounded-borders-lg { border-radius: var(--dss-radius-lg) !important; }
-.rounded-borders-xl { border-radius: var(--dss-radius-xl) !important; }
+.rounded-borders { border-radius: var(--dss-radius-md); }
+.rounded-borders-lg { border-radius: var(--dss-radius-lg); }
+.rounded-borders-xl { border-radius: var(--dss-radius-xl); }
 
 /* ===========================================
    13. MEDIA QUERIES PARA ACESSIBILIDADE
