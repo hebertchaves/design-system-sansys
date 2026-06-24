@@ -64,13 +64,11 @@
     border-color: var(--dss-gray-300);
   }
 
-  /* Label notch — fundo para "cortar" a borda atrás da label flutuante */
+  /* Label SEM fundo (sem "notch"): mesma decisão do DssInput/DssSelect — o fundo
+     opaco atrás da label flutuante pintava um retângulo (branco no light, e até
+     branco no dark, pois surface-default não remapeava) sobre a borda. Mantido
+     transparente em repouso E flutuante para paridade total com a família. */
   .q-field__label {
     background-color: transparent;
-  }
-
-  &.q-field--float .q-field__label {
-    background-color: var(--dss-surface-default);
-    padding: 0 var(--dss-spacing-1);
   }
 }

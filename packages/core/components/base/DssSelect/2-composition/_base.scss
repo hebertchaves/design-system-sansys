@@ -148,21 +148,15 @@
     transform: translateY(-50%);
   }
 
-  /* Tamanho da label flutuante alinhado ao DssInput. O _quasar-overrides força
-     `font-size: var(--dss-font-size-base) !important` em toda .q-field__label;
-     por isso precisamos de `!important` + maior especificidade para alinhar:
-     - flutuante (default): sm
-     - dense (repouso e flutuante): sm */
+  /* Label flutuante — padrão ÚNICO da família form (Input/Select/Textarea):
+     font-size MD (a escala 0.75 dá o tamanho visual). Sem !important: o override
+     global `.q-field .q-field__label` (0,2,0) NÃO tem mais !important (removido no
+     T1), e esta regra (0,3,0) vence por especificidade.
+     Posição: top = spacing-1 p/ NÃO colar na borda (alinha aos ~6px do DssInput;
+     com top:spacing-0 a label do Quasar caía a ~1px da borda = "colada"). */
   &.q-field--float .q-field__label {
-    font-size: var(--dss-font-size-sm) !important;
-    /* Posição da label flutuante IDÊNTICA ao DssInput: ancorada no topo
-       (spacing-0), escala a partir do topo-esquerda. O Quasar flutua com
-       `top:18px` + `transform: translateY(-40%) scale(0.75)` — calibrado p/ o
-       campo de 56px antigo; no campo compacto (47px) isso jogava a label p/
-       baixo, colando no valor. Adotamos o MESMO modelo do DssInput
-       (`translateY(0)`): sem o -40% não há "estouro" do box, então o top correto
-       é `spacing-0` (igual ao input) — não `spacing-2`, que só compensava o -40%. */
-    top: var(--dss-spacing-0);
+    font-size: var(--dss-font-size-md);
+    top: var(--dss-spacing-1);
     transform: translateY(0) scale(0.75);
     transform-origin: left top;
   }

@@ -136,8 +136,8 @@
      campo, sobrepondo o texto. Especificidade (0,3,0) vence o override global
      `.q-field .q-field__label` (0,2,0, sem !important) → não precisa de !important. */
   &.q-field--float .q-field__label {
-    font-size: var(--dss-font-size-sm);
-    top: var(--dss-spacing-0);
+    font-size: var(--dss-font-size-md);
+    top: var(--dss-spacing-1);
     transform: translateY(0) scale(0.75);
     transform-origin: left top;
   }
