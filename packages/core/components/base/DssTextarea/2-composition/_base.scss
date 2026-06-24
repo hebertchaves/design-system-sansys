@@ -140,7 +140,7 @@
      campo, sobrepondo o texto. Especificidade (0,3,0) vence o override global
      `.q-field .q-field__label` (0,2,0, sem !important) → não precisa de !important. */
   &.q-field--float .q-field__label {
-    font-size: var(--dss-font-size-md);
+    /* font-size NÃO redeclarado: a base `.q-field__label` já é md. */
     top: var(--dss-spacing-0); /* IDÊNTICO ao Input: afastamento vem do line-height, não de offset */
     transform: translateY(0) scale(0.75);
     transform-origin: left top;

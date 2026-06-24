@@ -159,7 +159,7 @@
      Posição: top = spacing-0 (IDÊNTICO ao DssInput). O afastamento da borda vem do
      line-height 1.5 da label (caixa de linha), não de um offset. */
   &.q-field--float .q-field__label {
-    font-size: var(--dss-font-size-md);
+    /* font-size NÃO redeclarado: a base `.q-field__label` já é md. */
     top: var(--dss-spacing-0);
     transform: translateY(0) scale(0.75);
     transform-origin: left top;
