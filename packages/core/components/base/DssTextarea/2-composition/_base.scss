@@ -61,6 +61,14 @@
     padding-top: var(--dss-spacing-3);
   }
 
+  /* Centraliza verticalmente o native no espaço abaixo da reserva da label, p/ o
+     single-line ficar balanceado como o Input (texto ~centralizado, sem vão grande
+     embaixo). O container é flex-row → o eixo cruzado (vertical) é o align-items.
+     No multi-line/autogrow o native preenche o container → sem efeito. */
+  .q-field__control-container {
+    align-items: center;
+  }
+
   /* Dense: reserva menor (spacing-2), igual ao DssSelect. */
   &.dss-textarea--dense.q-field--float .q-field__control-container {
     padding-top: var(--dss-spacing-2);
@@ -91,6 +99,16 @@
       color: var(--dss-text-hint);
       opacity: 1;
     }
+  }
+
+  /* Default single-line (rows=1, sem autogrow): o <textarea> intrínseco tem ~30px
+     (>1 linha) e, sendo top-aligned, o texto fica no topo deixando um vão grande
+     embaixo — diferente do Input/Select (single-line, texto centralizado). Forçamos
+     a caixa editável a 1 linha exata para não exceder o conteúdo. rows>1 e autogrow
+     ficam de fora (crescem normalmente, top-aligned como esperado num textarea). */
+  &:not(.dss-textarea--autogrow) .q-field__native[rows="1"] {
+    min-height: 0;
+    height: calc(var(--dss-font-size-md) * var(--dss-line-height-normal)); /* 1 linha */
   }
 
   /* Dense: padding interno reduzido */
