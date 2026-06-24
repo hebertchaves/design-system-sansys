@@ -7,6 +7,23 @@
    - --dss-primary-hover, --dss-secondary-hover, etc.
    - --dss-primary-light para flat/outline
    - ZERO hardcoding, ZERO filtros CSS
+
+   --------------------------------------------------------------------------
+   HIGIENE DE !important — Lote T2b (jun/2026)
+
+   As trocas de hover/active aqui NÃO precisam de !important (Princípio #13):
+   - Botão/badge FILLED (.bg-*): a utilitária .bg-X do Quasar em @layer quasar
+     é !important e VENCE qualquer unlayered (layered important > unlayered
+     important). A troca de background daqui é inerte — o !important não muda nada.
+   - Botão/badge FLAT/OUTLINE texto (.text-*): a cor é dominada por .text-X do
+     Quasar (@layer quasar, !important); o background vence por especificidade
+     (0,5,0 / 0,3,0) sobre os competidores normais (utilitária 0,1,0, variante 0,4,0).
+   Validado por resolvedor de cascata layer-aware (CSSOM) — 0 mudança de computed.
+
+   T3 (jun/2026): o `background` do hover de badge outline/transparent também perdeu
+   o !important. Antes ele competia contra a base `.dss-badge--outline/--transparent
+   { background-color: transparent !important }`; como o T3 removeu o !important dessa
+   base, o hover (0,3,0) já vence a base (0,1,0) por especificidade. 0 mudança de computed.
    ========================================================================== */
 
 /* ==========================================================================
@@ -15,35 +32,35 @@
 
 .dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading) {
   &.bg-primary {
-    background: var(--dss-primary-hover) !important;
+    background: var(--dss-primary-hover);
   }
 
   &.bg-secondary {
-    background: var(--dss-secondary-hover) !important;
+    background: var(--dss-secondary-hover);
   }
 
   &.bg-tertiary {
-    background: var(--dss-tertiary-hover) !important;
+    background: var(--dss-tertiary-hover);
   }
 
   &.bg-accent {
-    background: var(--dss-accent-hover) !important;
+    background: var(--dss-accent-hover);
   }
 
   &.bg-positive {
-    background: var(--dss-positive-hover) !important;
+    background: var(--dss-positive-hover);
   }
 
   &.bg-negative {
-    background: var(--dss-negative-hover) !important;
+    background: var(--dss-negative-hover);
   }
 
   &.bg-warning {
-    background: var(--dss-warning-hover) !important;
+    background: var(--dss-warning-hover);
   }
 
   &.bg-info {
-    background: var(--dss-info-hover) !important;
+    background: var(--dss-info-hover);
   }
 }
 
@@ -54,43 +71,43 @@
 .dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading),
 .dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading) {
   &.text-primary {
-    background: var(--dss-primary-light) !important;
-    color: var(--dss-primary-hover) !important;
+    background: var(--dss-primary-light);
+    color: var(--dss-primary-hover);
   }
 
   &.text-secondary {
-    background: var(--dss-secondary-light) !important;
-    color: var(--dss-secondary-hover) !important;
+    background: var(--dss-secondary-light);
+    color: var(--dss-secondary-hover);
   }
 
   &.text-tertiary {
-    background: var(--dss-tertiary-light) !important;
-    color: var(--dss-tertiary-hover) !important;
+    background: var(--dss-tertiary-light);
+    color: var(--dss-tertiary-hover);
   }
 
   &.text-accent {
-    background: var(--dss-accent-light) !important;
-    color: var(--dss-accent-hover) !important;
+    background: var(--dss-accent-light);
+    color: var(--dss-accent-hover);
   }
 
   &.text-positive {
-    background: var(--dss-positive-light) !important;
-    color: var(--dss-positive-hover) !important;
+    background: var(--dss-positive-light);
+    color: var(--dss-positive-hover);
   }
 
   &.text-negative {
-    background: var(--dss-negative-light) !important;
-    color: var(--dss-negative-hover) !important;
+    background: var(--dss-negative-light);
+    color: var(--dss-negative-hover);
   }
 
   &.text-warning {
-    background: var(--dss-warning-light) !important;
-    color: var(--dss-warning-hover) !important;
+    background: var(--dss-warning-light);
+    color: var(--dss-warning-hover);
   }
 
   &.text-info {
-    background: var(--dss-info-light) !important;
-    color: var(--dss-info-hover) !important;
+    background: var(--dss-info-light);
+    color: var(--dss-info-hover);
   }
 }
 
@@ -103,35 +120,35 @@
   transform: scale(0.98);
 
   &.bg-primary {
-    background: var(--dss-primary-hover) !important;
+    background: var(--dss-primary-hover);
   }
 
   &.bg-secondary {
-    background: var(--dss-secondary-hover) !important;
+    background: var(--dss-secondary-hover);
   }
 
   &.bg-tertiary {
-    background: var(--dss-tertiary-hover) !important;
+    background: var(--dss-tertiary-hover);
   }
 
   &.bg-accent {
-    background: var(--dss-accent-hover) !important;
+    background: var(--dss-accent-hover);
   }
 
   &.bg-positive {
-    background: var(--dss-positive-hover) !important;
+    background: var(--dss-positive-hover);
   }
 
   &.bg-negative {
-    background: var(--dss-negative-hover) !important;
+    background: var(--dss-negative-hover);
   }
 
   &.bg-warning {
-    background: var(--dss-warning-hover) !important;
+    background: var(--dss-warning-hover);
   }
 
   &.bg-info {
-    background: var(--dss-info-hover) !important;
+    background: var(--dss-info-hover);
   }
 }
 
@@ -141,78 +158,81 @@
 
 .dss-badge:hover:not(.dss-badge--transparent) {
   &.bg-primary {
-    background: var(--dss-primary-hover) !important;
+    background: var(--dss-primary-hover);
   }
 
   &.bg-secondary {
-    background: var(--dss-secondary-hover) !important;
+    background: var(--dss-secondary-hover);
   }
 
   &.bg-tertiary {
-    background: var(--dss-tertiary-hover) !important;
+    background: var(--dss-tertiary-hover);
   }
 
   &.bg-accent {
-    background: var(--dss-accent-hover) !important;
+    background: var(--dss-accent-hover);
   }
 
   &.bg-positive {
-    background: var(--dss-positive-hover) !important;
+    background: var(--dss-positive-hover);
   }
 
   &.bg-negative {
-    background: var(--dss-negative-hover) !important;
+    background: var(--dss-negative-hover);
   }
 
   &.bg-warning {
-    background: var(--dss-warning-hover) !important;
+    background: var(--dss-warning-hover);
   }
 
   &.bg-info {
-    background: var(--dss-info-hover) !important;
+    background: var(--dss-info-hover);
   }
 }
 
 .dss-badge--outline:hover,
 .dss-badge--transparent:hover {
+  /* T3: sem !important — vence a base `.dss-badge--outline/--transparent` (0,1,0,
+     já sem !important) por especificidade (0,3,0). `color` é dominada por .text-X
+     layered do Quasar (inerte). */
   &.text-primary {
-    background: var(--dss-primary-light) !important;
-    color: var(--dss-primary-hover) !important;
+    background: var(--dss-primary-light);
+    color: var(--dss-primary-hover);
   }
 
   &.text-secondary {
-    background: var(--dss-secondary-light) !important;
-    color: var(--dss-secondary-hover) !important;
+    background: var(--dss-secondary-light);
+    color: var(--dss-secondary-hover);
   }
 
   &.text-tertiary {
-    background: var(--dss-tertiary-light) !important;
-    color: var(--dss-tertiary-hover) !important;
+    background: var(--dss-tertiary-light);
+    color: var(--dss-tertiary-hover);
   }
 
   &.text-accent {
-    background: var(--dss-accent-light) !important;
-    color: var(--dss-accent-hover) !important;
+    background: var(--dss-accent-light);
+    color: var(--dss-accent-hover);
   }
 
   &.text-positive {
-    background: var(--dss-positive-light) !important;
-    color: var(--dss-positive-hover) !important;
+    background: var(--dss-positive-light);
+    color: var(--dss-positive-hover);
   }
 
   &.text-negative {
-    background: var(--dss-negative-light) !important;
-    color: var(--dss-negative-hover) !important;
+    background: var(--dss-negative-light);
+    color: var(--dss-negative-hover);
   }
 
   &.text-warning {
-    background: var(--dss-warning-light) !important;
-    color: var(--dss-warning-hover) !important;
+    background: var(--dss-warning-light);
+    color: var(--dss-warning-hover);
   }
 
   &.text-info {
-    background: var(--dss-info-light) !important;
-    color: var(--dss-info-hover) !important;
+    background: var(--dss-info-light);
+    color: var(--dss-info-hover);
   }
 }
 

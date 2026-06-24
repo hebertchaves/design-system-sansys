@@ -146,7 +146,7 @@ A prop `maxHeight` é implementada via CSS custom property `--dss-textarea-max-h
 | **active** | (via hover + foco simultâneos) | Campo sendo editado |
 | **disabled** | `.dss-textarea--disabled` | opacity 0.4, pointer-events none |
 | **readonly** | `.dss-textarea--readonly` | Cursor default, borda reduzida |
-| **error** | `.dss-textarea--error` + `.q-field--error` | Borda/sombra com `--dss-error-600` |
+| **error** | `.dss-textarea--error` + `.q-field--error` | Borda/sombra com `--dss-feedback-error` |
 | **loading** | `.dss-textarea--loading` | pointer-events none, spinner via QInput |
 
 ### Estados NÃO aplicáveis
@@ -240,7 +240,7 @@ Ativada via prop `brand` ou contexto `[data-brand="hub|water|waste"]`:
 | water | `--dss-water-500` | `--dss-water-600` | `--dss-water-700` |
 | waste | `--dss-waste-600` | `--dss-waste-700` | `--dss-waste-800` |
 
-**Regra**: Error state sempre usa `--dss-error-600` independente de brand.
+**Regra**: Error state sempre usa `--dss-feedback-error` independente de brand.
 
 ---
 

@@ -1,5 +1,5 @@
 <template>
-  <section v-if="visible" :id="`pg-${id}`" class="pg-section">
+  <section v-if="visible" ref="sectionEl" :id="`pg-${id}`" class="pg-section">
     <div class="pg-section__head">
       <div class="pg-section__heading">
         <span class="pg-section__index">{{ index }}</span>
@@ -8,14 +8,14 @@
           <p class="pg-section__desc">{{ desc }}</p>
         </div>
       </div>
-      <div class="pg-section__badge">{{ count }}<span> items</span></div>
+      <div class="pg-section__badge">{{ displayCount }}<span> items</span></div>
     </div>
     <slot />
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, type ComputedRef } from 'vue'
+import { computed, inject, ref, onMounted, nextTick, type ComputedRef } from 'vue'
 
 const props = defineProps<{
   id: string
@@ -28,4 +28,16 @@ const props = defineProps<{
 // Filtro de busca provido pelo PlaygroundLayout; ausente = sempre visível.
 const visibleIds = inject<ComputedRef<Set<string>> | null>('pg-visibleIds', null)
 const visible = computed(() => !visibleIds?.value || visibleIds.value.has(props.id))
+
+// O badge reflete os TILES realmente renderizados (.pg-tile), não a prop count —
+// evita o descompasso "diz N, renderiza M" (ex.: seção Slots com tiles de variação).
+// Seções sem PgTile (ex.: matriz) caem para a prop count.
+const sectionEl = ref<HTMLElement | null>(null)
+const tileCount = ref<number | null>(null)
+onMounted(async () => {
+  await nextTick()
+  const n = sectionEl.value?.querySelectorAll('.pg-tile').length ?? 0
+  tileCount.value = n || null
+})
+const displayCount = computed(() => tileCount.value ?? props.count)
 </script>

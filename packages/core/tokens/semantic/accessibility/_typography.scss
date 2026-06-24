@@ -124,6 +124,13 @@
     --dss-text-transition-timing: linear;
   }
   
-  /* Suporte a zoom do navegador */
-  font-size: clamp(100%, 1rem + 0.5vw, 125%); /* Ajuste progressivo para zoom */
+  /* Font-size raiz = 100% (= 16px) — HONRA o contrato dos tokens, que documentam
+     a escala em px (font-size-md = 1rem = 16px, etc.). O antigo
+     clamp(100%, 1rem + 0.5vw, 125%) era tipografia FLUIDA por viewport: saturava
+     no teto de 125% (1rem -> 20px) em telas largas, inflando TODO valor rem-based
+     (texto, spacing, alturas de campo) em ~25% acima do documentado. A intenção
+     declarada ("suporte a zoom") ja e coberta nativamente: o zoom do browser e o
+     rem respeitam a preferencia de fonte do usuario sem este clamp. Removido em
+     jun/2026 (decisao de governanca). */
+  font-size: 100%;
 }

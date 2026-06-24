@@ -33,7 +33,15 @@
      ========================================================================== */
 
   .q-field__control {
-    min-height: var(--dss-input-height-md); /* Touch Target Opção A: 44px — WCAG 2.1 AA */
+    /* !important load-bearing: `_quasar-overrides.scss` tem um
+       `.q-field__control { min-height: var(--dss-input-height-min) !important }`
+       global cujo token é INDEFINIDO → resolve p/ 0 !important e derruba o
+       min-height de TODOS os campos (o Select escapa via altura do marginal; o
+       Textarea, sem marginal, colapsava p/ ~28px). Como o concorrente é layered-
+       unlayered com !important, só vencemos com !important + maior especificidade
+       (0,2,0 > 0,1,0). Causa-raiz global = qfield-height-token-bug (a tratar na
+       missão de altura). Touch Target Opção A: 44px — WCAG 2.1 AA. */
+    min-height: var(--dss-input-height-md) !important;
     transition:
       border-color var(--dss-duration-200) var(--dss-easing-standard),
       box-shadow var(--dss-duration-200) var(--dss-easing-standard),
@@ -41,9 +49,29 @@
     font-family: var(--dss-font-family-sans);
   }
 
-  /* Dense: altura mínima reduzida */
+  /* Dense: altura mínima reduzida (mesmo motivo do !important acima). */
   &.dss-textarea--dense .q-field__control {
-    min-height: var(--dss-input-height-sm);
+    min-height: var(--dss-input-height-sm) !important;
+  }
+
+  /* Reserva de topo p/ a label flutuante — alinhada ao DssInput/DssSelect
+     (spacing-3). O native absorve a reserva → não cresce a altura. Aplicada só no
+     estado flutuante para o repouso (rows=1) ter a mesma altura do Input/Select. */
+  &.q-field--float .q-field__control-container {
+    padding-top: var(--dss-spacing-3);
+  }
+
+  /* Centraliza verticalmente o native no espaço abaixo da reserva da label, p/ o
+     single-line ficar balanceado como o Input (texto ~centralizado, sem vão grande
+     embaixo). O container é flex-row → o eixo cruzado (vertical) é o align-items.
+     No multi-line/autogrow o native preenche o container → sem efeito. */
+  .q-field__control-container {
+    align-items: center;
+  }
+
+  /* Dense: reserva menor (spacing-2), igual ao DssSelect. */
+  &.dss-textarea--dense.q-field--float .q-field__control-container {
+    padding-top: var(--dss-spacing-2);
   }
 
   /* ==========================================================================
@@ -73,6 +101,16 @@
     }
   }
 
+  /* Default single-line (rows=1, sem autogrow): o <textarea> intrínseco tem ~30px
+     (>1 linha) e, sendo top-aligned, o texto fica no topo deixando um vão grande
+     embaixo — diferente do Input/Select (single-line, texto centralizado). Forçamos
+     a caixa editável a 1 linha exata para não exceder o conteúdo. rows>1 e autogrow
+     ficam de fora (crescem normalmente, top-aligned como esperado num textarea). */
+  &:not(.dss-textarea--autogrow) .q-field__native[rows="1"] {
+    min-height: 0;
+    height: calc(var(--dss-font-size-md) * var(--dss-line-height-normal)); /* 1 linha */
+  }
+
   /* Dense: padding interno reduzido */
   &.dss-textarea--dense .q-field__native {
     padding: var(--dss-spacing-2) 0;
@@ -98,8 +136,37 @@
   .q-field__label {
     font-family: var(--dss-font-family-sans);
     font-size: var(--dss-font-size-md);
+    /* line-height igual ao DssInput (1.5 = 24px @ md): é a caixa de linha que cria
+       o afastamento da borda na label flutuante (top:spacing-0), não um offset.
+       O Quasar usa 20px (1.25), que colava a label na borda. */
+    line-height: var(--dss-line-height-normal);
     color: var(--dss-text-secondary);
     transition: all var(--dss-duration-200) var(--dss-easing-standard);
+  }
+
+  /* Repouso (não-float): centraliza a label no campo (mesmo princípio do
+     DssInput/DssSelect: top:50% + translateY(-50%)). Com rows=1 o campo é
+     single-line → idêntico ao Input/Select. O escopo `:not(.q-field--float)`
+     deixa o estado flutuante governado pelas regras de float abaixo. */
+  &:not(.q-field--float) .q-field__label {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Label flutuante: alinhada ao DssInput/DssSelect — encolhe (sm) e ancora no
+     topo. Sem isso (estado anterior) a label ficava em font-size-md no meio do
+     campo, sobrepondo o texto. Especificidade (0,3,0) vence o override global
+     `.q-field .q-field__label` (0,2,0, sem !important) → não precisa de !important. */
+  &.q-field--float .q-field__label {
+    /* font-size NÃO redeclarado: a base `.q-field__label` já é md. */
+    top: var(--dss-spacing-0); /* IDÊNTICO ao Input: afastamento vem do line-height, não de offset */
+    transform: translateY(0) scale(0.75);
+    transform-origin: left top;
+  }
+
+  /* Dense: label em sm (repouso e flutuante), igual ao DssInput/DssSelect dense. */
+  &.dss-textarea--dense .q-field__label {
+    font-size: var(--dss-font-size-sm);
   }
 
   /* ==========================================================================
@@ -109,6 +176,55 @@
   .q-field__prepend,
   .q-field__append {
     color: var(--dss-text-secondary);
+  }
+
+  /* Espaçamento do ícone PREPEND (dentro do campo) — mesmo padrão do
+     DssInput/DssSelect. Sem isto o ícone fica longe da borda (control tem
+     padding-left spacing-4) e colado ao texto. Alvo: 4px da borda + 4px do texto.
+     - control com prepend: padding-left = spacing-1 (4px da borda)
+     - prepend: padding-right = spacing-1 (4px do native) */
+  .q-field__control:has(.q-field__prepend) {
+    padding-left: var(--dss-spacing-1);
+  }
+
+  .q-field__prepend {
+    padding-right: var(--dss-spacing-1);
+  }
+
+  /* BEFORE (slot externo): separação mínima entre o ícone/slot e a caixa. */
+  .q-field__before {
+    padding-right: var(--dss-spacing-2);
+  }
+
+  /* AFTER (slot externo direito): separação da caixa (estava colado, gap 0). */
+  .q-field__after {
+    padding-left: var(--dss-spacing-2);
+  }
+
+  /* Marginal (coluna de ícone). O Quasar fixa `.q-field__marginal { height: 56px }`
+     (layered) — neutralizado aqui. Mas prepend/append (INTERNOS) e before/after
+     (EXTERNOS) precisam de tratamento diferente:
+
+     INTERNOS (prepend/append) ficam DENTRO do .q-field__control (área de conteúdo,
+     dentro das bordas). Uma altura fixa ali força o conteúdo do control e o
+     border-box estoura pela espessura da borda (44px conteúdo → 46px com borda).
+     Solução: height auto → com align-items stretch do control eles preenchem a
+     altura do conteúdo e o Quasar centraliza o ícone; NÃO inflam o campo. */
+  .q-field__prepend,
+  .q-field__append {
+    height: auto;
+  }
+
+  /* EXTERNOS (before/after) ficam na row .q-field (items-start). Sem altura
+     definida cairiam no topo; com a altura do campo, centralizam verticalmente. */
+  .q-field__before,
+  .q-field__after {
+    height: var(--dss-input-height-md);
+  }
+
+  &.dss-textarea--dense .q-field__before,
+  &.dss-textarea--dense .q-field__after {
+    height: var(--dss-input-height-sm);
   }
 
   /* ==========================================================================
@@ -127,9 +243,10 @@
     color: var(--dss-text-secondary);
   }
 
-  /* Error message color */
+  /* Error message color. Usa --dss-feedback-error (definido); --dss-error-600
+     NÃO existe → a cor caía para transparente/herdada. */
   &.q-field--error .q-field__messages {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   /* ==========================================================================

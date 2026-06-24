@@ -14,8 +14,10 @@
    VARIANTE SMALL
    ========================================================================== */
 
+/* T3: sem !important — o Quasar não estiliza padding do __handler; a variante
+   (0,2,0) vence a base L2 por ordem (mesma especificidade), igual ao __arrow irmão. */
 .dss-pull-to-refresh--sm .q-pull-to-refresh__handler {
-  padding: var(--dss-padding-1) !important; /* 4px → 20 + 4×2 = 28px visual */
+  padding: var(--dss-padding-1); /* 4px → 20 + 4×2 = 28px visual */
 }
 
 .dss-pull-to-refresh--sm .q-pull-to-refresh__arrow {
@@ -27,7 +29,7 @@
    ========================================================================== */
 
 .dss-pull-to-refresh--lg .q-pull-to-refresh__handler {
-  padding: var(--dss-padding-3) !important; /* 12px → 32 + 12×2 = 56px visual */
+  padding: var(--dss-padding-3); /* 12px → 32 + 12×2 = 56px visual */
 }
 
 .dss-pull-to-refresh--lg .q-pull-to-refresh__arrow {

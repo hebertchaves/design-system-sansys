@@ -15,12 +15,13 @@
 
 // ------------------------------------------------------------------
 // Variante bordered
-// Quasar aplica .q-stepper--bordered com border: 1px solid rgba(0,0,0,.12).
-// DSS substitui com tokens semânticos para suporte correto a dark mode.
+// Quasar aplica .q-stepper--bordered com border: 1px solid rgba(0,0,0,.12) — NORMAL
+// (em @layer quasar). DSS substitui com tokens semânticos para dark mode.
+// T3: sem !important — o seletor DSS (0,2,0) unlayered já vence o Quasar layered normal.
 // ------------------------------------------------------------------
 .dss-stepper--bordered .q-stepper,
 .dss-stepper .q-stepper--bordered {
-  border: var(--dss-border-width-thin) solid var(--dss-gray-200) !important;
+  border: var(--dss-border-width-thin) solid var(--dss-gray-200);
 }
 
 // ------------------------------------------------------------------

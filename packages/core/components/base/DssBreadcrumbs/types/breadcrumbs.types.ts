@@ -83,4 +83,9 @@ export interface BreadcrumbsSlots {
    * O uso de HTML nativo ou outros componentes viola a governança da Fase 2.
    */
   default?: () => VNode[]
+
+  /**
+   * Separador customizado entre os itens da trilha.
+   */
+  'separator'?: () => VNode[]
 }

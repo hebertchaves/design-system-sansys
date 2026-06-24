@@ -48,9 +48,12 @@
       max-width: 1600px;
     }
 
-    /* Variante fluid - sem max-width */
+    /* Variante fluid - sem max-width.
+       T3: sem !important — .dss-container--fluid (0,1,0) é declarada DEPOIS das
+       regras-base de max-width (mesmo arquivo, mesma especificidade) e não há
+       competidor externo → vence por ordem. */
     &--fluid {
-      max-width: none !important;
+      max-width: none;
     }
   }
 
@@ -370,7 +373,12 @@
      Alinhado com breakpoints DSS
      =========================================== */
 
-  /* Hide - Esconder em breakpoints específicos */
+  /* Hide - Esconder em breakpoints específicos.
+     KEEP (T3): `display: none !important` é MANTIDO em todo o bloco &-hide/&-show.
+     São utilitárias de visibilidade responsiva (forçantes por design, como
+     `.hidden` do Quasar / `.d-none` do Bootstrap): precisam vencer o `display` do
+     próprio componente, que carrega DEPOIS (components > utils) e venceria a
+     utilitária (mesma especificidade) sem o !important. Mesma natureza do bucket a11y. */
   &-hide {
     /* XS only (320px - 639px) */
     &-xs {

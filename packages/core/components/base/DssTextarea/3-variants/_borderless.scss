@@ -15,7 +15,7 @@
     background-color: transparent;
     border: none;
     border-radius: 0;
-    padding: var(--dss-spacing-2) 0;
+    padding: 0; /* vertical 0: reserva da label flutuante vem do control-container; flush horizontal */
     box-shadow: none;
   }
 
@@ -42,8 +42,8 @@
   /* Error state */
   &.dss-textarea--error .q-field__control,
   &.q-field--error .q-field__control {
-    border-bottom: var(--dss-border-width-md) solid var(--dss-error-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+    border-bottom: var(--dss-border-width-md) solid var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
   }
 
   /* Disabled state */

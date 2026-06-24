@@ -10,30 +10,54 @@
 
 [data-theme="dark"] {
   .dss-textarea {
-    /* Filled variant em dark mode */
+    /* Filled variant em dark mode. O stage atrás do campo é surface-subtle
+       (= gray-700) no dark; por isso o filled usa um fill UM TOM MAIS CLARO
+       (gray-600), legível como "preenchido" e NUNCA preto. O preto/destaque é
+       responsabilidade do standout (abaixo). Underline visível (gray-800) só em
+       REPOUSO; no foco a borda do variant (action-primary) do L3 prevalece. */
     &.dss-textarea--filled .q-field__control {
-      background-color: var(--dss-gray-900);
-      border-bottom-color: var(--dss-gray-700);
+      background-color: var(--dss-gray-600);
+    }
+
+    &.dss-textarea--filled:not(.dss-textarea--focused):not(.q-field--focused) .q-field__control {
+      border-bottom-color: var(--dss-gray-800);
     }
 
     &.dss-textarea--filled.dss-textarea--focused .q-field__control,
     &.dss-textarea--filled.q-field--focused .q-field__control {
-      background-color: var(--dss-gray-800);
+      background-color: var(--dss-gray-600);
     }
 
-    /* Outlined variant em dark mode */
-    &.dss-textarea--outlined .q-field__control {
+    /* Outlined variant em dark mode — borda neutra só em repouso (no foco
+       prevalece a borda action-primary do L3). */
+    &.dss-textarea--outlined:not(.dss-textarea--focused):not(.q-field--focused) .q-field__control {
       border-color: var(--dss-gray-600);
     }
 
-    /* Standout em dark mode */
+    /* Outlined hover em dark mode. Sem esta regra, o hover do L3 (gray-600)
+       coincidia com a borda de repouso do dark (gray-600) → hover "invisível".
+       No dark a borda mais clara (gray-400) torna o hover perceptível. */
+    &.dss-textarea--outlined:not(.dss-textarea--disabled):not(.dss-textarea--readonly):not(.dss-textarea--focused):hover .q-field__control {
+      border-color: var(--dss-gray-400);
+    }
+
+    /* Standout em dark mode — É o variant de DESTAQUE: fundo preto (gray-900),
+       claramente mais escuro que o stage (gray-700), espelhando o light mode
+       (chip escuro sobre fundo claro). É aqui que vive o "fica preto", não no
+       filled. */
     &.dss-textarea--standout .q-field__control {
-      background-color: var(--dss-gray-700);
+      background-color: var(--dss-gray-900);
+    }
+
+    /* Standout hover/focus em dark mode — clareia um tom (gray-800) para dar
+       feedback de interação sem perder o caráter escuro. */
+    &.dss-textarea--standout:not(.dss-textarea--disabled):not(.dss-textarea--readonly):not(.dss-textarea--focused):hover .q-field__control {
+      background-color: var(--dss-gray-800);
     }
 
     &.dss-textarea--standout.dss-textarea--focused .q-field__control,
     &.dss-textarea--standout.q-field--focused .q-field__control {
-      background-color: var(--dss-gray-600);
+      background-color: var(--dss-gray-800);
     }
 
     /* Texto do textarea em dark mode — text-body é claro no tema dark.

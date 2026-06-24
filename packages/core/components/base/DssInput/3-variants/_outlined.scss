@@ -37,11 +37,12 @@
     border-color: var(--dss-action-primary);
   }
 
-  /* Error state */
+  /* Error state — indicador único: borda 2px feedback-error. SEM box-shadow (o
+     anel de 1px duplicava a borda = 2 camadas de stroke no outlined). Mesma
+     decisão do foco. */
   &.dss-input--error .dss-input__field {
     border-color: var(--dss-feedback-error);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-feedback-error);
   }
 
   /* Error label */

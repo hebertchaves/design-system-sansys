@@ -19,7 +19,7 @@
     background-color: transparent;
     border: var(--dss-border-width-thin) solid var(--dss-gray-400);
     border-radius: var(--dss-radius-md);
-    padding: var(--dss-spacing-3) var(--dss-spacing-4);
+    padding: 0 var(--dss-spacing-4); /* vertical 0: reserva da label flutuante vem do control-container */
   }
 
   /* Hover (não desabilitado, não readonly, não focado) */
@@ -29,12 +29,13 @@
     }
   }
 
-  /* Focus state — usa nossa classe E a do QInput como fallback */
+  /* Focus state — dual hook: nossa classe + classe do QField.
+     Indicador único: borda 2px action-primary. SEM box-shadow (o anel de 1px
+     duplicava visualmente a borda no foco). Paridade com DssInput/DssSelect. */
   &.dss-textarea--focused .q-field__control,
   &.q-field--focused .q-field__control {
     border-color: var(--dss-action-primary);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
   }
 
   /* Focus: label color */
@@ -43,18 +44,21 @@
     color: var(--dss-action-primary);
   }
 
-  /* Error state */
+  /* Error state — indicador único: borda 2px feedback-error. SEM box-shadow (o
+     anel de 1px duplicava a borda = 2 camadas de stroke no outlined). Mesma
+     decisão do foco. */
   &.dss-textarea--error .q-field__control,
   &.q-field--error .q-field__control {
-    border-color: var(--dss-error-600);
+    border-color: var(--dss-feedback-error);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-error-600);
   }
 
-  /* Disabled state */
+  /* Disabled state. Usa --dss-surface-muted (semântico: remapeia no dark p/
+     gray-600) em vez de gray-50 fixo — gray-50 renderizava um retângulo BRANCO no
+     dark. Paridade com o golden (DssInput/DssSelect outlined disabled). */
   &.dss-textarea--disabled .q-field__control {
     border-style: dotted;
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-muted);
   }
 
   /* Readonly state */
@@ -62,13 +66,11 @@
     border-color: var(--dss-gray-300);
   }
 
-  /* Label notch — fundo para "cortar" a borda atrás da label flutuante */
+  /* Label SEM fundo (sem "notch"): mesma decisão do DssInput/DssSelect — o fundo
+     opaco atrás da label flutuante pintava um retângulo (branco no light, e até
+     branco no dark, pois surface-default não remapeava) sobre a borda. Mantido
+     transparente em repouso E flutuante para paridade total com a família. */
   .q-field__label {
     background-color: transparent;
-  }
-
-  &.q-field--float .q-field__label {
-    background-color: var(--dss-surface-default);
-    padding: 0 var(--dss-spacing-1);
   }
 }

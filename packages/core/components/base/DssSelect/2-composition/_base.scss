@@ -134,6 +134,10 @@
   .q-field__label {
     font-family: var(--dss-font-family-sans);
     font-size: var(--dss-font-size-md);
+    /* line-height igual ao DssInput (1.5 = 24px @ md). É a caixa de linha que cria
+       o afastamento da borda quando flutuante (top:spacing-0), e NÃO um offset —
+       mesmo mecanismo do Input. O Quasar usa 20px (1.25), que colava a label. */
+    line-height: var(--dss-line-height-normal);
     color: var(--dss-text-secondary);
     transition: all var(--dss-duration-200) var(--dss-easing-standard);
   }
@@ -148,20 +152,14 @@
     transform: translateY(-50%);
   }
 
-  /* Tamanho da label flutuante alinhado ao DssInput. O _quasar-overrides força
-     `font-size: var(--dss-font-size-base) !important` em toda .q-field__label;
-     por isso precisamos de `!important` + maior especificidade para alinhar:
-     - flutuante (default): sm
-     - dense (repouso e flutuante): sm */
+  /* Label flutuante — padrão ÚNICO da família form (Input/Select/Textarea):
+     font-size MD (a escala 0.75 dá o tamanho visual). Sem !important: o override
+     global `.q-field .q-field__label` (0,2,0) NÃO tem mais !important (removido no
+     T1), e esta regra (0,3,0) vence por especificidade.
+     Posição: top = spacing-0 (IDÊNTICO ao DssInput). O afastamento da borda vem do
+     line-height 1.5 da label (caixa de linha), não de um offset. */
   &.q-field--float .q-field__label {
-    font-size: var(--dss-font-size-sm) !important;
-    /* Posição da label flutuante IDÊNTICA ao DssInput: ancorada no topo
-       (spacing-0), escala a partir do topo-esquerda. O Quasar flutua com
-       `top:18px` + `transform: translateY(-40%) scale(0.75)` — calibrado p/ o
-       campo de 56px antigo; no campo compacto (47px) isso jogava a label p/
-       baixo, colando no valor. Adotamos o MESMO modelo do DssInput
-       (`translateY(0)`): sem o -40% não há "estouro" do box, então o top correto
-       é `spacing-0` (igual ao input) — não `spacing-2`, que só compensava o -40%. */
+    /* font-size NÃO redeclarado: a base `.q-field__label` já é md. */
     top: var(--dss-spacing-0);
     transform: translateY(0) scale(0.75);
     transform-origin: left top;

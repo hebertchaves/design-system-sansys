@@ -7,7 +7,7 @@
    - Usa tokens numéricos de brand (--dss-hub-*, --dss-water-*, --dss-waste-*)
    - Apenas accent color no focus e hint
    - Mantém estrutura visual da variante
-   - Error state sempre usa --dss-error-600 (brand não sobrescreve erro)
+   - Error state sempre usa --dss-feedback-error (brand não sobrescreve erro)
    ========================================================================== */
 
 /* ==========================================================================
@@ -46,7 +46,7 @@
     color: var(--dss-hub-700);
   }
 
-  /* Error state mantém --dss-error-600 */
+  /* Error state mantém --dss-feedback-error */
   &.dss-textarea--error .q-field__control,
   &.q-field--error .q-field__control {
     /* error-600 prevalece sobre brand — sem override aqui */
@@ -149,8 +149,8 @@
   color: var(--dss-waste-800);
 }
 
-/* Error sempre usa --dss-error-600 independente de brand.
+/* Error sempre usa --dss-feedback-error independente de brand.
    Especificidade (0-3-0) supera as regras de brand (0-2-0) — sem !important necessário. */
 .dss-textarea.q-field--error .q-field__messages {
-  color: var(--dss-error-600);
+  color: var(--dss-feedback-error);
 }

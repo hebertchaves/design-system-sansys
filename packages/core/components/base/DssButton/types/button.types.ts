@@ -241,6 +241,16 @@ export interface ButtonSlots {
    * @default label prop
    */
   default(): any
+
+  /**
+   * Ícone à esquerda do conteúdo (precede a prop icon — CCI §3.2)
+   */
+  'icon-left'(): any
+
+  /**
+   * Ícone à direita do conteúdo (precede a prop iconRight — CCI §3.2)
+   */
+  'icon-right'(): any
 }
 
 // ==========================================================================

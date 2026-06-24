@@ -55,9 +55,10 @@ import { DssTextarea } from '@dss/components/DssTextarea'
 | `required` | `boolean` | `false` | Obrigatório (aria-required) |
 | `clearable` | `boolean` | `false` | Botão de limpar |
 | `autogrow` | `boolean` | `false` | Cresce com o conteúdo |
-| `rows` | `number \| string` | `3` | Linhas iniciais |
+| `rows` | `number \| string` | `1` | Linhas iniciais (default single-line; aumentar é indicação explícita) |
 | `maxHeight` | `string` | — | Altura máxima (ex.: `'300px'`) |
 | `ariaLabel` | `string` | — | Label de acessibilidade |
+| `clearAriaLabel` | `string` | `'Clear textarea'` | aria-label do botão de limpar |
 | `tabindex` | `number \| string \| null` | `null` | Tabindex customizado |
 
 ## Quando NÃO usar

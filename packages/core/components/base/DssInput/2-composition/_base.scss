@@ -90,7 +90,8 @@
      entre label e caixa de texto e a altura total do campo. */
   top: var(--dss-spacing-0);
   transform: translateY(0) scale(0.75);
-  font-size: var(--dss-font-size-sm);
+  /* font-size NÃO é redeclarado aqui: a base `.dss-input__label` já é md (a escala
+     0.75 dá o tamanho visual flutuante). Redeclarar md era redundante. */
 }
 
 /* Stacked label (always on top) */

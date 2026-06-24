@@ -163,7 +163,9 @@ export interface TextareaProps {
    * Número de linhas visíveis inicialmente.
    * Funciona como o atributo `rows` do textarea nativo.
    * Quando autogrow=true, define a altura mínima.
-   * @default 3
+   * Default 1: o campo inicia com a mesma altura de DssInput/DssSelect; aumentar
+   * a escala é uma indicação explícita (rows>1 ou autogrow), não o padrão.
+   * @default 1
    */
   rows?: number | string
 
