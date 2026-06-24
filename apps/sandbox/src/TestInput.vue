@@ -147,6 +147,31 @@
             <template #append><span class="pg-char-count">{{ (m.slotBoth || '').length }}/40</span></template>
           </DssInput>
         </PgTile>
+        <PgTile code="#before (ícone externo)">
+          <DssInput label="Localização" v-model="m.slotBefore">
+            <template #before><span class="material-icons pg-slot-icon">place</span></template>
+          </DssInput>
+        </PgTile>
+        <PgTile code="#after (slot externo)">
+          <DssInput label="Mensagem" v-model="m.slotAfter">
+            <template #after><span class="material-icons pg-slot-icon">send</span></template>
+          </DssInput>
+        </PgTile>
+        <PgTile code="#label (custom)">
+          <DssInput v-model="m.slotLabel">
+            <template #label><span class="pg-slot-label">Nome <strong>*</strong></span></template>
+          </DssInput>
+        </PgTile>
+        <PgTile code="#hint (custom)">
+          <DssInput label="Usuário" v-model="m.slotHint">
+            <template #hint><span>Mín. <strong>3</strong> caracteres</span></template>
+          </DssInput>
+        </PgTile>
+        <PgTile code="#error (custom)">
+          <DssInput label="E-mail" :error="true" v-model="m.slotError">
+            <template #error><span>Formato <strong>inválido</strong></span></template>
+          </DssInput>
+        </PgTile>
       </PgGrid>
     </PgSection>
 
@@ -249,6 +274,7 @@ const m = reactive<Record<string, string>>({
   stError: '123', stDisabled: 'Não editável', stReadonly: 'Somente leitura', stLoading: '', stBase: '',
   clear1: 'Texto inicial', clear2: 'Filtro ativo',
   slotPrepend: '', slotAppend: '', slotPassword: '', slotBoth: '',
+  slotBefore: '', slotAfter: '', slotLabel: '', slotHint: '', slotError: '',
 })
 
 const showPassword = ref(false)

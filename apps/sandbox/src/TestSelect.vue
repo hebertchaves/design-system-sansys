@@ -107,7 +107,7 @@
 
     <!-- ── 08. Slots ───────────────────────────────────────────────────── -->
     <PgSection id="slots" index="08" title="Slots" :count="SLOTS.length"
-      desc="prepend e append (dentro do campo), before e after (fora), além de option/selected-item para render customizado.">
+      desc="prepend/append (dentro), before/after (fora), label/hint/error customizados e option/selected-item para render customizado das opções.">
       <PgGrid>
         <PgTile code="#prepend (ícone)">
           <DssSelect label="Localidade" :options="opts" v-model="m.slotPrepend">
@@ -122,6 +122,43 @@
         <PgTile code="#before (ícone externo)">
           <DssSelect label="Categoria" :options="opts" v-model="m.slotBefore">
             <template #before><span class="material-icons pg-slot-icon">category</span></template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#after (slot externo)">
+          <DssSelect label="Ações" :options="opts" v-model="m.slotAfter">
+            <template #after><span class="material-icons pg-slot-icon">tune</span></template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#label (custom)">
+          <DssSelect :options="opts" v-model="m.slotLabel">
+            <template #label><span class="pg-slot-label">Categoria <strong>*</strong></span></template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#option (render custom)">
+          <DssSelect label="Com ícone" :options="opts" v-model="m.slotOption">
+            <template #option="{ itemProps, opt }">
+              <q-item v-bind="itemProps">
+                <q-item-section avatar><span class="material-icons pg-slot-icon">star</span></q-item-section>
+                <q-item-section>{{ opt }}</q-item-section>
+              </q-item>
+            </template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#selected-item (custom)">
+          <DssSelect label="Selecionado" :options="opts" v-model="m.slotSelected">
+            <template #selected-item="{ opt }">
+              <span class="pg-slot-selected">✓ {{ opt }}</span>
+            </template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#hint (custom)">
+          <DssSelect label="UF" :options="opts" v-model="m.slotHint">
+            <template #hint><span>Selecione a <strong>unidade</strong></span></template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="#error (custom)">
+          <DssSelect label="Categoria" :error="true" :options="opts" v-model="m.slotError">
+            <template #error><span>Seleção <strong>obrigatória</strong></span></template>
           </DssSelect>
         </PgTile>
       </PgGrid>
@@ -231,6 +268,7 @@ const m = reactive<Record<string, any>>({
   clear1: 'Opção 2', clear2: 'Opção 3',
   multi1: ['Opção 1', 'Opção 3'], multi2: ['Opção 2', 'Opção 4'],
   slotPrepend: null, slotAppend: null, slotBefore: null,
+  slotAfter: null, slotLabel: null, slotOption: null, slotSelected: 'Opção 1', slotHint: null, slotError: null,
 })
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
