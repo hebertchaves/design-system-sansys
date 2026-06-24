@@ -127,6 +127,17 @@ if [ -n "$SANDBOX_VUE" ]; then
   echo "✅ Tags DSS do sandbox: OK."
 fi
 
+# ── 6b. DemoRenderer registry ↔ componentes base (drift de registry) ─────────
+# Componente base novo/selado esquecido no registry manual não aparece no sandbox.
+if echo "$STAGED" | grep -qE 'apps/sandbox/src/DemoRenderer\.vue|packages/core/catalog\.json|dss\.meta\.json'; then
+  echo "🔍 Validando registry do DemoRenderer (todo base presente)..."
+  node scripts/validate-demo-registry.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Componente base ausente do registry do DemoRenderer."
+    exit 1
+  fi
+fi
+
 # ── 4. Regressão visual Quasar↔DSS (testes estáticos) ────────────────────────
 if echo "$STAGED" | grep -qE 'apps/sandbox/public/|packages/core/themes/'; then
   echo "🎨 Validando isolamento Quasar↔DSS (regressão estática)..."
