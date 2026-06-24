@@ -73,7 +73,6 @@ import { DssButton } from '@sansys/design-system'
 | `default` | Conteúdo customizado (substitui `label` + ícones) |
 | `icon-left` | Ícone customizado à esquerda — precedência sobre a prop `icon` (CCI §3.2) |
 | `icon-right` | Ícone customizado à direita — precedência sobre a prop `iconRight` (CCI §3.2) |
-| `loading` | Slot customizado para estado de loading |
 
 ## Events
 

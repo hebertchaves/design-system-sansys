@@ -42,6 +42,24 @@ if echo "$STAGED" | grep -q 'dss\.meta\.json'; then
   echo "✅ DSS_REFERENCIA_VISUAL_ANALISE.md atualizado e staged."
 fi
 
+# ── 5. API (slots/props/events) ↔ types: valida componentes com types/docs staged ──
+# Dispara só quando types/*.types.ts, *_API.md ou README.md de um componente mudam
+# (não atrapalha commits só de SCSS). Escopado aos componentes alterados.
+API_COMPS=$(echo "$STAGED" | sed -nE 's#^packages/core/components/[^/]+/(Dss[A-Za-z0-9]+)/(types/.+\.types\.ts|[A-Z0-9_]+_API\.md|README\.md)$#\1#p' | sort -u)
+if [ -n "$API_COMPS" ]; then
+  echo "🔍 Validando paridade de API (types → docs) dos componentes alterados..."
+  node scripts/validate-api-docs.cjs --gate $API_COMPS
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ API divergente da fonte de verdade (types/*.types.ts)."
+    echo "   Detalhe:  node scripts/validate-api-docs.cjs <Componente>"
+    echo "   Corrigir: node scripts/validate-api-docs.cjs --fix <Componente>  (adiciona ao *_API.md o que falta)"
+    echo "   Extras não-tipados exigem decisão: completar a interface OU remover da doc."
+    exit 1
+  fi
+  echo "✅ Paridade de API: OK."
+fi
+
 # ── 4. Regressão visual Quasar↔DSS (testes estáticos) ────────────────────────
 if echo "$STAGED" | grep -qE 'apps/sandbox/public/|packages/core/themes/'; then
   echo "🎨 Validando isolamento Quasar↔DSS (regressão estática)..."

@@ -200,6 +200,16 @@ export interface ChipSlots {
    * @default label prop
    */
   default(): any
+
+  /**
+   * Ícone à esquerda (precede a prop/ícone de seleção — CCI §3.2)
+   */
+  'icon-left'(): any
+
+  /**
+   * Ícone à direita (precede o botão de remover — CCI §3.2)
+   */
+  'icon-right'(): any
 }
 
 // ==========================================================================
