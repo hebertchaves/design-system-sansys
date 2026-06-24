@@ -183,16 +183,29 @@
     padding-left: var(--dss-spacing-2);
   }
 
-  /* Altura do marginal (coluna de ícones: prepend/append internos e before/after
-     externos) alinhada ao token. O Quasar fixa `.q-field__marginal { height: 56px }`
-     (layered) — com ícone INTERNO isso DITAVA a altura do campo (control ia a
-     ~58px, acima do alvo). Unlayered DSS vence sem !important. Mesmo padrão do
-     DssSelect. */
-  .q-field__marginal {
+  /* Marginal (coluna de ícone). O Quasar fixa `.q-field__marginal { height: 56px }`
+     (layered) — neutralizado aqui. Mas prepend/append (INTERNOS) e before/after
+     (EXTERNOS) precisam de tratamento diferente:
+
+     INTERNOS (prepend/append) ficam DENTRO do .q-field__control (área de conteúdo,
+     dentro das bordas). Uma altura fixa ali força o conteúdo do control e o
+     border-box estoura pela espessura da borda (44px conteúdo → 46px com borda).
+     Solução: height auto → com align-items stretch do control eles preenchem a
+     altura do conteúdo e o Quasar centraliza o ícone; NÃO inflam o campo. */
+  .q-field__prepend,
+  .q-field__append {
+    height: auto;
+  }
+
+  /* EXTERNOS (before/after) ficam na row .q-field (items-start). Sem altura
+     definida cairiam no topo; com a altura do campo, centralizam verticalmente. */
+  .q-field__before,
+  .q-field__after {
     height: var(--dss-input-height-md);
   }
 
-  &.dss-textarea--dense .q-field__marginal {
+  &.dss-textarea--dense .q-field__before,
+  &.dss-textarea--dense .q-field__after {
     height: var(--dss-input-height-sm);
   }
 
