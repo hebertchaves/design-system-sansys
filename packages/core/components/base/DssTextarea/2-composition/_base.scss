@@ -178,6 +178,24 @@
     padding-right: var(--dss-spacing-2);
   }
 
+  /* AFTER (slot externo direito): separação da caixa (estava colado, gap 0). */
+  .q-field__after {
+    padding-left: var(--dss-spacing-2);
+  }
+
+  /* Altura do marginal (coluna de ícones: prepend/append internos e before/after
+     externos) alinhada ao token. O Quasar fixa `.q-field__marginal { height: 56px }`
+     (layered) — com ícone INTERNO isso DITAVA a altura do campo (control ia a
+     ~58px, acima do alvo). Unlayered DSS vence sem !important. Mesmo padrão do
+     DssSelect. */
+  .q-field__marginal {
+    height: var(--dss-input-height-md);
+  }
+
+  &.dss-textarea--dense .q-field__marginal {
+    height: var(--dss-input-height-sm);
+  }
+
   /* ==========================================================================
      BOTTOM AREA (hint/error — .q-field__bottom gerado pelo QInput)
      ========================================================================== */
