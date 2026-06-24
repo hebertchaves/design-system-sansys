@@ -164,8 +164,33 @@
       </PgGrid>
     </PgSection>
 
-    <!-- ── 09. Brandabilidade ──────────────────────────────────────────── -->
-    <PgSection id="brand" index="09" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
+    <!-- ── 09. Casos de uso (composições) ──────────────────────────────── -->
+    <PgSection id="casos" index="09" title="Casos de uso" :count="2"
+      desc="Composições reais combinando slots/props — não são slots novos, mas padrões de uso.">
+      <PgGrid>
+        <PgTile code="status com cor (#option + #selected-item)">
+          <DssSelect label="Status" :options="STATUS" v-model="m.casoStatus">
+            <template #option="{ itemProps, opt }">
+              <q-item v-bind="itemProps">
+                <q-item-section avatar><span class="material-icons" :style="{ color: statusColor(opt), fontSize: '14px' }">circle</span></q-item-section>
+                <q-item-section>{{ opt }}</q-item-section>
+              </q-item>
+            </template>
+            <template #selected-item="{ opt }">
+              <span><span class="material-icons" :style="{ color: statusColor(opt), fontSize: '14px', verticalAlign: 'text-bottom' }">circle</span> {{ opt }}</span>
+            </template>
+          </DssSelect>
+        </PgTile>
+        <PgTile code="filtro buscável (clearable + #prepend)">
+          <DssSelect label="Filtrar" clearable :options="opts" v-model="m.casoFiltro">
+            <template #prepend><span class="material-icons pg-slot-icon">search</span></template>
+          </DssSelect>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
+    <!-- ── 10. Brandabilidade ──────────────────────────────────────────── -->
+    <PgSection id="brand" index="10" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
       desc="Prop brand sobrescreve o accent de foco. Reage também a [data-brand] global (use as pílulas do topo).">
       <div v-for="brand in BRAND_KEYS" :key="brand" class="pg-brand-block">
         <div class="pg-brand-block__head">
@@ -186,8 +211,8 @@
       </div>
     </PgSection>
 
-    <!-- ── 10. Matriz Variante × Estado ────────────────────────────────── -->
-    <PgSection id="matriz" index="10" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
+    <!-- ── 11. Matriz Variante × Estado ────────────────────────────────── -->
+    <PgSection id="matriz" index="11" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
       desc="Cobertura combinatória para inspeção visual rápida: cada variante em base, erro, desabilitado e readonly.">
       <div v-for="v in VARIANTS" :key="v" class="pg-matrix-row">
         <div class="pg-matrix-row__label"><code>{{ v }}</code></div>
@@ -232,6 +257,14 @@ const BRAND_KEYS = ['hub', 'water', 'waste'] as const
 
 const opts = ['Opção 1', 'Opção 2', 'Opção 3', 'Opção 4']
 
+// Casos de uso — status com cor (option/selected-item slots)
+const STATUS = ['Ativo', 'Pendente', 'Inativo']
+const statusColor = (s: string) => ({
+  Ativo: 'var(--dss-positive)',
+  Pendente: 'var(--dss-warning)',
+  Inativo: 'var(--dss-text-disabled)',
+}[s] || 'var(--dss-text-secondary)')
+
 const MATRIX_STATES = [
   { key: 'base',     label: 'Base' },
   { key: 'error',    label: 'Erro' },
@@ -248,8 +281,9 @@ const SECTIONS = [
   { id: 'clearable', index: '06', title: 'Clearable' },
   { id: 'multipla',  index: '07', title: 'Seleção Múltipla' },
   { id: 'slots',     index: '08', title: 'Slots' },
-  { id: 'brand',     index: '09', title: 'Brandabilidade' },
-  { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+  { id: 'casos',     index: '09', title: 'Casos de uso' },
+  { id: 'brand',     index: '10', title: 'Brandabilidade' },
+  { id: 'matriz',    index: '11', title: 'Matriz V × Estado' },
 ]
 
 // "Seções" removido (redundante); "Exemplos" é anexado pelo PlaygroundLayout.
@@ -269,6 +303,7 @@ const m = reactive<Record<string, any>>({
   multi1: ['Opção 1', 'Opção 3'], multi2: ['Opção 2', 'Opção 4'],
   slotPrepend: null, slotAppend: null, slotBefore: null,
   slotAfter: null, slotLabel: null, slotOption: null, slotSelected: 'Opção 1', slotHint: null, slotError: null,
+  casoStatus: 'Ativo', casoFiltro: null,
 })
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

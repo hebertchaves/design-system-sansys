@@ -150,8 +150,26 @@
       </PgGrid>
     </PgSection>
 
-    <!-- ── 09. Brandabilidade ──────────────────────────────────────────── -->
-    <PgSection id="brand" index="09" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
+    <!-- ── 09. Casos de uso (composições) ──────────────────────────────── -->
+    <PgSection id="casos" index="09" title="Casos de uso" :count="2"
+      desc="Composições reais combinando props/slots — não são slots novos, mas padrões de uso.">
+      <PgGrid>
+        <PgTile code="comentário (autogrow + #after + contador)">
+          <DssTextarea label="Comentário" autogrow max-height="120px" v-model="m.casoComment">
+            <template #after><span class="material-icons pg-slot-icon">send</span></template>
+            <template #hint><span>{{ (m.casoComment || '').length }} caracteres</span></template>
+          </DssTextarea>
+        </PgTile>
+        <PgTile code="bio com limite (#hint contador)">
+          <DssTextarea label="Bio" :rows="3" v-model="m.casoBio">
+            <template #hint><span>{{ (m.casoBio || '').length }}/160</span></template>
+          </DssTextarea>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
+    <!-- ── 10. Brandabilidade ──────────────────────────────────────────── -->
+    <PgSection id="brand" index="10" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
       desc="Prop brand sobrescreve o accent de foco. Reage também a [data-brand] global (use as pílulas do topo).">
       <div v-for="brand in BRAND_KEYS" :key="brand" class="pg-brand-block">
         <div class="pg-brand-block__head">
@@ -172,8 +190,8 @@
       </div>
     </PgSection>
 
-    <!-- ── 10. Matriz Variante × Estado ────────────────────────────────── -->
-    <PgSection id="matriz" index="10" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
+    <!-- ── 11. Matriz Variante × Estado ────────────────────────────────── -->
+    <PgSection id="matriz" index="11" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
       desc="Cobertura combinatória para inspeção visual rápida: cada variante em base, erro, desabilitado e readonly. Calibre LIGHT e DARK.">
       <div v-for="v in VARIANTS" :key="v" class="pg-matrix-row">
         <div class="pg-matrix-row__label"><code>{{ v }}</code></div>
@@ -228,8 +246,9 @@ const SECTIONS = [
   { id: 'clearable', index: '06', title: 'Clearable' },
   { id: 'autogrow',  index: '07', title: 'Autogrow & Altura' },
   { id: 'slots',     index: '08', title: 'Slots' },
-  { id: 'brand',     index: '09', title: 'Brandabilidade' },
-  { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+  { id: 'casos',     index: '09', title: 'Casos de uso' },
+  { id: 'brand',     index: '10', title: 'Brandabilidade' },
+  { id: 'matriz',    index: '11', title: 'Matriz V × Estado' },
 ]
 
 // "Seções" removido (redundante); "Exemplos" é anexado pelo PlaygroundLayout.
@@ -248,6 +267,7 @@ const m = reactive<Record<string, any>>({
   rows5: '', autogrow: '', autogrowMax: '',
   slotPrepend: '', slotAppend: '', slotBefore: '',
   slotAfter: '', slotLabel: '', slotHint: '', slotError: '',
+  casoComment: '', casoBio: '',
 })
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
