@@ -232,8 +232,8 @@ const SECTIONS = [
   { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
 ]
 
+// "Seções" removido (redundante); "Exemplos" é anexado pelo PlaygroundLayout.
 const KPIS = [
-  { value: SECTIONS.length, label: 'Seções' },
   { value: VARIANTS.length, label: 'Variantes' },
   { value: SLOTS.length,    label: 'Slots' },
 ]

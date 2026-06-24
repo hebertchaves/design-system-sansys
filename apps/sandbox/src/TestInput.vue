@@ -122,31 +122,6 @@
             <template #append><span class="material-icons pg-slot-icon">attach_money</span></template>
           </DssInput>
         </PgTile>
-        <PgTile code="#append (toggle senha)">
-          <DssInput
-            label="Senha"
-            :type="showPassword ? 'text' : 'password'"
-            placeholder="Digite sua senha"
-            v-model="m.slotPassword"
-          >
-            <template #append>
-              <DssButton
-                variant="flat"
-                color="secondary"
-                size="sm"
-                :icon="showPassword ? 'visibility_off' : 'visibility'"
-                :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
-                @click="showPassword = !showPassword"
-              />
-            </template>
-          </DssInput>
-        </PgTile>
-        <PgTile code="#prepend + #append">
-          <DssInput label="Buscar" placeholder="Termo…" v-model="m.slotBoth">
-            <template #prepend><span class="material-icons pg-slot-icon">search</span></template>
-            <template #append><span class="pg-char-count">{{ (m.slotBoth || '').length }}/40</span></template>
-          </DssInput>
-        </PgTile>
         <PgTile code="#before (ícone externo)">
           <DssInput label="Localização" v-model="m.slotBefore">
             <template #before><span class="material-icons pg-slot-icon">place</span></template>
@@ -175,8 +150,40 @@
       </PgGrid>
     </PgSection>
 
-    <!-- ── 09. Brandabilidade ──────────────────────────────────────────── -->
-    <PgSection id="brand" index="09" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
+    <!-- ── 09. Casos de uso (composições de slots) ─────────────────────── -->
+    <PgSection id="casos" index="09" title="Casos de uso" :count="2"
+      desc="Composições reais combinando slots — não são slots novos, mas exemplos de uso (toggle de senha no #append, busca com ícone + contador no #prepend/#append).">
+      <PgGrid>
+        <PgTile code="senha (toggle no #append)">
+          <DssInput
+            label="Senha"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="Digite sua senha"
+            v-model="m.slotPassword"
+          >
+            <template #append>
+              <DssButton
+                variant="flat"
+                color="secondary"
+                size="sm"
+                :icon="showPassword ? 'visibility_off' : 'visibility'"
+                :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
+                @click="showPassword = !showPassword"
+              />
+            </template>
+          </DssInput>
+        </PgTile>
+        <PgTile code="busca (#prepend + #append)">
+          <DssInput label="Buscar" placeholder="Termo…" v-model="m.slotBoth">
+            <template #prepend><span class="material-icons pg-slot-icon">search</span></template>
+            <template #append><span class="pg-char-count">{{ (m.slotBoth || '').length }}/40</span></template>
+          </DssInput>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
+    <!-- ── 10. Brandabilidade ──────────────────────────────────────────── -->
+    <PgSection id="brand" index="10" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
       desc="Prop brand sobrescreve o accent de foco. Reage também a [data-brand] global (use as pílulas do topo).">
       <div v-for="brand in BRAND_KEYS" :key="brand" class="pg-brand-block">
         <div class="pg-brand-block__head">
@@ -197,8 +204,8 @@
       </div>
     </PgSection>
 
-    <!-- ── 10. Matriz Variante × Estado ────────────────────────────────── -->
-    <PgSection id="matriz" index="10" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
+    <!-- ── 11. Matriz Variante × Estado ────────────────────────────────── -->
+    <PgSection id="matriz" index="11" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
       desc="Cobertura combinatória para inspeção visual rápida: cada variante em base, erro, desabilitado e readonly.">
       <div v-for="v in VARIANTS" :key="v" class="pg-matrix-row">
         <div class="pg-matrix-row__label"><code>{{ v }}</code></div>
@@ -255,12 +262,14 @@ const SECTIONS = [
   { id: 'estados',   index: '06', title: 'Estados' },
   { id: 'clearable', index: '07', title: 'Clearable' },
   { id: 'slots',     index: '08', title: 'Slots' },
-  { id: 'brand',     index: '09', title: 'Brandabilidade' },
-  { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+  { id: 'casos',     index: '09', title: 'Casos de uso' },
+  { id: 'brand',     index: '10', title: 'Brandabilidade' },
+  { id: 'matriz',    index: '11', title: 'Matriz V × Estado' },
 ]
 
+// "Seções" removido (redundante com a numeração). "Exemplos" é anexado
+// automaticamente pelo PlaygroundLayout (total de tiles renderizados).
 const KPIS = [
-  { value: SECTIONS.length, label: 'Seções' },
   { value: VARIANTS.length, label: 'Variantes' },
   { value: TYPES.length,    label: 'Tipos HTML' },
   { value: SLOTS.length,    label: 'Slots' },
