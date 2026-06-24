@@ -1,161 +1,98 @@
 <template>
-  <div class="dss-select-examples">
-    <h2>DssSelect — Exemplos</h2>
+  <!-- Showcase canônico do DssSelect — embeddable, Token First, padrões atuais.
+       Consumido pelo sandbox (TestSelect.vue → seção "Exemplos do componente"). -->
+  <div class="dss-examples">
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Básico (outlined)</span>
+      <DssSelect v-model="cidade" :options="cidades" label="Cidade" hint="Cidade de entrega" />
+    </div>
 
-    <!-- ================================================================
-         CENÁRIO 1: Select simples (outlined padrão)
-         ================================================================ -->
-    <section>
-      <h3>1. Select básico — outlined (padrão)</h3>
-      <DssSelect
-        v-model="cidade"
-        :options="cidades"
-        label="Cidade"
-        hint="Selecione a cidade de entrega"
-      />
-      <p>Selecionado: {{ cidade }}</p>
-    </section>
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Múltipla + chips + clearable</span>
+      <DssSelect v-model="categorias" :options="opcoesCategorias" label="Categorias"
+        multiple use-chips clearable hint="Uma ou mais categorias" />
+    </div>
 
-    <!-- ================================================================
-         CENÁRIO 2: Seleção múltipla com chips nativos
-         ================================================================ -->
-    <section>
-      <h3>2. Seleção múltipla com chips (useChips)</h3>
-      <DssSelect
-        v-model="categorias"
-        :options="opcoesCategorias"
-        label="Categorias"
-        multiple
-        use-chips
-        clearable
-        hint="Selecione uma ou mais categorias"
-      />
-      <p>Selecionados: {{ categorias }}</p>
-    </section>
-
-    <!-- ================================================================
-         CENÁRIO 3: Seleção múltipla com DssChip via slot selected-item
-         (chips 100% governados pelo DSS)
-         ================================================================ -->
-    <section>
-      <h3>3. Seleção múltipla com DssChip (slot selected-item)</h3>
-      <DssSelect
-        v-model="tags"
-        :options="opcoesTags"
-        label="Tags"
-        multiple
-        use-input
-        hint="Chips governados pelo DssChip"
-      >
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Múltipla com DssChip (slot selected-item)</span>
+      <DssSelect v-model="tags" :options="opcoesTags" label="Tags" multiple use-input>
         <template #selected-item="{ opt, index }">
-          <!-- DssChip integrado via slot para governança DSS total -->
-          <DssChip
-            :key="index"
-            :label="opt.label ?? opt"
-            removable
-            @remove="tags.splice(index, 1)"
-          />
+          <DssChip :key="index" :label="opt" removable @remove="tags.splice(index, 1)" />
         </template>
       </DssSelect>
-    </section>
+    </div>
 
-    <!-- ================================================================
-         CENÁRIO 4: Variantes visuais e brandabilidade
-         ================================================================ -->
-    <section>
-      <h3>4. Variantes e brandabilidade</h3>
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <DssSelect
-          v-model="plano"
-          :options="opcoesPlano"
-          variant="filled"
-          label="Plano (filled)"
-          brand="hub"
-        />
-        <DssSelect
-          v-model="plano"
-          :options="opcoesPlano"
-          variant="standout"
-          label="Plano (standout)"
-          brand="water"
-        />
-        <DssSelect
-          v-model="plano"
-          :options="opcoesPlano"
-          variant="borderless"
-          label="Plano (borderless)"
-          brand="waste"
-        />
-      </div>
-    </section>
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Standout + brand</span>
+      <DssSelect v-model="plano" :options="opcoesPlano" variant="standout" label="Plano" brand="water" />
+    </div>
 
-    <!-- ================================================================
-         CENÁRIO 5: Estados de formulário
-         ================================================================ -->
-    <section>
-      <h3>5. Estados — disabled, readonly, error, loading</h3>
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (disabled)"
-          disabled
-        />
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (readonly)"
-          readonly
-        />
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (error)"
-          error
-          error-message="Campo obrigatório. Selecione um status."
-        />
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (loading)"
-          loading
-        />
-      </div>
-    </section>
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Erro</span>
+      <DssSelect v-model="status" :options="opcoesStatus" label="Status" error
+        error-message="Selecione um status" />
+    </div>
+
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Caso de uso: status com cor (#option + #selected-item)</span>
+      <DssSelect v-model="statusCor" :options="opcoesStatus" label="Status">
+        <template #option="{ itemProps, opt }">
+          <q-item v-bind="itemProps">
+            <q-item-section avatar><DssIcon name="circle" inline decorative :style="{ color: statusColor(opt) }" /></q-item-section>
+            <q-item-section>{{ opt }}</q-item-section>
+          </q-item>
+        </template>
+        <template #selected-item="{ opt }">
+          <span><DssIcon name="circle" inline decorative :style="{ color: statusColor(opt) }" /> {{ opt }}</span>
+        </template>
+      </DssSelect>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssSelect } from './index.js'
-// Importar DssChip do barrel quando disponível:
-// import { DssChip } from '../DssChip/index.js'
+import DssSelect from './DssSelect.vue'
+import DssChip from '../DssChip/DssChip.vue'
+import DssIcon from '../DssIcon/DssIcon.vue'
 
 const cidade = ref('')
 const cidades = ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Curitiba', 'Porto Alegre']
 
-const categorias = ref([])
-const opcoesCategorias = [
-  { label: 'Tecnologia', value: 'tech' },
-  { label: 'Saúde', value: 'health' },
-  { label: 'Educação', value: 'edu' },
-  { label: 'Finanças', value: 'finance' }
-]
+const categorias = ref<string[]>([])
+const opcoesCategorias = ['Tecnologia', 'Saúde', 'Educação', 'Finanças']
 
-const tags = ref([])
+const tags = ref<string[]>(['Vue.js', 'DSS'])
 const opcoesTags = ['Vue.js', 'TypeScript', 'Figma', 'SCSS', 'A11Y', 'DSS']
 
 const plano = ref(null)
-const opcoesPlano = [
-  { label: 'Plano Básico', value: 'basic' },
-  { label: 'Plano Pro', value: 'pro' },
-  { label: 'Plano Enterprise', value: 'enterprise' }
-]
+const opcoesPlano = ['Básico', 'Pro', 'Enterprise']
 
-const statusSelect = ref({ label: 'Ativo', value: 'active' })
-const opcoesStatus = [
-  { label: 'Ativo', value: 'active' },
-  { label: 'Inativo', value: 'inactive' },
-  { label: 'Pendente', value: 'pending' }
-]
+const status = ref(null)
+const statusCor = ref('Ativo')
+const opcoesStatus = ['Ativo', 'Pendente', 'Inativo']
+const statusColor = (s: string) => ({
+  Ativo: 'var(--dss-positive)',
+  Pendente: 'var(--dss-warning)',
+  Inativo: 'var(--dss-text-disabled)',
+}[s] || 'var(--dss-text-secondary)')
 </script>
+
+<style scoped>
+.dss-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--dss-spacing-6);
+}
+.dss-examples__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+}
+.dss-examples__label {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-medium);
+  color: var(--dss-text-secondary);
+}
+</style>

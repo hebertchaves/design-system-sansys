@@ -150,22 +150,10 @@
       </PgGrid>
     </PgSection>
 
-    <!-- ── 09. Casos de uso (composições) ──────────────────────────────── -->
-    <PgSection id="casos" index="09" title="Casos de uso" :count="2"
-      desc="Composições reais combinando props/slots — não são slots novos, mas padrões de uso.">
-      <PgGrid>
-        <PgTile code="comentário (autogrow + #after + contador)">
-          <DssTextarea label="Comentário" autogrow max-height="120px" v-model="m.casoComment">
-            <template #after><span class="material-icons pg-slot-icon">send</span></template>
-            <template #hint><span>{{ (m.casoComment || '').length }} caracteres</span></template>
-          </DssTextarea>
-        </PgTile>
-        <PgTile code="bio com limite (#hint contador)">
-          <DssTextarea label="Bio" :rows="3" v-model="m.casoBio">
-            <template #hint><span>{{ (m.casoBio || '').length }}/160</span></template>
-          </DssTextarea>
-        </PgTile>
-      </PgGrid>
+    <!-- ── 09. Exemplos do componente (.example.vue como fonte) ────────── -->
+    <PgSection id="exemplos" index="09" title="Exemplos do componente" :count="6"
+      desc="Renderiza o DssTextarea.example.vue — fonte única dos exemplos canônicos (Token First, padrões atuais), também usável na documentação.">
+      <DssTextareaExample />
     </PgSection>
 
     <!-- ── 10. Brandabilidade ──────────────────────────────────────────── -->
@@ -219,6 +207,7 @@ import { reactive } from 'vue'
 
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssTextarea from '@components/base/DssTextarea/DssTextarea.vue'
+import DssTextareaExample from '@components/base/DssTextarea/DssTextarea.example.vue'
 
 // Template reutilizável das páginas de teste
 import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
@@ -246,7 +235,7 @@ const SECTIONS = [
   { id: 'clearable', index: '06', title: 'Clearable' },
   { id: 'autogrow',  index: '07', title: 'Autogrow & Altura' },
   { id: 'slots',     index: '08', title: 'Slots' },
-  { id: 'casos',     index: '09', title: 'Casos de uso' },
+  { id: 'exemplos',  index: '09', title: 'Exemplos do componente' },
   { id: 'brand',     index: '10', title: 'Brandabilidade' },
   { id: 'matriz',    index: '11', title: 'Matriz V × Estado' },
 ]
@@ -267,7 +256,6 @@ const m = reactive<Record<string, any>>({
   rows5: '', autogrow: '', autogrowMax: '',
   slotPrepend: '', slotAppend: '', slotBefore: '',
   slotAfter: '', slotLabel: '', slotHint: '', slotError: '',
-  casoComment: '', casoBio: '',
 })
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

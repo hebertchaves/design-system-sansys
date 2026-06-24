@@ -164,29 +164,10 @@
       </PgGrid>
     </PgSection>
 
-    <!-- ── 09. Casos de uso (composições) ──────────────────────────────── -->
-    <PgSection id="casos" index="09" title="Casos de uso" :count="2"
-      desc="Composições reais combinando slots/props — não são slots novos, mas padrões de uso.">
-      <PgGrid>
-        <PgTile code="status com cor (#option + #selected-item)">
-          <DssSelect label="Status" :options="STATUS" v-model="m.casoStatus">
-            <template #option="{ itemProps, opt }">
-              <q-item v-bind="itemProps">
-                <q-item-section avatar><span class="material-icons" :style="{ color: statusColor(opt), fontSize: '14px' }">circle</span></q-item-section>
-                <q-item-section>{{ opt }}</q-item-section>
-              </q-item>
-            </template>
-            <template #selected-item="{ opt }">
-              <span><span class="material-icons" :style="{ color: statusColor(opt), fontSize: '14px', verticalAlign: 'text-bottom' }">circle</span> {{ opt }}</span>
-            </template>
-          </DssSelect>
-        </PgTile>
-        <PgTile code="filtro buscável (clearable + #prepend)">
-          <DssSelect label="Filtrar" clearable :options="opts" v-model="m.casoFiltro">
-            <template #prepend><span class="material-icons pg-slot-icon">search</span></template>
-          </DssSelect>
-        </PgTile>
-      </PgGrid>
+    <!-- ── 09. Exemplos do componente (.example.vue como fonte) ────────── -->
+    <PgSection id="exemplos" index="09" title="Exemplos do componente" :count="6"
+      desc="Renderiza o DssSelect.example.vue — fonte única dos exemplos canônicos (Token First, padrões atuais), também usável na documentação.">
+      <DssSelectExample />
     </PgSection>
 
     <!-- ── 10. Brandabilidade ──────────────────────────────────────────── -->
@@ -241,6 +222,7 @@ import { reactive } from 'vue'
 
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssSelect from '@components/base/DssSelect/DssSelect.vue'
+import DssSelectExample from '@components/base/DssSelect/DssSelect.example.vue'
 
 // Template reutilizável das páginas de teste
 import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
@@ -256,14 +238,6 @@ const SLOTS = ['label', 'before', 'prepend', 'append', 'after', 'option', 'selec
 const BRAND_KEYS = ['hub', 'water', 'waste'] as const
 
 const opts = ['Opção 1', 'Opção 2', 'Opção 3', 'Opção 4']
-
-// Casos de uso — status com cor (option/selected-item slots)
-const STATUS = ['Ativo', 'Pendente', 'Inativo']
-const statusColor = (s: string) => ({
-  Ativo: 'var(--dss-positive)',
-  Pendente: 'var(--dss-warning)',
-  Inativo: 'var(--dss-text-disabled)',
-}[s] || 'var(--dss-text-secondary)')
 
 const MATRIX_STATES = [
   { key: 'base',     label: 'Base' },
@@ -281,7 +255,7 @@ const SECTIONS = [
   { id: 'clearable', index: '06', title: 'Clearable' },
   { id: 'multipla',  index: '07', title: 'Seleção Múltipla' },
   { id: 'slots',     index: '08', title: 'Slots' },
-  { id: 'casos',     index: '09', title: 'Casos de uso' },
+  { id: 'exemplos',  index: '09', title: 'Exemplos do componente' },
   { id: 'brand',     index: '10', title: 'Brandabilidade' },
   { id: 'matriz',    index: '11', title: 'Matriz V × Estado' },
 ]
@@ -303,7 +277,6 @@ const m = reactive<Record<string, any>>({
   multi1: ['Opção 1', 'Opção 3'], multi2: ['Opção 2', 'Opção 4'],
   slotPrepend: null, slotAppend: null, slotBefore: null,
   slotAfter: null, slotLabel: null, slotOption: null, slotSelected: 'Opção 1', slotHint: null, slotError: null,
-  casoStatus: 'Ativo', casoFiltro: null,
 })
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

@@ -1,120 +1,73 @@
 <template>
-  <div style="max-width: 600px; display: flex; flex-direction: column; gap: 32px; padding: 24px;">
+  <!-- Showcase canônico do DssTextarea — embeddable (sem chrome de página),
+       Token First, refletindo os padrões atuais. Consumido pelo sandbox
+       (apps/sandbox/src/TestTextarea.vue → seção "Exemplos do componente"). -->
+  <div class="dss-examples">
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Básico (outlined, single-line)</span>
+      <DssTextarea v-model="basico" label="Descrição" hint="Descreva em poucas palavras" />
+    </div>
 
-    <!-- ================================================================== -->
-    <!-- CENÁRIO 1: Uso básico — outlined (padrão) -->
-    <!-- ================================================================== -->
-    <section>
-      <h3 style="margin: 0 0 12px; font-family: sans-serif; font-size: 14px; color: #555;">
-        1. Uso Básico (outlined, padrão)
-      </h3>
-      <DssTextarea
-        v-model="basicValue"
-        label="Descrição"
-        hint="Descreva em poucas palavras"
-        placeholder="Digite aqui..."
-      />
-    </section>
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Autogrow + max-height</span>
+      <DssTextarea v-model="autogrow" label="Comentário" variant="filled" autogrow max-height="160px"
+        hint="Cresce com o conteúdo, para em 160px" />
+    </div>
 
-    <!-- ================================================================== -->
-    <!-- CENÁRIO 2: autogrow com maxHeight -->
-    <!-- ================================================================== -->
-    <section>
-      <h3 style="margin: 0 0 12px; font-family: sans-serif; font-size: 14px; color: #555;">
-        2. Autogrow com MaxHeight (cresce até 200px)
-      </h3>
-      <DssTextarea
-        v-model="autogrowValue"
-        label="Comentário"
-        hint="O campo cresce com o conteúdo, mas para em 200px"
-        autogrow
-        max-height="200px"
-        variant="filled"
-      />
-    </section>
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Standout (alto contraste)</span>
+      <DssTextarea v-model="standout" label="Feedback" variant="standout" />
+    </div>
 
-    <!-- ================================================================== -->
-    <!-- CENÁRIO 3: Estado de erro -->
-    <!-- ================================================================== -->
-    <section>
-      <h3 style="margin: 0 0 12px; font-family: sans-serif; font-size: 14px; color: #555;">
-        3. Estado de Erro
-      </h3>
-      <DssTextarea
-        v-model="errorValue"
-        label="Mensagem"
-        error
-        error-message="Campo obrigatório — mínimo de 20 caracteres"
-        variant="outlined"
-      />
-    </section>
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Erro</span>
+      <DssTextarea v-model="erro" label="Mensagem" error
+        error-message="Mínimo de 20 caracteres" />
+    </div>
 
-    <!-- ================================================================== -->
-    <!-- CENÁRIO 4: Estados disabled e readonly -->
-    <!-- ================================================================== -->
-    <section>
-      <h3 style="margin: 0 0 12px; font-family: sans-serif; font-size: 14px; color: #555;">
-        4. Disabled e Readonly
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <DssTextarea
-          model-value="Conteúdo bloqueado — usuário não pode editar nem focar"
-          label="Campo desabilitado"
-          disabled
-          variant="outlined"
-        />
-        <DssTextarea
-          model-value="Texto visível mas não editável — pode ser selecionado e copiado"
-          label="Campo somente leitura"
-          readonly
-          variant="outlined"
-        />
-      </div>
-    </section>
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Caso de uso: comentário (#after + contador)</span>
+      <DssTextarea v-model="comentario" label="Comentário" autogrow max-height="120px">
+        <template #after><DssIcon name="send" inline decorative /></template>
+        <template #hint><span>{{ comentario.length }} caracteres</span></template>
+      </DssTextarea>
+    </div>
 
-    <!-- ================================================================== -->
-    <!-- CENÁRIO 5: Brands (Hub, Water, Waste) -->
-    <!-- ================================================================== -->
-    <section>
-      <h3 style="margin: 0 0 12px; font-family: sans-serif; font-size: 14px; color: #555;">
-        5. Brandability (Hub / Water / Waste)
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <DssTextarea
-          v-model="hubValue"
-          label="Textarea Hub"
-          hint="Cor de foco: Hub orange"
-          brand="hub"
-          variant="outlined"
-        />
-        <DssTextarea
-          v-model="waterValue"
-          label="Textarea Water"
-          hint="Cor de foco: Water blue"
-          brand="water"
-          variant="outlined"
-        />
-        <DssTextarea
-          v-model="wasteValue"
-          label="Textarea Waste"
-          hint="Cor de foco: Waste green"
-          brand="waste"
-          variant="outlined"
-        />
-      </div>
-    </section>
-
+    <div class="dss-examples__item">
+      <span class="dss-examples__label">Brandabilidade (accent de foco)</span>
+      <DssTextarea v-model="brand" label="Textarea Water" brand="water" hint="Foque para ver o accent" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import DssTextarea from './DssTextarea.vue'
+import DssIcon from '../DssIcon/DssIcon.vue'
 
-const basicValue = ref('')
-const autogrowValue = ref('')
-const errorValue = ref('Texto insuficiente')
-const hubValue = ref('')
-const waterValue = ref('')
-const wasteValue = ref('')
+const basico = ref('')
+const autogrow = ref('')
+const standout = ref('')
+const erro = ref('Curto')
+const comentario = ref('')
+const brand = ref('')
 </script>
+
+<style scoped>
+.dss-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--dss-spacing-6);
+}
+.dss-examples__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+}
+.dss-examples__label {
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-medium);
+  color: var(--dss-text-secondary);
+}
+</style>
