@@ -27,6 +27,8 @@
     "validate:token-values": "node scripts/sync-token-values.js --audit",
     "validate:api-docs": "node scripts/validate-api-docs.cjs",
     "validate:api-docs:gate": "node scripts/validate-api-docs.cjs --gate",
+    "catalog:build": "node scripts/build-catalog.cjs",
+    "catalog:validate": "node scripts/build-catalog.cjs --validate",
     "sync:all": "node scripts/sync-tokens-to-reference.js && node scripts/sync-css-to-meta.js --fix-sources && node scripts/sync-token-values.js --fix && node scripts/sync-visual-contract.js",
     "inject:token-markers": "node scripts/inject-token-table-markers.js",
     "update:meta-preview": "node scripts/update-meta-preview.cjs",

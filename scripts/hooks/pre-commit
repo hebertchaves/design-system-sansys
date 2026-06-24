@@ -56,6 +56,21 @@ if echo "$STAGED" | grep -q 'dss\.meta\.json'; then
   echo "✅ DSS_REFERENCIA_VISUAL_ANALISE.md atualizado e staged."
 fi
 
+# ── 3b. meta.json ou selo alterado → regenera catalog.json (fonte canônica) ──
+# catalog.json é a fonte única consumível por MCP/portal/DemoRenderer (deriva
+# "selado" do arquivo físico, não do status, que driftou). NÃO faz gate duro aqui
+# (há contradições status↔selo pré-existentes a reconciliar — ver catalog:validate).
+if echo "$STAGED" | grep -qE 'dss\.meta\.json|docs/Compliance/seals/'; then
+  echo "🔄 meta/selo alterado — regenerando catalog.json..."
+  node scripts/build-catalog.cjs
+  if [ $? -ne 0 ]; then
+    echo "❌ Falha ao gerar catalog.json. Commit abortado."
+    exit 1
+  fi
+  git add packages/core/catalog.json
+  echo "✅ catalog.json regenerado e staged."
+fi
+
 # ── 5. API (slots/props/events/arrays-sandbox) ↔ types: valida componentes staged ──
 # Dispara quando types/*.types.ts, *_API.md, README.md OU a Test page do sandbox
 # mudam (a Test page carrega arrays VARIANTS/SIZES/BRAND_KEYS/SLOTS que espelham os
