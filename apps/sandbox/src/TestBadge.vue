@@ -425,6 +425,11 @@
 <script setup>
 import { ref } from 'vue'
 
+// Componentes DSS reais (Entry Point Wrappers — Princípio #11). Sem isto o Vue não
+// resolve as tags <DssBadge>/<DssButton> e a página não renderiza os componentes.
+import DssBadge from '@components/base/DssBadge/DssBadge.vue'
+import DssButton from '@components/base/DssButton/DssButton.vue'
+
 const colors = ['primary', 'secondary', 'tertiary', 'accent', 'positive', 'negative', 'warning', 'info']
 </script>
 
