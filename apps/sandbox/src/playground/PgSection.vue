@@ -36,7 +36,8 @@ const sectionEl = ref<HTMLElement | null>(null)
 const tileCount = ref<number | null>(null)
 onMounted(async () => {
   await nextTick()
-  const n = sectionEl.value?.querySelectorAll('.pg-tile').length ?? 0
+  // conta tiles do playground (.pg-tile) e boxes de exemplo (.dss-ex__item)
+  const n = sectionEl.value?.querySelectorAll('.pg-tile, .dss-ex__item').length ?? 0
   tileCount.value = n || null
 })
 const displayCount = computed(() => tileCount.value ?? props.count)

@@ -262,7 +262,7 @@ onMounted(async () => {
   await nextTick()
   observeSections()
   // Conta no mount (sem filtro de busca ativo) → total de exemplos da página.
-  exampleCount.value = mainEl.value?.querySelectorAll('.pg-tile').length ?? 0
+  exampleCount.value = mainEl.value?.querySelectorAll('.pg-tile, .dss-ex__item').length ?? 0
 })
 
 // Re-observa quando a lista visível muda (filtro de busca cria/remove seções).
