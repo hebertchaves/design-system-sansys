@@ -134,6 +134,10 @@
   .q-field__label {
     font-family: var(--dss-font-family-sans);
     font-size: var(--dss-font-size-md);
+    /* line-height igual ao DssInput (1.5 = 24px @ md). É a caixa de linha que cria
+       o afastamento da borda quando flutuante (top:spacing-0), e NÃO um offset —
+       mesmo mecanismo do Input. O Quasar usa 20px (1.25), que colava a label. */
+    line-height: var(--dss-line-height-normal);
     color: var(--dss-text-secondary);
     transition: all var(--dss-duration-200) var(--dss-easing-standard);
   }
@@ -152,11 +156,11 @@
      font-size MD (a escala 0.75 dá o tamanho visual). Sem !important: o override
      global `.q-field .q-field__label` (0,2,0) NÃO tem mais !important (removido no
      T1), e esta regra (0,3,0) vence por especificidade.
-     Posição: top = spacing-1 p/ NÃO colar na borda (alinha aos ~6px do DssInput;
-     com top:spacing-0 a label do Quasar caía a ~1px da borda = "colada"). */
+     Posição: top = spacing-0 (IDÊNTICO ao DssInput). O afastamento da borda vem do
+     line-height 1.5 da label (caixa de linha), não de um offset. */
   &.q-field--float .q-field__label {
     font-size: var(--dss-font-size-md);
-    top: var(--dss-spacing-1);
+    top: var(--dss-spacing-0);
     transform: translateY(0) scale(0.75);
     transform-origin: left top;
   }
