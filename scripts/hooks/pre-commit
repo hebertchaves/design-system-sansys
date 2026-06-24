@@ -102,6 +102,20 @@ if [ -n "$API_COMPS" ]; then
   echo "✅ Paridade de API: OK."
 fi
 
+# ── 6. Sandbox: tag <Dss*> usada sem import (regressão Avatar/Badge) ─────────
+# O sandbox registra globalmente só Quasar; cada DSS precisa de import local.
+# Tag não-resolvida vira custom-element desconhecido → 0 elementos reais (silencioso).
+SANDBOX_VUE=$(echo "$STAGED" | grep -E '^apps/sandbox/src/.+\.vue$')
+if [ -n "$SANDBOX_VUE" ]; then
+  echo "🔍 Validando tags DSS no sandbox (import obrigatório)..."
+  node scripts/validate-sandbox-tags.cjs --gate $SANDBOX_VUE
+  if [ $? -ne 0 ]; then
+    echo "❌ Tag <Dss*> usada sem import — sandbox não reflete a fonte de verdade."
+    exit 1
+  fi
+  echo "✅ Tags DSS do sandbox: OK."
+fi
+
 # ── 4. Regressão visual Quasar↔DSS (testes estáticos) ────────────────────────
 if echo "$STAGED" | grep -qE 'apps/sandbox/public/|packages/core/themes/'; then
   echo "🎨 Validando isolamento Quasar↔DSS (regressão estática)..."
