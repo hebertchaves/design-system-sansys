@@ -1,49 +1,32 @@
 <template>
-  <!-- Showcase canônico do DssInput — embeddable, Token First, padrões atuais.
-       Consumido pelo sandbox (TestInput.vue → seção "Exemplos do componente"). -->
-  <div class="dss-examples">
-    <div class="dss-examples__item">
-      <span class="dss-examples__label">Básico (outlined)</span>
-      <DssInput v-model="basico" label="Nome" hint="Como devemos te chamar" />
+  <!-- Exemplos REAIS de uso do DssInput (composições contextuais — não repete as
+       variantes/estados que já estão nas seções do playground). Embeddable, Token
+       First, box estilizado como o PgTile do sandbox. Consumido por TestInput.vue. -->
+  <div class="dss-ex">
+    <div class="dss-ex__item">
+      <div class="dss-ex__stage">
+        <DssInput v-model="email" label="E-mail" placeholder="voce@exemplo.com">
+          <template #prepend><DssIcon name="mail" inline decorative /></template>
+        </DssInput>
+        <DssInput v-model="senha" label="Senha" :type="showPassword ? 'text' : 'password'">
+          <template #append>
+            <DssButton variant="flat" color="secondary" size="sm"
+              :icon="showPassword ? 'visibility_off' : 'visibility'"
+              :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
+              @click="showPassword = !showPassword" />
+          </template>
+        </DssInput>
+      </div>
+      <code class="dss-ex__code">formulário de login</code>
     </div>
 
-    <div class="dss-examples__item">
-      <span class="dss-examples__label">Standout (alto contraste)</span>
-      <DssInput v-model="standout" label="Busca" variant="standout" />
-    </div>
-
-    <div class="dss-examples__item">
-      <span class="dss-examples__label">Com ícone (#prepend)</span>
-      <DssInput v-model="telefone" label="Telefone" placeholder="(00) 00000-0000">
-        <template #prepend><DssIcon name="call" inline decorative /></template>
-      </DssInput>
-    </div>
-
-    <div class="dss-examples__item">
-      <span class="dss-examples__label">Caso de uso: senha (toggle no #append)</span>
-      <DssInput v-model="senha" label="Senha" :type="showPassword ? 'text' : 'password'">
-        <template #append>
-          <DssButton variant="flat" color="secondary" size="sm"
-            :icon="showPassword ? 'visibility_off' : 'visibility'"
-            :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
-            @click="showPassword = !showPassword" />
-        </template>
-      </DssInput>
-    </div>
-
-    <div class="dss-examples__item">
-      <span class="dss-examples__label">Clearable</span>
-      <DssInput v-model="busca" variant="filled" label="Pesquisar" clearable />
-    </div>
-
-    <div class="dss-examples__item">
-      <span class="dss-examples__label">Erro</span>
-      <DssInput v-model="email" label="E-mail" error error-message="Formato inválido" />
-    </div>
-
-    <div class="dss-examples__item">
-      <span class="dss-examples__label">Brandabilidade (accent de foco)</span>
-      <DssInput v-model="brand" label="Input Hub" brand="hub" hint="Foque para ver o accent" />
+    <div class="dss-ex__item">
+      <div class="dss-ex__stage">
+        <DssInput v-model="busca" variant="filled" label="Buscar" clearable placeholder="Termo…">
+          <template #prepend><DssIcon name="search" inline decorative /></template>
+        </DssInput>
+      </div>
+      <code class="dss-ex__code">campo de busca (ícone + clearable)</code>
     </div>
   </div>
 </template>
@@ -54,31 +37,45 @@ import DssInput from './DssInput.vue'
 import DssIcon from '../DssIcon/DssIcon.vue'
 import DssButton from '../DssButton/DssButton.vue'
 
-const basico = ref('')
-const standout = ref('')
-const telefone = ref('')
+const email = ref('')
 const senha = ref('')
 const showPassword = ref(false)
-const busca = ref('Texto inicial')
-const email = ref('invalido@')
-const brand = ref('')
+const busca = ref('')
 </script>
 
 <style scoped>
-.dss-examples {
+.dss-ex {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--dss-spacing-6);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--dss-spacing-5);
 }
-.dss-examples__item {
+.dss-ex__item {
   display: flex;
   flex-direction: column;
-  gap: var(--dss-spacing-2);
+  background: var(--dss-surface-default);
+  border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-radius: var(--dss-radius-md);
+  overflow: hidden;
 }
-.dss-examples__label {
-  font-family: var(--dss-font-family-sans);
-  font-size: var(--dss-font-size-sm);
-  font-weight: var(--dss-font-weight-medium);
-  color: var(--dss-text-secondary);
+.dss-ex__stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--dss-spacing-4);
+  min-height: 104px;
+  padding: var(--dss-spacing-4);
+  background:
+    linear-gradient(var(--dss-surface-subtle), var(--dss-surface-subtle)),
+    repeating-linear-gradient(45deg, transparent 0 8px,
+      color-mix(in srgb, var(--dss-gray-400) 8%, transparent) 8px 9px);
+}
+.dss-ex__code {
+  font-family: var(--dss-font-family-mono, monospace);
+  font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-subtle);
+  background: var(--dss-surface-default);
+  padding: var(--dss-spacing-1) var(--dss-spacing-3);
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
 }
 </style>

@@ -150,14 +150,8 @@
       </PgGrid>
     </PgSection>
 
-    <!-- ── 09. Exemplos do componente (.example.vue como fonte) ────────── -->
-    <PgSection id="exemplos" index="09" title="Exemplos do componente" :count="7"
-      desc="Renderiza o DssInput.example.vue — fonte única dos exemplos canônicos (Token First, padrões atuais), também usável na documentação.">
-      <DssInputExample />
-    </PgSection>
-
-    <!-- ── 10. Brandabilidade ──────────────────────────────────────────── -->
-    <PgSection id="brand" index="10" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
+    <!-- ── 09. Brandabilidade ──────────────────────────────────────────── -->
+    <PgSection id="brand" index="09" title="Brandabilidade" :count="BRAND_KEYS.length * 2"
       desc="Prop brand sobrescreve o accent de foco. Reage também a [data-brand] global (use as pílulas do topo).">
       <div v-for="brand in BRAND_KEYS" :key="brand" class="pg-brand-block">
         <div class="pg-brand-block__head">
@@ -178,8 +172,8 @@
       </div>
     </PgSection>
 
-    <!-- ── 11. Matriz Variante × Estado ────────────────────────────────── -->
-    <PgSection id="matriz" index="11" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
+    <!-- ── 10. Matriz Variante × Estado ────────────────────────────────── -->
+    <PgSection id="matriz" index="10" title="Matriz Variante × Estado" :count="VARIANTS.length * MATRIX_STATES.length"
       desc="Cobertura combinatória para inspeção visual rápida: cada variante em base, erro, desabilitado e readonly.">
       <div v-for="v in VARIANTS" :key="v" class="pg-matrix-row">
         <div class="pg-matrix-row__label"><code>{{ v }}</code></div>
@@ -198,6 +192,12 @@
           />
         </div>
       </div>
+    </PgSection>
+
+    <!-- ── 11. Exemplos de uso (.example.vue como fonte) — última seção ──── -->
+    <PgSection id="exemplos" index="11" title="Exemplos de uso" :count="2"
+      desc="Composições reais (não repete variantes/estados). Renderiza o DssInput.example.vue — fonte única, também usável na documentação.">
+      <DssInputExample />
     </PgSection>
   </PlaygroundLayout>
 </template>
@@ -236,9 +236,9 @@ const SECTIONS = [
   { id: 'estados',   index: '06', title: 'Estados' },
   { id: 'clearable', index: '07', title: 'Clearable' },
   { id: 'slots',     index: '08', title: 'Slots' },
-  { id: 'exemplos',  index: '09', title: 'Exemplos do componente' },
-  { id: 'brand',     index: '10', title: 'Brandabilidade' },
-  { id: 'matriz',    index: '11', title: 'Matriz V × Estado' },
+  { id: 'brand',     index: '09', title: 'Brandabilidade' },
+  { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+  { id: 'exemplos',  index: '11', title: 'Exemplos de uso' },
 ]
 
 // "Seções" removido (redundante com a numeração). "Exemplos" é anexado
