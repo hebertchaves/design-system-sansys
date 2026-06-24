@@ -56,10 +56,11 @@ if echo "$STAGED" | grep -q 'dss\.meta\.json'; then
   echo "✅ DSS_REFERENCIA_VISUAL_ANALISE.md atualizado e staged."
 fi
 
-# ── 3b. meta.json ou selo alterado → regenera catalog.json (fonte canônica) ──
+# ── 3b. meta.json ou selo alterado → regenera catalog.json + GATE de drift ──
 # catalog.json é a fonte única consumível por MCP/portal/DemoRenderer (deriva
-# "selado" do arquivo físico, não do status, que driftou). NÃO faz gate duro aqui
-# (há contradições status↔selo pré-existentes a reconciliar — ver catalog:validate).
+# "selado" do arquivo físico, não do status, que driftou). Os 11 drifts status↔selo
+# pré-existentes foram reconciliados (jun/2026) → gate duro LIGADO: bloqueia commit
+# se status contradiz selo físico ou se CERTIFIED↔selo divergir.
 if echo "$STAGED" | grep -qE 'dss\.meta\.json|docs/Compliance/seals/'; then
   echo "🔄 meta/selo alterado — regenerando catalog.json..."
   node scripts/build-catalog.cjs
@@ -68,7 +69,16 @@ if echo "$STAGED" | grep -qE 'dss\.meta\.json|docs/Compliance/seals/'; then
     exit 1
   fi
   git add packages/core/catalog.json
-  echo "✅ catalog.json regenerado e staged."
+  echo "🔒 Validando consistência status↔selo↔CERTIFIED..."
+  node scripts/build-catalog.cjs --validate
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ Contradição de catálogo: status contradiz selo físico (ou CERTIFIED↔selo)."
+    echo "   'Selado' = arquivo em docs/Compliance/seals/<Comp>/. Alinhe o 'status' no"
+    echo "   dss.meta.json (sealed/conformant/approved) OU remova o selo se prematuro."
+    exit 1
+  fi
+  echo "✅ catalog.json regenerado, staged e consistente."
 fi
 
 # ── 5. API (slots/props/events/arrays-sandbox) ↔ types: valida componentes staged ──

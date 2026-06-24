@@ -2,7 +2,7 @@
   "component": "DssCircularProgress",
   "cssClass": "dss-circular-progress",
   "phase": 2,
-  "status": "in-progress",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssLinearProgress",

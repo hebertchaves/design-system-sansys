@@ -3,7 +3,7 @@
   "cssClass": "dss-date-picker",
   "phase": 2,
   "level": 3,
-  "status": "in-progress",
+  "status": "sealed",
   "auditMode": "prompt_auditoria_v2.5",
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
