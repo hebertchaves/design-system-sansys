@@ -56,10 +56,13 @@ if echo "$STAGED" | grep -q 'dss\.meta\.json'; then
   echo "✅ DSS_REFERENCIA_VISUAL_ANALISE.md atualizado e staged."
 fi
 
-# ── 5. API (slots/props/events) ↔ types: valida componentes com types/docs staged ──
-# Dispara só quando types/*.types.ts, *_API.md ou README.md de um componente mudam
-# (não atrapalha commits só de SCSS). Escopado aos componentes alterados.
+# ── 5. API (slots/props/events/arrays-sandbox) ↔ types: valida componentes staged ──
+# Dispara quando types/*.types.ts, *_API.md, README.md OU a Test page do sandbox
+# mudam (a Test page carrega arrays VARIANTS/SIZES/BRAND_KEYS/SLOTS que espelham os
+# types — drift silencioso). Escopado aos componentes alterados.
 API_COMPS=$(echo "$STAGED" | sed -nE 's#^packages/core/components/[^/]+/(Dss[A-Za-z0-9]+)/(types/.+\.types\.ts|[A-Z0-9_]+_API\.md|README\.md)$#\1#p' | sort -u)
+SANDBOX_COMPS=$(echo "$STAGED" | sed -nE 's#^apps/sandbox/src/Test([A-Za-z0-9]+)\.vue$#Dss\1#p' | sort -u)
+API_COMPS=$(printf '%s\n%s\n' "$API_COMPS" "$SANDBOX_COMPS" | sort -u | sed '/^[[:space:]]*$/d')
 if [ -n "$API_COMPS" ]; then
   echo "🔍 Validando paridade de API (types → docs) dos componentes alterados..."
   node scripts/validate-api-docs.cjs --gate $API_COMPS
