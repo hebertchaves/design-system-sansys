@@ -33,7 +33,15 @@
      ========================================================================== */
 
   .q-field__control {
-    min-height: var(--dss-input-height-md); /* Touch Target Opção A: 44px — WCAG 2.1 AA */
+    /* !important load-bearing: `_quasar-overrides.scss` tem um
+       `.q-field__control { min-height: var(--dss-input-height-min) !important }`
+       global cujo token é INDEFINIDO → resolve p/ 0 !important e derruba o
+       min-height de TODOS os campos (o Select escapa via altura do marginal; o
+       Textarea, sem marginal, colapsava p/ ~28px). Como o concorrente é layered-
+       unlayered com !important, só vencemos com !important + maior especificidade
+       (0,2,0 > 0,1,0). Causa-raiz global = qfield-height-token-bug (a tratar na
+       missão de altura). Touch Target Opção A: 44px — WCAG 2.1 AA. */
+    min-height: var(--dss-input-height-md) !important;
     transition:
       border-color var(--dss-duration-200) var(--dss-easing-standard),
       box-shadow var(--dss-duration-200) var(--dss-easing-standard),
@@ -41,9 +49,21 @@
     font-family: var(--dss-font-family-sans);
   }
 
-  /* Dense: altura mínima reduzida */
+  /* Dense: altura mínima reduzida (mesmo motivo do !important acima). */
   &.dss-textarea--dense .q-field__control {
-    min-height: var(--dss-input-height-sm);
+    min-height: var(--dss-input-height-sm) !important;
+  }
+
+  /* Reserva de topo p/ a label flutuante — alinhada ao DssInput/DssSelect
+     (spacing-3). O native absorve a reserva → não cresce a altura. Aplicada só no
+     estado flutuante para o repouso (rows=1) ter a mesma altura do Input/Select. */
+  &.q-field--float .q-field__control-container {
+    padding-top: var(--dss-spacing-3);
+  }
+
+  /* Dense: reserva menor (spacing-2), igual ao DssSelect. */
+  &.dss-textarea--dense.q-field--float .q-field__control-container {
+    padding-top: var(--dss-spacing-2);
   }
 
   /* ==========================================================================
@@ -102,6 +122,31 @@
     transition: all var(--dss-duration-200) var(--dss-easing-standard);
   }
 
+  /* Repouso (não-float): centraliza a label no campo (mesmo princípio do
+     DssInput/DssSelect: top:50% + translateY(-50%)). Com rows=1 o campo é
+     single-line → idêntico ao Input/Select. O escopo `:not(.q-field--float)`
+     deixa o estado flutuante governado pelas regras de float abaixo. */
+  &:not(.q-field--float) .q-field__label {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Label flutuante: alinhada ao DssInput/DssSelect — encolhe (sm) e ancora no
+     topo. Sem isso (estado anterior) a label ficava em font-size-md no meio do
+     campo, sobrepondo o texto. Especificidade (0,3,0) vence o override global
+     `.q-field .q-field__label` (0,2,0, sem !important) → não precisa de !important. */
+  &.q-field--float .q-field__label {
+    font-size: var(--dss-font-size-sm);
+    top: var(--dss-spacing-0);
+    transform: translateY(0) scale(0.75);
+    transform-origin: left top;
+  }
+
+  /* Dense: label em sm (repouso e flutuante), igual ao DssInput/DssSelect dense. */
+  &.dss-textarea--dense .q-field__label {
+    font-size: var(--dss-font-size-sm);
+  }
+
   /* ==========================================================================
      APPENDAGES (prepend, append — gerados pelo QInput)
      ========================================================================== */
@@ -109,6 +154,24 @@
   .q-field__prepend,
   .q-field__append {
     color: var(--dss-text-secondary);
+  }
+
+  /* Espaçamento do ícone PREPEND (dentro do campo) — mesmo padrão do
+     DssInput/DssSelect. Sem isto o ícone fica longe da borda (control tem
+     padding-left spacing-4) e colado ao texto. Alvo: 4px da borda + 4px do texto.
+     - control com prepend: padding-left = spacing-1 (4px da borda)
+     - prepend: padding-right = spacing-1 (4px do native) */
+  .q-field__control:has(.q-field__prepend) {
+    padding-left: var(--dss-spacing-1);
+  }
+
+  .q-field__prepend {
+    padding-right: var(--dss-spacing-1);
+  }
+
+  /* BEFORE (slot externo): separação mínima entre o ícone/slot e a caixa. */
+  .q-field__before {
+    padding-right: var(--dss-spacing-2);
   }
 
   /* ==========================================================================

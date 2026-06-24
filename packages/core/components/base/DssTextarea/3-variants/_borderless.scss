@@ -15,7 +15,7 @@
     background-color: transparent;
     border: none;
     border-radius: 0;
-    padding: var(--dss-spacing-2) 0;
+    padding: 0; /* vertical 0: reserva da label flutuante vem do control-container; flush horizontal */
     box-shadow: none;
   }
 

@@ -97,7 +97,7 @@ const props = withDefaults(defineProps<TextareaProps>(), {
   // Features
   clearable: false,
   autogrow: false,
-  rows: 3,
+  rows: 1, // default single-line (mesma altura inicial de DssInput/DssSelect); crescer só por indicação (rows>1 ou autogrow)
 
   // Accessibility
   clearAriaLabel: 'Clear textarea',

@@ -110,7 +110,7 @@
 
     <!-- ── 08. Slots ───────────────────────────────────────────────────── -->
     <PgSection id="slots" index="08" title="Slots" :count="SLOTS.length"
-      desc="prepend e append (dentro do campo), before e after (fora). Útil para ícones e ações contextuais.">
+      desc="prepend/append (dentro do campo), before/after (fora) e os slots de conteúdo label, hint e error (sobrescrevem as props correspondentes).">
       <PgGrid>
         <PgTile code="#prepend (ícone)">
           <DssTextarea label="Mensagem" v-model="m.slotPrepend">
@@ -125,6 +125,26 @@
         <PgTile code="#before (ícone externo)">
           <DssTextarea label="Comentário" v-model="m.slotBefore">
             <template #before><span class="material-icons pg-slot-icon">comment</span></template>
+          </DssTextarea>
+        </PgTile>
+        <PgTile code="#after (slot externo)">
+          <DssTextarea label="Mensagem" v-model="m.slotAfter">
+            <template #after><span class="material-icons pg-slot-icon">send</span></template>
+          </DssTextarea>
+        </PgTile>
+        <PgTile code="#label (custom)">
+          <DssTextarea v-model="m.slotLabel">
+            <template #label><span class="pg-slot-label">Descrição <strong>*</strong></span></template>
+          </DssTextarea>
+        </PgTile>
+        <PgTile code="#hint (custom)">
+          <DssTextarea label="Bio" v-model="m.slotHint">
+            <template #hint><span>Máx. <strong>280</strong> caracteres</span></template>
+          </DssTextarea>
+        </PgTile>
+        <PgTile code="#error (custom)">
+          <DssTextarea label="Comentário" :error="true" v-model="m.slotError">
+            <template #error><span>Conteúdo <strong>inválido</strong></span></template>
           </DssTextarea>
         </PgTile>
       </PgGrid>
@@ -227,6 +247,7 @@ const m = reactive<Record<string, any>>({
   clear1: 'Conteúdo limpável', clear2: 'Anotação rápida',
   rows5: '', autogrow: '', autogrowMax: '',
   slotPrepend: '', slotAppend: '', slotBefore: '',
+  slotAfter: '', slotLabel: '', slotHint: '', slotError: '',
 })
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

@@ -26,7 +26,7 @@
 | `required` | `boolean` | `false` | Campo obrigatório (adiciona `aria-required="true"`) |
 | `clearable` | `boolean` | `false` | Exibe botão × para limpar o valor |
 | `autogrow` | `boolean` | `false` | Cresce automaticamente com o conteúdo |
-| `rows` | `number \| string` | `3` | Número de linhas visíveis inicialmente |
+| `rows` | `number \| string` | `1` | Número de linhas visíveis inicialmente (default single-line; aumentar é indicação explícita) |
 | `maxHeight` | `string` | `undefined` | Altura máxima CSS (ex.: `'300px'`, `'50vh'`). Limita crescimento do autogrow |
 | `ariaLabel` | `string` | `undefined` | Label de acessibilidade para screen readers |
 | `clearAriaLabel` | `string` | `'Clear textarea'` | Label acessível do botão clear |
