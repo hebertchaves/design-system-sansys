@@ -118,14 +118,15 @@ function parseTypes(typesFile) {
 }
 
 // ── DERIVADO: tabela markdown sob um heading ──────────────────────────────────
-function parseMarkdownTable(mdFile, headingRe) {
+function parseMarkdownTable(mdFile, headingRe, allowBullets = false) {
   if (!fs.existsSync(mdFile)) return null;
   const lines = fs.readFileSync(mdFile, 'utf8').split(/\r?\n/);
   const names = new Set();
   const clean = s => s.trim().replace(/^[#@:]/, ''); // `#slot`/`@event` → nome
-  // membros (props/slots/events) são lowercase/kebab; PascalCase = tipo/subcomponente
-  // documentado dentro da seção (ex.: `AjaxBarPosition`, `DssCardSection`) → ignora.
-  const add = raw => { const n = clean(raw); if (!/^[A-Z]/.test(n)) names.add(n); };
+  // Nome de membro válido: começa minúscula (PascalCase = tipo/subcomponente),
+  // só letras/dígitos/`_`/`:`/`-`. Exclui trechos HTML em backtick (`<span…>`),
+  // slots dinâmicos (`tab-{name}`) e nomes de tipo (`AjaxBarPosition`).
+  const add = raw => { const n = clean(raw); if (/^[a-z][\w:-]*$/.test(n)) names.add(n); };
   let active = false, hasSection = false, sectionLevel = 0;
   for (const line of lines) {
     const h = line.match(/^(#{1,6})\s+(.*?)\s*$/);
@@ -144,7 +145,12 @@ function parseMarkdownTable(mdFile, headingRe) {
     if (!active) continue;
     // formato tabela: | `nome` | ... |
     const cell = line.match(/^\s*\|\s*`([^`]+)`\s*\|/);
-    if (cell) add(cell[1]);
+    if (cell) { add(cell[1]); continue; }
+    // formato lista (só slots — em props/events os bullets costumam ser prosa
+    // com backticks que geram ruído): - **`nome`** — ...
+    if (!allowBullets) continue;
+    const bullet = line.match(/^\s*[-*]\s+\*{0,2}`([^`]+)`/);
+    if (bullet) add(bullet[1]);
   }
   return hasSection ? names : null;
 }
@@ -185,9 +191,10 @@ function collect() {
       const canon = n => ax.key === 'slots' ? n : n.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       const truthCanon = new Set(truthItems.map(i => canon(i.name)));
 
+      const bullets = ax.key === 'slots';
       const derivatives = {
-        'API.md': apiMd ? parseMarkdownTable(apiMd, ax.headingRe) : null,
-        'README.md': parseMarkdownTable(readme, ax.headingRe),
+        'API.md': apiMd ? parseMarkdownTable(apiMd, ax.headingRe, bullets) : null,
+        'README.md': parseMarkdownTable(readme, ax.headingRe, bullets),
       };
       if (ax.key === 'slots') derivatives['TestPage'] = parseTestPageSlots(componentName);
 

@@ -13,7 +13,8 @@ O `DssBadge` e um **wrapper DSS baseado no QBadge**, com API publica governada p
 ### Conteudo
 
 | Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------| | `label` | String \| Number | `''` | Conteúdo do badge |
+|------|------|---------|-----------|
+| `label` | String \| Number | `''` | Conteúdo do badge |
 
 **Exemplo:**
 ```vue
@@ -27,7 +28,8 @@ O `DssBadge` e um **wrapper DSS baseado no QBadge**, com API publica governada p
 ### Cores
 
 | Prop | Tipo | Default | Valores | Descrição |
-|------|------|---------|---------|-----------| | `color` | String | `'primary'` | `primary`, `secondary`, `tertiary`, `accent`, `positive`, `negative`, `warning`, `info` | Cor de fundo do badge |
+|------|------|---------|---------|-----------|
+| `color` | String | `'primary'` | `primary`, `secondary`, `tertiary`, `accent`, `positive`, `negative`, `warning`, `info` | Cor de fundo do badge |
 | `textColor` | String | `null` | Qualquer cor semântica | Cor do texto (sobrescreve cor padrão) |
 
 **Exemplo:**
@@ -44,7 +46,8 @@ O `DssBadge` e um **wrapper DSS baseado no QBadge**, com API publica governada p
 ### Posicionamento
 
 | Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------| | `floating` | Boolean | `false` | Badge posicionado de forma absoluta (top-right) |
+|------|------|---------|-----------|
+| `floating` | Boolean | `false` | Badge posicionado de forma absoluta (top-right) |
 | `align` | String | `null` | Alinhamento vertical (`top`, `middle`, `bottom`) |
 
 **Exemplo:**
@@ -64,7 +67,8 @@ O `DssBadge` e um **wrapper DSS baseado no QBadge**, com API publica governada p
 ### Variantes Visuais
 
 | Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------| | `transparent` | Boolean | `false` | Badge com fundo transparente (mantém cor do texto) |
+|------|------|---------|-----------|
+| `transparent` | Boolean | `false` | Badge com fundo transparente (mantém cor do texto) |
 | `outline` | Boolean | `false` | Badge com borda colorida (sem preenchimento) |
 | `rounded` | Boolean | `false` | Badge com bordas mais arredondadas (menos pill) |
 | `multiLine` | Boolean | `false` | Permite texto em múltiplas linhas |
@@ -89,7 +93,8 @@ O `DssBadge` e um **wrapper DSS baseado no QBadge**, com API publica governada p
 ## Slots
 
 | Slot | Descrição |
-|------|-----------| | `default` | Conteúdo do badge (substitui `label`) |
+|------|-----------|
+| `default` | Conteúdo do badge (substitui `label`) |
 
 **Exemplo:**
 ```vue
