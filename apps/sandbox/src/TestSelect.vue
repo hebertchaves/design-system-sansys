@@ -187,7 +187,10 @@ import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
 // API canônica do DssSelect (vide types/select.types.ts)
 // ──────────────────────────────────────────────────────────────────────────
 const VARIANTS = ['outlined', 'filled', 'standout', 'borderless'] as const
-const SLOTS = ['prepend', 'append', 'before', 'after', 'option', 'selected-item', 'no-option'] as const
+// Espelha a interface SelectSlots (fonte de verdade). `no-option` foi removido por
+// NÃO estar tipado em SelectSlots; se for um slot público intencional, adicioná-lo
+// à interface primeiro (validate:api-docs aponta a divergência).
+const SLOTS = ['label', 'before', 'prepend', 'append', 'after', 'option', 'selected-item', 'error', 'hint'] as const
 const BRAND_KEYS = ['hub', 'water', 'waste'] as const
 
 const opts = ['Opção 1', 'Opção 2', 'Opção 3', 'Opção 4']
