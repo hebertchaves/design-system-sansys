@@ -16,6 +16,20 @@ if echo "$STAGED" | grep -q 'packages/core/tokens/semantic/'; then
   echo "✅ DSS_TOKEN_REFERENCE.md atualizado e staged."
 fi
 
+# ── 1b. Qualquer token alterado → propaga p/ o docs-portal (anti-drift A12) ──
+# O portal mantinha 355 --dss-* à mão (262 dup, 13 divergentes). sync:portal-tokens
+# regenera o bloco auto a partir de packages/core/tokens/index.scss.
+if echo "$STAGED" | grep -q 'packages/core/tokens/'; then
+  echo "🔄 Token alterado — propagando tokens p/ o docs-portal..."
+  node scripts/sync-portal-tokens.mjs
+  if [ $? -ne 0 ]; then
+    echo "❌ Falha ao sincronizar tokens do portal. Commit abortado."
+    exit 1
+  fi
+  git add apps/docs-portal/src/index.css
+  echo "✅ Tokens do portal sincronizados e staged."
+fi
+
 # ── 2. SCSS de componente alterado → valida CSS ↔ meta.json ──────────────────
 if echo "$STAGED" | grep -qE 'packages/core/components/base/.+\.scss'; then
   echo "🔍 SCSS de componente alterado — validando CSS → meta.json..."
