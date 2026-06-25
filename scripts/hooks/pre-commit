@@ -158,4 +158,20 @@ if echo "$STAGED" | grep -qE 'apps/sandbox/public/|packages/core/themes/'; then
   echo "✅ Isolamento Quasar↔DSS: OK."
 fi
 
+# ── 7. Type-check (vue-tsc) — GATE bloqueante desde jun/2026 ─────────────────
+# A baseline de 66 erros pré-existentes foi zerada (vue-tsc --noEmit = 0).
+# Dispara quando qualquer .ts/.vue de packages/core é alterado. vue-tsc é
+# project-wide (não escopa por arquivo), então roda o type-check completo do core.
+# Impede regressão de tipo. Detalhe em docs/governance/HANDOFF_TYPECHECK_BACKLOG.md.
+if echo "$STAGED" | grep -qE '^packages/core/.+\.(ts|vue)$'; then
+  echo "🔎 .ts/.vue do core alterado — rodando type-check (vue-tsc)..."
+  (cd packages/core && npm run type-check) || {
+    echo ""
+    echo "❌ Erros de type-check (vue-tsc). Corrija antes de commitar."
+    echo "   Detalhe: cd packages/core && npm run type-check"
+    exit 1
+  }
+  echo "✅ Type-check: 0 erros."
+fi
+
 exit 0
