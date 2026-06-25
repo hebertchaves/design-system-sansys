@@ -6,6 +6,47 @@
 
 ---
 
+## ✅ STATUS (atualizado 2026-06-25)
+
+**8 de 9 corrigidos** (commits `6f7d762` + `a38e191`). type-check segue 0; casts
+type-only correspondentes removidos; types/API.md/README/test atualizados.
+
+| # | Bug | Status |
+|---|---|---|
+| 1 | DssScrollArea scrollTo/scrollBy (lança) | ✅ remapeado p/ setScrollPosition |
+| 2 | DssScrollArea ScrollPayload fictício | ✅ mapeado p/ `{ position }` (sem vazar Quasar) |
+| 4 | DssDatePicker range-start/end | ✅ tipado c/ forma real do QDate |
+| 5 | DssForm validationError + reset | ✅ alinhado a `(ref: Component)` / `() => void` |
+| 6 | DssTree after-show/hide | ✅ sem payload (`() => void`) |
+| 7 | DssFile add/remove | ✅ removidos (eventos mortos) |
+| 8 | DssColorPicker formatModel | ✅ estreitado aos 4 formatos do QColor |
+| 9 | DssUploader headers Record | ✅ convertido no wrapper (`toHeaderItems`) |
+| **3** | **DssFabAction externalLabel** | ⏸️ **DEFERIDO — ver abaixo** |
+
+### ⏸️ #3 DssFabAction — escalado de "contrato" para "feature morta"
+
+Investigação revelou que `externalLabel` está **morto em TODAS as camadas**, não é
+um simples mismatch de tipo:
+- **Template:** o texto vai p/ o `:external-label` (boolean) do QFabAction, que então
+  renderiza o `label` **nativo** (vazio nos exemplos) — o texto de `externalLabel`
+  nunca aparece.
+- **Composable:** adiciona `dss-fab-action--has-external-label` / `--label-{pos}`.
+- **SCSS:** **NENHUMA** regra p/ essas classes (grep retorna zero) → não posicionam nada.
+- **QFabAction:** só tem **um** prop de texto (`label`); `external-label` é boolean de
+  posição. Não suporta texto interno ≠ texto externo (o que o DSS prometia: "ambos coexistem").
+
+**Decisão de produto pendente** (precisa do mantenedor + validação visual):
+- (A) Renderizar `externalLabel` como elemento DSS próprio (template `<span>` + SCSS p/ 4
+  posições + a11y) → honra "dois textos coexistindo". Maior, exige trabalho visual.
+- (B) Mapear p/ o nativo: `:label="externalLabel || label"` + `:external-label="!!externalLabel"`
+  → externalLabel passa a renderizar (externo), mas vira mutuamente exclusivo com `label`.
+- (C) `externalLabel` vira boolean puro (perde o recurso de texto).
+
+O cast `(externalLabel as unknown as boolean)` permanece no template até a decisão
+(mantém type-check 0). É o **único** cast type-only remanescente da onda.
+
+---
+
 ## 🎯 Missão
 
 Corrigir os **bugs de contrato em runtime** descobertos durante a tarefa de
