@@ -42,6 +42,7 @@ import { DssCadrisCard } from '@dss/components/DssCadrisCard'
 | `disable` | `boolean` | `false` | Desabilita toda interação |
 | `documentoOptions` | `SelectOption[]` | `[]` | Opções do select Documento |
 | `aterroOptions` | `SelectOption[]` | `[]` | Opções do select Aterro |
+| `rowsPerPageOptions` | `number[]` | `[10, 25, 50]` | Opções do seletor "Linhas por página" |
 
 ## Eventos
 

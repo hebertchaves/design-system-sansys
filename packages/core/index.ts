@@ -51,13 +51,13 @@ import './index.scss'
 // EXPORTAR TODOS OS COMPONENTES
 // ============================================================================
 
-export * from './components/index.js'
+export * from './components/index'
 
 // ============================================================================
 // EXPORTAR PLUGIN COMO DEFAULT
 // ============================================================================
 
-export { default } from './components/index.js'
+export { default } from './components/index'
 
 // ============================================================================
 // VERSÃO DA BIBLIOTECA

@@ -32,6 +32,7 @@
     "validate:sandbox-tags": "node scripts/validate-sandbox-tags.cjs --gate",
     "validate:portal-pages": "node scripts/validate-portal-pages.cjs --gate",
     "validate:demo-registry": "node scripts/validate-demo-registry.cjs --gate",
+    "validate:barrel-ext": "node scripts/validate-barrel-ext.cjs --gate",
     "sync:all": "node scripts/sync-tokens-to-reference.js && node scripts/sync-css-to-meta.js --fix-sources && node scripts/sync-token-values.js --fix && node scripts/sync-visual-contract.js",
     "inject:token-markers": "node scripts/inject-token-table-markers.js",
     "update:meta-preview": "node scripts/update-meta-preview.cjs",

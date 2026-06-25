@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssField } from './index.js'
+import { DssField } from './index'
 
 const nome = ref('')
 const email = ref('')

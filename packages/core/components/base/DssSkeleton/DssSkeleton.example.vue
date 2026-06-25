@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssSkeleton } from './index.js'
+import { DssSkeleton } from './index'
 
 const loading = ref(true)
 </script>

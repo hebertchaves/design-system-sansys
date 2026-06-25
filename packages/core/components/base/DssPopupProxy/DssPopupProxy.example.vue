@@ -111,13 +111,13 @@
  */
 
 import { ref } from 'vue'
-import { DssPopupProxy } from './index.js'
-import { DssButton } from '../DssButton/index.js'
-import { DssCard } from '../DssCard/index.js'
-import { DssList } from '../DssList/index.js'
-import { DssItem } from '../DssItem/index.js'
-import { DssSeparator } from '../DssSeparator/index.js'
-import { DssAvatar } from '../DssAvatar/index.js'
+import { DssPopupProxy } from './index'
+import { DssButton } from '../DssButton/index'
+import { DssCard } from '../DssCard/index'
+import { DssList } from '../DssList/index'
+import { DssItem } from '../DssItem/index'
+import { DssSeparator } from '../DssSeparator/index'
+import { DssAvatar } from '../DssAvatar/index'
 
 const popup1 = ref(false)
 const popup2 = ref(false)

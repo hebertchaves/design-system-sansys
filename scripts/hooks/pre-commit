@@ -4,6 +4,16 @@
 
 STAGED=$(git diff --cached --name-only)
 
+# ── 0. Barrel export = index.ts (sem index.js novo em packages/core) ─────────
+if echo "$STAGED" | grep -qE 'packages/core/.+/index\.js$|packages/core/index\.js$'; then
+  echo "🔍 Validando extensão de barrel (index.ts canônico)..."
+  node scripts/validate-barrel-ext.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ index.js reintroduzido — o barrel de componente deve ser index.ts."
+    exit 1
+  fi
+fi
+
 # ── 1. Token SCSS alterado → regenera DSS_TOKEN_REFERENCE.md ─────────────────
 if echo "$STAGED" | grep -q 'packages/core/tokens/semantic/'; then
   echo "🔄 Token SCSS alterado — sincronizando DSS_TOKEN_REFERENCE.md..."

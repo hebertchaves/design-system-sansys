@@ -164,5 +164,5 @@
 </template>
 
 <script setup lang="ts">
-import { DssSpace } from './index.js'
+import { DssSpace } from './index'
 </script>
