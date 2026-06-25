@@ -2,6 +2,8 @@
 // DssForm — TypeScript Interfaces
 // ==========================================================================
 
+import type { Component } from 'vue'
+
 /**
  * Props do DssForm.
  *
@@ -36,16 +38,16 @@ export interface DssFormEmits {
   /** Disparado quando o formulário é submetido e a validação é bem-sucedida. */
   (e: 'submit', event: SubmitEvent): void
 
-  /** Disparado quando o formulário é resetado. */
-  (e: 'reset', event: Event): void
+  /** Disparado quando o formulário é resetado. O QForm não fornece payload. */
+  (e: 'reset'): void
 
   /**
    * Disparado quando a validação falha.
-   * @param el - Elemento DOM do campo inválido
-   * @param tabIndex - tabIndex do campo inválido
-   * @param index - Índice do campo na lista de campos do formulário
+   * O QForm fornece apenas a referência do primeiro componente inválido
+   * (`ref: Component`) — não há tabIndex/index no payload do Quasar.
+   * @param ref - Instância do componente de campo inválido
    */
-  (e: 'validationError', el: Element, tabIndex: number, index: number): void
+  (e: 'validationError', ref: Component): void
 
   /** Disparado quando todos os campos passam na validação. */
   (e: 'validationSuccess'): void

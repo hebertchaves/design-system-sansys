@@ -20,19 +20,20 @@
 
 | Evento | Payload | Descrição |
 |--------|---------|-----------|
-| `scroll` | `ScrollPayload` | Emitido durante a rolagem. Inclui posição atual, direção, delta e ponto de inflexão. |
+| `scroll` | `ScrollPayload` | Emitido durante a rolagem. Entrega a posição atual de scroll, derivada do `@scroll` do QScrollArea. |
 
 ### ScrollPayload
 
 ```typescript
 interface ScrollPayload {
-  position: { top: number; left: number }  // Posição atual de scroll (px)
-  direction?: 'up' | 'down' | 'left' | 'right'  // Direção do scroll
-  delta?: { top: number; left: number }  // Variação desde o último evento
-  inflectionPoint?: { top: number; left: number }  // Ponto onde a direção inverteu
-  overflow?: boolean  // Se o scroll chegou ao limite
+  position: { top: number; left: number }  // Posição atual de scroll em px (top = vertical, left = horizontal)
 }
 ```
+
+> **Nota:** o `@scroll` do QScrollArea expõe `verticalPosition`/`horizontalPosition`;
+> o DssScrollArea mapeia para `position` sem vazar a instância Quasar. Campos como
+> `direction`/`delta`/`inflectionPoint` não são fornecidos pelo QScrollArea e foram
+> removidos do contrato (jun/2026) por nunca terem sido populados.
 
 ## Métodos (via template ref)
 

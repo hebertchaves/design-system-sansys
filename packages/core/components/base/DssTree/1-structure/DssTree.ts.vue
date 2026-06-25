@@ -24,8 +24,8 @@
     @update:expanded="emit('update:expanded', $event as string[])"
     @update:ticked="emit('update:ticked', $event as string[])"
     @lazy-load="emit('lazy-load', $event)"
-    @after-show="emit('after-show', $event as unknown as DssTreeNode)"
-    @after-hide="emit('after-hide', $event as unknown as DssTreeNode)"
+    @after-show="emit('after-show')"
+    @after-hide="emit('after-hide')"
   >
     <!-- Forwarding dinâmico de todos os slots do QTree (header/body por nó) -->
     <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
@@ -44,7 +44,7 @@ export default {
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { QTreeProps } from 'quasar'
-import type { DssTreeProps, DssTreeEmits, DssTreeNode } from '../types/tree.types'
+import type { DssTreeProps, DssTreeEmits } from '../types/tree.types'
 import { useTreeClasses } from '../composables'
 
 // ============================================================================

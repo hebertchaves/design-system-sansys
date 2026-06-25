@@ -7,8 +7,8 @@
     :no-error-focus="props.noErrorFocus"
     v-bind="$attrs"
     @submit="emit('submit', $event as SubmitEvent)"
-    @reset="emit('reset', $event as unknown as Event)"
-    @validation-error="(el: any, tabIndex?: number, index?: number) => emit('validationError', el as Element, tabIndex as number, index as number)"
+    @reset="emit('reset')"
+    @validation-error="emit('validationError', $event)"
     @validation-success="emit('validationSuccess')"
   >
     <slot />

@@ -50,10 +50,10 @@
 
 import { ref, computed } from 'vue'
 import { QScrollArea } from 'quasar'
+import type { QScrollAreaProps } from 'quasar'
 import type {
   DssScrollAreaProps,
   DssScrollAreaEmits,
-  ScrollPayload,
 } from '../types/scrollarea.types'
 import { useScrollAreaClasses } from '../composables/useScrollAreaClasses'
 
@@ -94,8 +94,14 @@ const quasarVisible = computed<boolean | undefined>(() => {
 
 // ─── Handlers ─────────────────────────────────────────────────────────────────
 
-function onScroll(payload: ScrollPayload) {
-  emit('scroll', payload)
+// O @scroll do QScrollArea entrega { ref, verticalPosition, horizontalPosition, ... }.
+// Mapeamos para a abstração DSS (ScrollPayload) sem vazar a instância Quasar.
+type QScrollInfo = Parameters<NonNullable<QScrollAreaProps['onScroll']>>[0]
+
+function onScroll(info: QScrollInfo) {
+  emit('scroll', {
+    position: { top: info.verticalPosition, left: info.horizontalPosition },
+  })
 }
 
 // ─── Expose (EXC-Expose-01) ───────────────────────────────────────────────────
@@ -113,11 +119,9 @@ defineExpose({
    * @param duration  Animation duration in ms (0 = instant)
    * @param axis  'vertical' (default) | 'horizontal'
    */
-  // FIXME(runtime): QScrollArea não expõe scrollTo/scrollBy — apenas
-  // setScrollPosition/setScrollPercentage. Esta chamada lança em runtime se
-  // invocada. Cast type-only p/ zerar o type-check; correção de runtime pendente.
-  scrollTo: (offset: number, duration?: number, axis?: 'vertical' | 'horizontal') =>
-    (scrollAreaRef.value as any)?.scrollTo(offset, duration, axis),
+  // QScrollArea não possui scrollTo — mapeado para setScrollPosition (axis-first).
+  scrollTo: (offset: number, duration?: number, axis: 'vertical' | 'horizontal' = 'vertical') =>
+    scrollAreaRef.value?.setScrollPosition(axis, offset, duration),
 
   /**
    * Scrolls by a relative offset from current position.
@@ -125,9 +129,14 @@ defineExpose({
    * @param duration  Animation duration in ms (0 = instant)
    * @param axis  'vertical' (default) | 'horizontal'
    */
-  // FIXME(runtime): idem scrollTo — QScrollArea não possui scrollBy.
-  scrollBy: (offset: number, duration?: number, axis?: 'vertical' | 'horizontal') =>
-    (scrollAreaRef.value as any)?.scrollBy(offset, duration, axis),
+  // QScrollArea não possui scrollBy — lê a posição atual e soma o delta.
+  scrollBy: (offset: number, duration?: number, axis: 'vertical' | 'horizontal' = 'vertical') => {
+    const area = scrollAreaRef.value
+    if (!area) return
+    const position = area.getScrollPosition()
+    const current = axis === 'horizontal' ? position.left : position.top
+    area.setScrollPosition(axis, current + offset, duration)
+  },
 
   /**
    * Sets scroll position on a specific axis.
@@ -170,7 +179,7 @@ defineExpose({
     :scroll-target="scrollTarget ?? undefined"
     :role="label ? 'region' : undefined"
     :aria-label="label ?? undefined"
-    @scroll="(e: unknown) => onScroll(e as ScrollPayload)"
+    @scroll="onScroll"
   >
     <slot />
   </q-scroll-area>

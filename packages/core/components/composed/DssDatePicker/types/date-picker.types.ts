@@ -60,11 +60,20 @@ export interface DssDatePickerProps {
   readonly?: boolean
 }
 
+/** Data desestruturada que o QDate fornece nos eventos de range. */
+export interface DssDatePickerDateParts {
+  year: number
+  month: number
+  day: number
+}
+
 export interface DssDatePickerEmits {
   (e: 'update:modelValue', value: DssDatePickerModelValue): void
   (e: 'navigation', value: { year: number; month: number }): void
-  (e: 'range-start', value: string): void
-  (e: 'range-end', value: string): void
+  /** Início da seleção de range (QDate fornece a data desestruturada). */
+  (e: 'range-start', value: DssDatePickerDateParts): void
+  /** Fim da seleção de range (QDate fornece { from, to } desestruturados). */
+  (e: 'range-end', value: { from: DssDatePickerDateParts; to: DssDatePickerDateParts }): void
 }
 
 export interface DssDatePickerSlots {
