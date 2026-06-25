@@ -50,6 +50,7 @@ import { DssIcon } from '@sansys/design-system'
 | `spin` | `boolean` | `false` | Animação de rotação contínua |
 | `pulse` | `boolean` | `false` | Animação de pulso |
 | `decorative` | `boolean` | `false` | Marca como decorativo (`aria-hidden`) |
+| `inline` | `boolean` | `false` | Modo inline: sizing dirigido pelo host (width/height = 1em, font-size = inherit) |
 | `ariaLabel` | `string \| undefined` | `undefined` | Label para screen readers |
 
 ## Slots
