@@ -6,10 +6,10 @@
 
 ---
 
-## ✅ STATUS (atualizado 2026-06-25)
+## ✅ STATUS (atualizado 2026-06-25) — TODOS OS 9 RESOLVIDOS
 
-**8 de 9 corrigidos** (commits `6f7d762` + `a38e191`). type-check segue 0; casts
-type-only correspondentes removidos; types/API.md/README/test atualizados.
+**9 de 9 corrigidos** (commits `6f7d762`, `a38e191`, `b6cd1d2` + FabAction). type-check
+segue 0; **todos** os casts type-only removidos; types/API.md/README/test atualizados.
 
 | # | Bug | Status |
 |---|---|---|
@@ -21,29 +21,22 @@ type-only correspondentes removidos; types/API.md/README/test atualizados.
 | 7 | DssFile add/remove | ✅ removidos (eventos mortos) |
 | 8 | DssColorPicker formatModel | ✅ estreitado aos 4 formatos do QColor |
 | 9 | DssUploader headers Record | ✅ convertido no wrapper (`toHeaderItems`) |
-| **3** | **DssFabAction externalLabel** | ⏸️ **DEFERIDO — ver abaixo** |
+| **3** | **DssFabAction externalLabel** | ✅ **Opção B — mapeado ao nativo do QFabAction** |
 
-### ⏸️ #3 DssFabAction — escalado de "contrato" para "feature morta"
+### ✅ #3 DssFabAction — resolvido via Opção B
 
-Investigação revelou que `externalLabel` está **morto em TODAS as camadas**, não é
-um simples mismatch de tipo:
-- **Template:** o texto vai p/ o `:external-label` (boolean) do QFabAction, que então
-  renderiza o `label` **nativo** (vazio nos exemplos) — o texto de `externalLabel`
-  nunca aparece.
-- **Composable:** adiciona `dss-fab-action--has-external-label` / `--label-{pos}`.
-- **SCSS:** **NENHUMA** regra p/ essas classes (grep retorna zero) → não posicionam nada.
-- **QFabAction:** só tem **um** prop de texto (`label`); `external-label` é boolean de
-  posição. Não suporta texto interno ≠ texto externo (o que o DSS prometia: "ambos coexistem").
+A investigação revelou que `externalLabel` estava **morto em todas as camadas** (texto
+ia p/ o `:external-label` boolean → QFabAction renderizava o `label` nativo vazio; classes
+`--has-external-label`/`--label-*` sem nenhuma regra SCSS; QFabAction só tem 1 prop de texto).
 
-**Decisão de produto pendente** (precisa do mantenedor + validação visual):
-- (A) Renderizar `externalLabel` como elemento DSS próprio (template `<span>` + SCSS p/ 4
-  posições + a11y) → honra "dois textos coexistindo". Maior, exige trabalho visual.
-- (B) Mapear p/ o nativo: `:label="externalLabel || label"` + `:external-label="!!externalLabel"`
-  → externalLabel passa a renderizar (externo), mas vira mutuamente exclusivo com `label`.
-- (C) `externalLabel` vira boolean puro (perde o recurso de texto).
+**Decisão do mantenedor: Opção B** (mapear ao nativo). Implementado:
+- `:label="externalLabel || label"` + `:external-label="!!externalLabel"` — o texto externo
+  passa a renderizar de fato (nativo do QFabAction), na `labelPosition`.
+- `externalLabel` tem **precedência** sobre `label` (QFabAction mostra um texto por vez).
+- Sem SCSS novo (o QFabAction renderiza o label externo). Cast removido.
 
-O cast `(externalLabel as unknown as boolean)` permanece no template até a decisão
-(mantém type-check 0). É o **único** cast type-only remanescente da onda.
+Opção A (DSS renderizar dois textos coexistindo) foi descartada: QFabAction não suporta
+dois textos e não há requisito de UX para isso num FabAction secundário.
 
 ---
 
