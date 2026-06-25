@@ -34,15 +34,15 @@
       :color="color"
       :text-color="textColor"
       :icon="icon"
-      :label="label"
-      :external-label="externalLabel"
+      :label="externalLabel || label"
+      :external-label="!!externalLabel"
       :label-position="labelPosition || 'left'"
       :disable="disable"
       :to="to"
       :href="href"
       :target="target"
       :aria-label="ariaLabel || undefined"
-      @click="(e: MouseEvent) => emit('click', e)"
+      @click="(e: Event) => emit('click', e as MouseEvent)"
     >
       <template v-if="$slots.icon" #icon>
         <slot name="icon" />

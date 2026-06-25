@@ -34,15 +34,15 @@
       :loading="loading"
       :close-on-esc-key="closeOnEsc"
       :dropdown-icon="dropdownIcon"
-      :menu-anchor="menuAnchor"
-      :menu-self="menuSelf"
+      :menu-anchor="(menuAnchor as QBtnDropdownProps['menuAnchor'])"
+      :menu-self="(menuSelf as QBtnDropdownProps['menuSelf'])"
       :menu-offset="menuOffset"
       :stretch="stretch"
       :persistent="persistent"
       :aria-label="ariaLabel || undefined"
       popup-content-class="dss-btn-dropdown__panel"
       class="dss-btn-dropdown__trigger"
-      @click="(e: MouseEvent) => emit('click', e)"
+      @click="(e: Event) => emit('click', e as MouseEvent)"
       @show="emit('show')"
       @hide="emit('hide')"
       @before-show="emit('before-show')"
@@ -93,6 +93,7 @@
  */
 
 import { computed } from 'vue'
+import type { QBtnDropdownProps } from 'quasar'
 import type { BtnDropdownProps, BtnDropdownEmits } from '../types/btn-dropdown.types'
 import { useBtnDropdownClasses, useBtnDropdownVariantProps } from '../composables'
 

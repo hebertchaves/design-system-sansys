@@ -4,7 +4,7 @@
     :class="popupProxyClasses"
     :model-value="props.open"
     :breakpoint="props.breakpoint"
-    :target="props.target"
+    :target="(props.target as QPopupProxyProps['target'])"
     :no-parent-event="props.noParentEvent"
     :context-menu="props.contextMenu"
     :persistent="props.persistent"
@@ -93,6 +93,7 @@
  */
 
 import { ref } from 'vue'
+import type { QPopupProxyProps } from 'quasar'
 import type { PopupProxyProps, PopupProxyEmits, PopupProxySlots } from '../types/popupproxy.types'
 import { usePopupProxyClasses } from '../composables'
 

@@ -295,7 +295,9 @@ describe('DssFabAction', () => {
       expect(wrapper.classes()).toContain('dss-fab-action--brand-waste')
     })
 
-    it('label inline e externalLabel podem coexistir', () => {
+    it('label e externalLabel podem ser definidos juntos (externalLabel tem precedência no texto)', () => {
+      // Ambos os props podem ser definidos e as classes refletem ambos; no
+      // render, externalLabel tem precedência (QFabAction mostra um texto por vez).
       const wrapper = mountFabAction({
         props: { label: 'Editar', externalLabel: 'Editar item', labelPosition: 'right' }
       })

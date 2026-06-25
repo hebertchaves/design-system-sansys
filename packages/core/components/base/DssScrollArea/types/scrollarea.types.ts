@@ -1,11 +1,11 @@
 // DssScrollArea — TypeScript interfaces
 
 export interface ScrollPayload {
+  /**
+   * Posição atual de scroll em pixels (top = vertical, left = horizontal),
+   * derivada do evento @scroll do QScrollArea (verticalPosition/horizontalPosition).
+   */
   position: { top: number; left: number }
-  direction?: 'up' | 'down' | 'left' | 'right'
-  delta?: { top: number; left: number }
-  inflectionPoint?: { top: number; left: number }
-  overflow?: boolean
 }
 
 export interface DssScrollAreaProps {

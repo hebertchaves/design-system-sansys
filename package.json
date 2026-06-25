@@ -23,6 +23,7 @@
     "sync:css-to-meta": "node scripts/sync-css-to-meta.js --fix-sources",
     "sync:token-values": "node scripts/sync-token-values.js --fix",
     "sync:tokens-to-reference": "node scripts/sync-tokens-to-reference.js",
+    "validate:type-check": "npm run type-check --workspace=@sansys/design-system",
     "validate:css-meta": "node scripts/sync-css-to-meta.js --validate",
     "validate:token-values": "node scripts/sync-token-values.js --audit",
     "validate:api-docs": "node scripts/validate-api-docs.cjs",

@@ -5,7 +5,7 @@
 #   - build da lib (tokens no dist)
 #   - suíte unitária (2553 testes, projeto "unit")
 #   - validação meta.json ↔ catálogo de tokens
-#   - type-check (informativo até a baseline da Onda P2.1 zerar)
+#   - type-check (GATE bloqueante desde jun/2026 — baseline de 66 erros zerada)
 #
 # Node 20 (engine usado no desenvolvimento). Cache de node_modules por lock.
 # ==========================================================================
@@ -72,9 +72,9 @@ validate:visual-contract:
 type-check:
   stage: quality
   needs: ["install"]
-  # INFORMATIVO até a Onda P2.1 zerar a baseline de 66 erros pré-existentes
-  # (docs/governance/audit-reports/TYPECHECK_BASELINE_P2.md). allow_failure
-  # evita bloquear a pipeline por débito conhecido — mas mantém o sinal visível.
-  allow_failure: true
+  # GATE BLOQUEANTE desde jun/2026: a baseline de 66 erros pré-existentes foi
+  # zerada (vue-tsc --noEmit = 0). allow_failure removido — regressão de tipo
+  # passa a quebrar a pipeline. Correções type-only documentadas em
+  # docs/governance/HANDOFF_TYPECHECK_BACKLOG.md.
   script:
     - cd packages/core && npm run type-check

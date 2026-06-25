@@ -46,8 +46,9 @@
  * @version 1.0.0
  */
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { QUploader } from 'quasar'
+import type { QUploaderProps } from 'quasar'
 import type {
   DssUploaderProps,
   DssUploaderEmits,
@@ -87,6 +88,31 @@ const qUploaderRef = ref<InstanceType<typeof QUploader> | null>(null)
 // ─── Classes ──────────────────────────────────────────────────────────────
 
 const { rootClasses } = useUploaderClasses(props)
+
+// ─── Normalização de headers (Record → QUploaderHeaderItem[]) ───────────────
+// A API DSS aceita headers como Record<string,string> por conveniência; o
+// QUploader só aceita { name, value }[]. Convertemos aqui — na prop e nos
+// headers retornados pelo factory — para que a conveniência funcione de fato.
+type HeaderInput = Record<string, string> | Array<{ name: string; value: string }> | undefined
+
+function toHeaderItems(h: HeaderInput): Array<{ name: string; value: string }> | undefined {
+  if (!h) return undefined
+  if (Array.isArray(h)) return h
+  return Object.entries(h).map(([name, value]) => ({ name, value }))
+}
+
+const normalizedHeaders = computed(() => toHeaderItems(props.headers))
+
+const normalizedFactory = computed<QUploaderProps['factory']>(() => {
+  const factory = props.factory
+  if (!factory) return undefined
+  return (files: readonly File[]) => {
+    const result = factory(files)
+    return result instanceof Promise
+      ? result.then((r) => ({ ...r, headers: toHeaderItems(r.headers) }))
+      : { ...result, headers: toHeaderItems(result.headers) }
+  }
+})
 
 // ─── Status Announcement (aria-live) ─────────────────────────────────────
 // Região dedicada para anunciar mudanças de estado a screen readers.
@@ -202,11 +228,11 @@ defineExpose<DssUploaderExpose>({
       class="dss-uploader__engine"
       :url="url"
       :method="method"
-      :headers="headers"
+      :headers="normalizedHeaders"
       :form-fields="formFields"
       :with-credentials="withCredentials"
       :send-raw="sendRaw"
-      :factory="factory"
+      :factory="normalizedFactory"
       :multiple="multiple"
       :accept="accept"
       :max-files="maxFiles"

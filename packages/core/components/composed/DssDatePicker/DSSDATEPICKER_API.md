@@ -56,8 +56,8 @@ As seguintes props do QDate são **bloqueadas** e não devem ser passadas via `$
 |--------|---------|-----------|
 | `update:modelValue` | `String \| { from: String, to: String } \| String[]` | Emitido ao selecionar/alterar uma data |
 | `navigation` | `{ year: Number, month: Number }` | Emitido ao navegar entre meses/anos |
-| `range-start` | `String` | Emitido ao iniciar a seleção de um range (primeiro clique) |
-| `range-end` | `String` | Emitido ao finalizar a seleção de um range (segundo clique) |
+| `range-start` | `{ year, month, day }` | Emitido ao iniciar a seleção de um range (primeiro clique). QDate fornece a data desestruturada |
+| `range-end` | `{ from, to }` | Emitido ao finalizar a seleção de um range (segundo clique). `from`/`to` são `{ year, month, day }` |
 
 ## Tokens Utilizados
 

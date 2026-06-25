@@ -24,6 +24,7 @@ let _moduleGroupSeq = 0
  */
 
 import type { OptionGroupProps, OptionGroupEmits } from '../types/option-group.types'
+import type { RadioColor } from '../../DssRadio/types/radio.types'
 import { useDssOptionGroupClasses } from '../composables'
 import DssRadio from '../../DssRadio/DssRadio.vue'
 import DssCheckbox from '../../DssCheckbox/DssCheckbox.vue'
@@ -118,7 +119,7 @@ function onMultiChange(value: any, checked: boolean): void {
         :model-value="modelValue"
         :val="option.value"
         :label="option.label"
-        :color="option.color ?? color"
+        :color="((option.color ?? color) as RadioColor | undefined)"
         :keep-color="option.keepColor ?? keepColor"
         :disable="Boolean(disable || option.disable)"
         :readonly="readonly"

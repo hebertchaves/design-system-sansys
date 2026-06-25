@@ -3,7 +3,9 @@
 export interface DssColorPickerProps {
   modelValue?: string
   defaultValue?: string
-  formatModel?: 'rgb' | 'hex' | 'hexa' | 'rgba' | 'hsl' | 'hsla' | 'hsv' | 'hsva'
+  // QColor só suporta auto/rgb/hex/hexa/rgba. hsl/hsla/hsv/hsva foram removidos
+  // (jun/2026) por nunca terem sido renderizáveis pelo QColor subjacente.
+  formatModel?: 'rgb' | 'hex' | 'hexa' | 'rgba'
   noHeader?: boolean
   noHeaderTabs?: boolean
   noFooter?: boolean

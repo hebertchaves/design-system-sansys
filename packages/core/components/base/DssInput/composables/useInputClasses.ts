@@ -86,7 +86,7 @@ export function useInputClasses(
       {
         'dss-input__label--stack': props.stackLabel,
         'dss-input__label--float':
-          hasValue.value || isFocused.value || ALWAYS_FLOAT_TYPES.includes(props.type)
+          hasValue.value || isFocused.value || ALWAYS_FLOAT_TYPES.includes(props.type as string)
       }
     ]
   })

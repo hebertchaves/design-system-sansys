@@ -8,5 +8,6 @@
  * ou do barrel export './index'
  * ==========================================================================
  */
-export { default } from './1-structure/DssCheckbox.ts.vue'
+import DssCheckbox from './1-structure/DssCheckbox.ts.vue'
+export default DssCheckbox
 </script>

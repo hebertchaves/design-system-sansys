@@ -90,8 +90,8 @@ export interface DssTreeEmits {
   (e: 'update:ticked', value: string[]): void
   /** Evento de lazy loading — preencher filhos assíncronos */
   (e: 'lazy-load', details: DssTreeLazyLoadDetails): void
-  /** Nó terminou de expandir (animação concluída) */
-  (e: 'after-show', node: DssTreeNode): void
-  /** Nó terminou de colapsar (animação concluída) */
-  (e: 'after-hide', node: DssTreeNode): void
+  /** Nó terminou de expandir (animação concluída). QTree não fornece payload. */
+  (e: 'after-show'): void
+  /** Nó terminou de colapsar (animação concluída). QTree não fornece payload. */
+  (e: 'after-hide'): void
 }

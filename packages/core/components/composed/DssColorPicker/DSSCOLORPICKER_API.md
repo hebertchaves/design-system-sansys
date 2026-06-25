@@ -6,7 +6,7 @@
 |------|------|--------|-----------|
 | `modelValue` | `String` | `undefined` | Valor atual da cor. Use com `v-model`. |
 | `defaultValue` | `String` | `undefined` | Valor padrão ao montar (sem v-model). |
-| `formatModel` | `'rgb' \| 'hex' \| 'hexa' \| 'rgba' \| 'hsl' \| 'hsla' \| 'hsv' \| 'hsva'` | `undefined` | Formato de emissão da cor. Padrão Quasar: `'rgb'`. |
+| `formatModel` | `'rgb' \| 'hex' \| 'hexa' \| 'rgba'` | `undefined` | Formato de emissão da cor. Padrão Quasar: `'rgb'`. Formatos HSL/HSV não são suportados pelo QColor como saída. |
 | `noHeader` | `Boolean` | `false` | Remove o cabeçalho (preview da cor selecionada). |
 | `noHeaderTabs` | `Boolean` | `false` | Remove as abas (spectrum / tune / palette). |
 | `noFooter` | `Boolean` | `false` | Remove o rodapé. |

@@ -75,8 +75,6 @@ import { DssFile } from '@dss/components/base/DssFile'
 | Evento | Tipo | Descrição |
 |--------|------|-----------|
 | `update:modelValue` | `File \| File[] \| null` | v-model |
-| `add` | `{ files, index }[]` | Arquivo(s) adicionado(s) |
-| `remove` | `{ files, index }[]` | Arquivo removido |
 | `rejected` | `{ failedPropValidation, file }[]` | Arquivo(s) rejeitado(s) |
 | `focus` | `FocusEvent` | Campo recebeu foco |
 | `blur` | `FocusEvent` | Campo perdeu foco |

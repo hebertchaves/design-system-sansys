@@ -51,7 +51,6 @@
  * @see DssCircularProgress — Golden Context (família Progresso e Feedback)
  */
 
-import { defineOptions, defineProps, withDefaults, defineSlots } from 'vue'
 import { QInnerLoading } from 'quasar'
 import DssSpinner from '../../DssSpinner/DssSpinner.vue'
 import type { InnerLoadingProps, InnerLoadingSlots } from '../types/innerloading.types'

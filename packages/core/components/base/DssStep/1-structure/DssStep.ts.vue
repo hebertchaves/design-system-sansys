@@ -51,7 +51,7 @@ const { stepClasses } = useStepClasses(props)
   <q-step
     :class="stepClasses"
     :name="props.name"
-    :title="props.title"
+    :title="(props.title as string)"
     :caption="props.caption"
     :icon="props.icon"
     :active-icon="props.activeIcon"

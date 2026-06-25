@@ -13,13 +13,14 @@
  * ```
  */
 
-import type { Ref, SetupContext } from 'vue'
+import type { Ref } from 'vue'
 import type { FileEmits } from '../types/file.types'
 
-// NC-04 fix: SetupContext<FileEmits>['emit'] é o padrão correto para tipar emit
-// em composables que recebem emit como parâmetro. InstanceType<{ new(): ... }>
-// requer um construtor de classe — não um object literal — e falha em strict mode.
-type EmitFn = SetupContext<FileEmits>['emit']
+// FileEmits já é uma interface de call-signatures (o próprio tipo do `emit`
+// retornado por defineEmits<FileEmits>()). SetupContext<E> espera E extends
+// EmitsOptions e colapsa para `unknown` quando E é call-signature — por isso
+// tipamos `emit` diretamente com FileEmits.
+type EmitFn = FileEmits
 
 /**
  * Composable para ações do campo de arquivo
@@ -35,18 +36,18 @@ export function useFileActions(
   /**
    * Trata evento de foco no campo
    */
-  const handleFocus = (event: FocusEvent) => {
+  const handleFocus = (event: Event) => {
     isFocused.value = true
-    emit('focus', event)
+    emit('focus', event as FocusEvent)
   }
 
   /**
    * Trata evento de blur no campo
    */
-  const handleBlur = (event: FocusEvent) => {
+  const handleBlur = (event: Event) => {
     isFocused.value = false
     isDragging.value = false
-    emit('blur', event)
+    emit('blur', event as FocusEvent)
   }
 
   /**

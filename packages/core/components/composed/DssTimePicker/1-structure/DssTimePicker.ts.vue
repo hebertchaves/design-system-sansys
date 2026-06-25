@@ -53,7 +53,7 @@ const { timePickerClasses } = useTimePickerClasses(props)
     :name="props.name"
     :tabindex="props.tabindex"
     color="primary"
-    @update:model-value="emit('update:modelValue', $event)"
+    @update:model-value="emit('update:modelValue', $event as string)"
   >
     <template v-if="$slots.default" #default>
       <slot />

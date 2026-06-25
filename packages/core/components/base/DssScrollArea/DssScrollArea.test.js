@@ -133,16 +133,19 @@ describe('DssScrollArea — Forwarding de $attrs', () => {
 // ─── 6. Evento scroll ─────────────────────────────────────────────────────────
 
 describe('DssScrollArea — Evento scroll', () => {
-  it('emite evento scroll com payload de posição', async () => {
+  it('emite evento scroll mapeando a posição do payload do QScrollArea', async () => {
     const wrapper = mountArea()
-    const scrollPayload = {
-      position: { top: 100, left: 0 },
-      direction: 'down',
+    // Payload REAL do @scroll do QScrollArea (verticalPosition/horizontalPosition).
+    const qScrollInfo = {
+      verticalPosition: 100,
+      horizontalPosition: 0,
+      verticalPercentage: 0.5,
+      horizontalPercentage: 0,
     }
-    // Simula o q-scroll-area emitindo seu evento scroll interno
-    await wrapper.findComponent({ name: 'QScrollArea' }).vm.$emit('scroll', scrollPayload)
+    await wrapper.findComponent({ name: 'QScrollArea' }).vm.$emit('scroll', qScrollInfo)
     expect(wrapper.emitted('scroll')).toBeTruthy()
-    expect(wrapper.emitted('scroll')[0][0]).toMatchObject({ position: { top: 100, left: 0 } })
+    // DssScrollArea mapeia para a abstração { position: { top, left } }.
+    expect(wrapper.emitted('scroll')[0][0]).toEqual({ position: { top: 100, left: 0 } })
   })
 })
 
@@ -172,6 +175,21 @@ describe('DssScrollArea — API imperativa (defineExpose)', () => {
   it('expõe método setScrollPosition', () => {
     const wrapper = mountArea()
     expect(typeof wrapper.vm.setScrollPosition).toBe('function')
+  })
+
+  // Regressão: scrollTo/scrollBy chamavam scrollAreaRef.value.scrollTo/scrollBy,
+  // métodos que NÃO existem no QScrollArea (lançavam TypeError). Agora delegam
+  // a setScrollPosition. Smoke test garante que invocar não lança.
+  it('scrollTo não lança ao ser invocado (delega a setScrollPosition)', () => {
+    const wrapper = mountArea()
+    expect(() => wrapper.vm.scrollTo(100, 300)).not.toThrow()
+    expect(() => wrapper.vm.scrollTo(100, 300, 'horizontal')).not.toThrow()
+  })
+
+  it('scrollBy não lança ao ser invocado (lê posição + soma delta)', () => {
+    const wrapper = mountArea()
+    expect(() => wrapper.vm.scrollBy(50)).not.toThrow()
+    expect(() => wrapper.vm.scrollBy(50, 300, 'horizontal')).not.toThrow()
   })
 })
 

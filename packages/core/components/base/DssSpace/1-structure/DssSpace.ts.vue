@@ -28,7 +28,6 @@
  * ==========================================================================
  */
 
-import { defineOptions } from 'vue'
 import type { SpaceProps } from '../types/space.types'
 import { useSpaceClasses } from '../composables'
 

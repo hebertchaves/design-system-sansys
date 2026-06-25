@@ -48,8 +48,8 @@
 | `update:expanded` | `string[]` | Emitido ao expandir/colapsar nós |
 | `update:ticked` | `string[]` | Emitido ao marcar/desmarcar nós (requer `tick-strategy`) |
 | `lazy-load` | `DssTreeLazyLoadDetails` | Emitido ao expandir nó com `lazy: true` |
-| `after-show` | `DssTreeNode` | Emitido após nó ser expandido |
-| `after-hide` | `DssTreeNode` | Emitido após nó ser colapsado |
+| `after-show` | — | Emitido após nó ser expandido (sem payload — QTree não fornece o nó) |
+| `after-hide` | — | Emitido após nó ser colapsado (sem payload — QTree não fornece o nó) |
 
 ---
 

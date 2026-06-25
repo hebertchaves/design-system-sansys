@@ -14,30 +14,30 @@
  */
 
 import type { Ref } from 'vue'
-// Types used for documentation reference only
+import type { TextareaEmits } from '../types/textarea.types'
 
 /**
  * Composable para ações do textarea
  */
 export function useTextareaActions(
-  emit: (event: string, ...args: any[]) => void,
+  emit: TextareaEmits,
   qInputRef: Ref<any | null>,
   isFocused: Ref<boolean>
 ) {
   /**
    * Handler de foco — atualiza estado e emite evento
    */
-  function handleFocus(event: FocusEvent): void {
+  function handleFocus(event: Event): void {
     isFocused.value = true
-    emit('focus', event)
+    emit('focus', event as FocusEvent)
   }
 
   /**
    * Handler de blur — atualiza estado e emite evento
    */
-  function handleBlur(event: FocusEvent): void {
+  function handleBlur(event: Event): void {
     isFocused.value = false
-    emit('blur', event)
+    emit('blur', event as FocusEvent)
   }
 
   /**

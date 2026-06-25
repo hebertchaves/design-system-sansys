@@ -167,7 +167,7 @@ const resolvedLabelValue = computed(() =>
 // ==========================================================================
 
 onMounted(() => {
-  if (process.env.NODE_ENV !== 'production' && !props.ariaLabel) {
+  if (import.meta.env?.DEV && !props.ariaLabel) {
     console.warn(
       '[DssSlider] ariaLabel é fortemente recomendado quando não há label visual associado (WCAG 1.3.1)'
     )
@@ -213,7 +213,7 @@ defineExpose<SliderExpose>({
       :aria-label="ariaLabel || undefined"
       :aria-describedby="errorDescribedBy"
       v-bind="$attrs"
-      @update:model-value="emit('update:modelValue', $event)"
+      @update:model-value="emit('update:modelValue', $event as number)"
       @change="emit('change', $event)"
     />
 

@@ -8,5 +8,6 @@
  * ou do barrel export './index'
  * ==========================================================================
  */
-export { default } from './1-structure/DssToggle.ts.vue'
+import DssToggle from './1-structure/DssToggle.ts.vue'
+export default DssToggle
 </script>

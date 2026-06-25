@@ -79,9 +79,10 @@ export interface FabActionProps {
   label?: string
 
   /**
-   * Texto exibido fora do botão circular (tooltip lateral).
-   * Quando preenchido, um label flutuante aparece ao lado do botão.
-   * Complementar ao `label` — ambos podem coexistir.
+   * Texto do label exibido FORA do botão circular (ao lado), via
+   * `external-label` nativo do QFabAction. Quando preenchido, tem precedência
+   * sobre `label` (o QFabAction suporta um único texto por vez) e é renderizado
+   * externamente na posição definida por `labelPosition`.
    * @example 'Nova tarefa'
    */
   externalLabel?: string
@@ -158,7 +159,7 @@ export interface FabActionEmits {
   /**
    * Emitido ao clicar no botão de ação.
    */
-  click: [event: MouseEvent]
+  (e: 'click', event: MouseEvent): void
 }
 
 /**

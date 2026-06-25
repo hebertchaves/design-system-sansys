@@ -14,18 +14,18 @@
     :no-connectors="props.noConnectors"
     :default-expand-all="props.defaultExpandAll"
     :filter="props.filter"
-    :filter-method="props.filterMethod"
+    :filter-method="(props.filterMethod as QTreeProps['filterMethod'])"
     :tick-strategy="props.tickStrategy !== 'none' ? props.tickStrategy : undefined"
     :no-nodes-label="props.noNodesLabel"
     :no-results-label="props.noResultsLabel"
     :icon-size="props.iconSize"
     :dense="props.dense"
     @update:selected="emit('update:selected', $event)"
-    @update:expanded="emit('update:expanded', $event)"
-    @update:ticked="emit('update:ticked', $event)"
+    @update:expanded="emit('update:expanded', $event as string[])"
+    @update:ticked="emit('update:ticked', $event as string[])"
     @lazy-load="emit('lazy-load', $event)"
-    @after-show="emit('after-show', $event)"
-    @after-hide="emit('after-hide', $event)"
+    @after-show="emit('after-show')"
+    @after-hide="emit('after-hide')"
   >
     <!-- Forwarding dinâmico de todos os slots do QTree (header/body por nó) -->
     <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
@@ -43,6 +43,7 @@ export default {
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { QTreeProps } from 'quasar'
 import type { DssTreeProps, DssTreeEmits } from '../types/tree.types'
 import { useTreeClasses } from '../composables'
 

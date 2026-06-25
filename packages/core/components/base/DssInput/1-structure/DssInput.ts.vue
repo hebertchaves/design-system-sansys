@@ -1,5 +1,7 @@
 <template>
   <div :class="wrapperClasses">
+    <!-- Linha: before + campo + after lado a lado (semântica Quasar) -->
+    <div class="dss-input__row">
     <!-- Before slot -->
     <div v-if="slots.before" class="dss-input__before">
       <slot name="before" />
@@ -83,6 +85,7 @@
     <div v-if="slots.after" class="dss-input__after">
       <slot name="after" />
     </div>
+    </div><!-- /.dss-input__row -->
 
     <!-- Bottom slots (hint/error) -->
     <div v-if="hasBottomSlot" class="dss-input__bottom">

@@ -6,9 +6,9 @@
     :greedy="props.greedy"
     :no-error-focus="props.noErrorFocus"
     v-bind="$attrs"
-    @submit="emit('submit', $event)"
-    @reset="emit('reset', $event)"
-    @validation-error="(el, tabIndex, index) => emit('validationError', el, tabIndex, index)"
+    @submit="emit('submit', $event as SubmitEvent)"
+    @reset="emit('reset')"
+    @validation-error="emit('validationError', $event)"
     @validation-success="emit('validationSuccess')"
   >
     <slot />

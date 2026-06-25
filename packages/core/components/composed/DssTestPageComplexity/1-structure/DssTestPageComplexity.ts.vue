@@ -214,7 +214,7 @@ function handleRowView(row: ServiceOrderRow) {
                 type="button"
                 class="dss-test-page-complexity__tab-btn"
                 :class="{ 'dss-test-page-complexity__tab-btn--active': activeView === 'dashboard' }"
-                :aria-pressed="String(activeView === 'dashboard')"
+                :aria-pressed="activeView === 'dashboard'"
                 :disabled="disabled || undefined"
                 @click="handleViewChange('dashboard')"
               >
@@ -225,7 +225,7 @@ function handleRowView(row: ServiceOrderRow) {
                 type="button"
                 class="dss-test-page-complexity__tab-btn"
                 :class="{ 'dss-test-page-complexity__tab-btn--active': activeView === 'map' }"
-                :aria-pressed="String(activeView === 'map')"
+                :aria-pressed="activeView === 'map'"
                 :disabled="disabled || undefined"
                 @click="handleViewChange('map')"
               >
@@ -236,7 +236,7 @@ function handleRowView(row: ServiceOrderRow) {
                 type="button"
                 class="dss-test-page-complexity__tab-btn"
                 :class="{ 'dss-test-page-complexity__tab-btn--active': activeView === 'schedule' }"
-                :aria-pressed="String(activeView === 'schedule')"
+                :aria-pressed="activeView === 'schedule'"
                 :disabled="disabled || undefined"
                 @click="handleViewChange('schedule')"
               >

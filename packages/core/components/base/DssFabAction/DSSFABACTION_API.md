@@ -16,7 +16,7 @@
 | `text-color` | `string` | `undefined` | Não | Cor do ícone/texto. Sobrescreve o contraste automático |
 | `icon` | `string` | `undefined` | Não | Ícone Material Icons exibido no centro do botão |
 | `label` | `string` | `undefined` | Não | Texto inline ao lado do ícone. Ativa o modo Extended (pill) |
-| `external-label` | `string` | `undefined` | Não | Texto flutuante ao lado do botão circular |
+| `external-label` | `string` | `undefined` | Não | Texto exibido ao lado do botão (via `external-label` nativo do QFabAction). Tem precedência sobre `label` — o QFabAction mostra um único texto por vez |
 | `label-position` | `'top' \| 'right' \| 'bottom' \| 'left'` | `'left'` | Não | Posição do `external-label`. Ignorado sem `external-label` |
 
 ### Navegação

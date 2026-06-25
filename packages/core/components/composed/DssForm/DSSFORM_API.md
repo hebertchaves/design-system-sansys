@@ -38,8 +38,8 @@ Todos os demais atributos (`id`, `aria-label`, `aria-describedby`, `class`, `sty
 | Evento | Assinatura | Descrição |
 |--------|-----------|-----------|
 | `submit` | `(event: SubmitEvent) => void` | Disparado quando o formulário é submetido. O comportamento padrão de submit do browser **não** é cancelado — use `@submit.prevent` se necessário. |
-| `reset` | `(event: Event) => void` | Disparado quando o formulário é resetado (via botão `type="reset"` ou chamada imperativa de `reset()`). |
-| `validationError` | `(el: Element, tabIndex: number, index: number) => void` | Disparado quando a validação falha. Recebe o elemento DOM do campo inválido, seu tabIndex e índice na lista de campos. |
+| `reset` | `() => void` | Disparado quando o formulário é resetado (via botão `type="reset"` ou chamada imperativa de `reset()`). O QForm não fornece payload. |
+| `validationError` | `(ref: Component) => void` | Disparado quando a validação falha. O QForm fornece apenas a referência do componente de campo inválido (sem tabIndex/index). |
 | `validationSuccess` | `() => void` | Disparado quando todos os campos passam na validação. |
 
 ---

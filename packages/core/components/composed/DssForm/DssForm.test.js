@@ -164,29 +164,26 @@ describe('DssForm — Emits', () => {
     expect(event).toBeInstanceOf(Event)
   })
 
-  it('reemite reset do QForm com o Event como payload', async () => {
+  it('reemite reset do QForm (sem payload — QForm é () => void)', async () => {
     const wrapper = mountForm()
     // O QForm emite 'reset' pelo seu pipeline interno (resetValidation),
-    // não pelo evento DOM nativo — exercitamos o forwarding do wrapper
-    const resetEvent = new Event('reset')
-    wrapper.findComponent(QForm).vm.$emit('reset', resetEvent)
+    // não pelo evento DOM nativo, e SEM payload — exercitamos o forwarding.
+    wrapper.findComponent(QForm).vm.$emit('reset')
     await wrapper.vm.$nextTick()
-    const [event] = wrapper.emitted('reset')[0]
-    expect(event).toBeInstanceOf(Event)
+    expect(wrapper.emitted('reset')).toBeTruthy()
+    expect(wrapper.emitted('reset')[0]).toEqual([])
   })
 
-  it('emite validationError quando QForm dispara validation-error', async () => {
+  it('emite validationError encaminhando a ref do componente do QForm', async () => {
     const wrapper = mountForm()
     const qFormInstance = wrapper.findComponent(QForm).vm
-    const mockEl = document.createElement('input')
-    // Simula o evento de validation-error emitido pelo QForm internamente
-    qFormInstance.$emit('validation-error', mockEl, 0, 0)
+    // O QForm fornece APENAS a ref do primeiro componente inválido (1 arg).
+    const mockRef = { type: 'DssInput' }
+    qFormInstance.$emit('validation-error', mockRef)
     await wrapper.vm.$nextTick()
     expect(wrapper.emitted('validationError')).toBeTruthy()
-    const [el, tabIndex, index] = wrapper.emitted('validationError')[0]
-    expect(el).toBe(mockEl)
-    expect(tabIndex).toBe(0)
-    expect(index).toBe(0)
+    const [ref] = wrapper.emitted('validationError')[0]
+    expect(ref).toBe(mockRef)
   })
 
   it('emite validationSuccess quando QForm dispara validation-success', async () => {
