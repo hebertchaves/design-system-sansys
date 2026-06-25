@@ -176,6 +176,21 @@ describe('DssScrollArea — API imperativa (defineExpose)', () => {
     const wrapper = mountArea()
     expect(typeof wrapper.vm.setScrollPosition).toBe('function')
   })
+
+  // Regressão: scrollTo/scrollBy chamavam scrollAreaRef.value.scrollTo/scrollBy,
+  // métodos que NÃO existem no QScrollArea (lançavam TypeError). Agora delegam
+  // a setScrollPosition. Smoke test garante que invocar não lança.
+  it('scrollTo não lança ao ser invocado (delega a setScrollPosition)', () => {
+    const wrapper = mountArea()
+    expect(() => wrapper.vm.scrollTo(100, 300)).not.toThrow()
+    expect(() => wrapper.vm.scrollTo(100, 300, 'horizontal')).not.toThrow()
+  })
+
+  it('scrollBy não lança ao ser invocado (lê posição + soma delta)', () => {
+    const wrapper = mountArea()
+    expect(() => wrapper.vm.scrollBy(50)).not.toThrow()
+    expect(() => wrapper.vm.scrollBy(50, 300, 'horizontal')).not.toThrow()
+  })
 })
 
 // ─── 8. Gate de Responsabilidade ─────────────────────────────────────────────
