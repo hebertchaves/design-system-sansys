@@ -138,30 +138,42 @@ function parseMarkdownTable(mdFile, headingRe, allowBullets = false) {
   // só letras/dígitos/`_`/`:`/`-`. Exclui trechos HTML em backtick (`<span…>`),
   // slots dinâmicos (`tab-{name}`) e nomes de tipo (`AjaxBarPosition`).
   const add = raw => { const n = clean(raw); if (/^[a-z][\w:-]*$/.test(n)) names.add(n); };
-  let active = false, hasSection = false, sectionLevel = 0;
+  // `skipTables`: distingue dois tipos de subtítulo dentro da seção (## Props):
+  //  - `### \`color\` — Mapeamento de Tokens` (começa com `nome`) → documenta UM
+  //    membro; a tabela seguinte é de VALORES daquele membro → NÃO contar.
+  //  - `### Navegação` / `### Conteúdo Visual` (prosa) → categoria que agrupa
+  //    MEMBROS; a tabela seguinte lista props → contar.
+  // Subtítulos `### \`nome\`` puros (formato subseção) seguem documentando um membro.
+  let active = false, hasSection = false, sectionLevel = 0, skipTables = false;
   for (const line of lines) {
     const h = line.match(/^(#{1,6})\s+(.*?)\s*$/);
     if (h) {
       const level = h[1].length;
       const text = h[2].trim();
-      if (headingRe.test(text)) { active = true; hasSection = true; sectionLevel = level; continue; }
+      if (headingRe.test(text)) { active = true; hasSection = true; sectionLevel = level; skipTables = false; continue; }
       if (active && level <= sectionLevel) { active = false; continue; } // fim da seção
-      // dentro da seção, subtítulo `### \`nome\`` documenta um item (formato subseção)
       if (active && level > sectionLevel) {
-        const sub = text.match(/^`([^`]+)`$/);
-        if (sub) add(sub[1]);
+        if (/^`/.test(text)) {
+          skipTables = true; // subtítulo de um membro específico → tabela de valores
+          // extrai o nome no início do heading: cobre `### \`nome\`` puro e também
+          // `### \`nome\` *(obrigatório)*` / `### \`nome\` — Mapeamento de Tokens`.
+          const sub = text.match(/^`([^`]+)`/);
+          if (sub) add(sub[1]); // formato subseção documenta um membro
+        } else {
+          skipTables = false; // subtítulo de categoria → a tabela seguinte lista membros
+        }
       }
       continue;
     }
     if (!active) continue;
     // formato tabela: | `nome` | ... |
     const cell = line.match(/^\s*\|\s*`([^`]+)`\s*\|/);
-    if (cell) { add(cell[1]); continue; }
+    if (cell) { if (!skipTables) add(cell[1]); continue; }
     // formato lista (só slots — em props/events os bullets costumam ser prosa
     // com backticks que geram ruído): - **`nome`** — ...
     if (!allowBullets) continue;
     const bullet = line.match(/^\s*[-*]\s+\*{0,2}`([^`]+)`/);
-    if (bullet) add(bullet[1]);
+    if (bullet && !skipTables) add(bullet[1]);
   }
   return hasSection ? names : null;
 }
@@ -214,8 +226,14 @@ function collect() {
       if (!truthItems) continue; // sem interface → eixo fora de escopo p/ esse componente
       // props/events: nome no template é kebab-case; na interface é camelCase →
       // normaliza p/ não acusar `text-color` vs `textColor` como divergência. Slots
-      // mantêm a forma (são kebab nos dois lados).
-      const canon = n => ax.key === 'slots' ? n : n.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      // mantêm a forma (são kebab nos dois lados). `v-model`/`v-model:x` na doc
+      // referenciam a prop `modelValue`/`x` da interface — canoniza p/ casar.
+      const canon = n => {
+        if (ax.key === 'slots') return n;
+        if (n === 'v-model') return 'modelValue';
+        if (n.startsWith('v-model:')) n = n.slice('v-model:'.length);
+        return n.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      };
       const truthCanon = new Set(truthItems.map(i => canon(i.name)));
 
       const bullets = ax.key === 'slots';
