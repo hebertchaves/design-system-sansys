@@ -2,7 +2,7 @@
   "component": "DssSlideItem",
   "cssClass": "dss-slide-item",
   "phase": 2,
-  "status": "in-progress",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssPullToRefresh",

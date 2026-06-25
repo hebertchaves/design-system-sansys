@@ -147,7 +147,7 @@ O **DssButton é referência (Golden Sample de documentação)**, não fonte ún
     - Este arquivo e um **re-export puro** — sem `<template>`, sem `<style>`, sem logica propria
     - Aponta para a implementacao canonica em `1-structure/DssNomeComponente.ts.vue`
     - ❌ NUNCA colocar implementacao no wrapper (NC-01 do DssButton foi exatamente isso)
-    - ❌ NUNCA omitir o wrapper (mesmo que `index.js` exporte diretamente)
+    - ❌ NUNCA omitir o wrapper (mesmo que `index.ts` exporte diretamente)
     - ✅ Formato canonico:
     ```vue
     <script>
@@ -299,14 +299,14 @@ components/base/DssNomeComponente/
 ├── DSSNOMECOMPONENTE_API.md          ← API Reference (props, slots, events, tokens)
 ├── dss.meta.json                     ← Metadados: Golden Context, tokens, audit status, previewGroup, demoSlots
 ├── README.md                         ← Quick start e links
-└── index.js                          ← Barrel export (exporta wrapper + types + composables)
+└── index.ts                          ← Barrel export (exporta wrapper + types + composables)
 ```
 
 **Regras estruturais:**
 - Nenhum diretorio pode ser omitido (camadas com pouco conteudo continuam existindo)
 - `DssNomeComponente.vue` e **obrigatorio** — re-export puro, sem template/style/logica
 - `DssNomeComponente.module.scss` DEVE importar L2 → L3 → L4 **nessa ordem exata**
-- `index.js` DEVE exportar o componente, types e composables
+- `index.ts` DEVE exportar o componente, types e composables
 
 ---
 
@@ -371,7 +371,7 @@ O componente so e considerado valido — e elegivel para auditoria e selo — se
 - [ ] **4 camadas existem** em completude (`1-structure/`, `2-composition/`, `3-variants/`, `4-output/`)
 - [ ] **Entry Point Wrapper** (`DssNomeComponente.vue`) existe e e re-export puro
 - [ ] **Orchestrador SCSS** (`DssNomeComponente.module.scss`) importa L2 → L3 → L4 na ordem
-- [ ] **Barrel export** (`index.js`) exporta componente, types e composables
+- [ ] **Barrel export** (`index.ts`) exporta componente, types e composables
 - [ ] **dss.meta.json** existe com `goldenReference`, `goldenContext`, `previewGroup` e `defaultPreview.demoSlots` declarados
 
 ### Gate Tecnico (Bloqueante)

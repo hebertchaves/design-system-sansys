@@ -12,6 +12,14 @@
    app.use(DesignSystemSansys)
    ========================================================================== */
 
+import type { App } from 'vue'
+
+/** Opções do plugin Vue do Design System. */
+interface DssPluginOptions {
+  brand?: string
+  theme?: string
+}
+
 // ============================================================================
 // COMPONENTES BASE — CONTROLES INTERATIVOS
 // ============================================================================
@@ -284,7 +292,7 @@ const allComponents = [
 ]
 
 const DesignSystemSansys = {
-  install(app, options = {}) {
+  install(app: App, options: DssPluginOptions = {}) {
     allComponents.forEach(comp => {
       if (comp && comp.name) {
         app.component(comp.name, comp)
@@ -299,7 +307,7 @@ const DesignSystemSansys = {
       app.provide('dss-default-theme', options.theme)
     }
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (import.meta.env?.DEV) {
       console.log(`✅ Design System Sansys instalado (${allComponents.length} componentes)`)
     }
   }

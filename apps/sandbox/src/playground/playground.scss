@@ -365,17 +365,23 @@
 .pg-section__badge span { font-weight: var(--dss-font-weight-regular); color: var(--dss-text-subtle); }
 
 /* Grid de tiles */
-.pg-grid {
+/* .dss-ex* = boxes dos .example.vue (core) renderizados na seção "Exemplos de uso".
+   Compartilham as MESMAS regras do PgTile aqui (apresentação mora no sandbox, não
+   no arquivo de exemplo do componente — que fica só com conteúdo/estrutura). */
+.pg-grid,
+.dss-ex {
   display: grid;
   gap: var(--dss-spacing-3);
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
-.pg-main[data-density="comfortable"] .pg-grid {
+.pg-main[data-density="comfortable"] .pg-grid,
+.pg-main[data-density="comfortable"] .dss-ex {
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--dss-spacing-4);
 }
 
-.pg-tile {
+.pg-tile,
+.dss-ex__item {
   display: flex; flex-direction: column; /* sem gap — separador justaposto ao stage */
   background: var(--dss-surface-default);
   border: 1px solid var(--dss-gray-200);
@@ -383,13 +389,15 @@
   overflow: hidden;
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.pg-tile:hover {
+.pg-tile:hover,
+.dss-ex__item:hover {
   border-color: var(--dss-gray-300);
   box-shadow:
     0 1px 2px color-mix(in srgb, var(--dss-gray-900) 6%, transparent),
     0 6px 18px color-mix(in srgb, var(--dss-gray-900) 7%, transparent);
 }
-.pg-tile__stage {
+.pg-tile__stage,
+.dss-ex__stage {
   flex: 1;
   display: flex; flex-direction: column; align-items: stretch; justify-content: center;
   gap: var(--dss-spacing-2);
@@ -402,8 +410,10 @@
       color-mix(in srgb, var(--dss-gray-300) 8%, transparent) 8px 9px);
   transform: translateZ(0);
 }
-.pg-main[data-density="compact"] .pg-tile__stage { min-height: 88px; padding: var(--dss-spacing-3); }
-.pg-tile__code {
+.pg-main[data-density="compact"] .pg-tile__stage,
+.pg-main[data-density="compact"] .dss-ex__stage { min-height: 88px; padding: var(--dss-spacing-3); }
+.pg-tile__code,
+.dss-ex__code {
   display: block;
   font-family: var(--dss-font-family-mono, monospace);
   font-size: var(--dss-font-size-xs);
@@ -522,7 +532,8 @@
   --pg-accent-28: color-mix(in srgb, #1e71be 32%, transparent);
   background: var(--dss-surface-subtle, #0f1115);
 }
-.pg-page[data-theme="dark"] .pg-tile__stage {
+.pg-page[data-theme="dark"] .pg-tile__stage,
+.pg-page[data-theme="dark"] .dss-ex__stage {
   background:
     linear-gradient(var(--dss-surface-subtle), var(--dss-surface-subtle)),
     repeating-linear-gradient(45deg,

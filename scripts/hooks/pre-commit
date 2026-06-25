@@ -4,6 +4,16 @@
 
 STAGED=$(git diff --cached --name-only)
 
+# ── 0. Barrel export = index.ts (sem index.js novo em packages/core) ─────────
+if echo "$STAGED" | grep -qE 'packages/core/.+/index\.js$|packages/core/index\.js$'; then
+  echo "🔍 Validando extensão de barrel (index.ts canônico)..."
+  node scripts/validate-barrel-ext.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ index.js reintroduzido — o barrel de componente deve ser index.ts."
+    exit 1
+  fi
+fi
+
 # ── 1. Token SCSS alterado → regenera DSS_TOKEN_REFERENCE.md ─────────────────
 if echo "$STAGED" | grep -q 'packages/core/tokens/semantic/'; then
   echo "🔄 Token SCSS alterado — sincronizando DSS_TOKEN_REFERENCE.md..."
@@ -14,6 +24,20 @@ if echo "$STAGED" | grep -q 'packages/core/tokens/semantic/'; then
   fi
   git add docs/reference/DSS_TOKEN_REFERENCE.md
   echo "✅ DSS_TOKEN_REFERENCE.md atualizado e staged."
+fi
+
+# ── 1b. Qualquer token alterado → propaga p/ o docs-portal (anti-drift A12) ──
+# O portal mantinha 355 --dss-* à mão (262 dup, 13 divergentes). sync:portal-tokens
+# regenera o bloco auto a partir de packages/core/tokens/index.scss.
+if echo "$STAGED" | grep -q 'packages/core/tokens/'; then
+  echo "🔄 Token alterado — propagando tokens p/ o docs-portal..."
+  node scripts/sync-portal-tokens.mjs
+  if [ $? -ne 0 ]; then
+    echo "❌ Falha ao sincronizar tokens do portal. Commit abortado."
+    exit 1
+  fi
+  git add apps/docs-portal/src/index.css
+  echo "✅ Tokens do portal sincronizados e staged."
 fi
 
 # ── 2. SCSS de componente alterado → valida CSS ↔ meta.json ──────────────────
@@ -42,10 +66,49 @@ if echo "$STAGED" | grep -q 'dss\.meta\.json'; then
   echo "✅ DSS_REFERENCIA_VISUAL_ANALISE.md atualizado e staged."
 fi
 
-# ── 5. API (slots/props/events) ↔ types: valida componentes com types/docs staged ──
-# Dispara só quando types/*.types.ts, *_API.md ou README.md de um componente mudam
-# (não atrapalha commits só de SCSS). Escopado aos componentes alterados.
+# ── 3b. meta.json ou selo alterado → regenera catalog.json + GATE de drift ──
+# catalog.json é a fonte única consumível por MCP/portal/DemoRenderer (deriva
+# "selado" do arquivo físico, não do status, que driftou). Os 11 drifts status↔selo
+# pré-existentes foram reconciliados (jun/2026) → gate duro LIGADO: bloqueia commit
+# se status contradiz selo físico ou se CERTIFIED↔selo divergir.
+if echo "$STAGED" | grep -qE 'dss\.meta\.json|docs/Compliance/seals/'; then
+  echo "🔄 meta/selo alterado — regenerando catalog.json..."
+  node scripts/build-catalog.cjs
+  if [ $? -ne 0 ]; then
+    echo "❌ Falha ao gerar catalog.json. Commit abortado."
+    exit 1
+  fi
+  git add packages/core/catalog.json
+  echo "🔒 Validando consistência status↔selo↔CERTIFIED..."
+  node scripts/build-catalog.cjs --validate
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ Contradição de catálogo: status contradiz selo físico (ou CERTIFIED↔selo)."
+    echo "   'Selado' = arquivo em docs/Compliance/seals/<Comp>/. Alinhe o 'status' no"
+    echo "   dss.meta.json (sealed/conformant/approved) OU remova o selo se prematuro."
+    exit 1
+  fi
+  echo "✅ catalog.json regenerado, staged e consistente."
+fi
+
+# ── 3c. selo/catálogo/páginas alterados → todo selado tem página no portal ───
+# Gate duro só na direção "selado sem página" (página órfã é só aviso).
+if echo "$STAGED" | grep -qE 'dss\.meta\.json|docs/Compliance/seals/|packages/core/catalog\.json|apps/docs-portal/src/pages/components/'; then
+  echo "🔍 Validando cobertura de páginas do portal (selado → página)..."
+  node scripts/validate-portal-pages.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Componente selado sem página no portal. Gere: npm run portal:sync-docs"
+    exit 1
+  fi
+fi
+
+# ── 5. API (slots/props/events/arrays-sandbox) ↔ types: valida componentes staged ──
+# Dispara quando types/*.types.ts, *_API.md, README.md OU a Test page do sandbox
+# mudam (a Test page carrega arrays VARIANTS/SIZES/BRAND_KEYS/SLOTS que espelham os
+# types — drift silencioso). Escopado aos componentes alterados.
 API_COMPS=$(echo "$STAGED" | sed -nE 's#^packages/core/components/[^/]+/(Dss[A-Za-z0-9]+)/(types/.+\.types\.ts|[A-Z0-9_]+_API\.md|README\.md)$#\1#p' | sort -u)
+SANDBOX_COMPS=$(echo "$STAGED" | sed -nE 's#^apps/sandbox/src/Test([A-Za-z0-9]+)\.vue$#Dss\1#p' | sort -u)
+API_COMPS=$(printf '%s\n%s\n' "$API_COMPS" "$SANDBOX_COMPS" | sort -u | sed '/^[[:space:]]*$/d')
 if [ -n "$API_COMPS" ]; then
   echo "🔍 Validando paridade de API (types → docs) dos componentes alterados..."
   node scripts/validate-api-docs.cjs --gate $API_COMPS
@@ -58,6 +121,31 @@ if [ -n "$API_COMPS" ]; then
     exit 1
   fi
   echo "✅ Paridade de API: OK."
+fi
+
+# ── 6. Sandbox: tag <Dss*> usada sem import (regressão Avatar/Badge) ─────────
+# O sandbox registra globalmente só Quasar; cada DSS precisa de import local.
+# Tag não-resolvida vira custom-element desconhecido → 0 elementos reais (silencioso).
+SANDBOX_VUE=$(echo "$STAGED" | grep -E '^apps/sandbox/src/.+\.vue$')
+if [ -n "$SANDBOX_VUE" ]; then
+  echo "🔍 Validando tags DSS no sandbox (import obrigatório)..."
+  node scripts/validate-sandbox-tags.cjs --gate $SANDBOX_VUE
+  if [ $? -ne 0 ]; then
+    echo "❌ Tag <Dss*> usada sem import — sandbox não reflete a fonte de verdade."
+    exit 1
+  fi
+  echo "✅ Tags DSS do sandbox: OK."
+fi
+
+# ── 6b. DemoRenderer registry ↔ componentes base (drift de registry) ─────────
+# Componente base novo/selado esquecido no registry manual não aparece no sandbox.
+if echo "$STAGED" | grep -qE 'apps/sandbox/src/DemoRenderer\.vue|packages/core/catalog\.json|dss\.meta\.json'; then
+  echo "🔍 Validando registry do DemoRenderer (todo base presente)..."
+  node scripts/validate-demo-registry.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Componente base ausente do registry do DemoRenderer."
+    exit 1
+  fi
 fi
 
 # ── 4. Regressão visual Quasar↔DSS (testes estáticos) ────────────────────────

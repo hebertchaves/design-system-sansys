@@ -151,13 +151,13 @@
  */
 
 import { ref } from 'vue'
-import { DssMenu } from './index.js'
-import { DssList } from '../DssList/index.js'
-import { DssItem } from '../DssItem/index.js'
-import { DssItemSection } from '../DssItemSection/index.js'
-import { DssIcon } from '../DssIcon/index.js'
-import { DssSeparator } from '../DssSeparator/index.js'
-import { DssButton } from '../DssButton/index.js'
+import { DssMenu } from './index'
+import { DssList } from '../DssList/index'
+import { DssItem } from '../DssItem/index'
+import { DssItemSection } from '../DssItemSection/index'
+import { DssIcon } from '../DssIcon/index'
+import { DssSeparator } from '../DssSeparator/index'
+import { DssButton } from '../DssButton/index'
 
 // Controle de visibilidade de cada menu
 const menu1 = ref(false)

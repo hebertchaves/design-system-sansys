@@ -639,6 +639,11 @@
 <script setup>
 import { ref } from 'vue'
 
+// Componentes DSS reais (Entry Point Wrappers — Princípio #11). Sem isto o Vue não
+// resolve as tags <DssAvatar>/<DssBadge> e a página não renderiza os componentes.
+import DssAvatar from '@components/base/DssAvatar/DssAvatar.vue'
+import DssBadge from '@components/base/DssBadge/DssBadge.vue'
+
 const colors = ['primary', 'secondary', 'tertiary', 'accent', 'positive', 'negative', 'warning', 'info']
 const icons = ['person', 'account_circle', 'face', 'group', 'business', 'work', 'supervised_user_circle', 'admin_panel_settings']
 const statuses = ['online', 'away', 'busy', 'offline']

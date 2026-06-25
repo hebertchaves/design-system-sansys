@@ -2,7 +2,7 @@
   "component": "DssUploader",
   "cssClass": "dss-uploader",
   "phase": 2,
-  "status": "in-progress",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssCard",

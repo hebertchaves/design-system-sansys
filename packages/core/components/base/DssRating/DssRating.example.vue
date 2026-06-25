@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssRating } from './index.js'
+import { DssRating } from './index'
 
 const avaliacao = ref(3)
 const satisfacao = ref(4)

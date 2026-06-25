@@ -27,6 +27,11 @@ interface CadrisPagination {
 }
 ```
 
+### `rowsPerPageOptions`
+- **Tipo:** `number[]`
+- **Padrão:** `[10, 25, 50]`
+- **Descrição:** Opções do seletor "Linhas por página" na paginação.
+
 ### `disable`
 - **Tipo:** `boolean`
 - **Padrão:** `false`

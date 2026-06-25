@@ -446,7 +446,7 @@ components/base/DssComponente/
 ├── DssComponente.test.js          # Testes unitários (Vitest/Jest)
 ├── DssComponente.example.vue      # Showcase visual
 ├── README.md                      # Documentação
-└── index.js                       # Export barrel
+└── index.ts                       # Export barrel
 ```
 
 **Referência:** Ver `components/base/DssButton/` como golden sample.
@@ -460,7 +460,7 @@ components/base/DssComponente/
 - ✅ **Testes** - `.test.js` cobrindo props, eventos, slots, acessibilidade
 - ✅ **Showcase** - `.example.vue` para teste visual
 - ✅ **Documentação** - `README.md` com exemplos e API
-- ✅ **Export** - `index.js` para facilitar imports
+- ✅ **Export** - `index.ts` para facilitar imports
 
 ### 2. **Import de Utilitários**
 
@@ -1486,16 +1486,16 @@ export default DssNomeComponente
 - ✅ APENAS `<script>` com import + re-export
 - ✅ Extensao `.vue` (nao `.js` ou `.ts`) — para compatibilidade com ferramentas Vue
 
-**Por que o wrapper existe separado do `index.js`?**
+**Por que o wrapper existe separado do `index.ts`?**
 - O wrapper `.vue` e o entry point para imports diretos (`import DssItem from './DssItem.vue'`)
-- O `index.js` e o barrel export para imports de pacote (`import { DssItem } from '@dss/components/base/DssItem'`)
+- O `index.ts` e o barrel export para imports de pacote (`import { DssItem } from '@dss/components/base/DssItem'`)
 - Ambos sao obrigatorios e complementares
 
 ---
 
 #### **Passo 8: Barrel Export**
 
-Criar `index.js` para exportar o componente, types e composables:
+Criar `index.ts` para exportar o componente, types e composables:
 
 ```javascript
 /**
@@ -1523,7 +1523,7 @@ ls -la components/base/DssNomeComponente/
 # ✅ 4-output/index.scss                     ← Layer 4 (brands + states)
 # ✅ DssNomeComponente.vue                   ← Entry Point Wrapper (re-export puro)
 # ✅ DssNomeComponente.module.scss           ← Orchestrador (L2 → L3 → L4)
-# ✅ index.js                                ← Barrel export
+# ✅ index.ts                                ← Barrel export
 # ✅ dss.meta.json                           ← Metadados Golden + audit
 # ✅ types/                                  ← TypeScript interfaces
 # ✅ composables/                            ← Logica de classes
@@ -1577,7 +1577,7 @@ Criar `DssNomeComponente.example.vue` para testar o componente:
 </template>
 
 <script>
-import DssNomeComponente from './index.js'
+import DssNomeComponente from './index'
 
 export default {
   components: {
@@ -1605,7 +1605,7 @@ section > * {
 
 #### **Passo 9: Adicionar ao Build**
 
-**1. Atualizar `components/base/index.js`:**
+**1. Atualizar `components/base/index.ts`:**
 
 ```javascript
 // Adicionar export
@@ -1643,7 +1643,7 @@ Antes de considerar o componente pronto, verifique todos os itens abaixo:
 - [ ] Diretório criado em `components/base/DssNomeComponente/`
 - [ ] 4 camadas criadas (1-structure, 2-composition, 3-variants, 4-output)
 - [ ] `DssNomeComponente.module.scss` criado
-- [ ] `index.js` criado
+- [ ] `index.ts` criado
 - [ ] `DssNomeComponente.example.vue` criado
 
 ### **Layer 1: Structure**

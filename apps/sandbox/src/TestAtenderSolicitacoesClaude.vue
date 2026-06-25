@@ -466,7 +466,7 @@ import DssBtnDropdown   from '@components/base/DssBtnDropdown/DssBtnDropdown.vue
 import DssBreadcrumbs   from '@components/base/DssBreadcrumbs/DssBreadcrumbs.vue'
 import DssBreadcrumbsEl from '@components/base/DssBreadcrumbsEl/DssBreadcrumbsEl.vue'
 import DssCard          from '@components/base/DssCard/DssCard.vue'
-import { DssCardActions } from '@components/base/DssCard/index.js'
+import { DssCardActions } from '@components/base/DssCard/index'
 import DssCheckbox      from '@components/base/DssCheckbox/DssCheckbox.vue'
 import DssChip          from '@components/base/DssChip/DssChip.vue'
 import DssExpansionItem from '@components/base/DssExpansionItem/DssExpansionItem.vue'

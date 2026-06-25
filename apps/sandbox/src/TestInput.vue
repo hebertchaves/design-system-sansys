@@ -122,31 +122,6 @@
             <template #append><span class="material-icons pg-slot-icon">attach_money</span></template>
           </DssInput>
         </PgTile>
-        <PgTile code="#append (toggle senha)">
-          <DssInput
-            label="Senha"
-            :type="showPassword ? 'text' : 'password'"
-            placeholder="Digite sua senha"
-            v-model="m.slotPassword"
-          >
-            <template #append>
-              <DssButton
-                variant="flat"
-                color="secondary"
-                size="sm"
-                :icon="showPassword ? 'visibility_off' : 'visibility'"
-                :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
-                @click="showPassword = !showPassword"
-              />
-            </template>
-          </DssInput>
-        </PgTile>
-        <PgTile code="#prepend + #append">
-          <DssInput label="Buscar" placeholder="Termo…" v-model="m.slotBoth">
-            <template #prepend><span class="material-icons pg-slot-icon">search</span></template>
-            <template #append><span class="pg-char-count">{{ (m.slotBoth || '').length }}/40</span></template>
-          </DssInput>
-        </PgTile>
         <PgTile code="#before (ícone externo)">
           <DssInput label="Localização" v-model="m.slotBefore">
             <template #before><span class="material-icons pg-slot-icon">place</span></template>
@@ -218,15 +193,21 @@
         </div>
       </div>
     </PgSection>
+
+    <!-- ── 11. Exemplos de uso (.example.vue como fonte) — última seção ──── -->
+    <PgSection id="exemplos" index="11" title="Exemplos de uso" :count="2"
+      desc="Composições reais (não repete variantes/estados). Renderiza o DssInput.example.vue — fonte única, também usável na documentação.">
+      <DssInputExample />
+    </PgSection>
   </PlaygroundLayout>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssInput  from '@components/base/DssInput/DssInput.vue'
-import DssButton from '@components/base/DssButton/DssButton.vue'
+import DssInputExample from '@components/base/DssInput/DssInput.example.vue'
 
 // Template reutilizável das páginas de teste
 import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
@@ -257,10 +238,12 @@ const SECTIONS = [
   { id: 'slots',     index: '08', title: 'Slots' },
   { id: 'brand',     index: '09', title: 'Brandabilidade' },
   { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+  { id: 'exemplos',  index: '11', title: 'Exemplos de uso' },
 ]
 
+// "Seções" removido (redundante com a numeração). "Exemplos" é anexado
+// automaticamente pelo PlaygroundLayout (total de tiles renderizados).
 const KPIS = [
-  { value: SECTIONS.length, label: 'Seções' },
   { value: VARIANTS.length, label: 'Variantes' },
   { value: TYPES.length,    label: 'Tipos HTML' },
   { value: SLOTS.length,    label: 'Slots' },
@@ -273,11 +256,9 @@ const m = reactive<Record<string, string>>({
   hint1: '', hint2: '', hint3: '',
   stError: '123', stDisabled: 'Não editável', stReadonly: 'Somente leitura', stLoading: '', stBase: '',
   clear1: 'Texto inicial', clear2: 'Filtro ativo',
-  slotPrepend: '', slotAppend: '', slotPassword: '', slotBoth: '',
+  slotPrepend: '', slotAppend: '',
   slotBefore: '', slotAfter: '', slotLabel: '', slotHint: '', slotError: '',
 })
-
-const showPassword = ref(false)
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 const brandLabel = (b: string) => ({ hub: '🟠 Hub', water: '🔵 Water', waste: '🟢 Waste' }[b] || b)

@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-06-11. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-06-24. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -194,13 +194,18 @@
 :root {
   /* Text Hierarchy */
   --dss-text-primary: var(--dss-dark); /* #454545 - Alias semântico de --dss-text-body */
-  --dss-text-secondary: var(--dss-dark-light); /* #B0B0B0 - Alias semântico de --dss-text-subtle */
+  --dss-text-secondary: var(--dss-gray-600); /* #737373 - Texto secundário (~4.7:1, WCAG AA). Antes #B0B0B0 reprovava (~2.6:1) */
   --dss-text-body: var(--dss-dark); /* #454545 - Texto principal */
-  --dss-text-subtle: var(--dss-dark-light); /* #B0B0B0 - Texto secundário */
+  --dss-text-subtle: var(--dss-gray-600); /* #737373 - Texto sutil legível (WCAG AA). Antes #B0B0B0 reprovava */
   --dss-text-muted: var(--dss-dark-disable); /* #D7D7D7 - Texto terciário */
-  --dss-text-inverse: var(--dss-gray-50); /* #ffffff - Texto claro */
+  --dss-text-inverse: var(--dss-gray-50); /* #ffffff - Texto claro (sobre fundos escuros) */
+  --dss-text-inverse-secondary: var(--dss-gray-100); /* #fafafa - Texto claro secundário (label em standout/dark) */
+  --dss-text-inverse-hint: var(--dss-gray-400); /* #d4d4d4 - Placeholder/hint sobre fundo escuro */
   /* Text States */
-  --dss-text-disabled: var(--dss-gray-400); /* #d4d4d4 - Texto desabilitado */
+  --dss-text-disabled: var(--dss-gray-600); /* #737373 - Texto desabilitado (subido 2 tons: gray-400 → gray-600 p/ legibilidade; alinhado ao dark mode) */
+  --dss-text-hint: var(--dss-gray-500); /* #a3a3a3 - Placeholder/dica (texto transitório) */
+  /* Text On-Color (sobre fundos de cor sólida) */
+  --dss-text-on-primary: var(--dss-gray-50); /* #ffffff - Texto sobre action-primary */
   /* Text Actions */
   --dss-text-action: var(--dss-action-primary); /* Links padrão */
   --dss-text-action-hover: var(--dss-action-primary-hover);
@@ -1198,8 +1203,15 @@ elementos adjacentes (WCAG 2.1 AA - Critério 1.4.11 Non-text Contrast).
   }
 }
 :root {
-  /* Suporte a zoom do navegador */
-  font-size: clamp(100%, 1rem + 0.5vw, 125%); /* Ajuste progressivo para zoom */
+  /* Font-size raiz = 100% (= 16px) — HONRA o contrato dos tokens, que documentam
+     a escala em px (font-size-md = 1rem = 16px, etc.). O antigo
+     clamp(100%, 1rem + 0.5vw, 125%) era tipografia FLUIDA por viewport: saturava
+     no teto de 125% (1rem -> 20px) em telas largas, inflando TODO valor rem-based
+     (texto, spacing, alturas de campo) em ~25% acima do documentado. A intenção
+     declarada ("suporte a zoom") ja e coberta nativamente: o zoom do browser e o
+     rem respeitam a preferencia de fonte do usuario sem este clamp. Removido em
+     jun/2026 (decisao de governanca). */
+  font-size: 100%;
 }
 
 /*
@@ -1384,6 +1396,7 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-shadow-xs: 0 0 0 1px rgba(0, 0, 0, 0.05);
   --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25); /* Dark: 0.5 */
   --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.30); /* Dark: 0.6 */
+  --dss-shadow-up-md: 0 -4px 6px rgba(0, 0, 0, 0.30); /* Sombra ascendente (footers fixos) — resolve EXC-05 do DssFooter (Onda P2/G4.4) */
   --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.35); /* Dark: 0.7 */
   --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.40); /* Dark: 0.8 */
   --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.45); /* Dark: 0.9 */
@@ -2712,7 +2725,9 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      Inverter de escuro (dark) para claro (gray-200)
      =========================================== */
   --dss-text-body: var(--dss-gray-200); /* #f5f5f5 - Texto principal */
+  --dss-text-primary: var(--dss-gray-200); /* #f5f5f5 - alias de text-body (faltava no dark → ficava escuro) */
   --dss-text-subtle: var(--dss-gray-400); /* #d4d4d4 - Texto secundário */
+  --dss-text-secondary: var(--dss-gray-400); /* #d4d4d4 - alias de text-subtle (faltava no dark) */
   --dss-text-muted: var(--dss-gray-500); /* #a3a3a3 - Texto terciário */
   --dss-text-inverse: var(--dss-gray-900); /* #0a0a0a - Texto escuro */
   --dss-text-disabled: var(--dss-gray-600); /* #737373 - Desabilitado */

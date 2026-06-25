@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssAjaxBar } from './index.js'
+import { DssAjaxBar } from './index'
 
 const ajaxBarTop = ref<InstanceType<typeof DssAjaxBar> | null>(null)
 const ajaxBarBottom = ref<InstanceType<typeof DssAjaxBar> | null>(null)

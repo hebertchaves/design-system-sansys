@@ -2,7 +2,7 @@
   "component": "DssSplitter",
   "cssClass": "dss-splitter",
   "phase": 2,
-  "status": "in-progress",
+  "status": "sealed",
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssSlider",

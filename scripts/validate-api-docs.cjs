@@ -79,9 +79,20 @@ const jsDocFirstLine = (member, sf) => {
 function parseTypes(typesFile) {
   const src = fs.readFileSync(typesFile, 'utf8');
   const sf = ts.createSourceFile(typesFile, src, ts.ScriptTarget.Latest, true);
-  const out = { slots: null, props: null, events: null };
+  const out = { slots: null, props: null, events: null, unions: {} };
 
   ts.forEachChild(sf, node => {
+    // type aliases de união de string-literais (ex.: ButtonVariant = 'a' | 'b')
+    if (ts.isTypeAliasDeclaration(node) && node.type) {
+      const members = [];
+      const collect = t => {
+        if (ts.isLiteralTypeNode(t) && ts.isStringLiteral(t.literal)) members.push(t.literal.text);
+      };
+      if (ts.isUnionTypeNode(node.type)) node.type.types.forEach(collect);
+      else collect(node.type);
+      if (members.length) out.unions[node.name.text] = members;
+      return;
+    }
     if (!ts.isInterfaceDeclaration(node)) return;
     const name = node.name.text;
 
@@ -166,6 +177,22 @@ function parseTestPageSlots(componentName) {
   return names;
 }
 
+// ── DERIVADO: arrays hardcoded da página de teste (VARIANTS/SIZES/BRAND_KEYS) ──
+function parseTestPageArrays(componentName) {
+  const file = path.join(SANDBOX_DIR, `Test${componentName.replace(/^Dss/, '')}.vue`);
+  if (!fs.existsSync(file)) return {};
+  const src = fs.readFileSync(file, 'utf8');
+  const out = {};
+  for (const name of ['VARIANTS', 'SIZES', 'BRAND_KEYS']) {
+    const m = src.match(new RegExp(`const\\s+${name}\\s*=\\s*\\[([^\\]]*)\\]`));
+    if (!m) continue;
+    const s = new Set();
+    for (const q of m[1].matchAll(/['"]([^'"]+)['"]/g)) s.add(q[1]);
+    out[name] = s;
+  }
+  return out;
+}
+
 // ── coleta ────────────────────────────────────────────────────────────────────
 function collect() {
   const typeFiles = walk(COMPONENTS_DIR, f => f.endsWith('.types.ts'));
@@ -208,6 +235,29 @@ function collect() {
       }
       axes.push({ axis: ax.key, label: ax.label, truth: truthItems, truthNames: truthItems.map(i => i.name), divergences });
     }
+
+    // #11 — arrays hardcoded do sandbox (VARIANTS/SIZES/BRAND_KEYS) vs type unions.
+    // Pega drift silencioso: a página de teste copia à mão a lista que deveria vir
+    // do union tipado (ex.: VARIANTS ⊄ ButtonVariant).
+    if (!ONLY || ONLY === 'sandbox') {
+      const arrays = parseTestPageArrays(componentName);
+      const unionFor = kw => {
+        const k = Object.keys(truth.unions).find(n => n.toLowerCase().endsWith(kw));
+        return k ? new Set(truth.unions[k]) : null;
+      };
+      for (const [arrName, kw] of [['VARIANTS', 'variant'], ['SIZES', 'size'], ['BRAND_KEYS', 'brand']]) {
+        const arr = arrays[arrName];
+        if (!arr) continue;
+        const union = unionFor(kw);
+        if (!union) continue; // sem union tipado correspondente → fora de escopo
+        const missing = [...union].filter(x => !arr.has(x)); // tipado, falta no array
+        const extra = [...arr].filter(x => !union.has(x));    // no array, não tipado
+        if (missing.length || extra.length) {
+          axes.push({ axis: 'sandbox', label: `Sandbox ${arrName}`, truth: [], truthNames: [], divergences: [{ derivative: 'TestPage', missing, extra }] });
+        }
+      }
+    }
+
     results.push({ component: componentName, dir: componentDir, apiMd, axes });
   }
   return results;

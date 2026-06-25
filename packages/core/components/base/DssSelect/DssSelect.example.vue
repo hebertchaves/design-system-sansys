@@ -1,161 +1,64 @@
 <template>
-  <div class="dss-select-examples">
-    <h2>DssSelect — Exemplos</h2>
-
-    <!-- ================================================================
-         CENÁRIO 1: Select simples (outlined padrão)
-         ================================================================ -->
-    <section>
-      <h3>1. Select básico — outlined (padrão)</h3>
-      <DssSelect
-        v-model="cidade"
-        :options="cidades"
-        label="Cidade"
-        hint="Selecione a cidade de entrega"
-      />
-      <p>Selecionado: {{ cidade }}</p>
-    </section>
-
-    <!-- ================================================================
-         CENÁRIO 2: Seleção múltipla com chips nativos
-         ================================================================ -->
-    <section>
-      <h3>2. Seleção múltipla com chips (useChips)</h3>
-      <DssSelect
-        v-model="categorias"
-        :options="opcoesCategorias"
-        label="Categorias"
-        multiple
-        use-chips
-        clearable
-        hint="Selecione uma ou mais categorias"
-      />
-      <p>Selecionados: {{ categorias }}</p>
-    </section>
-
-    <!-- ================================================================
-         CENÁRIO 3: Seleção múltipla com DssChip via slot selected-item
-         (chips 100% governados pelo DSS)
-         ================================================================ -->
-    <section>
-      <h3>3. Seleção múltipla com DssChip (slot selected-item)</h3>
-      <DssSelect
-        v-model="tags"
-        :options="opcoesTags"
-        label="Tags"
-        multiple
-        use-input
-        hint="Chips governados pelo DssChip"
-      >
-        <template #selected-item="{ opt, index }">
-          <!-- DssChip integrado via slot para governança DSS total -->
-          <DssChip
-            :key="index"
-            :label="opt.label ?? opt"
-            removable
-            @remove="tags.splice(index, 1)"
-          />
-        </template>
-      </DssSelect>
-    </section>
-
-    <!-- ================================================================
-         CENÁRIO 4: Variantes visuais e brandabilidade
-         ================================================================ -->
-    <section>
-      <h3>4. Variantes e brandabilidade</h3>
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <DssSelect
-          v-model="plano"
-          :options="opcoesPlano"
-          variant="filled"
-          label="Plano (filled)"
-          brand="hub"
-        />
-        <DssSelect
-          v-model="plano"
-          :options="opcoesPlano"
-          variant="standout"
-          label="Plano (standout)"
-          brand="water"
-        />
-        <DssSelect
-          v-model="plano"
-          :options="opcoesPlano"
-          variant="borderless"
-          label="Plano (borderless)"
-          brand="waste"
-        />
+  <!-- Exemplos REAIS de uso do DssSelect (composições contextuais — não repete as
+       variantes/estados das seções do playground). Embeddable, Token First, box
+       estilizado como o PgTile do sandbox. Consumido por TestSelect.vue. -->
+  <div class="dss-ex">
+    <div class="dss-ex__item">
+      <div class="dss-ex__stage">
+        <DssSelect v-model="statusCor" :options="statusOpts" label="Status">
+          <template #option="{ itemProps, opt }">
+            <q-item v-bind="itemProps">
+              <q-item-section avatar><DssIcon name="circle" inline decorative :style="{ color: statusColor(opt) }" /></q-item-section>
+              <q-item-section>{{ opt }}</q-item-section>
+            </q-item>
+          </template>
+          <template #selected-item="{ opt }">
+            <span><DssIcon name="circle" inline decorative :style="{ color: statusColor(opt) }" /> {{ opt }}</span>
+          </template>
+        </DssSelect>
       </div>
-    </section>
+      <code class="dss-ex__code">filtro de status com cor</code>
+    </div>
 
-    <!-- ================================================================
-         CENÁRIO 5: Estados de formulário
-         ================================================================ -->
-    <section>
-      <h3>5. Estados — disabled, readonly, error, loading</h3>
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (disabled)"
-          disabled
-        />
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (readonly)"
-          readonly
-        />
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (error)"
-          error
-          error-message="Campo obrigatório. Selecione um status."
-        />
-        <DssSelect
-          v-model="statusSelect"
-          :options="opcoesStatus"
-          label="Status (loading)"
-          loading
-        />
+    <div class="dss-ex__item">
+      <div class="dss-ex__stage">
+        <DssSelect v-model="tags" :options="tagOpts" label="Tags" multiple use-input>
+          <template #selected-item="{ opt, index }">
+            <DssChip :key="index" :label="opt" removable @remove="tags.splice(index, 1)" />
+          </template>
+        </DssSelect>
       </div>
-    </section>
+      <code class="dss-ex__code">seletor de tags (DssChip)</code>
+    </div>
+
+    <div class="dss-ex__item">
+      <div class="dss-ex__stage">
+        <DssSelect v-model="filtro" :options="filtroOpts" label="Filtrar" clearable>
+          <template #prepend><DssIcon name="filter_list" inline decorative /></template>
+        </DssSelect>
+      </div>
+      <code class="dss-ex__code">filtro com clearable</code>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssSelect } from './index.js'
-// Importar DssChip do barrel quando disponível:
-// import { DssChip } from '../DssChip/index.js'
+import DssSelect from './DssSelect.vue'
+import DssChip from '../DssChip/DssChip.vue'
+import DssIcon from '../DssIcon/DssIcon.vue'
 
-const cidade = ref('')
-const cidades = ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Curitiba', 'Porto Alegre']
+const statusCor = ref('Ativo')
+const statusOpts = ['Ativo', 'Pendente', 'Inativo']
+const statusColor = (s: string) => ({
+  Ativo: 'var(--dss-positive)',
+  Pendente: 'var(--dss-warning)',
+  Inativo: 'var(--dss-text-disabled)',
+}[s] || 'var(--dss-text-secondary)')
 
-const categorias = ref([])
-const opcoesCategorias = [
-  { label: 'Tecnologia', value: 'tech' },
-  { label: 'Saúde', value: 'health' },
-  { label: 'Educação', value: 'edu' },
-  { label: 'Finanças', value: 'finance' }
-]
+const tags = ref<string[]>(['Vue.js', 'DSS'])
+const tagOpts = ['Vue.js', 'TypeScript', 'Figma', 'SCSS', 'A11Y', 'DSS']
 
-const tags = ref([])
-const opcoesTags = ['Vue.js', 'TypeScript', 'Figma', 'SCSS', 'A11Y', 'DSS']
-
-const plano = ref(null)
-const opcoesPlano = [
-  { label: 'Plano Básico', value: 'basic' },
-  { label: 'Plano Pro', value: 'pro' },
-  { label: 'Plano Enterprise', value: 'enterprise' }
-]
-
-const statusSelect = ref({ label: 'Ativo', value: 'active' })
-const opcoesStatus = [
-  { label: 'Ativo', value: 'active' },
-  { label: 'Inativo', value: 'inactive' },
-  { label: 'Pendente', value: 'pending' }
-]
+const filtro = ref(null)
+const filtroOpts = ['Mais recentes', 'Mais antigos', 'A–Z', 'Z–A']
 </script>

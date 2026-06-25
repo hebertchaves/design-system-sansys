@@ -193,6 +193,12 @@
         </div>
       </div>
     </PgSection>
+
+    <!-- ── 11. Exemplos de uso (.example.vue como fonte) — última seção ──── -->
+    <PgSection id="exemplos" index="11" title="Exemplos de uso" :count="2"
+      desc="Composições reais (não repete variantes/estados). Renderiza o DssTextarea.example.vue — fonte única, também usável na documentação.">
+      <DssTextareaExample />
+    </PgSection>
   </PlaygroundLayout>
 </template>
 
@@ -201,6 +207,7 @@ import { reactive } from 'vue'
 
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssTextarea from '@components/base/DssTextarea/DssTextarea.vue'
+import DssTextareaExample from '@components/base/DssTextarea/DssTextarea.example.vue'
 
 // Template reutilizável das páginas de teste
 import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
@@ -230,10 +237,11 @@ const SECTIONS = [
   { id: 'slots',     index: '08', title: 'Slots' },
   { id: 'brand',     index: '09', title: 'Brandabilidade' },
   { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+  { id: 'exemplos',  index: '11', title: 'Exemplos de uso' },
 ]
 
+// "Seções" removido (redundante); "Exemplos" é anexado pelo PlaygroundLayout.
 const KPIS = [
-  { value: SECTIONS.length, label: 'Seções' },
   { value: VARIANTS.length, label: 'Variantes' },
   { value: SLOTS.length,    label: 'Slots' },
 ]

@@ -208,6 +208,12 @@
         </div>
       </div>
     </PgSection>
+
+    <!-- ── 11. Exemplos de uso (.example.vue como fonte) — última seção ──── -->
+    <PgSection id="exemplos" index="11" title="Exemplos de uso" :count="3"
+      desc="Composições reais (não repete variantes/estados). Renderiza o DssSelect.example.vue — fonte única, também usável na documentação.">
+      <DssSelectExample />
+    </PgSection>
   </PlaygroundLayout>
 </template>
 
@@ -216,6 +222,7 @@ import { reactive } from 'vue'
 
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssSelect from '@components/base/DssSelect/DssSelect.vue'
+import DssSelectExample from '@components/base/DssSelect/DssSelect.example.vue'
 
 // Template reutilizável das páginas de teste
 import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
@@ -250,10 +257,11 @@ const SECTIONS = [
   { id: 'slots',     index: '08', title: 'Slots' },
   { id: 'brand',     index: '09', title: 'Brandabilidade' },
   { id: 'matriz',    index: '10', title: 'Matriz V × Estado' },
+  { id: 'exemplos',  index: '11', title: 'Exemplos de uso' },
 ]
 
+// "Seções" removido (redundante); "Exemplos" é anexado pelo PlaygroundLayout.
 const KPIS = [
-  { value: SECTIONS.length, label: 'Seções' },
   { value: VARIANTS.length, label: 'Variantes' },
   { value: SLOTS.length,    label: 'Slots' },
 ]

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "phase": 2,
   "level": 1,
-  "status": "pending-audit",
+  "status": "sealed",
   "quasarBase": "QPagination",
   "goldenReference": "DssChip",
   "goldenContext": "DssBtnGroup",

@@ -17,7 +17,7 @@
     "components",
     "tokens",
     "utils",
-    "index.js"
+    "index.ts"
   ],
   "scripts": {
     "build:lib": "vite build --config vite.config.lib.js",

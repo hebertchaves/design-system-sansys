@@ -21,9 +21,11 @@
             </div>
           </div>
 
-          <!-- KPIs (valor + label na mesma linha; altura = bloco do título) -->
+          <!-- KPIs (valor + label na mesma linha; altura = bloco do título).
+               "Exemplos" é auto-contado dos tiles renderizados (verídico, sem
+               manutenção manual) e anexado aos KPIs da página. -->
           <div class="pg-kpis">
-            <div v-for="(kpi, i) in kpis" :key="i" class="pg-kpi">
+            <div v-for="(kpi, i) in allKpis" :key="i" class="pg-kpi">
               <span class="pg-kpi__value">{{ kpi.value }}</span>
               <span class="pg-kpi__label">{{ kpi.label }}</span>
             </div>
@@ -138,7 +140,7 @@
         </ul>
       </aside>
 
-      <main class="pg-main" :data-density="density">
+      <main ref="mainEl" class="pg-main" :data-density="density">
         <slot />
       </main>
     </div>
@@ -185,6 +187,13 @@ const density = ref<'comfortable' | 'compact'>('comfortable')
 const query = ref('')
 const navCollapsed = ref(false)
 const activeSection = ref<string>(props.sections[0]?.id ?? '')
+
+// KPI "Exemplos" — total de tiles de demonstração (.pg-tile) realmente renderizados
+// na página. Auto-contado (verídico, sem manutenção manual). Anexado aos KPIs da
+// página, que NÃO devem mais listar "Seções" (redundante com a numeração).
+const mainEl = ref<HTMLElement | null>(null)
+const exampleCount = ref(0)
+const allKpis = computed(() => [...props.kpis, { value: exampleCount.value, label: 'Exemplos' }])
 
 // Tooltip estilizado (à direita) dos itens quando o menu está retraído. Usa um
 // <div> próprio (não QTooltip) para fugir dos estilos default do Quasar
@@ -252,6 +261,8 @@ function observeSections() {
 onMounted(async () => {
   await nextTick()
   observeSections()
+  // Conta no mount (sem filtro de busca ativo) → total de exemplos da página.
+  exampleCount.value = mainEl.value?.querySelectorAll('.pg-tile, .dss-ex__item').length ?? 0
 })
 
 // Re-observa quando a lista visível muda (filtro de busca cria/remove seções).

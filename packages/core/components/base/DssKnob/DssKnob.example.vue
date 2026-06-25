@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DssKnob } from './index.js'
+import { DssKnob } from './index'
 
 const volume = ref(50)
 const temperature = ref(22)
