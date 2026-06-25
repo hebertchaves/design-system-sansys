@@ -96,7 +96,7 @@ const errorDescribedBy = computed<string | undefined>(() => {
 
 // ─── Dev Warnings ────────────────────────────────────────────────────────────
 
-if (process.env.NODE_ENV !== 'production' && !props.ariaLabel) {
+if (import.meta.env?.DEV && !props.ariaLabel) {
   console.warn(
     '[DssRange] A prop `ariaLabel` é fortemente recomendada para acessibilidade.' +
     ' Range sliders sem rótulo verbal violam WCAG 1.3.1 (Name, Role, Value).'

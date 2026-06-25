@@ -20,7 +20,7 @@ import type { SelectEmits } from '../types/select.types'
  * Composable para ações do select
  */
 export function useSelectActions(
-  emit: (event: keyof SelectEmits, ...args: any[]) => void,
+  emit: SelectEmits,
   qSelectRef: Ref<any | null>,
   isFocused: Ref<boolean>
 ) {
