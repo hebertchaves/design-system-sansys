@@ -42,7 +42,7 @@
       :href="href"
       :target="target"
       :aria-label="ariaLabel || undefined"
-      @click="(e: MouseEvent) => emit('click', e)"
+      @click="(e: Event) => emit('click', e as MouseEvent)"
     >
       <template v-if="$slots.icon" #icon>
         <slot name="icon" />

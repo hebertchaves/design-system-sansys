@@ -29,11 +29,21 @@
    FIELD WRAPPER
    ========================================================================== */
 
+/* Linha que mantém before + campo + after lado a lado (semântica Quasar).
+   O wrapper .dss-input é coluna (linha + bottom hint/error empilham). */
+.dss-input__row {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  width: 100%;
+}
+
 .dss-input__field {
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
+  flex: 1;
+  min-width: 0; /* permite o campo encolher ao lado de before/after (flex-shrink:0) */
   min-height: var(--dss-input-height-md); /* 44px - ✅ WCAG 2.1 AA */
   gap: var(--dss-spacing-2);
   transition: all var(--dss-duration-150) var(--dss-easing-standard);

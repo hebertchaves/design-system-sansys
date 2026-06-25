@@ -36,18 +36,18 @@ export function useFileActions(
   /**
    * Trata evento de foco no campo
    */
-  const handleFocus = (event: FocusEvent) => {
+  const handleFocus = (event: Event) => {
     isFocused.value = true
-    emit('focus', event)
+    emit('focus', event as FocusEvent)
   }
 
   /**
    * Trata evento de blur no campo
    */
-  const handleBlur = (event: FocusEvent) => {
+  const handleBlur = (event: Event) => {
     isFocused.value = false
     isDragging.value = false
-    emit('blur', event)
+    emit('blur', event as FocusEvent)
   }
 
   /**

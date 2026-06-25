@@ -8,13 +8,13 @@
     :persistent="props.persistent"
     :fit="props.fit"
     :cover="props.cover"
-    :anchor="props.anchor"
-    :self="props.self"
+    :anchor="(props.anchor as QPopupEditProps['anchor'])"
+    :self="(props.self as QPopupEditProps['self'])"
     :offset="props.offset"
     :max-height="props.maxHeight"
     :max-width="props.maxWidth"
     :auto-save="props.autoSave"
-    :validate="props.validate"
+    :validate="(props.validate as QPopupEditProps['validate'])"
     :touch-position="props.touchPosition"
     :disable="props.disable"
     :data-brand="effectiveBrand"
@@ -91,6 +91,7 @@
  */
 
 import { ref } from 'vue'
+import type { QPopupEditProps } from 'quasar'
 import { useTeleportedBrand } from '../../../../composables/useTeleportedBrand'
 import type { DssPopupEditProps, DssPopupEditEmits, DssPopupEditSlots, DssPopupEditExpose } from '../types/popupedit.types'
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { QColor } from 'quasar'
+import type { QColorProps } from 'quasar'
 import type { DssColorPickerProps, DssColorPickerEmits, DssColorPickerSlots } from '../types/color-picker.types'
 import { useColorPickerClasses } from '../composables/useColorPickerClasses'
 
@@ -41,7 +42,7 @@ const { colorPickerClasses } = useColorPickerClasses(props)
     :class="colorPickerClasses"
     :model-value="props.modelValue"
     :default-value="props.defaultValue"
-    :format-model="props.formatModel"
+    :format-model="(props.formatModel as QColorProps['formatModel'])"
     :no-header="props.noHeader"
     :no-header-tabs="props.noHeaderTabs"
     :no-footer="props.noFooter"

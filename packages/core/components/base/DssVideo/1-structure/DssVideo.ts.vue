@@ -26,7 +26,7 @@ const { rootClasses } = useVideoClasses(props)
   <q-video
     v-bind="$attrs"
     :class="rootClasses"
-    :src="src"
+    :src="(src as string)"
     :ratio="ratio"
     :title="computedTitle"
   >

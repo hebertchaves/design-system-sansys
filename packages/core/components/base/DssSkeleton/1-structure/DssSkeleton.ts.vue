@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { QSkeleton } from 'quasar'
+import type { QSkeletonProps } from 'quasar'
 import type { SkeletonProps } from '../types/skeleton.types'
 import { useSkeletonClasses } from '../composables/useSkeletonClasses'
 
@@ -26,8 +27,8 @@ const { rootClasses, rootStyle, quasarType, quasarAnimation, skeletonItems } =
       v-for="(item, i) in skeletonItems"
       :key="i"
       class="dss-skeleton__item"
-      :type="quasarType"
-      :animation="quasarAnimation"
+      :type="(quasarType as QSkeletonProps['type'])"
+      :animation="(quasarAnimation as QSkeletonProps['animation'])"
       :bordered="bordered"
       :width="item.width"
       :height="height"

@@ -23,8 +23,8 @@
       class="dss-file__q-file"
       borderless
       @update:model-value="(val) => emit('update:modelValue', val)"
-      @add="(files) => emit('add', files)"
-      @remove="(files) => emit('remove', files)"
+      @add="(files: { files: readonly File[]; index: number }[]) => emit('add', files)"
+      @remove="(files: { files: readonly File[]; index: number }[]) => emit('remove', files)"
       @rejected="(rejections) => emit('rejected', rejections)"
       @focus="handleFocus"
       @blur="handleBlur"
