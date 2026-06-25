@@ -59,8 +59,6 @@ modelValue: File[] | null
 | Evento | Payload | Descrição |
 |--------|---------|-----------|
 | `update:modelValue` | `File \| File[] \| null` | Emitido quando a seleção muda (v-model). |
-| `add` | `{ files: readonly File[]; index: number }[]` | Arquivo(s) adicionado(s) à seleção. |
-| `remove` | `{ files: readonly File[]; index: number }[]` | Arquivo removido da seleção. |
 | `rejected` | `{ failedPropValidation: string; file: File }[]` | Arquivo(s) rejeitado(s). `failedPropValidation`: `'accept'`, `'max-file-size'`, `'max-files'`. |
 | `focus` | `FocusEvent` | Campo recebeu foco. |
 | `blur` | `FocusEvent` | Campo perdeu foco. |

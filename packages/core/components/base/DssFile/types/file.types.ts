@@ -200,16 +200,6 @@ export interface FileEmits {
   (e: 'update:modelValue', value: File | File[] | null): void
 
   /**
-   * Emitido quando arquivo(s) são adicionados
-   */
-  (e: 'add', files: { files: readonly File[]; index: number }[]): void
-
-  /**
-   * Emitido quando arquivo é removido
-   */
-  (e: 'remove', files: { files: readonly File[]; index: number }[]): void
-
-  /**
    * Emitido quando arquivos são rejeitados (maxFileSize, accept, maxFiles)
    */
   (e: 'rejected', rejections: { failedPropValidation: string; file: File }[]): void
