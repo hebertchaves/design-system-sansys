@@ -23,10 +23,10 @@
     :hide-bottom="props.hideBottom"
     :hide-header="props.hideHeader"
     :rows-per-page-options="props.rowsPerPageOptions"
-    @update:selected="emit('update:modelValue', $event)"
+    @update:selected="emit('update:modelValue', $event as Record<string, unknown>[])"
     @update:pagination="emit('update:pagination', $event)"
     @request="emit('request', $event)"
-    @selection="emit('selection', $event)"
+    @selection="emit('selection', $event as { rows: Record<string, unknown>[]; keys: unknown[]; added: boolean; evt: Event })"
     @row-click="(evt, row, index) => emit('row-click', evt, row, index)"
     @row-dblclick="(evt, row, index) => emit('row-dblclick', evt, row, index)"
     @row-contextmenu="(evt, row, index) => emit('row-contextmenu', evt, row, index)"
@@ -40,7 +40,7 @@
       de ações por linha (NC-A9-01, bloqueante da Auditoria Final Jun/2026).
     -->
     <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
-      <slot :name="name" v-bind="slotData || {}" />
+      <slot :name="(name as keyof DssTableSlots)" v-bind="slotData || {}" />
     </template>
   </q-table>
 </template>

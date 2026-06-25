@@ -48,6 +48,7 @@
 
 import { ref } from 'vue'
 import { QUploader } from 'quasar'
+import type { QUploaderProps } from 'quasar'
 import type {
   DssUploaderProps,
   DssUploaderEmits,
@@ -202,11 +203,11 @@ defineExpose<DssUploaderExpose>({
       class="dss-uploader__engine"
       :url="url"
       :method="method"
-      :headers="headers"
+      :headers="(headers as QUploaderProps['headers'])"
       :form-fields="formFields"
       :with-credentials="withCredentials"
       :send-raw="sendRaw"
-      :factory="factory"
+      :factory="(factory as QUploaderProps['factory'])"
       :multiple="multiple"
       :accept="accept"
       :max-files="maxFiles"

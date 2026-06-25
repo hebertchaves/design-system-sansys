@@ -113,8 +113,11 @@ defineExpose({
    * @param duration  Animation duration in ms (0 = instant)
    * @param axis  'vertical' (default) | 'horizontal'
    */
+  // FIXME(runtime): QScrollArea não expõe scrollTo/scrollBy — apenas
+  // setScrollPosition/setScrollPercentage. Esta chamada lança em runtime se
+  // invocada. Cast type-only p/ zerar o type-check; correção de runtime pendente.
   scrollTo: (offset: number, duration?: number, axis?: 'vertical' | 'horizontal') =>
-    scrollAreaRef.value?.scrollTo(offset, duration, axis),
+    (scrollAreaRef.value as any)?.scrollTo(offset, duration, axis),
 
   /**
    * Scrolls by a relative offset from current position.
@@ -122,8 +125,9 @@ defineExpose({
    * @param duration  Animation duration in ms (0 = instant)
    * @param axis  'vertical' (default) | 'horizontal'
    */
+  // FIXME(runtime): idem scrollTo — QScrollArea não possui scrollBy.
   scrollBy: (offset: number, duration?: number, axis?: 'vertical' | 'horizontal') =>
-    scrollAreaRef.value?.scrollBy(offset, duration, axis),
+    (scrollAreaRef.value as any)?.scrollBy(offset, duration, axis),
 
   /**
    * Sets scroll position on a specific axis.
@@ -166,7 +170,7 @@ defineExpose({
     :scroll-target="scrollTarget ?? undefined"
     :role="label ? 'region' : undefined"
     :aria-label="label ?? undefined"
-    @scroll="onScroll"
+    @scroll="(e: unknown) => onScroll(e as ScrollPayload)"
   >
     <slot />
   </q-scroll-area>

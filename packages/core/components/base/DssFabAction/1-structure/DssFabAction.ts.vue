@@ -35,7 +35,7 @@
       :text-color="textColor"
       :icon="icon"
       :label="label"
-      :external-label="externalLabel"
+      :external-label="(externalLabel as unknown as boolean)"
       :label-position="labelPosition || 'left'"
       :disable="disable"
       :to="to"

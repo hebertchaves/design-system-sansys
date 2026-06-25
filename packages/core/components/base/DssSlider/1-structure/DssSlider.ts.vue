@@ -213,7 +213,7 @@ defineExpose<SliderExpose>({
       :aria-label="ariaLabel || undefined"
       :aria-describedby="errorDescribedBy"
       v-bind="$attrs"
-      @update:model-value="emit('update:modelValue', $event)"
+      @update:model-value="emit('update:modelValue', $event as number)"
       @change="emit('change', $event)"
     />
 

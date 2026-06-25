@@ -64,8 +64,8 @@ const { datePickerClasses } = useDatePickerClasses(props)
     color="primary"
     @update:model-value="emit('update:modelValue', $event)"
     @navigation="emit('navigation', $event)"
-    @range-start="emit('range-start', $event)"
-    @range-end="emit('range-end', $event)"
+    @range-start="emit('range-start', ($event as unknown as string))"
+    @range-end="emit('range-end', ($event as unknown as string))"
   >
     <template v-if="$slots.default" #default>
       <slot />
