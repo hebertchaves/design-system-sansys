@@ -6,7 +6,8 @@
   "version": "1.0.0-draft",
   "type": "object",
   "additionalProperties": false,
-  "$comment": "additionalProperties:false no root é intencional: rejeita purpose/examples e qualquer campo não-verificável dentro do contrato (D4). Prosa editorial vive no README, não aqui.",
+  "patternProperties": { "^x-": {} },
+  "$comment": "additionalProperties:false rejeita purpose/examples e campos não-verificáveis (D4). patternProperties '^x-' libera extensões experimentais (padrão OpenAPI) sem bump. POLÍTICA DE EVOLUÇÃO: mudança de campo estável = evento versionado (schemaId dss-component-contract@1 → @2); campo experimental = prefixo x- até estabilizar.",
   "required": [
     "schemaId", "name", "version",
     "identity", "audit", "api", "visual", "tokens",
@@ -31,16 +32,21 @@
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado.",
-      "required": ["displayName", "category", "phase", "status", "goldenReference", "goldenContext"],
+      "required": ["displayName", "tagline", "category", "classification", "phase", "status", "goldenReference", "goldenContext"],
       "properties": {
         "displayName": {
           "type": "string",
-          "description": "DERIVADO: `Dss` removido + split camelCase (override só p/ irregular). §4.1.1 (mesma lógica do controlHint)."
+          "description": "DERIVADO: `Dss` removido + split camelCase (override só p/ irregular). §4.1.1 (mesma lógica do controlHint). Parser trata siglas coladas (ex.: DssSPCReport) via override em meta."
+        },
+        "tagline": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "UMA frase editorial curta ('o que é o componente'). TIER editorial com presence-gate (existe, não valida texto). Exceção mínima ao 'só verificável' — é naming, não orientação de uso. NÃO extraível do Quasar (api.json não traz descrição de componente)."
         },
         "category": { "type": "string", "description": "meta.category." },
         "classification": {
           "type": "string",
-          "description": "meta.classification. Opcional: nem todo meta declara hoje (ex.: DssInput não tem) — backfill de metadado, não bloqueante."
+          "description": "meta.classification (ex.: Action/Compact/Visual). OBRIGATÓRIO — alinha com PAGE_STRUCTURE §9. Componentes sem o campo hoje (ex.: DssInput) exigem backfill do metadado."
         },
         "phase": { "type": "integer", "minimum": 1, "description": "meta.phase." },
         "status": {
@@ -181,12 +187,12 @@
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado. ACHADO DssInput: meta NÃO tem bloco tokens — instances derivam de visualProperties[].token (dedupe); categories por convenção de prefixo (--dss-spacing-* → spacing).",
-      "required": ["instances"],
+      "required": ["categories", "instances"],
       "properties": {
         "categories": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "DERIVADO por prefixo do token. Ex.: spacing, color.action, typography."
+          "description": "DERIVADO por prefixo do token. Ex.: spacing, color.action, typography. OBRIGATÓRIO — alinha com PAGE_STRUCTURE §7.3 (tipos, não instâncias)."
         },
         "instances": {
           "type": "array",
@@ -290,7 +296,7 @@
         "properties": {
           "id": { "type": "string", "pattern": "^P[0-9]{2}$" },
           "name": { "type": "string" },
-          "appliesTo": { "type": "array", "items": { "type": "string" }, "description": "Caminhos no contrato, ex.: visual.states, api.props.icon." }
+          "appliesTo": { "type": "array", "items": { "type": "string", "pattern": "^(api|visual|tokens|a11y)(\\.[a-zA-Z0-9*]+)*$" }, "description": "Caminhos canônicos (raiz ∈ {api,visual,tokens,a11y} + JSONPath simplificado). Ex.: visual.states, api.props.icon. Pattern evita emissores gerarem caminhos divergentes." }
         }
       }
     },

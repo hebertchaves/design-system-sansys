@@ -91,6 +91,11 @@ Refina D3. A **proveniência** da orientação de uso não é certificável, e *
 - Os 90 `*.example.vue` permanecem como **demo NON-NORMATIVO** (ilustração técnica consumida pelo
   sandbox), fora do contrato e do portal-como-verdade. Promoção a normativo exige curadoria de
   autoridade de design.
+- **Exceção mínima (título da página):** toda página precisa de UMA frase "o que é o componente".
+  Ela vira `identity.tagline` — editorial curta (≤120 chars), com **presence-gate** (existe, não
+  valida texto), **DENTRO** do contrato para preservar a superfície única de leitura. É *naming*,
+  não orientação de uso. **Não extraível do Quasar** (`api.json` traz só `meta.docsUrl` + descrição
+  por-prop, nunca descrição de componente).
 
 ---
 
@@ -108,8 +113,9 @@ o padrão `inject-default-preview.cjs` (que já faz isso para `visualProperties`
 
   "identity": {
     "displayName": "Button",          // ⚠️ FALTA campo no meta (hoje inferido do nome)
+    "tagline": "Ação primária de formulário.", // editorial ≤120c, presence-gate (decisão tagline)
     "category": "Form/Action",        // ✅ meta.category
-    "classification": "Atomic Interactive", // ✅ meta.classification
+    "classification": "Atomic Interactive", // ✅ meta.classification (agora OBRIGATÓRIO no schema)
     "phase": 1,                       // ✅ meta.phase
     "status": "approved",             // ✅ meta.status
     "goldenReference": "DssChip",     // ✅ meta.goldenReference
@@ -255,6 +261,16 @@ curado — honesto, sem alegar "uso recomendado".
 a interatividade do portal era *inferida* (fantasma). O contrato unifica — **completude derivada**
 (fiel, sem digitar) **+ interatividade sobre o SFC real no iframe**.
 
+### 4.1.2 Nomenclatura: Playground (portal) ≠ Sandbox (🔒 BATIDA)
+
+A palavra "playground" está sobrecarregada. Dois consumidores distintos, **nomes fixos**:
+- **Playground (portal)** — explorador **exaustivo-fiel**, iframe do **SFC real**, controles
+  derivados de `api`, snippet vindo do **estado dos knobs**. Consome o **contrato**.
+- **Sandbox (`Test*.vue`)** — host de desenvolvimento que consome os `*.example.vue`
+  **NON-NORMATIVOS**. Nunca fonte de snippet oficial nem de "uso recomendado".
+
+Sem essa distinção formal, alguém tenta promover snippet de sandbox a snippet oficial.
+
 ---
 
 ## 4.2 Política de tiers e gate de verificação (🔒 BATIDA)
@@ -327,6 +343,11 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
 
 **Automação (propaga)**
 - (B) O gate que **emite** o contrato a partir dos donos por eixo.
+- (N) **Extrator CSS→meta de estados** — *pré-requisito bloqueante do emissor* (não backlog):
+  `active/disabled/loading` faltam em quase todo o repo (DssFile/DssItem/DssChatMessage confirmados);
+  sem o mirror, `visual.states` (MUST-derivado) nasce vazio. Ver §7.2.
+- (O) **Kit de asserções WCAG** reutilizável (`expectContrastAA`, foco, touch target) — pré-requisito
+  do backfill verificável de a11y. Ver §7.2.
 - (D) Build `types.ts → controls.json` (mata os knobs fantasma do Playground v3.2).
 - (E) Gates de prosa por natureza: **verificação** em a11y (7.4) e anti-patterns (8);
   vinculantes (9) **derivam** de meta; descrição/quando-usar (2/3) são **não-normativos** (sem gate).
@@ -346,15 +367,25 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
 
 ---
 
-## 7. Sequência (por dependência)
+## 7. Sequência (por dependência) — atualizada pós-revisão da equipe
 
-1. **Fechar o schema do `dss.contract.json`** (A+C) — coração; tudo deriva dele.
-2. **Gate emissor** (B) lendo os donos por eixo, validado no **DssInput** (POC já existe).
-3. **Preview Frame** (G+H) — arquitetura do iframe + snippet curado.
-4. Presence-gates + higiene (E+F+D).
-5. Governança escrita (I+J+L) + backfill (K).
+1. ✅ **Schema fechado** (`dss.contract.schema.json` validável, provado com Ajv). **Feito.**
+2. **Pré-requisitos BLOQUEANTES do emissor** (correção de sequência da revisão — antes eram backlog):
+   - **Extrator CSS→meta de estados**: varrer `:hover / :focus / :active / :disabled / [aria-busy] /
+     loading` no `_states.scss` e espelhar em `visual.states`. Sem isso, `visual.states` (MUST-derivado)
+     nasce vazio em ~80 componentes → o emissor reprova todos, ou afrouxamos `required` e o schema
+     perde o dente. (Gap confirmado em DssFile/DssItem/DssChatMessage, não só DssInput.)
+   - **Kit de asserções WCAG** reutilizável (`expectContrastAA(el,{brand})`, foco, touch target) —
+     antes de escalar o backfill de a11y (K), senão cada componente inventa a própria prova.
+3. **Gate emissor** lendo os donos por eixo, validado no **DssInput**. Riscos a cravar:
+   trio de overlays (Select + Dialog aninhado + Tooltip) no iframe; parser de `displayName` com siglas
+   (`DssSPCReport`) + override no meta (teste-primeiro); gate de `sealPath` em **CI Linux**
+   (case-sensitive); `tokens[]` legado em **migração de 2 fases**.
+4. **Preview Frame** (iframe: entry + `postMessage` de tema/brand + conter overlays) + snippet dos knobs.
+5. Gates de prosa (verificação a11y/anti-patterns) + higiene (CRLF→LF, casing, `types→controls JSON`).
+6. Governança escrita (I/J/L) + **reconciliação da spec com D4** (feita, v2.5) + backfill verificável (K).
 
-> A espinha (contrato + gate emissor + frame) é **provada no DssInput** antes de escalar.
+> A espinha (contrato + emissor + frame) é **provada no DssInput** antes de escalar.
 > DssButton só vira referência se passar antes pela adequação de UI da família Select.
 
 ---
