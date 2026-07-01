@@ -8,8 +8,20 @@
   "goldenReference": "DssChip",
   "goldenContext": "DssChip",
   "category": "Action Control (interativo)",
+  "classification": "Action",
+  "tagline": "Campo de texto de linha única para entrada de dados.",
   "phase": 1,
   "hasReservations": false,
+  "a11y": {
+    "aria": { "role": "textbox", "states": ["aria-required", "aria-invalid", "aria-describedby"] },
+    "keyboard": [{ "key": "Tab", "action": "mover foco para o campo" }],
+    "wcag": [
+      { "criterion": "1.4.3", "level": "AA", "implementation": "Texto do campo (text-primary) sobre fundo claro atinge contraste AA", "verifiedBy": "css", "contrast": { "fg": "--dss-text-primary", "bg": "--dss-gray-50" } },
+      { "criterion": "2.4.7", "level": "AA", "implementation": "Anel de foco visivel via outline no estado :focus", "verifiedBy": "css", "cssRule": { "selectorIncludes": ":focus", "property": "outline" } },
+      { "criterion": "4.1.2", "level": "A", "implementation": "Nome/estado expostos via aria-label, aria-required, aria-invalid", "verifiedBy": "aria" },
+      { "criterion": "2.1.1", "level": "A", "implementation": "Operavel por teclado (foco, digitacao, limpar)", "verifiedBy": "test" }
+    ]
+  },
   "defaultPreview": {
     "props": {
       "variant": "outlined",

@@ -98,7 +98,7 @@ function relSource(src, compDir) {
 }
 
 /** Extrai visual.states de um diretório de componente. */
-function extractStates(compDir) {
+export function extractStates(compDir) {
   const compiled = compileComponent(compDir)
   if (compiled == null) return null
   const { css, map } = compiled
@@ -186,7 +186,10 @@ function runAll() {
   if (failed.length) console.log(`  Falha de compilação: ${failed.slice(0, 10).join(', ')}${failed.length > 10 ? ' …' : ''}`)
 }
 
-const args = process.argv.slice(2)
-if (args.includes('--all')) runAll()
-else if (args[0]) runOne(args[0], args.includes('--json'))
-else { console.error('Uso: node scripts/extract-css-states.mjs <DssComponente> [--json] | --all'); process.exit(1) }
+// CLI só quando executado diretamente (não ao ser importado pelo emissor)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const args = process.argv.slice(2)
+  if (args.includes('--all')) runAll()
+  else if (args[0]) runOne(args[0], args.includes('--json'))
+  else { console.error('Uso: node scripts/extract-css-states.mjs <DssComponente> [--json] | --all'); process.exit(1) }
+}

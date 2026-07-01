@@ -387,10 +387,13 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
    - ✅ **Kit de asserções WCAG** (`scripts/wcag-kit.mjs`): `expectContrastAA(fgToken,bgToken,{brand,theme})`
      (resolve o token→cor e calcula o ratio WCAG, sem render) + `hasCssRule` (presença de focus ring/
      touch target no CSS compilado). Reproduz o achado do Storybook sem React. Âncoras aria/test = camada de teste.
-3. **Gate emissor** lendo os donos por eixo, validado no **DssInput**. Riscos a cravar:
-   trio de overlays (Select + Dialog aninhado + Tooltip) no iframe; parser de `displayName` com siglas
-   (`DssSPCReport`) + override no meta (teste-primeiro); `sealPath` **derivado do arquivo físico**
-   (F1, casing `Compliance` alinhado ao disco — sem migração); `tokens[]` legado em **migração de 2 fases**.
+3. ✅ **Gate emissor** (`scripts/emit-contract.mjs`) — **PILOTO DssInput validado**: contrato
+   schema-válido, **0 gaps**, a11y **4/4 verificados**, `--strict` sai 0. Deriva `api` (types.ts via TS
+   compiler + controlHint §4.1.1), `visual.states` (extractor N), `tokens`, `a11y` (verificado via
+   wcag-kit O), `sealPath` (arquivo físico F1). **Definition of Done de derivação** (o que um componente
+   precisa no `meta` para emitir contrato completo): `classification` + `tagline` + bloco `a11y` (claims
+   com `verifiedBy`). Riscos p/ escala: trio de overlays no iframe; parser de `displayName` com siglas
+   (`DssSPCReport`) + override; `tokens[]` legado em migração de 2 fases.
 4. **Preview Frame** (iframe: entry + `postMessage` de tema/brand + conter overlays) + snippet dos knobs.
 5. Gates de prosa (verificação a11y/anti-patterns) + higiene (CRLF→LF, casing, `types→controls JSON`).
 6. Governança escrita (I/J/L) + **reconciliação da spec com D4** (feita, v2.5) + backfill verificável (K).
