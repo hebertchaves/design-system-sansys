@@ -1,0 +1,21 @@
+# Normalização de fim de linha (DSS)
+# ----------------------------------
+# O índice do repositório é sempre LF; a working copy também usa LF (sem
+# conversão para CRLF), evitando o ruído CRLF↔LF recorrente em WSL/Windows
+# (autocrlf). Isto substitui o comportamento de `core.autocrlf` por regra
+# versionada e consistente para toda a equipe.
+* text=auto eol=lf
+
+# Binários — nunca normalizar / diff
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
+*.otf   binary
+*.pdf   binary
