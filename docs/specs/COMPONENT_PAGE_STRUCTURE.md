@@ -1,12 +1,14 @@
 # Estrutura Padrão para Páginas de Componentes DSS
 
-**Versão 2.4 — Junho 2026**
+**Versão 2.5 — Julho 2026**
 
 Este documento define a **estrutura normativa, visual e semântica** para todas as páginas de componentes do **Design System Sansys (DSS)**, e o **contrato de derivação** que torna essas páginas **consumidoras puras** dos artefatos canônicos do componente.
 
 > **Natureza vinculante.** Este arquivo é a **fonte da verdade** para a geração de páginas de componentes. Qualquer host de documentação (e qualquer agente de IA que gere páginas) DEVE seguir este documento literalmente, sem inferências, simplificações ou reorganizações estruturais.
 
 > **Mudança da v2.3 → v2.4.** A v2.3 instruía a IA a **redigir** cada seção (inferindo dos docs). A v2.4 inverte: cada seção **deriva** de um artefato canônico declarado; a página é uma **view pura**; nenhum conteúdo editorial vive no host/portal; o preview é **iframe sobre o componente real**, nunca reimplementação. Veja o **Contrato de Derivação** abaixo.
+
+> **Mudança da v2.4 → v2.5 (reconciliação com D4 do Blueprint).** Distinção de **tiers por verificabilidade** (`DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §4.2): (a) a **descrição** vira `identity.tagline` (editorial curta, presence-gate); (b) **Quando usar / NÃO usar** e os `example.vue` são **NÃO-NORMATIVOS** (editorial, sem gate de verdade); (c) **Acessibilidade** e **Anti-patterns** passam de *presença* para **verificação** (âncora `verifiedBy` = `aria`|`css`|`test`; anti-pattern deriva de princípio+gate + alternativa existence-checked). Nenhuma seção "escrita para passar" sobrevive ao gate de verificação.
 
 ---
 
@@ -24,8 +26,8 @@ A página de um componente é uma **VIEW**. Ela **não inventa** e **não hosped
 | # | Seção | Artefato dono (fonte de verdade) | Gate de drift |
 |---|---|---|---|
 | 1 | Badges / selos | `docs/compliance/seals/…` + `catalog.json` | `build-catalog.cjs` ✅ |
-| 2 | Título e descrição | `README.md` (H1 + intro) / `dss.meta.json` | ⚠️ gap (presença) |
-| 3 | Quando usar / NÃO usar | `README.md` (seções) | ⚠️ gap (presença) |
+| 2 | Título e descrição | `contract.identity` (displayName + **tagline** ≤120c editorial) | presença (tagline existe) |
+| 3 | Quando usar / NÃO usar | `README.md` (editorial) | **não-normativo** (sem gate) |
 | 4a | Playground — controles (props/valores) | `types/*.types.ts` (unions) + `dss.meta.json` (eixos) | `validate-api-docs.cjs` ✅ |
 | 4b | Playground — **preview ao vivo** | **iframe sobre `DssX.example.vue`** | `validate-demo-registry.cjs` + contrato example.vue |
 | 4c | Snippet de código | gerado do estado das props | mecânico |
@@ -34,12 +36,12 @@ A página de um componente é uma **VIEW**. Ela **não inventa** e **não hosped
 | 7.1 | Props API & Eventos | `types/*.types.ts` + `DSSX_API.md` | `validate-api-docs.cjs` ✅ |
 | 7.2 | Slots | `types/*.types.ts` + `DSSX_API.md` | `validate-api-docs.cjs` ✅ |
 | 7.3 | Tokens (tipos) | `dss.meta.json` (`visualProperties` / `tokens`) | `sync-css-to-meta` + `sync-visual-contract` ✅ |
-| 7.4 | Acessibilidade WCAG | `README.md` (prosa) | ⚠️ gap (presença) |
-| 8 | Anti-patterns | `README.md` (prosa humana) | ⚠️ gap (presença) |
-| 9 | Vinculantes DSS v2.2 | `dss.meta.json` (pseudo-elem / brightness / classificação) | ⚠️ gap (campo meta) |
+| 7.4 | Acessibilidade WCAG | SFC/ARIA + SCSS + `*.test.js` (`contract.a11y`) | **verificação** (`verifiedBy`) |
+| 8 | Anti-patterns | `contract.bindingRules` (princípios+gate) + alternativa existence-checked | **verificação** (deriva) |
+| 9 | Vinculantes DSS v2.2 | `dss.meta.json` → `contract.bindingRules` + `identity.classification` | campo meta (`classification` obrigatório) |
 | 10 | Referências normativas | links estáticos / `dss.meta.json` | mecânico |
 
-> **Estado dos gates (jun/2026):** o esqueleto duro (API, slots, tokens, visual, preview, selos) **já é gated**. Os 5 ⚠️ são **prosa/meta** — fecham-se com gates de presença + backfill do conteúdo no doc canônico. Esses gates são **downstream deste contrato** (este doc os define; eles o aplicam).
+> **Estado dos gates (jul/2026, pós-D4):** o esqueleto duro (API, slots, tokens, visual, preview, selos) **já é gated**. Descrição = presence-gate da `tagline`. Quando usar/NÃO = **não-normativo** (sem gate). a11y e anti-patterns = **gate de verificação** (âncora obrigatória, não presença) — dependem do **extrator CSS→meta de estados** e do **kit de asserções WCAG** (pré-requisitos, Blueprint §7.2). Esses gates são **downstream deste contrato** (este doc os define; eles o aplicam).
 
 ### Consolidação (enxugar, não somar)
 
@@ -93,8 +95,13 @@ Exibidos no topo da página:
 O host DEVE verificar explicitamente a existência de selos no caminho:
 
 ```
-DSS/docs/compliance/seals/<NomeDoComponente>/<NOME_DO_COMPONENTE>_SELO_v2.2.md
+docs/compliance/seals/<NomeDoComponente>/<NOME_DO_COMPONENTE>_SELO_v2.2.md
 ```
+
+> **⚠️ Item F (migração pendente).** O disco hoje é `docs/Compliance/seals/…` (**C maiúsculo**) e os
+> `meta.seal` trazem prefixo `DSS/` + `Compliance`. O alvo canônico é `docs/compliance/…` (minúsculo,
+> sem prefixo — casa com o schema `^docs/compliance/`). A migração física (renomear o diretório +
+> ~89 `meta.seal` + scripts) é **pré-requisito do gate de `sealPath`** em CI Linux case-sensitive.
 
 Regras:
 
@@ -106,7 +113,7 @@ Regras:
 
 ### 2. Título e Descrição do Componente ⭐ OBRIGATÓRIO
 
-> **Deriva de:** `README.md` (H1 + intro) / `dss.meta.json` · **Gate:** ⚠️ presença (a fechar)
+> **Deriva de:** `contract.identity` (displayName + tagline) · **Gate:** presença (a `tagline` existe)
 
 Usar o componente de cabeçalho de página do host (`PageHeader` ou equivalente Vue).
 
@@ -115,60 +122,34 @@ Usar o componente de cabeçalho de página do host (`PageHeader` ou equivalente 
 - Nome do componente (ex: **DssAvatar**)
 - Ícone representativo
 
-#### 2.2 Descrição (Regra Reforçada)
+#### 2.2 Descrição
 
-A descrição é **parte crítica da documentação** e DEVE ser orientada a **produto e decisão de uso**. Ela mora no `README.md` do componente; a página a renderiza.
+> **Deriva de:** `contract.identity.tagline` · **Gate:** presença (a `tagline` existe)
 
-A descrição DEVE responder, em texto corrido:
+A descrição da página é **UMA frase editorial curta** (`identity.tagline`, ≤120 chars), com
+**presence-gate** (existe, não valida o texto). É a exceção mínima ao "só verificável" (Blueprint
+D4): é *naming*, não orientação de uso, e mora no contrato para preservar a superfície única de leitura.
 
-1. Qual o **papel do componente no produto**
-2. Que tipo de **ação, informação ou identidade** ele representa
-3. Em quais **contextos de interface** ele aparece
-4. Como ele se **relaciona com outros componentes**
+- ✅ Curta, linguagem de produto. Ex.: *"Ação primária de formulário."*
+- ❌ Feature técnica. Ex.: *"Componente visual com suporte a tokens e WCAG."*
 
-##### Exemplo correto (referência normativa):
-
-> **DssButton** é o componente utilizado para representar ações na interface, como confirmar, cancelar, enviar ou navegar. Ele oferece variações visuais e comportamentais bem definidas para diferentes contextos de uso, podendo ser utilizado de forma isolada ou aninhado dentro de outros componentes interativos.
-
-##### Exemplo incorreto (PROIBIDO):
-
-> “Componente visual com suporte a tokens e WCAG.”
-
-Regras:
-
-- Mínimo de 2 frases
-- Máximo de 4 frases
-- Linguagem de UX + Produto
-- Não listar features técnicas
+> **Narrativa estendida** (papel no produto, relação com outros componentes) é **editorial
+> NÃO-NORMATIVA**: pode viver no `README.md`, sem gate de verdade — proveniência não certificável (D4).
 
 ---
 
-### 3. Quando Usar / Quando NÃO Usar ⭐ OBRIGATÓRIO
+### 3. Quando Usar / Quando NÃO Usar — NÃO-NORMATIVO (editorial)
 
-> **Deriva de:** `README.md` (seções `## Quando usar` / `## Quando NÃO usar`) · **Gate:** ⚠️ presença (a fechar)
+> **Deriva de:** `README.md` (editorial) · **Gate:** nenhum (não-normativo, D4)
 
-Seção orientada à **decisão de produto**.
+Orientação de uso é **autoridade de design do DSS**, não um fato derivável ou verificável
+(proveniência não certificável — Blueprint D4). Portanto **sai do contrato** e **não tem gate de
+verdade**. Pode viver no `README.md` como editorial, curada por autoridade de design; o
+portal-como-verdade **não** a consome.
 
-#### Formato obrigatório
-
-```markdown
-#### ✅ Quando Usar
-
-- Caso de uso orientado a produto
-- Caso de uso orientado a UX
-- Caso de uso recorrente
-
-#### ❌ Quando NÃO Usar
-
-| Cenário            | Alternativa Recomendada |
-| ------------------ | ----------------------- |
-| Cenário inadequado | `OutroComponente`       |
-```
-
-Regras:
-
-- Mínimo de 3 itens em cada bloco
-- Sempre indicar alternativa
+> Formato sugerido (não obrigatório): blocos ✅ Quando Usar / ❌ Quando NÃO Usar, este último com
+> **alternativa** — o componente-alternativo é o único dado *existence-checkable*, reaproveitado por
+> `contract.antiPatterns.instead`.
 
 ---
 
@@ -294,33 +275,37 @@ Este componente aceita os seguintes tipos de tokens DSS:
 
 ---
 
-### 7.4 Acessibilidade WCAG ⭐ OBRIGATÓRIO
+### 7.4 Acessibilidade WCAG ⭐ OBRIGATÓRIO — VERIFICADA
 
-> **Deriva de:** `README.md` (seção `## Acessibilidade`) · **Gate:** ⚠️ presença (a fechar)
+> **Deriva de:** `contract.a11y` (SFC/ARIA + SCSS + `*.test.js`) · **Gate:** **verificação** (`verifiedBy` obrigatório)
 
-- Tabela de conformidade WCAG
-- Touch Target vs Altura Visual
-- Media queries de acessibilidade
+Cada critério WCAG carrega uma **âncora** (`verifiedBy` = `aria` | `css` | `test`) que **casa com a
+implementação real** — não é prosa. Claim sem âncora **falha o gate** (mata o "escrever para passar").
+Pré-requisito: **kit de asserções WCAG** reutilizável (Blueprint §7.2).
+
+- Tabela WCAG derivada de `contract.a11y.wcag` (critério, nível, implementação, âncora)
+- Touch Target vs Altura Visual (âncora `css` / computed)
+- `aria` (role/estados) ancorado no SFC/DOM; teclado ancorado em `*.test.js`
 
 ---
 
-### 8. Anti-patterns ⭐ OBRIGATÓRIO
+### 8. Anti-patterns ⭐ OBRIGATÓRIO — DERIVADO
 
-> **Deriva de:** `README.md` (prosa humana) · **Gate:** ⚠️ presença (a fechar)
+> **Deriva de:** `contract.antiPatterns` (princípios com gate + alternativa existence-checked) · **Gate:** **verificação** (deriva de `bindingRules`)
 
-- Mínimo de 3 usos incorretos
-- Exemplo incorreto + correto
-- Combinações não permitidas (se aplicável)
+Sem prosa livre. Cada anti-pattern deriva de um **princípio vinculante com gate** (`rule` = P01…P14)
+e/ou aponta um **componente-alternativo existence-checked** (`instead`). O racional (`why`) é a única
+frase humana, opcional. Substitui o "mínimo 3 usos incorretos" redigido à mão (que não era verificável).
 
 ---
 
 ### 9. Vinculantes DSS v2.2 ⭐ OBRIGATÓRIO
 
-> **Deriva de:** `dss.meta.json` (pseudo-elem / brightness / classificação) · **Gate:** ⚠️ campo meta (a fechar)
+> **Deriva de:** `dss.meta.json` → `contract.bindingRules` + `contract.identity.classification` · **Gate:** campo meta (`classification` OBRIGATÓRIO)
 
-- Uso de pseudo-elementos (`::before` / `::after`)
-- Declaração de `brightness()` (ou não uso)
-- Classificação do componente (Action / Compact / Visual)
+- Uso de pseudo-elementos (`::before` / `::after`) → `bindingRules` (P08)
+- Declaração de `brightness()` (ou não uso) → `bindingRules` (P09)
+- Classificação do componente (Action / Compact / Visual) → `identity.classification` (obrigatório no schema)
 
 ---
 
