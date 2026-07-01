@@ -74,8 +74,13 @@ async function load() {
       default: p.default,
       options: p.validValues ? (/\bnull\b/.test(p.type) ? [null, ...p.validValues] : p.validValues) : null,
     }))
+  // Semeia o estado inicial pelo defaultPreview do contrato (view significativa),
+  // com fallback no @default da prop; assim o campo abre com label/placeholder.
+  const dpp = contract.value.visual?.defaultPreview?.props || {}
   Object.keys(state).forEach((k) => delete state[k])
-  for (const k of knobs.value) state[k.name] = k.default ?? (k.controlHint === 'toggle' ? false : '')
+  for (const k of knobs.value) {
+    state[k.name] = (k.name in dpp) ? dpp[k.name] : (k.default ?? (k.controlHint === 'toggle' ? false : ''))
+  }
 }
 
 function postState() {
