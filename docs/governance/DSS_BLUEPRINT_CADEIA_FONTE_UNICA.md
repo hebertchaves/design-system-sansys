@@ -343,9 +343,11 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
 
 **Automação (propaga)**
 - (B) O gate que **emite** o contrato a partir dos donos por eixo.
-- (N) **Extrator CSS→meta de estados** — *pré-requisito bloqueante do emissor* (não backlog):
-  `active/disabled/loading` faltam em quase todo o repo (DssFile/DssItem/DssChatMessage confirmados);
-  sem o mirror, `visual.states` (MUST-derivado) nasce vazio. Ver §7.2.
+- (N) ✅ **Resolvido:** `scripts/extract-css-states.mjs` compila o `.module.scss`→CSS plano (sass) e
+  deriva `visual.states` (postcss + sourcemap p/ `source`). 88/88 compilam; saída 100% conforme ao
+  schema. **Reframe do diagnóstico:** o risco "reprova ~80 componentes" não se aplica — o schema exige
+  só o *container* `states`, não estados específicos; um não-interativo tem só `default`. O gap real
+  era o **meta** (`visualProperties` sub-povoado), que o contrato **contorna** derivando do CSS.
 - (O) **Kit de asserções WCAG** reutilizável (`expectContrastAA`, foco, touch target) — pré-requisito
   do backfill verificável de a11y. Ver §7.2.
 - (D) Build `types.ts → controls.json` (mata os knobs fantasma do Playground v3.2).
@@ -373,10 +375,11 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
 
 1. ✅ **Schema fechado** (`dss.contract.schema.json` validável, provado com Ajv). **Feito.**
 2. **Pré-requisitos BLOQUEANTES do emissor** (correção de sequência da revisão — antes eram backlog):
-   - **Extrator CSS→meta de estados**: varrer `:hover / :focus / :active / :disabled / [aria-busy] /
-     loading` no `_states.scss` e espelhar em `visual.states`. Sem isso, `visual.states` (MUST-derivado)
-     nasce vazio em ~80 componentes → o emissor reprova todos, ou afrouxamos `required` e o schema
-     perde o dente. (Gap confirmado em DssFile/DssItem/DssChatMessage, não só DssInput.)
+   - ✅ **Extrator CSS→meta de estados** (`scripts/extract-css-states.mjs`): compila `.module.scss`→CSS
+     plano e deriva `visual.states` (pseudo-classes + BEM `--state`, excluindo `[data-theme]`), com
+     `source` via sourcemap. 88/88 compilam. **Correção do diagnóstico:** o schema exige só o container
+     `states`, então nada é "reprovado" por não ter loading; cada componente tem os estados que o CSS
+     realmente tem (default 86, hover/focus 42, active 32, disabled 36, loading 4 — de 88).
    - **Kit de asserções WCAG** reutilizável (`expectContrastAA(el,{brand})`, foco, touch target) —
      antes de escalar o backfill de a11y (K), senão cada componente inventa a própria prova.
 3. **Gate emissor** lendo os donos por eixo, validado no **DssInput**. Riscos a cravar:
