@@ -348,8 +348,12 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
   schema. **Reframe do diagnóstico:** o risco "reprova ~80 componentes" não se aplica — o schema exige
   só o *container* `states`, não estados específicos; um não-interativo tem só `default`. O gap real
   era o **meta** (`visualProperties` sub-povoado), que o contrato **contorna** derivando do CSS.
-- (O) **Kit de asserções WCAG** reutilizável (`expectContrastAA`, foco, touch target) — pré-requisito
-  do backfill verificável de a11y. Ver §7.2.
+- (O) ✅ **Resolvido:** `scripts/wcag-kit.mjs` — âncora `css` sem browser (O1): `expectContrastAA`/
+  `checkContrast` (token-math WCAG por brand/theme) + `hasCssRule` (focus ring / touch target no CSS
+  compilado). Prova: reproduz o achado do Storybook — action-primary+branco falha AA (hub **2.81 ❌**,
+  azuis 3.7–3.8 só grande/UI, waste 4.9 ✅). Âncoras `aria`/`test` vivem na camada de teste (wiring = passo 2).
+  ⚠️ **Débito de componente descoberto:** contraste de `action-primary`+branco falha AA em hub/water/default
+  (texto normal) — a tratar na fase de componentes, não agora.
 - (D) Build `types.ts → controls.json` (mata os knobs fantasma do Playground v3.2).
 - (E) Gates de prosa por natureza: **verificação** em a11y (7.4) e anti-patterns (8);
   vinculantes (9) **derivam** de meta; descrição/quando-usar (2/3) são **não-normativos** (sem gate).
@@ -380,8 +384,9 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
      `source` via sourcemap. 88/88 compilam. **Correção do diagnóstico:** o schema exige só o container
      `states`, então nada é "reprovado" por não ter loading; cada componente tem os estados que o CSS
      realmente tem (default 86, hover/focus 42, active 32, disabled 36, loading 4 — de 88).
-   - **Kit de asserções WCAG** reutilizável (`expectContrastAA(el,{brand})`, foco, touch target) —
-     antes de escalar o backfill de a11y (K), senão cada componente inventa a própria prova.
+   - ✅ **Kit de asserções WCAG** (`scripts/wcag-kit.mjs`): `expectContrastAA(fgToken,bgToken,{brand,theme})`
+     (resolve o token→cor e calcula o ratio WCAG, sem render) + `hasCssRule` (presença de focus ring/
+     touch target no CSS compilado). Reproduz o achado do Storybook sem React. Âncoras aria/test = camada de teste.
 3. **Gate emissor** lendo os donos por eixo, validado no **DssInput**. Riscos a cravar:
    trio de overlays (Select + Dialog aninhado + Tooltip) no iframe; parser de `displayName` com siglas
    (`DssSPCReport`) + override no meta (teste-primeiro); `sealPath` **derivado do arquivo físico**
