@@ -88,7 +88,10 @@ function postState() {
   if (!el || !el.contentWindow) return
   const clean = {}
   for (const [k, v] of Object.entries(state)) if (v !== '' && v != null && v !== false) clean[k] = v
-  el.contentWindow.postMessage({ __frame: true, props: clean, theme: theme.value, brand: brand.value }, '*')
+  // Serializa para dado PLANO: state pode conter arrays/objetos reativos (Proxy)
+  // que o structured-clone do postMessage não consegue clonar (ex.: options do Select).
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value }))
+  el.contentWindow.postMessage(payload, '*')
 }
 function onMsg(e) { if (e.data && e.data.__frameReady) postState() }
 

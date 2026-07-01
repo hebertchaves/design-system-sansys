@@ -161,9 +161,18 @@ function tokenCategory(name) {
 }
 function buildTokens(states, meta) {
   const inst = new Map()
-  const add = (tok, where) => { if (!tok) return; const e = inst.get(tok) || { name: tok, usedIn: new Set() }; e.usedIn.add(where); inst.set(tok, e) }
-  for (const [st, arr] of Object.entries(states || {})) for (const p of arr) add(p.token, st)
-  for (const vp of meta?.defaultPreview?.visualProperties || []) add(vp.token, 'defaultPreview')
+  // Defensivo: extrai APENAS tokens --dss-* de qualquer string (ignora lixo
+  // como descrições no campo `token` do meta; lida com compostos "--dss-a / --dss-b").
+  const addFrom = (str, where) => {
+    if (!str) return
+    for (const m of String(str).matchAll(/--dss-[\w-]+/g)) {
+      const tok = m[0]
+      const e = inst.get(tok) || { name: tok, usedIn: new Set() }
+      e.usedIn.add(where); inst.set(tok, e)
+    }
+  }
+  for (const [st, arr] of Object.entries(states || {})) for (const p of arr) addFrom(p.token, st)
+  for (const vp of meta?.defaultPreview?.visualProperties || []) addFrom(vp.token, 'defaultPreview')
   const instances = [...inst.values()].map(e => ({ name: e.name, usedIn: [...e.usedIn] }))
   const categories = [...new Set(instances.map(i => tokenCategory(i.name)))].sort()
   return { categories, instances }
@@ -229,6 +238,17 @@ function deriveDisplayName(name, meta) {
   return name.replace(/^Dss/, '').replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
 }
 
+// status DERIVADO: selo físico é a verdade (F1) → 'sealed'; senão normaliza meta.status
+// (que driftou: sealed/conformant/resolvida/approved/review/pendente).
+const STATUS_MAP = {
+  approved: 'approved', conformant: 'approved', resolvida: 'approved', sealed: 'sealed',
+  review: 'in-review', 'in-review': 'in-review', pendente: 'draft', draft: 'draft', deprecated: 'deprecated',
+}
+function deriveStatus(meta, sealPath) {
+  if (sealPath) return 'sealed'
+  return STATUS_MAP[meta.status] || 'draft'
+}
+
 // ── EMISSOR ──────────────────────────────────────────────────────────────────
 function emit(name) {
   const compDir = findCompDir(name)
@@ -240,6 +260,7 @@ function emit(name) {
   const states = extractStates(compDir)
   const { sources, sealPath } = buildSources(compDir, name)
   const api = buildApi(types)
+  const status = deriveStatus(meta, sealPath)
 
   if (!meta.classification) gaps.push('identity.classification: ausente no meta (MUST-derivado) — backfill')
   if (!meta.tagline)        gaps.push('identity.tagline: ausente no meta (presence-gate) — backfill editorial')
@@ -255,12 +276,12 @@ function emit(name) {
       category: meta.category || '',
       classification: meta.classification || '',
       phase: meta.phase ?? 1,
-      status: meta.status || 'draft',
+      status,
       goldenReference: meta.goldenReference || '',
       goldenContext: meta.goldenContext || '',
     },
     audit: {
-      status: meta.status || 'draft',
+      status,
       date: meta.auditDate || '1970-01-01',
       ...(meta.auditMode ? { mode: meta.auditMode } : {}),
       sealPath: sealPath || 'docs/Compliance/seals/__MISSING__',

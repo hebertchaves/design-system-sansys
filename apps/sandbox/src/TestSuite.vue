@@ -51,6 +51,13 @@
             <span class="nav-icon"><span class="material-icons">dvr</span></span>
             <span class="nav-label">Preview Frame · DssInput</span>
           </button>
+          <button
+            @click="activeComponent = 'preview-frame-select'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-select' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssSelect</span>
+          </button>
         </div>
 
         <!-- Foundation -->
@@ -425,6 +432,9 @@
       <!-- PREVIEW FRAME (durável) — playground contract-driven, iframe do SFC real -->
       <div v-else-if="activeComponent === 'preview-frame'" class="component-view">
         <PreviewFrame component="DssInput" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-select'" class="component-view">
+        <PreviewFrame component="DssSelect" />
       </div>
 
       <!-- DssButton Test View -->

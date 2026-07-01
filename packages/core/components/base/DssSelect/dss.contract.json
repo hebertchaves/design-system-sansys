@@ -1,61 +1,77 @@
 {
   "schemaId": "dss-component-contract@1",
-  "name": "DssInput",
-  "version": "2.2",
+  "name": "DssSelect",
+  "version": "2.2.0",
   "identity": {
-    "displayName": "Input",
-    "tagline": "Campo de texto de linha única para entrada de dados.",
-    "category": "Action Control (interativo)",
+    "displayName": "Select",
+    "tagline": "Campo de seleção de uma ou mais opções a partir de uma lista.",
+    "category": "Action Control interativo — campo de seleção",
     "classification": "Action",
     "phase": 1,
     "status": "sealed",
     "goldenReference": "DssChip",
-    "goldenContext": "DssChip"
+    "goldenContext": "DssInput"
   },
   "audit": {
     "status": "sealed",
-    "date": "2026-02-04",
-    "mode": "Final",
-    "sealPath": "docs/Compliance/seals/DssInput/DSSINPUT_SELO_v2.2.md"
+    "date": "2026-03-20",
+    "mode": "full",
+    "sealPath": "docs/Compliance/seals/DssSelect/DSSSELECT_SELO_v2.2.md"
   },
   "api": {
     "props": [
       {
         "name": "modelValue",
-        "type": "string | number",
+        "type": "any",
         "controlHint": "text",
-        "description": "Valor do input (v-model)"
+        "description": "Valor selecionado (v-model)."
+      },
+      {
+        "name": "options",
+        "type": "any[]",
+        "controlHint": "text",
+        "default": "[]",
+        "description": "Lista de opções disponíveis para seleção."
+      },
+      {
+        "name": "optionValue",
+        "type": "string | ((option: any) => any)",
+        "controlHint": "text",
+        "default": "value",
+        "description": "Chave do objeto usada como valor da opção."
+      },
+      {
+        "name": "optionLabel",
+        "type": "string | ((option: any) => string)",
+        "controlHint": "text",
+        "default": "label",
+        "description": "Chave do objeto usada como label exibido da opção."
+      },
+      {
+        "name": "emitValue",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Emite apenas o valor extraído da opção (não o objeto inteiro)."
+      },
+      {
+        "name": "mapOptions",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Mapeia os valores emitidos de volta para objetos ao usar emitValue=true."
       },
       {
         "name": "variant",
-        "type": "InputVariant",
+        "type": "SelectVariant",
         "controlHint": "segmented",
         "default": "outlined",
-        "description": "Variante visual do input",
+        "description": "Variante visual do select",
         "validValues": [
           "filled",
           "outlined",
           "standout",
           "borderless"
-        ]
-      },
-      {
-        "name": "type",
-        "type": "InputType",
-        "controlHint": "select",
-        "default": "text",
-        "description": "Tipo HTML do input",
-        "validValues": [
-          "text",
-          "password",
-          "email",
-          "number",
-          "tel",
-          "url",
-          "search",
-          "date",
-          "time",
-          "datetime-local"
         ]
       },
       {
@@ -67,7 +83,7 @@
       },
       {
         "name": "brand",
-        "type": "InputBrand | null",
+        "type": "SelectBrand | null",
         "controlHint": "picker-brand",
         "default": "null",
         "description": "Marca Sansys (Hub, Water, Waste)",
@@ -81,7 +97,7 @@
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Label do input (floating label)"
+        "description": "Label do select (floating label)"
       },
       {
         "name": "stackLabel",
@@ -94,74 +110,81 @@
         "name": "placeholder",
         "type": "string",
         "controlHint": "text",
-        "description": "Placeholder do input"
+        "description": "Placeholder do select quando não há valor selecionado"
       },
       {
         "name": "hint",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto de ajuda exibido abaixo do input"
+        "description": "Texto de ajuda exibido abaixo do select"
       },
       {
         "name": "errorMessage",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem de erro exibida abaixo do input"
+        "description": "Mensagem de erro exibida abaixo do select"
       },
       {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estado de erro (muda cor para negativo)"
+        "description": "Estado de erro (muda cor para --dss-error-600)"
       },
       {
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Input desabilitado"
+        "description": "Select desabilitado"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Input somente leitura"
+        "description": "Select somente leitura"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra indicador de loading (spinner)"
+        "description": "Mostra indicador de loading (spinner do QSelect)"
       },
       {
         "name": "required",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Input obrigatório (adiciona aria-required)"
+        "description": "Select obrigatório (adiciona aria-required=\"true\")"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Permite seleção de múltiplas opções."
+      },
+      {
+        "name": "useChips",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Exibe seleções múltiplas como chips dentro do campo."
       },
       {
         "name": "clearable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra botão de limpar (×) quando há valor"
+        "description": "Mostra botão de limpar (×) quando há valor selecionado"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers"
-      },
-      {
-        "name": "clearAriaLabel",
-        "type": "string",
-        "controlHint": "text",
-        "default": "Clear input",
-        "description": "Label de acessibilidade para o botão de limpar"
+        "description": "Label de acessibilidade customizado para screen readers."
       },
       {
         "name": "tabindex",
@@ -174,22 +197,30 @@
     "emits": [
       {
         "name": "update:modelValue",
-        "payload": "string",
-        "description": "Emitido quando o valor do input muda (v-model)"
+        "payload": "any",
+        "description": "Emitido quando o valor selecionado muda (v-model)"
       },
       {
         "name": "focus",
         "payload": "FocusEvent",
-        "description": "Emitido quando o input recebe foco"
+        "description": "Emitido quando o select recebe foco"
       },
       {
         "name": "blur",
         "payload": "FocusEvent",
-        "description": "Emitido quando o input perde foco"
+        "description": "Emitido quando o select perde foco"
       },
       {
         "name": "clear",
-        "description": "Emitido quando o input é limpo via botão clear"
+        "description": "Emitido quando a seleção é limpa via botão clear"
+      },
+      {
+        "name": "popup-show",
+        "description": "Emitido quando o painel dropdown é aberto"
+      },
+      {
+        "name": "popup-hide",
+        "description": "Emitido quando o painel dropdown é fechado"
       }
     ],
     "slots": [
@@ -197,6 +228,16 @@
         "name": "label",
         "scope": null,
         "description": "Label customizado"
+      },
+      {
+        "name": "selected-item",
+        "scope": null,
+        "description": "Customização de como a seleção atual é exibida no campo."
+      },
+      {
+        "name": "option",
+        "scope": null,
+        "description": "Customização de como cada opção é exibida no dropdown."
       },
       {
         "name": "before",
@@ -211,7 +252,7 @@
       {
         "name": "append",
         "scope": null,
-        "description": "Conteúdo dentro do campo, à direita"
+        "description": "Conteúdo dentro do campo, à direita (além da seta dropdown)"
       },
       {
         "name": "after",
@@ -233,17 +274,27 @@
       {
         "name": "focus",
         "type": "() => void",
-        "description": "Foca no input"
+        "description": "Foca no select"
       },
       {
         "name": "blur",
         "type": "() => void",
-        "description": "Remove foco do input"
+        "description": "Remove foco do select"
       },
       {
-        "name": "inputRef",
-        "type": "Ref<HTMLInputElement | null>",
-        "description": "Referência direta ao elemento input nativo"
+        "name": "showPopup",
+        "type": "() => void",
+        "description": "Abre o painel dropdown programaticamente"
+      },
+      {
+        "name": "hidePopup",
+        "type": "() => void",
+        "description": "Fecha o painel dropdown programaticamente"
+      },
+      {
+        "name": "nativeEl",
+        "type": "HTMLElement | null",
+        "description": "Referência ao elemento nativo do QSelect"
       }
     ],
     "vModel": {
@@ -255,10 +306,11 @@
     "defaultPreview": {
       "props": {
         "variant": "outlined",
-        "type": "text",
-        "dense": false,
-        "label": "Campo",
-        "placeholder": "Digite aqui"
+        "label": "Seleção",
+        "options": [
+          "Opção 1",
+          "Opção 2"
+        ]
       }
     },
     "dimensions": {
@@ -271,24 +323,6 @@
     },
     "states": {
       "default": [
-        {
-          "property": "position",
-          "token": null,
-          "value": "relative",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "display",
-          "token": null,
-          "value": "inline-flex",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "flex-direction",
-          "token": null,
-          "value": "column",
-          "source": "2-composition/_base.scss"
-        },
         {
           "property": "width",
           "token": null,
@@ -305,49 +339,19 @@
           "property": "font-family",
           "token": "--dss-font-family-sans",
           "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "display",
-          "token": null,
-          "value": "flex",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "align-items",
-          "token": null,
-          "value": "center",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "gap",
-          "token": "--dss-spacing-2",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "flex",
-          "token": null,
-          "value": "1",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "min-width",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "2-composition/_panel.scss"
         },
         {
           "property": "min-height",
           "token": "--dss-input-height-md",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "2-composition/_panel.scss"
         },
         {
           "property": "transition",
-          "token": "--dss-duration-150",
+          "token": "--dss-duration-200",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_standout.scss"
         },
         {
           "property": "min-height",
@@ -356,34 +360,106 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "justify-content",
-          "token": null,
-          "value": "center",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding",
-          "token": "--dss-spacing-4",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding",
+          "property": "padding-top",
           "token": "--dss-spacing-3",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "position",
-          "token": null,
-          "value": "absolute",
+          "property": "padding-top",
+          "token": "--dss-spacing-2",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "left",
-          "token": "--dss-spacing-4",
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-primary",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-normal",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "wrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-hint",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-compact-control-height-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-secondary",
+          "value": null,
+          "source": "2-composition/_panel.scss"
         },
         {
           "property": "top",
@@ -395,36 +471,6 @@
           "property": "transform",
           "token": null,
           "value": "translateY(-50%)",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-md",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-text-secondary",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "pointer-events",
-          "token": null,
-          "value": "none",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "transition",
-          "token": "--dss-duration-200",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "transform-origin",
-          "token": null,
-          "value": "left top",
           "source": "2-composition/_base.scss"
         },
         {
@@ -440,106 +486,52 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "position",
+          "property": "transform-origin",
           "token": null,
-          "value": "static",
+          "value": "left top",
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "transform",
-          "token": null,
-          "value": "none",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-sm",
+          "property": "height",
+          "token": "--dss-input-height-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "margin-bottom",
+          "property": "height",
+          "token": "--dss-input-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
           "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "border",
-          "token": null,
-          "value": "none",
-          "source": "3-variants/_borderless.scss"
-        },
-        {
-          "property": "outline",
-          "token": null,
-          "value": "none",
+          "property": "padding-right",
+          "token": "--dss-spacing-1",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "background",
-          "token": null,
-          "value": "transparent",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-family",
-          "token": null,
-          "value": "inherit",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-text-primary",
+          "property": "padding-right",
+          "token": "--dss-spacing-2",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "padding",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "margin",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "line-height",
-          "token": "--dss-line-height-normal",
+          "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
-          "token": "--dss-text-hint",
+          "token": "--dss-feedback-error",
           "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "opacity",
-          "token": null,
-          "value": "1",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "-webkit-box-shadow",
-          "token": null,
-          "value": "0 0 0 1000px transparent inset",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "transition",
-          "token": null,
-          "value": "background-color 5000s ease-in-out 0s",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-top",
-          "token": "--dss-spacing-3",
-          "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "4-output/_brands.scss"
         },
         {
           "property": "cursor",
@@ -548,92 +540,116 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "flex-shrink",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-left",
-          "token": "--dss-spacing-3",
+          "property": "background-color",
+          "token": "--dss-surface-default",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "2-composition/_panel.scss"
         },
         {
-          "property": "padding-right",
-          "token": "--dss-spacing-3",
+          "property": "border",
+          "token": "--dss-border-gray-200",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "2-composition/_panel.scss"
         },
         {
-          "property": "padding-left",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-right",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "left",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-spacing-6",
+          "property": "box-shadow",
+          "token": "--dss-elevation-3",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "2-composition/_panel.scss"
         },
         {
-          "property": "height",
-          "token": "--dss-spacing-6",
+          "property": "z-index",
+          "token": "--dss-z-index-dropdown",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "2-composition/_panel.scss"
         },
         {
-          "property": "font-size",
-          "token": "--dss-font-size-xl",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "line-height",
+          "property": "overflow",
           "token": null,
-          "value": "1",
-          "source": "2-composition/_base.scss"
+          "value": "hidden",
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-selected",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-action",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_panel.scss"
         },
         {
           "property": "cursor",
           "token": null,
-          "value": "pointer",
-          "source": "2-composition/_base.scss"
+          "value": "not-allowed",
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
         },
         {
           "property": "border-radius",
-          "token": "--dss-radius-full",
+          "token": "--dss-radius-sm",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_standout.scss"
         },
         {
           "property": "padding",
-          "token": "--dss-spacing-1",
+          "token": "--dss-spacing-4",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_borderless.scss"
         },
         {
-          "property": "min-height",
-          "token": "--dss-spacing-5",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "color",
+          "property": "border-color",
           "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-gray-300",
           "value": null,
           "source": "3-variants/_outlined.scss"
         },
@@ -641,13 +657,7 @@
           "property": "background-color",
           "token": "--dss-surface-subtle",
           "value": null,
-          "source": "3-variants/_outlined.scss"
-        },
-        {
-          "property": "border-radius",
-          "token": "--dss-radius-sm",
-          "value": null,
-          "source": "3-variants/_standout.scss"
+          "source": "3-variants/_filled.scss"
         },
         {
           "property": "border-bottom",
@@ -671,37 +681,7 @@
           "property": "border-bottom-color",
           "token": null,
           "value": "transparent",
-          "source": "3-variants/_borderless.scss"
-        },
-        {
-          "property": "background-color",
-          "token": null,
-          "value": "transparent",
-          "source": "3-variants/_borderless.scss"
-        },
-        {
-          "property": "border",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-feedback-error",
-          "value": null,
-          "source": "3-variants/_outlined.scss"
-        },
-        {
-          "property": "border-width",
-          "token": "--dss-border-width-md",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-gray-300",
-          "value": null,
-          "source": "3-variants/_outlined.scss"
+          "source": "3-variants/_filled.scss"
         },
         {
           "property": "background-color",
@@ -710,14 +690,20 @@
           "source": "3-variants/_standout.scss"
         },
         {
+          "property": "border",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
           "property": "color",
-          "token": "--dss-text-inverse-secondary",
+          "token": "--dss-text-inverse",
           "value": null,
           "source": "3-variants/_standout.scss"
         },
         {
           "property": "color",
-          "token": "--dss-text-inverse",
+          "token": "--dss-text-inverse-secondary",
           "value": null,
           "source": "3-variants/_standout.scss"
         },
@@ -734,10 +720,10 @@
           "source": "3-variants/_standout.scss"
         },
         {
-          "property": "border-radius",
+          "property": "box-shadow",
           "token": null,
-          "value": "0",
-          "source": "3-variants/_borderless.scss"
+          "value": "none",
+          "source": "4-output/_states.scss"
         },
         {
           "property": "border-bottom",
@@ -746,9 +732,33 @@
           "source": "3-variants/_borderless.scss"
         },
         {
+          "property": "border-radius",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
           "property": "border-color",
           "token": null,
           "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thin",
+          "value": null,
           "source": "4-output/_states.scss"
         },
         {
@@ -800,8 +810,26 @@
           "source": "4-output/_states.scss"
         },
         {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "HighlightText",
+          "source": "4-output/_states.scss"
+        },
+        {
           "property": "color",
           "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -813,24 +841,24 @@
         },
         {
           "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
           "token": "--dss-waste-800",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
           "value": null,
           "source": "4-output/_brands.scss"
         }
       ],
       "hover": [
-        {
-          "property": "background-color",
-          "token": "--dss-gray-100",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-text-primary",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
         {
           "property": "background-color",
           "token": "--dss-surface-hover",
@@ -844,6 +872,12 @@
           "source": "3-variants/_outlined.scss"
         },
         {
+          "property": "border-bottom-color",
+          "token": "--dss-gray-600",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
           "property": "background-color",
           "token": "--dss-gray-700",
           "value": null,
@@ -851,47 +885,29 @@
         },
         {
           "property": "border-bottom-color",
-          "token": "--dss-gray-400",
+          "token": "--dss-gray-300",
           "value": null,
           "source": "3-variants/_borderless.scss"
         }
       ],
       "focus": [
         {
-          "property": "outline",
-          "token": "--dss-border-width-md",
-          "value": null,
-          "source": "4-output/_states.scss"
+          "property": "transform",
+          "token": null,
+          "value": "rotate(180deg)",
+          "source": "2-composition/_base.scss"
         },
         {
-          "property": "outline-offset",
-          "token": "--dss-spacing-1",
+          "property": "transition",
+          "token": "--dss-duration-200",
           "value": null,
-          "source": "4-output/_states.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "background-color",
           "token": "--dss-surface-hover",
           "value": null,
           "source": "3-variants/_filled.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "3-variants/_borderless.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "3-variants/_outlined.scss"
         },
         {
           "property": "border-color",
@@ -906,6 +922,24 @@
           "source": "3-variants/_outlined.scss"
         },
         {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
           "property": "background-color",
           "token": "--dss-gray-700",
           "value": null,
@@ -916,6 +950,18 @@
           "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "4-output/_states.scss"
         },
         {
           "property": "outline",
@@ -984,39 +1030,7 @@
           "source": "4-output/_brands.scss"
         }
       ],
-      "active": [
-        {
-          "property": "background-color",
-          "token": "--dss-surface-active",
-          "value": null,
-          "source": "3-variants/_filled.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "3-variants/_outlined.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-gray-600",
-          "value": null,
-          "source": "3-variants/_standout.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-gray-500",
-          "value": null,
-          "source": "3-variants/_borderless.scss"
-        }
-      ],
       "disabled": [
-        {
-          "property": "color",
-          "token": "--dss-text-disabled",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
         {
           "property": "cursor",
           "token": null,
@@ -1030,16 +1044,10 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-surface-muted",
+          "property": "color",
+          "token": "--dss-text-disabled",
           "value": null,
-          "source": "3-variants/_outlined.scss"
-        },
-        {
-          "property": "border-bottom-style",
-          "token": null,
-          "value": "dashed",
-          "source": "3-variants/_filled.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "border-style",
@@ -1049,21 +1057,21 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-900",
+          "token": "--dss-surface-muted",
           "value": null,
-          "source": "3-variants/_standout.scss"
+          "source": "3-variants/_filled.scss"
         },
         {
           "property": "border-bottom-style",
           "token": null,
-          "value": "dotted",
-          "source": "3-variants/_borderless.scss"
+          "value": "dashed",
+          "source": "3-variants/_filled.scss"
         },
         {
-          "property": "border-bottom-color",
-          "token": "--dss-gray-300",
+          "property": "background-color",
+          "token": "--dss-gray-900",
           "value": null,
-          "source": "3-variants/_borderless.scss"
+          "source": "3-variants/_standout.scss"
         },
         {
           "property": "border-color",
@@ -1084,54 +1092,6 @@
           "token": null,
           "value": "none",
           "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "content",
-          "token": null,
-          "value": "\"\"",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "display",
-          "token": null,
-          "value": "inline-block",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-spacing-4",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-spacing-4",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border",
-          "token": "--dss-border-width-md",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-top-color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-radius",
-          "token": "--dss-radius-full",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "animation",
-          "token": "--dss-duration-500",
-          "value": null,
-          "source": "2-composition/_base.scss"
         }
       ]
     }
@@ -1140,10 +1100,12 @@
     "categories": [
       "border",
       "color",
+      "elevation",
       "motion",
       "other",
       "spacing",
-      "typography"
+      "typography",
+      "z-index"
     ],
     "instances": [
       {
@@ -1160,23 +1122,16 @@
         ]
       },
       {
-        "name": "--dss-spacing-2",
+        "name": "--dss-input-height-md",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-input-height-md",
+        "name": "--dss-duration-200",
         "usedIn": [
           "default",
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-duration-150",
-        "usedIn": [
-          "default",
-          "defaultPreview"
+          "focus"
         ]
       },
       {
@@ -1186,15 +1141,13 @@
         ]
       },
       {
-        "name": "--dss-spacing-4",
+        "name": "--dss-spacing-3",
         "usedIn": [
-          "default",
-          "loading",
-          "defaultPreview"
+          "default"
         ]
       },
       {
-        "name": "--dss-spacing-3",
+        "name": "--dss-spacing-2",
         "usedIn": [
           "default"
         ]
@@ -1202,31 +1155,17 @@
       {
         "name": "--dss-font-size-md",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
-        "name": "--dss-text-secondary",
-        "usedIn": [
-          "default",
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-duration-200",
+        "name": "--dss-text-primary",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-spacing-0",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-font-size-sm",
+        "name": "--dss-line-height-normal",
         "usedIn": [
           "default"
         ]
@@ -1235,20 +1174,11 @@
         "name": "--dss-spacing-1",
         "usedIn": [
           "default",
-          "focus",
-          "defaultPreview"
+          "focus"
         ]
       },
       {
-        "name": "--dss-text-primary",
-        "usedIn": [
-          "default",
-          "hover",
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-line-height-normal",
+        "name": "--dss-font-size-sm",
         "usedIn": [
           "default"
         ]
@@ -1260,26 +1190,31 @@
         ]
       },
       {
-        "name": "--dss-spacing-6",
+        "name": "--dss-gray-100",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-font-size-xl",
+        "name": "--dss-radius-md",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-radius-full",
+        "name": "--dss-compact-control-height-xs",
         "usedIn": [
-          "default",
-          "loading"
+          "default"
         ]
       },
       {
-        "name": "--dss-spacing-5",
+        "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
         "usedIn": [
           "default"
         ]
@@ -1291,9 +1226,52 @@
         ]
       },
       {
-        "name": "--dss-surface-subtle",
+        "name": "--dss-surface-default",
         "usedIn": [
           "default"
+        ]
+      },
+      {
+        "name": "--dss-border-gray-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-dropdown",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-selected",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-action",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default",
+          "focus"
         ]
       },
       {
@@ -1304,37 +1282,33 @@
         ]
       },
       {
-        "name": "--dss-border-width-md",
+        "name": "--dss-spacing-4",
         "usedIn": [
-          "default",
-          "focus",
-          "loading",
-          "defaultPreview"
+          "default"
         ]
       },
       {
-        "name": "--dss-border-width-thin",
+        "name": "--dss-border-width-md",
         "usedIn": [
           "default",
-          "focus",
-          "defaultPreview"
+          "focus"
         ]
       },
       {
         "name": "--dss-gray-300",
         "usedIn": [
           "default",
-          "disabled"
+          "hover"
         ]
       },
       {
-        "name": "--dss-gray-800",
+        "name": "--dss-surface-subtle",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-text-inverse-secondary",
+        "name": "--dss-gray-800",
         "usedIn": [
           "default"
         ]
@@ -1346,7 +1320,19 @@
         ]
       },
       {
+        "name": "--dss-text-inverse-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-text-inverse-hint",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
         "usedIn": [
           "default"
         ]
@@ -1359,9 +1345,23 @@
         ]
       },
       {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
         "name": "--dss-water-700",
         "usedIn": [
           "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default",
+          "focus"
         ]
       },
       {
@@ -1371,9 +1371,10 @@
         ]
       },
       {
-        "name": "--dss-gray-100",
+        "name": "--dss-waste-600",
         "usedIn": [
-          "hover"
+          "default",
+          "focus"
         ]
       },
       {
@@ -1386,9 +1387,7 @@
       {
         "name": "--dss-gray-600",
         "usedIn": [
-          "hover",
-          "active",
-          "defaultPreview"
+          "hover"
         ]
       },
       {
@@ -1399,35 +1398,14 @@
         ]
       },
       {
-        "name": "--dss-gray-400",
-        "usedIn": [
-          "hover",
-          "defaultPreview"
-        ]
-      },
-      {
         "name": "--dss-action-primary",
         "usedIn": [
           "focus",
-          "active",
-          "loading",
           "defaultPreview"
         ]
       },
       {
         "name": "--dss-border-width-thick",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
-        "name": "--dss-water-500",
         "usedIn": [
           "focus"
         ]
@@ -1439,27 +1417,9 @@
         ]
       },
       {
-        "name": "--dss-waste-600",
-        "usedIn": [
-          "focus"
-        ]
-      },
-      {
         "name": "--dss-waste-700",
         "usedIn": [
           "focus"
-        ]
-      },
-      {
-        "name": "--dss-surface-active",
-        "usedIn": [
-          "active"
-        ]
-      },
-      {
-        "name": "--dss-gray-500",
-        "usedIn": [
-          "active"
         ]
       },
       {
@@ -1481,9 +1441,15 @@
         ]
       },
       {
-        "name": "--dss-duration-500",
+        "name": "--dss-touch-target-md",
         "usedIn": [
-          "loading"
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "defaultPreview"
         ]
       }
     ]
@@ -1505,28 +1471,28 @@
       {
         "criterion": "4.1.2",
         "level": "A",
-        "implementation": "Nome/estado expostos via aria-label, aria-required, aria-invalid",
+        "implementation": "Combobox com aria-expanded/required/invalid expostos",
         "verifiedBy": "aria"
       },
       {
         "criterion": "2.1.1",
         "level": "A",
-        "implementation": "Operavel por teclado (foco, digitacao, limpar)",
+        "implementation": "Operavel por teclado (abrir, navegar, selecionar)",
         "verifiedBy": "test"
       }
     ],
     "aria": {
-      "role": "textbox",
+      "role": "combobox",
       "states": [
+        "aria-expanded",
         "aria-required",
-        "aria-invalid",
-        "aria-describedby"
+        "aria-invalid"
       ]
     },
     "keyboard": [
       {
-        "key": "Tab",
-        "action": "mover foco para o campo"
+        "key": "Enter/Space",
+        "action": "abrir o menu de opcoes"
       }
     ]
   },
@@ -1563,7 +1529,7 @@
     ]
   },
   "sources": {
-    "structure": "1-structure/DssInput.ts.vue",
+    "structure": "1-structure/DssSelect.ts.vue",
     "scss": {
       "L2": "2-composition/_base.scss",
       "L3": "3-variants/_borderless.scss",
@@ -1572,14 +1538,14 @@
         "4-output/_states.scss"
       ]
     },
-    "types": "types/input.types.ts",
+    "types": "types/select.types.ts",
     "docs": {
-      "normative": "DssInput.md",
-      "api": "DSSINPUT_API.md",
+      "normative": "DssSelect.md",
+      "api": "DSSSELECT_API.md",
       "readme": "README.md"
     },
-    "examples": "DssInput.example.vue",
-    "tests": "DssInput.test.js",
-    "seal": "docs/Compliance/seals/DssInput/DSSINPUT_SELO_v2.2.md"
+    "examples": "DssSelect.example.vue",
+    "tests": "DssSelect.test.js",
+    "seal": "docs/Compliance/seals/DssSelect/DSSSELECT_SELO_v2.2.md"
   }
 }

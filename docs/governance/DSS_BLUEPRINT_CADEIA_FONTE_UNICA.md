@@ -394,7 +394,12 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
    precisa no `meta` para emitir contrato completo): `classification` + `tagline` + bloco `a11y` (claims
    com `verifiedBy`). Riscos p/ escala: trio de overlays no iframe; parser de `displayName` com siglas
    (`DssSPCReport`) + override; `tokens[]` legado em migração de 2 fases.
-4. **Preview Frame** (iframe: entry + `postMessage` de tema/brand + conter overlays) + snippet dos knobs.
+4. ✅ **Preview Frame** (`apps/sandbox/src/preview/`) — iframe + `postMessage` + snippet dos knobs.
+   **Overlay containment PROVADO no fluxo real** com **DssSelect**: ao abrir o dropdown, o QMenu
+   teleporta **DENTRO** do iframe (`menusInIframeDoc=1`, `menusInMainDoc=0`, ancorado no body do iframe).
+   2º componente emitido (DssSelect: 24 props, 55 tokens, a11y 4/4). Refinos do emissor: `status`
+   **deriva do selo físico** (F1; enum +`sealed`); `tokens` defensivos (extrai só `--dss-*`, ignora lixo
+   no campo `token` do meta); `postMessage` serializa payload (arrays reativos do Vue → dado plano).
 5. Gates de prosa (verificação a11y/anti-patterns) + higiene (CRLF→LF, casing, `types→controls JSON`).
 6. Governança escrita (I/J/L) + **reconciliação da spec com D4** (feita, v2.5) + backfill verificável (K).
 
