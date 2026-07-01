@@ -25,7 +25,7 @@ A página de um componente é uma **VIEW**. Ela **não inventa** e **não hosped
 
 | # | Seção | Artefato dono (fonte de verdade) | Gate de drift |
 |---|---|---|---|
-| 1 | Badges / selos | `docs/compliance/seals/…` + `catalog.json` | `build-catalog.cjs` ✅ |
+| 1 | Badges / selos | `docs/Compliance/seals/…` (arquivo físico) + `catalog.json` | `build-catalog.cjs` ✅ |
 | 2 | Título e descrição | `contract.identity` (displayName + **tagline** ≤120c editorial) | presença (tagline existe) |
 | 3 | Quando usar / NÃO usar | `README.md` (editorial) | **não-normativo** (sem gate) |
 | 4a | Playground — controles (props/valores) | `types/*.types.ts` (unions) + `dss.meta.json` (eixos) | `validate-api-docs.cjs` ✅ |
@@ -79,7 +79,7 @@ As páginas de componentes DEVEM seguir **exatamente** a ordem abaixo. Cada seç
 
 ### 1. Badges de Metadados ⭐ OBRIGATÓRIO
 
-> **Deriva de:** `docs/compliance/seals/…` + `catalog.json` · **Gate:** `build-catalog.cjs` ✅
+> **Deriva de:** `docs/Compliance/seals/…` (arquivo físico) + `catalog.json` · **Gate:** `build-catalog.cjs` ✅
 
 Exibidos no topo da página:
 
@@ -95,13 +95,14 @@ Exibidos no topo da página:
 O host DEVE verificar explicitamente a existência de selos no caminho:
 
 ```
-docs/compliance/seals/<NomeDoComponente>/<NOME_DO_COMPONENTE>_SELO_v2.2.md
+docs/Compliance/seals/<NomeDoComponente>/<NOME_DO_COMPONENTE>_SELO_v2.2.md
 ```
 
-> **⚠️ Item F (migração pendente).** O disco hoje é `docs/Compliance/seals/…` (**C maiúsculo**) e os
-> `meta.seal` trazem prefixo `DSS/` + `Compliance`. O alvo canônico é `docs/compliance/…` (minúsculo,
-> sem prefixo — casa com o schema `^docs/compliance/`). A migração física (renomear o diretório +
-> ~89 `meta.seal` + scripts) é **pré-requisito do gate de `sealPath`** em CI Linux case-sensitive.
+> **Item F (resolvido — F1).** A verdade do selo é o **arquivo físico** em `docs/Compliance/seals/…`
+> (o disco e os 3 scripts — `build-catalog.cjs`, `generate-portal-landing-pages.js`, `hooks/pre-commit`
+> — já são consistentes nesse casing). O emissor **deriva** o `sealPath` do arquivo físico (glob),
+> **não** do campo `meta.seal` — que driftou (só 38/89 componentes, em formatos incompatíveis: path,
+> id, version-string). Nada a migrar; nenhuma edição de `meta.seal` necessária.
 
 Regras:
 

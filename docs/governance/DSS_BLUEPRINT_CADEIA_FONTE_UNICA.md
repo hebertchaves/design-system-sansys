@@ -124,7 +124,7 @@ o padrão `inject-default-preview.cjs` (que já faz isso para `visualProperties`
   },
   "audit": {
     "status": "approved", "date": "2026-02-13", "ncs": 0, "gaps": 0,
-    "sealPath": "docs/Compliance/seals/...", // ✅ meta.seal
+    "sealPath": "docs/Compliance/seals/...", // derivado do arquivo físico (F1), não de meta.seal (driftado)
     "history": [ { "date": "...", "auditor": "...", "outcome": "..." } ] // ⚠️ FALTA
   },
 
@@ -351,7 +351,9 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
 - (D) Build `types.ts → controls.json` (mata os knobs fantasma do Playground v3.2).
 - (E) Gates de prosa por natureza: **verificação** em a11y (7.4) e anti-patterns (8);
   vinculantes (9) **derivam** de meta; descrição/quando-usar (2/3) são **não-normativos** (sem gate).
-- (F) Higiene: normalizar CRLF→LF; corrigir casing `docs/Compliance` vs `docs/compliance`.
+- (F) ✅ **Resolvido (F1):** `sealPath` = **arquivo físico** `docs/Compliance/seals/…` (casing alinhado
+  ao disco/scripts); o emissor **deriva** do arquivo, não do `meta.seal` driftado (38/89, 4 formatos).
+  Nada a migrar. *(Higiene CRLF→LF segue pendente à parte.)*
 
 **Código / Playground / Portal**
 - (G) **Preview Frame**: arquitetura do iframe — entry próprio + `postMessage` de tema/brand +
@@ -379,8 +381,8 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
      antes de escalar o backfill de a11y (K), senão cada componente inventa a própria prova.
 3. **Gate emissor** lendo os donos por eixo, validado no **DssInput**. Riscos a cravar:
    trio de overlays (Select + Dialog aninhado + Tooltip) no iframe; parser de `displayName` com siglas
-   (`DssSPCReport`) + override no meta (teste-primeiro); gate de `sealPath` em **CI Linux**
-   (case-sensitive); `tokens[]` legado em **migração de 2 fases**.
+   (`DssSPCReport`) + override no meta (teste-primeiro); `sealPath` **derivado do arquivo físico**
+   (F1, casing `Compliance` alinhado ao disco — sem migração); `tokens[]` legado em **migração de 2 fases**.
 4. **Preview Frame** (iframe: entry + `postMessage` de tema/brand + conter overlays) + snippet dos knobs.
 5. Gates de prosa (verificação a11y/anti-patterns) + higiene (CRLF→LF, casing, `types→controls JSON`).
 6. Governança escrita (I/J/L) + **reconciliação da spec com D4** (feita, v2.5) + backfill verificável (K).

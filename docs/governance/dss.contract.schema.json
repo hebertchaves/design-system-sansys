@@ -77,8 +77,8 @@
         "gaps": { "type": "integer", "minimum": 0 },
         "sealPath": {
           "type": "string",
-          "pattern": "^docs/compliance/",
-          "description": "Caminho do selo NORMALIZADO. Item F: a fonte hoje traz 'DSS/docs/Compliance/…' (prefixo + casing) — o emitter normaliza para 'docs/compliance/…' (FS case-sensitive/CI)."
+          "pattern": "^docs/Compliance/",
+          "description": "Caminho do selo = ARQUIVO FÍSICO real (docs/Compliance/seals/<Comp>/<FILE>.md). Item F (F1): casing alinhado ao disco+scripts; o emitter DERIVA este path do arquivo físico (glob), NÃO do campo meta.seal (driftado: 38/89, formatos incompatíveis)."
         },
         "history": {
           "type": "array",
