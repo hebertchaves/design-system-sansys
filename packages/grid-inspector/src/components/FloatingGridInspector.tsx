@@ -152,7 +152,7 @@ export function FloatingGridInspector() {
   };
   
   const [panelSize, setPanelSize] = useState<PanelSize>('expanded');
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [mcpConnected, setMcpConnected] = useState(false);
 
   // Poll MCP connection status every 5 s

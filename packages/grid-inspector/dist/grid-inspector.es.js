@@ -10433,7 +10433,7 @@ function FloatingGridInspector() {
     }
   };
   const [panelSize, setPanelSize] = reactExports.useState("expanded");
-  const [isVisible, setIsVisible] = reactExports.useState(true);
+  const [isVisible, setIsVisible] = reactExports.useState(false);
   const [mcpConnected, setMcpConnected] = reactExports.useState(false);
   reactExports.useEffect(() => {
     const check = () => setMcpConnected(isMcpConnected());
