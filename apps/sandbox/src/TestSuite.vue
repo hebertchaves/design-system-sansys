@@ -42,28 +42,6 @@
           </button>
         </div>
 
-        <!-- SPIKE (descartável) — barreira de isolamento -->
-        <div class="nav-section">
-          <button
-            @click="activeComponent = 'spike-isolation'"
-            :class="['nav-item', { active: activeComponent === 'spike-isolation' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">science</span></span>
-            <span class="nav-label">Spike · Isolamento</span>
-          </button>
-        </div>
-
-        <!-- POC (descartável) — página derivada do DssInput -->
-        <div class="nav-section">
-          <button
-            @click="activeComponent = 'poc-input'"
-            :class="['nav-item', { active: activeComponent === 'poc-input' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">auto_awesome</span></span>
-            <span class="nav-label">POC · DssInput Page</span>
-          </button>
-        </div>
-
         <!-- PREVIEW FRAME (durável) — playground contract-driven -->
         <div class="nav-section">
           <button
@@ -444,16 +422,6 @@
         <TestIndex />
       </div>
 
-      <!-- SPIKE (descartável) — barreira de isolamento -->
-      <div v-else-if="activeComponent === 'spike-isolation'" class="component-view">
-        <SpikeIsolation />
-      </div>
-
-      <!-- POC (descartável) — página derivada do DssInput -->
-      <div v-else-if="activeComponent === 'poc-input'" class="component-view">
-        <PocInputPage />
-      </div>
-
       <!-- PREVIEW FRAME (durável) — playground contract-driven, iframe do SFC real -->
       <div v-else-if="activeComponent === 'preview-frame'" class="component-view">
         <PreviewFrame component="DssInput" />
@@ -547,11 +515,8 @@
 <script setup>
 import { ref } from 'vue'
 import TestIndex from './TestIndex.vue'
-// SPIKE (descartável) — remover junto com a pasta spike/
+// PREVIEW FRAME (durável) — playground contract-driven
 import PreviewFrame from './preview/PreviewFrame.vue'
-import SpikeIsolation from './spike/SpikeIsolation.vue'
-// POC (descartável) — remover junto com a pasta poc/
-import PocInputPage from './poc/PocInputPage.vue'
 import TestDefaultPreview from './TestDefaultPreview.vue'
 import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'

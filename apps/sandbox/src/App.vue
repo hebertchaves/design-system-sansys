@@ -1,10 +1,6 @@
 <template>
   <!-- PREVIEW FRAME (durável): /?frame=<Componente> monta o SFC real dentro do iframe -->
   <PreviewSubject v-if="isFrame" />
-  <!-- SPIKE (descartável): /?spikeSubject=1 carrega só o sujeito dentro do iframe -->
-  <SpikeSubjectStandalone v-else-if="isSpikeSubject" />
-  <!-- POC (descartável): /?poc=playground|examples carrega o conteúdo do iframe -->
-  <PocStandalone v-else-if="isPoc" />
   <TestSuite v-else />
 </template>
 
@@ -12,14 +8,8 @@
 import TestSuite from './TestSuite.vue'
 // PREVIEW FRAME (durável) — realm do iframe do playground
 import PreviewSubject from './preview/PreviewSubject.vue'
-// SPIKE (descartável) — remover junto com a pasta spike/
-import SpikeSubjectStandalone from './spike/SpikeSubjectStandalone.vue'
-// POC (descartável) — remover junto com a pasta poc/
-import PocStandalone from './poc/PocStandalone.vue'
 const sp = new URLSearchParams(window.location.search)
 const isFrame = sp.has('frame')
-const isSpikeSubject = sp.has('spikeSubject')
-const isPoc = sp.has('poc')
 </script>
 
 <style>
