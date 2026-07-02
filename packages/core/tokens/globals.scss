@@ -85,52 +85,55 @@
   --dss-tertiary-disable: #ffd2b5;
   --dss-tertiary-light: #ff9452;
   --dss-tertiary: #ff6607;
+  --dss-tertiary-focus: #E95900;
   --dss-tertiary-hover: #de5500;
-  --dss-tertiary-deep: #E95900;
+  --dss-tertiary-deep: #AD4200;
 
   /* Accent (Roxo/Púrpura) */
   --dss-accent-disable: #f0ddf4;
   --dss-accent-light: #e3bceb;
   --dss-accent: #b454c4;
+  --dss-accent-focus: #B02EC5;
   --dss-accent-hover: #883b90;
   --dss-accent-deep: #642f6a;
-  --dss-accent-deep: #B02EC5;
 
   /* Dark (Cinza/Preto) */
   --dss-dark-disable: #d7d7d7;
   --dss-dark-light: #b0b0b0;
   --dss-dark: #454545;
+  --dss-dark-focus: #3E3E3E;
   --dss-dark-hover: #313131;
   --dss-dark-deep: #1d1d1d;
-  --dss-dark-deep: #3E3E3E;
 
   /* Positive (Verde) */
   --dss-positive-disable: #dbf8d1;
   --dss-positive-light: #b9f2a4;
   --dss-positive: #4dd228;
+  --dss-positive-focus: #34C30C;
   --dss-positive-hover: #27910D;
   --dss-positive-deep: #246714;
-  --dss-positive-deep: #34C30C;
 
   /* Negative (Vermelho) */
   --dss-negative-disable: #ffcfd4;
   --dss-negative-light: #ffa0ab;
   --dss-negative: #d8182e;
+  --dss-negative-focus: #C40016;
   --dss-negative-hover: #a01424;
   --dss-negative-deep: #720e19;
-  --dss-negative-deep: #C40016;
 
   /* Warning (Amarelo/Laranja) */
   --dss-warning-disable: #fff9c3;
   --dss-warning-light: #fff488;
   --dss-warning: #fabd14;
+  --dss-warning-focus: #E9AB00;
   --dss-warning-hover: #dd8e02;
-  --dss-warning-deep: #E9AB00;
+  --dss-warning-deep: #A66D08;
 
   /* Info (Azul Claro) */
   --dss-info-disable: #d2f6fc;
   --dss-info-light: #a7effa;
   --dss-info: #0cc4e9;
+  --dss-info-focus: #00B2D5;
   --dss-info-hover: #0c8bae;
-  --dss-info-deep: #00B2D5;
+  --dss-info-deep: #0D7491;
 }
