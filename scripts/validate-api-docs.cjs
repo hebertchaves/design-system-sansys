@@ -106,7 +106,13 @@ function parseTypes(typesFile) {
           items.push({ name: memberName, type, desc: jsDocFirstLine(m, sf) });
         }
       }
-      out[axis] = items;
+      // Props: acumula (union) todas as interfaces `*Props` do arquivo — componentes
+      // multi-parte (ex.: DssCard = Card+CardSection+CardActions; DssCarousel =
+      // Carousel+CarouselSlide) declaram uma `*Props` por sub-componente e documentam
+      // todas sob `### Props`. Sem o union, só a ÚLTIMA interface seria a "verdade" e as
+      // props do componente principal apareceriam como falso-positivo "não tipadas".
+      // Slots/Emits seguem last-wins (nenhum componente multi-interface diverge neles).
+      out[axis] = axis === 'props' ? (out[axis] || []).concat(items) : items;
     }
 
     if (/Emits$/.test(name)) {
