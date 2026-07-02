@@ -1,0 +1,1244 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssField",
+  "version": "0",
+  "identity": {
+    "displayName": "Field",
+    "tagline": "Moldura de campo com rótulo, dica e erro para envolver um controle.",
+    "category": "Wrapper estrutural de campo de formulário (chrome: label, borda, hint, error)",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssInput"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssField/DSSFIELD_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "variant",
+        "type": "FieldVariant",
+        "controlHint": "segmented",
+        "validValues": [
+          "outlined",
+          "filled",
+          "borderless",
+          "standout"
+        ]
+      },
+      {
+        "name": "size",
+        "type": "FieldSize",
+        "controlHint": "segmented",
+        "validValues": [
+          "sm",
+          "md"
+        ]
+      },
+      {
+        "name": "brand",
+        "type": "FieldBrand",
+        "controlHint": "picker-brand",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "stackLabel",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "hasValue",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Sinaliza externamente que o controle interno possui valor (mantém label flutuante)"
+      },
+      {
+        "name": "hint",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "prefix",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "suffix",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "fieldId",
+        "type": "string",
+        "controlHint": "text",
+        "description": "ID do controle interno — para associação label[for]. Auto-gerado se omitido."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Controle principal. Recebe { fieldId, ariaDescribedby } para associação ARIA completa."
+      },
+      {
+        "name": "prepend",
+        "scope": null,
+        "description": "Conteúdo antes da área de campo (ícone, botão) — dentro da borda"
+      },
+      {
+        "name": "append",
+        "scope": null,
+        "description": "Conteúdo após a área de campo (ícone, botão) — dentro da borda"
+      },
+      {
+        "name": "before",
+        "scope": null,
+        "description": "Conteúdo antes de toda a estrutura do campo — fora da borda"
+      },
+      {
+        "name": "after",
+        "scope": null,
+        "description": "Conteúdo após toda a estrutura do campo — fora da borda"
+      },
+      {
+        "name": "label",
+        "scope": null,
+        "description": "Label personalizado (substitui a prop `label`)"
+      },
+      {
+        "name": "hint",
+        "scope": null,
+        "description": "Texto de dica personalizado (substitui a prop `hint`)"
+      },
+      {
+        "name": "error",
+        "scope": null,
+        "description": "Mensagem de erro personalizada (substitui a prop `errorMessage`)"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {}
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      },
+      "minWidth": {
+        "value": "240px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "unset",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "left",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translateY(-50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-secondary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "ellipsis",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-width",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translateY(0) scale(0.75)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform-origin",
+          "token": null,
+          "value": "left top",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "static",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "normal",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "left",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-self",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "animation",
+          "token": "--dss-duration-500",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-error-600",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-error-600",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-error-600",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": null,
+          "value": "transparent",
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-800",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "border-color",
+          "token": "--dss-gray-600",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "border-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "border-color",
+          "token": "--dss-gray-700",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-style",
+          "token": null,
+          "value": "dotted",
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-50",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-bottom-style",
+          "token": null,
+          "value": "dotted",
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-error-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "default",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-hub-700",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-800",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-600",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "hover",
+          "focus",
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-600",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-waste-700",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-gray-700",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-50",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-800",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "3.3.2",
+        "level": "A",
+        "implementation": "Rótulo, dica e mensagem de erro associados ao controle interno.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": [
+        "aria-invalid",
+        "aria-describedby"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    },
+    {
+      "rule": "P14"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    },
+    {
+      "id": "P14",
+      "name": "Icon Composition",
+      "appliesTo": [
+        "api.slots"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssField.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_borderless.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/field.types.ts",
+    "docs": {
+      "normative": "DssField.md",
+      "api": "DSSFIELD_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssField.example.vue",
+    "tests": "DssField.test.js",
+    "seal": "docs/Compliance/seals/DssField/DSSFIELD_SELO_v2.2.md"
+  }
+}

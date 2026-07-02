@@ -78,5 +78,25 @@
       }
     ]
   },
-  "previewGroup": "listas"
+  "previewGroup": "listas",
+  "classification": "Visual",
+  "tagline": "Divisor visual, horizontal ou vertical, entre blocos de conteúdo.",
+  "a11y": {
+    "aria": {
+      "role": "separator",
+      "states": [
+        "aria-orientation",
+        "aria-hidden"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Separação semântica via role=separator/aria-orientation; decorativo via aria-hidden.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

@@ -1,0 +1,516 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssIcon",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Icon",
+    "tagline": "Primitivo único de ícone do DSS, decorativo ou rotulado.",
+    "category": "Elemento Visual Base nao interativo",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssBadge"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-02-13",
+    "mode": "Final",
+    "sealPath": "docs/Compliance/seals/DssIcon/DSSICON_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "controlHint": "text",
+        "required": true,
+        "description": "Nome do icone Material Icons"
+      },
+      {
+        "name": "size",
+        "type": "IconSize",
+        "controlHint": "select",
+        "default": "md' (24px)",
+        "description": "Tamanho do icone via tokens DSS",
+        "validValues": [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ]
+      },
+      {
+        "name": "color",
+        "type": "IconColor | null",
+        "controlHint": "picker-color",
+        "default": "null (herda do contexto)",
+        "description": "Cor semantica do icone",
+        "validValues": [
+          "primary",
+          "secondary",
+          "tertiary",
+          "accent",
+          "positive",
+          "negative",
+          "warning",
+          "info"
+        ]
+      },
+      {
+        "name": "inline",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": "false (standalone usa o token de size)",
+        "description": "Modo inline (sizing dirigido pelo host)"
+      },
+      {
+        "name": "brand",
+        "type": "IconBrand | null",
+        "controlHint": "picker-brand",
+        "description": "Brand override (Hub, Water, Waste)",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "spin",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Ativa animacao de rotacao continua"
+      },
+      {
+        "name": "pulse",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Ativa animacao de pulso"
+      },
+      {
+        "name": "decorative",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Marca o icone como decorativo (aria-hidden=\"true\")"
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Label de acessibilidade para screen readers"
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Slot default - Permite conteudo customizado dentro do wrapper do icone"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "name": "star",
+        "size": "md"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "24px"
+      },
+      "minWidth": {
+        "value": "24px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "vertical-align",
+          "token": null,
+          "value": "middle",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "inherit",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-150",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": null,
+          "value": "inherit",
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-xl",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-xl",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-xl",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "1em",
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "1em",
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "animation",
+          "token": "--dss-duration-1000",
+          "value": null,
+          "source": "3-variants/_animations.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "motion",
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-icon-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-150",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-1000",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Conteúdo não-textual: decorative→aria-hidden; senão nome via aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Papel/nome expostos via aria-label quando informativo.",
+        "verifiedBy": "aria"
+      }
+    ],
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-hidden",
+        "aria-label"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssIcon.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_animations.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/icon.types.ts",
+    "docs": {
+      "normative": "DssIcon.md",
+      "api": "DSSICON_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssIcon.example.vue",
+    "tests": "DssIcon.test.js",
+    "seal": "docs/Compliance/seals/DssIcon/DSSICON_SELO_v2.2.md"
+  }
+}

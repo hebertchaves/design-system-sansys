@@ -134,5 +134,60 @@
       "blocking": false
     }
   ],
-  "previewGroup": "form-controles"
+  "previewGroup": "form-controles",
+  "tagline": "Grupo de opções (radio ou checkbox) com rótulo compartilhado.",
+  "a11y": {
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-checked",
+        "aria-label",
+        "aria-labelledby"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowDown",
+        "action": "mover para a próxima opção"
+      },
+      {
+        "key": "Space",
+        "action": "selecionar a opção focada"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação e seleção entre opções operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Grupo rotulado via aria-label/aria-labelledby; estado via aria-checked.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

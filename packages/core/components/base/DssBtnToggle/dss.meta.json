@@ -220,5 +220,53 @@
       "blocking": false
     }
   ],
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "tagline": "Conjunto de botões mutuamente exclusivos para alternar entre opções.",
+  "a11y": {
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-pressed",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "selecionar a opção focada"
+      },
+      {
+        "key": "Space",
+        "action": "selecionar a opção focada"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "mover para a próxima opção"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Seleção e navegação entre opções operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Estado de seleção exposto via aria-pressed.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

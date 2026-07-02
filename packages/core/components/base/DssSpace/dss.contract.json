@@ -1,0 +1,546 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssSpace",
+  "version": "2.2.0",
+  "identity": {
+    "displayName": "Space",
+    "tagline": "Espaçador presentacional para criar distância entre elementos.",
+    "category": "Elemento de Layout puro nao interativo",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssSeparator"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-03-18",
+    "mode": "Modo Auditor DSS",
+    "sealPath": "docs/Compliance/seals/DssSpace/DSSSPACE_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "size",
+        "type": "SpaceSize",
+        "controlHint": "select",
+        "description": "Tamanho fixo do espaço, mapeado diretamente para tokens --dss-spacing-*.",
+        "validValues": [
+          "px",
+          "0_5",
+          "1",
+          "1_5",
+          "2",
+          "2_5",
+          "3",
+          "3_5",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "14",
+          "16",
+          "20",
+          "24"
+        ]
+      }
+    ],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "size": "md"
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1 1 auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 auto",
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-2_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-2_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-3_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-3_5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-7",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-7",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-9",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-9",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-10",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-10",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-11",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-11",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-12",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-12",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-14",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-14",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-16",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-16",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-20",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-20",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-24",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-24",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-px",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-7",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-9",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-10",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-11",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-12",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-14",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-16",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-20",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-24",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Elemento puramente presentacional (spacer): sem papel, rótulo ou conteúdo textual.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssSpace.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_sizes.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/space.types.ts",
+    "docs": {
+      "normative": "DssSpace.md",
+      "api": "DSSSPACE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssSpace.example.vue",
+    "tests": "DssSpace.test.js",
+    "seal": "docs/Compliance/seals/DssSpace/DSSSPACE_SELO_v2.2.md"
+  }
+}

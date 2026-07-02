@@ -103,5 +103,29 @@
       }
     }
   },
-  "previewGroup": "indicadores"
+  "previewGroup": "indicadores",
+  "classification": "Visual",
+  "tagline": "Dica contextual exibida ao passar o mouse ou focar um elemento.",
+  "a11y": {
+    "aria": {
+      "role": "tooltip",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Escape",
+        "action": "ocultar a dica"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Conteúdo da dica exposto via role=tooltip e aria-label.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

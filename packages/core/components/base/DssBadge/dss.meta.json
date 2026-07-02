@@ -79,5 +79,24 @@
       "default": "99+"
     }
   },
-  "previewGroup": "indicadores"
+  "previewGroup": "indicadores",
+  "classification": "Visual",
+  "tagline": "Selo compacto que sinaliza status, contagem ou destaque sobre outro elemento.",
+  "a11y": {
+    "aria": {
+      "role": "status",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Rótulo acessível exposto via aria-label quando o conteúdo é apenas visual.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

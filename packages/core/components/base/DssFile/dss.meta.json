@@ -134,5 +134,56 @@
   "seal": "DSS v2.2",
   "hasReservations": false,
   "previewGroup": "form-campos",
-  "component": "DssFile"
+  "component": "DssFile",
+  "classification": "Action",
+  "tagline": "Campo de seleção de arquivos com validação de tipo e tamanho.",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-label",
+        "aria-invalid"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "abrir o seletor de arquivos"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Abertura do seletor e limpeza operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome via label/aria-label; ação de limpar via aria-label dedicado.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

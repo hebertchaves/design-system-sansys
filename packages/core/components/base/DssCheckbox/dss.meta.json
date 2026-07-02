@@ -85,5 +85,57 @@
     "demoContent": "Label 'Opção'",
     "demoSlots": null
   },
-  "previewGroup": "form-controles"
+  "previewGroup": "form-controles",
+  "classification": "Action",
+  "tagline": "Caixa de seleção para escolhas binárias ou múltiplas independentes.",
+  "a11y": {
+    "aria": {
+      "role": "checkbox",
+      "states": [
+        "aria-checked",
+        "aria-disabled",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Space",
+        "action": "alternar a seleção"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Alternância por Espaço com foco por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "::before",
+          "property": "min-height"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Estado exposto via aria-checked; nome via label/aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

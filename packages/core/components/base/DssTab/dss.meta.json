@@ -198,5 +198,52 @@
       }
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "tagline": "Aba para alternar entre painéis de conteúdo relacionados.",
+  "a11y": {
+    "aria": {
+      "role": "tab",
+      "states": [
+        "aria-selected"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "selecionar a aba"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "mover para a próxima aba"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Seleção e navegação entre abas operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

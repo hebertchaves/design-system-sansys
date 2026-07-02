@@ -1,0 +1,580 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssKnob",
+  "version": "0",
+  "identity": {
+    "displayName": "Knob",
+    "tagline": "Controle circular para ajustar um valor dentro de um intervalo.",
+    "category": "Controle rotativo para seleção de valores numéricos",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssSlider"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssKnob/DSSKNOB_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "number",
+        "controlHint": "stepper",
+        "required": true,
+        "description": "Valor atual do knob (obrigatório, bidireccional via v-model)"
+      },
+      {
+        "name": "min",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Valor mínimo permitido"
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Valor máximo permitido"
+      },
+      {
+        "name": "innerMin",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Mínimo interno (restringe o modelo dentro do intervalo da trilha)"
+      },
+      {
+        "name": "innerMax",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Máximo interno (restringe o modelo dentro do intervalo da trilha)"
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Incremento de valor por interação"
+      },
+      {
+        "name": "reverse",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Inverte a direção do progresso"
+      },
+      {
+        "name": "instantFeedback",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desativa animação ao mudar o valor (sem transição de arco)"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Apenas leitura — não editável, sem feedback visual de desabilitado"
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilitado — não interativo, com opacidade reduzida"
+      },
+      {
+        "name": "thickness",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Espessura do arco (razão 0–1 do raio)"
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Ângulo inicial do arco em graus"
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Terminações arredondadas no arco de progresso"
+      },
+      {
+        "name": "tabindex",
+        "type": "number | string",
+        "controlHint": "text",
+        "description": "Índice de tabulação para navegação por teclado"
+      },
+      {
+        "name": "size",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Tamanho visual do knob como string CSS (ex: '48px', '4rem')"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome do campo para formulários nativos"
+      },
+      {
+        "name": "showValue",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Exibe o conteúdo do slot default no centro do knob"
+      },
+      {
+        "name": "brand",
+        "type": "KnobBrand",
+        "controlHint": "picker-brand",
+        "description": "Contexto de brand DSS",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "number",
+        "description": "Emitido quando o valor muda durante interação (para v-model)"
+      },
+      {
+        "name": "change",
+        "payload": "number",
+        "description": "Emitido quando a interação finaliza (mouse/touch release)"
+      },
+      {
+        "name": "drag-value",
+        "payload": "number",
+        "description": "Emitido continuamente durante drag com o valor em tempo real"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo exibido no centro do knob."
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "modelValue": 50,
+        "min": 0,
+        "max": 100
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "56px"
+      },
+      "minWidth": {
+        "value": "56px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "fill",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "stroke-width",
+          "token": null,
+          "value": "3",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-iteration-count",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "stroke",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "stroke",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "fill",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "filter",
+          "token": null,
+          "value": "brightness(0.95)",
+          "source": "2-composition/_base.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-focus-ring-offset",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "filter",
+          "token": null,
+          "value": "brightness(0.9)",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "other",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-ring-offset",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Incremento/decremento do valor operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "slider",
+      "states": [
+        "aria-valuenow",
+        "aria-valuemin",
+        "aria-valuemax"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowUp",
+        "action": "incrementar o valor"
+      },
+      {
+        "key": "ArrowDown",
+        "action": "decrementar o valor"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssKnob.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/knob.types.ts",
+    "docs": {
+      "normative": "DssKnob.md",
+      "api": "DSSKNOB_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssKnob.example.vue",
+    "tests": "DssKnob.test.js",
+    "seal": "docs/Compliance/seals/DssKnob/DSSKNOB_SELO_v2.2.md"
+  }
+}

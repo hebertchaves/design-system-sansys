@@ -221,5 +221,49 @@
       }
     }
   },
-  "previewGroup": "stepper"
+  "previewGroup": "stepper",
+  "tagline": "Etapa individual dentro de um fluxo de passos (stepper).",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-current",
+        "aria-disabled"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "navegar para a etapa (quando headerNav)"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação entre etapas operável por teclado quando habilitada.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

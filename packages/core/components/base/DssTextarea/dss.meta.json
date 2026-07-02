@@ -131,5 +131,58 @@
     "demoContent": "Placeholder 'Escreva sua mensagem aqui'",
     "demoSlots": null
   },
-  "previewGroup": "form-campos"
+  "previewGroup": "form-campos",
+  "classification": "Action",
+  "tagline": "Campo de texto de múltiplas linhas para entradas longas.",
+  "a11y": {
+    "aria": {
+      "role": "textbox",
+      "states": [
+        "aria-required",
+        "aria-invalid",
+        "aria-label",
+        "aria-multiline"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "mover foco para o campo"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome/estado via aria-label, aria-required, aria-invalid.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Operável por teclado (foco, digitação, limpar).",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

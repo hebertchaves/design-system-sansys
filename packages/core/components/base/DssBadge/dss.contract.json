@@ -1,0 +1,767 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssBadge",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Badge",
+    "tagline": "Selo compacto que sinaliza status, contagem ou destaque sobre outro elemento.",
+    "category": "Compact Control nao interativo",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssChip"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-01-27",
+    "mode": "Final",
+    "sealPath": "docs/Compliance/seals/DssBadge/DSS_BADGE_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string | number",
+        "controlHint": "text",
+        "description": "Conteúdo do badge (alternativa ao slot default)"
+      },
+      {
+        "name": "color",
+        "type": "BadgeColor",
+        "controlHint": "picker-color",
+        "description": "Cor semântica do badge",
+        "validValues": [
+          "primary",
+          "secondary",
+          "tertiary",
+          "accent",
+          "positive",
+          "negative",
+          "warning",
+          "info"
+        ]
+      },
+      {
+        "name": "textColor",
+        "type": "string | null",
+        "controlHint": "text",
+        "description": "Cor customizada do texto (sobrescreve cor padrão)"
+      },
+      {
+        "name": "transparent",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Badge transparente (apenas texto colorido)"
+      },
+      {
+        "name": "outline",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Badge com outline (borda colorida)"
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Badge arredondado (border-radius aumentado)"
+      },
+      {
+        "name": "multiLine",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Permite múltiplas linhas de texto"
+      },
+      {
+        "name": "floating",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Badge flutuante (posicionamento absoluto)"
+      },
+      {
+        "name": "align",
+        "type": "BadgeAlign | null",
+        "controlHint": "segmented",
+        "description": "Alinhamento vertical quando não flutuante",
+        "validValues": [
+          "top",
+          "middle",
+          "bottom"
+        ]
+      },
+      {
+        "name": "brand",
+        "type": "BadgeBrand | null",
+        "controlHint": "picker-brand",
+        "description": "Brand override (Hub, Water, Waste)",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Label de acessibilidade customizado para screen readers"
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo principal do badge"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "color": "primary"
+      },
+      "slots": {
+        "default": "99+"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "24px"
+      },
+      "minWidth": {
+        "value": "24px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "vertical-align",
+          "token": null,
+          "value": "middle",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-compact-control-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "3-variants/_multi-line.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "ellipsis",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "vertical-align",
+          "token": null,
+          "value": "top",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "vertical-align",
+          "token": null,
+          "value": "baseline",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_transparent.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "-8px",
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "right",
+          "token": null,
+          "value": "-8px",
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "10",
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-spacing-2_5",
+          "value": null,
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-2_5",
+          "value": null,
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "-6px",
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "right",
+          "token": null,
+          "value": "-6px",
+          "source": "3-variants/_floating.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "3-variants/_rounded.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_transparent.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "normal",
+          "source": "3-variants/_multi-line.scss"
+        },
+        {
+          "property": "word-break",
+          "token": null,
+          "value": "break-word",
+          "source": "3-variants/_multi-line.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-tight",
+          "value": null,
+          "source": "3-variants/_multi-line.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_multi-line.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": null,
+          "value": "700",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "2px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": null,
+          "value": "50%",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "help",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "3px solid Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-sm",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "default",
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-duration-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Rótulo acessível exposto via aria-label quando o conteúdo é apenas visual.",
+        "verifiedBy": "aria"
+      }
+    ],
+    "aria": {
+      "role": "status",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssBadge.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_floating.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/badge.types.ts",
+    "docs": {
+      "normative": "DssBadge.md",
+      "api": "DSSBADGE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssBadge.example.vue",
+    "tests": "DssBadge.test.js",
+    "seal": "docs/Compliance/seals/DssBadge/DSS_BADGE_SELO_v2.2.md"
+  }
+}

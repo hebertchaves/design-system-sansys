@@ -11,8 +11,10 @@
 
 ## Frentes desta onda (cadeia de fonte única / contraste)
 
-- 🔴 **(a) Escalar `dss.contract.json`** — 2/76 base emitidos (DssInput, DssSelect); faltam 74.
-  Runbook: `HANDOFF_ESCALA_CONTRATOS.md`. Recomendado: **chat novo**, grupos sequenciais por família.
+- 🔴 **(a) Escalar `dss.contract.json`** — **25/76** base emitidos; faltam **51**. Runbook:
+  `HANDOFF_ESCALA_CONTRATOS.md`. Grupos sequenciais por família. Relatórios em `relatorios/CONTRATOS_*.md`.
+  - ✅ **Form/Input (23/23)** — `CONTRATOS_FORM_INPUT.md`. Todos schema-válidos, 0 gaps, a11y verificada.
+  - ⬜ Faltam: Feedback/Status (1), Navigation (9), Overlay (1), Data Display (3), Layout (10), Outros (27).
 - ⏳ **(c1) Contraste WCAG da paleta default** — auditoria + tabela de rotas (A escurecer / B texto escuro)
   prontas; **aguardando decisão da equipe** por cor. NÃO tocar `globals.scss` até o retorno.
   `[[project_color_ramp_a11y]]`. (c0 — reconciliação da rampa com o Figma — **feito**, commit `6a4baa6`.)
@@ -32,6 +34,10 @@
   no label; **demais componentes ainda usam o token frouxo**. → **tratar junto com (c1)** (mesmo tema).
 - 🟡 **Cobertura de testes: `DssUploader`** — único componente base sem `*.test.js` (89/89 exceto ele;
   CadrisCard/TestPageComplexity são fixtures fora de escopo). `[[project_cobertura_testes]]`.
+- 🟡 **Focus ring ausente no CSS próprio de 6 interativos** — Checkbox, Radio, Toggle, Field, Range,
+  Slider não declaram anel de foco no SCSS do componente; visibilidade de foco depende de regra
+  global/Quasar. Risco WCAG 2.4.7 se a global falhar/for sobrescrita. Achado ao emitir contratos
+  (Form/Input). **Verificar na Onda Higiene.** `relatorios/CONTRATOS_FORM_INPUT.md`.
 - 🟡 **Higiene `!important` — estados não-default** — disabled/erro/hover reais não são validáveis na
   sandbox (injeção sintética de classe Quasar dá artefato). Risco residual baixo. `[[project_important_audit]]`.
 - 🟡 **`tokens/brand/index.scss` = código morto (T4)** — ~149 `!important` inócuos (arquivo não importado)

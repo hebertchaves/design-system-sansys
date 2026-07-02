@@ -136,5 +136,50 @@
     "demoContent": "Range de 25 a 75",
     "demoSlots": null
   },
-  "previewGroup": "form-controles"
+  "previewGroup": "form-controles",
+  "classification": "Action",
+  "tagline": "Controle deslizante de intervalo com dois valores (mínimo e máximo).",
+  "a11y": {
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-valuenow",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowRight",
+        "action": "aumentar o valor da alça focada"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "diminuir o valor da alça focada"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ajuste de ambas as alças operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Valores expostos via aria-valuenow; nome via aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

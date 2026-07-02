@@ -9,7 +9,7 @@
   "goldenContext": "DssCheckbox",
   "goldenContextSecondary": "DssChip",
   "category": "Compact Control interativo",
-  "phase": "Fase 1",
+  "phase": 1,
   "classification": "Form / Selection",
   "hasReservations": false,
   "createdDate": "2026-02-04",
@@ -78,5 +78,59 @@
     "demoContent": "Label 'Opção'",
     "demoSlots": null
   },
-  "previewGroup": "form-controles"
+  "previewGroup": "form-controles",
+  "tagline": "Botão de opção para escolha única dentro de um grupo.",
+  "a11y": {
+    "aria": {
+      "role": "radio",
+      "states": [
+        "aria-checked",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowDown",
+        "action": "mover para a próxima opção"
+      },
+      {
+        "key": "Space",
+        "action": "selecionar a opção focada"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Seleção e navegação operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "::before",
+          "property": "min-height"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Estado via aria-checked; nome via label/aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

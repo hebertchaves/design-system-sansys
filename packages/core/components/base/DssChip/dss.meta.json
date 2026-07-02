@@ -103,5 +103,74 @@
     "demoContent": "Label 'Chip'",
     "demoSlots": null
   },
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "classification": "Compact",
+  "tagline": "Elemento compacto que representa entrada, atributo ou ação removível.",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-selected",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ativar o chip clicável"
+      },
+      {
+        "key": "Delete",
+        "action": "remover o chip removível"
+      },
+      {
+        "key": "Backspace",
+        "action": "remover o chip removível"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ativação e remoção operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "::before",
+          "property": "min-height"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome via label/aria-label; ação de remover via aria-label dedicado.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

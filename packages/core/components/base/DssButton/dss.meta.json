@@ -173,5 +173,49 @@
       "--dss-gradient-glossy-active"
     ]
   },
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "tagline": "Aciona uma ação primária ou secundária do formulário ou da tela.",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-disabled",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ativar o botão"
+      },
+      {
+        "key": "Space",
+        "action": "ativar o botão"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ativação por Enter/Espaço com foco por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome acessível via label/aria-label; estado via aria-disabled.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }
