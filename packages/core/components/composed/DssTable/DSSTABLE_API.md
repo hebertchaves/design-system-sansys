@@ -29,7 +29,7 @@ Motor: **QTable** (Quasar). CSS global (sem scoped) — DOM do QTable pode ser r
 | `hide-header` | `boolean` | `undefined` | Oculta o cabeçalho da tabela |
 | `rows-per-page-options` | `number[]` | `[10, 25, 50]` | Opções de quantidade de linhas por página |
 
-### Props bloqueadas (não usar)
+## Props bloqueadas (não usar)
 
 | Prop QTable | Motivo |
 |---|---|

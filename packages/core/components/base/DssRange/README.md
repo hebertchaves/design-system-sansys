@@ -74,6 +74,7 @@ const priceRange = ref({ min: 100, max: 500 })
 | `hint` | `string` | `''` | Texto de ajuda (exibido quando não há erro) |
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Contexto de brand |
 | `ariaLabel` | `string` | — | Rótulo para leitores de tela (WCAG 1.3.1) |
+| `tabindex` | `number \| string \| null` | — | Índice de tabulação dos thumbs do range |
 
 ## Eventos
 

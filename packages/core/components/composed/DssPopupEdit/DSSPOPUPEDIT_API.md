@@ -4,7 +4,7 @@
 
 | Prop | Tipo | Padrão | Descrição |
 |------|------|--------|-----------|
-| `modelValue` (v-model) | `unknown` | `undefined` | Valor em edição. **Não é visibilidade** — controla o dado editado. |
+| `modelValue` | `unknown` | `undefined` | Valor em edição (via `v-model`). **Não é visibilidade** — controla o dado editado. |
 | `title` | `string` | `undefined` | Cabeçalho do popup (usa `.q-item-label--header` do Quasar internamente). |
 | `buttons` | `boolean` | `true` | Exibe botões de Salvar/Cancelar. Padrão DSS é `true` para ação explícita. |
 | `labelSet` | `string` | `'Salvar'` | Rótulo do botão de confirmação. |
@@ -22,7 +22,7 @@
 | `touchPosition` | `boolean` | `false` | Ancora o popup na posição do toque (mobile). |
 | `disable` | `boolean` | `false` | Desabilita a abertura do popup ao clicar no elemento pai. |
 
-### Props bloqueadas (não repassadas ao QPopupEdit)
+## Props bloqueadas (não repassadas ao QPopupEdit)
 
 | Prop Quasar | Motivo do bloqueio |
 |-------------|-------------------|

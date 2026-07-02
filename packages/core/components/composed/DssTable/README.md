@@ -59,6 +59,9 @@ const rows = [
 | `separator` | `'horizontal' \| 'vertical' \| 'cell' \| 'none'` | `'horizontal'` | Tipo de separador |
 | `virtual-scroll` | `boolean` | `undefined` | Renderização virtual para grandes datasets |
 | `no-data-label` | `string` | `'Nenhum dado disponível'` | Mensagem para tabela vazia |
+| `no-results-label` | `string` | `'Nenhum resultado encontrado...'` | Mensagem quando o filtro não retorna resultados |
+| `hide-bottom` | `boolean` | `undefined` | Oculta a barra inferior (paginação) |
+| `hide-header` | `boolean` | `undefined` | Oculta o cabeçalho da tabela |
 | `rows-per-page-options` | `number[]` | `[10, 25, 50]` | Opções de itens por página |
 
 ## Slots Principais
@@ -84,6 +87,7 @@ const rows = [
 | `selection` | `{ rows, added, keys }` | Linhas selecionadas/desmarcadas |
 | `row-click` | `(evt, row, index)` | Clique em uma linha |
 | `row-dblclick` | `(evt, row, index)` | Duplo clique em uma linha |
+| `row-contextmenu` | `(evt, row, index)` | Clique com botão direito (menu de contexto) em uma linha |
 
 ## Estados Visuais
 
