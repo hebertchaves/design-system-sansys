@@ -20,7 +20,7 @@
 | `name` | `String` | `undefined` | Atributo `name` para hidden input em formulários. |
 | `tabindex` | `String \| Number` | `undefined` | Índice de tabulação. |
 
-### Props Bloqueadas
+## Props Bloqueadas
 
 | Prop Quasar | Motivo do Bloqueio |
 |-------------|--------------------|

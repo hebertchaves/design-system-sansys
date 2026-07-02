@@ -225,27 +225,27 @@ export interface BtnDropdownEmits {
   /**
    * Emitido ao clicar no botão principal (modo split).
    */
-  click: [event: MouseEvent]
+  (e: 'click', event: MouseEvent): void
 
   /**
    * Emitido quando o dropdown é aberto.
    */
-  show: []
+  (e: 'show'): void
 
   /**
    * Emitido quando o dropdown é fechado.
    */
-  hide: []
+  (e: 'hide'): void
 
   /**
    * Emitido antes do dropdown abrir.
    */
-  'before-show': []
+  (e: 'before-show'): void
 
   /**
    * Emitido antes do dropdown fechar.
    */
-  'before-hide': []
+  (e: 'before-hide'): void
 }
 
 /**

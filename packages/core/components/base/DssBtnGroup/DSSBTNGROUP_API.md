@@ -45,7 +45,7 @@
 |------|------|---------|-----------|
 | `ariaLabel` | `String` | `undefined` | Valor do atributo `aria-label` no container `role="group"`. Recomendado quando o grupo não possui label visual. |
 
-### Props Bloqueadas (Não Suportadas)
+## Props Bloqueadas (Não Suportadas)
 
 | Prop Quasar | Motivo do Bloqueio |
 |------------|-------------------|

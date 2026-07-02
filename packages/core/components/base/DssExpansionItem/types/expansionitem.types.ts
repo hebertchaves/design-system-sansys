@@ -24,11 +24,11 @@ export interface ExpansionItemProps {
 }
 
 export interface ExpansionItemEmits {
-  'update:modelValue': [value: boolean]
-  'show': []
-  'hide': []
-  'before-show': []
-  'before-hide': []
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'show'): void
+  (e: 'hide'): void
+  (e: 'before-show'): void
+  (e: 'before-hide'): void
 }
 
 export interface ExpansionItemSlots {

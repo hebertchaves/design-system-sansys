@@ -23,7 +23,7 @@
 | `show-value` | `boolean` | `true` | Exibe o valor numérico no centro do knob. |
 | `brand` | `'hub' \| 'water' \| 'waste'` | — | Cor do arco via sistema de marca DSS. |
 
-### Props Bloqueadas (não expor ao consumer)
+## Props Bloqueadas (não expor ao consumer)
 
 | Prop Quasar | Motivo |
 |-------------|--------|

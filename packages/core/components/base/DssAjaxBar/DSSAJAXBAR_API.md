@@ -11,7 +11,7 @@
 | `hijackFilter` | `Function` | `null` (QAjaxBar) | — | Função para filtrar quais requisições são interceptadas |
 | `brand` | `AjaxBarBrand` | — | — | Contexto de brand Sansys |
 
-### Props Bloqueadas (não expostas ao consumidor)
+## Props Bloqueadas (não expostas ao consumidor)
 
 | Prop Quasar | Motivo do Bloqueio |
 |-------------|-------------------|

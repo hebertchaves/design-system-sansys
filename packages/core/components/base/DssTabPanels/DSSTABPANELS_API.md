@@ -14,7 +14,7 @@
 | `infinite` | `boolean` | `false` | Não | Ao chegar no último painel, retorna ao primeiro (e vice-versa). |
 | `keepAlive` | `boolean` | `false` | Não | Mantém o estado dos painéis inativos em memória via Vue KeepAlive. Útil para formulários e outros estados que devem ser preservados ao alternar entre abas. |
 
-### Props Bloqueadas (Governança DSS)
+## Props Bloqueadas (Governança DSS)
 
 | Prop Quasar | Razão do Bloqueio |
 |-------------|-------------------|

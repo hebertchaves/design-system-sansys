@@ -27,7 +27,7 @@
 | `name` | `String` | `undefined` | Não | Nome do campo oculto para formulários nativos |
 | `tabindex` | `String \| Number` | `undefined` | Não | Ordem de foco |
 
-### Props Bloqueadas (não passadas ao QTime)
+## Props Bloqueadas (não passadas ao QTime)
 
 | Prop | Motivo do Bloqueio |
 |------|--------------------|

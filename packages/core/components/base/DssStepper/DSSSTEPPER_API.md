@@ -13,7 +13,7 @@
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Marca Sansys — aplica [data-brand] e propaga acento visual aos DssStep filhos |
 | `ariaLabel` | `string \| undefined` | `undefined` | Label acessível para o stepper (recomendado quando não há título visual) |
 
-### Props Bloqueadas (Governança DSS)
+## Props Bloqueadas (Governança DSS)
 
 | Prop | Razão do Bloqueio |
 |------|------------------|

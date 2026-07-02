@@ -16,7 +16,7 @@
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Acento de marca no header quando expandido |
 | `ariaLabel` | `string` | — | Label acessível para o botão toggle do header |
 
-### Props Bloqueadas (QExpansionItem API)
+## Props Bloqueadas (QExpansionItem API)
 
 | Prop | Justificativa |
 |------|---------------|

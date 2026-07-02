@@ -187,15 +187,15 @@ export interface PopupProxyProps {
  */
 export interface PopupProxyEmits {
   /** Sincronização bidirecional de v-model:open */
-  'update:open': [value: boolean]
+  (e: 'update:open', value: boolean): void
   /** Emitido antes do popup abrir (antes da transição de entrada) */
-  beforeShow: [evt: Event]
+  (e: 'beforeShow', evt: Event): void
   /** Emitido quando o popup termina de abrir */
-  show: [evt: Event]
+  (e: 'show', evt: Event): void
   /** Emitido antes do popup fechar (antes da transição de saída) */
-  beforeHide: [evt: Event]
+  (e: 'beforeHide', evt: Event): void
   /** Emitido quando o popup termina de fechar */
-  hide: [evt: Event]
+  (e: 'hide', evt: Event): void
 }
 
 /**

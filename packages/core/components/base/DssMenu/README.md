@@ -38,14 +38,14 @@ Overlay de navegação flutuante para exibição de ações e opções contextua
 | `self` | `MenuPosition` | — | Ponto de alinhamento do menu |
 | `offset` | `[number, number]` | — | Deslocamento `[x, y]` em pixels |
 
-### Props Bloqueadas
+## Props Bloqueadas
 
 | Prop QMenu | Motivo |
 |------------|--------|
 | `dark` | Modo escuro via `[data-theme="dark"]` global |
 | `square` | Cantos quadrados violam `--dss-radius-md` |
 
-### Props via `$attrs` (exemplos)
+## Props via `$attrs` (exemplos)
 
 | Prop | Descrição |
 |------|-----------|

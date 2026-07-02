@@ -28,7 +28,7 @@
 | `abortAriaLabel` | `String` | `'Cancelar upload'` | aria-label do botão de cancelar |
 | `clearAriaLabel` | `String` | `'Remover todos os arquivos da fila'` | aria-label do botão de limpar |
 
-### Props Bloqueadas (não expostas ao consumidor)
+## Props Bloqueadas (não expostas ao consumidor)
 
 | Prop QUploader | Motivo do Bloqueio |
 |---|---|

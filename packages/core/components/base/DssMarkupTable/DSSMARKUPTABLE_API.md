@@ -12,7 +12,7 @@
 | `wrapCells` | `Boolean` | `false` | Permite quebra de texto em múltiplas linhas nas células |
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Identidade visual de marca no cabeçalho |
 
-### Props Bloqueadas (não expostas)
+## Props Bloqueadas (não expostas)
 
 | Prop Quasar | Motivo do Bloqueio |
 |-------------|-------------------|

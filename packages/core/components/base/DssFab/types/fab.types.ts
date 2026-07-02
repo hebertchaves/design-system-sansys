@@ -186,32 +186,32 @@ export interface FabEmits {
   /**
    * Emitido quando o estado aberto/fechado muda.
    */
-  'update:modelValue': [value: boolean]
+  (e: 'update:modelValue', value: boolean): void
 
   /**
    * Emitido ao clicar no trigger do FAB.
    */
-  click: [event: MouseEvent]
+  (e: 'click', event: MouseEvent): void
 
   /**
    * Emitido quando as ações são exibidas.
    */
-  show: []
+  (e: 'show'): void
 
   /**
    * Emitido quando as ações são ocultadas.
    */
-  hide: []
+  (e: 'hide'): void
 
   /**
    * Emitido antes das ações serem exibidas.
    */
-  'before-show': []
+  (e: 'before-show'): void
 
   /**
    * Emitido antes das ações serem ocultadas.
    */
-  'before-hide': []
+  (e: 'before-hide'): void
 }
 
 /**
