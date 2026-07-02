@@ -46,6 +46,19 @@ function findCompDir(name) {
   return null
 }
 
+// Rollout incremental: o gate só enforça componentes que JÁ têm dss.contract.json
+// (à medida que o backfill escala, cada componente entra no gate automaticamente).
+function findComponentsWithContract() {
+  const out = []
+  for (const base of BASE_DIRS) {
+    if (!fs.existsSync(base)) continue
+    for (const e of fs.readdirSync(base, { withFileTypes: true })) {
+      if (e.isDirectory() && exists(path.join(base, e.name, 'dss.contract.json'))) out.push(e.name)
+    }
+  }
+  return out.sort()
+}
+
 // ── API ← types.ts (TS compiler) ─────────────────────────────────────────────
 const jsDocFirst = (m, sf) => {
   for (const r of ts.getLeadingCommentRanges(sf.text, m.pos) || []) {
@@ -303,25 +316,37 @@ function emit(name) {
 }
 
 // ── run ──────────────────────────────────────────────────────────────────────
-const argv = process.argv.slice(2)
-const name = argv.find(a => !a.startsWith('--'))
-if (!name) { console.error('Uso: node scripts/emit-contract.mjs <DssComponente> [--write] [--strict]'); process.exit(2) }
-
-const { contract, gaps } = emit(name)
-const ajv = new Ajv({ allErrors: true, strict: false })
-const valid = ajv.compile(SCHEMA)(contract)
-const errors = valid ? [] : ajv.compile(SCHEMA).errors
-
-console.log(`\n=== Emissão do contrato: ${name} ===`)
-console.log(`Schema válido: ${valid ? 'SIM ✅' : 'NÃO ❌'}`)
-if (!valid) for (const e of errors.slice(0, 12)) console.log(`  ✗ ${e.instancePath || '(root)'} ${e.message}`)
-console.log(`\nGaps não-bloqueantes (${gaps.length}):`)
-for (const g of gaps) console.log(`  ⚠️ ${g}`)
-console.log(`\nResumo: ${contract.api.props.length} props · ${contract.api.slots.length} slots · ${contract.api.emits.length} emits · ${Object.keys(contract.visual.states).length} estados · ${contract.tokens.instances.length} tokens · a11y ${contract.a11y.wcag.length} critérios`)
-
-if (argv.includes('--write')) {
-  const out = path.join(findCompDir(name), 'dss.contract.json')
-  fs.writeFileSync(out, JSON.stringify(contract, null, 2) + '\n')
-  console.log(`\nGravado: ${path.relative(ROOT, out)}`)
+const argv    = process.argv.slice(2)
+const write   = argv.includes('--write')
+const strict  = argv.includes('--strict')
+const all     = argv.includes('--all')
+let   names   = argv.filter(a => !a.startsWith('--'))
+if (all) names = findComponentsWithContract()
+if (!names.length) {
+  console.error('Uso: node scripts/emit-contract.mjs <Dss...> | --all  [--write] [--strict]')
+  process.exit(2)
 }
-if (argv.includes('--strict') && (!valid || gaps.some(g => /REPROVADA/.test(g)))) process.exit(1)
+
+const validate = new Ajv({ allErrors: true, strict: false }).compile(SCHEMA)
+let anyFail = false
+
+for (const name of names) {
+  const { contract, gaps } = emit(name)
+  const valid = validate(contract)
+  const anchorFail = gaps.some(g => /REPROVADA/.test(g))
+  const fail = !valid || anchorFail
+
+  console.log(`\n=== ${name} === ${valid ? '✅ schema' : '❌ schema'}${anchorFail ? ' · ❌ âncora a11y' : ''}`)
+  if (!valid) for (const e of (validate.errors || []).slice(0, 8)) console.log(`  ✗ ${e.instancePath || '(root)'} ${e.message}`)
+  for (const g of gaps) console.log(`  ⚠️ ${g}`)
+  console.log(`  ${contract.api.props.length} props · ${contract.api.slots.length} slots · ${contract.api.emits.length} emits · ${Object.keys(contract.visual.states).length} estados · ${contract.tokens.instances.length} tokens · a11y ${contract.a11y.wcag.length}`)
+
+  if (write) {
+    fs.writeFileSync(path.join(findCompDir(name), 'dss.contract.json'), JSON.stringify(contract, null, 2) + '\n')
+    console.log(`  → gravado`)
+  }
+  if (fail) anyFail = true
+}
+
+console.log(`\n${anyFail ? '❌' : '✅'} ${names.length} componente(s) processado(s)${anyFail ? ' — há contrato inválido / âncora reprovada' : ''}.`)
+if (strict && anyFail) process.exit(1)

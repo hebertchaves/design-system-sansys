@@ -78,3 +78,15 @@ type-check:
   # docs/governance/HANDOFF_TYPECHECK_BACKLOG.md.
   script:
     - cd packages/core && npm run type-check
+
+contracts:gate:
+  stage: quality
+  needs: ["install"]
+  # GATE do contrato derivado (dss.contract.json): re-emite todos os componentes
+  # que JÁ têm contrato e valida contra o schema + verifica âncoras a11y (css via
+  # token-math/CSS compilado, aria via prop, test via *.test.js). Bloqueia se um
+  # contrato ficar inválido ou uma âncora a11y reprovar. Rollout incremental: um
+  # componente entra no gate quando ganha seu dss.contract.json. Ver
+  # docs/governance/DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md (passo 2 + itens N/O).
+  script:
+    - npm run contracts:gate

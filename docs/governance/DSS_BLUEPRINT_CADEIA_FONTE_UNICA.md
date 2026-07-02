@@ -394,6 +394,10 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
    precisa no `meta` para emitir contrato completo): `classification` + `tagline` + bloco `a11y` (claims
    com `verifiedBy`). Riscos p/ escala: trio de overlays no iframe; parser de `displayName` com siglas
    (`DssSPCReport`) + override; `tokens[]` legado em migração de 2 fases.
+   **✅ Gate LIGADO (item d):** `emit-contract.mjs --all/--strict` + npm `contracts:emit`/`contracts:gate`;
+   **pre-commit** re-emite+valida+re-stage os componentes afetados que JÁ têm contrato (schema/emissor
+   alterado → re-emite todos); **GitLab CI** job `contracts:gate`. Rollout **incremental** (um componente
+   entra no gate quando ganha seu `dss.contract.json`). Bloqueia contrato inválido OU âncora a11y reprovada.
 4. ✅ **Preview Frame** (`apps/sandbox/src/preview/`) — iframe + `postMessage` + snippet dos knobs.
    **Overlay containment PROVADO no fluxo real** com **DssSelect**: ao abrir o dropdown, o QMenu
    teleporta **DENTRO** do iframe (`menusInIframeDoc=1`, `menusInMainDoc=0`, ancorado no body do iframe).

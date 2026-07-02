@@ -148,6 +148,43 @@ if echo "$STAGED" | grep -qE 'apps/sandbox/src/DemoRenderer\.vue|packages/core/c
   fi
 fi
 
+# ── 8. Contrato derivado (emit-contract) — GATE incremental ──────────────────
+# Só enforça componentes que JÁ têm dss.contract.json (rollout: entram no gate à
+# medida que o backfill de classification/tagline/a11y avança). Re-emite + valida
+# (--strict: bloqueia contrato inválido OU âncora a11y reprovada) + re-stage.
+# Schema/emissor/extratores alterados → re-emite TODOS os contratos.
+if echo "$STAGED" | grep -qE 'scripts/(emit-contract|extract-css-states|wcag-kit)\.mjs|docs/governance/dss\.contract\.schema\.json'; then
+  echo "🔄 Schema/emissor de contrato alterado — re-emitindo TODOS os contratos..."
+  node scripts/emit-contract.mjs --all --write --strict
+  if [ $? -ne 0 ]; then
+    echo "❌ Gate de contrato: contrato inválido ou âncora a11y reprovada."
+    exit 1
+  fi
+  git add packages/core/components/*/*/dss.contract.json 2>/dev/null
+  echo "✅ Contratos regenerados, validados e staged."
+else
+  CONTRACT_COMPS=$(echo "$STAGED" | sed -nE 's#^packages/core/components/[^/]+/(Dss[A-Za-z0-9]+)/(types/.+\.types\.ts|.+\.scss|dss\.meta\.json)$#\1#p' | sort -u)
+  GATED=""
+  for c in $CONTRACT_COMPS; do
+    d=$(find packages/core/components -type d -name "$c" 2>/dev/null | head -1)
+    [ -n "$d" ] && [ -f "$d/dss.contract.json" ] && GATED="$GATED $c"
+  done
+  GATED=$(echo "$GATED" | xargs)
+  if [ -n "$GATED" ]; then
+    echo "🔄 Fonte de contrato alterada — re-emitindo: $GATED"
+    node scripts/emit-contract.mjs $GATED --write --strict
+    if [ $? -ne 0 ]; then
+      echo "❌ Gate de contrato: contrato inválido ou âncora a11y reprovada."
+      exit 1
+    fi
+    for c in $GATED; do
+      d=$(find packages/core/components -type d -name "$c" 2>/dev/null | head -1)
+      [ -n "$d" ] && git add "$d/dss.contract.json"
+    done
+    echo "✅ Contrato(s) regenerado(s), validado(s) e staged."
+  fi
+fi
+
 # ── 4. Regressão visual Quasar↔DSS (testes estáticos) ────────────────────────
 if echo "$STAGED" | grep -qE 'apps/sandbox/public/|packages/core/themes/'; then
   echo "🎨 Validando isolamento Quasar↔DSS (regressão estática)..."
