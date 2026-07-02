@@ -1,0 +1,192 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPageSticky",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Page Sticky",
+    "tagline": "Posiciona conteúdo de forma fixa sobre a região de página.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssHeader"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssPageSticky/DSSPAGESTICKY_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "position": "bottom-right",
+        "offset": [
+          8,
+          8
+        ]
+      },
+      "slots": {
+        "default": [
+          {
+            "component": "DssButton",
+            "props": {
+              "round": true,
+              "color": "primary",
+              "icon": "keyboard_arrow_up",
+              "size": "sm"
+            }
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-sticky",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-2",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-lg",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "static",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "elevation",
+      "z-index"
+    ],
+    "instances": [
+      {
+        "name": "--dss-z-index-sticky",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Fixa conteúdo em uma posição da região de página.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPageSticky.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/pagesticky.types.ts",
+    "docs": {
+      "normative": "DssPageSticky.md",
+      "api": "DSSPAGESTICKY_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPageSticky.example.vue",
+    "tests": "DssPageSticky.test.js",
+    "seal": "docs/Compliance/seals/DssPageSticky/DSSPAGESTICKY_SELO_v2.2.md"
+  }
+}

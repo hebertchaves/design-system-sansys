@@ -14,7 +14,7 @@
   "goldenContextStructuralJustification": "Container pai semântico direto do DssPage. Gerencia os offsets externos (--q-header-offset etc.) que permitem o cálculo de min-height do DssPage.",
   "category": "Layout Global — Container de conteúdo principal com min-height dinâmica",
   "phase": 2,
-  "classification": "Container de conteúdo estrutural não-interativo de Nível 4 — terminal da hierarquia de layout",
+  "classification": "Visual",
   "compositionLevel": "Nível 4",
   "family": "Layout Global",
   "quasarBase": "QPage",
@@ -181,5 +181,32 @@
       }
     ]
   },
-  "previewGroup": "layout"
+  "previewGroup": "layout",
+  "classificationNote": "Container de conteúdo estrutural não-interativo de Nível 4 — terminal da hierarquia de layout",
+  "tagline": "Região de conteúdo principal da página dentro do layout.",
+  "a11y": {
+    "aria": {
+      "role": "main",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Marco de conteúdo principal (main) da estrutura de página.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

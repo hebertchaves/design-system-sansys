@@ -14,7 +14,7 @@
   "goldenContextSecondaryJustification": "Container pai semântico e único contexto de uso válido do DssToolbarTitle. Gerencia brand e propaga [data-brand] para herança de cores.",
   "category": "Container tipográfico para barra de ferramentas",
   "phase": 2,
-  "classification": "Elemento tipográfico estrutural não-interativo — wrapper DSS governado sobre QToolbarTitle",
+  "classification": "Visual",
   "quasarBase": "QToolbarTitle",
   "props": {
     "DssToolbarTitle": [
@@ -138,5 +138,26 @@
       "default": "Título da Barra"
     }
   },
-  "previewGroup": "layout"
+  "previewGroup": "layout",
+  "classificationNote": "Elemento tipográfico estrutural não-interativo — wrapper DSS governado sobre QToolbarTitle",
+  "tagline": "Título textual exibido dentro de um DssToolbar.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

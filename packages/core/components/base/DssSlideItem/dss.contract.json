@@ -1,0 +1,325 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssSlideItem",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Slide Item",
+    "tagline": "Item de lista com ações reveladas por gesto de deslizar.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssPullToRefresh"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssSlideItem/DSSSLIDEITEM_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita o gesto de swipe"
+      },
+      {
+        "name": "leftColor",
+        "type": "DssSlideItemActionColor",
+        "controlHint": "picker-color",
+        "description": "Cor semântica DSS da área revelada ao deslizar para a direita (slot left)",
+        "validValues": [
+          "error",
+          "success",
+          "warning",
+          "info"
+        ]
+      },
+      {
+        "name": "rightColor",
+        "type": "DssSlideItemActionColor",
+        "controlHint": "picker-color",
+        "description": "Cor semântica DSS da área revelada ao deslizar para a esquerda (slot right)",
+        "validValues": [
+          "error",
+          "success",
+          "warning",
+          "info"
+        ]
+      }
+    ],
+    "emits": [
+      {
+        "name": "action",
+        "payload": "DssSlideItemActionDetails"
+      },
+      {
+        "name": "slide",
+        "payload": "DssSlideItemSlideDetails"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo principal do item (sempre visível)"
+      },
+      {
+        "name": "left",
+        "scope": null,
+        "description": "Ações reveladas ao deslizar para a direita"
+      },
+      {
+        "name": "right",
+        "scope": null,
+        "description": "Ações reveladas ao deslizar para a esquerda"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": [
+          {
+            "component": "DssItemSection",
+            "children": [
+              {
+                "component": "DssItemLabel",
+                "children": "Deslize para ver ações"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "56px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-slide-item-left-bg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-slide-item-right-bg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "animation-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "HighlightText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-slide-item-left-bg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gap-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-slide-item-right-bg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Item com ações reveladas por deslize; ações laterais rotuladas.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssSlideItem.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/slideitem.types.ts",
+    "docs": {
+      "normative": "DssSlideItem.md",
+      "api": "DSSSLIDEITEM_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssSlideItem.example.vue",
+    "tests": "DssSlideItem.test.js",
+    "seal": "docs/Compliance/seals/DssSlideItem/DSSSLIDEITEM_SELO_v2.2.md"
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssLayout",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Layout",
+    "tagline": "Container raiz que organiza header, footer, drawer e page.",
+    "category": "Layout Global",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssCard",
+    "goldenContext": "DssHeader"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-20",
+    "mode": "Auditoria DSS v2.5 — Aprovado",
+    "sealPath": "docs/Compliance/seals/DssLayout/DssLayout_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "style": "height:200px;position:relative;overflow:hidden;display:block"
+      },
+      "slots": {
+        "default": [
+          {
+            "component": "DssHeader",
+            "props": {
+              "elevated": true
+            },
+            "children": [
+              {
+                "component": "DssToolbar",
+                "children": [
+                  {
+                    "component": "DssToolbarTitle",
+                    "children": "Layout DSS"
+                  },
+                  {
+                    "component": "DssButton",
+                    "props": {
+                      "flat": true,
+                      "icon": "menu",
+                      "dense": true
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "DssPageContainer",
+            "children": [
+              {
+                "component": "DssPage",
+                "props": {
+                  "padding": true
+                },
+                "children": [
+                  {
+                    "html": "<p style='font-size:11px;margin:0;color:var(--dss-text-subtle)'>Conteúdo da página</p>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "DssFooter",
+            "children": [
+              {
+                "component": "DssToolbar",
+                "children": [
+                  {
+                    "component": "DssToolbarTitle",
+                    "children": "Footer"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "background-color",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "#fff",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "#000",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color"
+    ],
+    "instances": [
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Container raiz que organiza os marcos de layout (header/footer/drawer/page).",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssLayout.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/layout.types.ts",
+    "docs": {
+      "normative": "DssLayout.md",
+      "api": "DSSLAYOUT_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssLayout.example.vue",
+    "tests": "DssLayout.test.js",
+    "seal": "docs/Compliance/seals/DssLayout/DssLayout_SELO_v2.2.md"
+  }
+}

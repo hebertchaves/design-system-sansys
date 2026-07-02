@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssLinearProgress",
-  "classification": {
-    "type": "Indicador de Progresso circular não interativo",
-    "category": "Progresso e Feedback",
-    "interactive": false,
-    "level": 1,
-    "family": "Progresso e Feedback"
-  },
+  "classification": "Visual",
   "phaseDescription": "Nível 1 — Indicador de progresso circular. Wrapper governado sobre QCircularProgress com suporte a determinado, indeterminado, slot de rótulo central e brandability.",
   "statesApplicable": [
     "default",
@@ -162,5 +156,32 @@
     "demoSlots": null
   },
   "auditHistory": [],
-  "previewGroup": "progresso"
+  "previewGroup": "progresso",
+  "classificationNote": {
+    "type": "Indicador de Progresso circular não interativo",
+    "category": "Progresso e Feedback",
+    "interactive": false,
+    "level": 1,
+    "family": "Progresso e Feedback"
+  },
+  "tagline": "Indicador de progresso circular, determinado ou indeterminado.",
+  "a11y": {
+    "aria": {
+      "role": "progressbar",
+      "states": [
+        "aria-valuenow",
+        "aria-valuemin",
+        "aria-valuemax"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Indicador de progresso circular; valor exposto via progressbar.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -11,12 +11,14 @@
 
 ## Frentes desta onda (cadeia de fonte única / contraste)
 
-- 🔴 **(a) Escalar `dss.contract.json`** — **35/76** base emitidos; faltam **41**. Runbook:
-  `HANDOFF_ESCALA_CONTRATOS.md`. Grupos sequenciais por família. Relatórios em `relatorios/CONTRATOS_*.md`.
-  - ✅ **Form/Input (23)** · **Feedback/Status (1)** · **Navigation (9)** — todos schema-válidos, 0 gaps, a11y verificada.
-  - ⬜ Faltam: Overlay (1), Data Display (3), Layout (10), Outros (27).
-  - 🔒 `classification` agora é **enum enforçado** no schema (Action|Compact|Visual); prosa/racional vai
-    p/ `classificationNote`. Os 10 valores-prosa do Form/Input foram reconciliados retroativamente.
+- ✅ **(a) Escalar `dss.contract.json`** — **CONCLUÍDO (76/76)**, `--all --strict` exit 0. Todos os
+  grupos (Form/Input 23, Feedback 1, Navigation 9, Overlay 1, Data 3, Layout 10, Outros 27) emitidos,
+  schema-válidos, a11y verificada. Relatórios em `relatorios/CONTRATOS_*.md`. `classification` é enum
+  enforçado (Action|Compact|Visual); prosa→`classificationNote`. Runbook histórico: `HANDOFF_ESCALA_CONTRATOS.md`.
+  - ⚠️ **Mapeamentos de `classification` ambíguos p/ revisão humana** (nos relatórios): DssItem,
+    DssBreadcrumbsEl (Action×Visual), DssCard (clickable), DssSlideItem (gesto), DssBanner (dispensar).
+  - ⚠️ **Débito de componente descoberto na emissão** (fora do escopo, tratar em Higiene): progressbars
+    sem `aria-valuenow` tipado; cobertura de `alt`/`decorative` nos testes de imagem. + focus-ring (já listado).
 - ⏳ **(c1) Contraste WCAG da paleta default** — auditoria + tabela de rotas (A escurecer / B texto escuro)
   prontas; **aguardando decisão da equipe** por cor. NÃO tocar `globals.scss` até o retorno.
   `[[project_color_ramp_a11y]]`. (c0 — reconciliação da rampa com o Figma — **feito**, commit `6a4baa6`.)

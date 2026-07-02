@@ -7,13 +7,7 @@
   "goldenReference": "DssBadge",
   "goldenContext": "DssPullToRefresh",
   "motor": "QSlideItem",
-  "classification": {
-    "type": "Interativo — Wrapper de Interação Gestual",
-    "category": "Interação Gestual",
-    "family": "Interação Gestual",
-    "level": 1,
-    "interactive": true
-  },
+  "classification": "Visual",
   "phaseDescription": "Fase 2 — Nível 1 — Independente. Depende apenas de componentes da Fase 1 (nenhum componente DSS instanciado internamente).",
   "tokens": [
     "--dss-feedback-error",
@@ -170,5 +164,28 @@
       ]
     }
   ],
-  "previewGroup": "listas"
+  "previewGroup": "listas",
+  "classificationNote": {
+    "type": "Interativo — Wrapper de Interação Gestual",
+    "category": "Interação Gestual",
+    "family": "Interação Gestual",
+    "level": 1,
+    "interactive": true
+  },
+  "tagline": "Item de lista com ações reveladas por gesto de deslizar.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Item com ações reveladas por deslize; ações laterais rotuladas.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

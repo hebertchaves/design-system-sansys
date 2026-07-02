@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssSlider",
-  "classification": {
-    "type": "Divisor redimensionável entre dois painéis de layout",
-    "category": "Layout Auxiliar",
-    "interactive": true,
-    "level": 1,
-    "family": "Layout Auxiliar"
-  },
+  "classification": "Action",
   "phaseDescription": "Nível 1 — Container interativo de divisão. Permite redimensionamento dinâmico entre dois painéis via arrastar/teclado.",
   "statesApplicable": [
     "default",
@@ -132,5 +126,60 @@
     }
   },
   "auditHistory": [],
-  "previewGroup": "midia"
+  "previewGroup": "midia",
+  "classificationNote": {
+    "type": "Divisor redimensionável entre dois painéis de layout",
+    "category": "Layout Auxiliar",
+    "interactive": true,
+    "level": 1,
+    "family": "Layout Auxiliar"
+  },
+  "tagline": "Divisor arrastável que redimensiona duas regiões adjacentes.",
+  "a11y": {
+    "aria": {
+      "role": "separator",
+      "states": [
+        "aria-valuenow",
+        "aria-orientation"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowRight",
+        "action": "redimensionar a região"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "redimensionar a região"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Redimensionamento operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "::before",
+          "property": "min-height"
+        }
+      }
+    ]
+  }
 }

@@ -123,5 +123,24 @@
     "demoSlots": null
   },
   "previewGroup": "progresso",
-  "component": "DssAjaxBar"
+  "component": "DssAjaxBar",
+  "classification": "Visual",
+  "tagline": "Barra de progresso global de requisições no topo da aplicação.",
+  "a11y": {
+    "aria": {
+      "role": "progressbar",
+      "states": [
+        "aria-valuenow"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Barra de progresso global; indica atividade de requisições em andamento.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

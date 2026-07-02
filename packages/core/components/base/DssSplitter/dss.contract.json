@@ -1,0 +1,537 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssSplitter",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Splitter",
+    "tagline": "Divisor arrastável que redimensiona duas regiões adjacentes.",
+    "category": "",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssSlider"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssSplitter/DSSSPLITTER_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "number",
+        "controlHint": "stepper"
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "controlHint": "segmented",
+        "validValues": [
+          "horizontal",
+          "vertical"
+        ]
+      },
+      {
+        "name": "limits",
+        "type": "[number, number]",
+        "controlHint": "text"
+      },
+      {
+        "name": "reverse",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "emitImmediately",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "unit",
+        "type": "'%' | 'px'",
+        "controlHint": "segmented",
+        "validValues": [
+          "%",
+          "px"
+        ]
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "number"
+      }
+    ],
+    "slots": [
+      {
+        "name": "before",
+        "scope": null
+      },
+      {
+        "name": "after",
+        "scope": null
+      },
+      {
+        "name": "separator",
+        "scope": null
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "modelValue": 50,
+        "orientation": "horizontal",
+        "style": "height:80px;width:240px"
+      },
+      "slots": {
+        "before": [
+          {
+            "html": "<div style='padding:8px'>Esquerdo</div>"
+          }
+        ],
+        "after": [
+          {
+            "html": "<div style='padding:8px'>Direito</div>"
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "200px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-250",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "left",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translate(-50%, -50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-600",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background-color",
+          "token": "--dss-gray-400",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-800",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-hub",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-water",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-waste",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-focus-shadow-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "2px solid Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "background-color",
+          "token": "--dss-gray-600",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-900",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-hub",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "filter",
+          "token": null,
+          "value": "brightness(0.9)",
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-water",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-waste",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "motion",
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-duration-250",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-600",
+        "usedIn": [
+          "default",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-gray-800",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-action-hub",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-water",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-waste",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-focus-shadow-primary",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-gray-900",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Redimensionamento operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "separator",
+      "states": [
+        "aria-valuenow",
+        "aria-orientation"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowRight",
+        "action": "redimensionar a região"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "redimensionar a região"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssSplitter.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/splitter.types.ts",
+    "docs": {
+      "normative": "DssSplitter.md",
+      "api": "DSSSPLITTER_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssSplitter.example.vue",
+    "tests": "DssSplitter.test.js",
+    "seal": "docs/Compliance/seals/DssSplitter/DSSSPLITTER_SELO_v2.2.md"
+  }
+}

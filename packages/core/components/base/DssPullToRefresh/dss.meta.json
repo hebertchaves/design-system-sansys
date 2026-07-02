@@ -7,13 +7,7 @@
   "goldenReference": "DssChip",
   "goldenContext": "DssInfiniteScroll",
   "motor": "QPullToRefresh",
-  "classification": {
-    "type": "Interativo — Wrapper de Interação Gestual",
-    "category": "Interação Gestual",
-    "family": "Interação Gestual",
-    "level": 1,
-    "interactive": true
-  },
+  "classification": "Visual",
   "phaseDescription": "Fase 2 — Nível 1 — Independente. Depende apenas de componentes da Fase 1 (nenhum componente DSS usado internamente).",
   "tokens": [
     "--dss-action-primary",
@@ -239,5 +233,28 @@
       "gaps": []
     }
   ],
-  "previewGroup": "contextuais"
+  "previewGroup": "contextuais",
+  "classificationNote": {
+    "type": "Interativo — Wrapper de Interação Gestual",
+    "category": "Interação Gestual",
+    "family": "Interação Gestual",
+    "level": 1,
+    "interactive": true
+  },
+  "tagline": "Gatilho de atualização por gesto de puxar em áreas roláveis.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Dispara atualização por gesto de puxar; comportamento sem semântica visual própria.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

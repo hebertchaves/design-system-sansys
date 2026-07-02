@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssImg",
-  "classification": {
-    "type": "Container de mídia não interativo",
-    "category": "Mídia e Visualização",
-    "interactive": false,
-    "level": 1,
-    "family": "Mídia e Visualização"
-  },
+  "classification": "Visual",
   "phaseDescription": "Nível 1 — Container de mídia. Wrapper governado sobre QVideo com aspect ratio responsivo e border-radius via tokens.",
   "statesApplicable": [
     "default"
@@ -117,5 +111,28 @@
       "summary": "Auditoria inicial. 2 NCs corrigidas (forced-color-adjust removido; ratio string→número). 4 GAPs corrigidos no pré-prompt (Golden Context, API QVideo incorreta com props inexistentes, tokens fantasmas, estados N/A). 0 Ressalvas. Selo emitido."
     }
   ],
-  "previewGroup": "contextuais"
+  "previewGroup": "contextuais",
+  "classificationNote": {
+    "type": "Container de mídia não interativo",
+    "category": "Mídia e Visualização",
+    "interactive": false,
+    "level": 1,
+    "family": "Mídia e Visualização"
+  },
+  "tagline": "Player de vídeo incorporado com proporção controlada.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Vídeo com nome acessível via title; decorativo via decorative.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

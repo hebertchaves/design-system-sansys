@@ -1,0 +1,207 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssVideo",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Video",
+    "tagline": "Player de vídeo incorporado com proporção controlada.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssImg"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssVideo/DSSVIDEO_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "src",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "decorative",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "ratio",
+        "type": "number | string",
+        "controlHint": "text"
+      },
+      {
+        "name": "radius",
+        "type": "'none' | 'sm' | 'md' | 'lg' | 'full'",
+        "controlHint": "select",
+        "validValues": [
+          "none",
+          "sm",
+          "md",
+          "lg",
+          "full"
+        ]
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "src": "",
+        "title": "[Descrição]",
+        "ratio": 1.78
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "180px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Vídeo com nome acessível via title; decorativo via decorative.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssVideo.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/video.types.ts",
+    "docs": {
+      "normative": "DssVideo.md",
+      "api": "DSSVIDEO_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssVideo.example.vue",
+    "tests": "DssVideo.test.js",
+    "seal": "docs/Compliance/seals/DssVideo/DSSVIDEO_SELO_v2.2.md"
+  }
+}

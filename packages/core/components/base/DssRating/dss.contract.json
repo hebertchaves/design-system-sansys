@@ -1,0 +1,441 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssRating",
+  "version": "0",
+  "identity": {
+    "displayName": "Rating",
+    "tagline": "Controle de avaliação por ícones (estrelas) selecionáveis.",
+    "category": "Controle de avaliação por ícones (estrelas ou customizados)",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssKnob"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssRating/DSSRATING_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "number",
+        "controlHint": "stepper",
+        "required": true
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "controlHint": "stepper"
+      },
+      {
+        "name": "size",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "icon",
+        "type": "string | string[]",
+        "controlHint": "text"
+      },
+      {
+        "name": "iconSelected",
+        "type": "string | string[]",
+        "controlHint": "text"
+      },
+      {
+        "name": "iconHalf",
+        "type": "string | string[]",
+        "controlHint": "text"
+      },
+      {
+        "name": "noReset",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "tabindex",
+        "type": "number | string",
+        "controlHint": "text"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "brand",
+        "type": "RatingBrand",
+        "controlHint": "picker-brand",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "number"
+      }
+    ],
+    "slots": [],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "modelValue": 3,
+        "max": 5
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      },
+      "minWidth": {
+        "value": "160px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "min-width",
+          "token": "--dss-min-w-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-150",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "filter",
+          "token": null,
+          "value": "brightness(0.95)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-focus-ring-offset",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "filter",
+          "token": null,
+          "value": "brightness(0.9)",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-min-w-sm",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-150",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default",
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default",
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default",
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-ring-offset",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ajuste da nota operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "slider",
+      "states": [
+        "aria-valuenow",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowRight",
+        "action": "aumentar a nota"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "diminuir a nota"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssRating.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/rating.types.ts",
+    "docs": {
+      "normative": "DssRating.md",
+      "api": "DSSRATING_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssRating.example.vue",
+    "tests": "DssRating.test.js",
+    "seal": "docs/Compliance/seals/DssRating/DSSRATING_SELO_v2.2.md"
+  }
+}

@@ -6,12 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssTimeline",
-  "classification": {
-    "type": "Subcomponente de container não-interativo",
-    "category": "Visualização de Dados e Histórico",
-    "interactive": false,
-    "family": "Timeline"
-  },
+  "classification": "Visual",
   "phaseDescription": "Fase 2, Nível 2 — Subcomponente da família Timeline. Deve ser filho direto de DssTimeline.",
   "statesApplicable": [],
   "statesNotApplicable": [
@@ -123,5 +118,37 @@
       }
     }
   },
-  "previewGroup": "timeline"
+  "previewGroup": "timeline",
+  "classificationNote": {
+    "type": "Subcomponente de container não-interativo",
+    "category": "Visualização de Dados e Histórico",
+    "interactive": false,
+    "family": "Timeline"
+  },
+  "tagline": "Entrada individual de uma linha do tempo (DssTimeline).",
+  "a11y": {
+    "aria": {
+      "role": "listitem",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Entrada de linha do tempo com título/subtítulo estruturados.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -9,12 +9,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssExpansionItem",
-  "classification": {
-    "type": "Árvore hierárquica interativa",
-    "category": "Navegação e Estrutura de Dados",
-    "interactive": true,
-    "note": "Interativo via seleção de nó, expansão/colapso, navegação por teclado e tick mode (checkbox). Motor QTree do Quasar."
-  },
+  "classification": "Action",
   "phaseDescription": "Fase 2 — Nível 4 (Dependente). Árvore hierárquica baseada em QTree do Quasar. Suporta seleção, expansão/colapso, navegação por teclado, lazy loading e modo checkbox (tick-strategy).",
   "quasarBase": "QTree",
   "dependencies": [],
@@ -189,5 +184,63 @@
       "notes": "NC-01 corrigida: removido calc(var(--dss-touch-target-md)*0.75) do dense variant. 4 GAPs pré-prompt documentados."
     }
   ],
-  "previewGroup": "arvore"
+  "previewGroup": "arvore",
+  "classificationNote": {
+    "type": "Árvore hierárquica interativa",
+    "category": "Navegação e Estrutura de Dados",
+    "interactive": true,
+    "note": "Interativo via seleção de nó, expansão/colapso, navegação por teclado e tick mode (checkbox). Motor QTree do Quasar."
+  },
+  "tagline": "Árvore hierárquica navegável com expansão, seleção e marcação de nós.",
+  "a11y": {
+    "aria": {
+      "role": "tree",
+      "states": [
+        "aria-expanded",
+        "aria-selected"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowDown",
+        "action": "mover para o próximo nó"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "expandir o nó"
+      },
+      {
+        "key": "Enter",
+        "action": "selecionar o nó"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação, expansão e seleção de nós operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

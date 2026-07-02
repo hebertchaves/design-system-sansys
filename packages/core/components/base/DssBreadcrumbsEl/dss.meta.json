@@ -31,7 +31,7 @@
       "impact": "Baixo — DssBreadcrumbsEl tem lógica mínima (composable de classes). Comportamento principal gerenciado pelo QBreadcrumbsEl nativo."
     }
   ],
-  "classification": "Elemento individual de trilha de navegação — condicionalmente interativo (clicável como link ou estático como item atual)",
+  "classification": "Action",
   "subcomponents": [],
   "compositionRequirements": [
     "DssIcon"
@@ -198,5 +198,49 @@
       "props": {}
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "classificationNote": "Elemento individual de trilha de navegação — condicionalmente interativo (clicável como link ou estático como item atual)",
+  "tagline": "Item individual (link) de uma trilha de navegação breadcrumb.",
+  "a11y": {
+    "aria": {
+      "role": "link",
+      "states": [
+        "aria-current"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "navegar para o destino"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação para o destino operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

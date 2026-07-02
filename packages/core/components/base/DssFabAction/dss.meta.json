@@ -8,12 +8,7 @@
   "goldenContext": "DssFab",
   "goldenContextNote": "DssFab é o Golden Context por ser o componente pai direto na família FAB — DssFabAction é filho semântico e visual do DssFab. DssFab foi selado em Mai 2026 e fornece o baseline arquitetural para wrapping de QFabAction, padrões de brand e EXC-States-02.",
   "phaseDescription": "Fase 2 — Nível 3 (FAB family). DssFabAction é filho canônico do DssFab, executando ações específicas. Não é um componente primário independente, mas parte da composição do FAB System.",
-  "classification": {
-    "type": "FAB Action (Nível 3)",
-    "category": "Action — Floating Action Button Secondary",
-    "interactive": true,
-    "family": "FAB"
-  },
+  "classification": "Action",
   "wrapperApproach": "WRAP QFabAction — não reconstrói o botão do zero. Justificativa: QFabAction fornece animação de entrada/saída, acessibilidade WAI-ARIA, navegação via router-link e gerenciamento de label externo nativos. Rebuilding seria duplicação de esforço sem ganho arquitetural. Precedente: DssFab (selado Mai 2026).",
   "parentComponent": "DssFab",
   "parentComponentNote": "DssFabAction é projetado para ser usado dentro do slot default do DssFab. Uso fora do DssFab é tecnicamente possível mas semanticamente incorreto.",
@@ -193,5 +188,60 @@
     "Usar externalLabel para identificar ações em FABs com direção 'up' ou 'down' — label externo aparece à esquerda por padrão."
   ],
   "auditHistory": [],
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "classificationNote": {
+    "type": "FAB Action (Nível 3)",
+    "category": "Action — Floating Action Button Secondary",
+    "interactive": true,
+    "family": "FAB"
+  },
+  "tagline": "Ação secundária revelada por um DssFab.",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "acionar a ação"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Acionamento operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "::before",
+          "property": "min-height"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome acessível via aria-label.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

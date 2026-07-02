@@ -1,11 +1,12 @@
-# HANDOFF — Escalar a emissão de `dss.contract.json` (frente "a")
+# HANDOFF — Escalar a emissão de `dss.contract.json` (frente "a") — ✅ CONCLUÍDO
 
-> Prompt de execução para um **chat novo**. Gerado em 2026-07-02 @ `import/dss-v2.4.0` (após `6a4baa6`).
-> Continuação da cadeia de fonte única: o schema, o emissor e os gates já existem e estão provados
-> em 2 componentes (DssInput, DssSelect). Falta **escalar** para os ~74 restantes.
+> **✅ CONCLUÍDO em 2026-07-02.** 76/76 componentes base com `dss.contract.json` schema-válido e
+> a11y verificada; `emit-contract.mjs --all --strict` exit 0. Este documento fica como **referência
+> histórica do runbook** (emissor, DoD de derivação, regra do enum de classification). Não há mais
+> escala pendente. Verificação/integração ficou com o chat orquestrador.
 >
-> **Leia primeiro** (contexto durável): `docs/governance/DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md`
-> (a cadeia, D1–D4, §4.2 tiers, passo 2). Este handoff é o runbook operacional.
+> Gerado em 2026-07-02 @ `import/dss-v2.4.0` (após `6a4baa6`).
+> **Contexto durável:** `docs/governance/DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` (a cadeia, D1–D4, §4.2 tiers).
 
 ---
 

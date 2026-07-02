@@ -8,12 +8,7 @@
   "goldenContext": "DssBtnDropdown",
   "goldenContextNote": "DssBtnDropdown é o Golden Context por ser o componente composto de Fase 2 mais próximo semanticamente — botão que expande/gerencia um painel de ações. DssBtnDropdown foi selado em Mar 2026 e fornece o baseline arquitetural para wrapping de QFab.",
   "phaseDescription": "Fase 2 — Componente Composto. O DssFab gerencia estado interno (expandido/colapsado) e orquestra múltiplos filhos (DssFabAction). Não é um simples wrapper de primitivo, mas um container interativo de ações.",
-  "classification": {
-    "type": "FAB (Composição de Primeiro Grau)",
-    "category": "Action Group Composto — Floating Action Button",
-    "interactive": true,
-    "family": "FAB"
-  },
+  "classification": "Action",
   "wrapperApproach": "WRAP QFab — não reconstrói trigger do zero. Justificativa: QFab fornece estado de expansão, direção de animação, acessibilidade WAI-ARIA e keyboard navigation nativos. Rebuilding seria duplicação de esforço sem ganho arquitetural. Precedente: DssBtnDropdown (selado Mar 2026).",
   "compositionRequirements": [
     "DssButton",
@@ -226,5 +221,55 @@
     "Não usar position: fixed diretamente no DssFab — delegar ao container pai."
   ],
   "auditHistory": [],
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "classificationNote": {
+    "type": "FAB (Composição de Primeiro Grau)",
+    "category": "Action Group Composto — Floating Action Button",
+    "interactive": true,
+    "family": "FAB"
+  },
+  "tagline": "Botão de ação flutuante que aciona uma ação primária da tela.",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-expanded",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "acionar o FAB / abrir ações"
+      },
+      {
+        "key": "Escape",
+        "action": "fechar as ações"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Acionamento e abertura de ações operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome via aria-label; estado de abertura via aria-expanded.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

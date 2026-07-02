@@ -1,0 +1,424 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssItemLabel",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Item Label",
+    "tagline": "Rótulo de texto (título, legenda ou overline) dentro de um DssItem.",
+    "category": "Container tipografico para itens de lista",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssItem",
+    "goldenContext": "DssSeparator"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-20",
+    "mode": "Auditoria DSS v2.5 — Aprovado",
+    "sealPath": "docs/Compliance/seals/DssItemLabel/DssItemLabel_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "header",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Define o label como um cabeçalho de lista."
+      },
+      {
+        "name": "caption",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Define o label como texto secundário (caption)."
+      },
+      {
+        "name": "overline",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Define o label como texto de sobreposição (overline)."
+      },
+      {
+        "name": "lines",
+        "type": "number | string",
+        "controlHint": "text",
+        "description": "Número máximo de linhas antes de truncar o texto com ellipsis."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo de texto do label."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": "Rótulo"
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow-wrap",
+          "token": null,
+          "value": "break-word",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "word-break",
+          "token": null,
+          "value": "normal",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-transform",
+          "token": null,
+          "value": "uppercase",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "letter-spacing",
+          "token": "--dss-letter-spacing-widest",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "3-variants/_header.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "3-variants/_caption.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "3-variants/_overline.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "3-variants/_lines.scss"
+        },
+        {
+          "property": "overflow-wrap",
+          "token": null,
+          "value": "anywhere",
+          "source": "3-variants/_lines.scss"
+        },
+        {
+          "property": "word-break",
+          "token": null,
+          "value": "break-word",
+          "source": "3-variants/_lines.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-letter-spacing-widest",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Hierarquia de texto (header/caption/overline) preservada no conteúdo do item.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssItemLabel.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_caption.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/item-label.types.ts",
+    "docs": {
+      "normative": "DssItemLabel.md",
+      "api": "DSSITEMLABEL_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssItemLabel.example.vue",
+    "tests": "DssItemLabel.test.js",
+    "seal": "docs/Compliance/seals/DssItemLabel/DssItemLabel_SELO_v2.2.md"
+  }
+}

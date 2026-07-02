@@ -1,0 +1,454 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssSkeleton",
+  "version": "0",
+  "identity": {
+    "displayName": "Skeleton",
+    "tagline": "Placeholder animado que representa conteúdo em carregamento.",
+    "category": "Placeholder de carregamento (skeleton screen)",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssInnerLoading"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-05-18",
+    "sealPath": "docs/Compliance/seals/DssSkeleton/DSSSKELETON_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "type",
+        "type": "SkeletonType",
+        "controlHint": "select",
+        "validValues": [
+          "rect",
+          "text",
+          "circle",
+          "heading",
+          "avatar"
+        ]
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "height",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "lines",
+        "type": "number",
+        "controlHint": "stepper"
+      },
+      {
+        "name": "animation",
+        "type": "SkeletonAnimation",
+        "controlHint": "segmented",
+        "validValues": [
+          "wave",
+          "pulse",
+          "none"
+        ]
+      },
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "controlHint": "text"
+      },
+      {
+        "name": "radius",
+        "type": "SkeletonRadius",
+        "controlHint": "select",
+        "validValues": [
+          "--dss-radius-none",
+          "--dss-radius-sm",
+          "--dss-radius-md",
+          "--dss-radius-lg",
+          "--dss-radius-xl",
+          "--dss-radius-2xl",
+          "--dss-radius-3xl",
+          "--dss-radius-full"
+        ]
+      },
+      {
+        "name": "brand",
+        "type": "SkeletonBrand",
+        "controlHint": "picker-brand",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      }
+    ],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "type": "text",
+        "width": "200px"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "24px"
+      },
+      "minWidth": {
+        "value": "200px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-min-w-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-skeleton-radius",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "3-variants/_types.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-xl",
+          "value": null,
+          "source": "3-variants/_types.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-xl",
+          "value": null,
+          "source": "3-variants/_types.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-iteration-count",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-hub-100",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-water-100",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-waste-100",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-hub-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-water-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-waste-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-min-w-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-skeleton-radius",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Placeholder decorativo de carregamento (aria-hidden); sem conteúdo semântico.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": [
+        "aria-hidden"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssSkeleton.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_types.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/skeleton.types.ts",
+    "docs": {
+      "normative": "DssSkeleton.md",
+      "api": "DSSSKELETON_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssSkeleton.example.vue",
+    "tests": "DssSkeleton.test.js",
+    "seal": "docs/Compliance/seals/DssSkeleton/DSSSKELETON_SELO_v2.2.md"
+  }
+}

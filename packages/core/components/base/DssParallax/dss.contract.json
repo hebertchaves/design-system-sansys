@@ -1,0 +1,300 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssParallax",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Parallax",
+    "tagline": "Imagem de fundo com efeito de rolagem em parallax.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssVideo"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssParallax/DSSPARALLAX_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "src",
+        "type": "string",
+        "controlHint": "text",
+        "description": "URL da imagem de fundo para o efeito de paralaxe"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "500",
+        "description": "Altura do componente em pixels."
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "0.5",
+        "description": "Velocidade do efeito de paralaxe."
+      },
+      {
+        "name": "scrollTarget",
+        "type": "string | Element",
+        "controlHint": "text",
+        "description": "Elemento alvo para o cálculo de scroll."
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto alternativo para acessibilidade (WCAG 1.1.1)."
+      },
+      {
+        "name": "decorative",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Marca o componente como puramente decorativo."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo renderizado como overlay sobre o efeito de paralaxe."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "src": "https://placehold.co/600x200",
+        "height": 100,
+        "speed": 0.5,
+        "alt": "Imagem decorativa de fundo",
+        "decorative": true
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "200px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "min-height",
+          "token": "--dss-min-h-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-size",
+          "token": null,
+          "value": "cover",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-position",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-repeat",
+          "token": null,
+          "value": "no-repeat",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "-1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "rect(0, 0, 0, 0)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-min-h-lg",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Imagem de fundo com alternativa textual via alt; decorativa via decorative→aria-hidden.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-hidden"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssParallax.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/parallax.types.ts",
+    "docs": {
+      "normative": "DssParallax.md",
+      "api": "DSSPARALLAX_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssParallax.example.vue",
+    "tests": "DssParallax.test.js",
+    "seal": "docs/Compliance/seals/DssParallax/DSSPARALLAX_SELO_v2.2.md"
+  }
+}

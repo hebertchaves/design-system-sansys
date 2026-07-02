@@ -1,0 +1,432 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPopupProxy",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Popup Proxy",
+    "tagline": "Proxy que alterna entre menu e diálogo conforme o breakpoint.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssMenu"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-05-22",
+    "sealPath": "docs/Compliance/seals/DssPopupProxy/DSSPOPUPPROXY_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Controla a visibilidade do popup (v-model:open)."
+      },
+      {
+        "name": "breakpoint",
+        "type": "number | string",
+        "controlHint": "text",
+        "default": "450",
+        "description": "Breakpoint em pixels para alternar entre QMenu (≥) e QDialog (<)."
+      },
+      {
+        "name": "target",
+        "type": "string | Element | boolean | null",
+        "controlHint": "text",
+        "description": "Elemento alvo para posicionamento. Pode ser seletor CSS string,"
+      },
+      {
+        "name": "noParentEvent",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Impede o QPopupProxy de adicionar listener de evento no elemento pai."
+      },
+      {
+        "name": "contextMenu",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Exibe o popup ao clique-direito do mouse (context menu)."
+      },
+      {
+        "name": "persistent",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Impede o fechamento do popup ao clicar fora ou pressionar ESC."
+      },
+      {
+        "name": "noFocus",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Impede que o popup capture o foco ao abrir."
+      },
+      {
+        "name": "noRefocus",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Impede que o foco retorne ao elemento trigger ao fechar."
+      },
+      {
+        "name": "autoClose",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Fecha o popup automaticamente ao clicar em qualquer elemento interno."
+      },
+      {
+        "name": "anchor",
+        "type": "PopupProxyPosition",
+        "controlHint": "select",
+        "description": "Ponto de ancoragem no elemento trigger.",
+        "validValues": [
+          "top left",
+          "top middle",
+          "top right",
+          "top start",
+          "top end",
+          "center left",
+          "center middle",
+          "center right",
+          "center start",
+          "center end",
+          "bottom left",
+          "bottom middle",
+          "bottom right",
+          "bottom start",
+          "bottom end"
+        ]
+      },
+      {
+        "name": "self",
+        "type": "PopupProxyPosition",
+        "controlHint": "select",
+        "description": "Ponto de alinhamento do próprio popup.",
+        "validValues": [
+          "top left",
+          "top middle",
+          "top right",
+          "top start",
+          "top end",
+          "center left",
+          "center middle",
+          "center right",
+          "center start",
+          "center end",
+          "bottom left",
+          "bottom middle",
+          "bottom right",
+          "bottom start",
+          "bottom end"
+        ]
+      },
+      {
+        "name": "offset",
+        "type": "[number, number]",
+        "controlHint": "text",
+        "description": "Deslocamento [x, y] em pixels a partir do ponto de ancoragem."
+      },
+      {
+        "name": "fit",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Ajusta a largura do popup para ser igual à largura do elemento trigger."
+      },
+      {
+        "name": "cover",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Cobre completamente o elemento trigger."
+      },
+      {
+        "name": "maxHeight",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Altura máxima do popup. Aceita string CSS (ex: '300px', '50vh')."
+      },
+      {
+        "name": "maxWidth",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Largura máxima do popup. Aceita string CSS (ex: '400px', '80vw')."
+      },
+      {
+        "name": "transitionShow",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome da transição de entrada do popup."
+      },
+      {
+        "name": "transitionHide",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome da transição de saída do popup."
+      },
+      {
+        "name": "scrollTarget",
+        "type": "string | Element",
+        "controlHint": "text",
+        "description": "Elemento para escutar eventos de scroll."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo do popup."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "breakpoint": 450
+      },
+      "slots": {
+        "default": [
+          {
+            "component": "DssList",
+            "children": [
+              {
+                "component": "DssItem",
+                "props": {
+                  "clickable": true
+                },
+                "children": [
+                  {
+                    "component": "DssItemSection",
+                    "children": [
+                      {
+                        "component": "DssItemLabel",
+                        "children": "Opção 1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "component": "DssItem",
+                "props": {
+                  "clickable": true
+                },
+                "children": [
+                  {
+                    "component": "DssItemSection",
+                    "children": [
+                      {
+                        "component": "DssItemLabel",
+                        "children": "Opção 2"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "elevation",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Delega conteúdo teleportado a menu ou diálogo conforme o breakpoint.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPopupProxy.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/popupproxy.types.ts",
+    "docs": {
+      "normative": "DssPopupProxy.md",
+      "api": "DSSPOPUPPROXY_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPopupProxy.example.vue",
+    "tests": "DssPopupProxy.test.js",
+    "seal": "docs/Compliance/seals/DssPopupProxy/DSSPOPUPPROXY_SELO_v2.2.md"
+  }
+}
