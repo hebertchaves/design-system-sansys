@@ -6,7 +6,7 @@
     "displayName": "Radio",
     "tagline": "Botão de opção para escolha única dentro de um grupo.",
     "category": "Compact Control interativo",
-    "classification": "Form / Selection",
+    "classification": "Action",
     "phase": 1,
     "status": "sealed",
     "goldenReference": "DssChip",

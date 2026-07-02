@@ -11,7 +11,8 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente Composto. O DssOptionGroup orquestra múltiplos componentes da Fase 1 (DssRadio, DssCheckbox, DssToggle) gerenciando o estado de seleção centralizado via v-model.",
   "hasReservations": true,
-  "classification": "Construção Explícita — não faz wrap de QOptionGroup. Renderiza componentes DSS da Fase 1 via v-for.",
+  "classification": "Action",
+  "classificationNote": "Construção Explícita — não faz wrap de QOptionGroup. Renderiza componentes DSS da Fase 1 via v-for.",
   "architecturalDecision": "NÃO USAR QOptionGroup. Abordagem de construção explícita garantindo 100% de fidelidade visual e comportamental com os componentes DssRadio, DssCheckbox e DssToggle já selados.",
   "subcomponents": [],
   "compositionRequirements": [

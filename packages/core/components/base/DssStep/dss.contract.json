@@ -6,7 +6,7 @@
     "displayName": "Step",
     "tagline": "Etapa individual dentro de um fluxo de passos (stepper).",
     "category": "Elemento interativo de navegação em stepper (wizard)",
-    "classification": "Controle interativo de navegação — wrapper DSS sobre QStep",
+    "classification": "Action",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssTab",

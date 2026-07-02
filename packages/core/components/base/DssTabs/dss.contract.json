@@ -1,176 +1,68 @@
 {
   "schemaId": "dss-component-contract@1",
-  "name": "DssBtnDropdown",
+  "name": "DssTabs",
   "version": "2.2",
   "identity": {
-    "displayName": "Btn Dropdown",
-    "tagline": "Botão de ação com menu suspenso acoplado para opções relacionadas.",
-    "category": "Action Group Composto (Botão com Dropdown Integrado)",
+    "displayName": "Tabs",
+    "tagline": "Lista de abas com navegação por teclado para alternar entre painéis.",
+    "category": "Container de Navegação (Tab Group)",
     "classification": "Action",
     "phase": 2,
     "status": "sealed",
-    "goldenReference": "DssChip",
+    "goldenReference": "DssBtnGroup",
     "goldenContext": "DssCard"
   },
   "audit": {
     "status": "sealed",
-    "date": "2026-03-27",
+    "date": "2026-04-02",
     "mode": "Selo DSS v2.2 Concedido",
-    "sealPath": "docs/Compliance/seals/DssBtnDropdown/DSSBTNDROPDOWN_SELO_v2.2.md"
+    "sealPath": "docs/Compliance/seals/DssTabs/DSSTABS_SELO_v2.2.md"
   },
   "api": {
     "props": [
       {
-        "name": "label",
-        "type": "string",
+        "name": "modelValue",
+        "type": "string | number",
         "controlHint": "text",
-        "description": "Rótulo do botão trigger."
+        "description": "Identificador da aba atualmente selecionada (v-model)."
       },
       {
-        "name": "icon",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Ícone à esquerda do label (Material Icons)."
-      },
-      {
-        "name": "iconRight",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Ícone à direita do label (antes do ícone de seta)."
-      },
-      {
-        "name": "variant",
-        "type": "BtnDropdownVariant",
+        "name": "align",
+        "type": "TabsAlign",
         "controlHint": "segmented",
-        "default": "elevated",
-        "description": "Variante visual do botão.",
+        "default": "left",
+        "description": "Alinhamento das abas no container.",
         "validValues": [
-          "elevated",
-          "flat",
-          "outline",
-          "unelevated"
+          "left",
+          "center",
+          "right",
+          "justify"
         ]
       },
       {
-        "name": "color",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Cor do botão (compatível com paleta Quasar e DSS)."
+        "name": "breakpoint",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "600",
+        "description": "Largura mínima do container (em px) para exibir as setas de navegação."
       },
       {
-        "name": "textColor",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Cor do texto (sobrescreve o contraste automático)."
-      },
-      {
-        "name": "size",
-        "type": "BtnDropdownSize",
-        "controlHint": "select",
-        "default": "md",
-        "description": "Tamanho do botão.",
-        "validValues": [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl"
-        ]
-      },
-      {
-        "name": "square",
+        "name": "vertical",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove o border-radius (cantos retos)."
-      },
-      {
-        "name": "rounded",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Border-radius pill completo."
+        "description": "Exibe as abas em layout vertical (coluna)."
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Reduz padding e altura (modo compacto)."
-      },
-      {
-        "name": "split",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Modo split: separa o botão de ação da seta de dropdown."
-      },
-      {
-        "name": "disable",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Desabilita o componente inteiro (trigger + dropdown)."
-      },
-      {
-        "name": "loading",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Indica estado de carregamento no trigger."
-      },
-      {
-        "name": "closeOnEsc",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": true,
-        "description": "Fecha o dropdown ao pressionar Escape."
-      },
-      {
-        "name": "dropdownIcon",
-        "type": "string",
-        "controlHint": "text",
-        "default": "arrow_drop_down",
-        "description": "Ícone de seta do dropdown."
-      },
-      {
-        "name": "menuAnchor",
-        "type": "string",
-        "controlHint": "text",
-        "default": "bottom left",
-        "description": "Opções de posicionamento do painel (QMenu anchor)."
-      },
-      {
-        "name": "menuSelf",
-        "type": "string",
-        "controlHint": "text",
-        "default": "top left",
-        "description": "Ponto de self do painel (QMenu self)."
-      },
-      {
-        "name": "menuOffset",
-        "type": "[number, number]",
-        "controlHint": "text",
-        "default": "[0, 0]",
-        "description": "Offset do painel em pixels [horizontal, vertical]."
-      },
-      {
-        "name": "stretch",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Largura mínima do painel igual à largura do trigger."
-      },
-      {
-        "name": "persistent",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Mantém o conteúdo do painel montado mesmo quando fechado."
+        "description": "Modo compacto: reduz o padding interno do container de abas."
       },
       {
         "name": "brand",
-        "type": "BtnDropdownBrand | null",
+        "type": "TabsBrand | null",
         "controlHint": "picker-brand",
         "default": "null",
         "description": "Marca Sansys (Hub, Water, Waste).",
@@ -184,68 +76,55 @@
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o trigger (aria-label)."
+        "description": "Label acessível para o grupo de abas (aria-label)."
       }
     ],
-    "emits": [],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "string | number",
+        "description": "Emitido quando o usuário seleciona uma aba."
+      }
+    ],
     "slots": [
       {
         "name": "default",
         "scope": null,
-        "description": "Conteúdo do painel dropdown."
-      },
-      {
-        "name": "label",
-        "scope": null,
-        "description": "Slot para conteúdo personalizado do trigger (substitui label + icon)."
+        "description": "Conteúdo do grupo de abas."
       }
-    ]
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
   },
   "visual": {
     "defaultPreview": {
       "props": {
-        "label": "Opções"
+        "modelValue": "inicio"
       },
       "slots": {
         "default": [
           {
-            "component": "DssList",
-            "children": [
-              {
-                "component": "DssItem",
-                "props": {
-                  "clickable": true
-                },
-                "children": [
-                  {
-                    "component": "DssItemSection",
-                    "children": [
-                      {
-                        "component": "DssItemLabel",
-                        "children": "Editar"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "component": "DssItem",
-                "props": {
-                  "clickable": true
-                },
-                "children": [
-                  {
-                    "component": "DssItemSection",
-                    "children": [
-                      {
-                        "component": "DssItemLabel",
-                        "children": "Duplicar"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            "component": "DssTab",
+            "props": {
+              "name": "inicio",
+              "label": "Início"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "perfil",
+              "label": "Perfil"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "config",
+              "label": "Config"
+            }
           }
         ]
       }
@@ -285,7 +164,7 @@
           "property": "display",
           "token": null,
           "value": "inline-flex",
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "display",
@@ -333,7 +212,7 @@
           "property": "align-items",
           "token": null,
           "value": "center",
-          "source": "2-composition/_base.scss"
+          "source": "_layout-helpers.scss"
         },
         {
           "property": "align-items",
@@ -675,7 +554,7 @@
           "property": "color",
           "token": "--dss-text-subtle",
           "value": null,
-          "source": "_helpers.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
@@ -753,7 +632,7 @@
           "property": "background-color",
           "token": "--dss-surface-default",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "background-color",
@@ -1155,7 +1034,7 @@
           "property": "border-radius",
           "token": "--dss-radius-md",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "border-radius",
@@ -1239,7 +1118,7 @@
           "property": "box-shadow",
           "token": "--dss-elevation-3",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "box-shadow",
@@ -1485,7 +1364,7 @@
           "property": "overflow",
           "token": null,
           "value": "hidden",
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "clip",
@@ -1509,7 +1388,7 @@
           "property": "transition",
           "token": null,
           "value": "none",
-          "source": "_helpers.scss"
+          "source": "4-output/_states.scss"
         },
         {
           "property": "animation",
@@ -1803,7 +1682,7 @@
           "property": "border-top-left-radius",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "_border-helpers.scss"
         },
         {
           "property": "border-top-right-radius",
@@ -1851,7 +1730,7 @@
           "property": "border-bottom-left-radius",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "_border-helpers.scss"
         },
         {
           "property": "border-bottom-right-radius",
@@ -2586,57 +2465,45 @@
           "source": "_layout-helpers.scss"
         },
         {
-          "property": "vertical-align",
-          "token": null,
-          "value": "middle",
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "-webkit-tap-highlight-color",
           "token": null,
           "value": "transparent",
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "border-radius",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "min-width",
-          "token": "--dss-min-w-sm",
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "border-left",
-          "token": "--dss-border-width-thin",
+          "property": "padding-inline",
+          "token": "--dss-spacing-1",
           "value": null,
-          "source": "3-variants/_unelevated.scss"
+          "source": "3-variants/_dense.scss"
         },
         {
-          "property": "margin-left",
-          "token": "--dss-border-width-thin",
+          "property": "color",
+          "token": "--dss-hub-600",
           "value": null,
-          "source": "3-variants/_outline.scss"
+          "source": "4-output/_brands.scss"
         },
         {
-          "property": "border",
+          "property": "color",
+          "token": "--dss-water-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline",
           "token": "--dss-border-width-md",
           "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border",
-          "token": null,
-          "value": "1px solid ButtonBorder",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "background-color",
-          "token": null,
-          "value": "Canvas",
           "source": "4-output/_states.scss"
         },
         {
@@ -2646,16 +2513,10 @@
           "source": "4-output/_states.scss"
         },
         {
-          "property": "border-left",
+          "property": "forced-color-adjust",
           "token": null,
-          "value": "1px solid ButtonText",
+          "value": "auto",
           "source": "4-output/_states.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thick",
-          "value": null,
-          "source": "4-output/_brands.scss"
         }
       ],
       "hover": [
@@ -2802,6 +2663,30 @@
           "token": "--dss-info-hover",
           "value": null,
           "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-hover",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
         }
       ],
       "focus": [
@@ -2870,6 +2755,48 @@
           "token": null,
           "value": "normal",
           "source": "_mixins.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-water-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
         }
       ],
       "active": [
@@ -2926,6 +2853,12 @@
           "token": "--dss-info-hover",
           "value": null,
           "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-active",
+          "value": null,
+          "source": "2-composition/_base.scss"
         }
       ],
       "disabled": [
@@ -3067,7 +3000,8 @@
       {
         "name": "--dss-text-subtle",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -3079,8 +3013,7 @@
       {
         "name": "--dss-text-inverse",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3146,8 +3079,7 @@
       {
         "name": "--dss-surface-default",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3171,13 +3103,15 @@
       {
         "name": "--dss-surface-hover",
         "usedIn": [
-          "default"
+          "default",
+          "hover"
         ]
       },
       {
         "name": "--dss-surface-active",
         "usedIn": [
-          "default"
+          "default",
+          "active"
         ]
       },
       {
@@ -3441,8 +3375,7 @@
       {
         "name": "--dss-radius-md",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3472,8 +3405,7 @@
       {
         "name": "--dss-radius-full",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3521,8 +3453,7 @@
       {
         "name": "--dss-elevation-3",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3756,8 +3687,7 @@
       {
         "name": "--dss-action-primary",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3776,7 +3706,8 @@
         "name": "--dss-gray-200",
         "usedIn": [
           "default",
-          "disabled"
+          "disabled",
+          "defaultPreview"
         ]
       },
       {
@@ -3819,8 +3750,7 @@
       {
         "name": "--dss-spacing-4",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3884,28 +3814,40 @@
         ]
       },
       {
-        "name": "--dss-min-w-sm",
-        "usedIn": [
-          "default",
-          "defaultPreview"
-        ]
-      },
-      {
         "name": "--dss-border-width-thin",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-border-width-md",
+        "name": "--dss-hub-600",
         "usedIn": [
-          "default"
+          "default",
+          "hover",
+          "focus"
         ]
       },
       {
-        "name": "--dss-border-width-thick",
+        "name": "--dss-water-600",
         "usedIn": [
-          "default"
+          "default",
+          "hover",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default",
+          "hover",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
         ]
       },
       {
@@ -4031,7 +3973,19 @@
         ]
       },
       {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
         "name": "--dss-touch-target-md",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-duration-250",
         "usedIn": [
           "defaultPreview"
         ]
@@ -4043,7 +3997,7 @@
       {
         "criterion": "2.1.1",
         "level": "A",
-        "implementation": "Operável por teclado: ativação e navegação do menu suspenso.",
+        "implementation": "Navegação entre abas operável por teclado (setas, Home/End).",
         "verifiedBy": "test"
       },
       {
@@ -4055,34 +4009,35 @@
       {
         "criterion": "4.1.2",
         "level": "A",
-        "implementation": "Nome/estado expostos via aria-label, aria-haspopup e aria-expanded.",
+        "implementation": "Lista de abas rotulada via aria-label; orientação via aria-orientation.",
         "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
       }
     ],
     "aria": {
-      "role": "button",
+      "role": "tablist",
       "states": [
-        "aria-haspopup",
-        "aria-expanded",
-        "aria-label"
+        "aria-label",
+        "aria-orientation"
       ]
     },
     "keyboard": [
       {
-        "key": "Enter",
-        "action": "ativar o botão / abrir o menu"
+        "key": "ArrowRight",
+        "action": "mover para a próxima aba"
       },
       {
-        "key": "Space",
-        "action": "ativar o botão"
+        "key": "ArrowLeft",
+        "action": "mover para a aba anterior"
       },
       {
-        "key": "Escape",
-        "action": "fechar o menu"
-      },
-      {
-        "key": "ArrowDown",
-        "action": "abrir e navegar o menu"
+        "key": "Home",
+        "action": "ir para a primeira aba"
       }
     ]
   },
@@ -4109,23 +4064,23 @@
     ]
   },
   "sources": {
-    "structure": "1-structure/DssBtnDropdown.ts.vue",
+    "structure": "1-structure/DssTabs.ts.vue",
     "scss": {
       "L2": "2-composition/_base.scss",
-      "L3": "3-variants/_elevated.scss",
+      "L3": "3-variants/_dense.scss",
       "L4": [
         "4-output/_brands.scss",
         "4-output/_states.scss"
       ]
     },
-    "types": "types/btn-dropdown.types.ts",
+    "types": "types/tabs.types.ts",
     "docs": {
-      "normative": "DssBtnDropdown.md",
-      "api": "DSSBTNDROPDOWN_API.md",
+      "normative": "DssTabs.md",
+      "api": "DSSTABS_API.md",
       "readme": "README.md"
     },
-    "examples": "DssBtnDropdown.example.vue",
-    "tests": "DssBtnDropdown.test.js",
-    "seal": "docs/Compliance/seals/DssBtnDropdown/DSSBTNDROPDOWN_SELO_v2.2.md"
+    "examples": "DssTabs.example.vue",
+    "tests": "DssTabs.test.js",
+    "seal": "docs/Compliance/seals/DssTabs/DSSTABS_SELO_v2.2.md"
   }
 }

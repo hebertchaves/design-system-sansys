@@ -31,7 +31,7 @@
       "impact": "Médio — Consumidores podem usar q-pa-none como workaround até v1.1.0."
     }
   ],
-  "classification": "Container estrutural não-interativo — fornece espaçamento e contexto de layout para conteúdo de aba",
+  "classification": "Visual",
   "subcomponents": [],
   "compositionRequirements": [],
   "compositionFuture": [
@@ -157,5 +157,44 @@
       }
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "classificationNote": "Container estrutural não-interativo — fornece espaçamento e contexto de layout para conteúdo de aba",
+  "tagline": "Painel de conteúdo associado a uma aba dentro de DssTabPanels.",
+  "a11y": {
+    "aria": {
+      "role": "tabpanel",
+      "states": [
+        "aria-labelledby"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Painel associado à aba correspondente via role=tabpanel.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -6,7 +6,7 @@
     "displayName": "Option Group",
     "tagline": "Grupo de opções (radio ou checkbox) com rótulo compartilhado.",
     "category": "Container de Seleção — Grupo de Controles (Radio, Checkbox ou Toggle)",
-    "classification": "Construção Explícita — não faz wrap de QOptionGroup. Renderiza componentes DSS da Fase 1 via v-for.",
+    "classification": "Action",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssChip",

@@ -1,258 +1,107 @@
 {
   "schemaId": "dss-component-contract@1",
-  "name": "DssBtnDropdown",
+  "name": "DssTabPanels",
   "version": "2.2",
   "identity": {
-    "displayName": "Btn Dropdown",
-    "tagline": "Botão de ação com menu suspenso acoplado para opções relacionadas.",
-    "category": "Action Group Composto (Botão com Dropdown Integrado)",
-    "classification": "Action",
+    "displayName": "Tab Panels",
+    "tagline": "Container que orquestra a visibilidade dos painéis de aba via v-model.",
+    "category": "Container de Painéis (Tab Panels Container)",
+    "classification": "Visual",
     "phase": 2,
     "status": "sealed",
-    "goldenReference": "DssChip",
-    "goldenContext": "DssCard"
+    "goldenReference": "DssCard",
+    "goldenContext": "DssTabs"
   },
   "audit": {
     "status": "sealed",
-    "date": "2026-03-27",
+    "date": "2026-04-09",
     "mode": "Selo DSS v2.2 Concedido",
-    "sealPath": "docs/Compliance/seals/DssBtnDropdown/DSSBTNDROPDOWN_SELO_v2.2.md"
+    "sealPath": "docs/Compliance/seals/DssTabPanels/DSSTABPANELS_SELO_v2.2.md"
   },
   "api": {
     "props": [
       {
-        "name": "label",
-        "type": "string",
+        "name": "modelValue",
+        "type": "string | number",
         "controlHint": "text",
-        "description": "Rótulo do botão trigger."
+        "required": true,
+        "description": "Identificador do painel ativo."
       },
       {
-        "name": "icon",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Ícone à esquerda do label (Material Icons)."
-      },
-      {
-        "name": "iconRight",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Ícone à direita do label (antes do ícone de seta)."
-      },
-      {
-        "name": "variant",
-        "type": "BtnDropdownVariant",
-        "controlHint": "segmented",
-        "default": "elevated",
-        "description": "Variante visual do botão.",
-        "validValues": [
-          "elevated",
-          "flat",
-          "outline",
-          "unelevated"
-        ]
-      },
-      {
-        "name": "color",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Cor do botão (compatível com paleta Quasar e DSS)."
-      },
-      {
-        "name": "textColor",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Cor do texto (sobrescreve o contraste automático)."
-      },
-      {
-        "name": "size",
-        "type": "BtnDropdownSize",
-        "controlHint": "select",
-        "default": "md",
-        "description": "Tamanho do botão.",
-        "validValues": [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl"
-        ]
-      },
-      {
-        "name": "square",
+        "name": "animated",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove o border-radius (cantos retos)."
+        "description": "Habilita transição animada (fade governado pelo DSS) ao trocar de painel."
       },
       {
-        "name": "rounded",
+        "name": "swipeable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Border-radius pill completo."
+        "description": "Habilita navegação por gesto de swipe (útil em dispositivos touch/mobile)."
       },
       {
-        "name": "dense",
+        "name": "infinite",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Reduz padding e altura (modo compacto)."
+        "description": "Ao chegar no último painel, retorna ao primeiro (e vice-versa)."
       },
       {
-        "name": "split",
+        "name": "keepAlive",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Modo split: separa o botão de ação da seta de dropdown."
-      },
-      {
-        "name": "disable",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Desabilita o componente inteiro (trigger + dropdown)."
-      },
-      {
-        "name": "loading",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Indica estado de carregamento no trigger."
-      },
-      {
-        "name": "closeOnEsc",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": true,
-        "description": "Fecha o dropdown ao pressionar Escape."
-      },
-      {
-        "name": "dropdownIcon",
-        "type": "string",
-        "controlHint": "text",
-        "default": "arrow_drop_down",
-        "description": "Ícone de seta do dropdown."
-      },
-      {
-        "name": "menuAnchor",
-        "type": "string",
-        "controlHint": "text",
-        "default": "bottom left",
-        "description": "Opções de posicionamento do painel (QMenu anchor)."
-      },
-      {
-        "name": "menuSelf",
-        "type": "string",
-        "controlHint": "text",
-        "default": "top left",
-        "description": "Ponto de self do painel (QMenu self)."
-      },
-      {
-        "name": "menuOffset",
-        "type": "[number, number]",
-        "controlHint": "text",
-        "default": "[0, 0]",
-        "description": "Offset do painel em pixels [horizontal, vertical]."
-      },
-      {
-        "name": "stretch",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Largura mínima do painel igual à largura do trigger."
-      },
-      {
-        "name": "persistent",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Mantém o conteúdo do painel montado mesmo quando fechado."
-      },
-      {
-        "name": "brand",
-        "type": "BtnDropdownBrand | null",
-        "controlHint": "picker-brand",
-        "default": "null",
-        "description": "Marca Sansys (Hub, Water, Waste).",
-        "validValues": [
-          "hub",
-          "water",
-          "waste"
-        ]
-      },
-      {
-        "name": "ariaLabel",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Label acessível para o trigger (aria-label)."
+        "description": "Mantém o estado dos painéis inativos em memória via Vue KeepAlive."
       }
     ],
-    "emits": [],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "string | number",
+        "description": "Emitido quando o painel ativo muda."
+      }
+    ],
     "slots": [
       {
         "name": "default",
         "scope": null,
-        "description": "Conteúdo do painel dropdown."
-      },
-      {
-        "name": "label",
-        "scope": null,
-        "description": "Slot para conteúdo personalizado do trigger (substitui label + icon)."
+        "description": "Slot para componentes DssTabPanel filhos."
       }
-    ]
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
   },
   "visual": {
     "defaultPreview": {
       "props": {
-        "label": "Opções"
+        "modelValue": "inicio"
       },
       "slots": {
         "default": [
           {
-            "component": "DssList",
-            "children": [
-              {
-                "component": "DssItem",
-                "props": {
-                  "clickable": true
-                },
-                "children": [
-                  {
-                    "component": "DssItemSection",
-                    "children": [
-                      {
-                        "component": "DssItemLabel",
-                        "children": "Editar"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "component": "DssItem",
-                "props": {
-                  "clickable": true
-                },
-                "children": [
-                  {
-                    "component": "DssItemSection",
-                    "children": [
-                      {
-                        "component": "DssItemLabel",
-                        "children": "Duplicar"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            "component": "DssTabPanel",
+            "props": {
+              "name": "inicio"
+            },
+            "children": "Conteúdo Início"
+          },
+          {
+            "component": "DssTabPanel",
+            "props": {
+              "name": "perfil"
+            },
+            "children": "Conteúdo Perfil"
           }
         ]
       }
     },
     "dimensions": {
       "minHeight": {
-        "value": "44px"
+        "value": "48px"
       }
     },
     "states": {
@@ -285,7 +134,7 @@
           "property": "display",
           "token": null,
           "value": "inline-flex",
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "display",
@@ -297,7 +146,7 @@
           "property": "display",
           "token": null,
           "value": "none",
-          "source": "4-output/_states.scss"
+          "source": "_layout-helpers.scss"
         },
         {
           "property": "visibility",
@@ -333,7 +182,7 @@
           "property": "align-items",
           "token": null,
           "value": "center",
-          "source": "2-composition/_base.scss"
+          "source": "_layout-helpers.scss"
         },
         {
           "property": "align-items",
@@ -753,7 +602,7 @@
           "property": "background-color",
           "token": "--dss-surface-default",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "background-color",
@@ -1155,7 +1004,7 @@
           "property": "border-radius",
           "token": "--dss-radius-md",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "border-radius",
@@ -1239,7 +1088,7 @@
           "property": "box-shadow",
           "token": "--dss-elevation-3",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "box-shadow",
@@ -1485,7 +1334,7 @@
           "property": "overflow",
           "token": null,
           "value": "hidden",
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "clip",
@@ -1803,7 +1652,7 @@
           "property": "border-top-left-radius",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "_border-helpers.scss"
         },
         {
           "property": "border-top-right-radius",
@@ -1851,7 +1700,7 @@
           "property": "border-bottom-left-radius",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "_border-helpers.scss"
         },
         {
           "property": "border-bottom-right-radius",
@@ -2586,9 +2435,9 @@
           "source": "_layout-helpers.scss"
         },
         {
-          "property": "vertical-align",
+          "property": "background",
           "token": null,
-          "value": "middle",
+          "value": "transparent",
           "source": "2-composition/_base.scss"
         },
         {
@@ -2598,64 +2447,22 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "border-radius",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "min-width",
-          "token": "--dss-min-w-sm",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-left",
+          "property": "outline",
           "token": "--dss-border-width-thin",
           "value": null,
-          "source": "3-variants/_unelevated.scss"
+          "source": "4-output/_states.scss"
         },
         {
-          "property": "margin-left",
+          "property": "outline-offset",
           "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "3-variants/_outline.scss"
-        },
-        {
-          "property": "border",
-          "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_states.scss"
         },
         {
           "property": "border",
-          "token": null,
-          "value": "1px solid ButtonBorder",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "background-color",
-          "token": null,
-          "value": "Canvas",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "color",
-          "token": null,
-          "value": "ButtonText",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border-left",
           "token": null,
           "value": "1px solid ButtonText",
           "source": "4-output/_states.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thick",
-          "value": null,
-          "source": "4-output/_brands.scss"
         }
       ],
       "hover": [
@@ -3079,8 +2886,7 @@
       {
         "name": "--dss-text-inverse",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3441,8 +3247,7 @@
       {
         "name": "--dss-radius-md",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3472,8 +3277,7 @@
       {
         "name": "--dss-radius-full",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3521,8 +3325,7 @@
       {
         "name": "--dss-elevation-3",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3756,8 +3559,7 @@
       {
         "name": "--dss-action-primary",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3806,8 +3608,7 @@
       {
         "name": "--dss-spacing-2",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3819,8 +3620,7 @@
       {
         "name": "--dss-spacing-4",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3884,26 +3684,7 @@
         ]
       },
       {
-        "name": "--dss-min-w-sm",
-        "usedIn": [
-          "default",
-          "defaultPreview"
-        ]
-      },
-      {
         "name": "--dss-border-width-thin",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-border-width-md",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-border-width-thick",
         "usedIn": [
           "default"
         ]
@@ -4029,21 +3810,15 @@
         "usedIn": [
           "focus"
         ]
-      },
-      {
-        "name": "--dss-touch-target-md",
-        "usedIn": [
-          "defaultPreview"
-        ]
       }
     ]
   },
   "a11y": {
     "wcag": [
       {
-        "criterion": "2.1.1",
+        "criterion": "1.3.1",
         "level": "A",
-        "implementation": "Operável por teclado: ativação e navegação do menu suspenso.",
+        "implementation": "Orquestra a visibilidade dos DssTabPanel via v-model.",
         "verifiedBy": "test"
       },
       {
@@ -4053,38 +3828,17 @@
         "verifiedBy": "css"
       },
       {
-        "criterion": "4.1.2",
-        "level": "A",
-        "implementation": "Nome/estado expostos via aria-label, aria-haspopup e aria-expanded.",
-        "verifiedBy": "aria"
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
       }
     ],
     "aria": {
-      "role": "button",
-      "states": [
-        "aria-haspopup",
-        "aria-expanded",
-        "aria-label"
-      ]
+      "role": "",
+      "states": []
     },
-    "keyboard": [
-      {
-        "key": "Enter",
-        "action": "ativar o botão / abrir o menu"
-      },
-      {
-        "key": "Space",
-        "action": "ativar o botão"
-      },
-      {
-        "key": "Escape",
-        "action": "fechar o menu"
-      },
-      {
-        "key": "ArrowDown",
-        "action": "abrir e navegar o menu"
-      }
-    ]
+    "keyboard": []
   },
   "antiPatterns": [
     {
@@ -4109,23 +3863,22 @@
     ]
   },
   "sources": {
-    "structure": "1-structure/DssBtnDropdown.ts.vue",
+    "structure": "1-structure/DssTabPanels.ts.vue",
     "scss": {
       "L2": "2-composition/_base.scss",
-      "L3": "3-variants/_elevated.scss",
       "L4": [
         "4-output/_brands.scss",
         "4-output/_states.scss"
       ]
     },
-    "types": "types/btn-dropdown.types.ts",
+    "types": "types/tab-panels.types.ts",
     "docs": {
-      "normative": "DssBtnDropdown.md",
-      "api": "DSSBTNDROPDOWN_API.md",
+      "normative": "DssTabPanels.md",
+      "api": "DSSTABPANELS_API.md",
       "readme": "README.md"
     },
-    "examples": "DssBtnDropdown.example.vue",
-    "tests": "DssBtnDropdown.test.js",
-    "seal": "docs/Compliance/seals/DssBtnDropdown/DSSBTNDROPDOWN_SELO_v2.2.md"
+    "examples": "DssTabPanels.example.vue",
+    "tests": "DssTabPanels.test.js",
+    "seal": "docs/Compliance/seals/DssTabPanels/DSSTABPANELS_SELO_v2.2.md"
   }
 }

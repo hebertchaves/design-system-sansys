@@ -6,7 +6,7 @@
     "displayName": "Tab",
     "tagline": "Aba para alternar entre painéis de conteúdo relacionados.",
     "category": "Elemento interativo de navegacao por abas",
-    "classification": "Controle interativo de selecao — wrapper DSS sobre QTab",
+    "classification": "Action",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssButton",

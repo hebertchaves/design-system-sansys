@@ -11,7 +11,8 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente Composto. O DssBtnGroup gerencia estado visual compartilhado entre múltiplos DssButton filhos (border-radius, separadores, layout). Isso caracteriza composição interna, critério da Fase 2.",
   "hasReservations": false,
-  "classification": "Container de composição — Agrupa instâncias de DssButton com borda compartilhada e remoção de gap",
+  "classification": "Action",
+  "classificationNote": "Container de composição — Agrupa instâncias de DssButton com borda compartilhada e remoção de gap",
   "subcomponents": [],
   "compositionRequirements": [
     "DssButton"

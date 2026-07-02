@@ -1,7 +1,8 @@
 {
   "component": "DssButton",
   "version": "2.2.0",
-  "classification": "Ação Principal",
+  "classification": "Action",
+  "classificationNote": "Ação Principal",
   "category": "Action",
   "phase": 1,
   "goldenReference": "DssButton",

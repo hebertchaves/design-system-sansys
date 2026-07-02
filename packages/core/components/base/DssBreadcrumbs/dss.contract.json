@@ -1,0 +1,389 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssBreadcrumbs",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Breadcrumbs",
+    "tagline": "Trilha de navegação que mostra a localização atual na hierarquia.",
+    "category": "Container Orquestrador de Navegação (Breadcrumb Trail)",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBtnGroup",
+    "goldenContext": "DssCard"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-11",
+    "mode": "Selo DSS v2.2 Concedido",
+    "sealPath": "docs/Compliance/seals/DssBreadcrumbs/DSSBREADCRUMBS_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "separator",
+        "type": "string",
+        "controlHint": "text",
+        "default": "/",
+        "description": "Caractere separador exibido entre os itens da trilha."
+      },
+      {
+        "name": "separatorColor",
+        "type": "string",
+        "controlHint": "text",
+        "default": "subtle",
+        "description": "Cor do separador."
+      },
+      {
+        "name": "gutter",
+        "type": "BreadcrumbsGutter",
+        "controlHint": "segmented",
+        "default": "md",
+        "description": "Espaçamento entre os itens da trilha.",
+        "validValues": [
+          "sm",
+          "md",
+          "lg"
+        ]
+      },
+      {
+        "name": "align",
+        "type": "BreadcrumbsAlign",
+        "controlHint": "select",
+        "default": "left",
+        "description": "Alinhamento horizontal da trilha dentro do container.",
+        "validValues": [
+          "left",
+          "center",
+          "right",
+          "between",
+          "around"
+        ]
+      },
+      {
+        "name": "brand",
+        "type": "BreadcrumbsBrand",
+        "controlHint": "picker-brand",
+        "default": "undefined",
+        "description": "Marca Sansys (Hub, Water, Waste).",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo da trilha."
+      },
+      {
+        "name": "separator",
+        "scope": null,
+        "description": "Separador customizado entre os itens da trilha."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": [
+          {
+            "component": "DssBreadcrumbsEl",
+            "props": {
+              "label": "Home"
+            }
+          },
+          {
+            "component": "DssBreadcrumbsEl",
+            "props": {
+              "label": "Produtos"
+            }
+          },
+          {
+            "component": "DssBreadcrumbsEl",
+            "props": {
+              "label": "Detalhe"
+            }
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "21px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "gap",
+          "token": "--dss-breadcrumbs-gap",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-breadcrumbs-separator-color",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-bold",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "inherit",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "DssBreadcrumbs.module.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "DssBreadcrumbs.module.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "DssBreadcrumbs.module.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-breadcrumbs-gap",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-breadcrumbs-separator-color",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-line-height-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-bold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Trilha estruturada via role=navigation e lista de itens (DssBreadcrumbsEl).",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "navigation",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssBreadcrumbs.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_gutter.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/breadcrumbs.types.ts",
+    "docs": {
+      "normative": "DssBreadcrumbs.md",
+      "api": "DSSBREADCRUMBS_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssBreadcrumbs.example.vue",
+    "tests": "DssBreadcrumbs.test.js",
+    "seal": "docs/Compliance/seals/DssBreadcrumbs/DSSBREADCRUMBS_SELO_v2.2.md"
+  }
+}

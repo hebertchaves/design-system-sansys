@@ -1,80 +1,61 @@
 {
   "schemaId": "dss-component-contract@1",
-  "name": "DssBtnDropdown",
+  "name": "DssMarkupTable",
   "version": "2.2",
   "identity": {
-    "displayName": "Btn Dropdown",
-    "tagline": "Botão de ação com menu suspenso acoplado para opções relacionadas.",
-    "category": "Action Group Composto (Botão com Dropdown Integrado)",
-    "classification": "Action",
+    "displayName": "Markup Table",
+    "tagline": "Superfície de tabela estilizada para exibição de dados tabulares.",
+    "category": "Tabela de Exibição Semântica",
+    "classification": "Visual",
     "phase": 2,
     "status": "sealed",
-    "goldenReference": "DssChip",
-    "goldenContext": "DssCard"
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssList"
   },
   "audit": {
     "status": "sealed",
-    "date": "2026-03-27",
-    "mode": "Selo DSS v2.2 Concedido",
-    "sealPath": "docs/Compliance/seals/DssBtnDropdown/DSSBTNDROPDOWN_SELO_v2.2.md"
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssMarkupTable/DSSMARKUPTABLE_SELO_v2.2.md"
   },
   "api": {
     "props": [
       {
-        "name": "label",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Rótulo do botão trigger."
-      },
-      {
-        "name": "icon",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Ícone à esquerda do label (Material Icons)."
-      },
-      {
-        "name": "iconRight",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Ícone à direita do label (antes do ícone de seta)."
-      },
-      {
-        "name": "variant",
-        "type": "BtnDropdownVariant",
+        "name": "density",
+        "type": "MarkupTableDensity",
         "controlHint": "segmented",
-        "default": "elevated",
-        "description": "Variante visual do botão.",
+        "default": "standard",
+        "description": "Densidade visual da tabela.",
         "validValues": [
-          "elevated",
-          "flat",
-          "outline",
-          "unelevated"
+          "compact",
+          "standard",
+          "comfortable"
         ]
       },
       {
-        "name": "color",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Cor do botão (compatível com paleta Quasar e DSS)."
+        "name": "flat",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Remove sombra e bordas do container (superfície plana)."
       },
       {
-        "name": "textColor",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Cor do texto (sobrescreve o contraste automático)."
+        "name": "bordered",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Aplica borda externa ao container da tabela."
       },
       {
-        "name": "size",
-        "type": "BtnDropdownSize",
-        "controlHint": "select",
-        "default": "md",
-        "description": "Tamanho do botão.",
+        "name": "separator",
+        "type": "MarkupTableSeparator",
+        "controlHint": "segmented",
+        "default": "horizontal",
+        "description": "Tipo de separador entre células.",
         "validValues": [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl"
+          "horizontal",
+          "vertical",
+          "cell",
+          "none"
         ]
       },
       {
@@ -82,109 +63,26 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove o border-radius (cantos retos)."
+        "description": "Remove o border-radius do container (cantos quadrados)."
       },
       {
-        "name": "rounded",
+        "name": "wrapCells",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Border-radius pill completo."
-      },
-      {
-        "name": "dense",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Reduz padding e altura (modo compacto)."
-      },
-      {
-        "name": "split",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Modo split: separa o botão de ação da seta de dropdown."
-      },
-      {
-        "name": "disable",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Desabilita o componente inteiro (trigger + dropdown)."
-      },
-      {
-        "name": "loading",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Indica estado de carregamento no trigger."
-      },
-      {
-        "name": "closeOnEsc",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": true,
-        "description": "Fecha o dropdown ao pressionar Escape."
-      },
-      {
-        "name": "dropdownIcon",
-        "type": "string",
-        "controlHint": "text",
-        "default": "arrow_drop_down",
-        "description": "Ícone de seta do dropdown."
-      },
-      {
-        "name": "menuAnchor",
-        "type": "string",
-        "controlHint": "text",
-        "default": "bottom left",
-        "description": "Opções de posicionamento do painel (QMenu anchor)."
-      },
-      {
-        "name": "menuSelf",
-        "type": "string",
-        "controlHint": "text",
-        "default": "top left",
-        "description": "Ponto de self do painel (QMenu self)."
-      },
-      {
-        "name": "menuOffset",
-        "type": "[number, number]",
-        "controlHint": "text",
-        "default": "[0, 0]",
-        "description": "Offset do painel em pixels [horizontal, vertical]."
-      },
-      {
-        "name": "stretch",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Largura mínima do painel igual à largura do trigger."
-      },
-      {
-        "name": "persistent",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "default": false,
-        "description": "Mantém o conteúdo do painel montado mesmo quando fechado."
+        "description": "Permite que o conteúdo das células quebre em múltiplas linhas."
       },
       {
         "name": "brand",
-        "type": "BtnDropdownBrand | null",
+        "type": "MarkupTableBrand | null",
         "controlHint": "picker-brand",
         "default": "null",
-        "description": "Marca Sansys (Hub, Water, Waste).",
+        "description": "Aplicar identidade visual de marca ao cabeçalho da tabela.",
         "validValues": [
           "hub",
           "water",
           "waste"
         ]
-      },
-      {
-        "name": "ariaLabel",
-        "type": "string",
-        "controlHint": "text",
-        "description": "Label acessível para o trigger (aria-label)."
       }
     ],
     "emits": [],
@@ -192,67 +90,28 @@
       {
         "name": "default",
         "scope": null,
-        "description": "Conteúdo do painel dropdown."
-      },
-      {
-        "name": "label",
-        "scope": null,
-        "description": "Slot para conteúdo personalizado do trigger (substitui label + icon)."
+        "description": "Conteúdo da tabela."
       }
     ]
   },
   "visual": {
     "defaultPreview": {
       "props": {
-        "label": "Opções"
+        "density": "standard",
+        "bordered": true,
+        "separator": "horizontal"
       },
       "slots": {
         "default": [
           {
-            "component": "DssList",
-            "children": [
-              {
-                "component": "DssItem",
-                "props": {
-                  "clickable": true
-                },
-                "children": [
-                  {
-                    "component": "DssItemSection",
-                    "children": [
-                      {
-                        "component": "DssItemLabel",
-                        "children": "Editar"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "component": "DssItem",
-                "props": {
-                  "clickable": true
-                },
-                "children": [
-                  {
-                    "component": "DssItemSection",
-                    "children": [
-                      {
-                        "component": "DssItemLabel",
-                        "children": "Duplicar"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            "html": "<thead><tr><th>Nome</th><th>Valor</th></tr></thead><tbody><tr><td>Item A</td><td>100</td></tr><tr><td>Item B</td><td>200</td></tr></tbody>"
           }
         ]
       }
     },
     "dimensions": {
-      "minHeight": {
-        "value": "44px"
+      "width": {
+        "value": "100%"
       }
     },
     "states": {
@@ -285,7 +144,7 @@
           "property": "display",
           "token": null,
           "value": "inline-flex",
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "display",
@@ -297,7 +156,7 @@
           "property": "display",
           "token": null,
           "value": "none",
-          "source": "4-output/_states.scss"
+          "source": "_layout-helpers.scss"
         },
         {
           "property": "visibility",
@@ -333,7 +192,7 @@
           "property": "align-items",
           "token": null,
           "value": "center",
-          "source": "2-composition/_base.scss"
+          "source": "_layout-helpers.scss"
         },
         {
           "property": "align-items",
@@ -669,7 +528,7 @@
           "property": "color",
           "token": "--dss-text-body",
           "value": null,
-          "source": "_helpers.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
@@ -753,7 +612,7 @@
           "property": "background-color",
           "token": "--dss-surface-default",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "background-color",
@@ -873,7 +732,7 @@
           "property": "font-size",
           "token": "--dss-font-size-sm",
           "value": null,
-          "source": "_helpers.scss"
+          "source": "3-variants/_density.scss"
         },
         {
           "property": "font-size",
@@ -933,19 +792,19 @@
           "property": "font-weight",
           "token": "--dss-font-weight-semibold",
           "value": null,
-          "source": "_helpers.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "font-weight",
           "token": "--dss-font-weight-bold",
           "value": null,
-          "source": "_helpers.scss"
+          "source": "4-output/_states.scss"
         },
         {
           "property": "text-align",
           "token": null,
           "value": "left",
-          "source": "_helpers.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "text-align",
@@ -1191,7 +1050,7 @@
           "property": "box-shadow",
           "token": null,
           "value": "none",
-          "source": "_helpers.scss"
+          "source": "4-output/_states.scss"
         },
         {
           "property": "box-shadow",
@@ -1239,7 +1098,7 @@
           "property": "box-shadow",
           "token": "--dss-elevation-3",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "box-shadow",
@@ -1485,7 +1344,7 @@
           "property": "overflow",
           "token": null,
           "value": "hidden",
-          "source": "2-composition/_base.scss"
+          "source": "_helpers.scss"
         },
         {
           "property": "clip",
@@ -1497,7 +1356,7 @@
           "property": "white-space",
           "token": null,
           "value": "nowrap",
-          "source": "_mixins.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "border",
@@ -1509,7 +1368,7 @@
           "property": "transition",
           "token": null,
           "value": "none",
-          "source": "_helpers.scss"
+          "source": "DssMarkupTable.module.scss"
         },
         {
           "property": "animation",
@@ -1803,7 +1662,7 @@
           "property": "border-top-left-radius",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "_border-helpers.scss"
         },
         {
           "property": "border-top-right-radius",
@@ -1851,7 +1710,7 @@
           "property": "border-bottom-left-radius",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "_border-helpers.scss"
         },
         {
           "property": "border-bottom-right-radius",
@@ -1899,7 +1758,7 @@
           "property": "width",
           "token": null,
           "value": "100%",
-          "source": "_layout-helpers.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "padding-left",
@@ -2586,51 +2445,123 @@
           "source": "_layout-helpers.scss"
         },
         {
+          "property": "box-sizing",
+          "token": null,
+          "value": "border-box",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-collapse",
+          "token": null,
+          "value": "collapse",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-50",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-700",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
           "property": "vertical-align",
           "token": null,
           "value": "middle",
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "-webkit-tap-highlight-color",
-          "token": null,
-          "value": "transparent",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-radius",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "min-width",
-          "token": "--dss-min-w-sm",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-left",
+          "property": "border-bottom",
           "token": "--dss-border-width-thin",
           "value": null,
-          "source": "3-variants/_unelevated.scss"
+          "source": "2-composition/_base.scss"
         },
         {
-          "property": "margin-left",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "3-variants/_outline.scss"
+          "property": "border-bottom",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
         },
         {
-          "property": "border",
+          "property": "border-top",
           "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_states.scss"
         },
         {
-          "property": "border",
+          "property": "white-space",
           "token": null,
-          "value": "1px solid ButtonBorder",
+          "value": "normal",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": null,
+          "value": "currentColor",
           "source": "4-output/_states.scss"
         },
         {
@@ -2642,18 +2573,102 @@
         {
           "property": "color",
           "token": null,
-          "value": "ButtonText",
+          "value": "CanvasText",
           "source": "4-output/_states.scss"
         },
         {
-          "property": "border-left",
+          "property": "border-bottom",
           "token": null,
           "value": "1px solid ButtonText",
           "source": "4-output/_states.scss"
         },
         {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thick",
+          "property": "border",
+          "token": null,
+          "value": "1px solid currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "print-color-adjust",
+          "token": null,
+          "value": "exact",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-hub-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-hub-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": "--dss-hub-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-water-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-water-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": "--dss-water-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-waste-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-waste-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": "--dss-waste-200",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -3079,8 +3094,7 @@
       {
         "name": "--dss-text-inverse",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3146,8 +3160,7 @@
       {
         "name": "--dss-surface-default",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3159,7 +3172,8 @@
       {
         "name": "--dss-surface-muted",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -3171,7 +3185,8 @@
       {
         "name": "--dss-surface-hover",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -3321,7 +3336,8 @@
       {
         "name": "--dss-font-weight-medium",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -3441,8 +3457,7 @@
       {
         "name": "--dss-radius-md",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3472,8 +3487,7 @@
       {
         "name": "--dss-radius-full",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3521,8 +3535,7 @@
       {
         "name": "--dss-elevation-3",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3756,8 +3769,7 @@
       {
         "name": "--dss-action-primary",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -3776,7 +3788,8 @@
         "name": "--dss-gray-200",
         "usedIn": [
           "default",
-          "disabled"
+          "disabled",
+          "defaultPreview"
         ]
       },
       {
@@ -3806,14 +3819,14 @@
       {
         "name": "--dss-spacing-2",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
         "name": "--dss-spacing-3",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -3884,14 +3897,26 @@
         ]
       },
       {
-        "name": "--dss-min-w-sm",
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
         "usedIn": [
           "default",
           "defaultPreview"
         ]
       },
       {
-        "name": "--dss-border-width-thin",
+        "name": "--dss-gray-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-700",
         "usedIn": [
           "default"
         ]
@@ -3903,7 +3928,67 @@
         ]
       },
       {
-        "name": "--dss-border-width-thick",
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-200",
         "usedIn": [
           "default"
         ]
@@ -4029,22 +4114,16 @@
         "usedIn": [
           "focus"
         ]
-      },
-      {
-        "name": "--dss-touch-target-md",
-        "usedIn": [
-          "defaultPreview"
-        ]
       }
     ]
   },
   "a11y": {
     "wcag": [
       {
-        "criterion": "2.1.1",
-        "level": "A",
-        "implementation": "Operável por teclado: ativação e navegação do menu suspenso.",
-        "verifiedBy": "test"
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
       },
       {
         "criterion": "2.4.7",
@@ -4053,38 +4132,17 @@
         "verifiedBy": "css"
       },
       {
-        "criterion": "4.1.2",
+        "criterion": "1.3.1",
         "level": "A",
-        "implementation": "Nome/estado expostos via aria-label, aria-haspopup e aria-expanded.",
-        "verifiedBy": "aria"
+        "implementation": "Estrutura semântica de tabela preservada (thead/tbody/th/td).",
+        "verifiedBy": "test"
       }
     ],
     "aria": {
-      "role": "button",
-      "states": [
-        "aria-haspopup",
-        "aria-expanded",
-        "aria-label"
-      ]
+      "role": "table",
+      "states": []
     },
-    "keyboard": [
-      {
-        "key": "Enter",
-        "action": "ativar o botão / abrir o menu"
-      },
-      {
-        "key": "Space",
-        "action": "ativar o botão"
-      },
-      {
-        "key": "Escape",
-        "action": "fechar o menu"
-      },
-      {
-        "key": "ArrowDown",
-        "action": "abrir e navegar o menu"
-      }
-    ]
+    "keyboard": []
   },
   "antiPatterns": [
     {
@@ -4109,23 +4167,23 @@
     ]
   },
   "sources": {
-    "structure": "1-structure/DssBtnDropdown.ts.vue",
+    "structure": "1-structure/DssMarkupTable.ts.vue",
     "scss": {
       "L2": "2-composition/_base.scss",
-      "L3": "3-variants/_elevated.scss",
+      "L3": "3-variants/_density.scss",
       "L4": [
         "4-output/_brands.scss",
         "4-output/_states.scss"
       ]
     },
-    "types": "types/btn-dropdown.types.ts",
+    "types": "types/markuptable.types.ts",
     "docs": {
-      "normative": "DssBtnDropdown.md",
-      "api": "DSSBTNDROPDOWN_API.md",
+      "normative": "DssMarkupTable.md",
+      "api": "DSSMARKUPTABLE_API.md",
       "readme": "README.md"
     },
-    "examples": "DssBtnDropdown.example.vue",
-    "tests": "DssBtnDropdown.test.js",
-    "seal": "docs/Compliance/seals/DssBtnDropdown/DSSBTNDROPDOWN_SELO_v2.2.md"
+    "examples": "DssMarkupTable.example.vue",
+    "tests": "DssMarkupTable.test.js",
+    "seal": "docs/Compliance/seals/DssMarkupTable/DSSMARKUPTABLE_SELO_v2.2.md"
   }
 }

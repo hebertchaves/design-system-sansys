@@ -31,7 +31,7 @@
       "impact": "Baixo — O padrão tabindex=-1 é semanticamente correto para um container de painéis (navegação via DssTabs, não pelo container)."
     }
   ],
-  "classification": "Container orquestrador não-interativo — gerencia visibilidade dos DssTabPanel via v-model e coordena transições",
+  "classification": "Visual",
   "subcomponents": [],
   "compositionRequirements": [
     "DssTabPanel"
@@ -154,5 +154,42 @@
       ]
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "classificationNote": "Container orquestrador não-interativo — gerencia visibilidade dos DssTabPanel via v-model e coordena transições",
+  "tagline": "Container que orquestra a visibilidade dos painéis de aba via v-model.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Orquestra a visibilidade dos DssTabPanel via v-model.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

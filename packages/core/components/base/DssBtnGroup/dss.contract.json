@@ -6,7 +6,7 @@
     "displayName": "Btn Group",
     "tagline": "Agrupa botões relacionados em um único bloco visual coeso.",
     "category": "Container de Composição (Action Group)",
-    "classification": "Container de composição — Agrupa instâncias de DssButton com borda compartilhada e remoção de gap",
+    "classification": "Action",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssChip",

@@ -10,7 +10,8 @@
   "goldenContextSecondary": "DssRadio",
   "category": "Compact Control interativo",
   "phase": 1,
-  "classification": "Form / Selection",
+  "classification": "Action",
+  "classificationNote": "Form / Selection",
   "hasReservations": false,
   "defaultPreview": {
     "props": {

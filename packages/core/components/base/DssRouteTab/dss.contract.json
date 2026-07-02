@@ -6,7 +6,7 @@
     "displayName": "Route Tab",
     "tagline": "Aba de navegação vinculada a uma rota da aplicação.",
     "category": "Elemento interativo de navegação por abas com roteamento",
-    "classification": "Controle interativo de seleção com roteamento — wrapper DSS sobre QRouteTab",
+    "classification": "Action",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssTab",

@@ -46,7 +46,8 @@
         "category": { "type": "string", "description": "meta.category." },
         "classification": {
           "type": "string",
-          "description": "meta.classification (ex.: Action/Compact/Visual). OBRIGATÓRIO — alinha com PAGE_STRUCTURE §9. Componentes sem o campo hoje (ex.: DssInput) exigem backfill do metadado."
+          "enum": ["Action", "Compact", "Visual"],
+          "description": "meta.classification — taxonomia de PAGE_STRUCTURE §9. ENUM enforçado (gate, não disciplina): valor prosa/objeto/null reprova. Prosa/racional original preservado em meta.classificationNote. É well-formedness (o valor é 1 dos 3), não verificação da escolha do balde — mapeamentos ambíguos vão p/ revisão humana via classificationNote."
         },
         "phase": { "type": "integer", "minimum": 1, "description": "meta.phase." },
         "status": {

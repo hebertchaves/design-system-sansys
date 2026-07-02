@@ -11,10 +11,12 @@
 
 ## Frentes desta onda (cadeia de fonte única / contraste)
 
-- 🔴 **(a) Escalar `dss.contract.json`** — **25/76** base emitidos; faltam **51**. Runbook:
+- 🔴 **(a) Escalar `dss.contract.json`** — **35/76** base emitidos; faltam **41**. Runbook:
   `HANDOFF_ESCALA_CONTRATOS.md`. Grupos sequenciais por família. Relatórios em `relatorios/CONTRATOS_*.md`.
-  - ✅ **Form/Input (23/23)** — `CONTRATOS_FORM_INPUT.md`. Todos schema-válidos, 0 gaps, a11y verificada.
-  - ⬜ Faltam: Feedback/Status (1), Navigation (9), Overlay (1), Data Display (3), Layout (10), Outros (27).
+  - ✅ **Form/Input (23)** · **Feedback/Status (1)** · **Navigation (9)** — todos schema-válidos, 0 gaps, a11y verificada.
+  - ⬜ Faltam: Overlay (1), Data Display (3), Layout (10), Outros (27).
+  - 🔒 `classification` agora é **enum enforçado** no schema (Action|Compact|Visual); prosa/racional vai
+    p/ `classificationNote`. Os 10 valores-prosa do Form/Input foram reconciliados retroativamente.
 - ⏳ **(c1) Contraste WCAG da paleta default** — auditoria + tabela de rotas (A escurecer / B texto escuro)
   prontas; **aguardando decisão da equipe** por cor. NÃO tocar `globals.scss` até o retorno.
   `[[project_color_ramp_a11y]]`. (c0 — reconciliação da rampa com o Figma — **feito**, commit `6a4baa6`.)

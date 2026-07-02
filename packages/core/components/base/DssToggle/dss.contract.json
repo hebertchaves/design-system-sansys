@@ -6,7 +6,7 @@
     "displayName": "Toggle",
     "tagline": "Interruptor para alternar um estado ligado/desligado.",
     "category": "Compact Control interativo",
-    "classification": "Form / Selection",
+    "classification": "Action",
     "phase": 1,
     "status": "sealed",
     "goldenReference": "DssChip",

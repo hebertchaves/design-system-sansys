@@ -6,7 +6,7 @@
     "displayName": "Button",
     "tagline": "Aciona uma ação primária ou secundária do formulário ou da tela.",
     "category": "Action",
-    "classification": "Ação Principal",
+    "classification": "Action",
     "phase": 1,
     "status": "sealed",
     "goldenReference": "DssButton",

@@ -29,7 +29,10 @@ o gate `contracts:gate` (já ligado no pre-commit + CI) passa a cobrir todos.
 ## 📐 Definition of Done de derivação (o que backfillar no `meta`)
 
 Um componente emite contrato completo quando o `dss.meta.json` tem:
-1. **`classification`** — `"Action"` | `"Compact"` | `"Visual"` (conforme CLAUDE.md §9 / natureza do componente).
+1. **`classification`** — `"Action"` | `"Compact"` | `"Visual"` (CLAUDE.md §9). **ENUM enforçado no schema**
+   (desde jul/2026): valor prosa/objeto/null **reprova o gate**. Se o meta trouxer prosa/racional
+   (convenção Fase 2), mover para **`classificationNote`** (não-destrutivo) e pôr a taxonomia em
+   `classification`. Mapeamento ambíguo → escolher o balde + registrar no relatório para revisão humana.
 2. **`tagline`** — UMA frase editorial curta (≤120 chars) "o que é o componente". Não copiar do Quasar.
 3. **bloco `a11y`** — `{ aria:{role,states[]}, keyboard:[{key,action}], wcag:[...] }`, onde cada
    `wcag[]` tem `{criterion, level, implementation, verifiedBy}` e **verifiedBy ∈ {css, aria, test}**:

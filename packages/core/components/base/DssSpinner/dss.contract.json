@@ -1,0 +1,568 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssSpinner",
+  "version": "2.2.0",
+  "identity": {
+    "displayName": "Spinner",
+    "tagline": "Indicador de carregamento animado para operações assíncronas.",
+    "category": "Feedback de Status — indicador de carregamento",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssIcon"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-03-24",
+    "mode": "formal",
+    "sealPath": "docs/Compliance/seals/DssSpinner/DSSSPINNER_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "type",
+        "type": "SpinnerType",
+        "controlHint": "select",
+        "default": "standard",
+        "description": "Variante gráfica do spinner.",
+        "validValues": [
+          "standard",
+          "dots",
+          "ios",
+          "oval",
+          "tail",
+          "rings",
+          "pie",
+          "bars"
+        ]
+      },
+      {
+        "name": "color",
+        "type": "SpinnerColor | null",
+        "controlHint": "picker-color",
+        "default": "null",
+        "description": "Cor semântica DSS.",
+        "validValues": [
+          "primary",
+          "secondary",
+          "neutral",
+          "error",
+          "success",
+          "warning",
+          "info"
+        ]
+      },
+      {
+        "name": "size",
+        "type": "SpinnerSize",
+        "controlHint": "select",
+        "default": "md",
+        "description": "Tamanho do spinner via tokens --dss-icon-size-* (seção 7.11 do catálogo).",
+        "validValues": [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ]
+      },
+      {
+        "name": "thickness",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "5",
+        "description": "Espessura do traço circular. Aplicável APENAS ao tipo 'standard' (QSpinner)."
+      },
+      {
+        "name": "brand",
+        "type": "SpinnerBrand",
+        "controlHint": "picker-brand",
+        "default": "null",
+        "description": "Contexto de brand Sansys.",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Carregando",
+        "description": "Texto acessível para screen readers (conteúdo do .dss-spinner__label sr-only)."
+      }
+    ],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "type": "standard",
+        "size": "md"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "40px"
+      },
+      "minWidth": {
+        "value": "40px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "vertical-align",
+          "token": null,
+          "value": "middle",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "inherit",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-secondary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-secondary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-success",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-warning",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-info",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "-1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "rect(0, 0, 0, 0)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-iteration-count",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-icon-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-warning",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-info",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Indicador não-textual com alternativa textual via aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Papel status e nome acessível expostos via aria-label.",
+        "verifiedBy": "aria"
+      }
+    ],
+    "aria": {
+      "role": "status",
+      "states": [
+        "aria-label",
+        "aria-busy"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssSpinner.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/spinner.types.ts",
+    "docs": {
+      "normative": "DssSpinner.md",
+      "api": "DSSSPINNER_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssSpinner.example.vue",
+    "tests": "DssSpinner.test.js",
+    "seal": "docs/Compliance/seals/DssSpinner/DSSSPINNER_SELO_v2.2.md"
+  }
+}

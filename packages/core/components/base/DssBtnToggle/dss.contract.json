@@ -6,7 +6,7 @@
     "displayName": "Btn Toggle",
     "tagline": "Conjunto de botões mutuamente exclusivos para alternar entre opções.",
     "category": "Container de Seleção Exclusiva (Grupo de Alternância)",
-    "classification": "Wrapper governado de QBtnToggle — container de seleção exclusiva com estilos DSS",
+    "classification": "Action",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssChip",

@@ -222,5 +222,64 @@
     "accessibility": "pending"
   },
   "previewGroup": "navegacao",
-  "component": "DssPagination"
+  "component": "DssPagination",
+  "classification": "Action",
+  "tagline": "Navegação entre páginas de um conjunto de dados paginado.",
+  "a11y": {
+    "aria": {
+      "role": "navigation",
+      "states": [
+        "aria-label",
+        "aria-current"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ir para a página focada"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "avançar de página"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "voltar de página"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação entre páginas operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome via aria-label; página atual via aria-current.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }
