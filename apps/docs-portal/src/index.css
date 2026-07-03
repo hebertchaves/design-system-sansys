@@ -125,7 +125,14 @@
   --dss-negative-focus: #C40016;
   --dss-negative-hover: #a01424;
   --dss-negative-deep: #720e19;
-  /* Warning (Amarelo/Laranja) */
+  /* Warning (Amarelo/Laranja)
+     ⚠️ REGRA DE A11y (a11y-rule): NÃO existe contraste seguro entre amarelo e branco.
+     - Fundo amarelo (warning/-light/-focus) → SEMPRE texto ESCURO, nunca branco.
+     - NUNCA usar ícone, texto ou outline amarelo sobre fundo branco (nem -deep #A66D08
+       fecha 4.5 p/ texto; máx. 4.36). Para "warning como ícone/texto no claro", usar um
+       nível escuro do laranja/marrom ou outro recurso — não o amarelo.
+     O gate de contraste (wcag-kit / a11y do contrato) aponta implementações incorretas;
+     o responsável adapta. Valores mantidos por decisão (2026-07). */
   --dss-warning-disable: #fff9c3;
   --dss-warning-light: #fff488;
   --dss-warning: #fabd14;
