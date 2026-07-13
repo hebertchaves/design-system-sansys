@@ -16,7 +16,8 @@
   schema-válidos, a11y verificada. Relatórios em `relatorios/CONTRATOS_*.md`. `classification` é enum
   enforçado (Action|Compact|Visual); prosa→`classificationNote`. Runbook histórico: `HANDOFF_ESCALA_CONTRATOS.md`.
   - ⚠️ **Mapeamentos de `classification` ambíguos p/ revisão humana** (nos relatórios): DssItem,
-    DssBreadcrumbsEl (Action×Visual), DssCard (clickable), DssSlideItem (gesto), DssBanner (dispensar).
+    DssBreadcrumbsEl (Action×Visual), DssCard (clickable), DssSlideItem (gesto), DssBanner (dispensar),
+    **DssUploader (Visual×Action — root não-interativo, mas propósito é fluxo de upload interativo)**.
   - ⚠️ **Débito de componente descoberto na emissão** (fora do escopo, tratar em Higiene): progressbars
     sem `aria-valuenow` tipado; cobertura de `alt`/`decorative` nos testes de imagem. + focus-ring (já listado).
 - ⏳ **(c1) Contraste WCAG da paleta default** — auditoria + tabela de rotas (A escurecer / B texto escuro)
@@ -46,8 +47,19 @@
   pendentes (`sync-token-values.js`). Mesma fonte acima.
 - 🟡 **`--dss-text-secondary` reprova AA** — `#B0B0B0` ≈ 2.6:1, sistêmico. DssInput já migrou p/ gray-600
   no label; **demais componentes ainda usam o token frouxo**. → **tratar junto com (c1)** (mesmo tema).
-- 🟡 **Cobertura de testes: `DssUploader`** — único componente base sem `*.test.js` (89/89 exceto ele;
-  CadrisCard/TestPageComplexity são fixtures fora de escopo). `[[project_cobertura_testes]]`.
+- 🟡 **Gate a11y — verificação de âncora é COARSE em `aria`/`test`** — descoberto no teste de fluxo do
+  DssUploader (2026-07). `verifiedBy: "css"` (contraste/focus) é **calculado de verdade** pelo wcag-kit;
+  mas `verifiedBy: "aria"` passa só por existir prop `aria*`/`required`, e `verifiedBy: "test"` passa só
+  por existir `*.test.js` — **presença, não que o teste exerça o claim**. Logo o "impossível escrever p/
+  passar" vale **plenamente só para `css`**; `aria`/`test` são gameáveis. (O executor cobriu por honestidade
+  — não declarou 2.1.1/teclado porque o teste não exercita.) **Decisão futura:** endurecer (aria→checar
+  atributo no DOM renderizado; test→casar o critério a um `it()` nomeado) ou aceitar como presence-gate assumido.
+- 🟡 **DssUploader disabled usa `opacity: 0.4` (não o padrão cor-based F1)** — escalado, não forçado. Seguro
+  AQUI (Quasar `.q-uploader--disable` só aplica `pointer-events:none`, sem empilhar → não ocorre o 0.24 do F1),
+  mas não é o padrão. Migrar = redesenho multi-camada num componente selado → decisão humana. `[[project_adequacao_ui_recorrencias]]`.
+- 🟡 **Composto com `classification`-objeto precisa `meta.category` no top-level** — o emissor lê
+  `meta.category` (raiz); na convenção antiga de composto a `category` fica DENTRO do objeto `classification`.
+  Ao emitir contrato dos próximos compostos, **promover `category` para o topo** (senão `--write` dá gap).
 - 🟡 **Focus ring ausente no CSS próprio de 6 interativos** — Checkbox, Radio, Toggle, Field, Range,
   Slider não declaram anel de foco no SCSS do componente; visibilidade de foco depende de regra
   global/Quasar. Risco WCAG 2.4.7 se a global falhar/for sobrescrita. Achado ao emitir contratos
@@ -81,6 +93,11 @@
 
 ## Resolvidos nesta onda (para não reabrir por engano)
 
+- ✅ **Teste do fluxo de adequação (DssUploader, composto)** — validado ponta a ponta: Roteador→Cartão
+  Composto, fonte-de-verdade-CSS resolveu Fase A sem alucinação, gate do contrato fechou Fase B com
+  âncoras verificadas; julgamentos (F1, classification) escalados não forçados. 77 contratos, `--all
+  --strict` exit 0. Commits `01e0b4d` (DoD) + `dbcb934` (DssUploader). DoD do CLAUDE.md agora inclui o passo do contrato.
+- ✅ **DssUploader tem teste** (30 casos) — o débito de cobertura da memória estava DESATUALIZADO (o teste existe).
 - ✅ **c0 — rampa de cores reconciliada com o Figma** (focus ausente/deep duplicado; 54/54) — `6a4baa6`.
 - ✅ **Cadeia de fonte única**: schema + emissor + gates N/O/F + Preview Frame + gate CI — provados em DssInput/DssSelect.
 - ✅ **Gate api-docs (30→0)** — na branch `chore/apidocs-passthrough` (pendente de merge).
