@@ -779,7 +779,7 @@ components/base/DssNomeComponente/
 9. **`*.example.vue`** - Showcase de todas as variantes
 10. **`index.js`** - Barrel export (componente + types + composables)
 
-> **Gate Estrutural**: Consulte o [Checklist de Validacao Final em CLAUDE.md](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss) para a lista completa de pre-requisitos de auditoria e selo.
+> **Gate Estrutural**: Consulte a [Definition of Done (gate executável) em CLAUDE.md](../../CLAUDE.md) para a lista completa de pre-requisitos de auditoria e selo.
 
 **Padrões Aplicados:**
 - ✅ **Arquitetura de 4 Camadas**: Structure → Composition → Variants → Output

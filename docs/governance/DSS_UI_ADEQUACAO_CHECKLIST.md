@@ -26,7 +26,7 @@
 
 ## A. Cascade & sobreposição DSS × Quasar
 
-- **A1 — Layered vs unlayered (Princípio #13 + exceção).** Quasar roda em
+- **A1 — Layered vs unlayered (Constituição #3 — Cascade Layers + exceção).** Quasar roda em
   `@layer quasar`. CSS DSS *unlayered* vence o layered **normal**, mas **NÃO**
   vence `!important` *layered* (ex.: `[disabled] { opacity:.6 !important }`).
   → Onde o Quasar impõe `!important` em layer, **não tente sobrescrever — contorne**.

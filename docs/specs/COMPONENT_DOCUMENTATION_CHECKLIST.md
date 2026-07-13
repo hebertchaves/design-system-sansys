@@ -37,7 +37,7 @@ O DSS e uma **camada de governanca** sobre o Quasar, nao um espelho. Componentes
 Antes de verificar documentacao, o componente DEVE passar pelo gate estrutural.
 Componentes que falham neste gate NAO podem receber auditoria ou selo.
 
-> **Fonte de verdade**: [CLAUDE.md — Gate Estrutural DSS](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss)
+> **Fonte de verdade**: [CLAUDE.md — Definition of Done (gate executável)](../../CLAUDE.md)
 
 ### Arquitetura 4 Camadas
 - [ ] `1-structure/DssXxx.ts.vue` existe (implementacao canonica)

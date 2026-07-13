@@ -125,7 +125,7 @@ estabelece o veredicto vigente.
 
 1. **Onda 8** (04–06/06): CSS Cascade Layers, bridge de tokens, index.css do portal.
 2. **Auditoria Final** (10–11/06): 13 relatórios em `audit-reports/AUDITORIA_FINAL_*` — veredicto ❌ BLOQUEADO.
-3. **Onda P0** (11/06, commits `7ee0ceb..0d8d423`): 12/12 bloqueantes corrigidos — tokens no dist, DssButton com ARIA, brand em overlays teleportados, DssTable slots dinâmicos, `@use` 100%, namespace `--quasar-*` eliminado, barrels completos (25 comps), drift do docs-portal zerado, **infraestrutura de testes criada** (projeto `unit` + shim Quasar), hierarquia visual corrigida (CSS supremo — Figma rebaixado a ferramenta MCP, Princípio #12).
+3. **Onda P0** (11/06, commits `7ee0ceb..0d8d423`): 12/12 bloqueantes corrigidos — tokens no dist, DssButton com ARIA, brand em overlays teleportados, DssTable slots dinâmicos, `@use` 100%, namespace `--quasar-*` eliminado, barrels completos (25 comps), drift do docs-portal zerado, **infraestrutura de testes criada** (projeto `unit` + shim Quasar), hierarquia visual corrigida (CSS supremo — Figma rebaixado a ferramenta MCP, Constituição #6).
 4. **Reauditoria dirigida independente** (11/06, `audit-reports/REAUDITORIA_DIRIGIDA_P0.md`): 15 verificações com cláusulas anti-máscara — **12/12 confirmados, zero regressões, zero deprecation warnings, 329/329 testes nos componentes tocados**.
 5. **Push para o GitHub origin** (`edb13d3..418a7fa`) em 11/06.
 

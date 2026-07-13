@@ -66,6 +66,12 @@
   dos superados é etapa pós-POC, ainda não executada. `[[project_sandbox_source_of_truth]]`.
 - 🟡 **`example.vue` non-normativos (90)** — rotular como demo ilustrativo (item M do blueprint); backfill
   de prosa verificável (a11y) por componente é parte de (a). `[[project_sandbox_source_of_truth]]`.
+- 🟡 **Adequação LLM-eficiente dos 4 docs-gigantes de referência** — `DSS_IMPLEMENTATION_GUIDE` (3059 linhas),
+  `DSS_TOKEN_REFERENCE` (2338), `DSS_COMPONENT_ARCHITECTURE` (2084), `DSS_ARCHITECTURE` (1591) carregam o vício
+  de acreção/lista-plana que o CLAUDE.md já superou. **Fora do caminho crítico da adequação de base** (o Roteador
+  manda o agente ao checklist de 208 linhas, não a eles) — mas **tratar ANTES de reabrir "criar componente do
+  zero"**, que é quando o agente realmente os lê. Ref.: `PROPOSTA_READEQUACAO_CLAUDE_MD.md` (mesma tese: núcleo
+  enxuto + gates + índice para lookup). `[[project_claudemd_higiene]]`.
 
 ## Verificar (pode já estar resolvido)
 

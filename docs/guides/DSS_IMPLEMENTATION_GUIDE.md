@@ -732,7 +732,7 @@ Antes de considerar um componente pronto para auditoria, verificar:
 | 9 | Types | `types/xxx.types.ts` | Sim |
 | 10 | Composables | `composables/` | Sim (mesmo se minimo) |
 
-> **Fonte de verdade**: [CLAUDE.md — Gate Estrutural DSS](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss)
+> **Fonte de verdade**: [CLAUDE.md — Definition of Done (gate executável)](../../CLAUDE.md)
 
 ### Política para Arquivos .example.vue
 

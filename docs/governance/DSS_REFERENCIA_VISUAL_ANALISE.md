@@ -2,7 +2,7 @@
 
 > **Status:** Normativo Vinculante (Hierarquia Nível 1)
 > **Versão DSS:** v2.3.0
-> **Autoridade:** Este documento é a ÚNICA fonte de verdade narrativa para o contrato visual default dos componentes DSS. Em caso de conflito com qualquer outro documento de documentação, este prevalece. Em caso de conflito com o CSS do componente, **o CSS prevalece** (Princípio #12 — este documento é derivado: a cadeia de verdade é CSS → meta.json → este documento).
+> **Autoridade:** Este documento é a ÚNICA fonte de verdade narrativa para o contrato visual default dos componentes DSS. Em caso de conflito com qualquer outro documento de documentação, este prevalece. Em caso de conflito com o CSS do componente, **o CSS prevalece** (Constituição #6 — CSS fonte de verdade — este documento é derivado: a cadeia de verdade é CSS → meta.json → este documento).
 > **Sincronização:** Este documento é o espelho em Markdown dos campos `defaultPreview` contidos nos arquivos `dss.meta.json` de cada componente. Alterações no `defaultPreview` de qualquer componente DEVEM ser refletidas aqui simultaneamente.
 
 ---
@@ -31,7 +31,7 @@ O default visual SIM inclui:
 | :--- | :--- | :--- | :--- |
 | **Machine-readable** | `dss.meta.json` → campo `defaultPreview` | MCP, ferramentas de validação visual | Fonte de código |
 | **Human-readable** | Este documento (`DSS_REFERENCIA_VISUAL_ANALISE.md`) | Agentes de IA, engenheiros, designers | Espelho narrativo do JSON |
-| **Árbitro visual** | CSS do componente (`2-composition/_base.scss` e camadas seguintes — Princípio #12) | Decisões visuais em caso de divergência | Supremo |
+| **Árbitro visual** | CSS do componente (`2-composition/_base.scss` e camadas seguintes — Constituição #6) | Decisões visuais em caso de divergência | Supremo |
 
 **Regra de sincronização:** Toda alteração no `defaultPreview` de um `dss.meta.json` DEVE ser refletida na entrada correspondente da Seção 4 deste documento na mesma PR.
 
@@ -57,7 +57,7 @@ Estes princípios garantem unidade visual entre os 76 componentes do DSS:
 
 ## 2. Princípios Normativos do Design System
 
-### 2.1 Token First (Princípio #1)
+### 2.1 Token First (Constituição #1)
 
 Nenhum valor hardcoded (px, rem, hex, rgb) deve aparecer em `_base.scss`, `_variants.scss` ou `_states.scss`. Todo valor visual deve ser expresso como `var(--dss-*)`.
 
@@ -69,7 +69,7 @@ Nenhum valor hardcoded (px, rem, hex, rgb) deve aparecer em `_base.scss`, `_vari
 - Sombra → `--dss-elevation-*`
 - Tipografia → `--dss-font-size-*`, `--dss-font-weight-*`, `--dss-line-height-*`
 
-### 2.2 CSS como Fonte de Verdade Visual (Princípio #12)
+### 2.2 CSS como Fonte de Verdade Visual (Constituição #6)
 
 O **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) é declarado normativamente como a **fonte de verdade visual** do DSS. Em caso de divergência entre o `defaultPreview` e o CSS, o CSS tem precedência. O campo `defaultPreview` reflete o CSS, e o CSS vence em caso de conflito.
 
@@ -2149,7 +2149,7 @@ Ao criar um novo componente DSS (Fase 3+):
 
 1. Defina o `defaultPreview` completo no `dss.meta.json` **antes** de escrever qualquer SCSS.
 2. Determine a categoria do componente e aplique os padrões da Seção 3.
-3. Consulte o CSS do componente (`2-composition/_base.scss` e camadas seguintes) para confirmar dimensões e tokens (Princípio #12). O Figma pode ser consultado via MCP como apoio, sem autoridade decisória.
+3. Consulte o CSS do componente (`2-composition/_base.scss` e camadas seguintes) para confirmar dimensões e tokens (Constituição #6). O Figma pode ser consultado via MCP como apoio, sem autoridade decisória.
 4. Adicione a entrada na Seção 4 deste documento com a tabela de tokens.
 5. Execute `validateVisualContract` (quando disponível) para validar conformidade.
 
@@ -2163,7 +2163,7 @@ Os seguintes 16 componentes possuem `computedDimensions: {}` (objeto vazio) no `
 
 Em caso de conflito entre fontes de informação visual:
 
-1. **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) — supremo (Princípio #12)
+1. **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) — supremo (Constituição #6)
 2. **`dss.meta.json` → `defaultPreview`** (machine-readable — espelho documentado do CSS)
 3. **Este documento** (human-readable — derivado do meta.json via `npm run sync:visual-contract`)
 4. **Qualquer outro documento** (subordinado)

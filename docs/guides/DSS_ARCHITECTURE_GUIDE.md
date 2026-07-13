@@ -73,7 +73,7 @@ DssNomeComponente/
 ```
 
 > **Nota**: `DssNomeComponente.vue` e um **re-export puro** (sem template/style/logica).
-> Para detalhes completos sobre o gate estrutural, consulte [CLAUDE.md — Gate Estrutural DSS](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss).
+> Para detalhes completos sobre o gate estrutural, consulte [CLAUDE.md — Definition of Done (gate executável)](../../CLAUDE.md).
 
 ---
 

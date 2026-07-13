@@ -2,11 +2,11 @@
 
 > **Status:** Normativo Vinculante
 > **Versão DSS:** v2.4.0
-> **Autoridade:** Nível 1 — Hard Rule. Este documento define como **todo** componente DSS renderiza ícone. Materializa o **Princípio #14 — Composição de Ícones**. Em caso de conflito sobre renderização de ícone, este documento e o CSS do componente prevalecem.
+> **Autoridade:** Nível 1 — Hard Rule. Este documento define como **todo** componente DSS renderiza ícone. Materializa a regra de **Composição de Ícones** (Cartão Base do CLAUDE.md). Em caso de conflito sobre renderização de ícone, este documento e o CSS do componente prevalecem.
 
 ---
 
-## 1. Princípio (Princípio #14 — Composição de Ícones)
+## 1. Princípio (Composição de Ícones — Cartão Base do CLAUDE.md)
 
 O DSS possui **um único primitivo de ícone**: o `DssIcon`. Nenhum componente reimplementa a renderização de glifo.
 
@@ -17,7 +17,7 @@ slot (#icon-*)      ──► conteúdo arbitrário do consumidor (recomendado: 
 
 **Motivação:** antes deste contrato, 4 componentes (`DssButton`, `DssChip`, `DssAvatar`, `DssCheckbox`) reimplementavam o ícone como `<span>` cru com `font-family: 'Material Icons'` hardcoded — perdendo o parser de formatos do QIcon, divergindo no modelo de a11y e duplicando o acoplamento à biblioteca de ícones. Este contrato encerra essa divergência e impede sua reincidência.
 
-**Cadeia de verdade:** CSS do componente → `dss.meta.json` → `DSS_REFERENCIA_VISUAL_ANALISE.md` (Princípio #12). A renderização de ícone vive **dentro** dessa cadeia, via `DssIcon`.
+**Cadeia de verdade:** CSS do componente → `dss.meta.json` → `DSS_REFERENCIA_VISUAL_ANALISE.md` (Constituição #6 — CSS fonte de verdade). A renderização de ícone vive **dentro** dessa cadeia, via `DssIcon`.
 
 ---
 
@@ -136,7 +136,7 @@ Fase 1  ── DssIcon embutível (§2) + este CCI ──► MERGE
 
 ## 8. Referências cruzadas
 
-- `CLAUDE.md` — Princípio #14 (Composição de Ícones), Princípio #12 (CSS fonte de verdade), Princípio #1 (Token First)
+- `CLAUDE.md` — Composição de Ícones (Cartão Base), CSS fonte de verdade (Constituição #6), Token First (Constituição #1)
 - `docs/governance/DSS_GOLDEN_COMPONENTS.md` — re-certificação de Button/Chip
 - `docs/reference/DSS_COMPONENT_ARCHITECTURE.md` — arquitetura de 4 camadas
 - `packages/core/components/base/DssIcon/` — primitivo canônico

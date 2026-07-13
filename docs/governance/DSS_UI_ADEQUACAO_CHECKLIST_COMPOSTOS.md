@@ -68,7 +68,7 @@ checklist de campo em cada peça interna**, não só no contêiner:
   composto DEVEM ser `DssChip`/`DssButton`/`DssIcon`/`DssAvatar` reais — **nunca** um
   `<span>`/`<div>` re-estilizado à mão imitando o primitivo. Razão: o imitador não
   herda tokens, dark, brand nem a11y → diverge na primeira mudança de tema.
-  (Ícone: reforça o **Princípio #14** — glifo só via `DssIcon`.)
+  (Ícone: reforça a **Composição de Ícones** — Cartão Base — glifo só via `DssIcon`.)
 
 > ↪️ **Overflow / scroll duplo** não é item próprio aqui — é o **risco §2.2 do
 > guia de composição**. Ao adequar a UI, confirme visualmente que não há barra de
