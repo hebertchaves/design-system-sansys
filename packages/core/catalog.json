@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-02",
+  "generated": "2026-07-13",
   "total": 90,
   "sealed": 88,
   "components": [
@@ -1225,7 +1225,7 @@
       "component": "DssUploader",
       "dir": "packages/core/components/composed/DssUploader",
       "phase": 2,
-      "category": null,
+      "category": "Upload",
       "status": "sealed",
       "sealDate": null,
       "sealField": null,

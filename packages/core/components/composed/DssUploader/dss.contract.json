@@ -1,0 +1,1040 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssUploader",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Uploader",
+    "tagline": "Área de upload que orquestra seleção, fila, progresso e envio de arquivos com identidade visual DSS.",
+    "category": "Upload",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssCard"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssUploader/DSSUPLOADER_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "url",
+        "type": "string",
+        "controlHint": "text",
+        "description": "URL para envio dos arquivos"
+      },
+      {
+        "name": "method",
+        "type": "UploaderMethod",
+        "controlHint": "segmented",
+        "description": "Método HTTP. Padrão: 'POST'.",
+        "validValues": [
+          "POST",
+          "PUT"
+        ]
+      },
+      {
+        "name": "headers",
+        "type": "Record<string, string> | Array<{ name: string; value: string }>",
+        "controlHint": "text",
+        "description": "Cabeçalhos HTTP adicionais"
+      },
+      {
+        "name": "formFields",
+        "type": "Array<{ name: string; value: string }>",
+        "controlHint": "text",
+        "description": "Campos de formulário adicionais"
+      },
+      {
+        "name": "withCredentials",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Envia credenciais (cookies, auth headers)"
+      },
+      {
+        "name": "sendRaw",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Envia arquivo como binário puro (sem FormData)"
+      },
+      {
+        "name": "factory",
+        "type": "UploaderFactory",
+        "controlHint": "text",
+        "description": "Configuração dinâmica de upload via função"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Permite selecionar múltiplos arquivos. Padrão: false."
+      },
+      {
+        "name": "accept",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Filtro de tipos aceitos (ex: \".pdf,image/*\")"
+      },
+      {
+        "name": "maxFiles",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Número máximo de arquivos na fila"
+      },
+      {
+        "name": "maxFileSize",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Tamanho máximo por arquivo em bytes"
+      },
+      {
+        "name": "maxTotalSize",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Tamanho máximo total da fila em bytes"
+      },
+      {
+        "name": "autoUpload",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Inicia o upload automaticamente ao adicionar arquivos. Padrão: false."
+      },
+      {
+        "name": "batch",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Envia todos os arquivos em um único request. Padrão: false."
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita toda interação com o componente. Padrão: false."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Modo somente leitura — mostra arquivos mas impede adição/remoção. Padrão: false."
+      },
+      {
+        "name": "variant",
+        "type": "UploaderVariant",
+        "controlHint": "segmented",
+        "description": "Variante visual do container. Padrão: 'elevated'.",
+        "validValues": [
+          "elevated",
+          "outline",
+          "subtle"
+        ]
+      },
+      {
+        "name": "brand",
+        "type": "UploaderBrand",
+        "controlHint": "picker-brand",
+        "description": "Contexto de brand Sansys",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto da dropzone vazia"
+      },
+      {
+        "name": "addAriaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "aria-label do botão \"Adicionar arquivos\""
+      },
+      {
+        "name": "uploadAriaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "aria-label do botão \"Fazer upload\""
+      },
+      {
+        "name": "abortAriaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "aria-label do botão \"Cancelar upload\""
+      },
+      {
+        "name": "clearAriaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "aria-label do botão \"Limpar fila\""
+      }
+    ],
+    "emits": [
+      {
+        "name": "added",
+        "payload": "readonly File[]",
+        "description": "Arquivos foram adicionados à fila"
+      },
+      {
+        "name": "removed",
+        "payload": "readonly File[]",
+        "description": "Arquivos foram removidos da fila"
+      },
+      {
+        "name": "rejected",
+        "payload": "ReadonlyArray<{ failedPropValidation: string; file: File }>",
+        "description": "Arquivos foram rejeitados por validação"
+      },
+      {
+        "name": "uploading",
+        "payload": "{ files: readonly File[]; xhr: XMLHttpRequest }",
+        "description": "Upload iniciado"
+      },
+      {
+        "name": "uploaded",
+        "payload": "{ files: readonly File[]; xhr: XMLHttpRequest }",
+        "description": "Upload concluído com sucesso"
+      },
+      {
+        "name": "failed",
+        "payload": "{ files: readonly File[]; xhr: XMLHttpRequest }",
+        "description": "Upload falhou"
+      }
+    ],
+    "slots": [],
+    "exposedRefs": [
+      {
+        "name": "upload",
+        "type": "() => void",
+        "description": "Inicia o upload manualmente"
+      },
+      {
+        "name": "abort",
+        "type": "() => void",
+        "description": "Aborta o upload em andamento"
+      },
+      {
+        "name": "reset",
+        "type": "() => void",
+        "description": "Limpa a fila de arquivos"
+      },
+      {
+        "name": "pickFiles",
+        "type": "() => void",
+        "description": "Abre o seletor de arquivos"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {}
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-style",
+          "token": null,
+          "value": "solid",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "unset",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "wrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-grid-gap-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom-style",
+          "token": null,
+          "value": "solid",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-600",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-8",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-150",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-500",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "list-style",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-800",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "ellipsis",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-20",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-success",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "rect(0, 0, 0, 0)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-1",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-hover",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-focus",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-200",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "Mark",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "2px solid Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-hub-sm",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-water-sm",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-waste-sm",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "elevation",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-radius-lg",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-grid-gap-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-150",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-800",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-20",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-px",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-hover",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-focus",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-hub-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-water-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-waste-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Nome do arquivo (--dss-gray-800) sobre superfície clara atinge contraste AA (~15:1)",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Ações expõem nome acessível via aria-label (addAriaLabel/uploadAriaLabel/abortAriaLabel/clearAriaLabel); ícones de status com aria-label",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "4.1.3",
+        "level": "AA",
+        "implementation": "Mudanças de status anunciadas por região role=status aria-live=polite aria-atomic (função announce)",
+        "verifiedBy": "aria"
+      }
+    ],
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-label",
+        "aria-live",
+        "aria-atomic"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "mover foco entre os botões de ação internos (Adicionar/Upload/Cancelar/Limpar/Remover)"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssUploader.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/uploader.types.ts",
+    "docs": {
+      "normative": "DssUploader.md",
+      "api": "DSSUPLOADER_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssUploader.example.vue",
+    "tests": "DssUploader.test.js",
+    "seal": "docs/Compliance/seals/DssUploader/DSSUPLOADER_SELO_v2.2.md"
+  }
+}
