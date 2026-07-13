@@ -61,7 +61,7 @@ cd apps/sandbox && npm run test:regression
 
 | Arquivo | Conteúdo |
 |---|---|
-| [DSS_ARCHITECTURE.md](/docs/reference/DSS_ARCHITECTURE.md) | Arquitetura geral, Princípios #1–#13 |
+| [DSS_ARCHITECTURE.md](/docs/reference/DSS_ARCHITECTURE.md) | Arquitetura geral + isolamento via Cascade Layers (Constituição DSS) |
 | [DSS_COMPONENT_ARCHITECTURE.md](/docs/reference/DSS_COMPONENT_ARCHITECTURE.md) | 4 camadas, pseudo-elementos, brightness |
 | [DSS_TOKEN_REFERENCE.md](/docs/reference/DSS_TOKEN_REFERENCE.md) | Catálogo de tokens semânticos |
 | [PRD_DSS.md](/docs/reference/PRD_DSS.md) | Product Requirements Document |
