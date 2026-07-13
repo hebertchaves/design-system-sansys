@@ -43,7 +43,8 @@ Todo invariante novo entra por **uma** de duas portas: (a) **universal** → Con
 Valem para **toda edição, todo arquivo**. Cada um traz seu **auto-check**.
 
 **1. Token First.** Nenhum valor hardcoded (px, rem, hex, rgb) — sempre `var(--dss-*)`. Cores nunca no SCSS: via classes utilitárias (`bg-*`, `text-*`) e computed no Vue.
-   `❯ grep -REn "#[0-9a-fA-F]{3,6}|[0-9]+px" 2-composition 3-variants 4-output` → 0 (fora de comentário).
+   `❯ grep -rEn "#[0-9a-fA-F]{3,6}|[0-9]+px" 2-composition 3-variants 4-output` → **scan de candidatos, revisar cada um** (não espere zero).
+   **Exceções legítimas conhecidas** (não são violação): `px` em `@media`/comentário; hex de fallback em `var(--dss-token, #hex)`; `#000`/`#fff` de forced-colors/alto contraste em `4-output/_states.scss`. Qualquer hex/px **fora** dessas exceções deve virar `var(--dss-*)`.
 
 **2. Sass Module System.** `@import` é **proibido**. Use `@use … as alias;` e `@forward …` em orquestradores.
    `❯ grep -rnE "^[^/]*@import" **/*.scss` → 0 (forma comment-aware; ignora `//` e `/* */`).
@@ -168,7 +169,7 @@ npx sass <Comp>.module.scss                 # compila sem erro
 npx vitest run --project unit               # testes: renderização, props, eventos, slots
 grep -rnE "^[^/]*@import" **/*.scss          # = 0  (Constituição #2, comment-aware)
 grep -rn "Material Icons" **/*.scss          # = 0  (Cartão Base — ícone)
-grep -REn "#[0-9a-fA-F]{3,6}|[0-9]+px" 2-composition 3-variants 4-output   # = 0 (Constituição #1)
+grep -rEn "#[0-9a-fA-F]{3,6}|[0-9]+px" 2-composition 3-variants 4-output   # scan de candidatos (Constituição #1: exceções = media/fallback/forced-colors)
 ```
 
 **Checklist de fechamento (bloqueante):**
