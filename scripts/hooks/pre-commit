@@ -41,17 +41,21 @@ if echo "$STAGED" | grep -q 'packages/core/tokens/'; then
 fi
 
 # ── 2. SCSS de componente alterado → valida CSS ↔ meta.json ──────────────────
+# NOTA (2026-07): --validate (default) checa apenas que os tokens em
+# visualProperties são tokens DSS VÁLIDOS (catálogo), NÃO que o componente os usa
+# de fato — logo NÃO bloqueia troca de token no CSS. A verdade visual auto-derivada
+# vive no dss.contract.json (visual.states, §8). meta.visualProperties é a camada
+# CURADA de defaultPreview; sua staleness é débito conhecido (ver DEBITO_ABERTO).
 if echo "$STAGED" | grep -qE 'packages/core/components/base/.+\.scss'; then
-  echo "🔍 SCSS de componente alterado — validando CSS → meta.json..."
+  echo "🔍 SCSS de componente alterado — validando tokens do meta.json (catálogo)..."
   node scripts/sync-css-to-meta.js --validate
   if [ $? -ne 0 ]; then
     echo ""
-    echo "❌ Divergência CSS ↔ meta.json detectada."
-    echo "   Atualize o campo 'visualProperties' no dss.meta.json do componente"
-    echo "   para refletir os tokens reais usados no CSS e tente novamente."
+    echo "❌ Token inválido (fora do catálogo DSS) em 'visualProperties'."
+    echo "   Corrija o dss.meta.json para usar apenas tokens --dss-* existentes."
     exit 1
   fi
-  echo "✅ CSS → meta.json: validação ok."
+  echo "✅ tokens do meta.json: válidos (catálogo)."
 fi
 
 # ── 3. meta.json alterado → sincroniza DSS_REFERENCIA_VISUAL_ANALISE.md ──────

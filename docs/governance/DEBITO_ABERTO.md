@@ -29,6 +29,14 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🟡 **`meta.visualProperties` = canal legado, weakly-validated, superado pelo contrato** — o gate §2
+  (`sync-css-to-meta --validate`) só checa que os tokens são DSS **válidos (catálogo)**, NÃO que o
+  componente os usa; logo **não** bloqueia troca de token no CSS → `visualProperties` pode ficar
+  **stale silenciosamente** (afeta `DSS_REFERENCIA_VISUAL_ANALISE.md`). A verdade visual auto-derivada
+  já vive no `dss.contract.json` (`visual.states`, §8 do hook). **Cleanup estratégico:** fazer a
+  REFERENCIA derivar do contrato (retirar o canal legado) OU ligar `--validate-strict`. Descoberto
+  ao fechar pontas do fluxo de adequação (2026-07). Não bloqueia o teste do fluxo.
+
 - 🟡 **Visual Height do DssInput (issues #3/#4)** — auto-height do Quasar: label ~2.5px fora do centro em
   repouso (#3); com valor, a label flutuante **sobrepõe** o valor centralizado no native (#4). Tensão:
   altura compacta (zero padding vertical) × reserva de topo p/ label flutuante. `[[project_visual_height_propagacao]]`.

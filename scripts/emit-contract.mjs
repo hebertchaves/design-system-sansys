@@ -38,6 +38,13 @@ const BASE_DIRS = ['packages/core/components/base', 'packages/core/components/co
 const read = f => fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null
 const exists = f => fs.existsSync(f)
 
+// Coage phase (que driftou: pode vir "1", "Fase 1", 1) para inteiro; default 1.
+function coercePhase(v) {
+  if (typeof v === 'number' && Number.isInteger(v)) return v
+  const m = String(v ?? '').match(/\d+/)
+  return m ? parseInt(m[0], 10) : 1
+}
+
 function findCompDir(name) {
   for (const base of BASE_DIRS) {
     const d = path.join(base, name)
@@ -288,7 +295,7 @@ function emit(name) {
       tagline: meta.tagline || '',
       category: meta.category || '',
       classification: meta.classification || '',
-      phase: meta.phase ?? 1,
+      phase: coercePhase(meta.phase),
       status,
       goldenReference: meta.goldenReference || '',
       goldenContext: meta.goldenContext || '',
