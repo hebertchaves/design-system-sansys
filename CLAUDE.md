@@ -170,6 +170,10 @@ npx vitest run --project unit               # testes: renderização, props, eve
 grep -rnE "^[^/]*@import" **/*.scss          # = 0  (Constituição #2, comment-aware)
 grep -rn "Material Icons" **/*.scss          # = 0  (Cartão Base — ícone)
 grep -rEn "#[0-9a-fA-F]{3,6}|[0-9]+px" 2-composition 3-variants 4-output   # scan de candidatos (Constituição #1: exceções = media/fallback/forced-colors)
+
+# a partir da RAIZ do repo — contrato derivado (cadeia de fonte única)
+node scripts/emit-contract.mjs <Comp> --write   # emite + valida schema + verifica âncoras a11y
+node scripts/emit-contract.mjs --all --strict    # gate: exit 0 (nenhum contrato inválido/âncora reprovada)
 ```
 
 **Checklist de fechamento (bloqueante):**
@@ -177,6 +181,7 @@ grep -rEn "#[0-9a-fA-F]{3,6}|[0-9]+px" 2-composition 3-variants 4-output   # sca
 - [ ] **Técnico:** zero hardcode · cores via classe · estados (hover/focus/active/disabled) implementados e documentados · a11y validada (AA, touch target, ARIA, teclado) · SCSS compila.
 - [ ] **Documental:** tokens com nomes exatos · README completo · doc normativa (Template 13.1) · API Reference atualizada · example (mín. 3 cenários).
 - [ ] **Testes:** `DssNomeComponente.test.js` existe com cobertura mínima (render base, props, eventos, slots) — **gate de build bloqueante**. Cobertura atual: 89/89 componentes. `DssCadrisCard` e `DssTestPageComplexity` são fixtures/páginas de teste — fora do escopo por decisão de governança (jun/2026).
+- [ ] **Contrato:** `dss.contract.json` emitido, schema-válido, 0 gaps, âncoras `a11y.wcag[].verifiedBy` passam (o gate reprova claim que não fecha). `dss.meta.json` backfillado com `classification` (enum `Action`|`Compact`|`Visual`), `tagline` (≤120c) e bloco `a11y`. Detalhe da cadeia (tiers verificáveis): [DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md §4.2](docs/governance/DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md).
 
 > Auditorias verificam este gate **antes** de qualquer análise detalhada. Nenhum componente recebe selo DSS v2.2 sem passá-lo.
 
