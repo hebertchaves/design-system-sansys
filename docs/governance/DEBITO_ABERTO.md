@@ -29,13 +29,15 @@
 
 ## Débito de fundo (ondas anteriores)
 
-- 🟡 **`meta.visualProperties` = canal legado, weakly-validated, superado pelo contrato** — o gate §2
-  (`sync-css-to-meta --validate`) só checa que os tokens são DSS **válidos (catálogo)**, NÃO que o
-  componente os usa; logo **não** bloqueia troca de token no CSS → `visualProperties` pode ficar
-  **stale silenciosamente** (afeta `DSS_REFERENCIA_VISUAL_ANALISE.md`). A verdade visual auto-derivada
-  já vive no `dss.contract.json` (`visual.states`, §8 do hook). **Cleanup estratégico:** fazer a
-  REFERENCIA derivar do contrato (retirar o canal legado) OU ligar `--validate-strict`. Descoberto
-  ao fechar pontas do fluxo de adequação (2026-07). Não bloqueia o teste do fluxo.
+- 🟡 **`meta.visualProperties` staleness = GERIDO via checklist (automação total impossível)** — o gate
+  não pode pegar drift da *lista de tokens*: o validador não distingue "token aplicado via classe Quasar
+  (`bg-primary`)" de "token removido" — `--validate-strict` deu **129 falsos-positivos em 88 comp**. Mesma
+  cegueira atinge o contrato (deriva do SCSS compilado, não vê Quasar-applied). Correção da premissa:
+  `meta.visualProperties` (curado, inclui Quasar-applied) é **complementar** ao contrato, não legado
+  inferior. **Resolvido como:** passo de propagação no `DSS_UI_ADEQUACAO_CHECKLIST.md` (sync:token-values
+  p/ value dimensional + revisão curatorial da lista + reverificar meta.a11y). Não há mais gate a construir
+  aqui — é curadoria humana consciente. *(Opção estratégica adiada: validador Quasar-aware p/ resolver
+  bg-primary→token; ou aposentar a REFERENCIA em favor do contrato.)*
 
 - 🟡 **Visual Height do DssInput (issues #3/#4)** — auto-height do Quasar: label ~2.5px fora do centro em
   repouso (#3); com valor, a label flutuante **sobrepõe** o valor centralizado no native (#4). Tensão:

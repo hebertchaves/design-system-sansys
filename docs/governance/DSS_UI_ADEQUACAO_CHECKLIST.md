@@ -169,6 +169,34 @@
 
 ---
 
+## Propagação pós-ajuste (cadeia de fonte única)
+
+Depois de adequar o visual, a maior parte da cadeia propaga **sozinha no `git commit`**
+(pre-commit): contrato `dss.contract.json` (§8, deriva `visual.states` do CSS compilado),
+`catalog.json` (§3b), `DSS_REFERENCIA_VISUAL_ANALISE.md` (§3) e tokens do portal (§1b).
+Não precisa rodar à mão — mas confira o resultado.
+
+Passos que **NÃO** são automáticos (rodar/revisar por componente):
+
+- [ ] **`npm run sync:token-values`** — se um token **dimensional** (px/ms/%) mudou de valor,
+  mantém o campo `value` de `meta.visualProperties` honesto. (Cor tem `value: null` — não drifta.)
+- [ ] **Revisar `meta.visualProperties`** (curatorial) — **só** se você ADICIONOU/REMOVEU/RENOMEOU
+  um token documentado. O gate **não pega** essa drift: o validador não distingue "token aplicado
+  via classe Quasar (`bg-primary`)" de "token removido" — mesma cegueira do contrato. Curadoria humana.
+- [ ] **`meta.a11y`** — se o ajuste mexeu em **contraste / focus ring / touch target**, reverificar os
+  claims `wcag[].verifiedBy` (o gate do contrato **reprova** âncora que não passa; não declarar o que
+  não fecha — ex.: contraste real medível via `scripts/wcag-kit.mjs`).
+- [ ] **Emitir/conferir o contrato:** `node scripts/emit-contract.mjs <Dss> --write` deve dar
+  `✅ schema · 0 gaps · 0 âncora reprovada` (o §8 do hook já faz no commit — este passo é para ver antes).
+
+> **Divisão de verdade:** o **contrato** (`visual.states`) é a verdade-máquina auto-derivada do CSS;
+> `meta.visualProperties` é a camada **CURADA complementar** (inclui tokens aplicados via Quasar que o
+> contrato não enxerga). Ambos existem por razões diferentes — não são redundantes.
+
+*(Aplica-se também aos compostos — ver `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md`, que herda este passo.)*
+
+---
+
 ## Predição — DssTextarea (QField-based: reproduz tudo de A–E)
 
 Estado atual (a corrigir, igual ao Select pré-fix):
