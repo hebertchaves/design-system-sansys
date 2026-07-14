@@ -182,6 +182,7 @@ node scripts/emit-contract.mjs --all --strict    # gate: exit 0 (nenhum contrato
 - [ ] **Documental:** tokens com nomes exatos · README completo · doc normativa (Template 13.1) · API Reference atualizada · example (mín. 3 cenários).
 - [ ] **Testes:** `DssNomeComponente.test.js` existe com cobertura mínima (render base, props, eventos, slots) — **gate de build bloqueante**. Cobertura atual: 89/89 componentes. `DssCadrisCard` e `DssTestPageComplexity` são fixtures/páginas de teste — fora do escopo por decisão de governança (jun/2026).
 - [ ] **Contrato:** `dss.contract.json` emitido, schema-válido, 0 gaps, âncoras `a11y.wcag[].verifiedBy` passam (o gate reprova claim que não fecha). `dss.meta.json` backfillado com `classification` (enum `Action`|`Compact`|`Visual`), `tagline` (≤120c) e bloco `a11y`. Detalhe da cadeia (tiers verificáveis): [DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md §4.2](docs/governance/DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md).
+- [ ] **Visual (fechamento da adequação):** o componente renderiza **fiel** no **Preview Frame** (iframe sobre o SFC real + knobs derivados do contrato) — SFC real monta, console limpo, knob→reação, LIGHT/DARK e Brand corretos dentro do iframe. Consome o contrato (passo anterior). Gate integral no checklist de adequação (base e composto).
 
 > Auditorias verificam este gate **antes** de qualquer análise detalhada. Nenhum componente recebe selo DSS v2.2 sem passá-lo.
 

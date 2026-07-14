@@ -148,6 +148,35 @@ describe('DssUploader', () => {
     expect(buttons.some((b) => b.text().includes('Adicionar'))).toBe(true)
   })
 
+  // Regressão: o override do slot #header (EXC-01) descartava o <input type=file>
+  // do QUploader, e "Adicionar" chamava addFiles() (no-op sem File[]) — o seletor
+  // NÃO abria. QUploaderAddTrigger reinjeta o input; "Adicionar" chama pickFiles.
+  // Bug flagrado pelo gate de validação visual (Preview Frame), invisível ao unit
+  // que só checava a presença do botão.
+  it('reinjeta o <input type=file> do QUploader no header reconstruído', () => {
+    const wrapper = mount(DssUploader)
+    expect(wrapper.find('input[type="file"]').exists()).toBe(true)
+    expect(wrapper.find('.dss-uploader__file-trigger').exists()).toBe(true)
+  })
+
+  it('a ação "Adicionar" aciona o seletor de arquivos (pickFiles), não addFiles no-op', async () => {
+    const wrapper = mount(DssUploader)
+    const fileInput = wrapper.find('input[type="file"]')
+    let picked = false
+    // o pickFiles do Quasar chama input.click() — instrumentar o elemento nativo
+    fileInput.element.click = () => { picked = true }
+    const addBtn = wrapper
+      .findAllComponents({ name: 'DssButton' })
+      .find((b) => b.text().includes('Adicionar'))
+    await addBtn.trigger('click')
+    expect(picked).toBe(true)
+  })
+
+  it('não renderiza a ação "Adicionar" nem o input no modo readonly', () => {
+    const wrapper = mount(DssUploader, { props: { readonly: true } })
+    expect(wrapper.find('.dss-uploader__file-trigger').exists()).toBe(false)
+  })
+
   it('renderiza a dropzone com o label padrão quando a fila está vazia', () => {
     const wrapper = mount(DssUploader)
     const dropzone = wrapper.find('.dss-uploader__dropzone')

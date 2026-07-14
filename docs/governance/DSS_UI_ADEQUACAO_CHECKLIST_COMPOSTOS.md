@@ -93,5 +93,28 @@ interna** relevante.
 
 ---
 
+## Validação visual final (Preview Frame) — **premissa de fechamento**
+
+> Herda a etapa de fechamento do [checklist de campo](DSS_UI_ADEQUACAO_CHECKLIST.md#validação-visual-final-preview-frame--premissa-de-fechamento):
+> o composto só está adequado quando renderiza **fiel** no **Preview Frame**
+> (`<iframe>` sobre o **SFC real** + knobs derivados do `dss.contract.json`).
+> O Preview Frame já **alcança `composed/`** (glob `{base,composed}`) — registrar a aba
+> em `TestSuite.vue` e validar.
+>
+> **Próprio do composto — o iframe é a barreira que prova o item L2:** um composto com
+> overlay (`DssDialog`/`DssMenu`/`DssDrawer`/`DssBottomSheet`) teleporta para o `<body>`
+> do **realm do iframe**, não do host — então o overlay fica **contido** e a marca
+> repassada explicitamente (L2) pode ser conferida **dentro** do iframe.
+
+**Gate visual final (marcar — LIGHT e DARK):**
+
+- [ ] **SFC real** do composto monta no iframe (não o fallback "não encontrado"); **zero erros** no console
+- [ ] Knobs **derivados do contrato**; mexer num knob → o composto real reage; **snippet** reflete o estado
+- [ ] **LIGHT e DARK** corretos; **Brand** propaga a todos os filhos **dentro** do iframe — L1
+- [ ] Overlay do composto **teleporta contido** no realm do iframe e **mantém a marca** — L2
+- [ ] Sem **scroll duplo** nem conteúdo cortado no preview — guia §2.2
+
+---
+
 **Relacionados:** [[DSS_UI_ADEQUACAO_CHECKLIST]] · [[DSS_GUIA_COMPOSICAO_FASE3]] ·
 [[DSS_GOLDEN_COMPONENTS]] (Golden Context: `DssDataCard`)

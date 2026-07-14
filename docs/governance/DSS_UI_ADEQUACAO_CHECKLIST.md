@@ -197,6 +197,36 @@ Passos que **NÃO** são automáticos (rodar/revisar por componente):
 
 ---
 
+## Validação visual final (Preview Frame) — **premissa de fechamento**
+
+> **Esta é a etapa que FECHA a adequação.** O visual só está adequado quando o
+> componente renderiza **fiel** no **Preview Frame** (`apps/sandbox/src/preview/`),
+> o validador durável da cadeia de fonte única: `<iframe>` sobre o **SFC real** +
+> knobs **derivados do `dss.contract.json`** — nunca reimplementação. É o mesmo
+> contrato de derivação da [`COMPONENT_PAGE_STRUCTURE.md`](../specs/COMPONENT_PAGE_STRUCTURE.md) §4
+> (preview = iframe sobre o componente real). O iframe é a **barreira** que contém
+> overlays teleportados (veredito do spike de isolamento).
+>
+> **Pré-requisito:** o passo anterior (contrato emitido) rodou — o Preview Frame **consome** o contrato.
+
+**Como rodar:** `npm run dev` em `apps/sandbox` → aba **"Preview Frame · Dss‹Nome›"**
+(ou direto `/?frame=Dss‹Nome›` para inspecionar só o realm do iframe). Para habilitar um
+componente novo: registrar a aba em `TestSuite.vue` (nav + `<PreviewFrame component="Dss‹Nome›" />`);
+se for `composed/`, confirmar que os globs do Preview Frame o alcançam (`{base,composed}`).
+
+**Gate visual final (marcar por componente — LIGHT e DARK):**
+
+- [ ] **SFC real** monta no iframe (`.dss-‹nome›` presente; **não** o fallback "não encontrado")
+- [ ] **Zero erros/warnings** no console do iframe
+- [ ] Knobs **derivados do contrato** — nº de controles = nº de props do contrato (sem knob fantasma nem omissão)
+- [ ] Mexer num knob → o **componente real reage** dentro do iframe; o **snippet** reflete o estado das props
+- [ ] **LIGHT e DARK** corretos dentro do iframe (superfície calibrada contra o stage — B)
+- [ ] **Brand** (Hub/Water/Waste) propaga para o componente real (token de brand resolve **dentro** do iframe)
+
+> Só depois deste gate a adequação está **fechada** e o componente fica elegível ao selo (Definition of Done do `CLAUDE.md`).
+
+---
+
 ## Predição — DssTextarea (QField-based: reproduz tudo de A–E)
 
 Estado atual (a corrigir, igual ao Select pré-fix):

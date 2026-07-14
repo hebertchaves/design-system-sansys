@@ -392,6 +392,18 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "margin-left",
           "token": null,
           "value": "auto",
