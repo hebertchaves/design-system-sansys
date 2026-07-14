@@ -5,11 +5,16 @@
 </template>
 
 <script setup>
-import TestSuite from './TestSuite.vue'
-// PREVIEW FRAME (durável) — realm do iframe do playground
-import PreviewSubject from './preview/PreviewSubject.vue'
+import { defineAsyncComponent } from 'vue'
 const sp = new URLSearchParams(window.location.search)
 const isFrame = sp.has('frame')
+// TestSuite é lazy: ele importa TODAS as Test*.vue (grafo de ~200 módulos do
+// core). Sem lazy, o realm do iframe (isFrame=true) baixava esse grafo inteiro
+// só para renderizar UM componente — era a causa dos ~4s de primeira pintura.
+// Com lazy, o iframe carrega só PreviewSubject + o SFC alvo.
+const TestSuite = defineAsyncComponent(() => import('./TestSuite.vue'))
+// PREVIEW FRAME (durável) — realm do iframe do playground
+import PreviewSubject from './preview/PreviewSubject.vue'
 </script>
 
 <style>

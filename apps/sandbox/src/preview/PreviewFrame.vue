@@ -50,7 +50,10 @@ import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({ component: { type: String, default: 'DssInput' } })
 
-const contracts = import.meta.glob('../../../../packages/core/components/base/*/dss.contract.json')
+// eager: o contrato é JSON pequeno; carregar sincronamente elimina o flash
+// "Sem dss.contract.json" (antes o import assíncrono deixava `contract` null por
+// alguns segundos no dev do /mnt/c) e o round-trip extra ao dev server.
+const contracts = import.meta.glob('../../../../packages/core/components/{base,composed}/*/dss.contract.json', { eager: true, import: 'default' })
 const contract = ref(null)
 const knobs = ref([])
 const state = reactive({})
@@ -60,11 +63,10 @@ const frameEl = ref(null)
 
 const frameSrc = computed(() => `${location.pathname}?frame=${props.component}`)
 
-async function load() {
+function load() {
   const key = Object.keys(contracts).find((k) => k.endsWith(`/${props.component}/dss.contract.json`))
   if (!key) { contract.value = null; knobs.value = []; return }
-  const mod = await contracts[key]()
-  contract.value = mod.default || mod
+  contract.value = contracts[key]
   const vmodel = contract.value.api?.vModel?.prop
   knobs.value = (contract.value.api?.props || [])
     .filter((p) => p.name !== vmodel)
@@ -90,7 +92,10 @@ function postState() {
   for (const [k, v] of Object.entries(state)) if (v !== '' && v != null && v !== false) clean[k] = v
   // Serializa para dado PLANO: state pode conter arrays/objetos reativos (Proxy)
   // que o structured-clone do postMessage não consegue clonar (ex.: options do Select).
-  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value }))
+  // modelProp: o sujeito só liga v-model quando o contrato declara vModel
+  // (componentes sem model — ex.: DssUploader — não recebem modelValue órfão).
+  const modelProp = contract.value?.api?.vModel?.prop ?? null
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp }))
   el.contentWindow.postMessage(payload, '*')
 }
 function onMsg(e) { if (e.data && e.data.__frameReady) postState() }

@@ -8,18 +8,18 @@
 -->
 <template>
   <div class="pv-stage" :data-theme="theme" :data-brand="brand || null">
-    <component :is="Comp" v-if="Comp" v-bind="props" v-model="model" />
+    <component :is="Comp" v-if="Comp" v-bind="boundProps" />
     <p v-else class="pv-missing">Componente "{{ name }}" não encontrado no registry de preview.</p>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
 
 const name = new URLSearchParams(location.search).get('frame') || ''
 
 // Registry de entry-wrappers reais: <Comp>/<Comp>.vue (re-export puro do 1-structure)
-const modules = import.meta.glob('../../../../packages/core/components/base/*/*.vue')
+const modules = import.meta.glob('../../../../packages/core/components/{base,composed}/*/*.vue')
 const key = Object.keys(modules).find(k => k.endsWith(`/${name}/${name}.vue`))
 const Comp = key ? defineAsyncComponent(modules[key]) : null
 
@@ -27,6 +27,15 @@ const props = reactive({})
 const theme = ref('light')
 const brand = ref('')
 const model = ref('')
+const modelProp = ref(null)
+
+// Liga v-model ao prop declarado no contrato (ex.: modelValue). Sem vModel no
+// contrato (ex.: DssUploader), NÃO injeta modelValue — o sujeito recebe só as props.
+const boundProps = computed(() => {
+  if (!modelProp.value) return props
+  const p = modelProp.value
+  return { ...props, [p]: model.value, [`onUpdate:${p}`]: (v) => { model.value = v } }
+})
 
 function onMsg(e) {
   const d = e.data
@@ -35,6 +44,7 @@ function onMsg(e) {
   Object.assign(props, d.props || {})
   if (d.theme != null) theme.value = d.theme
   if (d.brand != null) brand.value = d.brand
+  if ('modelProp' in d) modelProp.value = d.modelProp
 }
 onMounted(() => {
   window.addEventListener('message', onMsg)

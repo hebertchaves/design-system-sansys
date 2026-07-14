@@ -115,8 +115,11 @@ app.use(Quasar, {
 
 app.mount('#app')
 
-// Grid Inspector — apenas em desenvolvimento
-if (import.meta.env.DEV) {
+// Grid Inspector — apenas em desenvolvimento e SÓ no host (nunca no realm do
+// iframe do Preview Frame: lá é o sujeito isolado, o float React seria chrome
+// que só atrasa o boot do iframe).
+const isPreviewFrame = new URLSearchParams(window.location.search).has('frame')
+if (import.meta.env.DEV && !isPreviewFrame) {
   Promise.all([
     import('@sansys/grid-inspector'),
     import('@sansys/grid-inspector/styles').catch(() => {}),
