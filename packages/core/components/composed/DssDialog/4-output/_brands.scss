@@ -26,7 +26,7 @@
 [data-brand="hub"] .dss-dialog,
 .dss-dialog[data-brand="hub"] {
   .dss-dialog__header {
-    border-bottom-color: var(--dss-hub-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
   }
 }
 
@@ -37,7 +37,7 @@
 [data-brand="water"] .dss-dialog,
 .dss-dialog[data-brand="water"] {
   .dss-dialog__header {
-    border-bottom-color: var(--dss-water-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
   }
 }
 
@@ -48,6 +48,6 @@
 [data-brand="waste"] .dss-dialog,
 .dss-dialog[data-brand="waste"] {
   .dss-dialog__header {
-    border-bottom-color: var(--dss-waste-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
   }
 }

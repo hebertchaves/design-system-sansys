@@ -24,7 +24,7 @@
 
 [data-brand="hub"] .dss-infinite-scroll {
   .dss-infinite-scroll__no-more-text {
-    color: var(--dss-action-hub);
+    color: var(--dss-action-primary);
   }
 }
 
@@ -34,7 +34,7 @@
 
 [data-brand="water"] .dss-infinite-scroll {
   .dss-infinite-scroll__no-more-text {
-    color: var(--dss-action-water);
+    color: var(--dss-action-primary);
   }
 }
 
@@ -44,6 +44,6 @@
 
 [data-brand="waste"] .dss-infinite-scroll {
   .dss-infinite-scroll__no-more-text {
-    color: var(--dss-action-waste);
+    color: var(--dss-action-primary);
   }
 }

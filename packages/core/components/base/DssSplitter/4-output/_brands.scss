@@ -10,16 +10,16 @@
  */
 
 [data-brand="hub"] .dss-splitter .q-splitter__separator {
-  &:hover  { background-color: var(--dss-action-hub); }
-  &:active { background-color: var(--dss-action-hub); filter: brightness(0.90); }
+  &:hover  { background-color: var(--dss-action-primary); }
+  &:active { background-color: var(--dss-action-primary); filter: brightness(0.90); }
 }
 
 [data-brand="water"] .dss-splitter .q-splitter__separator {
-  &:hover  { background-color: var(--dss-action-water); }
-  &:active { background-color: var(--dss-action-water); filter: brightness(0.90); }
+  &:hover  { background-color: var(--dss-action-primary); }
+  &:active { background-color: var(--dss-action-primary); filter: brightness(0.90); }
 }
 
 [data-brand="waste"] .dss-splitter .q-splitter__separator {
-  &:hover  { background-color: var(--dss-action-waste); }
-  &:active { background-color: var(--dss-action-waste); filter: brightness(0.90); }
+  &:hover  { background-color: var(--dss-action-primary); }
+  &:active { background-color: var(--dss-action-primary); filter: brightness(0.90); }
 }

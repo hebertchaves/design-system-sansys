@@ -27,7 +27,7 @@
   }
 
   .dss-bottom-sheet__header {
-    border-bottom-color: var(--dss-hub-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
   }
 }
 
@@ -42,7 +42,7 @@
   }
 
   .dss-bottom-sheet__header {
-    border-bottom-color: var(--dss-water-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
   }
 }
 
@@ -57,6 +57,6 @@
   }
 
   .dss-bottom-sheet__header {
-    border-bottom-color: var(--dss-waste-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
   }
 }

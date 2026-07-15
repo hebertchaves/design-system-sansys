@@ -269,19 +269,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-action-hub",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-water",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-waste",
+          "token": "--dss-action-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -327,7 +315,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-action-hub",
+          "token": "--dss-action-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -335,18 +323,6 @@
           "property": "filter",
           "token": null,
           "value": "brightness(0.9)",
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-water",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-waste",
-          "value": null,
           "source": "4-output/_brands.scss"
         }
       ],
@@ -413,21 +389,7 @@
         ]
       },
       {
-        "name": "--dss-action-hub",
-        "usedIn": [
-          "hover",
-          "active"
-        ]
-      },
-      {
-        "name": "--dss-action-water",
-        "usedIn": [
-          "hover",
-          "active"
-        ]
-      },
-      {
-        "name": "--dss-action-waste",
+        "name": "--dss-action-primary",
         "usedIn": [
           "hover",
           "active"

@@ -201,19 +201,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-action-hub",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-action-water",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-action-waste",
+          "token": "--dss-action-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -263,33 +251,16 @@
         ]
       },
       {
-        "name": "--dss-action-hub",
+        "name": "--dss-action-primary",
         "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-action-water",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-action-waste",
-        "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
         "name": "--dss-opacity-disabled",
         "usedIn": [
           "disabled"
-        ]
-      },
-      {
-        "name": "--dss-action-primary",
-        "usedIn": [
-          "defaultPreview"
         ]
       },
       {

@@ -15,20 +15,20 @@
 [data-brand='hub'] .q-popup-edit,
 .q-popup-edit[data-brand='hub'] {
   .q-popup-edit__buttons {
-    border-top-color: var(--dss-hub-primary);
+    border-top-color: var(--dss-action-primary);
   }
 }
 
 [data-brand='water'] .q-popup-edit,
 .q-popup-edit[data-brand='water'] {
   .q-popup-edit__buttons {
-    border-top-color: var(--dss-water-primary);
+    border-top-color: var(--dss-action-primary);
   }
 }
 
 [data-brand='waste'] .q-popup-edit,
 .q-popup-edit[data-brand='waste'] {
   .q-popup-edit__buttons {
-    border-top-color: var(--dss-waste-primary);
+    border-top-color: var(--dss-action-primary);
   }
 }

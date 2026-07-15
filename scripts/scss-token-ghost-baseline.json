@@ -1,14 +1,9 @@
 {
   "note": "Tokens --dss-* referenciados mas NÃO definidos (débito). Gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.",
   "tokens": [
-    "--dss-action-hub",
-    "--dss-action-waste",
-    "--dss-action-water",
     "--dss-border-width-medium",
     "--dss-breadcrumbs-gap",
     "--dss-breadcrumbs-separator-color",
-    "--dss-hub-on-primary",
-    "--dss-hub-primary",
     "--dss-input-height-min",
     "--dss-line-height-md",
     "--dss-neutral-100",
@@ -22,10 +17,6 @@
     "--dss-surface-dark",
     "--dss-text-primary-dark",
     "--dss-textarea-max-height",
-    "--dss-touch-target-min",
-    "--dss-waste-on-primary",
-    "--dss-waste-primary",
-    "--dss-water-on-primary",
-    "--dss-water-primary"
+    "--dss-touch-target-min"
   ]
 }

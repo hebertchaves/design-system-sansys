@@ -6,38 +6,38 @@
 
 [data-brand="hub"] .dss-virtual-scroll {
   .dss-virtual-scroll__loading-indicator {
-    border-top-color: var(--dss-action-hub);
+    border-top-color: var(--dss-action-primary);
   }
 
   .dss-virtual-scroll__inner {
     scrollbar-color: var(--dss-surface-muted) transparent;
 
     &::-webkit-scrollbar-thumb {
-      background-color: var(--dss-action-hub, var(--dss-surface-muted));
+      background-color: var(--dss-action-primary, var(--dss-surface-muted));
     }
   }
 }
 
 [data-brand="water"] .dss-virtual-scroll {
   .dss-virtual-scroll__loading-indicator {
-    border-top-color: var(--dss-action-water);
+    border-top-color: var(--dss-action-primary);
   }
 
   .dss-virtual-scroll__inner {
     &::-webkit-scrollbar-thumb {
-      background-color: var(--dss-action-water, var(--dss-surface-muted));
+      background-color: var(--dss-action-primary, var(--dss-surface-muted));
     }
   }
 }
 
 [data-brand="waste"] .dss-virtual-scroll {
   .dss-virtual-scroll__loading-indicator {
-    border-top-color: var(--dss-action-waste);
+    border-top-color: var(--dss-action-primary);
   }
 
   .dss-virtual-scroll__inner {
     &::-webkit-scrollbar-thumb {
-      background-color: var(--dss-action-waste, var(--dss-surface-muted));
+      background-color: var(--dss-action-primary, var(--dss-surface-muted));
     }
   }
 }

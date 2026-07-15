@@ -5,15 +5,15 @@
 
 [data-brand="hub"] .dss-pagination,
 .dss-pagination[data-brand="hub"] {
-  --q-color-primary: var(--dss-hub-primary);
+  --q-color-primary: var(--dss-action-primary);
 }
 
 [data-brand="water"] .dss-pagination,
 .dss-pagination[data-brand="water"] {
-  --q-color-primary: var(--dss-water-primary);
+  --q-color-primary: var(--dss-action-primary);
 }
 
 [data-brand="waste"] .dss-pagination,
 .dss-pagination[data-brand="waste"] {
-  --q-color-primary: var(--dss-waste-primary);
+  --q-color-primary: var(--dss-action-primary);
 }

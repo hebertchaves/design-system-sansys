@@ -17,20 +17,20 @@
 // HUB BRAND (Laranja)
 [data-brand="hub"] .dss-img {
   .dss-img__error {
-    color: var(--dss-action-hub);
+    color: var(--dss-action-primary);
   }
 }
 
 // WATER BRAND (Azul)
 [data-brand="water"] .dss-img {
   .dss-img__error {
-    color: var(--dss-action-water);
+    color: var(--dss-action-primary);
   }
 }
 
 // WASTE BRAND (Verde)
 [data-brand="waste"] .dss-img {
   .dss-img__error {
-    color: var(--dss-action-waste);
+    color: var(--dss-action-primary);
   }
 }
