@@ -83,6 +83,7 @@ Leia o **NÚCLEO** sempre; consulte o **CONDICIONAL** só pelo que a tarefa exig
 | Mexer no aspecto visual default | `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` |
 | Mexer em preview / sandbox | `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` |
 | Renderizar/alterar ícone | `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md` |
+| Nomear/citar variante `outline`/`outlined` | `docs/governance/DSS_VARIANT_NAMING.md` *(espelha o Quasar; gate `validate:variant-naming`)* |
 | Abrir PR | `.github/pull_request_template.md` |
 | Consultar status de selos | `docs/governance/CERTIFIED_COMPONENTS.md` |
 

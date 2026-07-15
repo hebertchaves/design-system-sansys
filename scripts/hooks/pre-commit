@@ -14,6 +14,20 @@ if echo "$STAGED" | grep -qE 'packages/core/.+/index\.js$|packages/core/index\.j
   fi
 fi
 
+# ── 0b. Grafia de variante outline(d) espelha o Quasar (anti-drift) ──────────
+# QBtn usa `outline`, QField usa `outlined` (API oficial do Quasar) — o DSS
+# espelha por família. Este gate impede drift de grafia + variante quebrada
+# (type ≠ classe SCSS). Rápido e global; roda a cada mudança de types/scss.
+if echo "$STAGED" | grep -qE 'packages/core/components/.+\.(types\.ts|scss)$|scripts/validate-variant-naming\.cjs'; then
+  echo "🔍 Validando grafia de variante (outline/outlined ↔ Quasar)..."
+  node scripts/validate-variant-naming.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Grafia de variante viola a regra. Ver docs/governance/DSS_VARIANT_NAMING.md"
+    exit 1
+  fi
+  echo "✅ Grafia de variante: coerente e fiel ao Quasar."
+fi
+
 # ── 1. Token SCSS alterado → regenera DSS_TOKEN_REFERENCE.md ─────────────────
 if echo "$STAGED" | grep -q 'packages/core/tokens/semantic/'; then
   echo "🔄 Token SCSS alterado — sincronizando DSS_TOKEN_REFERENCE.md..."
