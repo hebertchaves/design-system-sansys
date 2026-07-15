@@ -59,8 +59,9 @@ fidelidade ao Quasar e apenas documentar+gatear.)*
 
 ## O gate
 
-`scripts/validate-variant-naming.cjs` verifica, para cada componente com variante
-outline(d):
+`scripts/validate-variant-naming.cjs` faz **duas** checagens.
+
+**A. Grafia outline(d) (componentes com variante de contorno):**
 
 1. **Coerência interna** — grafia no `types/*.types.ts` == classe SCSS (`--outline`
    vs `--outlined`). Divergência = variante quebrada (classe nunca aplica).
@@ -69,6 +70,14 @@ outline(d):
    então não pode mentir sobre a grafia).
 3. **Classificação** — todo componente com variante outline(d) deve estar no mapa;
    um componente novo não classificado **falha** (força decisão consciente).
+
+**B. Colisão estado × valor (TODOS os componentes):** uma classe de **estado**
+(chave-objeto literal no composable, ex.: `'dss-x--has-value': hasValue`) NÃO pode
+coincidir com uma classe de **valor** interpolada (`dss-x--${props.variant}`,
+`--${props.size}`, …, valores lidos do contrato). Se colidir, um componente NAQUELE
+estado herda o visual daquela variante. **Origem:** bug do DssFile (jul/2026) — o
+estado `hasValue` gerava `--filled`, a MESMA classe da variante `filled`; um outlined
+com arquivo herdava o visual do filled. Corrigido renomeando o estado p/ `--has-value`.
 
 ```bash
 npm run validate:variant-naming        # relatório

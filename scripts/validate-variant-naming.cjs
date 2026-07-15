@@ -101,6 +101,42 @@ function scssSpelling(text) {
   return outlined && outline ? 'both' : outlined ? 'outlined' : outline ? 'outline' : null;
 }
 
+// Colisão nome-de-classe ESTADO × VALOR: uma classe de estado (chave-objeto
+// literal no composable, ex. `'dss-x--has-value': cond`) que coincide com uma
+// classe de VALOR interpolada (`dss-x--${props.variant}` etc., cujos valores vêm
+// do contrato). Se colidir, um campo NAQUELE estado herda o visual daquela
+// variante (bug DssFile: `--filled` era estado hasValue E variante filled).
+// Retorna a lista de classes em colisão (vazia = ok).
+function detectCollision(dir) {
+  const compos = readDir(path.join(dir, 'composables'), (n) => n.endsWith('.ts'));
+  if (!compos) return [];
+  let m;
+  // Interpolações de valor: `dss-<prefix>--${props.<enum>}` (com/sem `?? 'default'`).
+  // Só bare (sem segmento namespaced tipo `--brand-${}`/`--align-${}`, que não colidem).
+  const interp = [];
+  const reInterp = /`(dss-[a-z0-9-]+)--\$\{\s*props\.(\w+)(?:\s*\?\?\s*'([a-z0-9-]+)')?/g;
+  while ((m = reInterp.exec(compos))) interp.push({ prefix: m[1], prop: m[2], def: m[3] });
+  // Classes de estado: chaves-objeto literais entre aspas com `:` (não as `[`...`]`).
+  const stateClasses = new Set();
+  const reState = /'(dss-[a-z0-9-]+--[a-z0-9-]+)'\s*:/g;
+  while ((m = reState.exec(compos))) stateClasses.add(m[1]);
+  if (!interp.length || !stateClasses.size) return [];
+  // Valores das props interpoladas: do contrato (validValues) + default do `??`.
+  let props = [];
+  const contractPath = path.join(dir, 'dss.contract.json');
+  if (fs.existsSync(contractPath)) {
+    try { props = JSON.parse(fs.readFileSync(contractPath, 'utf8')).api?.props || []; } catch { /* noop */ }
+  }
+  const valueClasses = new Set();
+  for (const it of interp) {
+    const p = props.find((x) => x.name === it.prop);
+    const vals = p && Array.isArray(p.validValues) ? [...p.validValues] : [];
+    if (it.def) vals.push(it.def);
+    for (const v of vals) valueClasses.add(`${it.prefix}--${v}`);
+  }
+  return [...stateClasses].filter((s) => valueClasses.has(s));
+}
+
 const results = [];
 for (const layer of ['base', 'composed']) {
   const base = path.join(COMPONENTS, layer);
@@ -140,17 +176,42 @@ for (const layer of ['base', 'composed']) {
 results.sort((a, b) => a.name.localeCompare(b.name));
 const failed = results.filter((r) => r.errors.length);
 
-console.log('🔎 Grafia de variante outline(d) — espelho do Quasar (fonte: api.json)\n');
+// ── Check B: colisão estado × valor (TODOS os componentes) ───────────────────
+const collisions = [];
+for (const layer of ['base', 'composed']) {
+  const base = path.join(COMPONENTS, layer);
+  let comps;
+  try { comps = fs.readdirSync(base, { withFileTypes: true }); } catch { continue; }
+  for (const c of comps) {
+    if (!c.isDirectory() || !/^Dss/.test(c.name)) continue;
+    const hit = detectCollision(path.join(base, c.name));
+    if (hit.length) collisions.push({ name: c.name, hit });
+  }
+}
+collisions.sort((a, b) => a.name.localeCompare(b.name));
+
+// ── Relatório ────────────────────────────────────────────────────────────────
+console.log('🔎 A. Grafia de variante outline(d) — espelho do Quasar (fonte: api.json)\n');
 for (const r of results) {
   const mark = r.errors.length ? '❌' : '✅';
-  const src = r.anchorInfo || '—';
-  console.log(`${mark} ${r.name.padEnd(16)} type:'${r.tSpell}'  scss:${r.sSpell ? '--' + r.sSpell : '—'}  → ${src}`);
+  console.log(`${mark} ${r.name.padEnd(16)} type:'${r.tSpell}'  scss:${r.sSpell ? '--' + r.sSpell : '—'}  → ${r.anchorInfo || '—'}`);
   for (const e of r.errors) console.log(`     ↳ ${e}`);
 }
 console.log(`\n${results.length} componente(s) com variante outline(d) · ${failed.length} com violação.`);
 
-if (!failed.length) {
-  console.log('✅ Grafia de variante: coerente e fiel ao Quasar.');
+console.log('\n🔎 B. Colisão de classe estado × valor de variante/size/…\n');
+if (!collisions.length) {
+  console.log('✅ Nenhuma classe de estado colide com uma classe de valor.');
+} else {
+  for (const c of collisions) {
+    console.log(`❌ ${c.name}: estado(s) colidem com valor de variante → ${c.hit.join(', ')}`);
+    console.log(`     ↳ renomeie o estado (ex.: --has-value) — senão o estado herda o visual daquela variante.`);
+  }
+}
+
+const totalFail = failed.length + collisions.length;
+if (!totalFail) {
+  console.log('\n✅ Variante: grafia fiel ao Quasar + sem colisão estado×valor.');
   process.exit(0);
 }
 console.log('\n❌ Violações acima. Regra em docs/governance/DSS_VARIANT_NAMING.md.');

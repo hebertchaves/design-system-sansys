@@ -14,12 +14,13 @@ if echo "$STAGED" | grep -qE 'packages/core/.+/index\.js$|packages/core/index\.j
   fi
 fi
 
-# ── 0b. Grafia de variante outline(d) espelha o Quasar (anti-drift) ──────────
-# QBtn usa `outline`, QField usa `outlined` (API oficial do Quasar) — o DSS
-# espelha por família. Este gate impede drift de grafia + variante quebrada
-# (type ≠ classe SCSS). Rápido e global; roda a cada mudança de types/scss.
-if echo "$STAGED" | grep -qE 'packages/core/components/.+\.(types\.ts|scss)$|scripts/validate-variant-naming\.cjs'; then
-  echo "🔍 Validando grafia de variante (outline/outlined ↔ Quasar)..."
+# ── 0b. Grafia de variante + colisão estado×valor (anti-drift) ───────────────
+# A: QBtn usa `outline`, QField usa `outlined` (API do Quasar) — o DSS espelha
+# por família; gate impede drift de grafia + variante quebrada (type ≠ classe).
+# B: classe de estado não pode colidir com classe de valor de variante (bug
+# DssFile --filled). Depende de types/scss/composable → dispara em qualquer .ts.
+if echo "$STAGED" | grep -qE 'packages/core/components/.+\.(ts|scss)$|scripts/validate-variant-naming\.cjs'; then
+  echo "🔍 Validando grafia de variante (outline/outlined ↔ Quasar) + colisão estado×valor..."
   node scripts/validate-variant-naming.cjs --gate
   if [ $? -ne 0 ]; then
     echo "❌ Grafia de variante viola a regra. Ver docs/governance/DSS_VARIANT_NAMING.md"
