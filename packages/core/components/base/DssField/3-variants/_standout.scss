@@ -10,7 +10,7 @@
   .dss-field__field {
     background-color: var(--dss-gray-100);
     border: none;
-    border-radius: var(--dss-radius-md);
+    border-radius: var(--dss-radius-sm);
   }
 
   /* Hover */
@@ -35,11 +35,11 @@
 
   /* Error */
   &.dss-field--error .dss-field__field {
-    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-error-600);
+    box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-feedback-error);
   }
 
   &.dss-field--error .dss-field__label {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   /* Disabled */

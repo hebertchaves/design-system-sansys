@@ -9,7 +9,7 @@
 .dss-field--filled {
   .dss-field__field {
     background-color: var(--dss-gray-100);
-    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+    border-radius: var(--dss-radius-sm) var(--dss-radius-sm) 0 0;
     border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400);
   }
 
@@ -36,12 +36,12 @@
 
   /* Error */
   &.dss-field--error .dss-field__field {
-    border-bottom-color: var(--dss-error-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-error-600);
+    border-bottom-color: var(--dss-feedback-error);
+    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-feedback-error);
   }
 
   &.dss-field--error .dss-field__label {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   /* Disabled */

@@ -107,6 +107,14 @@
 - **E4 — Altura.** `--dss-input-height-min` indefinido → `min-height` vira no-op; a
   altura real vem da **`.q-field__marginal`** do Quasar (56/40px). Alinhe a marginal
   ao token-alvo (44/36px).
+- **E5 — Radius do outlined = `--dss-radius-sm`** (cantos sóbrios, golden DssInput).
+  `radius-md` = fora do padrão. **Gate:** `validate:field-conventions`.
+- **E6 — Foco do outlined SEM `box-shadow`.** O anel de 1px duplica a borda; o foco
+  é só `border-width: md`. **Gate:** `validate:field-conventions`. *(Botões PODEM ter
+  shadow no foco — a regra é da família de campo.)*
+- **E7 — Só tokens que existem.** `var(--dss-*)` sem definição no catálogo (ex.: o
+  antigo `--dss-error-600`/`--dss-focus-ring`) resolve p/ vazio → estado/anel some.
+  Usar `--dss-feedback-error*`. **Gate:** `validate:scss-tokens` (ratchet c/ baseline).
 
 ---
 

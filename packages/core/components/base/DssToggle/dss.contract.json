@@ -817,13 +817,13 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-error-400",
+          "token": "--dss-feedback-error-light",
           "value": null,
           "source": "4-output/_states.scss"
         },
         {
           "property": "color",
-          "token": "--dss-error-400",
+          "token": "--dss-feedback-error-light",
           "value": null,
           "source": "4-output/_states.scss"
         },
@@ -1364,7 +1364,7 @@
         ]
       },
       {
-        "name": "--dss-error-400",
+        "name": "--dss-feedback-error-light",
         "usedIn": [
           "default"
         ]

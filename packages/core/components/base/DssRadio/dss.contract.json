@@ -445,7 +445,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-error-600",
+          "token": "--dss-feedback-error",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -547,12 +547,6 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-error-600",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "color",
           "token": "--dss-feedback-error",
           "value": null,
           "source": "2-composition/_base.scss"
@@ -739,13 +733,13 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-error-400",
+          "token": "--dss-feedback-error-light",
           "value": null,
           "source": "4-output/_states.scss"
         },
         {
           "property": "color",
-          "token": "--dss-error-400",
+          "token": "--dss-feedback-error-light",
           "value": null,
           "source": "4-output/_states.scss"
         },
@@ -1045,7 +1039,7 @@
         ]
       },
       {
-        "name": "--dss-error-600",
+        "name": "--dss-feedback-error",
         "usedIn": [
           "default"
         ]
@@ -1094,12 +1088,6 @@
       },
       {
         "name": "--dss-spacing-6",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-feedback-error",
         "usedIn": [
           "default"
         ]
@@ -1171,7 +1159,7 @@
         ]
       },
       {
-        "name": "--dss-error-400",
+        "name": "--dss-feedback-error-light",
         "usedIn": [
           "default"
         ]

@@ -126,7 +126,7 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-xs); // 12px
   line-height: var(--dss-line-height-normal);
-  color: var(--dss-error-600);
+  color: var(--dss-feedback-error);
 }
 
 // ==========================================================================
@@ -228,7 +228,7 @@
 // --- Error ---
 .dss-radio--error {
   .dss-radio__control {
-    border-color: var(--dss-error-600);
+    border-color: var(--dss-feedback-error);
     color: var(--dss-feedback-error);
   }
 

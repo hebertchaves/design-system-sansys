@@ -9,7 +9,7 @@
   .dss-field__field {
     background-color: transparent;
     border: var(--dss-border-width-thin) solid var(--dss-gray-400);
-    border-radius: var(--dss-radius-md);
+    border-radius: var(--dss-radius-sm);
   }
 
   /* Hover (sem disabled/readonly/focused) */
@@ -17,11 +17,11 @@
     border-color: var(--dss-gray-600);
   }
 
-  /* Focus */
+  /* Focus — indicador ÚNICO: borda 2px primary. SEM box-shadow (o anel de 1px
+     duplicava a borda no foco — paridade DssInput/DssSelect/DssFile). */
   &.dss-field--focused .dss-field__field {
     border-color: var(--dss-action-primary);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
   }
 
   &.dss-field--focused .dss-field__label {
@@ -33,15 +33,14 @@
     border-color: var(--dss-gray-700);
   }
 
-  /* Error */
+  /* Error — indicador único: borda 2px error, sem box-shadow (mesma razão do foco) */
   &.dss-field--error .dss-field__field {
-    border-color: var(--dss-error-600);
+    border-color: var(--dss-feedback-error);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-error-600);
   }
 
   &.dss-field--error .dss-field__label {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   /* Disabled */

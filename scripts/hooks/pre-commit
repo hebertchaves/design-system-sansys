@@ -29,6 +29,29 @@ if echo "$STAGED" | grep -qE 'packages/core/components/.+\.(ts|scss)$|scripts/va
   echo "✅ Grafia de variante: coerente e fiel ao Quasar."
 fi
 
+# ── 0c. Token SCSS fantasma (var(--dss-*) sem definição) — ratchet baseline ──
+# Ex.: --dss-error-600/--dss-focus-ring nunca definidos → estado/anel some. O
+# sync-css-to-meta valida só o meta, não o SCSS. Bloqueia fantasmas NOVOS (fora
+# do baseline); débito legado grandfathered em scss-token-ghost-baseline.json.
+if echo "$STAGED" | grep -qE 'packages/core/components/.+\.scss$|packages/core/tokens/.+\.scss$|scripts/validate-scss-tokens\.cjs'; then
+  echo "🔍 Validando tokens SCSS (todo var(--dss-*) existe no catálogo)..."
+  node scripts/validate-scss-tokens.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Token --dss-* fantasma NOVO (não definido). Corrija p/ um token existente."
+    exit 1
+  fi
+fi
+
+# ── 0d. Convenções visuais da família de campo (radius-sm + foco sem shadow) ──
+if echo "$STAGED" | grep -qE 'packages/core/components/base/Dss(Input|Select|Textarea|File|Field)/.+\.scss$|scripts/validate-field-conventions\.cjs'; then
+  echo "🔍 Validando convenções da família de campo (outlined)..."
+  node scripts/validate-field-conventions.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Convenção de campo violada (radius-md ou box-shadow no foco outlined)."
+    exit 1
+  fi
+fi
+
 # ── 1. Token SCSS alterado → regenera DSS_TOKEN_REFERENCE.md ─────────────────
 if echo "$STAGED" | grep -q 'packages/core/tokens/semantic/'; then
   echo "🔄 Token SCSS alterado — sincronizando DSS_TOKEN_REFERENCE.md..."

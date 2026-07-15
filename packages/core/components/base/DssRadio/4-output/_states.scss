@@ -46,16 +46,16 @@
 
   .dss-radio--error {
     .dss-radio__control {
-      border-color: var(--dss-error-400);
-      color: var(--dss-error-400);
+      border-color: var(--dss-feedback-error-light);
+      color: var(--dss-feedback-error-light);
     }
 
     .dss-radio__label {
-      color: var(--dss-error-400);
+      color: var(--dss-feedback-error-light);
     }
 
     .dss-radio__error {
-      color: var(--dss-error-400);
+      color: var(--dss-feedback-error-light);
     }
   }
 }

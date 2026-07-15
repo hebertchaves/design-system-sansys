@@ -507,9 +507,9 @@
         },
         {
           "property": "border-radius",
-          "token": "--dss-radius-md",
+          "token": "--dss-radius-sm",
           "value": null,
-          "source": "3-variants/_filled.scss"
+          "source": "3-variants/_standout.scss"
         },
         {
           "property": "padding",
@@ -582,12 +582,6 @@
           "token": null,
           "value": "none",
           "source": "3-variants/_borderless.scss"
-        },
-        {
-          "property": "border-radius",
-          "token": "--dss-radius-sm",
-          "value": null,
-          "source": "3-variants/_standout.scss"
         },
         {
           "property": "box-shadow",
@@ -1067,10 +1061,9 @@
         ]
       },
       {
-        "name": "--dss-radius-md",
+        "name": "--dss-radius-sm",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -1101,12 +1094,6 @@
       },
       {
         "name": "--dss-gray-800",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-radius-sm",
         "usedIn": [
           "default"
         ]
@@ -1230,6 +1217,12 @@
       },
       {
         "name": "--dss-gray-400",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
         "usedIn": [
           "defaultPreview"
         ]

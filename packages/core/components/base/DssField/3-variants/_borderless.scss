@@ -24,11 +24,11 @@
 
   /* Error */
   &.dss-field--error .dss-field__field {
-    border-bottom: var(--dss-border-width-md) solid var(--dss-error-600);
+    border-bottom: var(--dss-border-width-md) solid var(--dss-feedback-error);
   }
 
   &.dss-field--error .dss-field__label {
-    color: var(--dss-error-600);
+    color: var(--dss-feedback-error);
   }
 
   /* Readonly */

@@ -496,7 +496,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-error-600",
+          "token": "--dss-feedback-error",
           "value": null,
           "source": "3-variants/_standout.scss"
         },
@@ -520,13 +520,13 @@
         },
         {
           "property": "border-radius",
-          "token": "--dss-radius-md",
+          "token": "--dss-radius-sm",
           "value": null,
           "source": "3-variants/_standout.scss"
         },
         {
           "property": "border-color",
-          "token": "--dss-error-600",
+          "token": "--dss-feedback-error",
           "value": null,
           "source": "4-output/_states.scss"
         },
@@ -535,12 +535,6 @@
           "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_states.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "3-variants/_filled.scss"
         },
         {
           "property": "border-color",
@@ -568,7 +562,13 @@
         },
         {
           "property": "border-bottom-color",
-          "token": "--dss-error-600",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -709,12 +709,6 @@
           "source": "3-variants/_outlined.scss"
         },
         {
-          "property": "box-shadow",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
           "property": "color",
           "token": "--dss-action-primary",
           "value": null,
@@ -731,6 +725,12 @@
           "token": "--dss-action-primary",
           "value": null,
           "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_brands.scss"
         },
         {
           "property": "border-bottom",
@@ -1013,7 +1013,7 @@
         ]
       },
       {
-        "name": "--dss-error-600",
+        "name": "--dss-feedback-error",
         "usedIn": [
           "default"
         ]
@@ -1026,10 +1026,9 @@
         ]
       },
       {
-        "name": "--dss-radius-md",
+        "name": "--dss-radius-sm",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -1141,6 +1140,12 @@
       },
       {
         "name": "--dss-gray-400",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
         "usedIn": [
           "defaultPreview"
         ]
