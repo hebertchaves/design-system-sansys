@@ -55,6 +55,8 @@ export function useFileClasses(
         'dss-file--dense': props.dense,
         'dss-file--filled': hasValue.value,
         'dss-file--dragging': isDragging.value,
+        // há label → reserva espaço p/ a label flutuante (evita overlap no float)
+        'dss-file--labeled': !!props.label,
         [`dss-file--brand-${props.brand}`]: props.brand
       }
     ]

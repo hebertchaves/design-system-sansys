@@ -61,6 +61,17 @@ describe('DssFile', () => {
       expect(wrapper.text()).toContain('Anexar documento')
     })
 
+    // Regressão (adequação de UI): com um label em repouso (sem valor, sem foco),
+    // o label ocupa o centro do campo e o drop-hint NÃO deve renderizar — senão
+    // os dois se sobrepõem (bug flagrado pelo Preview Frame). Sem label, a dica
+    // aparece normalmente (coberto pelo teste "renders drop hint...").
+    it('hides drop hint at rest when a label is present (no overlap)', () => {
+      const wrapper = mount(DssFile, {
+        props: { modelValue: null, label: 'Anexar documento' }
+      })
+      expect(wrapper.find('.dss-file__drop-hint').exists()).toBe(false)
+    })
+
     describe('states', () => {
       it('applies disabled state', () => {
         const wrapper = mount(DssFile, {
@@ -104,6 +115,36 @@ describe('DssFile', () => {
           props: { clearable: true, modelValue: file }
         })
         expect(wrapper.find('.dss-file__clear').exists()).toBe(true)
+      })
+
+      // Regressão (adequação de UI): o QFile é renderizado opacity:0 (overlay).
+      // O botão de limpar ficava DENTRO dele → invisível (opacity do pai zera os
+      // descendentes). Deve ser sibling do wrapper, fora do overlay.
+      it('renders clear button OUTSIDE the opacity:0 QFile overlay', () => {
+        const file = new File(['content'], 'test.pdf', { type: 'application/pdf' })
+        const wrapper = mount(DssFile, {
+          props: { clearable: true, modelValue: file }
+        })
+        const clear = wrapper.find('.dss-file__clear')
+        const qFile = wrapper.find('.dss-file__q-file')
+        expect(clear.exists()).toBe(true)
+        expect(qFile.element.contains(clear.element)).toBe(false)
+      })
+
+      // Regressão: prepend/append sofriam o MESMO vício do clear — renderizados
+      // dentro do QFile opacity:0 → invisíveis. Agora são filhos da linha visual.
+      it('renders prepend/append slots OUTSIDE the opacity:0 QFile overlay', () => {
+        const wrapper = mount(DssFile, {
+          props: { label: 'Anexo' },
+          slots: { prepend: '<i class="my-prep"></i>', append: '<i class="my-app"></i>' }
+        })
+        const qFile = wrapper.find('.dss-file__q-file')
+        const prep = wrapper.find('.dss-file__prepend')
+        const app = wrapper.find('.dss-file__append')
+        expect(prep.exists()).toBe(true)
+        expect(app.exists()).toBe(true)
+        expect(qFile.element.contains(prep.element)).toBe(false)
+        expect(qFile.element.contains(app.element)).toBe(false)
       })
 
       it('hides clear button when clearable=true but no value', () => {

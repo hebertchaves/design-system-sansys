@@ -26,7 +26,13 @@
 
     &--outlined.dss-file--focused .dss-file__field {
       border-color: var(--dss-action-primary);
-      box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
+      border-width: var(--dss-border-width-md);
+    }
+
+    // B3 — hover no dark precisa diferir do repouso (gray-600), senão fica
+    // imperceptível. Repouso gray-600 → hover gray-400 (paridade DssInput).
+    &--outlined:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
+      border-color: var(--dss-gray-400);
     }
 
     // Label notch em dark mode
@@ -37,23 +43,29 @@
       background-color: var(--dss-surface-default);
     }
 
-    // Filled dark
+    // Filled dark — B2: repouso um tom MAIS CLARO que o stage (gray-600), senão
+    // (gray-900) some no fundo. Paridade DssInput.
     &--filled .dss-file__field {
-      background-color: var(--dss-gray-900);
+      background-color: var(--dss-gray-600);
       border-bottom-color: var(--dss-gray-700);
     }
 
     &--filled.dss-file--focused .dss-file__field {
-      background-color: var(--dss-gray-800);
-    }
-
-    // Standout dark
-    &--standout .dss-file__field {
       background-color: var(--dss-gray-700);
     }
 
+    // Standout dark — B1: repouso MAIS ESCURO que o stage (gray-900) para "saltar"
+    // como chip; hover/foco gray-800. ❌ gray-700 = mesma cor do stage → sumia.
+    &--standout .dss-file__field {
+      background-color: var(--dss-gray-900);
+    }
+
+    &--standout:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
+      background-color: var(--dss-gray-800);
+    }
+
     &--standout.dss-file--focused .dss-file__field {
-      background-color: var(--dss-gray-600);
+      background-color: var(--dss-gray-800);
     }
 
     // Drag ativo em dark

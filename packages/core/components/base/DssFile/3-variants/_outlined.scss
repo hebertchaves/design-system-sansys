@@ -9,7 +9,8 @@
   .dss-file__field {
     background-color: transparent;
     border: var(--dss-border-width-thin) solid var(--dss-gray-400);
-    border-radius: var(--dss-radius-md);
+    // radius-sm (4px) — paridade com a família (era md, cantos grandes demais)
+    border-radius: var(--dss-radius-sm);
   }
 
   // Hover (não desabilitado/readonly/focado)
@@ -17,11 +18,11 @@
     border-color: var(--dss-gray-600);
   }
 
-  // Foco
+  // Foco — indicador ÚNICO: borda 2px primary. SEM box-shadow (o anel de 1px
+  // duplicava visualmente a borda no foco — mesma decisão do DssInput/DssSelect).
   &.dss-file--focused .dss-file__field {
     border-color: var(--dss-action-primary);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-action-primary);
   }
 
   // Drag ativo — borda tracejada + fundo hover
@@ -36,11 +37,10 @@
     color: var(--dss-action-primary);
   }
 
-  // Erro
+  // Erro — indicador único: borda 2px error, sem box-shadow (mesma razão do foco)
   &.dss-file--error .dss-file__field {
     border-color: var(--dss-feedback-error);
     border-width: var(--dss-border-width-md);
-    box-shadow: 0 0 0 var(--dss-border-width-thin) var(--dss-feedback-error);
   }
 
   // Desabilitado
@@ -55,9 +55,8 @@
     border-style: dashed;
   }
 
-  // Label notch (flutuante)
-  .dss-file__label--float {
-    background-color: var(--dss-surface-default);
-    padding: 0 var(--dss-spacing-1);
-  }
+  // Sem notch (fundo na label flutuante). Paridade DssInput: a label fica DENTRO
+  // do campo (top:0, abaixo da borda), sem precisar "cortar" a borda — o fundo
+  // aparecia como retângulo indesejado em telas de fundo não-branco. Era também
+  // a ÚNICA diferença visível entre outlined e filled.
 }

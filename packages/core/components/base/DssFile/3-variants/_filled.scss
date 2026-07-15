@@ -5,11 +5,14 @@
 // =============================================================================
 
 .dss-file--filled {
+  // Paridade DssInput filled: fundo semântico surface-subtle (auto-escurece no
+  // dark), radius só no topo (Material) e border-bottom 2px. A distinção p/ o
+  // outlined é ESTRUTURAL (borda inferior vs borda completa), não o notch.
   .dss-file__field {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-surface-subtle);
     border: none;
-    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-400);
-    border-radius: var(--dss-radius-md) var(--dss-radius-md) 0 0;
+    border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400);
+    border-radius: var(--dss-radius-sm) var(--dss-radius-sm) 0 0;
   }
 
   // Hover
