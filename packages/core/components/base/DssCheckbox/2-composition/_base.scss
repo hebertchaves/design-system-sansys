@@ -295,7 +295,7 @@
  * O tabindex existe SOMENTE no <input>, NUNCA no <label>.
  */
 .dss-checkbox__control--focused {
-  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-0_5); /* 2px */
 }
 

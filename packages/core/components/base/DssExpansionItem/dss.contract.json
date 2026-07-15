@@ -2800,7 +2800,7 @@
         },
         {
           "property": "outline",
-          "token": "--dss-focus-ring",
+          "token": "--dss-focus-ring-width",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -4063,7 +4063,7 @@
         ]
       },
       {
-        "name": "--dss-focus-ring",
+        "name": "--dss-focus-ring-width",
         "usedIn": [
           "focus"
         ]

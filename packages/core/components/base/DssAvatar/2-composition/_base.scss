@@ -234,7 +234,7 @@ a.dss-avatar,
        e outline-offset em focus-visible seguem convencao CSS padrao
        de acessibilidade com valores absolutos.
        Ref: DssAvatar.md Secao 14, EXC-03 */
-    outline: 2px solid var(--dss-focus-ring);
+    outline: 2px solid var(--dss-focus-primary);
     outline-offset: var(--dss-focus-ring-offset);
   }
 }

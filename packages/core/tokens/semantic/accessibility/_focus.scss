@@ -33,6 +33,11 @@
   /* Primary Focus (Ações principais - Azul) */
   --dss-focus-primary: rgba(0, 106, 197, 0.5);         // #006AC5 @ 50%
   --dss-focus-primary-rgb: 0, 106, 197;                // RGB para manipulação
+  //
+  // NOTA: a COR DO ANEL DE FOCO usada em :focus-visible é `--dss-focus-primary`
+  // (brand/tema/forced-colors-aware). NÃO existe um `--dss-focus-ring` bare — um
+  // alias no :root não re-resolveria por marca (custom property = var(outra) herda
+  // o valor COMPUTADO no root). Componentes referenciam --dss-focus-primary direto.
 
   /* Secondary Focus (Ações secundárias - Verde/Turquesa) */
   --dss-focus-secondary: rgba(5, 156, 141, 0.5);       // #059C8D @ 50%

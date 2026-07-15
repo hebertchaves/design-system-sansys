@@ -148,6 +148,6 @@
 
 /* Focus states para badges em contexto focável */
 .dss-badge:focus-visible {
-  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-0_5);
 }

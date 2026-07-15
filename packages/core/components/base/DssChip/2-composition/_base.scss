@@ -138,7 +138,7 @@
   }
 
   &:focus-visible {
-    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
     /*
      * ⚠️ EXCEÇÃO DOCUMENTADA: outline-offset menor que --dss-focus-ring-offset
      *
@@ -314,7 +314,7 @@
    ========================================================================== */
 
 .dss-chip--clickable:focus-visible {
-  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-0_5);
 }
 

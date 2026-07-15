@@ -68,7 +68,7 @@
 
   // Focus visible — navegação por teclado
   &:focus-visible {
-    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
     outline-offset: calc(-1 * var(--dss-border-width-md));
   }
 }

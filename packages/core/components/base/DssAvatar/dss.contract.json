@@ -686,7 +686,7 @@
       "focus": [
         {
           "property": "outline",
-          "token": "--dss-focus-ring",
+          "token": "--dss-focus-primary",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -953,7 +953,7 @@
         ]
       },
       {
-        "name": "--dss-focus-ring",
+        "name": "--dss-focus-primary",
         "usedIn": [
           "focus"
         ]

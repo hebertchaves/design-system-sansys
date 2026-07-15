@@ -252,7 +252,7 @@
    ========================================================================== */
 
 .dss-button:focus-visible {
-  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-1);
 }
 

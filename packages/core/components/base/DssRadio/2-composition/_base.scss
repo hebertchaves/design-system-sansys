@@ -205,7 +205,7 @@
 
 // --- Focus (via classe aplicada pelo composable) ---
 .dss-radio__control--focused {
-  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-0_5); // 2px
 }
 
