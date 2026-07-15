@@ -8,7 +8,13 @@
 -->
 <template>
   <div class="pv-stage" :data-theme="theme" :data-brand="brand || null">
-    <component :is="Comp" v-if="Comp" v-bind="boundProps" />
+    <component :is="Comp" v-if="Comp" v-bind="boundProps">
+      <!-- Slots ligados no parent recebem conteúdo de demo, para exercitar
+           prepend/append/hint/error (que não são props e não apareciam). -->
+      <template v-for="s in activeSlots" :key="s" #[s]>
+        <span class="pv-slot-demo">{{ slotDemo(s) }}</span>
+      </template>
+    </component>
     <p v-else class="pv-missing">Componente "{{ name }}" não encontrado no registry de preview.</p>
   </div>
 </template>
@@ -28,6 +34,13 @@ const theme = ref('light')
 const brand = ref('')
 const model = ref(null) // null é o "vazio" universal (File/array/objeto aceitam; '' quebrava File)
 const modelProp = ref(null)
+const activeSlots = ref([]) // slots ligados no parent (nomes)
+
+// Conteúdo de demonstração por slot: marca visível para o slot ser inspecionável.
+function slotDemo(s) {
+  const demo = { prepend: '📎', append: '⬆', hint: 'Texto de ajuda (demo)', error: 'Mensagem de erro (demo)' }
+  return demo[s] ?? `«${s}»`
+}
 
 // Liga v-model ao prop declarado no contrato (ex.: modelValue). Sem vModel no
 // contrato (ex.: DssUploader), NÃO injeta modelValue — o sujeito recebe só as props.
@@ -45,6 +58,7 @@ function onMsg(e) {
   if (d.theme != null) theme.value = d.theme
   if (d.brand != null) brand.value = d.brand
   if ('modelProp' in d) modelProp.value = d.modelProp
+  if (Array.isArray(d.slots)) activeSlots.value = d.slots
 }
 onMounted(() => {
   window.addEventListener('message', onMsg)
