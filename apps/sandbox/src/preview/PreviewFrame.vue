@@ -48,7 +48,34 @@
             </label>
           </div>
         </template>
+
+        <template v-if="methodDefs.length">
+          <h4 class="pv__slots-h">Métodos <small>— exposedRefs ({{ methodDefs.length }})</small></h4>
+          <button
+            v-for="m in methodDefs" :key="m.name" class="pv__method"
+            :title="(m.description || '') + '  ' + (m.type || '')"
+            @click="callMethod(m.name)"
+          >{{ m.name }}()</button>
+        </template>
       </aside>
+    </div>
+
+    <div class="pv__events">
+      <div class="pv__events-h">
+        Eventos <small>— emits do contrato ({{ emitDefs.length }})</small>
+        <button v-if="eventLog.length" class="pv__events-clear" @click="eventLog = []">limpar</button>
+      </div>
+      <div class="pv__events-body">
+        <p v-if="!eventLog.length" class="pv__events-empty">
+          Interaja com o componente (ou chame um método) — os eventos aparecem aqui.
+          <span v-if="emitDefs.length"> Disponíveis: {{ emitDefs.map(e => e.name).join(', ') }}.</span>
+        </p>
+        <div v-for="(ev, i) in eventLog" :key="i" class="pv__event">
+          <span class="pv__event-t">{{ ev.t }}</span>
+          <strong>{{ ev.name }}</strong>
+          <code>{{ JSON.stringify(ev.payload) }}</code>
+        </div>
+      </div>
     </div>
 
     <pre class="pv__snippet">{{ snippet }}</pre>
@@ -68,6 +95,9 @@ const contract = ref(null)
 const knobs = ref([])
 const slotDefs = ref([])          // api.slots do contrato
 const activeSlots = reactive({})  // nome do slot -> ligado?
+const emitDefs = ref([])          // api.emits do contrato
+const methodDefs = ref([])        // api.exposedRefs do contrato
+const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
 const state = reactive({})
 const theme = ref('light')
 const brand = ref('')
@@ -109,6 +139,10 @@ function load() {
   slotDefs.value = contract.value.api?.slots || []
   Object.keys(activeSlots).forEach((k) => delete activeSlots[k])
   for (const s of slotDefs.value) activeSlots[s.name] = false
+  // Eventos (log) e métodos expostos (botões) — completam a superfície da API.
+  emitDefs.value = contract.value.api?.emits || []
+  methodDefs.value = contract.value.api?.exposedRefs || []
+  eventLog.value = []
 }
 
 function postState() {
@@ -122,10 +156,23 @@ function postState() {
   // (componentes sem model — ex.: DssUploader — não recebem modelValue órfão).
   const modelProp = contract.value?.api?.vModel?.prop ?? null
   const slots = Object.keys(activeSlots).filter((n) => activeSlots[n])
-  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, slots }))
+  const emits = emitDefs.value.map((ev) => ev.name)
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, slots, emits }))
   el.contentWindow.postMessage(payload, '*')
 }
-function onMsg(e) { if (e.data && e.data.__frameReady) postState() }
+// Chama um método exposto (exposedRefs) no sujeito, via postMessage.
+function callMethod(methodName) {
+  frameEl.value?.contentWindow?.postMessage({ __frameCall: true, method: methodName }, '*')
+}
+function onMsg(e) {
+  const d = e.data
+  if (!d) return
+  if (d.__frameReady) { postState(); return }
+  if (d.__frameEvent) {
+    eventLog.value.unshift({ t: new Date().toLocaleTimeString(), name: d.name, payload: d.payload })
+    if (eventLog.value.length > 50) eventLog.value.pop()
+  }
+}
 
 const snippet = computed(() => {
   const parts = []
@@ -165,7 +212,19 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__slot { font-size: 13px; margin-bottom: 6px; }
 .pv__slot label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
 .pv__slot small { color: #999; }
+.pv__method { display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 6px 10px; font-size: 13px; font-family: ui-monospace, monospace; background: #fff; border: 1px solid #d4d4d4; border-radius: 6px; cursor: pointer; }
+.pv__method:hover { background: #eef2ff; border-color: #a5b4fc; }
 .pv__empty { color: #b00020; font-size: 13px; }
+.pv__events { border-top: 1px solid #e5e5e5; background: #fafafa; max-height: 140px; display: flex; flex-direction: column; }
+.pv__events-h { display: flex; align-items: center; gap: 8px; padding: 6px 14px; font-size: 13px; font-weight: 600; border-bottom: 1px solid #eee; }
+.pv__events-h small { color: #999; font-weight: normal; }
+.pv__events-clear { margin-left: auto; font-size: 12px; background: none; border: 1px solid #d4d4d4; border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+.pv__events-body { overflow: auto; padding: 6px 14px; }
+.pv__events-empty { color: #999; font-size: 12px; margin: 4px 0; }
+.pv__event { display: flex; gap: 8px; align-items: baseline; font-size: 12px; padding: 2px 0; font-family: ui-monospace, monospace; }
+.pv__event-t { color: #999; flex-shrink: 0; }
+.pv__event strong { color: #4338ca; flex-shrink: 0; }
+.pv__event code { color: #475569; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pv__snippet { margin: 0; padding: 12px 14px; background: #0f172a; color: #e2e8f0; font-size: 13px; border-top: 1px solid #e5e5e5; overflow: auto; }
 h4 { margin: 0 0 10px; }
 h4 small { color: #999; font-weight: normal; }

@@ -8,7 +8,7 @@
 -->
 <template>
   <div class="pv-stage" :data-theme="theme" :data-brand="brand || null">
-    <component :is="Comp" v-if="Comp" v-bind="boundProps">
+    <component :is="Comp" v-if="Comp" ref="subjectRef" v-bind="allBindings">
       <!-- Slots ligados no parent recebem conteúdo de demo, para exercitar
            prepend/append/hint/error (que não são props e não apareciam). -->
       <template v-for="s in activeSlots" :key="s" #[s]>
@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, defineAsyncComponent, toHandlerKey } from 'vue'
 
 const name = new URLSearchParams(location.search).get('frame') || ''
 
@@ -29,12 +29,14 @@ const modules = import.meta.glob('../../../../packages/core/components/{base,com
 const key = Object.keys(modules).find(k => k.endsWith(`/${name}/${name}.vue`))
 const Comp = key ? defineAsyncComponent(modules[key]) : null
 
+const subjectRef = ref(null)  // ref do SFC real — permite chamar exposedRefs (métodos)
 const props = reactive({})
 const theme = ref('light')
 const brand = ref('')
 const model = ref(null) // null é o "vazio" universal (File/array/objeto aceitam; '' quebrava File)
 const modelProp = ref(null)
 const activeSlots = ref([]) // slots ligados no parent (nomes)
+const emitNames = ref([])   // api.emits do contrato — p/ logar TODOS os eventos
 
 // Conteúdo de demonstração por slot: marca visível para o slot ser inspecionável.
 function slotDemo(s) {
@@ -42,23 +44,63 @@ function slotDemo(s) {
   return demo[s] ?? `«${s}»`
 }
 
-// Liga v-model ao prop declarado no contrato (ex.: modelValue). Sem vModel no
-// contrato (ex.: DssUploader), NÃO injeta modelValue — o sujeito recebe só as props.
-const boundProps = computed(() => {
-  if (!modelProp.value) return props
-  const p = modelProp.value
-  return { ...props, [p]: model.value, [`onUpdate:${p}`]: (v) => { model.value = v } }
+// Resume um argumento de evento para dado PLANO serializável (payloads carregam
+// File/FocusEvent/etc. que o postMessage não clona).
+function summarize(a) {
+  if (a == null || typeof a !== 'object') return a
+  if (a instanceof File) return `File(${a.name})`
+  if (typeof Event !== 'undefined' && a instanceof Event) return `${a.constructor?.name || 'Event'}(${a.type})`
+  if (Array.isArray(a)) return a.map(summarize)
+  try { return JSON.parse(JSON.stringify(a)) } catch { return String(a) }
+}
+function forwardEvent(evName, args) {
+  window.parent?.postMessage({ __frameEvent: true, name: evName, payload: args.map(summarize) }, '*')
+}
+
+// Handlers para TODOS os emits do contrato: reemite ao parent (log) e, no evento
+// de vModel, atualiza o model local (assim o valor real dirige o componente).
+const eventHandlers = computed(() => {
+  const h = {}
+  const vmEvent = modelProp.value ? `update:${modelProp.value}` : null
+  for (const evName of emitNames.value) {
+    h[toHandlerKey(evName)] = (...args) => {
+      if (evName === vmEvent) model.value = args[0]
+      forwardEvent(evName, args)
+    }
+  }
+  if (vmEvent && !h[toHandlerKey(vmEvent)]) {
+    h[toHandlerKey(vmEvent)] = (v) => { model.value = v; forwardEvent(vmEvent, [v]) }
+  }
+  return h
+})
+
+// Bindings finais: props + valor do vModel + handlers de eventos.
+const allBindings = computed(() => {
+  const value = modelProp.value ? { [modelProp.value]: model.value } : {}
+  return { ...props, ...value, ...eventHandlers.value }
 })
 
 function onMsg(e) {
   const d = e.data
-  if (!d || !d.__frame) return
+  if (!d) return
+  // Chamada de método exposto (exposedRefs) disparada por um botão no parent.
+  if (d.__frameCall) {
+    const fn = subjectRef.value?.[d.method]
+    if (typeof fn === 'function') {
+      try { fn() } catch (err) { forwardEvent(`[erro: ${d.method}]`, [String(err)]) }
+    } else {
+      forwardEvent(`[método ausente: ${d.method}]`, [])
+    }
+    return
+  }
+  if (!d.__frame) return
   Object.keys(props).forEach((k) => delete props[k])
   Object.assign(props, d.props || {})
   if (d.theme != null) theme.value = d.theme
   if (d.brand != null) brand.value = d.brand
   if ('modelProp' in d) modelProp.value = d.modelProp
   if (Array.isArray(d.slots)) activeSlots.value = d.slots
+  if (Array.isArray(d.emits)) emitNames.value = d.emits
 }
 onMounted(() => {
   window.addEventListener('message', onMsg)
