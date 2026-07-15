@@ -109,6 +109,20 @@ describe('DssFile', () => {
         expect(wrapper.find('.dss-file__value').exists()).toBe(true)
       })
 
+      // Regressão (colisão de classe): o estado "tem valor" usa `--has-value`,
+      // NÃO `--filled` — que é a VARIANTE. Antes, um outlined COM arquivo ganhava
+      // `--filled` e herdava o visual da variante filled (borda vira só inferior).
+      it('outlined com valor usa --has-value e NÃO --filled (sem colisão de variante)', () => {
+        const file = new File(['content'], 'test.pdf', { type: 'application/pdf' })
+        const wrapper = mount(DssFile, {
+          props: { variant: 'outlined', modelValue: file }
+        })
+        const cls = wrapper.find('.dss-file').classes()
+        expect(cls).toContain('dss-file--outlined')
+        expect(cls).toContain('dss-file--has-value')
+        expect(cls).not.toContain('dss-file--filled')
+      })
+
       it('shows clear button when clearable=true and has value', () => {
         const file = new File(['content'], 'test.pdf', { type: 'application/pdf' })
         const wrapper = mount(DssFile, {

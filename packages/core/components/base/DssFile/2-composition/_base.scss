@@ -122,7 +122,7 @@
   // Reserva p/ a label flutuante: com label presente e flutuada (valor ou foco),
   // o conteúdo (nome do arquivo / dica) desce, evitando colidir com a label no
   // topo (paridade DssInput). Sem label, fica centralizado.
-  .dss-file--labeled.dss-file--filled &,
+  .dss-file--labeled.dss-file--has-value &,
   .dss-file--labeled.dss-file--focused & {
     align-items: flex-end;
     padding-bottom: var(--dss-spacing-1);

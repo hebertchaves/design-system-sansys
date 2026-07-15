@@ -39,7 +39,8 @@ export function useFileClasses(
    * - dss-file--disabled: desabilitado
    * - dss-file--readonly: somente leitura
    * - dss-file--dense: versão compacta
-   * - dss-file--filled: tem arquivo selecionado
+   * - dss-file--has-value: tem arquivo selecionado (NÃO `--filled`: colidia com a
+   *   VARIANTE filled — um outlined/standout COM arquivo herdava o visual do filled)
    * - dss-file--dragging: drag ativo sobre o campo
    * - dss-file--brand-{brand}: marca Sansys
    */
@@ -53,7 +54,7 @@ export function useFileClasses(
         'dss-file--disabled': props.disabled,
         'dss-file--readonly': props.readonly,
         'dss-file--dense': props.dense,
-        'dss-file--filled': hasValue.value,
+        'dss-file--has-value': hasValue.value,
         'dss-file--dragging': isDragging.value,
         // há label → reserva espaço p/ a label flutuante (evita overlap no float)
         'dss-file--labeled': !!props.label,
