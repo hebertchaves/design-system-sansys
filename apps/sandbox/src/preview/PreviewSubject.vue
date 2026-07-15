@@ -111,9 +111,12 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 </script>
 
 <style>
-/* Superfície do stage segue o tema (surface-subtle = o fundo real "atrás do
-   campo" que o checklist de adequação usa p/ calibrar dark). Sem isto o realm
-   ficava claro mesmo em data-theme=dark, e a validação de dark era falsa. */
-.pv-stage { padding: 32px; min-height: 100vh; box-sizing: border-box; background: var(--dss-surface-subtle); }
+/* Superfície do stage = surface-default (a página real). Segue o tema (dark de
+   verdade). NÃO usar surface-subtle: coincide com o fundo do variant `filled`
+   (também surface-subtle) e o filled "sumia" contra o stage. Contra surface-
+   default, TODOS os variants ficam distintos (filled=fundo sutil, standout=chip,
+   outlined=borda) e o dark segue calibrável (standout gray-900 e filled gray-600
+   distintos do stage gray-800). */
+.pv-stage { padding: 32px; min-height: 100vh; box-sizing: border-box; background: var(--dss-surface-default); }
 .pv-missing { color: #b00020; font-family: system-ui, sans-serif; }
 </style>
