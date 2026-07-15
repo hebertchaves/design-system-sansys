@@ -26,7 +26,7 @@ const Comp = key ? defineAsyncComponent(modules[key]) : null
 const props = reactive({})
 const theme = ref('light')
 const brand = ref('')
-const model = ref('')
+const model = ref(null) // null é o "vazio" universal (File/array/objeto aceitam; '' quebrava File)
 const modelProp = ref(null)
 
 // Liga v-model ao prop declarado no contrato (ex.: modelValue). Sem vModel no
@@ -55,6 +55,9 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 </script>
 
 <style>
-.pv-stage { padding: 32px; min-height: 100vh; box-sizing: border-box; }
+/* Superfície do stage segue o tema (surface-subtle = o fundo real "atrás do
+   campo" que o checklist de adequação usa p/ calibrar dark). Sem isto o realm
+   ficava claro mesmo em data-theme=dark, e a validação de dark era falsa. */
+.pv-stage { padding: 32px; min-height: 100vh; box-sizing: border-box; background: var(--dss-surface-subtle); }
 .pv-missing { color: #b00020; font-family: system-ui, sans-serif; }
 </style>

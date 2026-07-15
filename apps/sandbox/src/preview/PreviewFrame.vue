@@ -81,7 +81,15 @@ function load() {
   const dpp = contract.value.visual?.defaultPreview?.props || {}
   Object.keys(state).forEach((k) => delete state[k])
   for (const k of knobs.value) {
-    state[k.name] = (k.name in dpp) ? dpp[k.name] : (k.default ?? (k.controlHint === 'toggle' ? false : ''))
+    // @default sem valor chega do contrato como STRING descritiva (quirk do
+    // emitter): "null", "undefined", "undefined (ilimitado)"… Tratar como ausente,
+    // senão vira valor truthy semeado (brand="null" → classe --brand-null; ou
+    // maxFiles="undefined (ilimitado)" → prop numérica recebe string → Vue warn).
+    let def = k.default
+    if (typeof def === 'string' && /^(null|undefined)\b/.test(def)) def = undefined
+    // stepper (numérico): default não-parseável = ausente
+    if (k.controlHint === 'stepper' && def != null && Number.isNaN(Number(def))) def = undefined
+    state[k.name] = (k.name in dpp) ? dpp[k.name] : (def ?? (k.controlHint === 'toggle' ? false : ''))
   }
 }
 

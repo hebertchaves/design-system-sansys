@@ -65,6 +65,13 @@
             <span class="nav-icon"><span class="material-icons">dvr</span></span>
             <span class="nav-label">Preview Frame · DssUploader</span>
           </button>
+          <button
+            @click="activeComponent = 'preview-frame-file'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-file' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssFile</span>
+          </button>
         </div>
 
         <!-- Foundation -->
@@ -445,6 +452,9 @@
       </div>
       <div v-else-if="activeComponent === 'preview-frame-uploader'" class="component-view">
         <PreviewFrame component="DssUploader" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-file'" class="component-view">
+        <PreviewFrame component="DssFile" />
       </div>
 
       <!-- DssButton Test View -->
