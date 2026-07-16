@@ -493,163 +493,43 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-hub-primary",
+          "token": "--dss-action-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "border-color",
-          "token": "--dss-hub-primary",
+          "token": "--dss-action-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "color",
-          "token": "--dss-hub-on-primary",
+          "token": "--dss-text-on-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "background-color",
-          "token": "--dss-hub-secondary",
+          "token": "--dss-action-secondary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "border-color",
-          "token": "--dss-hub-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-on-secondary",
+          "token": "--dss-action-secondary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "background-color",
-          "token": "--dss-hub-accent",
+          "token": "--dss-action-accent",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "border-color",
-          "token": "--dss-hub-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-on-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-water-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-water-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-on-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-water-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-water-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-on-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-water-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-water-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-on-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-waste-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-waste-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-on-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-waste-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-waste-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-on-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-waste-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-waste-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-on-accent",
+          "token": "--dss-action-accent",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -982,109 +862,26 @@
         ]
       },
       {
-        "name": "--dss-hub-primary",
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-on-primary",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-hub-on-primary",
+        "name": "--dss-action-secondary",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-hub-secondary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-hub-on-secondary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-hub-accent",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-hub-on-accent",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-primary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-on-primary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-secondary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-on-secondary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-accent",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-on-accent",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-primary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-on-primary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-secondary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-on-secondary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-accent",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-on-accent",
+        "name": "--dss-action-accent",
         "usedIn": [
           "default"
         ]
@@ -1116,12 +913,6 @@
       },
       {
         "name": "--dss-touch-target-md",
-        "usedIn": [
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-action-primary",
         "usedIn": [
           "defaultPreview"
         ]

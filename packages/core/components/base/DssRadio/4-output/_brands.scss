@@ -12,40 +12,40 @@
 // Mixin: cores de brand para radio
 // Evita duplicacao para 3 brands x N cores
 // --------------------------------------------------------------------------
-@mixin radio-brand-colors($brand) {
+@mixin radio-brand-colors() {
   // --- Primary ---
   &.dss-radio--primary {
     .dss-radio__control--checked {
-      border-color: var(--dss-#{$brand}-primary);
-      color: var(--dss-#{$brand}-primary);
+      border-color: var(--dss-action-primary);
+      color: var(--dss-action-primary);
     }
 
     .dss-radio__dot {
-      background-color: var(--dss-#{$brand}-primary);
+      background-color: var(--dss-action-primary);
     }
   }
 
   // --- Secondary ---
   &.dss-radio--secondary {
     .dss-radio__control--checked {
-      border-color: var(--dss-#{$brand}-secondary);
-      color: var(--dss-#{$brand}-secondary);
+      border-color: var(--dss-action-secondary);
+      color: var(--dss-action-secondary);
     }
 
     .dss-radio__dot {
-      background-color: var(--dss-#{$brand}-secondary);
+      background-color: var(--dss-action-secondary);
     }
   }
 
   // --- Accent ---
   &.dss-radio--accent {
     .dss-radio__control--checked {
-      border-color: var(--dss-#{$brand}-accent);
-      color: var(--dss-#{$brand}-accent);
+      border-color: var(--dss-action-accent);
+      color: var(--dss-action-accent);
     }
 
     .dss-radio__dot {
-      background-color: var(--dss-#{$brand}-accent);
+      background-color: var(--dss-action-accent);
     }
   }
 }
@@ -53,35 +53,15 @@
 // --------------------------------------------------------------------------
 // Aplicacao: via contexto [data-brand] no wrapper
 // --------------------------------------------------------------------------
-[data-brand='hub'] {
+[data-brand] {
   .dss-radio {
-    @include radio-brand-colors(hub);
-  }
-}
-
-[data-brand='water'] {
-  .dss-radio {
-    @include radio-brand-colors(water);
-  }
-}
-
-[data-brand='waste'] {
-  .dss-radio {
-    @include radio-brand-colors(waste);
+    @include radio-brand-colors();
   }
 }
 
 // --------------------------------------------------------------------------
 // Aplicacao: via data-brand diretamente no componente
 // --------------------------------------------------------------------------
-.dss-radio[data-brand='hub'] {
-  @include radio-brand-colors(hub);
-}
-
-.dss-radio[data-brand='water'] {
-  @include radio-brand-colors(water);
-}
-
-.dss-radio[data-brand='waste'] {
-  @include radio-brand-colors(waste);
+.dss-radio[data-brand] {
+  @include radio-brand-colors();
 }

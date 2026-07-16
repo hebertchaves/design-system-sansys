@@ -17,164 +17,102 @@
    MIXINS PARA EVITAR DUPLICACAO
    ========================================================================== */
 
-@mixin chip-brand-filled($brand) {
+@mixin chip-brand-filled() {
   &.dss-chip--primary {
-    background-color: var(--dss-#{$brand}-primary);
-    color: var(--dss-#{$brand}-on-primary);
+    background-color: var(--dss-action-primary);
+    color: var(--dss-text-on-primary);
   }
 
   &.dss-chip--secondary {
-    background-color: var(--dss-#{$brand}-secondary);
-    color: var(--dss-#{$brand}-on-secondary);
+    background-color: var(--dss-action-secondary);
+    color: var(--dss-text-on-primary);
   }
 
   &.dss-chip--accent {
-    background-color: var(--dss-#{$brand}-accent);
-    color: var(--dss-#{$brand}-on-accent);
+    background-color: var(--dss-action-accent);
+    color: var(--dss-text-on-primary);
   }
 }
 
-@mixin chip-brand-outline($brand) {
+@mixin chip-brand-outline() {
   &.dss-chip--primary {
-    border-color: var(--dss-#{$brand}-primary);
-    color: var(--dss-#{$brand}-primary);
+    border-color: var(--dss-action-primary);
+    color: var(--dss-action-primary);
 
     &.dss-chip--clickable:hover,
     &.dss-chip--selected {
-      background-color: var(--dss-#{$brand}-primary);
-      color: var(--dss-#{$brand}-on-primary);
+      background-color: var(--dss-action-primary);
+      color: var(--dss-text-on-primary);
     }
   }
 
   &.dss-chip--secondary {
-    border-color: var(--dss-#{$brand}-secondary);
-    color: var(--dss-#{$brand}-secondary);
+    border-color: var(--dss-action-secondary);
+    color: var(--dss-action-secondary);
 
     &.dss-chip--clickable:hover,
     &.dss-chip--selected {
-      background-color: var(--dss-#{$brand}-secondary);
-      color: var(--dss-#{$brand}-on-secondary);
+      background-color: var(--dss-action-secondary);
+      color: var(--dss-text-on-primary);
     }
   }
 
   &.dss-chip--accent {
-    border-color: var(--dss-#{$brand}-accent);
-    color: var(--dss-#{$brand}-accent);
+    border-color: var(--dss-action-accent);
+    color: var(--dss-action-accent);
 
     &.dss-chip--clickable:hover,
     &.dss-chip--selected {
-      background-color: var(--dss-#{$brand}-accent);
-      color: var(--dss-#{$brand}-on-accent);
+      background-color: var(--dss-action-accent);
+      color: var(--dss-text-on-primary);
     }
   }
 }
 
-@mixin chip-brand-flat($brand) {
+@mixin chip-brand-flat() {
   &.dss-chip--primary {
-    color: var(--dss-#{$brand}-primary);
+    color: var(--dss-action-primary);
   }
 
   &.dss-chip--secondary {
-    color: var(--dss-#{$brand}-secondary);
+    color: var(--dss-action-secondary);
   }
 
   &.dss-chip--accent {
-    color: var(--dss-#{$brand}-accent);
+    color: var(--dss-action-accent);
   }
 }
 
 /* ==========================================================================
-   HUB BRAND
+   Aplicação (qualquer marca). Os mixins viraram brand-agnósticos (usam
+   --dss-action-*, que já resolve por marca), então os 3 blocos hub/water/waste
+   eram idênticos → colapsados em um único [data-brand].
    ========================================================================== */
 
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='hub'] {
+/* Cenario 1: contexto ancestral */
+[data-brand] {
   .dss-chip--filled {
-    @include chip-brand-filled(hub);
+    @include chip-brand-filled();
   }
 
   .dss-chip--outline {
-    @include chip-brand-outline(hub);
+    @include chip-brand-outline();
   }
 
   .dss-chip--flat {
-    @include chip-brand-flat(hub);
+    @include chip-brand-flat();
   }
 }
 
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-chip--filled[data-brand='hub'] {
-  @include chip-brand-filled(hub);
+/* Cenario 2: prop no próprio elemento */
+.dss-chip--filled[data-brand] {
+  @include chip-brand-filled();
 }
 
-.dss-chip--outline[data-brand='hub'] {
-  @include chip-brand-outline(hub);
+.dss-chip--outline[data-brand] {
+  @include chip-brand-outline();
 }
 
-.dss-chip--flat[data-brand='hub'] {
-  @include chip-brand-flat(hub);
-}
-
-/* ==========================================================================
-   WATER BRAND
-   ========================================================================== */
-
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='water'] {
-  .dss-chip--filled {
-    @include chip-brand-filled(water);
-  }
-
-  .dss-chip--outline {
-    @include chip-brand-outline(water);
-  }
-
-  .dss-chip--flat {
-    @include chip-brand-flat(water);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-chip--filled[data-brand='water'] {
-  @include chip-brand-filled(water);
-}
-
-.dss-chip--outline[data-brand='water'] {
-  @include chip-brand-outline(water);
-}
-
-.dss-chip--flat[data-brand='water'] {
-  @include chip-brand-flat(water);
-}
-
-/* ==========================================================================
-   WASTE BRAND
-   ========================================================================== */
-
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='waste'] {
-  .dss-chip--filled {
-    @include chip-brand-filled(waste);
-  }
-
-  .dss-chip--outline {
-    @include chip-brand-outline(waste);
-  }
-
-  .dss-chip--flat {
-    @include chip-brand-flat(waste);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-chip--filled[data-brand='waste'] {
-  @include chip-brand-filled(waste);
-}
-
-.dss-chip--outline[data-brand='waste'] {
-  @include chip-brand-outline(waste);
-}
-
-.dss-chip--flat[data-brand='waste'] {
-  @include chip-brand-flat(waste);
+.dss-chip--flat[data-brand] {
+  @include chip-brand-flat();
 }

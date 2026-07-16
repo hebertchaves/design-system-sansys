@@ -75,6 +75,20 @@ for (const f of walkScss(COMPONENTS)) {
         ghosts.get(tok).push(`${comp}/${path.basename(f)}:${i + 1}`);
       }
     }
+    // Interpolação de MARCA: `var(--dss-#{$brand}-<suffix>)` (mixins). O regex
+    // literal acima não enxerga através do `#{...}` — foi assim que os ghosts
+    // --dss-{hub,water,waste}-primary escaparam (Checkbox/Chip/Radio/Toggle). Aqui
+    // resolvemos p/ as 3 marcas e checamos cada uma no catálogo.
+    const reInterp = /var\(\s*--dss-#\{[^}]+\}-([a-z0-9-]+)/g;
+    while ((m = reInterp.exec(code))) {
+      for (const brand of ['hub', 'water', 'waste']) {
+        const tok = `--dss-${brand}-${m[1]}`;
+        if (!defined.has(tok)) {
+          if (!ghosts.has(tok)) ghosts.set(tok, []);
+          ghosts.get(tok).push(`${comp}/${path.basename(f)}:${i + 1} (interpolado #{$brand})`);
+        }
+      }
+    }
   });
 }
 

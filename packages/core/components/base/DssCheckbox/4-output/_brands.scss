@@ -20,18 +20,18 @@
    MIXINS PARA EVITAR DUPLICACAO
    ========================================================================== */
 
-@mixin checkbox-brand-colors($brand) {
+@mixin checkbox-brand-colors() {
   /* Primary */
   &.dss-checkbox--primary {
     .dss-checkbox__control--checked,
     .dss-checkbox__control--indeterminate {
-      background-color: var(--dss-#{$brand}-primary);
-      border-color: var(--dss-#{$brand}-primary);
-      color: var(--dss-#{$brand}-on-primary);
+      background-color: var(--dss-action-primary);
+      border-color: var(--dss-action-primary);
+      color: var(--dss-text-on-primary);
 
       .dss-checkbox__check,
       .dss-checkbox__dash {
-        color: var(--dss-#{$brand}-on-primary);
+        color: var(--dss-text-on-primary);
       }
     }
   }
@@ -40,13 +40,13 @@
   &.dss-checkbox--secondary {
     .dss-checkbox__control--checked,
     .dss-checkbox__control--indeterminate {
-      background-color: var(--dss-#{$brand}-secondary);
-      border-color: var(--dss-#{$brand}-secondary);
-      color: var(--dss-#{$brand}-on-secondary);
+      background-color: var(--dss-action-secondary);
+      border-color: var(--dss-action-secondary);
+      color: var(--dss-text-on-primary);
 
       .dss-checkbox__check,
       .dss-checkbox__dash {
-        color: var(--dss-#{$brand}-on-secondary);
+        color: var(--dss-text-on-primary);
       }
     }
   }
@@ -55,62 +55,26 @@
   &.dss-checkbox--accent {
     .dss-checkbox__control--checked,
     .dss-checkbox__control--indeterminate {
-      background-color: var(--dss-#{$brand}-accent);
-      border-color: var(--dss-#{$brand}-accent);
-      color: var(--dss-#{$brand}-on-accent);
+      background-color: var(--dss-action-accent);
+      border-color: var(--dss-action-accent);
+      color: var(--dss-text-on-primary);
 
       .dss-checkbox__check,
       .dss-checkbox__dash {
-        color: var(--dss-#{$brand}-on-accent);
+        color: var(--dss-text-on-primary);
       }
     }
   }
 }
 
 /* ==========================================================================
-   HUB BRAND
+   Aplicação (qualquer marca). O mixin virou brand-agnóstico (usa --dss-action-*,
+   que já resolve por marca), então os 3 blocos hub/water/waste eram idênticos →
+   colapsados em um único [data-brand]. Cenario 1 (contexto ancestral) + Cenario 2
+   (prop no próprio elemento).
    ========================================================================== */
 
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='hub'] {
-  .dss-checkbox {
-    @include checkbox-brand-colors(hub);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-checkbox[data-brand='hub'] {
-  @include checkbox-brand-colors(hub);
-}
-
-/* ==========================================================================
-   WATER BRAND
-   ========================================================================== */
-
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='water'] {
-  .dss-checkbox {
-    @include checkbox-brand-colors(water);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-checkbox[data-brand='water'] {
-  @include checkbox-brand-colors(water);
-}
-
-/* ==========================================================================
-   WASTE BRAND
-   ========================================================================== */
-
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='waste'] {
-  .dss-checkbox {
-    @include checkbox-brand-colors(waste);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-checkbox[data-brand='waste'] {
-  @include checkbox-brand-colors(waste);
+[data-brand] .dss-checkbox,
+.dss-checkbox[data-brand] {
+  @include checkbox-brand-colors();
 }
