@@ -275,7 +275,7 @@
         },
         {
           "property": "border",
-          "token": "--dss-border-width-medium",
+          "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_states.scss"
         },
@@ -444,7 +444,7 @@
         ]
       },
       {
-        "name": "--dss-border-width-medium",
+        "name": "--dss-border-width-md",
         "usedIn": [
           "default"
         ]

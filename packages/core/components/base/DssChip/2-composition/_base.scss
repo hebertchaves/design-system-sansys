@@ -42,8 +42,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min);
-    min-height: var(--dss-touch-target-min);
+    min-width: var(--dss-touch-target-md);
+    min-height: var(--dss-touch-target-md);
     pointer-events: none; /* Não interfere com cliques no chip */
   }
 

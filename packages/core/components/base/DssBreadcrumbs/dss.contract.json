@@ -122,7 +122,7 @@
       "default": [
         {
           "property": "gap",
-          "token": "--dss-breadcrumbs-gap",
+          "token": "--dss-spacing-3",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -140,7 +140,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-breadcrumbs-separator-color",
+          "token": "--dss-text-subtle",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -241,13 +241,13 @@
     ],
     "instances": [
       {
-        "name": "--dss-breadcrumbs-gap",
+        "name": "--dss-spacing-3",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-breadcrumbs-separator-color",
+        "name": "--dss-text-subtle",
         "usedIn": [
           "default"
         ]

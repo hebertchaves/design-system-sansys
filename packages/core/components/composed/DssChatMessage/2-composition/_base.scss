@@ -71,7 +71,7 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-sm);
   font-weight: var(--dss-font-weight-semibold);
-  line-height: var(--dss-line-height-md);
+  line-height: var(--dss-line-height-normal);
   color: var(--dss-text-subtle);
   padding-left: var(--dss-spacing-1);
 }
@@ -101,7 +101,7 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-md);
   font-weight: var(--dss-font-weight-normal);
-  line-height: var(--dss-line-height-md);
+  line-height: var(--dss-line-height-normal);
 }
 
 .dss-chat-message__text {

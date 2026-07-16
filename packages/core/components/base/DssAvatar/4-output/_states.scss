@@ -101,11 +101,11 @@
 
 [data-theme="dark"] {
   .dss-avatar {
-    background-color: var(--dss-neutral-700, #424242);
-    color: var(--dss-neutral-100, #F5F5F5);
+    background-color: var(--dss-gray-700, #424242);
+    color: var(--dss-gray-100, #F5F5F5);
   }
 
   .dss-avatar__status {
-    border-color: var(--dss-surface-dark, #1E1E1E);
+    border-color: var(--dss-surface-default, #1E1E1E);
   }
 }

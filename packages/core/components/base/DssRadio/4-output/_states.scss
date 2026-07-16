@@ -17,11 +17,11 @@
 // --------------------------------------------------------------------------
 @media (prefers-color-scheme: dark) {
   .dss-radio {
-    color: var(--dss-text-primary-dark, var(--dss-gray-200));
+    color: var(--dss-text-primary, var(--dss-gray-200));
   }
 
   .dss-radio__label {
-    color: var(--dss-text-primary-dark, var(--dss-gray-200));
+    color: var(--dss-text-primary, var(--dss-gray-200));
   }
 
   .dss-radio__control {

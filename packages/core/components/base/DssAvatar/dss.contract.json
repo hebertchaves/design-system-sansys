@@ -184,13 +184,13 @@
         },
         {
           "property": "width",
-          "token": "--dss-touch-target-min",
+          "token": "--dss-touch-target-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "height",
-          "token": "--dss-touch-target-min",
+          "token": "--dss-touch-target-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -448,7 +448,7 @@
         },
         {
           "property": "margin-left",
-          "token": "--dss-spacing-1-5",
+          "token": "--dss-spacing-1_5",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -520,7 +520,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-neutral-400",
+          "token": "--dss-gray-400",
           "value": null,
           "source": "3-variants/_status.scss"
         },
@@ -737,7 +737,7 @@
     ],
     "instances": [
       {
-        "name": "--dss-touch-target-min",
+        "name": "--dss-touch-target-md",
         "usedIn": [
           "default"
         ]
@@ -874,7 +874,7 @@
         ]
       },
       {
-        "name": "--dss-spacing-1-5",
+        "name": "--dss-spacing-1_5",
         "usedIn": [
           "default"
         ]
@@ -904,7 +904,7 @@
         ]
       },
       {
-        "name": "--dss-neutral-400",
+        "name": "--dss-gray-400",
         "usedIn": [
           "default"
         ]

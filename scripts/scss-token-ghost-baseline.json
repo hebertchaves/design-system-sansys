@@ -1,22 +1,4 @@
 {
   "note": "Tokens --dss-* referenciados mas NÃO definidos (débito). Gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.",
-  "tokens": [
-    "--dss-border-width-medium",
-    "--dss-breadcrumbs-gap",
-    "--dss-breadcrumbs-separator-color",
-    "--dss-input-height-min",
-    "--dss-line-height-md",
-    "--dss-neutral-100",
-    "--dss-neutral-400",
-    "--dss-neutral-700",
-    "--dss-skeleton-radius",
-    "--dss-slide-item-left-bg",
-    "--dss-slide-item-right-bg",
-    "--dss-spacing-",
-    "--dss-spacing-1-5",
-    "--dss-surface-dark",
-    "--dss-text-primary-dark",
-    "--dss-textarea-max-height",
-    "--dss-touch-target-min"
-  ]
+  "tokens": []
 }

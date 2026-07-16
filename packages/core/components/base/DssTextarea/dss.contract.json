@@ -345,8 +345,8 @@
         },
         {
           "property": "max-height",
-          "token": "--dss-textarea-max-height",
-          "value": null,
+          "token": null,
+          "value": "none",
           "source": "2-composition/_base.scss"
         },
         {
@@ -1004,12 +1004,6 @@
       },
       {
         "name": "--dss-line-height-normal",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-textarea-max-height",
         "usedIn": [
           "default"
         ]

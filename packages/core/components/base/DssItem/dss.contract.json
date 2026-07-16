@@ -462,7 +462,7 @@
         },
         {
           "property": "min-height",
-          "token": "--dss-touch-target-min",
+          "token": "--dss-touch-target-md",
           "value": null,
           "source": "3-variants/_interactive.scss"
         },
@@ -869,9 +869,10 @@
         ]
       },
       {
-        "name": "--dss-touch-target-min",
+        "name": "--dss-touch-target-md",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -970,12 +971,6 @@
         "name": "--dss-opacity-50",
         "usedIn": [
           "disabled"
-        ]
-      },
-      {
-        "name": "--dss-touch-target-md",
-        "usedIn": [
-          "defaultPreview"
         ]
       },
       {

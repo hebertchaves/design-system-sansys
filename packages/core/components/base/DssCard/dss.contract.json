@@ -654,7 +654,7 @@
           "property": "background-color",
           "token": "--dss-surface-default",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "4-output/_states.scss"
         },
         {
           "property": "background-color",
@@ -2529,12 +2529,6 @@
           "source": "3-variants/_outlined.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-surface-dark",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
           "property": "border-color",
           "token": null,
           "value": "rgba(255, 255, 255, 0.12)",
@@ -3979,12 +3973,6 @@
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-surface-dark",
-        "usedIn": [
-          "default"
         ]
       },
       {

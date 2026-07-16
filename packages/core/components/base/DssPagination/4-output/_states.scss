@@ -24,7 +24,7 @@
     // aria-current="page" is the ARIA value QPagination sets on the active page button.
     .q-pagination .q-btn[aria-current="page"],
     .q-pagination .q-btn.bg-primary {
-      border: var(--dss-border-width-medium) solid var(--dss-text-on-primary);
+      border: var(--dss-border-width-md) solid var(--dss-text-on-primary);
     }
   }
 }

@@ -122,7 +122,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-slide-item-left-bg",
+          "token": "--dss-feedback-error",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -158,7 +158,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-slide-item-right-bg",
+          "token": "--dss-feedback-info",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -216,7 +216,7 @@
     ],
     "instances": [
       {
-        "name": "--dss-slide-item-left-bg",
+        "name": "--dss-feedback-error",
         "usedIn": [
           "default"
         ]
@@ -240,7 +240,7 @@
         ]
       },
       {
-        "name": "--dss-slide-item-right-bg",
+        "name": "--dss-feedback-info",
         "usedIn": [
           "default"
         ]

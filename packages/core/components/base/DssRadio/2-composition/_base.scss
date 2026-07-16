@@ -43,8 +43,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min); // 48px
-    min-height: var(--dss-touch-target-min); // 48px
+    min-width: var(--dss-touch-target-md); // 48px
+    min-height: var(--dss-touch-target-md); // 48px
     pointer-events: none; // Deixa cliques passarem para o input
   }
 }

@@ -335,13 +335,13 @@
         },
         {
           "property": "min-width",
-          "token": "--dss-touch-target-min",
+          "token": "--dss-touch-target-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "min-height",
-          "token": "--dss-touch-target-min",
+          "token": "--dss-touch-target-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1162,9 +1162,10 @@
         ]
       },
       {
-        "name": "--dss-touch-target-min",
+        "name": "--dss-touch-target-md",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -1399,12 +1400,6 @@
       },
       {
         "name": "--dss-text-body",
-        "usedIn": [
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-touch-target-md",
         "usedIn": [
           "defaultPreview"
         ]

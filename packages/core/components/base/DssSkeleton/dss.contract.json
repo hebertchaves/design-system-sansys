@@ -162,7 +162,7 @@
         },
         {
           "property": "border-radius",
-          "token": "--dss-skeleton-radius",
+          "token": "--dss-radius-sm",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -312,9 +312,10 @@
         ]
       },
       {
-        "name": "--dss-skeleton-radius",
+        "name": "--dss-radius-sm",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -380,12 +381,6 @@
       },
       {
         "name": "--dss-gray-300",
-        "usedIn": [
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-radius-sm",
         "usedIn": [
           "defaultPreview"
         ]

@@ -101,7 +101,7 @@
         },
         {
           "property": "line-height",
-          "token": "--dss-line-height-md",
+          "token": "--dss-line-height-normal",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -259,7 +259,7 @@
         ]
       },
       {
-        "name": "--dss-line-height-md",
+        "name": "--dss-line-height-normal",
         "usedIn": [
           "default"
         ]

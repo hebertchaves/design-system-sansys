@@ -11,7 +11,7 @@
 
 @media (prefers-color-scheme: dark) {
   .dss-chat-message--received .dss-chat-message__bubble {
-    background-color: var(--dss-surface-dark);
+    background-color: var(--dss-surface-default);
     color: var(--dss-text-inverse);
   }
 
@@ -27,7 +27,7 @@
 
 [data-theme='dark'] {
   .dss-chat-message--received .dss-chat-message__bubble {
-    background-color: var(--dss-surface-dark);
+    background-color: var(--dss-surface-default);
     color: var(--dss-text-inverse);
   }
 

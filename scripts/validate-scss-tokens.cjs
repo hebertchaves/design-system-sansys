@@ -63,12 +63,20 @@ for (const f of walkScss(COMPONENTS)) {
   const rel = path.relative(COMPONENTS, f).replace(/\\/g, '/');
   const comp = rel.split('/')[1] || rel;
   if (FIXTURES.has(comp)) continue;
-  const lines = fs.readFileSync(f, 'utf8').split('\n');
+  // Tira comentários de BLOCO no arquivo inteiro (preservando o nº de linha), pois
+  // um /* */ multi-linha não era pego pelo strip per-linha → falso-positivo (ex.:
+  // --dss-input-height-min citado num doc-comment do DssTextarea).
+  const raw = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, (s) => s.replace(/[^\n]/g, ' '));
+  const lines = raw.split('\n');
   lines.forEach((line, i) => {
-    const code = stripComments(line);
+    const code = line.replace(/\/\/[^\n]*/g, ''); // comentários de linha
     let m;
     const reRef = /var\(\s*(--dss-[a-z0-9-]+)/g;
     while ((m = reRef.exec(code))) {
+      // `var(--dss-X-#{...})`: o char após o token é `#` → prefixo de INTERPOLAÇÃO
+      // (resolve p/ tokens dinâmicos existentes, ex.: --dss-spacing-#{$size}), não
+      // é fantasma. (A interpolação de MARCA é checada no loop abaixo.)
+      if (code[m.index + m[0].length] === '#') continue;
       const tok = m[1];
       if (!defined.has(tok)) {
         if (!ghosts.has(tok)) ghosts.set(tok, []);
