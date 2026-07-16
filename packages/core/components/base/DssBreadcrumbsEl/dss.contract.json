@@ -1,0 +1,591 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssBreadcrumbsEl",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Breadcrumbs El",
+    "tagline": "Item individual (link) de uma trilha de navegação breadcrumb.",
+    "category": "Elemento de Trilha de Navegação (Breadcrumb Item)",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssButton",
+    "goldenContext": "DssBreadcrumbs"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-10",
+    "mode": "Selo DSS v2.2 Concedido",
+    "sealPath": "docs/Compliance/seals/DssBreadcrumbsEl/DSSBREADCRUMBSEL_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto do item de breadcrumb"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome do ícone Material Icons exibido antes do conteúdo"
+      },
+      {
+        "name": "to",
+        "type": "string | Record<string, unknown>",
+        "controlHint": "text",
+        "description": "Destino de roteamento Vue Router — torna o item clicável"
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "controlHint": "text",
+        "description": "URL externa — alternativa ao `to` para links externos"
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita a interação com o item"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Sobrescreve a tag HTML renderizada (padrão QBreadcrumbsEl: `a` quando clicável, `div` quando estático)"
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo personalizado do item."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "label": "Página"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "17px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-action",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "pointer",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-150",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-bold",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "VisitedText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "inherit",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "color",
+          "token": "--dss-text-action-hover",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "underline",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ActiveText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": null,
+          "value": "none",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-focus-shadow-primary",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-focus-duration",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "2px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-focus-ring-offset",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "color",
+          "token": "--dss-text-action-hover",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "underline",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ActiveText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-action",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-duration-150",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-bold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default",
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default",
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default",
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-text-action-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-focus-shadow-primary",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-duration",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-ring-offset",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-normal",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação para o destino operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "link",
+      "states": [
+        "aria-current"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "navegar para o destino"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssBreadcrumbsEl.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/breadcrumbs-el.types.ts",
+    "docs": {
+      "normative": "DssBreadcrumbsEl.md",
+      "api": "DSSBREADCRUMBSEL_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssBreadcrumbsEl.example.vue",
+    "tests": "DssBreadcrumbsEl.test.js",
+    "seal": "docs/Compliance/seals/DssBreadcrumbsEl/DSSBREADCRUMBSEL_SELO_v2.2.md"
+  }
+}

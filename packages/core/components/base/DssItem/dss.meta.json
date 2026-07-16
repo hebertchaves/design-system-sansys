@@ -1,7 +1,7 @@
 {
   "component": "DssItem",
   "version": "2.2.0",
-  "classification": "Elemento Estrutural Base dual-mode",
+  "classification": "Action",
   "category": "Layout/List",
   "phase": 1,
   "goldenReference": "DssChip",
@@ -121,5 +121,66 @@
     ]
   },
   "previewGroup": "listas",
-  "status": "conformant"
+  "status": "conformant",
+  "classificationNote": "Elemento Estrutural Base dual-mode",
+  "tagline": "Item de lista, opcionalmente clicável, com seções de conteúdo.",
+  "a11y": {
+    "aria": {
+      "role": "listitem",
+      "states": [
+        "aria-disabled",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ativar o item clicável"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ativação do item clicável operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "::before",
+          "property": "min-height"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome via label/aria-label; estado via aria-disabled.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,446 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssCircularProgress",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Circular Progress",
+    "tagline": "Indicador de progresso circular, determinado ou indeterminado.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssLinearProgress"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssCircularProgress/DSSCIRCULARPROGRESS_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "value",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Valor atual do progresso (min..max). Omitir + indeterminate ativa animação contínua."
+      },
+      {
+        "name": "min",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Valor mínimo. Padrão: 0."
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Valor máximo. Padrão: 100."
+      },
+      {
+        "name": "color",
+        "type": "CircularProgressColor",
+        "controlHint": "picker-color",
+        "description": "Cor semântica DSS do arco de progresso. Padrão: 'primary'.",
+        "validValues": [
+          "primary",
+          "secondary",
+          "error",
+          "success",
+          "warning",
+          "info"
+        ]
+      },
+      {
+        "name": "size",
+        "type": "CircularProgressSize",
+        "controlHint": "select",
+        "description": "Tamanho do componente via tokens DSS. Padrão: 'md'.",
+        "validValues": [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ]
+      },
+      {
+        "name": "brand",
+        "type": "CircularProgressBrand",
+        "controlHint": "picker-brand",
+        "description": "Contexto de brand Sansys.",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "indeterminate",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Força estado indeterminado (animação contínua)."
+      },
+      {
+        "name": "thickness",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Espessura do traço (0–1, relativo ao raio). Padrão: 0.2."
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Ângulo de início do arco em graus. Padrão: 0."
+      },
+      {
+        "name": "reverse",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Inverte a direção do preenchimento/animação."
+      },
+      {
+        "name": "instantFeedback",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Remove transição de valor (feedback imediato, sem animação de fill)."
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Reduz opacidade ao nível desabilitado (não interativo)."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo renderizado no centro do círculo (ex: rótulo de percentual, ícone)."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "value": 70,
+        "size": "md",
+        "color": "primary"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "56px"
+      },
+      "minWidth": {
+        "value": "56px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-action-secondary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-feedback-success",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-feedback-warning",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-feedback-info",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "stroke-opacity",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-iteration-count",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "stroke",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "stroke",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "stroke",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "stroke",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-warning",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-info",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Indicador de progresso circular; valor exposto via progressbar.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "progressbar",
+      "states": [
+        "aria-valuenow",
+        "aria-valuemin",
+        "aria-valuemax"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssCircularProgress.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_colors.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/circularprogress.types.ts",
+    "docs": {
+      "normative": "DssCircularProgress.md",
+      "api": "DSSCIRCULARPROGRESS_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssCircularProgress.example.vue",
+    "tests": "DssCircularProgress.test.js",
+    "seal": "docs/Compliance/seals/DssCircularProgress/DSSCIRCULARPROGRESS_SELO_v2.2.md"
+  }
+}

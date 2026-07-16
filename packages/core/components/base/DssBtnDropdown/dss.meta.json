@@ -11,7 +11,8 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente Composto. O DssBtnDropdown gerencia estado visual compartilhado entre trigger (botão) e painel (dropdown), coordenando posicionamento, animações e acessibilidade entre os dois elementos.",
   "hasReservations": true,
-  "classification": "Wrapper governado de QBtnDropdown — trigger + painel dropdown com estilos DSS",
+  "classification": "Action",
+  "classificationNote": "Wrapper governado de QBtnDropdown — trigger + painel dropdown com estilos DSS",
   "subcomponents": [],
   "compositionRequirements": [
     "DssButton",
@@ -281,5 +282,58 @@
       "--dss-waste-500"
     ]
   },
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "tagline": "Botão de ação com menu suspenso acoplado para opções relacionadas.",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-haspopup",
+        "aria-expanded",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ativar o botão / abrir o menu"
+      },
+      {
+        "key": "Space",
+        "action": "ativar o botão"
+      },
+      {
+        "key": "Escape",
+        "action": "fechar o menu"
+      },
+      {
+        "key": "ArrowDown",
+        "action": "abrir e navegar o menu"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Operável por teclado: ativação e navegação do menu suspenso.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome/estado expostos via aria-label, aria-haspopup e aria-expanded.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

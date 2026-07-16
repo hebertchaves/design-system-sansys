@@ -20,16 +20,16 @@
    MIXINS PARA EVITAR DUPLICACAO
    ========================================================================== */
 
-@mixin toggle-brand-colors($brand) {
+@mixin toggle-brand-colors() {
   /* Primary */
   &.dss-toggle--primary {
     .dss-toggle__track--checked {
-      background-color: var(--dss-#{$brand}-primary);
-      border-color: var(--dss-#{$brand}-primary);
-      color: var(--dss-#{$brand}-on-primary);
+      background-color: var(--dss-action-primary);
+      border-color: var(--dss-action-primary);
+      color: var(--dss-text-on-primary);
 
       .dss-toggle__thumb {
-        background-color: var(--dss-#{$brand}-on-primary);
+        background-color: var(--dss-text-on-primary);
       }
     }
   }
@@ -37,12 +37,12 @@
   /* Secondary */
   &.dss-toggle--secondary {
     .dss-toggle__track--checked {
-      background-color: var(--dss-#{$brand}-secondary);
-      border-color: var(--dss-#{$brand}-secondary);
-      color: var(--dss-#{$brand}-on-secondary);
+      background-color: var(--dss-action-secondary);
+      border-color: var(--dss-action-secondary);
+      color: var(--dss-text-on-primary);
 
       .dss-toggle__thumb {
-        background-color: var(--dss-#{$brand}-on-secondary);
+        background-color: var(--dss-text-on-primary);
       }
     }
   }
@@ -50,61 +50,25 @@
   /* Accent */
   &.dss-toggle--accent {
     .dss-toggle__track--checked {
-      background-color: var(--dss-#{$brand}-accent);
-      border-color: var(--dss-#{$brand}-accent);
-      color: var(--dss-#{$brand}-on-accent);
+      background-color: var(--dss-action-accent);
+      border-color: var(--dss-action-accent);
+      color: var(--dss-text-on-primary);
 
       .dss-toggle__thumb {
-        background-color: var(--dss-#{$brand}-on-accent);
+        background-color: var(--dss-text-on-primary);
       }
     }
   }
 }
 
 /* ==========================================================================
-   HUB BRAND
+   Aplicação (qualquer marca). O mixin virou brand-agnóstico (usa --dss-action-*,
+   que já resolve por marca), então os 3 blocos hub/water/waste eram idênticos →
+   colapsados em um único [data-brand]. Cenario 1 (contexto ancestral) + Cenario 2
+   (prop no próprio elemento).
    ========================================================================== */
 
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='hub'] {
-  .dss-toggle {
-    @include toggle-brand-colors(hub);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-toggle[data-brand='hub'] {
-  @include toggle-brand-colors(hub);
-}
-
-/* ==========================================================================
-   WATER BRAND
-   ========================================================================== */
-
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='water'] {
-  .dss-toggle {
-    @include toggle-brand-colors(water);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-toggle[data-brand='water'] {
-  @include toggle-brand-colors(water);
-}
-
-/* ==========================================================================
-   WASTE BRAND
-   ========================================================================== */
-
-/* Cenario 1: Brand via contexto (ancestral) */
-[data-brand='waste'] {
-  .dss-toggle {
-    @include toggle-brand-colors(waste);
-  }
-}
-
-/* Cenario 2: Brand via prop (mesmo elemento) */
-.dss-toggle[data-brand='waste'] {
-  @include toggle-brand-colors(waste);
+[data-brand] .dss-toggle,
+.dss-toggle[data-brand] {
+  @include toggle-brand-colors();
 }

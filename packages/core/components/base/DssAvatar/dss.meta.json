@@ -66,5 +66,30 @@
     "demoContent": "Iniciais 'AB'",
     "demoSlots": null
   },
-  "previewGroup": "indicadores"
+  "previewGroup": "indicadores",
+  "classification": "Visual",
+  "tagline": "Representação gráfica de um usuário ou entidade (imagem, ícone ou inicial).",
+  "a11y": {
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome acessível via aria-label/alt.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Imagem/inicial com alternativa textual via alt/aria-label.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

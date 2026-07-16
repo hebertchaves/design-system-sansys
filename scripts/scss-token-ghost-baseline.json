@@ -1,0 +1,4 @@
+{
+  "note": "Tokens --dss-* referenciados mas NÃO definidos (débito). Gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.",
+  "tokens": []
+}

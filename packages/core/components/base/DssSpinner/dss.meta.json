@@ -85,5 +85,31 @@
     "demoContent": "Spinner animado de carregamento",
     "demoSlots": null
   },
-  "previewGroup": "indicadores"
+  "previewGroup": "indicadores",
+  "classification": "Visual",
+  "tagline": "Indicador de carregamento animado para operações assíncronas.",
+  "a11y": {
+    "aria": {
+      "role": "status",
+      "states": [
+        "aria-label",
+        "aria-busy"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Indicador não-textual com alternativa textual via aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Papel status e nome acessível expostos via aria-label.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

@@ -1,0 +1,385 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssScrollArea",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Scroll Area",
+    "tagline": "Região rolável com barra de rolagem estilizada.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssVirtualScroll"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssScrollArea/DSSSCROLLAREA_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "visible",
+        "type": "'auto' | 'always' | 'never'",
+        "controlHint": "segmented",
+        "description": "Controls scrollbar visibility.",
+        "validValues": [
+          "auto",
+          "always",
+          "never"
+        ]
+      },
+      {
+        "name": "horizontal",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Enable horizontal scrolling in addition to vertical"
+      },
+      {
+        "name": "barDelay",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Delay in milliseconds before the scrollbar hides after scroll ends."
+      },
+      {
+        "name": "scrollTarget",
+        "type": "Element | string",
+        "controlHint": "text",
+        "description": "External element or CSS selector to use as scroll target."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Accessible label for the scroll region."
+      }
+    ],
+    "emits": [
+      {
+        "name": "scroll",
+        "payload": "ScrollPayload",
+        "description": "Emitted during scroll."
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Content to be scrolled"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "visible": "auto",
+        "horizontal": false,
+        "style": "height:100px;width:200px"
+      },
+      "slots": {
+        "default": [
+          {
+            "html": "<div style='height:80px;width:160px;padding:8px'>Conteúdo com scroll personalizado</div>"
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "200px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "min-height",
+          "token": "--dss-min-h-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-250",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "right",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "bottom",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-gray-400",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-gray-700",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "ScrollbarThumb",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "ScrollbarTrack",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "max-height",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background",
+          "token": "--dss-gray-500",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-gray-900",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-min-h-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-250",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-500",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-gray-900",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Região rolável com barra estilizada; preserva a rolagem nativa do conteúdo.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssScrollArea.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/scrollarea.types.ts",
+    "docs": {
+      "normative": "DssScrollArea.md",
+      "api": "DSSSCROLLAREA_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssScrollArea.example.vue",
+    "tests": "DssScrollArea.test.js",
+    "seal": "docs/Compliance/seals/DssScrollArea/DSSSCROLLAREA_SELO_v2.2.md"
+  }
+}

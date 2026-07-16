@@ -13,7 +13,7 @@
   "category": "Layout Global",
   "phase": 2,
   "phaseDescription": "Fase 2 — Nível 4 (Composição de Terceiro Grau). Container raiz da aplicação. Orquestra DssHeader (Nível 3), DssFooter (Nível 3) e DssDrawer (Nível 3) via slots. Gerencia a matemática de layout do Quasar (offsets de header/footer/drawer via provide/inject interno do QLayout).",
-  "classification": "Container estrutural raiz nao-interativo — wrapper DSS governado sobre QLayout",
+  "classification": "Visual",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
@@ -110,7 +110,9 @@
     }
   ],
   "defaultPreview": {
-    "props": { "style": "height:200px;position:relative;overflow:hidden;display:block" },
+    "props": {
+      "style": "height:200px;position:relative;overflow:hidden;display:block"
+    },
     "computedDimensions": {},
     "visualProperties": [
       {
@@ -131,13 +133,25 @@
       "default": [
         {
           "component": "DssHeader",
-          "props": { "elevated": true },
+          "props": {
+            "elevated": true
+          },
           "children": [
             {
               "component": "DssToolbar",
               "children": [
-                { "component": "DssToolbarTitle", "children": "Layout DSS" },
-                { "component": "DssButton", "props": { "flat": true, "icon": "menu", "dense": true } }
+                {
+                  "component": "DssToolbarTitle",
+                  "children": "Layout DSS"
+                },
+                {
+                  "component": "DssButton",
+                  "props": {
+                    "flat": true,
+                    "icon": "menu",
+                    "dense": true
+                  }
+                }
               ]
             }
           ]
@@ -147,9 +161,13 @@
           "children": [
             {
               "component": "DssPage",
-              "props": { "padding": true },
+              "props": {
+                "padding": true
+              },
               "children": [
-                { "html": "<p style='font-size:11px;margin:0;color:var(--dss-text-subtle)'>Conteúdo da página</p>" }
+                {
+                  "html": "<p style='font-size:11px;margin:0;color:var(--dss-text-subtle)'>Conteúdo da página</p>"
+                }
               ]
             }
           ]
@@ -160,7 +178,10 @@
             {
               "component": "DssToolbar",
               "children": [
-                { "component": "DssToolbarTitle", "children": "Footer" }
+                {
+                  "component": "DssToolbarTitle",
+                  "children": "Footer"
+                }
               ]
             }
           ]
@@ -168,5 +189,22 @@
       ]
     }
   },
-  "previewGroup": "layout"
+  "previewGroup": "layout",
+  "classificationNote": "Container estrutural raiz nao-interativo — wrapper DSS governado sobre QLayout",
+  "tagline": "Container raiz que organiza header, footer, drawer e page.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Container raiz que organiza os marcos de layout (header/footer/drawer/page).",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

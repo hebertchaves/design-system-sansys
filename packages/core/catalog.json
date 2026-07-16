@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-01",
+  "generated": "2026-07-13",
   "total": 90,
   "sealed": 88,
   "components": [
@@ -790,7 +790,7 @@
     {
       "component": "DssRadio",
       "dir": "packages/core/components/base/DssRadio",
-      "phase": "Fase 1",
+      "phase": 1,
       "category": "Compact Control interativo",
       "status": "approved",
       "sealDate": "2026-02-05",
@@ -1154,7 +1154,7 @@
     {
       "component": "DssToggle",
       "dir": "packages/core/components/base/DssToggle",
-      "phase": "1",
+      "phase": 1,
       "category": "Compact Control interativo",
       "status": "sealed",
       "sealDate": "2026-02-05",
@@ -1225,7 +1225,7 @@
       "component": "DssUploader",
       "dir": "packages/core/components/composed/DssUploader",
       "phase": 2,
-      "category": null,
+      "category": "Upload",
       "status": "sealed",
       "sealDate": null,
       "sealField": null,

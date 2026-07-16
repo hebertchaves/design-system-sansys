@@ -37,7 +37,7 @@
       "impact": "Baixo — fallback garante visual correto"
     }
   ],
-  "classification": "Container orquestrador de trilha de navegação — gerencia layout, gap e separadores para DssBreadcrumbsEl filhos",
+  "classification": "Visual",
   "subcomponents": [],
   "compositionRequirements": [
     "DssBreadcrumbsEl"
@@ -206,5 +206,34 @@
       ]
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "classificationNote": "Container orquestrador de trilha de navegação — gerencia layout, gap e separadores para DssBreadcrumbsEl filhos",
+  "tagline": "Trilha de navegação que mostra a localização atual na hierarquia.",
+  "a11y": {
+    "aria": {
+      "role": "navigation",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Trilha estruturada via role=navigation e lista de itens (DssBreadcrumbsEl).",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

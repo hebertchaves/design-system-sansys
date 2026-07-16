@@ -52,16 +52,16 @@
   /* Error state em dark mode */
   .dss-toggle--error {
     .dss-toggle__track {
-      border-color: var(--dss-error-400);
-      color: var(--dss-error-400);
+      border-color: var(--dss-feedback-error-light);
+      color: var(--dss-feedback-error-light);
     }
 
     .dss-toggle__label {
-      color: var(--dss-error-400);
+      color: var(--dss-feedback-error-light);
     }
 
     .dss-toggle__error {
-      color: var(--dss-error-400);
+      color: var(--dss-feedback-error-light);
     }
   }
 }

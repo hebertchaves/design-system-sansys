@@ -61,6 +61,17 @@ describe('DssFile', () => {
       expect(wrapper.text()).toContain('Anexar documento')
     })
 
+    // Regressão (adequação de UI): com um label em repouso (sem valor, sem foco),
+    // o label ocupa o centro do campo e o drop-hint NÃO deve renderizar — senão
+    // os dois se sobrepõem (bug flagrado pelo Preview Frame). Sem label, a dica
+    // aparece normalmente (coberto pelo teste "renders drop hint...").
+    it('hides drop hint at rest when a label is present (no overlap)', () => {
+      const wrapper = mount(DssFile, {
+        props: { modelValue: null, label: 'Anexar documento' }
+      })
+      expect(wrapper.find('.dss-file__drop-hint').exists()).toBe(false)
+    })
+
     describe('states', () => {
       it('applies disabled state', () => {
         const wrapper = mount(DssFile, {
@@ -98,12 +109,56 @@ describe('DssFile', () => {
         expect(wrapper.find('.dss-file__value').exists()).toBe(true)
       })
 
+      // Regressão (colisão de classe): o estado "tem valor" usa `--has-value`,
+      // NÃO `--filled` — que é a VARIANTE. Antes, um outlined COM arquivo ganhava
+      // `--filled` e herdava o visual da variante filled (borda vira só inferior).
+      it('outlined com valor usa --has-value e NÃO --filled (sem colisão de variante)', () => {
+        const file = new File(['content'], 'test.pdf', { type: 'application/pdf' })
+        const wrapper = mount(DssFile, {
+          props: { variant: 'outlined', modelValue: file }
+        })
+        const cls = wrapper.find('.dss-file').classes()
+        expect(cls).toContain('dss-file--outlined')
+        expect(cls).toContain('dss-file--has-value')
+        expect(cls).not.toContain('dss-file--filled')
+      })
+
       it('shows clear button when clearable=true and has value', () => {
         const file = new File(['content'], 'test.pdf', { type: 'application/pdf' })
         const wrapper = mount(DssFile, {
           props: { clearable: true, modelValue: file }
         })
         expect(wrapper.find('.dss-file__clear').exists()).toBe(true)
+      })
+
+      // Regressão (adequação de UI): o QFile é renderizado opacity:0 (overlay).
+      // O botão de limpar ficava DENTRO dele → invisível (opacity do pai zera os
+      // descendentes). Deve ser sibling do wrapper, fora do overlay.
+      it('renders clear button OUTSIDE the opacity:0 QFile overlay', () => {
+        const file = new File(['content'], 'test.pdf', { type: 'application/pdf' })
+        const wrapper = mount(DssFile, {
+          props: { clearable: true, modelValue: file }
+        })
+        const clear = wrapper.find('.dss-file__clear')
+        const qFile = wrapper.find('.dss-file__q-file')
+        expect(clear.exists()).toBe(true)
+        expect(qFile.element.contains(clear.element)).toBe(false)
+      })
+
+      // Regressão: prepend/append sofriam o MESMO vício do clear — renderizados
+      // dentro do QFile opacity:0 → invisíveis. Agora são filhos da linha visual.
+      it('renders prepend/append slots OUTSIDE the opacity:0 QFile overlay', () => {
+        const wrapper = mount(DssFile, {
+          props: { label: 'Anexo' },
+          slots: { prepend: '<i class="my-prep"></i>', append: '<i class="my-app"></i>' }
+        })
+        const qFile = wrapper.find('.dss-file__q-file')
+        const prep = wrapper.find('.dss-file__prepend')
+        const app = wrapper.find('.dss-file__append')
+        expect(prep.exists()).toBe(true)
+        expect(app.exists()).toBe(true)
+        expect(qFile.element.contains(prep.element)).toBe(false)
+        expect(qFile.element.contains(app.element)).toBe(false)
       })
 
       it('hides clear button when clearable=true but no value', () => {
@@ -167,10 +222,13 @@ describe('DssFile', () => {
       const wrapper = mount(DssFile, {
         props: { modelValue: null }
       })
-      const fieldArea = wrapper.find('.dss-file__field')
-      if (fieldArea.exists()) {
-        expect(fieldArea.attributes('aria-hidden')).toBe('true')
-      }
+      // A camada visual duplicada (.dss-file__control — que contém a dica de drop)
+      // é decorativa: o QFile já anuncia via aria-label, então ela leva aria-hidden.
+      // O wrapper .dss-file__field NÃO é aria-hidden — contém controles REAIS e
+      // visíveis (prepend/append/clear). Ver DssFile.ts.vue (adequação de UI).
+      const control = wrapper.find('.dss-file__control')
+      expect(control.exists()).toBe(true)
+      expect(control.attributes('aria-hidden')).toBe('true')
     })
 
     it('remove o foco por teclado quando disabled (contrato real do QFile)', () => {

@@ -12,7 +12,7 @@
   "category": "Container estrutural de layout de página — header fixo ao topo",
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural de Nível 3 (Composição de Segundo Grau). Orquestra DssToolbar (Nível 1). Wrapper DSS governado sobre QHeader. Bloco de construção base para DssLayout (futuro Nível 4).",
-  "classification": "Superfície e Layout — container estrutural não-interativo",
+  "classification": "Visual",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
@@ -216,5 +216,32 @@
     }
   },
   "previewGroup": "layout",
-  "sealDate": "2026-04-17"
+  "sealDate": "2026-04-17",
+  "classificationNote": "Superfície e Layout — container estrutural não-interativo",
+  "tagline": "Cabeçalho de layout ancorado ao topo da página.",
+  "a11y": {
+    "aria": {
+      "role": "banner",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Marco de cabeçalho (banner) da estrutura de página.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

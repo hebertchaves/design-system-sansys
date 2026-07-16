@@ -201,7 +201,7 @@ DssNomeComponente/
 | 12 | CSS como Fonte de Verdade | CSS → meta.json → DSS_REFERENCIA_VISUAL |
 | 13 | Cascade Layers | CSS de terceiros em `@layer` · DSS unlayered |
 
-### 4.4 CSS Cascade Layers (Princípio #13)
+### 4.4 CSS Cascade Layers (Constituição #3)
 ```
 Unlayered (DSS)       → VENCE TUDO (sem @layer)
 @layer quasar { }     → CSS do Quasar (contido, inofensivo)

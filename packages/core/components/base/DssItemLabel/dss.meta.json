@@ -13,7 +13,7 @@
   "category": "Container tipografico para itens de lista",
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente estrutural tipografico que governa a hierarquia de texto dentro de um DssItemSection. Gerencia os niveis semanticos de label (padrao), caption (secundario), header (cabecalho de grupo) e overline (categoria/metadado), sobrescrevendo a tipografia nativa do Quasar com tokens DSS.",
-  "classification": "Container tipografico nao-interativo — wrapper DSS sobre QItemLabel",
+  "classification": "Visual",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [
@@ -128,5 +128,32 @@
       "default": "Rótulo"
     }
   },
-  "previewGroup": "listas"
+  "previewGroup": "listas",
+  "classificationNote": "Container tipografico nao-interativo — wrapper DSS sobre QItemLabel",
+  "tagline": "Rótulo de texto (título, legenda ou overline) dentro de um DssItem.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Hierarquia de texto (header/caption/overline) preservada no conteúdo do item.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -9,8 +9,9 @@
   "goldenContext": "DssCheckbox",
   "goldenContextSecondary": "DssRadio",
   "category": "Compact Control interativo",
-  "phase": "1",
-  "classification": "Form / Selection",
+  "phase": 1,
+  "classification": "Action",
+  "classificationNote": "Form / Selection",
   "hasReservations": false,
   "defaultPreview": {
     "props": {
@@ -105,5 +106,55 @@
     "demoContent": "Label 'Ativar'",
     "demoSlots": null
   },
-  "previewGroup": "form-controles"
+  "previewGroup": "form-controles",
+  "tagline": "Interruptor para alternar um estado ligado/desligado.",
+  "a11y": {
+    "aria": {
+      "role": "switch",
+      "states": [
+        "aria-checked",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Space",
+        "action": "alternar o estado"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Alternância por Espaço com foco por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": "::before",
+          "property": "min-height"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Estado via aria-checked; nome via label/aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

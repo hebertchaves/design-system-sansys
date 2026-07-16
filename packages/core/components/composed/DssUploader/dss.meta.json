@@ -6,11 +6,20 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssCard",
-  "classification": {
-    "type": "Composite",
-    "category": "Upload",
-    "interactive": false,
-    "note": "Não interativo em sua raiz — interatividade pertence aos filhos DssButton"
+  "classification": "Visual",
+  "classificationNote": "AMBÍGUO (revisão humana): root não-interativo — interatividade pertence aos filhos DssButton → baldeado como 'Visual' (superfície/estrutural). Argumento para 'Action': o propósito é um fluxo interativo de upload. Objeto original preservado: { type: 'Composite', category: 'Upload', interactive: false }.",
+  "category": "Upload",
+  "tagline": "Área de upload que orquestra seleção, fila, progresso e envio de arquivos com identidade visual DSS.",
+  "a11y": {
+    "aria": { "role": "group", "states": ["aria-label", "aria-live", "aria-atomic"] },
+    "keyboard": [
+      { "key": "Tab", "action": "mover foco entre os botões de ação internos (Adicionar/Upload/Cancelar/Limpar/Remover)" }
+    ],
+    "wcag": [
+      { "criterion": "1.4.3", "level": "AA", "implementation": "Nome do arquivo (--dss-gray-800) sobre superfície clara atinge contraste AA (~15:1)", "verifiedBy": "css", "contrast": { "fg": "--dss-gray-800", "bg": "--dss-surface-default" } },
+      { "criterion": "4.1.2", "level": "A", "implementation": "Ações expõem nome acessível via aria-label (addAriaLabel/uploadAriaLabel/abortAriaLabel/clearAriaLabel); ícones de status com aria-label", "verifiedBy": "aria" },
+      { "criterion": "4.1.3", "level": "AA", "implementation": "Mudanças de status anunciadas por região role=status aria-live=polite aria-atomic (função announce)", "verifiedBy": "aria" }
+    ]
   },
   "phaseDescription": "Fase 2 — Nível 2 (Composição de Primeiro Grau). Orquestra DssButton, DssIcon e DssLinearProgress em uma interface unificada de upload.",
   "dependencies": [

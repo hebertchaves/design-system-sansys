@@ -1,0 +1,154 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPage",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Page",
+    "tagline": "Região de conteúdo principal da página dentro do layout.",
+    "category": "Layout Global — Container de conteúdo principal com min-height dinâmica",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssLayout"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-22",
+    "mode": "DSS Modo Auditor v2.5",
+    "sealPath": "docs/Compliance/seals/DssPage/DSSPAGE_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": [
+          {
+            "html": "<div style='padding:16px'>Conteúdo da página</div>"
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "padding",
+          "token": "--dss-container-padding",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "#fff",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "#000",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-container-padding",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Marco de conteúdo principal (main) da estrutura de página.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "main",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPage.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/page.types.ts",
+    "docs": {
+      "normative": "DssPage.md",
+      "api": "DSSPAGE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPage.example.vue",
+    "tests": "DssPage.test.js",
+    "seal": "docs/Compliance/seals/DssPage/DSSPAGE_SELO_v2.2.md"
+  }
+}

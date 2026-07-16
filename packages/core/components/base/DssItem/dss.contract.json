@@ -1,0 +1,1073 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssItem",
+  "version": "0",
+  "identity": {
+    "displayName": "Item",
+    "tagline": "Item de lista, opcionalmente clicável, com seções de conteúdo.",
+    "category": "Layout/List",
+    "classification": "Action",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssChip"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssItem/DSSITEM_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto principal do item"
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto secundario (subtitulo) abaixo do label"
+      },
+      {
+        "name": "clickable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Torna o item clicavel (adiciona hover, active, focus, touch target)"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Estado desabilitado (requer clickable)"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Estado ativo (destaque visual, requer clickable)"
+      },
+      {
+        "name": "density",
+        "type": "ItemDensity",
+        "controlHint": "segmented",
+        "description": "Densidade do item",
+        "validValues": [
+          "default",
+          "compact"
+        ]
+      },
+      {
+        "name": "color",
+        "type": "ItemColor | null",
+        "controlHint": "picker-color",
+        "description": "Cor semantica do texto do label",
+        "validValues": [
+          "primary",
+          "secondary",
+          "tertiary",
+          "accent",
+          "positive",
+          "negative",
+          "warning",
+          "info"
+        ]
+      },
+      {
+        "name": "inset",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Recuo do conteudo para alinhar com itens que possuem leading"
+      },
+      {
+        "name": "divider",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Mostra divider (borda inferior)"
+      },
+      {
+        "name": "brand",
+        "type": "ItemBrand | null",
+        "controlHint": "picker-brand",
+        "description": "Brand override (Hub, Water, Waste)",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Label de acessibilidade customizado para screen readers"
+      },
+      {
+        "name": "tabindex",
+        "type": "number | string | null",
+        "controlHint": "text",
+        "description": "Tabindex customizado (sobrescreve logica automatica)"
+      },
+      {
+        "name": "leadingDecorative",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Marca o conteudo do slot leading como decorativo (aria-hidden=\"true\")"
+      },
+      {
+        "name": "trailingDecorative",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Marca o conteudo do slot trailing como decorativo (aria-hidden=\"true\")"
+      }
+    ],
+    "emits": [
+      {
+        "name": "click",
+        "payload": "MouseEvent | KeyboardEvent",
+        "description": "Emitido quando o item e clicado (requer clickable=true)"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteudo principal do item (substitui label + caption)"
+      },
+      {
+        "name": "leading",
+        "scope": null,
+        "description": "Area esquerda do item (icone, avatar, checkbox, etc.)"
+      },
+      {
+        "name": "trailing",
+        "scope": null,
+        "description": "Area direita do item (icone, badge, toggle, etc.)"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": [
+          {
+            "component": "DssItemSection",
+            "children": [
+              {
+                "component": "DssItemLabel",
+                "children": "Rótulo do item"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-12",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-sizing",
+          "token": null,
+          "value": "border-box",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-150",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "ellipsis",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "inherit",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "pointer",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "50%",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "left",
+          "token": null,
+          "value": "50%",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translate(-50%, -50%)",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "100%",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "inset",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-active",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "align-self",
+          "token": null,
+          "value": "flex-start",
+          "source": "3-variants/_alignment.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "3-variants/_alignment.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-400",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-border-default",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "HighlightText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left",
+          "token": null,
+          "value": "3px solid HighlightText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-hover",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "HighlightText",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "outline-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "3px solid Highlight",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-active",
+          "value": null,
+          "source": "3-variants/_interactive.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_interactive.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-50",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "line-through",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-12",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-150",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-surface-active",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-400",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-opacity-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-opacity-active",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-opacity-50",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-surface-hover",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ativação do item clicável operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome via label/aria-label; estado via aria-disabled.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "listitem",
+      "states": [
+        "aria-disabled",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ativar o item clicável"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssItem.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_alignment.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/item.types.ts",
+    "docs": {
+      "normative": "DssItem.md",
+      "api": "DSSITEM_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssItem.example.vue",
+    "tests": "DssItem.test.js",
+    "seal": "docs/Compliance/seals/DssItem/DSSITEM_SELO_v2.2.md"
+  }
+}

@@ -37,7 +37,7 @@
    ========================================================================== */
 
 .dss-slide-item .q-slide-item__left {
-  background-color: var(--dss-slide-item-left-bg, var(--dss-feedback-error)) !important;
+  background-color: var(--dss-feedback-error) !important;
   color: var(--dss-text-inverse);
   display: flex;
   align-items: center;
@@ -46,7 +46,7 @@
 }
 
 .dss-slide-item .q-slide-item__right {
-  background-color: var(--dss-slide-item-right-bg, var(--dss-feedback-info)) !important;
+  background-color: var(--dss-feedback-info) !important;
   color: var(--dss-text-inverse);
   display: flex;
   align-items: center;

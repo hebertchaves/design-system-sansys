@@ -1,0 +1,3875 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssTabPanel",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Tab Panel",
+    "tagline": "Painel de conteúdo associado a uma aba dentro de DssTabPanels.",
+    "category": "Container de Conteúdo (Tab Panel)",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssCard",
+    "goldenContext": "DssTabs"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-09",
+    "mode": "Selo DSS v2.2 Concedido",
+    "sealPath": "docs/Compliance/seals/DssTabPanel/DSSTABPANEL_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "name",
+        "type": "string | number",
+        "controlHint": "text",
+        "required": true,
+        "description": "Identificador único do painel."
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Desabilita o painel, bloqueando interações com seu conteúdo."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo do painel de aba."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "name": "inicio"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "48px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-block",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "grid",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "visibility",
+          "token": null,
+          "value": "hidden",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "row",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "wrap",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "nowrap",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "flex-start",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "flex-end",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "space-between",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "space-around",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-6",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(1, minmax(0, 1fr))",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(2, minmax(0, 1fr))",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(3, minmax(0, 1fr))",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-1",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-3",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-6",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-8",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-padding-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-padding-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-padding-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-padding-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-margin-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-margin-1",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-margin-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-margin-3",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-margin-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-margin-6",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-margin-8",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "auto",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": "--dss-margin-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-right",
+          "token": "--dss-margin-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": "--dss-margin-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-right",
+          "token": "--dss-margin-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": "--dss-margin-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-right",
+          "token": "--dss-margin-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": null,
+          "value": "auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "margin-right",
+          "token": null,
+          "value": "auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-margin-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-margin-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-margin-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-margin-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-margin-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-margin-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": null,
+          "value": "auto",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": null,
+          "value": "auto",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-muted",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-disabled",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-action",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-action-hover",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-success",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-error",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-warning",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-info",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-brand-hub",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-brand-water",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-brand-waste",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-subtle",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-overlay",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-hover",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-active",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-selected",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-disabled",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-brand-subtle",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-brand-light",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-success-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-error-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-warning-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-info-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-primary-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-secondary-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-accent-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-dark-surface",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-base",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-2xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-3xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-4xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-light",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-normal",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-bold",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "left",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "right",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "justify",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-transform",
+          "token": null,
+          "value": "uppercase",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-transform",
+          "token": null,
+          "value": "lowercase",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-transform",
+          "token": null,
+          "value": "capitalize",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-transform",
+          "token": null,
+          "value": "none",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "underline",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "line-through",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "none",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-width",
+          "token": null,
+          "value": "0",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-width",
+          "token": null,
+          "value": "1px",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-width",
+          "token": null,
+          "value": "2px",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-style",
+          "token": null,
+          "value": "solid",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-style",
+          "token": null,
+          "value": "dashed",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-style",
+          "token": null,
+          "value": "dotted",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-style",
+          "token": null,
+          "value": "none",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-gray-100",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-gray-200",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-gray-300",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-gray-400",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-gray-500",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-primary",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-secondary",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-tertiary",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-success",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-error",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-warning",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-info",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-hub-500",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-water-500",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-waste-500",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-none",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-2xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-3xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-sm",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-md",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-lg",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-2xl",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-1",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-2",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-3",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-4",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-5",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-hub-md",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-water-md",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-waste-md",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-hover",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-focus",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-10",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-20",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-30",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-40",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-50",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-60",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-70",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-80",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-90",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-100",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-hover",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-active",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-min",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-touch-target-min",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-touch-spacing-min",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "50%",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "left",
+          "token": null,
+          "value": "50%",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translate(-50%, -50%)",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-touch-target-min",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-touch-target-min",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-ideal",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-touch-target-ideal",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-touch-target-ideal",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-touch-target-ideal",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "1px",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "1px",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "-1px",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "rect(0, 0, 0, 0)",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "0",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "pointer",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "wait",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "auto",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "auto",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "scroll",
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "static",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "fixed",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "sticky",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-0",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-10",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-20",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-30",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-40",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-50",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-auto",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-maximum",
+          "value": null,
+          "source": "_helpers.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-fast",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-base",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-slow",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.1s cubic-bezier(0.4, 0, 0.2, 1)",
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "border-top",
+          "token": "--dss-border-gray-300",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top",
+          "token": "--dss-border-primary",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top",
+          "token": "--dss-border-error",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top",
+          "token": "--dss-border-success",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-right",
+          "token": "--dss-border-gray-300",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-right",
+          "token": "--dss-border-primary",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-gray-300",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-primary",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-hub-500",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-water-500",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-waste-500",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-left",
+          "token": "--dss-border-gray-300",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-left",
+          "token": "--dss-border-primary",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-left",
+          "token": "--dss-border-accent",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-gray-400",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-negative",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-positive",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-width",
+          "token": null,
+          "value": "3px",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-width",
+          "token": null,
+          "value": "4px",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-left-radius",
+          "token": null,
+          "value": "0",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-right-radius",
+          "token": null,
+          "value": "0",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-left-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-right-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-left-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-right-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-left-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-top-right-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-left-radius",
+          "token": null,
+          "value": "0",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-right-radius",
+          "token": null,
+          "value": "0",
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-left-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-right-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-left-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-right-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-left-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "border-bottom-right-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-container-padding",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-container-padding",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "608px",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "960px",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "1280px",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "1600px",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "none",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-grid-gap-md",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(1, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(2, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(3, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(4, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(5, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(6, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(7, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(8, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(9, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(10, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(11, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(12, 1fr)",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "repeat(auto-fit, minmax(250px, 1fr))",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": null,
+          "value": "0",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-10",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-12",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-grid-gap-sm",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-grid-gap-lg",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-grid-gap-xl",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "row-reverse",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "flex-start",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "flex-end",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "space-evenly",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "stretch",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "baseline",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1 1 0%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 8.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "8.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 16.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "16.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 25%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "25%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 33.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "33.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 41.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "41.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 50%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "50%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 58.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "58.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 66.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "66.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 75%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "75%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 83.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "83.3333333333%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 91.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "91.6666666667%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 100%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "100%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "aspect-ratio",
+          "token": null,
+          "value": "1/1",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "aspect-ratio",
+          "token": null,
+          "value": "16/9",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "aspect-ratio",
+          "token": null,
+          "value": "3/4",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "aspect-ratio",
+          "token": null,
+          "value": "21/9",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "aspect-ratio",
+          "token": null,
+          "value": "auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "object-fit",
+          "token": null,
+          "value": "cover",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "object-fit",
+          "token": null,
+          "value": "contain",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "object-fit",
+          "token": null,
+          "value": "fill",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "object-fit",
+          "token": null,
+          "value": "none",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "object-fit",
+          "token": null,
+          "value": "scale-down",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100vw",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "min-content",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "max-content",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "fit-content",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "100%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "100vh",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "min-content",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "max-content",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "fit-content",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "100%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "100vw",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "100vw",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "65ch",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-width",
+          "token": "--dss-layout-content-max-width",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "0",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "100%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "100vh",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-height",
+          "token": null,
+          "value": "100%",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "max-height",
+          "token": null,
+          "value": "100vh",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "inset",
+          "token": null,
+          "value": "0",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "inset",
+          "token": null,
+          "value": "auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "0",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "10",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "20",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "30",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "40",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "50",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1 1 auto",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-12",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-16",
+          "value": null,
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background",
+          "token": "--dss-primary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-secondary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-tertiary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-accent-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-positive-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-negative-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-warning-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-info-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-primary-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-primary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-secondary-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-secondary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-tertiary-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-tertiary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-accent-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-accent-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-positive-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-positive-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-negative-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-negative-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-warning-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-warning-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-info-light",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-info-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": null,
+          "value": "none",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-focus-shadow-primary",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-focus-duration",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-focus-shadow-error",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "static",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "auto",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "auto",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "auto",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "normal",
+          "source": "_mixins.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "transform",
+          "token": null,
+          "value": "scale(0.98)",
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-primary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-secondary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-tertiary-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-accent-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-positive-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-negative-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-warning-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-info-hover",
+          "value": null,
+          "source": "_colors-hover.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "border",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "_border-helpers.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "elevation",
+      "motion",
+      "other",
+      "spacing",
+      "typography",
+      "z-index"
+    ],
+    "instances": [
+      {
+        "name": "--dss-gap-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gap-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gap-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gap-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-margin-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-margin-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-margin-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-margin-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-margin-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-margin-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-margin-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-muted",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-disabled",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-action",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-action-hover",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-success",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-warning",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-info",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-brand-hub",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-brand-water",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-brand-waste",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-surface-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-overlay",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-hover",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-active",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-selected",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-disabled",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-brand-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-brand-light",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-warning-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-info-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-secondary-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-tertiary-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-accent-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-dark-surface",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-base",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-2xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-3xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-4xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-light",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-bold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-gray-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-gray-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-gray-300",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-gray-400",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-gray-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-tertiary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-success",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-warning",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-info",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-hub-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-waste-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-none",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-2xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-3xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-2xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-hub-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-water-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-waste-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-hover",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-focus",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-10",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-20",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-30",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-40",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-60",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-70",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-80",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-90",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "default",
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-opacity-hover",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-active",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-min",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-spacing-min",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-ideal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-10",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-20",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-30",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-40",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-auto",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-maximum",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-fast",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-base",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-slow",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-accent",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-negative",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-positive",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default",
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-container-padding",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-grid-gap-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-10",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-12",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-grid-gap-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-grid-gap-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-grid-gap-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-layout-content-max-width",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-16",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-primary-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-secondary-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-tertiary-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-accent-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-positive-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-negative-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-warning-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-info-hover",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-primary-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-secondary-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-tertiary-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-accent-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-positive-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-negative-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-warning-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-info-light",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-focus-shadow-primary",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-duration",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-shadow-error",
+        "usedIn": [
+          "focus"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Painel associado à aba correspondente via role=tabpanel.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "tabpanel",
+      "states": [
+        "aria-labelledby"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssTabPanel.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/tab-panel.types.ts",
+    "docs": {
+      "normative": "DssTabPanel.md",
+      "api": "DSSTABPANEL_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssTabPanel.example.vue",
+    "tests": "DssTabPanel.test.js",
+    "seal": "docs/Compliance/seals/DssTabPanel/DSSTABPANEL_SELO_v2.2.md"
+  }
+}

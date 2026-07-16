@@ -1,0 +1,331 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssInfiniteScroll",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Infinite Scroll",
+    "tagline": "Carrega conteúdo incremental automaticamente ao rolar a região.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssVirtualScroll"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssInfiniteScroll/DSSINFINITESCROLL_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "offset",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Offset em pixels a partir do fundo do container para acionar o carregamento"
+      },
+      {
+        "name": "debounce",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Debounce em milissegundos para o evento de scroll"
+      },
+      {
+        "name": "initialIndex",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Índice inicial de paginação passado para o primeiro evento @load"
+      },
+      {
+        "name": "scrollTarget",
+        "type": "string | Element | null",
+        "controlHint": "text",
+        "description": "Seletor CSS ou referência DOM para o container de scroll pai"
+      },
+      {
+        "name": "reverse",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Modo reverso: carrega ao atingir o topo (ex: chats, feeds de mensagens)"
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita a detecção de scroll e o acionamento de @load"
+      }
+    ],
+    "emits": [
+      {
+        "name": "load",
+        "payload": "number",
+        "description": "Disparado quando o componente precisa carregar mais conteúdo."
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo da lista que cresce a cada carregamento"
+      },
+      {
+        "name": "loading",
+        "scope": null,
+        "description": "Indicador de carregamento customizado (padrão: DssSpinner)"
+      },
+      {
+        "name": "no-more",
+        "scope": null,
+        "description": "Mensagem exibida quando done(true) é chamado — não há mais itens"
+      }
+    ],
+    "exposedRefs": [
+      {
+        "name": "poll",
+        "type": "() => void",
+        "description": "Verifica posição de scroll e carrega mais se necessário"
+      },
+      {
+        "name": "trigger",
+        "type": "() => void",
+        "description": "Força carregamento independente da posição de scroll"
+      },
+      {
+        "name": "reset",
+        "type": "() => void",
+        "description": "Reseta o índice para 0 e reativa o carregamento"
+      },
+      {
+        "name": "stop",
+        "type": "() => void",
+        "description": "Para o funcionamento do infinite scroll"
+      },
+      {
+        "name": "resume",
+        "type": "() => void",
+        "description": "Retoma o funcionamento e verifica posição"
+      },
+      {
+        "name": "setIndex",
+        "type": "(index: number) => void",
+        "description": "Define o índice de paginação manualmente"
+      },
+      {
+        "name": "isLoading",
+        "type": "Readonly<boolean>",
+        "description": "Estado reativo: carregamento em progresso"
+      },
+      {
+        "name": "noMore",
+        "type": "Readonly<boolean>",
+        "description": "Estado reativo: sem mais itens para carregar"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "offset": 500,
+        "debounce": 100
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Carrega conteúdo incremental ao rolar; comportamento sem semântica visual própria.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssInfiniteScroll.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/infinitescroll.types.ts",
+    "docs": {
+      "normative": "DssInfiniteScroll.md",
+      "api": "DSSINFINITESCROLL_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssInfiniteScroll.example.vue",
+    "tests": "DssInfiniteScroll.test.js",
+    "seal": "docs/Compliance/seals/DssInfiniteScroll/DSSINFINITESCROLL_SELO_v2.2.md"
+  }
+}

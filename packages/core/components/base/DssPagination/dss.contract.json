@@ -1,0 +1,594 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPagination",
+  "version": "0",
+  "identity": {
+    "displayName": "Pagination",
+    "tagline": "Navegação entre páginas de um conjunto de dados paginado.",
+    "category": "Navegação Estrutural",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssBtnGroup"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssPagination/DSSPAGINATION_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "number",
+        "controlHint": "stepper",
+        "required": true
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "controlHint": "stepper",
+        "required": true
+      },
+      {
+        "name": "maxPages",
+        "type": "number",
+        "controlHint": "stepper"
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "size",
+        "type": "DssPaginationSize",
+        "controlHint": "segmented",
+        "validValues": [
+          "xs",
+          "sm",
+          "md",
+          "lg"
+        ]
+      },
+      {
+        "name": "ellipses",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "boundaryLinks",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "directionLinks",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "flat",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "outline",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "round",
+        "type": "boolean",
+        "controlHint": "toggle"
+      },
+      {
+        "name": "brand",
+        "type": "DssBrand",
+        "controlHint": "picker-brand",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text"
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "number"
+      }
+    ],
+    "slots": [],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "modelValue": 1,
+        "max": 10
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-compact-control-height-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-150",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-primary",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-compact-control-height-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-compact-control-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-compact-control-height-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-bold",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": null,
+          "value": "none",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-focus-shadow-primary",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-focus-duration",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "_mixins.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-gap-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-150",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-bold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-focus-shadow-primary",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-duration",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-surface-hover",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação entre páginas operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome via aria-label; página atual via aria-current.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "navigation",
+      "states": [
+        "aria-label",
+        "aria-current"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ir para a página focada"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "avançar de página"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "voltar de página"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssButton",
+      "DssIcon"
+    ],
+    "quasar": [
+      "QPagination"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPagination.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/pagination.types.ts",
+    "docs": {
+      "normative": "DssPagination.md",
+      "api": "DSSPAGINATION_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPagination.example.vue",
+    "tests": "DssPagination.test.js",
+    "seal": "docs/Compliance/seals/DssPagination/DSSPAGINATION_SELO_v2.2.md"
+  }
+}

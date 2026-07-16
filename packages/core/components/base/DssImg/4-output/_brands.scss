@@ -1,36 +1,15 @@
 // =============================================================================
 // DssImg — LAYER 4: OUTPUT — Brands
 //
-// Brandability: Hub (laranja), Water (azul), Waste (verde).
+// Brandability: aplica-se ao ícone de erro (falha de carregamento).
 //
-// NOTA: DssImg é um container de mídia não interativo.
-//   Brand theming aplica-se ao ícone de erro, refletindo a identidade visual
-//   da marca no estado de falha de carregamento.
-//   O DssSpinner de loading é gerenciado pelo DssSpinner filho com sua
-//   própria brandabilidade via currentColor.
-//
-// PADRÃO: [data-brand] ancestral com descendant selector (com espaço).
-// TOKENS: --dss-action-{brand} para cor do ícone de erro.
-//
+// COLAPSADO: os 3 blocos por-marca eram IDÊNTICOS (todos --dss-action-primary,
+// que já é brand-aware). Um único [data-brand] tem o mesmo alcance (só em
+// contexto de marca; default segue neutro), sem repetir 3×.
 // =============================================================================
 
-// HUB BRAND (Laranja)
-[data-brand="hub"] .dss-img {
+[data-brand] .dss-img {
   .dss-img__error {
-    color: var(--dss-action-hub);
-  }
-}
-
-// WATER BRAND (Azul)
-[data-brand="water"] .dss-img {
-  .dss-img__error {
-    color: var(--dss-action-water);
-  }
-}
-
-// WASTE BRAND (Verde)
-[data-brand="waste"] .dss-img {
-  .dss-img__error {
-    color: var(--dss-action-waste);
+    color: var(--dss-action-primary);
   }
 }

@@ -15,7 +15,7 @@ para que um componente tenha **o mesmo aspecto visual** independente de quem mon
 (humano ou agente de IA). Este blueprint é o passo "deixar claro onde chegar" da amarração total.
 
 A divergência de produção **nunca entra pelo componente** (mesmas props + mesma versão = pixels
-idênticos — Princípios #1/#12). Ela entra pela **camada de consumo**: override local, Quasar cru,
+idênticos — Constituição #1/#6). Ela entra pela **camada de consumo**: override local, Quasar cru,
 slot off-token, ou — o caso do portal — **reimplementação** do componente em vez de consumo do real.
 
 ---
@@ -35,7 +35,7 @@ Regra de ouro: **todos consomem a MESMA fonte de verdade e conversam entre si.**
 
 ```
 FONTE DE VERDADE (dono ÚNICO por eixo)
-  visual  →  CSS / SCSS L1–L4         (Princípio #12: CSS é supremo)
+  visual  →  CSS / SCSS L1–L4         (Constituição #6: CSS é supremo)
   API     →  types/*.types.ts          (nome, tipo, default, emits, slots)
   prosa   →  README.md (uso) + Dss<Nome>.md (normativo)
   selo    →  docs/Compliance/seals/*
@@ -61,7 +61,7 @@ FONTE DE VERDADE (dono ÚNICO por eixo)
 `dss.contract.json` **não substitui** os donos por eixo. É o **agregado derivado** deles,
 produzido por um gate que lê os donos reais (CSS→meta, `types.ts`, headings de prosa, selos).
 Um contrato autorado à mão apenas moveria a fábrica de drift um nível acima.
-- Cadeia do Princípio #12 (CSS → meta) permanece **intacta**.
+- Cadeia da Constituição #6 (CSS → meta) permanece **intacta**.
 - O contrato vira a **superfície única de leitura** de playground e portal — eles param de inferir.
 - Resolve o tie-breaker (cada dado tem 1 dono por eixo; não há "meta vs `.md`" competindo).
 
@@ -394,7 +394,16 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
    precisa no `meta` para emitir contrato completo): `classification` + `tagline` + bloco `a11y` (claims
    com `verifiedBy`). Riscos p/ escala: trio de overlays no iframe; parser de `displayName` com siglas
    (`DssSPCReport`) + override; `tokens[]` legado em migração de 2 fases.
-4. **Preview Frame** (iframe: entry + `postMessage` de tema/brand + conter overlays) + snippet dos knobs.
+   **✅ Gate LIGADO (item d):** `emit-contract.mjs --all/--strict` + npm `contracts:emit`/`contracts:gate`;
+   **pre-commit** re-emite+valida+re-stage os componentes afetados que JÁ têm contrato (schema/emissor
+   alterado → re-emite todos); **GitLab CI** job `contracts:gate`. Rollout **incremental** (um componente
+   entra no gate quando ganha seu `dss.contract.json`). Bloqueia contrato inválido OU âncora a11y reprovada.
+4. ✅ **Preview Frame** (`apps/sandbox/src/preview/`) — iframe + `postMessage` + snippet dos knobs.
+   **Overlay containment PROVADO no fluxo real** com **DssSelect**: ao abrir o dropdown, o QMenu
+   teleporta **DENTRO** do iframe (`menusInIframeDoc=1`, `menusInMainDoc=0`, ancorado no body do iframe).
+   2º componente emitido (DssSelect: 24 props, 55 tokens, a11y 4/4). Refinos do emissor: `status`
+   **deriva do selo físico** (F1; enum +`sealed`); `tokens` defensivos (extrai só `--dss-*`, ignora lixo
+   no campo `token` do meta); `postMessage` serializa payload (arrays reativos do Vue → dado plano).
 5. Gates de prosa (verificação a11y/anti-patterns) + higiene (CRLF→LF, casing, `types→controls JSON`).
 6. Governança escrita (I/J/L) + **reconciliação da spec com D4** (feita, v2.5) + backfill verificável (K).
 
@@ -407,6 +416,6 @@ explorador exaustivo-fiel (4b) sobre o SFC real; o snippet vem da configuração
 
 - `docs/specs/COMPONENT_PAGE_STRUCTURE.md` v2.4 — contrato de derivação das 11 seções (downstream desta cadeia).
 - `docs/governance/PROMPT_DIRECIONADOR_CONSOLIDACAO_SANDBOX_ISOLAMENTO.md` — origem do spike de isolamento.
-- `CLAUDE.md` — Princípios #1 (Token First), #12 (CSS fonte de verdade), #13 (Cascade Layers), #14 (Composição de Ícone).
+- `CLAUDE.md` — Token First (Constituição #1), CSS fonte de verdade (Constituição #6), Cascade Layers (Constituição #3), Composição de Ícone (Cartão Base).
 - Spike de isolamento (2026-06-29): veredito iframe > shadow DOM (overlays teleportados).
 - POC DssInput (2026-06-29): derivação validada; achados de gap que alimentam §6.

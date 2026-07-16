@@ -1,0 +1,963 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssRange",
+  "version": "2.2.0",
+  "identity": {
+    "displayName": "Range",
+    "tagline": "Controle deslizante de intervalo com dois valores (mínimo e máximo).",
+    "category": "Action Control interativo — seleção de intervalo numérico",
+    "classification": "Action",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssSlider",
+    "goldenContext": "DssInput"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-03-23",
+    "mode": "full",
+    "sealPath": "docs/Compliance/seals/DssRange/DSSRANGE_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "RangeValue",
+        "controlHint": "text",
+        "required": true,
+        "description": "Valor atual do range (v-model). Obrigatório."
+      },
+      {
+        "name": "min",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "0",
+        "description": "Valor mínimo permitido. @default 0"
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "100",
+        "description": "Valor máximo permitido. @default 100"
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "1",
+        "description": "Incremento do passo. @default 1"
+      },
+      {
+        "name": "label",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Exibe tooltip flutuante com valor durante o drag. @default false"
+      },
+      {
+        "name": "markers",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Exibe marcações de passo no track. @default false"
+      },
+      {
+        "name": "dragRange",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Permite arrastar o intervalo inteiro (não apenas os thumbs individuais)."
+      },
+      {
+        "name": "dense",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Modo compacto — reduz touch target para --dss-touch-target-sm (36px). @default false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Desabilita toda interação. @default false"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Modo somente leitura — exibe o valor, mas não permite interação."
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Ativa estado de erro. Exibe errorMessage quando fornecido. @default false"
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "controlHint": "text",
+        "default": "",
+        "description": "Mensagem de erro exibida abaixo do range quando error=true. @default ''"
+      },
+      {
+        "name": "hint",
+        "type": "string",
+        "controlHint": "text",
+        "default": "",
+        "description": "Texto de ajuda exibido abaixo do range quando não há erro ativo. @default ''"
+      },
+      {
+        "name": "brand",
+        "type": "'hub' | 'water' | 'waste' | null",
+        "controlHint": "segmented",
+        "default": "null",
+        "description": "Contexto de brand do produto.",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "tabindex",
+        "type": "number | string | null",
+        "controlHint": "text",
+        "default": "null",
+        "description": "Tabindex customizado."
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Rótulo para leitores de tela (WCAG 1.3.1)."
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "RangeValue",
+        "description": "Emitido continuamente durante o drag dos thumbs (v-model)."
+      },
+      {
+        "name": "change",
+        "payload": "RangeValue",
+        "description": "Emitido quando o usuário solta o thumb (commit final)."
+      }
+    ],
+    "slots": [],
+    "exposedRefs": [
+      {
+        "name": "focus",
+        "type": "() => void",
+        "description": "Foca o componente programaticamente."
+      },
+      {
+        "name": "blur",
+        "type": "() => void",
+        "description": "Remove o foco do componente programaticamente."
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "min": 0,
+        "max": 100,
+        "modelValue": {
+          "min": 25,
+          "max": 75
+        },
+        "aria-label": "Seleção de intervalo"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      },
+      "minWidth": {
+        "value": "200px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-min-w-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-track-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-thumb-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-thumb-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "fill",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-focus",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "left",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translate(-50%, -50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-text-inverse",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-secondary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "grab",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "fill",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-hint",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "filter",
+          "token": null,
+          "value": "saturate(1.2)",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "filter",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-700",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "fill",
+          "token": "--dss-gray-900",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "2px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "fill",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "3px solid Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "fill",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-focus-ring-width",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "filter",
+          "token": null,
+          "value": "brightness(0.95)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "filter",
+          "token": null,
+          "value": "brightness(1.1)",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "grabbing",
+          "source": "2-composition/_base.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-400",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "fill",
+          "token": "--dss-gray-400",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "fill",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "elevation",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-min-w-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-track-height-sm",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-thumb-size-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-shadow-focus",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-hint",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-900",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-focus-ring-width",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-surface-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-elevation-1",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ajuste de ambas as alças operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Valores expostos via aria-valuenow; nome via aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-valuenow",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowRight",
+        "action": "aumentar o valor da alça focada"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "diminuir o valor da alça focada"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssRange.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/range.types.ts",
+    "docs": {
+      "normative": "DssRange.md",
+      "api": "DSSRANGE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssRange.example.vue",
+    "tests": "DssRange.test.js",
+    "seal": "docs/Compliance/seals/DssRange/DSSRANGE_SELO_v2.2.md"
+  }
+}

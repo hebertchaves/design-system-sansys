@@ -1,0 +1,139 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPageContainer",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Page Container",
+    "tagline": "Wrapper que aplica offsets de layout à região de página.",
+    "category": "Layout Global — Container de página com offset automático",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssLayout"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-22",
+    "mode": "DSS Modo Auditor v2.5",
+    "sealPath": "docs/Compliance/seals/DssPageContainer/DSSPAGECONTAINER_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo da página. Destinado exclusivamente a DssPage."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": [
+          {
+            "html": "<div style='padding:8px'>Container com offset automático</div>"
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "#fff",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "#000",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [],
+    "instances": []
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Aplica offsets de header/footer/drawer à região de página.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPageContainer.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/page-container.types.ts",
+    "docs": {
+      "normative": "DssPageContainer.md",
+      "api": "DSSPAGECONTAINER_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPageContainer.example.vue",
+    "tests": "DssPageContainer.test.js",
+    "seal": "docs/Compliance/seals/DssPageContainer/DSSPAGECONTAINER_SELO_v2.2.md"
+  }
+}

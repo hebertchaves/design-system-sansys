@@ -11,7 +11,8 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente Composto. O DssBtnToggle gerencia estado de seleção (v-model) entre múltiplas opções renderizadas internamente pelo QBtnToggle como botões de rádio visuais.",
   "hasReservations": true,
-  "classification": "Wrapper governado de QBtnToggle — container de seleção exclusiva com estilos DSS",
+  "classification": "Action",
+  "classificationNote": "Wrapper governado de QBtnToggle — container de seleção exclusiva com estilos DSS",
   "subcomponents": [],
   "compositionRequirements": [],
   "compositionNote": "DssBtnToggle envolve QBtnToggle diretamente. Os botões internos são renderizados pelo Quasar via prop `options`. Não usa DssButton como filho explícito — diferença fundamental vs. DssBtnGroup que aceita DssButton via <slot>.",
@@ -220,5 +221,53 @@
       "blocking": false
     }
   ],
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "tagline": "Conjunto de botões mutuamente exclusivos para alternar entre opções.",
+  "a11y": {
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-pressed",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "selecionar a opção focada"
+      },
+      {
+        "key": "Space",
+        "action": "selecionar a opção focada"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "mover para a próxima opção"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Seleção e navegação entre opções operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Estado de seleção exposto via aria-pressed.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

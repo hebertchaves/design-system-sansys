@@ -1,0 +1,413 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssBar",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Bar",
+    "tagline": "Barra fina de sistema ou status posicionada em uma borda da tela.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssToolbar"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssBar/DSSBAR_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "dense",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Modo compacto — reduz a altura e o padding interno (delegado ao QBar)"
+      },
+      {
+        "name": "elevated",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Adiciona sombra de elevação à barra"
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo da barra — DssButton, DssIcon, títulos, espaçadores, etc."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "rounded": true
+      },
+      "slots": {
+        "default": "Barra com conteúdo do sistema"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-sm",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-md",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "elevation",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-padding-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gap-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-elevation-1",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Barra de sistema/status; provê contexto estrutural.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssBar.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/bar.types.ts",
+    "docs": {
+      "normative": "DssBar.md",
+      "api": "DSSBAR_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssBar.example.vue",
+    "tests": "DssBar.test.js",
+    "seal": "docs/Compliance/seals/DssBar/DSSBAR_SELO_v2.2.md"
+  }
+}

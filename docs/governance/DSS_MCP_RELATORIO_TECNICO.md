@@ -37,9 +37,9 @@ A ferramenta `validate_component_code` analisa estaticamente o SCSS e Vue de qua
 
 | Violação | Regra DSS | Impacto sem MCP |
 |---|---|---|
-| Cor hexadecimal hardcoded | Princípio #1 Token First | NC detectada só na auditoria |
+| Cor hexadecimal hardcoded | Token First (Constituição #1) | NC detectada só na auditoria |
 | `:deep()` / `::v-deep` | Gate de Composição v2.4 | Retrabalho de SCSS completo |
-| Token de componente específico | Princípio #6 | Refatoração de token naming |
+| Token de componente específico | Cartão Base — alturas genéricas / Token First | Refatoração de token naming |
 | Camada arquitetural ausente | 4-Layer Architecture | Bloqueio no Gate Estrutural |
 | `dss.meta.json` ausente | Governança | Inelegível para selo |
 

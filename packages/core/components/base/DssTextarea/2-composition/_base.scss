@@ -88,7 +88,7 @@
        É uma CSS custom property de bridge para a prop maxHeight.
        Definida inline pelo componente quando a prop é fornecida.
        Fallback: none (sem limite de altura). */
-    max-height: var(--dss-textarea-max-height, none);
+    max-height: none;
     overflow-y: auto;
 
     /* resize desabilitado: autogrow controla o tamanho;

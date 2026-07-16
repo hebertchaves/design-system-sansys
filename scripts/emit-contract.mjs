@@ -38,12 +38,32 @@ const BASE_DIRS = ['packages/core/components/base', 'packages/core/components/co
 const read = f => fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null
 const exists = f => fs.existsSync(f)
 
+// Coage phase (que driftou: pode vir "1", "Fase 1", 1) para inteiro; default 1.
+function coercePhase(v) {
+  if (typeof v === 'number' && Number.isInteger(v)) return v
+  const m = String(v ?? '').match(/\d+/)
+  return m ? parseInt(m[0], 10) : 1
+}
+
 function findCompDir(name) {
   for (const base of BASE_DIRS) {
     const d = path.join(base, name)
     if (fs.existsSync(d)) return d
   }
   return null
+}
+
+// Rollout incremental: o gate só enforça componentes que JÁ têm dss.contract.json
+// (à medida que o backfill escala, cada componente entra no gate automaticamente).
+function findComponentsWithContract() {
+  const out = []
+  for (const base of BASE_DIRS) {
+    if (!fs.existsSync(base)) continue
+    for (const e of fs.readdirSync(base, { withFileTypes: true })) {
+      if (e.isDirectory() && exists(path.join(base, e.name, 'dss.contract.json'))) out.push(e.name)
+    }
+  }
+  return out.sort()
 }
 
 // ── API ← types.ts (TS compiler) ─────────────────────────────────────────────
@@ -161,9 +181,18 @@ function tokenCategory(name) {
 }
 function buildTokens(states, meta) {
   const inst = new Map()
-  const add = (tok, where) => { if (!tok) return; const e = inst.get(tok) || { name: tok, usedIn: new Set() }; e.usedIn.add(where); inst.set(tok, e) }
-  for (const [st, arr] of Object.entries(states || {})) for (const p of arr) add(p.token, st)
-  for (const vp of meta?.defaultPreview?.visualProperties || []) add(vp.token, 'defaultPreview')
+  // Defensivo: extrai APENAS tokens --dss-* de qualquer string (ignora lixo
+  // como descrições no campo `token` do meta; lida com compostos "--dss-a / --dss-b").
+  const addFrom = (str, where) => {
+    if (!str) return
+    for (const m of String(str).matchAll(/--dss-[\w-]+/g)) {
+      const tok = m[0]
+      const e = inst.get(tok) || { name: tok, usedIn: new Set() }
+      e.usedIn.add(where); inst.set(tok, e)
+    }
+  }
+  for (const [st, arr] of Object.entries(states || {})) for (const p of arr) addFrom(p.token, st)
+  for (const vp of meta?.defaultPreview?.visualProperties || []) addFrom(vp.token, 'defaultPreview')
   const instances = [...inst.values()].map(e => ({ name: e.name, usedIn: [...e.usedIn] }))
   const categories = [...new Set(instances.map(i => tokenCategory(i.name)))].sort()
   return { categories, instances }
@@ -229,6 +258,17 @@ function deriveDisplayName(name, meta) {
   return name.replace(/^Dss/, '').replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
 }
 
+// status DERIVADO: selo físico é a verdade (F1) → 'sealed'; senão normaliza meta.status
+// (que driftou: sealed/conformant/resolvida/approved/review/pendente).
+const STATUS_MAP = {
+  approved: 'approved', conformant: 'approved', resolvida: 'approved', sealed: 'sealed',
+  review: 'in-review', 'in-review': 'in-review', pendente: 'draft', draft: 'draft', deprecated: 'deprecated',
+}
+function deriveStatus(meta, sealPath) {
+  if (sealPath) return 'sealed'
+  return STATUS_MAP[meta.status] || 'draft'
+}
+
 // ── EMISSOR ──────────────────────────────────────────────────────────────────
 function emit(name) {
   const compDir = findCompDir(name)
@@ -240,6 +280,7 @@ function emit(name) {
   const states = extractStates(compDir)
   const { sources, sealPath } = buildSources(compDir, name)
   const api = buildApi(types)
+  const status = deriveStatus(meta, sealPath)
 
   if (!meta.classification) gaps.push('identity.classification: ausente no meta (MUST-derivado) — backfill')
   if (!meta.tagline)        gaps.push('identity.tagline: ausente no meta (presence-gate) — backfill editorial')
@@ -254,13 +295,13 @@ function emit(name) {
       tagline: meta.tagline || '',
       category: meta.category || '',
       classification: meta.classification || '',
-      phase: meta.phase ?? 1,
-      status: meta.status || 'draft',
+      phase: coercePhase(meta.phase),
+      status,
       goldenReference: meta.goldenReference || '',
       goldenContext: meta.goldenContext || '',
     },
     audit: {
-      status: meta.status || 'draft',
+      status,
       date: meta.auditDate || '1970-01-01',
       ...(meta.auditMode ? { mode: meta.auditMode } : {}),
       sealPath: sealPath || 'docs/Compliance/seals/__MISSING__',
@@ -282,25 +323,37 @@ function emit(name) {
 }
 
 // ── run ──────────────────────────────────────────────────────────────────────
-const argv = process.argv.slice(2)
-const name = argv.find(a => !a.startsWith('--'))
-if (!name) { console.error('Uso: node scripts/emit-contract.mjs <DssComponente> [--write] [--strict]'); process.exit(2) }
-
-const { contract, gaps } = emit(name)
-const ajv = new Ajv({ allErrors: true, strict: false })
-const valid = ajv.compile(SCHEMA)(contract)
-const errors = valid ? [] : ajv.compile(SCHEMA).errors
-
-console.log(`\n=== Emissão do contrato: ${name} ===`)
-console.log(`Schema válido: ${valid ? 'SIM ✅' : 'NÃO ❌'}`)
-if (!valid) for (const e of errors.slice(0, 12)) console.log(`  ✗ ${e.instancePath || '(root)'} ${e.message}`)
-console.log(`\nGaps não-bloqueantes (${gaps.length}):`)
-for (const g of gaps) console.log(`  ⚠️ ${g}`)
-console.log(`\nResumo: ${contract.api.props.length} props · ${contract.api.slots.length} slots · ${contract.api.emits.length} emits · ${Object.keys(contract.visual.states).length} estados · ${contract.tokens.instances.length} tokens · a11y ${contract.a11y.wcag.length} critérios`)
-
-if (argv.includes('--write')) {
-  const out = path.join(findCompDir(name), 'dss.contract.json')
-  fs.writeFileSync(out, JSON.stringify(contract, null, 2) + '\n')
-  console.log(`\nGravado: ${path.relative(ROOT, out)}`)
+const argv    = process.argv.slice(2)
+const write   = argv.includes('--write')
+const strict  = argv.includes('--strict')
+const all     = argv.includes('--all')
+let   names   = argv.filter(a => !a.startsWith('--'))
+if (all) names = findComponentsWithContract()
+if (!names.length) {
+  console.error('Uso: node scripts/emit-contract.mjs <Dss...> | --all  [--write] [--strict]')
+  process.exit(2)
 }
-if (argv.includes('--strict') && (!valid || gaps.some(g => /REPROVADA/.test(g)))) process.exit(1)
+
+const validate = new Ajv({ allErrors: true, strict: false }).compile(SCHEMA)
+let anyFail = false
+
+for (const name of names) {
+  const { contract, gaps } = emit(name)
+  const valid = validate(contract)
+  const anchorFail = gaps.some(g => /REPROVADA/.test(g))
+  const fail = !valid || anchorFail
+
+  console.log(`\n=== ${name} === ${valid ? '✅ schema' : '❌ schema'}${anchorFail ? ' · ❌ âncora a11y' : ''}`)
+  if (!valid) for (const e of (validate.errors || []).slice(0, 8)) console.log(`  ✗ ${e.instancePath || '(root)'} ${e.message}`)
+  for (const g of gaps) console.log(`  ⚠️ ${g}`)
+  console.log(`  ${contract.api.props.length} props · ${contract.api.slots.length} slots · ${contract.api.emits.length} emits · ${Object.keys(contract.visual.states).length} estados · ${contract.tokens.instances.length} tokens · a11y ${contract.a11y.wcag.length}`)
+
+  if (write) {
+    fs.writeFileSync(path.join(findCompDir(name), 'dss.contract.json'), JSON.stringify(contract, null, 2) + '\n')
+    console.log(`  → gravado`)
+  }
+  if (fail) anyFail = true
+}
+
+console.log(`\n${anyFail ? '❌' : '✅'} ${names.length} componente(s) processado(s)${anyFail ? ' — há contrato inválido / âncora reprovada' : ''}.`)
+if (strict && anyFail) process.exit(1)

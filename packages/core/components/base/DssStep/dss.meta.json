@@ -11,7 +11,8 @@
   "category": "Elemento interativo de navegação em stepper (wizard)",
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente interativo de seleção dentro do contexto DssStepper. Passo individual que gerencia estados visuais (ativo, concluído, erro, desabilitado) e delega o estado de progresso ao container pai via v-model Quasar.",
-  "classification": "Controle interativo de navegação — wrapper DSS sobre QStep",
+  "classification": "Action",
+  "classificationNote": "Controle interativo de navegação — wrapper DSS sobre QStep",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
@@ -221,5 +222,49 @@
       }
     }
   },
-  "previewGroup": "stepper"
+  "previewGroup": "stepper",
+  "tagline": "Etapa individual dentro de um fluxo de passos (stepper).",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-current",
+        "aria-disabled"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "navegar para a etapa (quando headerNav)"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação entre etapas operável por teclado quando habilitada.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

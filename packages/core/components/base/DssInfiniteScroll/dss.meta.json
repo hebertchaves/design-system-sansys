@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssVirtualScroll",
-  "classification": {
-    "type": "Container comportamental de scroll infinito",
-    "category": "Scroll e Virtualização",
-    "interactive": false,
-    "level": 1,
-    "family": "Scroll e Virtualização"
-  },
+  "classification": "Visual",
   "phaseDescription": "Nível 1 — Container comportamental. Complementar ao DssVirtualScroll para carregamento incremental.",
   "statesApplicable": [
     "default",
@@ -127,5 +121,28 @@
       "seal": "DSS/docs/Compliance/seals/DssInfiniteScroll/DSSINFINITESCROLL_SELO_v2.2.md"
     }
   ],
-  "previewGroup": "contextuais"
+  "previewGroup": "contextuais",
+  "classificationNote": {
+    "type": "Container comportamental de scroll infinito",
+    "category": "Scroll e Virtualização",
+    "interactive": false,
+    "level": 1,
+    "family": "Scroll e Virtualização"
+  },
+  "tagline": "Carrega conteúdo incremental automaticamente ao rolar a região.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Carrega conteúdo incremental ao rolar; comportamento sem semântica visual própria.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

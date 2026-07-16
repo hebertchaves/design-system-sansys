@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssVirtualScroll",
-  "classification": {
-    "type": "Container de conteúdo rolável com scrollbar customizada",
-    "category": "Layout Auxiliar",
-    "interactive": false,
-    "level": 1,
-    "family": "Layout Auxiliar"
-  },
+  "classification": "Visual",
   "phaseDescription": "Nível 1 — Container de scroll governado. Envolve conteúdo arbitrário com scrollbar estilizada por tokens DSS.",
   "statesApplicable": [
     "default",
@@ -134,5 +128,28 @@
     }
   },
   "auditHistory": [],
-  "previewGroup": "midia"
+  "previewGroup": "midia",
+  "classificationNote": {
+    "type": "Container de conteúdo rolável com scrollbar customizada",
+    "category": "Layout Auxiliar",
+    "interactive": false,
+    "level": 1,
+    "family": "Layout Auxiliar"
+  },
+  "tagline": "Região rolável com barra de rolagem estilizada.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Região rolável com barra estilizada; preserva a rolagem nativa do conteúdo.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

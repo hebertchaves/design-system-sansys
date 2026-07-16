@@ -1,0 +1,469 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPullToRefresh",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Pull To Refresh",
+    "tagline": "Gatilho de atualização por gesto de puxar em áreas roláveis.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssInfiniteScroll"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssPullToRefresh/DSSPULLTOREFRESH_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desativa a funcionalidade de puxar para atualizar"
+      },
+      {
+        "name": "noMouse",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desativa interação via mouse (apenas toque habilitado)"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Ícone Material exibido no indicador de pull. Padrão: 'refresh' (Quasar)"
+      },
+      {
+        "name": "size",
+        "type": "PullToRefreshSize",
+        "controlHint": "segmented",
+        "description": "Tamanho visual do indicador de pull",
+        "validValues": [
+          "sm",
+          "md",
+          "lg"
+        ]
+      }
+    ],
+    "emits": [
+      {
+        "name": "refresh",
+        "payload": "() => void",
+        "description": "Emitido quando a ação de puxar é concluída e a atualização deve iniciar."
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo da área deslizável (lista, feed, grade, etc.)"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {}
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-circle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "-1px",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "rect(0, 0, 0, 0)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-1",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-padding-3",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "animation-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation-iteration-count",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition-duration",
+          "token": null,
+          "value": "0.01ms",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-hub-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-hub-md",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-water-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-water-md",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-waste-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-shadow-waste-md",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "elevation",
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-radius-circle",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-padding-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-hub-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-water-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-shadow-waste-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Dispara atualização por gesto de puxar; comportamento sem semântica visual própria.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPullToRefresh.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/pulltorefresh.types.ts",
+    "docs": {
+      "normative": "DssPullToRefresh.md",
+      "api": "DSSPULLTOREFRESH_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPullToRefresh.example.vue",
+    "tests": "DssPullToRefresh.test.js",
+    "seal": "docs/Compliance/seals/DssPullToRefresh/DSSPULLTOREFRESH_SELO_v2.2.md"
+  }
+}

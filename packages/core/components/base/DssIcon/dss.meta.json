@@ -48,5 +48,31 @@
     "demoContent": "Ícone 'star' tamanho md",
     "demoSlots": null
   },
-  "previewGroup": "indicadores"
+  "previewGroup": "indicadores",
+  "classification": "Visual",
+  "tagline": "Primitivo único de ícone do DSS, decorativo ou rotulado.",
+  "a11y": {
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-hidden",
+        "aria-label"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Conteúdo não-textual: decorative→aria-hidden; senão nome via aria-label.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Papel/nome expostos via aria-label quando informativo.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

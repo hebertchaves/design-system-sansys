@@ -144,5 +144,24 @@
     }
   },
   "previewGroup": "progresso",
-  "component": "DssInnerLoading"
+  "component": "DssInnerLoading",
+  "classification": "Visual",
+  "tagline": "Sobreposição de carregamento que cobre a região pai enquanto ativa.",
+  "a11y": {
+    "aria": {
+      "role": "status",
+      "states": [
+        "aria-busy"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Região de carregamento que oculta o conteúdo pai enquanto showing.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

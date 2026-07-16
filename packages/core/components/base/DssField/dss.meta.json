@@ -204,5 +204,35 @@
     "demoSlots": null
   },
   "previewGroup": "contextuais",
-  "component": "DssField"
+  "component": "DssField",
+  "classification": "Action",
+  "tagline": "Moldura de campo com rótulo, dica e erro para envolver um controle.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": [
+        "aria-invalid",
+        "aria-describedby"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "3.3.2",
+        "level": "A",
+        "implementation": "Rótulo, dica e mensagem de erro associados ao controle interno.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -1,0 +1,615 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssRouteTab",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Route Tab",
+    "tagline": "Aba de navegação vinculada a uma rota da aplicação.",
+    "category": "Elemento interativo de navegação por abas com roteamento",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssTab",
+    "goldenContext": "DssTabs"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-04-10",
+    "mode": "Selo DSS v2.2 Concedido",
+    "sealPath": "docs/Compliance/seals/DssRouteTab/DSSROUTETAB_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "name",
+        "type": "string | number",
+        "controlHint": "text",
+        "required": true,
+        "description": "Identificador único da aba."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto principal exibido na aba."
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome do ícone Material Icons a exibir."
+      },
+      {
+        "name": "alert",
+        "type": "boolean | string",
+        "controlHint": "text",
+        "description": "Exibe um ponto de alerta na aba."
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita a interação com a aba."
+      },
+      {
+        "name": "to",
+        "type": "string | Record<string, unknown>",
+        "controlHint": "text",
+        "description": "Rota de destino — equivalente ao `to` do RouterLink."
+      },
+      {
+        "name": "exact",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Ativa correspondência exata de rota."
+      },
+      {
+        "name": "replace",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Substitui a entrada atual no histórico de navegação em vez de adicionar."
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "controlHint": "text",
+        "description": "URL externa como fallback quando `to` não é adequado."
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Target do link externo (apenas com `href`)."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo customizado da aba."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "label": "Início",
+        "to": "/",
+        "name": "inicio"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-normal",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-tight",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "padding-inline",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "pointer",
+          "source": "_base.scss"
+        },
+        {
+          "property": "user-select",
+          "token": null,
+          "value": "none",
+          "source": "_base.scss"
+        },
+        {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-150",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "_base.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "_base.scss"
+        },
+        {
+          "property": "inset",
+          "token": null,
+          "value": "0",
+          "source": "_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "0",
+          "source": "_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": null,
+          "value": "inherit",
+          "source": "_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-track-height-xs",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "_base.scss"
+        },
+        {
+          "property": "padding-inline",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "_icon.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-600",
+          "value": null,
+          "source": "_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "_states.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "auto",
+          "source": "_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "Highlight",
+          "source": "_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "#000",
+          "source": "_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "transparent",
+          "source": "_states.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-hover",
+          "value": null,
+          "source": "_base.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-water-600",
+          "value": null,
+          "source": "_brands.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "_brands.scss"
+        },
+        {
+          "property": "outline-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "_states.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "_states.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-active",
+          "value": null,
+          "source": "_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-150",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-track-height-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-600",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-opacity-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-opacity-active",
+        "usedIn": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Ativação e navegação de rota operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "tab",
+      "states": [
+        "aria-selected"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "ativar a aba / navegar para a rota"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssRouteTab.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_icon.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/route-tab.types.ts",
+    "docs": {
+      "normative": "DssRouteTab.md",
+      "api": "DSSROUTETAB_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssRouteTab.example.vue",
+    "tests": "DssRouteTab.test.js",
+    "seal": "docs/Compliance/seals/DssRouteTab/DSSROUTETAB_SELO_v2.2.md"
+  }
+}

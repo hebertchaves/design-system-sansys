@@ -122,6 +122,16 @@
     min-height: unset;
   }
 
+  // Host do input de arquivo recolocado (QUploaderAddTrigger). Contido e sem
+  // dimensão para não sobrepor a toolbar; o `.q-uploader__input` interno é
+  // `position:absolute; inset:0` e fica clicável só via pickFiles() (0×0).
+  &__file-trigger {
+    position: relative;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
   &__progress-info {
     margin-left: auto;
     font-size: var(--dss-font-size-sm);

@@ -51,6 +51,27 @@
             <span class="nav-icon"><span class="material-icons">dvr</span></span>
             <span class="nav-label">Preview Frame · DssInput</span>
           </button>
+          <button
+            @click="activeComponent = 'preview-frame-select'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-select' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssSelect</span>
+          </button>
+          <button
+            @click="activeComponent = 'preview-frame-uploader'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-uploader' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssUploader</span>
+          </button>
+          <button
+            @click="activeComponent = 'preview-frame-file'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-file' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssFile</span>
+          </button>
         </div>
 
         <!-- Foundation -->
@@ -425,6 +446,15 @@
       <!-- PREVIEW FRAME (durável) — playground contract-driven, iframe do SFC real -->
       <div v-else-if="activeComponent === 'preview-frame'" class="component-view">
         <PreviewFrame component="DssInput" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-select'" class="component-view">
+        <PreviewFrame component="DssSelect" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-uploader'" class="component-view">
+        <PreviewFrame component="DssUploader" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-file'" class="component-view">
+        <PreviewFrame component="DssFile" />
       </div>
 
       <!-- DssButton Test View -->

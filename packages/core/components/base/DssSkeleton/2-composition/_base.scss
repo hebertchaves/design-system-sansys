@@ -29,7 +29,7 @@
 .dss-skeleton--type-rect .q-skeleton,
 .dss-skeleton--type-text .q-skeleton,
 .dss-skeleton--type-heading .q-skeleton {
-  border-radius: var(--dss-skeleton-radius, var(--dss-radius-sm));
+  border-radius: var(--dss-radius-sm);
 }
 
 // Circle types: always full radius (preserves QSkeleton's circle shape)

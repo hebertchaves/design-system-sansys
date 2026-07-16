@@ -52,6 +52,25 @@
   cursor: pointer;
   z-index: 1;
 
+  // O QField interno impõe a altura default do Quasar (56px), o que fazia a área
+  // clicável (invisível) exceder o campo visual (44px). A cadeia inteira — o
+  // próprio QField, __inner, __control e __native — preenche o wrapper (44/36)
+  // para o alvo de clique coincidir EXATAMENTE com o campo visual (paridade com a
+  // família). height:100% no nó raiz ancora as % dos filhos (o inset sozinho não
+  // resolvia altura definida com o display do QField). Unlayered vence o layered
+  // do Quasar (Constituição #3).
+  &,
+  .q-field__inner,
+  .q-field__control,
+  .q-field__native {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .q-field__control {
+    padding: 0;
+  }
+
   // Desabilitado: sem interação
   .dss-file--disabled & {
     pointer-events: none;
@@ -72,14 +91,41 @@
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: var(--dss-input-height-md); // 44px — WCAG 2.5.5 touch target
+  // Altura FIXA (não só min-height) para paridade exata com a família de campos
+  // (DssInput/Select/Textarea = 44px). Antes, min-height + padding vertical
+  // empurrava o campo para ~50px. Padding só no eixo X; o eixo Y é a altura.
+  min-height: var(--dss-input-height-md);
+  height: var(--dss-input-height-md); // 44px — WCAG 2.5.5 touch target
   gap: var(--dss-spacing-2);
-  padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  padding: 0 var(--dss-spacing-4);
   transition: all var(--dss-duration-300) var(--dss-easing-standard);
 
   .dss-file--dense & {
-    min-height: var(--dss-input-height-sm); // 36px — modo compacto
-    padding: var(--dss-spacing-2) var(--dss-spacing-3);
+    min-height: var(--dss-input-height-sm);
+    height: var(--dss-input-height-sm); // 36px — modo compacto
+    padding: 0 var(--dss-spacing-3);
+  }
+}
+
+// Coluna de conteúdo (label + dropzone + valor) — aria-hidden no template: é a
+// duplicata visual do que o QFile já anuncia. flex:1 ocupa o meio, entre
+// prepend/append/clear; position:relative ancora a label absoluta.
+.dss-file__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  gap: var(--dss-spacing-2);
+
+  // Reserva p/ a label flutuante: com label presente e flutuada (valor ou foco),
+  // o conteúdo (nome do arquivo / dica) desce, evitando colidir com a label no
+  // topo (paridade DssInput). Sem label, fica centralizado.
+  .dss-file--labeled.dss-file--has-value &,
+  .dss-file--labeled.dss-file--focused & {
+    align-items: flex-end;
+    padding-bottom: var(--dss-spacing-1);
   }
 }
 
@@ -89,7 +135,9 @@
 
 .dss-file__label {
   position: absolute;
-  left: var(--dss-spacing-4);
+  // left:0 — a label é absoluta DENTRO do .dss-file__control, que já está
+  // recuado pelo padding lateral do campo. spacing-4 aqui dobraria o recuo.
+  left: var(--dss-spacing-0);
   top: 50%;
   transform: translateY(-50%);
   font-size: var(--dss-font-size-md);
@@ -99,11 +147,12 @@
   transform-origin: left top;
   cursor: pointer;
 
-  // Flutuante quando há valor ou foco
+  // Flutuante quando há valor ou foco. Paridade DssInput: ancora no topo
+  // (spacing-0) e o tamanho vem SÓ do scale(0.75) — redeclarar font-size-sm
+  // encolhia em dobro (scale × sm).
   &--float {
-    top: var(--dss-spacing-2);
+    top: var(--dss-spacing-0);
     transform: translateY(0) scale(0.75);
-    font-size: var(--dss-font-size-sm);
   }
 
   // Sempre no topo (stackLabel)
@@ -173,13 +222,13 @@
   z-index: 2; // Acima do QFile transparente
 }
 
+// Sem padding lateral próprio: agora são filhos flex do campo (que já tem
+// padding lateral spacing-4 + gap spacing-2 entre os itens).
 .dss-file__prepend {
-  padding-left: var(--dss-spacing-3);
   color: var(--dss-text-secondary);
 }
 
 .dss-file__append {
-  padding-right: var(--dss-spacing-3);
   color: var(--dss-text-secondary);
   gap: var(--dss-spacing-2);
 }
@@ -189,6 +238,11 @@
 // =============================================================================
 
 .dss-file__clear {
+  // Filho flex do campo (à direita, após o append), acima do QFile opacity:0
+  // (z-index) para receber o clique. Controle real — não é aria-hidden.
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,7 +257,6 @@
   cursor: pointer;
   border-radius: var(--dss-radius-full);
   transition: all var(--dss-duration-200) var(--dss-easing-standard);
-  z-index: 2; // Acima do QFile transparente
 
   &:hover {
     background-color: var(--dss-gray-100);
@@ -214,7 +267,7 @@
   // Precedente: DssInput (Golden Context, selado Jan 2026) usa este mesmo token
   // em .q-field__control:focus-within. Token definido em tokens/semantic/_focus.scss.
   &:focus-visible {
-    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
     outline-offset: var(--dss-spacing-1);
   }
 }

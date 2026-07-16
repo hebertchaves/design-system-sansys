@@ -11,7 +11,7 @@
   "category": "Container estrutural horizontal — barra de ferramentas",
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural não-interativo. Fornece layout horizontal flexbox e superfície de brand para composição de botões, ícones e texto. Bloco de construção base para DssHeader, DssFooter e barras de ação internas.",
-  "classification": "Container estrutural horizontal — wrapper DSS governado sobre QToolbar",
+  "classification": "Visual",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
@@ -216,5 +216,32 @@
     }
   },
   "previewGroup": "layout",
-  "sealDate": "2026-04-16"
+  "sealDate": "2026-04-16",
+  "classificationNote": "Container estrutural horizontal — wrapper DSS governado sobre QToolbar",
+  "tagline": "Barra horizontal que agrupa ações e títulos no topo de uma região.",
+  "a11y": {
+    "aria": {
+      "role": "toolbar",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Agrupa controles e título como barra de ferramentas (role=toolbar).",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

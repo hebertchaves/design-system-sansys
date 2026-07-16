@@ -1,34 +1,17 @@
 // =============================================================================
 // DssPopupEdit — Layer 4: Brands
-// =============================================================================
 //
-// Acento de brand no rodapé do popup (área de botões).
+// Acento de brand no rodapé (área de botões). O popup teleporta p/ <body>, então
+// descendant [data-brand] .q-popup-edit exige o atributo em <body>/<html>; o
+// seletor self (.q-popup-edit[data-brand]) cobre o root teleportado (useTeleportedBrand).
 //
-// O popup é teleportado para <body> (QPopupEdit/QMenu), portanto o seletor
-// descendente [data-brand="x"] .q-popup-edit só funciona se o atributo
-// estiver em <body>/<html> (NORMA — ver DSS_IMPLEMENTATION_GUIDE.md).
-// O seletor self (.q-popup-edit[data-brand="x"]) cobre o caminho defensivo:
-// o atributo é aplicado no próprio root teleportado via useTeleportedBrand
-// (Onda P0/T4 — bloqueante A8 da Auditoria Final Jun/2026).
+// COLAPSADO: os 3 blocos por-marca eram IDÊNTICOS (--dss-action-primary já é
+// brand-aware) → um único [data-brand] (mesmo alcance, sem repetir 3×).
 // =============================================================================
 
-[data-brand='hub'] .q-popup-edit,
-.q-popup-edit[data-brand='hub'] {
+[data-brand] .q-popup-edit,
+.q-popup-edit[data-brand] {
   .q-popup-edit__buttons {
-    border-top-color: var(--dss-hub-primary);
-  }
-}
-
-[data-brand='water'] .q-popup-edit,
-.q-popup-edit[data-brand='water'] {
-  .q-popup-edit__buttons {
-    border-top-color: var(--dss-water-primary);
-  }
-}
-
-[data-brand='waste'] .q-popup-edit,
-.q-popup-edit[data-brand='waste'] {
-  .q-popup-edit__buttons {
-    border-top-color: var(--dss-waste-primary);
+    border-top-color: var(--dss-action-primary);
   }
 }

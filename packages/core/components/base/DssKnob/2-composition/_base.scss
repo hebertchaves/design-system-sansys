@@ -24,7 +24,7 @@
 //
 // EXC-Focus-01: QKnob usa .q-knob--editable::before + box-shadow para focus visual.
 //   DSS neutraliza o box-shadow do ::before e aplica outline em :focus-visible no root.
-//   Padrão DssChip: outline: var(--dss-border-width-md) solid var(--dss-focus-ring).
+//   Padrão DssChip: outline: var(--dss-border-width-md) solid var(--dss-focus-primary).
 //
 // TOKENS UTILIZADOS:
 //   Progresso:    --dss-action-primary   (arco de progresso padrão)
@@ -108,7 +108,7 @@
   //   1. box-shadow do ::before neutralizado abaixo (box-shadow: none !important)
   //   2. outline DSS via :focus-visible — padrão DssChip (Golden Reference)
   &.q-knob--editable:focus-visible {
-    outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+    outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
     outline-offset: var(--dss-focus-ring-offset);
     border-radius: 50%; // garante que o outline segue o contorno circular
   }

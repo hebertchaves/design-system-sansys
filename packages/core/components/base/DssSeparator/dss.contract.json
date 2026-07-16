@@ -1,0 +1,586 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssSeparator",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Separator",
+    "tagline": "Divisor visual, horizontal ou vertical, entre blocos de conteúdo.",
+    "category": "Decorativo / Estrutural nao interativo",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssBadge"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-03-17",
+    "mode": "Modo Auditor DSS",
+    "sealPath": "docs/Compliance/seals/DssSeparator/DSSSEPARATOR_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "vertical",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Define orientação vertical. Default: false (horizontal)"
+      },
+      {
+        "name": "inset",
+        "type": "SeparatorInset",
+        "controlHint": "segmented",
+        "description": "Aplica indentação nas extremidades do separador.",
+        "validValues": [
+          "item",
+          "item-thumbnail"
+        ]
+      },
+      {
+        "name": "spaced",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Aplica margem ao redor do separador (separação com o conteúdo adjacente)."
+      },
+      {
+        "name": "color",
+        "type": "SeparatorColor",
+        "controlHint": "picker-color",
+        "description": "Cor semântica da linha. Default: 'default' (var(--dss-gray-200))",
+        "validValues": [
+          "subtle",
+          "default",
+          "strong",
+          "primary",
+          "secondary"
+        ]
+      },
+      {
+        "name": "size",
+        "type": "SeparatorSize",
+        "controlHint": "segmented",
+        "description": "Espessura da linha. Default: 'thin' (1px)",
+        "validValues": [
+          "hairline",
+          "thin",
+          "md",
+          "thick"
+        ]
+      },
+      {
+        "name": "ariaHidden",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Remove o separador da árvore de acessibilidade."
+      }
+    ],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {}
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "1px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "margin",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-top-style",
+          "token": null,
+          "value": "solid",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-top-width",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-fast",
+          "value": null,
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-block",
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "auto",
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "align-self",
+          "token": null,
+          "value": "stretch",
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "border-top",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "border-left-style",
+          "token": null,
+          "value": "solid",
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "border-left-width",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-primary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-secondary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "border-top-width",
+          "token": "--dss-border-width-hairline",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "border-left-width",
+          "token": "--dss-border-width-hairline",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "border-top-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "border-left-width",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "3-variants/_sizes.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_spaced.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_spaced.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_inset.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": "--dss-spacing-14",
+          "value": null,
+          "source": "3-variants/_inset.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-14",
+          "value": null,
+          "source": "3-variants/_inset.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": "--dss-spacing-16",
+          "value": null,
+          "source": "3-variants/_inset.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-16",
+          "value": null,
+          "source": "3-variants/_inset.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_spaced.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_spaced.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_spaced.scss"
+        },
+        {
+          "property": "margin-right",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_spaced.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-width",
+          "token": null,
+          "value": "1px",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left-width",
+          "token": null,
+          "value": "1px",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-400",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-duration-fast",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-hairline",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-14",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-16",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Separação semântica via role=separator/aria-orientation; decorativo via aria-hidden.",
+        "verifiedBy": "aria"
+      }
+    ],
+    "aria": {
+      "role": "separator",
+      "states": [
+        "aria-orientation",
+        "aria-hidden"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssSeparator.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_colors.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/separator.types.ts",
+    "docs": {
+      "normative": "DssSeparator.md",
+      "api": "DSSSEPARATOR_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssSeparator.example.vue",
+    "tests": "DssSeparator.test.js",
+    "seal": "docs/Compliance/seals/DssSeparator/DSSSEPARATOR_SELO_v2.2.md"
+  }
+}

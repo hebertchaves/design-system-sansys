@@ -415,7 +415,7 @@ computed: {
 
 ### 1. **CSS como Fonte de Verdade Visual** ⭐ **(Revisado Jun/2026 — Onda P0/T6)**
 
-O DSS adota o **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) como **fonte de verdade visual** (Princípio #12 do CLAUDE.md).
+O DSS adota o **CSS do componente** (`2-composition/_base.scss` e camadas seguintes) como **fonte de verdade visual** (Constituição #6 do CLAUDE.md — CSS fonte de verdade).
 - O contrato estático de dimensões e espaçamentos reside no campo `defaultPreview` do `dss.meta.json` — espelho documentado do CSS.
 - Em caso de ambiguidade (ex: o `withDefaults` não especifica qual variante é a padrão, ou o SCSS usa tokens compostos difíceis de inferir), o agente DEVE consultar o **CSS compilado do componente** — nunca inferir por "bom senso" ou "padrões web".
 - O Figma está **fora da cadeia de autoridade**: é ferramenta integrável via MCP, como qualquer outra ferramenta de mercado, sem poder decisório sobre aspectos visuais.
@@ -1082,7 +1082,7 @@ min-height: var(--dss-compact-control-height-lg);  /* 32px */
 
 > **Consequência**: Se um arquivo de variante usar `::before`, o touch target da Camada 2 será sobrescrito, quebrando acessibilidade WCAG 2.5.5.
 
-### Composição de Ícones (NORMATIVA — Princípio #14)
+### Composição de Ícones (NORMATIVA — Cartão Base; contrato em DSS_ICON_COMPOSITION_CONTRACT.md)
 
 > **⚠️ REGRA VINCULANTE**: O DSS possui **um único primitivo de ícone** — o `DssIcon`. Nenhum componente reimplementa a renderização de glifo. Detalhamento completo em [DSS_ICON_COMPOSITION_CONTRACT.md](../governance/DSS_ICON_COMPOSITION_CONTRACT.md) (Nível 1).
 
@@ -1537,7 +1537,7 @@ npx sass DssNomeComponente.module.scss --no-source-map
 ```
 
 > **Nenhum componente passa para auditoria ou selo sem completar este gate.**
-> Consulte tambem o [Gate Estrutural DSS em CLAUDE.md](../../CLAUDE.md#-checklist-de-validação-final-gate-estrutural-dss).
+> Consulte tambem a [Definition of Done (gate executável) em CLAUDE.md](../../CLAUDE.md).
 
 ---
 

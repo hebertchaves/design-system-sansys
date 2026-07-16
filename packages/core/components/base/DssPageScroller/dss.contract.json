@@ -1,0 +1,136 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPageScroller",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Page Scroller",
+    "tagline": "Controle que rola a página de volta ao topo.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssPageSticky"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssPageScroller/DSSPAGESCROLLER_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": [
+          {
+            "component": "DssButton",
+            "props": {
+              "round": true,
+              "color": "primary",
+              "icon": "keyboard_arrow_up",
+              "size": "sm"
+            }
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-sticky",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "z-index"
+    ],
+    "instances": [
+      {
+        "name": "--dss-z-index-sticky",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Rola a página até o topo ao ser acionado.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPageScroller.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/pagescroller.types.ts",
+    "docs": {
+      "normative": "DssPageScroller.md",
+      "api": "DSSPAGESCROLLER_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPageScroller.example.vue",
+    "tests": "DssPageScroller.test.js",
+    "seal": "docs/Compliance/seals/DssPageScroller/DSSPAGESCROLLER_SELO_v2.2.md"
+  }
+}

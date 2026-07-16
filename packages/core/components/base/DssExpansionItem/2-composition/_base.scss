@@ -78,7 +78,7 @@
 
 /* Focus-visible — ring de foco acessível */
 .dss-expansion-item .q-item:focus-visible {
-  outline: var(--dss-focus-ring);
+  outline: var(--dss-focus-ring-width) var(--dss-focus-ring-style) var(--dss-focus-primary);
   outline-offset: -2px;
 }
 

@@ -43,8 +43,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min); // 48px
-    min-height: var(--dss-touch-target-min); // 48px
+    min-width: var(--dss-touch-target-md); // 48px
+    min-height: var(--dss-touch-target-md); // 48px
     pointer-events: none; // Deixa cliques passarem para o input
   }
 }
@@ -126,7 +126,7 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-xs); // 12px
   line-height: var(--dss-line-height-normal);
-  color: var(--dss-error-600);
+  color: var(--dss-feedback-error);
 }
 
 // ==========================================================================
@@ -205,7 +205,7 @@
 
 // --- Focus (via classe aplicada pelo composable) ---
 .dss-radio__control--focused {
-  outline: var(--dss-border-width-md) solid var(--dss-focus-ring);
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-0_5); // 2px
 }
 
@@ -228,7 +228,7 @@
 // --- Error ---
 .dss-radio--error {
   .dss-radio__control {
-    border-color: var(--dss-error-600);
+    border-color: var(--dss-feedback-error);
     color: var(--dss-feedback-error);
   }
 

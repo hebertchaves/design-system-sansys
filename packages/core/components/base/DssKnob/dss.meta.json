@@ -169,5 +169,45 @@
     "demoSlots": null
   },
   "previewGroup": "indicadores",
-  "component": "DssKnob"
+  "component": "DssKnob",
+  "classification": "Action",
+  "tagline": "Controle circular para ajustar um valor dentro de um intervalo.",
+  "a11y": {
+    "aria": {
+      "role": "slider",
+      "states": [
+        "aria-valuenow",
+        "aria-valuemin",
+        "aria-valuemax"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowUp",
+        "action": "incrementar o valor"
+      },
+      {
+        "key": "ArrowDown",
+        "action": "decrementar o valor"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Incremento/decremento do valor operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      }
+    ]
+  }
 }

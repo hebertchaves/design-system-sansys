@@ -74,8 +74,8 @@
   }
 
   .dss-field--error .dss-field__field {
-    border-color: var(--dss-error-600) !important;
-    outline: var(--dss-border-width-thick) solid var(--dss-error-600);
+    border-color: var(--dss-feedback-error) !important;
+    outline: var(--dss-border-width-thick) solid var(--dss-feedback-error);
     outline-offset: var(--dss-spacing-1);
   }
 }

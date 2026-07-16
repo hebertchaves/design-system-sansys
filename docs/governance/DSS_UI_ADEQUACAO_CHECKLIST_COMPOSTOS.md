@@ -68,7 +68,7 @@ checklist de campo em cada peça interna**, não só no contêiner:
   composto DEVEM ser `DssChip`/`DssButton`/`DssIcon`/`DssAvatar` reais — **nunca** um
   `<span>`/`<div>` re-estilizado à mão imitando o primitivo. Razão: o imitador não
   herda tokens, dark, brand nem a11y → diverge na primeira mudança de tema.
-  (Ícone: reforça o **Princípio #14** — glifo só via `DssIcon`.)
+  (Ícone: reforça a **Composição de Ícones** — Cartão Base — glifo só via `DssIcon`.)
 
 > ↪️ **Overflow / scroll duplo** não é item próprio aqui — é o **risco §2.2 do
 > guia de composição**. Ao adequar a UI, confirme visualmente que não há barra de
@@ -90,6 +90,29 @@ interna** relevante.
 - [ ] **Sem scroll duplo / conteúdo cortado**; scroll-owner explícito — guia §2.2
 - [ ] **Disabled propagado sem empilhar opacity** (cor `text-disabled` por filho) — F1
 - [ ] Seções **A/B/C** do checklist de campo OK em cada peça QField-based interna
+
+---
+
+## Validação visual final (Preview Frame) — **premissa de fechamento**
+
+> Herda a etapa de fechamento do [checklist de campo](DSS_UI_ADEQUACAO_CHECKLIST.md#validação-visual-final-preview-frame--premissa-de-fechamento):
+> o composto só está adequado quando renderiza **fiel** no **Preview Frame**
+> (`<iframe>` sobre o **SFC real** + knobs derivados do `dss.contract.json`).
+> O Preview Frame já **alcança `composed/`** (glob `{base,composed}`) — registrar a aba
+> em `TestSuite.vue` e validar.
+>
+> **Próprio do composto — o iframe é a barreira que prova o item L2:** um composto com
+> overlay (`DssDialog`/`DssMenu`/`DssDrawer`/`DssBottomSheet`) teleporta para o `<body>`
+> do **realm do iframe**, não do host — então o overlay fica **contido** e a marca
+> repassada explicitamente (L2) pode ser conferida **dentro** do iframe.
+
+**Gate visual final (marcar — LIGHT e DARK):**
+
+- [ ] **SFC real** do composto monta no iframe (não o fallback "não encontrado"); **zero erros** no console
+- [ ] Knobs **derivados do contrato**; mexer num knob → o composto real reage; **snippet** reflete o estado
+- [ ] **LIGHT e DARK** corretos; **Brand** propaga a todos os filhos **dentro** do iframe — L1
+- [ ] Overlay do composto **teleporta contido** no realm do iframe e **mantém a marca** — L2
+- [ ] Sem **scroll duplo** nem conteúdo cortado no preview — guia §2.2
 
 ---
 

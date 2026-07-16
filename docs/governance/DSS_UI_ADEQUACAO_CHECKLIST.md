@@ -26,7 +26,7 @@
 
 ## A. Cascade & sobreposição DSS × Quasar
 
-- **A1 — Layered vs unlayered (Princípio #13 + exceção).** Quasar roda em
+- **A1 — Layered vs unlayered (Constituição #3 — Cascade Layers + exceção).** Quasar roda em
   `@layer quasar`. CSS DSS *unlayered* vence o layered **normal**, mas **NÃO**
   vence `!important` *layered* (ex.: `[disabled] { opacity:.6 !important }`).
   → Onde o Quasar impõe `!important` em layer, **não tente sobrescrever — contorne**.
@@ -107,6 +107,14 @@
 - **E4 — Altura.** `--dss-input-height-min` indefinido → `min-height` vira no-op; a
   altura real vem da **`.q-field__marginal`** do Quasar (56/40px). Alinhe a marginal
   ao token-alvo (44/36px).
+- **E5 — Radius do outlined = `--dss-radius-sm`** (cantos sóbrios, golden DssInput).
+  `radius-md` = fora do padrão. **Gate:** `validate:field-conventions`.
+- **E6 — Foco do outlined SEM `box-shadow`.** O anel de 1px duplica a borda; o foco
+  é só `border-width: md`. **Gate:** `validate:field-conventions`. *(Botões PODEM ter
+  shadow no foco — a regra é da família de campo.)*
+- **E7 — Só tokens que existem.** `var(--dss-*)` sem definição no catálogo (ex.: o
+  antigo `--dss-error-600`/`--dss-focus-ring`) resolve p/ vazio → estado/anel some.
+  Usar `--dss-feedback-error*`. **Gate:** `validate:scss-tokens` (ratchet c/ baseline).
 
 ---
 
@@ -166,6 +174,64 @@
 - [ ] **prepend/before/chips** com espaçamento correto (E2/E3)
 - [ ] **sem overflow** em grid/matriz (`min-width: 0` na raiz real)
 - [ ] verificado **sem** `!important` reflexo (só onde há override global — A3)
+
+---
+
+## Propagação pós-ajuste (cadeia de fonte única)
+
+Depois de adequar o visual, a maior parte da cadeia propaga **sozinha no `git commit`**
+(pre-commit): contrato `dss.contract.json` (§8, deriva `visual.states` do CSS compilado),
+`catalog.json` (§3b), `DSS_REFERENCIA_VISUAL_ANALISE.md` (§3) e tokens do portal (§1b).
+Não precisa rodar à mão — mas confira o resultado.
+
+Passos que **NÃO** são automáticos (rodar/revisar por componente):
+
+- [ ] **`npm run sync:token-values`** — se um token **dimensional** (px/ms/%) mudou de valor,
+  mantém o campo `value` de `meta.visualProperties` honesto. (Cor tem `value: null` — não drifta.)
+- [ ] **Revisar `meta.visualProperties`** (curatorial) — **só** se você ADICIONOU/REMOVEU/RENOMEOU
+  um token documentado. O gate **não pega** essa drift: o validador não distingue "token aplicado
+  via classe Quasar (`bg-primary`)" de "token removido" — mesma cegueira do contrato. Curadoria humana.
+- [ ] **`meta.a11y`** — se o ajuste mexeu em **contraste / focus ring / touch target**, reverificar os
+  claims `wcag[].verifiedBy` (o gate do contrato **reprova** âncora que não passa; não declarar o que
+  não fecha — ex.: contraste real medível via `scripts/wcag-kit.mjs`).
+- [ ] **Emitir/conferir o contrato:** `node scripts/emit-contract.mjs <Dss> --write` deve dar
+  `✅ schema · 0 gaps · 0 âncora reprovada` (o §8 do hook já faz no commit — este passo é para ver antes).
+
+> **Divisão de verdade:** o **contrato** (`visual.states`) é a verdade-máquina auto-derivada do CSS;
+> `meta.visualProperties` é a camada **CURADA complementar** (inclui tokens aplicados via Quasar que o
+> contrato não enxerga). Ambos existem por razões diferentes — não são redundantes.
+
+*(Aplica-se também aos compostos — ver `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md`, que herda este passo.)*
+
+---
+
+## Validação visual final (Preview Frame) — **premissa de fechamento**
+
+> **Esta é a etapa que FECHA a adequação.** O visual só está adequado quando o
+> componente renderiza **fiel** no **Preview Frame** (`apps/sandbox/src/preview/`),
+> o validador durável da cadeia de fonte única: `<iframe>` sobre o **SFC real** +
+> knobs **derivados do `dss.contract.json`** — nunca reimplementação. É o mesmo
+> contrato de derivação da [`COMPONENT_PAGE_STRUCTURE.md`](../specs/COMPONENT_PAGE_STRUCTURE.md) §4
+> (preview = iframe sobre o componente real). O iframe é a **barreira** que contém
+> overlays teleportados (veredito do spike de isolamento).
+>
+> **Pré-requisito:** o passo anterior (contrato emitido) rodou — o Preview Frame **consome** o contrato.
+
+**Como rodar:** `npm run dev` em `apps/sandbox` → aba **"Preview Frame · Dss‹Nome›"**
+(ou direto `/?frame=Dss‹Nome›` para inspecionar só o realm do iframe). Para habilitar um
+componente novo: registrar a aba em `TestSuite.vue` (nav + `<PreviewFrame component="Dss‹Nome›" />`);
+se for `composed/`, confirmar que os globs do Preview Frame o alcançam (`{base,composed}`).
+
+**Gate visual final (marcar por componente — LIGHT e DARK):**
+
+- [ ] **SFC real** monta no iframe (`.dss-‹nome›` presente; **não** o fallback "não encontrado")
+- [ ] **Zero erros/warnings** no console do iframe
+- [ ] Knobs **derivados do contrato** — nº de controles = nº de props do contrato (sem knob fantasma nem omissão)
+- [ ] Mexer num knob → o **componente real reage** dentro do iframe; o **snippet** reflete o estado das props
+- [ ] **LIGHT e DARK** corretos dentro do iframe (superfície calibrada contra o stage — B)
+- [ ] **Brand** (Hub/Water/Waste) propaga para o componente real (token de brand resolve **dentro** do iframe)
+
+> Só depois deste gate a adequação está **fechada** e o componente fica elegível ao selo (Definition of Done do `CLAUDE.md`).
 
 ---
 

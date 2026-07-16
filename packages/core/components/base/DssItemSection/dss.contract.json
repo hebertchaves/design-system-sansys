@@ -1,0 +1,249 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssItemSection",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Item Section",
+    "tagline": "Seção estrutural (avatar, conteúdo ou lateral) dentro de um DssItem.",
+    "category": "Container de Layout Interno",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssAvatar",
+    "goldenContext": "DssList"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "mode": "Pre-Auditoria",
+    "sealPath": "docs/Compliance/seals/DssItemSection/DSSITEMSECTION_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "avatar",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Configura a seção como container de avatar."
+      },
+      {
+        "name": "thumbnail",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Configura a seção como container de thumbnail."
+      },
+      {
+        "name": "side",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Indica que a seção é secundária (side section)."
+      },
+      {
+        "name": "top",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Alinha o conteúdo da seção ao topo do item."
+      },
+      {
+        "name": "noWrap",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Impede a quebra de linha do conteúdo interno da seção."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Slot default — conteúdo da seção."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": "Conteúdo"
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-compact-control-height-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "currentColor",
+          "source": "DssItemSection.module.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "DssItemSection.module.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-md",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Organiza o conteúdo do item em seções (avatar/conteúdo/lateral).",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssItemSection.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/item-section.types.ts",
+    "docs": {
+      "normative": "DssItemSection.md",
+      "api": "DSSITEMSECTION_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssItemSection.example.vue",
+    "tests": "DssItemSection.test.js",
+    "seal": "docs/Compliance/seals/DssItemSection/DSSITEMSECTION_SELO_v2.2.md"
+  }
+}

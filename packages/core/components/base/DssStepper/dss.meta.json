@@ -13,7 +13,7 @@
   "category": "Container de Navegação — Stepper/Wizard",
   "phase": 2,
   "phaseDescription": "Fase 2 — Nível 2 (Composição de Primeiro Grau). Container que orquestra múltiplos DssStep filhos. Gerencia o estado de navegação (v-model), fornece layout horizontal/vertical e delega renderização de cada passo ao DssStep.",
-  "classification": "Container de navegação não-interativo — wrapper DSS governado sobre QStepper",
+  "classification": "Visual",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [
@@ -169,5 +169,40 @@
       ]
     }
   },
-  "previewGroup": "stepper"
+  "previewGroup": "stepper",
+  "classificationNote": "Container de navegação não-interativo — wrapper DSS governado sobre QStepper",
+  "tagline": "Fluxo de etapas sequenciais que orquestra instâncias de DssStep.",
+  "a11y": {
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Fluxo rotulado via aria-label; etapas expõem o próprio estado.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Sequência de etapas estruturada e coordenada via v-model.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

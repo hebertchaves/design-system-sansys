@@ -13,7 +13,7 @@
   "phase": 2,
   "phaseDescription": "Fase 2 Ready — Composicao Interna DSS documentada",
   "hasReservations": true,
-  "classification": "Componente de superficie estrutural composto",
+  "classification": "Visual",
   "subcomponents": [
     "DssCardSection",
     "DssCardActions"
@@ -199,5 +199,42 @@
       ]
     }
   },
-  "previewGroup": "cartoes"
+  "previewGroup": "cartoes",
+  "classificationNote": "Componente de superficie estrutural composto",
+  "tagline": "Superfície de cartão que agrupa conteúdo relacionado em um bloco elevado.",
+  "a11y": {
+    "aria": {
+      "role": "",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Agrupa conteúdo relacionado como superfície de cartão.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

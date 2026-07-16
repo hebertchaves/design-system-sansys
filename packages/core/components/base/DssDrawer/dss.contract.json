@@ -1,0 +1,390 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssDrawer",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Drawer",
+    "tagline": "Painel lateral de layout, fixo ou sobreposto, para navegação ou conteúdo auxiliar.",
+    "category": "Container estrutural lateral de layout de página — painel de navegação",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssHeader",
+    "goldenContext": "DssHeader"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "mode": "Pendente Auditoria DSS v2.2",
+    "sealPath": "docs/Compliance/seals/DssDrawer/DSSDRAWER_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "modelValue": false,
+        "persistent": true,
+        "width": 150
+      },
+      "slots": {
+        "default": [
+          {
+            "component": "DssItem",
+            "props": {
+              "clickable": true
+            },
+            "children": [
+              {
+                "component": "DssItemSection",
+                "children": [
+                  {
+                    "component": "DssItemLabel",
+                    "children": "Início"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "DssItem",
+            "props": {
+              "clickable": true
+            },
+            "children": [
+              {
+                "component": "DssItemSection",
+                "children": [
+                  {
+                    "component": "DssItemLabel",
+                    "children": "Relatórios"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "DssItem",
+            "props": {
+              "clickable": true
+            },
+            "children": [
+              {
+                "component": "DssItemSection",
+                "children": [
+                  {
+                    "component": "DssItemLabel",
+                    "children": "Configurações"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "100vh"
+      },
+      "minWidth": {
+        "value": "300px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-opacity-backdrop",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-2",
+          "value": null,
+          "source": "3-variants/_elevated.scss"
+        },
+        {
+          "property": "border-right",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_bordered.scss"
+        },
+        {
+          "property": "border-left",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_bordered.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "3-variants/_mini.scss"
+        },
+        {
+          "property": "border-right-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-right-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-right",
+          "token": null,
+          "value": "1px solid ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left",
+          "token": null,
+          "value": "1px solid ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "rgba(0, 0, 0, 0.75)",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "#fff",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "#000",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "static",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-right",
+          "token": null,
+          "value": "1px solid #000",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-left",
+          "token": null,
+          "value": "1px solid #000",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "elevation",
+      "motion",
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-4",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-opacity-backdrop",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-elevation-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-duration-250",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Região de layout (drawer) que provê contexto estrutural à página.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "complementary",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssDrawer.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_bordered.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/drawer.types.ts",
+    "docs": {
+      "normative": "DssDrawer.md",
+      "api": "DSSDRAWER_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssDrawer.example.vue",
+    "tests": "DssDrawer.test.js",
+    "seal": "docs/Compliance/seals/DssDrawer/DSSDRAWER_SELO_v2.2.md"
+  }
+}

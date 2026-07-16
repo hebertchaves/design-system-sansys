@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssBadge",
-  "classification": {
-    "type": "Informativo / Feedback",
-    "category": "Notificações e Alertas",
-    "interactive": false,
-    "family": "Notificações e Alertas",
-    "level": 1
-  },
+  "classification": "Visual",
   "motor": "QBanner",
   "phaseDescription": "Fase 2 — Nível 1 — Independente. Depende apenas de componentes da Fase 1 (DssIcon, DssButton).",
   "tokens": [
@@ -168,5 +162,38 @@
       ]
     }
   },
-  "previewGroup": "banners"
+  "previewGroup": "banners",
+  "classificationNote": {
+    "type": "Informativo / Feedback",
+    "category": "Notificações e Alertas",
+    "interactive": false,
+    "family": "Notificações e Alertas",
+    "level": 1
+  },
+  "tagline": "Faixa de aviso ou notificação com ações opcionais.",
+  "a11y": {
+    "aria": {
+      "role": "status",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Faixa de mensagem com ação de dispensar rotulada (dismissLabel).",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -1,43 +1,23 @@
 // Layer 4 — Brand variants (Hub, Water, Waste)
 //
-// Nota: DssVirtualScroll é um container não interativo de dados.
-// Brand theming aplica-se apenas ao indicador de loading (spinner)
-// e à cor de highlight da scrollbar, refletindo a ação primária da marca.
+// Brand theming: indicador de loading + highlight da scrollbar com a ação
+// primária da marca.
+//
+// COLAPSADO: os 3 blocos por-marca eram IDÊNTICOS (--dss-action-primary já é
+// brand-aware) → um único [data-brand] (mesmo alcance, sem repetir 3×). O
+// `scrollbar-color` (antes só no bloco hub, mas é brand-agnóstico) passa a valer
+// para as 3 marcas — correção da inconsistência.
 
-[data-brand="hub"] .dss-virtual-scroll {
+[data-brand] .dss-virtual-scroll {
   .dss-virtual-scroll__loading-indicator {
-    border-top-color: var(--dss-action-hub);
+    border-top-color: var(--dss-action-primary);
   }
 
   .dss-virtual-scroll__inner {
     scrollbar-color: var(--dss-surface-muted) transparent;
 
     &::-webkit-scrollbar-thumb {
-      background-color: var(--dss-action-hub, var(--dss-surface-muted));
-    }
-  }
-}
-
-[data-brand="water"] .dss-virtual-scroll {
-  .dss-virtual-scroll__loading-indicator {
-    border-top-color: var(--dss-action-water);
-  }
-
-  .dss-virtual-scroll__inner {
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--dss-action-water, var(--dss-surface-muted));
-    }
-  }
-}
-
-[data-brand="waste"] .dss-virtual-scroll {
-  .dss-virtual-scroll__loading-indicator {
-    border-top-color: var(--dss-action-waste);
-  }
-
-  .dss-virtual-scroll__inner {
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--dss-action-waste, var(--dss-surface-muted));
+      background-color: var(--dss-action-primary, var(--dss-surface-muted));
     }
   }
 }

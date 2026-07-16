@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssVideo",
-  "classification": {
-    "type": "Container de efeito visual não interativo",
-    "category": "Mídia e Visualização",
-    "interactive": false,
-    "level": 1,
-    "family": "Mídia e Visualização"
-  },
+  "classification": "Visual",
   "phaseDescription": "Nível 1 — Container de efeito de paralaxe. Wrapper governado sobre QParallax com fallback estático para prefers-reduced-motion e suporte a alt text via sr-only.",
   "statesApplicable": [
     "default",
@@ -93,5 +87,30 @@
     "demoSlots": null
   },
   "auditHistory": [],
-  "previewGroup": "contextuais"
+  "previewGroup": "contextuais",
+  "classificationNote": {
+    "type": "Container de efeito visual não interativo",
+    "category": "Mídia e Visualização",
+    "interactive": false,
+    "level": 1,
+    "family": "Mídia e Visualização"
+  },
+  "tagline": "Imagem de fundo com efeito de rolagem em parallax.",
+  "a11y": {
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-hidden"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Imagem de fundo com alternativa textual via alt; decorativa via decorative→aria-hidden.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

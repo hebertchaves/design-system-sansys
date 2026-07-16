@@ -1,0 +1,1321 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssTextarea",
+  "version": "2.2.0",
+  "identity": {
+    "displayName": "Textarea",
+    "tagline": "Campo de texto de múltiplas linhas para entradas longas.",
+    "category": "Action Control interativo — campo multilinhas",
+    "classification": "Action",
+    "phase": 1,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssInput"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-03-19",
+    "mode": "Modo Auditor DSS",
+    "sealPath": "docs/Compliance/seals/DssTextarea/DSSTEXTAREA_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Valor do textarea (v-model)"
+      },
+      {
+        "name": "variant",
+        "type": "TextareaVariant",
+        "controlHint": "segmented",
+        "default": "outlined",
+        "description": "Variante visual do textarea",
+        "validValues": [
+          "filled",
+          "outlined",
+          "standout",
+          "borderless"
+        ]
+      },
+      {
+        "name": "dense",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Versão compacta (menor altura inicial e espaçamentos reduzidos)"
+      },
+      {
+        "name": "brand",
+        "type": "TextareaBrand | null",
+        "controlHint": "picker-brand",
+        "default": "null",
+        "description": "Marca Sansys (Hub, Water, Waste)",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Label do textarea (floating label)"
+      },
+      {
+        "name": "stackLabel",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Label sempre visível no topo (não flutua)"
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Placeholder do textarea"
+      },
+      {
+        "name": "hint",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto de ajuda exibido abaixo do textarea"
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Mensagem de erro exibida abaixo do textarea"
+      },
+      {
+        "name": "error",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Estado de erro (muda cor para negativo)"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Textarea desabilitado"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Textarea somente leitura"
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Mostra indicador de loading (spinner)"
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Textarea obrigatório (adiciona aria-required)"
+      },
+      {
+        "name": "clearable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Mostra botão de limpar (×) quando há valor"
+      },
+      {
+        "name": "autogrow",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Cresce automaticamente conforme o conteúdo é digitado."
+      },
+      {
+        "name": "rows",
+        "type": "number | string",
+        "controlHint": "text",
+        "default": "1",
+        "description": "Número de linhas visíveis inicialmente."
+      },
+      {
+        "name": "maxHeight",
+        "type": "string",
+        "controlHint": "text",
+        "default": "undefined (sem limite)",
+        "description": "Altura máxima do campo (CSS value, ex.: '300px', '50vh')."
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Label de acessibilidade customizado para screen readers."
+      },
+      {
+        "name": "clearAriaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Clear textarea",
+        "description": "Label de acessibilidade para o botão de limpar"
+      },
+      {
+        "name": "tabindex",
+        "type": "number | string | null",
+        "controlHint": "text",
+        "default": "null (usa 0 por padrão)",
+        "description": "Tabindex customizado"
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "string",
+        "description": "Emitido quando o valor do textarea muda (v-model)"
+      },
+      {
+        "name": "focus",
+        "payload": "FocusEvent",
+        "description": "Emitido quando o textarea recebe foco"
+      },
+      {
+        "name": "blur",
+        "payload": "FocusEvent",
+        "description": "Emitido quando o textarea perde foco"
+      },
+      {
+        "name": "clear",
+        "description": "Emitido quando o textarea é limpo via botão clear"
+      }
+    ],
+    "slots": [
+      {
+        "name": "label",
+        "scope": null,
+        "description": "Label customizado"
+      },
+      {
+        "name": "before",
+        "scope": null,
+        "description": "Conteúdo antes do campo wrapper"
+      },
+      {
+        "name": "prepend",
+        "scope": null,
+        "description": "Conteúdo dentro do campo, à esquerda"
+      },
+      {
+        "name": "append",
+        "scope": null,
+        "description": "Conteúdo dentro do campo, à direita"
+      },
+      {
+        "name": "after",
+        "scope": null,
+        "description": "Conteúdo depois do campo wrapper"
+      },
+      {
+        "name": "error",
+        "scope": null,
+        "description": "Mensagem de erro customizada"
+      },
+      {
+        "name": "hint",
+        "scope": null,
+        "description": "Texto de ajuda customizado"
+      }
+    ],
+    "exposedRefs": [
+      {
+        "name": "focus",
+        "type": "() => void",
+        "description": "Foca no textarea"
+      },
+      {
+        "name": "blur",
+        "type": "() => void",
+        "description": "Remove foco do textarea"
+      },
+      {
+        "name": "nativeEl",
+        "type": "HTMLTextAreaElement | null",
+        "description": "Referência direta ao elemento textarea nativo"
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "variant": "outlined",
+        "label": "Mensagem",
+        "placeholder": "Escreva aqui"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "88px"
+      },
+      "minWidth": {
+        "value": "240px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-min-w-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-input-height-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-200",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-input-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-normal",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-height",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow-y",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "resize",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-hint",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "default",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-secondary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translateY(-50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translateY(0) scale(0.75)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform-origin",
+          "token": null,
+          "value": "left top",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-input-height-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-input-height-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-gray-300",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-800",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse-hint",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse-secondary",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "LinkText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "FieldText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Field",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-800",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "border-color",
+          "token": "--dss-gray-600",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-700",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "border-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-700",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-thick",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "color",
+          "token": "--dss-text-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-style",
+          "token": null,
+          "value": "dotted",
+          "source": "3-variants/_outlined.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "border-bottom-style",
+          "token": null,
+          "value": "dotted",
+          "source": "3-variants/_filled.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-900",
+          "value": null,
+          "source": "3-variants/_standout.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_borderless.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "GrayText",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "loading": [
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-min-w-lg",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-input-height-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-input-height-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-normal",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-hint",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default",
+          "hover",
+          "focus",
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-800",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse-hint",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-700",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-800",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-600",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-gray-700",
+        "usedIn": [
+          "hover",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-water-600",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-waste-700",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-text-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-900",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-400",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Nome/estado via aria-label, aria-required, aria-invalid.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Operável por teclado (foco, digitação, limpar).",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "textbox",
+      "states": [
+        "aria-required",
+        "aria-invalid",
+        "aria-label",
+        "aria-multiline"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "mover foco para o campo"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    },
+    {
+      "rule": "P14"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    },
+    {
+      "id": "P14",
+      "name": "Icon Composition",
+      "appliesTo": [
+        "api.slots"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssTextarea.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_borderless.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/textarea.types.ts",
+    "docs": {
+      "normative": "DssTextarea.md",
+      "api": "DSSTEXTAREA_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssTextarea.example.vue",
+    "tests": "DssTextarea.test.js",
+    "seal": "docs/Compliance/seals/DssTextarea/DSSTEXTAREA_SELO_v2.2.md"
+  }
+}

@@ -1,0 +1,759 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssTree",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Tree",
+    "tagline": "Árvore hierárquica navegável com expansão, seleção e marcação de nós.",
+    "category": "",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssExpansionItem"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-05-22",
+    "sealPath": "docs/Compliance/seals/DssTree/DSSTREE_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "nodes",
+        "type": "DssTreeNode[]",
+        "controlHint": "text",
+        "required": true,
+        "description": "Dados hierárquicos da árvore (obrigatório)"
+      },
+      {
+        "name": "nodeKey",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Campo identificador único de cada nó"
+      },
+      {
+        "name": "labelKey",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Campo do texto exibido de cada nó"
+      },
+      {
+        "name": "childrenKey",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Campo dos filhos de cada nó"
+      },
+      {
+        "name": "selected",
+        "type": "string | null",
+        "controlHint": "text",
+        "description": "Nó selecionado (v-model:selected)."
+      },
+      {
+        "name": "expanded",
+        "type": "string[]",
+        "controlHint": "text",
+        "description": "Nós expandidos (v-model:expanded)."
+      },
+      {
+        "name": "ticked",
+        "type": "string[]",
+        "controlHint": "text",
+        "description": "Nós marcados/checked (v-model:ticked)."
+      },
+      {
+        "name": "accordion",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Modo acordeão: apenas um nó de cada nível expandido por vez"
+      },
+      {
+        "name": "noConnectors",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Oculta as linhas de conexão entre nós"
+      },
+      {
+        "name": "defaultExpandAll",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Expande todos os nós ao montar o componente"
+      },
+      {
+        "name": "filter",
+        "type": "string",
+        "controlHint": "text",
+        "description": "String de filtro para busca client-side"
+      },
+      {
+        "name": "filterMethod",
+        "type": "(node: DssTreeNode, filter: string, update: (fn: () => void) => void) => boolean",
+        "controlHint": "text",
+        "description": "Função customizada de filtro"
+      },
+      {
+        "name": "tickStrategy",
+        "type": "DssTreeTickStrategy",
+        "controlHint": "segmented",
+        "description": "Estratégia de seleção via checkbox",
+        "validValues": [
+          "none",
+          "strict",
+          "leaf",
+          "leaf-filtered"
+        ]
+      },
+      {
+        "name": "noNodesLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Mensagem quando não há nós"
+      },
+      {
+        "name": "noResultsLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Mensagem quando filtro não retorna resultados"
+      },
+      {
+        "name": "iconSize",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Tamanho dos ícones de expansão"
+      },
+      {
+        "name": "dense",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Modo compacto (equivale ao dense do Quasar)"
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:selected",
+        "payload": "string | null",
+        "description": "Nó selecionado mudou"
+      },
+      {
+        "name": "update:expanded",
+        "payload": "string[]",
+        "description": "Nós expandidos mudaram"
+      },
+      {
+        "name": "update:ticked",
+        "payload": "string[]",
+        "description": "Nós marcados mudaram"
+      },
+      {
+        "name": "lazy-load",
+        "payload": "DssTreeLazyLoadDetails",
+        "description": "Evento de lazy loading — preencher filhos assíncronos"
+      },
+      {
+        "name": "after-show",
+        "description": "Nó terminou de expandir (animação concluída). QTree não fornece payload."
+      },
+      {
+        "name": "after-hide",
+        "description": "Nó terminou de colapsar (animação concluída). QTree não fornece payload."
+      }
+    ],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "nodeKey": "id",
+        "labelKey": "label",
+        "nodes": [
+          {
+            "label": "Raiz",
+            "icon": "folder",
+            "children": [
+              {
+                "label": "Filho 1",
+                "icon": "description"
+              },
+              {
+                "label": "Filho 2",
+                "icon": "description"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-250",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-gray-100",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-gray-700",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": null,
+          "value": "1.5",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-gray-200",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": null,
+          "value": "-2px",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-width",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "HighlightText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "2px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "1px solid currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-hub-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-water-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-waste-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background-color",
+          "token": "--dss-gray-50",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": null,
+          "value": "-2px",
+          "source": "2-composition/_base.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-250",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-100",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-50",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação, expansão e seleção de nós operáveis por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "tree",
+      "states": [
+        "aria-expanded",
+        "aria-selected"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowDown",
+        "action": "mover para o próximo nó"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "expandir o nó"
+      },
+      {
+        "key": "Enter",
+        "action": "selecionar o nó"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssTree.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/tree.types.ts",
+    "docs": {
+      "normative": "DssTree.md",
+      "api": "DSSTREE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssTree.example.vue",
+    "tests": "DssTree.test.js",
+    "seal": "docs/Compliance/seals/DssTree/DSSTREE_SELO_v2.2.md"
+  }
+}

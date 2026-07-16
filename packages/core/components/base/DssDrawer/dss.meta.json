@@ -10,7 +10,7 @@
   "category": "Container estrutural lateral de layout de página — painel de navegação",
   "phase": 2,
   "phaseDescription": "Fase 2 — Container estrutural de Nível 3 (Composição de Segundo Grau). Orquestra componentes de Nível 2 (DssList, DssMenu) e interage diretamente com o sistema de layout do Quasar (QLayout via provide/inject). Wrapper DSS governado sobre QDrawer.",
-  "classification": "Layout — Estrutura de Página — container lateral não-interativo",
+  "classification": "Visual",
   "hasReservations": true,
   "reservations": [
     {
@@ -324,5 +324,22 @@
     }
   },
   "previewGroup": "layout",
-  "sealDate": "2026-04-20"
+  "sealDate": "2026-04-20",
+  "classificationNote": "Layout — Estrutura de Página — container lateral não-interativo",
+  "tagline": "Painel lateral de layout, fixo ou sobreposto, para navegação ou conteúdo auxiliar.",
+  "a11y": {
+    "aria": {
+      "role": "complementary",
+      "states": []
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Região de layout (drawer) que provê contexto estrutural à página.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -9,6 +9,18 @@
   "goldenContext": "DssInput",
   "phase": 1,
   "category": "Action Control interativo — campo de seleção",
+  "classification": "Action",
+  "tagline": "Campo de seleção de uma ou mais opções a partir de uma lista.",
+  "a11y": {
+    "aria": { "role": "combobox", "states": ["aria-expanded", "aria-required", "aria-invalid"] },
+    "keyboard": [{ "key": "Enter/Space", "action": "abrir o menu de opcoes" }],
+    "wcag": [
+      { "criterion": "1.4.3", "level": "AA", "implementation": "Texto do campo (text-primary) sobre fundo claro atinge contraste AA", "verifiedBy": "css", "contrast": { "fg": "--dss-text-primary", "bg": "--dss-gray-50" } },
+      { "criterion": "2.4.7", "level": "AA", "implementation": "Anel de foco visivel via outline no estado :focus", "verifiedBy": "css", "cssRule": { "selectorIncludes": ":focus", "property": "outline" } },
+      { "criterion": "4.1.2", "level": "A", "implementation": "Combobox com aria-expanded/required/invalid expostos", "verifiedBy": "aria" },
+      { "criterion": "2.1.1", "level": "A", "implementation": "Operavel por teclado (abrir, navegar, selecionar)", "verifiedBy": "test" }
+    ]
+  },
   "touchTarget": "Option A — interativo, min-height: var(--dss-input-height-md) no .q-field__control",
   "hasReservations": null,
   "exceptions": [],

@@ -5,35 +5,39 @@
 // =============================================================================
 
 .dss-file--standout {
+  // D1/D3 (golden = DssInput standout): standout é um CHIP DE ALTO CONTRASTE já
+  // em repouso — fundo escuro gray-800 + texto inverso. ❌ gray-100 ficava idêntico
+  // ao borderless. Espelha DssInput/3-variants/_standout.scss.
   .dss-file__field {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-gray-800);
     border: none;
-    border-radius: var(--dss-radius-md);
+    border-radius: var(--dss-radius-sm); // paridade família (era md)
+  }
+
+  // Texto inverso sobre o chip escuro (D2). Tokens EXISTEM no catálogo
+  // (text-inverse-secondary é estável nos 2 temas — C2); comentário antigo
+  // "NC-01: não existe" estava desatualizado.
+  .dss-file__label {
+    color: var(--dss-text-inverse-secondary);
+  }
+
+  .dss-file__drop-hint {
+    color: var(--dss-text-inverse-hint);
+  }
+
+  .dss-file__file-name {
+    color: var(--dss-text-inverse);
   }
 
   // Hover
   &:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
-    background-color: var(--dss-gray-200);
+    background-color: var(--dss-gray-700);
   }
 
   // Foco
   &.dss-file--focused .dss-file__field {
-    background-color: var(--dss-gray-800);
+    background-color: var(--dss-gray-700);
     box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
-  }
-
-  // NC-01 fix: --dss-text-inverse-secondary e --dss-text-inverse-hint não existem.
-  // Apenas --dss-text-inverse está definido no catálogo de tokens DSS.
-  &.dss-file--focused .dss-file__label {
-    color: var(--dss-text-inverse);
-  }
-
-  &.dss-file--focused .dss-file__drop-hint {
-    color: var(--dss-text-inverse);
-  }
-
-  &.dss-file--focused .dss-file__file-name {
-    color: var(--dss-text-inverse);
   }
 
   // Drag ativo
@@ -52,13 +56,13 @@
     box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-feedback-error);
   }
 
-  // Desabilitado
+  // Desabilitado — mantém o chip escuro, mais fundo (paridade DssInput standout)
   &.dss-file--disabled .dss-file__field {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-gray-900);
   }
 
-  // Readonly
+  // Readonly — chip escuro em repouso
   &.dss-file--readonly .dss-file__field {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-gray-800);
   }
 }

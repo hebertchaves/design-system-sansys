@@ -11,7 +11,8 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente Composto. O DssBtnGroup gerencia estado visual compartilhado entre múltiplos DssButton filhos (border-radius, separadores, layout). Isso caracteriza composição interna, critério da Fase 2.",
   "hasReservations": false,
-  "classification": "Container de composição — Agrupa instâncias de DssButton com borda compartilhada e remoção de gap",
+  "classification": "Action",
+  "classificationNote": "Container de composição — Agrupa instâncias de DssButton com borda compartilhada e remoção de gap",
   "subcomponents": [],
   "compositionRequirements": [
     "DssButton"
@@ -170,5 +171,44 @@
       "justification": "Uso de seletores descendentes (> .dss-button) necessário para aplicar border-radius e margens contextuais de grupo, sem alterar a API interna do DssButton."
     }
   },
-  "previewGroup": "acoes"
+  "previewGroup": "acoes",
+  "tagline": "Agrupa botões relacionados em um único bloco visual coeso.",
+  "a11y": {
+    "aria": {
+      "role": "group",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "mover foco entre os botões do grupo"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Cada botão do grupo é alcançável e operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Grupo rotulado via role=group e aria-label.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
 }

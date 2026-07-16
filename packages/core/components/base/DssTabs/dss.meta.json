@@ -12,7 +12,7 @@
   "phase": 2,
   "phaseDescription": "Fase 2 — Componente Composto. O DssTabs gerencia estado global de seleção (v-model) entre múltiplos DssTab filhos, orquestra setas de navegação por rolagem e propaga contexto de marca ([data-brand]) para coloração automática dos filhos. Isso caracteriza composição orquestrada, critério da Fase 2.",
   "hasReservations": false,
-  "classification": "Container de composição — Agrupa instâncias de DssTab com navegação por teclado e scroll automático",
+  "classification": "Action",
   "subcomponents": [],
   "compositionRequirements": [
     "DssTab"
@@ -194,5 +194,64 @@
       ]
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "classificationNote": "Container de composição — Agrupa instâncias de DssTab com navegação por teclado e scroll automático",
+  "tagline": "Lista de abas com navegação por teclado para alternar entre painéis.",
+  "a11y": {
+    "aria": {
+      "role": "tablist",
+      "states": [
+        "aria-label",
+        "aria-orientation"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowRight",
+        "action": "mover para a próxima aba"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "mover para a aba anterior"
+      },
+      {
+        "key": "Home",
+        "action": "ir para a primeira aba"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação entre abas operável por teclado (setas, Home/End).",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Lista de abas rotulada via aria-label; orientação via aria-orientation.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

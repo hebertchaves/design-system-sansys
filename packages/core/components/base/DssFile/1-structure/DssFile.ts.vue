@@ -8,7 +8,9 @@
     @dragover="handleDragOver"
     @dragleave="handleDragLeave"
   >
-    <!-- QFile — gerencia toda a lógica de seleção de arquivos -->
+    <!-- QFile — gerencia toda a lógica de seleção (overlay transparente opacity:0).
+         Sem slots prepend/append: eles ficariam invisíveis dentro do overlay;
+         moram na linha visual abaixo, acima do overlay (z-index). -->
     <q-file
       ref="qFileRef"
       :model-value="modelValue"
@@ -26,62 +28,65 @@
       @rejected="(rejections) => emit('rejected', rejections)"
       @focus="handleFocus"
       @blur="handleBlur"
-    >
-      <!-- Prepend slot -->
-      <template v-if="slots.prepend" #prepend>
-        <div class="dss-file__prepend">
-          <slot name="prepend" />
+    />
+
+    <!-- Linha visual do campo (sobre o QFile transparente). Só o
+         .dss-file__control (duplicata visual de label/dropzone/valor) é
+         aria-hidden; prepend/append/clear são slots/controles REAIS e visíveis,
+         com z-index acima do overlay para receberem o clique. -->
+    <div class="dss-file__field">
+      <!-- Prepend (slot do usuário) — fora do QFile opacity:0, senão invisível -->
+      <div v-if="slots.prepend" class="dss-file__prepend">
+        <slot name="prepend" />
+      </div>
+
+      <!-- Conteúdo visual duplicado (o QFile já anuncia via aria-label) -->
+      <div class="dss-file__control" aria-hidden="true">
+        <!-- Label flutuante -->
+        <label
+          v-if="label || slots['label-slot']"
+          :class="labelClasses"
+          @click="pickFiles"
+        >
+          {{ label }}
+        </label>
+
+        <!-- Área de drag-and-drop (dica visual). Papel de placeholder: com label
+             em repouso ocupa o centro e a dica fica oculta (evita overlap —
+             paridade DssInput). Sem label, aparece sempre no estado vazio. -->
+        <div v-if="showDropHint" class="dss-file__drop-hint">
+          <span class="dss-file__drop-icon" aria-hidden="true">📎</span>
+          <span class="dss-file__drop-text">
+            {{ placeholder || 'Clique ou arraste arquivos aqui' }}
+          </span>
         </div>
-      </template>
 
-      <!-- Append slot + clear button -->
-      <template #append>
-        <div class="dss-file__append">
-          <slot name="append" />
-
-          <!-- Botão de limpar -->
-          <button
-            v-if="clearable && hasValue && !disabled && !readonly"
-            class="dss-file__clear"
-            type="button"
-            :tabindex="-1"
-            :aria-label="clearAriaLabel"
-            @click.stop="handleClear"
-          >
-            <span aria-hidden="true">×</span>
-          </button>
+        <!-- Nomes dos arquivos selecionados -->
+        <div v-if="hasValue" class="dss-file__value">
+          <span v-if="Array.isArray(modelValue)" class="dss-file__file-name">
+            {{ modelValue.length === 1 ? modelValue[0].name : `${modelValue.length} arquivos selecionados` }}
+          </span>
+          <span v-else class="dss-file__file-name">
+            {{ (modelValue as File).name }}
+          </span>
         </div>
-      </template>
-    </q-file>
+      </div>
 
-    <!-- Região interna do campo (sobreposição visual) -->
-    <div class="dss-file__field" aria-hidden="true">
-      <!-- Label flutuante -->
-      <label
-        v-if="label || slots['label-slot']"
-        :class="labelClasses"
-        @click="pickFiles"
+      <!-- Append (slot do usuário) — fora do QFile opacity:0 -->
+      <div v-if="slots.append" class="dss-file__append">
+        <slot name="append" />
+      </div>
+
+      <!-- Botão de limpar (controle real, visível, acima do overlay) -->
+      <button
+        v-if="clearable && hasValue && !disabled && !readonly"
+        class="dss-file__clear"
+        type="button"
+        :aria-label="clearAriaLabel"
+        @click.stop="handleClear"
       >
-        {{ label }}
-      </label>
-
-      <!-- Área de drag-and-drop (dica visual) -->
-      <div v-if="!hasValue && !disabled && !readonly" class="dss-file__drop-hint">
-        <span class="dss-file__drop-icon" aria-hidden="true">📎</span>
-        <span class="dss-file__drop-text">
-          {{ placeholder || 'Clique ou arraste arquivos aqui' }}
-        </span>
-      </div>
-
-      <!-- Nomes dos arquivos selecionados -->
-      <div v-if="hasValue" class="dss-file__value">
-        <span v-if="Array.isArray(modelValue)" class="dss-file__file-name">
-          {{ modelValue.length === 1 ? modelValue[0].name : `${modelValue.length} arquivos selecionados` }}
-        </span>
-        <span v-else class="dss-file__file-name">
-          {{ (modelValue as File).name }}
-        </span>
-      </div>
+        <span aria-hidden="true">×</span>
+      </button>
     </div>
 
     <!-- Overlay visual para drag ativo -->
@@ -259,6 +264,18 @@ const computedTabindex = computed(() => {
   }
   return 0
 })
+
+/**
+ * Exibe a dica de arrastar/soltar (papel de placeholder). Oculta quando um label
+ * em repouso ocupa o centro do campo (evita a sobreposição label × placeholder);
+ * reaparece com o label flutuado (foco), em stackLabel, ou quando não há label.
+ */
+const showDropHint = computed(() =>
+  !hasValue.value &&
+  !props.disabled &&
+  !props.readonly &&
+  (!props.label || isFocused.value || props.stackLabel)
+)
 
 // ==========================================================================
 // EXPOSE

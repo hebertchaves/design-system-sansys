@@ -1,0 +1,295 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssTimelineEntry",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Timeline Entry",
+    "tagline": "Entrada individual de uma linha do tempo (DssTimeline).",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssTimeline"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssTimelineEntry/DSSTIMELINEENTRY_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "heading",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Quando true, renderiza como cabeçalho/separador visual dentro da timeline."
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Tag HTML raiz do item. Padrão: 'li'."
+      },
+      {
+        "name": "side",
+        "type": "DssTimelineEntrySide",
+        "controlHint": "segmented",
+        "description": "Sobrescreve o lado (left|right) definido no DssTimeline pai.",
+        "validValues": [
+          "left",
+          "right"
+        ]
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome do ícone Material Icons exibido no marcador do item."
+      },
+      {
+        "name": "avatar",
+        "type": "string",
+        "controlHint": "text",
+        "description": "URL de imagem de avatar exibida no lugar do ícone."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Título textual do evento."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Subtítulo textual — geralmente data/hora do evento."
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo principal do item (corpo do evento)."
+      },
+      {
+        "name": "title",
+        "scope": null,
+        "description": "Slot para customizar o título com badges, ícones ou markup rico."
+      },
+      {
+        "name": "subtitle",
+        "scope": null,
+        "description": "Slot para customizar o subtítulo com formatação especial de data/hora."
+      },
+      {
+        "name": "icon",
+        "scope": null,
+        "description": "Slot para customizar o marcador/ícone com SVG ou componente customizado."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "title": "Evento",
+        "subtitle": "Data",
+        "icon": "check"
+      },
+      "slots": {
+        "default": "Conteúdo do evento."
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Entrada de linha do tempo com título/subtítulo estruturados.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "listitem",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    },
+    {
+      "rule": "P14"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    },
+    {
+      "id": "P14",
+      "name": "Icon Composition",
+      "appliesTo": [
+        "api.slots"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssTimelineEntry.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/timeline-entry.types.ts",
+    "docs": {
+      "normative": "DssTimelineEntry.md",
+      "api": "DSSTIMELINEENTRY_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssTimelineEntry.example.vue",
+    "tests": "DssTimelineEntry.test.js",
+    "seal": "docs/Compliance/seals/DssTimelineEntry/DSSTIMELINEENTRY_SELO_v2.2.md"
+  }
+}

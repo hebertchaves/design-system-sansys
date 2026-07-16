@@ -9,7 +9,7 @@ DSS = camada corporativa sobre Quasar Framework. Não é uma lib standalone.
 - **Token First** — nenhum valor hardcoded, sempre `var(--dss-*)`
 - **4 Camadas** — Structure → Composition → Variants → Output (nenhuma omitível)
 - **Brand-aware** — reage a `[data-brand="hub|water|waste"]`
-- **Unlayered** — CSS DSS nunca entra em `@layer` (vence o Quasar via Princípio #13)
+- **Unlayered** — CSS DSS nunca entra em `@layer` (vence o Quasar via Cascade Layers — Constituição #3)
 - **WCAG 2.1 AA** — acessibilidade não é opcional
 
 ---
@@ -61,7 +61,7 @@ cd apps/sandbox && npm run test:regression
 
 | Arquivo | Conteúdo |
 |---|---|
-| [DSS_ARCHITECTURE.md](/docs/reference/DSS_ARCHITECTURE.md) | Arquitetura geral, Princípios #1–#13 |
+| [DSS_ARCHITECTURE.md](/docs/reference/DSS_ARCHITECTURE.md) | Arquitetura geral + isolamento via Cascade Layers (Constituição DSS) |
 | [DSS_COMPONENT_ARCHITECTURE.md](/docs/reference/DSS_COMPONENT_ARCHITECTURE.md) | 4 camadas, pseudo-elementos, brightness |
 | [DSS_TOKEN_REFERENCE.md](/docs/reference/DSS_TOKEN_REFERENCE.md) | Catálogo de tokens semânticos |
 | [PRD_DSS.md](/docs/reference/PRD_DSS.md) | Product Requirements Document |

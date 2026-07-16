@@ -38,7 +38,44 @@
           <input v-else-if="k.controlHint === 'stepper'" :id="'k-' + k.name" type="number" v-model.number="state[k.name]" />
           <input v-else :id="'k-' + k.name" type="text" v-model="state[k.name]" :placeholder="String(k.default ?? '')" />
         </div>
+
+        <template v-if="slotDefs.length">
+          <h4 class="pv__slots-h">Slots <small>— do contrato ({{ slotDefs.length }})</small></h4>
+          <div v-for="s in slotDefs" :key="s.name" class="pv__slot">
+            <label :for="'s-' + s.name" :title="s.description || ''">
+              <input :id="'s-' + s.name" type="checkbox" v-model="activeSlots[s.name]" />
+              {{ s.name }} <small>slot</small>
+            </label>
+          </div>
+        </template>
+
+        <template v-if="methodDefs.length">
+          <h4 class="pv__slots-h">Métodos <small>— exposedRefs ({{ methodDefs.length }})</small></h4>
+          <button
+            v-for="m in methodDefs" :key="m.name" class="pv__method"
+            :title="(m.description || '') + '  ' + (m.type || '')"
+            @click="callMethod(m.name)"
+          >{{ m.name }}()</button>
+        </template>
       </aside>
+    </div>
+
+    <div class="pv__events">
+      <div class="pv__events-h">
+        Eventos <small>— emits do contrato ({{ emitDefs.length }})</small>
+        <button v-if="eventLog.length" class="pv__events-clear" @click="eventLog = []">limpar</button>
+      </div>
+      <div class="pv__events-body">
+        <p v-if="!eventLog.length" class="pv__events-empty">
+          Interaja com o componente (ou chame um método) — os eventos aparecem aqui.
+          <span v-if="emitDefs.length"> Disponíveis: {{ emitDefs.map(e => e.name).join(', ') }}.</span>
+        </p>
+        <div v-for="(ev, i) in eventLog" :key="i" class="pv__event">
+          <span class="pv__event-t">{{ ev.t }}</span>
+          <strong>{{ ev.name }}</strong>
+          <code>{{ JSON.stringify(ev.payload) }}</code>
+        </div>
+      </div>
     </div>
 
     <pre class="pv__snippet">{{ snippet }}</pre>
@@ -50,9 +87,17 @@ import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({ component: { type: String, default: 'DssInput' } })
 
-const contracts = import.meta.glob('../../../../packages/core/components/base/*/dss.contract.json')
+// eager: o contrato é JSON pequeno; carregar sincronamente elimina o flash
+// "Sem dss.contract.json" (antes o import assíncrono deixava `contract` null por
+// alguns segundos no dev do /mnt/c) e o round-trip extra ao dev server.
+const contracts = import.meta.glob('../../../../packages/core/components/{base,composed}/*/dss.contract.json', { eager: true, import: 'default' })
 const contract = ref(null)
 const knobs = ref([])
+const slotDefs = ref([])          // api.slots do contrato
+const activeSlots = reactive({})  // nome do slot -> ligado?
+const emitDefs = ref([])          // api.emits do contrato
+const methodDefs = ref([])        // api.exposedRefs do contrato
+const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
 const state = reactive({})
 const theme = ref('light')
 const brand = ref('')
@@ -60,11 +105,10 @@ const frameEl = ref(null)
 
 const frameSrc = computed(() => `${location.pathname}?frame=${props.component}`)
 
-async function load() {
+function load() {
   const key = Object.keys(contracts).find((k) => k.endsWith(`/${props.component}/dss.contract.json`))
   if (!key) { contract.value = null; knobs.value = []; return }
-  const mod = await contracts[key]()
-  contract.value = mod.default || mod
+  contract.value = contracts[key]
   const vmodel = contract.value.api?.vModel?.prop
   knobs.value = (contract.value.api?.props || [])
     .filter((p) => p.name !== vmodel)
@@ -79,8 +123,26 @@ async function load() {
   const dpp = contract.value.visual?.defaultPreview?.props || {}
   Object.keys(state).forEach((k) => delete state[k])
   for (const k of knobs.value) {
-    state[k.name] = (k.name in dpp) ? dpp[k.name] : (k.default ?? (k.controlHint === 'toggle' ? false : ''))
+    // @default sem valor chega do contrato como STRING descritiva (quirk do
+    // emitter): "null", "undefined", "undefined (ilimitado)"… Tratar como ausente,
+    // senão vira valor truthy semeado (brand="null" → classe --brand-null; ou
+    // maxFiles="undefined (ilimitado)" → prop numérica recebe string → Vue warn).
+    let def = k.default
+    if (typeof def === 'string' && /^(null|undefined)\b/.test(def)) def = undefined
+    // stepper (numérico): default não-parseável = ausente
+    if (k.controlHint === 'stepper' && def != null && Number.isNaN(Number(def))) def = undefined
+    state[k.name] = (k.name in dpp) ? dpp[k.name] : (def ?? (k.controlHint === 'toggle' ? false : ''))
   }
+  // Slots: 1 toggle por slot do contrato (o Preview injeta conteúdo de demo no
+  // sujeito). Sem isto, slots como prepend/append nunca apareciam no Preview
+  // (o v-if="slots.x" ficava falso — só props eram exercitadas).
+  slotDefs.value = contract.value.api?.slots || []
+  Object.keys(activeSlots).forEach((k) => delete activeSlots[k])
+  for (const s of slotDefs.value) activeSlots[s.name] = false
+  // Eventos (log) e métodos expostos (botões) — completam a superfície da API.
+  emitDefs.value = contract.value.api?.emits || []
+  methodDefs.value = contract.value.api?.exposedRefs || []
+  eventLog.value = []
 }
 
 function postState() {
@@ -88,9 +150,29 @@ function postState() {
   if (!el || !el.contentWindow) return
   const clean = {}
   for (const [k, v] of Object.entries(state)) if (v !== '' && v != null && v !== false) clean[k] = v
-  el.contentWindow.postMessage({ __frame: true, props: clean, theme: theme.value, brand: brand.value }, '*')
+  // Serializa para dado PLANO: state pode conter arrays/objetos reativos (Proxy)
+  // que o structured-clone do postMessage não consegue clonar (ex.: options do Select).
+  // modelProp: o sujeito só liga v-model quando o contrato declara vModel
+  // (componentes sem model — ex.: DssUploader — não recebem modelValue órfão).
+  const modelProp = contract.value?.api?.vModel?.prop ?? null
+  const slots = Object.keys(activeSlots).filter((n) => activeSlots[n])
+  const emits = emitDefs.value.map((ev) => ev.name)
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, slots, emits }))
+  el.contentWindow.postMessage(payload, '*')
 }
-function onMsg(e) { if (e.data && e.data.__frameReady) postState() }
+// Chama um método exposto (exposedRefs) no sujeito, via postMessage.
+function callMethod(methodName) {
+  frameEl.value?.contentWindow?.postMessage({ __frameCall: true, method: methodName }, '*')
+}
+function onMsg(e) {
+  const d = e.data
+  if (!d) return
+  if (d.__frameReady) { postState(); return }
+  if (d.__frameEvent) {
+    eventLog.value.unshift({ t: new Date().toLocaleTimeString(), name: d.name, payload: d.payload })
+    if (eventLog.value.length > 50) eventLog.value.pop()
+  }
+}
 
 const snippet = computed(() => {
   const parts = []
@@ -101,10 +183,14 @@ const snippet = computed(() => {
     else if (typeof v === 'string') parts.push(`${k.name}="${v}"`)
     else parts.push(`:${k.name}="${v}"`)
   }
-  return `<${props.component}${parts.length ? ' ' + parts.join(' ') : ''} />`
+  const attrs = parts.length ? ' ' + parts.join(' ') : ''
+  const slots = Object.keys(activeSlots).filter((n) => activeSlots[n])
+  if (!slots.length) return `<${props.component}${attrs} />`
+  const inner = slots.map((s) => `  <template #${s}>…</template>`).join('\n')
+  return `<${props.component}${attrs}>\n${inner}\n</${props.component}>`
 })
 
-watch(() => JSON.stringify({ s: state, t: theme.value, b: brand.value }), postState)
+watch(() => JSON.stringify({ s: state, t: theme.value, b: brand.value, sl: activeSlots }), postState)
 watch(() => props.component, load)
 onMounted(() => { window.addEventListener('message', onMsg); load() })
 onUnmounted(() => window.removeEventListener('message', onMsg))
@@ -122,7 +208,23 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__knob { display: flex; flex-direction: column; margin-bottom: 8px; font-size: 13px; gap: 2px; }
 .pv__knob > label { font-weight: 600; }
 .pv__knob small { color: #999; font-weight: normal; }
+.pv__slots-h { margin: 16px 0 8px; padding-top: 12px; border-top: 1px solid #e5e5e5; }
+.pv__slot { font-size: 13px; margin-bottom: 6px; }
+.pv__slot label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.pv__slot small { color: #999; }
+.pv__method { display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 6px 10px; font-size: 13px; font-family: ui-monospace, monospace; background: #fff; border: 1px solid #d4d4d4; border-radius: 6px; cursor: pointer; }
+.pv__method:hover { background: #eef2ff; border-color: #a5b4fc; }
 .pv__empty { color: #b00020; font-size: 13px; }
+.pv__events { border-top: 1px solid #e5e5e5; background: #fafafa; max-height: 140px; display: flex; flex-direction: column; }
+.pv__events-h { display: flex; align-items: center; gap: 8px; padding: 6px 14px; font-size: 13px; font-weight: 600; border-bottom: 1px solid #eee; }
+.pv__events-h small { color: #999; font-weight: normal; }
+.pv__events-clear { margin-left: auto; font-size: 12px; background: none; border: 1px solid #d4d4d4; border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+.pv__events-body { overflow: auto; padding: 6px 14px; }
+.pv__events-empty { color: #999; font-size: 12px; margin: 4px 0; }
+.pv__event { display: flex; gap: 8px; align-items: baseline; font-size: 12px; padding: 2px 0; font-family: ui-monospace, monospace; }
+.pv__event-t { color: #999; flex-shrink: 0; }
+.pv__event strong { color: #4338ca; flex-shrink: 0; }
+.pv__event code { color: #475569; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pv__snippet { margin: 0; padding: 12px 14px; background: #0f172a; color: #e2e8f0; font-size: 13px; border-top: 1px solid #e5e5e5; overflow: auto; }
 h4 { margin: 0 0 10px; }
 h4 small { color: #999; font-weight: normal; }

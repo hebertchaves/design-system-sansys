@@ -7,12 +7,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssItem",
-  "classification": {
-    "type": "Composite",
-    "category": "Expansão e Colapso",
-    "interactive": true,
-    "family": "Expansion"
-  },
+  "classification": "Action",
   "quasarBase": "QExpansionItem",
   "architecture": "WRAP",
   "touchTarget": {
@@ -235,5 +230,61 @@
       "default": "Conteúdo expandido do item."
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "classificationNote": {
+    "type": "Composite",
+    "category": "Expansão e Colapso",
+    "interactive": true,
+    "family": "Expansion"
+  },
+  "tagline": "Item expansível (acordeão) que revela ou oculta conteúdo relacionado.",
+  "a11y": {
+    "aria": {
+      "role": "button",
+      "states": [
+        "aria-expanded",
+        "aria-controls"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Enter",
+        "action": "expandir/recolher o item"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Expandir/recolher operável por teclado.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível via outline no estado :focus.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus",
+          "property": "outline"
+        }
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Estado via aria-expanded; região via aria-controls.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      }
+    ]
+  }
 }

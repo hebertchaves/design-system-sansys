@@ -24,12 +24,12 @@
   vertical-align: middle;
 
   // Dimensoes padrao (md = 48px)
-  /* EXCECAO DOCUMENTADA: Reutiliza --dss-touch-target-min (48px) como
+  /* EXCECAO DOCUMENTADA: Reutiliza --dss-touch-target-md (48px) como
      token dimensional. Avatar e Visual/Identity, nao interativo.
      Nao existem tokens genericos --dss-size-* no catalogo DSS.
      Ref: DssAvatar.md Secao 14, EXC-01 */
-  width: var(--dss-touch-target-min);
-  height: var(--dss-touch-target-min);
+  width: var(--dss-touch-target-md);
+  height: var(--dss-touch-target-md);
 
   // Forma circular por padrao
   border-radius: var(--dss-radius-full);
@@ -234,7 +234,7 @@ a.dss-avatar,
        e outline-offset em focus-visible seguem convencao CSS padrao
        de acessibilidade com valores absolutos.
        Ref: DssAvatar.md Secao 14, EXC-03 */
-    outline: 2px solid var(--dss-focus-ring);
+    outline: 2px solid var(--dss-focus-primary);
     outline-offset: var(--dss-focus-ring-offset);
   }
 }
@@ -278,7 +278,7 @@ a.dss-avatar,
 
   // Avatar group overlap menor em mobile
   .dss-avatar-group .dss-avatar {
-    margin-left: calc(var(--dss-spacing-1-5) * -1);
+    margin-left: calc(var(--dss-spacing-1_5) * -1);
   }
 }
 

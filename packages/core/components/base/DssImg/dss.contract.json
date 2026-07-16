@@ -1,0 +1,394 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssImg",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Img",
+    "tagline": "Imagem responsiva com carregamento otimizado e fallback.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssInfiniteScroll"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/DssImg/DSSIMG_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "src",
+        "type": "string",
+        "controlHint": "text",
+        "description": "URL da imagem a ser carregada"
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto alternativo — obrigatório para imagens não-decorativas (WCAG 1.1.1)"
+      },
+      {
+        "name": "decorative",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Marca a imagem como puramente decorativa."
+      },
+      {
+        "name": "ratio",
+        "type": "number | string",
+        "controlHint": "text",
+        "description": "Proporção de aspecto da imagem (largura / altura)."
+      },
+      {
+        "name": "fit",
+        "type": "'cover' | 'contain' | 'fill' | 'none' | 'scale-down'",
+        "controlHint": "select",
+        "description": "Como a imagem se ajusta ao container (object-fit)",
+        "validValues": [
+          "cover",
+          "contain",
+          "fill",
+          "none",
+          "scale-down"
+        ]
+      },
+      {
+        "name": "loading",
+        "type": "'lazy' | 'eager'",
+        "controlHint": "segmented",
+        "description": "Comportamento de carregamento. `lazy` adia até a imagem entrar na viewport",
+        "validValues": [
+          "lazy",
+          "eager"
+        ]
+      },
+      {
+        "name": "fallbackSrc",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Imagem de fallback exibida quando `src` falha"
+      },
+      {
+        "name": "placeholderSrc",
+        "type": "string",
+        "controlHint": "text",
+        "description": "LQIP (Low Quality Image Placeholder): imagem de baixa qualidade exibida"
+      },
+      {
+        "name": "position",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Posição da imagem dentro do container (equivalente a background-position)"
+      },
+      {
+        "name": "radius",
+        "type": "'none' | 'sm' | 'md' | 'lg' | 'full'",
+        "controlHint": "select",
+        "description": "Raio de borda (border-radius) do container.",
+        "validValues": [
+          "none",
+          "sm",
+          "md",
+          "lg",
+          "full"
+        ]
+      },
+      {
+        "name": "noTransition",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desativa a transição de fade-in ao carregar"
+      }
+    ],
+    "emits": [
+      {
+        "name": "load",
+        "description": "Disparado quando a imagem carregou com sucesso"
+      },
+      {
+        "name": "error",
+        "description": "Disparado quando o carregamento da imagem falhou"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Overlay sobre a imagem carregada — renderizado acima do `<img>`"
+      },
+      {
+        "name": "loading",
+        "scope": null,
+        "description": "Indicador de carregamento customizado — padrão: DssSpinner centralizado"
+      },
+      {
+        "name": "error",
+        "scope": null,
+        "description": "Estado de erro customizado — padrão: ícone `broken_image` centralizado"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "src": "https://placehold.co/200x120",
+        "alt": "Imagem demonstrativa",
+        "fit": "cover",
+        "loading": "lazy",
+        "width": "200px"
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "150px"
+      },
+      "minWidth": {
+        "value": "200px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-disabled",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-lg",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion"
+    ],
+    "instances": [
+      {
+        "name": "--dss-surface-disabled",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-full",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-gray-100",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-500",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-duration-300",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Imagem com alternativa textual via alt; decorativa via decorative→aria-hidden.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-hidden"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssImg.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/img.types.ts",
+    "docs": {
+      "normative": "DssImg.md",
+      "api": "DSSIMG_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssImg.example.vue",
+    "tests": "DssImg.test.js",
+    "seal": "docs/Compliance/seals/DssImg/DSSIMG_SELO_v2.2.md"
+  }
+}

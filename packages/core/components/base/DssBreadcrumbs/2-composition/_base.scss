@@ -25,7 +25,7 @@
   // Gap governado pela CSS custom property injetada via style binding no template.
   // O valor padrão garante que o componente funcione mesmo sem style binding.
   // Quasar default gutter (gutter="none") não aplica margem — gap é o único controle.
-  gap: var(--dss-breadcrumbs-gap, var(--dss-spacing-3));
+  gap: var(--dss-spacing-3);
 
   // Garantia de alinhamento vertical entre itens e separadores
   align-items: center;
@@ -39,10 +39,10 @@
 // O aria-hidden="true" é aplicado nativamente pelo QBreadcrumbs nesses separadores.
 .dss-breadcrumbs .q-breadcrumbs__separator {
   // Cor via CSS custom property — sobrescrita por brands em Layer 4
-  color: var(--dss-breadcrumbs-separator-color, var(--dss-text-subtle));
+  color: var(--dss-text-subtle);
 
   // Tipografia dos separadores
-  // Nota: O pré-prompt especificou --dss-line-height-md, mas esse token não existe
+  // Nota: O pré-prompt especificou --dss-line-height-normal, mas esse token não existe
   // no catálogo DSS (DSS_TOKEN_REFERENCE.md). Uso --dss-line-height-sm, que é o
   // par canônico de --dss-font-size-sm. Divergência documentada aqui e em dss.meta.json.
   font-size: var(--dss-font-size-sm);

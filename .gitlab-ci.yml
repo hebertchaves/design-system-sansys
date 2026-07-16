@@ -10,6 +10,27 @@
 # Node 20 (engine usado no desenvolvimento). Cache de node_modules por lock.
 # ==========================================================================
 
+# --------------------------------------------------------------------------
+# Quando criar pipeline (evita a duplicata "branch + MR"):
+#   - MR aberto  → pipeline do MR (uma só)
+#   - push na main → integração/base
+#   - tag        → release
+# Uma feature branch SEM MR não roda sozinha (roda ao abrir o MR, inclusive draft).
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+
+# Regras aplicadas a CADA job. Sem isto, o default `only: [branches, tags]`
+# excluiria os jobs da pipeline de MR — que sairia vazia. Referenciada via
+# !reference em todos os jobs abaixo (job oculto, não executa por si só).
+.dss-rules:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+
 default:
   image: node:20
   cache:
@@ -29,6 +50,8 @@ stages:
 # --------------------------------------------------------------------------
 install:
   stage: install
+  rules:
+    - !reference [.dss-rules, rules]
   script:
     - npm ci
   artifacts:
@@ -41,6 +64,8 @@ install:
 build:core:
   stage: build
   needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
   script:
     - npm run core:build
   artifacts:
@@ -51,6 +76,8 @@ build:core:
 build:portal:
   stage: build
   needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
   script:
     - npm run docs:build
 
@@ -58,6 +85,8 @@ build:portal:
 test:unit:
   stage: test
   needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
   script:
     - cd packages/core && npx vitest run --project unit
   # 2553 testes — gate bloqueante (CLAUDE.md: test.js é gate de build)
@@ -66,15 +95,33 @@ test:unit:
 validate:visual-contract:
   stage: quality
   needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
   script:
     - npm run validate:css-meta
 
 type-check:
   stage: quality
   needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
   # GATE BLOQUEANTE desde jun/2026: a baseline de 66 erros pré-existentes foi
   # zerada (vue-tsc --noEmit = 0). allow_failure removido — regressão de tipo
   # passa a quebrar a pipeline. Correções type-only documentadas em
   # docs/governance/HANDOFF_TYPECHECK_BACKLOG.md.
   script:
     - cd packages/core && npm run type-check
+
+contracts:gate:
+  stage: quality
+  needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
+  # GATE do contrato derivado (dss.contract.json): re-emite todos os componentes
+  # que JÁ têm contrato e valida contra o schema + verifica âncoras a11y (css via
+  # token-math/CSS compilado, aria via prop, test via *.test.js). Bloqueia se um
+  # contrato ficar inválido ou uma âncora a11y reprovar. Rollout incremental: um
+  # componente entra no gate quando ganha seu dss.contract.json. Ver
+  # docs/governance/DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md (passo 2 + itens N/O).
+  script:
+    - npm run contracts:gate

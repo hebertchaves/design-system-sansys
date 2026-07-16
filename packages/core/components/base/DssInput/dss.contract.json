@@ -8,12 +8,12 @@
     "category": "Action Control (interativo)",
     "classification": "Action",
     "phase": 1,
-    "status": "approved",
+    "status": "sealed",
     "goldenReference": "DssChip",
     "goldenContext": "DssChip"
   },
   "audit": {
-    "status": "approved",
+    "status": "sealed",
     "date": "2026-02-04",
     "mode": "Final",
     "sealPath": "docs/Compliance/seals/DssInput/DSSINPUT_SELO_v2.2.md"

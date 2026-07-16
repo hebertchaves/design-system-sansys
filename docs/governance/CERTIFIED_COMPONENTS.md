@@ -142,7 +142,7 @@
 ## Documentos Relacionados
 
 - [DSS_GOLDEN_COMPONENTS.md](./DSS_GOLDEN_COMPONENTS.md) — Modelo de Governança Golden (definições formais)
-- [CLAUDE.md](../../CLAUDE.md) — Documento normativo vinculante (Princípio #9)
+- [CLAUDE.md](../../CLAUDE.md) — Documento normativo vinculante (Constituição + Cartões)
 - [DSS_COMPONENT_ARCHITECTURE.md](../reference/DSS_COMPONENT_ARCHITECTURE.md) — Arquitetura de 4 camadas
 - [DSS_TOKEN_REFERENCE.md](../reference/DSS_TOKEN_REFERENCE.md) — Catálogo oficial de tokens
 

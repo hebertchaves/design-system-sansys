@@ -12,7 +12,7 @@
   "category": "Overlay de Navegação — menu flutuante sobre conteúdo da página",
   "phase": 2,
   "phaseDescription": "Fase 2 — Overlay de Nível 2 (Composição de Primeiro Grau). Wrapper DSS governado sobre QMenu do Quasar. Orquestra DssList e DssItem (Nível 1) via slot. Teleporta para <body> via QMenu nativo.",
-  "classification": "Navegação / Overlays — container overlay não-interativo",
+  "classification": "Visual",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
@@ -277,5 +277,39 @@
       }
     }
   },
-  "previewGroup": "navegacao"
+  "previewGroup": "navegacao",
+  "classificationNote": "Navegação / Overlays — container overlay não-interativo",
+  "tagline": "Overlay contextual teleportado, ancorado a um elemento disparador.",
+  "a11y": {
+    "aria": {
+      "role": "menu",
+      "states": [
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Escape",
+        "action": "fechar o menu"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-primary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Overlay teleportado com contenção de foco no conteúdo do menu.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

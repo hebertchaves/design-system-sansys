@@ -6,13 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssBadge",
   "goldenContext": "DssInfiniteScroll",
-  "classification": {
-    "type": "Container de mídia não interativo",
-    "category": "Mídia e Visualização",
-    "interactive": false,
-    "level": 1,
-    "family": "Mídia e Visualização"
-  },
+  "classification": "Visual",
   "phaseDescription": "Nível 1 — Container de mídia. Wrapper governado sobre QImg com lazy loading, estados de loading/error, fallback visual e border-radius via tokens.",
   "statesApplicable": [
     "default",
@@ -141,5 +135,30 @@
       "summary": "Auditoria inicial. 0 NCs. 4 GAPs identificados e corrigidos (todos no pré-prompt: Golden Context, API incompleta, tokens fantasmas, estados N/A). 0 Ressalvas. Selo emitido."
     }
   ],
-  "previewGroup": "midia"
+  "previewGroup": "midia",
+  "classificationNote": {
+    "type": "Container de mídia não interativo",
+    "category": "Mídia e Visualização",
+    "interactive": false,
+    "level": 1,
+    "family": "Mídia e Visualização"
+  },
+  "tagline": "Imagem responsiva com carregamento otimizado e fallback.",
+  "a11y": {
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-hidden"
+      ]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Imagem com alternativa textual via alt; decorativa via decorative→aria-hidden.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
 }

@@ -47,7 +47,7 @@
  */
 
 import { ref, computed } from 'vue'
-import { QUploader } from 'quasar'
+import { QUploader, QUploaderAddTrigger } from 'quasar'
 import type { QUploaderProps } from 'quasar'
 import type {
   DssUploaderProps,
@@ -272,10 +272,24 @@ defineExpose<DssUploaderExpose>({
             no-caps
             :disabled="disable"
             :aria-label="addAriaLabel"
-            @click="scope.addFiles()"
+            @click="scope.pickFiles($event)"
           >
             Adicionar
           </DssButton>
+          <!-- Input de arquivo do QUploader, recolocado.
+               O override do slot #header (EXC-01) descarta o `<input type=file>`
+               que o QUploader renderiza no header default; sem ele `pickFiles()`
+               não tem o que clicar. QUploaderAddTrigger reinjeta esse input (via
+               `uploaderKey`), setando o `inputRef` interno. Fica **contido e oculto**
+               (0×0) para NÃO sobrepor a toolbar — é acionado programaticamente pelo
+               clique do botão acima (gesto de usuário → o browser abre o diálogo). -->
+          <span
+            v-if="scope.canAddFiles && !readonly"
+            class="dss-uploader__file-trigger"
+            aria-hidden="true"
+          >
+            <QUploaderAddTrigger />
+          </span>
 
           <!-- Botão: Fazer upload (apenas no modo manual e fora de upload ativo) -->
           <DssButton
