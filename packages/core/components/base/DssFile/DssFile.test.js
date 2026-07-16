@@ -222,10 +222,13 @@ describe('DssFile', () => {
       const wrapper = mount(DssFile, {
         props: { modelValue: null }
       })
-      const fieldArea = wrapper.find('.dss-file__field')
-      if (fieldArea.exists()) {
-        expect(fieldArea.attributes('aria-hidden')).toBe('true')
-      }
+      // A camada visual duplicada (.dss-file__control — que contém a dica de drop)
+      // é decorativa: o QFile já anuncia via aria-label, então ela leva aria-hidden.
+      // O wrapper .dss-file__field NÃO é aria-hidden — contém controles REAIS e
+      // visíveis (prepend/append/clear). Ver DssFile.ts.vue (adequação de UI).
+      const control = wrapper.find('.dss-file__control')
+      expect(control.exists()).toBe(true)
+      expect(control.attributes('aria-hidden')).toBe('true')
     })
 
     it('remove o foco por teclado quando disabled (contrato real do QFile)', () => {
