@@ -26,7 +26,7 @@
 | `brand` | `'hub'\|'water'\|'waste'\|null` | `null` | Acento de marca Sansys |
 | `aria-label` | `String` | `undefined` | Label acessível do trigger |
 
-### Props Bloqueadas (Quasar → DSS não expõe)
+## Props Bloqueadas (Quasar → DSS não expõe)
 
 | Prop Quasar | Motivo |
 |-------------|--------|

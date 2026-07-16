@@ -25,7 +25,7 @@ import type { TabsProps, TabsBrand, TabsAlign } from '@/dss/components/base/DssT
 | `brand` | `TabsBrand \| null` | `null` | Marca Sansys: `hub`, `water`, `waste` |
 | `ariaLabel` | `string` | `undefined` | Label acessível para o grupo (aria-label) |
 
-### Props Bloqueadas
+## Props Bloqueadas
 
 | Prop QTabs | Motivo do Bloqueio |
 |------------|-------------------|

@@ -16,7 +16,7 @@
 | `greedy` | `Boolean` | `undefined` | Quando `true`, valida **todos** os campos ao submeter, mesmo após encontrar o primeiro inválido. Padrão Quasar: para na primeira falha. | `greedy` ✓ |
 | `noErrorFocus` | `Boolean` | `undefined` | Desabilita o comportamento padrão de mover o foco para o primeiro campo com erro após falha de validação. | `no-error-focus` ✓ |
 
-### Props Bloqueadas (não repassadas ao QForm)
+## Props Bloqueadas (não repassadas ao QForm)
 
 | Prop | Motivo |
 |------|--------|

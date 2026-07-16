@@ -9,7 +9,7 @@
 | `noMouse` | `Boolean` | `false` | Restringe a interação apenas a eventos de toque (sem mouse) |
 | `icon` | `String` | `undefined` | Ícone Material exibido no handler. Se omitido, usa o padrão do QPullToRefresh (`refresh`) |
 
-### Props explicitamente NÃO expostas (bloqueadas do QPullToRefresh)
+## Props explicitamente NÃO expostas (bloqueadas do QPullToRefresh)
 
 | Prop QPullToRefresh | Motivo da remoção |
 |---------------------|-------------------|

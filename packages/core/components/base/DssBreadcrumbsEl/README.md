@@ -51,7 +51,7 @@ import { DssBreadcrumbsEl } from '@dss/components'
 | `disable` | `boolean` | `false` | Desabilita a interação |
 | `tag` | `string` | — | Sobrescreve a tag HTML renderizada |
 
-### Props Bloqueadas
+## Props Bloqueadas
 
 | Prop | Motivo |
 |------|--------|

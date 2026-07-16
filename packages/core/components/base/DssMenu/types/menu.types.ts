@@ -112,13 +112,13 @@ export interface MenuProps {
  */
 export interface MenuEmits {
   /** Sincronização de v-model */
-  'update:modelValue': [value: boolean]
+  (e: 'update:modelValue', value: boolean): void
 
   /** Emitido quando o menu termina de abrir */
-  show: [evt: Event]
+  (e: 'show', evt: Event): void
 
   /** Emitido quando o menu termina de fechar */
-  hide: [evt: Event]
+  (e: 'hide', evt: Event): void
 }
 
 /**

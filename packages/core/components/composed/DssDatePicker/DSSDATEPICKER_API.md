@@ -31,7 +31,7 @@
 | `disable` | `Boolean` | `false` | Desabilita o componente |
 | `readonly` | `Boolean` | `false` | Somente leitura |
 
-### Props Bloqueadas
+## Props Bloqueadas
 
 As seguintes props do QDate são **bloqueadas** e não devem ser passadas via `$attrs`:
 

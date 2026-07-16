@@ -45,9 +45,8 @@ import { DssAvatar } from '@sansys/design-system'
 | `icon` | `string \| null` | `null` | Nome do ícone Material Icons |
 | `color` | `string \| null` | `null` | Cor de fundo (classes `.bg-*`) |
 | `textColor` | `string \| null` | `null` | Cor do texto/ícone (classes `.text-*`) |
-| `shape` | `'circular' \| 'rounded' \| 'square'` | `'circular'` | Forma do avatar |
-| `rounded` | `boolean` | `false` | Atalho para `shape="rounded"` |
-| `square` | `boolean` | `false` | Atalho para `shape="square"` |
+| `rounded` | `boolean` | `false` | Avatar arredondado (`border-radius: 8px`). Sem `rounded`/`square` a forma é circular (padrão). |
+| `square` | `boolean` | `false` | Avatar quadrado (`border-radius: 0`) |
 | `status` | `'online' \| 'away' \| 'busy' \| 'offline' \| null` | `null` | Indicador de status de presença |
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Brand override |
 | `ariaLabel` | `string \| undefined` | `undefined` | Label ARIA para screen readers |
@@ -61,7 +60,9 @@ import { DssAvatar } from '@sansys/design-system'
 
 ## Events
 
-Nenhum evento emitido. `DssAvatar` é um componente de exibição puro.
+| Evento | Payload | Quando |
+|--------|---------|--------|
+| `click` | `MouseEvent` | Emitido ao clicar no avatar (permite uso como gatilho de menu/ação) |
 
 ## Tamanhos predefinidos
 

@@ -35,7 +35,7 @@ import { DssToolbarTitle } from '@dss/components/DssToolbarTitle'
 |----------|---------|---------|------------------------------------------------------------------------|
 | `shrink` | Boolean | `false` | Impede que o título cresça para preencher o espaço disponível na toolbar. Útil quando há múltiplos elementos flexíveis. |
 
-### Props bloqueadas (Governança DSS)
+## Props bloqueadas (Governança DSS)
 
 | Prop         | Motivo do bloqueio                                                                 |
 |--------------|------------------------------------------------------------------------------------|

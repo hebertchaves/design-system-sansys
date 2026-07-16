@@ -22,7 +22,7 @@
 | `loading` | `boolean` | `false` | Exibe skeleton loader no lugar do conteúdo |
 | `tabsAriaLabel` | `string` | `undefined` | `aria-label` acessível para o grupo de abas (`DssTabs`) |
 
-### Props bloqueadas
+## Props bloqueadas
 
 | Prop Quasar | Motivo |
 |---|---|

@@ -17,7 +17,7 @@
 | `name` | `string` | — | Atributo `name` para input oculto em formulários nativos. |
 | `brand` | `'hub' \| 'water' \| 'waste'` | — | Cor dos ícones selecionados via sistema de marca DSS. |
 
-### Props Bloqueadas (não expor ao consumer)
+## Props Bloqueadas (não expor ao consumer)
 
 | Prop Quasar | Motivo |
 |-------------|--------|

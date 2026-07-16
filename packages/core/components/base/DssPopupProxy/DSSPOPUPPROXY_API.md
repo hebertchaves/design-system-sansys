@@ -37,7 +37,7 @@
 | `transitionHide` | `String` | — | Não | Nome da transição de saída |
 | `scrollTarget` | `String\|Element` | — | Não | Elemento para escutar eventos de scroll |
 
-### Props Bloqueadas
+## Props Bloqueadas
 
 | Prop | Motivo |
 |------|--------|

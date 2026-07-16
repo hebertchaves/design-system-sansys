@@ -14,7 +14,7 @@
 | `radius` | `SkeletonRadius` | — | — | Token de raio de borda DSS (`'--dss-radius-sm'` a `'--dss-radius-full'`) |
 | `brand` | `SkeletonBrand` | — | — | Contexto de brand Sansys |
 
-### Props Bloqueadas (não expostas ao consumidor)
+## Props Bloqueadas (não expostas ao consumidor)
 
 | Prop Quasar | Motivo do Bloqueio |
 |-------------|-------------------|

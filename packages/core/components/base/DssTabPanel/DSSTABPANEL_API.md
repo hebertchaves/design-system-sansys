@@ -11,7 +11,7 @@
 | `name` | `string \| number` | — | ✅ Sim | Identificador único do painel. Deve corresponder ao `name` do DssTab associado no DssTabs. Usado pelo DssTabPanels (ou QTabPanels) para sincronizar exibição com a aba ativa. |
 | `disable` | `boolean` | `false` | Não | Desabilita o painel, aplicando opacidade reduzida (`--dss-opacity-disabled`) e bloqueando interações com filhos via `pointer-events: none`. |
 
-### Props Bloqueadas (Governança DSS)
+## Props Bloqueadas (Governança DSS)
 
 | Prop Quasar | Razão do Bloqueio |
 |-------------|-------------------|

@@ -6,7 +6,7 @@
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` *(v-model)* | `String \| Number` | — | **Obrigatório.** Nome ou índice do slide atualmente visível |
+| `modelValue` | `String \| Number` | — | **Obrigatório.** Nome ou índice do slide atualmente visível (via `v-model`) |
 | `animated` | `Boolean` | `true` | Ativa animação de transição entre slides |
 | `swipeable` | `Boolean` | `true` | Permite navegação por swipe/arrasto |
 | `vertical` | `Boolean` | `false` | Orientação vertical dos slides |

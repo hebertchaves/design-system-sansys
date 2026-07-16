@@ -28,14 +28,14 @@ type MenuPosition =
   | 'bottom left' | 'bottom middle' | 'bottom right' | 'bottom start' | 'bottom end'
 ```
 
-### Props Bloqueadas
+## Props Bloqueadas
 
 | Prop QMenu | Motivo do Bloqueio |
 |------------|-------------------|
 | `dark` | Modo escuro governado globalmente via `[data-theme="dark"]`. Uso direto quebraria consistência do sistema de temas DSS. |
 | `square` | Cantos quadrados violam o token `--dss-radius-md`. A identidade visual de overlays DSS v2.2 usa bordas arredondadas. |
 
-### Props Repassadas via `$attrs`
+## Props Repassadas via `$attrs`
 
 | Prop QMenu | Tipo | Descrição |
 |------------|------|-----------|
