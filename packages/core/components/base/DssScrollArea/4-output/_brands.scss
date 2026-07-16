@@ -1,29 +1,11 @@
 // Layer 4 — Brand variants (Hub, Water, Waste)
 //
-// DssScrollArea é um container não interativo de conteúdo.
-// Brand theming aplica-se à scrollbar thumb para refletir a ação primária
-// da marca ativa, alinhando o scroll ao identity visual do produto.
+// Brand theming: scrollbar thumb com a ação primária da marca.
 //
-// Padrão: descendant selector com [data-brand] + .dss-scroll-area
-// (mesmo padrão de DssVirtualScroll — Golden Context).
-//
-// Hover não é sobrescrito em contexto de brand:
-// --dss-action-{brand} já tem opacidade/brightness adequados para hover
-// via interação nativa do Quasar com a barra. Alinhado com DssVirtualScroll.
+// COLAPSADO: os 3 blocos por-marca eram IDÊNTICOS (--dss-action-primary já é
+// brand-aware) → um único [data-brand] (mesmo alcance, sem repetir 3×).
 
-[data-brand="hub"] .dss-scroll-area {
-  .q-scrollarea__thumb {
-    background: var(--dss-action-primary);
-  }
-}
-
-[data-brand="water"] .dss-scroll-area {
-  .q-scrollarea__thumb {
-    background: var(--dss-action-primary);
-  }
-}
-
-[data-brand="waste"] .dss-scroll-area {
+[data-brand] .dss-scroll-area {
   .q-scrollarea__thumb {
     background: var(--dss-action-primary);
   }

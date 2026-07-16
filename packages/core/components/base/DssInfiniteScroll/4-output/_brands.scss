@@ -1,48 +1,13 @@
 // =============================================================================
 // DssInfiniteScroll — LAYER 4: OUTPUT — Brands
 //
-// Brandability: Hub (laranja), Water (azul), Waste (verde).
+// Brandability: texto de estado no-more com a cor de ação primária da marca.
 //
-// NOTA: DssInfiniteScroll é um container comportamental.
-//   Brand theming aplica-se apenas ao texto de estado no-more,
-//   refletindo a cor de ação primária da marca.
-//   O spinner de loading é gerenciado pelo DssSpinner filho e tem
-//   sua própria brandabilidade.
-//
-// PADRÃO: Seletor via [data-brand] ancestral (descendant, com espaço).
-//   [data-brand="hub"] .dss-infinite-scroll (descendant)
-//   Consistente com DssVirtualScroll (Golden Context).
-//
-// TOKENS: --dss-action-{brand} para cor de destaque semântico.
-//   Consistente com DssVirtualScroll (Golden Context).
-//
+// COLAPSADO: os 3 blocos por-marca eram IDÊNTICOS (--dss-action-primary já é
+// brand-aware) → um único [data-brand] (mesmo alcance, sem repetir 3×).
 // =============================================================================
 
-// =============================================================================
-// HUB BRAND (Laranja)
-// =============================================================================
-
-[data-brand="hub"] .dss-infinite-scroll {
-  .dss-infinite-scroll__no-more-text {
-    color: var(--dss-action-primary);
-  }
-}
-
-// =============================================================================
-// WATER BRAND (Azul)
-// =============================================================================
-
-[data-brand="water"] .dss-infinite-scroll {
-  .dss-infinite-scroll__no-more-text {
-    color: var(--dss-action-primary);
-  }
-}
-
-// =============================================================================
-// WASTE BRAND (Verde)
-// =============================================================================
-
-[data-brand="waste"] .dss-infinite-scroll {
+[data-brand] .dss-infinite-scroll {
   .dss-infinite-scroll__no-more-text {
     color: var(--dss-action-primary);
   }
