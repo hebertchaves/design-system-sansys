@@ -23,10 +23,6 @@
 - ⏳ **(c1) Contraste WCAG da paleta default** — auditoria + tabela de rotas (A escurecer / B texto escuro)
   prontas; **aguardando decisão da equipe** por cor. NÃO tocar `globals.scss` até o retorno.
   `[[project_color_ramp_a11y]]`. (c0 — reconciliação da rampa com o Figma — **feito**, commit `6a4baa6`.)
-- ⏳ **Merge para `main`** (com o responsável) — 3 branches penduradas:
-  `import/dss-v2.4.0` (~14), `chore/eol-normalization` (~11, normaliza EOL/`.gitattributes`),
-  `chore/apidocs-passthrough` (~13, zera o gate api-docs). Ordem não deve importar (arquivos disjuntos);
-  ⚠️ o CI do `main` pode reprovar o gate `validate:api-docs` **até** a branch de api-docs entrar.
 
 ## Débito de fundo (ondas anteriores)
 
@@ -89,6 +85,14 @@
 - 🔍 **`DssResponsive`** — lista scope-props do slot default como slots (baixa prioridade). Mesmo arquivo.
 
 ## Resolvidos nesta onda (para não reabrir por engano)
+
+- ✅ **Merge da v2.4.0 para `main` — CONCLUÍDO** (2026-07-17). As 3 branches penduradas
+  (`import/dss-v2.4.0`, `chore/apidocs-passthrough`, `chore/eol-normalization`) foram consolidadas
+  numa branch de review (`review/merge-v2.4.0-apidocs-eol`, conflitos resolvidos) e mergeadas via
+  **MR !5** (merge commit `7fb36d5`, por `@joaoVittorDevvv`). Auditoria de integridade no MR: 36
+  arquivos apidocs 100% idênticos + 492 só-EOL + 0 mudança de conteúdo real; baseline de tokens
+  fantasma = 0 preservado; CI-Lint válido. MRs !2/!4 auto-marcados merged; !3 fechado como superseded
+  (EOL já em `main`). As 3 branches-fonte foram removidas do remoto; trabalho segue em `work/dss-continuidade`.
 
 - ✅ **Tokens SCSS fantasma ZERADOS — baseline 34→0, gate DURO** (`b49b6e0` e antecessores). Todo
   `var(--dss-*)` no SCSS de componente resolvia p/ token INEXISTENTE escapava (o sync só valida o meta).
