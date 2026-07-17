@@ -1,5 +1,5 @@
 <template>
-  <div :class="wrapperClasses">
+  <div :class="wrapperClasses" :data-brand="brand || undefined">
     <!-- Linha: before + campo + after lado a lado (semântica Quasar) -->
     <div class="dss-input__row">
     <!-- Before slot -->

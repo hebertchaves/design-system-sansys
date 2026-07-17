@@ -248,15 +248,19 @@ describe('DssFile', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    // Contrato real: brand aplica CLASSE dss-file--brand-* no root
-    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
-    it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
+    // Contrato real (norma DSS — precedente DssCheckbox/DssChip/DssRadio): a prop
+    // `brand` renderiza `data-brand` no root (remapeia os tokens de brand na subárvore,
+    // incl. --dss-action-primary/--dss-focus-primary do anel de foco) E mantém a classe
+    // `dss-file--brand-*` para o CSS matching do _brands.scss.
+    it.each(['hub', 'water', 'waste'])('sets data-brand="%s" on root', (brand) => {
       const wrapper = mount(DssFile, { props: { brand } })
+      expect(wrapper.attributes('data-brand')).toBe(brand)
       expect(wrapper.classes()).toContain(`dss-file--brand-${brand}`)
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssFile)
+      expect(wrapper.attributes('data-brand')).toBeUndefined()
       expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })

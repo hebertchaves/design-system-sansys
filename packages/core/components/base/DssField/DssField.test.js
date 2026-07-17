@@ -210,15 +210,19 @@ describe('DssField', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    // Contrato real: brand aplica CLASSE dss-field--brand-* no root
-    // (sem atributo data-brand próprio) — corrigido na Onda P2/G3.2.
+    // Norma DSS (precedente DssCheckbox/DssChip/DssRadio): a prop `brand` renderiza
+    // `data-brand` no root — remapeia os tokens de brand na subárvore (incl. o anel de
+    // foco --dss-focus-primary e a borda --dss-action-primary) — E mantém a classe
+    // dss-field--brand-* p/ o CSS matching do _brands.scss.
     it.each(['hub', 'water', 'waste'])('sets data-brand="%s"', (brand) => {
       const wrapper = mount(DssField, { props: { brand } })
+      expect(wrapper.attributes('data-brand')).toBe(brand)
       expect(wrapper.classes()).toContain(`dss-field--brand-${brand}`)
     })
 
     it('does not set data-brand when brand is null', () => {
       const wrapper = mount(DssField)
+      expect(wrapper.attributes('data-brand')).toBeUndefined()
       expect(wrapper.classes().some(c => c.includes('--brand-'))).toBe(false)
     })
   })

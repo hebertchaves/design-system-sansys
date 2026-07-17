@@ -62,6 +62,7 @@ defineExpose({ fieldId: computedFieldId, hintId, errorId, ariaDescribedby })
   <div
     v-bind="$attrs"
     :class="rootClasses"
+    :data-brand="brand || undefined"
     @focusin="onFocusIn"
     @focusout="onFocusOut"
   >

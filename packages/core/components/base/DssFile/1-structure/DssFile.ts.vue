@@ -5,6 +5,7 @@
        ========================================================================== -->
   <div
     :class="wrapperClasses"
+    :data-brand="brand || undefined"
     @dragover="handleDragOver"
     @dragleave="handleDragLeave"
   >
