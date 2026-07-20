@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-07-15. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-07-20. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -666,40 +666,52 @@
   --dss-focus-inverse: var(--dss-focus-light);
 }
 
-[data-brand=hub] {
+[data-brand=hub],
+.dss-select--brand-hub,
+.dss-textarea--brand-hub {
   --dss-focus-primary: rgba(191, 89, 15, 0.5);
   --dss-focus-primary-rgb: 191, 89, 15;
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
   /* Dark Mode - Versão mais clara */
 }
-[data-brand=hub][data-theme=dark] {
+[data-brand=hub][data-theme=dark],
+.dss-select--brand-hub[data-theme=dark],
+.dss-textarea--brand-hub[data-theme=dark] {
   --dss-focus-primary: rgba(248, 170, 63, 0.6);
   --dss-focus-primary-rgb: 248, 170, 63;
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
-[data-brand=water] {
+[data-brand=water],
+.dss-select--brand-water,
+.dss-textarea--brand-water {
   --dss-focus-primary: rgba(2, 108, 199, 0.5);
   --dss-focus-primary-rgb: 2, 108, 199;
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
   /* Dark Mode - Versão mais clara */
 }
-[data-brand=water][data-theme=dark] {
+[data-brand=water][data-theme=dark],
+.dss-select--brand-water[data-theme=dark],
+.dss-textarea--brand-water[data-theme=dark] {
   --dss-focus-primary: rgba(56, 166, 248, 0.6);
   --dss-focus-primary-rgb: 56, 166, 248;
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
-[data-brand=waste] {
+[data-brand=waste],
+.dss-select--brand-waste,
+.dss-textarea--brand-waste {
   --dss-focus-primary: rgba(10, 114, 78, 0.5);
   --dss-focus-primary-rgb: 10, 114, 78;
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
   /* Dark Mode - Versão mais clara */
 }
-[data-brand=waste][data-theme=dark] {
+[data-brand=waste][data-theme=dark],
+.dss-select--brand-waste[data-theme=dark],
+.dss-textarea--brand-waste[data-theme=dark] {
   --dss-focus-primary: rgba(24, 177, 115, 0.6);
   --dss-focus-primary-rgb: 24, 177, 115;
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);

@@ -143,9 +143,18 @@
 // -----------------------------------------------------------------------------
 // FOCUS RING - Brandabilidade (Hub, Water, Waste)
 // -----------------------------------------------------------------------------
+//
+// Além do atributo `[data-brand]` (contexto ancestral), aliasamos aqui as CLASSES
+// de brand dos campos Quasar-rooted (DssSelect/DssTextarea). Motivo: o root desses
+// dois É o próprio QSelect/QInput e o Quasar roteia o atributo `data-brand` para o
+// elemento nativo interno (não fica ancestral do `.q-field__control` que desenha o
+// anel `:focus-visible`). A prop `brand` gera a classe no root, então é por ela que
+// o `--dss-focus-primary` precisa remapear. (Campos div-rooted usam `:data-brand`.)
 
 // Hub - Laranja
-[data-brand="hub"] {
+[data-brand="hub"],
+.dss-select--brand-hub,
+.dss-textarea--brand-hub {
   --dss-focus-primary: rgba(191, 89, 15, 0.5);         // --dss-hub-700 @ 50% (focus)
   --dss-focus-primary-rgb: 191, 89, 15;
 
@@ -161,7 +170,9 @@
 }
 
 // Water - Azul
-[data-brand="water"] {
+[data-brand="water"],
+.dss-select--brand-water,
+.dss-textarea--brand-water {
   --dss-focus-primary: rgba(2, 108, 199, 0.5);         // --dss-water-600 @ 50% (focus)
   --dss-focus-primary-rgb: 2, 108, 199;
 
@@ -177,7 +188,9 @@
 }
 
 // Waste - Verde
-[data-brand="waste"] {
+[data-brand="waste"],
+.dss-select--brand-waste,
+.dss-textarea--brand-waste {
   --dss-focus-primary: rgba(10, 114, 78, 0.5);         // --dss-waste-700 @ 50% (focus)
   --dss-focus-primary-rgb: 10, 114, 78;
 
