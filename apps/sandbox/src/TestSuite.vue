@@ -72,6 +72,20 @@
             <span class="nav-icon"><span class="material-icons">dvr</span></span>
             <span class="nav-label">Preview Frame · DssFile</span>
           </button>
+          <button
+            @click="activeComponent = 'preview-frame-textarea'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-textarea' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssTextarea</span>
+          </button>
+          <button
+            @click="activeComponent = 'preview-frame-field'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-field' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssField</span>
+          </button>
         </div>
 
         <!-- Foundation -->
@@ -455,6 +469,12 @@
       </div>
       <div v-else-if="activeComponent === 'preview-frame-file'" class="component-view">
         <PreviewFrame component="DssFile" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-textarea'" class="component-view">
+        <PreviewFrame component="DssTextarea" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-field'" class="component-view">
+        <PreviewFrame component="DssField" />
       </div>
 
       <!-- DssButton Test View -->
