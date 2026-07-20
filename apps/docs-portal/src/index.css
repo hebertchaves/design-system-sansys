@@ -673,11 +673,14 @@
   --dss-focus-primary-rgb: 191, 89, 15;
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
-  /* Dark Mode - Versão mais clara */
 }
+
+/* Dark Mode - Versão mais clara. Cobre o atributo co-locado ([data-brand][data-theme])
+   E a classe de brand (prop) sob [data-theme="dark"] ANCESTRAL — o data-theme mora no
+   body, não no root do campo, então a classe precisa do seletor descendente. */
 [data-brand=hub][data-theme=dark],
-.dss-select--brand-hub[data-theme=dark],
-.dss-textarea--brand-hub[data-theme=dark] {
+[data-theme=dark] .dss-select--brand-hub,
+[data-theme=dark] .dss-textarea--brand-hub {
   --dss-focus-primary: rgba(248, 170, 63, 0.6);
   --dss-focus-primary-rgb: 248, 170, 63;
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -690,11 +693,12 @@
   --dss-focus-primary-rgb: 2, 108, 199;
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
-  /* Dark Mode - Versão mais clara */
 }
+
+/* Dark Mode - Versão mais clara (atributo co-locado + classe sob [data-theme] ancestral) */
 [data-brand=water][data-theme=dark],
-.dss-select--brand-water[data-theme=dark],
-.dss-textarea--brand-water[data-theme=dark] {
+[data-theme=dark] .dss-select--brand-water,
+[data-theme=dark] .dss-textarea--brand-water {
   --dss-focus-primary: rgba(56, 166, 248, 0.6);
   --dss-focus-primary-rgb: 56, 166, 248;
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -707,11 +711,12 @@
   --dss-focus-primary-rgb: 10, 114, 78;
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
-  /* Dark Mode - Versão mais clara */
 }
+
+/* Dark Mode - Versão mais clara (atributo co-locado + classe sob [data-theme] ancestral) */
 [data-brand=waste][data-theme=dark],
-.dss-select--brand-waste[data-theme=dark],
-.dss-textarea--brand-waste[data-theme=dark] {
+[data-theme=dark] .dss-select--brand-waste,
+[data-theme=dark] .dss-textarea--brand-waste {
   --dss-focus-primary: rgba(24, 177, 115, 0.6);
   --dss-focus-primary-rgb: 24, 177, 115;
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
