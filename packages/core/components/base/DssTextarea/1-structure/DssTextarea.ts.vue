@@ -168,6 +168,18 @@ const maxHeightStyle = computed(() => {
   return props.maxHeight ? { '--dss-textarea-max-height': props.maxHeight } : {}
 })
 
+/**
+ * Stack-label computado — evita a sobreposição label × placeholder em repouso.
+ *
+ * Quando há placeholder E label, o label já ocupa em repouso o seu aspecto flutuado
+ * (stacked), como no estado selecionado: assim o placeholder aparece visível na área
+ * do campo sem colidir com o label centralizado. Sem isso, o QInput renderiza o label
+ * em repouso E o placeholder nativo sobrepostos. Respeita o stackLabel explícito.
+ */
+const computedStackLabel = computed(
+  () => props.stackLabel || (!!props.placeholder && !!props.label)
+)
+
 // ==========================================================================
 // EXPOSE
 // ==========================================================================
@@ -189,7 +201,7 @@ defineExpose<TextareaExpose>({
     type="textarea"
     :model-value="modelValue"
     :label="label"
-    :stack-label="stackLabel"
+    :stack-label="computedStackLabel"
     :placeholder="placeholder"
     :hint="hint"
     :error="error"
