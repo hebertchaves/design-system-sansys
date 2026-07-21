@@ -46,15 +46,19 @@
               <input :id="'s-' + s.name" type="checkbox" v-model="activeSlots[s.name]" />
               {{ s.name }} <small>slot</small>
             </label>
-            <select
+            <input
               v-if="activeSlots[s.name] && ICON_SLOTS.includes(s.name)"
               v-model="slotIcons[s.name]"
+              type="text"
+              list="pv-icon-suggestions"
               class="pv__slot-icon"
+              placeholder="ícone (ex.: attach_file, mdi-account)"
               :aria-label="'Ícone do slot ' + s.name"
-            >
-              <option v-for="ic in ICON_OPTIONS" :key="ic" :value="ic">{{ ic }}</option>
-            </select>
+            />
           </div>
+          <datalist id="pv-icon-suggestions">
+            <option v-for="ic in iconSuggestions" :key="ic" :value="ic" />
+          </datalist>
         </template>
 
         <template v-if="methodDefs.length">
@@ -106,8 +110,26 @@ const activeSlots = reactive({})  // nome do slot -> ligado?
 // Slots de ícone (prepend/append de campos): quando ligados, o sujeito renderiza
 // <DssIcon :name> com o ícone escolhido aqui — em vez do marcador de demo.
 const ICON_SLOTS = ['prepend', 'append']
-const ICON_OPTIONS = ['attach_file', 'search', 'person', 'mail', 'lock', 'event', 'phone', 'upload', 'visibility', 'edit', 'star', 'close']
 const slotIcons = reactive({})    // nome do slot -> nome do ícone escolhido
+
+// Sugestões de ícone extraídas dos EXEMPLOS reais do DS (não uma lista hardcoded):
+// varre os *.example.vue em build-time e coleta os nomes usados em <DssIcon name="…">
+// e em atributos *icon="…". Alimenta apenas o autocomplete (datalist) — o input é
+// LIVRE, aceitando qualquer ícone que o Quasar resolva (Material, mdi-*, img:*).
+const iconSuggestions = (() => {
+  const files = import.meta.glob(
+    '../../../../packages/core/components/{base,composed}/*/*.example.vue',
+    { query: '?raw', import: 'default', eager: true }
+  )
+  const ok = (v) => /^(?:mdi-)?[a-z][a-z0-9_]*(?:-[a-z0-9]+)*$/.test(v)
+  const set = new Set()
+  for (const src of Object.values(files)) {
+    const s = String(src)
+    for (const m of s.matchAll(/<DssIcon\b[^>]*?\bname="([^"]+)"/g)) if (ok(m[1])) set.add(m[1])
+    for (const m of s.matchAll(/\b[\w-]*icon="([^"]+)"/g)) if (ok(m[1])) set.add(m[1])
+  }
+  return [...set].sort()
+})()
 const emitDefs = ref([])          // api.emits do contrato
 const methodDefs = ref([])        // api.exposedRefs do contrato
 const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
@@ -153,7 +175,9 @@ function load() {
   Object.keys(activeSlots).forEach((k) => delete activeSlots[k])
   for (const s of slotDefs.value) activeSlots[s.name] = false
   Object.keys(slotIcons).forEach((k) => delete slotIcons[k])
-  for (const s of slotDefs.value) if (ICON_SLOTS.includes(s.name)) slotIcons[s.name] = ICON_OPTIONS[0]
+  // Default sensato p/ o slot de ícone (o input é livre; 'attach_file' é Material Icons
+  // válido mesmo não estando nas sugestões extraídas dos exemplos).
+  for (const s of slotDefs.value) if (ICON_SLOTS.includes(s.name)) slotIcons[s.name] = 'attach_file'
   // Eventos (log) e métodos expostos (botões) — completam a superfície da API.
   emitDefs.value = contract.value.api?.emits || []
   methodDefs.value = contract.value.api?.exposedRefs || []
