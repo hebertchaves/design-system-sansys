@@ -69,14 +69,17 @@ export function useFileClasses(
    * Estrutura de classes:
    * - dss-file__label: classe base
    * - dss-file__label--stack: label sempre no topo
-   * - dss-file__label--float: label flutua quando focado/preenchido
+   * - dss-file__label--float: label flutua quando focado/preenchido, e também em
+   *   repouso quando há label (padrão B da família): o drop-hint — sempre presente
+   *   no DssFile — ocupa o papel de placeholder e apareceria sobreposto ao label
+   *   centralizado. Flutuando o label, o hint fica visível sem colisão.
    */
   const labelClasses = computed(() => {
     return [
       'dss-file__label',
       {
         'dss-file__label--stack': props.stackLabel,
-        'dss-file__label--float': hasValue.value || isFocused.value
+        'dss-file__label--float': hasValue.value || isFocused.value || !!props.label
       }
     ]
   })

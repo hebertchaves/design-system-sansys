@@ -232,14 +232,11 @@ const { handleInput, handleFocus, handleBlur, handleClear, focus, blur } = useIn
 /**
  * Placeholder computado
  *
- * Se stackLabel=false e tem label, só mostra placeholder quando focado
+ * Padrão B da família: o placeholder aparece já em repouso — a label flutua junto
+ * (ver labelClasses --float quando há placeholder), então não há sobreposição.
+ * Mantido como computed para preservar o ponto de extensão do binding.
  */
-const computedPlaceholder = computed(() => {
-  if (props.stackLabel || !props.label) {
-    return props.placeholder
-  }
-  return isFocused.value || hasValue.value ? props.placeholder : ''
-})
+const computedPlaceholder = computed(() => props.placeholder)
 
 /**
  * Tabindex computado

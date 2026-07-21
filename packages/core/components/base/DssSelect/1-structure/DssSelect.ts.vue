@@ -183,8 +183,20 @@ const isEmptySelection = computed(() => {
     : (v === null || v === undefined || v === '')
 })
 
+/**
+ * Stack-label computado (padrão B da família) — quando há placeholder E label, a
+ * label já ocupa em repouso o estado flutuado (stacked), abrindo espaço para o
+ * placeholder aparecer sem sobreposição. Respeita o stackLabel explícito.
+ * (Paridade com DssTextarea/DssInput/DssFile.)
+ */
+const computedStackLabel = computed(
+  () => props.stackLabel || (!!props.placeholder && !!props.label)
+)
+
+// Com a label flutuada (computedStackLabel), o placeholder pode aparecer sempre que
+// vazio — sem o gate antigo (que exigia stackLabel/sem-label para evitar overlap).
 const showingPlaceholder = computed(() =>
-  !!props.placeholder && isEmptySelection.value && (props.stackLabel || !props.label)
+  !!props.placeholder && isEmptySelection.value
 )
 
 const placeholderDisplay = computed(() =>
@@ -295,7 +307,7 @@ defineExpose<SelectExpose>({
     :emit-value="emitValue"
     :map-options="mapOptions"
     :label="label"
-    :stack-label="stackLabel"
+    :stack-label="computedStackLabel"
     :placeholder="placeholder"
     :hint="hint"
     :error="error"

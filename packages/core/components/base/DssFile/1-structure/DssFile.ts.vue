@@ -267,15 +267,15 @@ const computedTabindex = computed(() => {
 })
 
 /**
- * Exibe a dica de arrastar/soltar (papel de placeholder). Oculta quando um label
- * em repouso ocupa o centro do campo (evita a sobreposição label × placeholder);
- * reaparece com o label flutuado (foco), em stackLabel, ou quando não há label.
+ * Exibe a dica de arrastar/soltar (papel de placeholder). Padrão B da família: o
+ * hint aparece já em repouso (campo vazio e habilitado) — a sobreposição com o label
+ * é evitada flutuando o label em repouso (ver useFileClasses --float), não escondendo
+ * o hint.
  */
 const showDropHint = computed(() =>
   !hasValue.value &&
   !props.disabled &&
-  !props.readonly &&
-  (!props.label || isFocused.value || props.stackLabel)
+  !props.readonly
 )
 
 // ==========================================================================

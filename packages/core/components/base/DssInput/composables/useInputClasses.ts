@@ -74,6 +74,9 @@ export function useInputClasses(
    *
    * Tipos com UI nativa/placeholder sempre visível (date pickers, etc.): a label
    * flutua permanentemente, pois centralizada em repouso sobreporia o placeholder.
+   *
+   * Placeholder + label (padrão B da família): a label flutua já em repouso para o
+   * placeholder aparecer sem sobreposição (paridade com DssTextarea/DssSelect/DssFile).
    */
   const ALWAYS_FLOAT_TYPES = ['date', 'time', 'datetime-local', 'month', 'week']
 
@@ -86,7 +89,10 @@ export function useInputClasses(
       {
         'dss-input__label--stack': props.stackLabel,
         'dss-input__label--float':
-          hasValue.value || isFocused.value || ALWAYS_FLOAT_TYPES.includes(props.type as string)
+          hasValue.value ||
+          isFocused.value ||
+          !!props.placeholder ||
+          ALWAYS_FLOAT_TYPES.includes(props.type as string)
       }
     ]
   })
