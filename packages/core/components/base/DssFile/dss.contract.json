@@ -1001,18 +1001,6 @@
       ],
       "focus": [
         {
-          "property": "align-items",
-          "token": null,
-          "value": "flex-end",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-bottom",
-          "token": "--dss-spacing-1",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "outline",
           "token": "--dss-border-width-md",
           "value": null,
