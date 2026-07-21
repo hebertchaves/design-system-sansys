@@ -201,6 +201,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "-webkit-tap-highlight-color",
           "token": null,
           "value": "transparent",
@@ -294,12 +300,6 @@
           "property": "transform",
           "token": null,
           "value": "translateY(-50%)",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-md",
-          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -912,6 +912,12 @@
         ]
       },
       {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-touch-target-md",
         "usedIn": [
           "default",
@@ -932,12 +938,6 @@
       },
       {
         "name": "--dss-spacing-4",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-font-size-md",
         "usedIn": [
           "default"
         ]

@@ -290,6 +290,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-height",
           "token": "--dss-input-height-md",
           "value": null,
@@ -322,12 +328,6 @@
         {
           "property": "padding-top",
           "token": "--dss-spacing-2",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -960,6 +960,13 @@
         ]
       },
       {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
         "name": "--dss-input-height-md",
         "usedIn": [
           "default"
@@ -987,13 +994,6 @@
         "name": "--dss-spacing-2",
         "usedIn": [
           "default"
-        ]
-      },
-      {
-        "name": "--dss-font-size-md",
-        "usedIn": [
-          "default",
-          "defaultPreview"
         ]
       },
       {

@@ -289,6 +289,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "position",
           "token": null,
           "value": "absolute",
@@ -442,12 +448,6 @@
           "property": "transform",
           "token": null,
           "value": "translateY(-50%)",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-md",
-          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -1196,6 +1196,12 @@
         ]
       },
       {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-input-height-md",
         "usedIn": [
           "default"
@@ -1240,12 +1246,6 @@
       },
       {
         "name": "--dss-spacing-0",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-font-size-md",
         "usedIn": [
           "default"
         ]

@@ -23,6 +23,7 @@
   width: 100%;
   min-width: var(--dss-min-w-lg); // 240px — usabilidade mínima de campo de formulário
   font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md); // base 16px — família uniforme (texto e ícone inline do prepend/append)
 }
 
 /* ==========================================================================

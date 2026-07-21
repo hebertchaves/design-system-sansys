@@ -308,6 +308,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "display",
           "token": null,
           "value": "flex",
@@ -395,12 +401,6 @@
           "property": "transform",
           "token": null,
           "value": "translateY(-50%)",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-md",
-          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -1160,6 +1160,13 @@
         ]
       },
       {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
         "name": "--dss-spacing-2",
         "usedIn": [
           "default"
@@ -1197,13 +1204,6 @@
         "name": "--dss-spacing-3",
         "usedIn": [
           "default"
-        ]
-      },
-      {
-        "name": "--dss-font-size-md",
-        "usedIn": [
-          "default",
-          "defaultPreview"
         ]
       },
       {

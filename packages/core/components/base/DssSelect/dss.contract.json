@@ -342,6 +342,12 @@
           "source": "2-composition/_panel.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
           "property": "min-height",
           "token": "--dss-input-height-md",
           "value": null,
@@ -370,12 +376,6 @@
           "token": "--dss-spacing-2",
           "value": null,
           "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-md",
-          "value": null,
-          "source": "2-composition/_panel.scss"
         },
         {
           "property": "color",
@@ -1122,6 +1122,12 @@
         ]
       },
       {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-input-height-md",
         "usedIn": [
           "default"
@@ -1148,12 +1154,6 @@
       },
       {
         "name": "--dss-spacing-2",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-font-size-md",
         "usedIn": [
           "default"
         ]

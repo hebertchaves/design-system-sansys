@@ -22,6 +22,7 @@
   flex-direction: column;
   width: 100%;
   font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-md); // base 16px — família uniforme (texto e ícone inline do prepend/append)
   -webkit-tap-highlight-color: transparent;
 }
 
