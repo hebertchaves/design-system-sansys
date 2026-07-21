@@ -56,7 +56,6 @@
              em repouso ocupa o centro e a dica fica oculta (evita overlap —
              paridade DssInput). Sem label, aparece sempre no estado vazio. -->
         <div v-if="showDropHint" class="dss-file__drop-hint">
-          <span class="dss-file__drop-icon" aria-hidden="true">📎</span>
           <span class="dss-file__drop-text">
             {{ placeholder || 'Clique ou arraste arquivos aqui' }}
           </span>

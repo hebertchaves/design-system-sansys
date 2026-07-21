@@ -523,12 +523,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "flex-shrink",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "color",
           "token": "--dss-text-primary",
           "value": null,
@@ -550,6 +544,12 @@
           "property": "white-space",
           "token": null,
           "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
           "source": "2-composition/_base.scss"
         },
         {
