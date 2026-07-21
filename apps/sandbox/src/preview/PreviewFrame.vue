@@ -46,6 +46,14 @@
               <input :id="'s-' + s.name" type="checkbox" v-model="activeSlots[s.name]" />
               {{ s.name }} <small>slot</small>
             </label>
+            <select
+              v-if="activeSlots[s.name] && ICON_SLOTS.includes(s.name)"
+              v-model="slotIcons[s.name]"
+              class="pv__slot-icon"
+              :aria-label="'Ícone do slot ' + s.name"
+            >
+              <option v-for="ic in ICON_OPTIONS" :key="ic" :value="ic">{{ ic }}</option>
+            </select>
           </div>
         </template>
 
@@ -95,6 +103,11 @@ const contract = ref(null)
 const knobs = ref([])
 const slotDefs = ref([])          // api.slots do contrato
 const activeSlots = reactive({})  // nome do slot -> ligado?
+// Slots de ícone (prepend/append de campos): quando ligados, o sujeito renderiza
+// <DssIcon :name> com o ícone escolhido aqui — em vez do marcador de demo.
+const ICON_SLOTS = ['prepend', 'append']
+const ICON_OPTIONS = ['attach_file', 'search', 'person', 'mail', 'lock', 'event', 'phone', 'upload', 'visibility', 'edit', 'star', 'close']
+const slotIcons = reactive({})    // nome do slot -> nome do ícone escolhido
 const emitDefs = ref([])          // api.emits do contrato
 const methodDefs = ref([])        // api.exposedRefs do contrato
 const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
@@ -139,6 +152,8 @@ function load() {
   slotDefs.value = contract.value.api?.slots || []
   Object.keys(activeSlots).forEach((k) => delete activeSlots[k])
   for (const s of slotDefs.value) activeSlots[s.name] = false
+  Object.keys(slotIcons).forEach((k) => delete slotIcons[k])
+  for (const s of slotDefs.value) if (ICON_SLOTS.includes(s.name)) slotIcons[s.name] = ICON_OPTIONS[0]
   // Eventos (log) e métodos expostos (botões) — completam a superfície da API.
   emitDefs.value = contract.value.api?.emits || []
   methodDefs.value = contract.value.api?.exposedRefs || []
@@ -156,8 +171,10 @@ function postState() {
   // (componentes sem model — ex.: DssUploader — não recebem modelValue órfão).
   const modelProp = contract.value?.api?.vModel?.prop ?? null
   const slots = Object.keys(activeSlots).filter((n) => activeSlots[n])
+  const activeSlotIcons = {}
+  for (const n of slots) if (ICON_SLOTS.includes(n) && slotIcons[n]) activeSlotIcons[n] = slotIcons[n]
   const emits = emitDefs.value.map((ev) => ev.name)
-  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, slots, emits }))
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, slots, slotIcons: activeSlotIcons, emits }))
   el.contentWindow.postMessage(payload, '*')
 }
 // Chama um método exposto (exposedRefs) no sujeito, via postMessage.
@@ -190,7 +207,7 @@ const snippet = computed(() => {
   return `<${props.component}${attrs}>\n${inner}\n</${props.component}>`
 })
 
-watch(() => JSON.stringify({ s: state, t: theme.value, b: brand.value, sl: activeSlots }), postState)
+watch(() => JSON.stringify({ s: state, t: theme.value, b: brand.value, sl: activeSlots, si: slotIcons }), postState)
 watch(() => props.component, load)
 onMounted(() => { window.addEventListener('message', onMsg); load() })
 onUnmounted(() => window.removeEventListener('message', onMsg))
@@ -212,6 +229,7 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__slot { font-size: 13px; margin-bottom: 6px; }
 .pv__slot label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
 .pv__slot small { color: #999; }
+.pv__slot-icon { margin: 4px 0 2px 22px; width: calc(100% - 22px); font-size: 12px; padding: 2px 4px; }
 .pv__method { display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 6px 10px; font-size: 13px; font-family: ui-monospace, monospace; background: #fff; border: 1px solid #d4d4d4; border-radius: 6px; cursor: pointer; }
 .pv__method:hover { background: #eef2ff; border-color: #a5b4fc; }
 .pv__empty { color: #b00020; font-size: 13px; }

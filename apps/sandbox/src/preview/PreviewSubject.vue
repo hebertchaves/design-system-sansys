@@ -12,7 +12,8 @@
       <!-- Slots ligados no parent recebem conteúdo de demo, para exercitar
            prepend/append/hint/error (que não são props e não apareciam). -->
       <template v-for="s in activeSlots" :key="s" #[s]>
-        <span class="pv-slot-demo">{{ slotDemo(s) }}</span>
+        <DssIcon v-if="slotIcons[s]" :name="slotIcons[s]" inline decorative />
+        <span v-else class="pv-slot-demo">{{ slotDemo(s) }}</span>
       </template>
     </component>
     <p v-else class="pv-missing">Componente "{{ name }}" não encontrado no registry de preview.</p>
@@ -21,6 +22,7 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted, defineAsyncComponent, toHandlerKey } from 'vue'
+import DssIcon from '../../../../packages/core/components/base/DssIcon/DssIcon.vue'
 
 const name = new URLSearchParams(location.search).get('frame') || ''
 
@@ -36,6 +38,7 @@ const brand = ref('')
 const model = ref(null) // null é o "vazio" universal (File/array/objeto aceitam; '' quebrava File)
 const modelProp = ref(null)
 const activeSlots = ref([]) // slots ligados no parent (nomes)
+const slotIcons = ref({})   // nome do slot -> nome do ícone (prepend/append) escolhido no parent
 const emitNames = ref([])   // api.emits do contrato — p/ logar TODOS os eventos
 
 // Conteúdo de demonstração por slot: marca visível para o slot ser inspecionável.
@@ -100,6 +103,7 @@ function onMsg(e) {
   if (d.brand != null) brand.value = d.brand
   if ('modelProp' in d) modelProp.value = d.modelProp
   if (Array.isArray(d.slots)) activeSlots.value = d.slots
+  if (d.slotIcons && typeof d.slotIcons === 'object') slotIcons.value = d.slotIcons
   if (Array.isArray(d.emits)) emitNames.value = d.emits
 }
 onMounted(() => {
