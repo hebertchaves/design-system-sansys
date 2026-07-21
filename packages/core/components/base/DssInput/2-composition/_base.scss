@@ -35,7 +35,7 @@
 .dss-input__row {
   display: flex;
   align-items: center;
-  gap: var(--dss-spacing-1); // espaçamento apertado ícone↔conteúdo (paridade DssSelect)
+  gap: var(--dss-spacing-2);
   width: 100%;
 }
 
@@ -46,7 +46,7 @@
   flex: 1;
   min-width: 0; /* permite o campo encolher ao lado de before/after (flex-shrink:0) */
   min-height: var(--dss-input-height-md); /* 44px - ✅ WCAG 2.1 AA */
-  gap: var(--dss-spacing-2);
+  gap: var(--dss-spacing-1); // espaçamento apertado ícone↔conteúdo (paridade DssSelect)
   transition: all var(--dss-duration-150) var(--dss-easing-standard);
 }
 

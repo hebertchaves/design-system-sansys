@@ -327,7 +327,7 @@
         },
         {
           "property": "gap",
-          "token": "--dss-spacing-1",
+          "token": "--dss-spacing-2",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -351,7 +351,7 @@
         },
         {
           "property": "gap",
-          "token": "--dss-spacing-2",
+          "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1173,11 +1173,9 @@
         ]
       },
       {
-        "name": "--dss-spacing-1",
+        "name": "--dss-spacing-2",
         "usedIn": [
-          "default",
-          "focus",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -1188,9 +1186,11 @@
         ]
       },
       {
-        "name": "--dss-spacing-2",
+        "name": "--dss-spacing-1",
         "usedIn": [
-          "default"
+          "default",
+          "focus",
+          "defaultPreview"
         ]
       },
       {

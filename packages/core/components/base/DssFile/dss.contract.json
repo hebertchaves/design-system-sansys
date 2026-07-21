@@ -571,6 +571,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "margin-left",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "justify-content",
           "token": null,
           "value": "center",

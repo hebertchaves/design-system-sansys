@@ -223,6 +223,11 @@
 // padding lateral spacing-4 + gap spacing-2 entre os itens).
 .dss-file__prepend {
   color: var(--dss-text-secondary);
+  // O field emoldura o conteúdo com padding lateral spacing-4 (16px). Para o ícone
+  // alinhar à mesma posição dos irmãos (Input/Select), o prepend escapa 12px desse
+  // padding (spacing-1 − spacing-4), ficando a spacing-1 da borda — sem mover o
+  // conteúdo sem-prepend (que permanece emoldurado).
+  margin-left: calc(var(--dss-spacing-1) - var(--dss-spacing-4));
 }
 
 .dss-file__append {
