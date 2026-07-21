@@ -29,6 +29,13 @@
   font-family: var(--dss-font-family-sans);
   font-size: var(--dss-font-size-md); // base 16px — família uniforme (texto e ícone inline do prepend/append)
 
+  // Ícone do prepend/append: 20px (padrão da família), não os 24px default do Quasar.
+  // Unlayered vence o Quasar (Const. #3). O padding do prepend é o do Quasar (referência).
+  .q-field__prepend,
+  .q-field__append {
+    font-size: var(--dss-font-size-xl);
+  }
+
   /* ==========================================================================
      FIELD CONTROL (container visual: borda/fundo — gerado pelo QSelect/QField)
      ========================================================================== */

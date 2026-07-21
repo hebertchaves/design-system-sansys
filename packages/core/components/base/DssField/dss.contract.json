@@ -435,6 +435,30 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "display",
           "token": null,
           "value": "inline-block",
@@ -969,6 +993,12 @@
       },
       {
         "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xl",
         "usedIn": [
           "default"
         ]

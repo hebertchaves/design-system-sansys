@@ -296,6 +296,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-height",
           "token": "--dss-input-height-md",
           "value": null,
@@ -964,6 +970,12 @@
         "usedIn": [
           "default",
           "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xl",
+        "usedIn": [
+          "default"
         ]
       },
       {

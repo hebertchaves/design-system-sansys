@@ -140,15 +140,16 @@
   align-items: center;
   flex-shrink: 0;
   color: var(--dss-text-secondary);
+  font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
 }
 
 .dss-field__prepend {
-  padding-left: var(--dss-spacing-3);
+  padding-left: var(--dss-spacing-1); // espaçamento apertado (paridade DssSelect)
 }
 
 .dss-field__append {
-  padding-right: var(--dss-spacing-3);
-  gap: var(--dss-spacing-2);
+  padding-right: var(--dss-spacing-1); // espaçamento apertado (paridade DssSelect)
+  gap: var(--dss-spacing-1);
 }
 
 /* ==========================================================================

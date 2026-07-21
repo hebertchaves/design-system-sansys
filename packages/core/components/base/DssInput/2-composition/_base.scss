@@ -35,7 +35,7 @@
 .dss-input__row {
   display: flex;
   align-items: center;
-  gap: var(--dss-spacing-2);
+  gap: var(--dss-spacing-1); // espaçamento apertado ícone↔conteúdo (paridade DssSelect)
   width: 100%;
 }
 
@@ -186,17 +186,18 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
 }
 
 .dss-input__prepend {
-  padding-left: var(--dss-spacing-3);
+  padding-left: var(--dss-spacing-1); // espaçamento apertado (paridade DssSelect)
   color: var(--dss-text-secondary);
 }
 
 .dss-input__append {
-  padding-right: var(--dss-spacing-3);
+  padding-right: var(--dss-spacing-1); // espaçamento apertado (paridade DssSelect)
   color: var(--dss-text-secondary);
-  gap: var(--dss-spacing-2);
+  gap: var(--dss-spacing-1);
 }
 
 /* Com prepend/append, o padding lateral do control SOMA com o gap do field +

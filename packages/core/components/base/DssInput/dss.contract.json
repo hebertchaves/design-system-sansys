@@ -327,7 +327,7 @@
         },
         {
           "property": "gap",
-          "token": "--dss-spacing-2",
+          "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -346,6 +346,12 @@
         {
           "property": "min-height",
           "token": "--dss-input-height-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -554,14 +560,20 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "padding-left",
-          "token": "--dss-spacing-3",
+          "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "padding-right",
-          "token": "--dss-spacing-3",
+          "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -592,12 +604,6 @@
         {
           "property": "height",
           "token": "--dss-spacing-6",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-xl",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1167,9 +1173,11 @@
         ]
       },
       {
-        "name": "--dss-spacing-2",
+        "name": "--dss-spacing-1",
         "usedIn": [
-          "default"
+          "default",
+          "focus",
+          "defaultPreview"
         ]
       },
       {
@@ -1177,6 +1185,12 @@
         "usedIn": [
           "default",
           "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
         ]
       },
       {
@@ -1232,14 +1246,6 @@
         ]
       },
       {
-        "name": "--dss-spacing-1",
-        "usedIn": [
-          "default",
-          "focus",
-          "defaultPreview"
-        ]
-      },
-      {
         "name": "--dss-text-primary",
         "usedIn": [
           "default",
@@ -1260,13 +1266,13 @@
         ]
       },
       {
-        "name": "--dss-spacing-6",
+        "name": "--dss-font-size-xl",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-font-size-xl",
+        "name": "--dss-spacing-6",
         "usedIn": [
           "default"
         ]

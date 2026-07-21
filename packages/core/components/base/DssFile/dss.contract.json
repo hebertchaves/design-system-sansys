@@ -374,7 +374,7 @@
         },
         {
           "property": "gap",
-          "token": "--dss-spacing-2",
+          "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -418,6 +418,12 @@
           "property": "min-width",
           "token": null,
           "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -559,6 +565,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "justify-content",
           "token": null,
           "value": "center",
@@ -586,12 +598,6 @@
           "property": "background",
           "token": null,
           "value": "transparent",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-xl",
-          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -1208,9 +1214,10 @@
         ]
       },
       {
-        "name": "--dss-spacing-2",
+        "name": "--dss-spacing-1",
         "usedIn": [
-          "default"
+          "default",
+          "focus"
         ]
       },
       {
@@ -1238,10 +1245,9 @@
         ]
       },
       {
-        "name": "--dss-spacing-1",
+        "name": "--dss-spacing-2",
         "usedIn": [
-          "default",
-          "focus"
+          "default"
         ]
       },
       {
@@ -1288,16 +1294,16 @@
         ]
       },
       {
+        "name": "--dss-font-size-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-6",
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-font-size-xl",
-        "usedIn": [
-          "default"
         ]
       },
       {

@@ -97,7 +97,7 @@
   // empurrava o campo para ~50px. Padding só no eixo X; o eixo Y é a altura.
   min-height: var(--dss-input-height-md);
   height: var(--dss-input-height-md); // 44px — WCAG 2.5.5 touch target
-  gap: var(--dss-spacing-2);
+  gap: var(--dss-spacing-1); // espaçamento apertado ícone↔conteúdo (paridade DssSelect)
   padding: 0 var(--dss-spacing-4);
   transition: all var(--dss-duration-300) var(--dss-easing-standard);
 
@@ -216,6 +216,7 @@
   flex-shrink: 0;
   position: relative;
   z-index: 2; // Acima do QFile transparente
+  font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
 }
 
 // Sem padding lateral próprio: agora são filhos flex do campo (que já tem
