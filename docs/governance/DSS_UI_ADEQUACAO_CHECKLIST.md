@@ -311,6 +311,25 @@ se for `composed/`, confirmar que os globs do Preview Frame o alcançam (`{base,
 
 ---
 
+## Página do componente (portal docs) — aplicar o template
+
+> **A adequação NÃO termina no Preview Frame.** Ela também **ajusta/cria a página do
+> componente** em `apps/docs-portal/src/pages/components/Dss‹Nome›Page.tsx`, aplicando o
+> template **`docs/specs/COMPONENT_PAGE_STRUCTURE.md`**. Referência já desenvolvida:
+> **`DssInputPage.tsx` / `DssButtonPage.tsx`** (golden). O Preview Frame é o validador ao
+> vivo do SFC real; a **página** é a documentação/showcase pública — deriva do contrato (mesma
+> cadeia de fonte única), **não se inventa** estado/prop/token.
+
+**Gate da página (marcar por componente):**
+
+- [ ] **Página existe** e segue a **Hierarquia Oficial de Seções** do template: badges de metadados ·
+  título/descrição · quando usar/quando NÃO · playground · **estados interativos** · **anatomia 4 camadas** ·
+  seções técnicas 7.1 props/eventos · 7.2 slots · 7.3 tokens · 7.4 a11y WCAG · anti-patterns · vinculantes · referências.
+- [ ] **Estados/props/tokens/a11y** da página **batem com o contrato/meta** (derivação, não invenção — mesmo contrato do Preview Frame).
+- [ ] **Visual da página reflete a adequação** (as correções de UI aparecem na página, não uma versão velha).
+
+---
+
 ## Predição — DssTextarea (QField-based: reproduz tudo de A–E)
 
 Estado atual (a corrigir, igual ao Select pré-fix):
