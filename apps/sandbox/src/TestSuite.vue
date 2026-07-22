@@ -277,6 +277,30 @@
               </button>
 
               <button
+                @click="activeComponent = 'file'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'file' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">attach_file</span></span>
+                <span class="nav-label">DssFile</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'field'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'field' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">crop_free</span></span>
+                <span class="nav-label">DssField</span>
+              </button>
+            </div>
+
+            <!-- Controles de Seleção -->
+            <button @click="toggleCategory('selectionControls')" class="nav-subcategory">
+              <span class="nav-label">Controles de Seleção</span>
+              <span class="chevron" :class="{ expanded: expandedCategories.selectionControls }">›</span>
+            </button>
+
+            <div v-show="expandedCategories.selectionControls" class="nav-subsubmenu">
+              <button
                 @click="activeComponent = 'checkbox'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'checkbox' }]"
               >
@@ -522,6 +546,16 @@
         <TestTextarea />
       </div>
 
+      <!-- DssFile Test View -->
+      <div v-else-if="activeComponent === 'file'" class="component-view">
+        <TestFile />
+      </div>
+
+      <!-- DssField Test View -->
+      <div v-else-if="activeComponent === 'field'" class="component-view">
+        <TestField />
+      </div>
+
       <!-- DssCard Test View -->
       <div v-else-if="activeComponent === 'card'" class="component-view">
         <TestCard />
@@ -590,6 +624,8 @@ import TestInput from './TestInput.vue'
 import TestCheckbox from './TestCheckbox.vue'
 import TestSelect from './TestSelect.vue'
 import TestTextarea from './TestTextarea.vue'
+import TestFile from './TestFile.vue'
+import TestField from './TestField.vue'
 import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
 import TestDataCard from './TestDataCard.vue'
@@ -613,6 +649,7 @@ const expandedCategories = ref({
   displayFeedback: true,
   dataDisplay: true,
   formsInput: true,
+  selectionControls: true,
   layout: true,
   navigation: true,
   phase3: true,
