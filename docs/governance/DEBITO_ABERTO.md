@@ -80,9 +80,15 @@
 
 ## Verificar (pode já estar resolvido)
 
-- 🔍 **Débito de props (api-docs, 30)** — ainda diverge em `import/dss-v2.4.0`, mas o fix (30→0) vive em
-  `chore/apidocs-passthrough`. **Confirmar após o merge** dessa branch no `main`. `[[reference_api_docs_validator]]`.
 - 🔍 **`DssResponsive`** — lista scope-props do slot default como slots (baixa prioridade). Mesmo arquivo.
+
+## Frente em curso
+
+- ⏳ **MR !6 — consistência da família de campos** (`work/dss-continuidade` → `main`, aberto 2026-07-22).
+  16 commits: brand no anel de foco (rotas A/B + dark), label×placeholder padrão B, base font 16 + ícone
+  20px + paridade pixel-perfect do prepend, slot `error` fiel ao `getBottom` do Quasar, anel de foco do
+  DssFile, + Preview Frames Textarea/Field e seletor de ícone no sandbox. Gates verdes, testes 5/5.
+  Reviewer `@joao-henrique.vieira`; aguardando review + CI.
 
 ## Resolvidos nesta onda (para não reabrir por engano)
 
@@ -111,5 +117,5 @@
 - ✅ **DssUploader tem teste** (30 casos) — o débito de cobertura da memória estava DESATUALIZADO (o teste existe).
 - ✅ **c0 — rampa de cores reconciliada com o Figma** (focus ausente/deep duplicado; 54/54) — `6a4baa6`.
 - ✅ **Cadeia de fonte única**: schema + emissor + gates N/O/F + Preview Frame + gate CI — provados em DssInput/DssSelect.
-- ✅ **Gate api-docs (30→0)** — na branch `chore/apidocs-passthrough` (pendente de merge).
-- ✅ **Normalização EOL** — `.gitattributes` na branch `chore/eol-normalization` (pendente de merge).
+- ✅ **Gate api-docs (30→0)** — **mergeado em `main` via MR !5** (v2.4.0); gate `validate:api-docs` verde. Verificação 🔍 fechada.
+- ✅ **Normalização EOL** — `.gitattributes` **mergeado em `main` via MR !5** (v2.4.0).
