@@ -86,6 +86,13 @@
             <span class="nav-icon"><span class="material-icons">dvr</span></span>
             <span class="nav-label">Preview Frame · DssField</span>
           </button>
+          <button
+            @click="activeComponent = 'preview-frame-checkbox'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-checkbox' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssCheckbox</span>
+          </button>
         </div>
 
         <!-- Foundation -->
@@ -475,6 +482,9 @@
       </div>
       <div v-else-if="activeComponent === 'preview-frame-field'" class="component-view">
         <PreviewFrame component="DssField" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-checkbox'" class="component-view">
+        <PreviewFrame component="DssCheckbox" />
       </div>
 
       <!-- DssButton Test View -->
