@@ -61,15 +61,15 @@ describe('DssFile', () => {
       expect(wrapper.text()).toContain('Anexar documento')
     })
 
-    // Regressão (adequação de UI): com um label em repouso (sem valor, sem foco),
-    // o label ocupa o centro do campo e o drop-hint NÃO deve renderizar — senão
-    // os dois se sobrepõem (bug flagrado pelo Preview Frame). Sem label, a dica
-    // aparece normalmente (coberto pelo teste "renders drop hint...").
-    it('hides drop hint at rest when a label is present (no overlap)', () => {
+    // Padrão B da família (label × placeholder): com um label em repouso (sem valor,
+    // sem foco), o drop-hint (papel de placeholder) JÁ aparece — a sobreposição com o
+    // label é evitada flutuando o label no topo, não escondendo a dica. Paridade com
+    // DssInput/DssSelect/DssTextarea.
+    it('shows drop hint at rest when a label is present (label floats, no overlap)', () => {
       const wrapper = mount(DssFile, {
         props: { modelValue: null, label: 'Anexar documento' }
       })
-      expect(wrapper.find('.dss-file__drop-hint').exists()).toBe(false)
+      expect(wrapper.find('.dss-file__drop-hint').exists()).toBe(true)
     })
 
     describe('states', () => {
