@@ -1,12 +1,23 @@
 # DSS — Checklist de Adequação de UI (recorrências Input/Select → todas as famílias)
 
-> **Origem:** padrões de erro que se repetiram na adequação de `DssInput` e `DssSelect`
-> (jun/2026). Esta refatoração de UI **abrange todos os componentes** — rode este
-> checklist no **primeiro prompt de adequação** de cada um. Sempre verifique
-> **LIGHT e DARK**.
+> **Origem:** padrões de erro que se repetiram na adequação da **família de campos**
+> — `DssInput`/`DssSelect` (jun/2026) + `DssTextarea`/`DssFile`/`DssField` (jul/2026).
+> Esta refatoração de UI **abrange todos os componentes** — rode este checklist no
+> **primeiro prompt de adequação** de cada um. Sempre verifique **LIGHT e DARK**.
 >
 > **Como ler:** cada item traz o *sintoma* observado, a *causa-raiz* e o *fix
 > canônico*. A seção final é o **Gate** (caixas para marcar por componente).
+>
+> **Dois meta-princípios (aprendidos na marra, valem para TODA a análise):**
+> 1. **Quasar é a referência de COMPORTAMENTO, não só de estilo.** Em dúvida sobre
+>    *como algo se comporta* (slot `error`, altura, placeholder, foco), **consulte a
+>    fonte do Quasar** (`node_modules/quasar/src/…`, ex.: `use-field.js` → `getBottom()`)
+>    antes de decidir. Não interpole do prior genérico (regra anti-delírio do CLAUDE.md).
+> 2. **Ler o SCSS NÃO basta — MEÇA ao vivo.** Cascata layered/`!important`, `:focus-visible`,
+>    herança de custom-property e paint **enganam** na leitura estática. Reproduza no
+>    **Preview Frame** e leia os **estilos computados** (chrome-devtools), e **COMPARE com
+>    os irmãos** da família pixel-a-pixel (tamanho/posição do ícone, gap, altura, anel de
+>    foco). A paridade é medida, não presumida.
 
 ---
 
@@ -115,6 +126,24 @@
 - **E7 — Só tokens que existem.** `var(--dss-*)` sem definição no catálogo (ex.: o
   antigo `--dss-error-600`/`--dss-focus-ring`) resolve p/ vazio → estado/anel some.
   Usar `--dss-feedback-error*`. **Gate:** `validate:scss-tokens` (ratchet c/ baseline).
+- **E8 — label × placeholder = padrão B (sem sobreposição em repouso).** Com **label E
+  placeholder**, o label **flutua já em repouso** (assume o aspecto "selecionado") para o
+  placeholder aparecer visível **sem colidir**. ❌ Não esconder o placeholder (estratégia A
+  antiga), ❌ não deixar os dois centralizados sobrepostos. Mecanismo: QField-based → forçar
+  `stack-label` quando `placeholder && label` (`computedStackLabel`); custom → classe `--float`
+  incluindo `!!placeholder`. DssFile: o drop-hint É o placeholder (sempre presente) → label
+  sempre flutua com label; o conteúdo desce (`align-items:flex-end` / `align-self`) p/ não colidir.
+- **E9 — Base font-size + ícone de slot.** O **root** do campo seta `font-size:
+  var(--dss-font-size-md)` **explícito** (senão herda um 14px acidental do ancestral).
+  Ícone de prepend/append = **`--dss-font-size-xl` (20px)** uniforme na família (o `DssIcon`
+  `inline` é `1em` → herda o contexto; ajuste o `font-size` do slot, não passe `size`).
+  **Nunca emoji/glyph hardcoded** — só `<DssIcon>` (contrato de ícone). Confira posição/gap
+  do ícone **igual aos irmãos** (custom vs Quasar têm padding estrutural diferente — meça).
+- **E10 — slot `error` fiel ao `getBottom()` do Quasar.** Renderiza em
+  `error && (errorMessage || slot)`; **`errorMessage` tem prioridade**, o **slot é o
+  fallback** quando não há errorMessage. ❌ Não exigir `errorMessage` p/ o slot aparecer,
+  ❌ não deixar o slot sobrepor o errorMessage. (Select/Textarea delegam ao QField = correto;
+  Input/File reimplementam o bottom → espelhar o `getBottom`.)
 
 ---
 
@@ -160,6 +189,46 @@
 
 ---
 
+## J. Anel de foco de teclado (`:focus-visible`) — próprio, no elemento VISÍVEL
+
+> **WCAG 2.4.7.** O componente **declara seu próprio anel de foco** — não confie na regra
+> global/Quasar (pode faltar ou ser sobrescrita). E7/E6 tratam a **borda** no foco; isto é
+> o **outline externo** (o "anel"), coisa diferente.
+
+- **J1 — Existe e é próprio.** Todo interativo tem `:focus-visible` com
+  `outline: var(--dss-border-width-md) solid var(--dss-focus-primary)` + `outline-offset:
+  var(--dss-spacing-1)`. *(Achado: Checkbox/Radio/Toggle/Field/Range/Slider e o DssFile não
+  declaravam — dependiam da global.)*
+- **J2 — Mora no elemento VISÍVEL, não num overlay.** Onde o alvo focável é interno/transparente
+  (ex.: DssFile = controle do QFile dentro de overlay `opacity:0`), o `:focus-visible` do overlay
+  **não aparece**. Escopar o outline no elemento visível:
+  `.dss-x:has(.overlay :focus-visible) .dss-x__field { outline… }`. Escopar ao focável real
+  (não ao botão limpar, que tem o próprio `:focus-visible`).
+- **J3 — Cor do anel = `--dss-focus-primary`** (brand-aware, ver K). É a mesma via do brand no foco.
+
+---
+
+## K. Brand pela PROP `brand` (não só pelo `[data-brand]` ancestral)
+
+> **Sintoma:** o brand vindo de um `[data-brand]` **ancestral** (seletor "global" da página)
+> coloria a borda/anel de foco, mas o **`brand` como prop** (seletor "interno") **não** — a
+> **classe** `.dss-x--brand-*` **não remapeia** `--dss-action-primary`/`--dss-focus-primary`.
+
+- **K1 — div-rooted (Input/File/Field): `:data-brand` no root.** A prop emite
+  `:data-brand="brand || undefined"` no elemento raiz → remapeia os tokens de brand na subárvore
+  (borda via `--dss-action-primary`, anel via `--dss-focus-primary`). É a **norma DSS**
+  (precedente DssCheckbox/DssChip/DssRadio).
+- **K2 — Quasar-rooted (Select/Textarea): a CLASSE aliasa o token.** O Quasar roteia o atributo
+  `data-brand` p/ o native interno (não fica ancestral do `.q-field__control`) → o `:data-brand`
+  no root **não** serve. Aliasar `.dss-x--brand-*` aos blocos `[data-brand]` do `_focus.scss`
+  (lar dos rgba de foco — sem hardcode em componente), remapeando `--dss-focus-primary` pela classe.
+- **K3 — Dark do brand pela classe = seletor DESCENDENTE.** `&[data-theme=dark]` aninhado exige
+  `data-theme` co-locado; ele mora no `body`. Usar `[data-theme="dark"] .dss-x--brand-*` (descendente).
+- **K4 — Verificar pela PROP, não só pelo ancestral.** No Preview Frame, teste o **knob `brand`**
+  (interno) — não só o brand global da página. Ambos devem colorir borda **e** anel de foco.
+
+---
+
 ## Gate de adequação (marcar por componente — LIGHT e DARK)
 
 - [ ] **standout (light)** distinto do borderless (chip escuro `gray-800` + texto inverso)
@@ -171,7 +240,12 @@
 - [ ] **erro** com `--dss-feedback-error` (não `--dss-error-*`)
 - [ ] **disabled** legível (sem empilhar opacity; cor `text-disabled`)
 - [ ] **placeholder** visível (`display-value` se select de seleção pura)
+- [ ] **label × placeholder**: label flutua em repouso quando há placeholder — sem sobreposição (E8)
 - [ ] **prepend/before/chips** com espaçamento correto (E2/E3)
+- [ ] **ícone de slot** = 20px, sem glyph hardcoded (DssIcon); posição/gap **iguais aos irmãos** (E9)
+- [ ] **slot `error`** fiel ao Quasar: renderiza sem errorMessage; errorMessage tem prioridade (E10)
+- [ ] **anel de foco `:focus-visible`** próprio, no elemento visível (não overlay, não só a global) (J)
+- [ ] **brand pela PROP** colore borda + anel de foco (knob interno, não só `[data-brand]` global) (K)
 - [ ] **sem overflow** em grid/matriz (`min-width: 0` na raiz real)
 - [ ] verificado **sem** `!important` reflexo (só onde há override global — A3)
 
@@ -229,7 +303,9 @@ se for `composed/`, confirmar que os globs do Preview Frame o alcançam (`{base,
 - [ ] Knobs **derivados do contrato** — nº de controles = nº de props do contrato (sem knob fantasma nem omissão)
 - [ ] Mexer num knob → o **componente real reage** dentro do iframe; o **snippet** reflete o estado das props
 - [ ] **LIGHT e DARK** corretos dentro do iframe (superfície calibrada contra o stage — B)
-- [ ] **Brand** (Hub/Water/Waste) propaga para o componente real (token de brand resolve **dentro** do iframe)
+- [ ] **Brand** propaga pelo **ancestral `[data-brand]`** (global da página) **E pela prop `brand`** (knob interno) — os dois colorem borda + anel de foco (K)
+- [ ] **Foco de teclado** (Tab) mostra o **anel `:focus-visible`** no elemento visível (J)
+- [ ] **Medir, não presumir** — leia os **estilos computados** no iframe (chrome-devtools) e confira a paridade com os **irmãos** da família: tamanho/posição do ícone, gap ícone↔texto, altura do campo, geometria do anel de foco
 
 > Só depois deste gate a adequação está **fechada** e o componente fica elegível ao selo (Definition of Done do `CLAUDE.md`).
 
