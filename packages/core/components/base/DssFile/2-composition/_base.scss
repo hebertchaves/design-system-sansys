@@ -108,6 +108,15 @@
   }
 }
 
+// Anel de foco de teclado (a11y) — paridade com a família. O alvo focável real do
+// DssFile é o controle do QFile (dentro do overlay opacity:0), então o :focus-visible
+// dele não seria visível: espelhamos o outline no .dss-file__field VISÍVEL. Escopado ao
+// focável do QFile (não ao botão limpar, que tem o próprio :focus-visible).
+.dss-file:has(.dss-file__q-file :focus-visible) .dss-file__field {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
+  outline-offset: var(--dss-spacing-1);
+}
+
 // Coluna de conteúdo (label + dropzone + valor) — aria-hidden no template: é a
 // duplicata visual do que o QFile já anuncia. flex:1 ocupa o meio, entre
 // prepend/append/clear; position:relative ancora a label absoluta.
