@@ -51,9 +51,9 @@ export function useInputState(props: Readonly<InputProps>, slots: Slots) {
    */
   const hasBottomSlot = computed(() => {
     return (
-      (props.error && props.errorMessage) ||
+      // Área de erro (paridade Quasar getBottom): em erro, com errorMessage OU slot.
+      (props.error && (props.errorMessage || !!slots.error)) ||
       props.hint ||
-      !!slots.error ||
       !!slots.hint
     )
   })

@@ -90,13 +90,16 @@
     <!-- Bottom slots (hint/error) -->
     <div v-if="hasBottomSlot" class="dss-input__bottom">
       <div
-        v-if="error && errorMessage"
+        v-if="error && (errorMessage || slots.error)"
         :id="errorId"
         class="dss-input__error"
         role="alert"
         aria-live="assertive"
       >
-        <slot name="error">{{ errorMessage }}</slot>
+        <!-- Paridade Quasar (getBottom): errorMessage tem prioridade; o slot é o
+             fallback quando não há errorMessage. -->
+        <template v-if="errorMessage">{{ errorMessage }}</template>
+        <slot v-else name="error" />
       </div>
       <div
         v-else-if="hint"
