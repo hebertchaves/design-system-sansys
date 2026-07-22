@@ -507,6 +507,11 @@
         <TestInput />
       </div>
 
+      <!-- DssCheckbox Test View -->
+      <div v-else-if="activeComponent === 'checkbox'" class="component-view">
+        <TestCheckbox />
+      </div>
+
       <!-- DssSelect Test View -->
       <div v-else-if="activeComponent === 'select'" class="component-view">
         <TestSelect />
@@ -582,6 +587,7 @@ import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestInput from './TestInput.vue'
+import TestCheckbox from './TestCheckbox.vue'
 import TestSelect from './TestSelect.vue'
 import TestTextarea from './TestTextarea.vue'
 import TestCard from './TestCard.vue'
