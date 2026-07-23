@@ -72,6 +72,8 @@ export interface CheckboxProps {
    * - boolean: toggle simples (true/false)
    * - null: estado indeterminate
    * - any[]: modo grupo (array de valores selecionados)
+   *
+   * @default false
    */
   modelValue?: boolean | null | any[]
 

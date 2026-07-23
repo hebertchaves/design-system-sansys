@@ -37,6 +37,7 @@ const theme = ref('light')
 const brand = ref('')
 const model = ref(null) // null é o "vazio" universal (File/array/objeto aceitam; '' quebrava File)
 const modelProp = ref(null)
+let modelSeeded = false  // semeia o model com o default do vModel só na 1ª mensagem
 const activeSlots = ref([]) // slots ligados no parent (nomes)
 const slotIcons = ref({})   // nome do slot -> nome do ícone (prepend/append) escolhido no parent
 const emitNames = ref([])   // api.emits do contrato — p/ logar TODOS os eventos
@@ -102,6 +103,13 @@ function onMsg(e) {
   if (d.theme != null) theme.value = d.theme
   if (d.brand != null) brand.value = d.brand
   if ('modelProp' in d) modelProp.value = d.modelProp
+  // Semeia o model com o default do vModel (@default do contrato) — só na 1ª
+  // mensagem, para não sobrescrever a interação do usuário depois. Sem semente,
+  // um checkbox nasceria indeterminate (model=null === indeterminateValue:null).
+  if (!modelSeeded) {
+    if ('modelDefault' in d && d.modelDefault != null) model.value = d.modelDefault
+    modelSeeded = true
+  }
   if (Array.isArray(d.slots)) activeSlots.value = d.slots
   if (d.slotIcons && typeof d.slotIcons === 'object') slotIcons.value = d.slotIcons
   if (Array.isArray(d.emits)) emitNames.value = d.emits

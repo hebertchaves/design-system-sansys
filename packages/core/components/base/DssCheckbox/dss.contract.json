@@ -24,6 +24,7 @@
         "name": "modelValue",
         "type": "boolean | null | any[]",
         "controlHint": "text",
+        "default": false,
         "description": "Valor atual do checkbox"
       },
       {

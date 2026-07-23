@@ -194,11 +194,16 @@ function postState() {
   // modelProp: o sujeito só liga v-model quando o contrato declara vModel
   // (componentes sem model — ex.: DssUploader — não recebem modelValue órfão).
   const modelProp = contract.value?.api?.vModel?.prop ?? null
+  // Default do vModel (do @default no contrato): o sujeito semeia o model com
+  // isto em vez de null. Sem isto, um checkbox nasce indeterminate (model=null
+  // colide com indeterminateValue:null → mostra dash + confunde checked/indet).
+  let modelDefault = (contract.value?.api?.props || []).find((p) => p.name === modelProp)?.default
+  if (typeof modelDefault === 'string' && /^(null|undefined)\b/.test(modelDefault)) modelDefault = undefined
   const slots = Object.keys(activeSlots).filter((n) => activeSlots[n])
   const activeSlotIcons = {}
   for (const n of slots) if (ICON_SLOTS.includes(n) && slotIcons[n]) activeSlotIcons[n] = slotIcons[n]
   const emits = emitDefs.value.map((ev) => ev.name)
-  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, slots, slotIcons: activeSlotIcons, emits }))
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, modelDefault, slots, slotIcons: activeSlotIcons, emits }))
   el.contentWindow.postMessage(payload, '*')
 }
 // Chama um método exposto (exposedRefs) no sujeito, via postMessage.
