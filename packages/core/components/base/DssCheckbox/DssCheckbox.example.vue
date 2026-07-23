@@ -242,12 +242,15 @@ const customVal = ref('no')
 const a11yVal = ref(false)
 
 // 12. Real-world
-const terms = ref(false)
-const features = ref<string[]>([])
+// Estado inicial com variedade visual: sem isto, a seção vira um paredão de
+// checkboxes vazios idênticos (o color="positive" do Terms, p.ex., só aparece
+// quando marcado). Mix marcado/desmarcado demonstra os estados reais em contexto.
+const terms = ref(true)
+const features = ref<string[]>(['darkMode', 'notifications'])
 const settings = reactive({
   autoSave: true,
   spellCheck: false,
-  darkMode: false
+  darkMode: true
 })
 </script>
 

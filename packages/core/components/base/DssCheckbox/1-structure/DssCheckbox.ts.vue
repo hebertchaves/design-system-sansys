@@ -89,7 +89,7 @@
  */
 
 import { computed, ref, useSlots, watchEffect } from 'vue'
-import type { CheckboxProps, CheckboxEmits } from '../types/checkbox.types'
+import type { CheckboxProps, CheckboxEmits, CheckboxExpose } from '../types/checkbox.types'
 import { useCheckboxClasses } from '../composables'
 import DssIcon from '../../DssIcon/DssIcon.vue'
 
@@ -290,6 +290,40 @@ function handleChange() {
   // Modo 3: Toggle simples
   emit('update:modelValue', isChecked.value ? props.falseValue : props.trueValue)
 }
+
+/**
+ * Foca no input nativo do checkbox (controle programatico).
+ */
+function focus() {
+  inputRef.value?.focus()
+}
+
+/**
+ * Remove o foco do input nativo do checkbox.
+ */
+function blur() {
+  inputRef.value?.blur()
+}
+
+/**
+ * Alterna o estado do checkbox programaticamente.
+ * Reutiliza handleChange, portanto respeita disable, modo grupo/array
+ * e o ciclo de 3 estados (toggleIndeterminate).
+ */
+function toggle() {
+  handleChange()
+}
+
+// ==========================================================================
+// EXPOSE (paridade com a familia de campos: DssInput/DssSelect expoem focus/blur)
+// ==========================================================================
+
+defineExpose<CheckboxExpose>({
+  focus,
+  blur,
+  toggle,
+  inputRef
+})
 </script>
 
 <!-- Estilos carregados globalmente via dist/style.css -->

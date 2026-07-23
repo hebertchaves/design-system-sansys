@@ -146,6 +146,28 @@
         "description": "Conteudo customizado do label"
       }
     ],
+    "exposedRefs": [
+      {
+        "name": "focus",
+        "type": "() => void",
+        "description": "Foca no input nativo do checkbox"
+      },
+      {
+        "name": "blur",
+        "type": "() => void",
+        "description": "Remove o foco do input nativo do checkbox"
+      },
+      {
+        "name": "toggle",
+        "type": "() => void",
+        "description": "Alterna o estado do checkbox programaticamente (respeita disable,"
+      },
+      {
+        "name": "inputRef",
+        "type": "Ref<HTMLInputElement | null>",
+        "description": "Referencia direta ao elemento <input type=\"checkbox\"> nativo"
+      }
+    ],
     "vModel": {
       "prop": "modelValue",
       "event": "update:modelValue"
@@ -411,12 +433,6 @@
           "property": "color",
           "token": "--dss-text-body",
           "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "flex-direction",
-          "token": null,
-          "value": "row-reverse",
           "source": "2-composition/_base.scss"
         },
         {

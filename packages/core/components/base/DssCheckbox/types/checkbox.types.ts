@@ -9,6 +9,8 @@
  * @see https://quasar.dev/vue-components/checkbox
  */
 
+import type { Ref } from 'vue'
+
 // ==========================================================================
 // ENUMS E LITERAIS
 // ==========================================================================
@@ -166,4 +168,31 @@ export interface CheckboxSlots {
    * @default label prop
    */
   default(): any
+}
+
+/**
+ * Referencias/metodos expostos pelo DssCheckbox (paridade com a familia de campos).
+ * Permite controle programatico via ref do template (ex.: form.focus() no primeiro invalido).
+ */
+export interface CheckboxExpose {
+  /**
+   * Foca no input nativo do checkbox
+   */
+  focus: () => void
+
+  /**
+   * Remove o foco do input nativo do checkbox
+   */
+  blur: () => void
+
+  /**
+   * Alterna o estado do checkbox programaticamente (respeita disable,
+   * modo grupo/array e o ciclo de 3 estados de toggleIndeterminate).
+   */
+  toggle: () => void
+
+  /**
+   * Referencia direta ao elemento <input type="checkbox"> nativo
+   */
+  inputRef: Ref<HTMLInputElement | null>
 }

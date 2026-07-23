@@ -137,6 +137,17 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 |------|-----------|
 | `default` | Conteúdo customizado do label (substitui prop `label`) |
 
+### Métodos Expostos (via `ref`)
+
+Paridade com a família de campos (`DssInput`/`DssSelect`) — controle programático via `ref` no template.
+
+| Método/Ref | Tipo | Descrição |
+|------------|------|-----------|
+| `focus()` | `() => void` | Foca no input nativo |
+| `blur()` | `() => void` | Remove o foco |
+| `toggle()` | `() => void` | Alterna o estado (respeita `disable`, modo grupo e ciclo de 3 estados) |
+| `inputRef` | `Ref<HTMLInputElement \| null>` | Referência ao `<input>` nativo |
+
 ---
 
 ## 6. Estados

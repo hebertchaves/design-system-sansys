@@ -197,6 +197,36 @@ function onValueChange(newValue) {
 
 ---
 
+## Métodos Expostos (Expose)
+
+Referências públicas obtidas via `ref` no template (paridade com a família de campos — `DssInput`/`DssSelect`).
+
+| Método/Ref | Tipo | Descrição |
+|------------|------|-----------|
+| `focus()` | `() => void` | Foca no input nativo do checkbox |
+| `blur()` | `() => void` | Remove o foco do input nativo |
+| `toggle()` | `() => void` | Alterna o estado programaticamente. Respeita `disable`, o modo grupo (array) e o ciclo de 3 estados (`toggleIndeterminate`) |
+| `inputRef` | `Ref<HTMLInputElement \| null>` | Referência direta ao `<input type="checkbox">` nativo |
+
+**Exemplo:**
+```vue
+<template>
+  <DssCheckbox ref="cbRef" v-model="aceito" label="Aceito os termos" />
+  <button @click="cbRef?.focus()">Focar</button>
+  <button @click="cbRef?.toggle()">Alternar</button>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { CheckboxExpose } from '@/dss/components/base/DssCheckbox/types/checkbox.types'
+
+const cbRef = ref<CheckboxExpose | null>(null)
+const aceito = ref(false)
+</script>
+```
+
+---
+
 ## Sistema de Cores
 
 ### Sem Brand (classes utilitárias)
