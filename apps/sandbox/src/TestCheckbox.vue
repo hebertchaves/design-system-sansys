@@ -109,7 +109,7 @@ import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
 // ──────────────────────────────────────────────────────────────────────────
 // API canônica do DssCheckbox (vide types/checkbox.types.ts)
 // ──────────────────────────────────────────────────────────────────────────
-const SIZES = ['xs', 'sm', 'md', 'lg'] as const
+const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 const COLORS = ['primary', 'secondary', 'tertiary', 'accent', 'positive', 'negative', 'warning', 'info'] as const
 const BRAND_KEYS = ['hub', 'water', 'waste'] as const
 

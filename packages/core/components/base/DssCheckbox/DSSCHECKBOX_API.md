@@ -57,7 +57,7 @@ O `DssCheckbox` é um componente de checkbox do Design System Sansys baseado em 
 | Prop | Tipo | Default | Valores | Descrição |
 |------|------|---------|---------|-----------|
 | `color` | `CheckboxColor` | `'primary'` | Cores semânticas conforme tipo `CheckboxColor` | Cor semântica do checkbox |
-| `size` | `CheckboxSize` | `'md'` | `xs`, `sm`, `md`, `lg` | Tamanho do checkbox |
+| `size` | `CheckboxSize` | `'md'` | `xs`, `sm`, `md`, `lg`, `xl` | Tamanho do checkbox |
 
 **Especificações por Size:**
 
@@ -67,6 +67,9 @@ O `DssCheckbox` é um componente de checkbox do Design System Sansys baseado em 
 | `sm` | 24px | 20px | 12px | 12px | 6px |
 | `md` | 28px | 20px | 14px | 14px | 8px |
 | `lg` | 32px | 24px | 16px | 16px | 12px |
+| `xl` | 32px¹ | 28px | 18px | 18px | 16px |
+
+> ¹ `xl` reusa a altura `-lg` (32px) — a escala compacta compartilhada (badge/chip/checkbox) não define `-xl`. O box de 28px cabe em 32px; touch target 48px via `::before`.
 
 **Exemplo:**
 ```vue
@@ -74,6 +77,7 @@ O `DssCheckbox` é um componente de checkbox do Design System Sansys baseado em 
 <DssCheckbox v-model="val" size="sm" label="Small" />
 <DssCheckbox v-model="val" size="md" label="Medium (default)" />
 <DssCheckbox v-model="val" size="lg" label="Large" />
+<DssCheckbox v-model="val" size="xl" label="Extra Large" />
 ```
 
 ---

@@ -36,6 +36,7 @@ export type CheckboxSize =
   | 'sm'  // Small
   | 'md'  // Medium (default)
   | 'lg'  // Large
+  | 'xl'  // Extra Large
 
 /**
  * Brands disponiveis

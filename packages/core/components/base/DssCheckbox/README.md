@@ -87,6 +87,9 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 | `sm` | 24px (`--dss-compact-control-height-sm`) | 20px | 48px via `::before` |
 | `md` | 28px (`--dss-compact-control-height-md`) | 20px | 48px via `::before` |
 | `lg` | 32px (`--dss-compact-control-height-lg`) | 24px | 48px via `::before` |
+| `xl` | 32px (`--dss-compact-control-height-lg`, reusado¹) | 28px | 48px via `::before` |
+
+> ¹ A escala compacta compartilhada (badge/chip/checkbox) não tem `-xl`; `xl` reusa a altura `-lg` (o box de 28px cabe folgado em 32px). O touch target permanece 48px via `::before`.
 
 > **Convenção de Pseudo-elementos**: `::before` é RESERVADO para touch target. `::after` reservado para efeitos visuais.
 
@@ -118,7 +121,7 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 | `label` | `string` | `''` | Texto do label |
 | `leftLabel` | `boolean` | `false` | Label à esquerda do indicador |
 | `color` | `CheckboxColor` | `'primary'` | Cor semântica |
-| `size` | `CheckboxSize` | `'md'` | Tamanho (`xs`, `sm`, `md`, `lg`) |
+| `size` | `CheckboxSize` | `'md'` | Tamanho (`xs`, `sm`, `md`, `lg`, `xl`) |
 | `disable` | `boolean` | `false` | Desabilita interações |
 | `dense` | `boolean` | `false` | Modo compacto |
 | `brand` | `CheckboxBrand \| null` | `null` | Brand Sansys (`hub`, `water`, `waste`) |

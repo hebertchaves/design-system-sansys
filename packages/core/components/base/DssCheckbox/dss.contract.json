@@ -88,13 +88,14 @@
       {
         "name": "size",
         "type": "CheckboxSize",
-        "controlHint": "segmented",
+        "controlHint": "select",
         "description": "Tamanho do checkbox",
         "validValues": [
           "xs",
           "sm",
           "md",
-          "lg"
+          "lg",
+          "xl"
         ]
       },
       {
@@ -509,6 +510,30 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "gap",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-7",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-7",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "background-color",
           "token": "--dss-action-primary",
           "value": null,
@@ -875,6 +900,18 @@
       },
       {
         "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-7",
         "usedIn": [
           "default"
         ]

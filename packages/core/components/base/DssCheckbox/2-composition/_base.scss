@@ -243,6 +243,25 @@
   }
 }
 
+.dss-checkbox--xl {
+  gap: var(--dss-spacing-4); /* 16px */
+  /* Reusa a altura -lg da escala compacta compartilhada (badge/chip/checkbox):
+     não há compact-control-height-xl e a taxonomia é compartilhada. O box de 28px
+     cabe folgado em 32px; o touch target (48px) vem do ::before (WCAG 2.5.5). */
+  min-height: var(--dss-compact-control-height-lg); /* 32px */
+  font-size: var(--dss-font-size-lg);
+
+  .dss-checkbox__control {
+    width: var(--dss-spacing-7); /* 28px */
+    height: var(--dss-spacing-7); /* 28px */
+  }
+
+  .dss-checkbox__check,
+  .dss-checkbox__dash {
+    font-size: var(--dss-font-size-lg); /* 18px */
+  }
+}
+
 /* ==========================================================================
    DENSE VARIANT
    ========================================================================== */

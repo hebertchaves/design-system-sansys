@@ -19,6 +19,7 @@
         <DssCheckbox v-model="sizes.sm" size="sm" label="Small" />
         <DssCheckbox v-model="sizes.md" size="md" label="Medium (default)" />
         <DssCheckbox v-model="sizes.lg" size="lg" label="Large" />
+        <DssCheckbox v-model="sizes.xl" size="xl" label="Extra Large" />
       </div>
     </section>
 
@@ -208,7 +209,8 @@ const sizes = reactive({
   xs: true,
   sm: true,
   md: true,
-  lg: true
+  lg: true,
+  xl: true
 })
 
 // 3. Colors

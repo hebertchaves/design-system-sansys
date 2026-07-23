@@ -142,6 +142,9 @@ O **DssCheckbox** consome tokens de **múltiplas categorias** do Design System S
 | `sm` | 24px (`--dss-compact-control-height-sm`) | 20px (`--dss-spacing-5`) | 12px (`--dss-font-size-xs`) | 6px (`--dss-spacing-1_5`) | 48px (via `::before`) |
 | `md` | 28px (`--dss-compact-control-height-md`) | 20px (`--dss-spacing-5`) | 14px (`--dss-font-size-sm`) | 8px (`--dss-spacing-2`) | 48px (via `::before`) |
 | `lg` | 32px (`--dss-compact-control-height-lg`) | 24px (`--dss-spacing-6`) | 16px (`--dss-font-size-md`) | 12px (`--dss-spacing-3`) | 48px (via `::before`) |
+| `xl` | 32px (`--dss-compact-control-height-lg`, reusado¹) | 28px (`--dss-spacing-7`) | 18px (`--dss-font-size-lg`) | 16px (`--dss-spacing-4`) | 48px (via `::before`) |
+
+> ¹ A escala compacta compartilhada (badge/chip/checkbox) não define `-xl`; `xl` reusa a altura `-lg` (o box de 28px cabe folgado em 32px). Touch target permanece 48px via `::before`.
 
 #### Implementação Técnica
 
@@ -209,7 +212,7 @@ Valores não-tokenizados presentes no SCSS do componente, com justificativa téc
 | Prop | Type | Default | Valores | Descrição |
 |------|------|---------|---------|-----------|
 | `color` | `CheckboxColor` | `'primary'` | Cores semânticas conforme prop `color` | Cor semântica do checkbox |
-| `size` | `CheckboxSize` | `'md'` | `xs`, `sm`, `md`, `lg` | Tamanho do checkbox |
+| `size` | `CheckboxSize` | `'md'` | `xs`, `sm`, `md`, `lg`, `xl` | Tamanho do checkbox |
 
 ### Props de Estado
 
