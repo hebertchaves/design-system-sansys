@@ -90,6 +90,19 @@
   DssFile, + Preview Frames Textarea/Field e seletor de ícone no sandbox. Gates verdes, testes 5/5.
   Reviewer `@joao-henrique.vieira`; aguardando review + CI.
 
+- ⏳ **Família Controles de Seleção** (branch `work/dss-selection-controls`, NÃO empurrado ainda).
+  **DssCheckbox fechado** (4 commits `816ed41`→`fba32a2`): leftLabel (dupla-inversão template×CSS),
+  example §12 (estado inicial vazio→variedade), `defineExpose(focus/blur/toggle/inputRef)` (paridade
+  campo), Preview Frame nascia indeterminate (seed `null`==`indeterminateValue:null` → semear do
+  `@default` do vModel via contrato), `size="xl"` (28px, token). 63 testes. Preview Frame + TestCheckbox
+  feitos. **Próximo: DssRadio** (Golden Context=DssCheckbox), depois DssToggle — 3 artefatos cada.
+  - 🔲 **DECISÃO PENDENTE (dono): props de ícone no DssCheckbox** (`checked/unchecked/indeterminate-icon`
+    do q-checkbox) — reabre decisão travada do **CCI §7** (glifo=marca visual interna). É aditivo/reversível
+    (o CCI já prevê "mudança aditiva futura"). Opções: só checked/indeterminate · +unchecked (mostra ícone
+    no desmarcado, desvio maior) · manter travado. **Custom px em `size` = NÃO** (Token First).
+  - 🔲 **Ao criar DssRadio/DssToggle:** verificar a MESMA colisão do Preview (seed `null` vs valor "vazio"
+    do componente). Só componentes com `indeterminateValue:null` quebram; declarar `@default` no vModel se preciso.
+
 ## Resolvidos nesta onda (para não reabrir por engano)
 
 - ✅ **Merge da v2.4.0 para `main` — CONCLUÍDO** (2026-07-17). As 3 branches penduradas
