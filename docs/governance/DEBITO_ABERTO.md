@@ -113,13 +113,13 @@
     repouso nos 4 cenários (default cinza / non-brand / brand-prop / brand-global) — confirmado por
     `border-color` computado. O "cinza no repouso" relatado era o **default** (knob `keepColor`
     desligado), não bug. Props de ícone ✅ (`checkedIcon="star"` renderizou no checkbox real).
-  - 🟡 **MELHORIA DE SANDBOX (Preview Frame): knob de ícone = texto livre → picker.** Os knobs
-    `checkedIcon`/`indeterminateIcon` são `input[type=text]` (derivados do contrato como `string`).
-    Digitar nome **ausente do font "Material Icons" clássico** (ex.: `check_small`, `select_check_box` —
-    só no Material Symbols) faz o glifo renderizar **em branco** (o font não tem glifo de letra) → ícone
-    "some", sobra só o fill. NÃO é bug do componente (passthrough correto p/ DssIcon→QIcon; nomes válidos
-    renderizam). Fix de UX: wire o seletor de ícone do sandbox (MR !6) aos knobs de ícone p/ constranger
-    a nomes válidos. Doc já alertada (`DSSCHECKBOX_API.md` §Icon).
+  - ✅ **MELHORIA DE SANDBOX (Preview Frame): knob de ícone ganhou autocomplete** (2026-07-24). Os knobs
+    cujo nome casa `/icon/i` (`checkedIcon`/`indeterminateIcon`/`*Icon`) agora renderizam
+    `input list="pv-icon-suggestions"` — o MESMO datalist do slot prepend/append (reaproveitado; movido p/
+    fora do bloco de slots). 112 sugestões varridas dos `*.example.vue`. Input continua livre (só sugere),
+    mas guia p/ nomes válidos e evita o glifo-em-branco. `PreviewFrame.vue`. Doc alertada
+    (`DSSCHECKBOX_API.md` §Icon). *(Contexto: nome ausente do "Material Icons" clássico renderiza em branco
+    pois o font não tem glifo de letra — NÃO é bug do componente; passthrough correto p/ DssIcon→QIcon.)*
   - 🟡 **MELHORIA DE SANDBOX (infra): carregar Material Symbols** — o sandbox só carrega `Material Icons`
     clássico (Google Fonts `family=Material+Icons`). Nomes novos falham. Decisão: carregar também
     Material Symbols (suporta os nomes novos) ou manter só o clássico + o picker acima. Escopo sandbox.

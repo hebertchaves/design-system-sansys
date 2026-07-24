@@ -36,8 +36,22 @@
             <option v-for="o in k.options" :key="String(o)" :value="o">{{ o === null ? '—' : o }}</option>
           </select>
           <input v-else-if="k.controlHint === 'stepper'" :id="'k-' + k.name" type="number" v-model.number="state[k.name]" />
+          <input
+            v-else-if="isIconKnob(k)"
+            :id="'k-' + k.name"
+            type="text"
+            list="pv-icon-suggestions"
+            v-model="state[k.name]"
+            :placeholder="String(k.default ?? 'ícone (ex.: check, mdi-account)')"
+          />
           <input v-else :id="'k-' + k.name" type="text" v-model="state[k.name]" :placeholder="String(k.default ?? '')" />
         </div>
+
+        <!-- Autocomplete de ícone compartilhado (knobs *icon + slots prepend/append).
+             Fora do bloco de slots p/ existir mesmo em componentes sem slot. -->
+        <datalist id="pv-icon-suggestions">
+          <option v-for="ic in iconSuggestions" :key="ic" :value="ic" />
+        </datalist>
 
         <template v-if="slotDefs.length">
           <h4 class="pv__slots-h">Slots <small>— do contrato ({{ slotDefs.length }})</small></h4>
@@ -56,9 +70,6 @@
               :aria-label="'Ícone do slot ' + s.name"
             />
           </div>
-          <datalist id="pv-icon-suggestions">
-            <option v-for="ic in iconSuggestions" :key="ic" :value="ic" />
-          </datalist>
         </template>
 
         <template v-if="methodDefs.length">
@@ -130,6 +141,12 @@ const iconSuggestions = (() => {
   }
   return [...set].sort()
 })()
+
+// Knob cujo VALOR é um nome de ícone (checkedIcon, indeterminateIcon, prependIcon…):
+// recebe o autocomplete (datalist) em vez do texto livre. Só é avaliado para knobs
+// de texto livre — toggle/stepper e enums (k.options → <select>) têm precedência no
+// template. Evita nomes fora do icon-set carregado (o glifo renderiza em branco).
+const isIconKnob = (k) => /icon/i.test(k.name)
 const emitDefs = ref([])          // api.emits do contrato
 const methodDefs = ref([])        // api.exposedRefs do contrato
 const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
