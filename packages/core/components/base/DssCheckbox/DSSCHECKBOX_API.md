@@ -58,6 +58,7 @@ O `DssCheckbox` é um componente de checkbox do Design System Sansys baseado em 
 |------|------|---------|---------|-----------|
 | `color` | `CheckboxColor` | `'primary'` | Cores semânticas conforme tipo `CheckboxColor` | Cor semântica do checkbox |
 | `size` | `CheckboxSize` | `'md'` | `xs`, `sm`, `md`, `lg`, `xl` | Tamanho do checkbox |
+| `keepColor` | `boolean` | `false` | `true`, `false` | Escape hatch: mantém a cor (semântica/brand) no stroke também no estado **desmarcado**. Espelha `keep-color` do q-checkbox |
 
 **Especificações por Size:**
 
@@ -79,6 +80,38 @@ O `DssCheckbox` é um componente de checkbox do Design System Sansys baseado em 
 <DssCheckbox v-model="val" size="lg" label="Large" />
 <DssCheckbox v-model="val" size="xl" label="Extra Large" />
 ```
+
+**`keepColor` (escape hatch de cor no repouso):**
+
+Por padrão, o stroke do checkbox **desmarcado** é cinza (`--dss-gray-500` via `currentColor`) e a cor semântica/brand só aparece na seleção — convenção alinhada a M3/Carbon/Lightning (`DSS_REFERENCIA_VISUAL_ANALISE.md §11`). `keepColor` é um opt-in que colore também o stroke em repouso, sem preencher o fundo.
+
+```vue
+<!-- Default: cinza em repouso, cor só na seleção -->
+<DssCheckbox v-model="val" color="primary" />
+
+<!-- keepColor: stroke primary também no desmarcado -->
+<DssCheckbox v-model="val" keep-color color="primary" />
+```
+
+> ⚠️ **A11y:** a cor de brand como borda fina deve satisfazer **3:1 (WCAG 1.4.11 — Non-text Contrast)** por brand × tema. Em `forced-colors` o SO sobrescreve o stroke.
+
+---
+
+### **Icon** (glifos internos — CCI §7)
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `checkedIcon` | `string` | `'check'` | Nome do glifo (via `DssIcon`) exibido no estado **checked** |
+| `indeterminateIcon` | `string` | `'remove'` | Nome do glifo exibido no estado **indeterminate** |
+
+O estado **desmarcado permanece vazio** (não há `unchecked-icon` — decisão de governança, CCI §7 como mudança aditiva). O slot nomeado teria precedência, mas o glifo interno é composto sempre via `DssIcon` (`inline decorative`).
+
+```vue
+<DssCheckbox :model-value="true" checked-icon="done_all" />
+<DssCheckbox :model-value="null" indeterminate-icon="horizontal_rule" />
+```
+
+> ⚠️ **O nome deve existir no icon-set carregado.** O glifo é renderizado por ligadura do `QIcon`. No set **"Material Icons" clássico** (o padrão do sandbox), nomes válidos renderizam o glifo; nomes ausentes (ex.: `check_small`, `select_check_box` — só existem no **Material Symbols** mais novo) renderizam **em branco** (o font não tem glifo de letras), fazendo o ícone "sumir" e sobrar só o preenchimento no estado marcado. Use nomes válidos do set em uso (`check`, `remove`, `done_all`, `star`, `favorite`, `horizontal_rule`, `check_circle`, …).
 
 ---
 

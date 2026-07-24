@@ -71,6 +71,7 @@ export function useCheckboxClasses(
         'dss-checkbox--disabled': props.disable,
         'dss-checkbox--dense': props.dense,
         'dss-checkbox--left-label': props.leftLabel,
+        'dss-checkbox--keep-color': props.keepColor,
       }
     ]
   })
@@ -78,17 +79,22 @@ export function useCheckboxClasses(
   /**
    * Classes de cor para o indicador visual (.dss-checkbox__control)
    *
-   * SEM brand: aplica bg-{color} text-white quando checked/indeterminate
-   * COM brand: cores vem via _brands.scss, nao precisa de utility classes
+   * SEM brand:
+   *   - checked/indeterminate: bg-{color} text-white (fundo preenchido)
+   *   - keepColor + desmarcado: text-{color} (colore só o stroke via currentColor,
+   *     sem preencher o fundo) — escape hatch de cor no repouso
+   * COM brand: cores vem via _brands.scss (inclusive o keepColor), nao precisa
+   *   de utility classes aqui
    */
   const controlColorClasses = computed(() => {
     if (props.brand) return ''
 
-    const isActive = options.isChecked.value || options.isIndeterminate.value
-    if (!isActive) return ''
-
     const color = props.color || 'primary'
-    return `bg-${color} text-white`
+    const isActive = options.isChecked.value || options.isIndeterminate.value
+
+    if (isActive) return `bg-${color} text-white`
+    if (props.keepColor) return `text-${color}`
+    return ''
   })
 
   return {

@@ -17,6 +17,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import DssCheckbox from './1-structure/DssCheckbox.ts.vue'
+import DssIcon from '../DssIcon/DssIcon.vue'
 
 describe('DssCheckbox', () => {
   // ===========================================================================
@@ -44,7 +45,7 @@ describe('DssCheckbox', () => {
 
     // Size tests
     describe('size', () => {
-      it.each(['xs', 'sm', 'md', 'lg'])('applies %s size class', (size) => {
+      it.each(['xs', 'sm', 'md', 'lg', 'xl'])('applies %s size class', (size) => {
         const wrapper = mount(DssCheckbox, {
           props: { size }
         })
@@ -171,6 +172,40 @@ describe('DssCheckbox', () => {
       })
       expect(wrapper.find('.dss-checkbox__check').exists()).toBe(false)
       expect(wrapper.find('.dss-checkbox__dash').exists()).toBe(false)
+    })
+
+    // Custom glyphs — CCI §7 (mudanca aditiva: checked/indeterminate)
+    describe('icon customization (CCI §7)', () => {
+      it('defaults checkedIcon to "check"', () => {
+        const wrapper = mount(DssCheckbox, { props: { modelValue: true } })
+        expect(wrapper.findComponent(DssIcon).props('name')).toBe('check')
+      })
+
+      it('defaults indeterminateIcon to "remove"', () => {
+        const wrapper = mount(DssCheckbox, { props: { modelValue: null } })
+        expect(wrapper.findComponent(DssIcon).props('name')).toBe('remove')
+      })
+
+      it('renders custom checkedIcon glyph', () => {
+        const wrapper = mount(DssCheckbox, {
+          props: { modelValue: true, checkedIcon: 'done_all' }
+        })
+        expect(wrapper.findComponent(DssIcon).props('name')).toBe('done_all')
+      })
+
+      it('renders custom indeterminateIcon glyph', () => {
+        const wrapper = mount(DssCheckbox, {
+          props: { modelValue: null, indeterminateIcon: 'horizontal_rule' }
+        })
+        expect(wrapper.findComponent(DssIcon).props('name')).toBe('horizontal_rule')
+      })
+
+      it('keeps unchecked empty even with custom icons (no unchecked-icon)', () => {
+        const wrapper = mount(DssCheckbox, {
+          props: { modelValue: false, checkedIcon: 'done_all', indeterminateIcon: 'horizontal_rule' }
+        })
+        expect(wrapper.findComponent(DssIcon).exists()).toBe(false)
+      })
     })
 
     // Three-state cycling
@@ -408,6 +443,54 @@ describe('DssCheckbox', () => {
         expect(wrapper.classes()).toContain(`dss-checkbox--${color}`)
       }
     )
+
+    // keepColor — escape hatch de cor no stroke em repouso (opt-in)
+    describe('keepColor (escape hatch)', () => {
+      it('does not apply keep-color class by default', () => {
+        const wrapper = mount(DssCheckbox)
+        expect(wrapper.classes()).not.toContain('dss-checkbox--keep-color')
+      })
+
+      it('applies keep-color class on root when enabled', () => {
+        const wrapper = mount(DssCheckbox, { props: { keepColor: true } })
+        expect(wrapper.classes()).toContain('dss-checkbox--keep-color')
+      })
+
+      it('colors the unchecked stroke via text-{color} (no brand, no fill)', () => {
+        const wrapper = mount(DssCheckbox, {
+          props: { keepColor: true, color: 'primary', modelValue: false }
+        })
+        const control = wrapper.find('.dss-checkbox__control')
+        expect(control.classes()).toContain('text-primary')
+        expect(control.classes()).not.toContain('bg-primary')
+      })
+
+      it('does not color the unchecked stroke when keepColor is off (default gray)', () => {
+        const wrapper = mount(DssCheckbox, {
+          props: { color: 'primary', modelValue: false }
+        })
+        const control = wrapper.find('.dss-checkbox__control')
+        expect(control.classes()).not.toContain('text-primary')
+      })
+
+      it('checked state still fills (keepColor does not change active look)', () => {
+        const wrapper = mount(DssCheckbox, {
+          props: { keepColor: true, color: 'primary', modelValue: true }
+        })
+        const control = wrapper.find('.dss-checkbox__control')
+        expect(control.classes()).toContain('bg-primary')
+        expect(control.classes()).toContain('text-white')
+      })
+
+      it('defers to _brands.scss in brand mode (no utility classes on control)', () => {
+        const wrapper = mount(DssCheckbox, {
+          props: { keepColor: true, brand: 'hub', color: 'primary', modelValue: false }
+        })
+        const control = wrapper.find('.dss-checkbox__control')
+        expect(control.classes()).not.toContain('text-primary')
+        expect(wrapper.classes()).toContain('dss-checkbox--keep-color')
+      })
+    })
   })
 
   // ===========================================================================

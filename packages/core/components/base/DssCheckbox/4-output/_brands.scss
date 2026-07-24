@@ -7,7 +7,10 @@
    - Usa tokens de marca (--dss-{brand}-*)
    - Aplicado via atributo data-brand (contexto ou prop)
    - NAO sobrescreve logica de estados
-   - Cores aplicadas APENAS ao .dss-checkbox__control quando checked/indeterminate
+   - Cores aplicadas ao .dss-checkbox__control quando checked/indeterminate.
+     Excecao: com .dss-checkbox--keep-color (escape hatch opt-in), o stroke do
+     control DESMARCADO tambem recebe a cor de brand — so a borda, sem preencher
+     o fundo. Deve satisfazer 3:1 (WCAG 1.4.11) por brand x tema.
 
    CENARIOS SUPORTADOS:
    1. Brand via contexto (ancestral): <div data-brand="hub"><DssCheckbox /></div>
@@ -34,6 +37,11 @@
         color: var(--dss-text-on-primary);
       }
     }
+
+    /* keepColor: stroke de brand tambem no repouso (desmarcado), so a borda */
+    &.dss-checkbox--keep-color .dss-checkbox__control {
+      border-color: var(--dss-action-primary);
+    }
   }
 
   /* Secondary */
@@ -49,6 +57,11 @@
         color: var(--dss-text-on-primary);
       }
     }
+
+    /* keepColor: stroke de brand tambem no repouso (desmarcado), so a borda */
+    &.dss-checkbox--keep-color .dss-checkbox__control {
+      border-color: var(--dss-action-secondary);
+    }
   }
 
   /* Accent */
@@ -63,6 +76,11 @@
       .dss-checkbox__dash {
         color: var(--dss-text-on-primary);
       }
+    }
+
+    /* keepColor: stroke de brand tambem no repouso (desmarcado), so a borda */
+    &.dss-checkbox--keep-color .dss-checkbox__control {
+      border-color: var(--dss-action-accent);
     }
   }
 }

@@ -99,6 +99,27 @@
         ]
       },
       {
+        "name": "keepColor",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Escape hatch de cor: mantem a cor (semantica/brand) no stroke tambem no"
+      },
+      {
+        "name": "checkedIcon",
+        "type": "string",
+        "controlHint": "text",
+        "default": "check",
+        "description": "Nome do glifo exibido no estado CHECKED (composto via DssIcon)."
+      },
+      {
+        "name": "indeterminateIcon",
+        "type": "string",
+        "controlHint": "text",
+        "default": "remove",
+        "description": "Nome do glifo exibido no estado INDETERMINATE (composto via DssIcon)."
+      },
+      {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",

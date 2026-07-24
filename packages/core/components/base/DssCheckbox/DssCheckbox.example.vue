@@ -188,6 +188,52 @@
         <DssCheckbox v-model="settings.darkMode" label="Dark mode" />
       </div>
     </section>
+
+    <!-- ================================================================== -->
+    <!-- 13. KEEP COLOR (escape hatch de cor no repouso) -->
+    <!-- ================================================================== -->
+    <section>
+      <h3>13. Keep Color (escape hatch)</h3>
+      <p>
+        <em>
+          Por padrão o stroke em repouso é cinza e a cor só aparece na seleção.
+          Com <code>keep-color</code> a cor (semântica ou de brand) fica também no
+          desmarcado. Opt-in — use quando o design exigir.
+        </em>
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 24px;">
+        <DssCheckbox v-model="keep.a" color="primary" label="Default (stroke cinza)" />
+        <DssCheckbox v-model="keep.b" keep-color color="primary" label="keepColor primary" />
+        <DssCheckbox v-model="keep.c" keep-color color="positive" label="keepColor positive" />
+        <DssCheckbox v-model="keep.d" keep-color color="negative" label="keepColor negative" />
+      </div>
+
+      <h4>Com brand (Water)</h4>
+      <div data-brand="water" style="display: flex; gap: 24px;">
+        <DssCheckbox v-model="keep.e" color="primary" label="Default" />
+        <DssCheckbox v-model="keep.f" keep-color color="primary" label="keepColor" />
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 14. CUSTOM ICONS (glifos checked/indeterminate — CCI §7) -->
+    <!-- ================================================================== -->
+    <section>
+      <h3>14. Custom Icons</h3>
+      <p>
+        <em>
+          Os glifos de <code>checked</code> e <code>indeterminate</code> são
+          customizáveis (<code>checked-icon</code> / <code>indeterminate-icon</code>).
+          O estado desmarcado permanece vazio.
+        </em>
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 24px;">
+        <DssCheckbox :model-value="true" label="Default (check)" />
+        <DssCheckbox :model-value="true" checked-icon="done_all" label="checkedIcon: done_all" />
+        <DssCheckbox :model-value="true" checked-icon="star" color="warning" label="checkedIcon: star" />
+        <DssCheckbox :model-value="null" indeterminate-icon="horizontal_rule" label="indeterminateIcon: horizontal_rule" />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -253,6 +299,16 @@ const settings = reactive({
   autoSave: true,
   spellCheck: false,
   darkMode: true
+})
+
+// 13. Keep color — desmarcados para evidenciar o stroke em repouso
+const keep = reactive({
+  a: false,
+  b: false,
+  c: false,
+  d: false,
+  e: false,
+  f: false
 })
 </script>
 

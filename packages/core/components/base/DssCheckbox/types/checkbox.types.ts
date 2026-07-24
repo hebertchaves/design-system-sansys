@@ -116,6 +116,36 @@ export interface CheckboxProps {
   /** Tamanho do checkbox */
   size?: CheckboxSize
 
+  /**
+   * Escape hatch de cor: mantem a cor (semantica/brand) no stroke tambem no
+   * estado DESMARCADO. Por padrao (false) o stroke em repouso e cinza e a cor
+   * so aparece na selecao (convencao M3/Carbon/Lightning). Opt-in, espelha o
+   * `keep-color` do q-checkbox. A cor de brand como borda fina DEVE bater 3:1
+   * (WCAG 1.4.11) por brand x tema.
+   *
+   * @default false
+   */
+  keepColor?: boolean
+
+  // ========================================
+  // Icon (glifos internos — CCI §7, mudanca aditiva)
+  // ========================================
+
+  /**
+   * Nome do glifo exibido no estado CHECKED (composto via DssIcon).
+   * O estado desmarcado permanece vazio (sem icone).
+   *
+   * @default 'check'
+   */
+  checkedIcon?: string
+
+  /**
+   * Nome do glifo exibido no estado INDETERMINATE (composto via DssIcon).
+   *
+   * @default 'remove'
+   */
+  indeterminateIcon?: string
+
   // ========================================
   // States
   // ========================================

@@ -122,6 +122,9 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 | `leftLabel` | `boolean` | `false` | Label à esquerda do indicador |
 | `color` | `CheckboxColor` | `'primary'` | Cor semântica |
 | `size` | `CheckboxSize` | `'md'` | Tamanho (`xs`, `sm`, `md`, `lg`, `xl`) |
+| `keepColor` | `boolean` | `false` | Escape hatch: cor no stroke também no desmarcado (espelha `keep-color` do Quasar). Default: stroke cinza em repouso |
+| `checkedIcon` | `string` | `'check'` | Glifo (via `DssIcon`) no estado checked |
+| `indeterminateIcon` | `string` | `'remove'` | Glifo no estado indeterminate |
 | `disable` | `boolean` | `false` | Desabilita interações |
 | `dense` | `boolean` | `false` | Modo compacto |
 | `brand` | `CheckboxBrand \| null` | `null` | Brand Sansys (`hub`, `water`, `waste`) |

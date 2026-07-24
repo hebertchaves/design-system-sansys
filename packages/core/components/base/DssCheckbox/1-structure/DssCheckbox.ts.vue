@@ -33,19 +33,19 @@
       :class="controlClasses"
       aria-hidden="true"
     >
-      <!-- Check mark glyph — marca visual interna fixa, composta via DssIcon (CCI §3.1) -->
+      <!-- Check mark glyph — glifo composto via DssIcon (CCI §3.1); nome customizavel via checkedIcon (CCI §7) -->
       <DssIcon
         v-if="isChecked"
-        name="check"
+        :name="checkedIcon"
         inline
         decorative
         class="dss-checkbox__check"
       />
 
-      <!-- Indeterminate dash glyph — marca visual interna fixa, composta via DssIcon (CCI §3.1) -->
+      <!-- Indeterminate dash glyph — glifo composto via DssIcon (CCI §3.1); nome customizavel via indeterminateIcon (CCI §7) -->
       <DssIcon
         v-if="isIndeterminate"
-        name="remove"
+        :name="indeterminateIcon"
         inline
         decorative
         class="dss-checkbox__dash"
@@ -121,6 +121,11 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   // Visual
   color: 'primary',
   size: 'md',
+  keepColor: false,
+
+  // Icon (glifos internos — CCI §7)
+  checkedIcon: 'check',
+  indeterminateIcon: 'remove',
 
   // States
   disable: false,
