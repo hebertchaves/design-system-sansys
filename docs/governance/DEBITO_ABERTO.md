@@ -94,12 +94,37 @@
   **DssCheckbox fechado** (4 commits `816ed41`→`fba32a2`): leftLabel (dupla-inversão template×CSS),
   example §12 (estado inicial vazio→variedade), `defineExpose(focus/blur/toggle/inputRef)` (paridade
   campo), Preview Frame nascia indeterminate (seed `null`==`indeterminateValue:null` → semear do
-  `@default` do vModel via contrato), `size="xl"` (28px, token). 63 testes. Preview Frame + TestCheckbox
-  feitos. **Próximo: DssRadio** (Golden Context=DssCheckbox), depois DssToggle — 3 artefatos cada.
-  - 🔲 **DECISÃO PENDENTE (dono): props de ícone no DssCheckbox** (`checked/unchecked/indeterminate-icon`
-    do q-checkbox) — reabre decisão travada do **CCI §7** (glifo=marca visual interna). É aditivo/reversível
-    (o CCI já prevê "mudança aditiva futura"). Opções: só checked/indeterminate · +unchecked (mostra ícone
-    no desmarcado, desvio maior) · manter travado. **Custom px em `size` = NÃO** (Token First).
+  `@default` do vModel via contrato), `size="xl"` (28px, token). Preview Frame + TestCheckbox
+  feitos. **DECISÕES DO DONO RESOLVIDAS + IMPLEMENTADAS (2026-07-24, ainda não commitado):**
+  - ✅ **Props de ícone → escopo `checked`+`indeterminate`** (CCI §7, mudança aditiva). `checkedIcon`
+    (`'check'`) e `indeterminateIcon` (`'remove'`) compostos via `DssIcon`; desmarcado permanece vazio
+    (SEM `unchecked-icon`). Template usa `:name` binding. **`size` px arbitrário = REJEITADO POR TIPO**
+    (união literal `xs|sm|md|lg|xl`, não `string`) — precedente da família registrado.
+  - ✅ **`keepColor` adotado** (escape hatch opt-in; default cinza inalterado). Impl. em 3 camadas: type
+    `keepColor?: boolean`; composable adiciona classe `dss-checkbox--keep-color` no root + `text-{color}`
+    no control desmarcado (non-brand); `_brands.scss` estende o mixin p/ colorir o stroke desmarcado por
+    variante (primary/secondary/accent) atrás de `.dss-checkbox--keep-color`. Racional/mecanismo detalhado
+    ↓ resolvidos. **A11y:** 3:1 (WCAG 1.4.11) por brand×tema continua exigido; `forced-colors` vence.
+  - **Gates (75 testes, +12):** SCSS compila · vitest 75/75 · @import/Material Icons/hardcode limpos ·
+    contrato re-emitido (18 props, schema-válido, a11y 4) · `--all --strict` exit 0 · api-docs 0 diverg. ·
+    type-check exit 0. **PENDENTE:** verificação visual no Preview Frame (dev server estava down; knobs já
+    derivam do contrato) + **commit**. `[[project_adequacao_ui_recorrencias]]`.
+  - **Verificação visual (2026-07-24, chrome-devtools no 5173):** keepColor ✅ colore o stroke em
+    repouso nos 4 cenários (default cinza / non-brand / brand-prop / brand-global) — confirmado por
+    `border-color` computado. O "cinza no repouso" relatado era o **default** (knob `keepColor`
+    desligado), não bug. Props de ícone ✅ (`checkedIcon="star"` renderizou no checkbox real).
+  - 🟡 **MELHORIA DE SANDBOX (Preview Frame): knob de ícone = texto livre → picker.** Os knobs
+    `checkedIcon`/`indeterminateIcon` são `input[type=text]` (derivados do contrato como `string`).
+    Digitar nome **ausente do font "Material Icons" clássico** (ex.: `check_small`, `select_check_box` —
+    só no Material Symbols) faz o glifo renderizar **em branco** (o font não tem glifo de letra) → ícone
+    "some", sobra só o fill. NÃO é bug do componente (passthrough correto p/ DssIcon→QIcon; nomes válidos
+    renderizam). Fix de UX: wire o seletor de ícone do sandbox (MR !6) aos knobs de ícone p/ constranger
+    a nomes válidos. Doc já alertada (`DSSCHECKBOX_API.md` §Icon).
+  - 🟡 **MELHORIA DE SANDBOX (infra): carregar Material Symbols** — o sandbox só carrega `Material Icons`
+    clássico (Google Fonts `family=Material+Icons`). Nomes novos falham. Decisão: carregar também
+    Material Symbols (suporta os nomes novos) ou manter só o clássico + o picker acima. Escopo sandbox.
+  - 🔲 **Aplicar à FAMÍLIA:** replicar `keepColor` + props de ícone (e o `size` união-literal) em
+    **DssRadio/DssToggle** — são decisões de família. **Próximo: DssRadio** (Golden Context=DssCheckbox).
   - 🔲 **Ao criar DssRadio/DssToggle:** verificar a MESMA colisão do Preview (seed `null` vs valor "vazio"
     do componente). Só componentes com `indeterminateValue:null` quebram; declarar `@default` no vModel se preciso.
 
