@@ -1,6 +1,6 @@
 {
-  "generated": "2026-07-13",
-  "total": 90,
+  "generated": "2026-07-25",
+  "total": 91,
   "sealed": 88,
   "components": [
     {
@@ -646,6 +646,20 @@
       "previewGroup": "navegacao",
       "goldenReference": "DssTooltip",
       "goldenContext": "DssList"
+    },
+    {
+      "component": "DssMultiselectAutocomplete",
+      "dir": "packages/core/components/composed/DssMultiselectAutocomplete",
+      "phase": 3,
+      "category": "Composto de seleção (campo)",
+      "status": "draft",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "form-controles",
+      "goldenReference": "DssChip",
+      "goldenContext": "DssSelect"
     },
     {
       "component": "DssOptionGroup",

@@ -1,0 +1,68 @@
+{
+  "component": "DssMultiselectAutocomplete",
+  "dssVersion": "2.2",
+  "status": "draft",
+  "phase": 3,
+  "goldenReference": "DssChip",
+  "goldenContext": "DssSelect",
+  "goldenContextJustification": "DssSelect é a base envelopada e o Golden Context direto: o DssMultiselectAutocomplete é um composto THIN que preseta o DssSelect (multiple + use-input) e injeta bases DSS nos slots (DssCheckbox na opção, DssChip no selected-item). Herda do DssSelect o campo, o menu teleportado e a reinjeção de brand via popup-content-class.",
+  "category": "Composto de seleção (campo)",
+  "classification": "Action",
+  "classificationNote": "Controle interativo de seleção múltipla (multiselect + autocomplete). Classificado como Action por realizar seleção; é um composto de campo, não um Compact Control isolado.",
+  "tagline": "Seleção múltipla com autocomplete: checkbox por opção e chips removíveis.",
+  "previewGroup": "form-controles",
+  "defaultPreview": {
+    "props": {
+      "label": "Frutas",
+      "placeholder": "Digite para filtrar…",
+      "options": ["Maçã", "Banana", "Cereja", "Damasco", "Laranja", "Manga"],
+      "modelValue": ["Banana", "Cereja"]
+    },
+    "computedDimensions": {},
+    "visualProperties": [
+      {
+        "property": "gap (checkbox + rótulo na opção)",
+        "token": "--dss-spacing-2",
+        "value": "8px",
+        "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "6 opções de frutas, 2 selecionadas (chips removíveis)",
+    "demoSlots": null
+  },
+  "a11y": {
+    "aria": {
+      "role": "combobox",
+      "states": [
+        "aria-expanded",
+        "aria-multiselectable",
+        "aria-selected",
+        "aria-disabled",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      { "key": "ArrowDown / ArrowUp", "action": "navegar entre as opções" },
+      { "key": "Enter / Space", "action": "alternar a seleção da opção em foco" },
+      { "key": "Escape", "action": "fechar o dropdown" },
+      { "key": "Backspace", "action": "remover o último token quando o campo de busca está vazio" }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação e seleção por teclado herdadas do QSelect (base DssSelect): setas, Enter/Espaço, Escape.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "role=combobox + aria-multiselectable; estado de cada opção via aria-selected (fonte de verdade — o checkbox por opção é decorativo/aria-hidden).",
+        "verifiedBy": "aria"
+      }
+    ]
+  },
+  "tokens": [
+    "--dss-spacing-2"
+  ]
+}

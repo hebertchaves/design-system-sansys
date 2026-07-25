@@ -93,6 +93,13 @@
             <span class="nav-icon"><span class="material-icons">dvr</span></span>
             <span class="nav-label">Preview Frame · DssCheckbox</span>
           </button>
+          <button
+            @click="activeComponent = 'preview-frame-multiselect'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-multiselect' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssMultiselectAutocomplete</span>
+          </button>
         </div>
 
         <!-- Foundation -->
@@ -509,6 +516,9 @@
       </div>
       <div v-else-if="activeComponent === 'preview-frame-checkbox'" class="component-view">
         <PreviewFrame component="DssCheckbox" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-multiselect'" class="component-view">
+        <PreviewFrame component="DssMultiselectAutocomplete" />
       </div>
 
       <!-- DssButton Test View -->

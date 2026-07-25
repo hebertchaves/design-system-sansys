@@ -1,0 +1,343 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssMultiselectAutocomplete",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Multiselect Autocomplete",
+    "tagline": "Seleção múltipla com autocomplete: checkbox por opção e chips removíveis.",
+    "category": "Composto de seleção (campo)",
+    "classification": "Action",
+    "phase": 3,
+    "status": "draft",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssSelect"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "any[]",
+        "controlHint": "text",
+        "default": "[]",
+        "description": "Valores selecionados. Sempre um array (multiseleção)."
+      },
+      {
+        "name": "options",
+        "type": "any[]",
+        "controlHint": "text",
+        "description": "Lista de opções (objetos ou primitivos)."
+      },
+      {
+        "name": "optionValue",
+        "type": "string | ((option: any) => any)",
+        "controlHint": "text",
+        "description": "Campo/função que extrai o VALOR de cada opção (para emitValue/mapOptions)."
+      },
+      {
+        "name": "optionLabel",
+        "type": "string | ((option: any) => string)",
+        "controlHint": "text",
+        "description": "Campo/função que extrai o RÓTULO exibido de cada opção."
+      },
+      {
+        "name": "emitValue",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Emite apenas o valor (optionValue) em vez do objeto inteiro."
+      },
+      {
+        "name": "mapOptions",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Mapeia os valores emitidos de volta para objetos (requer emitValue)."
+      },
+      {
+        "name": "inputDebounce",
+        "type": "number | string",
+        "controlHint": "text",
+        "default": "300",
+        "description": "Debounce (ms) do filtro do autocomplete. @default 300"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Rótulo do campo."
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Placeholder exibido no input de busca."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Exibe indicador de carregamento."
+      },
+      {
+        "name": "disable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita o campo inteiro (propagado às peças internas via inject)."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Somente leitura."
+      },
+      {
+        "name": "clearable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Exibe botão de limpar toda a seleção."
+      },
+      {
+        "name": "chipsRemovable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Torna os chips de seleção removíveis (botão × + evento remove)."
+      },
+      {
+        "name": "brand",
+        "type": "MultiselectAutocompleteBrand | null",
+        "controlHint": "picker-brand",
+        "description": "Brand override. Propagado ao DssSelect (que já reinjeta o brand no menu",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ]
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Label ARIA do campo (role=combobox, aria-multiselectable)."
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "any[]",
+        "description": "Emitido quando a seleção muda (array)."
+      },
+      {
+        "name": "remove",
+        "payload": "any",
+        "description": "Emitido quando um chip é removido (valor removido)."
+      },
+      {
+        "name": "focus",
+        "payload": "FocusEvent",
+        "description": "Foco no campo."
+      },
+      {
+        "name": "blur",
+        "payload": "FocusEvent",
+        "description": "Blur do campo."
+      },
+      {
+        "name": "clear",
+        "description": "Seleção inteira limpa (via clearable)."
+      },
+      {
+        "name": "popup-show",
+        "description": "Dropdown aberto."
+      },
+      {
+        "name": "popup-hide",
+        "description": "Dropdown fechado."
+      }
+    ],
+    "slots": [
+      {
+        "name": "option",
+        "scope": null,
+        "description": "Conteúdo de cada opção do dropdown."
+      },
+      {
+        "name": "selected-item",
+        "scope": null,
+        "description": "Conteúdo de cada token selecionado no campo."
+      }
+    ],
+    "exposedRefs": [
+      {
+        "name": "focus",
+        "type": "() => void",
+        "description": "Foca o campo."
+      },
+      {
+        "name": "blur",
+        "type": "() => void",
+        "description": "Remove o foco do campo."
+      },
+      {
+        "name": "showPopup",
+        "type": "() => void",
+        "description": "Abre o dropdown."
+      },
+      {
+        "name": "hidePopup",
+        "type": "() => void",
+        "description": "Fecha o dropdown."
+      },
+      {
+        "name": "selectRef",
+        "type": "Ref<any>",
+        "description": "Referência ao DssSelect interno."
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "label": "Frutas",
+        "placeholder": "Digite para filtrar…",
+        "options": [
+          "Maçã",
+          "Banana",
+          "Cereja",
+          "Damasco",
+          "Laranja",
+          "Manga"
+        ],
+        "modelValue": [
+          "Banana",
+          "Cereja"
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "contents",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-inline-end",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Navegação e seleção por teclado herdadas do QSelect (base DssSelect): setas, Enter/Espaço, Escape.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "role=combobox + aria-multiselectable; estado de cada opção via aria-selected (fonte de verdade — o checkbox por opção é decorativo/aria-hidden).",
+        "verifiedBy": "aria"
+      }
+    ],
+    "aria": {
+      "role": "combobox",
+      "states": [
+        "aria-expanded",
+        "aria-multiselectable",
+        "aria-selected",
+        "aria-disabled",
+        "aria-label"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "ArrowDown / ArrowUp",
+        "action": "navegar entre as opções"
+      },
+      {
+        "key": "Enter / Space",
+        "action": "alternar a seleção da opção em foco"
+      },
+      {
+        "key": "Escape",
+        "action": "fechar o dropdown"
+      },
+      {
+        "key": "Backspace",
+        "action": "remover o último token quando o campo de busca está vazio"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssMultiselectAutocomplete.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/multiselect-autocomplete.types.ts",
+    "docs": {},
+    "examples": "DssMultiselectAutocomplete.example.vue",
+    "tests": "DssMultiselectAutocomplete.test.js"
+  }
+}

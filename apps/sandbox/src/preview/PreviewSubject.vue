@@ -26,7 +26,8 @@ import DssIcon from '../../../../packages/core/components/base/DssIcon/DssIcon.v
 
 const name = new URLSearchParams(location.search).get('frame') || ''
 
-// Registry de entry-wrappers reais: <Comp>/<Comp>.vue (re-export puro do 1-structure)
+// Registry de entry-wrappers reais: <Comp>/<Comp>.vue (re-export puro do 1-structure).
+// Glob lazy: novos componentes exigem re-transform deste módulo (HMR) p/ entrar no registry.
 const modules = import.meta.glob('../../../../packages/core/components/{base,composed}/*/*.vue')
 const key = Object.keys(modules).find(k => k.endsWith(`/${name}/${name}.vue`))
 const Comp = key ? defineAsyncComponent(modules[key]) : null
