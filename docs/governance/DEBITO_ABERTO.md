@@ -26,6 +26,14 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🟡 **DssChip sem cor neutra/token + DssSelect não consome DssChip** (decidido 2026-07, ADIADO). O
+  `useChips` do DssSelect delega ao `.q-chip` NATIVO do Quasar (cinza), não ao DssChip; o
+  DssMultiselectAutocomplete consome o DssChip (default filled azul) → divergência visual de chip.
+  Raiz: DssChip só tem cores semânticas (sem neutra/token). **Decisão do dono: caminho 1** — adicionar
+  aparência neutra/token ao DssChip + migrar useChips do DssSelect→DssChip (ambos consumindo a base).
+  **Sequência: só DEPOIS de fechar o DssMultiselectAutocomplete** (o chip azul fica como está por ora,
+  pré-adequação do DssChip). `[[project_multiselect_autocomplete]]`.
+
 - 🟡 **`meta.visualProperties` staleness = GERIDO via checklist (automação total impossível)** — o gate
   não pode pegar drift da *lista de tokens*: o validador não distingue "token aplicado via classe Quasar
   (`bg-primary`)" de "token removido" — `--validate-strict` deu **129 falsos-positivos em 88 comp**. Mesma
