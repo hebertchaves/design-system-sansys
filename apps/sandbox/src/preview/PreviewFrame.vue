@@ -113,6 +113,7 @@ const props = defineProps({ component: { type: String, default: 'DssInput' } })
 // eager: o contrato é JSON pequeno; carregar sincronamente elimina o flash
 // "Sem dss.contract.json" (antes o import assíncrono deixava `contract` null por
 // alguns segundos no dev do /mnt/c) e o round-trip extra ao dev server.
+// Glob eager: novos dss.contract.json exigem re-transform deste módulo (HMR) p/ entrar.
 const contracts = import.meta.glob('../../../../packages/core/components/{base,composed}/*/dss.contract.json', { eager: true, import: 'default' })
 const contract = ref(null)
 const knobs = ref([])
@@ -216,6 +217,12 @@ function postState() {
   // colide com indeterminateValue:null → mostra dash + confunde checked/indet).
   let modelDefault = (contract.value?.api?.props || []).find((p) => p.name === modelProp)?.default
   if (typeof modelDefault === 'string' && /^(null|undefined)\b/.test(modelDefault)) modelDefault = undefined
+  // @default de array/objeto literal chega como string ("[]"/"{}"/"[a,b]") — parseia p/ o
+  // valor real, senão um vModel de array (ex.: DssSelect multiple, DssMultiselectAutocomplete)
+  // é semeado com a STRING "[]" e o QSelect multiple mostra um chip fantasma.
+  else if (typeof modelDefault === 'string' && /^\s*[[{]/.test(modelDefault)) {
+    try { modelDefault = JSON.parse(modelDefault) } catch { /* mantém string se não for JSON válido */ }
+  }
   const slots = Object.keys(activeSlots).filter((n) => activeSlots[n])
   const activeSlotIcons = {}
   for (const n of slots) if (ICON_SLOTS.includes(n) && slotIcons[n]) activeSlotIcons[n] = slotIcons[n]
