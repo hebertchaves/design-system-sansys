@@ -110,9 +110,16 @@
     type-check exit 0. **PENDENTE:** verificação visual no Preview Frame (dev server estava down; knobs já
     derivam do contrato) + **commit**. `[[project_adequacao_ui_recorrencias]]`.
   - **Verificação visual (2026-07-24, chrome-devtools no 5173):** keepColor ✅ colore o stroke em
-    repouso nos 4 cenários (default cinza / non-brand / brand-prop / brand-global) — confirmado por
-    `border-color` computado. O "cinza no repouso" relatado era o **default** (knob `keepColor`
-    desligado), não bug. Props de ícone ✅ (`checkedIcon="star"` renderizou no checkbox real).
+    repouso; props de ícone ✅ (`checkedIcon`/`indeterminateIcon` renderizaram "star" no checkbox real —
+    `indeterminateIcon` só aparece no estado indeterminate, alcançável via `toggleIndeterminate`+ciclo).
+  - 🟡 **keepColor herda a inconsistência de brand global da família** (2026-07-24, provado por CSS):
+    o stroke do keepColor segue o **brand-prop** (`_brands.scss` → `var(--dss-action-*)`, brand-aware)
+    mas **não** o `[data-brand]` GLOBAL — porque no path non-brand usa a utility `.text-primary` do
+    Quasar, que **não** é brand-aware (fixa em `rgb(31,134,222)` sob hub/water/waste). NÃO é regressão do
+    keepColor: o **fill do estado marcado** (`bg-primary`) tem a MESMA cegueira; só o focus ring segue o
+    global (mecanismo à parte). Consistente com o componente → **não corrigir isoladamente** (faria o
+    stroke desmarcado seguir o global enquanto o fill marcado não → pior). Fix correto = sistêmico/família
+    (componente inteiro brand-aware sob `[data-brand]` global). `[[project_brand_prop_vs_data_brand_focus]]`.
   - ✅ **MELHORIA DE SANDBOX (Preview Frame): knob de ícone ganhou autocomplete** (2026-07-24). Os knobs
     cujo nome casa `/icon/i` (`checkedIcon`/`indeterminateIcon`/`*Icon`) agora renderizam
     `input list="pv-icon-suggestions"` — o MESMO datalist do slot prepend/append (reaproveitado; movido p/
