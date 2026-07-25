@@ -152,6 +152,7 @@ export { DssBottomSheet } from './composed/DssBottomSheet'
 export { DssChatMessage } from './composed/DssChatMessage'
 export { DssColorPicker } from './composed/DssColorPicker'
 export { DssDatePicker } from './composed/DssDatePicker'
+export { DssMultiselectAutocomplete } from './composed/DssMultiselectAutocomplete'
 export { DssTimePicker } from './composed/DssTimePicker'
 export { DssForm } from './composed/DssForm'
 export { DssPopupEdit } from './composed/DssPopupEdit'
@@ -247,6 +248,7 @@ import DssBottomSheet from './composed/DssBottomSheet/DssBottomSheet.vue'
 import DssChatMessage from './composed/DssChatMessage/DssChatMessage.vue'
 import DssColorPicker from './composed/DssColorPicker/DssColorPicker.vue'
 import DssDatePicker from './composed/DssDatePicker/DssDatePicker.vue'
+import DssMultiselectAutocomplete from './composed/DssMultiselectAutocomplete/DssMultiselectAutocomplete.vue'
 import DssTimePicker from './composed/DssTimePicker/DssTimePicker.vue'
 import DssForm from './composed/DssForm/DssForm.vue'
 import DssPopupEdit from './composed/DssPopupEdit/DssPopupEdit.vue'
@@ -288,6 +290,7 @@ const allComponents = [
   // Compostos
   DssDialog, DssTable, DssCarousel, DssCarouselSlide,
   DssBottomSheet, DssChatMessage, DssColorPicker, DssDatePicker,
+  DssMultiselectAutocomplete,
   DssTimePicker, DssForm, DssPopupEdit, DssUploader,
 ]
 

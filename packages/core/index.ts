@@ -108,6 +108,7 @@ export const metadata = {
     // Compostos
     'DssDialog', 'DssTable', 'DssCarousel', 'DssCarouselSlide',
     'DssBottomSheet', 'DssChatMessage', 'DssColorPicker', 'DssDatePicker',
+    'DssMultiselectAutocomplete',
     'DssTimePicker', 'DssForm', 'DssPopupEdit', 'DssUploader',
   ],
   brands: ['hub', 'water', 'waste'],

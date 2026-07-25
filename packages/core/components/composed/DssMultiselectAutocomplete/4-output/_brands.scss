@@ -1,0 +1,8 @@
+// =============================================================================
+// DssMultiselectAutocomplete — LAYER 4: OUTPUT (Brands)
+//
+// Brandabilidade é propagada ao DssSelect via a prop `brand` (que já reinjeta
+// o brand no menu TELEPORTADO via popup-content-class — mitigação do risco 2.1
+// de Fase 3). DssChip/DssCheckbox herdam o brand pela cascata [data-brand].
+// Sem regras de marca próprias aqui. Camada vazia por design.
+// =============================================================================
