@@ -39,4 +39,16 @@
     .dss-icon__inner {
     color: var(--dss-text-on-primary);
   }
+
+  // 3. Centralização do glifo (check/dash). A wrapper do glifo do DssCheckbox é
+  //    display:flex; no contexto do q-item a ligadura do Material Icons transborda
+  //    ~4px à esquerda (no checkbox standalone ela centra). block + text-align
+  //    center realinha a ligadura ao centro do box (verificado: offset H 0).
+  //    [ROOT: robustez de centralização do glifo no DssCheckbox — tratar na
+  //    adequação do checkbox/ícone; aqui é correção local do composto.]
+  .dss-multiselect-autocomplete__option .dss-checkbox__check,
+  .dss-multiselect-autocomplete__option .dss-checkbox__dash {
+    display: block;
+    text-align: center;
+  }
 }

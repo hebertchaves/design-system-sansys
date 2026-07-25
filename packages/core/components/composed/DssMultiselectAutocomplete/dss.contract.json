@@ -253,6 +253,18 @@
           "token": "--dss-text-on-primary",
           "value": null,
           "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "4-output/_states.scss"
         }
       ],
       "focus": [
