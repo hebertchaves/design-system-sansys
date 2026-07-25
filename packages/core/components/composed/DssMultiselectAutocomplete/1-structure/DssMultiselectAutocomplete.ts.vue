@@ -202,7 +202,7 @@ defineExpose<MultiselectAutocompleteExpose>({
       <slot name="selected-item" v-bind="scope">
         <DssChip
           class="dss-multiselect-autocomplete__chip"
-          size="sm"
+          size="md"
           :removable="chipsRemovable && !disable && !readonly"
           :remove-aria-label="`Remover ${labelOf(scope.opt)}`"
           @remove="removeValue(scope.opt)"

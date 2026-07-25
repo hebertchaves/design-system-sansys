@@ -241,12 +241,25 @@
           "token": "--dss-spacing-2",
           "value": null,
           "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-on-primary",
+          "value": null,
+          "source": "4-output/_states.scss"
         }
       ]
     }
   },
   "tokens": {
     "categories": [
+      "color",
       "spacing"
     ],
     "instances": [
@@ -255,6 +268,18 @@
         "usedIn": [
           "default",
           "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-on-primary",
+        "usedIn": [
+          "default"
         ]
       }
     ]

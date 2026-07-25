@@ -1,7 +1,33 @@
 // =============================================================================
 // DssMultiselectAutocomplete — LAYER 4: OUTPUT (States)
 //
-// Estados (hover/focus/active/disabled/loading) são governados pelo DssSelect
-// (campo/menu), pelo DssCheckbox (glifo) e pelo DssChip (token) — cada base
-// cuida do próprio estado. Sem regras próprias aqui. Camada vazia por design.
+// Correção de vazamento de CSS do painel do DssSelect na composição.
+//
+// CONTEXTO: o DssSelect estiliza a opção SELECIONADA do menu para o padrão
+// single-select — `.dss-select__panel .q-item--active` recebe cor `text-action`
+// (label) e a regra `… .q-item__section--side .q-icon { color: text-action }`
+// colore o ícone indicador. No multiselect com CHECKBOX, o checkbox vive na
+// seção "avatar" (= `--side`), então essa regra pintava o GLIFO do check de
+// primary → check azul sobre fundo azul (invisível). A seleção aqui é indicada
+// pelo CHECKBOX, não pela cor do texto.
+//
+// Correção (unlayered; especificidade 0,5,0 p/ vencer a regra 0,4,0 do painel):
+//  1. a opção selecionada NÃO adota "selected=primary" (label volta a text-body);
+//  2. o glifo do checkbox marcado segue on-primary (branco), visível no fundo.
+// Não é :deep de LAYOUT (Guia Fase 3 §1.4) — é correção de COR contra bleed.
 // =============================================================================
+
+.dss-select__panel {
+  // 1. Label da opção selecionada não vira primary (seleção = checkbox)
+  .dss-multiselect-autocomplete__option.q-item--active {
+    color: var(--dss-text-body);
+  }
+
+  // 2. Glifo do check marcado = on-primary (branco), vencendo a regra de
+  //    side-icon do DssSelect (`… --active … --side .q-icon`, 0,4,0)
+  .dss-multiselect-autocomplete__option.q-item--active
+    .q-item__section--side
+    .dss-icon__inner {
+    color: var(--dss-text-on-primary);
+  }
+}
