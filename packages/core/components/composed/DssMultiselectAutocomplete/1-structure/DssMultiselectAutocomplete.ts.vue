@@ -186,7 +186,7 @@ defineExpose<MultiselectAutocompleteExpose>({
                  aria-hidden pois aria-selected da option é a fonte de verdade. -->
             <DssCheckbox
               :model-value="scope.selected"
-              size="sm"
+              size="md"
               tabindex="-1"
               aria-hidden="true"
               style="pointer-events: none"
