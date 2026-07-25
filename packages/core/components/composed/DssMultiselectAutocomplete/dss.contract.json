@@ -254,11 +254,26 @@
           "value": null,
           "source": "4-output/_states.scss"
         }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
       ]
     }
   },
   "tokens": {
     "categories": [
+      "border",
       "color",
       "spacing"
     ],
@@ -280,6 +295,12 @@
         "name": "--dss-text-on-primary",
         "usedIn": [
           "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "focus"
         ]
       }
     ]

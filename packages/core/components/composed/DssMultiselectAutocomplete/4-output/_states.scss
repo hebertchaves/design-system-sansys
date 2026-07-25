@@ -18,6 +18,15 @@
 // =============================================================================
 
 .dss-select__panel {
+  // 0. Focus ring por teclado na opção (WCAG 2.4.7). O painel do DssSelect só
+  //    dá um fundo sutil (surface-hover) à opção focada — insuficiente e
+  //    divergente do anel do DssCheckbox base. Alinha ao mesmo token de foco.
+  //    outline-offset negativo = anel inset (não cortado pelo overflow do painel).
+  .dss-multiselect-autocomplete__option.q-manual-focusable--focused {
+    outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
+    outline-offset: calc(-1 * var(--dss-border-width-md));
+  }
+
   // 1. Label da opção selecionada não vira primary (seleção = checkbox)
   .dss-multiselect-autocomplete__option.q-item--active {
     color: var(--dss-text-body);
