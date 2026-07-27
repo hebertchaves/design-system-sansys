@@ -257,13 +257,25 @@
         {
           "property": "display",
           "token": null,
-          "value": "block",
+          "value": "flex",
           "source": "4-output/_states.scss"
         },
         {
-          "property": "text-align",
+          "property": "align-items",
           "token": null,
           "value": "center",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "0",
           "source": "4-output/_states.scss"
         }
       ],
