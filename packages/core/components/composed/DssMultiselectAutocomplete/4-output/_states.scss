@@ -1,60 +1,37 @@
 // =============================================================================
 // DssMultiselectAutocomplete — LAYER 4: OUTPUT (States)
 //
-// Correção de vazamento de CSS do painel do DssSelect na composição.
-//
-// CONTEXTO: o DssSelect estiliza a opção SELECIONADA do menu para o padrão
-// single-select — `.dss-select__panel .q-item--active` recebe cor `text-action`
-// (label) e a regra `… .q-item__section--side .q-icon { color: text-action }`
-// colore o ícone indicador. No multiselect com CHECKBOX, o checkbox vive na
-// seção "avatar" (= `--side`), então essa regra pintava o GLIFO do check de
-// primary → check azul sobre fundo azul (invisível). A seleção aqui é indicada
-// pelo CHECKBOX, não pela cor do texto.
-//
-// Correção (unlayered; especificidade 0,5,0 p/ vencer a regra 0,4,0 do painel):
-//  1. a opção selecionada NÃO adota "selected=primary" (label volta a text-body);
-//  2. o glifo do checkbox marcado segue on-primary (branco), visível no fundo.
-// Não é :deep de LAYOUT (Guia Fase 3 §1.4) — é correção de COR contra bleed.
+// A opção do dropdown é um DssItem (base consumida), NÃO um q-item cru. Por isso:
+//  - os leaks de q-item somem (margem do `.q-item .q-icon`, cor de `.q-item--active`
+//    …) — não precisam de patch;
+//  - MAS o painel do DssSelect estiliza `.q-item` (hover/selecionado/foco), então
+//    esses estados NÃO chegam ao DssItem e são recriados aqui;
+//  - o estado de foco por teclado do QSelect chega ao DssItem como ATRIBUTO
+//    `focused="true"` (o itemProps expõe `focused`; num QItem viraria a classe
+//    `q-manual-focusable--focused`, num DssItem vira atributo).
 // =============================================================================
 
 .dss-select__panel {
-  // 0. Focus ring por teclado na opção (WCAG 2.4.7). O painel do DssSelect só
-  //    dá um fundo sutil (surface-hover) à opção focada — insuficiente e
-  //    divergente do anel do DssCheckbox base. Alinha ao mesmo token de foco.
-  //    outline-offset negativo = anel inset (não cortado pelo overflow do painel).
-  .dss-multiselect-autocomplete__option.q-manual-focusable--focused {
-    outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
-    outline-offset: calc(-1 * var(--dss-border-width-md));
-  }
-
-  // 1. Label da opção selecionada não vira primary (seleção = checkbox)
-  .dss-multiselect-autocomplete__option.q-item--active {
+  .dss-multiselect-autocomplete__option {
+    // O DssItem aplica text-primary por padrão; num multiselect com checkbox a
+    // seleção é indicada pelo CHECKBOX, não pela cor do texto → rótulo neutro.
     color: var(--dss-text-body);
-  }
 
-  // 2. Glifo do check marcado = on-primary (branco), vencendo a regra de
-  //    side-icon do DssSelect (`… --active … --side .q-icon`, 0,4,0)
-  .dss-multiselect-autocomplete__option.q-item--active
-    .q-item__section--side
-    .dss-icon__inner {
-    color: var(--dss-text-on-primary);
-  }
+    // Hover
+    &:hover {
+      background-color: var(--dss-surface-hover);
+    }
 
-  // 3. Centralização do glifo (check/dash). CAUSA RAIZ (medida): o Quasar aplica
-  //    `margin-right: 8px` ao `.q-icon` dentro de um `q-item` (espaçamento
-  //    ícone↔texto de item) — no glifo decorativo do checkbox essa margem empurra
-  //    a caixa ~4px à esquerda no eixo flex → check descentralizado. Fix: zerar a
-  //    margem e centrar o wrapper (flex). Verificado: offset da tinta H 0 / V 0.
-  //    [ROOT do lado do DssCheckbox/DssIcon: o glifo não deveria herdar margem de
-  //    item; tratar na adequação do checkbox/ícone. Aqui é correção local.]
-  .dss-multiselect-autocomplete__option .dss-checkbox__check,
-  .dss-multiselect-autocomplete__option .dss-checkbox__dash {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // Selecionado: leve realce de fundo (a marca de seleção é o checkbox).
+    &[aria-selected='true'] {
+      background-color: var(--dss-surface-selected);
+    }
 
-    .dss-icon__inner {
-      margin: 0;
+    // Foco por teclado (WCAG 2.4.7). `focused` é atributo no DssItem (ver acima).
+    // outline-offset negativo = anel inset (não cortado pelo overflow do painel).
+    &[focused='true'] {
+      outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
+      outline-offset: calc(-1 * var(--dss-border-width-md));
     }
   }
 }

@@ -7,18 +7,22 @@
  * Orquestra bases DSS (Cartão Composto — "aninhar, não reimplementar"):
  *   - DssSelect   → base envelopada (raiz). Multiseleção + autocomplete via
  *                   passthrough de $attrs ao QSelect (use-input, @filter).
- *   - DssCheckbox → glifo de estado por opção (DECORATIVO — a fonte de verdade
- *                   é aria-selected da option; o checkbox é pointer-events:none).
+ *   - DssItem     → cada OPÇÃO do dropdown. O `itemProps` do QSelect é repassado
+ *                   ao root do DssItem via $attrs: `role=option`, `aria-selected`,
+ *                   e o estado de foco por teclado como ATRIBUTO `focused="true"`
+ *                   (num QItem viraria a classe `q-manual-focusable--focused`).
+ *                   A navegação por teclado funciona via `aria-activedescendant`.
+ *                   `color=null` → o rótulo herda a cor neutra (não text-primary).
+ *   - DssCheckbox → no slot `leading` do DssItem (DECORATIVO — a fonte de verdade
+ *                   é aria-selected da option; pointer-events:none). Como não há
+ *                   `.q-item`, o leak de margem `.q-item .q-icon` não ocorre e o
+ *                   glifo centra naturalmente (ver histórico: usar q-item exigia
+ *                   patches de margem/cor; DssItem elimina o leak na origem).
  *   - DssChip     → token removível de cada valor selecionado.
  *
- * EXC-Gate-01: `q-item`/`q-item-section` no slot `option`.
- *   O slot option do QSelect exige itemProps ligados a um QItem — o QSelect
- *   ancora nele a navegação por teclado, o highlight (.q-manual-focusable) e o
- *   aria-selected. DssItem é um <div> próprio (não integra o QSelect) → usá-lo
- *   quebraria teclado/ARIA (WCAG 2.1.1/4.1.2). q-item é INFRAESTRUTURA do
- *   QSelect, sem alternativa em base DSS. Precedente: DssSelect.example (slot
- *   option) e DssDatePicker (QDate como raiz). As BASES DSS são consumidas
- *   DENTRO da linha (DssCheckbox + rótulo).
+ * NOTA (ex-EXC-Gate revisada): tentou-se `q-item` cru por supor que DssItem
+ * quebraria teclado/ARIA — VERIFICADO que NÃO quebra (ARIA via activedescendant,
+ * foco via atributo `focused`). Trocado para DssItem = consumir a base + sem leaks.
  *
  * INCREMENTO 1 (thin): sem "selecionado sobe ao topo" (Incremento 2).
  *
@@ -26,8 +30,8 @@
  */
 
 import { ref, computed, watch, useSlots } from 'vue'
-import { QItem, QItemSection } from 'quasar'
 import DssSelect from '../../../base/DssSelect/DssSelect.vue'
+import DssItem from '../../../base/DssItem/DssItem.vue'
 import DssCheckbox from '../../../base/DssCheckbox/DssCheckbox.vue'
 import DssChip from '../../../base/DssChip/DssChip.vue'
 import type {
@@ -174,26 +178,29 @@ defineExpose<MultiselectAutocompleteExpose>({
     @popup-show="emit('popup-show')"
     @popup-hide="emit('popup-hide')"
   >
-    <!-- OPÇÃO: q-item (EXC-Gate-01) + DssCheckbox decorativo + rótulo -->
+    <!-- OPÇÃO: DssItem (base consumida) — o itemProps do QSelect (role=option,
+         aria-selected, teclado/highlight) é repassado ao root do DssItem via $attrs.
+         Checkbox DECORATIVO no slot leading; rótulo no default. -->
     <template #option="scope">
       <slot name="option" v-bind="scope">
-        <QItem
+        <DssItem
           v-bind="scope.itemProps"
           class="dss-multiselect-autocomplete__option"
+          :color="null"
+          :leading-decorative="true"
         >
-          <QItemSection avatar class="dss-multiselect-autocomplete__option-check">
-            <!-- DECORATIVO: pointer-events:none — o clique/teclado é do q-item.
-                 aria-hidden pois aria-selected da option é a fonte de verdade. -->
+          <template #leading>
+            <!-- DECORATIVO (aria-hidden via leadingDecorative): aria-selected da
+                 option é a fonte de verdade; clique/teclado são do itemProps. -->
             <DssCheckbox
               :model-value="scope.selected"
               size="md"
               tabindex="-1"
-              aria-hidden="true"
               style="pointer-events: none"
             />
-          </QItemSection>
-          <QItemSection>{{ labelOf(scope.opt) }}</QItemSection>
-        </QItem>
+          </template>
+          {{ labelOf(scope.opt) }}
+        </DssItem>
       </slot>
     </template>
 

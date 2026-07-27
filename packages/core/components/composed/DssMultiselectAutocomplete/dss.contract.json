@@ -231,55 +231,17 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "min-width",
-          "token": null,
-          "value": "auto",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-inline-end",
-          "token": "--dss-spacing-2",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "color",
           "token": "--dss-text-body",
           "value": null,
           "source": "4-output/_states.scss"
         },
         {
-          "property": "color",
-          "token": "--dss-text-on-primary",
+          "property": "background-color",
+          "token": "--dss-surface-selected",
           "value": null,
           "source": "4-output/_states.scss"
         },
-        {
-          "property": "display",
-          "token": null,
-          "value": "flex",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "align-items",
-          "token": null,
-          "value": "center",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "justify-content",
-          "token": null,
-          "value": "center",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "margin",
-          "token": null,
-          "value": "0",
-          "source": "4-output/_states.scss"
-        }
-      ],
-      "focus": [
         {
           "property": "outline",
           "token": "--dss-border-width-md",
@@ -289,6 +251,14 @@
         {
           "property": "outline-offset",
           "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background-color",
+          "token": "--dss-surface-hover",
           "value": null,
           "source": "4-output/_states.scss"
         }
@@ -303,20 +273,13 @@
     ],
     "instances": [
       {
-        "name": "--dss-spacing-2",
-        "usedIn": [
-          "default",
-          "defaultPreview"
-        ]
-      },
-      {
         "name": "--dss-text-body",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-text-on-primary",
+        "name": "--dss-surface-selected",
         "usedIn": [
           "default"
         ]
@@ -324,7 +287,19 @@
       {
         "name": "--dss-border-width-md",
         "usedIn": [
-          "focus"
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "defaultPreview"
         ]
       }
     ]

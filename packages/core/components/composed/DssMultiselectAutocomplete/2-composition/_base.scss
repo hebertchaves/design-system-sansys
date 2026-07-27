@@ -1,21 +1,13 @@
 /* ==========================================================================
    DssMultiselectAutocomplete — LAYER 2: BASE COMPOSITION
 
-   Composto THIN: o DssSelect governa o campo e o menu; o DssCheckbox e o
-   DssChip governam seus próprios visuais. Aqui só ajustamos o ESPAÇAMENTO da
-   linha de opção (contêiner q-item, EXC-Gate) — nunca cores, nunca :deep em
-   filhos DSS (Guia Fase 3 §1.4).
+   Composto THIN: o DssSelect governa o campo e o menu. A OPÇÃO é um DssItem
+   (base DSS consumida — o itemProps do QSelect é repassado ao root do DssItem
+   via $attrs), com o DssCheckbox no slot `leading` e o rótulo no default.
+   Sem layout próprio aqui; os estados visuais da opção vivem na Layer 4.
    ========================================================================== */
 
 /* Raiz: sem layout próprio — herda a superfície do DssSelect. */
 .dss-multiselect-autocomplete {
   display: contents;
-}
-
-/* Seção do checkbox na opção: a seção "avatar" do q-item reserva largura
-   grande demais para um checkbox sm — reduz para o mínimo necessário.
-   (Estiliza a PRÓPRIA classe da seção, não :deep no filho.) */
-.dss-multiselect-autocomplete__option-check {
-  min-width: auto;
-  padding-inline-end: var(--dss-spacing-2);
 }
