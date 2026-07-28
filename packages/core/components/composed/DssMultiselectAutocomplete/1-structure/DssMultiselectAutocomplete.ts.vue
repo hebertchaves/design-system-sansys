@@ -77,6 +77,12 @@ const selectRef = ref<any>(null)
 /** Opções visíveis (filtradas pelo autocomplete). Inicia com todas. */
 const filteredOptions = ref<any[]>([...props.options])
 
+/** Fetch assíncrono (loadOptions) em andamento. */
+const isLoadingOptions = ref(false)
+
+/** Loading efetivo: prop externa OU busca assíncrona em andamento. */
+const effectiveLoading = computed(() => props.loading || isLoadingOptions.value)
+
 // Mantém as opções filtradas em sincronia quando a lista-fonte muda.
 watch(
   () => props.options,
@@ -109,13 +115,37 @@ function optionValueOf(opt: any): any {
 // ==========================================================================
 
 /**
- * Handler de filtro do QSelect (use-input). Substring case-insensitive sobre
- * o rótulo. update()/abort() são fornecidos pelo QSelect.
+ * Handler de filtro do QSelect (use-input), com debounce de `inputDebounce`.
+ *
+ * - COM `loadOptions`: busca ASSÍNCRONA (server-side). Marca loading, aguarda o
+ *   resultado e popula o dropdown; em erro, aborta o ciclo do QSelect.
+ * - SEM `loadOptions`: filtro LOCAL por substring case-insensitive do rótulo.
+ *
+ * update()/abort() são fornecidos pelo QSelect (coordenam a exibição do menu).
  */
-function onFilter(inputValue: string, update: (fn: () => void) => void) {
+async function onFilter(
+  inputValue: string,
+  update: (fn: () => void) => void,
+  abort: () => void,
+) {
+  const val = String(inputValue || '').trim()
+
+  if (props.loadOptions) {
+    isLoadingOptions.value = true
+    try {
+      const results = await props.loadOptions(val)
+      update(() => { filteredOptions.value = Array.isArray(results) ? results : [] })
+    } catch {
+      abort()
+    } finally {
+      isLoadingOptions.value = false
+    }
+    return
+  }
+
   update(() => {
     const all = props.options || []
-    const needle = String(inputValue || '').trim().toLowerCase()
+    const needle = val.toLowerCase()
     filteredOptions.value = needle
       ? all.filter((o) => labelOf(o).toLowerCase().includes(needle))
       : [...all]
@@ -200,7 +230,7 @@ defineExpose<MultiselectAutocompleteExpose>({
     :input-debounce="inputDebounce"
     :label="label"
     :placeholder="placeholder"
-    :loading="loading"
+    :loading="effectiveLoading"
     :disable="disable"
     :readonly="readonly"
     :clearable="clearable"

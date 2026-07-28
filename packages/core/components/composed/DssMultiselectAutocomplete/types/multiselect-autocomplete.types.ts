@@ -72,6 +72,19 @@ export interface MultiselectAutocompleteProps {
   /** Debounce (ms) do filtro do autocomplete. @default 300 */
   inputDebounce?: number | string
 
+  /**
+   * Busca ASSÍNCRONA (server-side) das opções — para tabelas grandes demais
+   * para carregar inteiras no cliente. Recebe o texto digitado e retorna (ou
+   * resolve) a lista de opções correspondente. Quando fornecida, SUBSTITUI o
+   * filtro local: o componente chama esta função no `@filter` (com debounce de
+   * `inputDebounce`), exibe estado de carregamento durante o fetch e popula o
+   * dropdown com o resultado. Sem ela, mantém o filtro local por substring.
+   *
+   * @example
+   * :load-options="(q) => api.get('/clientes', { params: { q } })"
+   */
+  loadOptions?: (query: string) => any[] | Promise<any[]>
+
   // ========================================
   // Content
   // ========================================

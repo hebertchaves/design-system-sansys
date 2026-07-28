@@ -64,6 +64,12 @@
         "description": "Debounce (ms) do filtro do autocomplete. @default 300"
       },
       {
+        "name": "loadOptions",
+        "type": "(query: string) => any[] | Promise<any[]>",
+        "controlHint": "text",
+        "description": "Busca ASSÍNCRONA (server-side) das opções — para tabelas grandes demais"
+      },
+      {
         "name": "label",
         "type": "string",
         "controlHint": "text",
