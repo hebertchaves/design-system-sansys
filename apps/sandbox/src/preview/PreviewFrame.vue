@@ -206,7 +206,19 @@ function postState() {
   const el = frameEl.value
   if (!el || !el.contentWindow) return
   const clean = {}
-  for (const [k, v] of Object.entries(state)) if (v !== '' && v != null && v !== false) clean[k] = v
+  for (const [k, v] of Object.entries(state)) {
+    if (v === '' || v == null) continue
+    if (v === false) {
+      // `false` só é omitido quando também é o DEFAULT da prop (toggle default-false
+      // no repouso → snippet limpo). Se o default é `true` (ex.: chipsRemovable), o
+      // `false` é um override SIGNIFICATIVO e PRECISA ser enviado — senão o toggle
+      // nunca sai de true (o componente cai no default).
+      const def = knobs.value.find((kn) => kn.name === k)?.default
+      if (def === true || def === 'true') clean[k] = v
+      continue
+    }
+    clean[k] = v
+  }
   // Serializa para dado PLANO: state pode conter arrays/objetos reativos (Proxy)
   // que o structured-clone do postMessage não consegue clonar (ex.: options do Select).
   // modelProp: o sujeito só liga v-model quando o contrato declara vModel
