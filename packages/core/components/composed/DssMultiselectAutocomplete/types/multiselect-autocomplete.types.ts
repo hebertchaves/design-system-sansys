@@ -85,6 +85,19 @@ export interface MultiselectAutocompleteProps {
    */
   loadOptions?: (query: string) => any[] | Promise<any[]>
 
+  /**
+   * Carregamento INCREMENTAL (lazy / infinite scroll): chamado quando o usuário
+   * ROLA perto do fim da lista virtualizada. Recebe o texto atual (`query`) e
+   * quantos itens já carregados (`loaded`, = offset), e retorna o PRÓXIMO lote —
+   * o componente o APPENDA à lista. Retornar `[]` sinaliza FIM (para de pedir até
+   * a query mudar). Pareia com `loadOptions` (busca server-side paginada) e
+   * aproveita o virtual scroll herdado do QSelect.
+   *
+   * @example
+   * :load-more="(q, loaded) => api.get('/clientes', { params: { q, offset: loaded } })"
+   */
+  loadMore?: (query: string, loaded: number) => any[] | Promise<any[]>
+
   // ========================================
   // Content
   // ========================================

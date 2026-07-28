@@ -83,6 +83,14 @@ const isLoadingOptions = ref(false)
 /** Loading efetivo: prop externa OU busca assíncrona em andamento. */
 const effectiveLoading = computed(() => props.loading || isLoadingOptions.value)
 
+// --- Lazy / infinite loading (loadMore) ---
+/** Texto da busca atual (para paginar o loadMore com a mesma query). */
+const currentQuery = ref('')
+/** Ainda há lotes a carregar? (false quando loadMore retorna []). */
+const hasMore = ref(true)
+/** Carregamento de PRÓXIMO lote (loadMore) em andamento. */
+const isLoadingMore = ref(false)
+
 // Mantém as opções filtradas em sincronia quando a lista-fonte muda.
 watch(
   () => props.options,
@@ -129,6 +137,10 @@ async function onFilter(
   abort: () => void,
 ) {
   const val = String(inputValue || '').trim()
+  // Nova query → reseta a paginação do lazy loading.
+  currentQuery.value = val
+  hasMore.value = true
+  isLoadingMore.value = false
 
   if (props.loadOptions) {
     isLoadingOptions.value = true
@@ -150,6 +162,44 @@ async function onFilter(
       ? all.filter((o) => labelOf(o).toLowerCase().includes(needle))
       : [...all]
   })
+}
+
+// ==========================================================================
+// LAZY LOADING (infinite scroll via @virtual-scroll)
+// ==========================================================================
+
+/** Dispara loadMore quando faltam <= N itens para o fim da lista. */
+const LOAD_MORE_THRESHOLD = 4
+
+/**
+ * Handler do @virtual-scroll do QSelect: se rolou perto do fim e há mais lotes,
+ * carrega o próximo (loadMore) e APPENDA. Ignora se não há loadMore, se já está
+ * carregando, ou se acabou (hasMore=false).
+ */
+function onVirtualScroll(details: { to: number }) {
+  if (!props.loadMore || isLoadingMore.value || !hasMore.value) return
+  const total = filteredOptions.value.length
+  if (details && details.to >= total - LOAD_MORE_THRESHOLD) {
+    void loadMoreOptions()
+  }
+}
+
+/** Carrega e APPENDA o próximo lote; [] ⇒ fim (hasMore=false). */
+async function loadMoreOptions() {
+  if (!props.loadMore || isLoadingMore.value || !hasMore.value) return
+  isLoadingMore.value = true
+  try {
+    const more = await props.loadMore(currentQuery.value, filteredOptions.value.length)
+    if (!Array.isArray(more) || more.length === 0) {
+      hasMore.value = false
+    } else {
+      filteredOptions.value = [...filteredOptions.value, ...more]
+    }
+  } catch {
+    hasMore.value = false
+  } finally {
+    isLoadingMore.value = false
+  }
 }
 
 // ==========================================================================
@@ -237,6 +287,7 @@ defineExpose<MultiselectAutocompleteExpose>({
     :brand="brand"
     :aria-label="ariaLabel"
     @filter="onFilter"
+    @virtual-scroll="onVirtualScroll"
     @focus="emit('focus', $event)"
     @blur="emit('blur', $event)"
     @clear="emit('clear')"
@@ -309,6 +360,15 @@ defineExpose<MultiselectAutocompleteExpose>({
           {{ labelOf(scope.opt) }}
         </DssChip>
       </slot>
+    </template>
+
+    <!-- LAZY LOADING: indicador "carregando mais" no rodapé da lista (after-options,
+         abaixo da lista virtualizada). isLoadingMore é ref do setup (resolve no
+         menu teleportado; props diretas não resolveriam). -->
+    <template #after-options>
+      <div v-if="isLoadingMore" class="dss-multiselect-autocomplete__loading-more">
+        Carregando mais…
+      </div>
     </template>
 
     <!-- Passthrough dos demais slots do consumidor (label, prepend, append,

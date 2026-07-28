@@ -70,6 +70,12 @@
         "description": "Busca ASSÍNCRONA (server-side) das opções — para tabelas grandes demais"
       },
       {
+        "name": "loadMore",
+        "type": "(query: string, loaded: number) => any[] | Promise<any[]>",
+        "controlHint": "text",
+        "description": "Carregamento INCREMENTAL (lazy / infinite scroll): chamado quando o usuário"
+      },
+      {
         "name": "label",
         "type": "string",
         "controlHint": "text",
@@ -319,6 +325,12 @@
           "property": "gap",
           "token": "--dss-spacing-1",
           "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
           "source": "2-composition/_base.scss"
         },
         {

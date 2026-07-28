@@ -38,3 +38,11 @@
   flex-wrap: wrap;
   gap: var(--dss-spacing-1);
 }
+
+/* Indicador "carregando mais" (after-options: rodapé da lista, lazy loading). */
+.dss-multiselect-autocomplete__loading-more {
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-secondary);
+  text-align: center;
+}
