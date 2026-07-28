@@ -57,6 +57,7 @@ const props = withDefaults(defineProps<MultiselectAutocompleteProps>(), {
   readonly: false,
   clearable: false,
   chipsRemovable: true,
+  showSelectedSummary: false,
   brand: null,
   ariaLabel: undefined,
 })
@@ -95,6 +96,14 @@ function labelOf(opt: any): string {
   return String(opt ?? '')
 }
 
+/** Extrai o VALOR de uma opção (string-key ou função) — p/ resolver emitValue. */
+function optionValueOf(opt: any): any {
+  const ov = props.optionValue
+  if (typeof ov === 'function') return ov(opt)
+  if (opt !== null && typeof opt === 'object') return opt?.[ov as string]
+  return opt
+}
+
 // ==========================================================================
 // AUTOCOMPLETE (filtro default)
 // ==========================================================================
@@ -130,6 +139,32 @@ function removeValue(opt: any) {
   emit('update:modelValue', next)
   emit('remove', opt)
 }
+
+/**
+ * Tokens da seção "Selecionados" (before-options): cada entrada do modelValue
+ * resolvida para { value, label }. Com emitValue, a entrada é o VALOR → resolve
+ * o rótulo pela option correspondente; senão a entrada É a option. STICKY: mostra
+ * TODOS os selecionados, independente do filtro do autocomplete (o objetivo é ver
+ * tudo de uma vez). Deriva do modelValue — sem estado duplicado.
+ */
+const selectedTokens = computed(() => {
+  const mv = props.modelValue ?? []
+  const all = props.options || []
+  return mv.map((entry) => {
+    const opt = props.emitValue
+      ? (all.find((o) => optionValueOf(o) === entry) ?? entry)
+      : entry
+    return { value: entry, label: labelOf(opt) }
+  })
+})
+
+/**
+ * Condições da seção "Selecionados" como CONSTS do setup (não props diretas):
+ * o slot before-options renderiza no QMenu TELEPORTADO, onde acesso direto a
+ * props não resolve (o _ctx é re-vinculado). Consts do setup vêm por closure.
+ */
+const showSelected = computed(() => props.showSelectedSummary && selectedTokens.value.length > 0)
+const summaryChipRemovable = computed(() => props.chipsRemovable && !props.disable && !props.readonly)
 
 // ==========================================================================
 // EXPOSE
@@ -178,6 +213,33 @@ defineExpose<MultiselectAutocompleteExpose>({
     @popup-show="emit('popup-show')"
     @popup-hide="emit('popup-hide')"
   >
+    <!-- SELECIONADOS: seção FIXA no topo do painel (slot before-options do QSelect
+         — acima da lista virtualizada e FORA do scroll). Tokens derivam do
+         modelValue (sem estado duplicado); remover aqui desmarca a opção in-place.
+         Sticky: mostra todos os selecionados, independente do filtro. -->
+    <template #before-options>
+      <div
+        v-if="showSelected"
+        class="dss-multiselect-autocomplete__selected"
+        role="group"
+        :aria-label="`Selecionados (${selectedTokens.length})`"
+      >
+        <span class="dss-multiselect-autocomplete__selected-label">
+          Selecionados ({{ selectedTokens.length }})
+        </span>
+        <div class="dss-multiselect-autocomplete__selected-tokens">
+          <DssChip
+            v-for="t in selectedTokens"
+            :key="String(t.value)"
+            size="sm"
+            :removable="summaryChipRemovable"
+            :remove-aria-label="`Remover ${t.label}`"
+            @remove="removeValue(t.value)"
+          >{{ t.label }}</DssChip>
+        </div>
+      </div>
+    </template>
+
     <!-- OPÇÃO: DssItem (base consumida) — o itemProps do QSelect (role=option,
          aria-selected, teclado/highlight) é repassado ao root do DssItem via $attrs.
          Checkbox DECORATIVO no slot leading; rótulo no default. -->

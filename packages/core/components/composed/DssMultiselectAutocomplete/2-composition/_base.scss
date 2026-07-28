@@ -4,10 +4,37 @@
    Composto THIN: o DssSelect governa o campo e o menu. A OPÇÃO é um DssItem
    (base DSS consumida — o itemProps do QSelect é repassado ao root do DssItem
    via $attrs), com o DssCheckbox no slot `leading` e o rótulo no default.
-   Sem layout próprio aqui; os estados visuais da opção vivem na Layer 4.
    ========================================================================== */
 
 /* Raiz: sem layout próprio — herda a superfície do DssSelect. */
 .dss-multiselect-autocomplete {
   display: contents;
+}
+
+/* --------------------------------------------------------------------------
+   SEÇÃO "SELECIONADOS" (before-options: fixa no topo do painel, acima da
+   lista virtualizada e fora do scroll). Tokens removíveis derivados do
+   modelValue. max-height limita o crescimento (muitos selecionados) sem comer
+   o painel; vh é unidade relativa (não hardcode dimensional).
+   -------------------------------------------------------------------------- */
+.dss-multiselect-autocomplete__selected {
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  background-color: var(--dss-surface-default);
+  max-height: 33vh;
+  overflow-y: auto;
+}
+
+.dss-multiselect-autocomplete__selected-label {
+  display: block;
+  margin-bottom: var(--dss-spacing-1);
+  font-size: var(--dss-font-size-xs);
+  font-weight: var(--dss-font-weight-medium);
+  color: var(--dss-text-secondary);
+}
+
+.dss-multiselect-autocomplete__selected-tokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dss-spacing-1);
 }

@@ -107,6 +107,13 @@
         "description": "Torna os chips de seleção removíveis (botão × + evento remove)."
       },
       {
+        "name": "showSelectedSummary",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Exibe uma seção \"Selecionados\" FIXA no topo do painel do dropdown (via slot"
+      },
+      {
         "name": "brand",
         "type": "MultiselectAutocompleteBrand | null",
         "controlHint": "picker-brand",
@@ -231,6 +238,84 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-height",
+          "token": null,
+          "value": "33vh",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow-y",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-secondary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "wrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "color",
           "token": "--dss-text-body",
           "value": null,
@@ -269,9 +354,53 @@
     "categories": [
       "border",
       "color",
-      "spacing"
+      "spacing",
+      "typography"
     ],
     "instances": [
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
       {
         "name": "--dss-text-body",
         "usedIn": [
@@ -294,12 +423,6 @@
         "name": "--dss-surface-hover",
         "usedIn": [
           "hover"
-        ]
-      },
-      {
-        "name": "--dss-spacing-2",
-        "usedIn": [
-          "defaultPreview"
         ]
       }
     ]

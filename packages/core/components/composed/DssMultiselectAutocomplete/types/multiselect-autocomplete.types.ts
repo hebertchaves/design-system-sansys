@@ -109,6 +109,25 @@ export interface MultiselectAutocompleteProps {
   chipsRemovable?: boolean
 
   // ========================================
+  // Selecionados (seção fixa no topo do dropdown)
+  // ========================================
+
+  /**
+   * Exibe uma seção "Selecionados" FIXA no topo do painel do dropdown (via slot
+   * `before-options` do QSelect — acima da lista virtualizada, fora do scroll),
+   * com tokens removíveis de todos os valores selecionados. Opt-in.
+   *
+   * Resolve dois problemas de usabilidade em bases grandes: (1) usuários focados
+   * na lista veem/gerenciam a seleção sem depender dos chips do campo; (2) em
+   * componentes estreitos, a gestão da seleção migra do campo apertado para o
+   * painel amplo. Os tokens derivam do modelValue (sem estado duplicado): remover
+   * aqui desmarca também a opção in-place na lista.
+   *
+   * @default false
+   */
+  showSelectedSummary?: boolean
+
+  // ========================================
   // Brand
   // ========================================
 
