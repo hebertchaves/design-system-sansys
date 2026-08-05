@@ -29,7 +29,7 @@
  * @see docs/governance/DSS_GUIA_COMPOSICAO_FASE3.md
  */
 
-import { ref, computed, watch, useSlots } from 'vue'
+import { ref, computed, watch, useSlots, onMounted, onUnmounted, nextTick } from 'vue'
 import DssSelect from '../../../base/DssSelect/DssSelect.vue'
 import DssItem from '../../../base/DssItem/DssItem.vue'
 import DssCheckbox from '../../../base/DssCheckbox/DssCheckbox.vue'
@@ -247,6 +247,140 @@ const showSelected = computed(() => props.showSelectedSummary && selectedTokens.
 const summaryChipRemovable = computed(() => props.chipsRemovable && !props.disable && !props.readonly)
 
 // ==========================================================================
+// CAMPO DE UMA LINHA — quantos chips cabem é MEDIDO, não pré-definido
+// ==========================================================================
+//
+// O campo NUNCA cresce em altura: numa grade de formulário, um campo que ganha
+// linha desloca tudo à volta. Os chips ficam numa linha só e o excedente sai de
+// cena, sinalizado por um contador.
+//
+// Quantos cabem depende da largura REAL e do tamanho dos rótulos — um número
+// fixo (ex.: "mostre 2") erra nas duas pontas: sobra espaço num campo largo e
+// expulsa o input de busca num estreito. Por isso a conta é feita medindo o
+// layout, com ResizeObserver, e não por prop.
+
+/** Total de selecionados. */
+const totalSelected = computed(() => props.modelValue?.length ?? 0)
+
+/** Linha do campo (.q-field__native) — origem das medidas. */
+const fieldRow = ref<HTMLElement | null>(null)
+
+/** Quantos chips cabem na linha. Começa "todos" — a medição corrige. */
+const visibleCount = ref(Number.MAX_SAFE_INTEGER)
+
+/** Quantos ficaram de fora (rótulo do contador `+N`). */
+const hiddenCount = computed(() => Math.max(0, totalSelected.value - visibleCount.value))
+
+/**
+ * Rótulo do contador. Com algum chip à mostra é um INCREMENTO (`+3` = mais três
+ * além dos visíveis). Sem nenhum, "+4" seria incoerente (mais quatro do que
+ * quê?) — passa a ser o TOTAL puro.
+ */
+const counterLabel = computed(() =>
+  visibleCount.value === 0 ? String(totalSelected.value) : `+${hiddenCount.value}`
+)
+
+/** Texto acessível equivalente, sempre por extenso. */
+const counterAriaLabel = computed(() =>
+  visibleCount.value === 0
+    ? `${totalSelected.value} selecionados`
+    : `mais ${hiddenCount.value} de ${totalSelected.value} selecionados`
+)
+
+/** Espaço reservado à direita para o input de busca continuar utilizável. */
+const INPUT_RESERVE_PX = 56
+/** Espaço reservado ao contador quando ele for necessário. */
+const COUNTER_RESERVE_PX = 48
+
+/** Evita realimentação: esconder chip muda o layout e reacorda o ResizeObserver. */
+let measuring = false
+
+/**
+ * Decide quantos chips cabem, em DUAS passadas.
+ *
+ * 1ª — mostra todos e lê as larguras naturais. Necessário porque um chip
+ *      escondido tem largura 0: medir com ele já escondido perpetuaria a
+ *      decisão anterior (o campo nunca voltaria a crescer ao alargar).
+ * 2ª — acumula as larguras dentro do orçamento e corta.
+ *
+ * O contador só entra na conta quando de fato vai existir — reservar espaço
+ * para ele mesmo cabendo tudo desperdiçaria um chip em campos justos.
+ */
+async function measureOverflow() {
+  const row = fieldRow.value
+  if (!row || measuring) return
+  measuring = true
+  try {
+    const total = totalSelected.value
+    if (!total) { visibleCount.value = Number.MAX_SAFE_INTEGER; return }
+
+    // 1ª passada
+    visibleCount.value = total
+    await nextTick()
+
+    const chips = Array.from(row.querySelectorAll<HTMLElement>(
+      '.dss-multiselect-autocomplete__chip:not(.dss-multiselect-autocomplete__chip--counter)'
+    ))
+    if (!chips.length) return
+    const widths = chips.map((c) => c.getBoundingClientRect().width)
+    const rowW = row.clientWidth
+
+    // Sem layout medível (jsdom, display:none, antes da 1ª pintura) não há o que
+    // decidir — manter TODOS visíveis. Concluir "nada cabe" a partir de zeros
+    // esconderia a seleção inteira por falta de informação.
+    if (!rowW || !widths.some((w) => w > 0)) { visibleCount.value = total; return }
+
+    // 2ª passada: cabe tudo sem contador?
+    const somaTotal = widths.reduce((a, b) => a + b, 0)
+    if (somaTotal <= rowW - INPUT_RESERVE_PX) {
+      visibleCount.value = total
+      return
+    }
+
+    // Não cabe: o contador passa a existir e também ocupa lugar.
+    const budget = rowW - INPUT_RESERVE_PX - COUNTER_RESERVE_PX
+    let acc = 0
+    let n = 0
+    for (const w of widths) {
+      if (acc + w > budget) break
+      acc += w
+      n++
+    }
+    // Pode dar ZERO: em campo muito estreito, insistir num chip expulsaria o
+    // input de busca e o autocomplete pararia de funcionar. Aí o contador
+    // assume sozinho e passa a exibir o TOTAL (ver counterLabel).
+    visibleCount.value = n
+  } finally {
+    measuring = false
+  }
+}
+
+/**
+ * Índice do último chip — posição em que o contador é renderizado (uma vez só,
+ * no fim da linha, para ficar ancorado à direita).
+ */
+const counterIndex = computed(() => Math.max(0, totalSelected.value - 1))
+
+let ro: ResizeObserver | null = null
+
+onMounted(async () => {
+  await nextTick()
+  // O QSelect é a raiz do DssSelect; a linha dos chips é o .q-field__native.
+  const root = (selectRef.value as any)?.$el as HTMLElement | undefined
+  fieldRow.value = root?.querySelector('.q-field__native') ?? null
+  if (fieldRow.value && typeof ResizeObserver !== 'undefined') {
+    ro = new ResizeObserver(() => measureOverflow())
+    ro.observe(fieldRow.value)
+  }
+  measureOverflow()
+})
+
+onUnmounted(() => { ro?.disconnect(); ro = null })
+
+// Mudou a seleção → as larguras mudaram; remede depois do repaint.
+watch(() => props.modelValue, async () => { await nextTick(); measureOverflow() }, { deep: true })
+
+// ==========================================================================
 // EXPOSE
 // ==========================================================================
 
@@ -313,6 +447,7 @@ defineExpose<MultiselectAutocompleteExpose>({
             v-for="t in selectedTokens"
             :key="String(t.value)"
             size="sm"
+            variant="outline"
             :removable="summaryChipRemovable"
             :remove-aria-label="`Remover ${t.label}`"
             @remove="removeValue(t.value)"
@@ -347,17 +482,41 @@ defineExpose<MultiselectAutocompleteExpose>({
       </slot>
     </template>
 
-    <!-- TOKEN SELECIONADO: DssChip removível -->
+    <!-- TOKEN SELECIONADO no CAMPO.
+         O campo nunca ganha altura: os chips ficam numa linha só e o que não
+         cabe é cortado, sinalizado pelo contador. `flat` (sem fundo nem borda)
+         separa os papéis — o campo resume, a seção do painel gere a seleção
+         (lá os tokens são `outline`). -->
     <template #selected-item="scope">
       <slot name="selected-item" v-bind="scope">
+        <!-- TODOS os chips são renderizados (sem v-if por contagem): o corte é
+             VISUAL, pelo overflow da linha. É isso que mantém as larguras
+             naturais mensuráveis e permite a contagem adaptativa. -->
         <DssChip
-          class="dss-multiselect-autocomplete__chip"
+          :class="['dss-multiselect-autocomplete__chip', {
+            // Não coube na linha — sai de cena, o contador o representa.
+            'dss-multiselect-autocomplete__chip--overflowed': scope.index >= visibleCount,
+          }]"
           size="md"
+          variant="flat"
           :removable="chipsRemovable && !disable && !readonly"
           :remove-aria-label="`Remover ${labelOf(scope.opt)}`"
           @remove="removeValue(scope.opt)"
         >
           {{ labelOf(scope.opt) }}
+        </DssChip>
+        <!-- CONTADOR: uma vez só, ancorado ao fim da linha. O número vem da
+             MEDIÇÃO do layout (ResizeObserver), não de um limite pré-definido —
+             por isso acompanha a largura real do campo. Não é removível: não
+             representa um valor único. -->
+        <DssChip
+          v-if="scope.index === counterIndex && hiddenCount > 0"
+          class="dss-multiselect-autocomplete__chip dss-multiselect-autocomplete__chip--counter"
+          size="md"
+          variant="flat"
+          :aria-label="counterAriaLabel"
+        >
+          {{ counterLabel }}
         </DssChip>
       </slot>
     </template>

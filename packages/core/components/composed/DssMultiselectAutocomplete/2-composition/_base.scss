@@ -12,17 +12,84 @@
 }
 
 /* --------------------------------------------------------------------------
-   SEÇÃO "SELECIONADOS" (before-options: fixa no topo do painel, acima da
-   lista virtualizada e fora do scroll). Tokens removíveis derivados do
-   modelValue. max-height limita o crescimento (muitos selecionados) sem comer
-   o painel; vh é unidade relativa (não hardcode dimensional).
+   CAMPO EM UMA LINHA — regra estrutural, vale SEMPRE
+
+   O campo NUNCA pode ganhar altura: numa grade de formulário, um campo que
+   quebra em duas linhas desloca tudo à volta. Por isso `nowrap` + corte, e não
+   o empilhamento padrão do QSelect multiple (medido: 5 seleções a 260px levavam
+   o campo a 200px de altura).
+
+   QUANTOS chips cabem não é decidido aqui nem por prop — é MEDIDO em runtime
+   (ResizeObserver no 1-structure) e sinalizado pelo contador `+N`. Um número
+   fixo erraria nas duas pontas: desperdiça campo largo, entope campo estreito.
+   -------------------------------------------------------------------------- */
+.dss-multiselect-autocomplete {
+  .q-field__native {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  /* O input de busca nunca pode ser espremido a zero: sem ele o autocomplete
+     deixa de existir. Piso em `em` (relativo à tipografia, não dimensão fixa).
+     Espelha o INPUT_RESERVE_PX usado na medição. */
+  .q-field__input {
+    min-width: 4em;
+  }
+
+  /* Chips com largura NATURAL. Deixá-los encolher (flex-shrink) truncava os
+     rótulos a "M"/"Bar" — chip ilegível não informa nada e ainda ocupa espaço.
+     O excedente sai de cena pela borda; o corte lateral comunica "continua".
+     `max-width` evita que um rótulo muito longo monopolize a linha sozinho. */
+  .dss-multiselect-autocomplete__chip {
+    flex: 0 0 auto;
+    max-width: 60%;
+
+    .dss-chip__label {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /* Excedente: sai do fluxo. A medição (1-structure) o reexibe antes de cada
+     nova conta — sem isso, um chip escondido teria largura 0 e o campo nunca
+     voltaria a mostrá-lo ao alargar. */
+  .dss-multiselect-autocomplete__chip--overflowed {
+    display: none;
+  }
+
+  /* O contador é a informação que NÃO pode ser perdida (único sinal de que há
+     mais seleção): flui após os chips visíveis e nunca encolhe nem trunca.
+     Dispensa `sticky`/fundo opaco — os excedentes saem do fluxo, então nada
+     desliza por baixo dele. */
+  .dss-multiselect-autocomplete__chip--counter {
+    flex: 0 0 auto;
+    max-width: none;
+
+    .dss-chip__label {
+      overflow: visible;
+      text-overflow: clip;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SEÇÃO "SELECIONADOS" (slot before-options, no topo do painel).
+
+   FIXA no topo: o QMenu é o container de scroll (o virtual scroll do QSelect
+   escuta o scroll DELE), então a seção, sendo o primeiro filho, subiria junto
+   com a lista. `sticky` a mantém ancorada enquanto as opções correm por baixo.
+
+   Fundo OPACO é requisito, não estética: sem ele as opções apareceriam através
+   da seção fixa. `z-index` a mantém acima da lista virtualizada.
    -------------------------------------------------------------------------- */
 .dss-multiselect-autocomplete__selected {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   padding: var(--dss-spacing-2) var(--dss-spacing-3);
   border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
   background-color: var(--dss-surface-default);
-  max-height: 33vh;
-  overflow-y: auto;
 }
 
 .dss-multiselect-autocomplete__selected-label {
@@ -33,10 +100,29 @@
   color: var(--dss-text-secondary);
 }
 
+/* O scroll é DESTA lista, não da seção: o rótulo "Selecionados (N)" permanece
+   visível enquanto se rola a seleção. A lista de opções tem o scroll próprio
+   dela (virtual scroll do QSelect), abaixo — os dois não competem.
+   vh é unidade relativa (não hardcode dimensional); o teto deixa a maior parte
+   do painel para a lista, que é o que o usuário veio consultar. */
 .dss-multiselect-autocomplete__selected-tokens {
   display: flex;
   flex-wrap: wrap;
   gap: var(--dss-spacing-1);
+  max-height: 22vh;
+  overflow-y: auto;
+
+  /* Folga vertical do TOUCH TARGET dos chips.
+     O `::before` de cada chip (alvo de 44px, WCAG 2.5.5) é centrado sobre um
+     chip de 24px, sobrando 10px para cada lado. Um descendente absoluto conta
+     para o scrollable overflow do ancestral: sem esta folga, o container via
+     34px de conteúdo em 24px de caixa e desenhava barra de rolagem mesmo com
+     UMA linha de chips — scroll onde não havia o que rolar.
+     Derivado dos tokens (não é espaçamento escolhido a olho): se o alvo de
+     toque ou a altura do chip mudarem, a folga acompanha. */
+  padding-block: calc(
+    (var(--dss-touch-target-md) - var(--dss-compact-control-height-sm)) / 2
+  );
 }
 
 /* Indicador "carregando mais" (after-options: rodapé da lista, lazy loading). */

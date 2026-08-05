@@ -250,6 +250,90 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "4em",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "60%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "ellipsis",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-width",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "clip",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "sticky",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "padding",
           "token": "--dss-spacing-2",
           "value": null,
@@ -265,18 +349,6 @@
           "property": "background-color",
           "token": "--dss-surface-default",
           "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "max-height",
-          "token": null,
-          "value": "33vh",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "overflow-y",
-          "token": null,
-          "value": "auto",
           "source": "2-composition/_base.scss"
         },
         {
@@ -328,6 +400,24 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "max-height",
+          "token": null,
+          "value": "22vh",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow-y",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "text-align",
           "token": null,
           "value": "center",
@@ -372,6 +462,7 @@
     "categories": [
       "border",
       "color",
+      "other",
       "spacing",
       "typography"
     ],
@@ -415,6 +506,12 @@
       },
       {
         "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
         "usedIn": [
           "default"
         ]
