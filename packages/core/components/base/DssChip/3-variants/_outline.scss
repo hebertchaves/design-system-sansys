@@ -16,12 +16,16 @@
 
   /* Cor do texto - aplicada via classe utilitaria .text-{color} */
 
-  /* Hover effect para variante outline */
+  /* Hover effect para variante outline.
+     NÃO declarar `color` AQUI: `currentColor` no background resolve pelo `color`
+     DESTE mesmo elemento. Trocá-lo para --dss-text-inverse fazia o fundo virar
+     branco junto com o texto (chip invisível) e ainda apagava a borda, que é
+     `solid currentColor`. Mantendo o `color` de acento, o fundo e a borda ficam
+     no acento e só os FILHOS recebem a cor invertida — mesmo padrão do bloco
+     `--selected` abaixo, que sempre funcionou. */
   &.dss-chip--clickable:hover {
     background-color: currentColor;
-    color: var(--dss-text-inverse);
 
-    /* Manter a borda com a cor original */
     .dss-chip__label,
     .dss-chip__icon {
       color: var(--dss-text-inverse);
@@ -46,13 +50,18 @@
     }
   }
 
-  /* Remove button styling para outline */
+  /* Remove button styling para outline.
+     SEM override de :hover — o comportamento correto já vem de _base.scss
+     (opacity 70% → 100% + véu sutil de currentColor no fundo), idêntico ao que
+     o `flat` faz. O glifo permanece no acento e apenas "escurece" ao perder a
+     transparência de repouso.
+     A regra que existia aqui pintava o fundo com o acento e invertia o glifo:
+     como `currentColor` resolve pelo `color` DO PRÓPRIO elemento, e a mesma
+     regra trocava esse `color` para --dss-text-inverse, o fundo saía branco
+     junto com o glifo — "×" branco sobre branco. Substituí-la por um preenchimento
+     sólido corrigia a invisibilidade mas criava um disco azul que o outline não
+     deve ter. Não reimplementar o que a base já resolve. */
   .dss-chip__remove {
     color: currentColor;
-
-    &:hover {
-      background-color: currentColor;
-      color: var(--dss-text-inverse);
-    }
   }
 }
