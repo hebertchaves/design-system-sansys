@@ -7,7 +7,14 @@
   e recebe props/tema/brand do parent via postMessage.
 -->
 <template>
-  <div class="pv-stage" :data-theme="theme" :data-brand="brand || null">
+  <!--
+    `data-theme`/`data-brand` NÃO ficam aqui — vão para <html> (ver watcher).
+    O DSS governa o tema GLOBALMENTE (é o que todo componente teleportado
+    declara: "modo escuro governado globalmente via [data-theme=dark]"). Preso a
+    esta div, o atributo não alcançava o conteúdo TELEPORTADO para o <body> —
+    dropdowns, menus, dialogs ficavam claros dentro de uma página escura.
+  -->
+  <div class="pv-stage">
     <component :is="Comp" v-if="Comp" ref="subjectRef" v-bind="allBindings">
       <!-- Slots ligados no parent recebem conteúdo de demo, para exercitar
            prepend/append/hint/error (que não são props e não apareciam). -->
@@ -21,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onUnmounted, defineAsyncComponent, toHandlerKey } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted, defineAsyncComponent, toHandlerKey } from 'vue'
 import DssIcon from '../../../../packages/core/components/base/DssIcon/DssIcon.vue'
 
 const name = new URLSearchParams(location.search).get('frame') || ''
@@ -115,6 +122,25 @@ function onMsg(e) {
   if (d.slotIcons && typeof d.slotIcons === 'object') slotIcons.value = d.slotIcons
   if (Array.isArray(d.emits)) emitNames.value = d.emits
 }
+/**
+ * Tema e brand vão para <html> deste realm, não para a div do palco.
+ *
+ * QMenu/QDialog/QTooltip teleportam para o <body>. Um atributo preso a uma div
+ * INTERNA não é ancestral do conteúdo teleportado, então dropdowns e overlays
+ * resolviam os tokens do tema CLARO dentro de uma página escura. Em <html> o
+ * atributo cobre o documento inteiro — que é como o DSS declara governar o tema
+ * ("globalmente via [data-theme]") e como um app real o aplica.
+ *
+ * O iframe é um realm próprio (um documento por sujeito), então mexer no <html>
+ * daqui não vaza para a casca do playground.
+ */
+watch([theme, brand], ([t, b]) => {
+  const html = document.documentElement
+  html.setAttribute('data-theme', t)
+  if (b) html.setAttribute('data-brand', b)
+  else html.removeAttribute('data-brand')
+}, { immediate: true })
+
 onMounted(() => {
   window.addEventListener('message', onMsg)
   // avisa o parent que o realm está pronto para receber o estado inicial
