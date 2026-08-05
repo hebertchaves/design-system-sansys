@@ -237,7 +237,8 @@
         "modelValue": [
           "Banana",
           "Cereja"
-        ]
+        ],
+        "showSelectedSummary": true
       }
     },
     "dimensions": {},
@@ -476,8 +477,7 @@
       {
         "name": "--dss-spacing-2",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -519,7 +519,8 @@
       {
         "name": "--dss-touch-target-md",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -531,7 +532,8 @@
       {
         "name": "--dss-surface-selected",
         "usedIn": [
-          "default"
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -543,7 +545,14 @@
       {
         "name": "--dss-action-primary-surface",
         "usedIn": [
-          "hover"
+          "hover",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-focus-primary",
+        "usedIn": [
+          "defaultPreview"
         ]
       }
     ]
@@ -625,7 +634,11 @@
       ]
     },
     "types": "types/multiselect-autocomplete.types.ts",
-    "docs": {},
+    "docs": {
+      "normative": "DssMultiselectAutocomplete.md",
+      "api": "DSSMULTISELECTAUTOCOMPLETE_API.md",
+      "readme": "README.md"
+    },
     "examples": "DssMultiselectAutocomplete.example.vue",
     "tests": "DssMultiselectAutocomplete.test.js"
   }

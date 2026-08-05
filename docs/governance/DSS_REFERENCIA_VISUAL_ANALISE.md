@@ -2226,7 +2226,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssList | listas | — | — | Lista com 3 itens |
 | DssMarkupTable | cartoes | density:standard, bordered, separator:horizontal | width:100% | Tabela com thead/tbody padrão |
 | DssMenu | navegacao | — | minHeight:200px, minWidth:200px | Menu com 3 itens |
-| DssMultiselectAutocomplete | form-controles | label:Frutas, placeholder:Digite para filtrar…, options:[…], modelValue:[…] | — | 6 opções de frutas, 2 selecionadas (chips removíveis) |
+| DssMultiselectAutocomplete | form-controles | label:Frutas, placeholder:Digite para filtrar…, options:[…], modelValue:[…], showSelectedSummary | — | 6 opções de frutas, 2 selecionadas; seção "Selecionados" ligada para exercitar o painel |
 | DssOptionGroup | form-controles | type:radio, modelValue:opt1, options:[…] | minHeight:44px | Grupo de opções (radio/checkbox/toggle) |
 | DssPage | layout | — | — | Área de conteúdo principal da página |
 | DssPageContainer | layout | — | — | Container com largura máxima de conteúdo |
@@ -2271,5 +2271,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-07-25T01:00:39.538Z_
+_Gerado em: 2026-08-05T18:16:39.659Z_
 <!-- END:AUTO-GENERATED -->

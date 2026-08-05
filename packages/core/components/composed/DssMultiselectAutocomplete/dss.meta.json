@@ -15,19 +15,66 @@
     "props": {
       "label": "Frutas",
       "placeholder": "Digite para filtrar…",
-      "options": ["Maçã", "Banana", "Cereja", "Damasco", "Laranja", "Manga"],
-      "modelValue": ["Banana", "Cereja"]
+      "options": [
+        "Maçã",
+        "Banana",
+        "Cereja",
+        "Damasco",
+        "Laranja",
+        "Manga"
+      ],
+      "modelValue": [
+        "Banana",
+        "Cereja"
+      ],
+      "showSelectedSummary": true
     },
     "computedDimensions": {},
     "visualProperties": [
       {
-        "property": "gap (checkbox + rótulo na opção)",
-        "token": "--dss-spacing-2",
-        "value": "8px",
+        "property": "altura do campo (não cresce: chips em uma linha)",
+        "token": null,
+        "value": "nowrap + overflow hidden",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "piso do input de busca na linha",
+        "token": null,
+        "value": "4em",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "fundo do hover da opção",
+        "token": "--dss-action-primary-surface",
+        "value": "rgba(31,134,222,0.08)",
+        "source": "4-output/_states.scss"
+      },
+      {
+        "property": "fundo da opção selecionada",
+        "token": "--dss-surface-selected",
+        "value": "rgba(31,134,222,0.12)",
+        "source": "4-output/_states.scss"
+      },
+      {
+        "property": "anel de foco da opção (teclado)",
+        "token": "--dss-focus-primary",
+        "value": null,
+        "source": "4-output/_states.scss"
+      },
+      {
+        "property": "teto da lista de tokens selecionados",
+        "token": null,
+        "value": "22vh",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "folga vertical dos tokens (touch target)",
+        "token": "--dss-touch-target-md",
+        "value": "(44px - 24px) / 2",
         "source": "2-composition/_base.scss"
       }
     ],
-    "demoContent": "6 opções de frutas, 2 selecionadas (chips removíveis)",
+    "demoContent": "6 opções de frutas, 2 selecionadas; seção \"Selecionados\" ligada para exercitar o painel",
     "demoSlots": null
   },
   "a11y": {
@@ -42,10 +89,22 @@
       ]
     },
     "keyboard": [
-      { "key": "ArrowDown / ArrowUp", "action": "navegar entre as opções" },
-      { "key": "Enter / Space", "action": "alternar a seleção da opção em foco" },
-      { "key": "Escape", "action": "fechar o dropdown" },
-      { "key": "Backspace", "action": "remover o último token quando o campo de busca está vazio" }
+      {
+        "key": "ArrowDown / ArrowUp",
+        "action": "navegar entre as opções"
+      },
+      {
+        "key": "Enter / Space",
+        "action": "alternar a seleção da opção em foco"
+      },
+      {
+        "key": "Escape",
+        "action": "fechar o dropdown"
+      },
+      {
+        "key": "Backspace",
+        "action": "remover o último token quando o campo de busca está vazio"
+      }
     ],
     "wcag": [
       {
@@ -63,6 +122,21 @@
     ]
   },
   "tokens": [
-    "--dss-spacing-2"
+    "--dss-action-primary-surface",
+    "--dss-border-width-md",
+    "--dss-border-width-thin",
+    "--dss-compact-control-height-sm",
+    "--dss-focus-primary",
+    "--dss-font-size-xs",
+    "--dss-font-weight-medium",
+    "--dss-gray-200",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-surface-default",
+    "--dss-surface-selected",
+    "--dss-text-body",
+    "--dss-text-secondary",
+    "--dss-touch-target-md"
   ]
 }
