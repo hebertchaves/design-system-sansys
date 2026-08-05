@@ -17,12 +17,25 @@
     // seleção é indicada pelo CHECKBOX, não pela cor do texto → rótulo neutro.
     color: var(--dss-text-body);
 
-    // Hover
+    // O DssItem clicável pinta um overlay `::after` de `currentColor` a 10%.
+    // Com o rótulo neutro (regra acima), esse overlay é um véu ESCURO — e somava
+    // com o fundo cinza que havia aqui, resultando em ~14% de escurecimento.
+    // O realce deste painel é AZUL, então o overlay da base é zerado e a cor vem
+    // do token de superfície abaixo.
+    &:hover::after {
+      opacity: 0;
+    }
+
+    // Hover: primary a 8% — MAIS CLARO que o selecionado (12%), de modo que
+    // passar o mouse nunca se confunda com estar marcado.
     &:hover {
-      background-color: var(--dss-surface-hover);
+      background-color: var(--dss-action-primary-surface);
     }
 
     // Selecionado: leve realce de fundo (a marca de seleção é o checkbox).
+    // Vem depois do hover de propósito: numa opção JÁ marcada o estado prevalece
+    // sobre o ponteiro. Não há token de "selecionado + hover" no catálogo; criar
+    // um valor aqui violaria Token First.
     &[aria-selected='true'] {
       background-color: var(--dss-surface-selected);
     }

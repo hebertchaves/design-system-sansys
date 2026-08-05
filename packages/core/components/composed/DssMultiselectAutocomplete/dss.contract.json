@@ -450,8 +450,14 @@
       ],
       "hover": [
         {
+          "property": "opacity",
+          "token": null,
+          "value": "0",
+          "source": "4-output/_states.scss"
+        },
+        {
           "property": "background-color",
-          "token": "--dss-surface-hover",
+          "token": "--dss-action-primary-surface",
           "value": null,
           "source": "4-output/_states.scss"
         }
@@ -535,7 +541,7 @@
         ]
       },
       {
-        "name": "--dss-surface-hover",
+        "name": "--dss-action-primary-surface",
         "usedIn": [
           "hover"
         ]
