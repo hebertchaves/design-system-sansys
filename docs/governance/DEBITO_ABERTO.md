@@ -44,6 +44,29 @@
   aqui — é curadoria humana consciente. *(Opção estratégica adiada: validador Quasar-aware p/ resolver
   bg-primary→token; ou aposentar a REFERENCIA em favor do contrato.)*
 
+- 🟡 **Governança da IMPLEMENTAÇÃO (o que o produto constrói) — camada 1 de 4 entregue** (2026-08).
+  Contexto: as frentes do DSS governam o *componente*; **nada governava a implementação**. Causa de origem: D4
+  do blueprint tirou `purpose.*`/`examples[]` do contrato (correto — proveniência não certificável), mas a
+  orientação de uso não entrou em nenhum lugar com gate.
+  - ✅ **(1) `ui-rules.schema.json` ressuscitado** — de 28/abr a 05/ago/2026 sem consumidor algum (forense de git:
+    o schema nasceu 1 mês ANTES do MCP; os planos das Fases 1–4 do MCP nunca o citaram; `DSS_UI_RULES.md` §3.2
+    declarava o consumo no presente como fato consumado). Agora tem consumidor real: tool **`validate_composition`**
+    (9 regras: vocabulário DSS, allowed/forbidden children, forbidden_contexts, auto-aninhamento, Matryoshka,
+    required_props, estados de dados, densidade de formulário). Schema → v1.2.0 (`applies_to`/`field_components`:
+    as regras de tela existiam sem dizer a QUEM se aplicam, logo eram inexecutáveis). **Anti-apodrecimento:** nada
+    transcrito para constante — vocabulário existence-checked a cada chamada contra o catálogo real e a escala real
+    de spacing; resultado em `schemaIntegrity`. Reproduz o NC-03 do stress test (`<q-checkbox>` cru) sozinho.
+  - ⏳ **Pendente decidir: gate de pre-commit** para `schemaIntegrity` (hoje o schema só se anuncia se alguém
+    CHAMAR a tool — é o mesmo modo de falha que o matou). Único ponto que fecha o anti-apodrecimento de vez.
+  - 🔜 **(2) Ontologia de funcionalidade** (tela/fluxo/estado/regra de negócio) — sem isso, nada acima do
+    componente é representável, logo não é validável. **É o coração da frente.**
+  - 🔜 **(3) `dss.spec.json` + checklist de completude** — o `validate_pre_prompt` promovido a nível de feature,
+    com âncora em vez de regex de heading (hoje é presence-gate gameável).
+  - 🔜 **(4) Superfície onde o analista escreve** · **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
+    **(6) MCP servido a ferramentas externas** (transporte HTTP/SSE pronto, falta hospedar) · **(7) sinais de
+    runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
+    `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.
+
 - 🟡 **Visual Height do DssInput (issues #3/#4)** — auto-height do Quasar: label ~2.5px fora do centro em
   repouso (#3); com valor, a label flutuante **sobrepõe** o valor centralizado no native (#4). Tensão:
   altura compacta (zero padding vertical) × reserva de topo p/ label flutuante. `[[project_visual_height_propagacao]]`.

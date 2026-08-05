@@ -2,7 +2,11 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "DSS UI Rules Schema",
   "description": "Schema programático das regras de UI do Design System Sansys para consumo pelo MCP e Grid Inspector",
-  "version": "1.1.0",
+  "version": "1.2.0",
+  "consumers": {
+    "mcp": "validate_composition (packages/mcp/src/tools/validateComposition.ts)",
+    "note": "Toda entrada deste schema é existence-checked contra o catálogo real de componentes e a escala real de --dss-spacing-* a cada chamada. Divergência é reportada em schemaIntegrity."
+  },
   "hierarchy": {
     "description": "Regra Matryoshka: Padding(Pai) >= Padding(Filho) em todos os níveis",
     "level_1": {
@@ -157,6 +161,13 @@
   },
   "form_rules": {
     "module": "04_FORMS_INPUTS",
+    "applies_to": ["DssForm"],
+    "field_components": [
+      "DssInput", "DssSelect", "DssTextarea", "DssCheckbox", "DssRadio",
+      "DssToggle", "DssFile", "DssField", "DssDatePicker", "DssTimePicker",
+      "DssColorPicker", "DssOptionGroup", "DssMultiselectAutocomplete",
+      "DssRating", "DssSlider", "DssRange", "DssKnob", "DssUploader", "DssBtnToggle"
+    ],
     "gutter_tokens": ["q-col-gutter-sm", "q-col-gutter-md"],
     "max_visible_fields": 15,
     "mobile_rule": "Todos os campos devem ser col-12 em telas xs",
@@ -168,6 +179,7 @@
   },
   "table_rules": {
     "module": "05_TABLES_LISTS",
+    "applies_to": ["DssTable", "DssMarkupTable", "DssList", "DssDataCard"],
     "cell_padding_tokens": ["--dss-spacing-2", "--dss-spacing-3"],
     "mobile_rule": "Usar DssDataCard ou DssList em telas xs e sm",
     "pagination_position": "footer",

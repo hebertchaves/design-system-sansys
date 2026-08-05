@@ -17,6 +17,7 @@ import { generateComponentScaffold } from "./generateComponentScaffold.js";
 import { generatePrePromptTemplate } from "./generatePrePromptTemplate.js";
 import { recordAuditEvent } from "./recordAuditEvent.js";
 import { validateGridLayout } from "./validateGridLayout.js";
+import { validateComposition } from "./validateComposition.js";
 import { describeGridInspector } from "./describeGridInspector.js";
 import { validateVisualContract, validate_visual_contract_schema } from "./validateVisualContract.js";
 
@@ -164,6 +165,51 @@ const ValidateGridLayoutSchema = z.object({
     .enum(["light", "dark"])
     .optional()
     .describe("Theme context."),
+});
+
+// ── Composition schema (ui-rules.schema.json consumer) ─────────────────────
+
+interface CompositionNodeInput {
+  component: string;
+  variant?: string;
+  props?: Record<string, unknown>;
+  states?: string[];
+  children?: CompositionNodeInput[];
+}
+
+const CompositionNodeSchema: z.ZodType<CompositionNodeInput> = z.lazy(() =>
+  z.object({
+    component: z
+      .string()
+      .describe(
+        'Component or element name: "DssCard", "q-checkbox", "text", "div".'
+      ),
+    variant: z
+      .string()
+      .optional()
+      .describe('Variant in use (e.g. "elevated") — used by variant-qualified rules.'),
+    props: z
+      .record(z.unknown())
+      .optional()
+      .describe("Props declared on this node — checked against required_props."),
+    states: z
+      .array(z.string())
+      .optional()
+      .describe(
+        'States this node declares (e.g. ["empty", "loading", "error"]). Tables and lists must declare "empty" and "loading".'
+      ),
+    children: z.array(CompositionNodeSchema).optional(),
+  })
+);
+
+const ValidateCompositionSchema = z.object({
+  tree: CompositionNodeSchema.describe(
+    "Root node of the proposed component tree."
+  ),
+  context: z
+    .string()
+    .optional()
+    .describe('Screen context for the report (e.g. "Atender Solicitações — listagem").'),
 });
 
 // ── Phase 4 schemas ────────────────────────────────────────────────────────
@@ -436,6 +482,34 @@ const TOOL_DEFINITIONS = [
       },
     },
   },
+  {
+    name: "validate_composition",
+    description:
+      "Validates a proposed component tree (a screen, a section, a form) against the DSS composition contract in docs/guides/ui-rules/ui-rules.schema.json. Checks: (1) every node is a real DSS component — catches raw Quasar with a DSS equivalent and invented component names (CRITICAL), (2) forbidden/allowed children and forbidden contexts (CRITICAL/HIGH), (3) self-nesting such as dialog over dialog (CRITICAL), (4) Matryoshka hierarchy inversion (MEDIUM), (5) required props (HIGH), (6) tables and lists must declare empty and loading states (HIGH), (7) form field density (MEDIUM). CALL THIS TOOL BEFORE generating screen or Phase 3 composed-component code. Returns verdict, violations with tree paths, and schemaIntegrity — the schema's own vocabulary existence-checked against the real catalog. Read-Only — no files are modified.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        tree: {
+          type: "object",
+          description:
+            'Root node of the proposed component tree. Each node: { component, variant?, props?, states?, children? }. Use "text" for text nodes. Declare states like ["empty","loading"] on tables and lists.',
+          properties: {
+            component: { type: "string", description: 'Component or element name (e.g. "DssCard", "q-checkbox", "text").' },
+            variant: { type: "string", description: 'Variant in use (e.g. "elevated").' },
+            props: { type: "object", description: "Props declared on this node." },
+            states: { type: "array", items: { type: "string" }, description: 'Declared states (e.g. ["empty","loading","error"]).' },
+            children: { type: "array", items: { type: "object" }, description: "Child nodes, same shape." },
+          },
+          required: ["component"],
+        },
+        context: {
+          type: "string",
+          description: 'Screen context for the report (e.g. "Atender Solicitações — listagem").',
+        },
+      },
+      required: ["tree"],
+    },
+  },
   // ── Phase 4 Tools ──────────────────────────────────────────────────────────
   {
     name: "record_audit_event",
@@ -601,6 +675,14 @@ export function registerTools(server: Server): void {
       case "validate_grid_layout": {
         const input = ValidateGridLayoutSchema.parse(args ?? {});
         const result = await validateGridLayout(input, DSS_ROOT);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "validate_composition": {
+        const input = ValidateCompositionSchema.parse(args ?? {});
+        const result = await validateComposition(input, DSS_ROOT);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
