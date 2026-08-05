@@ -572,7 +572,7 @@
         {
           "property": "overflow",
           "token": null,
-          "value": "hidden",
+          "value": "hidden auto",
           "source": "2-composition/_panel.scss"
         },
         {

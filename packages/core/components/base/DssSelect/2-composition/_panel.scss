@@ -26,7 +26,15 @@
   border: var(--dss-border-gray-200);
   box-shadow: var(--dss-elevation-3);
   z-index: var(--dss-z-index-dropdown);
-  overflow: hidden;
+
+  /* Recorta em X (mantém os cantos arredondados sobre o hover das opções) e
+     ROLA em Y. Antes era `overflow: hidden`: o shorthand zerava também o eixo
+     vertical e o dropdown NUNCA rolava — com mais opções do que cabem no
+     painel, as excedentes ficavam inalcançáveis.
+     `.dss-select__panel` e `.q-menu` do DSS têm a mesma especificidade (0,1,0)
+     e ambos são unlayered; esta regra vem depois e vence, então precisa
+     declarar os dois eixos. É o mesmo valor que o Quasar usa em `.q-menu`. */
+  overflow: hidden auto;
 
   /* ==========================================================================
      ITENS DO DROPDOWN (.q-item gerado pelo QSelect para cada opção)
