@@ -304,6 +304,7 @@ O slot do consumidor **tem precedência** sobre o padrão. Demais slots (`label`
 | `inheritAttrs: false` + `$attrs` | ✅ | ✅ | ✅ |
 | Brand no menu teleportado | `popup-content-class` | herdado | ✅ |
 | Chips do campo | `.q-chip` nativo (cinza) | `DssChip` `flat` | ⚠️ o composto **consome a base**; o `useChips` do DssSelect ainda não. Reconciliação prevista na adequação do DssChip |
+| Rótulo com `emitValue` sem `mapOptions` | valor cru (`2`) | rótulo resolvido (`"Curitiba"`) | ✅ divergência deliberada — campo e seção do painel resolvem pela mesma via e nunca discordam |
 | Opção do dropdown | `.q-item` do QSelect | `DssItem` | ✅ divergência deliberada — elimina vazamentos na origem |
 | Altura do campo | cresce com os chips | **fixa em uma linha** | ✅ divergência deliberada — requisito de grade |
 | Scroll do painel | `overflow: hidden auto` | idem (herdado) | ✅ |

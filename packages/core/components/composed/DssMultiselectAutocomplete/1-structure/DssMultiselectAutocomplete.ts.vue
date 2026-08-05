@@ -118,6 +118,24 @@ function optionValueOf(opt: any): any {
   return opt
 }
 
+/**
+ * Rótulo de uma entrada da SELEÇÃO (não de uma opção da lista).
+ *
+ * Com `emitValue` e sem `mapOptions`, o QSelect entrega o VALOR cru ao slot
+ * `selected-item` — e `labelOf` devolveria "2" no lugar de "Curitiba". Aqui a
+ * entrada é resolvida de volta para a opção antes de extrair o rótulo.
+ *
+ * Vale para os três arranjos: sem emitValue a entrada já É a opção; com
+ * emitValue + mapOptions ela também já vem resolvida (a busca não acha nada e o
+ * fallback devolve a própria entrada). Usado pelo CAMPO e pela SEÇÃO, para os
+ * dois nunca discordarem sobre o mesmo valor.
+ */
+function labelOfEntry(entry: any): string {
+  if (!props.emitValue) return labelOf(entry)
+  const all = props.options || []
+  return labelOf(all.find((o) => optionValueOf(o) === entry) ?? entry)
+}
+
 // ==========================================================================
 // AUTOCOMPLETE (filtro default)
 // ==========================================================================
@@ -227,16 +245,9 @@ function removeValue(opt: any) {
  * TODOS os selecionados, independente do filtro do autocomplete (o objetivo é ver
  * tudo de uma vez). Deriva do modelValue — sem estado duplicado.
  */
-const selectedTokens = computed(() => {
-  const mv = props.modelValue ?? []
-  const all = props.options || []
-  return mv.map((entry) => {
-    const opt = props.emitValue
-      ? (all.find((o) => optionValueOf(o) === entry) ?? entry)
-      : entry
-    return { value: entry, label: labelOf(opt) }
-  })
-})
+const selectedTokens = computed(() =>
+  (props.modelValue ?? []).map((entry) => ({ value: entry, label: labelOfEntry(entry) }))
+)
 
 /**
  * Condições da seção "Selecionados" como CONSTS do setup (não props diretas):
@@ -500,10 +511,10 @@ defineExpose<MultiselectAutocompleteExpose>({
           size="md"
           variant="flat"
           :removable="chipsRemovable && !disable && !readonly"
-          :remove-aria-label="`Remover ${labelOf(scope.opt)}`"
+          :remove-aria-label="`Remover ${labelOfEntry(scope.opt)}`"
           @remove="removeValue(scope.opt)"
         >
-          {{ labelOf(scope.opt) }}
+          {{ labelOfEntry(scope.opt) }}
         </DssChip>
         <!-- CONTADOR: uma vez só, ancorado ao fim da linha. O número vem da
              MEDIÇÃO do layout (ResizeObserver), não de um limite pré-definido —

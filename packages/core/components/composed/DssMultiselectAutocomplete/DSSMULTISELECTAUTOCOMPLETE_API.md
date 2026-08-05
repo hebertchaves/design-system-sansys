@@ -13,6 +13,12 @@
 | `emitValue` | `boolean` | `false` | Emite apenas `optionValue` em vez do objeto inteiro. |
 | `mapOptions` | `boolean` | `false` | Mapeia os valores emitidos de volta para objetos. Requer `emitValue`. |
 
+> **Divergência deliberada do QSelect:** no Quasar, `emitValue` sem `mapOptions` faz o
+> campo exibir o **valor cru** (`2` em vez de `"Curitiba"`). Aqui o rótulo é resolvido de
+> volta pela lista de `options` — no campo **e** na seção "Selecionados", que assim nunca
+> discordam sobre o mesmo valor. `mapOptions` continua útil para o que o Quasar faz com o
+> model, mas não é mais necessário só para exibir o rótulo.
+
 ### Autocomplete
 
 | Prop | Tipo | Padrão | Descrição |
