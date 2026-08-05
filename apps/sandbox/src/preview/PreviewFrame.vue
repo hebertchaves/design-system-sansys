@@ -22,10 +22,24 @@
           <option value="water">water</option><option value="waste">waste</option>
         </select>
       </label>
+      <!-- Largura do PALCO (não do componente): o sujeito é responsivo e, ocupando
+           todo o palco, esconde os problemas de layout apertado (chips que quebram
+           em muitas linhas, rótulos truncados). Larguras típicas de coluna de
+           formulário / card lateral. -->
+      <label class="pv__ctl">Largura
+        <select v-model="stageWidth">
+          <option value="">cheia</option>
+          <option value="480">480px</option>
+          <option value="360">360px</option>
+          <option value="260">260px</option>
+        </select>
+      </label>
     </header>
 
     <div class="pv__body">
-      <iframe ref="frameEl" class="pv__frame" :src="frameSrc" @load="postState" />
+      <div class="pv__stage">
+        <iframe ref="frameEl" class="pv__frame" :style="stageStyle" :src="frameSrc" @load="postState" />
+      </div>
       <aside class="pv__knobs">
         <h4>Controles <small>— derivados do contrato ({{ knobs.length }})</small></h4>
         <p v-if="!contract" class="pv__empty">Sem <code>dss.contract.json</code> para {{ component }}.</p>
@@ -110,6 +124,27 @@ import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({ component: { type: String, default: 'DssInput' } })
 
+/**
+ * O tipo declarado no contrato é uma prop de ARRAY?
+ *
+ * Cuidado com dois enganos comuns na string do tipo:
+ *  - `(query: string) => any[]` CONTÉM "[]" mas é FUNÇÃO (o `loadOptions` do
+ *    multiselect) — converter viraria uma lista de caracteres do código-fonte;
+ *  - `Array<{ name: string }>` não tem "[]" e mesmo assim é array.
+ */
+function isArrayType(type) {
+  const t = String(type || '')
+  if (!t || t.includes('=>')) return false
+  return /\[\]/.test(t) || /\bArray</.test(t)
+}
+
+// Largura do palco ('' = cheia). String em px vinda do <select>; o iframe deixa de
+// ser flex:1 e passa a ter largura fixa, centralizado — simula coluna estreita.
+const stageWidth = ref('')
+const stageStyle = computed(() =>
+  stageWidth.value ? { flex: '0 0 auto', width: stageWidth.value + 'px' } : null
+)
+
 // eager: o contrato é JSON pequeno; carregar sincronamente elimina o flash
 // "Sem dss.contract.json" (antes o import assíncrono deixava `contract` null por
 // alguns segundos no dev do /mnt/c) e o round-trip extra ao dev server.
@@ -170,6 +205,11 @@ function load() {
       controlHint: p.controlHint,
       default: p.default,
       options: p.validValues ? (/\bnull\b/.test(p.type) ? [null, ...p.validValues] : p.validValues) : null,
+      isArray: isArrayType(p.type),
+      // União com escalar (`string | string[]`, `File | File[] | null`): sem vírgula,
+      // o valor continua escalar — converter sempre quebraria o uso de valor único.
+      scalarOk: /^(?![^=]*=>)/.test(String(p.type || '')) &&
+        /\b(string|number|boolean|File)\s*\|/.test(String(p.type || '')),
     }))
   // Semeia o estado inicial pelo defaultPreview do contrato (view significativa),
   // com fallback no @default da prop; assim o campo abre com label/placeholder.
@@ -202,11 +242,35 @@ function load() {
   eventLog.value = []
 }
 
+/**
+ * Props de ARRAY editadas no knob voltam como STRING (o widget é <input type=text>).
+ * Sem converter, "Maçã,Banana" chega ao componente como string e quem itera a prop
+ * — QSelect, QOptionGroup… — percorre CARACTERES: a lista vira "M","a","ç","ã",",".
+ * O default não sofria porque vem do defaultPreview já como array de verdade, o que
+ * fazia o defeito aparecer só ao EDITAR (e "voltar" só com reload).
+ *
+ * Aceita JSON (`["a","b"]`) ou lista separada por vírgula.
+ */
+function coerceKnobValue(k, v) {
+  if (!k?.isArray || typeof v !== 'string') return v
+  const s = v.trim()
+  if (!s) return undefined
+  if (s.startsWith('[')) {
+    try { return JSON.parse(s) } catch { /* não era JSON — cai no split */ }
+  }
+  // União com escalar (ex.: `string | string[]`): um valor só continua escalar.
+  if (k.scalarOk && !s.includes(',')) return v
+  return s.split(',').map((x) => x.trim()).filter((x) => x !== '')
+}
+
 function postState() {
   const el = frameEl.value
   if (!el || !el.contentWindow) return
   const clean = {}
-  for (const [k, v] of Object.entries(state)) {
+  for (const [kName, raw] of Object.entries(state)) {
+    const knob = knobs.value.find((kn) => kn.name === kName)
+    const k = kName
+    const v = coerceKnobValue(knob, raw)
     if (v === '' || v == null) continue
     if (v === false) {
       // `false` só é omitido quando também é o DEFAULT da prop (toggle default-false
@@ -259,9 +323,16 @@ function onMsg(e) {
 const snippet = computed(() => {
   const parts = []
   for (const k of knobs.value) {
-    const v = state[k.name]
+    // Mesma coerção enviada ao sujeito: o snippet existe para ser COPIADO, então
+    // precisa mostrar a prop de array como binding (`:options="['a','b']"`) e não
+    // como atributo string — colar `options="a,b"` reproduziria o bug de iterar
+    // caracteres no código do consumidor.
+    const v = coerceKnobValue(k, state[k.name])
     if (v === k.default || v === '' || v == null || v === false) continue
     if (v === true) parts.push(k.name)
+    // Aspas simples DENTRO do binding: `:options="["a"]"` fecharia o atributo no
+    // primeiro `"` e o snippet colado não compilaria.
+    else if (Array.isArray(v)) parts.push(`:${k.name}="${JSON.stringify(v).replace(/"/g, "'")}"`)
     else if (typeof v === 'string') parts.push(`${k.name}="${v}"`)
     else parts.push(`:${k.name}="${v}"`)
   }
@@ -285,7 +356,10 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__spacer { flex: 1; }
 .pv__ctl { font-size: 13px; display: flex; gap: 4px; align-items: center; }
 .pv__body { display: flex; flex: 1; min-height: 380px; }
-.pv__frame { flex: 1; border: 0; border-right: 1px solid #e5e5e5; background: #fff; }
+/* Palco: hospeda o iframe e o centraliza quando a largura é restrita. O fundo
+   cinza demarca a área FORA do sujeito (deixa a largura escolhida evidente). */
+.pv__stage { flex: 1; display: flex; justify-content: center; min-width: 0; border-right: 1px solid #e5e5e5; background: #f4f4f5; }
+.pv__frame { flex: 1; min-width: 0; border: 0; background: #fff; }
 .pv__knobs { width: 300px; padding: 12px 14px; overflow: auto; background: #fafafa; }
 .pv__knob { display: flex; flex-direction: column; margin-bottom: 8px; font-size: 13px; gap: 2px; }
 .pv__knob > label { font-weight: 600; }
