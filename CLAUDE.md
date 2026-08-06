@@ -73,6 +73,7 @@ Leia o **NÚCLEO** sempre; consulte o **CONDICIONAL** só pelo que a tarefa exig
 | **Adequar UI de componente BASE** (Fase 1/2) — *foco da onda atual* | **Cartão Base** ↓ | `DSS_UI_ADEQUACAO_CHECKLIST.md` *(rode o Gate de adequação, LIGHT e DARK)* |
 | **Criar componente BASE do zero** *(só após adequação da base)* | **Cartão Base** ↓ | `PRD_DSS.md`, `DSS_ARCHITECTURE.md`, `DSS_COMPONENT_ARCHITECTURE.md`, `DSS_IMPLEMENTATION_GUIDE.md` |
 | **Criar / adequar COMPOSTO** (Fase 3) | **Cartão Composto** ↓ | `DSS_GUIA_COMPOSICAO_FASE3.md`, `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md` |
+| **Fechar / auditar COMPOSTO** (Fase 3) | — | `DSS_ROTEIRO_FECHAMENTO_FASE3.md` *(4 etapas; substitui o par "Modo Auditor + Selo" das Fases 1/2)* |
 
 ### Condicional por assunto
 
@@ -156,7 +157,7 @@ Ao criar/adequar composto, os invariantes de composição são (detalhe integral
 - **Não reimplementar primitivos** — compor DSS; nunca QComponent cru no template.
 - Adequação: rodar o checklist de composto **por peça interna**.
 
-📖 `docs/governance/DSS_GUIA_COMPOSICAO_FASE3.md` (5 padrões + riscos overlay/overflow) · `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md` (delta por peça) · `DSS_ESTRATEGIA_FASE3_COMPLEXIDADE_IA.md` (visão).
+📖 `docs/governance/DSS_GUIA_COMPOSICAO_FASE3.md` (5 padrões + riscos overlay/overflow) · `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md` (delta por peça) · `DSS_ESTRATEGIA_FASE3_COMPLEXIDADE_IA.md` (visão) · **`DSS_ROTEIRO_FECHAMENTO_FASE3.md`** (como FECHAR: o que é provado por comando e o que sobra para julgamento).
 
 ---
 
