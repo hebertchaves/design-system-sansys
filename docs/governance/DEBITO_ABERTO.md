@@ -58,8 +58,18 @@
     de spacing; resultado em `schemaIntegrity`. Reproduz o NC-03 do stress test (`<q-checkbox>` cru) sozinho.
   - ⏳ **Pendente decidir: gate de pre-commit** para `schemaIntegrity` (hoje o schema só se anuncia se alguém
     CHAMAR a tool — é o mesmo modo de falha que o matou). Único ponto que fecha o anti-apodrecimento de vez.
-  - 🔜 **(2) Ontologia de funcionalidade** (tela/fluxo/estado/regra de negócio) — sem isso, nada acima do
-    componente é representável, logo não é validável. **É o coração da frente.**
+  - ✅ **(2) Ontologia de funcionalidade** — `DSS_ONTOLOGIA_FUNCIONALIDADE.md` + `dss.ontology.json` (v0.1.0,
+    27 entidades, 83 campos, **27/27 com `evidencia`** apontando spec real). Derivada de RF-0292D (SPC/Serasa,
+    692 linhas). **Método: descrever, não inventar** — entidade sem evidência não entra; lacuna só entra
+    verificada por busca negativa (grep=0), não por impressão. **`regime` é o conceito central** (obrigatorio/
+    recomendado/**horizonte**): reconcilia o que a produção Sansys faz HOJE com o alvo do DSS. **Acessibilidade
+    = `horizonte` por decisão explícita do dono (ago/2026)** — registrada como débito, NUNCA reprova a spec;
+    NÃO afrouxa a Constituição #4, que segue vinculante no nível do COMPONENTE. Achados: a spec é BOA (escopo
+    negativo, 41 BDD Gherkin, 40 CA) — as lacunas são do **template**, não do analista (não há campo para
+    estado vazio/carregando/erro, texto de mensagem, volume, responsividade); §2.4 "Elementos a preservar" é a
+    árvore de composição escrita em prosa (input direto da `validate_composition`); §2.4 manda reprototipar "no
+    padrão do sistema" **sem citar o DSS**; o checklist exige inferir a convenção de tachado (não é legível por
+    máquina). ⚠️ **Amostra = 1**; mais specs a caminho podem reclassificar `cardinalidade`/`regime`.
   - 🔜 **(3) `dss.spec.json` + checklist de completude** — o `validate_pre_prompt` promovido a nível de feature,
     com âncora em vez de regex de heading (hoje é presence-gate gameável).
   - 🔜 **(4) Superfície onde o analista escreve** · **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
