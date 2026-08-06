@@ -1,7 +1,13 @@
 # DSS — Ontologia de Funcionalidade
 
-> **Status:** descritiva, v0.1.0 · **Fonte de máquina:** [`dss.ontology.json`](./dss.ontology.json)
-> **Amostra:** 1 spec real (RF-0292D — SPC/Serasa, módulo Negativação, 692 linhas)
+> **Status:** descritiva, v0.2.0 · **Fonte de máquina:** [`dss.ontology.json`](./dss.ontology.json)
+> **Amostra:** 3 specs reais, de autores, módulos e **gêneros** diferentes
+>
+> | Spec | Módulo | Linhas | Gênero |
+> |---|---|---|---|
+> | RF-0292D — SPC/Serasa | Negativação | 692 | especificação funcional |
+> | #85505 / RF-0024.1 — Cobrança NFAg | Water / Fiscal | 428 | especificação funcional |
+> | #33950 / EST0012406 — Baixa parcial jurídica | Arrecadação | 783 | lista de requisitos de mudança |
 
 Vocabulário do que uma **especificação funcional Sansys** contém. Sem ele, nada acima do nível de componente é representável — e o que não se representa não se valida.
 
@@ -22,6 +28,30 @@ Esta ontologia é a camada 2 de 4 da governança da implementação (a 1 foi o c
 Isso não é preciosismo. O `ui-rules.schema.json` passou três meses morto porque a documentação declarou uma realidade em vez de descrevê-la — o texto afirmava, no presente, um consumo pelo MCP que nunca existiu. Uma ontologia inventada repetiria o erro numa escala maior: um vocabulário que ninguém usa não é padrão, é ficção.
 
 As lacunas seguem a mesma disciplina. Cada uma foi verificada por **busca negativa** — `grep` retornando zero em 692 linhas — e não por impressão de leitura.
+
+---
+
+## 2b. Não existe um template único — e isso muda o desenho
+
+Aprendizado central da v0.2.0. Três specs reais produziram **três formatos diferentes**:
+
+| | RF-0292D | #85505 | #33950 |
+|---|---|---|---|
+| Como/Quero/**Para** | 18 | **0** | **0** |
+| Cenários Gherkin | 82 | 18 | **0** |
+| Critérios de aceite | 40 | sim | **0** |
+| Rastreio requisito→estória | 0 | 0 | **12** |
+| Log de revisão do doc | não | não | **sim** |
+| Convenção de heading | `## **1\. X**` | `**1\. X**` | `1. # **X**` |
+
+Um validador que exigisse a estrutura da RF-0292D **reprovaria a #33950 por cerca de quinze seções ausentes**. Reprovação em massa é o caminho mais curto para a ferramenta ser desligada — e é a segunda vez nesta frente que esse risco aparece.
+
+Por isso a ontologia declara **gêneros**, e o regime de várias entidades é condicionado a ele:
+
+- **`especificacao-funcional`** — exige estória, premissa, restrição, cenário e critério de aceite.
+- **`lista-requisitos-mudanca`** — exige estória, regra e rastreio; **não** exige cenário nem critério de aceite.
+
+Detecção: presença de critérios de aceite e/ou marcadores Gherkin → funcional. Ausência de ambos somada a campo `Relação` por requisito → lista de mudança.
 
 ---
 
@@ -70,16 +100,31 @@ Decisão do dono do DSS, ago/2026: os sistemas Sansys não trabalham acessibilid
 | `anexo` · `rastreabilidade` | Upload com escopo · trilha de auditoria | RF09 · RF16 |
 | `referencia_visual` | A que o protótipo deve obedecer | §2.4 |
 
-**Derivadas por ausência** — os conceitos que faltam:
+**Descobertas na v0.2.0**, ao comparar as três:
 
-| Entidade | Regime | Verificação |
+| Entidade | Regime | Origem |
 |---|---|---|
-| `estado_dado` (vazio · carregando · erro · parcial) | `obrigatorio` | grep = **0 ocorrências** |
-| `mensagem` (texto final · veículo) | `obrigatorio` | descrita, nunca redigida; veículo nunca dito |
-| `tela.superficie` | `obrigatorio` | "modal" na RF01 × "tela" em todo o resto |
-| `volume` | `recomendado` | "uma ou mais faturas", sem teto |
-| `responsividade` | `recomendado` | só no checklist, ausente no corpo |
-| `acessibilidade` | `horizonte` | checklist responde **NÃO** |
+| `maquina_estado` | `obrigatorio` | **Promovida** — governa comportamento de tela nas 3. #85505 opera duplo controle: Situação Fiscal × Financeira |
+| `rastreio` | `recomendado` | **Melhor prática da amostra** — #33950 amarra 12 requisitos à estória de origem via `Relação` |
+| `contexto_negocio` | `recomendado` | "Premissas" tem 2 semânticas: pré-condição (0292D) × justificativa de negócio (#33950, "11 milhões parados em juízo") |
+| `integracao` | condicional | #85505 — payload, retornos e **tratamento de falha** |
+| `parametrizacao` | `recomendado` | #33950 — chave por cliente. Tela parametrizada tem **duas** composições; a spec descreve uma |
+| `historico_documento` | `recomendado` | #33950 — 6 revisões em 18 meses, com emendas em linha |
+| `regra.motivo` | `recomendado` | Rationale que impede o implementador de "simplificar" a regra |
+
+**Derivadas por ausência** — verificadas por busca negativa nas três:
+
+| Entidade | Regime | 0292D | 33950 | 85505 | Veredito |
+|---|---|---|---|---|---|
+| `estado_dado.vazio` | `obrigatorio` | 0 | 0 | 0 | **sistêmico** |
+| `estado_dado.carregando` | `obrigatorio` | 0 | 0 | 0 | **sistêmico** |
+| `volume` | `recomendado` | 0 | 0 | 0 | **sistêmico** |
+| `acessibilidade` | `horizonte` | 0 | 0 | 0 | **sistêmico** |
+| `responsividade` | `recomendado` | checklist | 0 | checklist | ausente no corpo |
+| `mensagem` (texto · veículo) | `obrigatorio` | 8 | 9 | 5 | falam sempre, **nunca redigem** |
+| `estado_dado.erro` | `obrigatorio` | — | — | **trata** | #85505 é o modelo |
+
+> Os padrões de controle — mensagem, validação, permissão, protótipo — retornaram valores altos e variados nas mesmas buscas. Isso prova que o extrator funciona e que os zeros acima são ausência real, não falha de regex.
 
 ---
 
@@ -97,9 +142,25 @@ Decisão do dono do DSS, ago/2026: os sistemas Sansys não trabalham acessibilid
 
 ---
 
+### O handoff para o design está estruturalmente vazio
+
+O achado mais forte da v0.2.0, e o que sustenta a apresentação:
+
+- **#85505 §2.4 "Protótipos" — cabeçalho sem nenhum conteúdo.**
+- **RF-0292D §2.4** — declara que não há protótipo aprovado e manda "reprototipar **no padrão do sistema**", sem apontar para lugar nenhum.
+- **#33950** — 40 imagens de protótipo, embutidas por requisito. Material farto, mas como *imagem*, não como referência a um sistema.
+
+**Em nenhuma das três o DSS é citado.** É exatamente o ponto do processo em que ele deveria ser a resposta.
+
+E há um efeito colateral: quando a spec entrega imagem em vez de referência, o agente de IA que gera o protótipo lê pixels, não contrato — e devolve componentes reinventados. É a mesma fábrica de divergência do portal, agora na entrada do processo.
+
+---
+
 ## 6. Limite honesto desta versão
 
-**Amostra de 1.** As lacunas listadas podem ser deste analista, não do processo. Ampliar a amostra pode reclassificar `cardinalidade` e `regime` de várias entidades — e é o próximo insumo esperado.
+**Amostra de 3.** Suficiente para separar o sistêmico do individual — as quatro lacunas com zero em 3 de 3 são do processo, não de um autor. Insuficiente para fechar `cardinalidade` e para afirmar que existem só dois gêneros; uma quarta spec de outro módulo pode revelar um terceiro.
+
+**Uma lacuna não se confirmou.** A contradição "modal × tela" só apareceu na RF-0292D. Fica registrada como achado daquela spec, não como padrão.
 
 **A ontologia não julga regra de negócio.** Ela representa que existe uma regra e verifica se a spec diz o que precisa dizer sobre ela. Se o prazo deveria ser 5 dias e não 3, isso está fora do alcance de qualquer validador — e prometer o contrário destrói a confiança na ferramenta.
 

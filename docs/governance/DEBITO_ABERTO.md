@@ -69,7 +69,19 @@
     estado vazio/carregando/erro, texto de mensagem, volume, responsividade); §2.4 "Elementos a preservar" é a
     árvore de composição escrita em prosa (input direto da `validate_composition`); §2.4 manda reprototipar "no
     padrão do sistema" **sem citar o DSS**; o checklist exige inferir a convenção de tachado (não é legível por
-    máquina). ⚠️ **Amostra = 1**; mais specs a caminho podem reclassificar `cardinalidade`/`regime`.
+    máquina). **v0.2.0 revalidada contra +2 specs** (#85505 fiscal/Water, #33950 jurídico/Rio — autores e módulos
+    distintos): 33 entidades, 97 campos, 33/33 com evidência. Aprendizado central: **NÃO existe template único**
+    (3 specs = 3 formatos) → criado o conceito de **`genero`** e regimes `condicional:genero`; exigir a estrutura
+    da RF-0292D reprovaria a #33950 por ~15 seções. Rebaixados: `cenario` e `criterio_aceite` (Gherkin 82/18/**0**;
+    CA 40/sim/**0**) e `estoria.para` (Como/Quero/Para só existe na 0292D). Novas: `maquina_estado` (promovida — o que
+    mais governa tela nas 3), `rastreio` (melhor prática da amostra: #33950 amarra 12 requisitos à estória),
+    `contexto_negocio` ('Premissas' tem 2 semânticas), `integracao`, `parametrizacao` (tela com flag por cliente tem
+    DUAS composições; a spec descreve uma), `historico_documento`, `regra.motivo`. **Lacunas confirmadas SISTÊMICAS
+    (0 em 3/3):** estado vazio · carregando · volume · **acessibilidade** (os hits eram falsos positivos — base64 e a
+    palavra 'gost*aria*'). Mensagem: 22 menções somadas, **nenhuma** redige texto final ou diz o veículo. **Handoff de
+    design estruturalmente vazio:** §2.4 da #85505 é cabeçalho SEM CONTEÚDO; a da 0292D manda reprototipar 'no padrão
+    do sistema' sem apontar nada; a #33950 dá 40 imagens. **O DSS não é citado em nenhuma das 3.** ⚠️ Amostra=3 fecha
+    o sistêmico vs individual, mas não `cardinalidade` nem o número de gêneros. 'modal×tela' NÃO se repetiu (é da 0292D).
   - 🔜 **(3) `dss.spec.json` + checklist de completude** — o `validate_pre_prompt` promovido a nível de feature,
     com âncora em vez de regex de heading (hoje é presence-gate gameável).
   - 🔜 **(4) Superfície onde o analista escreve** · **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
