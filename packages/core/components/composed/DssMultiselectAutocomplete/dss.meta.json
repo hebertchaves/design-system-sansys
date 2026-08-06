@@ -32,10 +32,24 @@
     "computedDimensions": {},
     "visualProperties": [
       {
-        "property": "altura do campo (não cresce: chips em uma linha)",
+        "property": "campo em uma linha: chips não quebram",
         "token": null,
-        "value": "nowrap + overflow hidden",
-        "source": "2-composition/_base.scss"
+        "value": "nowrap",
+        "source": "2-composition/_base.scss",
+        "probe": {
+          "selector": ".q-field__native",
+          "css": "flex-wrap"
+        }
+      },
+      {
+        "property": "excedente do campo sai por CORTE, não por altura",
+        "token": null,
+        "value": "hidden",
+        "source": "2-composition/_base.scss",
+        "probe": {
+          "selector": ".q-field__native",
+          "css": "overflow-x"
+        }
       },
       {
         "property": "piso do input de busca na linha",
@@ -47,13 +61,32 @@
         "property": "fundo do hover da opção",
         "token": "--dss-action-primary-surface",
         "value": "rgba(31,134,222,0.08)",
-        "source": "4-output/_states.scss"
+        "source": "4-output/_states.scss",
+        "probe": {
+          "selector": ".dss-multiselect-autocomplete__option",
+          "css": "background-color",
+          "state": "hover",
+          "openPanel": true,
+          "themes": [
+            "light",
+            "dark"
+          ]
+        }
       },
       {
         "property": "fundo da opção selecionada",
         "token": "--dss-surface-selected",
         "value": "rgba(31,134,222,0.12)",
-        "source": "4-output/_states.scss"
+        "source": "4-output/_states.scss",
+        "probe": {
+          "selector": ".dss-multiselect-autocomplete__option[aria-selected='true']",
+          "css": "background-color",
+          "openPanel": true,
+          "themes": [
+            "light",
+            "dark"
+          ]
+        }
       },
       {
         "property": "anel de foco da opção (teclado)",
