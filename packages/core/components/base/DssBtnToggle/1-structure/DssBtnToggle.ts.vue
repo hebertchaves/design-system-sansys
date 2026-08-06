@@ -101,7 +101,6 @@
  * @author Hebert Daniel Oliveira Chaves
  */
 
-import { computed } from 'vue'
 import type { BtnToggleProps, BtnToggleEmits } from '../types/btn-toggle.types'
 import { useBtnToggleClasses } from '../composables'
 

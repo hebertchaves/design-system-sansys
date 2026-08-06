@@ -83,7 +83,7 @@
  * @version 2.2.0
  */
 
-import type { FabProps, FabEmits } from '../types/fab.types'
+import type { FabProps } from '../types/fab.types'
 import { useFabClasses } from '../composables'
 
 // ==========================================================================

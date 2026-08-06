@@ -14,7 +14,6 @@ import DssIcon from '../../../base/DssIcon/DssIcon.vue'
 import DssCheckbox from '../../../base/DssCheckbox/DssCheckbox.vue'
 import DssInput from '../../../base/DssInput/DssInput.vue'
 import DssSelect from '../../../base/DssSelect/DssSelect.vue'
-import DssSeparator from '../../../base/DssSeparator/DssSeparator.vue'
 import { useTestPageComplexityClasses } from '../composables/useTestPageComplexityClasses'
 import type {
   DssTestPageComplexityProps,

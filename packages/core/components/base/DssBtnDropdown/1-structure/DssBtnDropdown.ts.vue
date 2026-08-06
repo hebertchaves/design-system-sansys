@@ -94,7 +94,7 @@
 
 import { computed } from 'vue'
 import type { QBtnDropdownProps } from 'quasar'
-import type { BtnDropdownProps, BtnDropdownEmits } from '../types/btn-dropdown.types'
+import type { BtnDropdownProps } from '../types/btn-dropdown.types'
 import { useBtnDropdownClasses, useBtnDropdownVariantProps } from '../composables'
 
 // ==========================================================================

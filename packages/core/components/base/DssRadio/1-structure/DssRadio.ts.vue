@@ -16,7 +16,7 @@
  *   - Cores aplicadas via classes utilitarias Quasar ou sistema de brands DSS
  */
 
-import { ref, computed, useSlots, type StyleValue } from 'vue'
+import { ref, computed, useSlots } from 'vue'
 import type { RadioProps, RadioEmits } from '../types/radio.types'
 import { useRadioClasses } from '../composables/useRadioClasses'
 

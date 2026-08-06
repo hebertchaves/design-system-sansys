@@ -53,8 +53,6 @@ import type {
   DssUploaderProps,
   DssUploaderEmits,
   DssUploaderExpose,
-  QUploaderHeaderScope,
-  QUploaderListScope,
   QUploaderExtendedFile,
 } from '../types/uploader.types'
 import { useUploaderClasses } from '../composables/useUploaderClasses'

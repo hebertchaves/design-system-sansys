@@ -18,18 +18,21 @@
  */
 
 import { computed, ref, toRef, useAttrs } from 'vue'
-import type { DataCardProps, DataCardEmits, DataCardTab } from '../types/datacard.types'
+import type { DataCardProps, DataCardEmits } from '../types/datacard.types'
 import { provideDataCardDisabled, usePagination } from '../composables/useDataCard'
 
 // Componentes DSS consumidos
-import DssCard from '../../DssCard/DssCard.vue'
-import DssCardSection from '../../DssCard/1-structure/DssCardSection.ts.vue'
-import DssToolbar from '../../DssToolbar/DssToolbar.vue'
-import DssTabs from '../../DssTabs/DssTabs.vue'
-import DssTab from '../../DssTab/DssTab.vue'
-import DssTabPanels from '../../DssTabPanels/DssTabPanels.vue'
-import DssTabPanel from '../../DssTabPanel/DssTabPanel.vue'
-import DssButton from '../../DssButton/DssButton.vue'
+import DssCard from '../../../base/DssCard/DssCard.vue'
+// DssCardSection não tem wrapper de raiz (mora no 1-structure do DssCard), mas o
+// barrel do DssCard o exporta — esse é o caminho público. Importar direto da
+// Layer 1 do vizinho prende este componente a um caminho interno alheio.
+import { DssCardSection } from '../../../base/DssCard/index'
+import DssToolbar from '../../../base/DssToolbar/DssToolbar.vue'
+import DssTabs from '../../../base/DssTabs/DssTabs.vue'
+import DssTab from '../../../base/DssTab/DssTab.vue'
+import DssTabPanels from '../../../base/DssTabPanels/DssTabPanels.vue'
+import DssTabPanel from '../../../base/DssTabPanel/DssTabPanel.vue'
+import DssButton from '../../../base/DssButton/DssButton.vue'
 
 // --------------------------------------------------------------------------
 // Configuração

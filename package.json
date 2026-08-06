@@ -36,6 +36,8 @@
     "validate:portal-pages": "node scripts/validate-portal-pages.cjs --gate",
     "validate:demo-registry": "node scripts/validate-demo-registry.cjs --gate",
     "validate:barrel-ext": "node scripts/validate-barrel-ext.cjs --gate",
+    "validate:sfc-hygiene": "node scripts/validate-sfc-hygiene.cjs",
+    "validate:sfc-hygiene:gate": "node scripts/validate-sfc-hygiene.cjs --gate",
     "validate:variant-naming": "node scripts/validate-variant-naming.cjs",
     "validate:variant-naming:gate": "node scripts/validate-variant-naming.cjs --gate",
     "validate:scss-tokens": "node scripts/validate-scss-tokens.cjs",

@@ -54,7 +54,7 @@
  * @version 1.0.0
  */
 
-import { computed, useSlots, ref, onBeforeUnmount } from 'vue'
+import { computed, useSlots, onBeforeUnmount } from 'vue'
 import DssAvatar from '../../../base/DssAvatar/DssAvatar.vue'
 import DssIcon from '../../../base/DssIcon/DssIcon.vue'
 import type { DssChatMessageProps, DssChatMessageEmits, DssChatMessageSlots } from '../types/chatmessage.types'

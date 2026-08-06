@@ -1,6 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    /* Pega dependência DECLARADA e NÃO USADA (NC-06 do stress test de Fase 3):
+       import de componente DSS que sobrou no arquivo. Era invisível ao gate. */
+    "noUnusedLocals": true,
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "bundler",
