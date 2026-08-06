@@ -171,5 +171,16 @@
     "--dss-text-body",
     "--dss-text-secondary",
     "--dss-touch-target-md"
+  ],
+  "auditHistory": [
+    {
+      "date": "2026-08-06",
+      "phase": "revalidation",
+      "verdict": "compliant",
+      "ncs": 0,
+      "gaps": 4,
+      "auditor": "Claude Opus 5 — Roteiro de Fechamento Fase 3 v1.0",
+      "notes": "Fechamento pelo DSS_ROTEIRO_FECHAMENTO_FASE3.md. VERIFICADO POR COMANDO: SCSS compila; vitest 27/27 (4 incrementos + medicao adaptativa, esta com getBoundingClientRect mockado — jsdom nao tem layout); vue-tsc 0 erros com noUnusedLocals; contrato schema-valido (19 props, 2 slots, 7 emits, 13 tokens); higiene de SFC; paridade API types→docs 0 divergencias; probe:visual 6/6 em light e dark. DOCUMENTACAO: README + doc normativa (Template 13.1) + API Reference + example com 7 cenarios. GAPS CONSCIENTES (4): (1) 4 de 8 visualProperties sem bloco probe — dependem de assercao relativa (px derivado de em/vh, calc) ou de navegacao por teclado, e o prober hoje so expressa igualdade; (2) 'selecionado + hover' mantem a cor de selecionado por FALTA de token no catalogo — criar valor violaria Token First, e lacuna do catalogo e nao do componente; (3) chip do campo consome DssChip enquanto o useChips do DssSelect ainda usa .q-chip nativo — reconciliacao prevista na adequacao do DssChip; (4) sem arquivo fisico de selo, status permanece draft. DEFEITOS DE BASE CORRIGIDOS NO CAMINHO, fora deste componente: DssSelect _panel.scss overflow:hidden zerava o eixo Y e o dropdown NUNCA rolava em nenhum select; DssChip _outline.scss currentColor auto-referente deixava o × branco sobre branco e apagava a borda do chip clicavel; DssDataCard tinha 8 imports para caminho inexistente, mascarados pelo wildcard declare module '*.vue' do env.d.ts. ACHADOS REGISTRADOS E NAO CORRIGIDOS: color-mix com --dss-opacity-hover (0.1 sem unidade) e invalido em 4 pontos do DssChip e o fallback da linha anterior nao salva, porque var() invalido e descartado em tempo de valor computado; DssChip renderiza role=option mesmo como token no campo. NOTA DE PROCEDIMENTO: gravado a mao porque o MCP record_audit_event fixa packages/core/components/base (recordAuditEvent.ts:54) e nao alcanca composed/ — nenhum componente Fase 3 pode ser registrado por ele hoje."
+    }
   ]
 }
