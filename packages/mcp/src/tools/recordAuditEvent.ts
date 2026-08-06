@@ -51,17 +51,24 @@ export async function recordAuditEvent(
     ? componentName.charAt(0).toUpperCase() + componentName.slice(1)
     : `Dss${componentName.charAt(0).toUpperCase()}${componentName.slice(1)}`;
 
-  const componentDir = resolve(dssRoot, "packages/core/components/base", pascal);
-  const metaPath = join(componentDir, "dss.meta.json");
+  // Componentes vivem em três grupos. Fixar "base" tornava a tool inútil para a
+  // Fase 3 INTEIRA — todo composto mora em "composed/" e falhava com
+  // "meta.json not found". Descoberto ao fechar o DssMultiselectAutocomplete.
+  const GROUPS = ["base", "composed", "stress-test"] as const;
+  let metaPath = "";
+  for (const group of GROUPS) {
+    const candidate = join(resolve(dssRoot, "packages/core/components", group, pascal), "dss.meta.json");
+    if (existsSync(candidate)) { metaPath = candidate; break; }
+  }
 
-  if (!existsSync(metaPath)) {
+  if (!metaPath) {
     return {
       success: false,
       componentName: pascal,
       event: null,
       auditHistory: [],
       statusUpdated: false,
-      error: `dss.meta.json not found at: packages/core/components/base/${pascal}/dss.meta.json`,
+      error: `dss.meta.json not found for ${pascal} in packages/core/components/{${GROUPS.join(",")}}/`,
       notice: AUDIT_WRITE_NOTICE,
     };
   }
@@ -101,11 +108,28 @@ export async function recordAuditEvent(
   meta.auditHistory = updatedHistory;
 
   let statusUpdated = false;
+  let sealRefusal = "";
   if (phase === "seal-granted" && verdict === "compliant") {
-    meta.status = "granted";
-    meta.auditDate = today;
-    if (!meta.seal) meta.seal = "DSS v2.2";
-    statusUpdated = true;
+    // O SELO É O ARQUIVO FÍSICO. build-catalog.cjs deriva "selado" da existência
+    // de docs/Compliance/seals/<Comp>/ e reprova `status="sealed"` sem ele. Sem
+    // esta guarda a tool produziria justamente o estado que o gate proíbe.
+    const sealDir = resolve(dssRoot, "docs/Compliance/seals", pascal);
+    if (existsSync(sealDir)) {
+      // "sealed" — vocabulário real do repo (52 componentes). "granted" não
+      // existia em lugar nenhum E escapava do gate de drift, que checa
+      // `status === 'sealed'`: era um selo que a máquina não conseguia auditar.
+      meta.status = "sealed";
+      meta.auditDate = today;
+      if (!meta.seal) meta.seal = "DSS v2.2";
+      statusUpdated = true;
+    } else {
+      // A auditoria é registrada mesmo assim — recusar o selo não pode apagar o
+      // trabalho de verificação. Só a promoção de status é que fica de fora.
+      sealRefusal =
+        `Seal not granted: no physical seal at docs/Compliance/seals/${pascal}/. ` +
+        `The seal document is the source of truth — status follows it, never the reverse. ` +
+        `The audit event WAS recorded in auditHistory[]; only the status promotion was skipped.`;
+    }
   }
 
   try {
@@ -129,6 +153,9 @@ export async function recordAuditEvent(
     auditHistory: updatedHistory,
     statusUpdated,
     newStatus: meta.status as string,
+    // Presente só quando o selo foi pedido e recusado por falta do documento
+    // físico — o registro da auditoria, esse, foi gravado.
+    ...(sealRefusal ? { error: sealRefusal } : {}),
     notice: AUDIT_WRITE_NOTICE,
   };
 }
