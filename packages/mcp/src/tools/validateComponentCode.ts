@@ -241,7 +241,7 @@ export async function validateComponentCode(
 
   // Search in base and composed directories
   let componentDir: string | null = null;
-  for (const subDir of ["packages/core/components/base", "packages/core/components/composed"]) {
+  for (const subDir of ["packages/core/components/base", "packages/core/components/composed", "packages/core/components/stress-test"]) {
     const candidate = resolve(dssRoot, subDir, normalized);
     if (existsSync(candidate)) {
       componentDir = candidate;
@@ -260,7 +260,7 @@ export async function validateComponentCode(
         {
           severity: "error",
           rule: "COMPONENT_NOT_FOUND",
-          message: `Component directory "${normalized}" not found in packages/core/components/base or packages/core/components/composed.`,
+          message: `Component directory "${normalized}" not found in packages/core/components/{base,composed,stress-test}.`,
         },
       ],
       summary: `Component "${normalized}" not found. Verify the name or check DSS_FASEAMENTO_COMPONENTES.md.`,

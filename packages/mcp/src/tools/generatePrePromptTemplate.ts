@@ -338,7 +338,7 @@ export async function generatePrePromptTemplate(
   // Check if component dir exists and read meta
   let found = false;
   let meta: DssMeta | null = null;
-  for (const subDir of ["packages/core/components/base", "packages/core/components/composed"]) {
+  for (const subDir of ["packages/core/components/base", "packages/core/components/composed", "packages/core/components/stress-test"]) {
     const candidate = resolve(dssRoot, subDir, pascal);
     if (existsSync(candidate)) {
       found = true;

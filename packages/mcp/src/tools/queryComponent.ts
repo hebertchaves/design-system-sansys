@@ -23,7 +23,15 @@ export async function queryComponent(
   // Normalize: accept "DssCard", "dsscard", "card" etc.
   const normalized = normalizeComponentName(componentName);
 
-  const componentDir = resolve(dssRoot, "packages/core/components/base", normalized);
+  // Componentes vivem em três grupos. Fixar "base" tornava a query cega para a
+  // Fase 3 inteira (composed/) e para os stress tests — devolvia "não encontrado"
+  // para componente que existe. Mesmo defeito que havia em recordAuditEvent.
+  // Não achando em nenhum, cai em base/ para a mensagem de erro seguir legível.
+  const COMPONENT_GROUPS = ["base", "composed", "stress-test"];
+  const componentDir =
+    COMPONENT_GROUPS.map((g) => resolve(dssRoot, "packages/core/components", g, normalized)).find(
+      (dir) => existsSync(dir)
+    ) ?? resolve(dssRoot, "packages/core/components/base", normalized);
   const metaPath = resolve(componentDir, "dss.meta.json");
   const docPath = resolve(componentDir, `${normalized}.md`);
 
