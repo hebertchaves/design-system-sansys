@@ -1,5 +1,5 @@
 import { existsSync } from "fs";
-import { resolve, isAbsolute } from "path";
+import { resolve, isAbsolute, relative } from "path";
 import { execFile } from "child_process";
 import { promisify } from "util";
 
@@ -39,43 +39,91 @@ export interface SpecReadinessResult {
   error?: string;
 }
 
+export interface SpecReadinessInput {
+  specPath?: string;
+  specContent?: string;
+}
+
+/**
+ * O servidor exposto por HTTP marca DSS_MCP_REMOTE=1. Nesse modo, aceitar
+ * caminho arbitrário seria LEITURA DE ARQUIVO ARBITRÁRIO no host — a versão
+ * anterior aceitava qualquer caminho absoluto. Cliente remoto usa specContent.
+ */
+const isRemote = () => process.env.DSS_MCP_REMOTE === "1";
+
 export async function validateSpecReadiness(
-  specPath: string,
+  input: SpecReadinessInput | string,
   dssRoot: string
 ): Promise<SpecReadinessResult> {
-  const abs = isAbsolute(specPath) ? specPath : resolve(dssRoot, specPath);
+  const { specPath, specContent } =
+    typeof input === "string" ? { specPath: input, specContent: undefined } : input;
+
+  if (!specPath && !specContent) {
+    return { found: false, specPath: "", notice: READ_ONLY_NOTICE, error: "Informe specPath ou specContent." };
+  }
+
+  if (specContent !== undefined) {
+    return runEmitter(dssRoot, ["--stdin", "--label", specPath ?? "spec.md", "--json"], specContent, specPath ?? "(conteúdo enviado)");
+  }
+
+  const abs = isAbsolute(specPath!) ? specPath! : resolve(dssRoot, specPath!);
+
+  if (isRemote()) {
+    const rel = relative(dssRoot, abs);
+    if (rel.startsWith("..") || isAbsolute(rel)) {
+      return {
+        found: false,
+        specPath: abs,
+        notice: READ_ONLY_NOTICE,
+        error: "Servidor remoto: caminho fora da raiz do DSS é recusado. Envie o markdown em specContent.",
+      };
+    }
+  }
 
   if (!existsSync(abs)) {
     return {
       found: false,
       specPath: abs,
       notice: READ_ONLY_NOTICE,
-      error:
-        "Arquivo não encontrado. Informe o caminho do .md da especificação funcional.",
+      error: "Arquivo não encontrado. Informe o caminho do .md da especificação funcional.",
     };
   }
 
+  return runEmitter(dssRoot, [abs, "--json"], undefined, abs);
+}
+
+/** Executa o emissor — fonte ÚNICA das regras. Esta tool não reimplementa nada. */
+async function runEmitter(
+  dssRoot: string,
+  args: string[],
+  stdin: string | undefined,
+  label: string
+): Promise<SpecReadinessResult> {
   const emitter = resolve(dssRoot, "scripts/emit-spec.mjs");
   if (!existsSync(emitter)) {
     return {
       found: false,
-      specPath: abs,
+      specPath: label,
       notice: READ_ONLY_NOTICE,
       error: "scripts/emit-spec.mjs não encontrado — o emissor é a fonte das regras.",
     };
   }
 
   try {
-    const { stdout } = await run("node", [emitter, abs, "--json"], {
+    // `run` é promisify(execFile): devolve PromiseWithChild, então dá para
+    // escrever no stdin do processo e ainda assim aguardar o resultado.
+    const pending = run("node", ["--", emitter, ...args], {
       cwd: dssRoot,
       maxBuffer: 20 * 1024 * 1024, // specs carregam imagens base64 grandes
     });
+    if (stdin !== undefined) pending.child.stdin?.end(stdin);
+    const { stdout } = await pending;
 
     const r = JSON.parse(stdout);
 
     return {
       found: true,
-      specPath: abs,
+      specPath: label,
       verdict: r.veredito,
       genre: r.genero,
       ontologyVersion: r.ontologiaVersao,
@@ -93,7 +141,7 @@ export async function validateSpecReadiness(
   } catch (err) {
     return {
       found: true,
-      specPath: abs,
+      specPath: label,
       notice: READ_ONLY_NOTICE,
       error: `Falha ao executar o emissor: ${(err as Error).message}`,
     };

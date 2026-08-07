@@ -111,7 +111,21 @@
     o analista escreve de fato, quem administra e se a organização autoriza integração. Existe MCP de Google Drive
     disponível, não testado. **Não construir integração para ferramenta suposta.**
   - 🔜 **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
-    **(6) MCP servido a ferramentas externas** (transporte HTTP/SSE pronto, falta hospedar) · **(7) sinais de
+    **(6) MCP servido a ferramentas externas — PRÉ-REQUISITOS FEITOS, hospedagem
+    pendente.** A descrição "transporte pronto, falta hospedar" era otimista: o transporte funciona (via `/mcp`,
+    protocolo MCP real, 15/15 tools respondem), mas expor exigia 4 correções, TODAS feitas e verificadas:
+    (a) **`/tools` mentia** — array escrito à mão que já driftou (anunciava 13; servidor registrava 15, faltando
+    `validate_composition` e `validate_spec_readiness`). Agora deriva de `TOOL_DEFINITIONS`;
+    (b) **leitura de arquivo arbitrário** — `validate_spec_readiness` aceitava QUALQUER caminho absoluto; hospedado
+    = ler `/etc/passwd`. Servidores HTTP marcam `DSS_MCP_REMOTE=1` e caminho fora da raiz é recusado;
+    (c) **remoto era inútil** — o `.md` do analista não existe no servidor. Adicionado `specContent` (+ `--stdin` no
+    emissor, mantendo fonte única). Verificado: 24 KB por HTTP → veredito correto;
+    (d) **tool de ESCRITA exposta sem auth** — `record_audit_event` grava no `dss.meta.json`. **Comprovado na prática:
+    um teste meu MUTOU o `dss.meta.json` do DssButton via HTTP não autenticado** (revertido). Agora: Bearer opcional
+    (`DSS_MCP_TOKEN`, `/health` livre) e a escrita se RECUSA em modo remoto sem token.
+    ⏳ **Falta:** decidir a hospedagem em si (o `DSS_MCP_FASE4_PLANO_TECNICO.md` propõe AWS Lambda + API Gateway) —
+    infra, não código. **Item 4 (add-on no Google Docs) DEPENDE deste**: Apps Script não roda Node, então validar
+    dentro do Docs exige endpoint hospedado — senão duplicaria as regras. · **(7) sinais de
     runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
     `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.
 

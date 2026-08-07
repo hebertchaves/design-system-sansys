@@ -235,9 +235,18 @@ const CONTROLES = [
 // ─── Emissão ──────────────────────────────────────────────────────────────────
 
 export function emitSpec(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf8')
+  return emitSpecFromText(fs.readFileSync(filePath, 'utf8'), path.basename(filePath))
+}
+
+/**
+ * Mesma análise a partir do CONTEÚDO, sem tocar o disco.
+ *
+ * Necessário para o MCP hospedado: o .md do analista não existe no servidor,
+ * então o cliente envia o texto. Mantém UMA fonte de regra — emitSpec() apenas
+ * lê o arquivo e delega para cá.
+ */
+export function emitSpecFromText(raw, basename = 'spec.md') {
   const text = sanitize(raw)
-  const basename = path.basename(filePath)
 
   const { genero, sinais } = detectGenre(text)
   const generoDef = ONTOLOGY.generos[genero] || null
@@ -369,10 +378,23 @@ const write = argv.includes('--write')
 const gate = argv.includes('--gate')
 const asJson = argv.includes('--json')
 const all = argv.includes('--all')
-const targets = argv.filter(a => !a.startsWith('--'))
+const stdinMode = argv.includes('--stdin')
+const labelIdx = argv.indexOf('--label')
+const label = labelIdx >= 0 ? argv[labelIdx + 1] : 'spec.md'
+const targets = argv.filter((a, i) => !a.startsWith('--') && !(labelIdx >= 0 && i === labelIdx + 1))
+
+if (stdinMode) {
+  const chunks = []
+  for await (const c of process.stdin) chunks.push(c)
+  const r = emitSpecFromText(Buffer.concat(chunks).toString('utf8'), label)
+  console.log(asJson ? JSON.stringify(r, null, 2) : report(r))
+  if (gate && (r.veredito === 'incompleta' || r.veredito === 'inconclusivo')) process.exit(1)
+  process.exit(0)
+}
 
 if (!targets.length) {
   console.error('Uso: node scripts/emit-spec.mjs <arquivo.md> [--write] [--gate] [--json]')
+  console.error('     cat spec.md | node scripts/emit-spec.mjs --stdin [--label nome.md] [--json]')
   console.error('     node scripts/emit-spec.mjs --all <diretório> [--write] [--gate]')
   process.exit(2)
 }

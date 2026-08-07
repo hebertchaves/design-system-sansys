@@ -19,6 +19,7 @@ import { randomUUID } from "crypto";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { createServer as createMCPServer } from "./server.js";
+import { TOOL_DEFINITIONS } from "./tools/index.js";
 
 const PORT = parseInt(process.env.DSS_HTTP_PORT ?? "3002", 10);
 
@@ -44,11 +45,30 @@ function readBody(req: IncomingMessage): Promise<Buffer> {
 }
 
 // ─── Main Server ──────────────────────────────────────────────────────────────
+
+// Servidor exposto por rede: tools que leem disco passam a recusar caminho
+// fora da raiz do DSS. Ver validateSpecReadiness.
+process.env.DSS_MCP_REMOTE = "1";
+
 async function main() {
   // Legacy SSE transport (one per connection)
   const sseTransports = new Map<string, SSEServerTransport>();
 
   const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
+    // Autenticação opcional. Quando DSS_MCP_TOKEN está definido, toda rota
+    // exceto /health exige Bearer. Sem token definido o servidor segue aberto
+    // (uso local), mas as tools de ESCRITA se recusam a rodar — ver
+    // record_audit_event em tools/index.ts.
+    const expected = process.env.DSS_MCP_TOKEN;
+    if (expected && req.url !== "/health" && req.method !== "OPTIONS") {
+      const got = (req.headers["authorization"] ?? "").toString();
+      if (got !== `Bearer ${expected}`) {
+        res.writeHead(401, { "Content-Type": "application/json", ...CORS_HEADERS });
+        res.end(JSON.stringify({ error: "Unauthorized" }));
+        return;
+      }
+    }
+
     const { method, url } = req;
 
     // CORS preflight
@@ -73,21 +93,11 @@ async function main() {
 
     // ── Tools list (human-readable) ───────────────────────────────────────────
     if (method === "GET" && url === "/tools") {
-      const toolNames = [
-        "query_component",
-        "query_token",
-        "check_compliance",
-        "get_todo_list_status",
-        "validate_pre_prompt",
-        "validate_component_code",
-        "suggest_token_replacement",
-        "generate_component_scaffold",
-        "generate_pre_prompt_template",
-        "record_audit_event",
-        "validate_visual_contract",
-        "describe_grid_inspector",
-        "validate_grid_layout",
-      ];
+      // Derivado de TOOL_DEFINITIONS. Era um array escrito à mão e JÁ tinha
+      // driftado: anunciava 13 tools enquanto o servidor registrava 15
+      // (validate_composition e validate_spec_readiness ficaram de fora).
+      // Endpoint de descoberta que mente é pior que endpoint ausente.
+      const toolNames = TOOL_DEFINITIONS.map((t) => t.name);
       res.writeHead(200, { "Content-Type": "application/json", ...CORS_HEADERS });
       res.end(JSON.stringify({ tools: toolNames, count: toolNames.length }));
       return;

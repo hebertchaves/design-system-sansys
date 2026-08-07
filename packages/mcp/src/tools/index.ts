@@ -213,13 +213,24 @@ const ValidateCompositionSchema = z.object({
     .describe('Screen context for the report (e.g. "Atender Solicitações — listagem").'),
 });
 
-const ValidateSpecReadinessSchema = z.object({
-  specPath: z
-    .string()
-    .describe(
-      'Caminho do .md da especificação funcional do analista (absoluto, ou relativo à raiz do DSS).'
-    ),
-});
+const ValidateSpecReadinessSchema = z
+  .object({
+    specPath: z
+      .string()
+      .optional()
+      .describe(
+        'Caminho do .md da spec. Em servidor REMOTO só é aceito dentro da raiz do DSS — para arquivo do analista use specContent.'
+      ),
+    specContent: z
+      .string()
+      .optional()
+      .describe(
+        'Conteúdo do markdown da spec. Use esta forma quando o MCP estiver hospedado: o arquivo do analista não existe no servidor.'
+      ),
+  })
+  .refine((v) => !!(v.specPath || v.specContent), {
+    message: "Informe specPath ou specContent.",
+  });
 
 // ── Phase 4 schemas ────────────────────────────────────────────────────────
 
@@ -265,7 +276,7 @@ const RecordAuditEventSchema = z.object({
 
 // ─── Tool Definitions ─────────────────────────────────────────────────────────
 
-const TOOL_DEFINITIONS = [
+export const TOOL_DEFINITIONS = [
   // ── Phase 1 Tools ──────────────────────────────────────────────────────────
   {
     name: "query_component",
@@ -529,10 +540,14 @@ const TOOL_DEFINITIONS = [
         specPath: {
           type: "string",
           description:
-            "Caminho do arquivo .md da especificação funcional (absoluto, ou relativo à raiz do DSS).",
+            "Caminho do .md da spec. Em servidor remoto só vale dentro da raiz do DSS.",
+        },
+        specContent: {
+          type: "string",
+          description:
+            "Conteúdo do markdown da spec. Use esta forma quando o MCP estiver hospedado.",
         },
       },
-      required: ["specPath"],
     },
   },
   // ── Phase 4 Tools ──────────────────────────────────────────────────────────
@@ -715,7 +730,7 @@ export function registerTools(server: Server): void {
 
       case "validate_spec_readiness": {
         const input = ValidateSpecReadinessSchema.parse(args ?? {});
-        const result = await validateSpecReadiness(input.specPath, DSS_ROOT);
+        const result = await validateSpecReadiness(input, DSS_ROOT);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -723,6 +738,22 @@ export function registerTools(server: Server): void {
 
       // ── Phase 4 ────────────────────────────────────────────────────────────
       case "record_audit_event": {
+        // Única tool que ESCREVE em disco (auditHistory do dss.meta.json).
+        // Num servidor exposto por rede sem autenticação, qualquer um poderia
+        // mutar o histórico de auditoria do repositório. Fail-safe: recusa.
+        if (process.env.DSS_MCP_REMOTE === "1" && !process.env.DSS_MCP_TOKEN) {
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify({
+                error:
+                  "record_audit_event é uma tool de ESCRITA e está desabilitada: " +
+                  "o servidor está exposto por rede (DSS_MCP_REMOTE=1) sem DSS_MCP_TOKEN. " +
+                  "Defina um token para habilitar, ou use o servidor local via stdio.",
+              }, null, 2),
+            }],
+          };
+        }
         const input = RecordAuditEventSchema.parse(args ?? {});
         const result = await recordAuditEvent(
           input.componentName,
