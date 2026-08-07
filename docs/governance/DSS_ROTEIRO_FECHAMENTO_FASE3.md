@@ -97,9 +97,21 @@ por isso é comando de fechamento, não de pre-commit.
 Propriedade sem bloco `probe` é reportada como *declarada-porém-não-verificável*. Isso é sinal,
 não ruído: mede quanto do contrato visual ainda é promessa.
 
-> **O pre-commit já roda sozinho** grafia de variante, tokens SCSS, catálogo, drift status↔selo,
-> cobertura do portal, registry do DemoRenderer, re-emissão de contrato e type-check. Não
-> repita isso à mão.
+> **O pre-commit já roda sozinho** grafia de variante, tokens SCSS, higiene de SFC, catálogo,
+> drift status↔selo, cobertura do portal, registry do DemoRenderer, re-emissão de contrato e
+> type-check. Não repita isso à mão.
+
+#### Dois scripts ficam FORA do hook — de propósito
+
+Ambos aceitam `--gate`, o que faz parecerem gates esquecidos. Não são. Wireá-los no
+pre-commit quebraria cada um à sua maneira:
+
+| script | por que fica fora |
+|---|---|
+| `probe-visual-contract.mjs` | Precisa de **browser** e do dev server no ar. No pre-commit, tornaria todo commit dependente de servidor rodando. É comando de fechamento de componente. |
+| `emit-spec.mjs` | É **portão de prontidão da SPEC**, a montante do código, e recebe um arquivo por vez em vez de varrer o repo. O próprio cabeçalho diz: *"o relatório NÃO é instrumento de fiscalização… diz à DUPLA quando a spec está pronta"*. No hook, viraria fiscalização — exatamente o que o desenho recusa. |
+
+> Se um dia parecer que faltam gates no hook, comece por aqui antes de "consertar" a ausência.
 
 ### Etapa 3 — O que sobra para julgamento
 
