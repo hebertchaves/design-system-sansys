@@ -56,6 +56,35 @@ const HARDCODED_COLOR_PATTERNS: { pattern: RegExp; label: string }[] = [
 const RGBA_EXCEPTION_PATTERN =
   /rgba\(\s*(?:255\s*,\s*255\s*,\s*255|0\s*,\s*0\s*,\s*0)\s*,\s*0\.\d+\s*\)/;
 
+/**
+ * REGIME DE EXCEÇÕES — CLAUDE.md, Constituição #1.
+ *
+ * O documento lista três casos que "NÃO são violação". Sem implementá-los, o
+ * validador acusa conformidade como defeito — medido no DssChip: dos 7 achados,
+ * 3 eram fallback de var() e 1 era forced-colors. Relatório que grita em cima
+ * de acerto é relatório que ninguém lê.
+ *
+ *   (a) hex de fallback em `var(--dss-token, #hex)`
+ *   (b) px em `@media` (e `@container`, mesmo papel: limiar de layout)
+ *   (c) `#000`/`#fff` em bloco forced-colors / prefers-contrast
+ */
+
+/**
+ * (a) Remove o FALLBACK de `var(--token, fallback)` antes das checagens.
+ * O fallback é rede de segurança declarada, não valor cravado — a Constituição
+ * o permite explicitamente. Sem isto, `var(--dss-x, #e0e0e0)` era reportado como
+ * "hardcoded hex", que é o oposto do que a linha faz.
+ */
+function stripVarFallbacks(line: string): string {
+  return line.replace(/var\(\s*--[\w-]+\s*,[^)]*\)/g, "var(--token)");
+}
+
+/** (b) Limiar de layout: px em at-rule de media/container é exceção. */
+const AT_RULE_LIMIAR = /@(?:media|container)\b/;
+
+/** (c) Abertura de bloco de contraste forçado / alto contraste. */
+const BLOCO_CONTRASTE = /forced-colors\s*:|prefers-contrast\s*:/;
+
 /** :deep() usage violates Gate de Composição v2.4 */
 const DEEP_SELECTOR_PATTERN = /:deep\s*\(|::v-deep\b/;
 
@@ -128,12 +157,29 @@ function analyzeScss(
   const contentWithoutBlockComments = stripBlockComments(content);
   const lines = contentWithoutBlockComments.split("\n");
 
+  // (c) Rastreia se estamos DENTRO de um bloco de contraste forçado. Não dá para
+  // decidir por linha: `outline: 3px solid Highlight` só é exceção por causa da
+  // at-rule que a envolve, que pode estar dezenas de linhas acima.
+  let profundidadeContraste = 0;
+  let chavesNoBloco = 0;
+
   lines.forEach((line, idx) => {
     const lineNum = idx + 1;
 
     // Strip inline // comments to get only the code portion of the line
-    const codeOnly = line.replace(/\/\/.*$/, "");
+    const codeOnlyBruto = line.replace(/\/\/.*$/, "");
+    // (a) fallback de var() é exceção declarada — sai antes de qualquer análise
+    const codeOnly = stripVarFallbacks(codeOnlyBruto);
     const trimmed = codeOnly.trim();
+
+    // (c) contabiliza entrada/saída do bloco de contraste
+    if (BLOCO_CONTRASTE.test(codeOnly)) { profundidadeContraste++; chavesNoBloco = 0; }
+    if (profundidadeContraste > 0) {
+      chavesNoBloco += (codeOnly.match(/\{/g) || []).length;
+      chavesNoBloco -= (codeOnly.match(/\}/g) || []).length;
+      if (chavesNoBloco <= 0 && /\}/.test(codeOnly)) profundidadeContraste = 0;
+    }
+    const emExcecaoDeContraste = profundidadeContraste > 0;
 
     // Skip lines that are empty after comment removal
     if (!trimmed) return;
@@ -150,7 +196,9 @@ function analyzeScss(
     }
 
     // ── Hardcoded color check ─────────────────────────────────────────────
-    for (const { pattern, label } of HARDCODED_COLOR_PATTERNS) {
+    // (c) dentro de forced-colors/prefers-contrast, cor absoluta é a REGRA:
+    // tokens são ignorados pelo modo de alto contraste do sistema.
+    for (const { pattern, label } of (emExcecaoDeContraste ? [] : HARDCODED_COLOR_PATTERNS)) {
       if (pattern.test(codeOnly)) {
         // Allow rgba(255,255,255,x) and rgba(0,0,0,x) — documented dark mode exceptions
         if (label.startsWith("rgba") && RGBA_EXCEPTION_PATTERN.test(codeOnly)) {
@@ -189,8 +237,11 @@ function analyzeScss(
     }
 
     // ── Hardcoded px check (non-trivial values) ───────────────────────────
+    // (b) px em @media/@container é limiar de layout, não dimensão de componente.
+    // (c) em bloco de contraste, o valor absoluto é intencional.
     let pxMatch: RegExpExecArray | null;
-    const pxRegex = new RegExp(HARDCODED_PX_PATTERN.source, "g");
+    const pulaPx = emExcecaoDeContraste || AT_RULE_LIMIAR.test(codeOnly);
+    const pxRegex = new RegExp(pulaPx ? "(?!)" : HARDCODED_PX_PATTERN.source, "g");
     while ((pxMatch = pxRegex.exec(codeOnly)) !== null) {
       const val = parseInt(pxMatch[1], 10);
       if (!ALLOWED_PX_VALUES.has(val)) {
