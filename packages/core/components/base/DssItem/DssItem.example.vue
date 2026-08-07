@@ -274,7 +274,7 @@
 
 <script>
 import DssItem from './1-structure/DssItem.ts.vue'
-import DssIcon from '../DssIcon/1-structure/DssIcon.ts.vue'
+import DssIcon from '../DssIcon/DssIcon.vue'
 
 export default {
   name: 'DssItemExamples',

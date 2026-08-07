@@ -23,8 +23,20 @@
  *   Toleramos `style` sem número (ex.: `pointer-events: none`), que é chave de
  *   comportamento e não valor de design.
  *
- * ESCOPO: SFCs de produção em packages/core/components. `.example.vue` e
- * `.test.js` ficam de fora — são demonstração e fixture, não superfície do DS.
+ * ESCOPO — decidido POR REGRA, não por tipo de arquivo. A versão anterior
+ * excluía `.example.vue` das duas, com o argumento de que "demonstração não é
+ * superfície do DS". O argumento não se sustenta para a regra A e escondeu uma
+ * violação real (DssItem.example.vue importava o 1-structure do DssIcon).
+ *
+ *   Regra A vale TAMBÉM em example — exemplo é documentação que o consumidor
+ *   copia; um import errado ali ENSINA o anti-padrão. Custo medido: 1 correção.
+ *
+ *   Regra B NÃO vale em example — medido: 47 arquivos, e o conteúdo é
+ *   `padding: var(--dss-spacing-2); border: 1px solid var(--dss-gray-200)`.
+ *   O único "hardcode" é o `1px` da borda, cercado de tokens, em andaime de
+ *   página de demonstração. Muito ruído para pouco sinal.
+ *
+ * `.test.js` fica fora das duas — fixture não é lido como referência de uso.
  *
  * Uso:
  *   node scripts/validate-sfc-hygiene.cjs          # relatório
@@ -57,7 +69,7 @@ function walk(dir, acc = []) {
       continue;
     }
     if (!/\.(vue|ts)$/.test(e.name)) continue;
-    if (/\.example\.vue$|\.test\.(js|ts)$/.test(e.name)) continue;
+    if (/\.test\.(js|ts)$/.test(e.name)) continue;
     acc.push(full);
   }
   return acc;
@@ -74,8 +86,10 @@ for (const full of arquivos) {
   for (const m of src.matchAll(IMPORT_CRUZADO)) {
     violacoesA.push({ rel, linha: src.slice(0, m.index).split('\n').length, alvo: m[1] });
   }
-  // Regra B só faz sentido em template — .ts não tem.
-  if (full.endsWith('.vue')) {
+  // Regra B só faz sentido em template — .ts não tem — e NÃO se aplica a
+  // example: lá o style inline é andaime de página de demonstração, já
+  // majoritariamente tokenizado (ver nota de escopo no cabeçalho).
+  if (full.endsWith('.vue') && !full.endsWith('.example.vue')) {
     for (const m of src.matchAll(STYLE_DIMENSIONAL)) {
       violacoesB.push({ rel, linha: src.slice(0, m.index).split('\n').length, trecho: m[1].trim() });
     }
