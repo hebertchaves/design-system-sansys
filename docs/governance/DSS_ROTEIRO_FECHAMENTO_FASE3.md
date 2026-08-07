@@ -101,17 +101,27 @@ não ruído: mede quanto do contrato visual ainda é promessa.
 > drift status↔selo, cobertura do portal, registry do DemoRenderer, re-emissão de contrato e
 > type-check. Não repita isso à mão.
 
-#### Dois scripts ficam FORA do hook — de propósito
+#### O que fica FORA do hook — e por quê
 
-Ambos aceitam `--gate`, o que faz parecerem gates esquecidos. Não são. Wireá-los no
-pre-commit quebraria cada um à sua maneira:
+**Um gate de componente que não roda no commit:**
 
 | script | por que fica fora |
 |---|---|
-| `probe-visual-contract.mjs` | Precisa de **browser** e do dev server no ar. No pre-commit, tornaria todo commit dependente de servidor rodando. É comando de fechamento de componente. |
-| `emit-spec.mjs` | É **portão de prontidão da SPEC**, a montante do código, e recebe um arquivo por vez em vez de varrer o repo. O próprio cabeçalho diz: *"o relatório NÃO é instrumento de fiscalização… diz à DUPLA quando a spec está pronta"*. No hook, viraria fiscalização — exatamente o que o desenho recusa. |
+| `probe-visual-contract.mjs` | Precisa de **browser** e do dev server no ar. No pre-commit, tornaria todo commit dependente de servidor rodando. É comando de fechamento de componente — etapa 2 deste roteiro. |
 
-> Se um dia parecer que faltam gates no hook, comece por aqui antes de "consertar" a ausência.
+**Dois que não são gates de componente — são da fase de SPEC:**
+
+`emit-spec.mjs` e `spec-parecer.mjs` atuam sobre a **especificação funcional do analista**,
+a montante da Entrega. Não têm componente como objeto e não pertencem a este roteiro.
+
+- `emit-spec.mjs` é portão de prontidão da spec: diz **à dupla designer+analista** quando ela
+  está pronta para atravessar. O cabeçalho é explícito — *"o relatório NÃO é instrumento de
+  fiscalização"*.
+- `spec-parecer.mjs` **nunca reprova**: é roteiro para juízo, não portão.
+
+> O `--gate` de `emit-spec` engana: parece gate esquecido. Tratá-lo como gate de componente é
+> **erro de categoria** — no hook, viraria a fiscalização que o desenho recusa. Se um dia
+> parecer que faltam gates, comece por aqui antes de "consertar" a ausência.
 
 ### Etapa 3 — O que sobra para julgamento
 
