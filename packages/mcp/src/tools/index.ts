@@ -18,6 +18,7 @@ import { generatePrePromptTemplate } from "./generatePrePromptTemplate.js";
 import { recordAuditEvent } from "./recordAuditEvent.js";
 import { validateGridLayout } from "./validateGridLayout.js";
 import { validateComposition } from "./validateComposition.js";
+import { validateSpecReadiness } from "./validateSpecReadiness.js";
 import { describeGridInspector } from "./describeGridInspector.js";
 import { validateVisualContract, validate_visual_contract_schema } from "./validateVisualContract.js";
 
@@ -210,6 +211,14 @@ const ValidateCompositionSchema = z.object({
     .string()
     .optional()
     .describe('Screen context for the report (e.g. "Atender Solicitações — listagem").'),
+});
+
+const ValidateSpecReadinessSchema = z.object({
+  specPath: z
+    .string()
+    .describe(
+      'Caminho do .md da especificação funcional do analista (absoluto, ou relativo à raiz do DSS).'
+    ),
 });
 
 // ── Phase 4 schemas ────────────────────────────────────────────────────────
@@ -510,6 +519,22 @@ const TOOL_DEFINITIONS = [
       required: ["tree"],
     },
   },
+  {
+    name: "validate_spec_readiness",
+    description:
+      "Portão de prontidão da ESPECIFICAÇÃO FUNCIONAL do analista. Lê o markdown que o analista já escreve (nada precisa ser reescrito em outro formato) e devolve um relatório de completude por regime: (a) detecta o GÊNERO do documento — especificação funcional completa vs lista de requisitos de mudança — e só cobra o que aquele gênero exige; (b) lista as seções obrigatórias ausentes; (c) lista o que a spec NÃO DIZ e bloqueia a passagem para a fase de Entrega (estado vazio, estado de carregamento, estado de erro, veículo da mensagem, superfície da tela); (d) aponta recomendados sem bloquear (volume esperado, responsividade); (e) registra acessibilidade como débito de HORIZONTE, que nunca reprova. CHAME ANTES de gerar qualquer código ou protótipo a partir de uma spec. Verifica COMPLETUDE, nunca a correção da regra de negócio. Read-Only.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        specPath: {
+          type: "string",
+          description:
+            "Caminho do arquivo .md da especificação funcional (absoluto, ou relativo à raiz do DSS).",
+        },
+      },
+      required: ["specPath"],
+    },
+  },
   // ── Phase 4 Tools ──────────────────────────────────────────────────────────
   {
     name: "record_audit_event",
@@ -683,6 +708,14 @@ export function registerTools(server: Server): void {
       case "validate_composition": {
         const input = ValidateCompositionSchema.parse(args ?? {});
         const result = await validateComposition(input, DSS_ROOT);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "validate_spec_readiness": {
+        const input = ValidateSpecReadinessSchema.parse(args ?? {});
+        const result = await validateSpecReadiness(input.specPath, DSS_ROOT);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };

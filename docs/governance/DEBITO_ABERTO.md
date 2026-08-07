@@ -82,8 +82,23 @@
     design estruturalmente vazio:** §2.4 da #85505 é cabeçalho SEM CONTEÚDO; a da 0292D manda reprototipar 'no padrão
     do sistema' sem apontar nada; a #33950 dá 40 imagens. **O DSS não é citado em nenhuma das 3.** ⚠️ Amostra=3 fecha
     o sistêmico vs individual, mas não `cardinalidade` nem o número de gêneros. 'modal×tela' NÃO se repetiu (é da 0292D).
-  - 🔜 **(3) `dss.spec.json` + checklist de completude** — o `validate_pre_prompt` promovido a nível de feature,
-    com âncora em vez de regex de heading (hoje é presence-gate gameável).
+  - ✅ **(3) Portão de prontidão da spec** — `scripts/emit-spec.mjs` + tool MCP **`validate_spec_readiness`**.
+    **DERIVADO, nunca autorado (D1):** lê o markdown que o analista JÁ escreve; ele não redige nenhum JSON —
+    era a mudança cultural que encontraria resistência. Detecta o `genero` e só cobra o que aquele gênero exige
+    (a #33950 não é reprovada por não ter critério de aceite). Reporta por regime: bloqueantes · recomendados ·
+    **horizonte (acessibilidade, nunca reprova)**. A tool DELEGA ao emissor em vez de reimplementar as regras —
+    duas fontes de verdade divergiriam em silêncio. **Enquadramento:** Descoberta+Solução são construção conjunta
+    designer+analista, então o relatório NÃO fiscaliza ninguém — diz à DUPLA quando a spec pode atravessar para a
+    Entrega. **Verificado nas 3 specs reais:** todas `incompleta`, com as mesmas 5 lacunas bloqueantes.
+    ⚠️ **Mecanismo de controle provou seu valor na 1ª execução:** o padrão de controle `deverá` deu 0 nas 3 specs
+    porque `\b` em JS deriva de `\w` = `[A-Za-z0-9_]` e **não casa depois de letra acentuada** — sem os controles,
+    um regex quebrado teria APROVADO as 3 em silêncio. Veredito `inconclusivo` ≠ aprovação.
+    **Limites declarados:** verifica completude/coerência estrutural, NUNCA correção de regra de negócio; entidades
+    semânticas (campo, comando, `maquina_estado`) não são extraídas — exigem leitura de significado, que é parecer
+    probabilístico (item 5) e por isso não vira gate.
+  - ⏳ **Pendente decidir: o portão entra em pre-commit/CI?** Hoje roda sob demanda (`npm run spec:check`). Specs
+    vivem fora do repo (Desktop/Confluence), então o gate natural não é o pre-commit do DSS — é a superfície do
+    item 4.
   - 🔜 **(4) Superfície onde o analista escreve** · **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
     **(6) MCP servido a ferramentas externas** (transporte HTTP/SSE pronto, falta hospedar) · **(7) sinais de
     runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
