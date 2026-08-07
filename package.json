@@ -40,6 +40,8 @@
     "validate:demo-registry": "node scripts/validate-demo-registry.cjs --gate",
     "validate:barrel-ext": "node scripts/validate-barrel-ext.cjs --gate",
     "probe:visual": "node scripts/probe-visual-contract.mjs",
+    "validate:structure": "node scripts/validate-structure.cjs",
+    "validate:structure:gate": "node scripts/validate-structure.cjs --gate",
     "validate:sfc-hygiene": "node scripts/validate-sfc-hygiene.cjs",
     "validate:sfc-hygiene:gate": "node scripts/validate-sfc-hygiene.cjs --gate",
     "validate:variant-naming": "node scripts/validate-variant-naming.cjs",

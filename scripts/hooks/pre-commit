@@ -14,6 +14,18 @@ if echo "$STAGED" | grep -qE 'packages/core/.+/index\.js$|packages/core/index\.j
   fi
 fi
 
+# ── 0. Gate Estrutural: 4 camadas · wrapper puro · barrel · orquestrador ─────
+# Era o UNICO eixo do antigo "Modo Auditor" sem cobertura por comando. O
+# CLAUDE.md classifica ausencia de Entry Point Wrapper como NAO-CONFORMIDADE
+# BLOQUEANTE; o gate e o que torna isso verdade em vez de intencao.
+if echo "$STAGED" | grep -qE 'packages/core/components/[^/]+/[^/]+/' ; then
+  node scripts/validate-structure.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Gate Estrutural reprovado."
+    exit 1
+  fi
+fi
+
 # ── 0a. Higiene de SFC: import canônico + estilo inline ─────────────────────
 # Duas das 5 não-conformidades do stress test de Fase 3 que ainda eram "texto de
 # prompt" e passaram a ser verificáveis: import cruzado para o 1-structure de
