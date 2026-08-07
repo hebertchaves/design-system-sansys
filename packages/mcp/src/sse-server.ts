@@ -87,6 +87,15 @@ async function main() {
         version: "1.0.0",
         transport: ["sse", "streamable-http"],
         port: PORT,
+        // Identidade do CONTEÚDO servido, não só do código. O MCP responde a
+        // partir do repositório embutido na imagem; sem expor o commit, um
+        // serviço defasado mente com confiança e ninguém percebe.
+        content: {
+          sha: process.env.DSS_BUILD_SHA ?? "dev",
+          builtAt: process.env.DSS_BUILD_DATE ?? null,
+        },
+        remote: process.env.DSS_MCP_REMOTE === "1",
+        authRequired: !!process.env.DSS_MCP_TOKEN,
       }));
       return;
     }
