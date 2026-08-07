@@ -19,6 +19,7 @@ import { recordAuditEvent } from "./recordAuditEvent.js";
 import { validateGridLayout } from "./validateGridLayout.js";
 import { validateComposition } from "./validateComposition.js";
 import { validateSpecReadiness } from "./validateSpecReadiness.js";
+import { requestSpecParecer } from "./requestSpecParecer.js";
 import { describeGridInspector } from "./describeGridInspector.js";
 import { validateVisualContract, validate_visual_contract_schema } from "./validateVisualContract.js";
 
@@ -231,6 +232,13 @@ const ValidateSpecReadinessSchema = z
   .refine((v) => !!(v.specPath || v.specContent), {
     message: "Informe specPath ou specContent.",
   });
+
+const RequestSpecParecerSchema = z
+  .object({
+    specPath: z.string().optional().describe("Caminho do .md da spec (em servidor remoto, só dentro da raiz do DSS)."),
+    specContent: z.string().optional().describe("Conteúdo do markdown da spec. Use quando o MCP estiver hospedado."),
+  })
+  .refine((v) => !!(v.specPath || v.specContent), { message: "Informe specPath ou specContent." });
 
 // ── Phase 4 schemas ────────────────────────────────────────────────────────
 
@@ -550,6 +558,18 @@ export const TOOL_DEFINITIONS = [
       },
     },
   },
+  {
+    name: "request_spec_parecer",
+    description:
+      "Devolve um ROTEIRO para VOCÊ (agente) ler a especificação funcional e emitir um parecer semântico. NÃO É GATE: não reprova, não emite veredito e não altera o resultado de validate_spec_readiness. Complementa o portão determinístico — enquanto aquele verifica se a spec MENCIONA algo, este roteiro pergunta se o que ela DIZ é coerente: contradição interna, referência órfã, cobertura entre regra/cenário/critério, vagueza que decide comportamento de tela, termo inconsistente, estado sem transição, caminho infeliz sem contrapartida visual, e escopo negativo furado pelo corpo. REGRA OBRIGATÓRIA da sua resposta: toda observação carrega CITAÇÃO literal da spec — sem âncora é opinião e deve ser descartada. NÃO opine sobre a correção da regra de negócio nem repita o que o portão já apontou. Zero observações é resposta válida. Read-Only.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        specPath: { type: "string", description: "Caminho do .md da spec." },
+        specContent: { type: "string", description: "Conteúdo do markdown da spec (use quando hospedado)." },
+      },
+    },
+  },
   // ── Phase 4 Tools ──────────────────────────────────────────────────────────
   {
     name: "record_audit_event",
@@ -734,6 +754,12 @@ export function registerTools(server: Server): void {
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
+      }
+
+      case "request_spec_parecer": {
+        const input = RequestSpecParecerSchema.parse(args ?? {});
+        const result = await requestSpecParecer(input, DSS_ROOT);
+        return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
       }
 
       // ── Phase 4 ────────────────────────────────────────────────────────────

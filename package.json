@@ -34,6 +34,7 @@
     "contracts:gate": "node scripts/emit-contract.mjs --all --strict",
     "spec:check": "node scripts/emit-spec.mjs",
     "spec:gate": "node scripts/emit-spec.mjs --gate",
+    "spec:parecer": "node scripts/spec-parecer.mjs",
     "validate:sandbox-tags": "node scripts/validate-sandbox-tags.cjs --gate",
     "validate:portal-pages": "node scripts/validate-portal-pages.cjs --gate",
     "validate:demo-registry": "node scripts/validate-demo-registry.cjs --gate",

@@ -112,7 +112,21 @@
     + base64 no rodapé, escapes de ponto, pseudo-cabeçalhos em negrito), mas isso é INFERÊNCIA — falta confirmar onde
     o analista escreve de fato, quem administra e se a organização autoriza integração. Existe MCP de Google Drive
     disponível, não testado. **Não construir integração para ferramenta suposta.**
-  - 🔜 **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
+  - 🔜 ✅ **(5) Parecer semântico — ROTEIRO, não gate.** `scripts/spec-parecer.mjs` + tool
+    **`request_spec_parecer`** + `npm run spec:parecer`. **Decisão de arquitetura: o DSS NÃO chama LLM.** O MCP não
+    faz chamada de rede alguma e o `MCP_READ_ONLY_CONTRACT` §3 exige que ele "observe e explique, nunca decida" —
+    juízo probabilístico embutido o tornaria criativo/não-reprodutível e daria à opinião aparência de veredito da
+    ferramenta. Divisão: **DSS monta o roteiro (determinístico) · agente responde (juízo) · humano confere**.
+    8 perguntas que busca textual não alcança: contradição interna · referência órfã · cobertura regra↔cenário↔CA ·
+    vagueza que decide comportamento · termo inconsistente · estado sem transição · caminho infeliz sem contrapartida ·
+    escopo negativo furado. **Disciplina anti-achismo:** toda observação exige **citação literal** (mesmo princípio do
+    `verifiedBy`) — sem âncora é opinião e se descarta; com âncora o humano confere em segundos. O roteiro **importa
+    o resultado do portão e manda NÃO repetir** o que já foi apontado por ausência. Verificado: `isGate:false`, sem
+    campo de veredito, exit 0 sempre, portão inalterado. **Dogfood — achado real e novo (fora dos exemplos de
+    calibragem):** na RF-0292D, BDD07 (lote somente-leitura: Enviado/Negativado/Cancelado) e BDD08 (lote editável:
+    Em Análise/Neg. Aprovada/Neg. Reprovada) **não cobrem "Pendente"**, que consta na lista de status (BDD10, CA11) —
+    a spec não diz se um lote Pendente abre travado ou editável. ⚠️ **Limite estrutural:** parecer pode errar; ausência
+    de observação NÃO significa spec correta. ·
     **(6) MCP servido a ferramentas externas — PRÉ-REQUISITOS FEITOS, hospedagem
     pendente.** A descrição "transporte pronto, falta hospedar" era otimista: o transporte funciona (via `/mcp`,
     protocolo MCP real, 15/15 tools respondem), mas expor exigia 4 correções, TODAS feitas e verificadas:
