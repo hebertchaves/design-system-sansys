@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
+import { COMPONENT_GROUPS } from "../lib/componentGroups.js";
 
 export type AuditPhase =
   | "initial-audit"
@@ -54,7 +55,7 @@ export async function recordAuditEvent(
   // Componentes vivem em três grupos. Fixar "base" tornava a tool inútil para a
   // Fase 3 INTEIRA — todo composto mora em "composed/" e falhava com
   // "meta.json not found". Descoberto ao fechar o DssMultiselectAutocomplete.
-  const GROUPS = ["base", "composed", "stress-test"] as const;
+  const GROUPS = COMPONENT_GROUPS;
   let metaPath = "";
   for (const group of GROUPS) {
     const candidate = join(resolve(dssRoot, "packages/core/components", group, pascal), "dss.meta.json");

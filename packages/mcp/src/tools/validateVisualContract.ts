@@ -2,6 +2,7 @@ import { z } from "zod";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
+import { COMPONENT_GROUPS } from "../lib/componentGroups.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,7 +26,6 @@ export const validate_visual_contract_schema = {
 // resources/index.ts). O bug anterior usava process.cwd() relativo,
 // quebrando fora do diretório esperado (achado A12; Onda P2/G4.3).
 const DSS_ROOT = process.env.DSS_ROOT ?? path.resolve(__dirname, "../../..");
-const COMPONENT_GROUPS = ["base", "composed", "stress-test"];
 
 export async function validateVisualContract(args: any) {
   const { componentName } = args;

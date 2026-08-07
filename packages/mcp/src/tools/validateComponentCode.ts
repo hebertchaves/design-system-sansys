@@ -1,6 +1,7 @@
 import { readFileSync, existsSync, readdirSync, statSync } from "fs";
 import { resolve, join, extname } from "path";
 import { suggestTokenReplacement } from "./suggestTokenReplacement.js";
+import { COMPONENT_GROUP_PATHS, groupList } from "../lib/componentGroups.js";
 
 interface Finding {
   severity: "error" | "warning" | "info";
@@ -241,7 +242,7 @@ export async function validateComponentCode(
 
   // Search in base and composed directories
   let componentDir: string | null = null;
-  for (const subDir of ["packages/core/components/base", "packages/core/components/composed", "packages/core/components/stress-test"]) {
+  for (const subDir of COMPONENT_GROUP_PATHS) {
     const candidate = resolve(dssRoot, subDir, normalized);
     if (existsSync(candidate)) {
       componentDir = candidate;
@@ -260,7 +261,7 @@ export async function validateComponentCode(
         {
           severity: "error",
           rule: "COMPONENT_NOT_FOUND",
-          message: `Component directory "${normalized}" not found in packages/core/components/{base,composed,stress-test}.`,
+          message: `Component directory "${normalized}" not found in packages/core/components/{${groupList()}}.`,
         },
       ],
       summary: `Component "${normalized}" not found. Verify the name or check DSS_FASEAMENTO_COMPONENTES.md.`,
