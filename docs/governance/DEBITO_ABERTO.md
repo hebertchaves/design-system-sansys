@@ -99,7 +99,18 @@
   - ⏳ **Pendente decidir: o portão entra em pre-commit/CI?** Hoje roda sob demanda (`npm run spec:check`). Specs
     vivem fora do repo (Desktop/Confluence), então o gate natural não é o pre-commit do DSS — é a superfície do
     item 4.
-  - 🔜 **(4) Superfície onde o analista escreve** · **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
+  - 🟡 **(4) Superfície onde o analista escreve — METADE entregue.** ✅ **Template:** `DSS_SPEC_BLOCO_INTERFACE.md`
+    — uma seção **§2.5 Interface**, dona = **designer**, que entra AO LADO do que o analista já escreve (não desloca
+    nada). 7 campos: superfície · estados de dados · mensagens (texto exato + veículo) · volume · responsividade ·
+    acessibilidade (horizonte) · elementos a preservar. **Laço fechado e verificado:** RF-0292D real + §2.5 preenchida
+    → portão vira `incompleta` (5 bloqueantes) em **`pronta`**; as 3 specs originais seguem `incompleta` (sem aprovação
+    falsa). Fechar o laço expôs divergência template↔portão: o detector de volume não reconhecia a redação do PRÓPRIO
+    template ("Máximo esperado: N") — corrigido no `emit-spec.mjs`. ⏳ **Integração (validar na ferramenta) BLOQUEADA
+    por fato desconhecido:** as 3 specs têm assinatura de exportação **Google Docs → Markdown** (imagens em referência
+    + base64 no rodapé, escapes de ponto, pseudo-cabeçalhos em negrito), mas isso é INFERÊNCIA — falta confirmar onde
+    o analista escreve de fato, quem administra e se a organização autoriza integração. Existe MCP de Google Drive
+    disponível, não testado. **Não construir integração para ferramenta suposta.**
+  - 🔜 **(5) parecer semântico via LLM** (probabilístico, NÃO gate) ·
     **(6) MCP servido a ferramentas externas** (transporte HTTP/SSE pronto, falta hospedar) · **(7) sinais de
     runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
     `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.

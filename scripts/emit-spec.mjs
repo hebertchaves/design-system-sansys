@@ -196,7 +196,10 @@ const LACUNAS = [
     id: 'volume',
     regime: 'recomendado',
     label: 'Volume esperado de dados — decide tabela, lista ou scroll virtual',
-    re: /no\s+m[áa]ximo\s+\d+|limite\s+de\s+\d+\s+(registros|itens|linhas)|at[ée]\s+\d+\s+(registros|itens|linhas)|pagina[çc][ãa]o\s+de\s+\d+/i,
+    // Inclui a redação do próprio DSS_SPEC_BLOCO_INTERFACE §2.5.4 ("Máximo
+    // esperado: N", "Típico: N"). Detector que não reconhece o template que o
+    // DSS manda preencher é detector errado — descoberto ao fechar o laço.
+    re: /no\s+m[áa]ximo\s+\d+|m[áa]ximo\s+esperado[:\s]+\d+|t[íi]pico[:\s]+\d+|limite\s+de\s+\d+\s+(registros|itens|linhas)|at[ée]\s+\d+\s+(registros|itens|linhas)|pagina[çc][ãa]o\s+de\s+\d+/i,
   },
   {
     id: 'responsividade',
