@@ -134,7 +134,7 @@
   &:hover {
     opacity: 1;
     background-color: currentColor;
-    background-color: color-mix(in srgb, currentColor var(--dss-opacity-hover), transparent);
+    background-color: color-mix(in srgb, currentColor calc(var(--dss-opacity-hover) * 100%), transparent);
   }
 
   &:focus-visible {

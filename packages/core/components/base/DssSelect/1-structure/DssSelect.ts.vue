@@ -32,9 +32,13 @@
  * Events: update:modelValue, focus, blur, clear, popup-show, popup-hide
  *
  * useChips
- *   → Delega diretamente para use-chips do QSelect.
- *   → Chips nativos (.q-chip) estilizados via .dss-select .q-field__native .q-chip.
- *   → Para chips 100% governados pelo DSS, usar slot selected-item + DssChip.
+ *   → Delega use-chips ao QSelect, MAS o chip renderizado é DssChip, não o
+ *     `.q-chip` nativo: o componente preenche o slot `selected-item` com
+ *     <DssChip color="neutral" size="xs"> quando o consumidor não traz o seu.
+ *   → Antes os chips nativos eram pintados por CSS (.q-field__native .q-chip),
+ *     o que fazia o MESMO token de valor aparecer cinza aqui e azul em quem
+ *     consumia DssChip direto — duas linguagens visuais para a mesma coisa.
+ *   → Slot `selected-item` do consumidor tem precedência sobre o padrão DSS.
  *
  * Touch Target: Opção A (interativo)
  *   → min-height: var(--dss-input-height-md) aplicado em .q-field__control no SCSS.
@@ -50,6 +54,7 @@ import { ref, computed, useSlots, onBeforeUnmount, onMounted, watch, nextTick } 
 import { QSelect } from 'quasar'
 import type { SelectProps, SelectEmits, SelectExpose } from '../types/select.types'
 import { useSelectClasses, useSelectState, useSelectActions } from '../composables'
+import DssChip from '../../DssChip/DssChip.vue'
 
 // ==========================================================================
 // COMPONENT NAME
@@ -141,6 +146,29 @@ const { handleFocus, handleBlur, focus, blur, showPopup, hidePopup, getNativeEl 
  * - Customizado: usa prop tabindex
  * - Padrão: 0 (focável na ordem natural)
  */
+/**
+ * Rótulo exibível de um item SELECIONADO.
+ *
+ * O `selected-item` do QSelect entrega a option; `optionLabel` pode ser chave ou
+ * função. Mesma resolução que o QSelect faria — só que aqui o conteúdo passa a
+ * ser um DssChip em vez do `.q-chip` nativo.
+ */
+function labelOfSelected(opt: any): string {
+  const ol = props.optionLabel
+  if (typeof ol === 'function') return String(ol(opt) ?? '')
+  if (opt !== null && typeof opt === 'object') return String(opt?.[ol as string] ?? '')
+  return String(opt ?? '')
+}
+
+/**
+ * Renderiza chips DSS no lugar dos `.q-chip` nativos.
+ *
+ * SÓ quando `useChips` está ligado E o consumidor não trouxe o próprio
+ * `selected-item` — sobrescrever o slot sem essa guarda quebraria os selects
+ * SEM chip, que são a maioria (o default é false) e exibem texto simples.
+ */
+const renderDssChips = computed(() => props.useChips && !slots['selected-item'])
+
 const computedTabindex = computed(() => {
   if (props.disabled || props.loading) return -1
   if (props.tabindex !== null && props.tabindex !== undefined) {
@@ -334,7 +362,35 @@ defineExpose<SelectExpose>({
     @popup-show="onPopupShow"
     @popup-hide="onPopupHide"
   >
-    <!-- Passthrough dinâmico de todos os slots para o QSelect -->
+    <!--
+      CHIP DSS no lugar do `.q-chip` nativo do Quasar.
+
+      Só entra quando `useChips` está ligado e o consumidor não trouxe o próprio
+      `selected-item` (ver renderDssChips) — sem essa guarda, sobrescrever o slot
+      quebraria os selects SEM chip, que exibem texto simples e são a maioria.
+
+      `color="neutral"`: o chip representa um VALOR escolhido, não ênfase
+      semântica. É o que encerra a divergência de o mesmo token aparecer cinza
+      aqui (via CSS sobre .q-chip) e azul em quem consome DssChip direto.
+
+      `size="xs"` (20px) NÃO é escolha estética: é a mesma restrição que o CSS
+      do `.q-chip` nativo aplicava via --dss-compact-control-height-xs. Em
+      `multiple + use-chips` um chip mais alto INVADE a faixa da label
+      flutuante — medido: com `md` (28px) o topo do chip entra sob a label.
+      Aqui a regra passa a viver na escala do próprio componente, não num patch.
+    -->
+    <template v-if="renderDssChips" #selected-item="scope">
+      <DssChip
+        class="dss-select__chip"
+        size="xs"
+        color="neutral"
+        :removable="!disabled && !readonly"
+        :remove-aria-label="`Remover ${labelOfSelected(scope.opt)}`"
+        @remove="scope.removeAtIndex(scope.index)"
+      >{{ labelOfSelected(scope.opt) }}</DssChip>
+    </template>
+
+    <!-- Passthrough dinâmico dos demais slots para o QSelect -->
     <template v-for="(_, name) in slots" :key="name" #[name]="slotProps">
       <slot :name="name" v-bind="slotProps ?? {}" />
     </template>

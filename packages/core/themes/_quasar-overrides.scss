@@ -1002,6 +1002,15 @@
 .text-dark { color: var(--dss-text-body); }
 .text-light { color: var(--dss-text-subtle); }
 
+/* NEUTRAL — exclusiva do DSS, NÃO é espelho do Quasar (que não tem esta cor).
+   Diferente das de cima, aqui não há redundância: é a definição primária.
+   Existe porque faltava ao sistema uma cor para "token de valor", que é estado
+   NEUTRO e não ênfase semântica. Sem ela, todo chip nascia `primary` e o mesmo
+   token aparecia azul no DssChip e cinza no `.q-chip` nativo do DssSelect —
+   duas linguagens visuais para a mesma coisa. Os valores abaixo são os que o
+   DssSelect já usava no chip nativo, para os dois convergirem. */
+.text-neutral { color: var(--dss-text-primary); }
+
 /* Background colors */
 .bg-primary { background-color: var(--dss-action-primary); }
 .bg-secondary { background-color: var(--dss-action-secondary); }
@@ -1012,6 +1021,9 @@
 .bg-info { background-color: var(--dss-feedback-info); }
 .bg-dark { background-color: var(--dss-gray-900); }
 .bg-light { background-color: var(--dss-gray-100); }
+/* NEUTRAL — ver nota em .text-neutral. Mesmo par de tokens que o DssSelect já
+   aplicava em `.q-field__native .q-chip`, para o chip DSS e o nativo convergirem. */
+.bg-neutral { background-color: var(--dss-gray-100); }
 
 /* Border colors */
 .border-primary { border-color: var(--dss-action-primary); }

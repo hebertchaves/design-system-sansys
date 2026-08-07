@@ -51,7 +51,12 @@ export function useChipClasses(
     // Classes de cor - estrategia diferente com/sem brand
     let colorClasses: string | string[] = ''
 
-    if (props.brand) {
+    // NEUTRAL e agnostico de brand: representa "token de valor", nao enfase
+    // semantica — um dado escolhido nao muda de cor porque o produto e Hub,
+    // Water ou Waste. Por isso ignora o caminho de brand.
+    const isNeutral = props.color === 'neutral'
+
+    if (props.brand && !isNeutral) {
       // COM BRAND: usa classe DSS para matching com seletores de _brands.scss
       // Ex: dss-chip--primary (CSS: [data-brand='hub'] .dss-chip--filled.dss-chip--primary)
       colorClasses = `dss-chip--${props.color}`
@@ -60,6 +65,10 @@ export function useChipClasses(
       if (props.variant === 'flat' || props.variant === 'outline') {
         // Variantes transparentes: apenas cor de texto
         colorClasses = `text-${props.color}`
+      } else if (isNeutral) {
+        // Neutral filled: fundo cinza pede texto ESCURO — `text-white` seria
+        // ilegivel. Par de tokens identico ao do chip nativo do DssSelect.
+        colorClasses = `bg-neutral text-neutral`
       } else {
         // Variante filled: fundo colorido + texto branco
         colorClasses = `bg-${props.color} text-white`

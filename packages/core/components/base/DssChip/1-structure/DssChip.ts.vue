@@ -1,13 +1,17 @@
 <template>
+  <!--
+    `role` é DERIVADO do contexto (ver computedRole) e não fixo. E `aria-selected`
+    só sai acompanhado de `role="option"` — fora dele é atributo inválido.
+  -->
   <div
     :class="chipClasses"
     :style="chipStyle"
     :tabindex="computedTabindex"
     :aria-label="ariaLabel"
-    :aria-selected="selected ? 'true' : undefined"
+    :aria-selected="computedRole === 'option' && selected ? 'true' : undefined"
     :aria-disabled="disable ? 'true' : undefined"
     :data-brand="brand || undefined"
-    role="option"
+    :role="computedRole"
     v-bind="$attrs"
     @click="handleClick"
     @keydown.enter="handleClick"
@@ -240,6 +244,15 @@ const chipStyle = computed(() => {
  * - Customizado: usa prop tabindex
  * - Padrao: -1 (nao focavel se nao clicavel)
  */
+/**
+ * Papel ARIA — derivado do contexto, não fixo (ver `role` em chip.types.ts).
+ * String vazia é opt-out explícito: remove o papel sem cair no default.
+ */
+const computedRole = computed(() => {
+  if (props.role !== undefined) return props.role === '' ? undefined : props.role
+  return props.clickable ? 'button' : undefined
+})
+
 const computedTabindex = computed(() => {
   if (props.disable) return -1
   if (props.tabindex !== null && props.tabindex !== undefined) {

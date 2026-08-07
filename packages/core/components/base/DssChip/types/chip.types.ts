@@ -33,6 +33,17 @@ export type ChipColor =
   | 'negative'
   | 'warning'
   | 'info'
+  /**
+   * Token de VALOR — cinza, sem ênfase semântica.
+   *
+   * Use quando o chip representa um item escolhido (valor de campo, filtro
+   * aplicado, tag) e não um estado com significado. As demais cores comunicam
+   * semântica (sucesso, erro, aviso); esta comunica "isto é um dado".
+   *
+   * É a única cor **agnóstica de brand**: um token de valor não muda de cor
+   * porque o produto é Hub, Water ou Waste.
+   */
+  | 'neutral'
 
 /**
  * Tamanhos disponíveis
@@ -151,6 +162,25 @@ export interface ChipProps {
 
   /** Tabindex customizado */
   tabindex?: number | string | null
+
+  /**
+   * Papel ARIA do chip. **O papel depende do contexto, não do componente.**
+   *
+   * Antes o chip emitia `role="option"` FIXO na raiz — em todo chip, fosse token
+   * de campo, tag ou filtro. `option` só é válido dentro de um `listbox`; fora
+   * disso o leitor de tela anuncia "opção" para algo que não está em lista
+   * nenhuma. Era papel falso na maioria dos usos.
+   *
+   * Agora é derivado e sobrescrevível:
+   * - informado → usa o que foi pedido (`''` remove o papel de vez);
+   * - omitido + `clickable` → `button`, que é o que o chip de fato faz (já
+   *   responde a Enter/Espaço);
+   * - omitido e não clicável → **nenhum papel** — é conteúdo, não widget.
+   *
+   * Quem monta um listbox declara `role="option"` explicitamente; só aí o
+   * `aria-selected` é emitido, porque fora de `option` ele é inválido.
+   */
+  role?: string
 
   // ========================================
   // Accessibility (WCAG 2.1 AA)

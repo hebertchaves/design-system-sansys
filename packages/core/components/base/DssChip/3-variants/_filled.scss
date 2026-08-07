@@ -36,6 +36,6 @@
 
   /* Remove button styling para fundo solido */
   .dss-chip__remove:hover {
-    background-color: color-mix(in srgb, white var(--dss-opacity-hover), transparent);
+    background-color: color-mix(in srgb, white calc(var(--dss-opacity-hover) * 100%), transparent);
   }
 }

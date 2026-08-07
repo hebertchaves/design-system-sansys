@@ -92,12 +92,23 @@ describe('DssChip', () => {
         expect(wrapper.classes()).toContain('dss-chip--clickable')
       })
 
-      it('applies selected class and aria-selected', () => {
+      it('applies selected class', () => {
         const wrapper = mount(DssChip, {
           props: { selected: true }
         })
         expect(wrapper.classes()).toContain('dss-chip--selected')
-        expect(wrapper.attributes('aria-selected')).toBe('true')
+      })
+
+      // `aria-selected` só é válido acompanhado de role=option. Antes era emitido
+      // sozinho, junto do role="option" fixo — atributo órfão na maioria dos usos.
+      it('emite aria-selected APENAS com role=option', () => {
+        const comOption = mount(DssChip, {
+          props: { selected: true, role: 'option' }
+        })
+        expect(comOption.attributes('aria-selected')).toBe('true')
+
+        const semRole = mount(DssChip, { props: { selected: true } })
+        expect(semRole.attributes('aria-selected')).toBeUndefined()
       })
 
       it('applies dense class', () => {
@@ -349,9 +360,27 @@ describe('DssChip', () => {
   // ===========================================================================
 
   describe('Accessibility', () => {
-    it('has role="option" by default', () => {
+    // O papel ARIA depende do CONTEXTO, não do componente. Antes o chip emitia
+    // role="option" FIXO — inválido fora de um listbox, que é a maioria dos usos
+    // (token de campo, tag, filtro). Agora é derivado e sobrescrevível.
+    it('NÃO emite role quando é conteúdo estático', () => {
       const wrapper = mount(DssChip)
+      expect(wrapper.attributes('role')).toBeUndefined()
+    })
+
+    it('deriva role=button quando clickable', () => {
+      const wrapper = mount(DssChip, { props: { clickable: true } })
+      expect(wrapper.attributes('role')).toBe('button')
+    })
+
+    it('respeita role explícito do consumidor', () => {
+      const wrapper = mount(DssChip, { props: { role: 'option' } })
       expect(wrapper.attributes('role')).toBe('option')
+    })
+
+    it('role="" remove o papel mesmo sendo clickable (opt-out)', () => {
+      const wrapper = mount(DssChip, { props: { clickable: true, role: '' } })
+      expect(wrapper.attributes('role')).toBeUndefined()
     })
 
     it('applies custom aria-label', () => {

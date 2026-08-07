@@ -432,36 +432,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-gray-100",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-radius",
-          "token": "--dss-radius-md",
-          "value": null,
-          "source": "2-composition/_panel.scss"
-        },
-        {
-          "property": "margin",
-          "token": null,
-          "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-compact-control-height-xs",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "min-height",
-          "token": "--dss-compact-control-height-xs",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "color",
           "token": "--dss-text-secondary",
           "value": null,
@@ -548,6 +518,12 @@
         {
           "property": "background-color",
           "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_panel.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
           "value": null,
           "source": "2-composition/_panel.scss"
         },
@@ -1202,24 +1178,6 @@
         ]
       },
       {
-        "name": "--dss-gray-100",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-radius-md",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-compact-control-height-xs",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-text-secondary",
         "usedIn": [
           "default"
@@ -1239,6 +1197,12 @@
       },
       {
         "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
         "usedIn": [
           "default"
         ]

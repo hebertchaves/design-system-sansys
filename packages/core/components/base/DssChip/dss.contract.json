@@ -74,7 +74,8 @@
           "positive",
           "negative",
           "warning",
-          "info"
+          "info",
+          "neutral"
         ]
       },
       {
@@ -153,6 +154,12 @@
         "type": "number | string | null",
         "controlHint": "text",
         "description": "Tabindex customizado"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Papel ARIA do chip. **O papel depende do contexto, não do componente.**"
       },
       {
         "name": "removeAriaLabel",

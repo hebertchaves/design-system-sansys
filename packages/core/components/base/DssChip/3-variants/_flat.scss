@@ -58,7 +58,7 @@
     color: currentColor;
 
     &:hover {
-      background-color: color-mix(in srgb, currentColor var(--dss-opacity-hover), transparent);
+      background-color: color-mix(in srgb, currentColor calc(var(--dss-opacity-hover) * 100%), transparent);
     }
   }
 }

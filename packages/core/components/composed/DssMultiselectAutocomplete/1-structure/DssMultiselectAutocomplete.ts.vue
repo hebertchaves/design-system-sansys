@@ -459,6 +459,7 @@ defineExpose<MultiselectAutocompleteExpose>({
             :key="String(t.value)"
             size="sm"
             variant="outline"
+            color="neutral"
             :removable="summaryChipRemovable"
             :remove-aria-label="`Remover ${t.label}`"
             @remove="removeValue(t.value)"
@@ -510,6 +511,7 @@ defineExpose<MultiselectAutocompleteExpose>({
           }]"
           size="md"
           variant="flat"
+          color="neutral"
           :removable="chipsRemovable && !disable && !readonly"
           :remove-aria-label="`Remover ${labelOfEntry(scope.opt)}`"
           @remove="removeValue(scope.opt)"
@@ -525,6 +527,7 @@ defineExpose<MultiselectAutocompleteExpose>({
           class="dss-multiselect-autocomplete__chip dss-multiselect-autocomplete__chip--counter"
           size="md"
           variant="flat"
+          color="neutral"
           :aria-label="counterAriaLabel"
         >
           {{ counterLabel }}

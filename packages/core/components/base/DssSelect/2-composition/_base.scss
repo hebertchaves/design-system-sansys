@@ -108,32 +108,16 @@
 
   /* ==========================================================================
      CHIPS NO CAMPO (quando useChips=true)
-     Chips nativos do QSelect estilizados com tokens DSS.
-     Para chips totalmente governados, usar slot selected-item + DssChip.
+
+     Não há CSS aqui: o DssSelect passou a renderizar `DssChip` no slot
+     `selected-item` (ver 1-structure), em vez do `.q-chip` nativo do QSelect.
+     As regras que existiam neste ponto pintavam o chip nativo com tokens DSS —
+     ficaram MORTAS, porque nenhum `.q-chip` é mais renderizado pelo componente.
+
+     A restrição de altura que elas carregavam (20px, para o chip não invadir a
+     label flutuante em `multiple + use-chips`) não se perdeu: virou `size="xs"`
+     no DssChip, que resolve para o mesmo --dss-compact-control-height-xs.
      ========================================================================== */
-
-  .q-field__native .q-chip {
-    background-color: var(--dss-gray-100);
-    color: var(--dss-text-primary);
-    font-family: var(--dss-font-family-sans);
-    font-size: var(--dss-font-size-sm);
-    border-radius: var(--dss-radius-md);
-    margin: 0;
-    /* Altura compacta (20px = QChip dense 24px − 4px): evita que o chip
-       sobreponha a label flutuante no modo multiple + use-chips. */
-    height: var(--dss-compact-control-height-xs);
-    min-height: var(--dss-compact-control-height-xs);
-  }
-
-  .q-field__native .q-chip__content {
-    font-family: var(--dss-font-family-sans);
-    font-size: var(--dss-font-size-sm);
-  }
-
-  /* Ícone de remover chip */
-  .q-field__native .q-chip__icon--remove {
-    color: var(--dss-text-secondary);
-  }
 
   /* ==========================================================================
      LABEL (gerada pelo QSelect como .q-field__label)
