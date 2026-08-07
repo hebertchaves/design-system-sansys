@@ -1,5 +1,6 @@
 import { readFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
+import { COMPONENT_GROUP_PATHS } from "../lib/componentGroups.js";
 
 /**
  * generate_pre_prompt_template — Read-Only (Generator)
@@ -338,7 +339,7 @@ export async function generatePrePromptTemplate(
   // Check if component dir exists and read meta
   let found = false;
   let meta: DssMeta | null = null;
-  for (const subDir of ["packages/core/components/base", "packages/core/components/composed", "packages/core/components/stress-test"]) {
+  for (const subDir of COMPONENT_GROUP_PATHS) {
     const candidate = resolve(dssRoot, subDir, pascal);
     if (existsSync(candidate)) {
       found = true;

@@ -1,5 +1,6 @@
 import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
+import { COMPONENT_GROUPS } from "../lib/componentGroups.js";
 
 interface ComponentQueryResult {
   component: string;
@@ -27,7 +28,6 @@ export async function queryComponent(
   // Fase 3 inteira (composed/) e para os stress tests — devolvia "não encontrado"
   // para componente que existe. Mesmo defeito que havia em recordAuditEvent.
   // Não achando em nenhum, cai em base/ para a mensagem de erro seguir legível.
-  const COMPONENT_GROUPS = ["base", "composed", "stress-test"];
   const componentDir =
     COMPONENT_GROUPS.map((g) => resolve(dssRoot, "packages/core/components", g, normalized)).find(
       (dir) => existsSync(dir)

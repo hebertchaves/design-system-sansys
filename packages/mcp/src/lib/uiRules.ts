@@ -1,5 +1,6 @@
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
+import { COMPONENT_GROUPS, FIXTURE_GROUPS } from "./componentGroups.js";
 
 /**
  * uiRules — Shared loader for the DSS UI Rules contract.
@@ -20,17 +21,11 @@ import { resolve, join } from "path";
 
 const SCHEMA_PATH = "docs/guides/ui-rules/ui-rules.schema.json";
 const SPACING_PATH = "packages/core/tokens/semantic/_spacing.scss";
-const COMPONENT_GROUPS = [
-  "base",
-  "composed",
-  "feedback",
-  "forms",
-  "layout",
-  "stress-test",
-] as const;
-
-/** Component groups that are fixtures, not production components. */
-const FIXTURE_GROUPS = new Set(["stress-test"]);
+// Grupos e fixtures vêm de lib/componentGroups.ts. Esta lista era a SEGUNDA
+// convenção do MCP: seis grupos, incluindo feedback/forms/layout — que existem
+// como diretório mas estão vazios. Duas convenções para o mesmo fato é
+// exatamente a divergência silenciosa que esta frente combate.
+const FIXTURE_SET = new Set<string>(FIXTURE_GROUPS);
 
 /** Non-component tokens allowed as leaves in a composition tree. */
 export const SENTINELS = new Set(["text", "*"]);
@@ -110,7 +105,7 @@ export function loadComponentCatalog(dssRoot: string): Map<string, CatalogEntry>
       catalog.set(entry.name, {
         name: entry.name,
         group,
-        isFixture: FIXTURE_GROUPS.has(group),
+        isFixture: FIXTURE_SET.has(group),
       });
     }
   }
