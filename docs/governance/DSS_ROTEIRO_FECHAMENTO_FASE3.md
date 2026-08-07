@@ -149,9 +149,11 @@ positivo mais caro que o defeito.
 
 ## Limites conhecidos
 
-- **O hook de pre-commit não é versionado.** Vive em `.git/hooks/`, fora do controle de versão
-  (não há husky). Os gates funcionam na máquina onde foram plugados; em clone novo ou CI é
-  preciso chamar os scripts npm explicitamente.
+- **O hook de pre-commit exige um passo de instalação.** A fonte versionada é
+  `scripts/hooks/pre-commit`; `.git/hooks/` está fora do controle de versão, como sempre. Em
+  clone novo, rode **`npm run setup:hooks`** — sem isso nenhum gate dispara no commit.
+  Ao acrescentar um gate, altere **a cópia versionada** e reinstale: mexer só em `.git/hooks/`
+  faz o gate ser silenciosamente apagado na próxima instalação.
 - **`declare module '*.vue'` no `env.d.ts` cega o type-check** para caminho `.vue` inexistente —
   foi o que escondeu os 8 imports quebrados do `DssDataCard` por meses. Um gate de resolução de
   import `.vue` fecharia isso; ainda não existe.

@@ -14,6 +14,19 @@ if echo "$STAGED" | grep -qE 'packages/core/.+/index\.js$|packages/core/index\.j
   fi
 fi
 
+# ── 0a. Higiene de SFC: import canônico + estilo inline ─────────────────────
+# Duas das 5 não-conformidades do stress test de Fase 3 que ainda eram "texto de
+# prompt" e passaram a ser verificáveis: import cruzado para o 1-structure de
+# outro componente (fura o encapsulamento) e style inline com valor dimensional
+# (hardcode fora do alcance do gate de tokens, que só varre SCSS).
+if echo "$STAGED" | grep -qE 'packages/core/components/.+\.(vue|ts)$|scripts/validate-sfc-hygiene\.cjs'; then
+  node scripts/validate-sfc-hygiene.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Higiene de SFC reprovada."
+    exit 1
+  fi
+fi
+
 # ── 0b. Grafia de variante + colisão estado×valor (anti-drift) ───────────────
 # A: QBtn usa `outline`, QField usa `outlined` (API do Quasar) — o DSS espelha
 # por família; gate impede drift de grafia + variante quebrada (type ≠ classe).
