@@ -1,5 +1,8 @@
-import { readFileSync, existsSync } from "fs";
-import { resolve } from "path";
+import {
+  loadSpacingScale,
+  closestSpacingToken,
+  type SpacingToken,
+} from "../lib/uiRules.js";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -55,12 +58,13 @@ interface GridValidationResult {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 /**
- * Valid DSS spacing tokens (in pixels)
- * Maps to --dss-spacing-{0..16}
+ * Spacing tokens are read from tokens/semantic/_spacing.scss at call time.
+ *
+ * They used to be a hardcoded array whose *index* became the token name, which
+ * produced wrong suggestions above 24px: the value 40 resolved to
+ * `--dss-spacing-8` (32px) when the real 40px token is `--dss-spacing-10`.
+ * Deriving from the scale keeps the suggestion honest as the scale evolves.
  */
-const VALID_SPACING_TOKENS = [
-  0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64,
-] as const;
 
 /**
  * Valid grid column counts per Material Design and CSS Grid conventions
@@ -106,6 +110,18 @@ const RECOMMENDED_CONFIGS = {
   },
 } as const;
 
+/**
+ * Normative references.
+ *
+ * These used to cite `GRID_INSPECTOR_MCP_CONTRACT_v0.1.md`, a document that does
+ * not exist anywhere in the repository — every finding pointed the reader at a
+ * dead end. They now cite the real docs.
+ */
+const SPACING_REFERENCE = "docs/guides/ui-rules/00_SPACING_HIERARCHY.md";
+const GRID_REFERENCE = "docs/guides/dss-grid-layout.md";
+const INSPECTOR_REFERENCE =
+  "docs/governance/GRID_INSPECTOR_IMPLEMENTATION_GUIDE.md";
+
 // ─── Main Validation Function ─────────────────────────────────────────────────
 
 /**
@@ -128,6 +144,7 @@ export async function validateGridLayout(
 ): Promise<GridValidationResult> {
   const violations: GridViolation[] = [];
   const suggestions: GridViolation[] = [];
+  const spacingScale = loadSpacingScale(dssRoot);
 
   // ── Critical Validations ────────────────────────────────────────────────────
 
@@ -137,7 +154,8 @@ export async function validateGridLayout(
       config.overlay,
       "overlay",
       violations,
-      "GRID_INSPECTOR_MCP_CONTRACT_v0.1.md — Regra 1: Spacing DEVE usar tokens DSS"
+      spacingScale,
+      `${SPACING_REFERENCE} — Regra 1: Spacing DEVE usar tokens DSS`
     );
   }
 
@@ -146,7 +164,8 @@ export async function validateGridLayout(
       config.layout,
       "layout",
       violations,
-      "GRID_INSPECTOR_MCP_CONTRACT_v0.1.md — Regra 1: Spacing DEVE usar tokens DSS"
+      spacingScale,
+      `${SPACING_REFERENCE} — Regra 1: Spacing DEVE usar tokens DSS`
     );
   }
 
@@ -156,7 +175,7 @@ export async function validateGridLayout(
       config.overlay,
       config.layout,
       violations,
-      "GRID_INSPECTOR_MCP_CONTRACT_v0.1.md — Regra 2: Overlay vs Layout DEVE ser consistente"
+      `${GRID_REFERENCE} — Regra 2: Overlay vs Layout DEVE ser consistente`
     );
   }
 
@@ -165,7 +184,7 @@ export async function validateGridLayout(
     validateColumnCount(
       config.overlay.columns,
       violations,
-      "GRID_INSPECTOR_MCP_CONTRACT_v0.1.md — Regra 3: Grid columns DEVE ser válido"
+      `${GRID_REFERENCE} — Regra 3: Grid columns DEVE ser válido`
     );
   }
 
@@ -256,8 +275,10 @@ function validateSpacingTokens(
   },
   context: "overlay" | "layout",
   violations: GridViolation[],
+  spacingScale: SpacingToken[],
   reference: string
 ): void {
+  const validValues = new Set(spacingScale.map((t) => t.px));
   const properties = [
     { name: "gutter.x", value: gridConfig.gutter?.x },
     { name: "gutter.y", value: gridConfig.gutter?.y },
@@ -270,9 +291,8 @@ function validateSpacingTokens(
   for (const { name, value } of properties) {
     if (value === undefined) continue;
 
-    if (!VALID_SPACING_TOKENS.includes(value as any)) {
-      const closest = findClosestToken(value);
-      const tokenIndex = VALID_SPACING_TOKENS.indexOf(closest);
+    if (!validValues.has(value)) {
+      const closest = closestSpacingToken(value, spacingScale);
 
       violations.push({
         severity: "critical",
@@ -281,11 +301,10 @@ function validateSpacingTokens(
         context: {
           property: `${context}.${name}`,
           actual: value,
-          expected: VALID_SPACING_TOKENS as any,
-          suggestion: {
-            value: closest,
-            token: `--dss-spacing-${tokenIndex}`,
-          },
+          expected: spacingScale.map((t) => t.px),
+          suggestion: closest
+            ? { value: closest.px, token: closest.name }
+            : undefined,
         },
         reference,
       });
@@ -389,7 +408,7 @@ function suggestAutoColumnWidth(
         suggestion: recommended,
       },
       reference:
-        "GRID_INSPECTOR_MCP_CONTRACT_v0.1.md — Regra 6: autoColumnWidth baseado em breakpoint",
+        `${INSPECTOR_REFERENCE} — Regra 6: autoColumnWidth baseado em breakpoint`,
     });
   }
 }
@@ -419,7 +438,7 @@ function suggestGutterByBreakpoint(
         suggestion: recommended,
       },
       reference:
-        "GRID_INSPECTOR_MCP_CONTRACT_v0.1.md — Regra 7: Gutter otimizado por dispositivo",
+        `${INSPECTOR_REFERENCE} — Regra 7: Gutter otimizado por dispositivo`,
     });
   }
 }
@@ -480,15 +499,6 @@ function suggestColumnCountByBreakpoint(
 }
 
 // ─── Helper Functions ─────────────────────────────────────────────────────────
-
-/**
- * Finds the closest valid DSS spacing token
- */
-function findClosestToken(value: number): number {
-  return VALID_SPACING_TOKENS.reduce((prev, curr) =>
-    Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-  );
-}
 
 /**
  * Gets breakpoint name from viewport width
@@ -552,7 +562,9 @@ Severity Levels:
 - INFO: Suggestions for best practices
 
 References:
-- GRID_INSPECTOR_MCP_CONTRACT_v0.1.md
+- docs/guides/ui-rules/00_SPACING_HIERARCHY.md
+- docs/guides/dss-grid-layout.md
+- docs/governance/GRID_INSPECTOR_IMPLEMENTATION_GUIDE.md
 - CLAUDE.md — Princípio #1: Token First
 - Material Design Grid Specification
 `.trim();

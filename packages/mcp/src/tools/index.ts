@@ -17,6 +17,9 @@ import { generateComponentScaffold } from "./generateComponentScaffold.js";
 import { generatePrePromptTemplate } from "./generatePrePromptTemplate.js";
 import { recordAuditEvent } from "./recordAuditEvent.js";
 import { validateGridLayout } from "./validateGridLayout.js";
+import { validateComposition } from "./validateComposition.js";
+import { validateSpecReadiness } from "./validateSpecReadiness.js";
+import { requestSpecParecer } from "./requestSpecParecer.js";
 import { describeGridInspector } from "./describeGridInspector.js";
 import { validateVisualContract, validate_visual_contract_schema } from "./validateVisualContract.js";
 
@@ -166,6 +169,77 @@ const ValidateGridLayoutSchema = z.object({
     .describe("Theme context."),
 });
 
+// ── Composition schema (ui-rules.schema.json consumer) ─────────────────────
+
+interface CompositionNodeInput {
+  component: string;
+  variant?: string;
+  props?: Record<string, unknown>;
+  states?: string[];
+  children?: CompositionNodeInput[];
+}
+
+const CompositionNodeSchema: z.ZodType<CompositionNodeInput> = z.lazy(() =>
+  z.object({
+    component: z
+      .string()
+      .describe(
+        'Component or element name: "DssCard", "q-checkbox", "text", "div".'
+      ),
+    variant: z
+      .string()
+      .optional()
+      .describe('Variant in use (e.g. "elevated") — used by variant-qualified rules.'),
+    props: z
+      .record(z.unknown())
+      .optional()
+      .describe("Props declared on this node — checked against required_props."),
+    states: z
+      .array(z.string())
+      .optional()
+      .describe(
+        'States this node declares (e.g. ["empty", "loading", "error"]). Tables and lists must declare "empty" and "loading".'
+      ),
+    children: z.array(CompositionNodeSchema).optional(),
+  })
+);
+
+const ValidateCompositionSchema = z.object({
+  tree: CompositionNodeSchema.describe(
+    "Root node of the proposed component tree."
+  ),
+  context: z
+    .string()
+    .optional()
+    .describe('Screen context for the report (e.g. "Atender Solicitações — listagem").'),
+});
+
+const ValidateSpecReadinessSchema = z
+  .object({
+    specPath: z
+      .string()
+      .optional()
+      .describe(
+        'Caminho do .md da spec. Em servidor REMOTO só é aceito dentro da raiz do DSS — para arquivo do analista use specContent.'
+      ),
+    specContent: z
+      .string()
+      .optional()
+      .describe(
+        'Conteúdo do markdown da spec. Use esta forma quando o MCP estiver hospedado: o arquivo do analista não existe no servidor.'
+      ),
+  })
+  .refine((v) => !!(v.specPath || v.specContent), {
+    message: "Informe specPath ou specContent.",
+  });
+
+const RequestSpecParecerSchema = z
+  .object({
+    specPath: z.string().optional().describe("Caminho do .md da spec (em servidor remoto, só dentro da raiz do DSS)."),
+    specContent: z.string().optional().describe("Conteúdo do markdown da spec. Use quando o MCP estiver hospedado."),
+  })
+  .refine((v) => !!(v.specPath || v.specContent), { message: "Informe specPath ou specContent." });
+
 // ── Phase 4 schemas ────────────────────────────────────────────────────────
 
 const RecordAuditEventSchema = z.object({
@@ -210,7 +284,7 @@ const RecordAuditEventSchema = z.object({
 
 // ─── Tool Definitions ─────────────────────────────────────────────────────────
 
-const TOOL_DEFINITIONS = [
+export const TOOL_DEFINITIONS = [
   // ── Phase 1 Tools ──────────────────────────────────────────────────────────
   {
     name: "query_component",
@@ -436,6 +510,66 @@ const TOOL_DEFINITIONS = [
       },
     },
   },
+  {
+    name: "validate_composition",
+    description:
+      "Validates a proposed component tree (a screen, a section, a form) against the DSS composition contract in docs/guides/ui-rules/ui-rules.schema.json. Checks: (1) every node is a real DSS component — catches raw Quasar with a DSS equivalent and invented component names (CRITICAL), (2) forbidden/allowed children and forbidden contexts (CRITICAL/HIGH), (3) self-nesting such as dialog over dialog (CRITICAL), (4) Matryoshka hierarchy inversion (MEDIUM), (5) required props (HIGH), (6) tables and lists must declare empty and loading states (HIGH), (7) form field density (MEDIUM). CALL THIS TOOL BEFORE generating screen or Phase 3 composed-component code. Returns verdict, violations with tree paths, and schemaIntegrity — the schema's own vocabulary existence-checked against the real catalog. Read-Only — no files are modified.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        tree: {
+          type: "object",
+          description:
+            'Root node of the proposed component tree. Each node: { component, variant?, props?, states?, children? }. Use "text" for text nodes. Declare states like ["empty","loading"] on tables and lists.',
+          properties: {
+            component: { type: "string", description: 'Component or element name (e.g. "DssCard", "q-checkbox", "text").' },
+            variant: { type: "string", description: 'Variant in use (e.g. "elevated").' },
+            props: { type: "object", description: "Props declared on this node." },
+            states: { type: "array", items: { type: "string" }, description: 'Declared states (e.g. ["empty","loading","error"]).' },
+            children: { type: "array", items: { type: "object" }, description: "Child nodes, same shape." },
+          },
+          required: ["component"],
+        },
+        context: {
+          type: "string",
+          description: 'Screen context for the report (e.g. "Atender Solicitações — listagem").',
+        },
+      },
+      required: ["tree"],
+    },
+  },
+  {
+    name: "validate_spec_readiness",
+    description:
+      "Portão de prontidão da ESPECIFICAÇÃO FUNCIONAL do analista. Lê o markdown que o analista já escreve (nada precisa ser reescrito em outro formato) e devolve um relatório de completude por regime: (a) detecta o GÊNERO do documento — especificação funcional completa vs lista de requisitos de mudança — e só cobra o que aquele gênero exige; (b) lista as seções obrigatórias ausentes; (c) lista o que a spec NÃO DIZ e bloqueia a passagem para a fase de Entrega (estado vazio, estado de carregamento, estado de erro, veículo da mensagem, superfície da tela); (d) aponta recomendados sem bloquear (volume esperado, responsividade); (e) registra acessibilidade como débito de HORIZONTE, que nunca reprova. CHAME ANTES de gerar qualquer código ou protótipo a partir de uma spec. Verifica COMPLETUDE, nunca a correção da regra de negócio. Read-Only.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        specPath: {
+          type: "string",
+          description:
+            "Caminho do .md da spec. Em servidor remoto só vale dentro da raiz do DSS.",
+        },
+        specContent: {
+          type: "string",
+          description:
+            "Conteúdo do markdown da spec. Use esta forma quando o MCP estiver hospedado.",
+        },
+      },
+    },
+  },
+  {
+    name: "request_spec_parecer",
+    description:
+      "Devolve um ROTEIRO para VOCÊ (agente) ler a especificação funcional e emitir um parecer semântico. NÃO É GATE: não reprova, não emite veredito e não altera o resultado de validate_spec_readiness. Complementa o portão determinístico — enquanto aquele verifica se a spec MENCIONA algo, este roteiro pergunta se o que ela DIZ é coerente: contradição interna, referência órfã, cobertura entre regra/cenário/critério, vagueza que decide comportamento de tela, termo inconsistente, estado sem transição, caminho infeliz sem contrapartida visual, e escopo negativo furado pelo corpo. REGRA OBRIGATÓRIA da sua resposta: toda observação carrega CITAÇÃO literal da spec — sem âncora é opinião e deve ser descartada. NÃO opine sobre a correção da regra de negócio nem repita o que o portão já apontou. Zero observações é resposta válida. Read-Only.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        specPath: { type: "string", description: "Caminho do .md da spec." },
+        specContent: { type: "string", description: "Conteúdo do markdown da spec (use quando hospedado)." },
+      },
+    },
+  },
   // ── Phase 4 Tools ──────────────────────────────────────────────────────────
   {
     name: "record_audit_event",
@@ -606,8 +740,46 @@ export function registerTools(server: Server): void {
         };
       }
 
+      case "validate_composition": {
+        const input = ValidateCompositionSchema.parse(args ?? {});
+        const result = await validateComposition(input, DSS_ROOT);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "validate_spec_readiness": {
+        const input = ValidateSpecReadinessSchema.parse(args ?? {});
+        const result = await validateSpecReadiness(input, DSS_ROOT);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "request_spec_parecer": {
+        const input = RequestSpecParecerSchema.parse(args ?? {});
+        const result = await requestSpecParecer(input, DSS_ROOT);
+        return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+      }
+
       // ── Phase 4 ────────────────────────────────────────────────────────────
       case "record_audit_event": {
+        // Única tool que ESCREVE em disco (auditHistory do dss.meta.json).
+        // Num servidor exposto por rede sem autenticação, qualquer um poderia
+        // mutar o histórico de auditoria do repositório. Fail-safe: recusa.
+        if (process.env.DSS_MCP_REMOTE === "1" && !process.env.DSS_MCP_TOKEN) {
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify({
+                error:
+                  "record_audit_event é uma tool de ESCRITA e está desabilitada: " +
+                  "o servidor está exposto por rede (DSS_MCP_REMOTE=1) sem DSS_MCP_TOKEN. " +
+                  "Defina um token para habilitar, ou use o servidor local via stdio.",
+              }, null, 2),
+            }],
+          };
+        }
         const input = RecordAuditEventSchema.parse(args ?? {});
         const result = await recordAuditEvent(
           input.componentName,

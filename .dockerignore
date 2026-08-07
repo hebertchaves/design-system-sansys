@@ -1,0 +1,28 @@
+# Contexto de build da imagem do MCP.
+#
+# Sem isto o Docker envia o repositório inteiro (incluindo node_modules e .git),
+# o que torna o build lento e a imagem grande sem necessidade.
+
+.git
+.gitlab-ci.yml
+node_modules
+**/node_modules
+**/dist
+**/build
+.claude
+test-results
+chrome
+*.log
+
+# Superfícies que o MCP não lê em runtime
+apps/
+packages/grid-inspector/
+packages/core/stories/
+packages/core/test/
+**/*.test.js
+**/*.spec.ts
+**/__snapshots__/
+
+# Artefatos grandes fora do caminho de leitura
+*.pdf
+bun.lock

@@ -44,6 +44,115 @@
   aqui — é curadoria humana consciente. *(Opção estratégica adiada: validador Quasar-aware p/ resolver
   bg-primary→token; ou aposentar a REFERENCIA em favor do contrato.)*
 
+- 🟡 **Governança da IMPLEMENTAÇÃO (o que o produto constrói) — camada 1 de 4 entregue** (2026-08).
+  📖 **Visão consolidada do processo: `DSS_PROCESSO_DESENVOLVIMENTO_ASSISTIDO.md`** (fronteira Descoberta+Solução =
+  como a spec nasce / Entrega = onde o DSS entra; divisão analista×designer; o que roda hoje; limites; medição).
+  Contexto: as frentes do DSS governam o *componente*; **nada governava a implementação**. Causa de origem: D4
+  do blueprint tirou `purpose.*`/`examples[]` do contrato (correto — proveniência não certificável), mas a
+  orientação de uso não entrou em nenhum lugar com gate.
+  - ✅ **(1) `ui-rules.schema.json` ressuscitado** — de 28/abr a 05/ago/2026 sem consumidor algum (forense de git:
+    o schema nasceu 1 mês ANTES do MCP; os planos das Fases 1–4 do MCP nunca o citaram; `DSS_UI_RULES.md` §3.2
+    declarava o consumo no presente como fato consumado). Agora tem consumidor real: tool **`validate_composition`**
+    (9 regras: vocabulário DSS, allowed/forbidden children, forbidden_contexts, auto-aninhamento, Matryoshka,
+    required_props, estados de dados, densidade de formulário). Schema → v1.2.0 (`applies_to`/`field_components`:
+    as regras de tela existiam sem dizer a QUEM se aplicam, logo eram inexecutáveis). **Anti-apodrecimento:** nada
+    transcrito para constante — vocabulário existence-checked a cada chamada contra o catálogo real e a escala real
+    de spacing; resultado em `schemaIntegrity`. Reproduz o NC-03 do stress test (`<q-checkbox>` cru) sozinho.
+  - ⏳ **Pendente decidir: gate de pre-commit** para `schemaIntegrity` (hoje o schema só se anuncia se alguém
+    CHAMAR a tool — é o mesmo modo de falha que o matou). Único ponto que fecha o anti-apodrecimento de vez.
+  - ✅ **(2) Ontologia de funcionalidade** — `DSS_ONTOLOGIA_FUNCIONALIDADE.md` + `dss.ontology.json` (v0.1.0,
+    27 entidades, 83 campos, **27/27 com `evidencia`** apontando spec real). Derivada de RF-0292D (SPC/Serasa,
+    692 linhas). **Método: descrever, não inventar** — entidade sem evidência não entra; lacuna só entra
+    verificada por busca negativa (grep=0), não por impressão. **`regime` é o conceito central** (obrigatorio/
+    recomendado/**horizonte**): reconcilia o que a produção Sansys faz HOJE com o alvo do DSS. **Acessibilidade
+    = `horizonte` por decisão explícita do dono (ago/2026)** — registrada como débito, NUNCA reprova a spec;
+    NÃO afrouxa a Constituição #4, que segue vinculante no nível do COMPONENTE. Achados: a spec é BOA (escopo
+    negativo, 41 BDD Gherkin, 40 CA) — as lacunas são do **template**, não do analista (não há campo para
+    estado vazio/carregando/erro, texto de mensagem, volume, responsividade); §2.4 "Elementos a preservar" é a
+    árvore de composição escrita em prosa (input direto da `validate_composition`); §2.4 manda reprototipar "no
+    padrão do sistema" **sem citar o DSS**; o checklist exige inferir a convenção de tachado (não é legível por
+    máquina). **v0.2.0 revalidada contra +2 specs** (#85505 fiscal/Water, #33950 jurídico/Rio — autores e módulos
+    distintos): 33 entidades, 97 campos, 33/33 com evidência. Aprendizado central: **NÃO existe template único**
+    (3 specs = 3 formatos) → criado o conceito de **`genero`** e regimes `condicional:genero`; exigir a estrutura
+    da RF-0292D reprovaria a #33950 por ~15 seções. Rebaixados: `cenario` e `criterio_aceite` (Gherkin 82/18/**0**;
+    CA 40/sim/**0**) e `estoria.para` (Como/Quero/Para só existe na 0292D). Novas: `maquina_estado` (promovida — o que
+    mais governa tela nas 3), `rastreio` (melhor prática da amostra: #33950 amarra 12 requisitos à estória),
+    `contexto_negocio` ('Premissas' tem 2 semânticas), `integracao`, `parametrizacao` (tela com flag por cliente tem
+    DUAS composições; a spec descreve uma), `historico_documento`, `regra.motivo`. **Lacunas confirmadas SISTÊMICAS
+    (0 em 3/3):** estado vazio · carregando · volume · **acessibilidade** (os hits eram falsos positivos — base64 e a
+    palavra 'gost*aria*'). Mensagem: 22 menções somadas, **nenhuma** redige texto final ou diz o veículo. **Handoff de
+    design estruturalmente vazio:** §2.4 da #85505 é cabeçalho SEM CONTEÚDO; a da 0292D manda reprototipar 'no padrão
+    do sistema' sem apontar nada; a #33950 dá 40 imagens. **O DSS não é citado em nenhuma das 3.** ⚠️ Amostra=3 fecha
+    o sistêmico vs individual, mas não `cardinalidade` nem o número de gêneros. 'modal×tela' NÃO se repetiu (é da 0292D).
+  - ✅ **(3) Portão de prontidão da spec** — `scripts/emit-spec.mjs` + tool MCP **`validate_spec_readiness`**.
+    **DERIVADO, nunca autorado (D1):** lê o markdown que o analista JÁ escreve; ele não redige nenhum JSON —
+    era a mudança cultural que encontraria resistência. Detecta o `genero` e só cobra o que aquele gênero exige
+    (a #33950 não é reprovada por não ter critério de aceite). Reporta por regime: bloqueantes · recomendados ·
+    **horizonte (acessibilidade, nunca reprova)**. A tool DELEGA ao emissor em vez de reimplementar as regras —
+    duas fontes de verdade divergiriam em silêncio. **Enquadramento:** Descoberta+Solução são construção conjunta
+    designer+analista, então o relatório NÃO fiscaliza ninguém — diz à DUPLA quando a spec pode atravessar para a
+    Entrega. **Verificado nas 3 specs reais:** todas `incompleta`, com as mesmas 5 lacunas bloqueantes.
+    ⚠️ **Mecanismo de controle provou seu valor na 1ª execução:** o padrão de controle `deverá` deu 0 nas 3 specs
+    porque `\b` em JS deriva de `\w` = `[A-Za-z0-9_]` e **não casa depois de letra acentuada** — sem os controles,
+    um regex quebrado teria APROVADO as 3 em silêncio. Veredito `inconclusivo` ≠ aprovação.
+    **Limites declarados:** verifica completude/coerência estrutural, NUNCA correção de regra de negócio; entidades
+    semânticas (campo, comando, `maquina_estado`) não são extraídas — exigem leitura de significado, que é parecer
+    probabilístico (item 5) e por isso não vira gate.
+  - ⏳ **Pendente decidir: o portão entra em pre-commit/CI?** Hoje roda sob demanda (`npm run spec:check`). Specs
+    vivem fora do repo (Desktop/Confluence), então o gate natural não é o pre-commit do DSS — é a superfície do
+    item 4.
+  - 🟡 **(4) Superfície onde o analista escreve — METADE entregue.** ✅ **Template:** `DSS_SPEC_BLOCO_INTERFACE.md`
+    — uma seção **§2.5 Interface**, dona = **designer**, que entra AO LADO do que o analista já escreve (não desloca
+    nada). 7 campos: superfície · estados de dados · mensagens (texto exato + veículo) · volume · responsividade ·
+    acessibilidade (horizonte) · elementos a preservar. **Laço fechado e verificado:** RF-0292D real + §2.5 preenchida
+    → portão vira `incompleta` (5 bloqueantes) em **`pronta`**; as 3 specs originais seguem `incompleta` (sem aprovação
+    falsa). Fechar o laço expôs divergência template↔portão: o detector de volume não reconhecia a redação do PRÓPRIO
+    template ("Máximo esperado: N") — corrigido no `emit-spec.mjs`. ⏳ **Integração (validar na ferramenta) BLOQUEADA
+    por fato desconhecido:** as 3 specs têm assinatura de exportação **Google Docs → Markdown** (imagens em referência
+    + base64 no rodapé, escapes de ponto, pseudo-cabeçalhos em negrito), mas isso é INFERÊNCIA — falta confirmar onde
+    o analista escreve de fato, quem administra e se a organização autoriza integração. Existe MCP de Google Drive
+    disponível, não testado. **Não construir integração para ferramenta suposta.**
+  - 🔜 ✅ **(5) Parecer semântico — ROTEIRO, não gate.** `scripts/spec-parecer.mjs` + tool
+    **`request_spec_parecer`** + `npm run spec:parecer`. **Decisão de arquitetura: o DSS NÃO chama LLM.** O MCP não
+    faz chamada de rede alguma e o `MCP_READ_ONLY_CONTRACT` §3 exige que ele "observe e explique, nunca decida" —
+    juízo probabilístico embutido o tornaria criativo/não-reprodutível e daria à opinião aparência de veredito da
+    ferramenta. Divisão: **DSS monta o roteiro (determinístico) · agente responde (juízo) · humano confere**.
+    8 perguntas que busca textual não alcança: contradição interna · referência órfã · cobertura regra↔cenário↔CA ·
+    vagueza que decide comportamento · termo inconsistente · estado sem transição · caminho infeliz sem contrapartida ·
+    escopo negativo furado. **Disciplina anti-achismo:** toda observação exige **citação literal** (mesmo princípio do
+    `verifiedBy`) — sem âncora é opinião e se descarta; com âncora o humano confere em segundos. O roteiro **importa
+    o resultado do portão e manda NÃO repetir** o que já foi apontado por ausência. Verificado: `isGate:false`, sem
+    campo de veredito, exit 0 sempre, portão inalterado. **Dogfood — achado real e novo (fora dos exemplos de
+    calibragem):** na RF-0292D, BDD07 (lote somente-leitura: Enviado/Negativado/Cancelado) e BDD08 (lote editável:
+    Em Análise/Neg. Aprovada/Neg. Reprovada) **não cobrem "Pendente"**, que consta na lista de status (BDD10, CA11) —
+    a spec não diz se um lote Pendente abre travado ou editável. ⚠️ **Limite estrutural:** parecer pode errar; ausência
+    de observação NÃO significa spec correta. ·
+    **(6) MCP servido a ferramentas externas — PRÉ-REQUISITOS FEITOS, hospedagem
+    pendente.** A descrição "transporte pronto, falta hospedar" era otimista: o transporte funciona (via `/mcp`,
+    protocolo MCP real, 15/15 tools respondem), mas expor exigia 4 correções, TODAS feitas e verificadas:
+    (a) **`/tools` mentia** — array escrito à mão que já driftou (anunciava 13; servidor registrava 15, faltando
+    `validate_composition` e `validate_spec_readiness`). Agora deriva de `TOOL_DEFINITIONS`;
+    (b) **leitura de arquivo arbitrário** — `validate_spec_readiness` aceitava QUALQUER caminho absoluto; hospedado
+    = ler `/etc/passwd`. Servidores HTTP marcam `DSS_MCP_REMOTE=1` e caminho fora da raiz é recusado;
+    (c) **remoto era inútil** — o `.md` do analista não existe no servidor. Adicionado `specContent` (+ `--stdin` no
+    emissor, mantendo fonte única). Verificado: 24 KB por HTTP → veredito correto;
+    (d) **tool de ESCRITA exposta sem auth** — `record_audit_event` grava no `dss.meta.json`. **Comprovado na prática:
+    um teste meu MUTOU o `dss.meta.json` do DssButton via HTTP não autenticado** (revertido). Agora: Bearer opcional
+    (`DSS_MCP_TOKEN`, `/health` livre) e a escrita se RECUSA em modo remoto sem token.
+    ✅ **Empacotamento portável pronto:** `packages/mcp/Dockerfile` + `.dockerignore` + **`DSS_MCP_DEPLOY.md`**.
+    **O plano Fase 4 tratava o MCP como stateless e ELE NÃO É** — as tools leem o repo em runtime (docs/, components/,
+    tokens/, scripts/): **~18 MB viajam com o código**; sem eles o servidor sobe, responde /health e TODA tool devolve
+    "não encontrado" (falha que parece sucesso). Imagem multi-stage, usuário não-root, `DSS_MCP_REMOTE=1` fixo.
+    **`/health` agora carimba `content.sha` + `builtAt`** — MCP defasado mente com confiança; agora a defasagem é
+    visível (comparar com HEAD da main) → **deploy precisa ser automático a cada merge**. ⚠️ **Docker não existe no
+    ambiente: a imagem NÃO foi construída.** Verificado: todo `COPY` existe · ontologia sob docs/ acompanha · /health
+    novo responde · comando do HEALTHCHECK retorna 0. Primeiro `docker build` pode exigir ajuste no `npm ci` com
+    workspaces. ⏳ **Falta:** escolher ONDE hospedar — infra, não código; 3 perguntas em `DSS_MCP_DEPLOY.md` §6
+    (padrão de nuvem Veolia? internet+token ou rede interna? quem opera?). **Item 4 (add-on no Google Docs) DEPENDE deste**: Apps Script não roda Node, então validar
+    dentro do Docs exige endpoint hospedado — senão duplicaria as regras. · **(7) sinais de
+    runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
+    `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.
+
 - 🟡 **Visual Height do DssInput (issues #3/#4)** — auto-height do Quasar: label ~2.5px fora do centro em
   repouso (#3); com valor, a label flutuante **sobrepõe** o valor centralizado no native (#4). Tensão:
   altura compacta (zero padding vertical) × reserva de topo p/ label flutuante. `[[project_visual_height_propagacao]]`.

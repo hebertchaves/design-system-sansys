@@ -34,9 +34,23 @@ As regras de UI estão divididas em módulos temáticos para facilitar a consult
 O Grid Inspector utiliza as regras definidas no **Módulo 1** para validar se os designs no Figma respeitam os tokens de espaçamento (`--dss-spacing-*`) e as larguras máximas de container. Qualquer desvio das regras documentadas aqui será sinalizado como erro no Inspector.
 
 ### 3.2. Model Context Protocol (MCP)
-Agentes de IA (como o Claude Code) que constroem telas ou componentes da Fase 3 **DEVEM** consultar os módulos de regras correspondentes antes de gerar o código. O MCP usará estas regras para validar se a composição proposta viola algum padrão do DSS.
+Agentes de IA (como o Claude Code) que constroem telas ou componentes da Fase 3 **DEVEM** consultar os módulos de regras correspondentes antes de gerar o código. O MCP usa estas regras para validar se a composição proposta viola algum padrão do DSS.
 
-O arquivo `ui-rules/ui-rules.schema.json` é o contrato programático que o MCP consome diretamente para validar composições. Ele mapeia: hierarquia de aninhamento por nível, filhos permitidos e proibidos por componente, regras de espaçamento e posição de ações.
+O arquivo `ui-rules/ui-rules.schema.json` é o contrato programático que o MCP consome para validar composições. Ele mapeia: hierarquia de aninhamento por nível, filhos permitidos e proibidos por componente, regras de espaçamento, estados obrigatórios de dados e posição de ações.
+
+**Consumidor:** a tool **`validate_composition`** (`packages/mcp/src/tools/validateComposition.ts`) recebe a árvore de componentes proposta e avalia 9 regras derivadas deste schema:
+
+| Regra | O que pega | Severidade |
+|---|---|---|
+| R1 — vocabulário DSS | Quasar cru com equivalente DSS · componente inexistente | CRITICAL |
+| R2 / R3 — `forbidden_children` / `allowed_children` | Aninhamento direto inválido | CRITICAL / HIGH |
+| R4 / R5 — `forbidden_contexts` / auto-aninhamento | Contexto proibido · modal sobre modal | HIGH / CRITICAL |
+| R6 — hierarquia Matryoshka | Container dentro de elemento de nível menor | MEDIUM |
+| R7 — `required_props` | Prop obrigatória ausente (ex.: `ariaLabel` no DssSpinner) | HIGH |
+| R8 — estados de dados | Tabela/lista sem estado vazio ou de carregamento | HIGH |
+| R9 — densidade de formulário | Acima de `max_visible_fields` | MEDIUM |
+
+> ⚠️ **Anti-apodrecimento.** Este schema ficou de 28/abr a 05/ago/2026 sem nenhum consumidor: o texto acima declarava o consumo no presente, mas os planos técnicos do MCP (Fases 1–4) nunca o referenciaram, e o servidor foi construído um mês depois sem essa ligação. Para que não se repita, **nada aqui é transcrito para constante em código** — a cada chamada o vocabulário do schema é *existence-checked* contra o catálogo real (`packages/core/components`) e contra a escala real de `--dss-spacing-*`. O resultado vem no campo `schemaIntegrity` de toda resposta: um schema que divergir do código passa a se anunciar.
 
 ## 4. Glossário de Termos de UI
 

@@ -4,6 +4,25 @@
 
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](../../LICENSE)
 
+
+## Build não é versionado
+
+`packages/mcp/build/` está no `.gitignore` e **não** é commitado. O bundle é gerado
+por `npm run prepare`, que o npm executa automaticamente depois de `npm install`.
+
+Antes disto, 5 arquivos de `build/` estavam rastreados por acidente histórico,
+contradizendo o próprio `.gitignore` — e o `index.js` versionado importava um chunk
+que nunca esteve no repositório. Ou seja: "clonar e rodar" já estava quebrado.
+Com o build fora do git, o artefato deixa de gerar conflito entre frentes
+trabalhando em paralelo, e o `prepare` devolve o clonar-e-rodar.
+
+Se o MCP parecer desatualizado (tool nova não aparece, correção não vale em runtime),
+o build está velho:
+
+```bash
+npm run build --workspace=@sansys/dss-mcp
+```
+
 ## O que é
 
 Um servidor MCP que dá a agentes acesso programático à governança do DSS:

@@ -7,6 +7,11 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // After tsup bundle: __dirname = mcp/build/ → go up 2 levels to reach DSS root
 const DSS_ROOT = resolve(__dirname, "../..");
+
+// Servidor exposto por rede: tools que leem disco passam a recusar caminho
+// fora da raiz do DSS. Ver validateSpecReadiness.
+process.env.DSS_MCP_REMOTE = "1";
+
 const PORT = parseInt(process.env.DSS_HTTP_PORT ?? "3001", 10);
 
 // ─── CORS Headers (fallback — Vite proxy is preferred in dev) ─────────────────

@@ -1,0 +1,623 @@
+{
+  "title": "DSS — Ontologia de Funcionalidade",
+  "version": "0.2.0",
+  "status": "descritiva-com-lacunas",
+  "descricao": "Vocabulário do que uma especificação funcional Sansys contém. Derivado de specs reais, NÃO idealizado. Consumido pelo item 3 (dss.spec.json + checklist de completude).",
+
+  "fonte": {
+    "amostra": 3,
+    "specs": [
+      {
+        "id": "RF-0292D",
+        "titulo": "SPC/Serasa — Exibir Análise de faturas (Análise do Contribuinte)",
+        "modulo": "Negativação",
+        "genero": "especificacao-funcional",
+        "linhas": 692,
+        "estrutura": ["1 Objetivo", "2 Esp. de Negócio", "2.1 Estórias", "2.2 Premissas", "2.3 Restrições", "2.4 Protótipos", "3 Esp. de Desenvolvimento", "4 BDD", "5 Critérios de Aceite", "6 Checklist", "7 Papéis"]
+      },
+      {
+        "id": "#85505 / RF-0024.1",
+        "titulo": "Emissão Cobrança Serviço Cliente Comercial (Modelo 75 — Antecipação Pagamento)",
+        "modulo": "Water / Faturamento-Fiscal",
+        "genero": "especificacao-funcional",
+        "linhas": 428,
+        "estrutura": ["1 Objetivo", "2 Esp. de Negócio", "2.1 Estórias", "2.2 Premissas", "2.3 Restrições", "2.4 Protótipos (VAZIA)", "3 Esp. de Desenvolvimento", "3.2.2 Mapeamento de campos", "4 BDD", "6 Critérios de Aceitação", "8 Papéis"]
+      },
+      {
+        "id": "#33950 / EST0012406",
+        "titulo": "Rio — Baixa parcial de pagamentos nos casos jurídicos (Incontroverso definitivo)",
+        "modulo": "Arrecadação / Jurídico",
+        "genero": "lista-requisitos-mudanca",
+        "linhas": 783,
+        "estrutura": ["1 Objetivo", "2 História de Usuário", "3 Premissas", "4 Restrições", "5 Banco de dados", "6 Requisitos", "7 Atualização do documento"],
+        "nota": "Sem BDD, sem critérios de aceite, sem checklist, sem papéis. Convenção de heading distinta ('1. # **X**'). 40 imagens de protótipo embutidas POR requisito."
+      }
+    ],
+    "ressalva": "Toda entidade carrega `evidencia`. Entidade sem evidência não entra — a ontologia descreve, não inventa. v0.2.0 revalidou a v0.1.0 contra 2 specs adicionais de autores e módulos diferentes; o principal aprendizado foi a NÃO-UNIFORMIDADE do template (ver `generos`)."
+  },
+
+  "generos": {
+    "descricao": "APRENDIZADO CENTRAL DA v0.2.0: não existe um template único. Três specs reais produziram três formatos. Um validador que exigisse a estrutura da RF-0292D reprovaria a #33950 por ~15 seções ausentes — reprovação em massa é o caminho mais curto para a ferramenta ser desligada. Por isso o `regime` de várias entidades é CONDICIONADO ao gênero.",
+    "especificacao-funcional": {
+      "label": "Especificação funcional completa",
+      "observado_em": ["RF-0292D", "#85505"],
+      "caracteristicas": "Objetivo, estórias, premissas, restrições, BDD em Gherkin, critérios de aceite, papéis.",
+      "exige": ["estoria", "premissa", "restricao", "cenario", "criterio_aceite"]
+    },
+    "lista-requisitos-mudanca": {
+      "label": "Lista de requisitos de mudança",
+      "observado_em": ["#33950"],
+      "caracteristicas": "Objetivo, histórias curtas, requisitos numerados com Descrição/Relação/Motivo, seção de banco de dados, log de revisão. Sem BDD e sem critérios de aceite.",
+      "exige": ["estoria", "regra", "rastreio"],
+      "nao_exige": ["cenario", "criterio_aceite"]
+    },
+    "regra_de_deteccao": "Presença de seção 'Critérios de Aceite' e/ou marcadores Gherkin ('Dado que'/'Quando'/'Então') → especificacao-funcional. Ausência de ambos + campo 'Relação' por requisito → lista-requisitos-mudanca."
+  },
+
+  "regimes": {
+    "descricao": "Grau de cobrança de cada campo. Existe para reconciliar dois mundos: o que os sistemas Sansys fazem HOJE em produção e o que o DSS estabelece como alvo. Um validador que reprova toda spec por um alvo de longo prazo é ignorado — foi assim que o ui-rules.schema.json morreu.",
+    "obrigatorio": {
+      "label": "Cobrado agora",
+      "efeito": "Ausência reprova a spec.",
+      "criterio": "Só entra aqui o que (a) custa quase nada para o analista escrever e (b) evita retrabalho imediato de designer ou desenvolvedor."
+    },
+    "recomendado": {
+      "label": "Apontado, não reprova",
+      "efeito": "Reportado como lacuna. Não bloqueia.",
+      "criterio": "Melhora muito o resultado, mas exige decisão ou informação que o analista pode não ter no momento da escrita."
+    },
+    "horizonte": {
+      "label": "Registrado como débito, NÃO cobrado",
+      "efeito": "Registrado no backlog de refatoração de longo prazo. NUNCA reprova a spec e NUNCA aparece como erro.",
+      "criterio": "Alvo do DSS que os sistemas em produção ainda não praticam. Cobrar hoje seria utópico e destruiria a confiança na ferramenta.",
+      "nota": "Acessibilidade está aqui por decisão explícita do dono do DSS (2026-08). O DSS permanece vinculado a WCAG 2.1 AA no nível do COMPONENTE (Constituição #4); a spec de funcionalidade não é cobrada por isso enquanto a refatoração não chegar."
+    }
+  },
+
+  "entidades": {
+    "funcionalidade": {
+      "descricao": "Raiz do documento. A unidade de trabalho que o analista especifica.",
+      "cardinalidade": "1",
+      "regime": "obrigatorio",
+      "campos": {
+        "id": { "regime": "obrigatorio", "exemplo": "RF-0292D" },
+        "titulo": { "regime": "obrigatorio" },
+        "modulo": { "regime": "obrigatorio", "exemplo": "Negativação" },
+        "objetivo": { "regime": "obrigatorio", "descricao": "O que a funcionalidade permite fazer." },
+        "fora_de_escopo": {
+          "regime": "obrigatorio",
+          "tipo": "lista",
+          "descricao": "Escopo negativo explícito. O analista já faz isso bem e é o que mais protege a implementação.",
+          "evidencia": "RF-0292D §1 — 11 itens listados"
+        }
+      },
+      "evidencia": "RF-0292D §1"
+    },
+
+    "tela": {
+      "descricao": "Superfície onde a funcionalidade acontece.",
+      "cardinalidade": "1..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "nome": { "regime": "obrigatorio", "exemplo": "Análise do Contribuinte" },
+        "superficie": {
+          "regime": "obrigatorio",
+          "tipo": "enum",
+          "valores": ["pagina", "modal", "drawer", "painel-embutido"],
+          "descricao": "Decide foco, ESC, scroll, largura e navegação. Sem isso o protótipo é um chute.",
+          "lacuna_detectada": "RF-0292D usa 'modal' no título da RF01 e 'tela' em todo o resto (BDD01, CA01). Nunca resolve. Ambiguidade de superfície é resolvida silenciosamente por quem prototipa."
+        },
+        "entrada": {
+          "regime": "obrigatorio",
+          "descricao": "De onde se chega e por qual gatilho.",
+          "evidencia": "RF-0292D §2 — 'Negativação > Lote > Análise do Lote', ação Analisar na grid de casos"
+        },
+        "saidas": { "regime": "recomendado", "descricao": "Para onde se vai ao concluir ou cancelar." }
+      },
+      "evidencia": "RF-0292D §2, RF01, BDD01"
+    },
+
+    "estoria": {
+      "descricao": "Intenção do usuário. O ATOR e a INTENÇÃO são universais; a forma não é.",
+      "cardinalidade": "1..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "id": { "regime": "obrigatorio", "exemplo": "EST01 · HIST001 · EST001" },
+        "como": { "regime": "obrigatorio", "descricao": "O ator. Presente nas 3 specs." },
+        "intencao": { "regime": "obrigatorio", "descricao": "O que quer. Presente nas 3, com verbos diferentes (quero/desejo/gostaria)." },
+        "para": {
+          "regime": "recomendado",
+          "descricao": "A justificativa.",
+          "nota_v0.2.0": "REBAIXADO de obrigatorio. O formato Como/Quero/Para de 3 partes só existe na RF-0292D (18 ocorrências); #33950 e #85505 têm ZERO — usam frase única 'Como X, desejo/gostaria Y'. Exigir as 3 partes reprovaria 2 de 3 specs por questão de estilo."
+        }
+      },
+      "evidencia": "RF-0292D §2.1 (EST01–09) · #33950 §2 (HIST001–004) · #85505 §2.1 (EST001–006)"
+    },
+
+    "contexto_negocio": {
+      "descricao": "O problema de negócio que justifica a funcionalidade — com números, exemplo concreto ou custo do status quo.",
+      "cardinalidade": "0..1",
+      "regime": "recomendado",
+      "nota_v0.2.0": "ENTIDADE NOVA. Descoberta ao comparar as seções 'Premissas': em RF-0292D são pré-condições ('o usuário possui permissão'); em #33950 a MESMA seção traz justificativa de negócio ('a Iguá está com 11 milhões parados em juízo') com exemplo trabalhado de rede hoteleira. Mesma palavra, semântica diferente. Separar evita que um extrator misture pré-condição com motivação.",
+      "evidencia": "#33950 §3 — diagnóstico + exemplo numérico"
+    },
+
+    "premissa": {
+      "descricao": "Condição assumida como verdadeira antes da funcionalidade operar. Distinta de contexto_negocio.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "evidencia": "RF-0292D §2.2 (17 premissas) · #85505 §2.2 ('o microserviço NFAg já existe e está operacional')"
+    },
+
+    "restricao": {
+      "descricao": "O que o sistema NÃO deve fazer. Sempre em forma negativa.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "extracao": { "marcadores": ["não deverá", "não poderá", "não deve"] },
+      "evidencia": "RF-0292D §2.3 — 14 restrições"
+    },
+
+    "regra": {
+      "descricao": "Regra de negócio nomeada, com descrição.",
+      "cardinalidade": "1..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "id": { "regime": "obrigatorio", "exemplo": "RF14 · RF005" },
+        "titulo": { "regime": "obrigatorio" },
+        "descricao": { "regime": "obrigatorio" },
+        "motivo": {
+          "regime": "recomendado",
+          "descricao": "Por que a regra existe.",
+          "nota_v0.2.0": "CAMPO NOVO. #33950 BD01 traz 'Motivo: essa tela já é utilizada por outros clientes; não podemos alterá-la de forma geral'. Rationale explícito é o que impede o implementador de 'simplificar' a regra por não entendê-la."
+        },
+        "cenarios": { "regime": "condicional:genero", "tipo": "ref:cenario" }
+      },
+      "evidencia": "RF-0292D §4 (RF01–16) · #33950 §6 (RF001–023) · #85505 §4"
+    },
+
+    "cenario": {
+      "descricao": "Cenário BDD em Gherkin.",
+      "cardinalidade": "0..n",
+      "regime": "condicional:genero",
+      "regime_por_genero": { "especificacao-funcional": "obrigatorio", "lista-requisitos-mudanca": "recomendado" },
+      "campos": {
+        "id": { "regime": "obrigatorio", "exemplo": "BDD35" },
+        "dado": { "regime": "obrigatorio" },
+        "quando": { "regime": "obrigatorio" },
+        "entao": { "regime": "obrigatorio" },
+        "e": { "regime": "recomendado", "tipo": "lista" }
+      },
+      "extracao": { "marcadores": ["Dado que", "Quando", "Então", "E "] },
+      "nota_v0.2.0": "REBAIXADO de obrigatorio global para condicional. Contagem de marcadores Gherkin: RF-0292D 82 · #85505 18 · #33950 ZERO.",
+      "evidencia": "RF-0292D §4 (BDD01–41) · #85505 §4"
+    },
+
+    "criterio_aceite": {
+      "descricao": "Condição verificável de aceite, vinculada a uma regra.",
+      "cardinalidade": "0..n",
+      "regime": "condicional:genero",
+      "regime_por_genero": { "especificacao-funcional": "obrigatorio", "lista-requisitos-mudanca": "recomendado" },
+      "campos": {
+        "id": { "regime": "obrigatorio", "exemplo": "CA31" },
+        "regra_ref": { "regime": "obrigatorio", "tipo": "ref:regra" },
+        "texto": { "regime": "obrigatorio" }
+      },
+      "nota_v0.2.0": "REBAIXADO. #33950 não tem nenhum critério de aceite (grep 'aceit' = 0 em 783 linhas).",
+      "evidencia": "RF-0292D §5 (CA01–40) · #85505 §6"
+    },
+
+    "rastreio": {
+      "descricao": "Vínculo explícito entre um requisito e a estória que o originou.",
+      "cardinalidade": "0..n",
+      "regime": "recomendado",
+      "campos": {
+        "de": { "regime": "recomendado", "tipo": "ref:regra" },
+        "para": { "regime": "recomendado", "tipo": "ref:estoria" }
+      },
+      "nota_v0.2.0": "ENTIDADE NOVA — e é a MELHOR prática encontrada na amostra. #33950 declara 'Relação: HIST002' em 12 requisitos, amarrando cada mudança técnica à intenção de usuário que a justifica. As outras duas specs não têm equivalente: lá o vínculo estória→regra existe só na cabeça do autor. Recomendado para todos os gêneros.",
+      "evidencia": "#33950 §5–6 — campo 'Relação' em 12 requisitos"
+    },
+
+    "historico_documento": {
+      "descricao": "Log de revisões da própria spec: data, responsável e o que mudou.",
+      "cardinalidade": "0..1",
+      "regime": "recomendado",
+      "nota_v0.2.0": "ENTIDADE NOVA. #33950 §7 traz 6 revisões datadas ao longo de ~18 meses. Sem isso não se sabe se um requisito é original ou emenda — e a spec traz emendas em linha ('Esse requisito foi modificado e ficou assim: ...'), que sem log ficam indistinguíveis do texto original.",
+      "evidencia": "#33950 §7 — 6 entradas datadas"
+    },
+
+    "maquina_estado": {
+      "descricao": "Ciclo de vida de uma entidade de domínio: estados possíveis, transições e o que cada estado permite ou bloqueia.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "entidade": { "regime": "obrigatorio", "tipo": "ref:entidade_dado" },
+        "estados": { "regime": "obrigatorio", "tipo": "lista" },
+        "transicoes": { "regime": "recomendado" },
+        "efeito_na_ui": { "regime": "obrigatorio", "descricao": "O que cada estado habilita ou bloqueia na tela." }
+      },
+      "nota_v0.2.0": "PROMOVIDO de campo para entidade. Aparece nas 3 specs e é o que mais governa comportamento de tela: status do lote decide somente-leitura (RF-0292D RF04); status 'processo judicial' bloqueia edição do documento (#33950 RF009); #85505 opera DUPLO controle simultâneo — Situação Financeira × Situação Fiscal — com ações bloqueadas por combinação dos dois. v0.1.0 só tinha `estado_tela`, que é o efeito, não a máquina.",
+      "evidencia": "RF-0292D RF04/BDD07 · #33950 RF009/RF010–012 · #85505 §1 'duplo controle'"
+    },
+
+    "integracao": {
+      "descricao": "Contrato com sistema externo: o que se envia, o que se recebe e o que fazer com cada retorno.",
+      "cardinalidade": "0..n",
+      "regime": "condicional:genero",
+      "campos": {
+        "sistema": { "regime": "obrigatorio", "exemplo": "microserviço Sansys NFAg" },
+        "payload": { "regime": "obrigatorio", "descricao": "Mapeamento de campos." },
+        "retornos": { "regime": "obrigatorio", "tipo": "lista", "descricao": "Estados possíveis do retorno." },
+        "tratamento_de_falha": {
+          "regime": "obrigatorio",
+          "descricao": "O que o usuário vê e pode fazer quando o retorno é rejeição ou erro.",
+          "nota": "#85505 é a única da amostra que trata isso (EST004: verificar, corrigir, reenviar ou cancelar). É o modelo a seguir."
+        }
+      },
+      "nota_v0.2.0": "ENTIDADE NOVA. #85505 §3.2.2 dedica ~100 linhas ao mapeamento de campos para o leiaute XML da NFAg.",
+      "evidencia": "#85505 §3.2.2, EST002–004"
+    },
+
+    "parametrizacao": {
+      "descricao": "Chave que liga ou desliga a funcionalidade por cliente/tenant.",
+      "cardinalidade": "0..n",
+      "regime": "recomendado",
+      "campos": {
+        "chave": { "regime": "recomendado", "exemplo": "3411 - FL_REGISTRAR PAGAMENTO VIA DEPOSITO JUDICIAL ITEM" },
+        "padrao": { "regime": "recomendado" },
+        "comportamento_desligado": { "regime": "recomendado", "descricao": "Como a tela se comporta com a chave desligada." }
+      },
+      "nota_v0.2.0": "ENTIDADE NOVA e específica do contexto multi-cliente da Sansys. #33950 BD01 cria parâmetro porque 'essa tela já é utilizada por outros clientes; não podemos alterá-la de forma geral'. Toda tela parametrizada tem, na prática, DUAS composições — e a spec só descreve uma.",
+      "evidencia": "#33950 BD01, §4 Restrições"
+    },
+
+    "campo": {
+      "descricao": "Campo de entrada da tela, com seu domínio de valores.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "nome": { "regime": "obrigatorio", "exemplo": "Status da Análise" },
+        "dominio": {
+          "regime": "obrigatorio",
+          "tipo": "lista",
+          "descricao": "Valores possíveis quando enumerado.",
+          "evidencia": "RF-0292D BDD10 — Cancelado, Pendente, Em Análise, Negativação Aprovada, Negativação Reprovada, Negativado"
+        },
+        "obrigatorio_quando": {
+          "regime": "obrigatorio",
+          "descricao": "Condição de obrigatoriedade, quando condicional.",
+          "evidencia": "RF-0292D RF08 — observação obrigatória quando há decisão operacional ou alteração de seleção"
+        },
+        "somente_leitura_quando": { "regime": "obrigatorio", "tipo": "ref:estado_tela" }
+      },
+      "evidencia": "RF-0292D §2.4 'Elementos a preservar', RF06, RF07, RF08"
+    },
+
+    "comando": {
+      "descricao": "Ação disparável pelo usuário.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "nome": { "regime": "obrigatorio", "exemplo": "Salvar Análise" },
+        "efeito": { "regime": "obrigatorio" },
+        "habilitado_quando": { "regime": "obrigatorio" },
+        "destrutivo": { "regime": "recomendado", "tipo": "boolean", "descricao": "Exige confirmação e posição própria." }
+      },
+      "evidencia": "RF-0292D §2.4 — Anterior, Fechar, Salvar Análise, Próximo"
+    },
+
+    "estado_tela": {
+      "descricao": "Modo de operação da tela e o que o determina. Distinto de estado_dado.",
+      "cardinalidade": "1..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "nome": { "regime": "obrigatorio", "exemplo": "somente-leitura" },
+        "determinado_por": {
+          "regime": "obrigatorio",
+          "descricao": "A condição que liga este modo.",
+          "evidencia": "RF-0292D RF04 — status do lote (Enviado/Negativado/Cancelado → somente leitura)"
+        },
+        "efeito_na_ui": { "regime": "obrigatorio", "descricao": "O que muda visivelmente." }
+      },
+      "evidencia": "RF-0292D RF04, BDD07, BDD08"
+    },
+
+    "estado_dado": {
+      "descricao": "O que a tela mostra em função da disponibilidade dos dados. LACUNA SISTÊMICA: ausente por completo na amostra.",
+      "cardinalidade": "1..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "vazio": {
+          "regime": "obrigatorio",
+          "descricao": "O que aparece quando não há dado. O DSS exige ícone/ilustração + título; descrição e ação primária são recomendadas.",
+          "lacuna_detectada": "0 ocorrências em 692 linhas (grep: vazio|nenhuma fatura|sem faturas|não houver). A tela agrupa faturas por matrícula e nunca diz o que mostrar quando uma matrícula não tem fatura elegível.",
+          "ancora_dss": "ui-rules.schema.json → empty_states + table_rules.empty_state_required"
+        },
+        "carregando": {
+          "regime": "obrigatorio",
+          "descricao": "O que aparece enquanto os dados chegam.",
+          "lacuna_detectada": "0 ocorrências. A tela agrega 6 fontes (contribuinte, imóvel, faturas, históricos, anexos, dados internos) e não diz se carregam juntas ou em paralelo, nem o que se vê no meio.",
+          "ancora_dss": "ui-rules.schema.json → table_rules.loading_state_required"
+        },
+        "erro": {
+          "regime": "obrigatorio",
+          "descricao": "O que aparece quando a operação falha.",
+          "lacuna_detectada": "BDD37 e BDD39 mandam 'rejeitar a operação'; nenhum cenário diz o que o usuário vê ao ser rejeitado."
+        },
+        "parcial": {
+          "regime": "recomendado",
+          "descricao": "Uma fonte falha e as outras não. Some o painel, fica vazio ou mostra erro local?",
+          "lacuna_detectada": "BDD03 diz 'conforme disponibilidade das informações' — a única menção, e é ambígua."
+        }
+      },
+      "evidencia": "AUSENTE em RF-0292D — lacuna derivada por verificação negativa"
+    },
+
+    "mensagem": {
+      "descricao": "Texto que o sistema diz ao usuário, e por qual veículo.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "gatilho": { "regime": "obrigatorio", "tipo": "ref:validacao|ref:estado_dado" },
+        "texto": {
+          "regime": "obrigatorio",
+          "descricao": "Texto final, não paráfrase.",
+          "lacuna_detectada": "Padrão recorrente: 'deverá apresentar mensagem informando que...'. O conteúdo é descrito, nunca redigido. Quem prototipa inventa a redação."
+        },
+        "veiculo": {
+          "regime": "obrigatorio",
+          "tipo": "enum",
+          "valores": ["inline", "toast", "banner", "dialog"],
+          "lacuna_detectada": "Nunca especificado em nenhuma das mensagens da spec."
+        },
+        "severidade": { "regime": "recomendado", "tipo": "enum", "valores": ["info", "sucesso", "alerta", "erro"] }
+      },
+      "evidencia": "RF-0292D BDD09, BDD27, CA25 — sempre como descrição, nunca como texto"
+    },
+
+    "permissao": {
+      "descricao": "Quem pode ver e quem pode agir.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "perfil": { "regime": "obrigatorio", "exemplo": "Concessão Atendimento" },
+        "condicao_adicional": {
+          "regime": "obrigatorio",
+          "descricao": "Vínculo além do perfil.",
+          "evidencia": "RF-0292D RF05 — usuário precisa estar ATRIBUÍDO ao caso, além de ter o perfil"
+        },
+        "efeito_sem_permissao": { "regime": "obrigatorio", "descricao": "Esconde, desabilita ou bloqueia com mensagem?" }
+      },
+      "evidencia": "RF-0292D §2.2, RF05, CA01, CA10"
+    },
+
+    "entidade_dado": {
+      "descricao": "Entidade de domínio exibida ou manipulada.",
+      "cardinalidade": "1..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "nome": { "regime": "obrigatorio", "exemplo": "fatura" },
+        "somente_leitura": { "regime": "obrigatorio", "tipo": "boolean" }
+      },
+      "evidencia": "RF-0292D — lote, caso, contribuinte, matrícula (unidade consumidora), fatura, anexo, histórico"
+    },
+
+    "hierarquia_dado": {
+      "descricao": "Encadeamento entre entidades. Governa agrupamento visual, seleção e validação de integridade.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "cadeia": { "regime": "obrigatorio", "tipo": "lista-ordenada", "exemplo": ["caso", "contribuinte", "matricula", "fatura"] },
+        "validado_no_servidor": { "regime": "recomendado", "tipo": "boolean" }
+      },
+      "evidencia": "RF-0292D §3.2 — 'integridade do encadeamento caso → contribuinte → matrícula → fatura'"
+    },
+
+    "agrupamento": {
+      "descricao": "Como os dados são organizados visualmente.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "agrupa_por": { "regime": "obrigatorio", "tipo": "ref:entidade_dado" },
+        "cabecalho_exibe": { "regime": "obrigatorio", "tipo": "lista" },
+        "colapsavel": { "regime": "recomendado", "tipo": "boolean" }
+      },
+      "evidencia": "RF-0292D RF13, BDD32 — agrupamento por matrícula com tipo do imóvel, endereço, qtd elegíveis e subtotal"
+    },
+
+    "selecao": {
+      "descricao": "Semântica de seleção múltipla, incluindo estado parcial.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "escopo": { "regime": "obrigatorio", "descricao": "Coletiva pelo grupo, individual, ou ambas." },
+        "estado_inicial": { "regime": "obrigatorio", "evidencia": "BDD33 — tudo desmarcado sem seleção salva" },
+        "estado_parcial": {
+          "regime": "obrigatorio",
+          "descricao": "Comportamento quando parte do grupo está selecionada.",
+          "evidencia": "BDD35 — checkbox da matrícula em estado indeterminado",
+          "nota_horizonte": "O estado indeterminado exige aria-checked='mixed' para ser anunciado. Registrado, não cobrado."
+        },
+        "elegibilidade": { "regime": "obrigatorio", "evidencia": "BDD37 — fatura inelegível ou externa não pode ser selecionada" }
+      },
+      "evidencia": "RF-0292D RF14 — BDD33 a BDD37"
+    },
+
+    "calculo": {
+      "descricao": "Valor derivado de outros, recalculado na interação.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "formula": { "regime": "obrigatorio" },
+        "recalcula_quando": { "regime": "obrigatorio" },
+        "revalidado_no_servidor": { "regime": "recomendado", "tipo": "boolean", "evidencia": "BDD39 — servidor recalcula e rejeita divergências" }
+      },
+      "evidencia": "RF-0292D RF15 — subtotal por matrícula e total geral"
+    },
+
+    "validacao": {
+      "descricao": "Condição que impede uma operação.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "condicao": { "regime": "obrigatorio" },
+        "bloqueia": { "regime": "obrigatorio", "tipo": "ref:comando" },
+        "mensagem": { "regime": "obrigatorio", "tipo": "ref:mensagem" },
+        "momento": { "regime": "recomendado", "tipo": "enum", "valores": ["ao-digitar", "ao-sair-do-campo", "ao-submeter"] }
+      },
+      "evidencia": "RF-0292D RF05, RF08, RF10 — BDD09, BDD17, BDD27"
+    },
+
+    "guarda_navegacao": {
+      "descricao": "Proteção contra perda de alterações não salvas.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "gatilhos": { "regime": "obrigatorio", "tipo": "lista", "evidencia": "CA27 — navegar, fechar ou voltar" },
+        "opcoes_oferecidas": { "regime": "obrigatorio", "tipo": "lista", "evidencia": "CA27 — permanecer ou descartar" }
+      },
+      "evidencia": "RF-0292D RF11, BDD29, CA27"
+    },
+
+    "anexo": {
+      "descricao": "Upload de arquivo, com escopo e limites.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "escopo": { "regime": "obrigatorio", "descricao": "A qual entidade o arquivo se vincula.", "evidencia": "RF09 — Contribuinte ou Unidade Consumidora" },
+        "vinculo_automatico": { "regime": "recomendado", "evidencia": "CA21 — arquivo incluído no agrupamento vincula-se à matrícula sem nova seleção" },
+        "limite_tamanho": { "regime": "obrigatorio", "evidencia": "§2.2 — 10MB por arquivo" },
+        "formatos": { "regime": "recomendado", "lacuna_detectada": "A spec diz 'respeitando os formatos atuais' (CA19) sem enumerá-los." },
+        "obrigatorio": { "regime": "obrigatorio", "tipo": "boolean" }
+      },
+      "evidencia": "RF-0292D RF09 — BDD20 a BDD24"
+    },
+
+    "rastreabilidade": {
+      "descricao": "O que fica registrado de cada operação.",
+      "cardinalidade": "0..n",
+      "regime": "recomendado",
+      "campos": {
+        "registra": { "regime": "recomendado", "tipo": "lista", "evidencia": "BDD40 — fatura, matrícula, valor anterior, valor novo, observação, usuário, data, hora" },
+        "exibido_ao_usuario": { "regime": "recomendado", "tipo": "boolean", "evidencia": "BDD41 — histórico cronológico consultável" }
+      },
+      "evidencia": "RF-0292D RF16, §3.2"
+    },
+
+    "volume": {
+      "descricao": "Ordem de grandeza esperada dos dados. Decide tabela vs lista vs scroll virtual, paginação e densidade. LACUNA.",
+      "cardinalidade": "0..n",
+      "regime": "recomendado",
+      "campos": {
+        "entidade": { "regime": "recomendado", "tipo": "ref:entidade_dado" },
+        "tipico": { "regime": "recomendado" },
+        "maximo_esperado": { "regime": "recomendado" }
+      },
+      "lacuna_detectada": "RF-0292D diz 'uma ou mais matrículas, cada uma com uma ou mais faturas' e nunca dá teto. 3 matrículas × 8 faturas e 40 × 200 são telas estruturalmente diferentes.",
+      "evidencia": "AUSENTE em RF-0292D — lacuna derivada"
+    },
+
+    "responsividade": {
+      "descricao": "Comportamento por faixa de tela.",
+      "cardinalidade": "0..n",
+      "regime": "recomendado",
+      "campos": {
+        "alvos": { "regime": "recomendado", "tipo": "lista" },
+        "adaptacao": { "regime": "recomendado", "descricao": "O que muda em telas pequenas." }
+      },
+      "lacuna_detectada": "Só aparece no checklist ('testes em diferentes dispositivos'). Nenhum BDD ou CA descreve comportamento mobile. O DSS tem resposta pronta que a spec nunca pergunta: table_rules.mobile_rule manda usar DssDataCard ou DssList em xs/sm.",
+      "evidencia": "AUSENTE no corpo de RF-0292D — lacuna derivada"
+    },
+
+    "acessibilidade": {
+      "descricao": "Requisitos de acesso assistivo da funcionalidade.",
+      "cardinalidade": "0..n",
+      "regime": "horizonte",
+      "campos": {
+        "requisitos": { "regime": "horizonte", "tipo": "lista" }
+      },
+      "lacuna_detectada": "O checklist de RF-0292D responde NÃO a 'Existem requisitos de acessibilidade?' (leitura confirmada pela linha 'Bug externo?', onde a convenção de tachado se resolve sem ambiguidade). A tela contém checkbox de estado indeterminado (BDD35), que sem aria-checked='mixed' é inacessível por construção.",
+      "nota_regime": "REGIME HORIZONTE POR DECISÃO EXPLÍCITA DO DONO (2026-08): os sistemas Sansys não praticam acessibilidade hoje; as premissas rígidas do DSS miram a refatoração de longo prazo. Cobrar na spec agora seria utópico e queimaria a ferramenta. O item é REGISTRADO como débito e NUNCA reprova. Não confundir com a Constituição #4, que segue vinculante no nível do COMPONENTE.",
+      "evidencia": "RF-0292D §6 Checklist — e ausência total no corpo"
+    },
+
+    "referencia_visual": {
+      "descricao": "A que o protótipo deve obedecer.",
+      "cardinalidade": "0..n",
+      "regime": "obrigatorio",
+      "campos": {
+        "protótipo_aprovado": { "regime": "obrigatorio", "tipo": "boolean" },
+        "elementos_a_preservar": {
+          "regime": "obrigatorio",
+          "tipo": "lista",
+          "descricao": "Componentes que devem sobreviver à reprototipação. É a árvore de composição — e é o input direto de validate_composition.",
+          "evidencia": "RF-0292D §2.4 — título, identificação do contribuinte, atribuição, Status, Legitimidade, Observações, histórico em painéis, comandos Anterior/Fechar/Salvar/Próximo",
+          "lacuna_detectada": "Escrito como frase corrida. Sendo lista, seria consumível por máquina sem interpretação."
+        },
+        "padrao_de_referencia": {
+          "regime": "obrigatorio",
+          "descricao": "Onde está o padrão a seguir.",
+          "lacuna_detectada": "§2.4 manda 'reprototipar no padrão do sistema' sem apontar para nenhum lugar. É exatamente o ponto onde o DSS deveria ser a resposta e não é citado."
+        }
+      },
+      "evidencia": "RF-0292D §2.4"
+    }
+  },
+
+  "lacunas_sistemicas": {
+    "descricao": "Conceitos ausentes. Verificados por BUSCA NEGATIVA nas 3 specs (autores, módulos e gêneros diferentes), nunca por impressão de leitura. Ausência que se repete em 3 de 3 é do PROCESSO, não do analista — e o template não tem onde colocá-las.",
+    "metodo": "Contagem de ocorrências por spec. Padrões de controle (mensagem, validação, permissão, protótipo) retornaram valores altos e variados nas mesmas buscas, provando que o extrator funciona e que os zeros abaixo são ausência real.",
+    "itens": [
+      {
+        "entidade": "estado_dado.vazio", "regime": "obrigatorio",
+        "ocorrencias": { "RF-0292D": 0, "#33950": 0, "#85505": 0 },
+        "veredito": "SISTÊMICO — 3 de 3",
+        "verificacao": "grep -ciE 'vazio|nenhum registro|nenhuma fatura|sem resultado|lista vazia'"
+      },
+      {
+        "entidade": "estado_dado.carregando", "regime": "obrigatorio",
+        "ocorrencias": { "RF-0292D": 0, "#33950": 0, "#85505": 0 },
+        "veredito": "SISTÊMICO — 3 de 3",
+        "verificacao": "grep -ciE 'carregando|loading|spinner|aguarde'"
+      },
+      {
+        "entidade": "estado_dado.erro", "regime": "obrigatorio",
+        "ocorrencias": { "RF-0292D": "rejeição sem contrapartida visual", "#33950": "idem", "#85505": "ÚNICA que trata (EST004)" },
+        "veredito": "SISTÊMICO com 1 exceção — #85505 é o modelo a seguir"
+      },
+      {
+        "entidade": "volume", "regime": "recomendado",
+        "ocorrencias": { "RF-0292D": 0, "#33950": 0, "#85505": 0 },
+        "veredito": "SISTÊMICO — 3 de 3. Nenhuma spec declara ordem de grandeza; decide tabela vs scroll virtual vs paginação."
+      },
+      {
+        "entidade": "responsividade", "regime": "recomendado",
+        "ocorrencias": { "RF-0292D": "só no checklist", "#33950": 0, "#85505": "só no checklist" },
+        "veredito": "SISTÊMICO — ausente no corpo em 3 de 3"
+      },
+      {
+        "entidade": "acessibilidade", "regime": "horizonte",
+        "ocorrencias": { "RF-0292D": 0, "#33950": 0, "#85505": 0 },
+        "veredito": "SISTÊMICO — ZERO menções reais no corpo das 3.",
+        "verificacao": "Os hits brutos eram falsos positivos: em #33950 ambos vinham de base64 de imagem; em #85505 um era a palavra 'gostaria' casando com 'aria' e o outro a linha do checklist. Ambos os checklists respondem NÃO.",
+        "nota": "Continua em regime HORIZONTE: registrado, nunca reprova."
+      },
+      {
+        "entidade": "mensagem.texto + mensagem.veiculo", "regime": "obrigatorio",
+        "ocorrencias": { "RF-0292D": 8, "#33950": 9, "#85505": 5 },
+        "veredito": "SISTÊMICO por NATUREZA, não por ausência — as 3 falam de mensagem o tempo todo (22 no total) e NENHUMA redige o texto final nem diz o veículo (inline, toast, banner, dialog). Quem prototipa inventa os dois."
+      },
+      {
+        "entidade": "tela.superficie", "regime": "obrigatorio",
+        "veredito": "CONFIRMADO em RF-0292D ('modal' na RF01 × 'tela' em todo o resto). Não reincidente nas outras duas — pode ser específico daquela spec."
+      },
+      {
+        "entidade": "referencia_visual.padrao_de_referencia", "regime": "obrigatorio",
+        "veredito": "SISTÊMICO E AGRAVADO — a seção de protótipo é o ponto de handoff para o design, e está estruturalmente vazia: #85505 §2.4 tem o CABEÇALHO SEM NENHUM CONTEÚDO; RF-0292D §2.4 diz que não há protótipo aprovado e manda 'reprototipar no padrão do sistema' sem apontar para lugar nenhum. Só #33950 tem material visual farto (40 imagens), e embutido POR requisito — mas como imagem, não como referência a um sistema de design.",
+        "nota": "Em nenhuma das 3 o DSS é citado."
+      }
+    ]
+  },
+
+  "proximo": "Item 3 — dss.spec.json (instância desta ontologia por funcionalidade) + checklist de completude que reporta por regime, nunca reprovando o que é horizonte."
+}
