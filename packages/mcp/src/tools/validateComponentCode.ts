@@ -85,6 +85,28 @@ const AT_RULE_LIMIAR = /@(?:media|container)\b/;
 /** (c) Abertura de bloco de contraste forçado / alto contraste. */
 const BLOCO_CONTRASTE = /forced-colors\s*:|prefers-contrast\s*:/;
 
+/**
+ * ESCOPO DO TOKEN FIRST — as três camadas de ESTILO.
+ *
+ * É o mesmo contorno que o DoD do CLAUDE.md define no seu próprio scan:
+ *   grep -rEn "#[0-9a-f]{3,6}|[0-9]+px" 2-composition 3-variants 4-output
+ *
+ * Fora dessas camadas o valor cravado não é estilo de componente: no <style> de
+ * `.example.vue` é andaime de página de demonstração (max-width da página, a
+ * largura do caso estreito que a demo existe para mostrar). Cobrar token ali
+ * gerava warning em cima de acerto.
+ *
+ * NÃO é isenção por tipo de arquivo — é o escopo que a governança já desenhou.
+ * O Gate de Composição (`:deep()`) segue valendo em TODO arquivo: quebrar
+ * encapsulamento é errado em qualquer camada.
+ */
+const CAMADAS_DE_ESTILO = ["2-composition", "3-variants", "4-output"];
+
+function noEscopoDoTokenFirst(filePath: string): boolean {
+  const norm = filePath.replace(/\\/g, "/");
+  return CAMADAS_DE_ESTILO.some((c) => norm.includes(`/${c}/`));
+}
+
 /** :deep() usage violates Gate de Composição v2.4 */
 const DEEP_SELECTOR_PATTERN = /:deep\s*\(|::v-deep\b/;
 
@@ -152,6 +174,8 @@ function analyzeScss(
   filePath: string,
   findings: Finding[]
 ): void {
+  // Token First só vale nas camadas de estilo (ver CAMADAS_DE_ESTILO).
+  const tokenFirst = noEscopoDoTokenFirst(filePath);
   // Strip block comments first — prevents false positives when
   // documentation inside /* ... */ mentions :deep() or ::v-deep.
   const contentWithoutBlockComments = stripBlockComments(content);
@@ -198,7 +222,7 @@ function analyzeScss(
     // ── Hardcoded color check ─────────────────────────────────────────────
     // (c) dentro de forced-colors/prefers-contrast, cor absoluta é a REGRA:
     // tokens são ignorados pelo modo de alto contraste do sistema.
-    for (const { pattern, label } of (emExcecaoDeContraste ? [] : HARDCODED_COLOR_PATTERNS)) {
+    for (const { pattern, label } of (!tokenFirst || emExcecaoDeContraste ? [] : HARDCODED_COLOR_PATTERNS)) {
       if (pattern.test(codeOnly)) {
         // Allow rgba(255,255,255,x) and rgba(0,0,0,x) — documented dark mode exceptions
         if (label.startsWith("rgba") && RGBA_EXCEPTION_PATTERN.test(codeOnly)) {
@@ -240,7 +264,7 @@ function analyzeScss(
     // (b) px em @media/@container é limiar de layout, não dimensão de componente.
     // (c) em bloco de contraste, o valor absoluto é intencional.
     let pxMatch: RegExpExecArray | null;
-    const pulaPx = emExcecaoDeContraste || AT_RULE_LIMIAR.test(codeOnly);
+    const pulaPx = !tokenFirst || emExcecaoDeContraste || AT_RULE_LIMIAR.test(codeOnly);
     const pxRegex = new RegExp(pulaPx ? "(?!)" : HARDCODED_PX_PATTERN.source, "g");
     while ((pxMatch = pxRegex.exec(codeOnly)) !== null) {
       const val = parseInt(pxMatch[1], 10);

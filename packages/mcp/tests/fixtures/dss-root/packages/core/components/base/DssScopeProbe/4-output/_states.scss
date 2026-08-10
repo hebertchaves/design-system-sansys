@@ -1,0 +1,20 @@
+// CAMADA DE ESTILO — exceção (c): em alto contraste a cor ABSOLUTA é a regra,
+// porque o modo de contraste forçado do sistema ignora tokens.
+//
+// O caso decisivo é a `outline`: `3px solid Highlight` só é exceção por causa
+// da at-rule que a envolve — a linha isolada não tem nenhuma marca de exceção.
+// Por isso o rastreio é por BLOCO, não por linha.
+
+@media (forced-colors: active) {
+  .dss-scope-probe:focus-visible {
+    outline: 3px solid Highlight;
+    border: 4px solid #fff;
+    background: #000;
+  }
+}
+
+// Fora do bloco de contraste, a mesma linha volta a valer como violação —
+// é o que prova que a exceção FECHA junto com as chaves do bloco.
+.dss-scope-probe--depois-do-bloco {
+  color: #123123;
+}

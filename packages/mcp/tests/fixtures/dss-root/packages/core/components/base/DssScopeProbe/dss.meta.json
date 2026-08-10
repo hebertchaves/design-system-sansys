@@ -1,0 +1,5 @@
+{
+  "name": "DssScopeProbe",
+  "fixture": true,
+  "purpose": "Fixture de teste do validate_component_code. NÃO é componente do DSS: vive sob packages/mcp/tests/fixtures, fora de packages/core/components, e por isso não entra em catálogo, contrato nem selo."
+}

@@ -1,0 +1,20 @@
+// CAMADA DE ESTILO — dentro do escopo, mas exercitando as exceções (a) e (b)
+// da Constituição #1. Nada aqui pode produzir achado.
+
+.dss-scope-probe--outline {
+  // (a) hex de FALLBACK em var() — rede de segurança declarada, não valor cravado
+  border-color: var(--dss-border-color, #e0e0e0);
+}
+
+// (b) px em at-rule é LIMIAR DE LAYOUT, não dimensão de componente
+@media (min-width: 600px) {
+  .dss-scope-probe--outline {
+    gap: var(--dss-spacing-md);
+  }
+}
+
+@container (min-width: 480px) {
+  .dss-scope-probe--outline {
+    gap: var(--dss-spacing-sm);
+  }
+}

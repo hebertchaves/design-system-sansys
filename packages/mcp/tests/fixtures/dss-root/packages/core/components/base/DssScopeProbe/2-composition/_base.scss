@@ -1,0 +1,8 @@
+// CAMADA DE ESTILO — dentro do escopo do Token First.
+// Cada linha abaixo DEVE produzir um achado. É o controle positivo da fixture:
+// se estas calarem, o validador parou de validar e o resto do teste é vazio.
+
+.dss-scope-probe {
+  color: #ff00aa;   // → error TOKEN_FIRST (hex cravado)
+  padding: 37px;    // → warning TOKEN_FIRST (px cravado, fora de 0/1/2)
+}

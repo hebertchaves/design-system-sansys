@@ -12,6 +12,7 @@
     "start:http": "node build/http-server.js",
     "start:sse": "node build/sse-server.js",
     "start:sse:bg": "nohup node build/sse-server.js > /tmp/dss-mcp-sse.log 2>&1 & echo $!",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
