@@ -201,6 +201,26 @@
 
 ## Frente em curso
 
+- 🔴 **Gates de componente no MCP** (branch `work/dss-selection-controls`, NÃO empurrado). Commits
+  `a2722fe`→`4460c93`: Gate Estrutural (4 camadas, wrapper puro, barrel, orquestrador) · escopo do gate de
+  higiene por REGRA e não por arquivo · `validate_component_code` implementa o regime de exceções da
+  Constituição #1 (fallback de `var()`, px em `@media`/`@container`, bloco `forced-colors`) · Token First
+  escopado às camadas de ESTILO (`2-composition`/`3-variants`/`4-output`), mesmo contorno do grep do DoD —
+  o `<style>` de `.example.vue` é andaime de demo. Gate de Composição (`:deep()`) segue valendo em TODO
+  arquivo. Medido: DssChip 7→0, DssMultiselectAutocomplete 2→0, DssSelect 0 — o ruído acabou.
+  **Runner de teste criado** (`packages/mcp` não tinha nenhum): vitest, `npm test`, 8 casos, fixture
+  = dssRoot em miniatura sob `tests/fixtures/` (fora de `components/`, senão viraria componente-fantasma
+  em catálogo/contrato/selo). Controle negativo verificado.
+  - ⚠️ **`build/` do MCP precisa de rebuild + RESTART do servidor** para o comportamento novo valer na tool
+    — `build/` deixou de ser versionado em `47a8182`, então cada clone/sessão reconstrói.
+  - 🔲 **Hardcode real descoberto pelo validador limpo** (agora que não há ruído): **DssButton 12**
+    (`3-variants/_glossy.scss`, `_push.scss`, `4-output/_states.scss`) e **DssInput 1**
+    (`2-composition/_base.scss`). São candidatos DENTRO das camadas de estilo → **Onda Higiene**.
+  - 🔲 **`tests/validateGridLayout.test.ts` fora do runner** — anterior a ele: script de console que
+    imprime em vez de asserir; sob vitest falharia por não declarar suíte. Converter ou aposentar.
+  - 🔲 **`tests/` não é type-checked** — `tsconfig.json` do MCP tem `include: ["src/**/*"]` + `rootDir: src`;
+    o vitest transpila sem checar tipo. Erro de tipo no `.spec.ts` passa batido.
+
 - ⏳ **MR !6 — consistência da família de campos** (`work/dss-continuidade` → `main`, aberto 2026-07-22).
   16 commits: brand no anel de foco (rotas A/B + dark), label×placeholder padrão B, base font 16 + ícone
   20px + paridade pixel-perfect do prepend, slot `error` fiel ao `getBottom` do Quasar, anel de foco do
