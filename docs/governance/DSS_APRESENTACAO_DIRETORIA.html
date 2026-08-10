@@ -1,0 +1,883 @@
+<title>DSS — de biblioteca a agente ativo</title>
+
+<style>
+  :root {
+    --ground: #f5f7f7;
+    --surface: #ffffff;
+    --surface-2: #eceff0;
+    --ink: #14212a;
+    --ink-soft: #3d4f59;
+    --muted: #66787f;
+    --line: #d6dddd;
+    --accent: #0f6e75;
+    --accent-soft: #dfeced;
+    --attention: #97591f;
+    --attention-soft: #f6ead9;
+    --critical: #a6342b;
+    --critical-soft: #f8e5e2;
+    --good: #2f6b46;
+
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    --measure: 68ch;
+    --s1: 0.5rem; --s2: 0.875rem; --s3: 1.375rem; --s4: 2.25rem; --s5: 3.5rem; --s6: 5.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0d1416;
+      --surface: #141e21;
+      --surface-2: #1b282c;
+      --ink: #e4ecec;
+      --ink-soft: #b3c3c5;
+      --muted: #859699;
+      --line: #2a393d;
+      --accent: #4fb3b1;
+      --accent-soft: #12312f;
+      --attention: #d69a5f;
+      --attention-soft: #2e2417;
+      --critical: #e2776b;
+      --critical-soft: #331d1a;
+      --good: #6aae86;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0d1416;
+    --surface: #141e21;
+    --surface-2: #1b282c;
+    --ink: #e4ecec;
+    --ink-soft: #b3c3c5;
+    --muted: #859699;
+    --line: #2a393d;
+    --accent: #4fb3b1;
+    --accent-soft: #12312f;
+    --attention: #d69a5f;
+    --attention-soft: #2e2417;
+    --critical: #e2776b;
+    --critical-soft: #331d1a;
+    --good: #6aae86;
+  }
+  :root[data-theme="light"] {
+    --ground: #f5f7f7;
+    --surface: #ffffff;
+    --surface-2: #eceff0;
+    --ink: #14212a;
+    --ink-soft: #3d4f59;
+    --muted: #66787f;
+    --line: #d6dddd;
+    --accent: #0f6e75;
+    --accent-soft: #dfeced;
+    --attention: #97591f;
+    --attention-soft: #f6ead9;
+    --critical: #a6342b;
+    --critical-soft: #f8e5e2;
+    --good: #2f6b46;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 0 var(--s3) var(--s6);
+  }
+
+  /* ── Hero ───────────────────────────────────────────── */
+  header.hero {
+    padding: var(--s6) 0 var(--s5);
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--s3);
+  }
+  h1 {
+    font-size: clamp(2.1rem, 5.2vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.024em;
+    font-weight: 680;
+    margin: 0 0 var(--s3);
+    text-wrap: balance;
+    max-width: 20ch;
+  }
+  .standfirst {
+    font-size: 1.16rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+    margin: 0;
+  }
+  .standfirst strong { color: var(--ink); font-weight: 600; }
+
+  /* ── Sections ───────────────────────────────────────── */
+  section { padding-top: var(--s5); }
+  section > * { max-width: var(--measure); }
+  section > .bleed, section > figure { max-width: none; }
+
+  h2 {
+    font-size: 1.52rem;
+    line-height: 1.22;
+    letter-spacing: -0.012em;
+    font-weight: 650;
+    margin: 0 0 var(--s3);
+    text-wrap: balance;
+  }
+  h2 .num {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+  h3 {
+    font-size: 1.02rem;
+    font-weight: 650;
+    letter-spacing: -0.004em;
+    margin: var(--s4) 0 var(--s2);
+  }
+  p { margin: 0 0 var(--s2); }
+  p + p { margin-top: 0; }
+  strong { font-weight: 640; }
+
+  .lede { font-size: 1.06rem; color: var(--ink-soft); }
+
+  /* mono = evidência executada */
+  .ev {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    font-variant-numeric: tabular-nums;
+    background: var(--surface-2);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+  }
+
+  /* ── Evidence table ─────────────────────────────────── */
+  .tablewrap { overflow-x: auto; margin: var(--s3) 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.94rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.62rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    border-bottom-color: var(--ink-soft);
+  }
+  td.n {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  td.zero { color: var(--critical); font-weight: 600; }
+
+  /* ── Stat row ───────────────────────────────────────── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: var(--s3) 0;
+  }
+  .stat { background: var(--surface); padding: var(--s3) var(--s2); }
+  .stat b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 1.7rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.45rem;
+  }
+  .stat span { font-size: 0.82rem; color: var(--muted); line-height: 1.35; display: block; }
+  .stat.bad b { color: var(--critical); }
+  .stat.ok b { color: var(--accent); }
+
+  /* ── Callout ────────────────────────────────────────── */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    padding: var(--s3);
+    margin: var(--s3) 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout.warn { border-left-color: var(--attention); }
+  .callout.crit { border-left-color: var(--critical); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .callout.warn .tag { color: var(--attention); }
+  .callout.crit .tag { color: var(--critical); }
+
+  /* ── Terminal ───────────────────────────────────────── */
+  .term {
+    font-family: var(--mono);
+    font-size: 0.83rem;
+    line-height: 1.72;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: var(--s3);
+    margin: var(--s3) 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .term .c { color: var(--muted); }
+  .term .r { color: var(--critical); font-weight: 600; }
+  .term .g { color: var(--good); font-weight: 600; }
+
+  /* ── Chips ──────────────────────────────────────────── */
+  .chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.18em 0.55em;
+    border-radius: 3px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .chip.v { background: var(--accent-soft); color: var(--accent); }
+  .chip.p { background: var(--attention-soft); color: var(--attention); }
+  .chip.t { background: var(--surface-2); color: var(--muted); }
+
+  ul { padding-left: 1.15rem; margin: 0 0 var(--s2); }
+  li { margin-bottom: 0.42rem; }
+  li::marker { color: var(--muted); }
+
+  .rule { border: 0; border-top: 1px solid var(--line); margin: var(--s5) 0 0; max-width: none; }
+
+  /* ── Figure / flow ──────────────────────────────────── */
+  figure.flow {
+    margin: var(--s4) 0 var(--s3);
+    padding: var(--s3) var(--s3) var(--s2);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  figure.flow svg {
+    display: block;
+    width: 100%;
+    min-width: 44rem;
+    height: auto;
+    color: var(--ink);
+  }
+  figure.flow figcaption {
+    margin-top: var(--s3);
+    padding-top: var(--s2);
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+  figure.flow figcaption strong { color: var(--ink-soft); font-weight: 640; }
+
+  footer {
+    margin-top: var(--s5);
+    padding-top: var(--s3);
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+  footer code { font-family: var(--mono); font-size: 0.92em; }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    header.hero { padding-top: var(--s4); }
+  }
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <p class="eyebrow">Design System Sansys · Proposta à diretoria</p>
+  <h1>O DSS como agente ativo do desenvolvimento</h1>
+  <p class="standfirst">
+    Hoje o DSS é uma biblioteca de componentes que já possui governança robusta,
+    ferramentas MCP e aderência à linguagem que os LLMs utilizam. A proposta é que ele
+    também passe a <strong>assistir todo o caminho</strong> — da especificação que o
+    analista escreve até o código que chega ao sistema. Boa parte já existe e roda.
+    Este documento mostra o que foi verificado, o que falta, e o que precisa de decisão.
+  </p>
+</header>
+
+<section>
+  <h2><span class="num">01 — Diagnóstico</span>O que a IA erra quando constrói uma tela</h2>
+
+  <p class="lede">
+    Em abril, uma IA construiu uma página complexa usando o DSS. O resultado foi
+    auditado linha a linha.
+  </p>
+
+  <div class="stats">
+    <div class="stat bad"><b>5</b><span>não-conformidades bloqueantes</span></div>
+    <div class="stat"><b>3</b><span>não-bloqueantes</span></div>
+    <div class="stat"><b>7</b><span>riscos futuros</span></div>
+    <div class="stat ok"><b>20</b><span>pontos conformes</span></div>
+    <div class="stat ok"><b>0</b><span>exigiram refazer a arquitetura</span></div>
+  </div>
+
+  <p>
+    Entre as bloqueantes, uma é exemplar. O código trazia
+    <span class="ev">border: 1px solid var(--dss-border-default)</span> — e
+    <strong>esse token nunca existiu</strong>. A IA inventou um nome plausível, o
+    código compilou sem erro, e a borda simplesmente não aparece na tela.
+  </p>
+
+  <p>
+    Também apareceu um componente cru do framework no lugar do componente DSS, e um
+    rótulo de acessibilidade sem a marcação correta — o leitor de tela anunciaria o
+    código-fonte em voz alta, literalmente.
+  </p>
+
+  <div class="callout">
+    <span class="tag">A leitura correta</span>
+    <p>
+      A IA acertou a arquitetura, a composição e o fluxo. Errou em detalhes que
+      <strong>uma máquina pega</strong>. Dos oito achados, <strong>três já são
+      capturados automaticamente hoje</strong> — os gates construídos desde então
+      passaram a barrá-los antes do commit.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">02 — Diagnóstico</span>O que as especificações não dizem</h2>
+
+  <p class="lede">
+    Três especificações reais, de módulos e autores diferentes, foram medidas termo a
+    termo. As ausências não são de uma pessoa — repetem-se nas três.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>O que a spec deveria declarar</th>
+          <th>Negativação<br><span style="font-weight:400;text-transform:none;letter-spacing:0">692 linhas</span></th>
+          <th>Water / Fiscal<br><span style="font-weight:400;text-transform:none;letter-spacing:0">428 linhas</span></th>
+          <th>Arrecadação<br><span style="font-weight:400;text-transform:none;letter-spacing:0">783 linhas</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>O que a tela mostra quando não há dados</td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+        <tr><td>O que aparece enquanto os dados carregam</td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+        <tr><td>Volume esperado de registros</td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+        <tr><td>Requisitos de acessibilidade</td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+        <tr><td>Texto exato das mensagens ao usuário</td><td class="n">8 menções</td><td class="n">5 menções</td><td class="n">9 menções</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    A última linha é a mais reveladora: as três falam de mensagem ao usuário
+    <strong>22 vezes somadas</strong>, e nenhuma redige o texto final nem diz por onde
+    ele aparece. Quem constrói a tela inventa os dois.
+  </p>
+
+  <div class="callout warn">
+    <span class="tag">O ponto que muda a conversa</span>
+    <p>
+      <strong>As especificações são boas.</strong> Trazem escopo negativo explícito,
+      41 cenários de teste, 40 critérios de aceite — acima da média do mercado.
+    </p>
+    <p>
+      O que falta não é capricho de quem escreve: <strong>o modelo de documento não
+      tem onde colocar</strong>. Ninguém preenche um campo que não existe. Problema
+      de formulário se conserta e se automatiza; problema de pessoa, não.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">03 — Diagnóstico</span>O design é chamado quando já é tarde</h2>
+
+  <p class="lede">
+    A seção de protótipo é o ponto em que a especificação passa o bastão para o
+    design. Nas três, ela está vazia ou aponta para lugar nenhum.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Documento</th><th>O que a seção de protótipo traz</th></tr></thead>
+      <tbody>
+        <tr><td class="n">Water / Fiscal</td><td>Um título de seção — <strong>e nada abaixo dele</strong></td></tr>
+        <tr><td class="n">Negativação</td><td>“Reprototipar no padrão do sistema”, sem apontar qual padrão</td></tr>
+        <tr><td class="n">Arrecadação</td><td>40 imagens soltas, uma por requisito</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    O DSS ainda não aparece nessas especificações — ele está em validação e
+    adequação, não em uso para produzir telas novas. <strong>A aplicação do DSS é
+    exatamente o ponto do processo em que a virada de chave mora.</strong>
+  </p>
+
+  <p>
+    E há um custo escondido: quando a especificação entrega imagem em vez de
+    referência, a ferramenta de IA que gera o protótipo lê pixels — e devolve
+    componentes reinventados. O desenvolvedor então <em>reconstrói</em> em vez de
+    traduzir. É retrabalho embutido no processo, não falha de ninguém.
+  </p>
+</section>
+
+<hr class="rule">
+
+<section>
+  <h2><span class="num">04 — A virada</span>O protótipo deixou de ser caro</h2>
+
+  <p class="lede">
+    O design entra tarde por um motivo histórico legítimo: protótipo custava caro.
+    Esse pressuposto caiu.
+  </p>
+
+  <p>
+    Com IA gerando código sobre o DSS, o protótipo de alta fidelidade e o
+    desenvolvimento <strong>deixam de ser duas etapas</strong>. O fluxo desenhado pela
+    própria área de UX em 2024 já tratava desenvolvimento como “codagem do protótipo”
+    — mas a codagem era manual, então as etapas precisavam ser separadas, com uma
+    reunião de validação entre elas.
+  </p>
+
+  <div class="callout">
+    <span class="tag">A única mudança que o ferramental novo torna possível</span>
+    <p>
+      As duas etapas viram uma. A reunião de validação entre elas é substituída por
+      <strong>verificação automática</strong> — mesma pergunta, resposta em segundos.
+      E validar com o usuário sobre algo real passa a ser barato, e cedo.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">05 — O processo</span>Onde cada um atua</h2>
+
+  <p class="lede">
+    O fluxo da área de UX tem três fases. A divisão de responsabilidade já está lá — o
+    que muda é o que assiste cada etapa.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Fase</th><th>Produz</th><th>Conduz</th></tr></thead>
+      <tbody>
+        <tr><td class="n">Descoberta</td><td>Entendimento e escopo</td><td>Analista + Designer + Líderes</td></tr>
+        <tr><td class="n">Solução</td><td><strong>A especificação validada</strong></td><td>Analista + Designer + Usuário</td></tr>
+        <tr><td class="n">Entrega</td><td>O código no sistema</td><td>Designer + Dev + Usuário</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>Descoberta e Solução são como a especificação nasce. A Entrega é onde o
+    DSS entra</strong> — a spec é verificada e vira código.
+  </p>
+
+  <h3>Por que isso não gera atrito entre analista e designer</h3>
+
+  <p>
+    As ausências da seção 02 não são aleatórias: elas mapeiam exatamente a divisão
+    entre o que cada um domina.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Eixo</th><th>Dono natural</th><th>Estado nas 3 specs</th></tr></thead>
+      <tbody>
+        <tr><td>Regra, fluxo, permissão, integração</td><td class="n">Analista</td><td><span class="chip v">forte</span></td></tr>
+        <tr><td>Estados de tela e de erro</td><td class="n">Designer</td><td><span class="chip t">ausente</span></td></tr>
+        <tr><td>Texto e formato das mensagens</td><td class="n">Designer</td><td><span class="chip t">ausente</span></td></tr>
+        <tr><td>Volume, densidade e responsividade</td><td class="n">Designer</td><td><span class="chip t">ausente</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    As duas colunas quase não se tocam. <strong>O designer não invade o território do
+    analista</strong> — ele preenche sete campos que hoje ninguém preenche.
+  </p>
+
+  <div class="callout">
+    <span class="tag">E o relatório não fiscaliza ninguém</span>
+    <p>
+      Como as duas primeiras fases são construção conjunta, a especificação chega à
+      Entrega <strong>com dois donos</strong>. O relatório de prontidão não julga o
+      analista: diz <strong>à dupla</strong> que ela terminou.
+    </p>
+    <p>
+      Isso importa. Padronizar documento é mudança de cultura, e mudança de cultura
+      morre quando o primeiro contato de quem escreve é uma reprovação.
+    </p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <h2><span class="num">06 — O que existe</span>Já construído e verificado</h2>
+
+  <p class="lede">
+    Nada abaixo é planejado. Tudo foi executado e conferido contra o sistema real.
+  </p>
+
+  <div class="stats">
+    <div class="stat"><b>91</b><span>componentes catalogados</span></div>
+    <div class="stat"><b>78</b><span>contratos verificados</span></div>
+    <div class="stat"><b>88</b><span>selos de conformidade</span></div>
+    <div class="stat"><b>19</b><span>travas automáticas</span></div>
+    <div class="stat"><b>16</b><span>ferramentas para agentes de IA</span></div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Camada</th><th>O que faz</th><th>Verificação</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="n">Composição</td>
+          <td>Valida a árvore de componentes de uma tela antes de existir código</td>
+          <td>Reproduz sozinha o componente cru que a auditoria humana levou horas para achar</td>
+        </tr>
+        <tr>
+          <td class="n">Vocabulário</td>
+          <td>33 conceitos que uma especificação contém, extraídos de specs reais</td>
+          <td>33 de 33 com evidência apontando o documento de origem</td>
+        </tr>
+        <tr>
+          <td class="n">Prontidão</td>
+          <td>Lê a spec e diz se ela pode atravessar para a Entrega</td>
+          <td>3 specs testadas — todas incompletas, pelas mesmas 5 lacunas</td>
+        </tr>
+        <tr>
+          <td class="n">Modelo</td>
+          <td>Os sete campos que faltam, para o designer preencher</td>
+          <td>Preenchido na spec real, o veredito vira aprovado</td>
+        </tr>
+        <tr>
+          <td class="n">Parecer</td>
+          <td>Roteiro de leitura crítica — contradição, lacuna, ambiguidade</td>
+          <td>Achou item real que nenhuma busca automática pegaria</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>O laço fechado, em um comando</h3>
+
+  <div class="term"><span class="c">$ verificar "RF-0292D.md"</span>
+<span class="r">✕  INCOMPLETA</span>  <span class="c">— 5 lacunas bloqueantes</span>
+
+<span class="c">   ↳ o designer preenche a seção de interface</span>
+
+<span class="c">$ verificar "RF-0292D.md"</span>
+<span class="g">✓  PRONTA</span></div>
+
+  <p>
+    Não é promessa: é reproduzível hoje, sobre a especificação real, em uma máquina
+    com o repositório.
+  </p>
+</section>
+
+<section>
+  <h2><span class="num">07 — Honestidade</span>O que o DSS não faz</h2>
+
+  <p class="lede">
+    Esta seção existe porque prometer demais é o jeito mais rápido de perder a
+    confiança na primeira falha.
+  </p>
+
+  <ul>
+    <li>
+      <strong>Não valida se a regra de negócio está certa.</strong> Detecta que a spec
+      não diz o que acontece com a lista vazia. Não detecta que o prazo deveria ser
+      cinco dias e não três.
+    </li>
+    <li>
+      <strong>Presença não é qualidade.</strong> A ferramenta vê que a spec
+      <em>fala</em> do estado vazio. Não avalia se o que ela diz faz sentido.
+    </li>
+    <li>
+      <strong>O parecer de leitura pode errar.</strong> É opinião assistida, não trava
+      — por isso cada observação vem com a citação exata, para conferência em segundos.
+    </li>
+    <li>
+      <strong>Acessibilidade é registrada, não cobrada.</strong> Decisão explícita: os
+      sistemas de hoje não a praticam, e cobrar agora seria irreal. Fica como débito
+      declarado, sem bloquear ninguém.
+    </li>
+    <li>
+      <strong>O artefato gerado não é o sistema em produção.</strong> Ele nasce no
+      ambiente do DSS; o produto tem navegação, integrações e telas legadas. A
+      tradução é real e tem custo.
+    </li>
+    <li>
+      <strong>As travas protegem o DSS, não o produto.</strong> As 19 travas
+      automáticas vivem no repositório do design system. <strong>No repositório dos
+      produtos não existe nenhuma.</strong> Levá-las para lá é o que transforma
+      “o DSS valida” de promessa em fato.
+    </li>
+  </ul>
+</section>
+
+<hr class="rule">
+
+<section>
+  <h2><span class="num">08 — Pedidos</span>O que precisa de decisão</h2>
+
+  <p class="lede">
+    Três pedidos. Nenhum é grande; os dois primeiros destravam tudo o mais.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Pedido</th><th>Por quê</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Um endereço para hospedar o serviço</strong></td>
+          <td>Hoje só funciona para quem tem o repositório na máquina. Hospedado, qualquer ferramenta de design ou IA passa a consultar o DSS. Custo praticamente zero quando ocioso; empacotamento já pronto</td>
+          <td><span class="chip p">decisão de infraestrutura</span></td>
+        </tr>
+        <tr>
+          <td><strong>Uma especificação real, com o designer</strong></td>
+          <td>Para descobrir se os sete campos cabem no trabalho dele. Não precisa de nada além de uma hora e um documento</td>
+          <td><span class="chip v">pode começar hoje</span></td>
+        </tr>
+        <tr>
+          <td><strong>Conversa com os times de produto</strong></td>
+          <td>Medir aderência em produção exige instrumentar os sistemas. Isso é pedir código a eles — e o argumento precisa ser sobre o que eles ganham</td>
+          <td><span class="chip p">negociação</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">09 — Medição</span>Como saber se funcionou</h2>
+
+  <p class="lede">
+    A missão é reduzir defeito e tela fora do padrão. Sem número antes de começar, em
+    seis meses vira discussão de opinião.
+  </p>
+
+  <p>
+    Já existe linha de base: a auditoria da seção 01 mediu <span class="ev">8</span>
+    não-conformidades em uma tela, das quais <span class="ev">3</span> hoje já caem
+    por máquina. Três medidas por tela entregue:
+  </p>
+
+  <ul>
+    <li><strong>Não-conformidades encontradas na revisão</strong> — separando as que a máquina pega das que exigem julgamento humano</li>
+    <li><strong>Ciclos de ida e volta até aprovar</strong> — o fluxo atual tem seis pontos de decisão com retorno</li>
+    <li><strong>Componentes reinventados</strong> — quantos foram recriados em vez de reaproveitados</li>
+  </ul>
+
+  <div class="callout warn">
+    <span class="tag">Um risco a nomear agora</span>
+    <p>
+      Vender que “a IA entrega pronto” queima o processo no primeiro ciclo. O ganho
+      real é outro: <strong>a pessoa deixa de gastar atenção com detalhe verificável e
+      passa a gastá-la com regra de negócio e experiência</strong> — que é onde
+      julgamento humano não tem substituto.
+    </p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <h2><span class="num">10 — O fluxo</span>O processo, com os ajustes</h2>
+
+  <p class="lede">
+    O fluxo abaixo é o que a área de UX desenhou, mas agora com algumas mudanças:
+    a documentação é criada em pares (designer e analista), as etapas de protótipo
+    de alta e desenvolvimento se fundem, e três pontos de verificação automática
+    entram no caminho.
+  </p>
+
+  <figure class="flow">
+    <svg viewBox="0 0 1020 426" role="img"
+         aria-label="Linha do tempo do processo em três fases. Descoberta: demanda, pesquisa com usuário e cliente, escopo multidisciplinar e storyboard de telas e fluxos. Solução: protótipo de baixa fidelidade, validação com analista e validação com usuário e cliente. Entrega: portão de prontidão, código DSS com visualização em ambiente real, em uma única etapa, verificação automática, validação do time de UX, validação com usuário e cliente, e produção. O DSS assiste o storyboard, a validação com analista, o portão de prontidão, a etapa de código e a verificação automática. A etapa de produção ainda não tem desenho.">
+      <defs>
+        <marker id="ar" viewBox="0 0 8 8" refX="7" refY="4"
+                markerWidth="6" markerHeight="6" orient="auto">
+          <polygon points="0,1 7,4 0,7" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <!-- spine -->
+      <line x1="10" y1="14" x2="10" y2="382" stroke="currentColor" stroke-width="1" opacity="0.22"/>
+      <circle cx="10" cy="20" r="3" fill="currentColor" opacity="0.4"/>
+      <circle cx="10" cy="134" r="3" fill="currentColor" opacity="0.4"/>
+      <circle cx="10" cy="272" r="3" fill="currentColor" opacity="0.4"/>
+
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+         font-size="11" letter-spacing="1.4" fill="currentColor" opacity="0.55">
+        <text x="32" y="24">DESCOBERTA</text>
+        <text x="32" y="138">SOLUÇÃO</text>
+        <text x="32" y="276">ENTREGA</text>
+      </g>
+
+      <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+         font-size="12.5" fill="currentColor" text-anchor="middle">
+
+        <!-- ── Descoberta ─────────────────────────────── -->
+        <g fill="none" stroke="currentColor" stroke-width="1.15" opacity="0.5">
+          <rect x="32"  y="36" width="146" height="60" rx="4"/>
+          <rect x="198" y="36" width="146" height="60" rx="4"/>
+          <rect x="364" y="36" width="146" height="60" rx="4"/>
+        </g>
+        <rect x="530" y="36" width="146" height="60" rx="4"
+              fill="none" stroke="currentColor" stroke-width="1.15" opacity="0.5"/>
+        <rect x="530" y="36" width="146" height="3" fill="var(--accent)"/>
+
+        <text x="105" y="70">Demanda</text>
+        <text x="271" y="62">Pesquisa com</text><text x="271" y="78">usuário e cliente</text>
+        <text x="437" y="62">Escopo</text><text x="437" y="78">multidisciplinar</text>
+        <text x="603" y="62">Storyboard</text><text x="603" y="78">de telas e fluxos</text>
+
+        <g stroke="currentColor" stroke-width="1.15" opacity="0.55" marker-end="url(#ar)">
+          <line x1="181" y1="66" x2="194" y2="66"/>
+          <line x1="347" y1="66" x2="360" y2="66"/>
+          <line x1="513" y1="66" x2="526" y2="66"/>
+        </g>
+
+        <!-- ── Solução ────────────────────────────────── -->
+        <rect x="32"  y="150" width="146" height="60" rx="4"
+              fill="none" stroke="currentColor" stroke-width="1.15" opacity="0.5"/>
+        <rect x="198" y="150" width="146" height="60" rx="4"
+              fill="none" stroke="currentColor" stroke-width="1.15" opacity="0.5"/>
+        <rect x="198" y="150" width="146" height="3" fill="var(--accent)"/>
+        <rect x="364" y="150" width="146" height="60" rx="4"
+              fill="none" stroke="currentColor" stroke-width="1.15" opacity="0.5"/>
+
+        <text x="105" y="176">Protótipo de</text><text x="105" y="192">baixa fidelidade</text>
+        <text x="271" y="176">Validação</text><text x="271" y="192">com analista</text>
+        <text x="437" y="176">Validação com</text><text x="437" y="192">usuário e cliente</text>
+
+        <g stroke="currentColor" stroke-width="1.15" opacity="0.55" marker-end="url(#ar)">
+          <line x1="181" y1="180" x2="194" y2="180"/>
+          <line x1="347" y1="180" x2="360" y2="180"/>
+        </g>
+
+        <!-- fusão: o que eram duas etapas -->
+        <g opacity="0.75">
+          <path d="M198 298 L198 290 L344 290 L344 298" fill="none"
+                stroke="var(--accent)" stroke-width="1.1" stroke-dasharray="3 3"/>
+          <text x="271" y="284" font-size="11" fill="var(--accent)"
+                font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">eram 2 etapas</text>
+        </g>
+
+        <!-- ── Entrega ────────────────────────────────── -->
+        <g fill="none" stroke="currentColor" stroke-width="1.15" opacity="0.5">
+          <rect x="32"  y="304" width="146" height="60" rx="4"/>
+          <rect x="198" y="304" width="146" height="60" rx="4"/>
+          <rect x="364" y="304" width="146" height="60" rx="4"/>
+          <rect x="530" y="304" width="146" height="60" rx="4"/>
+          <rect x="696" y="304" width="146" height="60" rx="4"/>
+        </g>
+        <rect x="862" y="304" width="146" height="60" rx="4" fill="none"
+              stroke="currentColor" stroke-width="1.15" stroke-dasharray="4 4" opacity="0.42"/>
+
+        <rect x="32"  y="304" width="146" height="3" fill="var(--accent)"/>
+        <rect x="198" y="304" width="146" height="3" fill="var(--accent)"/>
+        <rect x="364" y="304" width="146" height="3" fill="var(--accent)"/>
+
+        <text x="105" y="330">Portão de</text><text x="105" y="346">prontidão</text>
+        <text x="271" y="326">Código DSS</text><text x="271" y="342" font-size="11.5" opacity="0.72">visualização em</text><text x="271" y="355" font-size="11.5" opacity="0.72">ambiente real</text>
+        <text x="437" y="330">Verificação</text><text x="437" y="346">automática</text>
+        <text x="603" y="330">Validação</text><text x="603" y="346">time de UX</text>
+        <text x="769" y="330">Validação com</text><text x="769" y="346">usuário e cliente</text>
+        <text x="935" y="338" opacity="0.62">Produção</text>
+
+        <g stroke="currentColor" stroke-width="1.15" opacity="0.55" marker-end="url(#ar)">
+          <line x1="181" y1="334" x2="194" y2="334"/>
+          <line x1="347" y1="334" x2="360" y2="334"/>
+          <line x1="513" y1="334" x2="526" y2="334"/>
+          <line x1="679" y1="334" x2="692" y2="334"/>
+          <line x1="845" y1="334" x2="858" y2="334"/>
+        </g>
+      </g>
+
+      <!-- legenda -->
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+         font-size="11" fill="currentColor">
+        <rect x="32" y="398" width="22" height="3" fill="var(--accent)"/>
+        <text x="62" y="403" opacity="0.7">onde o DSS assiste</text>
+        <rect x="236" y="393" width="22" height="12" rx="2" fill="none"
+              stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 3" opacity="0.45"/>
+        <text x="266" y="403" opacity="0.7">etapa ainda sem desenho no fluxo</text>
+      </g>
+    </svg>
+
+    <figcaption>
+      A Descoberta e a Solução seguem como estão: é onde a especificação nasce, com
+      analista e designer juntos. A mudança está na Entrega — <strong>protótipo de alta
+      e desenvolvimento viram uma etapa só</strong>, e a reunião de validação que existia
+      entre elas dá lugar a verificação automática.
+    </figcaption>
+  </figure>
+
+  <p>
+    A última caixa é a mais importante para dimensionar expectativa:
+    <strong>a passagem para produção nunca foi desenhada</strong> — nem no fluxo
+    original, nem agora. O artefato nasce no ambiente do DSS, e o produto tem
+    navegação, integrações e telas legadas. Essa fronteira precisa de um contrato
+    próprio com o time de desenvolvimento.
+  </p>
+</section>
+
+<footer>
+  <p>
+    Apresentação preparada a partir de material verificado: auditoria de abril,
+    três especificações reais dos módulos de Negativação, Faturamento e Arrecadação,
+    e o estado atual do repositório do Design System Sansys.
+  </p>
+  <p>
+    Detalhamento técnico em <code>DSS_PROCESSO_DESENVOLVIMENTO_ASSISTIDO.md</code>
+    e <code>DEBITO_ABERTO.md</code>.
+  </p>
+</footer>
+
+</div>
