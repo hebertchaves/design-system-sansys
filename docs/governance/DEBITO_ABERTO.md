@@ -45,6 +45,13 @@
   bg-primary→token; ou aposentar a REFERENCIA em favor do contrato.)*
 
 - 🟡 **Governança da IMPLEMENTAÇÃO (o que o produto constrói) — camada 1 de 4 entregue** (2026-08).
+  > 🔻 **A árvore paralela desta frente foi encerrada em 2026-08-10** (worktree `DSS-governanca` +
+  > branch `work/dss-governanca-implementacao`, ambas removidas após atualização do SO). **Nada se perdeu:**
+  > os 13 commits que já existiram nela foram verificados um a um como contidos em
+  > `work/dss-selection-controls` (merge `67838e5`), incluindo o último — a apresentação à diretoria
+  > (`DSS_APRESENTACAO_DIRETORIA.html`), que estava fora do git desde 07/ago.
+  > **Os itens abertos abaixo continuam abertos**; o que acabou foi a árvore
+  > separada, não o trabalho. Daqui em diante esta frente anda na árvore principal.
   📖 **Visão consolidada do processo: `DSS_PROCESSO_DESENVOLVIMENTO_ASSISTIDO.md`** (fronteira Descoberta+Solução =
   como a spec nasce / Entrega = onde o DSS entra; divisão analista×designer; o que roda hoje; limites; medição).
   Contexto: as frentes do DSS governam o *componente*; **nada governava a implementação**. Causa de origem: D4
