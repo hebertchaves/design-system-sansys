@@ -202,6 +202,27 @@
   zero"**, que é quando o agente realmente os lê. Ref.: `PROPOSTA_READEQUACAO_CLAUDE_MD.md` (mesma tese: núcleo
   enxuto + gates + índice para lookup). `[[project_claudemd_higiene]]`.
 
+- 🔴 **Eixo visual da adequação — cobertura muito abaixo da regra** (medido 2026-08-11). O
+  `DSS_UI_ADEQUACAO_CHECKLIST.md` exige, por componente adequado, **página Playground**
+  (`apps/sandbox/src/Test‹Nome›.vue`) **e** **Preview Frame** registrado — é o que torna possível a
+  análise visual, o passo que FECHA a adequação. Estado real:
+  - **Página Playground: 12 de 76** componentes base.
+  - **Preview Frame: 10** registrados (Input, Select, Textarea, Field, File, Checkbox, Radio, Toggle,
+    Uploader, MultiselectAutocomplete).
+  - Não é dívida de um componente: é a regra valendo só onde a adequação já passou. **Cada componente
+    adequado daqui em diante entra com os dois** — e a fila de não-adequados carrega o resto.
+  - ⚠️ **Sem gate automatizado.** Hoje é item de checklist marcado à mão. Um gate tipo
+    `validate:portal-pages` reprovaria 64/76 de saída, então precisaria de baseline/ratchet como o de
+    tokens fantasma. **Decisão pendente:** construir o ratchet ou manter curadoria manual.
+
+- 🟡 **`DssCheckbox.modelValue` não admite os valores de `trueValue`/`falseValue`** (achado 2026-08-11 ao
+  verificar a página no navegador). O tipo é `boolean | null | any[]`, mas as props `trueValue`/`falseValue`
+  existem justamente para valores customizados — usar a feature como documentada dispara
+  `[Vue warn] Invalid prop: type check failed for prop "modelValue" … got String`. Reproduz no
+  `DssCheckbox.example.vue` (`true-value="yes"` / `false-value="no"`), vindo de `af5cc54`.
+  **É defeito de contrato do componente**, não da página. Fix = alargar o tipo (não-breaking) + re-emitir
+  contrato + atualizar doc. Verificar se DssToggle tem o mesmo (ele também expõe `trueValue`/`falseValue`).
+
 ## Verificar (pode já estar resolvido)
 
 - 🔍 **`DssResponsive`** — lista scope-props do slot default como slots (baixa prioridade). Mesmo arquivo.
