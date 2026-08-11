@@ -163,6 +163,21 @@ export interface CheckboxProps {
   /** Modo compacto (reduz espacamento) */
   dense?: boolean
 
+  /**
+   * Estado de erro (validacao de formulario).
+   * Paridade com DssRadio/DssToggle: a cor de erro tem PRIORIDADE sobre `color`
+   * e sobre `keepColor` — um campo invalido nao exibe cor de acao em repouso.
+   *
+   * @default false
+   */
+  error?: boolean
+
+  /**
+   * Mensagem de erro exibida quando `error=true`.
+   * Renderizada com `role="alert"` e ligada ao input por `aria-describedby`.
+   */
+  errorMessage?: string
+
   // ========================================
   // Brand
   // ========================================

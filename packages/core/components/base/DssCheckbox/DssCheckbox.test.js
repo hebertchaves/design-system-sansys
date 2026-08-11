@@ -515,6 +515,81 @@ describe('DssCheckbox', () => {
   })
 
   // ===========================================================================
+  // ERROR TESTS (paridade com DssRadio/DssToggle)
+  // ===========================================================================
+
+  describe('Error', () => {
+    it('applies error class when error is true', () => {
+      const wrapper = mount(DssCheckbox, {
+        props: { error: true, label: 'Obrigatorio' }
+      })
+      expect(wrapper.classes()).toContain('dss-checkbox--error')
+    })
+
+    it('does not apply error class by default', () => {
+      const wrapper = mount(DssCheckbox, { props: { label: 'Normal' } })
+      expect(wrapper.classes()).not.toContain('dss-checkbox--error')
+    })
+
+    it('renders the error message with role=alert', () => {
+      const wrapper = mount(DssCheckbox, {
+        props: { error: true, errorMessage: 'Campo obrigatorio' }
+      })
+      const msg = wrapper.find('.dss-checkbox__error')
+      expect(msg.exists()).toBe(true)
+      expect(msg.text()).toBe('Campo obrigatorio')
+      expect(msg.attributes('role')).toBe('alert')
+    })
+
+    it('does not render the message when error is false', () => {
+      const wrapper = mount(DssCheckbox, {
+        props: { error: false, errorMessage: 'Campo obrigatorio' }
+      })
+      expect(wrapper.find('.dss-checkbox__error').exists()).toBe(false)
+    })
+
+    it('sets aria-invalid on the native input when error', () => {
+      const wrapper = mount(DssCheckbox, { props: { error: true } })
+      expect(wrapper.find('.dss-checkbox__native').attributes('aria-invalid')).toBe('true')
+    })
+
+    it('does not set aria-invalid by default', () => {
+      const wrapper = mount(DssCheckbox)
+      expect(wrapper.find('.dss-checkbox__native').attributes('aria-invalid')).toBeUndefined()
+    })
+
+    // O id gerado precisa CASAR com o aria-describedby: um describedby apontando
+    // para um id inexistente e pior que nenhum — o leitor de tela anuncia nada.
+    it('wires aria-describedby to the error message id', () => {
+      const wrapper = mount(DssCheckbox, {
+        props: { error: true, errorMessage: 'Campo obrigatorio' }
+      })
+      const describedBy = wrapper.find('.dss-checkbox__native').attributes('aria-describedby')
+      const msgId = wrapper.find('.dss-checkbox__error').attributes('id')
+      expect(describedBy).toBeTruthy()
+      expect(describedBy).toBe(msgId)
+    })
+
+    it('has no aria-describedby when error has no message', () => {
+      const wrapper = mount(DssCheckbox, { props: { error: true } })
+      expect(
+        wrapper.find('.dss-checkbox__native').attributes('aria-describedby')
+      ).toBeUndefined()
+    })
+
+    // Erro vence cor e keepColor: um campo invalido nao exibe cor de acao em
+    // repouso. Mesma regra do DssRadio/DssToggle.
+    it('error suppresses the color utility class, even with keepColor', () => {
+      const wrapper = mount(DssCheckbox, {
+        props: { error: true, keepColor: true, color: 'primary' }
+      })
+      const control = wrapper.find('.dss-checkbox__control')
+      expect(control.classes()).not.toContain('text-primary')
+      expect(control.classes()).not.toContain('bg-primary')
+    })
+  })
+
+  // ===========================================================================
   // STRUCTURE TESTS
   // ===========================================================================
 

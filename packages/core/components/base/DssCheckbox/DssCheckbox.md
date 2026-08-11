@@ -220,6 +220,8 @@ Valores não-tokenizados presentes no SCSS do componente, com justificativa téc
 |------|------|---------|-----------|
 | `disable` | `boolean` | `false` | Desabilita o checkbox (opacidade reduzida, cursor not-allowed, pointer-events none) |
 | `dense` | `boolean` | `false` | Modo compacto (reduz gap e min-height para valores de `sm`) |
+| `error` | `boolean` | `false` | Estado de erro (validação). Cor de erro no controle e na label, `aria-invalid="true"`. Prioridade sobre `color` e `keepColor` |
+| `errorMessage` | `string` | `''` | Mensagem de erro. Requer `error=true`. `<span role="alert">` ligado ao input por `aria-describedby` |
 
 ### Props de Brandabilidade (Exclusivo DSS)
 

@@ -72,6 +72,7 @@ export function useCheckboxClasses(
         'dss-checkbox--dense': props.dense,
         'dss-checkbox--left-label': props.leftLabel,
         'dss-checkbox--keep-color': props.keepColor,
+        'dss-checkbox--error': props.error,
       }
     ]
   })
@@ -88,6 +89,11 @@ export function useCheckboxClasses(
    */
   const controlColorClasses = computed(() => {
     if (props.brand) return ''
+
+    // Erro tem prioridade sobre qualquer cor, marcado ou nao — inclusive sobre
+    // keepColor: um campo invalido nao pode exibir a cor de acao no repouso.
+    // Mesma regra do DssRadio/DssToggle (paridade da familia).
+    if (props.error) return ''
 
     const color = props.color || 'primary'
     const isActive = options.isChecked.value || options.isIndeterminate.value

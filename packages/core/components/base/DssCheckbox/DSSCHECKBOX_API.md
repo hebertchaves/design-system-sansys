@@ -121,6 +121,8 @@ O estado **desmarcado permanece vazio** (não há `unchecked-icon` — decisão 
 |------|------|---------|-----------|
 | `disable` | `boolean` | `false` | Desabilita todas as interações |
 | `dense` | `boolean` | `false` | Modo compacto (reduz gap e min-height para valores de `sm`) |
+| `error` | `boolean` | `false` | Estado de erro. Aplica cor de erro ao controle e à label + `aria-invalid="true"`. Tem prioridade sobre `color` e `keepColor`. |
+| `errorMessage` | `string` | `''` | Mensagem de erro. Requer `error=true`. Renderiza `<span role="alert">` vinculado via `aria-describedby`. |
 
 **Exemplo:**
 ```vue

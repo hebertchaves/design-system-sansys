@@ -176,6 +176,36 @@
 }
 
 /* ==========================================================================
+   ERROR
+
+   Paridade com DssRadio/DssToggle: a cor de erro vale para o controle e para a
+   label. A prioridade sobre `color`/`keepColor` é resolvida no composable
+   (que não emite a utility `.text-{color}` quando error=true).
+   ========================================================================== */
+
+.dss-checkbox--error {
+  .dss-checkbox__control {
+    border-color: var(--dss-feedback-error);
+    color: var(--dss-feedback-error);
+  }
+
+  .dss-checkbox__label {
+    color: var(--dss-feedback-error);
+  }
+}
+
+/* Mensagem de erro */
+.dss-checkbox__error {
+  display: block;
+  width: 100%;
+  margin-top: var(--dss-spacing-1); /* 4px */
+  font-family: var(--dss-font-family-sans);
+  font-size: var(--dss-font-size-xs); /* 12px */
+  line-height: var(--dss-line-height-normal);
+  color: var(--dss-feedback-error);
+}
+
+/* ==========================================================================
    LEFT LABEL
 
    A ordem é resolvida no TEMPLATE (o <span> da label é renderizado ANTES do

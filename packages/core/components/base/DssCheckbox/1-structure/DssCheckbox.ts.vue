@@ -21,6 +21,8 @@
       :disabled="disable"
       :tabindex="computedTabindex"
       :aria-label="ariaLabel"
+      :aria-invalid="error || undefined"
+      :aria-describedby="errorId"
       :value="val"
       @change="handleChange"
       @focus="isFocused = true"
@@ -58,6 +60,17 @@
       class="dss-checkbox__label"
     >
       <slot>{{ label }}</slot>
+    </span>
+
+    <!-- Mensagem de erro (paridade com DssRadio/DssToggle) -->
+    <span
+      v-if="error && errorMessage"
+      :id="errorId"
+      class="dss-checkbox__error"
+      role="alert"
+      aria-live="assertive"
+    >
+      {{ errorMessage }}
     </span>
   </label>
 </template>
@@ -130,6 +143,8 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   // States
   disable: false,
   dense: false,
+  error: false,
+  errorMessage: '',
 
   // Brand
   brand: null,
@@ -192,6 +207,20 @@ const isIndeterminate = computed(() => {
  * Detecta se ha conteudo de label (prop ou slot)
  */
 const hasLabel = computed(() => !!(props.label || slots.default))
+
+/**
+ * ID unico da instancia — base do id da mensagem de erro.
+ * Mesmo mecanismo do DssRadio (Golden Context da familia).
+ */
+const uniqueId = computed(() => `dss-checkbox-${Math.random().toString(36).substring(2, 8)}`)
+
+/**
+ * ID da mensagem de erro (para aria-describedby).
+ * undefined quando nao ha erro/mensagem — assim o atributo nem e renderizado.
+ */
+const errorId = computed(() =>
+  props.error && props.errorMessage ? `${uniqueId.value}-error` : undefined
+)
 
 /**
  * Tabindex computado - SOMENTE para o input nativo

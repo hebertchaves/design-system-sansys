@@ -127,6 +127,8 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 | `indeterminateIcon` | `string` | `'remove'` | Glifo no estado indeterminate |
 | `disable` | `boolean` | `false` | Desabilita interações |
 | `dense` | `boolean` | `false` | Modo compacto |
+| `error` | `boolean` | `false` | Estado de erro (prioridade sobre `color`/`keepColor`) |
+| `errorMessage` | `string` | `''` | Mensagem de erro (requer `error=true`) |
 | `brand` | `CheckboxBrand \| null` | `null` | Brand Sansys (`hub`, `water`, `waste`) |
 | `tabindex` | `number \| string \| null` | `null` | Tabindex customizado |
 | `ariaLabel` | `string` | — | Label ARIA para o input nativo |

@@ -234,6 +234,38 @@
         <DssCheckbox :model-value="null" indeterminate-icon="horizontal_rule" label="indeterminateIcon: horizontal_rule" />
       </div>
     </section>
+
+    <!-- ================================================================== -->
+    <!-- 15. ERROR -->
+    <!-- ================================================================== -->
+    <section>
+      <h3>15. Error (validação)</h3>
+      <p>
+        <em>
+          <code>error</code> aplica a cor de erro ao controle e à label;
+          <code>error-message</code> renderiza a mensagem com
+          <code>role="alert"</code>, ligada ao input por
+          <code>aria-describedby</code>. O erro tem prioridade sobre
+          <code>color</code> e <code>keepColor</code>.
+        </em>
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <DssCheckbox
+          v-model="errorTerms"
+          error
+          error-message="É obrigatório aceitar os termos"
+          label="Aceito os termos de uso"
+        />
+        <DssCheckbox :model-value="false" error label="Erro sem mensagem" />
+        <DssCheckbox
+          :model-value="false"
+          error
+          keep-color
+          color="primary"
+          label="Erro tem prioridade sobre keepColor"
+        />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -285,6 +317,9 @@ const fruits = ref<string[]>(['apple', 'cherry'])
 
 // 9. Custom values
 const customVal = ref('no')
+
+// 15. Error
+const errorTerms = ref(false)
 
 // 11. Accessibility
 const a11yVal = ref(false)

@@ -56,6 +56,23 @@
   .dss-checkbox--disabled {
     opacity: var(--dss-opacity-disabled);
   }
+
+  /* Erro em dark: vermelho CLARO, legível sobre fundo escuro (paridade
+     DssRadio/DssToggle). */
+  .dss-checkbox--error {
+    .dss-checkbox__control {
+      border-color: var(--dss-feedback-error-light);
+      color: var(--dss-feedback-error-light);
+    }
+
+    .dss-checkbox__label {
+      color: var(--dss-feedback-error-light);
+    }
+
+    .dss-checkbox__error {
+      color: var(--dss-feedback-error-light);
+    }
+  }
 }
 
 /* ==========================================================================
@@ -194,5 +211,10 @@
 
   .dss-checkbox--disabled .dss-checkbox__label {
     color: GrayText;
+  }
+
+  /* Erro em forced colors (paridade DssRadio/DssToggle) */
+  .dss-checkbox--error .dss-checkbox__control {
+    border-color: LinkText;
   }
 }
