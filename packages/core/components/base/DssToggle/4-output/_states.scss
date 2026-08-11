@@ -15,9 +15,16 @@
 
 /* ==========================================================================
    DARK MODE
+
+   O eixo é o TEMA DA APLICAÇÃO (`[data-theme="dark"]`), não a preferência do
+   SO. `@media (prefers-color-scheme: dark)` erra nas DUAS direções: com o SO
+   escuro e o app claro, pintava a cor de erro clara
+   (`--dss-feedback-error-light`) sobre fundo claro; com o SO claro e o app
+   escuro, não pintava nada. Mesmo seletor dos componentes já adequados
+   (DssInput/DssField).
    ========================================================================== */
 
-@media (prefers-color-scheme: dark) {
+[data-theme="dark"] {
   /*
    * EXCECAO DOCUMENTADA: Brightness invertido para dark mode
    *

@@ -656,30 +656,6 @@
           "source": "4-output/_brands.scss"
         },
         {
-          "property": "color",
-          "token": "--dss-text-primary",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-gray-400",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-feedback-error-light",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-feedback-error-light",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
           "property": "transition",
           "token": null,
           "value": "none",
@@ -752,12 +728,6 @@
           "token": null,
           "value": "brightness(0.95)",
           "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(1.1)",
-          "source": "4-output/_states.scss"
         }
       ],
       "focus": [
@@ -804,12 +774,6 @@
           "token": null,
           "value": "brightness(0.9)",
           "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(1.2)",
-          "source": "4-output/_states.scss"
         }
       ],
       "disabled": [
@@ -1062,24 +1026,6 @@
       },
       {
         "name": "--dss-action-accent",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-text-primary",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-gray-400",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-feedback-error-light",
         "usedIn": [
           "default"
         ]

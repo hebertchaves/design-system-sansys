@@ -671,12 +671,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(1.1)",
-          "source": "4-output/_states.scss"
-        },
-        {
           "property": "border-color",
           "token": null,
           "value": "Highlight",
@@ -721,12 +715,6 @@
           "token": null,
           "value": "brightness(0.9)",
           "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(1.2)",
-          "source": "4-output/_states.scss"
         }
       ],
       "disabled": [
@@ -734,7 +722,7 @@
           "property": "opacity",
           "token": "--dss-opacity-disabled",
           "value": null,
-          "source": "4-output/_states.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "cursor",

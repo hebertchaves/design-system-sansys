@@ -3,7 +3,7 @@
 // Design System Sansys v2.2
 //
 // Media queries de acessibilidade:
-//   - Dark mode (prefers-color-scheme: dark)
+//   - Dark mode ([data-theme="dark"] — tema da APLICACAO, nao do SO)
 //   - Reduced motion (prefers-reduced-motion: reduce)
 //   - High contrast (prefers-contrast: more)
 //   - Forced colors (forced-colors: active)
@@ -14,8 +14,14 @@
 
 // --------------------------------------------------------------------------
 // Dark mode
+//
+// O eixo e o TEMA DA APLICACAO (`[data-theme="dark"]`), nao a preferencia do SO.
+// `@media (prefers-color-scheme: dark)` erra nas DUAS direcoes: com o SO escuro
+// e o app claro, pintava a cor de erro clara (--dss-feedback-error-light) sobre
+// fundo claro; com o SO claro e o app escuro, nao pintava nada. Mesmo seletor
+// dos componentes ja adequados (DssInput/DssField).
 // --------------------------------------------------------------------------
-@media (prefers-color-scheme: dark) {
+[data-theme="dark"] {
   .dss-radio {
     color: var(--dss-text-primary, var(--dss-gray-200));
   }
