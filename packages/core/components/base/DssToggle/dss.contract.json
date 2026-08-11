@@ -22,7 +22,7 @@
     "props": [
       {
         "name": "modelValue",
-        "type": "boolean | null | any[]",
+        "type": "any",
         "controlHint": "text",
         "description": "Valor reativo do toggle (v-model)"
       },
@@ -159,7 +159,7 @@
     "emits": [
       {
         "name": "update:modelValue",
-        "payload": "boolean | any[]",
+        "payload": "any",
         "description": "Emitido quando o valor do toggle muda"
       }
     ],

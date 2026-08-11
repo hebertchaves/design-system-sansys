@@ -112,7 +112,7 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 
 | Prop | Tipo | Padrão | Descrição |
 |------|------|--------|-----------|
-| `modelValue` | `boolean \| null \| any[]` | `false` | Valor atual (boolean, null, ou array para grupo) |
+| `modelValue` | `any` | `false` | Valor atual (boolean, null, array para grupo, ou valor customizado via `trueValue`/`falseValue`) |
 | `val` | `any` | — | Valor no modo grupo (array model) |
 | `trueValue` | `any` | `true` | Valor customizado para estado marcado |
 | `falseValue` | `any` | `false` | Valor customizado para estado desmarcado |
@@ -135,7 +135,7 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 
 | Evento | Payload | Descrição |
 |--------|---------|-----------|
-| `update:modelValue` | `boolean \| null \| any[]` | Emitido ao alterar estado (não emite se `disable`) |
+| `update:modelValue` | `any` | Emitido ao alterar estado (não emite se `disable`) |
 
 ### Slots
 

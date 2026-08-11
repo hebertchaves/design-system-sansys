@@ -153,6 +153,26 @@ describe('DssToggle', () => {
       expect(wrapper.classes()).toContain('dss-toggle--checked')
     })
 
+    // Regressao: modelValue estreitado (boolean|null|any[]) fazia o compilador do
+    // Vue gerar um runtime check que REPROVAVA os valores que trueValue/falseValue
+    // oferecem. Os testes acima ja usavam string e passavam — Vue warn nao reprova
+    // vitest —, entao a asercao precisa ser sobre o WARN, nao sobre o comportamento.
+    it('does not emit a Vue prop-type warn with custom values', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      mount(DssToggle, {
+        props: {
+          modelValue: 'off',
+          trueValue: 'on',
+          falseValue: 'off'
+        }
+      })
+      const invalidProp = warn.mock.calls.filter((call) =>
+        String(call[0]).includes('Invalid prop')
+      )
+      warn.mockRestore()
+      expect(invalidProp).toEqual([])
+    })
+
     it('renders track with checked class when checked', () => {
       const wrapper = mount(DssToggle, {
         props: { modelValue: true }

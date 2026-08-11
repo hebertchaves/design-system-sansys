@@ -12,7 +12,7 @@ O `DssCheckbox` é um componente de checkbox do Design System Sansys baseado em 
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `modelValue` | `boolean \| null \| any[]` | `false` | Valor atual do checkbox |
+| `modelValue` | `any` | `false` | Valor atual do checkbox. `boolean`: toggle simples. `null`: indeterminate. `any[]`: modo grupo. Qualquer outro valor quando `trueValue`/`falseValue`/`indeterminateValue` sao customizados |
 | `val` | `any` | — | Valor no modo grupo (array model) |
 | `trueValue` | `any` | `true` | Valor customizado para estado marcado |
 | `falseValue` | `any` | `false` | Valor customizado para estado desmarcado |
@@ -180,7 +180,7 @@ O estado **desmarcado permanece vazio** (não há `unchecked-icon` — decisão 
 
 | Evento | Payload | Descrição |
 |--------|---------|-----------|
-| `update:modelValue` | `boolean \| null \| any[]` | Emitido ao alterar estado. Não emitido se `disable` é `true` |
+| `update:modelValue` | `any` | Emitido ao alterar estado. Novo valor (boolean, null, array ou o valor customizado). Não emitido se `disable` é `true` |
 
 **Payload por modo de operação:**
 

@@ -67,10 +67,16 @@ export interface ToggleProps {
    * Valor reativo do toggle (v-model)
    *
    * - Boolean mode: true/false
-   * - Custom values mode: trueValue/falseValue
+   * - Custom values mode: o valor definido em `trueValue`/`falseValue`
+   *   (ex.: `'on'`/`'off'`)
    * - Array mode: adiciona/remove val do array
+   *
+   * O tipo e aberto DE PROPOSITO: `trueValue`/`falseValue` sao `any`, entao o
+   * model precisa aceitar o que elas oferecem. Estreitar aqui faz o compilador
+   * do Vue gerar um runtime check que REPROVA a propria feature documentada.
+   * Espelha o QToggle (`model-value`: `Any | Array`).
    */
-  modelValue?: boolean | null | any[]
+  modelValue?: any
 
   /**
    * Valor quando toggle esta ativo (on)
@@ -243,9 +249,10 @@ export interface ToggleProps {
 export interface ToggleEmits {
   /**
    * Emitido quando o valor do toggle muda
-   * @param value Novo valor (boolean ou array)
+   * @param value Novo valor (boolean, array ou o valor customizado definido
+   *   em `trueValue`/`falseValue`)
    */
-  (e: 'update:modelValue', value: boolean | any[]): void
+  (e: 'update:modelValue', value: any): void
 }
 
 /**

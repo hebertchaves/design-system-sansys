@@ -193,7 +193,7 @@ Valores não-tokenizados presentes no SCSS do componente, com justificativa téc
 
 | Prop | Type | Default | Descrição |
 |------|------|---------|-----------|
-| `modelValue` | `boolean \| null \| any[]` | `false` | Valor atual. `boolean`: toggle simples. `null`: indeterminate. `any[]`: modo grupo |
+| `modelValue` | `any` | `false` | Valor atual. `boolean`: toggle simples. `null`: indeterminate. `any[]`: modo grupo. Outro valor: modo customizado (`trueValue`/`falseValue`/`indeterminateValue`) |
 | `val` | `any` | — | Valor que este checkbox representa no modo grupo (array model) |
 | `trueValue` | `any` | `true` | Valor customizado para estado marcado |
 | `falseValue` | `any` | `false` | Valor customizado para estado desmarcado |
@@ -238,7 +238,7 @@ Valores não-tokenizados presentes no SCSS do componente, com justificativa téc
 
 | Event | Payload | Quando Emitido | Descrição |
 |-------|---------|----------------|-----------|
-| `update:modelValue` | `boolean \| null \| any[]` | Ao alterar o estado do checkbox | Novo valor. Não emitido se `disable` é `true` |
+| `update:modelValue` | `any` | Ao alterar o estado do checkbox | Novo valor. Não emitido se `disable` é `true` |
 
 ### Slots
 

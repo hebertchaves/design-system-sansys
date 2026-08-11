@@ -15,7 +15,7 @@
 
 | Prop | Tipo | Default | Descricao |
 |------|------|---------|-----------|
-| `modelValue` | `boolean \| null \| any[]` | `false` | Valor reativo (v-model). Boolean para toggle simples, array para grupo. |
+| `modelValue` | `any` | `false` | Valor reativo (v-model). Boolean para toggle simples, array para grupo, ou o valor customizado de `trueValue`/`falseValue`. |
 | `trueValue` | `any` | `true` | Valor emitido quando toggle esta ativo (on). |
 | `falseValue` | `any` | `false` | Valor emitido quando toggle esta inativo (off). |
 | `val` | `any` | — | Valor para array mode (grupo de toggles). |
@@ -39,7 +39,7 @@
 
 | Evento | Payload | Descricao |
 |--------|---------|-----------|
-| `update:modelValue` | `boolean \| any[]` | Emitido quando o valor do toggle muda. |
+| `update:modelValue` | `any` | Emitido quando o valor do toggle muda (boolean, array ou o valor customizado de `trueValue`/`falseValue`). |
 
 ---
 

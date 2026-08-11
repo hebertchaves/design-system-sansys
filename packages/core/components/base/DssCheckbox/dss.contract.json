@@ -22,7 +22,7 @@
     "props": [
       {
         "name": "modelValue",
-        "type": "boolean | null | any[]",
+        "type": "any",
         "controlHint": "text",
         "default": false,
         "description": "Valor atual do checkbox"
@@ -158,7 +158,7 @@
     "emits": [
       {
         "name": "update:modelValue",
-        "payload": "boolean | null | any[]",
+        "payload": "any",
         "description": "Emitido quando o valor do checkbox muda"
       }
     ],

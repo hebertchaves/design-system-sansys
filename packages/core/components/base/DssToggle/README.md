@@ -24,7 +24,7 @@ import { DssToggle } from '@dss/components/base/DssToggle'
 
 | Prop | Tipo | Default | Descricao |
 |------|------|---------|-----------|
-| `modelValue` | `boolean \| any[]` | `false` | Valor reativo (v-model) |
+| `modelValue` | `any` | `false` | Valor reativo (v-model): boolean, array, ou valor customizado |
 | `trueValue` | `any` | `true` | Valor quando ativo |
 | `falseValue` | `any` | `false` | Valor quando inativo |
 | `val` | `any` | — | Valor para array mode |
@@ -48,7 +48,7 @@ import { DssToggle } from '@dss/components/base/DssToggle'
 
 | Evento | Payload | Descricao |
 |--------|---------|-----------|
-| `update:modelValue` | `boolean \| any[]` | Emitido ao mudar valor |
+| `update:modelValue` | `any` | Emitido ao mudar valor (boolean, array ou valor customizado) |
 
 ---
 

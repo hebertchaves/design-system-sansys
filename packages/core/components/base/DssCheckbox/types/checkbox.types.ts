@@ -73,10 +73,17 @@ export interface CheckboxProps {
    * - boolean: toggle simples (true/false)
    * - null: estado indeterminate
    * - any[]: modo grupo (array de valores selecionados)
+   * - qualquer outro valor: modo customizado, quando `trueValue`/`falseValue`/
+   *   `indeterminateValue` definem valores proprios (ex.: `'yes'`/`'no'`)
+   *
+   * O tipo e aberto DE PROPOSITO: `trueValue`/`falseValue`/`indeterminateValue`
+   * sao `any`, entao o model precisa aceitar o que elas oferecem. Estreitar aqui
+   * faz o compilador do Vue gerar um runtime check que REPROVA a propria feature
+   * documentada. Espelha o QCheckbox (`model-value`: `Any | Array`).
    *
    * @default false
    */
-  modelValue?: boolean | null | any[]
+  modelValue?: any
 
   /**
    * Valor que este checkbox representa no modo grupo (array model)
@@ -187,9 +194,10 @@ export interface CheckboxProps {
 export interface CheckboxEmits {
   /**
    * Emitido quando o valor do checkbox muda
-   * @param value Novo valor (boolean, null ou array)
+   * @param value Novo valor (boolean, null, array ou o valor customizado
+   *   definido em `trueValue`/`falseValue`/`indeterminateValue`)
    */
-  (e: 'update:modelValue', value: boolean | null | any[]): void
+  (e: 'update:modelValue', value: any): void
 }
 
 /**
