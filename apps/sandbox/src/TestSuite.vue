@@ -94,6 +94,20 @@
             <span class="nav-label">Preview Frame · DssCheckbox</span>
           </button>
           <button
+            @click="activeComponent = 'preview-frame-radio'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-radio' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssRadio</span>
+          </button>
+          <button
+            @click="activeComponent = 'preview-frame-toggle'"
+            :class="['nav-item', { active: activeComponent === 'preview-frame-toggle' }]"
+          >
+            <span class="nav-icon"><span class="material-icons">dvr</span></span>
+            <span class="nav-label">Preview Frame · DssToggle</span>
+          </button>
+          <button
             @click="activeComponent = 'preview-frame-multiselect'"
             :class="['nav-item', { active: activeComponent === 'preview-frame-multiselect' }]"
           >
@@ -314,6 +328,20 @@
                 <span class="nav-icon"><span class="material-icons">check_box</span></span>
                 <span class="nav-label">DssCheckbox</span>
               </button>
+              <button
+                @click="activeComponent = 'radio'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'radio' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">radio_button_checked</span></span>
+                <span class="nav-label">DssRadio</span>
+              </button>
+              <button
+                @click="activeComponent = 'toggle'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'toggle' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">toggle_on</span></span>
+                <span class="nav-label">DssToggle</span>
+              </button>
             </div>
 
             <!-- Layout -->
@@ -517,6 +545,12 @@
       <div v-else-if="activeComponent === 'preview-frame-checkbox'" class="component-view">
         <PreviewFrame component="DssCheckbox" />
       </div>
+      <div v-else-if="activeComponent === 'preview-frame-radio'" class="component-view">
+        <PreviewFrame component="DssRadio" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-toggle'" class="component-view">
+        <PreviewFrame component="DssToggle" />
+      </div>
       <div v-else-if="activeComponent === 'preview-frame-multiselect'" class="component-view">
         <PreviewFrame component="DssMultiselectAutocomplete" />
       </div>
@@ -544,6 +578,16 @@
       <!-- DssCheckbox Test View -->
       <div v-else-if="activeComponent === 'checkbox'" class="component-view">
         <TestCheckbox />
+      </div>
+
+      <!-- DssRadio Test View -->
+      <div v-else-if="activeComponent === 'radio'" class="component-view">
+        <TestRadio />
+      </div>
+
+      <!-- DssToggle Test View -->
+      <div v-else-if="activeComponent === 'toggle'" class="component-view">
+        <TestToggle />
       </div>
 
       <!-- DssSelect Test View -->
@@ -632,6 +676,8 @@ import TestBadge from './TestBadge.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestInput from './TestInput.vue'
 import TestCheckbox from './TestCheckbox.vue'
+import TestRadio from './TestRadio.vue'
+import TestToggle from './TestToggle.vue'
 import TestSelect from './TestSelect.vue'
 import TestTextarea from './TestTextarea.vue'
 import TestFile from './TestFile.vue'
