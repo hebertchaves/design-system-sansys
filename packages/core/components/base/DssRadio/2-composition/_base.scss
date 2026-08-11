@@ -105,6 +105,17 @@
 }
 
 // --------------------------------------------------------------------------
+// Indicador alternativo: glifo (quando o consumidor informa checkedIcon)
+// Substitui o ponto, nunca coexiste com ele.
+// --------------------------------------------------------------------------
+.dss-radio__icon {
+  // Sizing: como DssIcon e inline (1em), o font-size do host dimensiona o glifo
+  font-size: var(--dss-font-size-sm); // 14px
+  // Herda a cor do control — a mesma que pinta a borda e o ponto
+  color: inherit;
+}
+
+// --------------------------------------------------------------------------
 // Label
 // --------------------------------------------------------------------------
 .dss-radio__label {
@@ -148,6 +159,10 @@
     width: var(--dss-spacing-2); // 8px
     height: var(--dss-spacing-2); // 8px
   }
+
+  .dss-radio__icon {
+    font-size: var(--dss-font-size-xs); // 12px
+  }
 }
 
 // --- SM ---
@@ -164,6 +179,10 @@
   .dss-radio__dot {
     width: var(--dss-spacing-2); // 8px
     height: var(--dss-spacing-2); // 8px
+  }
+
+  .dss-radio__icon {
+    font-size: var(--dss-font-size-xs); // 12px
   }
 }
 
@@ -184,6 +203,34 @@
   .dss-radio__dot {
     width: var(--dss-spacing-3); // 12px
     height: var(--dss-spacing-3); // 12px
+  }
+
+  .dss-radio__icon {
+    font-size: var(--dss-font-size-md); // 16px
+  }
+}
+
+// --- XL ---
+.dss-radio--xl {
+  gap: var(--dss-spacing-4); // 16px
+  // Reusa a altura -lg da escala compacta compartilhada (badge/chip/checkbox/radio):
+  // nao ha compact-control-height-xl e a taxonomia e compartilhada. O circulo de
+  // 28px cabe folgado em 32px; o touch target (48px) vem do ::before (WCAG 2.5.5).
+  min-height: var(--dss-compact-control-height-lg); // 32px
+  font-size: var(--dss-font-size-lg); // 18px
+
+  .dss-radio__control {
+    width: var(--dss-spacing-7); // 28px
+    height: var(--dss-spacing-7); // 28px
+  }
+
+  .dss-radio__dot {
+    width: var(--dss-spacing-3_5); // 14px — mantem a proporcao 1/2 do lg
+    height: var(--dss-spacing-3_5); // 14px
+  }
+
+  .dss-radio__icon {
+    font-size: var(--dss-font-size-lg); // 18px
   }
 }
 

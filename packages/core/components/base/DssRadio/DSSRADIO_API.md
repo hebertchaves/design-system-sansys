@@ -38,7 +38,14 @@ import DssRadio from '@dss/components/base/DssRadio/DssRadio.vue'
 | Prop | Tipo | Default | Descricao |
 |------|------|---------|-----------|
 | `color` | `RadioColor` | `'primary'` | Cor semantica do indicador quando selecionado. |
-| `size` | `RadioSize` | `'md'` | Tamanho do controle. Afeta min-height, dimensoes do circulo e fonte. |
+| `size` | `RadioSize` | `'md'` | Tamanho do controle. Afeta min-height, dimensoes do circulo e fonte. Uniao literal: px arbitrario e rejeitado POR TIPO. |
+| `keepColor` | `boolean` | `false` | Escape hatch de cor: mantem a cor no stroke tambem no estado DESMARCADO. Por padrao o stroke em repouso e cinza e a cor so aparece na selecao. Espelha `keep-color` do q-radio. Deve satisfazer 3:1 (WCAG 1.4.11) por brand x tema. |
+
+### Grupo: Icone (CCI §7)
+
+| Prop | Tipo | Default | Descricao |
+|------|------|---------|-----------|
+| `checkedIcon` | `string` | `undefined` | Glifo do estado marcado, composto via `DssIcon`. **Sem default de proposito:** ausente, o indicador e o ponto preenchido (`.dss-radio__dot`), que e a convencao do radio; informado, o glifo SUBSTITUI o ponto — nunca coexistem. Nao ha `uncheckedIcon` (desmarcado permanece vazio) nem `indeterminateIcon` (radio nao tem estado indeterminado, e o q-radio tambem nao o oferece). |
 
 ### Grupo: Estados
 
@@ -71,7 +78,7 @@ type RadioColor =
   | 'primary' | 'secondary' | 'tertiary' | 'accent'
   | 'positive' | 'negative' | 'warning' | 'info'
 
-type RadioSize = 'xs' | 'sm' | 'md' | 'lg'
+type RadioSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 type RadioBrand = 'hub' | 'water' | 'waste'
 ```

@@ -17,6 +17,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import DssRadio from './1-structure/DssRadio.ts.vue'
+import DssIcon from '../DssIcon/DssIcon.vue'
 
 describe('DssRadio', () => {
   // ===========================================================================
@@ -230,6 +231,106 @@ describe('DssRadio', () => {
     it('control indicator has aria-hidden="true"', () => {
       const wrapper = mount(DssRadio)
       expect(wrapper.find('.dss-radio__control').attributes('aria-hidden')).toBe('true')
+    })
+  })
+})
+
+// ==========================================================================
+// Paridade da família de Controles de Seleção (Golden Context: DssCheckbox)
+// keepColor · checkedIcon · size xl
+// ==========================================================================
+describe('DssRadio — paridade da família', () => {
+  // ------------------------------------------------------------------------
+  // keepColor — escape hatch de cor no stroke em repouso (opt-in)
+  // ------------------------------------------------------------------------
+  describe('keepColor (escape hatch)', () => {
+    it('não aplica a classe keep-color por padrão', () => {
+      const wrapper = mount(DssRadio)
+      expect(wrapper.classes()).not.toContain('dss-radio--keep-color')
+    })
+
+    it('aplica keep-color no root quando habilitado', () => {
+      const wrapper = mount(DssRadio, { props: { keepColor: true } })
+      expect(wrapper.classes()).toContain('dss-radio--keep-color')
+    })
+
+    it('colore o stroke DESMARCADO via text-{color} (sem brand)', () => {
+      const wrapper = mount(DssRadio, {
+        props: { keepColor: true, color: 'primary', modelValue: 'a', val: 'b' }
+      })
+      expect(wrapper.find('.dss-radio__control').classes()).toContain('text-primary')
+    })
+
+    it('sem keepColor, o stroke desmarcado fica cinza (sem utilitária de cor)', () => {
+      const wrapper = mount(DssRadio, {
+        props: { color: 'primary', modelValue: 'a', val: 'b' }
+      })
+      expect(wrapper.find('.dss-radio__control').classes()).not.toContain('text-primary')
+    })
+
+    it('estado marcado continua colorido (keepColor não altera o ativo)', () => {
+      const wrapper = mount(DssRadio, {
+        props: { keepColor: true, color: 'primary', modelValue: 'a', val: 'a' }
+      })
+      expect(wrapper.find('.dss-radio__control').classes()).toContain('text-primary')
+    })
+
+    it('delega ao _brands.scss no modo brand (sem utilitária no control)', () => {
+      const wrapper = mount(DssRadio, {
+        props: { keepColor: true, brand: 'hub', color: 'primary', modelValue: 'a', val: 'b' }
+      })
+      expect(wrapper.find('.dss-radio__control').classes()).not.toContain('text-primary')
+    })
+
+    it('ERRO vence keepColor — campo inválido não exibe cor de ação no repouso', () => {
+      const wrapper = mount(DssRadio, {
+        props: { keepColor: true, error: true, color: 'primary', modelValue: 'a', val: 'b' }
+      })
+      expect(wrapper.find('.dss-radio__control').classes()).not.toContain('text-primary')
+    })
+  })
+
+  // ------------------------------------------------------------------------
+  // checkedIcon — glifo SUBSTITUI o ponto; sem prop, o ponto permanece
+  // ------------------------------------------------------------------------
+  describe('checkedIcon (CCI §7)', () => {
+    it('marcado SEM checkedIcon renderiza o ponto, não um ícone', () => {
+      const wrapper = mount(DssRadio, { props: { modelValue: 'a', val: 'a' } })
+      expect(wrapper.find('.dss-radio__dot').exists()).toBe(true)
+      expect(wrapper.findComponent(DssIcon).exists()).toBe(false)
+    })
+
+    it('marcado COM checkedIcon troca o ponto pelo glifo (nunca os dois)', () => {
+      const wrapper = mount(DssRadio, {
+        props: { modelValue: 'a', val: 'a', checkedIcon: 'star' }
+      })
+      expect(wrapper.findComponent(DssIcon).props('name')).toBe('star')
+      expect(wrapper.find('.dss-radio__dot').exists()).toBe(false)
+    })
+
+    it('desmarcado não renderiza indicador algum, mesmo com checkedIcon', () => {
+      const wrapper = mount(DssRadio, {
+        props: { modelValue: 'a', val: 'b', checkedIcon: 'star' }
+      })
+      expect(wrapper.findComponent(DssIcon).exists()).toBe(false)
+      expect(wrapper.find('.dss-radio__dot').exists()).toBe(false)
+    })
+
+    it('o glifo é decorativo (o estado é anunciado pelo input nativo)', () => {
+      const wrapper = mount(DssRadio, {
+        props: { modelValue: 'a', val: 'a', checkedIcon: 'star' }
+      })
+      expect(wrapper.findComponent(DssIcon).props('decorative')).toBe(true)
+    })
+  })
+
+  // ------------------------------------------------------------------------
+  // size xl
+  // ------------------------------------------------------------------------
+  describe('size xl', () => {
+    it('aplica a classe de tamanho xl', () => {
+      const wrapper = mount(DssRadio, { props: { size: 'xl' } })
+      expect(wrapper.classes()).toContain('dss-radio--xl')
     })
   })
 })

@@ -69,14 +69,28 @@
       {
         "name": "size",
         "type": "RadioSize",
-        "controlHint": "segmented",
+        "controlHint": "select",
         "description": "Tamanho do controle",
         "validValues": [
           "xs",
           "sm",
           "md",
-          "lg"
+          "lg",
+          "xl"
         ]
+      },
+      {
+        "name": "keepColor",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Escape hatch de cor: mantem a cor (semantica/brand) no stroke tambem no"
+      },
+      {
+        "name": "checkedIcon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome do glifo exibido no estado CHECKED, composto via DssIcon (CCI §7)."
       },
       {
         "name": "disable",
@@ -540,6 +554,42 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "gap",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-7",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-7",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-3_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-3_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "border-color",
           "token": null,
           "value": "currentColor",
@@ -981,6 +1031,24 @@
       },
       {
         "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-7",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3_5",
         "usedIn": [
           "default"
         ]

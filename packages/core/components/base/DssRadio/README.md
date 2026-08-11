@@ -54,7 +54,9 @@ const selected = ref('a')
 | `label` | `string` | — | Texto do label |
 | `leftLabel` | `boolean` | `false` | Label a esquerda |
 | `color` | `RadioColor` | `'primary'` | Cor semantica |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` | Tamanho |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Tamanho (uniao literal — px arbitrario e rejeitado por tipo) |
+| `keepColor` | `boolean` | `false` | Mantem a cor no stroke tambem no estado DESMARCADO (escape hatch opt-in) |
+| `checkedIcon` | `string` | — | Glifo que SUBSTITUI o ponto no estado marcado. Omitido = ponto preenchido (padrao do radio) |
 | `disable` | `boolean` | `false` | Desabilitado |
 | `dense` | `boolean` | `false` | Modo compacto |
 | `error` | `boolean` | `false` | Estado de erro |

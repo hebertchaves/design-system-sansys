@@ -12,6 +12,9 @@
 // Mixin: cores de brand para radio
 // Evita duplicacao para 3 brands x N cores
 // --------------------------------------------------------------------------
+// Excecao: com .dss-radio--keep-color (escape hatch opt-in), o stroke do control
+// DESMARCADO tambem recebe a cor de brand — so a borda, sem preencher o interior.
+// Deve satisfazer 3:1 (WCAG 1.4.11) por brand x tema.
 @mixin radio-brand-colors() {
   // --- Primary ---
   &.dss-radio--primary {
@@ -22,6 +25,11 @@
 
     .dss-radio__dot {
       background-color: var(--dss-action-primary);
+    }
+
+    // keepColor: stroke de brand tambem no repouso (desmarcado)
+    &.dss-radio--keep-color .dss-radio__control {
+      border-color: var(--dss-action-primary);
     }
   }
 
@@ -35,6 +43,11 @@
     .dss-radio__dot {
       background-color: var(--dss-action-secondary);
     }
+
+    // keepColor: stroke de brand tambem no repouso (desmarcado)
+    &.dss-radio--keep-color .dss-radio__control {
+      border-color: var(--dss-action-secondary);
+    }
   }
 
   // --- Accent ---
@@ -46,6 +59,11 @@
 
     .dss-radio__dot {
       background-color: var(--dss-action-accent);
+    }
+
+    // keepColor: stroke de brand tambem no repouso (desmarcado)
+    &.dss-radio--keep-color .dss-radio__control {
+      border-color: var(--dss-action-accent);
     }
   }
 }

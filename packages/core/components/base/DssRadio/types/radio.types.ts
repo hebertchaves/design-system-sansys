@@ -23,9 +23,13 @@ export type RadioColor =
   | 'info'
 
 // ---------------------------------------------------------------------------
-// Tamanhos (4 niveis com suporte a token)
+// Tamanhos (5 niveis com suporte a token)
+//
+// Uniao literal, NAO string: px arbitrario e rejeitado POR TIPO. Precedente da
+// familia de controles de selecao, firmado no DssCheckbox — o consumidor que
+// precisa de outra dimensao pede token, nao passa numero.
 // ---------------------------------------------------------------------------
-export type RadioSize = 'xs' | 'sm' | 'md' | 'lg'
+export type RadioSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 // ---------------------------------------------------------------------------
 // Brands Sansys
@@ -56,6 +60,31 @@ export interface RadioProps {
 
   /** Tamanho do controle */
   size?: RadioSize
+
+  /**
+   * Escape hatch de cor: mantem a cor (semantica/brand) no stroke tambem no
+   * estado DESMARCADO. Por padrao (false) o stroke em repouso e cinza e a cor
+   * so aparece na selecao (convencao M3/Carbon/Lightning). Opt-in, espelha o
+   * `keep-color` do q-radio. A cor de brand como borda fina DEVE bater 3:1
+   * (WCAG 1.4.11) por brand x tema.
+   *
+   * @default false
+   */
+  keepColor?: boolean
+
+  /**
+   * Nome do glifo exibido no estado CHECKED, composto via DssIcon (CCI §7).
+   *
+   * SEM default de propósito: o indicador padrao do radio e o PONTO preenchido
+   * (`.dss-radio__dot`), nao um glifo — e a convencao da plataforma para escolha
+   * unica. Informar `checkedIcon` TROCA o ponto pelo glifo; omitir preserva o
+   * ponto. Aditivo, sem mudar o visual de quem nao pede.
+   *
+   * Nao existe `indeterminateIcon`: radio nao tem estado indeterminado (o
+   * proprio q-radio do Quasar tambem nao o oferece). Tambem nao existe
+   * `uncheckedIcon` — o estado desmarcado permanece vazio, como no DssCheckbox.
+   */
+  checkedIcon?: string
 
   /** Estado desabilitado */
   disable?: boolean

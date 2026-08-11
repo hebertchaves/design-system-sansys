@@ -22,8 +22,10 @@ Este componente implementa um **subset controlado da API do Quasar q-radio**. Na
 
 | Funcionalidade | q-radio (Quasar) | DssRadio (DSS) | Justificativa |
 |----------------|------------------|----------------|---------------|
-| `keep-color` | Sim | Nao | Cor controlada exclusivamente via sistema DSS |
-| `checked-icon` / `unchecked-icon` | Sim | Nao | Indicador visual padronizado (circulo preenchido) |
+| `keep-color` | Sim | **Sim** (`keepColor`) | Escape hatch opt-in; default segue cinza no repouso (convencao M3/Carbon/Lightning) |
+| `checked-icon` | Sim | **Sim** (`checkedIcon`) | Aditivo: sem a prop, o indicador segue sendo o ponto preenchido |
+| `unchecked-icon` | Sim | Nao | Estado desmarcado permanece vazio — mesma decisao do DssCheckbox |
+| `size` livre (string) | Sim | Nao — uniao literal `xs\|sm\|md\|lg\|xl` | px arbitrario e rejeitado POR TIPO; dimensao nova entra como token |
 | `QOptionGroup` integration | Sim | Nao | Agrupamento via prop `name` (nativo HTML) |
 | `dark` prop | Sim | Nao | Dark mode via `prefers-color-scheme` (automatico) |
 | `dense` | Sim | Sim (reduz gap, altura e fonte; remove touch target expandido) | Conformidade WCAG contextual |
@@ -39,16 +41,20 @@ Este componente implementa um **subset controlado da API do Quasar q-radio**. Na
 - Agrupa radios nativamente via prop `name`
 - Aplica cores semanticas DSS e brandabilidade Sansys
 - Implementa touch target WCAG 2.5.5 via `::before`
-- Suporta 4 tamanhos (xs, sm, md, lg) com tokens genericos
+- Suporta 5 tamanhos (xs, sm, md, lg, xl) com tokens genericos
 - Implementa estados: default, hover, active, focus-visible, checked, disabled, error
+- Aceita glifo no indicador marcado via `checkedIcon`, composto por `DssIcon`
+- Oferece `keepColor` como escape hatch de cor no estado desmarcado
 - Suporta acessibilidade completa (WCAG 2.1 AA)
 
 ### O que o DssRadio NAO faz:
 - Nao gerencia logica de grupo (responsabilidade do contexto via `name`)
-- Nao implementa icones customizados no indicador
+- Nao oferece `uncheckedIcon` — o estado desmarcado permanece vazio
+- Nao aceita `size` em px arbitrario (uniao literal, rejeitado por tipo)
 - Nao aplica cores via CSS inline
 - Nao replica a API completa do q-radio
-- Nao implementa estado indeterminate (inaplicavel a radios)
+- Nao implementa estado indeterminate (inaplicavel a radios — o proprio
+  q-radio tambem nao o oferece, por isso nao ha `indeterminateIcon`)
 
 ---
 

@@ -40,6 +40,7 @@ export function useRadioClasses(
         'dss-radio--dense': props.dense,
         'dss-radio--error': props.error,
         'dss-radio--left-label': props.leftLabel,
+        'dss-radio--keep-color': props.keepColor,
       }
     ]
   })
@@ -63,18 +64,30 @@ export function useRadioClasses(
 
   // -------------------------------------------------------------------------
   // Classes de cor (utilitarias Quasar, sem brand)
+  //
+  // A utilitaria pinta `color`, e tanto a borda do control quanto o fundo do
+  // dot usam `currentColor` — por isso uma classe so resolve os dois.
+  //
+  // Funciona apesar de `.dss-radio__control { color: inherit }` (DSS, unlayered)
+  // porque `.text-{color}` do Quasar e `!important`: declaracao important em
+  // layer vence declaracao normal fora de layer. Mesmo mecanismo do DssCheckbox.
   // -------------------------------------------------------------------------
   const controlColorClasses = computed(() => {
-    // Quando brand esta ativo, _brands.scss cuida das cores
+    // Quando brand esta ativo, _brands.scss cuida das cores (inclusive keepColor)
     if (props.brand) return ''
 
-    if (!options.isChecked.value) return ''
-
-    // Cores de erro tem prioridade
+    // Erro tem prioridade sobre qualquer cor, marcado ou nao — inclusive sobre
+    // keepColor: um campo invalido nao pode exibir a cor de acao no repouso.
     if (props.error) return ''
 
     const color = props.color || 'primary'
-    return `text-${color}`
+
+    if (options.isChecked.value) return `text-${color}`
+
+    // keepColor: escape hatch opt-in — colore o stroke tambem no DESMARCADO
+    if (props.keepColor) return `text-${color}`
+
+    return ''
   })
 
   return { radioClasses, controlClasses, controlColorClasses }

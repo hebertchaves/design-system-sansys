@@ -14,6 +14,9 @@ const selectedBrand = ref(null)
 const selectedDisabled = ref('option1')
 const selectedError = ref(null)
 const selectedDense = ref('a')
+// Deliberadamente sem selecao inicial: o ponto do exemplo e o estado DESMARCADO
+const selectedKeep = ref(null)
+const selectedPlan = ref('basic')
 </script>
 
 <template>
@@ -80,6 +83,13 @@ const selectedDense = ref('a')
           name="size"
           label="Large (lg)"
           size="lg"
+        />
+        <DssRadio
+          v-model="selectedSize"
+          val="xl"
+          name="size"
+          label="Extra Large (xl)"
+          size="xl"
         />
       </div>
     </section>
@@ -261,6 +271,68 @@ const selectedDense = ref('a')
         >
           <strong>Maca</strong> — fruta tropical
         </DssRadio>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 10. keepColor — escape hatch de cor no repouso -->
+    <!-- ================================================================ -->
+    <section>
+      <h3>10. keepColor (escape hatch)</h3>
+      <p class="example-description">
+        Por padrao o stroke em repouso e cinza e a cor so aparece na selecao.
+        Com <code>keepColor</code>, o desmarcado tambem recebe a cor — compare
+        as duas colunas com a opcao NAO selecionada.
+      </p>
+      <div class="example-row">
+        <DssRadio
+          v-model="selectedKeep"
+          val="off-a"
+          name="keep-off"
+          label="Padrao — desmarcado cinza"
+        />
+        <DssRadio
+          v-model="selectedKeep"
+          val="on-a"
+          name="keep-on"
+          label="keepColor — desmarcado colorido"
+          keep-color
+        />
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 11. checkedIcon — glifo no lugar do ponto -->
+    <!-- ================================================================ -->
+    <section>
+      <h3>11. checkedIcon (glifo substitui o ponto)</h3>
+      <p class="example-description">
+        Sem a prop, o indicador e o ponto preenchido — a convencao do radio.
+        Informar <code>checkedIcon</code> troca o ponto pelo glifo; os dois
+        nunca aparecem juntos.
+      </p>
+      <div class="example-row">
+        <DssRadio
+          v-model="selectedPlan"
+          val="basic"
+          name="plan"
+          label="Padrao (ponto)"
+        />
+        <DssRadio
+          v-model="selectedPlan"
+          val="pro"
+          name="plan"
+          label="Com glifo (star)"
+          checked-icon="star"
+        />
+        <DssRadio
+          v-model="selectedPlan"
+          val="max"
+          name="plan"
+          label="Com glifo (check)"
+          checked-icon="check"
+          size="lg"
+        />
       </div>
     </section>
 

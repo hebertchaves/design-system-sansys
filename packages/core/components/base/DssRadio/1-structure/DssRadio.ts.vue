@@ -10,13 +10,16 @@
  * Subset controlado da API do Quasar q-radio.
  * Este componente NAO replica a API completa do q-radio.
  * Diferencias em relacao a q-radio:
- *   - Sem suporte a keep-color
- *   - Sem suporte a checked-icon / unchecked-icon customizados
+ *   - `checked-icon` suportado; `unchecked-icon` NAO — o estado desmarcado
+ *     permanece vazio (mesma decisao do DssCheckbox)
+ *   - `size` e uniao literal (xs|sm|md|lg|xl), nao string: px arbitrario e
+ *     rejeitado POR TIPO
  *   - Sem integracao com QOptionGroup (usar agrupamento nativo via prop name)
  *   - Cores aplicadas via classes utilitarias Quasar ou sistema de brands DSS
  */
 
 import { ref, computed, useSlots } from 'vue'
+import DssIcon from '../../DssIcon/DssIcon.vue'
 import type { RadioProps, RadioEmits } from '../types/radio.types'
 import { useRadioClasses } from '../composables/useRadioClasses'
 
@@ -39,6 +42,9 @@ const props = withDefaults(defineProps<RadioProps>(), {
   leftLabel: false,
   color: 'primary',
   size: 'md',
+  keepColor: false,
+  // Sem default: ausente = mantem o ponto preenchido (convencao do radio).
+  checkedIcon: undefined,
   disable: false,
   dense: false,
   error: false,
@@ -173,9 +179,20 @@ defineExpose({
 
     <!-- CONTROLE VISUAL (circulo do radio) -->
     <span :class="[controlClasses, controlColorClasses]" aria-hidden="true">
-      <!-- INDICADOR DE SELECAO (circulo preenchido) -->
+      <!--
+        INDICADOR DE SELECAO — duas formas, nunca as duas ao mesmo tempo:
+        glifo composto via DssIcon quando o consumidor informa checkedIcon
+        (CCI §3.1), senao o ponto preenchido, que e o padrao do radio.
+      -->
+      <DssIcon
+        v-if="isChecked && checkedIcon"
+        class="dss-radio__icon"
+        :name="checkedIcon"
+        inline
+        decorative
+      />
       <span
-        v-if="isChecked"
+        v-else-if="isChecked"
         class="dss-radio__dot"
       />
     </span>
