@@ -211,17 +211,27 @@
     Uploader, MultiselectAutocomplete).
   - Não é dívida de um componente: é a regra valendo só onde a adequação já passou. **Cada componente
     adequado daqui em diante entra com os dois** — e a fila de não-adequados carrega o resto.
-  - ⚠️ **Sem gate automatizado.** Hoje é item de checklist marcado à mão. Um gate tipo
-    `validate:portal-pages` reprovaria 64/76 de saída, então precisaria de baseline/ratchet como o de
-    tokens fantasma. **Decisão pendente:** construir o ratchet ou manter curadoria manual.
+  - ⚠️ **Sem gate automatizado.** Hoje é item de checklist marcado à mão. Um gate desses reprovaria 64/76
+    de saída, então precisaria de baseline/ratchet como o de tokens fantasma. **Decisão pendente:**
+    construir o ratchet ou manter curadoria manual.
+  - ⚠️ **Não chamar esse gate de `validate:portal-pages`** — o nome JÁ EXISTE e significa outra coisa:
+    `scripts/validate-portal-pages.cjs` (no pre-commit, §3c) valida as páginas **React do docs-portal**
+    (`apps/docs-portal/src/pages/components/‹Comp›Page.tsx`) para componentes **SELADOS**. Eixo diferente
+    (portal ≠ sandbox; selado ≠ adequado). Um gate do eixo visual precisa de outro nome
+    (ex.: `validate:sandbox-pages`), senão colide.
 
-- 🟡 **`DssCheckbox.modelValue` não admite os valores de `trueValue`/`falseValue`** (achado 2026-08-11 ao
-  verificar a página no navegador). O tipo é `boolean | null | any[]`, mas as props `trueValue`/`falseValue`
-  existem justamente para valores customizados — usar a feature como documentada dispara
-  `[Vue warn] Invalid prop: type check failed for prop "modelValue" … got String`. Reproduz no
-  `DssCheckbox.example.vue` (`true-value="yes"` / `false-value="no"`), vindo de `af5cc54`.
-  **É defeito de contrato do componente**, não da página. Fix = alargar o tipo (não-breaking) + re-emitir
-  contrato + atualizar doc. Verificar se DssToggle tem o mesmo (ele também expõe `trueValue`/`falseValue`).
+- ✅ **`modelValue` não admitia os valores de `trueValue`/`falseValue` — RESOLVIDO** (`17715e9`,
+  2026-08-11) em **DssCheckbox E DssToggle** — a verificação pedida confirmou que o Toggle tinha o mesmo
+  defeito. Tipo alargado para `any`, espelhando o Quasar (`model-value`: `Any | Array`); o **DssRadio já
+  era `any`**, então o fix alinhou a família ao irmão. Não-breaking (só admite mais).
+  **Nuance que vale reter:** o comportamento sempre esteve correto — os testes já exerciam
+  `modelValue: 'no'` + `trueValue: 'yes'` e **passavam**, porque Vue warn não reprova o vitest. O defeito
+  era só o runtime check que o compilador do Vue deriva do tipo. Por isso o teste de regressão asserta
+  sobre o **warn** (`console.warn` espiado, filtro `Invalid prop`), não sobre o comportamento — com
+  controle negativo verificado. Console real conferido no sandbox: zero warn.
+  ⚠️ **Padrão a generalizar:** qualquer prop tipada estreita cujo valor venha de outra prop `any`
+  (`val`, `trueValue`, `falseValue`, `indeterminateValue`) tem esse mesmo risco. Vale varrer a base na
+  Onda Higiene — o sintoma é silencioso em teste e só aparece no console.
 
 ## Verificar (pode já estar resolvido)
 
