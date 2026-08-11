@@ -38,11 +38,22 @@
       :class="trackClasses"
       aria-hidden="true"
     >
-      <!-- Toggle thumb (knob) -->
+      <!--
+        Toggle thumb (knob). Com checkedIcon, hospeda o glifo quando LIGADO —
+        composto via DssIcon (CCI §3.1). Sem a prop, permanece liso.
+      -->
       <span
         class="dss-toggle__thumb"
         aria-hidden="true"
-      ></span>
+      >
+        <DssIcon
+          v-if="isChecked && checkedIcon"
+          class="dss-toggle__icon"
+          :name="checkedIcon"
+          inline
+          decorative
+        />
+      </span>
     </span>
 
     <!-- Label RIGHT (default position) -->
@@ -100,6 +111,7 @@
 import { computed, ref, useSlots } from 'vue'
 import type { ToggleProps, ToggleEmits } from '../types/toggle.types'
 import { useToggleClasses } from '../composables'
+import DssIcon from '../../DssIcon/DssIcon.vue'
 
 // ==========================================================================
 // COMPONENT NAME
@@ -127,6 +139,9 @@ const props = withDefaults(defineProps<ToggleProps>(), {
   // Visual
   color: 'primary',
   size: 'md',
+  keepColor: false,
+  // Sem default: ausente = thumb liso (padrao do toggle)
+  checkedIcon: undefined,
 
   // States
   disable: false,

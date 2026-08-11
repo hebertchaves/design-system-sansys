@@ -71,6 +71,7 @@ export function useToggleClasses(
         'dss-toggle--dense': props.dense,
         'dss-toggle--left-label': props.leftLabel,
         'dss-toggle--error': props.error,
+        'dss-toggle--keep-color': props.keepColor,
       }
     ]
   })
@@ -78,8 +79,15 @@ export function useToggleClasses(
   /**
    * Classes de cor para o track (.dss-toggle__track)
    *
-   * SEM brand: aplica bg-{color} text-white quando checked
-   * COM brand: cores vem via _brands.scss, nao precisa de utility classes
+   * SEM brand:
+   *   - checked: bg-{color} text-white (pilula preenchida)
+   *   - keepColor + DESLIGADO: text-{color} — colore SO A BORDA, porque o track
+   *     declara `border: ... solid currentColor` e mantem
+   *     `background-color: var(--dss-surface-muted)`. O fundo NAO e preenchido
+   *     de proposito: track colorido no desligado tornaria ligado e desligado
+   *     indistinguiveis, o que quebra a percepcao de estado. O thumb tambem
+   *     segue cinza (gray-500 explicito), reforcando a distincao.
+   * COM brand: cores vem via _brands.scss (inclusive o keepColor)
    *
    * Hierarquia de estados: error > color
    * (erro impede aplicacao de cor — padrao DssRadio selado)
@@ -87,13 +95,18 @@ export function useToggleClasses(
   const trackColorClasses = computed(() => {
     if (props.brand) return ''
 
-    if (!options.isChecked.value) return ''
-
-    // Cores de erro tem prioridade (padrao DssRadio, Selo DSS v2.2)
+    // Erro tem prioridade sobre qualquer cor, ligado ou nao — inclusive sobre
+    // keepColor: um campo invalido nao pode exibir cor de acao no repouso.
     if (props.error) return ''
 
     const color = props.color || 'primary'
-    return `bg-${color} text-white`
+
+    if (options.isChecked.value) return `bg-${color} text-white`
+
+    // keepColor: escape hatch opt-in — colore a borda tambem no DESLIGADO
+    if (props.keepColor) return `text-${color}`
+
+    return ''
   })
 
   return {

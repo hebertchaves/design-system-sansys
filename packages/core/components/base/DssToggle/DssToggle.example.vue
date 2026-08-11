@@ -21,6 +21,7 @@
       <DssToggle v-model="sizeToggle" size="sm" label="Small" />
       <DssToggle v-model="sizeToggle" size="md" label="Medium (padrao)" />
       <DssToggle v-model="sizeToggle" size="lg" label="Large" />
+      <DssToggle v-model="sizeToggle" size="xl" label="Extra Large" />
     </section>
 
     <!-- ================================================================
@@ -101,6 +102,34 @@
         label="Alto Contraste"
       />
     </section>
+
+    <!-- ================================================================
+         Exemplo 10: keepColor (escape hatch de cor no desligado)
+         ================================================================ -->
+    <section>
+      <h3>10. keepColor (escape hatch)</h3>
+      <p class="example-description">
+        Por padrao o track desligado e cinza. Com <code>keepColor</code>, a
+        BORDA recebe a cor — o fundo continua muted e o thumb cinza, para que
+        ligado e desligado sigam distinguiveis sem depender so da cor.
+      </p>
+      <DssToggle v-model="keepOff" label="Padrao — desligado cinza" />
+      <DssToggle v-model="keepOn" label="keepColor — borda colorida" keep-color />
+    </section>
+
+    <!-- ================================================================
+         Exemplo 11: checkedIcon (glifo dentro do thumb)
+         ================================================================ -->
+    <section>
+      <h3>11. checkedIcon (glifo no thumb)</h3>
+      <p class="example-description">
+        Sem a prop, o thumb e liso. Informar <code>checkedIcon</code> coloca o
+        glifo dentro do thumb quando ligado; desligado segue sem glifo.
+      </p>
+      <DssToggle v-model="iconPlain" label="Padrao (thumb liso)" />
+      <DssToggle v-model="iconCheck" label="Com glifo (check)" checked-icon="check" />
+      <DssToggle v-model="iconBolt" label="Com glifo (bolt), tamanho lg" checked-icon="bolt" size="lg" />
+    </section>
   </div>
 </template>
 
@@ -121,4 +150,10 @@ const leftToggle = ref(false)
 const slotToggle = ref(false)
 const features = ref<string[]>(['wifi'])
 const a11yToggle = ref(false)
+// Deliberadamente DESLIGADOS: o ponto do exemplo 10 e o estado em repouso
+const keepOff = ref(false)
+const keepOn = ref(false)
+const iconPlain = ref(true)
+const iconCheck = ref(true)
+const iconBolt = ref(true)
 </script>

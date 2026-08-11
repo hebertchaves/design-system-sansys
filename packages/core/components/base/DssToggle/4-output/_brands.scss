@@ -8,6 +8,10 @@
    - Aplicado via atributo data-brand (contexto ou prop)
    - NAO sobrescreve logica de estados
    - Cores aplicadas APENAS ao .dss-toggle__track quando checked
+     Excecao: com .dss-toggle--keep-color (escape hatch opt-in), a BORDA do
+     track DESLIGADO tambem recebe a cor de brand — so a borda, o fundo segue
+     surface-muted para que ligado e desligado continuem distinguiveis.
+     Deve satisfazer 3:1 (WCAG 1.4.11) por brand x tema.
 
    CENARIOS SUPORTADOS:
    1. Brand via contexto (ancestral): <div data-brand="hub"><DssToggle /></div>
@@ -32,6 +36,11 @@
         background-color: var(--dss-text-on-primary);
       }
     }
+
+    /* keepColor: borda de brand tambem no repouso (desligado) */
+    &.dss-toggle--keep-color .dss-toggle__track {
+      border-color: var(--dss-action-primary);
+    }
   }
 
   /* Secondary */
@@ -45,6 +54,11 @@
         background-color: var(--dss-text-on-primary);
       }
     }
+
+    /* keepColor: borda de brand tambem no repouso (desligado) */
+    &.dss-toggle--keep-color .dss-toggle__track {
+      border-color: var(--dss-action-secondary);
+    }
   }
 
   /* Accent */
@@ -57,6 +71,11 @@
       .dss-toggle__thumb {
         background-color: var(--dss-text-on-primary);
       }
+    }
+
+    /* keepColor: borda de brand tambem no repouso (desligado) */
+    &.dss-toggle--keep-color .dss-toggle__track {
+      border-color: var(--dss-action-accent);
     }
   }
 }

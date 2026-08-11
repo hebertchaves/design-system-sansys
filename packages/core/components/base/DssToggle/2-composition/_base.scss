@@ -166,8 +166,25 @@
   /* Posicao inicial - lado esquerdo (unchecked) */
   left: var(--dss-spacing-0_5); /* 2px offset from edge */
 
+  /* Centraliza o glifo opcional (checkedIcon) dentro do thumb */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   /* Transitions */
   transition: left var(--dss-duration-200) var(--dss-easing-standard);
+}
+
+/* --------------------------------------------------------------------------
+   Glifo opcional dentro do thumb (quando checkedIcon e informado).
+   Sem a prop o thumb permanece liso — este seletor nem chega a existir no DOM.
+   -------------------------------------------------------------------------- */
+.dss-toggle__icon {
+  /* Sizing: como DssIcon e inline (1em), o font-size do host dimensiona o glifo */
+  font-size: var(--dss-font-size-xs); /* 12px — cabe no thumb de 16px */
+  /* Contrasta com o thumb: no estado ON o thumb e claro, entao o glifo herda a
+     cor de acao do track em vez de currentColor (que seria branco no branco) */
+  color: var(--dss-action-primary);
 }
 
 /* ==========================================================================
@@ -301,6 +318,37 @@
 
   .dss-toggle__track--checked .dss-toggle__thumb {
     left: calc(100% - var(--dss-thumb-size-md) - var(--dss-spacing-0_5));
+  }
+}
+
+.dss-toggle--xl {
+  gap: var(--dss-spacing-4); /* 16px */
+  /* Reusa a altura -lg da escala compacta compartilhada (badge/chip/checkbox/
+     radio/toggle): não há compact-control-height-xl e a taxonomia é
+     compartilhada. O track de 28px cabe folgado em 32px; o touch target (48px)
+     vem do ::before (WCAG 2.5.5). */
+  min-height: var(--dss-compact-control-height-lg); /* 32px */
+  font-size: var(--dss-font-size-lg);
+
+  .dss-toggle__track {
+    /* 48px/28px = 1.71. A família gira em ~1.8 (md 36/20, lg 44/24), e o valor
+       ideal seria 50px — que NÃO existe na escala (ela pula de 48 para 56).
+       Entre encaixar no token e cravar 50px, a Constituição #1 manda encaixar. */
+    width: var(--dss-spacing-12); /* 48px */
+    height: var(--dss-spacing-7); /* 28px */
+  }
+
+  .dss-toggle__thumb {
+    width: var(--dss-thumb-size-lg); /* 24px */
+    height: var(--dss-thumb-size-lg); /* 24px */
+  }
+
+  .dss-toggle__track--checked .dss-toggle__thumb {
+    left: calc(100% - var(--dss-thumb-size-lg) - var(--dss-spacing-0_5));
+  }
+
+  .dss-toggle__icon {
+    font-size: var(--dss-font-size-md); /* 16px */
   }
 }
 

@@ -30,8 +30,10 @@ import { DssToggle } from '@dss/components/base/DssToggle'
 | `val` | `any` | — | Valor para array mode |
 | `label` | `string` | `''` | Texto do label |
 | `leftLabel` | `boolean` | `false` | Label a esquerda |
-| `color` | `string` | `'primary'` | Cor quando ativo |
-| `size` | `'xs'\|'sm'\|'md'\|'lg'` | `'md'` | Tamanho |
+| `color` | `ToggleColor` | `'primary'` | Cor quando ativo (uniao literal — cor arbitraria e rejeitada por tipo) |
+| `size` | `ToggleSize` | `'md'` | Tamanho (`xs\|sm\|md\|lg\|xl`) |
+| `keepColor` | `boolean` | `false` | Colore a BORDA do track tambem no estado desligado (fundo segue muted) |
+| `checkedIcon` | `string` | — | Glifo dentro do thumb quando ligado. Omitido = thumb liso |
 | `disable` | `boolean` | `false` | Desabilita |
 | `dense` | `boolean` | `false` | Modo denso. Reduz gap, altura e font-size. Remove touch target. |
 | `error` | `boolean` | `false` | Estado de erro |

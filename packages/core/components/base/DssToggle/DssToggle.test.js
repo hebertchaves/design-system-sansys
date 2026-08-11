@@ -19,6 +19,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import DssToggle from './1-structure/DssToggle.ts.vue'
+import DssIcon from '../DssIcon/DssIcon.vue'
 
 describe('DssToggle', () => {
   // ===========================================================================
@@ -505,6 +506,110 @@ describe('DssToggle', () => {
 // ==========================================================================
 // Teclado — WCAG 2.1.1 (suíte padronizada — Onda P2/G3.3)
 // ==========================================================================
+// ==========================================================================
+// Paridade da família de Controles de Seleção (Golden Context: DssCheckbox)
+// keepColor · checkedIcon · size xl
+// ==========================================================================
+describe('DssToggle — paridade da família', () => {
+  // ------------------------------------------------------------------------
+  // keepColor — colore SÓ A BORDA no desligado; o fundo segue muted
+  // ------------------------------------------------------------------------
+  describe('keepColor (escape hatch)', () => {
+    it('não aplica a classe keep-color por padrão', () => {
+      const wrapper = mount(DssToggle)
+      expect(wrapper.classes()).not.toContain('dss-toggle--keep-color')
+    })
+
+    it('aplica keep-color no root quando habilitado', () => {
+      const wrapper = mount(DssToggle, { props: { keepColor: true } })
+      expect(wrapper.classes()).toContain('dss-toggle--keep-color')
+    })
+
+    it('DESLIGADO com keepColor colore a borda (text-) e NÃO preenche o fundo (bg-)', () => {
+      // É o invariante que preserva a percepção de estado: se o fundo fosse
+      // preenchido, ligado e desligado ficariam indistinguíveis.
+      const wrapper = mount(DssToggle, {
+        props: { keepColor: true, color: 'primary', modelValue: false }
+      })
+      const track = wrapper.find('.dss-toggle__track')
+      expect(track.classes()).toContain('text-primary')
+      expect(track.classes()).not.toContain('bg-primary')
+    })
+
+    it('sem keepColor, o desligado não recebe utilitária de cor', () => {
+      const wrapper = mount(DssToggle, {
+        props: { color: 'primary', modelValue: false }
+      })
+      expect(wrapper.find('.dss-toggle__track').classes()).not.toContain('text-primary')
+    })
+
+    it('LIGADO continua preenchendo (keepColor não altera o estado ativo)', () => {
+      const wrapper = mount(DssToggle, {
+        props: { keepColor: true, color: 'primary', modelValue: true }
+      })
+      const track = wrapper.find('.dss-toggle__track')
+      expect(track.classes()).toContain('bg-primary')
+      expect(track.classes()).toContain('text-white')
+    })
+
+    it('delega ao _brands.scss no modo brand (sem utilitária no track)', () => {
+      const wrapper = mount(DssToggle, {
+        props: { keepColor: true, brand: 'hub', color: 'primary', modelValue: false }
+      })
+      expect(wrapper.find('.dss-toggle__track').classes()).not.toContain('text-primary')
+    })
+
+    it('ERRO vence keepColor — campo inválido não exibe cor de ação no repouso', () => {
+      const wrapper = mount(DssToggle, {
+        props: { keepColor: true, error: true, color: 'primary', modelValue: false }
+      })
+      expect(wrapper.find('.dss-toggle__track').classes()).not.toContain('text-primary')
+    })
+  })
+
+  // ------------------------------------------------------------------------
+  // checkedIcon — glifo dentro do thumb, só quando ligado
+  // ------------------------------------------------------------------------
+  describe('checkedIcon (CCI §7)', () => {
+    it('ligado SEM checkedIcon mantém o thumb liso', () => {
+      const wrapper = mount(DssToggle, { props: { modelValue: true } })
+      expect(wrapper.findComponent(DssIcon).exists()).toBe(false)
+    })
+
+    it('ligado COM checkedIcon renderiza o glifo dentro do thumb', () => {
+      const wrapper = mount(DssToggle, {
+        props: { modelValue: true, checkedIcon: 'check' }
+      })
+      expect(wrapper.findComponent(DssIcon).props('name')).toBe('check')
+      expect(wrapper.find('.dss-toggle__thumb').findComponent(DssIcon).exists()).toBe(true)
+    })
+
+    it('desligado não renderiza glifo, mesmo com checkedIcon', () => {
+      const wrapper = mount(DssToggle, {
+        props: { modelValue: false, checkedIcon: 'check' }
+      })
+      expect(wrapper.findComponent(DssIcon).exists()).toBe(false)
+    })
+
+    it('o glifo é decorativo (o estado é anunciado pelo role="switch")', () => {
+      const wrapper = mount(DssToggle, {
+        props: { modelValue: true, checkedIcon: 'check' }
+      })
+      expect(wrapper.findComponent(DssIcon).props('decorative')).toBe(true)
+    })
+  })
+
+  // ------------------------------------------------------------------------
+  // size xl
+  // ------------------------------------------------------------------------
+  describe('size xl', () => {
+    it('aplica a classe de tamanho xl', () => {
+      const wrapper = mount(DssToggle, { props: { size: 'xl' } })
+      expect(wrapper.classes()).toContain('dss-toggle--xl')
+    })
+  })
+})
+
 describe('DssToggle — Teclado (WCAG 2.1.1)', () => {
   // Input NATIVO (checkbox): Space é ativação do user-agent — o contrato
   // testável é o input focável + ativação alterar o modelo.

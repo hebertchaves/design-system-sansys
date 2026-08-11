@@ -12,6 +12,46 @@
  * @version 1.0.0
  */
 
+// ==========================================================================
+// ENUMS E LITERAIS
+//
+// Aliases nomeados e exportados, como no DssCheckbox e no DssRadio. O toggle
+// era o unico da familia sem eles: `color` era `string` aberto e `size` uma
+// uniao inline. Nomear fecha a uniao (px/cor arbitraria passa a ser rejeitada
+// POR TIPO) e torna os tipos consumiveis pelo barrel.
+// ==========================================================================
+
+/**
+ * Cores semanticas DSS
+ */
+export type ToggleColor =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'accent'
+  | 'positive'
+  | 'negative'
+  | 'warning'
+  | 'info'
+
+/**
+ * Tamanhos disponiveis
+ */
+export type ToggleSize =
+  | 'xs'  // Extra Small
+  | 'sm'  // Small
+  | 'md'  // Medium (default)
+  | 'lg'  // Large
+  | 'xl'  // Extra Large
+
+/**
+ * Brands disponiveis
+ */
+export type ToggleBrand =
+  | 'hub'
+  | 'water'
+  | 'waste'
+
 /**
  * Props do DssToggle
  *
@@ -78,7 +118,7 @@ export interface ToggleProps {
    *
    * @default 'primary'
    */
-  color?: string
+  color?: ToggleColor
 
   /**
    * Tamanho do toggle
@@ -88,10 +128,38 @@ export interface ToggleProps {
    * - sm: --dss-compact-control-height-sm (24px)
    * - md: --dss-compact-control-height-md (28px)
    * - lg: --dss-compact-control-height-lg (32px)
+   * - xl: reusa a altura -lg (nao ha -xl na escala compacta compartilhada)
    *
    * @default 'md'
    */
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: ToggleSize
+
+  /**
+   * Escape hatch de cor: mantem a cor (semantica/brand) no track tambem no
+   * estado DESLIGADO. Por padrao (false) o track em repouso e cinza e a cor
+   * so aparece quando ligado (convencao M3/Carbon/Lightning). Opt-in, espelha
+   * o `keep-color` do q-toggle. A cor como fundo de track DEVE bater 3:1
+   * (WCAG 1.4.11) por brand x tema.
+   *
+   * @default false
+   */
+  keepColor?: boolean
+
+  // =========================================================================
+  // Icon (glifo no thumb — CCI §7, mudanca aditiva)
+  // =========================================================================
+
+  /**
+   * Nome do glifo exibido DENTRO do thumb quando LIGADO, composto via DssIcon.
+   *
+   * SEM default de proposito: o thumb liso e o padrao do toggle. Informar
+   * `checkedIcon` adiciona o glifo; omitir preserva o thumb como esta.
+   *
+   * Nao existe `uncheckedIcon` — o estado desligado permanece sem glifo, mesma
+   * decisao do DssCheckbox e do DssRadio. Nao existe `indeterminateIcon`
+   * porque o toggle e binario puro (ver nota do cabecalho).
+   */
+  checkedIcon?: string
 
   // =========================================================================
   // States
@@ -148,7 +216,7 @@ export interface ToggleProps {
    *
    * @default null
    */
-  brand?: 'hub' | 'water' | 'waste' | null
+  brand?: ToggleBrand | null
 
   // =========================================================================
   // Accessibility

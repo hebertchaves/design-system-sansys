@@ -365,15 +365,15 @@ background-color: var(--dss-hub-primary);
 | true-value / false-value | Sim | Sim | Igual |
 | label | Sim | Sim | Igual |
 | left-label | Sim | Sim | Igual |
-| color | Sim | Sim (subset) | Diferente: limitado a cores Quasar validas |
-| size | Sim | Sim | Igual |
+| color | Sim | Sim (subset) | Diferente: uniao literal com as 8 cores semanticas DSS; cor fora dela e rejeitada POR TIPO |
+| size | Sim | Sim (subset) | Diferente: uniao literal `xs\|sm\|md\|lg\|xl`; px arbitrario e rejeitado POR TIPO |
 | disable | Sim | Sim | Igual |
 | dense | Sim | Sim (comportamento DSS) | Diferente: reduz visual + remove touch target |
 | icon | Sim | Nao | Nao aplicavel Fase 1 |
-| checked-icon | Sim | Nao | Nao aplicavel Fase 1 |
-| unchecked-icon | Sim | Nao | Nao aplicavel Fase 1 |
+| checked-icon | Sim | **Sim** (`checkedIcon`) | Aditivo: sem a prop o thumb segue liso; com ela, o glifo aparece dentro do thumb quando ligado |
+| unchecked-icon | Sim | Nao | Desligado permanece sem glifo — mesma decisao do DssCheckbox e do DssRadio |
 | toggle-order | Sim | Nao | Nao aplicavel |
-| keep-color | Sim | Nao | Nao aplicavel |
+| keep-color | Sim | **Sim** (`keepColor`) | Escape hatch opt-in. Colore apenas a BORDA do track no desligado; o fundo segue `--dss-surface-muted` para nao apagar a distincao ligado x desligado |
 | tabindex | Sim | Sim | Igual |
 
 ---

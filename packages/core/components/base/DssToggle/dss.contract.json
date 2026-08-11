@@ -62,23 +62,47 @@
       },
       {
         "name": "color",
-        "type": "string",
-        "controlHint": "text",
+        "type": "ToggleColor",
+        "controlHint": "picker-color",
         "default": "primary",
-        "description": "Cor do toggle quando ativo"
+        "description": "Cor do toggle quando ativo",
+        "validValues": [
+          "primary",
+          "secondary",
+          "tertiary",
+          "accent",
+          "positive",
+          "negative",
+          "warning",
+          "info"
+        ]
       },
       {
         "name": "size",
-        "type": "'xs' | 'sm' | 'md' | 'lg'",
-        "controlHint": "segmented",
+        "type": "ToggleSize",
+        "controlHint": "select",
         "default": "md",
         "description": "Tamanho do toggle",
         "validValues": [
           "xs",
           "sm",
           "md",
-          "lg"
+          "lg",
+          "xl"
         ]
+      },
+      {
+        "name": "keepColor",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Escape hatch de cor: mantem a cor (semantica/brand) no track tambem no"
+      },
+      {
+        "name": "checkedIcon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome do glifo exibido DENTRO do thumb quando LIGADO, composto via DssIcon."
       },
       {
         "name": "disable",
@@ -109,8 +133,8 @@
       },
       {
         "name": "brand",
-        "type": "'hub' | 'water' | 'waste' | null",
-        "controlHint": "segmented",
+        "type": "ToggleBrand | null",
+        "controlHint": "picker-brand",
         "default": "null",
         "description": "Marca do produto (Hub, Water, Waste)",
         "validValues": [
@@ -420,6 +444,24 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "border-color",
           "token": null,
           "value": "currentColor",
@@ -465,12 +507,6 @@
           "property": "display",
           "token": null,
           "value": "block",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-xs",
-          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -590,6 +626,48 @@
         {
           "property": "left",
           "token": "--dss-thumb-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-12",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-7",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-thumb-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-thumb-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "left",
+          "token": "--dss-thumb-size-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -987,6 +1065,19 @@
         ]
       },
       {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
         "name": "--dss-spacing-4",
         "usedIn": [
           "default"
@@ -1000,12 +1091,6 @@
       },
       {
         "name": "--dss-feedback-error",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-font-size-xs",
         "usedIn": [
           "default"
         ]
@@ -1089,10 +1174,21 @@
         ]
       },
       {
-        "name": "--dss-action-primary",
+        "name": "--dss-font-size-lg",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-12",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-thumb-size-lg",
+        "usedIn": [
+          "default"
         ]
       },
       {
