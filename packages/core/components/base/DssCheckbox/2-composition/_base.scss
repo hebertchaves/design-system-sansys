@@ -176,11 +176,63 @@
 }
 
 /* ==========================================================================
+   CORES SEMÂNTICAS (fill do estado marcado)
+
+   Por que isto vive aqui e não nas utilities do Quasar (`bg-primary`):
+   as utilities NÃO são brand-aware — `.bg-primary` é azul fixo mesmo sob
+   `[data-brand="hub"]` — e, por serem `!important` dentro de layer, venciam o
+   `_brands.scss` do DSS. O resultado sob brand GLOBAL era fundo azul com ícone
+   pintado de laranja pela regra global `[data-brand] .dss-icon`: sem contraste
+   e sem relação com a marca.
+
+   Os tokens `--dss-action-*` já resolvem os dois casos: seguem a marca sob
+   `[data-brand]` e caem no valor semântico quando não há marca. Assim o mesmo
+   CSS serve o caminho da PROP e o do contexto GLOBAL.
+
+   O `color` do ícone é declarado NO PRÓPRIO ícone (não só herdado do control):
+   a regra global `[data-brand] .dss-icon` casa direto no elemento e venceria um
+   valor apenas herdado.
+   ========================================================================== */
+
+$dss-checkbox-semantic-colors: (
+  'primary': var(--dss-action-primary),
+  'secondary': var(--dss-action-secondary),
+  'tertiary': var(--dss-action-tertiary),
+  'accent': var(--dss-action-accent),
+  'positive': var(--dss-feedback-success),
+  'negative': var(--dss-feedback-error),
+  'warning': var(--dss-feedback-warning),
+  'info': var(--dss-feedback-info)
+);
+
+@each $name, $color in $dss-checkbox-semantic-colors {
+  .dss-checkbox--#{$name} {
+    .dss-checkbox__control--checked,
+    .dss-checkbox__control--indeterminate {
+      background-color: #{$color};
+      border-color: #{$color};
+      color: var(--dss-text-on-primary);
+
+      .dss-checkbox__check,
+      .dss-checkbox__dash {
+        color: var(--dss-text-on-primary);
+      }
+    }
+
+    /* keepColor: stroke colorido também no DESMARCADO (só a borda, sem fill) */
+    &.dss-checkbox--keep-color .dss-checkbox__control:not(.dss-checkbox__control--checked):not(.dss-checkbox__control--indeterminate) {
+      border-color: #{$color};
+      color: #{$color};
+    }
+  }
+}
+
+/* ==========================================================================
    ERROR
 
    Paridade com DssRadio/DssToggle: a cor de erro vale para o controle e para a
    label. A prioridade sobre `color`/`keepColor` é resolvida no composable
-   (que não emite a utility `.text-{color}` quando error=true).
+   (que não emite a classe de cor quando error=true).
    ========================================================================== */
 
 .dss-checkbox--error {

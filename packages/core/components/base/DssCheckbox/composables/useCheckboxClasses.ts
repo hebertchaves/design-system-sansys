@@ -38,21 +38,24 @@ export function useCheckboxClasses(
   /**
    * Classes CSS computadas do checkbox (aplicadas ao ROOT <label>)
    *
-   * Logica de cores:
-   * - SEM brand: classes utilitarias Quasar nao vao no root
-   * - COM brand: classe DSS (dss-checkbox--{color}) para seletores em _brands.scss
+   * Logica de cores: a classe `dss-checkbox--{color}` vai SEMPRE no root, e todo
+   * o pintado vem do SCSS do DSS (2-composition/_base.scss) via tokens
+   * `--dss-action-*`/`--dss-feedback-*`.
    *
-   * O CSS em _brands.scss usa seletores como:
-   *   [data-brand='hub'] .dss-checkbox.dss-checkbox--primary
+   * Antes ela so era emitida COM a prop `brand`, e sem brand o fill vinha das
+   * utilities do Quasar (`bg-{color}`). Isso quebrava sob brand GLOBAL
+   * (`[data-brand]` num ancestral, sem prop): as utilities nao sao brand-aware,
+   * entao o fundo ficava azul fixo enquanto a regra global `[data-brand]
+   * .dss-icon` pintava o icone da cor da marca — sem contraste. Com a classe
+   * sempre presente, o MESMO CSS serve os dois caminhos.
+   *
+   * Excecao: em `error` a classe de cor NAO e emitida — a cor de erro tem
+   * prioridade sobre `color` e sobre `keepColor` (um campo invalido nao exibe
+   * cor de acao em repouso). Mesma regra do DssRadio/DssToggle.
    */
   const checkboxClasses = computed(() => {
     const color = props.color || 'primary'
-
-    // Classes de cor no root - apenas para brand matching
-    let colorClass = ''
-    if (props.brand) {
-      colorClass = `dss-checkbox--${color}`
-    }
+    const colorClass = props.error ? '' : `dss-checkbox--${color}`
 
     return [
       // Classe base
@@ -61,7 +64,7 @@ export function useCheckboxClasses(
       // Tamanho
       `dss-checkbox--${props.size || 'md'}`,
 
-      // Classe de cor (apenas com brand)
+      // Classe de cor (sempre, exceto em erro) — alvo do CSS de cor do DSS
       colorClass,
 
       // Classes condicionais
@@ -78,30 +81,15 @@ export function useCheckboxClasses(
   })
 
   /**
-   * Classes de cor para o indicador visual (.dss-checkbox__control)
+   * Classes de cor do indicador visual (.dss-checkbox__control)
    *
-   * SEM brand:
-   *   - checked/indeterminate: bg-{color} text-white (fundo preenchido)
-   *   - keepColor + desmarcado: text-{color} (colore só o stroke via currentColor,
-   *     sem preencher o fundo) — escape hatch de cor no repouso
-   * COM brand: cores vem via _brands.scss (inclusive o keepColor), nao precisa
-   *   de utility classes aqui
+   * DESCONTINUADO como fonte de cor: hoje retorna sempre '' e existe apenas
+   * para nao quebrar quem consome a assinatura do composable. As utilities do
+   * Quasar (`bg-{color}`/`text-white`) foram removidas porque nao sao
+   * brand-aware; toda a cor mora no SCSS do DSS, keyed pela classe de cor do
+   * root. Ver o bloco "CORES SEMANTICAS" em 2-composition/_base.scss.
    */
-  const controlColorClasses = computed(() => {
-    if (props.brand) return ''
-
-    // Erro tem prioridade sobre qualquer cor, marcado ou nao — inclusive sobre
-    // keepColor: um campo invalido nao pode exibir a cor de acao no repouso.
-    // Mesma regra do DssRadio/DssToggle (paridade da familia).
-    if (props.error) return ''
-
-    const color = props.color || 'primary'
-    const isActive = options.isChecked.value || options.isIndeterminate.value
-
-    if (isActive) return `bg-${color} text-white`
-    if (props.keepColor) return `text-${color}`
-    return ''
-  })
+  const controlColorClasses = computed(() => '')
 
   return {
     checkboxClasses,

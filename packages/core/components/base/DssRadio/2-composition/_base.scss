@@ -276,6 +276,48 @@
   }
 }
 
+// --------------------------------------------------------------------------
+// CORES SEMANTICAS (indicador selecionado)
+//
+// Por que aqui e nao nas utilities do Quasar (`text-primary`): as utilities NAO
+// sao brand-aware — ficam na cor fixa mesmo sob `[data-brand]` — e, por serem
+// `!important` dentro de layer, venciam o `_brands.scss` do DSS. Sob brand
+// GLOBAL (sem a prop) o resultado era cor errada no indicador.
+//
+// Os tokens `--dss-action-*` resolvem os dois casos: seguem a marca sob
+// `[data-brand]` e caem no valor semantico quando nao ha marca. O mesmo CSS
+// serve o caminho da PROP e o do contexto GLOBAL.
+// --------------------------------------------------------------------------
+$dss-radio-semantic-colors: (
+  'primary': var(--dss-action-primary),
+  'secondary': var(--dss-action-secondary),
+  'tertiary': var(--dss-action-tertiary),
+  'accent': var(--dss-action-accent),
+  'positive': var(--dss-feedback-success),
+  'negative': var(--dss-feedback-error),
+  'warning': var(--dss-feedback-warning),
+  'info': var(--dss-feedback-info)
+);
+
+@each $name, $color in $dss-radio-semantic-colors {
+  .dss-radio--#{$name} {
+    .dss-radio__control--checked {
+      border-color: #{$color};
+      color: #{$color};
+
+      .dss-radio__dot {
+        background-color: #{$color};
+      }
+    }
+
+    // keepColor: stroke colorido tambem no DESMARCADO (so a borda)
+    &.dss-radio--keep-color .dss-radio__control:not(.dss-radio__control--checked) {
+      border-color: #{$color};
+      color: #{$color};
+    }
+  }
+}
+
 // --- Error ---
 .dss-radio--error {
   .dss-radio__control {

@@ -24,11 +24,13 @@ export function useRadioClasses(
   const radioClasses = computed(() => {
     const color = props.color || 'primary'
 
-    // Classe de cor apenas quando brand esta definido (para seletores _brands.scss)
-    let colorClass = ''
-    if (props.brand) {
-      colorClass = `dss-radio--${color}`
-    }
+    // Classe de cor SEMPRE (exceto em erro) — e o alvo do CSS de cor do DSS em
+    // 2-composition/_base.scss. Antes so era emitida COM a prop `brand`, e sem
+    // brand a cor vinha das utilities do Quasar, que nao sao brand-aware: sob
+    // brand GLOBAL ([data-brand] num ancestral) o indicador ficava na cor errada.
+    // Em erro a classe e suprimida: a cor de erro tem prioridade sobre `color`
+    // e sobre `keepColor`.
+    const colorClass = props.error ? '' : `dss-radio--${color}`
 
     return [
       'dss-radio',
@@ -63,32 +65,15 @@ export function useRadioClasses(
   })
 
   // -------------------------------------------------------------------------
-  // Classes de cor (utilitarias Quasar, sem brand)
+  // Classes de cor do controle (.dss-radio__control)
   //
-  // A utilitaria pinta `color`, e tanto a borda do control quanto o fundo do
-  // dot usam `currentColor` — por isso uma classe so resolve os dois.
-  //
-  // Funciona apesar de `.dss-radio__control { color: inherit }` (DSS, unlayered)
-  // porque `.text-{color}` do Quasar e `!important`: declaracao important em
-  // layer vence declaracao normal fora de layer. Mesmo mecanismo do DssCheckbox.
+  // DESCONTINUADO como fonte de cor: hoje retorna sempre '' e existe apenas para
+  // nao quebrar quem consome a assinatura do composable. As utilities do Quasar
+  // (`text-{color}`) foram removidas porque nao sao brand-aware; toda a cor mora
+  // no SCSS do DSS, keyed pela classe de cor do root. Ver o bloco
+  // "CORES SEMANTICAS" em 2-composition/_base.scss.
   // -------------------------------------------------------------------------
-  const controlColorClasses = computed(() => {
-    // Quando brand esta ativo, _brands.scss cuida das cores (inclusive keepColor)
-    if (props.brand) return ''
-
-    // Erro tem prioridade sobre qualquer cor, marcado ou nao — inclusive sobre
-    // keepColor: um campo invalido nao pode exibir a cor de acao no repouso.
-    if (props.error) return ''
-
-    const color = props.color || 'primary'
-
-    if (options.isChecked.value) return `text-${color}`
-
-    // keepColor: escape hatch opt-in — colore o stroke tambem no DESMARCADO
-    if (props.keepColor) return `text-${color}`
-
-    return ''
-  })
+  const controlColorClasses = computed(() => '')
 
   return { radioClasses, controlClasses, controlColorClasses }
 }

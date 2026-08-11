@@ -290,11 +290,15 @@ describe('DssRadio — paridade da família', () => {
       expect(wrapper.classes()).toContain('dss-radio--keep-color')
     })
 
-    it('colore o stroke DESMARCADO via text-{color} (sem brand)', () => {
+    // A cor mora no SCSS do DSS (keyed pela classe de cor do root), nao mais nas
+    // utilities do Quasar — que nao sao brand-aware e quebravam sob brand GLOBAL.
+    it('marca o root com a cor + keep-color e nao emite utilitaria no control', () => {
       const wrapper = mount(DssRadio, {
         props: { keepColor: true, color: 'primary', modelValue: 'a', val: 'b' }
       })
-      expect(wrapper.find('.dss-radio__control').classes()).toContain('text-primary')
+      expect(wrapper.classes()).toContain('dss-radio--primary')
+      expect(wrapper.classes()).toContain('dss-radio--keep-color')
+      expect(wrapper.find('.dss-radio__control').classes()).not.toContain('text-primary')
     })
 
     it('sem keepColor, o stroke desmarcado fica cinza (sem utilitária de cor)', () => {
@@ -308,7 +312,10 @@ describe('DssRadio — paridade da família', () => {
       const wrapper = mount(DssRadio, {
         props: { keepColor: true, color: 'primary', modelValue: 'a', val: 'a' }
       })
-      expect(wrapper.find('.dss-radio__control').classes()).toContain('text-primary')
+      expect(wrapper.classes()).toContain('dss-radio--primary')
+      expect(wrapper.find('.dss-radio__control').classes()).toContain(
+        'dss-radio__control--checked'
+      )
     })
 
     it('delega ao _brands.scss no modo brand (sem utilitária no control)', () => {

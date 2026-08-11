@@ -477,12 +477,16 @@ describe('DssCheckbox', () => {
         expect(wrapper.classes()).toContain('dss-checkbox--keep-color')
       })
 
-      it('colors the unchecked stroke via text-{color} (no brand, no fill)', () => {
+      // A cor mora no SCSS do DSS (keyed pela classe de cor do root), nao mais
+      // nas utilities do Quasar — que nao sao brand-aware.
+      it('marks the root with color + keep-color and emits no Quasar utility', () => {
         const wrapper = mount(DssCheckbox, {
           props: { keepColor: true, color: 'primary', modelValue: false }
         })
+        expect(wrapper.classes()).toContain('dss-checkbox--primary')
+        expect(wrapper.classes()).toContain('dss-checkbox--keep-color')
         const control = wrapper.find('.dss-checkbox__control')
-        expect(control.classes()).toContain('text-primary')
+        expect(control.classes()).not.toContain('text-primary')
         expect(control.classes()).not.toContain('bg-primary')
       })
 
@@ -498,9 +502,10 @@ describe('DssCheckbox', () => {
         const wrapper = mount(DssCheckbox, {
           props: { keepColor: true, color: 'primary', modelValue: true }
         })
+        expect(wrapper.classes()).toContain('dss-checkbox--primary')
         const control = wrapper.find('.dss-checkbox__control')
-        expect(control.classes()).toContain('bg-primary')
-        expect(control.classes()).toContain('text-white')
+        expect(control.classes()).toContain('dss-checkbox__control--checked')
+        expect(control.classes()).not.toContain('bg-primary')
       })
 
       it('defers to _brands.scss in brand mode (no utility classes on control)', () => {
@@ -579,13 +584,22 @@ describe('DssCheckbox', () => {
 
     // Erro vence cor e keepColor: um campo invalido nao exibe cor de acao em
     // repouso. Mesma regra do DssRadio/DssToggle.
-    it('error suppresses the color utility class, even with keepColor', () => {
+    it('error suppresses the color class on the root, even with keepColor', () => {
       const wrapper = mount(DssCheckbox, {
         props: { error: true, keepColor: true, color: 'primary' }
       })
-      const control = wrapper.find('.dss-checkbox__control')
-      expect(control.classes()).not.toContain('text-primary')
-      expect(control.classes()).not.toContain('bg-primary')
+      expect(wrapper.classes()).not.toContain('dss-checkbox--primary')
+      expect(wrapper.classes()).toContain('dss-checkbox--error')
+    })
+
+    // Sem a classe de cor, nada disputa a cor de erro no controle — este teste
+    // trava a razao de o composable suprimi-la (e nao apenas confiar na ordem
+    // das regras no SCSS).
+    it('error keeps the color class off for every semantic color', () => {
+      for (const color of ['primary', 'secondary', 'negative', 'info']) {
+        const wrapper = mount(DssCheckbox, { props: { error: true, color } })
+        expect(wrapper.classes()).not.toContain(`dss-checkbox--${color}`)
+      }
     })
   })
 

@@ -416,12 +416,16 @@ describe('DssToggle', () => {
       expect(track.classes()).not.toContain('bg-primary')
     })
 
-    it('applies bg-{color} when checked (no brand)', () => {
+    // A cor mora no SCSS do DSS (keyed pela classe de cor do root), nao mais nas
+    // utilities do Quasar — que nao sao brand-aware e quebravam sob brand GLOBAL.
+    it('marks the root with the color class when checked (no brand)', () => {
       const wrapper = mount(DssToggle, {
         props: { modelValue: true, color: 'primary' }
       })
+      expect(wrapper.classes()).toContain('dss-toggle--primary')
       const track = wrapper.find('.dss-toggle__track')
-      expect(track.classes()).toContain('bg-primary')
+      expect(track.classes()).toContain('dss-toggle__track--checked')
+      expect(track.classes()).not.toContain('bg-primary')
     })
 
     it('applies brand color class when brand is set', () => {
@@ -587,8 +591,12 @@ describe('DssToggle — paridade da família', () => {
       const wrapper = mount(DssToggle, {
         props: { keepColor: true, color: 'primary', modelValue: false }
       })
+      expect(wrapper.classes()).toContain('dss-toggle--primary')
+      expect(wrapper.classes()).toContain('dss-toggle--keep-color')
       const track = wrapper.find('.dss-toggle__track')
-      expect(track.classes()).toContain('text-primary')
+      // O track DESLIGADO nao carrega a classe de estado ligado — e o que a
+      // regra `:not(--checked)` do keepColor usa para colorir so a borda.
+      expect(track.classes()).not.toContain('dss-toggle__track--checked')
       expect(track.classes()).not.toContain('bg-primary')
     })
 
@@ -603,9 +611,10 @@ describe('DssToggle — paridade da família', () => {
       const wrapper = mount(DssToggle, {
         props: { keepColor: true, color: 'primary', modelValue: true }
       })
+      expect(wrapper.classes()).toContain('dss-toggle--primary')
       const track = wrapper.find('.dss-toggle__track')
-      expect(track.classes()).toContain('bg-primary')
-      expect(track.classes()).toContain('text-white')
+      expect(track.classes()).toContain('dss-toggle__track--checked')
+      expect(track.classes()).not.toContain('bg-primary')
     })
 
     it('delega ao _brands.scss no modo brand (sem utilitária no track)', () => {

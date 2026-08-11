@@ -48,11 +48,13 @@ export function useToggleClasses(
   const toggleClasses = computed(() => {
     const color = props.color || 'primary'
 
-    // Classes de cor no root - apenas para brand matching
-    let colorClass = ''
-    if (props.brand) {
-      colorClass = `dss-toggle--${color}`
-    }
+    // Classe de cor SEMPRE (exceto em erro) — e o alvo do CSS de cor do DSS em
+    // 2-composition/_base.scss. Antes so era emitida COM a prop `brand`, e sem
+    // brand a cor vinha das utilities do Quasar, que nao sao brand-aware: sob
+    // brand GLOBAL ([data-brand] num ancestral) o track ligado ficava na cor
+    // errada. Em erro a classe e suprimida: a cor de erro tem prioridade sobre
+    // `color` e sobre `keepColor`.
+    const colorClass = props.error ? '' : `dss-toggle--${color}`
 
     return [
       // Classe base
@@ -77,37 +79,17 @@ export function useToggleClasses(
   })
 
   /**
-   * Classes de cor para o track (.dss-toggle__track)
+   * Classes de cor do track (.dss-toggle__track)
    *
-   * SEM brand:
-   *   - checked: bg-{color} text-white (pilula preenchida)
-   *   - keepColor + DESLIGADO: text-{color} — colore SO A BORDA, porque o track
-   *     declara `border: ... solid currentColor` e mantem
-   *     `background-color: var(--dss-surface-muted)`. O fundo NAO e preenchido
-   *     de proposito: track colorido no desligado tornaria ligado e desligado
-   *     indistinguiveis, o que quebra a percepcao de estado. O thumb tambem
-   *     segue cinza (gray-500 explicito), reforcando a distincao.
-   * COM brand: cores vem via _brands.scss (inclusive o keepColor)
-   *
-   * Hierarquia de estados: error > color
-   * (erro impede aplicacao de cor — padrao DssRadio selado)
+   * DESCONTINUADO como fonte de cor: hoje retorna sempre '' e existe apenas para
+   * nao quebrar quem consome a assinatura do composable. As utilities do Quasar
+   * (`bg-{color}`/`text-{color}`) foram removidas porque nao sao brand-aware;
+   * toda a cor mora no SCSS do DSS, keyed pela classe de cor do root. Ver o bloco
+   * "CORES SEMANTICAS" em 2-composition/_base.scss — inclusive a regra do
+   * keepColor, que colore SO A BORDA no desligado (preencher o track apagaria a
+   * distincao ligado x desligado).
    */
-  const trackColorClasses = computed(() => {
-    if (props.brand) return ''
-
-    // Erro tem prioridade sobre qualquer cor, ligado ou nao — inclusive sobre
-    // keepColor: um campo invalido nao pode exibir cor de acao no repouso.
-    if (props.error) return ''
-
-    const color = props.color || 'primary'
-
-    if (options.isChecked.value) return `bg-${color} text-white`
-
-    // keepColor: escape hatch opt-in — colore a borda tambem no DESLIGADO
-    if (props.keepColor) return `text-${color}`
-
-    return ''
-  })
+  const trackColorClasses = computed(() => '')
 
   return {
     toggleClasses,
