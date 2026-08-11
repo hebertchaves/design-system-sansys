@@ -26,13 +26,10 @@
 
 ## Débito de fundo (ondas anteriores)
 
-- 🟡 **DssChip sem cor neutra/token + DssSelect não consome DssChip** (decidido 2026-07, ADIADO). O
-  `useChips` do DssSelect delega ao `.q-chip` NATIVO do Quasar (cinza), não ao DssChip; o
-  DssMultiselectAutocomplete consome o DssChip (default filled azul) → divergência visual de chip.
-  Raiz: DssChip só tem cores semânticas (sem neutra/token). **Decisão do dono: caminho 1** — adicionar
-  aparência neutra/token ao DssChip + migrar useChips do DssSelect→DssChip (ambos consumindo a base).
-  **Sequência: só DEPOIS de fechar o DssMultiselectAutocomplete** (o chip azul fica como está por ora,
-  pré-adequação do DssChip). `[[project_multiselect_autocomplete]]`.
+- ✅ **DssChip sem cor neutra/token + DssSelect não consome DssChip — RESOLVIDO** (`886b083`, ago/2026).
+  `ChipColor` ganhou `'neutral'` (aditiva; o default segue `primary`) e o `DssSelect` passou a preencher o
+  slot `selected-item` com `<DssChip color="neutral" size="xs">` — acabou a divergência de duas linguagens
+  visuais para o mesmo dado. `[[project_multiselect_autocomplete]]`.
 
 - 🟡 **`meta.visualProperties` staleness = GERIDO via checklist (automação total impossível)** — o gate
   não pode pegar drift da *lista de tokens*: o validador não distingue "token aplicado via classe Quasar
@@ -180,10 +177,13 @@
 - 🟡 **Composto com `classification`-objeto precisa `meta.category` no top-level** — o emissor lê
   `meta.category` (raiz); na convenção antiga de composto a `category` fica DENTRO do objeto `classification`.
   Ao emitir contrato dos próximos compostos, **promover `category` para o topo** (senão `--write` dá gap).
-- 🟡 **Focus ring ausente no CSS próprio de 6 interativos** — Checkbox, Radio, Toggle, Field, Range,
-  Slider não declaram anel de foco no SCSS do componente; visibilidade de foco depende de regra
-  global/Quasar. Risco WCAG 2.4.7 se a global falhar/for sobrescrita. Achado ao emitir contratos
-  (Form/Input). **Verificar na Onda Higiene.** `relatorios/CONTRATOS_FORM_INPUT.md`.
+- 🟡 **Focus ring ausente no CSS próprio — de 6 sobrou 1** (reverificado 2026-08-11, direto no SCSS).
+  Checkbox, Radio e Toggle declaram `outline: … var(--dss-focus-primary)`; Range e Slider usam
+  `box-shadow: var(--dss-shadow-focus)`. **Só o `DssField` segue sem anel próprio** — tem apenas
+  `.dss-field--focused` na variante `outlined`, que é classe de estado do Quasar e não `:focus-visible`.
+  Risco WCAG 2.4.7 restrito a ele. **Onda Higiene.** `relatorios/CONTRATOS_FORM_INPUT.md`.
+  *(A ser confirmado no Range/Slider: se o `box-shadow` está de fato preso a `:focus-visible` e não a
+  `:focus` — a distinção importa para não exibir anel em clique de mouse.)*
 - 🟡 **Higiene `!important` — estados não-default** — disabled/erro/hover reais não são validáveis na
   sandbox (injeção sintética de classe Quasar dá artefato). Risco residual baixo. `[[project_important_audit]]`.
 - 🟡 **`tokens/brand/index.scss` = código morto (T4)** — ~149 `!important` inócuos (arquivo não importado)
@@ -274,10 +274,25 @@
   - 🟡 **MELHORIA DE SANDBOX (infra): carregar Material Symbols** — o sandbox só carrega `Material Icons`
     clássico (Google Fonts `family=Material+Icons`). Nomes novos falham. Decisão: carregar também
     Material Symbols (suporta os nomes novos) ou manter só o clássico + o picker acima. Escopo sandbox.
-  - 🔲 **Aplicar à FAMÍLIA:** replicar `keepColor` + props de ícone (e o `size` união-literal) em
-    **DssRadio/DssToggle** — são decisões de família. **Próximo: DssRadio** (Golden Context=DssCheckbox).
-  - 🔲 **Ao criar DssRadio/DssToggle:** verificar a MESMA colisão do Preview (seed `null` vs valor "vazio"
-    do componente). Só componentes com `indeterminateValue:null` quebram; declarar `@default` no vModel se preciso.
+  - ✅ **Aplicar à FAMÍLIA — FEITO** (2026-08-11, `8b057a0` DssRadio + `d929e21` DssToggle). `keepColor`,
+    `checkedIcon` e `size` união-literal com `xl` nos três. Aditivo: quem não passa as props novas não vê
+    diferença. **Os dois não foram cópia** — cada um exigiu decisão própria, registrada nos commits:
+    - **Radio:** o indicador é o PONTO, não um glifo. `checkedIcon` ficou SEM default e *substitui* o ponto;
+      omitir preserva a convenção. Sem `indeterminateIcon` — conferido na `api.json` do Quasar que o próprio
+      q-radio não o oferece (radio não tem estado indeterminado).
+    - **Toggle:** o track é pílula PREENCHIDA — colorir no desligado apagaria a distinção ligado×desligado.
+      Como o track usa `border: … currentColor` + fundo `surface-muted`, o `keepColor` colore **só a borda**.
+      Teste trava o invariante (exige `text-primary` E ausência de `bg-primary`).
+    - **Toggle, dívida estrutural encontrada de brinde:** era o único da família sem aliases de tipo —
+      `color` era `string` ABERTO. Agora exporta `ToggleColor`/`ToggleSize`/`ToggleBrand`. **Estreitamento
+      = breaking em tempo de compilação**, aplicado após medir: os 37 usos de `color=` no repo já estavam
+      nas 8 semânticas e o type-check passa intacto.
+  - ✅ **Colisão de seed do Preview — VERIFICADA, não ocorre** no Radio nem no Toggle. Em ambos `null`/`false`
+    significa "nada selecionado", que é correto; o bug do Checkbox era `null` ser lido como *indeterminate*,
+    estado que nenhum dos dois possui.
+  - 🟡 **`keepColor` do Radio e do Toggle herdam a MESMA cegueira de brand global** já registrada acima para
+    o Checkbox (a utility `.text-{color}` do Quasar não é brand-aware). Consistente com o componente →
+    não corrigir isoladamente; o fix é sistêmico. `[[project_brand_prop_vs_data_brand_focus]]`.
 
 ## Resolvidos nesta onda (para não reabrir por engano)
 
