@@ -233,6 +233,24 @@
   (`val`, `trueValue`, `falseValue`, `indeterminateValue`) tem esse mesmo risco. Vale varrer a base na
   Onda Higiene — o sintoma é silencioso em teste e só aparece no console.
 
+- ✅ **`leftLabel` não funcionava em DssRadio e DssToggle — RESOLVIDO** (`64cf911`, 2026-08-11). A label
+  seguia à direita. Causa: **dupla-inversão** — o template já renderiza a label ANTES do controle quando
+  `leftLabel=true`, e o CSS revertia de novo com `flex-direction: row-reverse`. Duas inversões se
+  cancelam. **O DssCheckbox já tinha corrigido isso** e carrega o comentário de aviso no `_base.scss`;
+  Radio e Toggle nasceram com a regra CSS e ganharam a inversão no template depois. O comentário foi
+  replicado nos dois para o próximo da família não reintroduzir.
+
+- 🔴 **MODO DE FALHA RECORRENTE DE TESTE: asserção sobre PROXY, não sobre RESULTADO** (2 casos em
+  2026-08-11, vale varrer na Onda Higiene). Os dois defeitos acima tinham teste passando:
+  - `leftLabel`: o teste afirmava `classes()).toContain('dss-*--left-label')` — a **classe aplicada**,
+    não a **ordem real**. A classe existia; o layout estava errado.
+  - `modelValue`: o teste exercia o valor customizado, mas Vue warn não reprova o vitest.
+  **Regra prática:** asserte o efeito observável (ordem no DOM, o warn, o atributo final), não o
+  intermediário que você mesmo produziu. **Limite honesto a respeitar:** jsdom não aplica SCSS — defeito
+  que mora só no CSS (como o `row-reverse`) **não é capturável em teste unitário**; quem o pega é o
+  `dss.contract.json` (derivado do SCSS, versionado → aparece no diff) e a verificação visual. Isso
+  reforça o item do eixo visual acima: ele não é redundante com os testes, cobre o que eles não alcançam.
+
 ## Verificar (pode já estar resolvido)
 
 - 🔍 **`DssResponsive`** — lista scope-props do slot default como slots (baixa prioridade). Mesmo arquivo.
