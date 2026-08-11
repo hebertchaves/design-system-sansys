@@ -42,70 +42,18 @@
           </button>
         </div>
 
-        <!-- PREVIEW FRAME (durável) — playground contract-driven -->
+        <!-- PREVIEW FRAME sem página de teste correspondente.
+             Os demais Preview Frames moram aninhados sob o próprio componente,
+             na árvore de COMPONENTS — este bloco guarda só os que não têm
+             página de teste onde ancorar. Ao criar a página de teste destes
+             dois, mova o item para baixo dela e apague esta seção. -->
         <div class="nav-section">
-          <button
-            @click="activeComponent = 'preview-frame'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssInput</span>
-          </button>
-          <button
-            @click="activeComponent = 'preview-frame-select'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-select' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssSelect</span>
-          </button>
           <button
             @click="activeComponent = 'preview-frame-uploader'"
             :class="['nav-item', { active: activeComponent === 'preview-frame-uploader' }]"
           >
             <span class="nav-icon"><span class="material-icons">dvr</span></span>
             <span class="nav-label">Preview Frame · DssUploader</span>
-          </button>
-          <button
-            @click="activeComponent = 'preview-frame-file'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-file' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssFile</span>
-          </button>
-          <button
-            @click="activeComponent = 'preview-frame-textarea'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-textarea' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssTextarea</span>
-          </button>
-          <button
-            @click="activeComponent = 'preview-frame-field'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-field' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssField</span>
-          </button>
-          <button
-            @click="activeComponent = 'preview-frame-checkbox'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-checkbox' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssCheckbox</span>
-          </button>
-          <button
-            @click="activeComponent = 'preview-frame-radio'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-radio' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssRadio</span>
-          </button>
-          <button
-            @click="activeComponent = 'preview-frame-toggle'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-toggle' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssToggle</span>
           </button>
           <button
             @click="activeComponent = 'preview-frame-multiselect'"
@@ -280,6 +228,14 @@
                 <span class="nav-icon"><span class="material-icons">edit</span></span>
                 <span class="nav-label">DssInput</span>
               </button>
+              <button
+                @click="activeComponent = 'preview-frame'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
 
               <button
                 @click="activeComponent = 'select'"
@@ -288,6 +244,14 @@
                 <span class="nav-icon"><span class="material-icons">expand_circle_down</span></span>
                 <span class="nav-label">DssSelect</span>
               </button>
+              <button
+                @click="activeComponent = 'preview-frame-select'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-select' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
 
               <button
                 @click="activeComponent = 'textarea'"
@@ -296,6 +260,14 @@
                 <span class="nav-icon"><span class="material-icons">notes</span></span>
                 <span class="nav-label">DssTextarea</span>
               </button>
+              <button
+                @click="activeComponent = 'preview-frame-textarea'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-textarea' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
 
               <button
                 @click="activeComponent = 'file'"
@@ -304,6 +276,14 @@
                 <span class="nav-icon"><span class="material-icons">attach_file</span></span>
                 <span class="nav-label">DssFile</span>
               </button>
+              <button
+                @click="activeComponent = 'preview-frame-file'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-file' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
 
               <button
                 @click="activeComponent = 'field'"
@@ -312,6 +292,14 @@
                 <span class="nav-icon"><span class="material-icons">crop_free</span></span>
                 <span class="nav-label">DssField</span>
               </button>
+              <button
+                @click="activeComponent = 'preview-frame-field'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-field' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
             </div>
 
             <!-- Controles de Seleção -->
@@ -329,6 +317,14 @@
                 <span class="nav-label">DssCheckbox</span>
               </button>
               <button
+                @click="activeComponent = 'preview-frame-checkbox'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-checkbox' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'radio'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'radio' }]"
               >
@@ -336,12 +332,28 @@
                 <span class="nav-label">DssRadio</span>
               </button>
               <button
+                @click="activeComponent = 'preview-frame-radio'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-radio' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'toggle'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'toggle' }]"
               >
                 <span class="nav-icon"><span class="material-icons">toggle_on</span></span>
                 <span class="nav-label">DssToggle</span>
               </button>
+              <button
+                @click="activeComponent = 'preview-frame-toggle'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-toggle' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
             </div>
 
             <!-- Layout -->
@@ -981,10 +993,31 @@ function onNavOut(e) {
   font-size: 0.75rem;
 }
 
+/* Preview Frame — filho do componente (um nível abaixo do item do componente).
+   Recuo maior + rótulo mais discreto para ler como "página do componente", e
+   não como um componente irmão. */
+.nav-previewitem {
+  padding-left: 1.75rem;
+  font-size: 0.6875rem;
+  opacity: 0.85;
+}
+
+.nav-previewitem .nav-label {
+  letter-spacing: 0.02em;
+}
+
 /* Remove hover layout-shift */
 .nav-subitem:hover,
 .nav-subsubitem:hover {
   padding-left: inherit;
+}
+
+/* O .nav-previewitem fica FORA do reset acima de propósito: `padding-left:
+   inherit` no hover resolve para o padding do menu pai (0), o que colapsaria o
+   recuo justamente no hover. Aqui o recuo é o que sinaliza o aninhamento. */
+.nav-previewitem:hover,
+.nav-previewitem.active {
+  opacity: 1;
 }
 
 /* Submenu Containers */
