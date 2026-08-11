@@ -302,12 +302,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "flex-direction",
-          "token": null,
-          "value": "row-reverse",
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "width",
           "token": null,
           "value": "1px",

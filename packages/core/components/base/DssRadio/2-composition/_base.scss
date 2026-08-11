@@ -51,9 +51,13 @@
 
 // --------------------------------------------------------------------------
 // Label posicionado a esquerda
+//
+// A ordem e resolvida no TEMPLATE (o <span> da label e renderizado ANTES do
+// controle quando leftLabel=true). NAO reverter tambem via CSS (flex-direction:
+// row-reverse) — os dois mecanismos se cancelam e a label volta para a direita.
 // --------------------------------------------------------------------------
 .dss-radio--left-label {
-  flex-direction: row-reverse;
+  /* Ordem garantida pelo template; sem regra de direcao aqui. */
 }
 
 // --------------------------------------------------------------------------

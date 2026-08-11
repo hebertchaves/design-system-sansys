@@ -85,6 +85,42 @@ describe('DssToggle', () => {
         expect(wrapper.classes()).toContain('dss-toggle--left-label')
       })
 
+      // A ordem do leftLabel e resolvida no TEMPLATE (label renderizada ANTES do
+      // track). A asercao da classe acima passava mesmo com a feature quebrada
+      // pela dupla-inversao template x CSS — por isso esta trava a ORDEM REAL.
+      // Limite conhecido: jsdom nao aplica o SCSS, entao a metade CSS do defeito
+      // (flex-direction: row-reverse) NAO e capturada aqui; ela e visivel no
+      // dss.contract.json (derivado do SCSS) e na verificacao visual.
+      it('renders the label BEFORE the track when leftLabel is true', () => {
+        const wrapper = mount(DssToggle, {
+          props: { leftLabel: true, label: 'Left' }
+        })
+        const children = [...wrapper.element.children]
+        const labelIdx = children.findIndex((el) =>
+          el.classList.contains('dss-toggle__label')
+        )
+        const trackIdx = children.findIndex((el) =>
+          el.classList.contains('dss-toggle__track')
+        )
+        expect(labelIdx).toBeGreaterThanOrEqual(0)
+        expect(trackIdx).toBeGreaterThanOrEqual(0)
+        expect(labelIdx).toBeLessThan(trackIdx)
+      })
+
+      it('renders the label AFTER the track by default', () => {
+        const wrapper = mount(DssToggle, {
+          props: { label: 'Right' }
+        })
+        const children = [...wrapper.element.children]
+        const labelIdx = children.findIndex((el) =>
+          el.classList.contains('dss-toggle__label')
+        )
+        const trackIdx = children.findIndex((el) =>
+          el.classList.contains('dss-toggle__track')
+        )
+        expect(labelIdx).toBeGreaterThan(trackIdx)
+      })
+
       it('applies checked class when modelValue is true', () => {
         const wrapper = mount(DssToggle, {
           props: { modelValue: true }

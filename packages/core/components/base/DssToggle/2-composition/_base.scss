@@ -218,14 +218,18 @@
 
 /* ==========================================================================
    LEFT LABEL
+
+   A ordem é resolvida no TEMPLATE (o <span> da label é renderizado ANTES do
+   controle quando leftLabel=true). NÃO reverter também via CSS (flex-direction:
+   row-reverse) — os dois mecanismos se cancelam e a label volta para a direita.
    ========================================================================== */
 
 .dss-toggle--left-label {
-  flex-direction: row-reverse;
+  /* Ordem garantida pelo template; sem regra de direção aqui. */
 }
 
 .dss-toggle__label--left {
-  /* Nenhum estilo adicional necessario - flex-direction cuida da ordem */
+  /* Ordem garantida pelo template; sem margem/espaçamento extra (o gap do root cuida). */
 }
 
 /* ==========================================================================

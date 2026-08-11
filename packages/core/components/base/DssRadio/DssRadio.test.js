@@ -79,6 +79,42 @@ describe('DssRadio', () => {
         expect(wrapper.classes()).toContain('dss-radio--left-label')
       })
 
+      // A ordem do leftLabel e resolvida no TEMPLATE (label renderizada ANTES do
+      // controle). A asercao da classe acima passava mesmo com a feature quebrada
+      // pela dupla-inversao template x CSS — por isso esta trava a ORDEM REAL.
+      // Limite conhecido: jsdom nao aplica o SCSS, entao a metade CSS do defeito
+      // (flex-direction: row-reverse) NAO e capturada aqui; ela e visivel no
+      // dss.contract.json (derivado do SCSS) e na verificacao visual.
+      it('renders the label BEFORE the control when leftLabel is true', () => {
+        const wrapper = mount(DssRadio, {
+          props: { leftLabel: true, label: 'Esquerda' }
+        })
+        const children = [...wrapper.element.children]
+        const labelIdx = children.findIndex((el) =>
+          el.classList.contains('dss-radio__label')
+        )
+        const controlIdx = children.findIndex((el) =>
+          el.classList.contains('dss-radio__control')
+        )
+        expect(labelIdx).toBeGreaterThanOrEqual(0)
+        expect(controlIdx).toBeGreaterThanOrEqual(0)
+        expect(labelIdx).toBeLessThan(controlIdx)
+      })
+
+      it('renders the label AFTER the control by default', () => {
+        const wrapper = mount(DssRadio, {
+          props: { label: 'Direita' }
+        })
+        const children = [...wrapper.element.children]
+        const labelIdx = children.findIndex((el) =>
+          el.classList.contains('dss-radio__label')
+        )
+        const controlIdx = children.findIndex((el) =>
+          el.classList.contains('dss-radio__control')
+        )
+        expect(labelIdx).toBeGreaterThan(controlIdx)
+      })
+
       it('applies checked class when modelValue equals val', () => {
         const wrapper = mount(DssRadio, {
           props: { modelValue: 'a', val: 'a' }
