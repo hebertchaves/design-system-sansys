@@ -362,22 +362,34 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "width",
+          "property": "font-size",
           "token": "--dss-spacing-5",
           "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "1em",
           "source": "2-composition/_base.scss"
         },
         {
           "property": "height",
-          "token": "--dss-spacing-5",
-          "value": null,
+          "token": null,
+          "value": "1em",
           "source": "2-composition/_base.scss"
         },
         {
           "property": "border",
-          "token": "--dss-border-width-md",
-          "value": null,
-          "source": "4-output/_states.scss"
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": null,
+          "value": "inset 0 0 0 0.0833333333em currentColor",
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "border-radius",
@@ -405,14 +417,14 @@
         },
         {
           "property": "width",
-          "token": "--dss-spacing-2_5",
-          "value": null,
+          "token": null,
+          "value": "0.5em",
           "source": "2-composition/_base.scss"
         },
         {
           "property": "height",
-          "token": "--dss-spacing-2_5",
-          "value": null,
+          "token": null,
+          "value": "0.5em",
           "source": "2-composition/_base.scss"
         },
         {
@@ -476,26 +488,8 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "width",
+          "property": "font-size",
           "token": "--dss-spacing-4",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-spacing-4",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-spacing-2",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-spacing-2",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -530,26 +524,8 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "width",
+          "property": "font-size",
           "token": "--dss-spacing-6",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-spacing-6",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-spacing-3",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-spacing-3",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -566,26 +542,8 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "width",
+          "property": "font-size",
           "token": "--dss-spacing-7",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-spacing-7",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-spacing-3_5",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-spacing-3_5",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -746,9 +704,9 @@
           "source": "4-output/_states.scss"
         },
         {
-          "property": "border-width",
-          "token": "--dss-border-width-thick",
-          "value": null,
+          "property": "box-shadow",
+          "token": null,
+          "value": "inset 0 0 0 0.1666666667em currentColor",
           "source": "4-output/_states.scss"
         },
         {
@@ -803,6 +761,12 @@
           "property": "filter",
           "token": null,
           "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-md",
+          "value": null,
           "source": "4-output/_states.scss"
         }
       ],
@@ -1029,26 +993,10 @@
         ]
       },
       {
-        "name": "--dss-border-width-md",
-        "usedIn": [
-          "default",
-          "focus",
-          "defaultPreview"
-        ]
-      },
-      {
         "name": "--dss-radius-circle",
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-spacing-2_5",
-        "usedIn": [
-          "default",
-          "hover",
-          "focus"
         ]
       },
       {
@@ -1138,14 +1086,6 @@
         ]
       },
       {
-        "name": "--dss-spacing-3_5",
-        "usedIn": [
-          "default",
-          "hover",
-          "focus"
-        ]
-      },
-      {
         "name": "--dss-action-primary",
         "usedIn": [
           "default",
@@ -1189,14 +1129,35 @@
         ]
       },
       {
-        "name": "--dss-border-width-thick",
+        "name": "--dss-border-width-md",
         "usedIn": [
           "default",
+          "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3_5",
+        "usedIn": [
+          "hover",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2_5",
+        "usedIn": [
+          "hover",
           "focus"
         ]
       },
       {
         "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thick",
         "usedIn": [
           "focus"
         ]

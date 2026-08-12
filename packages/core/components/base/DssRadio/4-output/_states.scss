@@ -30,8 +30,10 @@
     color: var(--dss-text-primary, var(--dss-gray-200));
   }
 
+  // O anel e sombra interna com `currentColor`: pintar via `color`, nao
+  // `border-color` (que ficou inerte quando a borda saiu).
   .dss-radio__control {
-    border-color: var(--dss-gray-400);
+    color: var(--dss-gray-400);
   }
 
   // Hover em dark mode: brightness invertido
@@ -52,7 +54,6 @@
 
   .dss-radio--error {
     .dss-radio__control {
-      border-color: var(--dss-feedback-error-light);
       color: var(--dss-feedback-error-light);
     }
 
@@ -87,8 +88,10 @@
 // High contrast (prefers-contrast: more)
 // --------------------------------------------------------------------------
 @media (prefers-contrast: more) {
+  // `border-width` ficou inerte (o anel e sombra interna). Aqui o anel dobra de
+  // espessura — 1em/6 em vez de 1em/12 — mantendo a proporcionalidade.
   .dss-radio__control {
-    border-width: var(--dss-border-width-thick);
+    box-shadow: inset 0 0 0 calc(1em / 6) currentColor;
   }
 
   .dss-radio__control--focused {
