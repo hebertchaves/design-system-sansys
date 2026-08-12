@@ -416,6 +416,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "aspect-ratio",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "background-color",
           "token": null,
           "value": "currentColor",
@@ -802,13 +808,55 @@
       ],
       "hover": [
         {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(0.95)",
+          "property": "box-shadow",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-spacing-3_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-spacing-2_5",
+          "value": null,
           "source": "2-composition/_base.scss"
         }
       ],
       "focus": [
+        {
+          "property": "box-shadow",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-spacing-3_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-spacing-2_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
         {
           "property": "outline",
           "token": "--dss-border-width-md",
@@ -925,7 +973,9 @@
       {
         "name": "--dss-spacing-2",
         "usedIn": [
-          "default"
+          "default",
+          "hover",
+          "focus"
         ]
       },
       {
@@ -996,7 +1046,9 @@
       {
         "name": "--dss-spacing-2_5",
         "usedIn": [
-          "default"
+          "default",
+          "hover",
+          "focus"
         ]
       },
       {
@@ -1050,7 +1102,9 @@
       {
         "name": "--dss-spacing-3",
         "usedIn": [
-          "default"
+          "default",
+          "hover",
+          "focus"
         ]
       },
       {
@@ -1086,7 +1140,9 @@
       {
         "name": "--dss-spacing-3_5",
         "usedIn": [
-          "default"
+          "default",
+          "hover",
+          "focus"
         ]
       },
       {

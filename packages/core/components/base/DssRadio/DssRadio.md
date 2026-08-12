@@ -220,7 +220,7 @@ O indicador de selecao (circulo preenchido) e implementado como elemento real `<
 | Estado | Aparencia | Interacao | Tokens / Regras CSS | Notas |
 |--------|-----------|-----------|---------------------|-------|
 | **Default** | Circulo vazio com borda | Clicavel | `border: var(--dss-border-width-md) solid currentColor` | — |
-| **Hover** | Escurecimento sutil | Clicavel | `filter: brightness(0.95)` | WCAG 1.4.1 |
+| **Hover** | Halo ao redor do anel | Clicavel | anel translucido (10% de `currentColor`), spread = metade do control | WCAG 1.4.1 |
 | **Focus** | Outline visivel | Via teclado | `outline: var(--dss-border-width-md) solid var(--dss-focus-ring)` | WCAG 2.4.7 |
 | **Active / Pressed** | Escurecimento intenso | Click/touch | `filter: brightness(0.90)` | — |
 | **Checked** | Circulo interno preenchido | Selecao unica | `border-color: currentColor` + `.dss-radio__dot` | — |
@@ -268,7 +268,7 @@ O indicador de selecao (circulo preenchido) e implementado como elemento real `<
 
 | ID | Valor | Localizacao | Justificativa |
 |----|-------|-------------|---------------|
-| EXC-01 | `brightness(0.95)` | `_base.scss` | Valor canonico DSS para hover light mode |
+| EXC-01 | spread do halo = metade do control | `_base.scss` | Halo de hover/foco (padrao QRadio); spread por tamanho via token de spacing |
 | EXC-02 | `brightness(0.90)` | `_base.scss` | Valor canonico DSS para active light mode |
 | EXC-03 | `brightness(1.10)` | `_states.scss` | Valor canonico DSS para hover dark mode |
 | EXC-04 | `brightness(1.20)` | `_states.scss` | Valor canonico DSS para active dark mode |

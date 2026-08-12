@@ -120,7 +120,7 @@ Circulo interno preenchido (`.dss-radio__dot`). Cor determinada pela prop `color
 
 ### Hover
 ```scss
-filter: brightness(0.95); // Light mode — valor canonico DSS
+box-shadow: 0 0 0 var(--dss-spacing-2_5) color-mix(...); // halo de hover/foco
 filter: brightness(1.10); // Dark mode — valor canonico DSS
 ```
 
@@ -303,7 +303,7 @@ Cores devem usar o sistema DSS (`color` prop ou `brand`). CSS inline ignora bran
 
 | Valor | Localizacao | Justificativa |
 |-------|-------------|---------------|
-| `brightness(0.95)` | `_base.scss` | Canonico DSS (hover light) |
+| spread do halo = metade do control | `_base.scss` | Halo de hover/foco (padrao QRadio) |
 | `brightness(0.90)` | `_base.scss` | Canonico DSS (active light) |
 | `brightness(1.10)` | `_states.scss` | Canonico DSS (hover dark) |
 | `brightness(1.20)` | `_states.scss` | Canonico DSS (active dark) |

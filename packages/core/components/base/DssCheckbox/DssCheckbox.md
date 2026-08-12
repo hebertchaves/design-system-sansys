@@ -173,7 +173,7 @@ Valores não-tokenizados presentes no SCSS do componente, com justificativa téc
 
 | ID | Valor | Arquivo | Linha | Racional |
 |----|-------|---------|-------|----------|
-| EXC-01 | `brightness(0.95)` | `_base.scss` | 271 | Valor canônico DSS para hover de controles interativos em light mode. Ref: CLAUDE.md Princípio #8 |
+| EXC-01 | `scale` do halo (spread = metade do control) | `_base.scss` | — | Halo de hover/foco replicando o QCheckbox. Spread sai de token de spacing por tamanho; a razão 1:2 com o control não tem token próprio |
 | EXC-02 | `brightness(1.10)` | `_states.scss` | 33 | Valor canônico DSS para hover em dark mode (clareia fundos escuros). Ref: CLAUDE.md Princípio #8 |
 | EXC-04 | `saturate(1.2)` | `_states.scss` | 83 | Valor canônico DSS para high contrast mode. Ref: CLAUDE.md Princípio #8 |
 | EXC-05 | `2px`, `3px` hardcoded | `_states.scss` | 156, 181 | Tokens CSS custom properties são ignorados em `forced-colors: active`. Precedente: DssChip `_states.scss` |
@@ -259,7 +259,7 @@ Valores não-tokenizados presentes no SCSS do componente, com justificativa téc
 | **Unchecked** | (estado base) | Caixa vazia com borda `currentColor` | Clique alterna para checked | `border: var(--dss-border-width-md) solid currentColor`, `background-color: transparent` |
 | **Checked** | `.dss-checkbox--checked` | Caixa preenchida com ícone ✓ | Clique alterna para unchecked (ou indeterminate se `toggleIndeterminate`) | `bg-{color} text-white` (sem brand) ou tokens de brand |
 | **Indeterminate** | `.dss-checkbox--indeterminate` | Caixa preenchida com ícone — | Clique alterna para unchecked (com `toggleIndeterminate`) | Mesmo tratamento visual que checked |
-| **Hover** | `:hover` (não disabled) | Control com `brightness(0.95)` | Feedback visual | EXC-01: `filter: brightness(0.95)` |
+| **Hover** | `:hover` / `:focus-within` (não disabled) | Halo ao redor do control: anel translúcido (10% de `currentColor`) com spread de metade do control | Feedback visual no alvo do clique | EXC-01 |
 | **Active** | `:active` (não disabled) | Control com `brightness(0.90)` | Feedback durante mousedown | EXC-06: `filter: brightness(0.90)` |
 | **Focus** | `.dss-checkbox__control--focused` | Focus ring visível no control | Navegação por teclado | `outline: var(--dss-border-width-md) solid var(--dss-focus-ring)`, `outline-offset: var(--dss-spacing-0_5)` |
 | **Disabled** | `.dss-checkbox--disabled` | Opacidade reduzida, cursor not-allowed | Interações bloqueadas, tabindex -1 | `opacity: var(--dss-opacity-disabled)`, `pointer-events: none` |

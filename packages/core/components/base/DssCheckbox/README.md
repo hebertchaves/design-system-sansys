@@ -97,7 +97,7 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 
 | ID | Valor | Arquivo | Racional |
 |----|-------|---------|----------|
-| EXC-01 | `brightness(0.95)` | `_base.scss` | Hover em light mode (canônico DSS) |
+| EXC-01 | spread do halo = metade do control | `_base.scss` | Halo de hover/foco (padrão QCheckbox); spread por tamanho via token de spacing |
 | EXC-02 | `brightness(1.10)` | `_states.scss` | Hover em dark mode (canônico DSS) |
 | EXC-04 | `saturate(1.2)` | `_states.scss` | High contrast mode (canônico DSS) |
 | EXC-05 | `2px`, `3px` | `_states.scss` | Tokens ignorados em `forced-colors: active` |
@@ -167,7 +167,7 @@ Paridade com a família de campos (`DssInput`/`DssSelect`) — controle program�
 | **Unchecked** | (base) | Caixa vazia com borda |
 | **Checked** | `.dss-checkbox--checked` | Caixa preenchida com ícone ✓ |
 | **Indeterminate** | `.dss-checkbox--indeterminate` | Caixa preenchida com ícone — |
-| **Hover** | `:hover` | `brightness(0.95)` no control |
+| **Hover** | `:hover` / `:focus-within` | Halo translúcido (10%) ao redor do control |
 | **Active** | `:active` | `brightness(0.90)` no control |
 | **Focus** | `.dss-checkbox__control--focused` | Focus ring visível |
 | **Disabled** | `.dss-checkbox--disabled` | Opacidade reduzida, interações bloqueadas |

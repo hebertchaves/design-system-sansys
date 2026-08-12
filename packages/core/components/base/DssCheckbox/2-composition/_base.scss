@@ -304,6 +304,13 @@ $dss-checkbox-semantic-colors: (
   .dss-checkbox__dash {
     font-size: var(--dss-font-size-xs); /* 12px */
   }
+  /* Halo proporcional: metade do control (8px) */
+  &:not(.dss-checkbox--disabled):hover .dss-checkbox__control,
+  &:not(.dss-checkbox--disabled):focus-within .dss-checkbox__control {
+    box-shadow: 0 0 0 var(--dss-spacing-2)
+      color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
+  }
+
 }
 
 .dss-checkbox--sm {
@@ -340,6 +347,13 @@ $dss-checkbox-semantic-colors: (
   .dss-checkbox__dash {
     font-size: var(--dss-font-size-md); /* 16px */
   }
+  /* Halo proporcional: metade do control (12px) */
+  &:not(.dss-checkbox--disabled):hover .dss-checkbox__control,
+  &:not(.dss-checkbox--disabled):focus-within .dss-checkbox__control {
+    box-shadow: 0 0 0 var(--dss-spacing-3)
+      color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
+  }
+
 }
 
 .dss-checkbox--xl {
@@ -359,6 +373,13 @@ $dss-checkbox-semantic-colors: (
   .dss-checkbox__dash {
     font-size: var(--dss-font-size-lg); /* 18px */
   }
+  /* Halo proporcional: metade do control (14px) */
+  &:not(.dss-checkbox--disabled):hover .dss-checkbox__control,
+  &:not(.dss-checkbox--disabled):focus-within .dss-checkbox__control {
+    box-shadow: 0 0 0 var(--dss-spacing-3_5)
+      color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
+  }
+
 }
 
 /* ==========================================================================
@@ -375,18 +396,19 @@ $dss-checkbox-semantic-colors: (
    HOVER STATE
    ========================================================================== */
 
-/*
- * EXCECAO DOCUMENTADA: brightness(0.95)
- *
- * Valor canonico DSS para hover de controles interativos.
- * filter: brightness() ajusta a cor sem alterar a base do componente.
- * Nao existem tokens DSS para brightness.
- *
- * Referencia: CLAUDE.md Principio #8
- * Valores canonicos: 0.85, 0.90, 0.92, 0.95 (light), 1.10, 1.20 (dark)
- */
-.dss-checkbox:not(.dss-checkbox--disabled):hover .dss-checkbox__control {
-  filter: brightness(0.95);
+/* Halo do control no hover e no foco — mesmo recurso do QCheckbox (círculo de
+   currentColor a 12% que cresce sob o cursor) e do DssToggle/DssRadio.
+
+   Substitui o `filter: brightness(0.95)`, que escurecia a caixa inteira: sinal
+   chapado e, na caixa VAZIA (sem preenchimento), praticamente invisível.
+
+   Implementado como SOMBRA (spread = metade do control, dobrando o diâmetro
+   aparente) e não como pseudo-elemento: `::before` é reservado ao touch target
+   pela Constituição, e um `::after` pintaria por CIMA do glifo. */
+.dss-checkbox:not(.dss-checkbox--disabled):hover .dss-checkbox__control,
+.dss-checkbox:not(.dss-checkbox--disabled):focus-within .dss-checkbox__control {
+  box-shadow: 0 0 0 var(--dss-spacing-2_5)
+    color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
 }
 
 /*

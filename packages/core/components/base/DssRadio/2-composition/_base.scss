@@ -99,10 +99,22 @@
 // Indicador de selecao (circulo interno preenchido)
 // Elemento real (nao pseudo-elemento), seguindo padrao DssCheckbox
 // --------------------------------------------------------------------------
+// O ponto e SEMPRE metade do diametro do anel, em todos os tamanhos. O QRadio
+// consegue isso desenhando anel e ponto no MESMO SVG, que escala como unidade e
+// nunca deforma. Aqui a geometria e CSS, entao a razao 1:2 e mantida a mao em
+// cada tamanho — e as duas travas abaixo impedem que ela derive:
+//
+// - `flex-shrink: 0`: o ponto e item de um container flex. Sem isso, qualquer
+//   contexto que aperte o control encolhe a LARGURA e nao a altura, e o circulo
+//   vira ELIPSE.
+// - `aspect-ratio: 1`: garante circulo mesmo se so uma das dimensoes for
+//   resolvida (arredondamento sub-pixel, zoom nao inteiro).
 .dss-radio__dot {
   display: block;
-  width: var(--dss-spacing-2_5); // 10px
+  width: var(--dss-spacing-2_5); // 10px = metade do anel de 20px
   height: var(--dss-spacing-2_5); // 10px
+  flex-shrink: 0;
+  aspect-ratio: 1;
   border-radius: var(--dss-radius-circle);
   background-color: currentColor;
   transition: transform var(--dss-duration-200) var(--dss-easing-standard);
@@ -167,6 +179,13 @@
   .dss-radio__icon {
     font-size: var(--dss-font-size-xs); // 12px
   }
+  /* Halo proporcional: metade do control (8px) */
+  &:not(.dss-radio--disabled):hover .dss-radio__control,
+  &:not(.dss-radio--disabled):focus-within .dss-radio__control {
+    box-shadow: 0 0 0 var(--dss-spacing-2)
+      color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
+  }
+
 }
 
 // --- SM ---
@@ -180,9 +199,12 @@
     height: var(--dss-spacing-5); // 20px
   }
 
+  // Era 8px sobre um anel de 20px (razao 0,40) enquanto TODOS os outros
+  // tamanhos usam 0,50 — o `sm` era o unico fora do padrao, e e a origem do
+  // "ponto pequeno demais" percebido. Agora segue a razao da familia.
   .dss-radio__dot {
-    width: var(--dss-spacing-2); // 8px
-    height: var(--dss-spacing-2); // 8px
+    width: var(--dss-spacing-2_5); // 10px = metade do anel de 20px
+    height: var(--dss-spacing-2_5); // 10px
   }
 
   .dss-radio__icon {
@@ -212,6 +234,13 @@
   .dss-radio__icon {
     font-size: var(--dss-font-size-md); // 16px
   }
+  /* Halo proporcional: metade do control (12px) */
+  &:not(.dss-radio--disabled):hover .dss-radio__control,
+  &:not(.dss-radio--disabled):focus-within .dss-radio__control {
+    box-shadow: 0 0 0 var(--dss-spacing-3)
+      color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
+  }
+
 }
 
 // --- XL ---
@@ -236,6 +265,13 @@
   .dss-radio__icon {
     font-size: var(--dss-font-size-lg); // 18px
   }
+  /* Halo proporcional: metade do control (14px) */
+  &:not(.dss-radio--disabled):hover .dss-radio__control,
+  &:not(.dss-radio--disabled):focus-within .dss-radio__control {
+    box-shadow: 0 0 0 var(--dss-spacing-3_5)
+      color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
+  }
+
 }
 
 // ==========================================================================
@@ -243,9 +279,19 @@
 // ==========================================================================
 
 // --- Hover ---
-// EXCECAO DOCUMENTADA: brightness(0.95) — valor canonico DSS para hover light mode
-.dss-radio:not(.dss-radio--disabled):hover .dss-radio__control {
-  filter: brightness(0.95);
+// Halo do control no hover e no foco — mesmo recurso do QRadio (circulo de
+// currentColor a 12% que cresce sob o dedo/cursor) e do DssToggle.
+//
+// Substitui o `filter: brightness(0.95)`, que escurecia o anel inteiro: sinal
+// chapado, quase invisivel num anel de 2px e sem relacao com o alvo do clique.
+//
+// Implementado como SOMBRA (spread = metade do control, dobrando o diametro
+// aparente) e nao como pseudo-elemento: `::before` e reservado ao touch target
+// pela Constituicao, e um `::after` pintaria por CIMA do ponto interno.
+.dss-radio:not(.dss-radio--disabled):hover .dss-radio__control,
+.dss-radio:not(.dss-radio--disabled):focus-within .dss-radio__control {
+  box-shadow: 0 0 0 var(--dss-spacing-2_5)
+    color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
 }
 
 // --- Active ---
