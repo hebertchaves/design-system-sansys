@@ -37,10 +37,9 @@
   font-size: var(--dss-font-size-sm);
   line-height: var(--dss-line-height-normal);
 
-  /* DSS Visual Standard: cor gray-400 no root define currentColor do track unchecked.
-     Borda do track off: 2px solid gray-400 (M3, Carbon, Lightning).
-     O thumb tem cor explícita (gray-500) definida em .dss-toggle__thumb.
-     A cor primary só aparece no estado CHECKED (via bg-primary text-white no track).
+  /* gray-400 no root é o currentColor do trilho DESLIGADO — o trilho o consome
+     translúcido (40%), então o cinza chapado nunca aparece cru. A cor semântica
+     só entra no estado LIGADO (bloco CORES SEMÂNTICAS).
      Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 11 e 13.7 */
   color: var(--dss-gray-400);
 
@@ -100,9 +99,9 @@
 
 /*
  * Track (trilho) do toggle - elemento decorativo (aria-hidden="true").
- * Dimensoes:
- * - Largura: --dss-spacing-9 (36px) — proporcao 1.8:1 com thumb
- * - Altura: --dss-spacing-5 (20px) — mesma altura do control do checkbox
+ * Dimensoes (md):
+ * - Largura: --dss-spacing-9 (36px)
+ * - Altura: --dss-spacing-3_5 (14px) — MENOR que o thumb (20px), de proposito
  *
  * EXCECAO DOCUMENTADA: border-radius: 9999px
  * Pill shape (totalmente arredondado) e inerente ao componente toggle.
@@ -115,24 +114,31 @@
   align-items: center;
   flex-shrink: 0;
 
-  /* Dimensoes */
+  /* Dimensoes — o trilho é MAIS FINO que o thumb (14px contra 20px, ~1:1,43).
+     É essa diferença que faz o thumb FLUTUAR sobre o trilho em vez de ficar
+     preso dentro de uma cápsula. A altura visual do componente passa a ser a do
+     thumb (20px), que é exatamente a altura do control do DssCheckbox — o
+     alinhamento em linha de formulário se mantém. */
   width: var(--dss-spacing-9); /* 36px */
-  height: var(--dss-spacing-5); /* 20px */
+  height: var(--dss-spacing-3_5); /* 14px */
 
   /* Forma pill */
   border-radius: var(--dss-radius-full);
 
-  /* Bordas */
-  border: var(--dss-border-width-md) solid currentColor;
-
-  /* DSS Visual Standard: track unchecked usa surface-muted para contraste visual.
-     Material 3 usa surface-variant; IBM Carbon usa gray-30.
-     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
-  background-color: var(--dss-surface-muted);
+  /* Trilho TRANSLÚCIDO sobre a cor corrente, sem borda.
+     `opacity` não serve aqui: no DSS o thumb é FILHO do trilho (no Quasar são
+     irmãos), então opacidade no trilho apagaria o thumb junto. `color-mix`
+     resolve a transparência só no fundo. Precedente: DssChip. */
+  background-color: color-mix(
+    in srgb,
+    currentColor calc(var(--dss-opacity-40) * 100%),
+    transparent
+  );
+  border: none;
   color: inherit;
 
   /* Transitions */
-  transition: all var(--dss-duration-200) var(--dss-easing-standard);
+  transition: background-color var(--dss-duration-200) var(--dss-easing-standard);
 }
 
 /* ==========================================================================
@@ -151,28 +157,39 @@
 .dss-toggle__thumb {
   position: absolute;
 
-  /* Dimensoes do thumb - proporcional ao track */
-  width: var(--dss-thumb-size-sm); /* 16px */
-  height: var(--dss-thumb-size-sm); /* 16px */
+  /* Dimensoes do thumb — MAIOR que a altura do trilho (20px contra 14px). */
+  width: var(--dss-thumb-size-md); /* 20px */
+  height: var(--dss-thumb-size-md); /* 20px */
 
   /* Forma circular */
   border-radius: var(--dss-radius-circle);
 
-  /* Fundo unchecked: gray-500 (cinza médio — spec M3/Carbon/Lightning).
-     Estado ON: currentColor do track (white via text-white) sobrescreve via
-     .dss-toggle__track--checked .dss-toggle__thumb abaixo. */
-  background-color: var(--dss-gray-500);
+  /* DESLIGADO: círculo BRANCO com elevação. O contraste vem da sombra, não de
+     um cinza chapado — é o que dá a leitura de "botão que se move sobre o
+     trilho". LIGADO: recebe a cor semântica (bloco CHECKED STATE). */
+  background-color: var(--dss-surface-default);
 
-  /* Posicao inicial - lado esquerdo (unchecked) */
-  left: var(--dss-spacing-0_5); /* 2px offset from edge */
+  /* Elevação. O token já é theme-aware (mais opaco no dark). */
+  box-shadow: var(--dss-shadow-sm);
+
+  /* Posição: encostado na borda do trilho e centrado na vertical — como o thumb
+     é mais alto que o trilho, ele transborda igualmente em cima e embaixo. */
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 
   /* Centraliza o glifo opcional (checkedIcon) dentro do thumb */
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  /* Transitions */
-  transition: left var(--dss-duration-200) var(--dss-easing-standard);
+  /* Transitions: `box-shadow` entra porque o halo de hover é uma sombra
+     adicional (ver HOVER) — assim o halo cresce com a mesma curva do
+     deslocamento. */
+  transition:
+    left var(--dss-duration-200) var(--dss-easing-standard),
+    background-color var(--dss-duration-200) var(--dss-easing-standard),
+    box-shadow var(--dss-duration-200) var(--dss-easing-standard);
 }
 
 /* --------------------------------------------------------------------------
@@ -193,14 +210,12 @@
 
 .dss-toggle__track--checked {
   border-color: currentColor;
-  /* Fundo aplicado via classes utilitarias (.bg-{color}) ou _brands.scss */
+  /* Trilho e thumb ligados recebem cor no bloco CORES SEMÂNTICAS (keyed pela
+     classe de cor do root). Aqui fica só a GEOMETRIA do estado. */
 
-  /* Thumb ON: currentColor herdado do track (text-white via composable = branco).
-     Sobrescreve o var(--dss-gray-500) definido no estado unchecked. */
   .dss-toggle__thumb {
-    background-color: currentColor;
-    /* Move thumb para a direita */
-    left: calc(100% - var(--dss-spacing-4) - var(--dss-spacing-0_5)); /* 36 - 16 - 2 = 18px */
+    /* Move o thumb até encostar na borda direita do trilho. */
+    left: calc(100% - var(--dss-thumb-size-md));
   }
 }
 
@@ -258,20 +273,27 @@ $dss-toggle-semantic-colors: (
 
 @each $name, $color in $dss-toggle-semantic-colors {
   .dss-toggle--#{$name} {
+    /* LIGADO: o trilho fica TRANSLÚCIDO na cor (não sólido) e o thumb fica
+       SÓLIDO na mesma cor. É a inversão em relação ao desligado (trilho cinza
+       translúcido + thumb branco) e o que dá a leitura de "o botão assumiu a
+       cor". Duas intensidades do mesmo tom hierarquizam trilho e thumb sem
+       precisar de um segundo matiz. */
     .dss-toggle__track--checked {
-      background-color: #{$color};
-      border-color: #{$color};
-      color: var(--dss-text-on-primary);
+      background-color: color-mix(
+        in srgb,
+        #{$color} calc(var(--dss-opacity-55) * 100%),
+        transparent
+      );
+      color: #{$color};
 
       .dss-toggle__thumb {
-        background-color: var(--dss-text-on-primary);
+        background-color: #{$color};
       }
     }
 
-    /* keepColor: borda colorida também no DESLIGADO (só a borda, sem preencher —
-       preencher apagaria a distinção ligado × desligado). */
+    /* keepColor: colore o trilho DESLIGADO na cor, mantendo a translucidez
+       baixa — o thumb segue branco, então ligado × desligado continua legível. */
     &.dss-toggle--keep-color .dss-toggle__track:not(.dss-toggle__track--checked) {
-      border-color: #{$color};
       color: #{$color};
     }
   }
@@ -286,23 +308,24 @@ $dss-toggle-semantic-colors: (
  * Aplica cor de erro ao track e label.
  */
 .dss-toggle--error {
-  /* Desligado: só a borda vermelha — o fundo NÃO é preenchido, senão ligado e
-     desligado ficariam indistinguíveis (mesmo invariante do keepColor). */
+  /* Desligado: o trilho assume o vermelho, mas segue translúcido e o thumb
+     segue branco — ligado × desligado continua distinguível. */
   .dss-toggle__track {
-    border-color: var(--dss-feedback-error);
     color: var(--dss-feedback-error);
   }
 
-  /* Ligado: PREENCHE, como qualquer cor semântica. O erro troca a COR do
-     preenchimento — não remove o preenchimento, que é justamente o que comunica
-     "ligado". */
+  /* Ligado: mesma mecânica das cores semânticas — trilho translúcido na cor de
+     erro, thumb SÓLIDO na cor de erro. O erro troca a COR, não o modelo. */
   .dss-toggle__track--checked {
-    background-color: var(--dss-feedback-error);
-    border-color: var(--dss-feedback-error);
-    color: var(--dss-text-on-primary);
+    background-color: color-mix(
+      in srgb,
+      var(--dss-feedback-error) calc(var(--dss-opacity-55) * 100%),
+      transparent
+    );
+    color: var(--dss-feedback-error);
 
     .dss-toggle__thumb {
-      background-color: var(--dss-text-on-primary);
+      background-color: var(--dss-feedback-error);
     }
   }
 
@@ -329,16 +352,22 @@ $dss-toggle-semantic-colors: (
 
   .dss-toggle__track {
     width: var(--dss-spacing-7); /* 28px */
-    height: var(--dss-spacing-4); /* 16px */
+    height: var(--dss-spacing-3); /* 12px — thumb 16px transborda (1:1,33) */
   }
 
   .dss-toggle__thumb {
-    width: var(--dss-thumb-size-xs); /* 12px */
-    height: var(--dss-thumb-size-xs); /* 12px */
+    width: var(--dss-thumb-size-sm); /* 16px */
+    height: var(--dss-thumb-size-sm); /* 16px */
   }
 
   .dss-toggle__track--checked .dss-toggle__thumb {
-    left: calc(100% - var(--dss-spacing-3) - var(--dss-spacing-0_5));
+    left: calc(100% - var(--dss-thumb-size-sm));
+  }
+
+  /* Halo = metade do thumb, para o círculo dobrar de diâmetro (como o QToggle) */
+  &:not(.dss-toggle--disabled):hover .dss-toggle__thumb,
+  &:not(.dss-toggle--disabled):focus-within .dss-toggle__thumb {
+    box-shadow: var(--dss-shadow-sm), 0 0 0 var(--dss-spacing-2) color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
   }
 }
 
@@ -349,16 +378,16 @@ $dss-toggle-semantic-colors: (
 
   .dss-toggle__track {
     width: var(--dss-spacing-8); /* 32px */
-    height: var(--dss-spacing-5); /* 20px */
+    height: var(--dss-spacing-3_5); /* 14px — thumb 20px transborda (1:1,43) */
   }
 
   .dss-toggle__thumb {
-    width: var(--dss-thumb-size-sm); /* 16px */
-    height: var(--dss-thumb-size-sm); /* 16px */
+    width: var(--dss-thumb-size-md); /* 20px */
+    height: var(--dss-thumb-size-md); /* 20px */
   }
 
   .dss-toggle__track--checked .dss-toggle__thumb {
-    left: calc(100% - var(--dss-thumb-size-sm) - var(--dss-spacing-0_5));
+    left: calc(100% - var(--dss-thumb-size-md));
   }
 }
 
@@ -373,16 +402,21 @@ $dss-toggle-semantic-colors: (
 
   .dss-toggle__track {
     width: var(--dss-spacing-11); /* 44px */
-    height: var(--dss-spacing-6); /* 24px */
+    height: var(--dss-spacing-4); /* 16px — thumb 24px transborda (1:1,5) */
   }
 
   .dss-toggle__thumb {
-    width: var(--dss-thumb-size-md); /* 20px */
-    height: var(--dss-thumb-size-md); /* 20px */
+    width: var(--dss-thumb-size-lg); /* 24px */
+    height: var(--dss-thumb-size-lg); /* 24px */
   }
 
   .dss-toggle__track--checked .dss-toggle__thumb {
-    left: calc(100% - var(--dss-thumb-size-md) - var(--dss-spacing-0_5));
+    left: calc(100% - var(--dss-thumb-size-lg));
+  }
+
+  &:not(.dss-toggle--disabled):hover .dss-toggle__thumb,
+  &:not(.dss-toggle--disabled):focus-within .dss-toggle__thumb {
+    box-shadow: var(--dss-shadow-sm), 0 0 0 var(--dss-spacing-3) color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
   }
 }
 
@@ -400,16 +434,21 @@ $dss-toggle-semantic-colors: (
        ideal seria 50px — que NÃO existe na escala (ela pula de 48 para 56).
        Entre encaixar no token e cravar 50px, a Constituição #1 manda encaixar. */
     width: var(--dss-spacing-12); /* 48px */
-    height: var(--dss-spacing-7); /* 28px */
+    height: var(--dss-spacing-5); /* 20px — thumb 28px transborda (1:1,4) */
   }
 
   .dss-toggle__thumb {
-    width: var(--dss-thumb-size-lg); /* 24px */
-    height: var(--dss-thumb-size-lg); /* 24px */
+    width: var(--dss-spacing-7); /* 28px — a escala de thumb pula 24→32 */
+    height: var(--dss-spacing-7); /* 28px */
   }
 
   .dss-toggle__track--checked .dss-toggle__thumb {
-    left: calc(100% - var(--dss-thumb-size-lg) - var(--dss-spacing-0_5));
+    left: calc(100% - var(--dss-spacing-7));
+  }
+
+  &:not(.dss-toggle--disabled):hover .dss-toggle__thumb,
+  &:not(.dss-toggle--disabled):focus-within .dss-toggle__thumb {
+    box-shadow: var(--dss-shadow-sm), 0 0 0 var(--dss-spacing-3_5) color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
   }
 
   .dss-toggle__icon {
@@ -442,17 +481,27 @@ $dss-toggle-semantic-colors: (
    ========================================================================== */
 
 /*
- * EXCECAO DOCUMENTADA: brightness(0.95)
+ * Halo do thumb no hover e no foco.
  *
- * Valor canonico DSS para hover de controles interativos.
- * filter: brightness() ajusta a cor sem alterar a base do componente.
- * Nao existem tokens DSS para brightness.
+ * Substitui o `filter: brightness(0.95)` que existia aqui: escurecer o trilho
+ * inteiro é um sinal chapado e some quando o trilho já é translúcido. O halo
+ * responde NO THUMB, que é o elemento que o usuário mira.
  *
- * Referencia: CLAUDE.md Principio #8
- * Valores canonicos: 0.85, 0.90, 0.92, 0.95 (light), 1.10, 1.20 (dark)
+ * Implementado como SOMBRA ADICIONAL (spread = metade do thumb, dobrando o
+ * diâmetro aparente) e não como pseudo-elemento: `::before` é reservado ao
+ * touch target pela Constituição, e um `::after` dentro do thumb pintaria por
+ * CIMA do próprio thumb — precisaria de z-index negativo e contexto de
+ * empilhamento. A sombra resolve sem nada disso, e ainda anima junto com a
+ * elevação já existente.
+ *
+ * `:focus-within` cobre o foco por teclado: o input nativo é filho do root.
  */
-.dss-toggle:not(.dss-toggle--disabled):hover .dss-toggle__track {
-  filter: brightness(0.95);
+.dss-toggle:not(.dss-toggle--disabled):hover .dss-toggle__thumb,
+.dss-toggle:not(.dss-toggle--disabled):focus-within .dss-toggle__thumb {
+  box-shadow:
+    var(--dss-shadow-sm),
+    0 0 0 var(--dss-spacing-2_5)
+      color-mix(in srgb, currentColor calc(var(--dss-opacity-10) * 100%), transparent);
 }
 
 /*

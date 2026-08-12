@@ -56,15 +56,24 @@
     opacity: var(--dss-opacity-disabled);
   }
 
-  /* Error state em dark mode */
+  /* O thumb DESLIGADO continua CLARO no dark.
+     `--dss-surface-default` inverte para #262626 no tema escuro, e o círculo
+     sumiria contra o fundo — pior ainda, ficaria mais escuro que o próprio
+     trilho translúcido. O thumb é um "botão" que corre sobre o trilho, não uma
+     superfície de página: no QToggle ele também permanece branco nos dois
+     temas. Primitivo de cinza aqui é o mesmo recurso que o root já usa
+     (gray-400) — não há semântico para "superfície que não inverte". */
+  .dss-toggle__track:not(.dss-toggle__track--checked) .dss-toggle__thumb {
+    background-color: var(--dss-gray-50);
+  }
+
   /* Erro em dark: vermelho CLARO nos elementos que ficam SOBRE o fundo escuro
-     (borda do track desligado, label, mensagem). O track LIGADO fica de fora do
-     clareamento de propósito: é superfície preenchida, carrega o próprio fundo,
-     e mantém o vermelho forte com thumb branco — mesma lógica que faz o dark não
-     clarear o fill de `--dss-action-primary`. */
+     (trilho DESLIGADO, label, mensagem). O trilho LIGADO fica de fora do
+     clareamento de propósito: ele e o thumb carregam a cor de erro cheia, e é
+     o par trilho-translúcido × thumb-sólido que comunica o estado — mesma
+     lógica que faz o dark não clarear a cor de `--dss-action-primary`. */
   .dss-toggle--error {
     .dss-toggle__track:not(.dss-toggle__track--checked) {
-      border-color: var(--dss-feedback-error-light);
       color: var(--dss-feedback-error-light);
     }
 
@@ -93,8 +102,10 @@
  */
 @media (prefers-contrast: more) {
   .dss-toggle__track {
-    /* Bordas mais visiveis em high contrast */
-    border-width: var(--dss-border-width-thick);
+    /* O trilho default é translúcido e SEM borda — em alto contraste isso é
+       pouco. Aqui ele recebe borda de verdade: `border-width` sozinho seria
+       inerte, porque sem `border-style` o navegador não desenha nada. */
+    border: var(--dss-border-width-thick) solid currentColor;
   }
 
   /* Focus ring mais forte */

@@ -373,7 +373,7 @@ background-color: var(--dss-hub-primary);
 | checked-icon | Sim | **Sim** (`checkedIcon`) | Aditivo: sem a prop o thumb segue liso; com ela, o glifo aparece dentro do thumb quando ligado |
 | unchecked-icon | Sim | Nao | Desligado permanece sem glifo — mesma decisao do DssCheckbox e do DssRadio |
 | toggle-order | Sim | Nao | Nao aplicavel |
-| keep-color | Sim | **Sim** (`keepColor`) | Escape hatch opt-in. Colore apenas a BORDA do track no desligado; o fundo segue `--dss-surface-muted` para nao apagar a distincao ligado x desligado |
+| keep-color | Sim | **Sim** (`keepColor`) | Escape hatch opt-in. Colore o trilho no desligado mantendo a translucidez baixa (40%) e o thumb branco; no ligado o trilho vai a 55% e o thumb fica solido na cor — a distincao ligado x desligado nao depende so do matiz |
 | tabindex | Sim | Sim | Igual |
 
 ---

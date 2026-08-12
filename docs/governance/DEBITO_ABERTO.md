@@ -251,6 +251,29 @@
   `dss.contract.json` (derivado do SCSS, versionado → aparece no diff) e a verificação visual. Isso
   reforça o item do eixo visual acima: ele não é redundante com os testes, cobre o que eles não alcançam.
 
+- 🟡 **Contrato visual do DssToggle MUDOU** (2026-08-12) — reformulação aprovada pelo dono para alcançar a
+  qualidade visual do QToggle **com tokens DSS**. Fonte: `node_modules/quasar/src/components/toggle/QToggle.sass`
+  (v2.19.3), lida direto em vez do site. O que mudou:
+  - **Proporção:** o thumb passou a ser MAIOR que a espessura do trilho (md: 20px sobre 14px, 1:1,43 — a
+    razão exata do Quasar). Antes era 16px dentro de um trilho de 20px. Vale nas 5 variantes (1,33–1,50).
+    A altura visual do componente virou a do thumb, que coincide com o control do DssCheckbox → o
+    alinhamento em linha de formulário se preservou.
+  - **Trilho:** de sólido `surface-muted` + borda 2px para **translúcido** via `color-mix` (40% desligado,
+    55% ligado), sem borda. `opacity` não serviria: no DSS o thumb é FILHO do trilho (no Quasar são irmãos).
+  - **Thumb:** ganhou elevação (`--dss-shadow-sm`) e **inverteu a lógica de cor** — branco no desligado,
+    sólido na cor no ligado (antes: cinza no desligado, branco no ligado).
+  - **Hover:** o `filter: brightness(0.95)` no trilho saiu; entrou halo no THUMB (anel translúcido de meio
+    thumb via `box-shadow`, dobrando o diâmetro aparente). Feito com sombra e não com pseudo-elemento
+    porque `::before` é reservado ao touch target e um `::after` pintaria por cima do próprio thumb.
+  - ⚠️ **`4-output/_brands.scss` do Toggle foi esvaziado** (o arquivo permanece pela arquitetura de 4
+    camadas). As regras de lá pintavam o trilho SÓLIDO e, por especificidade, venciam a L2 nova — além de
+    cobrirem só 3 das 8 cores. A cor de marca já chega pela L2 via `--dss-action-*`, que é brand-aware.
+    **O mesmo esvaziamento cabe em DssCheckbox e DssRadio** (lá é só redundância, não conflito) — pendente.
+  - 🔍 **`DSS_VISUAL_DEFAULTS_STANDARD.md` NÃO EXISTE** e é citado como autoridade em 4 arquivos SCSS
+    (DssButton ×3, DssToggle ×1). O `PROMPT_DIRECIONADOR_CONSOLIDACAO_CONTRATO_VISUAL.md` previa mesclá-lo
+    no canônico e arquivar, e a referência ficou pendurada. **Decidir:** recriar, ou reapontar as 4 citações
+    para o doc que absorveu o conteúdo.
+
 ## Verificar (pode já estar resolvido)
 
 - 🔍 **`DssResponsive`** — lista scope-props do slot default como slots (baixa prioridade). Mesmo arquivo.

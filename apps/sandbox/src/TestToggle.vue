@@ -49,7 +49,7 @@
 
     <!-- ── 04. keepColor ───────────────────────────────────────────────── -->
     <PgSection id="keepcolor" index="04" title="keepColor (escape hatch)" :count="4"
-      desc="No toggle o keepColor colore SÓ A BORDA do track no estado desligado — o fundo segue surface-muted e o thumb segue cinza. É deliberado: preencher o track no desligado tornaria ligado e desligado indistinguíveis.">
+      desc="No toggle o keepColor colore o trilho no estado desligado mantendo a translucidez baixa (40%) e o thumb branco. No ligado o trilho vai a 55% e o thumb fica sólido na cor — é o par translucidez × solidez que distingue os dois estados, não o matiz sozinho.">
       <PgGrid>
         <PgTile code="padrão · desligado">
           <DssToggle v-model="m.kcOffA" label="Track cinza" />
@@ -58,7 +58,7 @@
           <DssToggle v-model="m.kcOffB" label="Borda colorida, fundo muted" keep-color />
         </PgTile>
         <PgTile code="keep-color · ligado">
-          <DssToggle v-model="m.kcOn" label="Ligado (pílula cheia)" keep-color />
+          <DssToggle v-model="m.kcOn" label="Ligado (trilho 55% + thumb sólido)" keep-color />
         </PgTile>
         <PgTile code="keep-color + error (erro vence)">
           <DssToggle v-model="m.kcErr" label="Erro tem prioridade" keep-color error />
