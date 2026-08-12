@@ -274,6 +274,24 @@
     no canônico e arquivar, e a referência ficou pendurada. **Decidir:** recriar, ou reapontar as 4 citações
     para o doc que absorveu o conteúdo.
 
+- 🟡 **Meio pixel: `line-height` sem unidade gera altura FRACIONADA e desalinha controle circular**
+  (achado 2026-08-12, investigando "o ponto do DssRadio está torto"). **A geometria do componente estava
+  exata** — a 5× de zoom os círculos são concêntricos e redondos em todos os tamanhos, e o ponto centra em
+  offsets inteiros. O artefato era de **rasterização**: a página do playground posicionava as linhas em
+  Y fracionado (`.875` numa seção, `.188` noutra), e círculo em meio pixel antialiasa torto. Isso explica a
+  anomalia que abriu o caso: SM e MD têm o MESMO tamanho e pareciam diferentes — estavam em **fases
+  sub-pixel diferentes**.
+  - **Origem:** `line-height: 1.2` hardcoded no `pg-section__title` (16px × 1,2 = 19,2px). A fração subia
+    pelo cabeçalho da seção e empurrava tudo abaixo. Corrigido para `--dss-line-height-tight` (1,25 → 20px):
+    os 86 controles da página passaram de **todos** fracionados para **zero**.
+  - ⚠️ **O problema é sistêmico, não do sandbox.** Vários pares token×tamanho do próprio DSS dão altura
+    fracionada — `xs`(1,4)×16px = 22,4 · `sm`(1,45)×14px = 20,3 · `lg`(1,55)×16px = 24,8 · `xl`(1,6)×16px =
+    25,6 · `tight`(1,25)×14px = 17,5 · `snug`(1,375)×14px = 19,25. Onde isso cair acima de um radio/toggle,
+    o círculo volta a rasterizar torto. **Só `--dss-line-height-normal` (1,5) é seguro em toda a escala de
+    fontes** (12/14/16/20/24 → todos inteiros).
+  - **Decisão pendente:** ajustar a escala de line-height para valores que fechem inteiro nas font-sizes
+    canônicas, ou aceitar e documentar como limite conhecido. Não é gate-ável por grep — só medindo layout.
+
 ## Verificar (pode já estar resolvido)
 
 - 🔍 **`DssResponsive`** — lista scope-props do slot default como slots (baixa prioridade). Mesmo arquivo.

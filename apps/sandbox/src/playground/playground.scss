@@ -349,7 +349,12 @@
 }
 .pg-section__title {
   margin: 0; font-size: var(--dss-font-size-md);
-  font-weight: var(--dss-font-weight-semibold); line-height: 1.2;
+  /* line-height era 1.2 HARDCODED: 16px x 1.2 = 19,2px, altura FRACIONADA.
+     A fração subia pelo cabeçalho da seção e empurrava tudo abaixo para meio
+     pixel — e círculo (radio, thumb do toggle) em meio pixel rasteriza torto.
+     O token tight (1.25) dá 20px inteiros e ainda cumpre Token First. */
+  font-weight: var(--dss-font-weight-semibold);
+  line-height: var(--dss-line-height-tight);
   color: var(--pg-accent);
 }
 .pg-section__desc {
