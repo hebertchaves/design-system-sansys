@@ -78,7 +78,19 @@ describe('DssToggle', () => {
         expect(wrapper.classes()).toContain('dss-toggle--dense')
       })
 
-      it('applies left-label class', () => {
+      // O erro troca a COR do preenchimento, nao remove o preenchimento: LIGADO em
+    // erro precisa continuar sendo uma pilula CHEIA com thumb branco. Sem a
+    // classe de estado o SCSS nao tem como pintar o fill.
+    it('keeps the checked track class when in error (fill is preserved)', () => {
+      const wrapper = mount(DssToggle, {
+        props: { error: true, modelValue: true }
+      })
+      const track = wrapper.find('.dss-toggle__track')
+      expect(track.classes()).toContain('dss-toggle__track--checked')
+      expect(wrapper.classes()).toContain('dss-toggle--error')
+    })
+
+    it('applies left-label class', () => {
         const wrapper = mount(DssToggle, {
           props: { leftLabel: true, label: 'Left' }
         })

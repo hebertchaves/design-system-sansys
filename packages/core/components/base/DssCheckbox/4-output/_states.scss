@@ -57,10 +57,17 @@
     opacity: var(--dss-opacity-disabled);
   }
 
-  /* Erro em dark: vermelho CLARO, legível sobre fundo escuro (paridade
-     DssRadio/DssToggle). */
+  /* Erro em dark: vermelho CLARO nos elementos que ficam SOBRE o fundo escuro
+     (stroke da caixa vazia, label, mensagem) — é ali que o vermelho forte perde
+     legibilidade.
+
+     O controle MARCADO fica de fora do clareamento de propósito: ele é uma
+     superfície preenchida, carrega o próprio fundo, e por isso mantém o
+     vermelho forte com glifo branco. Mesma lógica que faz o dark NÃO clarear o
+     fill de `--dss-action-primary`. Clarear aqui daria glifo branco sobre rosa
+     claro — contraste pior, não melhor. */
   .dss-checkbox--error {
-    .dss-checkbox__control {
+    .dss-checkbox__control:not(.dss-checkbox__control--checked):not(.dss-checkbox__control--indeterminate) {
       border-color: var(--dss-feedback-error-light);
       color: var(--dss-feedback-error-light);
     }

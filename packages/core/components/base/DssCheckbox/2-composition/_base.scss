@@ -236,9 +236,26 @@ $dss-checkbox-semantic-colors: (
    ========================================================================== */
 
 .dss-checkbox--error {
+  /* Desmarcado: só o stroke vermelho (a caixa vazia continua vazia). */
   .dss-checkbox__control {
     border-color: var(--dss-feedback-error);
     color: var(--dss-feedback-error);
+  }
+
+  /* Marcado/indeterminado: PREENCHE, exatamente como qualquer cor semântica.
+     O erro troca a COR do preenchimento — não remove o preenchimento. É o fill
+     que comunica "marcado"; sem ele o estado marcado vira um contorno com glifo
+     vermelho, indistinguível de um desmarcado em erro. */
+  .dss-checkbox__control--checked,
+  .dss-checkbox__control--indeterminate {
+    background-color: var(--dss-feedback-error);
+    border-color: var(--dss-feedback-error);
+    color: var(--dss-text-on-primary);
+
+    .dss-checkbox__check,
+    .dss-checkbox__dash {
+      color: var(--dss-text-on-primary);
+    }
   }
 
   .dss-checkbox__label {

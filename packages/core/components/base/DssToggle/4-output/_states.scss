@@ -57,8 +57,13 @@
   }
 
   /* Error state em dark mode */
+  /* Erro em dark: vermelho CLARO nos elementos que ficam SOBRE o fundo escuro
+     (borda do track desligado, label, mensagem). O track LIGADO fica de fora do
+     clareamento de propósito: é superfície preenchida, carrega o próprio fundo,
+     e mantém o vermelho forte com thumb branco — mesma lógica que faz o dark não
+     clarear o fill de `--dss-action-primary`. */
   .dss-toggle--error {
-    .dss-toggle__track {
+    .dss-toggle__track:not(.dss-toggle__track--checked) {
       border-color: var(--dss-feedback-error-light);
       color: var(--dss-feedback-error-light);
     }

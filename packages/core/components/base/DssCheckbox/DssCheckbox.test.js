@@ -601,6 +601,26 @@ describe('DssCheckbox', () => {
         expect(wrapper.classes()).not.toContain(`dss-checkbox--${color}`)
       }
     })
+
+    // O erro troca a COR do preenchimento, nao remove o preenchimento: marcado
+    // em erro precisa continuar sendo uma caixa CHEIA com glifo branco. Sem a
+    // classe de estado o SCSS nao tem como pintar o fill.
+    it('keeps the checked state class when in error (fill is preserved)', () => {
+      const wrapper = mount(DssCheckbox, {
+        props: { error: true, modelValue: true }
+      })
+      const control = wrapper.find('.dss-checkbox__control')
+      expect(control.classes()).toContain('dss-checkbox__control--checked')
+      expect(wrapper.classes()).toContain('dss-checkbox--error')
+    })
+
+    it('keeps the indeterminate state class when in error', () => {
+      const wrapper = mount(DssCheckbox, {
+        props: { error: true, modelValue: null }
+      })
+      const control = wrapper.find('.dss-checkbox__control')
+      expect(control.classes()).toContain('dss-checkbox__control--indeterminate')
+    })
   })
 
   // ===========================================================================

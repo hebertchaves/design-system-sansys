@@ -286,10 +286,26 @@ $dss-toggle-semantic-colors: (
  * Aplica cor de erro ao track e label.
  */
 .dss-toggle--error {
+  /* Desligado: só a borda vermelha — o fundo NÃO é preenchido, senão ligado e
+     desligado ficariam indistinguíveis (mesmo invariante do keepColor). */
   .dss-toggle__track {
     border-color: var(--dss-feedback-error);
     color: var(--dss-feedback-error);
   }
+
+  /* Ligado: PREENCHE, como qualquer cor semântica. O erro troca a COR do
+     preenchimento — não remove o preenchimento, que é justamente o que comunica
+     "ligado". */
+  .dss-toggle__track--checked {
+    background-color: var(--dss-feedback-error);
+    border-color: var(--dss-feedback-error);
+    color: var(--dss-text-on-primary);
+
+    .dss-toggle__thumb {
+      background-color: var(--dss-text-on-primary);
+    }
+  }
+
   .dss-toggle__label {
     color: var(--dss-feedback-error);
   }
