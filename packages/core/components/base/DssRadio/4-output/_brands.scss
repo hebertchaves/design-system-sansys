@@ -1,85 +1,31 @@
-// ==========================================================================
-// DssRadio — Layer 4: Output / Brands
-// Design System Sansys v2.2
-//
-// Cores de marca Sansys: Hub (laranja), Water (azul), Waste (verde).
-// Aplicadas via [data-brand] no contexto ou diretamente no componente.
-//
-// Golden Context: DssCheckbox (4-output/_brands.scss)
-// ==========================================================================
+/* ==========================================================================
+   DssRadio - LAYER 4: OUTPUT (Brands)
 
-// --------------------------------------------------------------------------
-// Mixin: cores de brand para radio
-// Evita duplicacao para 3 brands x N cores
-// --------------------------------------------------------------------------
-// Excecao: com .dss-radio--keep-color (escape hatch opt-in), o stroke do control
-// DESMARCADO tambem recebe a cor de brand — so a borda, sem preencher o interior.
-// Deve satisfazer 3:1 (WCAG 1.4.11) por brand x tema.
-@mixin radio-brand-colors() {
-  // --- Primary ---
-  &.dss-radio--primary {
-    .dss-radio__control--checked {
-      border-color: var(--dss-action-primary);
-      color: var(--dss-action-primary);
-    }
+   RESPONSABILIDADE: Estilos especificos por marca (Hub, Water, Waste)
 
-    .dss-radio__dot {
-      background-color: var(--dss-action-primary);
-    }
+   ESTA CAMADA NAO PINTA MAIS COR — E INTENCIONAL.
 
-    // keepColor: stroke de brand tambem no repouso (desmarcado)
-    &.dss-radio--keep-color .dss-radio__control {
-      border-color: var(--dss-action-primary);
-    }
-  }
+   As regras que viviam aqui repetiam, escopadas em `[data-brand]`, o que a L2
+   ja faz. Duas razoes para remover:
 
-  // --- Secondary ---
-  &.dss-radio--secondary {
-    .dss-radio__control--checked {
-      border-color: var(--dss-action-secondary);
-      color: var(--dss-action-secondary);
-    }
+   1. REDUNDANTE. A cor da L2 sai de `--dss-action-*`, que JA e brand-aware: sob
+      `[data-brand]` resolve para a cor da marca, e sem marca cai no valor
+      semantico. O mesmo CSS serve o caminho da PROP e o do contexto GLOBAL.
+      Alem disso, a L2 cobre as 8 cores semanticas; aqui so havia 3.
 
-    .dss-radio__dot {
-      background-color: var(--dss-action-secondary);
-    }
+   2. PARTE JA ERA INERTE. Declaracoes de `border-color` deixaram de ter efeito
+      quando o anel/caixa passou a ser desenhado por outro mecanismo — ficavam
+      no arquivo dando impressao de cobertura que nao existia.
 
-    // keepColor: stroke de brand tambem no repouso (desmarcado)
-    &.dss-radio--keep-color .dss-radio__control {
-      border-color: var(--dss-action-secondary);
-    }
-  }
+   O arquivo permanece porque a arquitetura de 4 camadas e obrigatoria e porque
+   e aqui que entraria qualquer ajuste que dependa da MARCA em si (nao da cor de
+   acao). Hoje nao ha nenhum. Mesmo tratamento aplicado ao DssToggle.
 
-  // --- Accent ---
-  &.dss-radio--accent {
-    .dss-radio__control--checked {
-      border-color: var(--dss-action-accent);
-      color: var(--dss-action-accent);
-    }
+   Ver: 2-composition/_base.scss, bloco "CORES SEMANTICAS".
 
-    .dss-radio__dot {
-      background-color: var(--dss-action-accent);
-    }
+   CENARIOS SUPORTADOS (ambos pela L2, sem regra propria aqui):
+   1. Brand via contexto (ancestral): <div data-brand="hub"><DssRadio /></div>
+   2. Brand via prop (mesmo elemento): <DssRadio brand="hub" />
+   ========================================================================== */
 
-    // keepColor: stroke de brand tambem no repouso (desmarcado)
-    &.dss-radio--keep-color .dss-radio__control {
-      border-color: var(--dss-action-accent);
-    }
-  }
-}
-
-// --------------------------------------------------------------------------
-// Aplicacao: via contexto [data-brand] no wrapper
-// --------------------------------------------------------------------------
-[data-brand] {
-  .dss-radio {
-    @include radio-brand-colors();
-  }
-}
-
-// --------------------------------------------------------------------------
-// Aplicacao: via data-brand diretamente no componente
-// --------------------------------------------------------------------------
-.dss-radio[data-brand] {
-  @include radio-brand-colors();
-}
+/* Sem regras de cor: a cor de marca chega via --dss-action-* na L2. */

@@ -1,98 +1,31 @@
 /* ==========================================================================
    DssCheckbox - LAYER 4: OUTPUT (Brands)
 
-   RESPONSABILIDADE: Estilos especificos para cada marca (Hub, Water, Waste)
+   RESPONSABILIDADE: Estilos especificos por marca (Hub, Water, Waste)
 
-   REGRAS:
-   - Usa tokens de marca (--dss-{brand}-*)
-   - Aplicado via atributo data-brand (contexto ou prop)
-   - NAO sobrescreve logica de estados
-   - Cores aplicadas ao .dss-checkbox__control quando checked/indeterminate.
-     Excecao: com .dss-checkbox--keep-color (escape hatch opt-in), o stroke do
-     control DESMARCADO tambem recebe a cor de brand — so a borda, sem preencher
-     o fundo. Deve satisfazer 3:1 (WCAG 1.4.11) por brand x tema.
+   ESTA CAMADA NAO PINTA MAIS COR — E INTENCIONAL.
 
-   CENARIOS SUPORTADOS:
+   As regras que viviam aqui repetiam, escopadas em `[data-brand]`, o que a L2
+   ja faz. Duas razoes para remover:
+
+   1. REDUNDANTE. A cor da L2 sai de `--dss-action-*`, que JA e brand-aware: sob
+      `[data-brand]` resolve para a cor da marca, e sem marca cai no valor
+      semantico. O mesmo CSS serve o caminho da PROP e o do contexto GLOBAL.
+      Alem disso, a L2 cobre as 8 cores semanticas; aqui so havia 3.
+
+   2. PARTE JA ERA INERTE. Declaracoes de `border-color` deixaram de ter efeito
+      quando o anel/caixa passou a ser desenhado por outro mecanismo — ficavam
+      no arquivo dando impressao de cobertura que nao existia.
+
+   O arquivo permanece porque a arquitetura de 4 camadas e obrigatoria e porque
+   e aqui que entraria qualquer ajuste que dependa da MARCA em si (nao da cor de
+   acao). Hoje nao ha nenhum. Mesmo tratamento aplicado ao DssToggle.
+
+   Ver: 2-composition/_base.scss, bloco "CORES SEMANTICAS".
+
+   CENARIOS SUPORTADOS (ambos pela L2, sem regra propria aqui):
    1. Brand via contexto (ancestral): <div data-brand="hub"><DssCheckbox /></div>
    2. Brand via prop (mesmo elemento): <DssCheckbox brand="hub" />
-
-   GOLDEN COMPONENT: DssChip - mesmo padrao de brand mixins
    ========================================================================== */
 
-/* ==========================================================================
-   MIXINS PARA EVITAR DUPLICACAO
-   ========================================================================== */
-
-@mixin checkbox-brand-colors() {
-  /* Primary */
-  &.dss-checkbox--primary {
-    .dss-checkbox__control--checked,
-    .dss-checkbox__control--indeterminate {
-      background-color: var(--dss-action-primary);
-      border-color: var(--dss-action-primary);
-      color: var(--dss-text-on-primary);
-
-      .dss-checkbox__check,
-      .dss-checkbox__dash {
-        color: var(--dss-text-on-primary);
-      }
-    }
-
-    /* keepColor: stroke de brand tambem no repouso (desmarcado), so a borda */
-    &.dss-checkbox--keep-color .dss-checkbox__control {
-      border-color: var(--dss-action-primary);
-    }
-  }
-
-  /* Secondary */
-  &.dss-checkbox--secondary {
-    .dss-checkbox__control--checked,
-    .dss-checkbox__control--indeterminate {
-      background-color: var(--dss-action-secondary);
-      border-color: var(--dss-action-secondary);
-      color: var(--dss-text-on-primary);
-
-      .dss-checkbox__check,
-      .dss-checkbox__dash {
-        color: var(--dss-text-on-primary);
-      }
-    }
-
-    /* keepColor: stroke de brand tambem no repouso (desmarcado), so a borda */
-    &.dss-checkbox--keep-color .dss-checkbox__control {
-      border-color: var(--dss-action-secondary);
-    }
-  }
-
-  /* Accent */
-  &.dss-checkbox--accent {
-    .dss-checkbox__control--checked,
-    .dss-checkbox__control--indeterminate {
-      background-color: var(--dss-action-accent);
-      border-color: var(--dss-action-accent);
-      color: var(--dss-text-on-primary);
-
-      .dss-checkbox__check,
-      .dss-checkbox__dash {
-        color: var(--dss-text-on-primary);
-      }
-    }
-
-    /* keepColor: stroke de brand tambem no repouso (desmarcado), so a borda */
-    &.dss-checkbox--keep-color .dss-checkbox__control {
-      border-color: var(--dss-action-accent);
-    }
-  }
-}
-
-/* ==========================================================================
-   Aplicação (qualquer marca). O mixin virou brand-agnóstico (usa --dss-action-*,
-   que já resolve por marca), então os 3 blocos hub/water/waste eram idênticos →
-   colapsados em um único [data-brand]. Cenario 1 (contexto ancestral) + Cenario 2
-   (prop no próprio elemento).
-   ========================================================================== */
-
-[data-brand] .dss-checkbox,
-.dss-checkbox[data-brand] {
-  @include checkbox-brand-colors();
-}
+/* Sem regras de cor: a cor de marca chega via --dss-action-* na L2. */

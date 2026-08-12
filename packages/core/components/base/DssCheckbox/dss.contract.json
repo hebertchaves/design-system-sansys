@@ -475,19 +475,19 @@
           "property": "background-color",
           "token": "--dss-action-primary",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "border-color",
           "token": "--dss-action-primary",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
           "token": "--dss-text-on-primary",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
@@ -499,13 +499,13 @@
           "property": "background-color",
           "token": "--dss-action-secondary",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "border-color",
           "token": "--dss-action-secondary",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
@@ -535,13 +535,13 @@
           "property": "background-color",
           "token": "--dss-action-accent",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "border-color",
           "token": "--dss-action-accent",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",

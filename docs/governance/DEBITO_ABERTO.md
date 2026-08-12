@@ -324,7 +324,37 @@
   DssFile, + Preview Frames Textarea/Field e seletor de ícone no sandbox. Gates verdes, testes 5/5.
   Reviewer `@joao-henrique.vieira`; aguardando review + CI.
 
-- ⏳ **Família Controles de Seleção** (branch `work/dss-selection-controls`, NÃO empurrado ainda).
+- ✅ **Família Controles de Seleção — FECHADA** (2026-08-12, branch `work/dss-selection-controls`).
+  Fechamento em duas ondas: **paridade de API** (jul/ago) e **qualidade visual** (ago/12), esta última
+  disparada pela comparação com os controles do Quasar. Gates no fechamento: vitest 222/222 nos três ·
+  SCSS compila · `--all --strict` exit 0 (78) · api-docs 0 divergência · type-check 0 · tokens fantasma 0 ·
+  estrutura 91/91 · barrels · variant-naming · field-conventions. Os três têm página Playground e
+  Preview Frame (o eixo visual que o checklist exige).
+  - **Correções de contrato:** `modelValue` passou a admitir os valores de `trueValue`/`falseValue`
+    (`17715e9`) · `leftLabel` voltou a funcionar no Radio e no Toggle — dupla-inversão template×CSS
+    (`64cf911`) · dark mode passou a seguir `[data-theme]` e não `prefers-color-scheme` (`14a8b37`) ·
+    `error` implementado no Checkbox, que não tinha a prop (`bd772c6`) · erro passou a PREENCHER em vez de
+    só contornar (`485a744`).
+  - **Cor brand-aware** (`6bdcc92`): a cor saiu das utilities do Quasar (não brand-aware e `!important`
+    em layer) para o SCSS do DSS com `--dss-action-*`. Sob brand GLOBAL o fundo ficava azul fixo com ícone
+    laranja. Consequência: **`4-output/_brands.scss` dos TRÊS ficou sem regras de cor** — era redundante
+    (a L2 já resolve as 8 cores nos dois caminhos) e em parte inerte. Os arquivos permanecem pela
+    arquitetura de 4 camadas.
+  - **Qualidade visual** (`c04d42b`, `43a22f1`, `e489846`): Toggle reformulado com as proporções do
+    QToggle (thumb maior que o trilho, trilho translúcido, elevação, halo, thumb branco↔colorido) ·
+    halo de hover/foco no Checkbox e no Radio no lugar do `brightness(0.95)` chapado · Radio com
+    **geometria proporcional** — anel 8,3%, ponto 50%, folga 16,7% em todos os tamanhos, as mesmas razões
+    do SVG do QRadio.
+  - 🔍 **Aprendizados que valem para os próximos componentes** (não são débito deste, são método):
+    - Teste que asserta PROXY (classe aplicada) passa com a feature quebrada — asserte o resultado.
+    - `border-width` é arredondado para pixel inteiro pelo navegador; espessura fracionada exige
+      `box-shadow: inset`.
+    - Proporção que não escala junto (borda fixa contra dimensão variável) faz cada tamanho virar um
+      desenho diferente — foi o defeito real do Radio, e o mesmo risco existe em qualquer componente com
+      borda fixa e 5 tamanhos.
+    - Medir contra o elemento pai esconde deslocamento absoluto; medir a fração da posição na tela.
+
+- ⏳ **Histórico da família (contexto das decisões acima)** (branch `work/dss-selection-controls`).
   **DssCheckbox fechado** (4 commits `816ed41`→`fba32a2`): leftLabel (dupla-inversão template×CSS),
   example §12 (estado inicial vazio→variedade), `defineExpose(focus/blur/toggle/inputRef)` (paridade
   campo), Preview Frame nascia indeterminate (seed `null`==`indeterminateValue:null` → semear do
