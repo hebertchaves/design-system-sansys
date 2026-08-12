@@ -372,7 +372,7 @@
         },
         {
           "property": "line-height",
-          "token": "--dss-line-height-tight",
+          "token": "--dss-line-height-sm-tight",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -833,7 +833,7 @@
         ]
       },
       {
-        "name": "--dss-line-height-tight",
+        "name": "--dss-line-height-sm-tight",
         "usedIn": [
           "default"
         ]

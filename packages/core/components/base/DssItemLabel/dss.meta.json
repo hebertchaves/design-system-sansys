@@ -72,7 +72,7 @@
     "--dss-font-weight-normal",
     "--dss-font-weight-medium",
     "--dss-font-weight-semibold",
-    "--dss-line-height-tight",
+    "--dss-line-height-xs-tight",
     "--dss-line-height-sm",
     "--dss-line-height-normal",
     "--dss-letter-spacing-widest",

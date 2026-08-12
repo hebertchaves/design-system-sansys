@@ -135,7 +135,7 @@
       "--dss-font-size-xl",
       "--dss-font-weight-medium",
       "--dss-font-weight-bold",
-      "--dss-line-height-tight"
+      "--dss-line-height-sm-tight"
     ],
     "colors": [
       "--dss-primary-light",

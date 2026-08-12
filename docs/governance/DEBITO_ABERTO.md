@@ -289,8 +289,28 @@
     25,6 · `tight`(1,25)×14px = 17,5 · `snug`(1,375)×14px = 19,25. Onde isso cair acima de um radio/toggle,
     o círculo volta a rasterizar torto. **Só `--dss-line-height-normal` (1,5) é seguro em toda a escala de
     fontes** (12/14/16/20/24 → todos inteiros).
-  - **Decisão pendente:** ajustar a escala de line-height para valores que fechem inteiro nas font-sizes
-    canônicas, ou aceitar e documentar como limite conhecido. Não é gate-ável por grep — só medindo layout.
+  - ✅ **RESOLVIDO pela rota C** (2026-08-12): escala pareada em px. Ver entrada abaixo.
+
+- ✅ **Rota C — escala de `line-height` pareada em px — CONCLUÍDA** (2026-08-12). Substitui as razões
+  sem unidade que fracionavam. **Achado que reduziu o escopo pela metade:** `normal` (1,5) é a ÚNICA razão
+  segura em toda a escala — todas as font-sizes do DSS são pares, então 1,5 sempre fecha inteiro. Ela
+  NÃO foi depreciada e continua sendo a ferramenta certa para elemento cujo font-size **varia por
+  variante** (ex.: label de Checkbox/Radio/Toggle, de 12px no xs a 18px no xl) — px fixo estaria errado ali.
+  Assim, dos 54 usos só **13 eram inseguros** e precisaram migrar; os 39 de `normal` ficaram como estavam.
+  - **Novos tokens:** tier confortável (`--dss-line-height-{xs,sm,md,base,lg,xl,2xl,3xl,4xl}`, = 1,5 em px)
+    e tier compacto (`--dss-line-height-{xs,sm,md,lg,xl}-tight`, ~1,25), mais `--dss-line-height-md-relaxed`
+    (26px) para o único uso relaxado (DssCard), que já era inteiro.
+  - **Valores escolhidos preservando o que já renderizava inteiro** — a migração é quase inerte. Único
+    delta real: `tight`×14px de 17,5 → 18px, em Button, Chip, Tab e Item.
+  - **Medido antes×depois** nos 89 componentes do Defaults Preview: line-heights fracionados **36 → 12**, e
+    os 12 restantes são do QUASAR (razões 1,715 e 1,2), não do DSS. Alturas de componente inalteradas
+    (button 44, chip 28 — `min-height` domina); `dss-tab` passou de 20,3 para 21 e `dss-tabs` de 21,3 para 22
+    (ambos saíram de fracionário para inteiro).
+  - 🟡 **Depreciados, ainda definidos:** `tight`, `snug`, `relaxed`, `loose` — consumo interno ZERO, mantidos
+    para não quebrar consumidor externo. **Remover quando houver certeza de que ninguém fora do repo usa.**
+  - ⚠️ **Resíduo de terceiros:** os 12 fracionados restantes vêm do CSS do Quasar. Não dá para corrigir por
+    token; se algum deles cair acima de um controle circular, o remédio é local (fixar o line-height naquele
+    ponto), não sistêmico.
 
 ## Verificar (pode já estar resolvido)
 

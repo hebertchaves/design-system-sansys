@@ -85,7 +85,7 @@
       "--dss-font-weight-normal",
       "--dss-font-weight-medium",
       "--dss-line-height-normal",
-      "--dss-line-height-tight"
+      "--dss-line-height-sm-tight"
     ],
     "colors": [
       "--dss-text-body",

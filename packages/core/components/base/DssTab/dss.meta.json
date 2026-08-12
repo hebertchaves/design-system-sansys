@@ -73,7 +73,7 @@
     "--dss-font-size-sm",
     "--dss-font-weight-normal",
     "--dss-font-weight-medium",
-    "--dss-line-height-tight",
+    "--dss-line-height-sm-tight",
     "--dss-text-subtle",
     "--dss-text-body",
     "--dss-text-inverse",

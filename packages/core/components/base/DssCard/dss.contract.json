@@ -2506,7 +2506,7 @@
         },
         {
           "property": "line-height",
-          "token": "--dss-line-height-relaxed",
+          "token": "--dss-line-height-md-relaxed",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -3963,7 +3963,7 @@
         ]
       },
       {
-        "name": "--dss-line-height-relaxed",
+        "name": "--dss-line-height-md-relaxed",
         "usedIn": [
           "default"
         ]

@@ -165,7 +165,7 @@
         },
         {
           "property": "line-height",
-          "token": "--dss-line-height-xs",
+          "token": "--dss-line-height-sm-tight",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -338,10 +338,9 @@
         ]
       },
       {
-        "name": "--dss-line-height-xs",
+        "name": "--dss-line-height-sm-tight",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -420,6 +419,12 @@
         "name": "--dss-font-weight-bold",
         "usedIn": [
           "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-xs",
+        "usedIn": [
+          "defaultPreview"
         ]
       }
     ]

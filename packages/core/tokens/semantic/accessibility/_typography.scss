@@ -48,18 +48,73 @@
      4. ALTURA DE LINHA E ESPAÇAMENTO (Página 8)
      "1,4 a 1,6 vezes o tamanho da fonte para legibilidade ideal"
      =========================================== */
+  /* -------------------------------------------------------------------------
+     ESCALA PAREADA — line-height em PX, um por tamanho de fonte.
+
+     POR QUE PX E NAO RAZAO. Uma razao sem unidade so fecha em altura INTEIRA se
+     for multipla de 0,5 — porque o mdc da escala de fontes (12,14,16,18,20,24,
+     30,36) e 2. Ou seja: com razao, os unicos valores universalmente seguros
+     sao 1,0 / 1,5 / 2,0, e qualquer escala fina (tight/snug/relaxed) FRACIONA
+     em 14, 18 ou 30px. Nao e questao de escolher valores melhores; e aritmetica.
+
+     Altura fracionada nao atrapalha texto, mas sobe pela arvore e posiciona o
+     que vem abaixo em meio pixel — e circulo (radio, thumb de toggle) em meio
+     pixel rasteriza torto. Foi assim que o problema apareceu.
+
+     COMO ESCOLHEMOS OS VALORES: preservando o que ja renderizava INTEIRO, para
+     a migracao nao mexer no layout. A escala "confortavel" e exatamente 1,5 (o
+     que --dss-line-height-normal ja entregava); a "compacta" e ~1,25 com os
+     meios-pixels arredondados para cima.
+     ------------------------------------------------------------------------- */
+
+  /* Confortavel (=1,5) — corpo de texto. Par de --dss-font-size-* */
+  --dss-line-height-xs: 18px;    /* 12px */
+  --dss-line-height-sm: 21px;    /* 14px */
+  --dss-line-height-md: 24px;    /* 16px */
+  --dss-line-height-base: 24px;  /* 16px — alias de -md */
+  --dss-line-height-lg: 27px;    /* 18px */
+  --dss-line-height-xl: 30px;    /* 20px */
+  --dss-line-height-2xl: 36px;   /* 24px */
+  --dss-line-height-3xl: 45px;   /* 30px */
+  --dss-line-height-4xl: 54px;   /* 36px */
+
+  /* Compacto (~1,25) — controles e rotulos densos, onde 1,5 abriria demais.
+     14px era o unico que fracionava (17,5) e virou 18. */
+  --dss-line-height-xs-tight: 15px;   /* 12px */
+  --dss-line-height-sm-tight: 18px;   /* 14px — era 17,5 */
+  --dss-line-height-md-tight: 20px;   /* 16px */
+  --dss-line-height-lg-tight: 23px;   /* 18px — era 22,5 */
+  --dss-line-height-xl-tight: 25px;   /* 20px */
+
+  /* -------------------------------------------------------------------------
+     RAZAO SEM UNIDADE — use SOMENTE quando o font-size do elemento VARIA.
+
+     `normal` (1,5) e a unica razao segura em toda a escala: como todas as
+     font-sizes do DSS sao PARES, 1,5 x qualquer uma delas fecha inteiro. Por
+     isso ela NAO e depreciada — e a ferramenta certa para elemento cujo
+     tamanho de fonte muda por variante (ex.: o label de Checkbox/Radio/Toggle,
+     que vai de 12px no xs a 18px no xl). Um px fixo estaria errado ali.
+     ------------------------------------------------------------------------- */
+  --dss-line-height-normal: 1.5;
+
+  /* -------------------------------------------------------------------------
+     DEPRECIADOS — razoes que FRACIONAM. Mantidos definidos para nao quebrar
+     consumidor externo, mas NAO usar em codigo novo:
+       tight   1,25   -> fraciona em 14px (17,5) e 18px (22,5)
+       snug    1,375  -> fraciona em 12, 14 e 20px
+       relaxed 1,625  -> fraciona em 12, 14, 18 e 30px
+       loose   1,75   -> fraciona em 14, 18 e 30px
+     Migrar para o par em px do tamanho de fonte correspondente (tier -tight
+     acima). Remocao prevista quando o consumo interno chegar a zero.
+     ------------------------------------------------------------------------- */
   --dss-line-height-tight: 1.25;
   --dss-line-height-snug: 1.375;
-  --dss-line-height-normal: 1.5;      /* Ideal para corpo */
   --dss-line-height-relaxed: 1.625;
-  --dss-line-height-loose: 1.75;      /* Para acessibilidade extra */
-  
-  /* Altura de linha por tamanho de fonte */
-  --dss-line-height-xs: 1.4;
-  --dss-line-height-sm: 1.45;
-  --dss-line-height-base: 1.5;
-  --dss-line-height-lg: 1.55;
-  --dss-line-height-xl: 1.6;
+  --dss-line-height-loose: 1.75;
+
+  /* Par relaxado, unico em uso (DssCard): 16px x 1,625 = 26px, ja inteiro.
+     Preservado em px para o card nao mudar de ritmo na migracao. */
+  --dss-line-height-md-relaxed: 26px;
   
   /* ===========================================
      5. ESPAÇAMENTO DE LETRAS (Página 8)

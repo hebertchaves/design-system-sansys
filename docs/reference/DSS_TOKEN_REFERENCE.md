@@ -1171,16 +1171,26 @@ Sistema de fontes, tamanhos e hierarquia tipográfica baseado no Guia de Acessib
 <!-- BEGIN:TOKEN-TABLE:text-line-height -->
 | Token | Valor | px | Descrição |
 |---|---|---|---|
+| `--dss-line-height-xs` | `18px` | `12px` | — |
+| `--dss-line-height-sm` | `21px` | `14px` | — |
+| `--dss-line-height-md` | `24px` | `16px` | — |
+| `--dss-line-height-base` | `24px` | `16px` | alias de -md |
+| `--dss-line-height-lg` | `27px` | `18px` | — |
+| `--dss-line-height-xl` | `30px` | `20px` | — |
+| `--dss-line-height-2xl` | `36px` | `24px` | — |
+| `--dss-line-height-3xl` | `45px` | `30px` | — |
+| `--dss-line-height-4xl` | `54px` | `36px` | — |
+| `--dss-line-height-xs-tight` | `15px` | `12px` | — |
+| `--dss-line-height-sm-tight` | `18px` | `14px` | era 17,5 |
+| `--dss-line-height-md-tight` | `20px` | `16px` | — |
+| `--dss-line-height-lg-tight` | `23px` | `18px` | era 22,5 |
+| `--dss-line-height-xl-tight` | `25px` | `20px` | — |
+| `--dss-line-height-normal` | `1.5` | — | — |
 | `--dss-line-height-tight` | `1.25` | — | — |
 | `--dss-line-height-snug` | `1.375` | — | — |
-| `--dss-line-height-normal` | `1.5` | — | Ideal para corpo |
 | `--dss-line-height-relaxed` | `1.625` | — | — |
-| `--dss-line-height-loose` | `1.75` | — | Para acessibilidade extra |
-| `--dss-line-height-xs` | `1.4` | — | — |
-| `--dss-line-height-sm` | `1.45` | — | — |
-| `--dss-line-height-base` | `1.5` | — | — |
-| `--dss-line-height-lg` | `1.55` | — | — |
-| `--dss-line-height-xl` | `1.6` | — | — |
+| `--dss-line-height-loose` | `1.75` | — | — |
+| `--dss-line-height-md-relaxed` | `26px` | `26px` | — |
 <!-- END:TOKEN-TABLE:text-line-height -->
 
 ## 6.5 Espaçamento de Letras

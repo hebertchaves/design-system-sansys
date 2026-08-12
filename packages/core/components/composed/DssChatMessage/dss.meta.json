@@ -42,7 +42,7 @@
     "--dss-font-weight-normal",
     "--dss-font-weight-semibold",
     "--dss-line-height-md",
-    "--dss-line-height-tight",
+    "--dss-line-height-xs-tight",
     "--dss-radius-sm",
     "--dss-radius-lg",
     "--dss-radius-full",

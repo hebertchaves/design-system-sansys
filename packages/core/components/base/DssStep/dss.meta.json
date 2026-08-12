@@ -141,7 +141,7 @@
     "--dss-font-size-base",
     "--dss-font-weight-normal",
     "--dss-font-weight-medium",
-    "--dss-line-height-tight",
+    "--dss-line-height-md-tight",
     "--dss-line-height-normal",
     "--dss-text-subtle",
     "--dss-text-body",
