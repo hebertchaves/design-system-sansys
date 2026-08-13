@@ -23,6 +23,10 @@
 - ⏳ **(c1) Contraste WCAG da paleta default** — auditoria + tabela de rotas (A escurecer / B texto escuro)
   prontas; **aguardando decisão da equipe** por cor. NÃO tocar `globals.scss` até o retorno.
   `[[project_color_ramp_a11y]]`. (c0 — reconciliação da rampa com o Figma — **feito**, commit `6a4baa6`.)
+  - 📌 **Evidência medida de campo** (2026-08-13, chips `filled` no dark, texto branco): `positive`
+    **1,99:1** e `primary` **3,80:1** reprovam AA para texto normal; `negative` 5,13:1 passa. Confirma a
+    auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
+    abrir a lista quando a decisão vier.
 
 ## Débito de fundo (ondas anteriores)
 
@@ -206,9 +210,9 @@
   `DSS_UI_ADEQUACAO_CHECKLIST.md` exige, por componente adequado, **página Playground**
   (`apps/sandbox/src/Test‹Nome›.vue`) **e** **Preview Frame** registrado — é o que torna possível a
   análise visual, o passo que FECHA a adequação. Estado real:
-  - **Página Playground: 12 de 76** componentes base.
-  - **Preview Frame: 10** registrados (Input, Select, Textarea, Field, File, Checkbox, Radio, Toggle,
-    Uploader, MultiselectAutocomplete).
+  - **Página Playground: 13 de 76** componentes base *(+DssChip, `97c517e`)*.
+  - **Preview Frame: 11** registrados (Input, Select, Textarea, Field, File, Checkbox, Radio, Toggle,
+    Uploader, MultiselectAutocomplete, **Chip**).
   - Não é dívida de um componente: é a regra valendo só onde a adequação já passou. **Cada componente
     adequado daqui em diante entra com os dois** — e a fila de não-adequados carrega o resto.
   - ⚠️ **Sem gate automatizado.** Hoje é item de checklist marcado à mão. Um gate desses reprovaria 64/76
@@ -373,6 +377,26 @@
       desenho diferente — foi o defeito real do Radio, e o mesmo risco existe em qualquer componente com
       borda fixa e 5 tamanhos.
     - Medir contra o elemento pai esconde deslocamento absoluto; medir a fração da posição na tela.
+
+- ✅ **DssChip — adequação de UI FECHADA** (2026-08-13, `9965b90` · `8262f83` · `97c517e`). Entra com os
+  dois itens do eixo visual (Playground + Preview Frame), como a regra passou a exigir.
+  - **Altura fiel à escala de compact control.** O `lg` estourava o token — padding vertical `spacing-2`
+    (8px) + fonte 16px davam **34px** contra os 32px de `--dss-compact-control-height-lg`. Causa de fundo:
+    o `line-height` era declarado UMA vez na base, pareado com 14px, e os modificadores trocavam só o
+    `font-size` — o par só fechava no `md`. Cada tamanho passou a declarar o seu par, usando a escala
+    compacta em px da Rota C. Medido: **20 / 24 / 28 / 32**, todos inteiros (não reintroduz a rasterização
+    fracionada de `ae81a89`).
+  - **`.bg-neutral` não seguia o tema** — usava o primitivo `--dss-gray-100`, que não inverte, enquanto o
+    par `.text-neutral` usa `--dss-text-primary`, que inverte. No dark: fundo #fafafa com texto #f5f5f5,
+    **1,04:1 medido** — o chip sumia. Com `--dss-surface-subtle`: **7,17:1** no dark e 9,19:1 no light
+    (inalterado). Raio de alcance conferido: a classe só é emitida pelo `useChipClasses`; Select e
+    MultiselectAutocomplete herdam o fix por comporem `<DssChip color="neutral">`.
+  - 🔍 **Padrão a generalizar:** par de utilitárias em que o **fundo é primitivo e o texto é semântico**
+    quebra em dark por construção. Vale varrer as demais `.bg-*`/`.text-*` de `_quasar-overrides.scss`
+    na Onda Higiene — o sintoma é invisível no light, que é onde quase toda inspeção acontece.
+  - **`PgTile` ganhou `align`** (opt-in; default `stretch` inalterado). Detalhe que custou tempo:
+    `inline-flex` no root **não** protege — item de flex é blockificado, então o componente estica assim
+    mesmo; só o alinhamento do stage resolve. Verificado que os 8 consumidores existentes não regridem.
 
 - ⏳ **Histórico da família (contexto das decisões acima)** (branch `work/dss-selection-controls`).
   **DssCheckbox fechado** (4 commits `816ed41`→`fba32a2`): leftLabel (dupla-inversão template×CSS),
