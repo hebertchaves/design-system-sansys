@@ -74,14 +74,11 @@
     </PgSection>
 
     <!-- ── 06. Forma ───────────────────────────────────────────────────── -->
-    <PgSection id="forma" index="06" title="Forma & Densidade" :count="4"
-      desc="round arredonda por completo (pílula), square deixa reto; dense reduz a densidade visual. Sem prop, o chip usa o raio padrão do DSS.">
+    <PgSection id="forma" index="06" title="Forma & Densidade" :count="3"
+      desc="O chip JÁ nasce pílula (border-radius full na base) — não há prop `round`, espelhando o QChip, que também só oferece `square`. square reduz o raio; dense reduz a altura de 28px para 24px.">
       <PgGrid>
-        <PgTile align="start" code="padrão">
+        <PgTile align="start" code="padrão (pílula)">
           <DssChip label="Padrão" />
-        </PgTile>
-        <PgTile align="start" code=":round=&quot;true&quot;">
-          <DssChip label="Round" round />
         </PgTile>
         <PgTile align="start" code=":square=&quot;true&quot;">
           <DssChip label="Square" square />
@@ -114,12 +111,25 @@
 
     <!-- ── 08. Brandabilidade ──────────────────────────────────────────── -->
     <PgSection id="brand" index="08" title="Brandabilidade" :count="BRAND_KEYS.length"
-      desc="Prop brand sobrescreve a cor de ação. Reage também a [data-brand] global — use as pílulas do topo para comparar os dois caminhos. A cor `neutral` não muda com brand, de propósito.">
+      desc="Prop brand e [data-brand] global (pílulas do topo) são os dois caminhos — e resolvem pelos mesmos tokens. Os chips levam ícone de propósito: era o ícone que sumia dentro do próprio fundo, pintado pela regra global [data-brand] .dss-icon.">
       <PgGrid>
         <PgTile align="start" v-for="b in BRAND_KEYS" :key="b" :code="`brand=&quot;${b}&quot;`">
-          <DssChip :brand="b" :label="brandLabel(b)" />
+          <DssChip :brand="b" :label="brandLabel(b)" icon="star" />
         </PgTile>
       </PgGrid>
+    </PgSection>
+
+    <!-- ── 08b. Disputa color × brand ──────────────────────────────────── -->
+    <PgSection id="color-brand" index="08b" title="Disputa color × brand" :count="DISPUTA.length * VARIANTS.length"
+      desc="Ative uma marca no topo: só a linha `primary` deve virar de cor. As demais NÃO — feedback é imune por regime, e secondary/tertiary/accent têm token fixo nas 3 marcas (decisão dos tokens, não do chip: só --dss-action-primary é remapeada). Em toda combinação o ícone acompanha o chip, nunca a marca — era ele que sumia dentro do próprio fundo.">
+      <div class="pg-matrix">
+        <div v-for="c in DISPUTA" :key="c.color" class="pg-matrix-row">
+          <div class="pg-matrix-row__label">{{ c.color }}<br><small style="opacity:.6">{{ c.regra }}</small></div>
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic">
+            <DssChip v-for="v in VARIANTS" :key="v" :variant="v" :color="c.color" :label="v" icon="star" />
+          </div>
+        </div>
+      </div>
     </PgSection>
 
     <!-- ── 09. Matriz ──────────────────────────────────────────────────── -->
@@ -128,7 +138,7 @@
       <div class="pg-matrix">
         <div v-for="v in VARIANTS" :key="v" class="pg-matrix-row">
           <div class="pg-matrix-row__label">{{ v }}</div>
-          <div class="pg-matrix-row__items">
+          <div class="pg-matrix-row__items pg-matrix-row__items--intrinsic">
             <DssChip :variant="v" label="Repouso" />
             <DssChip :variant="v" label="Selecionado" selected />
             <DssChip :variant="v" label="Disabled" disable />
@@ -167,17 +177,28 @@ const COLORS = [
 ] as const
 const BRAND_KEYS = ['hub', 'water', 'waste'] as const
 
+// Disputa color × brand — uma cor de cada regime, para a diferença ficar visível
+// ao trocar a marca no topo.
+const DISPUTA = [
+  { color: 'primary'  as const, regra: 'ação → segue a marca' },
+  { color: 'accent'   as const, regra: 'ação → mas token fixo' },
+  { color: 'negative' as const, regra: 'feedback → imune' },
+  { color: 'warning'  as const, regra: 'feedback → imune' },
+  { color: 'neutral'  as const, regra: 'valor → agnóstico' },
+]
+
 const SECTIONS = [
-  { id: 'variantes', index: '01', title: 'Variantes' },
-  { id: 'tamanhos',  index: '02', title: 'Tamanhos' },
-  { id: 'cores',     index: '03', title: 'Cores Semânticas' },
-  { id: 'estados',   index: '04', title: 'Estados' },
-  { id: 'icones',    index: '05', title: 'Ícones' },
-  { id: 'forma',     index: '06', title: 'Forma & Densidade' },
-  { id: 'remocao',   index: '07', title: 'Remoção' },
-  { id: 'brand',     index: '08', title: 'Brandabilidade' },
-  { id: 'matriz',    index: '09', title: 'Matriz Variante × Estado' },
-  { id: 'exemplos',  index: '10', title: 'Exemplos de uso' },
+  { id: 'variantes',   index: '01',  title: 'Variantes' },
+  { id: 'tamanhos',    index: '02',  title: 'Tamanhos' },
+  { id: 'cores',       index: '03',  title: 'Cores Semânticas' },
+  { id: 'estados',     index: '04',  title: 'Estados' },
+  { id: 'icones',      index: '05',  title: 'Ícones' },
+  { id: 'forma',       index: '06',  title: 'Forma & Densidade' },
+  { id: 'remocao',     index: '07',  title: 'Remoção' },
+  { id: 'brand',       index: '08',  title: 'Brandabilidade' },
+  { id: 'color-brand', index: '08b', title: 'Disputa color × brand' },
+  { id: 'matriz',      index: '09',  title: 'Matriz Variante × Estado' },
+  { id: 'exemplos',    index: '10',  title: 'Exemplos de uso' },
 ]
 
 const KPIS = [

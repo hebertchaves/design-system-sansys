@@ -532,6 +532,19 @@
 .pg-page .pg-matrix-row__items > * { width: 100%; min-width: 0; }
 .pg-matrix-field { width: 100%; min-width: 0; }
 
+/* Matriz de componente de largura INTRÍNSECA (chip, badge, botão) — opt-in.
+   A regra acima existe para CAMPO, que em uso real ocupa a largura do
+   container; aplicada a um chip ela o estica e faz a demo mentir sobre o
+   tamanho do componente. Mesmo racional da prop `align` do PgTile.
+   O seletor precisa casar a especificidade (0,2,0) da regra que desfaz e vir
+   depois dela — daí o ancestral `.pg-page`. */
+.pg-page .pg-matrix-row__items--intrinsic > * { width: auto; }
+.pg-matrix-row__items--intrinsic {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 /* ── DARK MODE ─────────────────────────────────────────────────────────── */
 .pg-page[data-theme="dark"] {
   /* Em dark mode o accent #1d4971 (escuro) tem baixo contraste sobre fundos
