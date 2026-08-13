@@ -173,6 +173,14 @@
               </button>
 
               <button
+                @click="activeComponent = 'preview-frame-chip'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-chip' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'alert'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'alert' }]"
               >
@@ -563,6 +571,9 @@
       <div v-else-if="activeComponent === 'preview-frame-toggle'" class="component-view">
         <PreviewFrame component="DssToggle" />
       </div>
+      <div v-else-if="activeComponent === 'preview-frame-chip'" class="component-view">
+        <PreviewFrame component="DssChip" />
+      </div>
       <div v-else-if="activeComponent === 'preview-frame-multiselect'" class="component-view">
         <PreviewFrame component="DssMultiselectAutocomplete" />
       </div>
@@ -575,6 +586,11 @@
       <!-- DssBadge Test View -->
       <div v-else-if="activeComponent === 'badge'" class="component-view">
         <TestBadge />
+      </div>
+
+      <!-- DssChip Test View -->
+      <div v-else-if="activeComponent === 'chip'" class="component-view">
+        <TestChip />
       </div>
 
       <!-- DssAvatar Test View -->
@@ -685,6 +701,7 @@ import PreviewFrame from './preview/PreviewFrame.vue'
 import TestDefaultPreview from './TestDefaultPreview.vue'
 import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'
+import TestChip from './TestChip.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestInput from './TestInput.vue'
 import TestCheckbox from './TestCheckbox.vue'

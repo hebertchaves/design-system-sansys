@@ -415,6 +415,12 @@
       color-mix(in srgb, var(--dss-gray-300) 8%, transparent) 8px 9px);
   transform: translateZ(0);
 }
+/* Stage de largura INTRÍNSECA — opt-in via prop `align` do PgTile.
+   O default (stretch) é certo para campo; para chip/badge/botão ele mentiria
+   sobre o tamanho do componente. */
+.pg-tile__stage--start { align-items: flex-start; }
+.pg-tile__stage--center { align-items: center; }
+
 .pg-main[data-density="compact"] .pg-tile__stage,
 .pg-main[data-density="compact"] .dss-ex__stage { min-height: 88px; padding: var(--dss-spacing-3); }
 .pg-tile__code,
