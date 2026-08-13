@@ -193,6 +193,46 @@
 - 🟡 **`tokens/brand/index.scss` = código morto (T4)** — ~149 `!important` inócuos (arquivo não importado)
   + feature de override local de marca parcialmente entregue. T4 BLOQUEADO (limpar seria maquiagem).
   Alerta em `ALERTA_BRAND_INDEX_NAO_IMPORTADO.md`. `[[project_brand_index_dead_code]]`.
+
+- ⏳ **DECISÃO EM ABERTO: a escala de tonalidade de marca (`--dss-brand-*`) deve ser cabeada?**
+  (levantado 2026-08-13, a partir de observação do dono durante o DssChip). **Existem DUAS famílias de
+  token de marca, com significados diferentes**, e só uma está viva:
+  | Família | `secondary` sob Hub | Significado |
+  |---|---|---|
+  | `--dss-action-*` | `--dss-secondary` (verde-azulado) | outra MATIZ, com carga semântica própria |
+  | `--dss-brand-*` | `--dss-hub-300` (#fbcb76) | MESMA matiz da marca, outra luminosidade |
+  - **Estado real medido:** `--dss-brand-{secondary,tertiary,accent}` têm **ZERO consumidores** em todo
+    o `packages/core` — definidos nas três marcas, ninguém lê. `--dss-brand-primary` é consumido, mas só
+    em `themes/` para alimentar `--quasar-primary`. Ou seja: **a escala está especificada e não cabeada**,
+    mesma natureza da entrega parcial do item acima.
+  - ⚠️ **CUSTO DURO da adoção (calculado, não estimado).** Se o `filled` passasse a usar a escala com
+    texto branco, **6 dos 9 casos reprovam AA** — porque 300 e 400 são tons claros:
+
+    | | secondary (300) | tertiary (800) | accent (400) |
+    |---|---|---|---|
+    | Hub | **1,51:1** ❌ | 6,52:1 ✅ | **1,94:1** ❌ |
+    | Water | **1,88:1** ❌ | 9,02:1 ✅ | **2,63:1** ❌ |
+    | Waste | **1,60:1** ❌ | 8,14:1 ✅ | **2,08:1** ❌ |
+
+    Só os `tertiary` (800) passam. Adotar exigiria **inverter o texto para escuro** nos tons claros —
+    isso é redesenho da variante, não troca de token. Some-se que as três cores passariam a ser tons da
+    MESMA matiz, perdendo a distinção semântica entre elas.
+  - **Nada do que está no DssChip depende disto**: ele consome `--dss-action-*`, a família viva. A decisão
+    é de sistema (todos os componentes), não do chip.
+  - 🔲 **Decidir:** (a) cabear a escala e redesenhar o contraste das variantes claras; (b) manter
+    `--dss-action-*` como única via e **remover** `--dss-brand-{secondary,tertiary,accent}`, que hoje só
+    sugerem uma capacidade inexistente; (c) manter como está, documentando que são reserva de futuro.
+
+- 🔴 **Token fantasma `--dss-brand-primary-hover` — e o ponto cego do gate** (2026-08-13). Consumido em
+  **9 lugares** (`themes/index.scss` ×3, `_quasar-tokens-mapping.scss` ×3 com fallback,
+  `_quasar-utilities.scss` ×3) e **NUNCA definido** — nem no fonte nem no `dist/style.css`. Os arquivos de
+  marca definem `--dss-brand-hover`, sem o `primary-`. Impacto prático baixo (3 usos têm fallback e o pior
+  caso, `_quasar-utilities.scss:32`, está em bloco que o próprio comentário marca como provavelmente
+  morto), **mas o achado que importa é o gate**: `validate-scss-tokens.cjs` varre só `components/`
+  (const `COMPONENTS`, linha 28) — **`themes/` e `tokens/` são ponto cego**. O baseline "vazio = qualquer
+  fantasma bloqueia" vale menos do que parece. **Decidir:** estender o escopo do gate a `themes/`
+  (provável safra nova de fantasmas) ou registrar a limitação explicitamente.
+
 - 🟡 **Decisão: label flutuante vs estática** — Material (flutuante, atual) vs shadcn/Make (estática acima).
   Usuário optou por **manter flutuante por enquanto**. `[[project_make_vs_dss_contrato_visual]]`.
 - 🟡 **Consolidação documental (5→1)** — `COMPONENT_PAGE_STRUCTURE` já absorve 5 docs; **remoção física**
