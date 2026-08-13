@@ -9,6 +9,11 @@
    - flat: Chip sem borda e fundo transparente
    ========================================================================== */
 
+/* `colors` vem PRIMEIRO de proposito: as regras de hover/selected das variantes
+   empatam em especificidade (0,3,0) com as regras de cor, e empate se resolve
+   por ordem de origem. Quem deve vencer e o ESTADO — um chip selecionado
+   inverte label e icone, e isso nao pode ser desfeito pela cor de repouso. */
+@use 'colors';
 @use 'filled';
 @use 'outline';
 @use 'flat';

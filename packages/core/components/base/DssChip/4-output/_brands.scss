@@ -1,118 +1,27 @@
 /* ==========================================================================
    DssChip - LAYER 4: OUTPUT (Brands)
 
-   RESPONSABILIDADE: Estilos especificos para cada marca (Hub, Water, Waste)
+   ESTE ARQUIVO NAO TEM MAIS REGRAS — e o mesmo desfecho ja aplicado em
+   DssCheckbox, DssRadio e DssToggle. O arquivo permanece pela arquitetura de
+   4 camadas.
 
-   REGRAS:
-   - Usa tokens de marca (--dss-{brand}-*)
-   - Aplicado via atributo data-brand (contexto ou prop)
-   - NAO sobrescreve logica de variantes
+   O QUE HAVIA AQUI E POR QUE SAIU
+   -------------------------------
+   Tres mixins (`chip-brand-filled/outline/flat`) aplicados sob `[data-brand]`,
+   cobrindo `primary`, `secondary` e `accent` — 3 das 9 cores do componente.
 
-   CENARIOS SUPORTADOS:
-   1. Brand via contexto (ancestral): <div data-brand="hub"><DssChip /></div>
-   2. Brand via prop (mesmo elemento): <DssChip brand="hub" />
+   1. ERA A CAUSA DE UM DEFEITO, nao so redundancia. O composable trocava a
+      classe de cor por `.dss-chip--{color}` sempre que havia `brand`, contando
+      que este arquivo a pintasse. Para as outras 6 cores (tertiary, positive,
+      negative, warning, info, neutral) nao havia regra: o chip ficava PRETO,
+      sem fundo — medido `rgb(0,0,0)` no navegador com `positive` + `brand`.
+
+   2. ERA REDUNDANTE no que cobria. Os mixins ja usavam `--dss-action-*`, que e
+      brand-aware: o token resolve a marca sozinho, nos DOIS caminhos (prop
+      `brand` no proprio elemento e `[data-brand]` ancestral). Uma camada extra
+      por marca nao acrescentava nada — so criava um segundo lugar onde a cor
+      podia divergir.
+
+   A cor agora vive inteira em `3-variants/_colors.scss`, que cobre as 9 e
+   documenta a regra de disputa color x brand.
    ========================================================================== */
-
-/* ==========================================================================
-   MIXINS PARA EVITAR DUPLICACAO
-   ========================================================================== */
-
-@mixin chip-brand-filled() {
-  &.dss-chip--primary {
-    background-color: var(--dss-action-primary);
-    color: var(--dss-text-on-primary);
-  }
-
-  &.dss-chip--secondary {
-    background-color: var(--dss-action-secondary);
-    color: var(--dss-text-on-primary);
-  }
-
-  &.dss-chip--accent {
-    background-color: var(--dss-action-accent);
-    color: var(--dss-text-on-primary);
-  }
-}
-
-@mixin chip-brand-outline() {
-  &.dss-chip--primary {
-    border-color: var(--dss-action-primary);
-    color: var(--dss-action-primary);
-
-    &.dss-chip--clickable:hover,
-    &.dss-chip--selected {
-      background-color: var(--dss-action-primary);
-      color: var(--dss-text-on-primary);
-    }
-  }
-
-  &.dss-chip--secondary {
-    border-color: var(--dss-action-secondary);
-    color: var(--dss-action-secondary);
-
-    &.dss-chip--clickable:hover,
-    &.dss-chip--selected {
-      background-color: var(--dss-action-secondary);
-      color: var(--dss-text-on-primary);
-    }
-  }
-
-  &.dss-chip--accent {
-    border-color: var(--dss-action-accent);
-    color: var(--dss-action-accent);
-
-    &.dss-chip--clickable:hover,
-    &.dss-chip--selected {
-      background-color: var(--dss-action-accent);
-      color: var(--dss-text-on-primary);
-    }
-  }
-}
-
-@mixin chip-brand-flat() {
-  &.dss-chip--primary {
-    color: var(--dss-action-primary);
-  }
-
-  &.dss-chip--secondary {
-    color: var(--dss-action-secondary);
-  }
-
-  &.dss-chip--accent {
-    color: var(--dss-action-accent);
-  }
-}
-
-/* ==========================================================================
-   Aplicação (qualquer marca). Os mixins viraram brand-agnósticos (usam
-   --dss-action-*, que já resolve por marca), então os 3 blocos hub/water/waste
-   eram idênticos → colapsados em um único [data-brand].
-   ========================================================================== */
-
-/* Cenario 1: contexto ancestral */
-[data-brand] {
-  .dss-chip--filled {
-    @include chip-brand-filled();
-  }
-
-  .dss-chip--outline {
-    @include chip-brand-outline();
-  }
-
-  .dss-chip--flat {
-    @include chip-brand-flat();
-  }
-}
-
-/* Cenario 2: prop no próprio elemento */
-.dss-chip--filled[data-brand] {
-  @include chip-brand-filled();
-}
-
-.dss-chip--outline[data-brand] {
-  @include chip-brand-outline();
-}
-
-.dss-chip--flat[data-brand] {
-  @include chip-brand-flat();
-}

@@ -5,9 +5,20 @@
  *
  * Composable para gerar classes CSS do DssChip
  *
- * ESTRATEGIA DE CORES:
- * - Sem brand: usa classes utilitarias Quasar (.bg-*, .text-*)
- * - Com brand: usa classe DSS (.dss-chip--{color}) para CSS de _brands.scss
+ * ESTRATEGIA DE CORES: UM caminho so — `.dss-chip--{color}`, sempre.
+ *
+ * Antes havia DOIS caminhos: sem brand emitia as utilities do Quasar
+ * (`.bg-primary`/`.text-white`) e com brand trocava por `.dss-chip--{color}`,
+ * que era casada em `4-output/_brands.scss`. O problema: aquele arquivo
+ * implementava 3 das 9 cores (primary, secondary, accent). Com `brand` +
+ * qualquer uma das outras 6 (tertiary, positive, negative, warning, info,
+ * neutral) a classe nao casava com regra nenhuma e o chip ficava PRETO, sem
+ * fundo e sem cor — medido `rgb(0,0,0)` no navegador.
+ *
+ * Agora a cor e sempre resolvida pelo SCSS do proprio DSS
+ * (`3-variants/_colors.scss`), que cobre as 9 e usa tokens brand-aware. As
+ * utilities do Quasar sairam de cena: nao sao brand-aware e, por serem
+ * `!important` dentro de layer, disputavam a cascata com o CSS do DSS.
  *
  * @example
  * ```ts
@@ -31,49 +42,18 @@ export function useChipClasses(
   options: UseChipClassesOptions
 ) {
   /**
-   * Classes CSS computadas do chip
+   * Classes CSS computadas do chip.
    *
-   * Logica de cores:
-   * - SEM brand: classes utilitarias Quasar (bg-{color}, text-{color})
-   * - COM brand: classe DSS (dss-chip--{color}) para seletores em _brands.scss
-   *
-   * O CSS em _brands.scss usa seletores como:
-   *   [data-brand='hub'] .dss-chip--filled.dss-chip--primary
-   *
-   * Por isso, quando ha brand, geramos dss-chip--{color} em vez de bg-{color}
+   * A cor NAO depende mais de haver brand: sai sempre `dss-chip--{color}` e o
+   * SCSS decide o resto. O `brand` continua chegando ao CSS pelo atributo
+   * `data-brand` no root (ver 1-structure), que e o que remapeia os tokens
+   * `--dss-action-*`.
    */
   const chipClasses = computed(() => {
     // Detecta se tem apenas icone (sem label)
     const hasLabel = !!(props.label || options.hasDefaultSlot.value)
     const hasIcon = !!(props.icon || props.iconRight)
     const isIconOnly = hasIcon && !hasLabel
-
-    // Classes de cor - estrategia diferente com/sem brand
-    let colorClasses: string | string[] = ''
-
-    // NEUTRAL e agnostico de brand: representa "token de valor", nao enfase
-    // semantica — um dado escolhido nao muda de cor porque o produto e Hub,
-    // Water ou Waste. Por isso ignora o caminho de brand.
-    const isNeutral = props.color === 'neutral'
-
-    if (props.brand && !isNeutral) {
-      // COM BRAND: usa classe DSS para matching com seletores de _brands.scss
-      // Ex: dss-chip--primary (CSS: [data-brand='hub'] .dss-chip--filled.dss-chip--primary)
-      colorClasses = `dss-chip--${props.color}`
-    } else {
-      // SEM BRAND: usa classes utilitarias Quasar
-      if (props.variant === 'flat' || props.variant === 'outline') {
-        // Variantes transparentes: apenas cor de texto
-        colorClasses = `text-${props.color}`
-      } else if (isNeutral) {
-        // Neutral filled: fundo cinza pede texto ESCURO — `text-white` seria
-        // ilegivel. Par de tokens identico ao do chip nativo do DssSelect.
-        colorClasses = `bg-neutral text-neutral`
-      } else {
-        // Variante filled: fundo colorido + texto branco
-        colorClasses = `bg-${props.color} text-white`
-      }
-    }
 
     return [
       // Classe base
@@ -82,15 +62,16 @@ export function useChipClasses(
       // Variante visual
       `dss-chip--${props.variant}`,
 
-      // Classes de cor (estrategia baseada em brand)
-      colorClasses,
+      // Cor: SEMPRE a classe DSS, com ou sem brand. Ver o bloco de racional no
+      // topo deste arquivo — o caminho duplo (utility do Quasar sem brand,
+      // classe DSS com brand) era a causa do chip preto.
+      `dss-chip--${props.color}`,
 
       // Tamanho
       `dss-chip--${props.size}`,
 
       // Classes condicionais
       {
-        'dss-chip--round': props.round,
         'dss-chip--square': props.square,
         'dss-chip--selected': props.selected,
         'dss-chip--disabled': props.disable,

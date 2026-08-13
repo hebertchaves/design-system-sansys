@@ -1,0 +1,124 @@
+/* ==========================================================================
+   DssChip - LAYER 3: VARIANTS (Cores semanticas)
+
+   RESPONSABILIDADE: aplicar a cor escolhida (prop `color`) em cada variante.
+
+   POR QUE A COR SAIU DAS UTILITIES DO QUASAR
+   ------------------------------------------
+   O composable emitia `.bg-{color}`/`.text-white` quando NAO havia brand e
+   trocava por `.dss-chip--{color}` quando havia — dois caminhos para a mesma
+   decisao. O segundo caminho era servido por `4-output/_brands.scss`, que
+   cobria 3 das 9 cores. Resultado medido no navegador: `color="positive"` +
+   `brand` casava com regra NENHUMA e o chip ficava preto (`rgb(0,0,0)`), sem
+   fundo. Agora ha um caminho so, e ele cobre as 9.
+
+   REGRA DE DISPUTA color x brand (decisao do dono, ago/2026)
+   ----------------------------------------------------------
+   - Cores de ACAO (primary/secondary/tertiary/accent) resolvem por
+     `--dss-action-*`. Destas, so `--dss-action-primary` E remapeada por marca
+     (`tokens/brand/_{hub,water,waste}.scss`); secondary, tertiary e accent
+     declaram "Mantem ... semantico" nas TRES marcas, por decisao do DS. Ou
+     seja: na pratica so `color="primary"` acompanha a marca — verificado por
+     medicao, nao por suposicao.
+   - Cores de FEEDBACK (positive/negative/warning/info) resolvem por
+     `--dss-feedback-*` e sao IMUNES a marca: "erro" nao muda de cor porque o
+     produto e Water.
+   - `neutral` e agnostico de marca por decisao de tipo (token de VALOR).
+
+   Este arquivo NAO decide nada disso: ele so aponta cada cor ao token certo.
+   Quem governa o que acompanha a marca sao os tokens. Se um dia `accent`
+   passar a variar por marca, isto aqui continua correto sem alteracao.
+   Como os proprios TOKENS resolvem a marca, o mesmo CSS serve o caminho da
+   prop `brand` e o do `[data-brand]` ancestral — nao ha regra por marca aqui.
+   Foi o que esvaziou o `4-output/_brands.scss`, como ja acontecera em
+   DssCheckbox/DssRadio/DssToggle.
+
+   POR QUE O ICONE DECLARA A PROPRIA COR
+   -------------------------------------
+   Existe uma regra GLOBAL em `DssIcon/4-output/_brands.scss`:
+   `[data-brand="waste"] .dss-icon { color: var(--dss-waste-600) }`.
+   Ela casa DIRETO no elemento do icone, com especificidade (0,2,0), e por isso
+   vence qualquer cor apenas HERDADA do chip. O sintoma media assim: chip
+   `filled` sob brand global ficava com fundo #0b8154 e icone #0b8154 — o glifo
+   sumia dentro do proprio fundo. Os seletores abaixo tem (0,3,0) e vencem.
+   Mesmo mecanismo — e mesmo racional — ja documentado no DssCheckbox.
+
+   ORDEM: este arquivo e importado ANTES das variantes em `index.scss`. As
+   regras de hover/selected do outline e do flat empatam em (0,3,0) com as
+   daqui; empate se resolve por ordem de origem, e quem deve vencer e o ESTADO.
+   ========================================================================== */
+
+$dss-chip-semantic-colors: (
+  'primary': var(--dss-action-primary),
+  'secondary': var(--dss-action-secondary),
+  'tertiary': var(--dss-action-tertiary),
+  'accent': var(--dss-action-accent),
+  'positive': var(--dss-feedback-success),
+  'negative': var(--dss-feedback-error),
+  'warning': var(--dss-feedback-warning),
+  'info': var(--dss-feedback-info)
+);
+
+@each $name, $color in $dss-chip-semantic-colors {
+  .dss-chip--#{$name} {
+    /* FILLED: acento no fundo, conteudo invertido. */
+    &.dss-chip--filled {
+      background-color: #{$color};
+      color: var(--dss-text-on-primary);
+
+      .dss-chip__label,
+      .dss-chip__icon {
+        color: var(--dss-text-on-primary);
+      }
+    }
+
+    /* OUTLINE e FLAT: acento no proprio `color` da raiz. As duas variantes
+       constroem borda (`solid currentColor`) e veu (`background-color:
+       currentColor` no ::after) a partir dele, entao acertar a raiz basta —
+       menos o icone, pela regra global explicada acima. */
+    &.dss-chip--outline,
+    &.dss-chip--flat {
+      color: #{$color};
+
+      .dss-chip__label,
+      .dss-chip__icon {
+        color: #{$color};
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   NEUTRAL
+
+   Fora do @each porque nao e um acento: e um PAR superficie+texto. Os dois
+   tokens invertem com o tema, o que mantem o contraste nos dois modos (medido:
+   9,19:1 no claro, 7,17:1 no escuro). Um primitivo como `--dss-gray-100` nao
+   inverteria — foi exatamente o defeito corrigido em 8262f83.
+
+   Agnostico de marca por decisao de tipo: um "token de valor" nao muda de cor
+   porque o produto e Hub, Water ou Waste. O icone precisa da declaracao
+   explicita justamente para NAO ser pintado pela regra global de brand.
+   ========================================================================== */
+
+.dss-chip--neutral {
+  &.dss-chip--filled {
+    background-color: var(--dss-surface-subtle);
+    color: var(--dss-text-primary);
+
+    .dss-chip__label,
+    .dss-chip__icon {
+      color: var(--dss-text-primary);
+    }
+  }
+
+  &.dss-chip--outline,
+  &.dss-chip--flat {
+    color: var(--dss-text-primary);
+
+    .dss-chip__label,
+    .dss-chip__icon {
+      color: var(--dss-text-primary);
+    }
+  }
+}
