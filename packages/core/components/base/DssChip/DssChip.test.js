@@ -62,9 +62,13 @@ describe('DssChip', () => {
 
     // Shape tests
     describe('shape', () => {
-      it('applies round shape by default', () => {
+      // O chip nasce pill pelo `border-radius` da base — nao ha classe (nem
+      // prop) `round`. A que existia era byte-identica ao default e vinha
+      // ligada de fabrica, logo inerte. Este teste trava a AUSENCIA, para nao
+      // reintroduzirem a prop inerte.
+      it('does not emit a round class — pill is the base default', () => {
         const wrapper = mount(DssChip)
-        expect(wrapper.classes()).toContain('dss-chip--round')
+        expect(wrapper.classes()).not.toContain('dss-chip--round')
       })
 
       it('applies square shape when square prop is true', () => {
@@ -449,49 +453,48 @@ describe('DssChip', () => {
   // COLOR CLASSES TESTS
   // ===========================================================================
 
+  // O defeito que estes testes travam: a cor era emitida por DOIS caminhos
+  // (utility do Quasar sem brand, classe DSS com brand) e o segundo so tinha
+  // CSS para 3 das 9 cores — `positive` + `brand` saia preto, sem fundo.
+  // jsdom nao aplica SCSS, entao a cor COMPUTADA nao e verificavel aqui (isso
+  // fica com o contrato e com a verificacao visual). O que E verificavel, e o
+  // que teria pego o defeito, e o contrato de CLASSE: sai sempre uma unica
+  // classe de cor, a mesma com e sem brand.
   describe('Color Classes', () => {
-    it('applies background color class for filled variant', () => {
-      const wrapper = mount(DssChip, {
-        props: {
-          variant: 'filled',
-          color: 'primary'
+    const CORES = [
+      'primary', 'secondary', 'tertiary', 'accent',
+      'positive', 'negative', 'warning', 'info', 'neutral'
+    ]
+    const VARIANTES = ['filled', 'outline', 'flat']
+
+    it.each(CORES)('emits dss-chip--%s in every variant, with and without brand', (color) => {
+      for (const variant of VARIANTES) {
+        for (const brand of [null, 'hub', 'water', 'waste']) {
+          const wrapper = mount(DssChip, { props: { variant, color, brand } })
+          expect(wrapper.classes()).toContain(`dss-chip--${color}`)
         }
-      })
-      expect(wrapper.classes()).toContain('bg-primary')
-      expect(wrapper.classes()).toContain('text-white')
+      }
     })
 
-    it('applies text color class for outline variant', () => {
-      const wrapper = mount(DssChip, {
-        props: {
-          variant: 'outline',
-          color: 'secondary'
-        }
-      })
-      expect(wrapper.classes()).toContain('text-secondary')
-      expect(wrapper.classes()).not.toContain('bg-secondary')
+    it('keeps the color class identical with and without brand', () => {
+      for (const color of CORES) {
+        const semBrand = mount(DssChip, { props: { color } }).classes()
+        const comBrand = mount(DssChip, { props: { color, brand: 'hub' } }).classes()
+        const cor = (cls) => cls.filter((c) => CORES.some((k) => c === `dss-chip--${k}`))
+        expect(cor(comBrand)).toEqual(cor(semBrand))
+        expect(cor(comBrand)).toHaveLength(1)
+      }
     })
 
-    it('applies text color class for flat variant', () => {
-      const wrapper = mount(DssChip, {
-        props: {
-          variant: 'flat',
-          color: 'accent'
+    // As utilities nao sao brand-aware e sao `!important` dentro de layer, o
+    // que as punha em disputa com o CSS do DSS. Sairam de cena de proposito.
+    it('does not emit Quasar color utilities', () => {
+      for (const variant of VARIANTES) {
+        for (const color of CORES) {
+          const classes = mount(DssChip, { props: { variant, color } }).classes()
+          expect(classes.some((c) => /^(bg|text)-/.test(c))).toBe(false)
         }
-      })
-      expect(wrapper.classes()).toContain('text-accent')
-      expect(wrapper.classes()).not.toContain('bg-accent')
-    })
-
-    it('does not apply color classes when brand is set', () => {
-      const wrapper = mount(DssChip, {
-        props: {
-          color: 'primary',
-          brand: 'hub'
-        }
-      })
-      expect(wrapper.classes()).not.toContain('bg-primary')
-      expect(wrapper.classes()).not.toContain('text-primary')
+      }
     })
   })
 

@@ -58,7 +58,10 @@ O `DssChip` é um wrapper DSS baseado no QChip, com **API pública governada pel
 
 | Prop | Tipo | Default | Valores | Descrição |
 |------|------|---------|---------|-----------|
-| `color` | String | `'primary'` | `primary`, `secondary`, `accent`, `positive`, `negative`, `warning`, `info`, `grey` | Cor semântica do chip |
+| `color` | `ChipColor` | `'primary'` | `primary`, `secondary`, `tertiary`, `accent`, `positive`, `negative`, `warning`, `info`, `neutral` | Cor semântica do chip |
+
+> A lista acima é a união literal de `ChipColor` (`types/chip.types.ts`). Esta tabela
+> chegou a divergir dela — anunciava `grey`, que nunca existiu, e omitia `tertiary`.
 
 **Exemplo:**
 ```vue
@@ -99,12 +102,16 @@ O `DssChip` é um wrapper DSS baseado no QChip, com **API pública governada pel
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `round` | Boolean | `true` | Bordas completamente arredondadas (pill shape) |
 | `square` | Boolean | `false` | Bordas quadradas (border-radius pequeno) |
+
+> **Não existe prop `round`.** O chip já nasce pílula (`border-radius: var(--dss-radius-full)`
+> na base), então `square` é o único desvio possível — e o QChip também só oferece este.
+> A prop existiu, vinha `true` de fábrica e aplicava uma regra byte-idêntica ao default:
+> era inerte nas duas posições. Removida em ago/2026.
 
 **Exemplo:**
 ```vue
-<DssChip round label="Round (Padrão)" />
+<DssChip label="Pílula (padrão)" />
 <DssChip square label="Square" />
 ```
 
@@ -172,10 +179,40 @@ O `DssChip` é um wrapper DSS baseado no QChip, com **API pública governada pel
 
 **Exemplo:**
 ```vue
-<DssChip brand="hub" class="dss-chip--primary" label="Hub 🟠" />
-<DssChip brand="water" class="dss-chip--primary" label="Water 🔵" />
-<DssChip brand="waste" class="dss-chip--primary" label="Waste 🟢" />
+<DssChip brand="hub" label="Hub 🟠" />
+<DssChip brand="water" label="Water 🔵" />
+<DssChip brand="waste" label="Waste 🟢" />
 ```
+
+> O `class="dss-chip--primary"` que este exemplo pedia **não é mais necessário** —
+> a classe de cor passou a ser emitida sempre, com ou sem brand.
+
+#### Disputa `color` × `brand`
+
+Quando os dois estão definidos, a cor **não** é sobrescrita pela marca: o que decide
+é o REGIME do token por trás da cor escolhida.
+
+| Regime | Cores | Token | Sob `[data-brand]` |
+|---|---|---|---|
+| Ação | `primary` | `--dss-action-primary` | **Acompanha a marca** |
+| Ação | `secondary`, `tertiary`, `accent` | `--dss-action-*` | Imune — ver nota |
+| Feedback | `positive`, `negative`, `warning`, `info` | `--dss-feedback-*` | **Imune** |
+| Valor | `neutral` | `--dss-surface-subtle` + `--dss-text-primary` | **Imune** |
+
+`primary` acompanhar a marca é intencional (Constituição #5): significa "a cor de
+ação do produto ativo", não um azul fixo. Cor de feedback é imune porque "erro" não
+muda de cor porque o produto é Water.
+
+> **Nota — as outras três cores de ação.** `secondary`, `tertiary` e `accent` usam
+> tokens `--dss-action-*`, mas os arquivos de marca (`tokens/brand/_hub.scss` e
+> irmãos) as declaram como "Mantém … semântico" nas três marcas: só
+> `--dss-action-primary` é remapeada. Isso é decisão dos TOKENS, não do chip — o
+> componente apenas aponta cada cor ao token certo. Se um dia `accent` passar a
+> variar por marca, o chip acompanha sem alteração de código.
+
+Os dois caminhos de marca — a prop `brand` e o `[data-brand]` ancestral — resolvem
+pelos **mesmos tokens**, então produzem o mesmo resultado. Em toda combinação o
+**ícone acompanha o chip**, nunca a marca.
 
 ---
 
@@ -341,7 +378,6 @@ O DssChip implementa um subconjunto curado das props do QChip:
 ### Props Exclusivas DSS
 - `brand` (hub, water, waste) - Sistema de brandabilidade Sansys
 - `variant` (filled, outline, flat) - Variantes visuais explícitas
-- `round` (Boolean) - Forma pill (arredondada)
 
 ### Governança
 - Cores são aplicadas via classes utilitárias no Vue, não em SCSS

@@ -113,10 +113,13 @@ export interface ChipProps {
   /** Tamanho do chip */
   size?: ChipSize
 
-  /** Chip completamente circular (pill shape) */
-  round?: boolean
-
-  /** Chip completamente quadrado (sem border-radius) */
+  /**
+   * Chip completamente quadrado (raio reduzido).
+   *
+   * Espelha o `square` do QChip. Não existe prop `round` complementar: o chip
+   * já NASCE pill (`border-radius: var(--dss-radius-full)` na base), então
+   * `square` é o único desvio possível — e o QChip também só oferece este.
+   */
   square?: boolean
 
   // ========================================

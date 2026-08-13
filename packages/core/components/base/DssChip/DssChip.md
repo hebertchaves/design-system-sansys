@@ -211,8 +211,9 @@ O DssChip utiliza pseudo-elemento `::before` para garantir touch target ≥48px:
 
 | Prop | Type | Default | Descrição |
 |------|------|---------|-----------|
-| `round` | Boolean | `true` | Bordas completamente arredondadas (pill shape) |
 | `square` | Boolean | `false` | Bordas quadradas (border-radius pequeno) |
+
+> **Não existe prop `round`** — o chip já nasce pílula pela base, espelhando o QChip.
 
 ### Props de Estado
 
@@ -750,7 +751,6 @@ function removeTag(tag) {
 | Combinação | Por quê | Alternativa |
 |------------|---------|-------------|
 | `disabled` + `clickable` ativo | Estados conflitantes | Use apenas `disabled` |
-| `round` + `square` | Formas conflitantes | Use apenas um |
 | `removable` sem `@remove` handler | Botão não funcional | Sempre handle o evento |
 
 ---

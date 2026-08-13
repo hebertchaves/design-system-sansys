@@ -118,7 +118,6 @@ O **DssChip** é um componente de chip/tag para exibição de informações comp
 | `variant` | `'filled' \| 'outline' \| 'flat'` | `'filled'` | Variante visual |
 | `color` | `String` | `'primary'` | Cor semântica DSS |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` | Tamanho |
-| `round` | `Boolean` | `true` | Bordas pill (arredondadas) |
 | `square` | `Boolean` | `false` | Bordas com radius mínimo |
 | `selected` | `Boolean` | `false` | Estado de seleção |
 | `disable` | `Boolean` | `false` | Desabilita interações |

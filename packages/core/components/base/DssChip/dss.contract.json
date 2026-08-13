@@ -91,16 +91,10 @@
         ]
       },
       {
-        "name": "round",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "description": "Chip completamente circular (pill shape)"
-      },
-      {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Chip completamente quadrado (sem border-radius)"
+        "description": "Chip completamente quadrado (raio reduzido)."
       },
       {
         "name": "selected",
@@ -629,6 +623,120 @@
           "source": "3-variants/_flat.scss"
         },
         {
+          "property": "background-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-on-primary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-secondary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-secondary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-tertiary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-accent",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-accent",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-success",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-success",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-warning",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-warning",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-info",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-info",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-subtle",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-primary",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
           "property": "border",
           "token": "--dss-border-width-md",
           "value": null,
@@ -663,66 +771,6 @@
           "token": null,
           "value": "-1",
           "source": "3-variants/_flat.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-text-on-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-action-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-action-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-action-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-action-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
         },
         {
           "property": "border-width",
@@ -893,30 +941,6 @@
           "token": null,
           "value": "-1",
           "source": "3-variants/_flat.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-text-on-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-secondary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-accent",
-          "value": null,
-          "source": "4-output/_brands.scss"
         },
         {
           "property": "filter",
@@ -1325,6 +1349,73 @@
         ]
       },
       {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-on-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-tertiary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-accent",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-warning",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-info",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-text-inverse",
         "usedIn": [
           "default",
@@ -1336,35 +1427,6 @@
         "name": "--dss-opacity-selected",
         "usedIn": [
           "default"
-        ]
-      },
-      {
-        "name": "--dss-action-primary",
-        "usedIn": [
-          "default",
-          "hover",
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-text-on-primary",
-        "usedIn": [
-          "default",
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-action-secondary",
-        "usedIn": [
-          "default",
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-action-accent",
-        "usedIn": [
-          "default",
-          "hover"
         ]
       },
       {
@@ -1522,7 +1584,7 @@
     "structure": "1-structure/DssChip.ts.vue",
     "scss": {
       "L2": "2-composition/_base.scss",
-      "L3": "3-variants/_filled.scss",
+      "L3": "3-variants/_colors.scss",
       "L4": [
         "4-output/_brands.scss",
         "4-output/_states.scss"

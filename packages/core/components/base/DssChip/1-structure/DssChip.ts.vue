@@ -146,7 +146,6 @@ const props = withDefaults(defineProps<ChipProps>(), {
   variant: 'filled',
   color: 'primary',
   size: 'md',
-  round: true,
   square: false,
 
   // States

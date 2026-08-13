@@ -300,10 +300,10 @@
    SHAPE VARIANTS
    ========================================================================== */
 
-.dss-chip--round {
-  border-radius: var(--dss-radius-full);
-}
-
+/* Não existe `.dss-chip--round`: o raio pill JÁ é o default do `.dss-chip`
+   (ver "Borders" no topo deste arquivo). A regra que existia aqui era
+   byte-idêntica a esse default, e a prop que a acionava vinha `true` de fábrica
+   — ou seja, era inerte nas duas posições. O QChip também só oferece `square`. */
 .dss-chip--square {
   border-radius: var(--dss-radius-sm);
 }
