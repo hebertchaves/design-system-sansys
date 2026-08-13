@@ -527,6 +527,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "line-height",
+          "token": "--dss-line-height-xs-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "gap",
           "token": "--dss-spacing-0_5",
           "value": null,
@@ -551,14 +557,14 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "padding",
-          "token": "--dss-spacing-2",
+          "property": "min-height",
+          "token": "--dss-compact-control-height-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "min-height",
-          "token": "--dss-compact-control-height-lg",
+          "property": "line-height",
+          "token": "--dss-line-height-md-tight",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1245,6 +1251,12 @@
         ]
       },
       {
+        "name": "--dss-line-height-xs-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-3",
         "usedIn": [
           "default",
@@ -1258,16 +1270,22 @@
         ]
       },
       {
+        "name": "--dss-compact-control-height-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-md-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-2",
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-compact-control-height-lg",
-        "usedIn": [
-          "default"
         ]
       },
       {

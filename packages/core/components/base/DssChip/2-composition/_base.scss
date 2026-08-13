@@ -220,6 +220,10 @@
   padding: var(--dss-spacing-0_5) var(--dss-spacing-2);
   min-height: var(--dss-compact-control-height-xs); /* 20px - altura VISUAL */
   font-size: var(--dss-font-size-xs);
+  /* O line-height acompanha o font-size DESTE tamanho. A base declara o par de
+     14px; sem este override o texto de 12px herdaria a caixa de 14px e a altura
+     estouraria os 20px do token de compact control. */
+  line-height: var(--dss-line-height-xs-tight);
   gap: var(--dss-spacing-0_5);
 
   .dss-chip__icon {
@@ -240,6 +244,7 @@
   padding: var(--dss-spacing-0_5) var(--dss-spacing-2_5);
   min-height: var(--dss-compact-control-height-sm); /* 24px - altura VISUAL */
   font-size: var(--dss-font-size-xs);
+  line-height: var(--dss-line-height-xs-tight);
 
   .dss-chip__icon {
     font-size: var(--dss-font-size-sm);
@@ -251,9 +256,13 @@
 }
 
 .dss-chip--lg {
-  padding: var(--dss-spacing-2) var(--dss-spacing-4);
+  /* Padding vertical era spacing-2 (8px): com fonte de 16px a altura chegava a
+     34px e ESTOURAVA os 32px do token de compact control — a escala de altura
+     da familia (badge/chip/checkbox/radio/toggle) deixava de valer no lg. */
+  padding: var(--dss-spacing-1) var(--dss-spacing-4);
   min-height: var(--dss-compact-control-height-lg); /* 32px - altura VISUAL */
   font-size: var(--dss-font-size-md);
+  line-height: var(--dss-line-height-md-tight);
   gap: var(--dss-spacing-2);
 
   .dss-chip__icon {
@@ -307,6 +316,7 @@
   padding: var(--dss-spacing-0_5) var(--dss-spacing-2);
   min-height: var(--dss-compact-control-height-sm); /* 24px - altura VISUAL */
   font-size: var(--dss-font-size-xs);
+  line-height: var(--dss-line-height-xs-tight);
 }
 
 /* ==========================================================================
