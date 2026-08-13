@@ -1,4 +1,25 @@
 {
-  "note": "Tokens --dss-* referenciados mas NÃO definidos (débito). Gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.",
-  "tokens": []
+  "note": "Tokens --dss-* referenciados mas NAO definidos (debito), POR ESCOPO. O gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.",
+  "byScope": {
+    "themes": [
+      "--dss-brand-primary-hover",
+      "--dss-button-padding-x",
+      "--dss-button-padding-y",
+      "--dss-input-height-min",
+      "--dss-input-padding-x",
+      "--dss-input-padding-y",
+      "--dss-radius-button",
+      "--dss-radius-card",
+      "--dss-radius-input",
+      "--dss-radius-modal",
+      "--dss-touch-target-ideal",
+      "--dss-touch-target-min"
+    ],
+    "tokens": [
+      "--dss-opacity-12",
+      "--dss-opacity-16",
+      "--dss-opacity-24",
+      "--dss-opacity-8"
+    ]
+  }
 }

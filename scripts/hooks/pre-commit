@@ -58,7 +58,14 @@ fi
 # Ex.: --dss-error-600/--dss-focus-ring nunca definidos → estado/anel some. O
 # sync-css-to-meta valida só o meta, não o SCSS. Bloqueia fantasmas NOVOS (fora
 # do baseline); débito legado grandfathered em scss-token-ghost-baseline.json.
-if echo "$STAGED" | grep -qE 'packages/core/components/.+\.scss$|packages/core/tokens/.+\.scss$|scripts/validate-scss-tokens\.cjs'; then
+#
+# ago/2026: o gatilho ganhou `themes/` junto com a extensão de escopo do próprio
+# validador. Sem isso o gate só rodaria por acaso — quando um .scss de componente
+# ou de token fosse encenado no mesmo commit —, e um fantasma introduzido em
+# themes/ passaria batido, que foi exatamente como `--dss-brand-primary-hover`
+# sobreviveu. O baseline também entra no gatilho: mexer nele é mexer no contrato
+# do gate, e precisa ser revalidado no mesmo commit.
+if echo "$STAGED" | grep -qE 'packages/core/(components|tokens|themes)/.+\.scss$|scripts/validate-scss-tokens\.cjs|scripts/scss-token-ghost-baseline\.json'; then
   echo "🔍 Validando tokens SCSS (todo var(--dss-*) existe no catálogo)..."
   node scripts/validate-scss-tokens.cjs --gate
   if [ $? -ne 0 ]; then

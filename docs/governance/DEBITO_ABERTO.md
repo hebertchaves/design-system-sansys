@@ -223,15 +223,29 @@
     `--dss-action-*` como única via e **remover** `--dss-brand-{secondary,tertiary,accent}`, que hoje só
     sugerem uma capacidade inexistente; (c) manter como está, documentando que são reserva de futuro.
 
-- 🔴 **Token fantasma `--dss-brand-primary-hover` — e o ponto cego do gate** (2026-08-13). Consumido em
-  **9 lugares** (`themes/index.scss` ×3, `_quasar-tokens-mapping.scss` ×3 com fallback,
-  `_quasar-utilities.scss` ×3) e **NUNCA definido** — nem no fonte nem no `dist/style.css`. Os arquivos de
-  marca definem `--dss-brand-hover`, sem o `primary-`. Impacto prático baixo (3 usos têm fallback e o pior
-  caso, `_quasar-utilities.scss:32`, está em bloco que o próprio comentário marca como provavelmente
-  morto), **mas o achado que importa é o gate**: `validate-scss-tokens.cjs` varre só `components/`
-  (const `COMPONENTS`, linha 28) — **`themes/` e `tokens/` são ponto cego**. O baseline "vazio = qualquer
-  fantasma bloqueia" vale menos do que parece. **Decidir:** estender o escopo do gate a `themes/`
-  (provável safra nova de fantasmas) ou registrar a limitação explicitamente.
+- ✅ **Ponto cego do gate de tokens fantasma — FECHADO** (2026-08-13). O `validate-scss-tokens.cjs` varria
+  só `components/`; `themes/` e `tokens/` nunca foram olhados, então o baseline "vazio = qualquer fantasma
+  bloqueia" cobria menos do que o nome sugeria. Descoberto via `--dss-brand-primary-hover` (consumido em
+  10 lugares de `themes/`, nunca definido — nem no `dist/style.css`; os arquivos de marca definem
+  `--dss-brand-hover`, sem o `primary-`). Escopo estendido aos três diretórios + gatilho do pre-commit
+  ampliado para `themes/` (sem isso o gate só rodaria por acaso, quando um `.scss` de componente caísse
+  no mesmo commit — foi assim que o fantasma sobreviveu).
+  - **Baseline agora é POR ESCOPO.** Uma lista plana de nomes faria com que perdoar um fantasma em
+    `themes/` o perdoasse também em `components/`, diluindo a garantia de baseline vazio conquistada em
+    `b49b6e0`. **Controle negativo verificado:** injetando `--dss-touch-target-min` (baselinado em
+    `themes/`) num componente, o gate reprova com exit 1 e rotula `(20× · components)`.
+  - 🟡 **Débito novo rastreado: 16 fantasmas em 45 referências** (12 em `themes/`, 4 em `tokens/`).
+    Baselinados, não corrigidos — porque **corrigir não é trocar o nome do token**, ver abaixo.
+    - 🔴 **`--dss-touch-target-min` (19 usos) — guarda de WCAG 2.5.5 que NUNCA funcionou.** A escala real
+      é `xs/sm/md/lg/xl` (o mínimo WCAG de 44px é o `md`); `-min` não existe. Logo
+      `.q-btn { min-height: var(--dss-touch-target-min) !important }` é **no-op**. ⚠️ **Apontá-lo para
+      `--dss-touch-target-md` não é cosmético: passaria a aplicar `min-height: 44px !important` em TODO
+      `.q-btn`**, mudando altura em cascata no sistema inteiro. Exige decisão + verificação visual ampla.
+    - **`--dss-input-height-min`** — é exatamente o bug já registrado em `[[project_qfield_height_token_bug]]`,
+      que até agora não tinha gate. A extensão de escopo passou a pegá-lo sozinha.
+    - Demais: `--dss-brand-primary-hover`, `--dss-{button,input}-padding-{x,y}`,
+      `--dss-radius-{button,input,card,modal}`, `--dss-touch-target-ideal` (themes) e
+      `--dss-opacity-{8,12,16,24}` (tokens — quebram a cadeia de `--dss-opacity-brand-*`).
 
 - 🟡 **Decisão: label flutuante vs estática** — Material (flutuante, atual) vs shadcn/Make (estática acima).
   Usuário optou por **manter flutuante por enquanto**. `[[project_make_vs_dss_contrato_visual]]`.

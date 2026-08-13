@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * validate-scss-tokens.cjs — Todo `var(--dss-*)` no SCSS de componente existe.
+ * validate-scss-tokens.cjs — Todo `var(--dss-*)` no SCSS do core existe.
  *
  * CONTEXTO (jul/2026). O `sync-css-to-meta --validate` checa os tokens do
  * dss.meta.json contra o catálogo, mas NÃO os `var(--dss-*)` escritos direto no
@@ -9,7 +9,8 @@
  * para vazio e o estado (erro/anel) some silenciosamente. Bug real em
  * DssField/DssRadio/DssToggle (~23 usos). Ver [[undefined-error-scale]].
  *
- * Regra: todo `var(--dss-x)` referenciado no SCSS de componente DEVE ter uma
+ * Regra: todo `var(--dss-x)` referenciado no SCSS de `components/`, `themes/`
+ * ou `tokens/` DEVE ter uma
  * definição `--dss-x:` em algum lugar de packages/core (tokens, themes ou o
  * próprio componente). Referência sem definição = token fantasma → FALHA.
  *
@@ -27,6 +28,21 @@ const ROOT = path.resolve(__dirname, '..');
 const CORE = path.join(ROOT, 'packages', 'core');
 const COMPONENTS = path.join(CORE, 'components');
 const GATE = process.argv.slice(2).includes('--gate');
+
+// ESCOPOS VARRIDOS (ago/2026: eram só os componentes).
+// O catálogo de DEFINIÇÕES sempre varreu todo o packages/core, mas a leitura de
+// REFERÊNCIAS parava em components/ — então `themes/` e `tokens/` eram ponto
+// cego, e o baseline vazio ("qualquer fantasma bloqueia") cobria menos do que o
+// nome sugeria. Descoberto via `--dss-brand-primary-hover`: consumido em 9
+// lugares de themes/, nunca definido, nem no dist. Ver DEBITO_ABERTO.md.
+//
+// `tokens/` entra porque um token cujo VALOR é `var(--outro-inexistente)` falha
+// do mesmo jeito — a cadeia de tokens é código, não é declaração inerte.
+const SCOPES = [
+  { root: COMPONENTS, name: 'components' },
+  { root: path.join(CORE, 'themes'), name: 'themes' },
+  { root: path.join(CORE, 'tokens'), name: 'tokens' },
+];
 
 function walkScss(dir, acc = []) {
   let entries;
@@ -57,12 +73,26 @@ for (const f of walkScss(CORE)) {
 // Fixtures/páginas de teste — fora do escopo de produção (decisão de governança).
 const FIXTURES = new Set(['DssTestPageComplexity', 'DssCadrisCard', 'DssDataCard']);
 
-// 2. Referências `var(--dss-x)` no SCSS de COMPONENTE.
-const ghosts = new Map(); // token -> [ "Comp/arquivo:linha", ... ]
-for (const f of walkScss(COMPONENTS)) {
-  const rel = path.relative(COMPONENTS, f).replace(/\\/g, '/');
-  const comp = rel.split('/')[1] || rel;
-  if (FIXTURES.has(comp)) continue;
+// 2. Referências `var(--dss-x)` no SCSS dos escopos acima.
+const ghosts = new Map();      // token -> [ "escopo · arquivo:linha", ... ]
+const ghostScopes = new Map(); // token -> Set(nome do escopo) — p/ o relatório
+for (const { root: scopeRoot, name: scopeName } of SCOPES)
+for (const f of walkScss(scopeRoot)) {
+  const rel = path.relative(scopeRoot, f).replace(/\\/g, '/');
+  // Em components/ o rótulo útil é o NOME do componente; nos demais escopos é o
+  // caminho relativo, que já é curto.
+  const comp = scopeName === 'components' ? (rel.split('/')[1] || rel) : rel;
+  if (scopeName === 'components' && FIXTURES.has(comp)) continue;
+  // Rótulo do local: em components/ `Comp/arquivo`; nos demais, `escopo/caminho`
+  // (o `rel` já traz o arquivo, então não se repete o basename).
+  const where = scopeName === 'components'
+    ? `${comp}/${path.basename(f)}`
+    : `${scopeName}/${rel}`;
+  const noteGhost = (tok, linha, sufixo = '') => {
+    if (!ghosts.has(tok)) { ghosts.set(tok, []); ghostScopes.set(tok, new Set()); }
+    ghosts.get(tok).push(`${where}:${linha}${sufixo}`);
+    ghostScopes.get(tok).add(scopeName);
+  };
   // Tira comentários de BLOCO no arquivo inteiro (preservando o nº de linha), pois
   // um /* */ multi-linha não era pego pelo strip per-linha → falso-positivo (ex.:
   // --dss-input-height-min citado num doc-comment do DssTextarea).
@@ -78,10 +108,7 @@ for (const f of walkScss(COMPONENTS)) {
       // é fantasma. (A interpolação de MARCA é checada no loop abaixo.)
       if (code[m.index + m[0].length] === '#') continue;
       const tok = m[1];
-      if (!defined.has(tok)) {
-        if (!ghosts.has(tok)) ghosts.set(tok, []);
-        ghosts.get(tok).push(`${comp}/${path.basename(f)}:${i + 1}`);
-      }
+      if (!defined.has(tok)) noteGhost(tok, i + 1);
     }
     // Interpolação de MARCA: `var(--dss-#{$brand}-<suffix>)` (mixins). O regex
     // literal acima não enxerga através do `#{...}` — foi assim que os ghosts
@@ -91,37 +118,55 @@ for (const f of walkScss(COMPONENTS)) {
     while ((m = reInterp.exec(code))) {
       for (const brand of ['hub', 'water', 'waste']) {
         const tok = `--dss-${brand}-${m[1]}`;
-        if (!defined.has(tok)) {
-          if (!ghosts.has(tok)) ghosts.set(tok, []);
-          ghosts.get(tok).push(`${comp}/${path.basename(f)}:${i + 1} (interpolado #{$brand})`);
-        }
+        if (!defined.has(tok)) noteGhost(tok, i + 1, ' (interpolado #{$brand})');
       }
     }
   });
 }
 
-// Baseline (ratchet): débito pré-existente grandfathered. O gate bloqueia
-// tokens fantasma NOVOS (fora do baseline) já; os existentes são débito rastreado
-// a zerar aos poucos. `--update-baseline` regrava a lista atual.
+// Baseline (ratchet) POR ESCOPO. Guardar só o NOME do token faria com que
+// perdoar um fantasma em `themes/` o perdoasse também em `components/` — o
+// baseline de componente é vazio desde b49b6e0 e essa garantia não pode ser
+// diluída por causa da extensão de escopo. Por isso a lista é por escopo.
+// Formato legado (array plano) segue aceito e vale para TODOS os escopos.
 const BASELINE_PATH = path.join(__dirname, 'scss-token-ghost-baseline.json');
 const UPDATE = process.argv.slice(2).includes('--update-baseline');
 const ghostNames = [...ghosts.keys()].sort();
 
+// Pares reais (token, escopo) encontrados agora.
+const pares = [];
+for (const [tok, escopos] of ghostScopes) for (const s of escopos) pares.push([tok, s]);
+pares.sort((a, b) => a[0].localeCompare(b[0]) || a[1].localeCompare(b[1]));
+
+const porEscopo = {};
+for (const [tok, s] of pares) (porEscopo[s] ||= []).push(tok);
+
 if (UPDATE) {
   fs.writeFileSync(BASELINE_PATH, JSON.stringify({
-    note: 'Tokens --dss-* referenciados mas NÃO definidos (débito). Gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.',
-    tokens: ghostNames,
+    note: 'Tokens --dss-* referenciados mas NAO definidos (debito), POR ESCOPO. O gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.',
+    byScope: porEscopo,
   }, null, 2) + '\n');
-  console.log(`✅ Baseline atualizado: ${ghostNames.length} token(s) fantasma conhecido(s).`);
+  const n = pares.length;
+  console.log(`✅ Baseline atualizado: ${n} par(es) token×escopo conhecido(s).`);
+  for (const [s, lista] of Object.entries(porEscopo)) console.log(`   ${s}: ${lista.length}`);
   process.exit(0);
 }
 
-let baseline = [];
-try { baseline = JSON.parse(fs.readFileSync(BASELINE_PATH, 'utf8')).tokens || []; } catch { /* sem baseline */ }
-const baseSet = new Set(baseline);
-const newGhosts = ghostNames.filter((t) => !baseSet.has(t));
-const knownGhosts = ghostNames.filter((t) => baseSet.has(t));
-const staleBaseline = baseline.filter((t) => !ghosts.has(t)); // já corrigidos → limpar do baseline
+let baseRaw = {};
+try { baseRaw = JSON.parse(fs.readFileSync(BASELINE_PATH, 'utf8')); } catch { /* sem baseline */ }
+const legado = Array.isArray(baseRaw.tokens) ? baseRaw.tokens : [];
+const byScope = baseRaw.byScope || {};
+const conhecido = (tok, escopo) =>
+  legado.includes(tok) || (byScope[escopo] || []).includes(tok);
+
+const novos = pares.filter(([tok, s]) => !conhecido(tok, s));
+const newGhosts = [...new Set(novos.map(([tok]) => tok))].sort();
+const knownGhosts = ghostNames.filter((t) => !newGhosts.includes(t));
+// Entradas do baseline que ninguem mais referencia → limpar.
+const staleBaseline = [];
+for (const [s, lista] of Object.entries(byScope))
+  for (const tok of lista) if (!(ghostScopes.get(tok) || new Set()).has(s)) staleBaseline.push(`${s}/${tok}`);
+for (const tok of legado) if (!ghosts.has(tok)) staleBaseline.push(tok);
 const totalRefs = [...ghosts.values()].reduce((a, v) => a + v.length, 0);
 
 console.log(`🔎 Tokens SCSS — todo var(--dss-*) deve existir (${defined.size} definidos)\n`);
@@ -141,7 +186,8 @@ if (!newGhosts.length) {
 console.log(`\n❌ ${newGhosts.length} token(s) fantasma NOVO(S) (fora do baseline):\n`);
 for (const tok of newGhosts) {
   const uses = ghosts.get(tok);
-  console.log(`  ${tok}  (${uses.length}×)`);
+  const esc = novos.filter(([t2]) => t2 === tok).map(([, s]) => s).join('+');
+  console.log(`  ${tok}  (${uses.length}× · ${esc})`);
   for (const u of uses.slice(0, 8)) console.log(`     ↳ ${u}`);
   if (uses.length > 8) console.log(`     ↳ … +${uses.length - 8}`);
 }
