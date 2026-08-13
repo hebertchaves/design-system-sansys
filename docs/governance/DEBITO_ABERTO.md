@@ -234,15 +234,36 @@
     `themes/` o perdoasse também em `components/`, diluindo a garantia de baseline vazio conquistada em
     `b49b6e0`. **Controle negativo verificado:** injetando `--dss-touch-target-min` (baselinado em
     `themes/`) num componente, o gate reprova com exit 1 e rotula `(20× · components)`.
-  - 🟡 **Débito novo rastreado: 16 fantasmas em 45 referências** (12 em `themes/`, 4 em `tokens/`).
-    Baselinados, não corrigidos — porque **corrigir não é trocar o nome do token**, ver abaixo.
+  - 🟡 **Débito novo rastreado: 15 fantasmas em 44 referências** (11 em `themes/`, 4 em `tokens/`).
+    Eram 16; `--dss-input-height-min` foi resolvido (↓). Baselinados, não corrigidos — porque
+    **corrigir não é trocar o nome do token**, ver abaixo.
+    - ✅ **Divergência 48px × 44px — RESOLVIDA na fonte normativa** (2026-08-13). A Constituição #4 do
+      `CLAUDE.md` exigia "≥ 48px", valor que **não existe na escala** (32/36/44/52/64) e que vinha do
+      Material, não do WCAG. Os componentes sempre entregaram 44px (`--dss-touch-target-md`), e a
+      divergência estava mascarada por comentários `/* 48px */` escritos ao lado do token de 44.
+      **A decisão já existia:** o selo do DssInput registrava como risco **R-04** que "governança definiu
+      44px" e pedia "alinhamento de CLAUDE.md na próxima revisão normativa" — ação que nunca ocorreu.
+      Agora: `CLAUDE.md` corrigido para 44px + **19 citações do token fantasma e 46 valores `48px`**
+      corrigidos em Checkbox/Radio/Toggle/Chip (`.md`, `README`, `_base.scss`), mais **10 citações e 11
+      valores nos SELOS** desses quatro — eram afirmação falsa em documento de certificação.
+      🔲 **Sobra varrer:** `docs/DSS_CATALOG_2026.md`, `dss_system_handoff_v_2.md` e selos de outros
+      componentes ainda dizem 48px. `docs/archive/` e `docs/audits/` **não** devem ser reescritos —
+      são registro do que se acreditava à época.
     - 🔴 **`--dss-touch-target-min` (19 usos) — guarda de WCAG 2.5.5 que NUNCA funcionou.** A escala real
       é `xs/sm/md/lg/xl` (o mínimo WCAG de 44px é o `md`); `-min` não existe. Logo
       `.q-btn { min-height: var(--dss-touch-target-min) !important }` é **no-op**. ⚠️ **Apontá-lo para
       `--dss-touch-target-md` não é cosmético: passaria a aplicar `min-height: 44px !important` em TODO
       `.q-btn`**, mudando altura em cascata no sistema inteiro. Exige decisão + verificação visual ampla.
-    - **`--dss-input-height-min`** — é exatamente o bug já registrado em `[[project_qfield_height_token_bug]]`,
-      que até agora não tinha gate. A extensão de escopo passou a pegá-lo sozinha.
+    - ✅ **`--dss-input-height-min` — RESOLVIDO** (2026-08-13), o bug de
+      `[[project_qfield_height_token_bug]]`, que até agora não tinha gate. **A regra foi REMOVIDA, não
+      reapontada.** Medido `min-height: 0px` no navegador: o `!important` nunca aplicou nada, então
+      remover não mudou pixel algum — Select 54 campos (38–48px), Textarea 52 (36–122), File 49 (36–69),
+      idênticos antes e depois. ⚠️ **Não apontar para `--dss-form-control-height-md` (44px)**: isso a
+      tornaria viva e forçaria 44px em todo `.q-field__control`, atropelando a escala densa que o próprio
+      DSS oferece (`-xs` 32px, `-sm` 36px) — os 4 campos hoje em 36–38px são exatamente as densas.
+      O comentário `KEEP: load-bearing` que a acompanhava era falso e saiu junto. *(Nota: DssInput foi
+      reconstruído com DOM próprio — `dss-input__control` — e não passa por `.q-field`; o alcance da regra
+      era só Select/Textarea/File.)*
     - Demais: `--dss-brand-primary-hover`, `--dss-{button,input}-padding-{x,y}`,
       `--dss-radius-{button,input,card,modal}`, `--dss-touch-target-ideal` (themes) e
       `--dss-opacity-{8,12,16,24}` (tokens — quebram a cadeia de `--dss-opacity-brand-*`).

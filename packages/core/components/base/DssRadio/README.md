@@ -106,7 +106,7 @@ const selected = ref('a')
 | `md` | 28px | 20px | `--dss-compact-control-height-md` |
 | `lg` | 32px | 24px | `--dss-compact-control-height-lg` |
 
-Touch target: 48px via `::before` (WCAG 2.5.5). Modo `dense` reduz gap, altura e tamanho da fonte, e remove touch target expandido.
+Touch target: 44px via `::before` (WCAG 2.5.5). Modo `dense` reduz gap, altura e tamanho da fonte, e remove touch target expandido.
 
 ---
 
@@ -229,7 +229,7 @@ Brands disponveis: `hub` (laranja), `water` (azul), `waste` (verde).
 
 | Criterio WCAG | Nivel | Implementacao |
 |---------------|-------|---------------|
-| 2.5.5 Target Size | AA | Touch target 48px via `::before` |
+| 2.5.5 Target Size | AA | Touch target 44px via `::before` |
 | 2.4.7 Focus Visible | AA | Outline tokenizado `--dss-focus-ring` |
 | 1.3.1 Info and Relationships | A | `<label>` + `<input type="radio">` nativos |
 | 4.1.2 Name, Role, Value | A | `aria-checked`, `aria-disabled`, `aria-invalid` |
@@ -255,7 +255,7 @@ Brands disponveis: `hub` (laranja), `water` (azul), `waste` (verde).
 | Categoria | Token | Uso |
 |-----------|-------|-----|
 | Altura | `--dss-compact-control-height-{xs,sm,md,lg}` | min-height por tamanho |
-| Touch target | `--dss-touch-target-min` | Area clicavel (48px) |
+| Touch target | `--dss-touch-target-md` | Area clicavel (44px) |
 | Spacing | `--dss-spacing-{0_5,1,1_5,2,2_5,3,4,5,6}` | Gap, controle, dot, offsets |
 | Tipografia | `--dss-font-family-sans`, `--dss-font-size-{xs,sm,md}` | Fonte e tamanho |
 | Bordas | `--dss-border-width-{md,thick}` | Controle e focus |

@@ -147,10 +147,10 @@ DssRadio/
 | Propriedade | Valor | Token |
 |-------------|-------|-------|
 | **Altura visual** | 28px (md) | `--dss-compact-control-height-md` |
-| **Touch target** | 48px | `--dss-touch-target-min` |
+| **Touch target** | 44px | `--dss-touch-target-md` |
 | **Implementacao** | `::before` no elemento raiz | Pseudo-elemento reservado |
 
-- Touch target implementado via `::before` com `min-width` e `min-height` de 48px
+- Touch target implementado via `::before` com `min-width` e `min-height` de 44px
 - `pointer-events: none` para nao interceptar cliques
 - Centralizado absolutamente com `transform: translate(-50%, -50%)`
 - Modo `dense` desativa touch target expandido (`display: none` no `::before`)
@@ -182,7 +182,7 @@ O indicador de selecao (circulo preenchido) e implementado como elemento real `<
 | **Altura** | `--dss-compact-control-height-sm` | min-height SM (24px) |
 | **Altura** | `--dss-compact-control-height-md` | min-height MD (28px) |
 | **Altura** | `--dss-compact-control-height-lg` | min-height LG (32px) |
-| **Touch Target** | `--dss-touch-target-min` | Area clicavel minima (48px) |
+| **Touch Target** | `--dss-touch-target-md` | Area clicavel minima (44px) |
 | **Spacing** | `--dss-spacing-0_5` | Focus outline offset (2px) |
 | **Spacing** | `--dss-spacing-1` | Gap XS, margem erro (4px) |
 | **Spacing** | `--dss-spacing-1_5` | Gap SM (6px) |
@@ -236,7 +236,7 @@ O indicador de selecao (circulo preenchido) e implementado como elemento real `<
 
 | Criterio WCAG | Nivel | Aplicacao no Componente | Status |
 |---------------|-------|-------------------------|--------|
-| 2.5.5 Target Size | AA | Touch target 48px via `::before` | Implementado |
+| 2.5.5 Target Size | AA | Touch target 44px via `::before` | Implementado |
 | 2.4.7 Focus Visible | AA | Outline com `--dss-focus-ring` | Implementado |
 | 1.4.3 Contrast (Minimum) | AA | Cores semanticas DSS | Implementado |
 | 1.3.1 Info and Relationships | A | `<label>` nativo, `<input type="radio">` | Implementado |
@@ -344,7 +344,7 @@ O indicador de selecao (circulo preenchido) e implementado como elemento real `<
 |---------|-------|---------------|
 | Golden Context | DssCheckbox | Mesma categoria (form control), mesma arquitetura |
 | Indicador visual | `<span>` real | Consistencia com DssCheckbox (nao pseudo-elemento) |
-| Touch target | 48px via `::before` | WCAG 2.5.5, mesmo padrao DssCheckbox/DssChip |
+| Touch target | 44px via `::before` | WCAG 2.5.5, mesmo padrao DssCheckbox/DssChip |
 | Sem variantes (Layer 3) | Fase 1 atomico | Controle unico, sem variantes visuais |
 | Cores sem brand | Classes utilitarias Quasar | `text-primary`, `text-secondary` etc. |
 | Cores com brand | `_brands.scss` via mixin | 3 brands x 3 cores, sem duplicacao |

@@ -70,7 +70,7 @@ O `DssCheckbox` é um componente de checkbox do Design System Sansys baseado em 
 | `lg` | 32px | 24px | 16px | 16px | 12px |
 | `xl` | 32px¹ | 28px | 18px | 18px | 16px |
 
-> ¹ `xl` reusa a altura `-lg` (32px) — a escala compacta compartilhada (badge/chip/checkbox) não define `-xl`. O box de 28px cabe em 32px; touch target 48px via `::before`.
+> ¹ `xl` reusa a altura `-lg` (32px) — a escala compacta compartilhada (badge/chip/checkbox) não define `-xl`. O box de 28px cabe em 32px; touch target 44px via `::before`.
 
 **Exemplo:**
 ```vue

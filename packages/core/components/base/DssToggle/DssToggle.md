@@ -96,8 +96,8 @@ DSS/components/base/DssToggle/
 
 **Opcao A — Componente INTERATIVO**
 
-- Touch target >= 48px via `::before` no elemento raiz `<label>`
-- Token: `--dss-touch-target-min`
+- Touch target >= 44px via `::before` no elemento raiz `<label>`
+- Token: `--dss-touch-target-md`
 - `pointer-events: none` no pseudo-elemento
 - `::before` reservado exclusivamente para touch target (CLAUDE.md Principio #7)
 - `::after` nao utilizado
@@ -145,7 +145,7 @@ DssToggle usa `role="switch"` no `<input type="checkbox">` nativo.
 
 | Criterio | Status | Implementacao |
 |----------|--------|---------------|
-| 2.5.5 Touch Target (AA) | Implementado | `::before` com `var(--dss-touch-target-min)` = 48px |
+| 2.5.5 Touch Target (AA) | Implementado | `::before` com `var(--dss-touch-target-md)` = 44px |
 | 2.4.7 Focus Visible (AA) | Implementado | Outline com `var(--dss-focus-ring)` |
 | 1.3.1 Info and Relationships (A) | Implementado | `<label>` nativo, `<input type="checkbox" role="switch">` |
 | 4.1.2 Name, Role, Value (A) | Implementado | `aria-checked`, `aria-disabled`, `aria-invalid`, `aria-label` |
@@ -210,7 +210,7 @@ DssToggle usa `role="switch"` no `<input type="checkbox">` nativo.
 |-------|-----|
 | `--dss-duration-200` | Transicoes |
 | `--dss-easing-standard` | Curva de easing |
-| `--dss-touch-target-min` | Touch target 48px |
+| `--dss-touch-target-md` | Touch target 44px |
 | `--dss-opacity-disabled` | Opacidade disabled (0.4) |
 | `--dss-opacity-50` | Opacidade high contrast disabled |
 
@@ -268,7 +268,7 @@ Dense mode aplica as seguintes reducoes visuais:
 | gap | `--dss-spacing-2` (8px) | `--dss-spacing-1` (4px) |
 | min-height | `--dss-compact-control-height-md` (28px) | `--dss-compact-control-height-sm` (24px) |
 | font-size | `--dss-font-size-sm` (14px) | `--dss-font-size-xs` (12px) |
-| touch target | 48px via `::before` | Removido (`display: none`) |
+| touch target | 44px via `::before` | Removido (`display: none`) |
 
 ### Comparacao com Golden Context (DssCheckbox)
 
@@ -346,7 +346,7 @@ background-color: var(--dss-hub-primary);
 | Golden Context | DssCheckbox (primario) | Mesma categoria: Compact Control interativo |
 | Golden Context Secundario | DssRadio | Error state e aria-describedby como referencia |
 | ARIA role | `switch` | WAI-ARIA recomenda `role="switch"` para controles on/off |
-| Touch target | 48px via `::before` | WCAG 2.5.5 AA; `::before` reservado |
+| Touch target | 44px via `::before` | WCAG 2.5.5 AA; `::before` reservado |
 | Dense touch target | Removido (`display: none`) | Seguindo DssRadio |
 | Layer 3 | Vazia | Fase 1, controle atomico sem variantes |
 | Estado indeterminate | Nao aplicavel | Toggle e binario |

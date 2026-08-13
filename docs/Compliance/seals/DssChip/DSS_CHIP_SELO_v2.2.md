@@ -37,7 +37,7 @@ Nenhuma ressalva registrada.
 
 ### Tokens
 - Uso de `--dss-compact-control-height-{xs,sm,md,lg}` para altura visual
-- Touch target via `--dss-touch-target-min` (48px)
+- Touch target via `--dss-touch-target-md` (44px)
 - Tokens de spacing: `--dss-spacing-1` a `--dss-spacing-4`
 - Tokens de tipografia: `--dss-font-family-sans`, `--dss-font-size-{xs,sm,md}`
 - Tokens de radius: `--dss-radius-sm`, `--dss-radius-full`
@@ -58,7 +58,7 @@ Nenhuma ressalva registrada.
 
 ### Acessibilidade
 - WCAG 2.1 AA completo
-- Touch target >= 48px via `::before` no root com `pointer-events: none`
+- Touch target >= 44px via `::before` no root com `pointer-events: none`
 - ARIA: `role="option"`, `aria-selected`, `aria-disabled`
 - Remove button: `aria-label="Remover"` (customizavel via `removeAriaLabel`)
 - Keyboard: Tab (foco), Enter/Space (acao), Delete (remover)

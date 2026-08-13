@@ -70,7 +70,7 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 | Categoria | Tokens Usados | Aplicação no Componente |
 |-----------|---------------|-------------------------|
 | **Altura Visual** | `--dss-compact-control-height-{xs\|sm\|md\|lg}` | `min-height` do root por size |
-| **Touch Target** | `--dss-touch-target-min` | Touch target 48px via `::before` |
+| **Touch Target** | `--dss-touch-target-md` | Touch target 44px via `::before` |
 | **Espaçamento** | `--dss-spacing-{0_5\|1\|1_5\|2\|3\|4\|5\|6}` | Gap, dimensões do control, focus offset |
 | **Tipografia** | `--dss-font-family-sans`, `--dss-font-size-{xs\|sm\|md}`, `--dss-line-height-normal` | Fonte e tamanhos |
 | **Bordas** | `--dss-border-width-{md\|thick}`, `--dss-radius-sm` | Borda do control, focus outline |
@@ -89,7 +89,7 @@ O **DssCheckbox** é um componente de checkbox para seleção binária, seleçã
 | `lg` | 32px (`--dss-compact-control-height-lg`) | 24px | 48px via `::before` |
 | `xl` | 32px (`--dss-compact-control-height-lg`, reusado¹) | 28px | 48px via `::before` |
 
-> ¹ A escala compacta compartilhada (badge/chip/checkbox) não tem `-xl`; `xl` reusa a altura `-lg` (o box de 28px cabe folgado em 32px). O touch target permanece 48px via `::before`.
+> ¹ A escala compacta compartilhada (badge/chip/checkbox) não tem `-xl`; `xl` reusa a altura `-lg` (o box de 28px cabe folgado em 32px). O touch target permanece 44px via `::before`.
 
 > **Convenção de Pseudo-elementos**: `::before` é RESERVADO para touch target. `::after` reservado para efeitos visuais.
 
@@ -191,7 +191,7 @@ O DssCheckbox segue as diretrizes **WCAG 2.1 nível AA**.
 
 | Critério | Implementação |
 |----------|---------------|
-| **Touch targets** | 48px via `::before` (`--dss-touch-target-min`) |
+| **Touch targets** | 44px via `::before` (`--dss-touch-target-md`) |
 | **Focus ring** | `--dss-focus-ring` com outline-offset, visível quando focado |
 | **ARIA** | Input nativo provê `aria-checked`, `aria-disabled`, `indeterminate` → `aria-checked="mixed"` |
 | **Keyboard** | Tab (foco), Space (toggle de estado) |

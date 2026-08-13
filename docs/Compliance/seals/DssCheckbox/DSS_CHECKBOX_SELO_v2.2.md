@@ -53,7 +53,7 @@ Todas as 3 nao-conformidades identificadas na auditoria intermediaria (NC-01, NC
 - Zero tokens inexistentes
 - Zero tokens especificos de componente (`--dss-checkbox-*` = 0 resultados)
 - Tokens genericos de compact control: `--dss-compact-control-height-{xs,sm,md,lg}`
-- Touch target via `--dss-touch-target-min`
+- Touch target via `--dss-touch-target-md`
 - 7 excepcoes documentadas (EXC-01 a EXC-07) com ID, valor, arquivo, linha e racional
 - Valores de brightness canonicos (0.90, 0.95, 1.10, 1.20)
 - Zero valores hardcoded nao-documentados
@@ -67,7 +67,7 @@ Todas as 3 nao-conformidades identificadas na auditoria intermediaria (NC-01, NC
 
 ### Acessibilidade
 - WCAG 2.1 AA completo
-- Touch target >= 48px via `::before` no root
+- Touch target >= 44px via `::before` no root
 - Input nativo com sr-only, `aria-checked`, `aria-disabled`, `aria-checked="mixed"`
 - `aria-hidden="true"` em elementos decorativos
 - Keyboard: Tab (foco), Space (toggle)

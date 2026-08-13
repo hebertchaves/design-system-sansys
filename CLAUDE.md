@@ -52,7 +52,8 @@ Valem para **toda edição, todo arquivo**. Cada um traz seu **auto-check**.
 **3. Isolamento via Cascade Layers.** CSS de terceiros (Quasar, fontes, libs) **sempre** dentro de `@layer vendor { … }`; CSS DSS **nunca** em layer — o escopo unlayered vence qualquer regra layered, mesmo `!important`.
    *(detalhe: DSS_ARCHITECTURE.md — Princípio #13)*
 
-**4. Acessibilidade WCAG 2.1 AA.** Não é opcional: focus visível, touch target ≥ 48px, navegação por teclado. Altura visual ≠ touch target (documentar separadamente).
+**4. Acessibilidade WCAG 2.1 AA.** Não é opcional: focus visível, touch target ≥ **44px** (`--dss-touch-target-md`), navegação por teclado. Altura visual ≠ touch target (documentar separadamente).
+   *(ago/2026 — era "≥ 48px". Corrigido para o que o sistema de fato entrega e para o que a norma pede: 44×44 é o mínimo do WCAG 2.5.5, e a escala do DSS é 32/36/44/52/64 — **não existe token de 48px**. Os 48 vinham do Material Design, não do WCAG, e a divergência estava mascarada por comentários `/* 48px */` escritos ao lado de `var(--dss-touch-target-md)`, que vale 44. Quem precisar de alvo maior usa `-lg` (52px).)*
 
 **5. Brandabilidade.** Componentes reagem a `[data-brand="hub|water|waste"]`; tokens de brand com fallback semântico. Nunca listar cores hex por brand.
 

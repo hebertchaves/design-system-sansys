@@ -128,7 +128,7 @@ import { DssToggle } from '@dss/components/base/DssToggle'
 | Token | Valor | Uso |
 |-------|-------|-----|
 | `--dss-compact-control-height-md` | 28px | Altura visual padrao |
-| `--dss-touch-target-min` | 48px | Touch target WCAG |
+| `--dss-touch-target-md` | 44px | Touch target WCAG |
 | `--dss-opacity-disabled` | 0.4 | Opacidade disabled |
 | `--dss-focus-ring` | — | Cor do focus ring |
 | `--dss-duration-200` | 200ms | Transicoes |
@@ -149,7 +149,7 @@ import { DssToggle } from '@dss/components/base/DssToggle'
 - `role="switch"` no input nativo
 - `aria-checked` reflete estado atual
 - `aria-describedby` associa mensagem de erro
-- Touch target >= 48px via `::before`
+- Touch target >= 44px via `::before`
 - Focus ring tokenizado via `--dss-focus-ring`
 - `prefers-reduced-motion`, `prefers-contrast`, `forced-colors`, `print` suportados
 

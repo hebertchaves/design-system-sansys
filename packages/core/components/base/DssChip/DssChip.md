@@ -121,7 +121,7 @@ O DssChip utiliza tokens das seguintes categorias:
 | **Bordas** | `--dss-radius-sm`, `--dss-radius-full`, `--dss-border-width-md`, `--dss-border-width-lg` | [Seção 8 - Bordas](../../../DSS_TOKEN_REFERENCE.md#8-bordas) | Border radius (round=full, square=sm), outline variant |
 | **Acessibilidade (Focus)** | `--dss-focus-ring`, `--dss-focus-ring-dark` | [Seção 7.1 - Focus](../../../DSS_TOKEN_REFERENCE.md#71-focus-configurações-base) | Focus ring (WCAG 2.4.7) em `:focus-visible` |
 | **Altura Visual** | `--dss-compact-control-height-{xs\|sm\|md\|lg}` | [Seção 7.13 - Compact Controls](../../docs/reference/DSS_TOKEN_REFERENCE.md#713-compact-controls---alturas-visuais) | Min-height VISUAL do chip por size (20/24/28/32px) |
-| **Touch Target** | `--dss-touch-target-min` | [Seção 7.7 - Touch Targets](../../docs/reference/DSS_TOKEN_REFERENCE.md#77-touch-targets) | Área interativa mínima 48px via `::before` |
+| **Touch Target** | `--dss-touch-target-md` | [Seção 7.7 - Touch Targets](../../docs/reference/DSS_TOKEN_REFERENCE.md#77-touch-targets) | Área interativa mínima 44px via `::before` |
 | **Motion** | `--dss-duration-150`, `--dss-duration-200`, `--dss-duration-slowest`, `--dss-easing-standard`, `--dss-easing-ease-out` | [Seção 5 - Motion/Animation](../../../DSS_TOKEN_REFERENCE.md#5-motionanimation) | Transições de hover, active, ripple effect |
 | **Opacidade** | `--dss-opacity-disabled`, `--dss-opacity-70`, `--dss-opacity-hover`, `--dss-opacity-active`, `--dss-opacity-selected` | [Seção 2.4 - Opacidade](../../../DSS_TOKEN_REFERENCE.md#24-opacidade) | Estados disabled, hover overlay, ripple |
 | **Brands** | `--dss-hub-*`, `--dss-water-*`, `--dss-waste-*` | [Seção 2.2 - Brand Palettes](../../../DSS_TOKEN_REFERENCE.md#22-brand-palettes) | Aplicado via prop `brand` ou `data-brand` |
@@ -147,7 +147,7 @@ O DssChip utiliza tokens das seguintes categorias:
 | Conceito | Token | Valor | Responsabilidade |
 |----------|-------|-------|------------------|
 | **Altura Visual** | `--dss-compact-control-height-*` | 20-32px | Dimensão renderizada visualmente |
-| **Touch Target** | `--dss-touch-target-min` | 48px | Área mínima clicável/tocável |
+| **Touch Target** | `--dss-touch-target-md` | 44px | Área mínima clicável/tocável |
 
 #### Mapeamento por Size
 
@@ -160,7 +160,7 @@ O DssChip utiliza tokens das seguintes categorias:
 
 #### Implementação Técnica
 
-O DssChip utiliza pseudo-elemento `::before` para garantir touch target ≥48px:
+O DssChip utiliza pseudo-elemento `::before` para garantir touch target ≥44px:
 
 ```scss
 .dss-chip {
@@ -172,8 +172,8 @@ O DssChip utiliza pseudo-elemento `::before` para garantir touch target ≥48px:
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min);  /* 48px */
-    min-height: var(--dss-touch-target-min); /* 48px */
+    min-width: var(--dss-touch-target-md);  /* 44px */
+    min-height: var(--dss-touch-target-md); /* 44px */
     pointer-events: none; /* ⚠️ Não intercepta eventos */
   }
 }

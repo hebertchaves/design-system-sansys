@@ -107,7 +107,7 @@ O **DssCheckbox** consome tokens de **múltiplas categorias** do Design System S
 | Categoria | Tokens Usados | Onde Encontrar | Aplicação no DssCheckbox |
 |-----------|---------------|----------------|--------------------------|
 | **Altura Visual** | `--dss-compact-control-height-{xs\|sm\|md\|lg}` | [Seção 7.13 - Compact Controls](../../../docs/reference/DSS_TOKEN_REFERENCE.md#713-compact-controls---alturas-visuais) | `min-height` do root por size (20/24/28/32px) |
-| **Touch Target** | `--dss-touch-target-min` | [Seção 7.7 - Touch Targets](../../../docs/reference/DSS_TOKEN_REFERENCE.md#77-touch-targets) | Área interativa mínima 48px via `::before` no root |
+| **Touch Target** | `--dss-touch-target-md` | [Seção 7.7 - Touch Targets](../../../docs/reference/DSS_TOKEN_REFERENCE.md#77-touch-targets) | Área interativa mínima 44px via `::before` no root |
 | **Espaçamento** | `--dss-spacing-{0_5\|1\|1_5\|2\|3\|4\|5\|6}` | [Seção 1.1 - Escala Base](../../../docs/reference/DSS_TOKEN_REFERENCE.md#11-escala-base) | Gap entre control e label, dimensões do control, focus outline offset |
 | **Tipografia** | `--dss-font-family-sans`, `--dss-font-size-{xs\|sm\|md}`, `--dss-line-height-normal` | [Seção 6 - Tipografia](../../../docs/reference/DSS_TOKEN_REFERENCE.md#6-tipografia) | Fonte, tamanho de texto do label e ícones |
 | **Bordas** | `--dss-border-width-md`, `--dss-border-width-thick`, `--dss-radius-sm` | [Seção 8 - Bordas](../../../docs/reference/DSS_TOKEN_REFERENCE.md#8-bordas) | Borda do control indicator, focus outline, border-radius |
@@ -132,7 +132,7 @@ O **DssCheckbox** consome tokens de **múltiplas categorias** do Design System S
 | Conceito | Token | Valor | Responsabilidade |
 |----------|-------|-------|------------------|
 | **Altura Visual** | `--dss-compact-control-height-*` | 20-32px | Dimensão renderizada visualmente (`min-height` do root) |
-| **Touch Target** | `--dss-touch-target-min` | 48px | Área mínima clicável/tocável via `::before` |
+| **Touch Target** | `--dss-touch-target-md` | 44px | Área mínima clicável/tocável via `::before` |
 
 #### Mapeamento por Size
 
@@ -144,11 +144,11 @@ O **DssCheckbox** consome tokens de **múltiplas categorias** do Design System S
 | `lg` | 32px (`--dss-compact-control-height-lg`) | 24px (`--dss-spacing-6`) | 16px (`--dss-font-size-md`) | 12px (`--dss-spacing-3`) | 48px (via `::before`) |
 | `xl` | 32px (`--dss-compact-control-height-lg`, reusado¹) | 28px (`--dss-spacing-7`) | 18px (`--dss-font-size-lg`) | 16px (`--dss-spacing-4`) | 48px (via `::before`) |
 
-> ¹ A escala compacta compartilhada (badge/chip/checkbox) não define `-xl`; `xl` reusa a altura `-lg` (o box de 28px cabe folgado em 32px). Touch target permanece 48px via `::before`.
+> ¹ A escala compacta compartilhada (badge/chip/checkbox) não define `-xl`; `xl` reusa a altura `-lg` (o box de 28px cabe folgado em 32px). Touch target permanece 44px via `::before`.
 
 #### Implementação Técnica
 
-O DssCheckbox utiliza pseudo-elemento `::before` no root `<label>` para garantir touch target ≥48px:
+O DssCheckbox utiliza pseudo-elemento `::before` no root `<label>` para garantir touch target ≥44px:
 
 ```scss
 .dss-checkbox {
@@ -160,8 +160,8 @@ O DssCheckbox utiliza pseudo-elemento `::before` no root `<label>` para garantir
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min);  /* 48px */
-    min-height: var(--dss-touch-target-min); /* 48px */
+    min-width: var(--dss-touch-target-md);  /* 44px */
+    min-height: var(--dss-touch-target-md); /* 44px */
     pointer-events: none; /* OBRIGATÓRIO - cliques chegam ao input */
   }
 }
@@ -392,7 +392,7 @@ O DssCheckbox implementa duas estratégias de cores, gerenciadas pelo composable
 | **1.4.3 Contraste (Mínimo)** | AA | Cores semânticas com contraste adequado; high contrast mode via `prefers-contrast: more` |
 | **2.1.1 Teclado** | A | Input nativo `<input type="checkbox">` com Tab e Space |
 | **2.4.7 Foco Visível** | AA | Focus ring via `--dss-focus-ring` com outline-offset `--dss-spacing-0_5` |
-| **2.5.5 Tamanho do Alvo** | AAA | Touch target ≥48px via `::before` no root |
+| **2.5.5 Tamanho do Alvo** | AAA | Touch target ≥44px via `::before` no root |
 | **4.1.2 Nome, Função, Valor** | A | `<label>` vincula input, `aria-label` prop, `indeterminate` DOM property |
 
 ### Navegação por Teclado

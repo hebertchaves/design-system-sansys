@@ -66,8 +66,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-md); /* 48px */
-    min-height: var(--dss-touch-target-md); /* 48px */
+    min-width: var(--dss-touch-target-md); /* 44px */
+    min-height: var(--dss-touch-target-md); /* 44px */
     pointer-events: none; /* OBRIGATORIO - cliques chegam ao input */
   }
 }
@@ -424,7 +424,7 @@ $dss-toggle-semantic-colors: (
   gap: var(--dss-spacing-4); /* 16px */
   /* Reusa a altura -lg da escala compacta compartilhada (badge/chip/checkbox/
      radio/toggle): não há compact-control-height-xl e a taxonomia é
-     compartilhada. O track de 28px cabe folgado em 32px; o touch target (48px)
+     compartilhada. O track de 28px cabe folgado em 32px; o touch target (44px)
      vem do ::before (WCAG 2.5.5). */
   min-height: var(--dss-compact-control-height-lg); /* 32px */
   font-size: var(--dss-font-size-lg);

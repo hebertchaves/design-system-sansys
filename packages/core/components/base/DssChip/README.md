@@ -69,7 +69,7 @@ O **DssChip** é um componente de chip/tag para exibição de informações comp
 | Categoria | Tokens Usados | Onde Encontrar | Aplicação no Componente |
 |-----------|---------------|----------------|-------------------------|
 | **Altura Visual** | `--dss-compact-control-height-xs/sm/md/lg` | [Seção 7.13](../../docs/reference/DSS_TOKEN_REFERENCE.md#713-compact-controls---alturas-visuais) | **Altura VISUAL por size** |
-| **Touch Target** | `--dss-touch-target-min` | [Seção 7.7](../../docs/reference/DSS_TOKEN_REFERENCE.md#77-touch-targets) | Touch target 48px via ::before |
+| **Touch Target** | `--dss-touch-target-md` | [Seção 7.7](../../docs/reference/DSS_TOKEN_REFERENCE.md#77-touch-targets) | Touch target 44px via ::before |
 | **Espaçamento** | `--dss-spacing-1`, `--dss-spacing-2`, `--dss-spacing-2_5`, `--dss-spacing-3`, `--dss-spacing-4` | [Seção 1.1](../../docs/reference/DSS_TOKEN_REFERENCE.md#11-escala-base) | Padding interno por tamanho |
 | **Tipografia** | `--dss-font-family-sans`, `--dss-font-size-xs`, `--dss-font-size-sm`, `--dss-font-size-md` | [Seção 6](../../docs/reference/DSS_TOKEN_REFERENCE.md#6-tipografia) | Fonte e tamanhos de texto |
 | **Border Radius** | `--dss-radius-sm`, `--dss-radius-full` | [Seção 1.9](../../docs/reference/DSS_TOKEN_REFERENCE.md#19-border-radius) | Formato round/square |
@@ -87,7 +87,7 @@ O **DssChip** é um componente de chip/tag para exibição de informações comp
 | `md` | `--dss-compact-control-height-md` | 28px | Via ::before (48px) |
 | `lg` | `--dss-compact-control-height-lg` | 32px | Via ::before (48px) |
 
-> **⚠️ Altura Visual vs Touch Target**: A altura visual do chip é menor que 48px por razões estéticas. O touch target mínimo de 48×48px (WCAG 2.5.5) é garantido via pseudo-elemento `::before` invisível com `pointer-events: none`. O pseudo-elemento NÃO intercepta eventos de clique — ele existe apenas para ferramentas de acessibilidade medirem a área tocável. Consulte [DSS_IMPLEMENTATION_GUIDE.md - Touch Target vs Visual Height](../../docs/guides/DSS_IMPLEMENTATION_GUIDE.md#touch-target-vs-visual-height-wcag-255) para detalhes.
+> **⚠️ Altura Visual vs Touch Target**: A altura visual do chip é menor que 44px por razões estéticas. O touch target mínimo de 48×44px (WCAG 2.5.5) é garantido via pseudo-elemento `::before` invisível com `pointer-events: none`. O pseudo-elemento NÃO intercepta eventos de clique — ele existe apenas para ferramentas de acessibilidade medirem a área tocável. Consulte [DSS_IMPLEMENTATION_GUIDE.md - Touch Target vs Visual Height](../../docs/guides/DSS_IMPLEMENTATION_GUIDE.md#touch-target-vs-visual-height-wcag-255) para detalhes.
 
 > **📖 Convenção de Pseudo-elementos**: `::before` é RESERVADO para touch target. Efeitos visuais (hover, active, selected na variante flat) usam `::after`. Consulte [DSS_COMPONENT_ARCHITECTURE.md - Convenção de Pseudo-elementos](../../docs/reference/DSS_COMPONENT_ARCHITECTURE.md#convenção-de-pseudo-elementos-normativa).
 
@@ -184,7 +184,7 @@ O DssChip segue as diretrizes **WCAG 2.1 nível AA**.
 
 | Critério | Implementação |
 |----------|---------------|
-| **Touch targets** | Áreas mínimas de 48x48px via `::before` (`--dss-touch-target-min`) |
+| **Touch targets** | Áreas mínimas de 44x44px via `::before` (`--dss-touch-target-md`) |
 | **Focus ring** | `--dss-border-width-md` com `--dss-focus-ring`, visível em `:focus-visible` |
 | **ARIA** | `role="option"`, `aria-selected`, `aria-disabled` |
 | **Keyboard** | Tab (foco), Enter/Space (ação), Delete (remover) |

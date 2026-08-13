@@ -72,7 +72,7 @@ As ressalvas abaixo foram identificadas e aceitas. Nenhuma impede a emissao do s
 - Zero tokens inexistentes
 - Zero tokens especificos de componente (`--dss-radio-*` = 0 resultados)
 - Tokens genericos de compact control: `--dss-compact-control-height-{xs,sm,md,lg}`
-- Touch target via `--dss-touch-target-min` (48px)
+- Touch target via `--dss-touch-target-md` (44px)
 - Tokens de brand semanticos: `--dss-{hub,water,waste}-{primary,secondary,accent}`
 - Tokens de motion: `--dss-duration-200`, `--dss-easing-standard`
 - Tokens de opacidade: `--dss-opacity-disabled` (0.4), `--dss-opacity-50`
@@ -85,7 +85,7 @@ As ressalvas abaixo foram identificadas e aceitas. Nenhuma impede a emissao do s
 
 ### Touch Target — CONFORME
 
-- 48px via `::before` no elemento raiz com `min-width`/`min-height: var(--dss-touch-target-min)`
+- 44px via `::before` no elemento raiz com `min-width`/`min-height: var(--dss-touch-target-md)`
 - `::before` reservado exclusivamente para touch target (conforme CLAUDE.md)
 - `::after` nao utilizado (conforme convencao)
 - `pointer-events: none` no pseudo-elemento
@@ -126,7 +126,7 @@ As ressalvas abaixo foram identificadas e aceitas. Nenhuma impede a emissao do s
 
 | Criterio WCAG | Status | Implementacao |
 |---------------|--------|---------------|
-| 2.5.5 Touch Target (AA) | CONFORME | `::before` com `min-width`/`min-height: var(--dss-touch-target-min)` = 48px |
+| 2.5.5 Touch Target (AA) | CONFORME | `::before` com `min-width`/`min-height: var(--dss-touch-target-md)` = 44px |
 | 2.4.7 Focus Visible (AA) | CONFORME | Outline com `var(--dss-focus-ring)` e `var(--dss-spacing-0_5)` offset |
 | 1.3.1 Info and Relationships (A) | CONFORME | `<label>` nativo como raiz, `<input type="radio">` nativo |
 | 4.1.2 Name, Role, Value (A) | CONFORME | `aria-checked`, `aria-disabled`, `aria-invalid`, `aria-label` |
@@ -163,7 +163,7 @@ As ressalvas abaixo foram identificadas e aceitas. Nenhuma impede a emissao do s
 | Decisao | Valor | Justificativa |
 |---------|-------|---------------|
 | Golden Component | DssCheckbox (primario), DssChip (secundario) | Mesma categoria (Compact Control interativo), mesma arquitetura |
-| Touch target canonico | 48px via `--dss-touch-target-min` | WCAG 2.5.5 AA; pseudo-elemento `::before` reservado |
+| Touch target canonico | 44px via `--dss-touch-target-md` | WCAG 2.5.5 AA; pseudo-elemento `::before` reservado |
 | Dense touch target | Removido (`display: none`) | Dense reduz densidade visual e area de toque |
 | Tokens de altura | `--dss-compact-control-height-{xs,sm,md,lg}` | Compact Control; nao usa tokens especificos |
 | Indicador visual | Elemento `<span>` real, nao pseudo-elemento | Consistencia com DssCheckbox golden |

@@ -152,7 +152,20 @@
   
   /* Container do input */
   &__control {
-    min-height: var(--dss-input-height-min) !important; /* KEEP: load-bearing intra-DSS — Select/Textarea têm min-height próprio; remover altera altura (território do trabalho de height em curso) */
+    /* REMOVIDO (ago/2026): `min-height: var(--dss-input-height-min) !important`.
+       O token NUNCA existiu — a escala é `--dss-form-control-height-{xs..xl}`
+       (32/36/44/52/64) e o sufixo `-min` não é convenção do DSS. Logo a regra
+       era no-op: medido `min-height: 0px` no navegador, o `!important` nunca
+       aplicou nada. Remover não muda pixel algum; o render de hoje JÁ é o
+       estado pós-remoção. O comentário `KEEP: load-bearing` que a acompanhava
+       era falso e saiu junto.
+
+       NÃO apontar para `--dss-form-control-height-md` (44px) "para consertar":
+       isso a tornaria viva e forçaria 44px em TODO `.q-field__control`,
+       atropelando a escala densa que o próprio DSS oferece — medidos hoje 4
+       campos entre 36px e 38px em Select/Textarea/File, que são exatamente as
+       variantes densas. A altura correta vem do SCSS de cada componente, com a
+       sua escala de `size`, que é o que já acontece. */
     border-radius: var(--dss-radius-sm) !important; /* KEEP: load-bearing intra-DSS — sem !important Select/Textarea caem p/ radius-md do componente */
 
     /* Quasar desenha a BORDA no :before (repouso) e o HIGHLIGHT DE FOCO no :after
