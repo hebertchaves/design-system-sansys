@@ -1022,8 +1022,18 @@
 .bg-dark { background-color: var(--dss-gray-900); }
 .bg-light { background-color: var(--dss-gray-100); }
 /* NEUTRAL — ver nota em .text-neutral. Mesmo par de tokens que o DssSelect já
-   aplicava em `.q-field__native .q-chip`, para o chip DSS e o nativo convergirem. */
-.bg-neutral { background-color: var(--dss-gray-100); }
+   aplicava em `.q-field__native .q-chip`, para o chip DSS e o nativo convergirem.
+
+   Era `--dss-gray-100`: um PRIMITIVO, que não inverte no dark. O par
+   `.text-neutral` usa `--dss-text-primary`, que INVERTE (#454545 → #f5f5f5).
+   No tema escuro isso dava fundo quase branco (#fafafa) com texto quase branco
+   (#f5f5f5) — chip ilegível, contraste medido 1,04:1.
+
+   `--dss-surface-subtle` é o mesmo #fafafa no claro (9,19:1, zero mudança visual
+   ali) e escuro no dark, devolvendo o contraste pelos dois caminhos de tema:
+   7,17:1 sob `[data-theme="dark"]` (gray-700) e 13,88:1 sob a media query
+   `prefers-color-scheme` (gray-800). Ambos passam AA e AAA para texto normal. */
+.bg-neutral { background-color: var(--dss-surface-subtle); }
 
 /* Border colors */
 .border-primary { border-color: var(--dss-action-primary); }
