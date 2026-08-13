@@ -397,6 +397,28 @@
   - **`PgTile` ganhou `align`** (opt-in; default `stretch` inalterado). Detalhe que custou tempo:
     `inline-flex` no root **não** protege — item de flex é blockificado, então o componente estica assim
     mesmo; só o alinhamento do stage resolve. Verificado que os 8 consumidores existentes não regridem.
+  - **2ª rodada (2026-08-13, `36bf0fe` · `de4ca8b` · `19367c0`)** — três achados do dono, dos quais
+    **um era CSS stale** (`dense` "mais alto": medido 24px contra 28px, sempre esteve certo). Fica o
+    lembrete de método: no WSL2 o HMR falha em `/mnt/c`, então **hard refresh antes de reportar** —
+    mas o hard refresh **zera os knobs do Preview Frame**, o que fez um defeito real *parecer* resolvido.
+    - **`round` removida** (breaking, uso em produção zero). Vinha `true` de fábrica e aplicava regra
+      byte-idêntica ao default da base: inerte ligada **e** desligada. O QChip também só tem `square`.
+    - **Cor tinha DUAS fontes** → dois defeitos. Com `brand` + 6 das 9 cores nada casava e o chip ficava
+      **preto** (`rgb(0,0,0)` medido); e o **ícone era sequestrado** pela marca. Unificado em
+      `3-variants/_colors.scss` (9 cores); `_brands.scss` esvaziado, como já ocorrera na família.
+    - 🔍 **ACHADO SISTÊMICO — `[data-brand] .dss-icon` é regra GLOBAL.** Mora em
+      `DssIcon/4-output/_brands.scss` e casa **direto no elemento** do ícone (0,2,0), vencendo qualquer
+      cor apenas **herdada** do componente pai. Sob marca global, um `filled` ficava com fundo e ícone
+      na mesma cor — o glifo sumia. **Qualquer componente que componha `DssIcon` e conte com herança
+      para colorir o ícone tem esse defeito**, e ele é invisível sem marca ativa. O DssCheckbox já o
+      havia encontrado e documentado o remédio (declarar a cor no próprio ícone, ≥3 classes de
+      especificidade); Chip é o segundo caso. **Vale varrer a base na Onda Higiene** — o candidato
+      natural é todo componente com prop de ícone. *(Alternativa de fundo, mais limpa e mais arriscada:
+      restringir a regra global do DssIcon a ícones que não estejam dentro de outro componente DSS.)*
+    - ⚠️ **Correção de premissa registrada:** eu havia escrito que as 4 cores de AÇÃO acompanham a
+      marca. **Não acompanham** — `tokens/brand/_{hub,water,waste}.scss` declaram `secondary`,
+      `tertiary` e `accent` como "Mantém … semântico" nas três marcas; **só `--dss-action-primary` é
+      remapeada**. Quem governa isso é o token, não o componente.
 
 - ⏳ **Histórico da família (contexto das decisões acima)** (branch `work/dss-selection-controls`).
   **DssCheckbox fechado** (4 commits `816ed41`→`fba32a2`): leftLabel (dupla-inversão template×CSS),
