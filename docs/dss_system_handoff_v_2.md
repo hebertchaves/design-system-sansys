@@ -224,9 +224,9 @@ Todo componente **DEVE declarar explicitamente** sua estratégia:
 ### Opção A — Interativo
 
 - WCAG 2.5.5
-- Touch target ≥ 48px
+- Touch target ≥ 44px
 - Implementação via `::before`
-- Token: `--dss-touch-target-min`
+- Token: `--dss-touch-target-md`
 
 ### Opção B — Não interativo
 

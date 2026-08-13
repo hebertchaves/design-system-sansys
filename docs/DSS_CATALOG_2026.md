@@ -221,7 +221,7 @@ O DSS não precisa de `!important` para vencer CSS de terceiros — a ausência 
 
 | Recurso | Implementação |
 |---|---|
-| Touch target ≥ 48px | `::before` pseudo-elemento (reservado exclusivamente) |
+| Touch target ≥ 44px (`--dss-touch-target-md`) | `::before` pseudo-elemento (reservado exclusivamente) |
 | Focus ring visível | Mixin `dss-focus-ring()` com tokens `--dss-focus-ring-*` |
 | Contraste de texto | Função `dss-contrast-ratio()` em Sass |
 | High Contrast Mode | `@media (forced-colors: active)` em 4-output/_states.scss |

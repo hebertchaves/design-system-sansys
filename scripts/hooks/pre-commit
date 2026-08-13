@@ -65,7 +65,7 @@ fi
 # themes/ passaria batido, que foi exatamente como `--dss-brand-primary-hover`
 # sobreviveu. O baseline também entra no gatilho: mexer nele é mexer no contrato
 # do gate, e precisa ser revalidado no mesmo commit.
-if echo "$STAGED" | grep -qE 'packages/core/(components|tokens|themes)/.+\.scss$|scripts/validate-scss-tokens\.cjs|scripts/scss-token-ghost-baseline\.json'; then
+if echo "$STAGED" | grep -qE 'packages/core/(components|tokens|themes|utils)/.+\.scss$|scripts/validate-scss-tokens\.cjs|scripts/scss-token-ghost-baseline\.json'; then
   echo "🔍 Validando tokens SCSS (todo var(--dss-*) existe no catálogo)..."
   node scripts/validate-scss-tokens.cjs --gate
   if [ $? -ne 0 ]; then

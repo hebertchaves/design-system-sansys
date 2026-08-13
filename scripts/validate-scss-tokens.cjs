@@ -38,10 +38,15 @@ const GATE = process.argv.slice(2).includes('--gate');
 //
 // `tokens/` entra porque um token cujo VALOR é `var(--outro-inexistente)` falha
 // do mesmo jeito — a cadeia de tokens é código, não é declaração inerte.
+// `utils/` entrou logo depois (mesma onda): o mixin `dss-touch-target` mora la e
+// seus TRES ramos ('min'/'ideal'/'large') apontam para tokens que nao existem —
+// so a escala `-{xs..xl}` existe. Mixin quebrado nao aparece em lugar nenhum ate
+// alguem usa-lo; e exatamente o que um gate deve pegar antes.
 const SCOPES = [
   { root: COMPONENTS, name: 'components' },
   { root: path.join(CORE, 'themes'), name: 'themes' },
   { root: path.join(CORE, 'tokens'), name: 'tokens' },
+  { root: path.join(CORE, 'utils'), name: 'utils' },
 ];
 
 function walkScss(dir, acc = []) {

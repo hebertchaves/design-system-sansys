@@ -234,9 +234,19 @@
     `themes/` o perdoasse também em `components/`, diluindo a garantia de baseline vazio conquistada em
     `b49b6e0`. **Controle negativo verificado:** injetando `--dss-touch-target-min` (baselinado em
     `themes/`) num componente, o gate reprova com exit 1 e rotula `(20× · components)`.
-  - 🟡 **Débito novo rastreado: 15 fantasmas em 44 referências** (11 em `themes/`, 4 em `tokens/`).
-    Eram 16; `--dss-input-height-min` foi resolvido (↓). Baselinados, não corrigidos — porque
-    **corrigir não é trocar o nome do token**, ver abaixo.
+  - 🟡 **Débito novo rastreado: 35 fantasmas em 82 referências** (20 em `utils/`, 11 em `themes/`,
+    4 em `tokens/`). Baselinados, não corrigidos — porque **corrigir não é trocar o nome do token**,
+    ver abaixo.
+  - 🔴 **`utils/` era um QUARTO ponto cego — e o pior deles.** Incluído na mesma onda, revelou **20
+    fantasmas**. O caso emblemático: o mixin `dss-touch-target` (`utils/_mixins.scss:63`) tem os **três**
+    ramos apontando para tokens inexistentes — `'min'`, `'ideal'` e `'large'`; só a escala `-{xs..xl}`
+    existe. **O mixin nunca funcionou.** Mitigante: nenhum componente o invoca — as 3 chamadas vivem
+    dentro do próprio `utils/` (`_helpers.scss:311,315` · `_mixins.scss:143`), então o estrago é contido.
+    Também reapareceu ali `--dss-focus-ring` (1×), o fantasma de a11y que a onda `b49b6e0` zerou em
+    `components/` (27 usos) — `utils/` ficou para trás por estar fora do escopo.
+    🔲 **Decidir:** `utils/` parece ser majoritariamente código morto (helpers que ninguém importa).
+    Antes de "consertar" os 20, vale medir **quem importa cada arquivo de `utils/`** — consertar token
+    de helper morto é maquiagem, o mesmo erro já evitado no `brand/index.scss` (T4 BLOQUEADO).
     - ✅ **Divergência 48px × 44px — RESOLVIDA na fonte normativa** (2026-08-13). A Constituição #4 do
       `CLAUDE.md` exigia "≥ 48px", valor que **não existe na escala** (32/36/44/52/64) e que vinha do
       Material, não do WCAG. Os componentes sempre entregaram 44px (`--dss-touch-target-md`), e a
