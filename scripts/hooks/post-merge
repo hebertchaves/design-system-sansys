@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# post-merge — mantém o `dist/` espelhado com o fonte após `git pull`/`git merge`.
+#
+# POR QUE ESTE HOOK EXISTE
+# ------------------------
+# `packages/core/dist/` NÃO é versionado (.gitignore linha 32). Logo, depois de
+# um pull o código anda e o artefato não — e artefato defasado não avisa que
+# está defasado: ele responde com confiança o estado antigo. Isso já custou
+# caro: o dist ficou 2 meses parado carregando 101 declarações quebradas que o
+# repositório já havia consertado, incluindo o `--dss-focus-ring` (anel de foco
+# invisível) que o commit b49b6e0 tinha zerado no fonte.
+#
+# O `prepublishOnly` do packages/core protege a PUBLICAÇÃO. Este hook protege o
+# DESENVOLVIMENTO — quem inspeciona o dist localmente.
+#
+# CONDICIONAL DE PROPÓSITO: só reconstrói se o merge tocou algo que entra no
+# build. Um pull que só traz documentação não paga os ~23s.
+#
+# Para pular pontualmente:  DSS_SKIP_DIST_BUILD=1 git pull
+#
+# Instalação: `npm run setup:hooks` (copia daqui para .git/hooks/).
+
+[ "$DSS_SKIP_DIST_BUILD" = "1" ] && exit 0
+
+# ORIG_HEAD pode não existir (ex.: primeiro merge de um clone). Sem base de
+# comparação não dá para decidir, e reconstruir na dúvida é o lado seguro.
+if git rev-parse --verify --quiet ORIG_HEAD >/dev/null 2>&1; then
+  ALTERADOS=$(git diff --name-only ORIG_HEAD HEAD 2>/dev/null)
+else
+  ALTERADOS="packages/core/FORCA_REBUILD"
+fi
+
+# O que de fato entra no bundle. `docs/`, `apps/` e `scripts/` ficam de fora:
+# não são compilados para o dist.
+PADRAO='^packages/core/(components|tokens|themes|utils)/|^packages/core/(index\.(ts|scss)|package\.json|vite\.config\.lib\.js)$'
+
+if ! printf '%s\n' "$ALTERADOS" | grep -qE "$PADRAO"; then
+  exit 0
+fi
+
+echo "🔄 O merge tocou o core — reconstruindo packages/core/dist/ (~23s)…"
+echo "   (para pular: DSS_SKIP_DIST_BUILD=1 git pull)"
+
+# O git IGNORA o exit code do post-merge, então uma falha de build não pode
+# travar o merge — mas precisa ser BARULHENTA, senão vira exatamente o silêncio
+# que criou o problema original.
+if npm --prefix packages/core run build:lib >/tmp/dss-dist-build.log 2>&1; then
+  echo "✅ dist reconstruído."
+else
+  echo "❌ FALHA ao reconstruir o dist — o merge está feito, mas o dist ficou DEFASADO."
+  echo "   Log: /tmp/dss-dist-build.log"
+  echo "   Rode manualmente: npm --prefix packages/core run build:lib"
+  tail -15 /tmp/dss-dist-build.log
+fi
+
+exit 0
