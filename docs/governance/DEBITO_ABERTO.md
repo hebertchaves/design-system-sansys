@@ -266,12 +266,41 @@
       | **(a) Sem consumidor porque a feature nunca existiu** | `dss-skip-link` | **Decidir:** skip link não existe em lugar nenhum do repo. Ou se implementa (é item real de a11y), ou se remove o mixin órfão. |
       | **(d) Estruturalmente impossível** | `dss-aria-live` | **Remover sem debate.** Escreve `aria-live: polite` **como propriedade CSS** — que não existe. O browser descarta a declaração. Nunca poderia ter funcionado, com ou sem consumidor. |
 
-      **Conclusão que muda o enquadramento:** o problema de `utils/` não é "esqueceram de usar". É que a
-      maioria destes mixins **perdeu o sentido quando o DSS ganhou componentes de verdade** — a camada de
-      mixins é anterior à arquitetura de 4 camadas. O desfecho majoritário é *remoção*, não adoção.
-      ⚠️ **Nenhum é `@forward`ado para fora?** `utils/index.scss` faz `@forward 'mixins'` e
-      `@forward 'accessibility-mixins'`, então são **API pública** do pacote: remover é breaking para
-      consumidor externo que os inclua. Medir antes (o repo tem 0 usos; o risco é fora dele).
+      ⚠️ **FORENSE DE GIT corrigiu duas afirmações minhas** (2026-08-14). Eu havia escrito que a camada
+      de mixins era *anterior* à arquitetura de 4 camadas e que os mixins "perderam o sentido" quando os
+      componentes chegaram. **As duas erradas:**
+      - Os mixins nasceram em **2026-01-09** (`63e4e07`, "DSS compartilhado") — **o mesmo commit** que
+        criou DssInput e DssField. Não são anteriores; são simultâneos.
+      - `git log -S "@include <mixin>" --all -- packages/core/components` = **0 para os 11**. Nunca
+        foram usados por componente algum, em commit nenhum. Não perderam adoção: **nunca tiveram**.
+      - Confirmado o vício de data escrita à mão que o dono apontou: o `dss-input-base` diz "refatoração
+        Jan **2025** Sprint 2" e é de Jan/**2026**. O 1º commit do repo (`bebc3a2`, "2025-01-01") é um
+        template com data default; o trabalho real começa em 2026-01-08.
+      **Enquadramento correto:** não é legado que envelheceu, é **andaime especulativo escrito no
+      bootstrap e nunca ligado**. Os componentes que hoje cobrem o papel vieram *depois*
+      (DssTooltip 02/26, DssSpinner 03/26, DssDialog 05/26, wcag-kit 07/26) — tornaram os mixins
+      redundantes de forma retroativa, mas eles já estavam sem uso antes disso.
+  - ✅ **HIGIENIZAÇÃO EXECUTADA** (2026-08-14). **11 mixins removidos**; sobraram os 5 com uso real
+    (`dss-focus-ring`, `dss-transition`, `dss-button-variant`, `dss-card`, `dss-visually-hidden`).
+    - **Chamadas órfãs consertadas, não removidas:** `dss-button-variant` invocava internamente
+      `dss-touch-target('ideal')` — ou seja, o único mixin de botão do DSS embutia uma declaração vazia.
+      Passou a declarar `--dss-touch-target-md` direto.
+    - **2 classes utilitárias públicas removidas:** `.dss-touch-target` e `.dss-touch-target-ideal`
+      (mais `::after`). Eram API que não entregava nada; **ninguém as aplica no repo** (verificado) e
+      remover é no-op visual — o que já não pintava, sumiu.
+    - **`--dss-border-error`/`-success` → `-negative`/`-positive`** em `_border-helpers` e `_helpers`.
+      Os nomes certos sempre existiram (o DSS segue a convenção semântica do Quasar); os utilitários
+      citavam nomes inventados. Mesmo padrão do `--dss-error-*`→`--dss-feedback-error*` de `b49b6e0`.
+    - **MEDIDO no bundle compilado: 29 → 15 declarações quebradas** em produção. As 15 restantes são
+      todas `--dss-touch-target-min` vindas de `themes/` (`.q-btn`, `.q-tab`, `.q-item`, `.q-chip`,
+      `.dss-pagination__item`) — é a decisão separada, que **muda layout** e por isso não entra aqui.
+    - Baseline de fantasmas: **35 → 27** pares (utils 20→12). Gates: type-check 0 · scss-tokens sem
+      novo · estrutura · api-docs 0 · `--all --strict` 78 · vitest 208/208.
+    - 🔲 **Sobra decidir:** `dss-skip-link` foi removido como órfão, mas **skip link é item legítimo de
+      a11y e não existe em lugar nenhum do repo** — implementar de verdade continua em aberto.
+    ⚠️ **Risco assumido:** `utils/index.scss` faz `@forward` dos dois arquivos, então os mixins eram
+    **API pública**. Dentro do repo o uso era 0 e todos resolviam para vazio ou eram inválidos; o risco
+    residual é consumidor externo que os incluísse — e receberia CSS vazio de qualquer forma.
     - 🔴 **27 declarações QUEBRADAS chegam ao CSS de produção** (contadas no bundle compilado agora):
       `--dss-touch-target-min` 19× · `-ideal` 4× · `--dss-touch-spacing-min` 2× · `--dss-border-error`
       e `-success` 2×. Destas, **4 são classes utilitárias públicas de `utils/_helpers.scss`** —

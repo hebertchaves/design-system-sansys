@@ -1,28 +1,6 @@
 {
   "note": "Tokens --dss-* referenciados mas NAO definidos (debito), POR ESCOPO. O gate bloqueia NOVOS fora desta lista. Zerar aos poucos e remover daqui.",
   "byScope": {
-    "utils": [
-      "--dss-border-error",
-      "--dss-border-success",
-      "--dss-brand-primary-hover",
-      "--dss-feedback-error-dark",
-      "--dss-feedback-info-dark",
-      "--dss-feedback-success-dark",
-      "--dss-feedback-warning-dark",
-      "--dss-focus-ring",
-      "--dss-font-family-base",
-      "--dss-input-height-min",
-      "--dss-radius-card",
-      "--dss-radius-input",
-      "--dss-radius-modal",
-      "--dss-surface-code",
-      "--dss-text-code",
-      "--dss-touch-spacing-min",
-      "--dss-touch-target-ideal",
-      "--dss-touch-target-large",
-      "--dss-touch-target-min",
-      "--dss-z-fab"
-    ],
     "themes": [
       "--dss-brand-primary-hover",
       "--dss-button-padding-x",
@@ -35,6 +13,20 @@
       "--dss-radius-modal",
       "--dss-touch-target-ideal",
       "--dss-touch-target-min"
+    ],
+    "utils": [
+      "--dss-brand-primary-hover",
+      "--dss-feedback-error-dark",
+      "--dss-feedback-info-dark",
+      "--dss-feedback-success-dark",
+      "--dss-feedback-warning-dark",
+      "--dss-focus-ring",
+      "--dss-font-family-base",
+      "--dss-radius-card",
+      "--dss-radius-input",
+      "--dss-surface-code",
+      "--dss-text-code",
+      "--dss-z-fab"
     ],
     "tokens": [
       "--dss-opacity-12",

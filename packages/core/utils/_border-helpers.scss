@@ -8,8 +8,8 @@
   &-border-t {
     &-gray-300 { border-top: var(--dss-border-gray-300); }
     &-primary { border-top: var(--dss-border-primary); }
-    &-error { border-top: var(--dss-border-error); }
-    &-success { border-top: var(--dss-border-success); }
+    &-error { border-top: var(--dss-border-negative); }
+    &-success { border-top: var(--dss-border-positive); }
   }
   
   &-border-r {

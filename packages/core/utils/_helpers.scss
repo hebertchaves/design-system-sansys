@@ -219,8 +219,8 @@
     &-tertiary { border-color: var(--dss-border-tertiary); }
     
     /* Cores - Feedback */
-    &-success { border-color: var(--dss-border-success); }
-    &-error { border-color: var(--dss-border-error); }
+    &-success { border-color: var(--dss-border-positive); }
+    &-error { border-color: var(--dss-border-negative); }
     &-warning { border-color: var(--dss-border-warning); }
     &-info { border-color: var(--dss-border-info); }
     
@@ -306,15 +306,15 @@
     }
   }
   
-  /* Touch target */
-  &-touch-target {
-    @include dss-touch-target('default');
-  }
-  
-  &-touch-target-ideal {
-    @include dss-touch-target('ideal');
-  }
-  
+  /* Touch target — as classes `.dss-touch-target` e `.dss-touch-target-ideal`
+     foram REMOVIDAS (ago/2026). Eram API pública que não entregava nada: as duas
+     chamavam o mixin `dss-touch-target`, cujos ramos apontavam para
+     `--dss-touch-target-min`/`-ideal`, tokens que nunca existiram. Quem
+     aplicasse `class="dss-touch-target"` recebia zero — e ninguém aplicava
+     (verificado no repo). Remover é no-op visual: o que já não pintava, some.
+     Para touch target, declare o token no componente:
+     `min-height: var(--dss-touch-target-md)` (44px). */
+
   /* Visually hidden */
   &-visually-hidden {
     @include dss-visually-hidden;

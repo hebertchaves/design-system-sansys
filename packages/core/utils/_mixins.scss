@@ -57,48 +57,6 @@
 }
 
 /**
- * Garante tamanho mínimo para elementos tocáveis (WCAG)
- * 44×44px conforme diretrizes DSS
- */
-@mixin dss-touch-target($size: 'default') {
-  @if $size == 'default' or $size == 'min' {
-    min-height: var(--dss-touch-target-min);
-    min-width: var(--dss-touch-target-min);
-  } @else if $size == 'ideal' {
-    min-height: var(--dss-touch-target-ideal);
-    min-width: var(--dss-touch-target-ideal);
-  } @else if $size == 'large' {
-    min-height: var(--dss-touch-target-large);
-    min-width: var(--dss-touch-target-large);
-  }
-  
-  // Espaçamento interno adicional para ícones
-  padding: var(--dss-touch-spacing-min);
-  
-  // Para elementos que não podem aumentar (ex: ícones)
-  position: relative;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-    @if $size == 'default' or $size == 'min' {
-      width: var(--dss-touch-target-min);
-      height: var(--dss-touch-target-min);
-    } @else if $size == 'ideal' {
-      width: var(--dss-touch-target-ideal);
-      height: var(--dss-touch-target-ideal);
-    } @else if $size == 'large' {
-      width: var(--dss-touch-target-large);
-      height: var(--dss-touch-target-large);
-    }
-  }
-}
-
-/**
  * Mixin para aplicar transições consistentes
  * Respeita prefers-reduced-motion
  */
@@ -140,7 +98,11 @@
   gap: var(--dss-spacing-2);
   white-space: nowrap;
   
-  @include dss-touch-target('ideal');
+  /* Touch target pelo token, direto. Aqui havia `@include dss-touch-target('ideal')`,
+     que resolvia para VAZIO: o mixin apontava para `--dss-touch-target-ideal`, um
+     token que nunca existiu. A escala real é `-{xs,sm,md,lg,xl}` = 32/36/44/52/64. */
+  min-height: var(--dss-touch-target-md); /* 44px — mínimo WCAG 2.5.5 */
+  min-width: var(--dss-touch-target-md);
   @include dss-focus-ring('primary');
   @include dss-transition(all, 'fast');
   
@@ -214,57 +176,6 @@
 }
 
 /**
- * Mixin para inputs com estados
- */
-@mixin dss-input-base {
-  width: 100%;
-  border: 1px solid var(--dss-gray-300); /* refatoração Jan 2025 Sprint 2 */
-  border-radius: var(--dss-radius-md); /* refatoração Jan 2025 Sprint 1 */
-  background-color: var(--dss-surface-default);
-  color: var(--dss-text-body);
-  font-size: var(--dss-font-size-base);
-  line-height: var(--dss-line-height-normal);
-  min-height: var(--dss-input-height-min);
-  padding: var(--dss-spacing-2) var(--dss-spacing-3); /* refatoração Jan 2025 Sprint 1 */
-
-  @include dss-transition(border-color, 'fast');
-  @include dss-focus-ring('primary');
-
-  &:hover {
-    border: 1px solid var(--dss-gray-400); /* refatoração Jan 2025 Sprint 2 */
-  }
-
-  &:focus {
-    border: 2px solid var(--dss-action-primary); /* refatoração Jan 2025 Sprint 2 */
-  }
-
-  &.dss-input--error {
-    border: 2px solid var(--dss-negative); /* refatoração Jan 2025 Sprint 2 */
-
-    &:focus {
-      @include dss-focus-ring('error');
-    }
-  }
-
-  &.dss-input--success {
-    border: 2px solid var(--dss-positive); /* refatoração Jan 2025 Sprint 2 */
-  }
-  
-  &:disabled {
-    background-color: var(--dss-surface-disabled);
-    border-color: var(--dss-border-disabled);
-    color: var(--dss-text-disabled);
-    cursor: not-allowed;
-  }
-  
-  // Placeholder
-  &::placeholder {
-    color: var(--dss-text-muted);
-    opacity: 1;
-  }
-}
-
-/**
  * Mixin para cards brandáveis
  */
 @mixin dss-card($brand: null) {
@@ -292,71 +203,6 @@
   
   &.dss-card--selected {
     border: 2px solid var(--dss-action-primary); /* refatoração Jan 2025 Sprint 2 */
-  }
-}
-
-/**
- * Mixin para textos acessíveis
- */
-@mixin dss-text($size: 'base', $weight: 'normal') {
-  // Tamanho com fallback para zoom
-  font-size: clamp(
-    var(--dss-font-size-base),
-    1rem + 0.5vw,
-    var(--dss-font-size-lg)
-  );
-  
-  @if $size == 'sm' {
-    font-size: var(--dss-font-size-sm);
-    line-height: var(--dss-line-height-sm);
-  } @else if $size == 'base' {
-    font-size: var(--dss-font-size-base);
-    line-height: var(--dss-line-height-base);
-  } @else if $size == 'lg' {
-    font-size: var(--dss-font-size-lg);
-    line-height: var(--dss-line-height-lg);
-  } @else if $size == 'xl' {
-    font-size: var(--dss-font-size-xl);
-    line-height: var(--dss-line-height-xl);
-  }
-  
-  // Peso
-  @if $weight == 'light' {
-    font-weight: var(--dss-font-weight-light);
-  } @else if $weight == 'normal' {
-    font-weight: var(--dss-font-weight-normal);
-  } @else if $weight == 'medium' {
-    font-weight: var(--dss-font-weight-medium);
-  } @else if $weight == 'semibold' {
-    font-weight: var(--dss-font-weight-semibold);
-  } @else if $weight == 'bold' {
-    font-weight: var(--dss-font-weight-bold);
-  }
-  
-  // Garantir contraste
-  color: var(--dss-text-body);
-  
-  // Para alto contraste
-  @media (prefers-contrast: high) {
-    font-weight: var(--dss-font-weight-semibold);
-  }
-}
-
-/**
- * Mixin para aplicar opacidade com fallback
- */
-@mixin dss-opacity($level: '10') {
-  opacity: var(--dss-opacity-#{$level});
-  
-  // Fallback para browsers antigos
-  @if $level == '10' {
-    opacity: 0.1;
-  } @else if $level == '20' {
-    opacity: 0.2;
-  } @else if $level == '50' {
-    opacity: 0.5;
-  } @else if $level == '75' {
-    opacity: 0.75;
   }
 }
 

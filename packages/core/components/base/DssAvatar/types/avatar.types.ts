@@ -227,7 +227,7 @@ export interface ContentStyle {
  * fixos replicam os tokens CSS correspondentes:
  * - xs: --dss-touch-target-sm (36px no catalogo, 32px no QAvatar)
  * - sm: 40px (sem token canonico)
- * - md: --dss-touch-target-min (48px)
+ * - md: --dss-touch-target-md (44px)
  * - lg: --dss-touch-target-xl (64px)
  * - xl: 80px (sem token canonico)
  *
