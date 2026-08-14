@@ -27,7 +27,7 @@ const ctxVal = ref('')
             :id="fieldId"
             v-model="nome"
             type="text"
-            style="border: none; outline: none; background: transparent; width: 100%; font-size: 16px; padding-top: 20px; padding-bottom: 4px;"
+            style="border: none; outline: none; background: transparent; width: 100%; font: inherit; padding: 0;"
           />
         </template>
       </DssField>
@@ -49,7 +49,7 @@ const ctxVal = ref('')
             :id="fieldId"
             v-model="email"
             type="email"
-            style="border: none; outline: none; background: transparent; width: 100%; font-size: 16px; padding-top: 20px; padding-bottom: 4px;"
+            style="border: none; outline: none; background: transparent; width: 100%; font: inherit; padding: 0;"
             @blur="hasEmailError = email.length > 0 && !email.includes('@')"
           />
         </template>
@@ -75,7 +75,7 @@ const ctxVal = ref('')
             :id="fieldId"
             v-model="telefone"
             type="tel"
-            style="border: none; outline: none; background: transparent; width: 100%; font-size: 16px;"
+            style="border: none; outline: none; background: transparent; width: 100%; font: inherit; padding: 0;"
           />
         </template>
       </DssField>
@@ -95,7 +95,7 @@ const ctxVal = ref('')
             :id="fieldId"
             v-model="descricao"
             rows="3"
-            style="border: none; outline: none; background: transparent; width: 100%; resize: none; font-size: 16px; padding-top: 20px; font-family: inherit;"
+            style="border: none; outline: none; background: transparent; width: 100%; resize: none; font: inherit; padding: 0;"
           />
         </template>
       </DssField>
@@ -116,7 +116,7 @@ const ctxVal = ref('')
             value="USR-2026-00042"
             type="text"
             disabled
-            style="border: none; outline: none; background: transparent; width: 100%; font-size: 16px;"
+            style="border: none; outline: none; background: transparent; width: 100%; font: inherit; padding: 0;"
           />
         </template>
       </DssField>
@@ -138,7 +138,7 @@ const ctxVal = ref('')
             :id="fieldId"
             v-model="ctxVal"
             type="search"
-            style="border: none; outline: none; background: transparent; width: 100%; font-size: 16px; padding-top: 20px; padding-bottom: 4px;"
+            style="border: none; outline: none; background: transparent; width: 100%; font: inherit; padding: 0;"
           />
         </template>
       </DssField>

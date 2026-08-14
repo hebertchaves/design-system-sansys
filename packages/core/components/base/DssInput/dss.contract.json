@@ -560,9 +560,21 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "top",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "font-size",
           "token": "--dss-font-size-xl",
           "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "0",
           "source": "2-composition/_base.scss"
         },
         {
@@ -1261,6 +1273,12 @@
       },
       {
         "name": "--dss-text-hint",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1_5",
         "usedIn": [
           "default"
         ]

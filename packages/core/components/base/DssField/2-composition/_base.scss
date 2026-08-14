@@ -33,12 +33,7 @@
 .dss-field__field {
   position: relative;
   display: flex;
-  /* `stretch` e nao `center`: com a faixa da label reservada (ver abaixo), cada
-     filho recebe a MESMA caixa de padding e centra o proprio conteudo nela.
-     Com `center`, os icones centravam na altura TOTAL enquanto o texto centrava
-     na area util — 8px de desalinhamento medido no DssField (e 6px no DssInput,
-     que tem o mesmo defeito e ainda nao foi corrigido). */
-  align-items: stretch;
+  align-items: center;
   width: 100%;
   min-height: var(--dss-touch-target-md);
   gap: var(--dss-spacing-2);
@@ -144,13 +139,12 @@
   left: var(--dss-spacing-3);
 }
 
-/* Dense: mesma reserva, proporcional — control e adornos na mesma caixa. */
+/* Dense: reserva menor (12 topo / 4 base) → mesmo deslocamento de 4px. */
 .dss-field--dense .dss-field__prepend,
 .dss-field--dense .dss-field__append,
 .dss-field--dense .dss-field__prefix,
 .dss-field--dense .dss-field__suffix {
-  padding-top: var(--dss-spacing-3);
-  padding-bottom: var(--dss-spacing-1);
+  top: var(--dss-spacing-1);
 }
 
 /* ==========================================================================
@@ -164,11 +158,19 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  /* MESMA caixa de padding do `__control` — é o que faz o prefixo alinhar com o
-     valor. `align-self: center` saiu: centrava na altura TOTAL enquanto o valor
-     centrava na área útil, abaixo da faixa reservada à label. */
-  padding-top: var(--dss-spacing-5);
-  padding-bottom: var(--dss-spacing-3);
+  /* ALINHAMENTO COM O TEXTO (ago/2026) — deslocamento VISUAL, sem efeito de layout.
+     O nativo reserva a faixa da label e é centrado, então o texto cai 4px
+     abaixo do centro do campo; o adorno precisa do mesmo deslocamento.
+
+     Duas tentativas anteriores falharam e o motivo vale registrar:
+     · `padding-top` INFLA a caixa — um append com DssButton (36px) virava 48px e
+       estourava os 44px do campo, que crescia para 50 (medido);
+     · `margin-top` sob `align-items: center` desloca só METADE (o flex centra a
+       caixa de MARGEM), e dobrá-la traz de volta o crescimento.
+     `position: relative` + `top` desloca o pixel certo e não entra no cálculo de
+     altura — serve a glifo e a botão. */
+  position: relative;
+  top: var(--dss-spacing-1); /* 4px */
 }
 
 .dss-field__prefix {
@@ -188,11 +190,19 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  /* MESMA caixa de padding do `__control` (ver a reserva da label acima): é o
-     que faz o glifo alinhar com o texto. Sem isto o ícone centrava na altura
-     TOTAL e o texto na área útil — 8px de desvio medido. */
-  padding-top: var(--dss-spacing-5);
-  padding-bottom: var(--dss-spacing-3);
+  /* ALINHAMENTO COM O TEXTO (ago/2026) — deslocamento VISUAL, sem efeito de layout.
+     O nativo reserva a faixa da label e é centrado, então o texto cai 4px
+     abaixo do centro do campo; o adorno precisa do mesmo deslocamento.
+
+     Duas tentativas anteriores falharam e o motivo vale registrar:
+     · `padding-top` INFLA a caixa — um append com DssButton (36px) virava 48px e
+       estourava os 44px do campo, que crescia para 50 (medido);
+     · `margin-top` sob `align-items: center` desloca só METADE (o flex centra a
+       caixa de MARGEM), e dobrá-la traz de volta o crescimento.
+     `position: relative` + `top` desloca o pixel certo e não entra no cálculo de
+     altura — serve a glifo e a botão. */
+  position: relative;
+  top: var(--dss-spacing-1); /* 4px */
   color: var(--dss-text-secondary);
   font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
 }

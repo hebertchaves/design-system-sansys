@@ -227,7 +227,7 @@
         {
           "property": "align-items",
           "token": null,
-          "value": "stretch",
+          "value": "center",
           "source": "2-composition/_base.scss"
         },
         {
@@ -411,13 +411,7 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "padding-top",
-          "token": "--dss-spacing-3",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-bottom",
+          "property": "top",
           "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
@@ -426,24 +420,6 @@
           "property": "flex-shrink",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "align-items",
-          "token": null,
-          "value": "center",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-top",
-          "token": "--dss-spacing-5",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-bottom",
-          "token": "--dss-spacing-3",
-          "value": null,
           "source": "2-composition/_base.scss"
         },
         {

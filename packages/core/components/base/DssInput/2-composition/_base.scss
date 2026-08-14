@@ -65,9 +65,12 @@
   flex-direction: column;
   flex: 1;
   justify-content: center;
-  /* Padding vertical = 0: a reserva da label flutuante vem do padding-top do
-     input nativo (--dss-spacing-5). Evita o empilhamento que estourava a altura.
-     Horizontal mantido em --dss-spacing-4. min-height do field é o teto real. */
+  /* Padding vertical = 0: a reserva da label flutuante vem do `padding-top` do
+     input NATIVO — hoje `--dss-spacing-3` (12px). Evita o empilhamento que
+     estourava a altura. Horizontal em --dss-spacing-4; o `min-height` do field
+     é o teto real.
+     (Este comentário dizia `--dss-spacing-5`, valor que a regra nunca usou —
+     corrigido em ago/2026 junto com o alinhamento dos adornos.) */
   padding: 0 var(--dss-spacing-4);
 }
 
@@ -186,7 +189,27 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  /* ALINHAMENTO COM O TEXTO (ago/2026) — deslocamento VISUAL, sem efeito de layout.
+     O nativo reserva a faixa da label e é centrado, então o texto cai 6px
+     abaixo do centro do campo; o adorno precisa do mesmo deslocamento.
+
+     Duas tentativas anteriores falharam e o motivo vale registrar:
+     · `padding-top` INFLA a caixa — um append com DssButton (36px) virava 48px e
+       estourava os 44px do campo, que crescia para 50 (medido);
+     · `margin-top` sob `align-items: center` desloca só METADE (o flex centra a
+       caixa de MARGEM), e dobrá-la traz de volta o crescimento.
+     `position: relative` + `top` desloca o pixel certo e não entra no cálculo de
+     altura — serve a glifo e a botão. */
+  position: relative;
+  top: var(--dss-spacing-1_5); /* 6px */
   font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
+}
+
+/* stackLabel: sem label flutuante não há faixa a reservar — o nativo perde o
+   `padding-top`, então o adorno volta ao centro. */
+.dss-input__label--stack .dss-input__prepend,
+.dss-input__label--stack .dss-input__append {
+  top: 0;
 }
 
 .dss-input__prepend {

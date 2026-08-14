@@ -174,9 +174,22 @@
     (`__prepend`/`__append`/`__prefix`/`__suffix`) recebem a MESMA caixa de padding**; o `__field` passou
     de `align-items: center` para `stretch`, de modo que cada filho centra o próprio conteúdo na mesma
     área útil. Desvio medido depois: **0**.
-  - 🔲 **Aplicar o mesmo ao DssInput** (e conferir Select/Textarea/File, que compartilham a mecânica).
-    Não fiz junto para não misturar a correção do DssField com uma mudança de altura em 4 componentes
-    selados — mas o padrão está provado e o número (6px) está medido.
+  - ✅ **DssInput CORRIGIDO** (2026-08-14) — desvio **6px → 0**, medido em 7 campos com adorno.
+    A técnica final NÃO foi a do DssField, e as duas tentativas descartadas valem registro porque a
+    armadilha se repete em qualquer campo com adorno:
+    - **`padding-top` no adorno INFLA a caixa.** Um `append` com `DssButton` (36px) virava 48px e
+      estourava os 44px do campo, que crescia para **50px** (medido). Padding só é seguro quando o
+      adorno é um glifo — e o slot aceita qualquer coisa.
+    - **`margin-top` sob `align-items: center` desloca só METADE** (o flex centra a caixa de MARGEM):
+      6px de margem renderam 3px de deslocamento. Dobrar traz de volta o crescimento.
+    - ✅ **`position: relative` + `top`** desloca o pixel exato e **não entra no cálculo de altura** —
+      serve a glifo e a botão. É a técnica correta para correção puramente VISUAL de alinhamento.
+    O DssField foi migrado para a mesma técnica (4px), então a família está uniforme.
+  - ✅ **`DssField.example.vue` também compensava** — as mesmas `padding-top: 20px` da página de teste,
+    em 4 controles. Como o `example.vue` é a **fonte de verdade de uso**, ele propagava o padrão errado
+    para quem lê a documentação. Corrigido; desvio da seção de exemplos foi de 8px para 0.
+  - 🔲 **Conferir Select/Textarea/File** — compartilham a mecânica de label flutuante. Testes passam
+    (137/137 na família), mas o alinhamento adorno×texto não foi medido neles.
 - 🟡 **Propagação CSS→meta — lotes 2–6** — catálogo com 38 divergências de *value* + 6 dimensionais
   pendentes (`sync-token-values.js`). Mesma fonte acima.
 - 🟡 **`--dss-text-secondary` reprova AA** — `#B0B0B0` ≈ 2.6:1, sistêmico. DssInput já migrou p/ gray-600
