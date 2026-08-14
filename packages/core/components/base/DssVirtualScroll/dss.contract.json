@@ -86,23 +86,28 @@
     "slots": [
       {
         "name": "default",
-        "scope": null
+        "scope": null,
+        "required": true
       },
       {
         "name": "prepend",
-        "scope": null
+        "scope": null,
+        "required": true
       },
       {
         "name": "append",
-        "scope": null
+        "scope": null,
+        "required": true
       },
       {
         "name": "loading",
-        "scope": null
+        "scope": null,
+        "required": true
       },
       {
         "name": "empty",
-        "scope": null
+        "scope": null,
+        "required": true
       }
     ]
   },

@@ -79,16 +79,19 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteúdo principal (mensagem do banner)"
       },
       {
         "name": "avatar",
         "scope": null,
+        "required": true,
         "description": "Área de avatar/ícone — sobrescreve a prop `icon`"
       },
       {
         "name": "actions",
         "scope": null,
+        "required": true,
         "description": "Ações personalizadas — sobrescreve o botão de fechar padrão do `dismissible`"
       }
     ]

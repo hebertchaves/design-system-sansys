@@ -63,6 +63,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteúdo renderizado como overlay sobre o efeito de paralaxe."
       }
     ]

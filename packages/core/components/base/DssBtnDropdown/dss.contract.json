@@ -187,16 +187,40 @@
         "description": "Label acessível para o trigger (aria-label)."
       }
     ],
-    "emits": [],
+    "emits": [
+      {
+        "name": "click",
+        "payload": "MouseEvent",
+        "description": "Emitido ao clicar no botão principal (modo split)."
+      },
+      {
+        "name": "show",
+        "description": "Emitido quando o dropdown é aberto."
+      },
+      {
+        "name": "hide",
+        "description": "Emitido quando o dropdown é fechado."
+      },
+      {
+        "name": "before-show",
+        "description": "Emitido antes do dropdown abrir."
+      },
+      {
+        "name": "before-hide",
+        "description": "Emitido antes do dropdown fechar."
+      }
+    ],
     "slots": [
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteúdo do painel dropdown."
       },
       {
         "name": "label",
         "scope": null,
+        "required": true,
         "description": "Slot para conteúdo personalizado do trigger (substitui label + icon)."
       }
     ]
@@ -1099,13 +1123,13 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-border-success",
+          "token": "--dss-border-positive",
           "value": null,
           "source": "_helpers.scss"
         },
         {
           "property": "border-color",
-          "token": "--dss-border-error",
+          "token": "--dss-border-negative",
           "value": null,
           "source": "_helpers.scss"
         },
@@ -1368,94 +1392,10 @@
           "source": "_helpers.scss"
         },
         {
-          "property": "min-height",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "min-width",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "padding",
-          "token": "--dss-touch-spacing-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "position",
-          "token": null,
-          "value": "relative",
-          "source": "_layout-helpers.scss"
-        },
-        {
-          "property": "content",
-          "token": null,
-          "value": "\"\"",
-          "source": "_mixins.scss"
-        },
-        {
           "property": "position",
           "token": null,
           "value": "absolute",
           "source": "_layout-helpers.scss"
-        },
-        {
-          "property": "top",
-          "token": null,
-          "value": "50%",
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "left",
-          "token": null,
-          "value": "50%",
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "transform",
-          "token": null,
-          "value": "translate(-50%, -50%)",
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "min-height",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "min-width",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
         },
         {
           "property": "width",
@@ -1586,6 +1526,12 @@
         {
           "property": "position",
           "token": null,
+          "value": "relative",
+          "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
           "value": "sticky",
           "source": "_layout-helpers.scss"
         },
@@ -1675,13 +1621,13 @@
         },
         {
           "property": "border-top",
-          "token": "--dss-border-error",
+          "token": "--dss-border-negative",
           "value": null,
           "source": "_border-helpers.scss"
         },
         {
           "property": "border-top",
-          "token": "--dss-border-success",
+          "token": "--dss-border-positive",
           "value": null,
           "source": "_border-helpers.scss"
         },
@@ -3385,13 +3331,13 @@
         ]
       },
       {
-        "name": "--dss-border-success",
+        "name": "--dss-border-positive",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-border-error",
+        "name": "--dss-border-negative",
         "usedIn": [
           "default"
         ]
@@ -3647,24 +3593,6 @@
       },
       {
         "name": "--dss-opacity-active",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-touch-target-min",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-touch-spacing-min",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-touch-target-ideal",
         "usedIn": [
           "default"
         ]

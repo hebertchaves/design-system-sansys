@@ -64,16 +64,17 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteúdo principal do item (sempre visível)"
       },
       {
         "name": "left",
-        "scope": null,
+        "scope": "reset",
         "description": "Ações reveladas ao deslizar para a direita"
       },
       {
         "name": "right",
-        "scope": null,
+        "scope": "reset",
         "description": "Ações reveladas ao deslizar para a esquerda"
       }
     ]

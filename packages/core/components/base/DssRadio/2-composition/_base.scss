@@ -311,7 +311,16 @@
 }
 
 // --- Focus (via classe aplicada pelo composable) ---
-.dss-radio__control--focused {
+/* O gatilho do anel saiu da CLASSE `--focused` para o seletor CSS.
+   A classe e aplicada pelo composable no evento `focus` puro, entao o anel
+   aparecia tambem em clique de mouse — apesar de o comentario acima afirmar
+   `:focus-visible`. Checar `:focus-visible` dentro do handler de focus tambem
+   nao serve: o estado ainda nao esta resolvido quando o evento dispara
+   (medido no navegador). O seletor CSS e declarativo e nao tem esse problema.
+   Mesmo mecanismo do DssInput e do DssField.
+   A classe `--focused` continua sendo emitida: ela e estado do componente e
+   segue util para outros efeitos; so nao governa mais o anel. */
+.dss-radio__native:focus-visible ~ .dss-radio__control {
   outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-0_5); // 2px
 }

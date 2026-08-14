@@ -114,8 +114,29 @@ function parseTypes(typesFile) {
         }
       }
     } else if (/Slots$/.test(name)) {
-      for (const m of node.members) if ((ts.isPropertySignature(m) || ts.isMethodSignature(m)) && m.name)
-        out.slots.push({ name: m.name.getText(sf).replace(/^['"]|['"]$/g, ''), desc: jsDocFirst(m, sf) })
+      // O ESCOPO e a OBRIGATORIEDADE do slot já estavam na assinatura TS e eram
+      // descartados (o contrato gravava `scope: null` fixo). Sem eles, o Preview
+      // Frame não tinha como saber que o `default` do DssField é ESTRUTURAL —
+      // ele entrega `{ fieldId }` esperando que você monte o controle. O frame
+      // renderizava um <span> de demo e o componente aparecia como moldura vazia,
+      // divergindo da página de teste. Ver DEBITO_ABERTO.
+      for (const m of node.members) {
+        if (!((ts.isPropertySignature(m) || ts.isMethodSignature(m)) && m.name)) continue
+        // Assinaturas aceitas: `nome: (scope: {...}) => X` e `nome(scope: {...}): X`
+        const fn = ts.isMethodSignature(m)
+          ? m
+          : (m.type && ts.isFunctionTypeNode(m.type) ? m.type : null)
+        const p0 = fn?.parameters?.[0]
+        const chaves = p0?.type && ts.isTypeLiteralNode(p0.type)
+          ? p0.type.members.filter(x => x.name).map(x => x.name.getText(sf))
+          : []
+        out.slots.push({
+          name: m.name.getText(sf).replace(/^['"]|['"]$/g, ''),
+          scope: chaves.length ? chaves.join(', ') : null,
+          required: !m.questionToken,
+          desc: jsDocFirst(m, sf),
+        })
+      }
     } else if (/Emits$/.test(name)) {
       for (const m of node.members) if (ts.isCallSignatureDeclaration(m) && m.parameters.length) {
         const p0 = m.parameters[0]
@@ -159,7 +180,12 @@ function buildApi(types) {
     return out
   })
   const emits = types.events.map(e => ({ name: e.name, ...(e.payload ? { payload: e.payload } : {}), ...(e.desc ? { description: e.desc } : {}) }))
-  const slots = types.slots.map(s => ({ name: s.name, scope: null, ...(s.desc ? { description: s.desc } : {}) }))
+  const slots = types.slots.map(s => ({
+    name: s.name,
+    scope: s.scope ?? null,
+    ...(s.required ? { required: true } : {}),
+    ...(s.desc ? { description: s.desc } : {}),
+  }))
   const api = { props, emits, slots }
   if (types.expose.length) api.exposedRefs = types.expose
   const hasModel = props.some(p => p.name === 'modelValue') && emits.some(e => e.name === 'update:modelValue')

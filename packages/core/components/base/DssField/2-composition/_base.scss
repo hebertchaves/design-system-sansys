@@ -47,6 +47,30 @@
 }
 
 /* ==========================================================================
+   FOCO DE TECLADO (WCAG 2.4.7)
+
+   O DssField era o ÚNICO da família de campos sem anel próprio: tinha apenas
+   `.dss-field--focused` (classe de ESTADO, aplicada também em clique de mouse)
+   trocando a cor da borda por variante. Cor de borda sozinha é indicação fraca
+   e inconsistente com Input/Select/Textarea/File, que declaram o anel.
+
+   `:has(:focus-visible)` e não `:focus-visible` no root: o DssField é uma
+   MOLDURA — quem recebe o foco é o controle que o CONSUMIDOR monta no slot
+   `default`, um elemento que este SCSS não conhece. `:has()` reage a qualquer
+   controle focado por teclado lá dentro, sem acoplar a uma tag específica.
+   Mesmo mecanismo já usado no DssInput (`4-output/_states.scss`).
+
+   `:focus-visible` e não `:focus`: o anel é para navegação por TECLADO. Preso
+   a `:focus`, apareceria também em clique de mouse — ruído que o padrão da
+   família evita.
+   ========================================================================== */
+
+.dss-field:has(:focus-visible) .dss-field__field {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
+  outline-offset: var(--dss-spacing-0_5);
+}
+
+/* ==========================================================================
    ÁREA DE CONTROLE (label + slot do controle interno)
    ========================================================================== */
 

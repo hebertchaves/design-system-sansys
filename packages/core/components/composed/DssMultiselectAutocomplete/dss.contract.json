@@ -180,12 +180,12 @@
     "slots": [
       {
         "name": "option",
-        "scope": null,
+        "scope": "opt, selected, toggleOption, index",
         "description": "Conteúdo de cada opção do dropdown."
       },
       {
         "name": "selected-item",
-        "scope": null,
+        "scope": "opt, index, removeAtIndex",
         "description": "Conteúdo de cada token selecionado no campo."
       }
     ],

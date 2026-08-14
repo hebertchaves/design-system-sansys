@@ -118,16 +118,19 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Overlay sobre a imagem carregada — renderizado acima do `<img>`"
       },
       {
         "name": "loading",
         "scope": null,
+        "required": true,
         "description": "Indicador de carregamento customizado — padrão: DssSpinner centralizado"
       },
       {
         "name": "error",
         "scope": null,
+        "required": true,
         "description": "Estado de erro customizado — padrão: ícone `broken_image` centralizado"
       }
     ]

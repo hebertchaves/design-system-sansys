@@ -116,7 +116,8 @@
     "slots": [
       {
         "name": "default",
-        "scope": null,
+        "scope": "fieldId, ariaDescribedby",
+        "required": true,
         "description": "Controle principal. Recebe { fieldId, ariaDescribedby } para associação ARIA completa."
       },
       {
@@ -158,7 +159,12 @@
   },
   "visual": {
     "defaultPreview": {
-      "props": {}
+      "props": {
+        "variant": "outlined",
+        "size": "md",
+        "label": "Rótulo do campo",
+        "hint": "Texto de ajuda"
+      }
     },
     "dimensions": {
       "minHeight": {
@@ -721,6 +727,18 @@
       ],
       "focus": [
         {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "border-color",
           "token": "--dss-action-primary",
           "value": null,
@@ -784,12 +802,6 @@
           "property": "border-color",
           "token": null,
           "value": "Highlight",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "outline",
-          "token": "--dss-border-width-md",
-          "value": null,
           "source": "4-output/_states.scss"
         },
         {
@@ -1118,6 +1130,12 @@
           "hover",
           "focus",
           "disabled"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "focus"
         ]
       },
       {

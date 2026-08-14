@@ -10,9 +10,7 @@
       "--dss-radius-button",
       "--dss-radius-card",
       "--dss-radius-input",
-      "--dss-radius-modal",
-      "--dss-touch-target-ideal",
-      "--dss-touch-target-min"
+      "--dss-radius-modal"
     ],
     "utils": [
       "--dss-brand-primary-hover",

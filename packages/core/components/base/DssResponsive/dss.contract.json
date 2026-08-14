@@ -48,7 +48,8 @@
     "slots": [
       {
         "name": "default",
-        "scope": null
+        "scope": null,
+        "required": true
       }
     ]
   },

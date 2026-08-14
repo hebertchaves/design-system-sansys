@@ -139,7 +139,12 @@
     "templateStructure": "DssField usa div como root (não QField) — container estrutural custom consistente com DssInput (Golden Context). (EXC-Gate-01)"
   },
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "variant": "outlined",
+      "size": "md",
+      "label": "Rótulo do campo",
+      "hint": "Texto de ajuda"
+    },
     "computedDimensions": {
       "minHeight": "44px",
       "minWidth": "240px"

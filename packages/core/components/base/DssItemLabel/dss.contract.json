@@ -50,6 +50,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteúdo de texto do label."
       }
     ]

@@ -6,12 +6,24 @@
   "version": "1.0.0-draft",
   "type": "object",
   "additionalProperties": false,
-  "patternProperties": { "^x-": {} },
+  "patternProperties": {
+    "^x-": {}
+  },
   "$comment": "additionalProperties:false rejeita purpose/examples e campos não-verificáveis (D4). patternProperties '^x-' libera extensões experimentais (padrão OpenAPI) sem bump. POLÍTICA DE EVOLUÇÃO: mudança de campo estável = evento versionado (schemaId dss-component-contract@1 → @2); campo experimental = prefixo x- até estabilizar.",
   "required": [
-    "schemaId", "name", "version",
-    "identity", "audit", "api", "visual", "tokens",
-    "a11y", "antiPatterns", "bindingRules", "dependencies", "sources"
+    "schemaId",
+    "name",
+    "version",
+    "identity",
+    "audit",
+    "api",
+    "visual",
+    "tokens",
+    "a11y",
+    "antiPatterns",
+    "bindingRules",
+    "dependencies",
+    "sources"
   ],
   "properties": {
     "schemaId": {
@@ -27,12 +39,20 @@
       "type": "string",
       "description": "Versão do componente (deriva de meta.dssVersion / package)."
     },
-
     "identity": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado.",
-      "required": ["displayName", "tagline", "category", "classification", "phase", "status", "goldenReference", "goldenContext"],
+      "required": [
+        "displayName",
+        "tagline",
+        "category",
+        "classification",
+        "phase",
+        "status",
+        "goldenReference",
+        "goldenContext"
+      ],
       "properties": {
         "displayName": {
           "type": "string",
@@ -43,39 +63,94 @@
           "maxLength": 120,
           "description": "UMA frase editorial curta ('o que é o componente'). TIER editorial com presence-gate (existe, não valida texto). Exceção mínima ao 'só verificável' — é naming, não orientação de uso. NÃO extraível do Quasar (api.json não traz descrição de componente)."
         },
-        "category": { "type": "string", "description": "meta.category." },
+        "category": {
+          "type": "string",
+          "description": "meta.category."
+        },
         "classification": {
           "type": "string",
-          "enum": ["Action", "Compact", "Visual"],
+          "enum": [
+            "Action",
+            "Compact",
+            "Visual"
+          ],
           "description": "meta.classification — taxonomia de PAGE_STRUCTURE §9. ENUM enforçado (gate, não disciplina): valor prosa/objeto/null reprova. Prosa/racional original preservado em meta.classificationNote. É well-formedness (o valor é 1 dos 3), não verificação da escolha do balde — mapeamentos ambíguos vão p/ revisão humana via classificationNote."
         },
-        "phase": { "type": "integer", "minimum": 1, "description": "meta.phase." },
+        "phase": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "meta.phase."
+        },
         "status": {
           "type": "string",
-          "enum": ["draft", "in-review", "approved", "sealed", "deprecated"],
+          "enum": [
+            "draft",
+            "in-review",
+            "approved",
+            "sealed",
+            "deprecated"
+          ],
           "description": "meta.status."
         },
-        "goldenReference": { "type": "string", "description": "meta.goldenReference (governança de categoria)." },
-        "goldenContext": { "type": "string", "description": "meta.goldenContext (baseline de auditoria)." },
+        "goldenReference": {
+          "type": "string",
+          "description": "meta.goldenReference (governança de categoria)."
+        },
+        "goldenContext": {
+          "type": "string",
+          "description": "meta.goldenContext (baseline de auditoria)."
+        },
         "isGoldenSampleFor": {
           "type": "array",
-          "items": { "type": "string", "enum": ["documentation", "architecture"] },
+          "items": {
+            "type": "string",
+            "enum": [
+              "documentation",
+              "architecture"
+            ]
+          },
           "description": "Opcional. Ex.: DssButton → ['documentation']."
         }
       }
     },
-
     "audit": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado.",
-      "required": ["status", "date", "sealPath"],
+      "required": [
+        "status",
+        "date",
+        "sealPath"
+      ],
       "properties": {
-        "status": { "type": "string", "enum": ["draft", "in-review", "approved", "sealed", "deprecated"] },
-        "date": { "type": "string", "format": "date", "description": "meta.auditDate normalizado." },
-        "mode": { "type": "string", "description": "meta.auditMode (ex.: 'Final')." },
-        "ncs": { "type": "integer", "minimum": 0, "description": "Não-conformidades abertas." },
-        "gaps": { "type": "integer", "minimum": 0 },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "in-review",
+            "approved",
+            "sealed",
+            "deprecated"
+          ]
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "meta.auditDate normalizado."
+        },
+        "mode": {
+          "type": "string",
+          "description": "meta.auditMode (ex.: 'Final')."
+        },
+        "ncs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Não-conformidades abertas."
+        },
+        "gaps": {
+          "type": "integer",
+          "minimum": 0
+        },
         "sealPath": {
           "type": "string",
           "pattern": "^docs/Compliance/",
@@ -86,36 +161,73 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["date", "outcome"],
+            "required": [
+              "date",
+              "outcome"
+            ],
             "properties": {
-              "date": { "type": "string", "format": "date" },
-              "auditor": { "type": "string" },
-              "outcome": { "type": "string" }
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "auditor": {
+                "type": "string"
+              },
+              "outcome": {
+                "type": "string"
+              }
             }
           }
         }
       }
     },
-
     "api": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado — 100% de types/*.types.ts (validate-api-docs já cobre slots).",
-      "required": ["props", "emits", "slots"],
+      "required": [
+        "props",
+        "emits",
+        "slots"
+      ],
       "properties": {
-        "props": { "type": "array", "items": { "$ref": "#/definitions/prop" } },
-        "emits": { "type": "array", "items": { "$ref": "#/definitions/emit" } },
-        "slots": { "type": "array", "items": { "$ref": "#/definitions/slot" } },
+        "props": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/prop"
+          }
+        },
+        "emits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/emit"
+          }
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slot"
+          }
+        },
         "exposedRefs": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "type"],
+            "required": [
+              "name",
+              "type"
+            ],
             "properties": {
-              "name": { "type": "string" },
-              "type": { "type": "string" },
-              "description": { "type": "string" }
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
             }
           },
           "description": "Deriva de types (ex.: InputExpose: focus/blur/inputRef)."
@@ -123,34 +235,55 @@
         "vModel": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["prop", "event"],
+          "required": [
+            "prop",
+            "event"
+          ],
           "properties": {
-            "prop": { "type": "string" },
-            "event": { "type": "string" }
+            "prop": {
+              "type": "string"
+            },
+            "event": {
+              "type": "string"
+            }
           },
           "description": "Deriva por convenção: prop modelValue + emit update:modelValue."
         }
       }
     },
-
     "visual": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado — CSS→meta (Princípio #12). states: ACHADO DssInput — visualProperties só espelha hover/foco; falta active/disabled/loading (gap CSS→meta a fechar).",
-      "required": ["defaultPreview", "dimensions", "states"],
+      "required": [
+        "defaultPreview",
+        "dimensions",
+        "states"
+      ],
       "properties": {
         "defaultPreview": {
           "type": "object",
-          "required": ["props"],
+          "required": [
+            "props"
+          ],
           "properties": {
-            "props": { "type": "object" },
-            "slots": { "type": ["object", "null"] }
+            "props": {
+              "type": "object"
+            },
+            "slots": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
           },
           "description": "meta.defaultPreview."
         },
         "dimensions": {
           "type": "object",
-          "additionalProperties": { "$ref": "#/definitions/tokenValue" },
+          "additionalProperties": {
+            "$ref": "#/definitions/tokenValue"
+          },
           "description": "Ex.: minHeight, minWidth. Deriva de meta.defaultPreview.computedDimensions + visualProperties."
         },
         "states": {
@@ -158,18 +291,32 @@
           "additionalProperties": false,
           "$comment": "Estados presentes conforme o componente. Gate CSS→meta deve garantir mirror completo.",
           "properties": {
-            "default": { "$ref": "#/definitions/stateVisual" },
-            "hover": { "$ref": "#/definitions/stateVisual" },
-            "focus": { "$ref": "#/definitions/stateVisual" },
-            "active": { "$ref": "#/definitions/stateVisual" },
-            "disabled": { "$ref": "#/definitions/stateVisual" },
-            "loading": { "$ref": "#/definitions/stateVisual" }
+            "default": {
+              "$ref": "#/definitions/stateVisual"
+            },
+            "hover": {
+              "$ref": "#/definitions/stateVisual"
+            },
+            "focus": {
+              "$ref": "#/definitions/stateVisual"
+            },
+            "active": {
+              "$ref": "#/definitions/stateVisual"
+            },
+            "disabled": {
+              "$ref": "#/definitions/stateVisual"
+            },
+            "loading": {
+              "$ref": "#/definitions/stateVisual"
+            }
           }
         },
         "variants": {
           "type": "object",
           "$comment": "TIER MAY — só quando a fonte declara. Ex.: size {xs,sm,md,lg}, density. DssInput NÃO tem size → sem seletor de tamanho no playground (regra exaustividade-fiel).",
-          "additionalProperties": { "type": "object" }
+          "additionalProperties": {
+            "type": "object"
+          }
         },
         "brands": {
           "type": "object",
@@ -177,22 +324,32 @@
           "additionalProperties": {
             "type": "object",
             "properties": {
-              "tokensOverridden": { "type": "array", "items": { "type": "string", "pattern": "^--dss-" } }
+              "tokensOverridden": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^--dss-"
+                }
+              }
             }
           }
         }
       }
     },
-
     "tokens": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado. ACHADO DssInput: meta NÃO tem bloco tokens — instances derivam de visualProperties[].token (dedupe); categories por convenção de prefixo (--dss-spacing-* → spacing).",
-      "required": ["categories", "instances"],
+      "required": [
+        "categories",
+        "instances"
+      ],
       "properties": {
         "categories": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "DERIVADO por prefixo do token. Ex.: spacing, color.action, typography. OBRIGATÓRIO — alinha com PAGE_STRUCTURE §7.3 (tipos, não instâncias)."
         },
         "instances": {
@@ -200,22 +357,38 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name"],
+            "required": [
+              "name"
+            ],
             "properties": {
-              "name": { "type": "string", "pattern": "^--dss-" },
-              "usedIn": { "type": "array", "items": { "type": "string" } },
-              "ref": { "type": "string", "description": "Âncora em DSS_TOKEN_REFERENCE.md." }
+              "name": {
+                "type": "string",
+                "pattern": "^--dss-"
+              },
+              "usedIn": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "ref": {
+                "type": "string",
+                "description": "Âncora em DSS_TOKEN_REFERENCE.md."
+              }
             }
           }
         }
       }
     },
-
     "a11y": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-VERIFICADO (§4.2). O gate NÃO checa presença de texto — checa correspondência com a implementação. `verifiedBy` é OBRIGATÓRIO em cada critério; claim sem âncora FALHA (mata 'escrever para passar').",
-      "required": ["wcag", "aria", "keyboard"],
+      "required": [
+        "wcag",
+        "aria",
+        "keyboard"
+      ],
       "properties": {
         "wcag": {
           "type": "array",
@@ -223,14 +396,35 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["criterion", "level", "implementation", "verifiedBy"],
+            "required": [
+              "criterion",
+              "level",
+              "implementation",
+              "verifiedBy"
+            ],
             "properties": {
-              "criterion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
-              "level": { "type": "string", "enum": ["A", "AA", "AAA"] },
-              "implementation": { "type": "string" },
+              "criterion": {
+                "type": "string",
+                "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+              },
+              "level": {
+                "type": "string",
+                "enum": [
+                  "A",
+                  "AA",
+                  "AAA"
+                ]
+              },
+              "implementation": {
+                "type": "string"
+              },
               "verifiedBy": {
                 "type": "string",
-                "enum": ["aria", "css", "test"],
+                "enum": [
+                  "aria",
+                  "css",
+                  "test"
+                ],
                 "description": "Âncora obrigatória: aria=atributo no SFC/DOM; css=token/regra no SCSS ou computed medível; test=caso no *.test.js."
               }
             }
@@ -240,8 +434,15 @@
           "type": "object",
           "$comment": "Âncora: SFC/DOM renderizado.",
           "properties": {
-            "role": { "type": "string" },
-            "states": { "type": "array", "items": { "type": "string" } }
+            "role": {
+              "type": "string"
+            },
+            "states": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         },
         "keyboard": {
@@ -250,16 +451,22 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["key", "action"],
+            "required": [
+              "key",
+              "action"
+            ],
             "properties": {
-              "key": { "type": "string" },
-              "action": { "type": "string" }
+              "key": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              }
             }
           }
         }
       }
     },
-
     "antiPatterns": {
       "type": "array",
       "$comment": "TIER MUST-VERIFICADO. Sem prosa livre: cada item DERIVA de um bindingRule (princípio com gate) e/ou aponta um alternativo EXISTENCE-CHECKED. `why` é a única frase humana admitida, e é opcional.",
@@ -267,8 +474,16 @@
         "type": "object",
         "additionalProperties": false,
         "anyOf": [
-          { "required": ["rule"] },
-          { "required": ["instead"] }
+          {
+            "required": [
+              "rule"
+            ]
+          },
+          {
+            "required": [
+              "instead"
+            ]
+          }
         ],
         "properties": {
           "rule": {
@@ -281,11 +496,13 @@
             "pattern": "^Dss[A-Z][A-Za-z0-9]+$",
             "description": "Componente-alternativo. EXISTENCE-CHECKED (tem que existir no sistema)."
           },
-          "why": { "type": "string", "description": "Racional humano opcional (a única frase editorial, não gated como verdade)." }
+          "why": {
+            "type": "string",
+            "description": "Racional humano opcional (a única frase editorial, não gated como verdade)."
+          }
         }
       }
     },
-
     "bindingRules": {
       "type": "array",
       "additionalProperties": false,
@@ -293,99 +510,222 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "name", "appliesTo"],
+        "required": [
+          "id",
+          "name",
+          "appliesTo"
+        ],
         "properties": {
-          "id": { "type": "string", "pattern": "^P[0-9]{2}$" },
-          "name": { "type": "string" },
-          "appliesTo": { "type": "array", "items": { "type": "string", "pattern": "^(api|visual|tokens|a11y)(\\.[a-zA-Z0-9*]+)*$" }, "description": "Caminhos canônicos (raiz ∈ {api,visual,tokens,a11y} + JSONPath simplificado). Ex.: visual.states, api.props.icon. Pattern evita emissores gerarem caminhos divergentes." }
+          "id": {
+            "type": "string",
+            "pattern": "^P[0-9]{2}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "appliesTo": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(api|visual|tokens|a11y)(\\.[a-zA-Z0-9*]+)*$"
+            },
+            "description": "Caminhos canônicos (raiz ∈ {api,visual,tokens,a11y} + JSONPath simplificado). Ex.: visual.states, api.props.icon. Pattern evita emissores gerarem caminhos divergentes."
+          }
         }
       }
     },
-
     "dependencies": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado (dss/quasar deriváveis; external MAY).",
-      "required": ["dss", "quasar"],
+      "required": [
+        "dss",
+        "quasar"
+      ],
       "properties": {
-        "dss": { "type": "array", "items": { "type": "string", "pattern": "^Dss[A-Z]" } },
-        "quasar": { "type": "array", "items": { "type": "string", "pattern": "^Q[A-Z]" } },
-        "external": { "type": "array", "items": { "type": "string" } }
+        "dss": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^Dss[A-Z]"
+          }
+        },
+        "quasar": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^Q[A-Z]"
+          }
+        },
+        "external": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
-
     "sources": {
       "type": "object",
       "additionalProperties": false,
       "$comment": "TIER MUST-derivado — paths para o consumidor resolver (iframe monta sources.structure; anatomia deriva de sources.scss).",
-      "required": ["structure", "scss", "types", "docs"],
+      "required": [
+        "structure",
+        "scss",
+        "types",
+        "docs"
+      ],
       "properties": {
-        "structure": { "type": "string" },
+        "structure": {
+          "type": "string"
+        },
         "scss": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["L2"],
+          "required": [
+            "L2"
+          ],
           "properties": {
-            "L2": { "type": "string" },
-            "L3": { "type": "string" },
-            "L4": { "type": "array", "items": { "type": "string" } }
+            "L2": {
+              "type": "string"
+            },
+            "L3": {
+              "type": "string"
+            },
+            "L4": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         },
-        "types": { "type": "string" },
+        "types": {
+          "type": "string"
+        },
         "docs": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "normative": { "type": "string" },
-            "api": { "type": "string" },
-            "readme": { "type": "string" }
+            "normative": {
+              "type": "string"
+            },
+            "api": {
+              "type": "string"
+            },
+            "readme": {
+              "type": "string"
+            }
           }
         },
-        "examples": { "type": "string", "description": "Path do *.example.vue — NON-NORMATIVO (D4): referência para o sandbox, não fonte de verdade." },
-        "tests": { "type": "string" },
-        "seal": { "type": "string" }
+        "examples": {
+          "type": "string",
+          "description": "Path do *.example.vue — NON-NORMATIVO (D4): referência para o sandbox, não fonte de verdade."
+        },
+        "tests": {
+          "type": "string"
+        },
+        "seal": {
+          "type": "string"
+        }
       }
     }
   },
-
   "definitions": {
     "tokenValue": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "token": { "type": ["string", "null"], "description": "Nome do token --dss-* ou null quando não tokenizado." },
-        "value": { "type": ["string", "null"] }
+        "token": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Nome do token --dss-* ou null quando não tokenizado."
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     },
     "visualProperty": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["property", "source"],
+      "required": [
+        "property",
+        "source"
+      ],
       "properties": {
-        "property": { "type": "string" },
-        "token": { "type": ["string", "null"] },
-        "value": { "type": ["string", "null"] },
-        "source": { "type": "string", "description": "Arquivo SCSS de origem (Princípio #12), ex.: 2-composition/_base.scss." }
+        "property": {
+          "type": "string"
+        },
+        "token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "description": "Arquivo SCSS de origem (Princípio #12), ex.: 2-composition/_base.scss."
+        }
       }
     },
     "stateVisual": {
       "type": "array",
-      "items": { "$ref": "#/definitions/visualProperty" },
+      "items": {
+        "$ref": "#/definitions/visualProperty"
+      },
       "description": "Propriedades visuais daquele estado, cada uma ancorada no SCSS de origem."
     },
     "prop": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "type", "controlHint"],
+      "required": [
+        "name",
+        "type",
+        "controlHint"
+      ],
       "properties": {
-        "name": { "type": "string" },
-        "type": { "type": "string", "description": "Assinatura TS (ex.: 'filled'|'outlined'|... )." },
-        "default": { "description": "Valor default (deriva de withDefaults/@default JSDoc)." },
-        "required": { "type": "boolean" },
-        "description": { "type": "string", "description": "JSDoc da prop." },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "Assinatura TS (ex.: 'filled'|'outlined'|... )."
+        },
+        "default": {
+          "description": "Valor default (deriva de withDefaults/@default JSDoc)."
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "description": "JSDoc da prop."
+        },
         "controlHint": {
           "type": "string",
-          "enum": ["toggle", "segmented", "select", "picker-color", "picker-feedback", "picker-brand", "stepper", "text", "textarea"],
+          "enum": [
+            "toggle",
+            "segmented",
+            "select",
+            "picker-color",
+            "picker-feedback",
+            "picker-brand",
+            "stepper",
+            "text",
+            "textarea"
+          ],
           "description": "DERIVADO (§4.1.1) do type/validValues — campo de SAÍDA, nunca autorado. Governa o widget do knob no playground."
         },
         "validValues": {
@@ -394,7 +734,9 @@
         },
         "affects": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Caminhos visuais afetados (ex.: visual.states.hover.background) — opcional, ajuda o playground."
         }
       }
@@ -402,21 +744,46 @@
     "emit": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
-        "name": { "type": "string" },
-        "payload": { "type": "string", "description": "Tipo do payload (ex.: FocusEvent)." },
-        "description": { "type": "string" }
+        "name": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string",
+          "description": "Tipo do payload (ex.: FocusEvent)."
+        },
+        "description": {
+          "type": "string"
+        }
       }
     },
     "slot": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
-        "name": { "type": "string" },
-        "scope": { "type": ["string", "null"], "description": "Props expostas pelo slot (scoped) ou null." },
-        "description": { "type": "string" }
+        "name": {
+          "type": "string"
+        },
+        "scope": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Chaves dos props escopados que o slot expoe (ex.: 'fieldId, ariaDescribedby'), ou null se o slot nao e escopado."
+        },
+        "description": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Slot obrigatorio para o componente renderizar seu papel (derivado da ausencia de `?` na assinatura TS). Slot estrutural, nao decorativo."
+        }
       }
     }
   }

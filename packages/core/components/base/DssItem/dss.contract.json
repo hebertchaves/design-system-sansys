@@ -134,16 +134,19 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteudo principal do item (substitui label + caption)"
       },
       {
         "name": "leading",
         "scope": null,
+        "required": true,
         "description": "Area esquerda do item (icone, avatar, checkbox, etc.)"
       },
       {
         "name": "trailing",
         "scope": null,
+        "required": true,
         "description": "Area direita do item (icone, badge, toggle, etc.)"
       }
     ]

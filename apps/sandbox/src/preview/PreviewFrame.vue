@@ -231,7 +231,11 @@ function load() {
   // (o v-if="slots.x" ficava falso — só props eram exercitadas).
   slotDefs.value = contract.value.api?.slots || []
   Object.keys(activeSlots).forEach((k) => delete activeSlots[k])
-  for (const s of slotDefs.value) activeSlots[s.name] = false
+  // Slot OBRIGATÓRIO (`required` do contrato, derivado da ausência de `?` na
+  // assinatura TS) nasce LIGADO: ele é estrutural, não enfeite. O `default` do
+  // DssField é o caso — sem ele o componente renderiza uma moldura vazia, que
+  // era a divergência entre o Preview Frame e a página de teste.
+  for (const s of slotDefs.value) activeSlots[s.name] = !!s.required
   Object.keys(slotIcons).forEach((k) => delete slotIcons[k])
   // Default sensato p/ o slot de ícone (o input é livre; 'attach_file' é Material Icons
   // válido mesmo não estando nas sugestões extraídas dos exemplos).
@@ -339,7 +343,14 @@ const snippet = computed(() => {
   const attrs = parts.length ? ' ' + parts.join(' ') : ''
   const slots = Object.keys(activeSlots).filter((n) => activeSlots[n])
   if (!slots.length) return `<${props.component}${attrs} />`
-  const inner = slots.map((s) => `  <template #${s}>…</template>`).join('\n')
+  // Slot escopado sai no snippet COM o destructuring — é o que o consumidor
+  // precisa copiar (`#default="{ fieldId }"`), e sem isso o exemplo não compila
+  // o caso que mais importa.
+  const inner = slots.map((n) => {
+    const def = slotDefs.value.find((s) => s.name === n)
+    const bind = def?.scope ? `="{ ${def.scope} }"` : ''
+    return `  <template #${n}${bind}>…</template>`
+  }).join('\n')
   return `<${props.component}${attrs}>\n${inner}\n</${props.component}>`
 })
 

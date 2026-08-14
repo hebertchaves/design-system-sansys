@@ -190,16 +190,19 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteudo principal do chip"
       },
       {
         "name": "icon-left",
         "scope": null,
+        "required": true,
         "description": "Ícone à esquerda (precede a prop/ícone de seleção — CCI §3.2)"
       },
       {
         "name": "icon-right",
         "scope": null,
+        "required": true,
         "description": "Ícone à direita (precede o botão de remover — CCI §3.2)"
       }
     ]

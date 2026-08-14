@@ -231,12 +231,12 @@
       },
       {
         "name": "selected-item",
-        "scope": null,
+        "scope": "opt, index",
         "description": "Customização de como a seleção atual é exibida no campo."
       },
       {
         "name": "option",
-        "scope": null,
+        "scope": "opt, index, selected, focused",
         "description": "Customização de como cada opção é exibida no dropdown."
       },
       {

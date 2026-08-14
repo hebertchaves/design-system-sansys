@@ -109,6 +109,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Slot default - Permite conteudo customizado dentro do wrapper do icone"
       }
     ]

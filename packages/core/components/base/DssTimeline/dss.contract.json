@@ -52,6 +52,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Slot principal — aceita componentes DssTimelineEntry"
       }
     ]

@@ -318,11 +318,21 @@
   build versionado e não regenerado. **Decidir:** regenerar no CI a cada merge, ou parar de versionar o
   `dist` (o mesmo raciocínio já aplicado ao `build/` do MCP em `47a8182`).
 
-- 🟡 **Estilo de componente morando em `themes/`** — achado de passagem: `.dss-pagination` e
-  `.dss-pagination__item` são declarados em `themes/_quasar-utilities.scss:494`, **não** nas 4 camadas do
-  DssPagination (o SCSS do componente não tem nenhuma regra para eles). Fere o Cartão Base e explica por
-  que um fantasma de `themes/` aparece pintando classe de componente. Verificar se há outros casos ao
-  passar por cada componente na onda de adequação.
+- 🟡 **Estilo de componente morando em `themes/` — metade resolvida** (2026-08-14). O que parecia "mover
+  para as 4 camadas" era outra coisa: **`.dss-pagination__item` NUNCA é emitida** — o
+  `usePaginationClasses` produz `.dss-pagination` e modificadores, e nada no repo escreve `__item`. Quem
+  desenha os botões é o QPagination. Eram **38 linhas de CSS morto** (com `--active`/`--disabled`),
+  removidas.
+  - 🔲 **Sobra um conflito real, deixado de propósito:** a regra raiz `.dss-pagination` em
+    `themes/_quasar-utilities.scss` **colide** com a do componente
+    (`DssPagination/2-composition/_base.scss:6`) — mesma especificidade (0,1,0). O `display` do
+    componente vence por ordem de import (`themes` é importado antes de `components` em
+    `packages/core/index.scss`), mas o **`margin-top: var(--dss-spacing-6)` do themes NÃO é sobrescrito**,
+    porque o componente não declara margem. Resultado: 24px de margem superior injetados em todo
+    DssPagination, invisíveis para quem lê o SCSS do componente. **Remover MUDA espaçamento de páginas
+    existentes** → decisão com verificação visual, não higiene. *(Margem no root do próprio componente é
+    anti-padrão — layout é do consumidor —, o que sugere remover; mas a decisão é do dono.)*
+  - Verificar se há outros casos ao passar por cada componente na onda de adequação.
     - ✅ **Divergência 48px × 44px — RESOLVIDA na fonte normativa** (2026-08-13). A Constituição #4 do
       `CLAUDE.md` exigia "≥ 48px", valor que **não existe na escala** (32/36/44/52/64) e que vinha do
       Material, não do WCAG. Os componentes sempre entregaram 44px (`--dss-touch-target-md`), e a
@@ -351,11 +361,15 @@
       🔲 **Sobra:** selos de outros componentes (DssBar, DssItem, DssFab, DssExpansionItem,
       DssChatMessage, DssSlideItem), `pre-prompts/`, `audit-prompts/` e `specs/`. `docs/archive/` e
       `docs/audits/` **não** devem ser reescritos — são registro do que se acreditava à época.
-    - 🔴 **`--dss-touch-target-min` (19 usos) — guarda de WCAG 2.5.5 que NUNCA funcionou.** A escala real
-      é `xs/sm/md/lg/xl` (o mínimo WCAG de 44px é o `md`); `-min` não existe. Logo
-      `.q-btn { min-height: var(--dss-touch-target-min) !important }` é **no-op**. ⚠️ **Apontá-lo para
-      `--dss-touch-target-md` não é cosmético: passaria a aplicar `min-height: 44px !important` em TODO
-      `.q-btn`**, mudando altura em cascata no sistema inteiro. Exige decisão + verificação visual ampla.
+    - ✅ **`--dss-touch-target-min` em `themes/` — RESOLVIDO por REMOÇÃO** (2026-08-14). A guarda de
+      WCAG 2.5.5 nunca funcionou (a escala é `xs/sm/md/lg/xl`; `-min` não existe), então
+      `.q-btn { min-height: … !important }` era no-op. **Verificado antes de mexer: era REDUNDANTE** —
+      DssButton, DssItem, DssTab e DssChip declaram o próprio alvo com token real. Removidas as 15
+      declarações (`.q-btn`, `--sm`, `--lg`, `.q-tab`, `.q-item`, `.q-chip`, paginação de tabela,
+      `.dss-sidebar-accessible`) e as 5 variáveis Sass de `quasar.variables.scss` (nenhuma consumida).
+      ⚠️ **Não foram apontadas para `--dss-touch-target-md`**: isso as tornaria vivas e mudaria altura
+      em cascata. **Provado no bundle compilado que a remoção é no-op**: diff sem comentários mostra
+      APENAS as declarações inválidas saindo — `touch-target-min` no CSS entregue foi de **15 → 0**.
     - ✅ **`--dss-input-height-min` — RESOLVIDO** (2026-08-13), o bug de
       `[[project_qfield_height_token_bug]]`, que até agora não tinha gate. **A regra foi REMOVIDA, não
       reapontada.** Medido `min-height: 0px` no navegador: o `!important` nunca aplicou nada, então

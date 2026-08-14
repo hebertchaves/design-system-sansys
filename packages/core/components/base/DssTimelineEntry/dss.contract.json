@@ -71,21 +71,25 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteúdo principal do item (corpo do evento)."
       },
       {
         "name": "title",
         "scope": null,
+        "required": true,
         "description": "Slot para customizar o título com badges, ícones ou markup rico."
       },
       {
         "name": "subtitle",
         "scope": null,
+        "required": true,
         "description": "Slot para customizar o subtítulo com formatação especial de data/hora."
       },
       {
         "name": "icon",
         "scope": null,
+        "required": true,
         "description": "Slot para customizar o marcador/ícone com SVG ou componente customizado."
       }
     ]

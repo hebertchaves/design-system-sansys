@@ -18,8 +18,24 @@
     <component :is="Comp" v-if="Comp" ref="subjectRef" v-bind="allBindings">
       <!-- Slots ligados no parent recebem conteúdo de demo, para exercitar
            prepend/append/hint/error (que não são props e não apareciam). -->
-      <template v-for="s in activeSlots" :key="s" #[s]>
+      <template v-for="s in activeSlots" :key="s" #[s]="scope">
         <DssIcon v-if="slotIcons[s]" :name="slotIcons[s]" inline decorative />
+        <!--
+          Slot ESCOPADO que entrega `fieldId`: o componente é uma MOLDURA e está
+          pedindo que o consumidor monte o controle (DssField). Renderizar o
+          `<span>` de demo aqui fazia o Preview mostrar um campo VAZIO — a
+          divergência contra a página de teste, que monta um <input> real.
+          Usamos o próprio `fieldId` para a associação ARIA, exercitando o
+          contrato em vez de ilustrá-lo.
+        -->
+        <input
+          v-else-if="scope && scope.fieldId"
+          :id="scope.fieldId"
+          :aria-describedby="scope.ariaDescribedby"
+          class="pv-slot-control"
+          type="text"
+          v-model="slotControl"
+        />
         <span v-else class="pv-slot-demo">{{ slotDemo(s) }}</span>
       </template>
     </component>
@@ -44,6 +60,10 @@ const props = reactive({})
 const theme = ref('light')
 const brand = ref('')
 const model = ref(null) // null é o "vazio" universal (File/array/objeto aceitam; '' quebrava File)
+// Valor do controle que o Preview monta dentro de slot escopado com `fieldId`
+// (componentes-moldura, ex.: DssField). Separado do `model` porque não é o
+// v-model do componente — é o estado do controle que o CONSUMIDOR forneceria.
+const slotControl = ref('')
 const modelProp = ref(null)
 let modelSeeded = false  // semeia o model com o default do vModel só na 1ª mensagem
 const activeSlots = ref([]) // slots ligados no parent (nomes)
@@ -158,4 +178,18 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    distintos do stage gray-800). */
 .pv-stage { padding: 32px; min-height: 100vh; box-sizing: border-box; background: var(--dss-surface-default); }
 .pv-missing { color: #b00020; font-family: system-ui, sans-serif; }
+/* Controle montado pelo Preview dentro de slot escopado com `fieldId`
+   (componente-moldura). Deliberadamente CRU — sem borda, fundo ou padding
+   próprios: quem desenha a moldura é o componente sob teste, e um controle
+   estilizado aqui mascararia o que se quer inspecionar. Herda cor e fonte para
+   acompanhar tema e brand. */
+.pv-slot-control {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+}
 </style>

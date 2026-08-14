@@ -61,6 +61,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Slot default — conteúdo da seção."
       }
     ]

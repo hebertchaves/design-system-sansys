@@ -12,8 +12,17 @@
 
 .q-btn {
   /* Garantir tamanho mínimo para touch */
-  min-height: var(--dss-touch-target-min) !important; /* KEEP: load-bearing intra-DSS (homogeneíza dimensões vs estilos de componentes Quasar-driven, ex.: DssPagination) */
-  min-width: var(--dss-touch-target-min) !important; /* KEEP: idem min-height */
+  /* REMOVIDO (ago/2026) — min-height/min-width via `--dss-touch-target-min`.
+     Este é o 1º de vários pontos neste arquivo; os demais referenciam esta nota.
+
+     O token NUNCA existiu (a escala é `--dss-touch-target-{xs,sm,md,lg,xl}` =
+     32/36/44/52/64), então a declaração era inválida e o browser a descartava —
+     inclusive com `!important`. Era REDUNDANTE além de quebrada: DssButton,
+     DssItem, DssTab e DssChip declaram o próprio alvo com token real (verificado).
+
+     Remover é no-op. Apontar para `--dss-touch-target-md` NÃO seria: ativaria
+     regras dormentes e mudaria altura em cascata no sistema — decisão que exige
+     verificação visual ampla, registrada no DEBITO_ABERTO. */
 
   /* Tipografia acessível */
   font-weight: var(--dss-font-weight-semibold);
@@ -94,15 +103,13 @@
   
   /* Tamanhos customizados */
   &--sm {
-    min-height: calc(var(--dss-touch-target-min) * 0.875);
-    min-width: calc(var(--dss-touch-target-min) * 0.875);
+    /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
     font-size: var(--dss-font-size-sm);
     padding: var(--dss-spacing-1_5) var(--dss-spacing-3); /* refatoração Jan 2025 Sprint 1 */
   }
   
   &--lg {
-    min-height: calc(var(--dss-touch-target-min) * 1.25);
-    min-width: calc(var(--dss-touch-target-min) * 1.25);
+    /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
     font-size: var(--dss-font-size-lg);
     padding: var(--dss-spacing-3) var(--dss-spacing-6);
   }
@@ -506,7 +513,7 @@
   
   /* Individual tab */
   .q-tab {
-    min-height: var(--dss-touch-target-min);
+    /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
     padding: 0 var(--dss-spacing-3);
     
     /* Ícone */
@@ -590,7 +597,7 @@
   
   /* Itens do menu */
   .q-item {
-    min-height: var(--dss-touch-target-min);
+    /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
     padding: var(--dss-spacing-2) var(--dss-spacing-3);
     
     /* Foco e hover */
@@ -739,7 +746,7 @@
         margin-bottom: 0;
         
         .q-field__control {
-          min-height: calc(var(--dss-touch-target-min) * 0.875);
+          /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
         }
       }
     }
@@ -815,7 +822,7 @@
   font-size: var(--dss-font-size-sm);
   padding: var(--dss-spacing-1) var(--dss-spacing-2);
   border-radius: var(--dss-radius-full);
-  min-height: calc(var(--dss-touch-target-min) * 0.75);
+  /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
   display: inline-flex;
   align-items: center;
   gap: var(--dss-spacing-1);
@@ -1114,8 +1121,7 @@
 /* Zoom do navegador */
 @media (max-width: 767px) {
   .q-btn {
-    min-height: calc(var(--dss-touch-target-min) * 1.1) !important;
-    min-width: calc(var(--dss-touch-target-min) * 1.1) !important;
+    /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
   }
   
   .q-field {

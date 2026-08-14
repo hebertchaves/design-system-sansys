@@ -983,13 +983,13 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-border-success",
+          "token": "--dss-border-positive",
           "value": null,
           "source": "_helpers.scss"
         },
         {
           "property": "border-color",
-          "token": "--dss-border-error",
+          "token": "--dss-border-negative",
           "value": null,
           "source": "_helpers.scss"
         },
@@ -1252,94 +1252,10 @@
           "source": "_helpers.scss"
         },
         {
-          "property": "min-height",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "min-width",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "padding",
-          "token": "--dss-touch-spacing-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "position",
-          "token": null,
-          "value": "relative",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "content",
-          "token": null,
-          "value": "\"\"",
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "position",
           "token": null,
           "value": "absolute",
           "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "top",
-          "token": null,
-          "value": "50%",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "left",
-          "token": null,
-          "value": "50%",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "transform",
-          "token": null,
-          "value": "translate(-50%, -50%)",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-touch-target-min",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "min-height",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "min-width",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-touch-target-ideal",
-          "value": null,
-          "source": "_mixins.scss"
         },
         {
           "property": "width",
@@ -1470,6 +1386,12 @@
         {
           "property": "position",
           "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
           "value": "sticky",
           "source": "_layout-helpers.scss"
         },
@@ -1559,13 +1481,13 @@
         },
         {
           "property": "border-top",
-          "token": "--dss-border-error",
+          "token": "--dss-border-negative",
           "value": null,
           "source": "_border-helpers.scss"
         },
         {
           "property": "border-top",
-          "token": "--dss-border-success",
+          "token": "--dss-border-positive",
           "value": null,
           "source": "_border-helpers.scss"
         },
@@ -2494,6 +2416,30 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "left",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translate(-50%, -50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-width",
           "token": "--dss-touch-target-md",
           "value": null,
@@ -3346,13 +3292,13 @@
         ]
       },
       {
-        "name": "--dss-border-success",
+        "name": "--dss-border-positive",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-border-error",
+        "name": "--dss-border-negative",
         "usedIn": [
           "default"
         ]
@@ -3610,24 +3556,6 @@
       },
       {
         "name": "--dss-opacity-active",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-touch-target-min",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-touch-spacing-min",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-touch-target-ideal",
         "usedIn": [
           "default"
         ]

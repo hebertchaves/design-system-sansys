@@ -67,16 +67,19 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteúdo da lista que cresce a cada carregamento"
       },
       {
         "name": "loading",
         "scope": null,
+        "required": true,
         "description": "Indicador de carregamento customizado (padrão: DssSpinner)"
       },
       {
         "name": "no-more",
         "scope": null,
+        "required": true,
         "description": "Mensagem exibida quando done(true) é chamado — não há mais itens"
       }
     ],

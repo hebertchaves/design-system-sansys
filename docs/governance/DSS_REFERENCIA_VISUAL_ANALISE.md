@@ -2207,7 +2207,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssExpansionItem | navegacao | label:Expansível, icon:expand_more, modelValue | minHeight:44px | Item expansível com conteúdo |
 | DssFab | acoes | color:primary, icon:add, label:Adicionar | minHeight:56px, minWidth:56px | FAB com ícone 'add' |
 | DssFabAction | acoes | color:primary, icon:mail, label:Email | minHeight:40px, minWidth:40px | FAB Action com ícone 'mail' |
-| DssField | contextuais | — | minHeight:44px, minWidth:240px | Campo de formulário customizado |
+| DssField | contextuais | variant:outlined, size:md, label:Rótulo do campo, hint:Texto de ajuda | minHeight:44px, minWidth:240px | Campo de formulário customizado |
 | DssFile | form-campos | label:Arquivo | minHeight:44px | Seleção de arquivo |
 | DssFooter | layout | — | minHeight:44px | Rodapé com informações do sistema |
 | DssForm | contextuais | — | gap:16px (via --dss-form-gap → --dss-spacing-4) | DssForm com DssInput e DssButton — container estrutural com gap semântico entre campos |
@@ -2271,5 +2271,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-08-12T22:25:39.348Z_
+_Gerado em: 2026-08-14T13:50:15.064Z_
 <!-- END:AUTO-GENERATED -->

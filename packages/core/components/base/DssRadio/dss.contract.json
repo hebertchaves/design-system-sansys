@@ -150,6 +150,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteudo customizado do label"
       }
     ],

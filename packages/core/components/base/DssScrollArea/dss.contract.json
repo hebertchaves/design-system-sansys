@@ -66,6 +66,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Content to be scrolled"
       }
     ]

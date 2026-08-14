@@ -84,6 +84,7 @@
       {
         "name": "default",
         "scope": null,
+        "required": true,
         "description": "Conteudo principal do tooltip"
       }
     ]

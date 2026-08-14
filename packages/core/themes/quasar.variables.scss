@@ -81,7 +81,7 @@ $badge-font-weight: var(--dss-font-weight-semibold) !default;
 $chip-border-radius: var(--dss-radius-full) !default;
 $chip-padding: var(--dss-spacing-1) var(--dss-spacing-2) !default;
 $chip-font-size: var(--dss-font-size-sm) !default;
-$chip-height: calc(var(--dss-touch-target-min) * 0.75) !default;
+$chip-height: var(--dss-compact-control-height-md) !default; /* 28px — o que o DssChip de fato usa */
 
 // Tables
 $table-border-radius: var(--dss-radius-md) !default;
@@ -99,7 +99,7 @@ $table-stripe-bg: var(--dss-surface-subtle) !default;
 // Tabs
 $tabs-border-radius: var(--dss-radius-md) !default;
 $tabs-padding: 0 var(--dss-spacing-3) !default;
-$tabs-min-height: var(--dss-touch-target-min) !default;
+$tabs-min-height: var(--dss-touch-target-md) !default; /* 44px */
 $tabs-font-size: var(--dss-font-size-sm) !default;
 $tabs-font-weight: var(--dss-font-weight-medium) !default;
 $tabs-active-font-weight: var(--dss-font-weight-semibold) !default;
@@ -113,7 +113,7 @@ $menu-shadow: var(--dss-shadow-lg) !default;
 $menu-background: var(--dss-surface-default) !default;
 $menu-padding: var(--dss-spacing-1) 0 !default;
 $menu-item-padding: var(--dss-spacing-2) var(--dss-spacing-3) !default;
-$menu-item-min-height: var(--dss-touch-target-min) !default;
+$menu-item-min-height: var(--dss-touch-target-md) !default; /* 44px */
 $menu-item-font-size: var(--dss-font-size-base) !default;
 $menu-item-active-bg: var(--dss-surface-selected) !default;
 $menu-item-active-color: var(--dss-primary) !default;
@@ -279,8 +279,9 @@ $focus-ring-color: color-mix(in srgb, var(--dss-primary) 50%, transparent) !defa
 $focus-ring-style: solid !default;
 
 // Touch target minimum size
-$touch-target-min: var(--dss-touch-target-min) !default;
-$touch-target-ideal: var(--dss-touch-target-ideal) !default;
+/* $touch-target-min/$touch-target-ideal REMOVIDOS: eram apelidos Sass de dois
+   tokens que nunca existiram, e ninguém os consumia. Use direto
+   `var(--dss-touch-target-md)` (44px) ou `-lg` (52px). */
 
 // Reduced motion support
 $reduce-motion: true !default;
