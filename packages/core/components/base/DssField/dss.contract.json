@@ -227,7 +227,7 @@
         {
           "property": "align-items",
           "token": null,
-          "value": "center",
+          "value": "stretch",
           "source": "2-composition/_base.scss"
         },
         {
@@ -268,7 +268,7 @@
         },
         {
           "property": "padding",
-          "token": "--dss-spacing-4",
+          "token": "--dss-spacing-5",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -280,7 +280,7 @@
         },
         {
           "property": "padding",
-          "token": "--dss-spacing-2",
+          "token": "--dss-spacing-3",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -411,20 +411,38 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "padding-top",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "flex-shrink",
           "token": null,
           "value": "0",
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "align-self",
+          "property": "align-items",
           "token": null,
           "value": "center",
           "source": "2-composition/_base.scss"
         },
         {
           "property": "padding-top",
-          "token": "--dss-spacing-1",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-spacing-3",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -973,6 +991,18 @@
         ]
       },
       {
+        "name": "--dss-spacing-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-4",
         "usedIn": [
           "default"
@@ -1001,12 +1031,6 @@
         "usedIn": [
           "default",
           "focus"
-        ]
-      },
-      {
-        "name": "--dss-spacing-3",
-        "usedIn": [
-          "default"
         ]
       },
       {
@@ -1044,12 +1068,6 @@
       },
       {
         "name": "--dss-line-height-normal",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-spacing-5",
         "usedIn": [
           "default"
         ]

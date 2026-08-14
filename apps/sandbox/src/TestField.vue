@@ -65,26 +65,26 @@
       <PgGrid>
         <PgTile code="#prepend (ícone)">
           <DssField label="Telefone" :has-value="!!m.slotPre">
-            <template #prepend><span class="material-icons pg-slot-icon">call</span></template>
+            <template #prepend><DssIcon name="call" inline decorative /></template>
             <template #default="{ fieldId }"><input :id="fieldId" v-model="m.slotPre" type="text" :style="INPUT_STYLE" /></template>
           </DssField>
         </PgTile>
         <PgTile code="#append (ícone)">
           <DssField label="Valor" :has-value="!!m.slotApp">
             <template #default="{ fieldId }"><input :id="fieldId" v-model="m.slotApp" type="text" :style="INPUT_STYLE" /></template>
-            <template #append><span class="material-icons pg-slot-icon">attach_money</span></template>
+            <template #append><DssIcon name="attach_money" inline decorative /></template>
           </DssField>
         </PgTile>
         <PgTile code="#before (externo)">
           <DssField label="Local" :has-value="!!m.slotBef">
-            <template #before><span class="material-icons pg-slot-icon">place</span></template>
+            <template #before><DssIcon name="place" inline decorative /></template>
             <template #default="{ fieldId }"><input :id="fieldId" v-model="m.slotBef" type="text" :style="INPUT_STYLE" /></template>
           </DssField>
         </PgTile>
         <PgTile code="#after (externo)">
           <DssField label="Mensagem" :has-value="!!m.slotAft">
             <template #default="{ fieldId }"><input :id="fieldId" v-model="m.slotAft" type="text" :style="INPUT_STYLE" /></template>
-            <template #after><span class="material-icons pg-slot-icon">send</span></template>
+            <template #after><DssIcon name="send" inline decorative /></template>
           </DssField>
         </PgTile>
       </PgGrid>
@@ -137,6 +137,7 @@ import { reactive } from 'vue'
 
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssField from '@components/base/DssField/DssField.vue'
+import DssIcon from '@components/base/DssIcon/DssIcon.vue'
 import DssFieldExample from '@components/base/DssField/DssField.example.vue'
 
 // Template reutilizável das páginas de teste
@@ -150,7 +151,12 @@ const VARIANTS = ['outlined', 'filled', 'standout', 'borderless'] as const
 const BRAND_KEYS = ['hub', 'water', 'waste'] as const
 
 // Input nativo (não estilizado) que a moldura DssField envolve.
-const INPUT_STYLE = 'border:none;outline:none;background:transparent;width:100%;font-size:16px;padding-top:20px;padding-bottom:4px;color:inherit;'
+// Controle mínimo que o consumidor fornece ao DssField (que é MOLDURA).
+// Deliberadamente SEM padding e SEM font-size: quem reserva a faixa da label
+// flutuante é o COMPONENTE (`.dss-field__control`), não a página. Enquanto
+// isto trazia `padding-top:20px`, a sandbox resolvia layout do componente e
+// divergia do Preview Frame, que não compensava. Igual ao `.pv-slot-control`.
+const INPUT_STYLE = 'border:none;outline:none;background:transparent;width:100%;font:inherit;color:inherit;padding:0;'
 
 const MATRIX_STATES = [
   { key: 'base',  label: 'Base' },

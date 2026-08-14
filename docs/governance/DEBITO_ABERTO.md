@@ -161,9 +161,22 @@
     runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
     `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.
 
-- 🟡 **Visual Height do DssInput (issues #3/#4)** — auto-height do Quasar: label ~2.5px fora do centro em
-  repouso (#3); com valor, a label flutuante **sobrepõe** o valor centralizado no native (#4). Tensão:
-  altura compacta (zero padding vertical) × reserva de topo p/ label flutuante. `[[project_visual_height_propagacao]]`.
+- 🔴 **Visual Height do DssInput (issues #3/#4) — agora com número, e o DssField mostrou a saída**
+  (2026-08-14). Auto-height do Quasar: label ~2.5px fora do centro em repouso (#3); com valor, a label
+  flutuante **sobrepõe** o valor centralizado no native (#4). Tensão: altura compacta × reserva de topo.
+  `[[project_visual_height_propagacao]]`.
+  - **MEDIDO:** com valor + ícone prepend, o DssInput tem **6px de desvio** entre o centro do TEXTO e o
+    centro do ÍCONE. Causa: `.dss-input__native` tem `padding-top: 12px / bottom: 0` (assimétrico, para
+    reservar a label) enquanto o ícone centra na altura TOTAL do field. O defeito não é "a label
+    sobrepõe" apenas — é que **a reserva desalinha os adornos**.
+  - ✅ **O DssField foi corrigido e serve de modelo**: o `__control` reserva a faixa
+    (`padding: spacing-5 spacing-4 spacing-3`, total vertical inalterado) **e os adornos
+    (`__prepend`/`__append`/`__prefix`/`__suffix`) recebem a MESMA caixa de padding**; o `__field` passou
+    de `align-items: center` para `stretch`, de modo que cada filho centra o próprio conteúdo na mesma
+    área útil. Desvio medido depois: **0**.
+  - 🔲 **Aplicar o mesmo ao DssInput** (e conferir Select/Textarea/File, que compartilham a mecânica).
+    Não fiz junto para não misturar a correção do DssField com uma mudança de altura em 4 componentes
+    selados — mas o padrão está provado e o número (6px) está medido.
 - 🟡 **Propagação CSS→meta — lotes 2–6** — catálogo com 38 divergências de *value* + 6 dimensionais
   pendentes (`sync-token-values.js`). Mesma fonte acima.
 - 🟡 **`--dss-text-secondary` reprova AA** — `#B0B0B0` ≈ 2.6:1, sistêmico. DssInput já migrou p/ gray-600

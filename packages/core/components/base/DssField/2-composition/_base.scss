@@ -33,7 +33,12 @@
 .dss-field__field {
   position: relative;
   display: flex;
-  align-items: center;
+  /* `stretch` e nao `center`: com a faixa da label reservada (ver abaixo), cada
+     filho recebe a MESMA caixa de padding e centra o proprio conteudo nela.
+     Com `center`, os icones centravam na altura TOTAL enquanto o texto centrava
+     na area util — 8px de desalinhamento medido no DssField (e 6px no DssInput,
+     que tem o mesmo defeito e ainda nao foi corrigido). */
+  align-items: stretch;
   width: 100%;
   min-height: var(--dss-touch-target-md);
   gap: var(--dss-spacing-2);
@@ -80,12 +85,18 @@
   flex-direction: column;
   flex: 1;
   justify-content: center;
-  padding: var(--dss-spacing-4) var(--dss-spacing-4);
+  /* RESERVA DA LABEL FLUTUANTE (ago/2026). A label e `position: absolute` e
+     flutua para `top: var(--dss-spacing-2)`; com padding simetrico ela cobria o
+     valor do consumidor. Cada consumidor compensava por conta propria — a
+     pagina de teste injetava `padding-top: 20px` no proprio <input>, fazendo a
+     SANDBOX resolver layout do COMPONENTE. Agora quem reserva e o componente.
+     Total vertical inalterado (20+12 = 16+16): a altura do campo nao muda. */
+  padding: var(--dss-spacing-5) var(--dss-spacing-4) var(--dss-spacing-3);
   min-width: 0; /* Evita overflow em flex containers */
 }
 
 .dss-field--dense .dss-field__control {
-  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  padding: var(--dss-spacing-3) var(--dss-spacing-3) var(--dss-spacing-1);
 }
 
 /* ==========================================================================
@@ -133,6 +144,15 @@
   left: var(--dss-spacing-3);
 }
 
+/* Dense: mesma reserva, proporcional — control e adornos na mesma caixa. */
+.dss-field--dense .dss-field__prepend,
+.dss-field--dense .dss-field__append,
+.dss-field--dense .dss-field__prefix,
+.dss-field--dense .dss-field__suffix {
+  padding-top: var(--dss-spacing-3);
+  padding-bottom: var(--dss-spacing-1);
+}
+
 /* ==========================================================================
    PREFIX E SUFFIX (texto inline)
    ========================================================================== */
@@ -142,8 +162,13 @@
   font-size: var(--dss-font-size-md);
   color: var(--dss-text-secondary);
   flex-shrink: 0;
-  align-self: center;
-  padding-top: var(--dss-spacing-1);
+  display: flex;
+  align-items: center;
+  /* MESMA caixa de padding do `__control` — é o que faz o prefixo alinhar com o
+     valor. `align-self: center` saiu: centrava na altura TOTAL enquanto o valor
+     centrava na área útil, abaixo da faixa reservada à label. */
+  padding-top: var(--dss-spacing-5);
+  padding-bottom: var(--dss-spacing-3);
 }
 
 .dss-field__prefix {
@@ -163,6 +188,11 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  /* MESMA caixa de padding do `__control` (ver a reserva da label acima): é o
+     que faz o glifo alinhar com o texto. Sem isto o ícone centrava na altura
+     TOTAL e o texto na área útil — 8px de desvio medido. */
+  padding-top: var(--dss-spacing-5);
+  padding-bottom: var(--dss-spacing-3);
   color: var(--dss-text-secondary);
   font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
 }
