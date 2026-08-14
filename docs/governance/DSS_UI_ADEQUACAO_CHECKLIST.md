@@ -258,6 +258,8 @@ Depois de adequar o visual, a maior parte da cadeia propaga **sozinha no `git co
 `catalog.json` (§3b), `DSS_REFERENCIA_VISUAL_ANALISE.md` (§3) e tokens do portal (§1b).
 Não precisa rodar à mão — mas confira o resultado.
 
+### Propagação de MÁQUINA (contrato, meta, catálogo)
+
 Passos que **NÃO** são automáticos (rodar/revisar por componente):
 
 - [ ] **`npm run sync:token-values`** — se um token **dimensional** (px/ms/%) mudou de valor,
@@ -274,6 +276,42 @@ Passos que **NÃO** são automáticos (rodar/revisar por componente):
 > **Divisão de verdade:** o **contrato** (`visual.states`) é a verdade-máquina auto-derivada do CSS;
 > `meta.visualProperties` é a camada **CURADA complementar** (inclui tokens aplicados via Quasar que o
 > contrato não enxerga). Ambos existem por razões diferentes — não são redundantes.
+
+### Propagação de PROSA (o que nenhum gate pega)
+
+> **Por que este bloco existe** (ago/2026): fechamos duas ondas com a cadeia-máquina
+> impecável — contrato, catálogo e REFERENCIA sempre em dia — e mesmo assim três
+> documentos ficaram **factualmente errados**. O `utils/README.md` listava 6 mixins já
+> removidos; o `CHANGELOG.md` passou 269 commits sem registro, incluindo **duas breaking
+> changes**; o `DOCUMENTATION_CHANGELOG` do DssChip parou duas versões atrás.
+> O `DEBITO_ABERTO.md` estava em dia o tempo todo — mas ele é índice de **pendências**,
+> não substitui doc de API nem changelog. Nenhum gate reprova prosa desatualizada:
+> o `validate:api-docs` cobre o eixo de **slots**, não texto.
+
+Marcar **só o que o ajuste tocou** — a lista é condicional, não burocracia:
+
+- [ ] **README / `*_API.md` / `*.md` do componente** — se mudou prop, valor de prop,
+  token citado ou comportamento descrito. ⚠️ Conferir os **valores** citados na prosa,
+  não só os nomes: o caso mais comum é o texto dizer um número que o CSS não entrega
+  (a família inteira dizia "48px" ao lado de `var(--dss-touch-target-md)`, que vale 44).
+- [ ] **`DOCUMENTATION_CHANGELOG.md` do componente** (quando existir) — entrada com
+  **motivo**, não só o "o quê".
+- [ ] **`CHANGELOG.md` da RAIZ** — **obrigatório se a API mudou**. Prop removida/renomeada,
+  default alterado, união de tipo estreitada, classe utilitária pública que sai. Consumidor
+  externo não tem outra forma de saber. Se for remoção, escreva a **migração** e diga se o
+  comportamento antigo funcionava — é o que decide minor × major.
+- [ ] **Doc de governança que faça afirmação sobre o que você mexeu** — buscar antes de
+  fechar: `grep -rn "<token-ou-prop>" docs/ CLAUDE.md`. Vale para os normativos de Nível 1/2,
+  que são o que o agente lê ao **criar componente do zero** — doc errada ali se replica em
+  todo componente novo.
+- [ ] **Selo em `docs/Compliance/seals/`** (se o componente é selado) — o selo AFIRMA
+  conformidade; afirmação falsa em documento de certificação é pior que doc velha.
+  ⚠️ **Não reescrever `docs/archive/` nem `docs/audits/`**: são registro do que se
+  acreditava à época, e falsificá-los apaga a trilha de como o erro sobreviveu.
+
+> **Regra prática:** se o ajuste mudou algo que alguém poderia **copiar de um documento
+> e colar no código**, esse documento entra na lista. Bloco de código em doc é o que mais
+> apodrece — e o que mais se propaga.
 
 *(Aplica-se também aos compostos — ver `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md`, que herda este passo.)*
 
