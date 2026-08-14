@@ -20,6 +20,7 @@
     "index.ts"
   ],
   "scripts": {
+    "prepublishOnly": "npm run build:lib",
     "build:lib": "vite build --config vite.config.lib.js",
     "build:watch": "vite build --watch --config vite.config.lib.js",
     "type-check": "vue-tsc --noEmit -p tsconfig.json",
