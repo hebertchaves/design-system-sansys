@@ -189,12 +189,16 @@
   --dss-action-dark-hover: var(--dss-dark-hover);
   --dss-action-dark-deep: var(--dss-dark-deep);
   --dss-action-dark-focus: var(--dss-dark-focus);
-  /* Action Surfaces — fundo tintado a 8% por cor de ação */
-  --dss-action-primary-surface: rgba(31, 134, 222, 0.08); /* #1f86de 8% */
-  --dss-action-secondary-surface: rgba(38, 166, 154, 0.08); /* #26a69a 8% */
-  --dss-action-tertiary-surface: rgba(255, 102, 7, 0.08); /* #ff6607 8% */
-  --dss-action-accent-surface: rgba(180, 84, 196, 0.08); /* #b454c4 8% */
-  --dss-action-dark-surface: rgba( 69, 69, 69, 0.08); /* #454545 8% */
+  /* Action Surfaces — fundo tintado a 8% por cor de ação.
+     DERIVADO do token SEMÂNTICO (não do primitivo): é no semântico que
+     [data-brand] remapeia, então o fundo tintado acompanha a marca e o tema.
+     (Antes eram rgba() com o hex CONGELADO dentro — não seguiam [data-theme]
+      nem [data-brand], e ficavam dessincronizados da borda e do texto.) */
+  --dss-action-primary-surface: color-mix(in srgb, var(--dss-action-primary) 8%, transparent);
+  --dss-action-secondary-surface: color-mix(in srgb, var(--dss-action-secondary) 8%, transparent);
+  --dss-action-tertiary-surface: color-mix(in srgb, var(--dss-action-tertiary) 8%, transparent);
+  --dss-action-accent-surface: color-mix(in srgb, var(--dss-action-accent) 8%, transparent);
+  --dss-action-dark-surface: color-mix(in srgb, var(--dss-action-dark) 8%, transparent);
 }
 
 /* ==========================================================================
@@ -244,7 +248,9 @@
   /* Surface States */
   --dss-surface-hover: rgba(0, 0, 0, 0.04);
   --dss-surface-active: rgba(0, 0, 0, 0.08);
-  --dss-surface-selected: rgba(31, 134, 222, 0.12); /* Primary com 12% opacidade */
+  /* Primary a 12% — DERIVADO do token semântico, onde [data-brand] remapeia
+     (antes: rgba() com o hex congelado, que não seguia tema nem marca). */
+  --dss-surface-selected: color-mix(in srgb, var(--dss-action-primary) 12%, transparent);
   --dss-surface-disabled: var(--dss-gray-200); /* #f5f5f5 */
   /* Surface Brand — transparent fora de contexto [data-brand]; sobrescrito por tokens/brand/_*.scss */
   --dss-surface-brand-subtle: transparent;
@@ -574,11 +580,13 @@
   --dss-feedback-info-disable: var(--dss-info-disable);
   --dss-feedback-info-hover: var(--dss-info-hover);
   --dss-feedback-info-deep: var(--dss-info-deep);
-  /* Feedback Surfaces (para fundos de alertas) */
-  --dss-feedback-success-surface: rgba(77, 210, 40, 0.1);
-  --dss-feedback-error-surface: rgba(216, 24, 46, 0.1);
-  --dss-feedback-warning-surface: rgba(250, 189, 20, 0.1);
-  --dss-feedback-info-surface: rgba(12, 196, 233, 0.1);
+  /* Feedback Surfaces (para fundos de alertas) — tintado a 10%.
+     DERIVADO do token SEMÂNTICO via color-mix: acompanha tema automaticamente.
+     (Antes eram rgba() com o hex CONGELADO dentro.) */
+  --dss-feedback-success-surface: color-mix(in srgb, var(--dss-feedback-success) 10%, transparent);
+  --dss-feedback-error-surface: color-mix(in srgb, var(--dss-feedback-error) 10%, transparent);
+  --dss-feedback-warning-surface: color-mix(in srgb, var(--dss-feedback-warning) 10%, transparent);
+  --dss-feedback-info-surface: color-mix(in srgb, var(--dss-feedback-info) 10%, transparent);
 }
 
 /* 3. Tokens de acessibilidade (Guia de Acessibilidade DSS) */
@@ -2797,7 +2805,9 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-surface-overlay: rgba(255, 255, 255, 0.05);
   --dss-surface-hover: rgba(255, 255, 255, 0.08);
   --dss-surface-active: rgba(255, 255, 255, 0.12);
-  --dss-surface-selected: rgba(31, 134, 222, 0.24);
+  /* Primary a 24% (dobro do light — precisa de mais presença sobre fundo escuro).
+     DERIVADO do token semântico; antes era rgba() com o hex congelado. */
+  --dss-surface-selected: color-mix(in srgb, var(--dss-action-primary) 24%, transparent);
   /* ===========================================
      TEXT COLORS
      Inverter de escuro (dark) para claro (gray-200)

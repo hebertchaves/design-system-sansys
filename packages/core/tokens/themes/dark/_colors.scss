@@ -34,7 +34,9 @@
   --dss-surface-overlay: rgba(255, 255, 255, 0.05);
   --dss-surface-hover: rgba(255, 255, 255, 0.08);
   --dss-surface-active: rgba(255, 255, 255, 0.12);
-  --dss-surface-selected: rgba(31, 134, 222, 0.24);
+  /* Primary a 24% (dobro do light — precisa de mais presença sobre fundo escuro).
+     DERIVADO do token semântico; antes era rgba() com o hex congelado. */
+  --dss-surface-selected: color-mix(in srgb, var(--dss-action-primary) 24%, transparent);
 
   /* ===========================================
      TEXT COLORS

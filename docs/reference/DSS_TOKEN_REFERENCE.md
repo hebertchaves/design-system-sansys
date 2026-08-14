@@ -722,7 +722,7 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 | `--dss-action-primary-hover` | `var(--dss-primary-hover)` | — | — |
 | `--dss-action-primary-deep` | `var(--dss-primary-deep)` | — | — |
 | `--dss-action-primary-focus` | `var(--dss-primary-focus)` | — | — |
-| `--dss-action-primary-surface` | `rgba(31, 134, 222, 0.08)` | — | #1f86de 8% |
+| `--dss-action-primary-surface` | `color-mix(in srgb, var(--dss-action-primary)   8%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:actions-primary -->
 
 ## 3.2 Secondary Actions
@@ -738,7 +738,7 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 | `--dss-action-secondary-hover` | `var(--dss-secondary-hover)` | — | — |
 | `--dss-action-secondary-deep` | `var(--dss-secondary-deep)` | — | — |
 | `--dss-action-secondary-focus` | `var(--dss-secondary-focus)` | — | — |
-| `--dss-action-secondary-surface` | `rgba(38, 166, 154, 0.08)` | — | #26a69a 8% |
+| `--dss-action-secondary-surface` | `color-mix(in srgb, var(--dss-action-secondary) 8%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:actions-secondary -->
 
 ## 3.3 Tertiary Actions
@@ -754,7 +754,7 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 | `--dss-action-tertiary-hover` | `var(--dss-tertiary-hover)` | — | — |
 | `--dss-action-tertiary-deep` | `var(--dss-tertiary-deep)` | — | — |
 | `--dss-action-tertiary-focus` | `var(--dss-tertiary-focus)` | — | — |
-| `--dss-action-tertiary-surface` | `rgba(255, 102,   7, 0.08)` | — | #ff6607 8% |
+| `--dss-action-tertiary-surface` | `color-mix(in srgb, var(--dss-action-tertiary)  8%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:actions-tertiary -->
 
 ## 3.4 Accent Actions
@@ -770,7 +770,7 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 | `--dss-action-accent-hover` | `var(--dss-accent-hover)` | — | — |
 | `--dss-action-accent-deep` | `var(--dss-accent-deep)` | — | — |
 | `--dss-action-accent-focus` | `var(--dss-accent-focus)` | — | — |
-| `--dss-action-accent-surface` | `rgba(180,  84, 196, 0.08)` | — | #b454c4 8% |
+| `--dss-action-accent-surface` | `color-mix(in srgb, var(--dss-action-accent)    8%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:actions-accent -->
 
 ## 3.5 Dark Actions
@@ -786,7 +786,7 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 | `--dss-action-dark-hover` | `var(--dss-dark-hover)` | — | — |
 | `--dss-action-dark-deep` | `var(--dss-dark-deep)` | — | — |
 | `--dss-action-dark-focus` | `var(--dss-dark-focus)` | — | — |
-| `--dss-action-dark-surface` | `rgba( 69,  69,  69, 0.08)` | — | #454545 8% |
+| `--dss-action-dark-surface` | `color-mix(in srgb, var(--dss-action-dark)      8%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:actions-dark -->
 
 ## 3.6 Action Surfaces
@@ -825,7 +825,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 | `--dss-feedback-success-disable` | `var(--dss-positive-disable)` | — | — |
 | `--dss-feedback-success-hover` | `var(--dss-positive-hover)` | — | — |
 | `--dss-feedback-success-deep` | `var(--dss-positive-deep)` | — | — |
-| `--dss-feedback-success-surface` | `rgba(77, 210, 40, 0.1)` | — | — |
+| `--dss-feedback-success-surface` | `color-mix(in srgb, var(--dss-feedback-success) 10%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:feedback-success -->
 
 ## 4.2 Error
@@ -840,7 +840,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 | `--dss-feedback-error-disable` | `var(--dss-negative-disable)` | — | — |
 | `--dss-feedback-error-hover` | `var(--dss-negative-hover)` | — | — |
 | `--dss-feedback-error-deep` | `var(--dss-negative-deep)` | — | — |
-| `--dss-feedback-error-surface` | `rgba(216, 24, 46, 0.1)` | — | — |
+| `--dss-feedback-error-surface` | `color-mix(in srgb, var(--dss-feedback-error)   10%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:feedback-error -->
 
 ## 4.3 Warning
@@ -855,7 +855,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 | `--dss-feedback-warning-disable` | `var(--dss-warning-disable)` | — | — |
 | `--dss-feedback-warning-hover` | `var(--dss-warning-hover)` | — | — |
 | `--dss-feedback-warning-deep` | `var(--dss-warning-deep)` | — | — |
-| `--dss-feedback-warning-surface` | `rgba(250, 189, 20, 0.1)` | — | — |
+| `--dss-feedback-warning-surface` | `color-mix(in srgb, var(--dss-feedback-warning) 10%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:feedback-warning -->
 
 ## 4.4 Info
@@ -870,7 +870,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 | `--dss-feedback-info-disable` | `var(--dss-info-disable)` | — | — |
 | `--dss-feedback-info-hover` | `var(--dss-info-hover)` | — | — |
 | `--dss-feedback-info-deep` | `var(--dss-info-deep)` | — | — |
-| `--dss-feedback-info-surface` | `rgba(12, 196, 233, 0.1)` | — | — |
+| `--dss-feedback-info-surface` | `color-mix(in srgb, var(--dss-feedback-info)    10%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:feedback-info -->
 
 ## 4.5 Feedback Surfaces

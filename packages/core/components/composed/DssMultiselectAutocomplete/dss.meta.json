@@ -60,7 +60,7 @@
       {
         "property": "fundo do hover da opção",
         "token": "--dss-action-primary-surface",
-        "value": "rgba(31,134,222,0.08)",
+        "value": null,
         "source": "4-output/_states.scss",
         "probe": {
           "selector": ".dss-multiselect-autocomplete__option",
@@ -76,7 +76,7 @@
       {
         "property": "fundo da opção selecionada",
         "token": "--dss-surface-selected",
-        "value": "rgba(31,134,222,0.12)",
+        "value": null,
         "source": "4-output/_states.scss",
         "probe": {
           "selector": ".dss-multiselect-autocomplete__option[aria-selected='true']",

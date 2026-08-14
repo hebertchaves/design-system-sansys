@@ -2271,5 +2271,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-08-14T13:50:15.064Z_
+_Gerado em: 2026-08-14T22:43:27.601Z_
 <!-- END:AUTO-GENERATED -->
