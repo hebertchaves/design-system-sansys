@@ -66,67 +66,73 @@ defineExpose({ fieldId: computedFieldId, hintId, errorId, ariaDescribedby })
     @focusin="onFocusIn"
     @focusout="onFocusOut"
   >
-    <!-- Before slot: conteúdo fora da borda, antes do campo -->
-    <div v-if="$slots.before" class="dss-field__before">
-      <slot name="before" />
-    </div>
-
-    <!-- Chrome do campo: borda, label, controle, prepend, append -->
-    <div class="dss-field__field">
-      <!-- Prepend: ícone ou botão antes do controle, dentro da borda -->
-      <div v-if="$slots.prepend" class="dss-field__prepend" aria-hidden="true">
-        <slot name="prepend" />
+    <!-- Linha horizontal: before | campo | after. Sem este wrapper os slots
+         externos EMPILHAM (a raiz é flex-column) — divergia de DssInput,
+         onde before/after ficam ao lado. -->
+    <div class="dss-field__row">
+      <div v-if="$slots.before" class="dss-field__before">
+        <slot name="before" />
       </div>
 
-      <!-- Prefix: texto antes do controle (ex: "R$") -->
-      <span v-if="prefix" class="dss-field__prefix" aria-hidden="true">{{ prefix }}</span>
+      <!-- Chrome do campo: borda, label, controle, prepend, append -->
+      <div class="dss-field__field">
+        <!-- Prepend: ícone ou botão antes do controle, dentro da borda -->
+        <div v-if="$slots.prepend" class="dss-field__prepend" aria-hidden="true">
+          <slot name="prepend" />
+        </div>
 
-      <!-- Área de controle: label flutuante + slot do controle -->
-      <div class="dss-field__control">
-        <label
-          v-if="label || $slots.label"
-          :id="labelId"
-          :for="computedFieldId"
-          :class="labelClasses"
-        >
-          <slot name="label">{{ label }}</slot>
-        </label>
+        <!-- Prefix: texto antes do controle (ex: "R$") -->
+        <span v-if="prefix" class="dss-field__prefix" aria-hidden="true">{{ prefix }}</span>
 
-        <!--
-          Slot padrão: o controle real (input nativo, DssInput sem label,
-          seletor customizado, etc.).
-          `fieldId` é exposto para que o consumer possa associar ao label:
-          <template #default="{ fieldId }">
-            <input :id="fieldId" ... />
-          </template>
-        -->
-        <slot :field-id="computedFieldId" :aria-describedby="ariaDescribedby" />
+        <!-- Área de controle: label flutuante + slot do controle -->
+        <div class="dss-field__control">
+          <label
+            v-if="label || $slots.label"
+            :id="labelId"
+            :for="computedFieldId"
+            :class="labelClasses"
+          >
+            <slot name="label">{{ label }}</slot>
+          </label>
+
+          <!--
+            Slot padrão: o controle real (input nativo, DssInput sem label,
+            seletor customizado, etc.).
+            `fieldId` é exposto para que o consumer possa associar ao label:
+            <template #default="{ fieldId }">
+              <input :id="fieldId" ... />
+            </template>
+          -->
+          <slot :field-id="computedFieldId" :aria-describedby="ariaDescribedby" />
+        </div>
+
+        <!-- Suffix: texto após o controle (ex: ".com") -->
+        <span v-if="suffix" class="dss-field__suffix" aria-hidden="true">{{ suffix }}</span>
+
+        <!-- Append: ícone, botão ou spinner, após o controle, dentro da borda -->
+        <div v-if="$slots.append || loading" class="dss-field__append">
+          <slot name="append" />
+          <span
+            v-if="loading"
+            class="dss-field__loading"
+            role="status"
+            aria-label="Carregando"
+            aria-live="polite"
+          >
+            <span class="dss-field__spinner" aria-hidden="true" />
+          </span>
+        </div>
       </div>
 
-      <!-- Suffix: texto após o controle (ex: ".com") -->
-      <span v-if="suffix" class="dss-field__suffix" aria-hidden="true">{{ suffix }}</span>
-
-      <!-- Append: ícone, botão ou spinner, após o controle, dentro da borda -->
-      <div v-if="$slots.append || loading" class="dss-field__append">
-        <slot name="append" />
-        <span
-          v-if="loading"
-          class="dss-field__loading"
-          role="status"
-          aria-label="Carregando"
-          aria-live="polite"
-        >
-          <span class="dss-field__spinner" aria-hidden="true" />
-        </span>
+      <!-- After slot: conteúdo fora da borda, após o campo -->
+      <div v-if="$slots.after" class="dss-field__after">
+        <slot name="after" />
       </div>
-    </div>
 
-    <!-- After slot: conteúdo fora da borda, após o campo -->
-    <div v-if="$slots.after" class="dss-field__after">
-      <slot name="after" />
-    </div>
+    </div><!-- /.dss-field__row -->
 
     <!-- Bottom: erro (preferência) ou dica -->
+
     <div v-if="hasBottomContent" class="dss-field__bottom">
       <div
         v-if="error && (errorMessage || $slots.error)"

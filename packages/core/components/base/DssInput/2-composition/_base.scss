@@ -132,9 +132,18 @@
   margin: 0;
   line-height: var(--dss-line-height-normal);
 
+  // Valor e placeholder TRUNCAM com reticências em vez de sumir cortados na
+  // borda. O texto íntegro do placeholder fica no `title` (ver 1-structure).
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
   &::placeholder {
     color: var(--dss-text-hint);
     opacity: 1;
+    // `text-overflow` no ::placeholder é o que faz o Chrome truncar a dica.
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Remove autofill background */

@@ -33,6 +33,7 @@
           :type="type"
           :value="modelValue"
           :placeholder="computedPlaceholder"
+          :title="computedPlaceholder || undefined"
           :disabled="disabled || loading"
           :readonly="readonly"
           :class="inputClasses"

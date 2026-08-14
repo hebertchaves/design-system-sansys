@@ -10,108 +10,114 @@
     @dragleave="handleDragLeave"
   >
     <!-- Before: fora da borda do campo (paridade da família) -->
-    <div v-if="slots.before" class="dss-file__before">
-      <slot name="before" />
-    </div>
-
-    <!-- QFile — gerencia toda a lógica de seleção (overlay transparente opacity:0).
-         Sem slots prepend/append: eles ficariam invisíveis dentro do overlay;
-         moram na linha visual abaixo, acima do overlay (z-index). -->
-    <q-file
-      ref="qFileRef"
-      :model-value="modelValue"
-      :multiple="multiple"
-      :accept="accept"
-      :max-files="maxFiles"
-      :max-file-size="maxFileSize"
-      :disable="disabled || loading"
-      :readonly="readonly"
-      :aria-busy="loading ? 'true' : undefined"
-      :aria-required="required ? 'true' : undefined"
-      :tabindex="computedTabindex"
-      :aria-label="ariaLabel"
-      class="dss-file__q-file"
-      borderless
-      @update:model-value="(val) => emit('update:modelValue', val)"
-      @rejected="(rejections) => emit('rejected', rejections)"
-      @focus="handleFocus"
-      @blur="handleBlur"
-    />
-
-    <!-- Linha visual do campo (sobre o QFile transparente). Só o
-         .dss-file__control (duplicata visual de label/dropzone/valor) é
-         aria-hidden; prepend/append/clear são slots/controles REAIS e visíveis,
-         com z-index acima do overlay para receberem o clique. -->
-    <div class="dss-file__field">
-      <!-- Prepend (slot do usuário) — fora do QFile opacity:0, senão invisível -->
-      <div v-if="slots.prepend" class="dss-file__prepend">
-        <slot name="prepend" />
+    <!-- Linha horizontal: before | campo | after. Sem este wrapper os slots
+         externos EMPILHAM (a raiz é flex-column) — divergia de DssInput,
+         onde before/after ficam ao lado. -->
+    <div class="dss-file__row">
+      <div v-if="slots.before" class="dss-file__before">
+        <slot name="before" />
       </div>
 
-      <!-- Conteúdo visual duplicado (o QFile já anuncia via aria-label) -->
-      <div class="dss-file__control" aria-hidden="true">
-        <!-- Label flutuante -->
-        <label
-          v-if="label || slots.label"
-          :class="labelClasses"
-          @click="pickFiles"
+      <!-- QFile — gerencia toda a lógica de seleção (overlay transparente opacity:0).
+           Sem slots prepend/append: eles ficariam invisíveis dentro do overlay;
+           moram na linha visual abaixo, acima do overlay (z-index). -->
+      <q-file
+        ref="qFileRef"
+        :model-value="modelValue"
+        :multiple="multiple"
+        :accept="accept"
+        :max-files="maxFiles"
+        :max-file-size="maxFileSize"
+        :disable="disabled || loading"
+        :readonly="readonly"
+        :aria-busy="loading ? 'true' : undefined"
+        :aria-required="required ? 'true' : undefined"
+        :tabindex="computedTabindex"
+        :aria-label="ariaLabel"
+        class="dss-file__q-file"
+        borderless
+        @update:model-value="(val) => emit('update:modelValue', val)"
+        @rejected="(rejections) => emit('rejected', rejections)"
+        @focus="handleFocus"
+        @blur="handleBlur"
+      />
+
+      <!-- Linha visual do campo (sobre o QFile transparente). Só o
+           .dss-file__control (duplicata visual de label/dropzone/valor) é
+           aria-hidden; prepend/append/clear são slots/controles REAIS e visíveis,
+           com z-index acima do overlay para receberem o clique. -->
+      <div class="dss-file__field">
+        <!-- Prepend (slot do usuário) — fora do QFile opacity:0, senão invisível -->
+        <div v-if="slots.prepend" class="dss-file__prepend">
+          <slot name="prepend" />
+        </div>
+
+        <!-- Conteúdo visual duplicado (o QFile já anuncia via aria-label) -->
+        <div class="dss-file__control" aria-hidden="true">
+          <!-- Label flutuante -->
+          <label
+            v-if="label || slots.label"
+            :class="labelClasses"
+            @click="pickFiles"
+          >
+            <slot name="label">{{ label }}</slot><span v-if="required" aria-hidden="true"> *</span>
+          </label>
+
+          <!-- Área de drag-and-drop (dica visual). Papel de placeholder: com label
+               em repouso ocupa o centro e a dica fica oculta (evita overlap —
+               paridade DssInput). Sem label, aparece sempre no estado vazio. -->
+          <div v-if="showDropHint" class="dss-file__drop-hint">
+            <span class="dss-file__drop-text">
+              {{ placeholder || 'Clique ou arraste arquivos aqui' }}
+            </span>
+          </div>
+
+          <!-- Nomes dos arquivos selecionados -->
+          <div v-if="hasValue" class="dss-file__value">
+            <span v-if="Array.isArray(modelValue)" class="dss-file__file-name">
+              {{ modelValue.length === 1 ? modelValue[0].name : `${modelValue.length} arquivos selecionados` }}
+            </span>
+            <span v-else class="dss-file__file-name">
+              {{ (modelValue as File).name }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Append (slot do usuário) — fora do QFile opacity:0 -->
+        <div v-if="slots.append || loading" class="dss-file__append">
+          <!-- Loading tem precedência visual: durante o upload o campo comunica
+               ocupado e não oferece a ação do slot. -->
+          <span v-if="loading" class="dss-file__loading" aria-hidden="true"></span>
+          <slot v-else name="append" />
+        </div>
+
+        <!-- Botão de limpar (controle real, visível, acima do overlay) -->
+        <button
+          v-if="clearable && hasValue && !loading && !disabled && !readonly"
+          class="dss-file__clear"
+          type="button"
+          :aria-label="clearAriaLabel"
+          @click.stop="handleClear"
         >
-          <slot name="label">{{ label }}</slot><span v-if="required" aria-hidden="true"> *</span>
-        </label>
-
-        <!-- Área de drag-and-drop (dica visual). Papel de placeholder: com label
-             em repouso ocupa o centro e a dica fica oculta (evita overlap —
-             paridade DssInput). Sem label, aparece sempre no estado vazio. -->
-        <div v-if="showDropHint" class="dss-file__drop-hint">
-          <span class="dss-file__drop-text">
-            {{ placeholder || 'Clique ou arraste arquivos aqui' }}
-          </span>
-        </div>
-
-        <!-- Nomes dos arquivos selecionados -->
-        <div v-if="hasValue" class="dss-file__value">
-          <span v-if="Array.isArray(modelValue)" class="dss-file__file-name">
-            {{ modelValue.length === 1 ? modelValue[0].name : `${modelValue.length} arquivos selecionados` }}
-          </span>
-          <span v-else class="dss-file__file-name">
-            {{ (modelValue as File).name }}
-          </span>
-        </div>
+          <span aria-hidden="true">×</span>
+        </button>
       </div>
 
-      <!-- Append (slot do usuário) — fora do QFile opacity:0 -->
-      <div v-if="slots.append || loading" class="dss-file__append">
-        <!-- Loading tem precedência visual: durante o upload o campo comunica
-             ocupado e não oferece a ação do slot. -->
-        <span v-if="loading" class="dss-file__loading" aria-hidden="true"></span>
-        <slot v-else name="append" />
-      </div>
-
-      <!-- Botão de limpar (controle real, visível, acima do overlay) -->
-      <button
-        v-if="clearable && hasValue && !loading && !disabled && !readonly"
-        class="dss-file__clear"
-        type="button"
-        :aria-label="clearAriaLabel"
-        @click.stop="handleClear"
+      <!-- Overlay visual para drag ativo -->
+      <div
+        v-if="isDragging"
+        class="dss-file__drag-overlay"
+        aria-hidden="true"
       >
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
+        <span class="dss-file__drag-label">Solte os arquivos aqui</span>
+      </div>
 
-    <!-- Overlay visual para drag ativo -->
-    <div
-      v-if="isDragging"
-      class="dss-file__drag-overlay"
-      aria-hidden="true"
-    >
-      <span class="dss-file__drag-label">Solte os arquivos aqui</span>
-    </div>
+      <!-- After: fora da borda do campo (paridade da família) -->
+      <div v-if="slots.after" class="dss-file__after">
+        <slot name="after" />
+      </div>
+    </div><!-- /.dss-file__row -->
 
-    <!-- After: fora da borda do campo (paridade da família) -->
-    <div v-if="slots.after" class="dss-file__after">
-      <slot name="after" />
-    </div>
 
     <!-- Área inferior: hint / erro -->
     <div v-if="hasBottomSlot" class="dss-file__bottom">

@@ -558,12 +558,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "color",
-          "token": "--dss-text-primary",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "overflow",
           "token": null,
           "value": "hidden",
@@ -579,6 +573,12 @@
           "property": "white-space",
           "token": null,
           "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-primary",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {

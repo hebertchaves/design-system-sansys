@@ -181,6 +181,7 @@
 .dss-file__drop-hint {
   display: flex;
   align-items: center;
+  min-width: 0; // permite o filho truncar (flex item não encolhe sem isto)
   gap: var(--dss-spacing-2);
   color: var(--dss-text-hint);
   font-size: var(--dss-font-size-md);
@@ -191,6 +192,13 @@
 
 .dss-file__drop-text {
   font-size: var(--dss-font-size-md);
+  // Texto longo TRUNCA em vez de estourar a moldura e quebrar linha (que inflava
+  // a altura do campo). O texto íntegro fica no `title`, que o template emite.
+  // Mesmo tratamento da label do DssField e do nome de arquivo aqui do lado.
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 // =============================================================================
@@ -270,6 +278,16 @@
 
 // Sem o deslocamento de alinhamento dos adornos INTERNOS: aqui não há reserva de
 // label a compensar, porque estes elementos ficam fora da moldura.
+/* Linha horizontal do campo: before | campo | after — paridade com o
+   `.dss-input__row`. Sem ela os slots externos empilhavam, porque a raiz é
+   `flex-direction: column`. */
+.dss-file__row {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  width: 100%;
+}
+
 .dss-file__before,
 .dss-file__after {
   display: flex;

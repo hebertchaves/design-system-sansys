@@ -36,7 +36,10 @@
   align-items: center;
   width: 100%;
   min-height: var(--dss-touch-target-md);
-  gap: var(--dss-spacing-2);
+  // spacing-1 (4px) e não spacing-2: é o espaçamento ícone↔conteúdo da família
+  // (DssInput e DssFile usam 4px). Com 8px aqui o glifo ficava visivelmente mais
+  // solto que nos irmãos.
+  gap: var(--dss-spacing-1);
   transition: background-color var(--dss-duration-200) var(--dss-easing-standard),
               border-color var(--dss-duration-200) var(--dss-easing-standard),
               box-shadow var(--dss-duration-200) var(--dss-easing-standard);
@@ -92,6 +95,29 @@
 
 .dss-field--dense .dss-field__control {
   padding: var(--dss-spacing-3) var(--dss-spacing-3) var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   ADORNO INTERNO + CONTROL — recuo lateral
+
+   Com prepend/append, o `padding` lateral do control SOMA com o `gap` do field:
+   medido 24px entre o ícone e a label, contra 4px em DssInput e DssFile. A label
+   ficava numa coluna deslocada, longe do glifo. Zera o lado correspondente — o
+   `gap` do field já dá o respiro. Regras idênticas às do DssInput, que já as
+   tinha; o DssField é que ficou sem.
+   ========================================================================== */
+
+.dss-field__prepend + .dss-field__control {
+  padding-left: 0;
+}
+
+.dss-field__control:has(+ .dss-field__append) {
+  padding-right: 0;
+}
+
+/* Com prepend, a label acompanha o texto (sem o recuo de 16px). */
+.dss-field__prepend + .dss-field__control .dss-field__label {
+  left: 0;
 }
 
 /* ==========================================================================
@@ -219,6 +245,16 @@
 /* ==========================================================================
    BEFORE E AFTER (slots externos à borda)
    ========================================================================== */
+
+/* Linha horizontal do campo: before | campo | after — paridade com o
+   `.dss-input__row`. Sem ela os slots externos empilhavam, porque a raiz é
+   `flex-direction: column`. */
+.dss-field__row {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  width: 100%;
+}
 
 .dss-field__before,
 .dss-field__after {
