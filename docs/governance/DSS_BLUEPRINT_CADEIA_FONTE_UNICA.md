@@ -145,7 +145,8 @@ o padrão `inject-default-preview.cjs` (que já faz isso para `visualProperties`
         "validValues": ["..."] }
     ],                                // ⚠️ PARCIAL — types.ts tem nome/tipo; default/desc fragmentados
     "emits": [ { "name": "click", "payload": "MouseEvent", "description": "..." } ], // ⚠️ PARCIAL
-    "slots": [ { "name": "default", "scope": null, "description": "...", "example": "..." } ], // ⚠️ PARCIAL
+    "slots": [ { "name": "default", "scope": "fieldId, ariaDescribedby",
+                 "required": true, "description": "..." } ],  // ✅ v2.5.0 — ver nota abaixo
     "exposedRefs": [],                // ⚠️ FALTA
     "vModel": { "prop": "modelValue", "event": "update:modelValue" } // ⚠️ FALTA estruturado
   },
@@ -194,6 +195,16 @@ o padrão `inject-default-preview.cjs` (que já faz isso para `visualProperties`
   }
 }
 ```
+> **`api.slots[]` deixou de ser PARCIAL em v2.5.0.** O `scope` gravava `null` fixo e a
+> obrigatoriedade nem existia — mas as duas informações **já estavam** na assinatura TS
+> (`default: (scope: { fieldId: string }) => unknown` vs `prepend?: () => unknown`) e o
+> emissor as descartava. Agora `scope` traz as chaves e `required` deriva da ausência de `?`.
+>
+> **Por que importava:** sem isso o Preview Frame não distinguia slot ESTRUTURAL de
+> decorativo. O `default` do DssField entrega `{ fieldId }` esperando o consumidor montar
+> o controle; o frame punha um `<span>` de demo e o componente aparecia como **moldura
+> vazia**, divergindo da página de teste. Foi o caso que expôs a lacuna.
+
 
 ---
 
@@ -216,7 +227,7 @@ Sem inferência, sem template universal de controles.
 | `visual.variants.size` | Seletor de tamanho | **SÓ** quando o componente declara variantes de tamanho |
 | `visual.variants.density` / outras | Seletor correspondente | **SÓ** quando declarado na fonte |
 | `api.emits[]` | Painel/log de eventos (registra ao emitir) | **TODO** evento aparece; `payload` type exibido |
-| `api.slots[]` | Toggle/preenchedor de slot (conteúdo demo) | **TODO** slot exposto; slot com conteúdo > prop |
+| `api.slots[]` | Toggle/preenchedor de slot; slot **`required` nasce LIGADO**; slot com `scope` recebe controle real | **TODO** slot exposto; slot com conteúdo > prop |
 | `sources.structure` | Mount do **SFC real** no iframe | Render fiel; controles → `postMessage` |
 
 **Regra de exaustividade-fiel (resolve o knob fantasma):** renderizar um controle para **CADA**

@@ -14,18 +14,40 @@ Funções SASS para conversões e cálculos:
 ### Mixins (`_mixins.scss`)
 Mixins principais para componentes:
 - `dss-focus-ring()` - Focus ring acessível
-- `dss-touch-target()` - Touch targets 44×44px mínimo
 - `dss-transition()` - Transições com reduced-motion
 - `dss-button-variant()` - Variantes de botões
 - `dss-card()` - Cards brandáveis
 
 ### Mixins de Acessibilidade (`_accessibility-mixins.scss`)
-Mixins específicos para acessibilidade WCAG 2.1 AA:
-- `dss-validate-contrast()` - Validação em tempo de compilação
-- `dss-skip-link()` - Links de navegação
-- `dss-aria-live()` - ARIA live regions
-- `dss-loading-state()` - Estados de loading
-- `dss-accessible-modal()` - Modais com focus trap
+- `dss-visually-hidden()` - Conteúdo só para leitor de tela
+
+> ### ⚠️ 11 mixins REMOVIDOS em v2.5.0 — não voltar a documentá-los
+>
+> `dss-touch-target` · `dss-input-base` · `dss-text` · `dss-opacity` ·
+> `dss-accessible-form` · `dss-accessible-modal` · `dss-accessible-tooltip` ·
+> `dss-aria-live` · `dss-loading-state` · `dss-skip-link` · `dss-validate-contrast`
+>
+> Forense de git: nasceram no commit de bootstrap (`63e4e07`, jan/2026) e
+> **nunca foram usados por componente algum, em commit nenhum** — `git log -S`
+> deu 0 para os 11. Não eram legado que envelheceu; eram andaime especulativo.
+> Vários apontavam para tokens inexistentes e resolviam para vazio; o
+> `dss-aria-live` escrevia `aria-live` como **propriedade CSS**, que não existe.
+>
+> **Onde está o papel deles hoje:**
+> | Removido | Substituto |
+> |---|---|
+> | `dss-touch-target` | `min-height: var(--dss-touch-target-md)` (44px), direto |
+> | `dss-input-base` | **DssInput** (4 camadas) |
+> | `dss-accessible-form` | **DssField** / **DssInput** |
+> | `dss-accessible-modal` | **DssDialog** (composed) |
+> | `dss-accessible-tooltip` | **DssTooltip** |
+> | `dss-loading-state` | **DssSpinner** / **DssInnerLoading** |
+> | `dss-validate-contrast` | `scripts/wcag-kit.mjs` (roda no CI, não depende de incluir mixin) |
+> | `dss-opacity` · `dss-text` | tokens direto (`--dss-opacity-*`, `--dss-font-*`) |
+> | `dss-skip-link` | **nada** — skip link não existe no DSS; lacuna real de a11y, registrada no `DEBITO_ABERTO.md` |
+>
+> Também saíram as classes `.dss-touch-target` e `.dss-touch-target-ideal`:
+> eram API pública que não pintava nada.
 
 ### Helpers (`_helpers.scss`)
 Classes utilitárias CSS disponíveis globalmente:

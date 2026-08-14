@@ -2,7 +2,7 @@
 
 > Núcleo do **Design System Sansys (DSS)** — componentes Vue 3, tokens semânticos e temas. É o pacote publicável consumido pelas aplicações.
 
-[![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)](../../CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.5.0-blue.svg)](../../CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](../../LICENSE)
 [![WCAG](https://img.shields.io/badge/WCAG-2.1%20AA-success.svg)](#)
 

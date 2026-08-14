@@ -7,6 +7,83 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [2.5.0] - 2026-08-14 — Adequação de UI, Cadeia de Contrato e Higiene
+
+> 269 commits desde a 2.4.0. As três frentes: **adequação visual** dos componentes
+> (família de Controles de Seleção + DssChip + DssField), **endurecimento da cadeia
+> de fonte única** (contratos, gates, Preview Frame) e **higiene** de código que
+> nunca funcionou. Detalhe vivo em `docs/governance/DEBITO_ABERTO.md`.
+
+### ⚠️ BREAKING CHANGES
+
+Ambas removem API que **nunca teve efeito** — por isso `2.5.0` e não `3.0.0`.
+Quem as usava já não recebia nada; a migração é apagar a chamada.
+
+- **`DssChip`: prop `round` removida.** Vinha `round: true` de fábrica e aplicava
+  uma regra byte-idêntica ao default da base (`border-radius: var(--dss-radius-full)`),
+  logo era inerte ligada **e** desligada. O chip já nasce pílula. O QChip também só
+  oferece `square`. **Migração:** remover `round` / `:round="false"` — o resultado
+  visual é idêntico.
+- **`utils/`: 11 mixins e 2 classes utilitárias removidos.**
+  `dss-touch-target` · `dss-input-base` · `dss-text` · `dss-opacity` ·
+  `dss-accessible-form` · `dss-accessible-modal` · `dss-accessible-tooltip` ·
+  `dss-aria-live` · `dss-loading-state` · `dss-skip-link` · `dss-validate-contrast`;
+  classes `.dss-touch-target` e `.dss-touch-target-ideal`.
+  Forense de git: nasceram no bootstrap (`63e4e07`, jan/2026) e **nunca foram usados
+  por componente algum, em commit nenhum**. Vários apontavam para tokens inexistentes
+  e resolviam para vazio; o `dss-aria-live` escrevia `aria-live` como *propriedade CSS*,
+  que não existe. **Migração e substitutos:** tabela em `packages/core/utils/README.md`.
+
+### ♿ Acessibilidade
+
+- **Touch target normativo passou de 48px para 44px.** Os 48 vinham do Material, não
+  do WCAG — 44×44 é o mínimo do **WCAG 2.5.5** — e **não existia token de 48px** (a
+  escala é 32/36/44/52/64). A implementação sempre entregou 44; a divergência estava
+  mascarada por comentários `/* 48px */` ao lado de `var(--dss-touch-target-md)`.
+  A decisão já existia (risco **R-04** do selo do DssInput) e nunca fora propagada.
+  Alinhados: `CLAUDE.md`, 5 normativos de Nível 1/2, selos e docs de componente.
+- **`.bg-neutral` seguia primitivo e não invertia no dark:** fundo `#fafafa` com texto
+  `#f5f5f5` — **1,04:1 medido**, chip invisível. Com `--dss-surface-subtle`: **7,17:1**
+  no escuro, 9,19:1 no claro (inalterado).
+- **Anel de foco virou exclusivo de teclado** em Checkbox, Radio e Toggle. Ligavam no
+  evento `focus` puro, então aparecia em clique de mouse — enquanto o comentário do
+  SCSS afirmava `:focus-visible`. Agora o gatilho é o seletor CSS.
+- **`DssField` ganhou anel próprio** (`:has(:focus-visible)`), fechando o último
+  componente da família de campos sem ele.
+
+### ✨ Componentes
+
+- **Família de Controles de Seleção fechada**: `keepColor`, `checkedIcon`, `size="xl"`
+  e uniões de tipo nos três; `error` no Checkbox; `leftLabel` corrigido (dupla-inversão
+  template×CSS); `modelValue` admitindo os valores de `trueValue`/`falseValue`;
+  DssToggle reformulado com as proporções do QToggle.
+- **DssChip**: altura fiel à escala de compact control (20/24/28/32); cor unificada
+  numa fonte só — antes `brand` + 6 das 9 cores não casavam regra nenhuma e o chip
+  saía **preto**; ícone deixou de ser sequestrado pela regra global `[data-brand] .dss-icon`.
+- **DssMultiselectAutocomplete** (Fase 3): busca assíncrona, lazy loading e seção
+  "Selecionados" no topo.
+
+### 🔗 Cadeia de fonte única
+
+- **`api.slots[]` deixou de ser parcial**: o contrato passou a carregar `scope` (chaves
+  do slot escopado) e `required`. As duas já estavam na assinatura TS e o emissor as
+  descartava. O Preview Frame agora liga slots obrigatórios e monta o controle real.
+- **Gate de tokens fantasma triplicou de escopo**: varria só `components/`; ganhou
+  `themes/`, `tokens/` e `utils/`, com **baseline por escopo** (perdoar em um não
+  perdoa nos outros). Achou 35 fantasmas que ninguém via.
+- **Gate Estrutural** (4 camadas, wrapper, barrel, orquestrador) e higiene de SFC.
+- **`line-height` pareado em px** (Rota C): fracionados de 36 → 12 nos 89 componentes,
+  e os 12 restantes são do Quasar.
+
+### 📦 Build e release
+
+- **`prepublishOnly`** reconstrói o `dist` antes de publicar. O `dist` não é versionado
+  e ficou **2 meses defasado**, carregando 101 declarações quebradas que o fonte já
+  havia consertado — incluindo `--dss-focus-ring` (anel invisível) 27×.
+- **`post-merge`** reconstrói o `dist` quando o pull toca o core, condicionalmente.
+
+---
+
 ## [2.4.0] - 2026-06-13 — Estabilização Pré-Produção
 
 > Ciclo de auditoria e correção que antecedeu a migração para o GitLab

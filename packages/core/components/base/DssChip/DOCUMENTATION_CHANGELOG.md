@@ -1,8 +1,45 @@
 # DssChip - Changelog da Documentação
 
-**Data:** Janeiro 2025
+**Data:** Maio 2026 *(o cabeçalho dizia "Janeiro 2025"; a criação real do arquivo é
+2026-05-30, conferida no git — vício de data escrita à mão, corrigido em ago/2026)*
 **Versão:** DSS v2.2.0
 **Motivo:** Implementação inicial do componente DssChip
+
+---
+
+## [2.5.0] — Agosto 2026 — Adequação de UI: altura, cor e remoção da prop `round`
+
+**Motivo:** adequação visual do componente (Fase 1/2) — ver `DEBITO_ABERTO.md`.
+
+### ⚠️ BREAKING — prop `round` removida
+Vinha `true` de fábrica e aplicava regra byte-idêntica ao default da base, logo era
+inerte **ligada e desligada**. O chip já nasce pílula; o QChip também só oferece
+`square`. Uso em produção era zero. **Migração:** apagar a prop.
+
+### Altura fiel à escala de compact control
+O `lg` estourava o token (34px contra 32px). Causa de fundo: o `line-height` era
+declarado uma vez, pareado com 14px, e os modificadores trocavam só o `font-size` — o
+par só fechava no `md`. Medido: **20 / 24 / 28 / 32**, todos inteiros.
+
+### Cor: de dois caminhos para um
+O composable emitia utilities do Quasar sem brand e trocava por `.dss-chip--{color}`
+com brand — e o `_brands.scss` cobria 3 das 9 cores. Com `brand` + as outras 6, nada
+casava e o chip ficava **preto** (`rgb(0,0,0)` medido). Agora `3-variants/_colors.scss`
+cobre as 9; `4-output/_brands.scss` ficou sem regras, como já ocorrera na família de
+Controles de Seleção.
+
+**Regra de disputa `color` × `brand`:** decide o REGIME do token, não uma precedência
+entre props. Ação → `--dss-action-*` (só `primary` é remapeada por marca);
+feedback → `--dss-feedback-*` (imune); `neutral` → agnóstico.
+
+### Ícone deixou de sumir dentro do próprio fundo
+A regra **global** `[data-brand] .dss-icon` (`DssIcon/4-output/_brands.scss`) casa
+direto no elemento (0,2,0) e vencia a cor apenas herdada do chip: sob marca global, um
+`filled` ficava com fundo e ícone na mesma cor. Corrigido declarando a cor no próprio
+ícone, como o DssCheckbox já fazia.
+
+### Contraste do `neutral` no dark
+`.bg-neutral` usava primitivo que não inverte: 1,04:1 medido. Agora 7,17:1.
 
 ---
 
