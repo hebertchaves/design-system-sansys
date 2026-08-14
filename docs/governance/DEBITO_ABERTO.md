@@ -253,9 +253,25 @@
       load-bearing: **`dss-focus-ring` (16 usos)** e **`dss-transition` (16 usos)**.
     - **Morto:** `_example-showcase.scss` (0/6 seletores no bundle) — e morto **de propósito**, o
       `utils/index.scss` documenta que ele fica fora para não levar CSS de demo à produção.
-    - **Morto por símbolo:** **12 dos 16 mixins têm ZERO uso externo**, incluindo o quebrado
-      `dss-touch-target`. Usados: `dss-focus-ring`, `dss-transition`, `dss-button-variant` (1),
+    - **Morto por símbolo:** **11 dos 16 mixins têm ZERO uso externo** (recontado; o registro anterior
+      dizia 12). Usados: `dss-focus-ring` (16), `dss-transition` (16), `dss-button-variant` (1),
       `dss-card` (1), `dss-visually-hidden` (1).
+    - 🔍 **POR QUE não são usados — investigado 2026-08-14. Não há causa única; são 4 grupos, e cada um
+      pede um desfecho diferente:**
+
+      | Motivo | Mixins | Desfecho indicado |
+      |---|---|---|
+      | **(b) Substituído por implementação real** | `dss-input-base`→DssInput · `dss-accessible-form`→DssField/DssInput · `dss-accessible-tooltip`→DssTooltip · `dss-accessible-modal`→DssDialog (composed) · `dss-loading-state`→DssSpinner/DssInnerLoading · `dss-validate-contrast`→`scripts/wcag-kit.mjs` | **Remover.** São ancestrais dos componentes — o `dss-input-base` até carrega comentários "refatoração Jan 2025 Sprint 2". Mantê-los é oferecer dois caminhos para a mesma coisa. |
+      | **(c) Esquecidos / redundantes com o token direto** | `dss-opacity` · `dss-text` · `dss-touch-target` | **Remover.** O `dss-opacity` inclusive **hardcoda** `0.1/0.2/0.5/0.75` — hoje violaria a Constituição #1 no próprio utilitário que deveria ensiná-la. |
+      | **(a) Sem consumidor porque a feature nunca existiu** | `dss-skip-link` | **Decidir:** skip link não existe em lugar nenhum do repo. Ou se implementa (é item real de a11y), ou se remove o mixin órfão. |
+      | **(d) Estruturalmente impossível** | `dss-aria-live` | **Remover sem debate.** Escreve `aria-live: polite` **como propriedade CSS** — que não existe. O browser descarta a declaração. Nunca poderia ter funcionado, com ou sem consumidor. |
+
+      **Conclusão que muda o enquadramento:** o problema de `utils/` não é "esqueceram de usar". É que a
+      maioria destes mixins **perdeu o sentido quando o DSS ganhou componentes de verdade** — a camada de
+      mixins é anterior à arquitetura de 4 camadas. O desfecho majoritário é *remoção*, não adoção.
+      ⚠️ **Nenhum é `@forward`ado para fora?** `utils/index.scss` faz `@forward 'mixins'` e
+      `@forward 'accessibility-mixins'`, então são **API pública** do pacote: remover é breaking para
+      consumidor externo que os inclua. Medir antes (o repo tem 0 usos; o risco é fora dele).
     - 🔴 **27 declarações QUEBRADAS chegam ao CSS de produção** (contadas no bundle compilado agora):
       `--dss-touch-target-min` 19× · `-ideal` 4× · `--dss-touch-spacing-min` 2× · `--dss-border-error`
       e `-success` 2×. Destas, **4 são classes utilitárias públicas de `utils/_helpers.scss`** —
