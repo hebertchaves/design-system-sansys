@@ -256,9 +256,25 @@
       Agora: `CLAUDE.md` corrigido para 44px + **19 citações do token fantasma e 46 valores `48px`**
       corrigidos em Checkbox/Radio/Toggle/Chip (`.md`, `README`, `_base.scss`), mais **10 citações e 11
       valores nos SELOS** desses quatro — eram afirmação falsa em documento de certificação.
-      🔲 **Sobra varrer:** `docs/DSS_CATALOG_2026.md`, `dss_system_handoff_v_2.md` e selos de outros
-      componentes ainda dizem 48px. `docs/archive/` e `docs/audits/` **não** devem ser reescritos —
-      são registro do que se acreditava à época.
+      ✅ **Varredura estendida (2026-08-13):** `DSS_CATALOG_2026.md` · `dss_system_handoff_v_2.md` ·
+      e os **5 normativos de Nível 1/2** — `DSS_TOKEN_REFERENCE` (7), `DSS_COMPONENT_ARCHITECTURE` (20),
+      `DSS_ARCHITECTURE` (6), `DSS_IMPLEMENTATION_GUIDE` (23), `DSS_UI_RULES` (1). Estes eram os que
+      mais importavam: são o que o agente lê ao **criar componente do zero**, e ensinavam
+      `@include dss-touch-target('ideal')` — o mixin que nunca funcionou.
+      - **Não foi busca-e-troca.** Dos 11 hits do TOKEN_REFERENCE, **4 eram 48px legítimos**
+        (`--dss-spacing-12`, `--dss-layout-header-height-dense`, `--dss-icon-size-xl`,
+        `--dss-switch-track-width-sm`) e ficaram. Vários exemplos tinham `min-height: 48px` **hardcoded**,
+        violando Token First — passaram a usar o token.
+      - **Correção de norma, não só de número:** `DSS_UI_RULES` afirmava "48x48px (WCAG 2.5.5) **ou**
+        44x44px (WCAG 2.1 AA)" — duplamente errado. 44×44 é o WCAG **2.5.5**, nível **AAA**; o WCAG 2.1
+        **não tem** critério de alvo em AA (o 2.5.8, 24×24 em AA, é do WCAG 2.2); e 48px é Material, não
+        WCAG. Mesma imprecisão corrigida em `--dss-min-h-md`, que é 48px legítimo (piso do **MD3**) mas
+        se anunciava como "piso MD3/**WCAG 2.5.5**".
+      - **Cadeia respeitada:** a descrição de `--dss-min-h-md` vive em `tokens/semantic/_dimensions.scss`
+        e alimenta tabela AUTO-GENERATED; corrigi na **fonte** e rodei `sync:tokens-to-reference`.
+      🔲 **Sobra:** selos de outros componentes (DssBar, DssItem, DssFab, DssExpansionItem,
+      DssChatMessage, DssSlideItem), `pre-prompts/`, `audit-prompts/` e `specs/`. `docs/archive/` e
+      `docs/audits/` **não** devem ser reescritos — são registro do que se acreditava à época.
     - 🔴 **`--dss-touch-target-min` (19 usos) — guarda de WCAG 2.5.5 que NUNCA funcionou.** A escala real
       é `xs/sm/md/lg/xl` (o mínimo WCAG de 44px é o `md`); `-min` não existe. Logo
       `.q-btn { min-height: var(--dss-touch-target-min) !important }` é **no-op**. ⚠️ **Apontá-lo para

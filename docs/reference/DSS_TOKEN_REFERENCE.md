@@ -1461,7 +1461,12 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-touch-target-xl` | `64px` | `64px` | CTAs principais e ações primárias |
 <!-- END:TOKEN-TABLE:accessibility-touch-targets -->
 
-> **⚠️ IMPORTANTE**: Use `--dss-touch-target-min` (48px) como padrão para pseudo-elementos de touch target em Compact Controls. Este valor atende WCAG 2.5.5 com margem de segurança.
+> **⚠️ IMPORTANTE**: Use **`--dss-touch-target-md` (44px)** como padrão para pseudo-elementos de touch
+> target em Compact Controls. É o mínimo do WCAG 2.5.5 e a decisão de governança do DSS.
+>
+> **Não existe `--dss-touch-target-min`** — nem `-ideal`, nem `-large`. A escala é `-{xs,sm,md,lg,xl}`
+> = 32/36/44/52/64. Esses três nomes foram citados por anos em docs e no mixin `dss-touch-target`
+> (`utils/_mixins.scss`), sempre resolvendo para vazio. Se precisar de alvo maior que 44px, use `-lg` (52px).
 
 ## 7.8 Touch Spacing
 
@@ -1560,7 +1565,7 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 > **⚠️ IMPORTANTE: Altura Visual vs Touch Target**
 >
 > Os tokens abaixo definem a **altura visual** do componente, NÃO o touch target.
-> O touch target mínimo (48×48px WCAG) é garantido por outros mecanismos:
+> O touch target mínimo (44×44px — WCAG 2.5.5) é garantido por outros mecanismos:
 > - Padding expandido invisível
 > - Pseudo-elementos `::before`/`::after`
 > - Área de clique estendida via CSS
@@ -1603,7 +1608,7 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 
 ### Garantia de Touch Target (WCAG 2.5.5)
 
-Os componentes que usam estes tokens DEVEM garantir touch target mínimo de 48×48px via:
+Os componentes que usam estes tokens DEVEM garantir touch target mínimo de 44×44px via:
 
 ```scss
 // Exemplo de implementação do touch target via pseudo-elemento
@@ -1618,8 +1623,8 @@ Os componentes que usam estes tokens DEVEM garantir touch target mínimo de 48×
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min);  // 48px
-    min-height: var(--dss-touch-target-min); // 48px
+    min-width: var(--dss-touch-target-md);  // 44px
+    min-height: var(--dss-touch-target-md); // 44px
     pointer-events: none; // ⚠️ NÃO REMOVER - ver nota
   }
 }
@@ -2209,7 +2214,7 @@ Restrições máximas de largura por contexto semântico de uso.
 
 Restrições mínimas de altura por contexto semântico.
 
-**Referência:** xs/sm para elementos não-interativos compactos; md (48px) é o **piso MD3/WCAG 2.5.5** para qualquer área interativa.
+**Referência:** xs/sm para elementos não-interativos compactos; md (48px) é o piso do **MD3** (48dp) para área interativa — excede o WCAG 2.5.5, cujo mínimo é 44px (`--dss-touch-target-md`).
 
 **Total: 6 tokens** *(tabela auto-gerada por `scripts/sync-tokens-to-reference.js`)*
 
@@ -2218,7 +2223,7 @@ Restrições mínimas de altura por contexto semântico.
 |---|---|---|---|
 | `--dss-min-h-xs` | `var(--dss-spacing-6)` | `24px` | elementos não-interativos compactos (IBM Carbon layout-05) |
 | `--dss-min-h-sm` | `var(--dss-spacing-10)` | `40px` | elementos compactos abaixo do mínimo WCAG (uso restrito) |
-| `--dss-min-h-md` | `var(--dss-spacing-12)` | `48px` | ✅ piso MD3/WCAG 2.5.5 — referência primária |
+| `--dss-min-h-md` | `var(--dss-spacing-12)` | `48px` | piso do MD3 (48dp); excede o WCAG 2.5.5, que pede 44px |
 | `--dss-min-h-lg` | `var(--dss-spacing-48)` | `192px` | containers overlay (menus, scroll areas, parallax) |
 | `--dss-min-h-xl` | `var(--dss-spacing-80)` | `320px` | painéis laterais e seções de conteúdo |
 | `--dss-min-h-2xl` | `var(--dss-spacing-120)` | `480px` | seções de altura completa |

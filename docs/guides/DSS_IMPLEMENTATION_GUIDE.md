@@ -1028,7 +1028,7 @@ Essas cores foram escolhidas para funcionar bem em ambos os modos, minimizando a
 
 O DssButton possui acessibilidade WCAG 2.1 AA completa:
 
-- ✅ **Touch Targets**: Mínimo 48×48px
+- ✅ **Touch Targets**: Mínimo 44×44px (`--dss-touch-target-md`)
 - ✅ **Focus Ring**: Anel de foco 3px com contraste 4.5:1
 - ✅ **ARIA**: Suporte a `aria-label`, `aria-busy`, `aria-disabled`
 - ✅ **Teclado**: Funciona com Enter e Space
@@ -1417,7 +1417,7 @@ Detecta tipo de dispositivo:
 .button {
   @include dss-touch-device {
     // Touch devices (mobile, tablet)
-    min-height: 48px;
+    min-height: var(--dss-touch-target-md); /* 44px */
     padding: 12px 16px;
   }
 
@@ -1751,13 +1751,14 @@ Todos os focus rings foram validados para WCAG 2.1 AA:
 
 ```scss
 .icon-button {
-  @include dss-touch-target('ideal');
+  min-height: var(--dss-touch-target-md); // 44px
+  min-width:  var(--dss-touch-target-md);
 
-  // Gera automaticamente:
-  // min-height: 48px;
-  // min-width: 48px;
-  // padding: 8px;
-  // + pseudo-element para área tocável
+  // O touch target do DSS é declarado assim, no token — não há mixin que o
+  // gere. O `dss-touch-target` de utils/_mixins.scss nunca funcionou (seus três
+  // ramos apontam para tokens inexistentes) e nenhum componente o usa.
+  // Quando o tamanho VISUAL é menor que 44px (chip, badge), a área tocável vem
+  // do ::before, que é reservado a isso (Cartão Base do CLAUDE.md).
 }
 ```
 
@@ -1961,7 +1962,7 @@ Todos os focus rings foram validados para WCAG 2.1 AA:
 
 <!-- Touch target -->
 <button class="dss-touch-target-ideal">
-  Botão com área tocável ideal (48×48px)
+  Botão com área tocável no mínimo do WCAG 2.5.5 (44×44px)
 </button>
 
 <!-- Visualmente escondido (screen readers only) -->
@@ -1992,8 +1993,8 @@ A classe `.dss-touch-wrapper` é uma **utility oficial do DSS** para garantir to
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--dss-touch-target-min);  /* 48px */
-  min-height: var(--dss-touch-target-min); /* 48px */
+  min-width: var(--dss-touch-target-md);  /* 44px */
+  min-height: var(--dss-touch-target-md); /* 44px */
 
   /* Reset para uso como botão */
   &:where(button) {
@@ -2041,15 +2042,15 @@ Todos os elementos interativos têm **mínimo 44×44px** (WCAG 2.1 AA):
 | Conceito | Definição | Requisito WCAG |
 |----------|-----------|----------------|
 | **Altura Visual** | Dimensão renderizada visualmente do componente | Nenhum (estético) |
-| **Touch Target** | Área mínima clicável/tocável para interação | ≥ 44×44px (AA) ou ≥ 48×48px (recomendado) |
+| **Touch Target** | Área mínima clicável/tocável para interação | ≥ 44×44px (`--dss-touch-target-md`; WCAG 2.5.5, nível AAA) |
 
 #### Por Que Isso Importa
 
-Componentes compactos (chips, badges, tags) frequentemente têm **altura visual menor que 48px** por razões estéticas, mas DEVEM manter **touch target de 48×48px** para acessibilidade.
+Componentes compactos (chips, badges, tags) frequentemente têm **altura visual menor que 44px** por razões estéticas, mas DEVEM manter **touch target de 44×44px** para acessibilidade.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│         TOUCH TARGET INVISÍVEL (48×48px)                    │
+│         TOUCH TARGET INVISÍVEL (44×44px)                    │
 │    ┌────────────────────────────────────────────────┐       │
 │    │    ALTURA VISUAL DO CHIP (28px)                │       │
 │    │    ┌──────────────────────────────────┐        │       │
@@ -2088,8 +2089,8 @@ O DSS fornece tokens GENÉRICOS para altura visual de controles compactos:
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min);  // 48px
-    min-height: var(--dss-touch-target-min); // 48px
+    min-width: var(--dss-touch-target-md);  // 44px
+    min-height: var(--dss-touch-target-md); // 44px
     pointer-events: none; // ⚠️ CRÍTICO - ver nota abaixo
   }
 }
@@ -2107,7 +2108,7 @@ O DSS fornece tokens GENÉRICOS para altura visual de controles compactos:
   font-size: var(--dss-font-size-xs);
   line-height: 1;
 
-  // Touch target via padding (total ≥ 48px)
+  // Touch target via padding (total ≥ 44px)
   padding: var(--dss-spacing-3) var(--dss-spacing-4);
 }
 ```
@@ -2128,8 +2129,8 @@ O DSS fornece tokens GENÉRICOS para altura visual de controles compactos:
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--dss-touch-target-min);
-  min-height: var(--dss-touch-target-min);
+  min-width: var(--dss-touch-target-md);
+  min-height: var(--dss-touch-target-md);
 }
 </style>
 ```
@@ -2139,7 +2140,7 @@ O DSS fornece tokens GENÉRICOS para altura visual de controles compactos:
 Para cada componente compacto, verifique:
 
 - [ ] **Token de altura visual**: Usa `--dss-compact-control-height-*`
-- [ ] **Touch target mínimo**: ≥ 48×48px garantido
+- [ ] **Touch target mínimo**: ≥ 44×44px garantido
 - [ ] **Método documentado**: README explica como touch target é garantido
 - [ ] **Teste de acessibilidade**: Touch target verificado via devtools
 
@@ -2277,7 +2278,7 @@ Suporte automático a `prefers-reduced-motion: reduce`:
 <style lang="scss" scoped>
 .custom-hub-button {
   @include dss-button-variant('primary', 'brand');
-  @include dss-touch-target('ideal');
+  min-height: var(--dss-touch-target-md); // 44px
 
   display: inline-flex;
   align-items: center;
@@ -2727,14 +2728,14 @@ O DSS foi desenvolvido com foco em acessibilidade real e testada com usuários.
 - Testado em screens de 4" até 6.7"
 
 **Resultados:**
-- ✅ 100% dos botões ≥ 48×48px (acima do mínimo)
+- ✅ 100% dos botões ≥ 44×44px (`--dss-touch-target-md`, mínimo do WCAG 2.5.5)
 - ✅ 0 erros de toque em áreas pequenas
 - ✅ Usuários com tremor nas mãos conseguiram usar todos os controles
 
 **Implementação:**
 ```scss
 .dss-button {
-  @include dss-touch-target('ideal'); // 48×48px
+  min-height: var(--dss-touch-target-md); // 44×44px
 }
 ```
 
@@ -2931,7 +2932,7 @@ npm run lighthouse
 ```
 
 #### Checklist de Review
-- [ ] Todos os botões ≥ 48×48px
+- [ ] Todos os botões ≥ 44×44px
 - [ ] Focus rings visíveis (3px, 4.5:1)
 - [ ] ARIA labels em elementos sem texto
 - [ ] Contraste validado (≥ 4.5:1)
@@ -3005,7 +3006,7 @@ npm run lighthouse
 </button>
 
 <!-- ✅ Correto - área adequada -->
-<DssButton icon="close" size="md" /> <!-- 48×48px -->
+<DssButton icon="close" size="md" /> <!-- 44×44px -->
 ```
 
 #### 4. Estados visualmente distintos

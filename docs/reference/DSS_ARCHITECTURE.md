@@ -642,10 +642,10 @@ Tokens WCAG 2.1 AA completos:
 - Suporte a prefers-contrast e prefers-reduced-motion
 
 **_sizing.scss** (79 linhas)
-- Touch targets: 44×44px (min), 48×48px (ideal)
+- Touch targets: escala `--dss-touch-target-{xs,sm,md,lg,xl}` = 32/36/**44**/52/64px (o `md`, 44px, é o mínimo do WCAG 2.5.5 e o padrão do DSS)
 - Font sizes mínimos: 16px (body), 14px (secondary)
 - Line heights: 1.4-1.6
-- Input heights: 44-48px
+- Input heights: `--dss-form-control-height-{xs..xl}` = 32/36/**44**/52/64px
 
 **_typography.scss** (116 linhas)
 - Famílias de fonte (Inter, Roboto Mono)
@@ -987,12 +987,14 @@ Aplica foco acessível WCAG 2.1 AA:
 @include dss-focus-ring('error');
 ```
 
-#### dss-touch-target($size)
-Garante touch target mínimo 44×44px:
+#### dss-touch-target($size) — ⚠️ QUEBRADO, NÃO USAR
+O mixin existe em `utils/_mixins.scss`, mas seus **três** ramos apontam para tokens
+que nunca existiram (`--dss-touch-target-min` / `-ideal` / `-large`) — a escala real
+é `-{xs,sm,md,lg,xl}`. Ele sempre resolveu para vazio; nenhum componente o invoca.
+Use o token direto:
 ```scss
-@include dss-touch-target('min');      // 44px
-@include dss-touch-target('ideal');    // 48px
-@include dss-touch-target('large');    // 52px
+min-height: var(--dss-touch-target-md);  // 44px — mínimo WCAG 2.5.5
+min-width:  var(--dss-touch-target-md);
 ```
 
 #### dss-transition($properties, $speed)
@@ -1223,7 +1225,7 @@ Sistema completo de responsividade compatível com Quasar:
 
 // Dispositivos touch
 @include dss-touch-device {
-  .component { min-height: 48px; }
+  .component { min-height: var(--dss-touch-target-md); } // 44px
 }
 
 // Desktop

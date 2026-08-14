@@ -56,7 +56,7 @@ O arquivo `ui-rules/ui-rules.schema.json` é o contrato programático que o MCP 
 
 - **Ritmo Vertical:** O espaçamento consistente entre blocos de conteúdo de cima para baixo na página.
 - **Superfície:** Qualquer elemento que atue como container para outros elementos (ex: Cards, Dialogs, Drawers).
-- **Touch Target:** A área clicável de um elemento interativo, que deve ser no mínimo 48x48px (WCAG 2.5.5) ou 44x44px (WCAG 2.1 AA).
+- **Touch Target:** A área clicável de um elemento interativo. No DSS o mínimo é **44×44px** (`--dss-touch-target-md`). *(Precisão sobre a norma: 44×44 é o WCAG **2.5.5 Target Size**, que é nível **AAA**; o WCAG 2.1 não tem critério de alvo em AA — o 2.5.8, de 24×24 em AA, só chegou no WCAG 2.2. Os 48px que este documento citava vêm do Material Design, não do WCAG.)*
 - **Gutter:** O espaço entre colunas em um layout de grid.
 - **Gap:** O espaço entre elementos em um layout flexbox.
 

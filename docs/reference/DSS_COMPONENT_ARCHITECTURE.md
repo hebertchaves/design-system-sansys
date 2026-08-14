@@ -113,8 +113,9 @@ Todos os componentes DEVEM seguir **WCAG 2.1 AA** por padrão:
 
 ```scss
 .dss-component {
-  /* Touch Targets: Mínimo 48x48px */
-  @include dss-touch-target('ideal');
+  /* Touch target: mínimo 44x44px (WCAG 2.5.5) */
+  min-height: var(--dss-touch-target-md);
+  min-width: var(--dss-touch-target-md);
 
   /* Focus Ring: Contraste 4.5:1 */
   @include dss-focus-ring('primary');
@@ -125,7 +126,7 @@ Todos os componentes DEVEM seguir **WCAG 2.1 AA** por padrão:
 ```
 
 **Checklist de Acessibilidade:**
-- [ ] Touch targets ≥ 48×48px (mixins)
+- [ ] Touch targets ≥ 44×44px (`--dss-touch-target-md`)
 - [ ] Focus rings visíveis 3px com contraste 4.5:1
 - [ ] ARIA labels apropriados
 - [ ] Estados (loading, disabled) anunciados
@@ -311,7 +312,7 @@ computed: {
   text-transform: uppercase;
 
   /* Acessibilidade OBRIGATÓRIA */
-  @include dss-touch-target('ideal');  // 48x48px
+  min-height: var(--dss-touch-target-md);  // 44x44px
   @include dss-focus-ring('primary');  // Focus ring 3px
   @include dss-transition(all, 'fast'); // Respeita reduced-motion
 }
@@ -333,8 +334,8 @@ computed: {
 }
 
 .dss-button--md {
-  min-height: 48px;  /* ✅ WCAG 2.1 AA ideal */
-  min-width: 48px;
+  min-height: var(--dss-touch-target-md);  /* 44px — WCAG 2.5.5 */
+  min-width: var(--dss-touch-target-md);
   padding: var(--dss-spacing-3) var(--dss-spacing-6);
   font-size: var(--dss-font-size-base, 16px);
 }
@@ -342,7 +343,7 @@ computed: {
 
 **Padrão de Sizes:**
 - ✅ `min-height` e `min-width` para touch targets
-- ✅ Tamanho padrão (md) é 48×48px (ideal WCAG)
+- ✅ Tamanho padrão (md) é 44×44px (`--dss-touch-target-md`, mínimo do WCAG 2.5.5)
 - ✅ Padding e font-size escalados proporcionalmente
 
 #### 3. **Variants com Estados**
@@ -574,18 +575,17 @@ props: {
 ### 1. **Touch Targets WCAG**
 
 ```scss
-/* SEMPRE usar mixins */
+/* SEMPRE pelo token — NÃO usar o mixin `dss-touch-target`: os três ramos dele
+   ('min'/'ideal'/'large') apontam para tokens que nunca existiram e resolvem
+   para vazio. Ver utils/_mixins.scss e o DEBITO_ABERTO. */
 .dss-component {
-  @include dss-touch-target('ideal'); // 48x48px
-
-  /* OU manualmente: */
-  min-height: 48px;
-  min-width: 48px;
+  min-height: var(--dss-touch-target-md); // 44px — mínimo WCAG 2.5.5
+  min-width: var(--dss-touch-target-md);
 }
 
-/* Componentes pequenos: mínimo 44x44px */
-.dss-component--small {
-  @include dss-touch-target('min'); // 44x44px
+/* Alvo maior que o mínimo: use -lg (52px), não um valor solto. */
+.dss-component--destaque {
+  min-height: var(--dss-touch-target-lg); // 52px
 }
 ```
 
@@ -767,7 +767,7 @@ npm run test:coverage
 | **Cores** | Classes (`bg-primary`) | Tokens (`var(--dss-action-primary)`) |
 | **Brandabilidade** | Recompilação SASS | `[data-brand]` em runtime |
 | **Dark Mode** | `body.dark` | `[data-theme="dark"]` |
-| **Touch Targets** | Não garantido | 48×48px (WCAG ideal) via mixin |
+| **Touch Targets** | Não garantido | 44×44px (WCAG 2.5.5) via `--dss-touch-target-md` |
 | **Focus Ring** | ❌ FALTANTE | ⚠️ **CRÍTICO: tokens `--dss-focus-*` ainda não criados** |
 | **Acessibilidade** | Básica | WCAG 2.1 AA completa |
 | **Estrutura** | Componente Quasar | Wrapper DSS sobre Quasar |
@@ -1007,8 +1007,8 @@ min-height: var(--dss-compact-control-height-lg);  /* 32px */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min);  /* 48px */
-    min-height: var(--dss-touch-target-min); /* 48px */
+    min-width: var(--dss-touch-target-md);  /* 44px */
+    min-height: var(--dss-touch-target-md); /* 44px */
     pointer-events: none; /* ⚠️ OBRIGATÓRIO - não intercepta eventos */
   }
 }
@@ -1048,8 +1048,8 @@ min-height: var(--dss-compact-control-height-lg);  /* 32px */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: var(--dss-touch-target-min);  /* 48px */
-    min-height: var(--dss-touch-target-min); /* 48px */
+    min-width: var(--dss-touch-target-md);  /* 44px */
+    min-height: var(--dss-touch-target-md); /* 44px */
     pointer-events: none; /* ⚠️ OBRIGATÓRIO */
   }
 }
@@ -1686,7 +1686,7 @@ Antes de considerar o componente pronto, verifique todos os itens abaixo:
 
 ### **Acessibilidade WCAG 2.1 AA**
 - [ ] Contraste mínimo 4.5:1
-- [ ] Touch targets ≥ 48×48px (se interativo)
+- [ ] Touch targets ≥ 44×44px (se interativo)
 - [ ] Focus ring visível
 - [ ] Navegação por teclado (se interativo)
 - [ ] ARIA labels apropriados
@@ -1910,7 +1910,7 @@ export default {
 6. 🎨 **Brandabilidade**: Reagir a `[data-brand="hub|water|water"]`
 7. 🌙 **Dark Mode**: Reagir a `[data-theme="dark"]`
 8. ✅ **Props Completas**: TODAS as props do componente Quasar original
-9. 📱 **Touch Targets**: Aplicar `@include dss-touch-target('ideal')` (48×48px WCAG)
+9. 📱 **Touch Targets**: Aplicar `min-height/min-width: var(--dss-touch-target-md)` (44×44px, WCAG 2.5.5)
 10. 🎯 **Focus Rings**: Aplicar `@include dss-focus-ring('primary')` (3px, contraste 4.5:1)
 11. 🎭 **Estados**: normal → hover → active → disabled → loading (idênticos ao Quasar)
 12. 📚 **Documentação**: Listar TODAS as props/slots/eventos do Quasar + gaps identificados
@@ -1927,10 +1927,13 @@ Consultar **`Q_BTN_COMPLETE_SPECIFICATION.md`** para lista completa de gaps iden
    - DSS precisa criar: `--dss-focus-ring-*`, `--dss-focus-primary`, etc.
    - **AÇÃO URGENTE**: Criar `tokens/semantic/_focus.scss`
 
-2. **Touch Targets** - ✅ DSS tem mixin
-   - Quasar não garante 48×48px mínimo
-   - DSS tem `@include dss-touch-target('ideal')`
-   - **AÇÃO**: Aplicar em todos os componentes
+2. **Touch Targets** - ⚠️ o mixin do DSS está QUEBRADO
+   - Quasar não garante o mínimo de 44×44px (WCAG 2.5.5)
+   - O mixin `dss-touch-target` existe mas **nunca funcionou**: seus três ramos
+     ('min'/'ideal'/'large') apontam para tokens inexistentes — a escala real é
+     `--dss-touch-target-{xs,sm,md,lg,xl}`. Nenhum componente o invoca.
+   - **AÇÃO**: usar o token direto (`--dss-touch-target-md`); decidir se o mixin
+     é consertado ou removido (ver DEBITO_ABERTO).
 
 ### **MÉDIOS** 🟡
 3. **Size System** - ✅ Decisão: Manter valores DSS

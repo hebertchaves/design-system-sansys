@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-12. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-14. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -1404,7 +1404,7 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      =========================================== */
   --dss-min-h-xs: var(--dss-spacing-6); /*  24px — elementos não-interativos compactos (IBM Carbon layout-05) */
   --dss-min-h-sm: var(--dss-spacing-10); /*  40px — elementos compactos abaixo do mínimo WCAG (uso restrito) */
-  --dss-min-h-md: var(--dss-spacing-12); /*  48px — ✅ piso MD3/WCAG 2.5.5 — referência primária */
+  --dss-min-h-md: var(--dss-spacing-12); /*  48px — piso do MD3 (48dp); excede o WCAG 2.5.5, que pede 44px */
   --dss-min-h-lg: var(--dss-spacing-48); /* 192px — containers overlay (menus, scroll areas, parallax) */
   --dss-min-h-xl: var(--dss-spacing-80); /* 320px — painéis laterais e seções de conteúdo */
   --dss-min-h-2xl: var(--dss-spacing-120); /* 480px — seções de altura completa */
