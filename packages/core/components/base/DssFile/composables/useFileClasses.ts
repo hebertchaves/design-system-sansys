@@ -19,6 +19,9 @@ interface UseFileClassesOptions {
   isFocused: Ref<boolean>
   hasValue: Ref<boolean>
   isDragging: Ref<boolean>
+  /** Slot `label` preenchido — a reserva vertical depende de HAVER label
+   *  renderizada, não de a prop estar preenchida. */
+  hasLabelSlot?: Ref<boolean>
 }
 
 /**
@@ -26,7 +29,7 @@ interface UseFileClassesOptions {
  */
 export function useFileClasses(
   props: Readonly<FileProps>,
-  { isFocused, hasValue, isDragging }: UseFileClassesOptions
+  { isFocused, hasValue, isDragging, hasLabelSlot }: UseFileClassesOptions
 ) {
   /**
    * Classes CSS computadas do wrapper principal
@@ -38,6 +41,7 @@ export function useFileClasses(
    * - dss-file--error: estado de erro
    * - dss-file--disabled: desabilitado
    * - dss-file--readonly: somente leitura
+   * - dss-file--loading: carregando (bloqueia interação)
    * - dss-file--dense: versão compacta
    * - dss-file--has-value: tem arquivo selecionado (NÃO `--filled`: colidia com a
    *   VARIANTE filled — um outlined/standout COM arquivo herdava o visual do filled)
@@ -53,11 +57,12 @@ export function useFileClasses(
         'dss-file--error': props.error,
         'dss-file--disabled': props.disabled,
         'dss-file--readonly': props.readonly,
+        'dss-file--loading': props.loading,
         'dss-file--dense': props.dense,
         'dss-file--has-value': hasValue.value,
         'dss-file--dragging': isDragging.value,
         // há label → reserva espaço p/ a label flutuante (evita overlap no float)
-        'dss-file--labeled': !!props.label,
+        'dss-file--labeled': !!props.label || !!hasLabelSlot?.value,
         [`dss-file--brand-${props.brand}`]: props.brand
       }
     ]
@@ -79,7 +84,12 @@ export function useFileClasses(
       'dss-file__label',
       {
         'dss-file__label--stack': props.stackLabel,
-        'dss-file__label--float': hasValue.value || isFocused.value || !!props.label
+        // A label do DssFile flutua SEMPRE que existe (padrão B da família): em
+        // repouso ela sobe e a dica de drop ocupa o centro, sem colidir. Precisa
+        // considerar o SLOT também — com label por slot a condição dava falso, a
+        // label ficava centrada e sobrepunha o placeholder (visto no playground).
+        'dss-file__label--float':
+          hasValue.value || isFocused.value || !!props.label || !!hasLabelSlot?.value
       }
     ]
   })

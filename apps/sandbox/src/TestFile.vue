@@ -80,17 +80,37 @@
     </PgSection>
 
     <!-- ── 06. Slots ───────────────────────────────────────────────────── -->
-    <PgSection id="slots" index="06" title="Slots" :count="2"
-      desc="prepend e append (ícones dentro do campo) via DssIcon — acompanham o texto (20px, inline).">
+    <PgSection id="slots" index="06" title="Slots" :count="6"
+      desc="prepend/append (dentro do campo) e before/after (fora), além de label customizada — a mesma família de slots de Input/Select/Textarea/Field. Os ícones vêm de DssIcon; prepend/append acompanham o texto, before/after não (ficam fora da moldura).">
       <PgGrid>
         <PgTile code="#prepend (ícone)">
           <DssFile label="Anexo" placeholder="Clique ou arraste" v-model="m.slotPrepend">
-            <template #prepend><span class="material-icons pg-slot-icon">attach_file</span></template>
+            <template #prepend><DssIcon name="attach_file" inline decorative /></template>
           </DssFile>
         </PgTile>
         <PgTile code="#append (ícone)">
           <DssFile label="Upload" placeholder="Clique ou arraste" v-model="m.slotAppend">
-            <template #append><span class="material-icons pg-slot-icon">upload</span></template>
+            <template #append><DssIcon name="upload" inline decorative /></template>
+          </DssFile>
+        </PgTile>
+        <PgTile code="#prepend + valor (alinhamento)">
+          <DssFile label="Com arquivo" v-model="m.slotComValor">
+            <template #prepend><DssIcon name="description" inline decorative /></template>
+          </DssFile>
+        </PgTile>
+        <PgTile code="#before (externo)">
+          <DssFile label="Local" placeholder="Clique ou arraste" v-model="m.slotBefore">
+            <template #before><DssIcon name="folder" inline decorative /></template>
+          </DssFile>
+        </PgTile>
+        <PgTile code="#after (externo)">
+          <DssFile label="Envio" placeholder="Clique ou arraste" v-model="m.slotAfter">
+            <template #after><DssIcon name="send" inline decorative /></template>
+          </DssFile>
+        </PgTile>
+        <PgTile code="#label (customizada)">
+          <DssFile placeholder="Clique ou arraste" v-model="m.slotLabel">
+            <template #label>Documento <strong>obrigatório</strong></template>
           </DssFile>
         </PgTile>
       </PgGrid>
@@ -141,6 +161,7 @@ import { reactive } from 'vue'
 
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssFile from '@components/base/DssFile/DssFile.vue'
+import DssIcon from '@components/base/DssIcon/DssIcon.vue'
 import DssFileExample from '@components/base/DssFile/DssFile.example.vue'
 
 // Template reutilizável das páginas de teste

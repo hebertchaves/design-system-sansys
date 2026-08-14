@@ -9,6 +9,11 @@
     @dragover="handleDragOver"
     @dragleave="handleDragLeave"
   >
+    <!-- Before: fora da borda do campo (paridade da família) -->
+    <div v-if="slots.before" class="dss-file__before">
+      <slot name="before" />
+    </div>
+
     <!-- QFile — gerencia toda a lógica de seleção (overlay transparente opacity:0).
          Sem slots prepend/append: eles ficariam invisíveis dentro do overlay;
          moram na linha visual abaixo, acima do overlay (z-index). -->
@@ -19,8 +24,10 @@
       :accept="accept"
       :max-files="maxFiles"
       :max-file-size="maxFileSize"
-      :disable="disabled"
+      :disable="disabled || loading"
       :readonly="readonly"
+      :aria-busy="loading ? 'true' : undefined"
+      :aria-required="required ? 'true' : undefined"
       :tabindex="computedTabindex"
       :aria-label="ariaLabel"
       class="dss-file__q-file"
@@ -45,11 +52,11 @@
       <div class="dss-file__control" aria-hidden="true">
         <!-- Label flutuante -->
         <label
-          v-if="label || slots['label-slot']"
+          v-if="label || slots.label"
           :class="labelClasses"
           @click="pickFiles"
         >
-          {{ label }}
+          <slot name="label">{{ label }}</slot><span v-if="required" aria-hidden="true"> *</span>
         </label>
 
         <!-- Área de drag-and-drop (dica visual). Papel de placeholder: com label
@@ -73,13 +80,16 @@
       </div>
 
       <!-- Append (slot do usuário) — fora do QFile opacity:0 -->
-      <div v-if="slots.append" class="dss-file__append">
-        <slot name="append" />
+      <div v-if="slots.append || loading" class="dss-file__append">
+        <!-- Loading tem precedência visual: durante o upload o campo comunica
+             ocupado e não oferece a ação do slot. -->
+        <span v-if="loading" class="dss-file__loading" aria-hidden="true"></span>
+        <slot v-else name="append" />
       </div>
 
       <!-- Botão de limpar (controle real, visível, acima do overlay) -->
       <button
-        v-if="clearable && hasValue && !disabled && !readonly"
+        v-if="clearable && hasValue && !loading && !disabled && !readonly"
         class="dss-file__clear"
         type="button"
         :aria-label="clearAriaLabel"
@@ -96,6 +106,11 @@
       aria-hidden="true"
     >
       <span class="dss-file__drag-label">Solte os arquivos aqui</span>
+    </div>
+
+    <!-- After: fora da borda do campo (paridade da família) -->
+    <div v-if="slots.after" class="dss-file__after">
+      <slot name="after" />
     </div>
 
     <!-- Área inferior: hint / erro -->
@@ -179,6 +194,10 @@ const props = withDefaults(defineProps<FileProps>(), {
   maxFiles: undefined,
   maxFileSize: undefined,
 
+  // States
+  loading: false,
+  required: false,
+
   // Visual
   variant: 'outlined',
   dense: false,
@@ -236,7 +255,8 @@ const errorId = computed(() => `dss-file-error-${uniqueId}`)
 // ==========================================================================
 
 const { isFocused, isDragging, hasValue, hasBottomSlot } = useFileState(props, slots)
-const { wrapperClasses, labelClasses } = useFileClasses(props, { isFocused, hasValue, isDragging })
+const hasLabelSlot = computed(() => !!slots.label)
+const { wrapperClasses, labelClasses } = useFileClasses(props, { isFocused, hasValue, isDragging, hasLabelSlot })
 const {
   handleFocus,
   handleBlur,

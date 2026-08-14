@@ -63,6 +63,8 @@ import { DssFile } from '@dss/components/base/DssFile'
 | `error` | `boolean` | `false` | Estado de erro |
 | `disabled` | `boolean` | `false` | Desabilitado |
 | `readonly` | `boolean` | `false` | Somente leitura |
+| `loading` | `boolean` | `false` | Carregando: mostra spinner, bloqueia interação e emite `aria-busy` |
+| `required` | `boolean` | `false` | Obrigatório: asterisco na label e `aria-required` |
 | `clearable` | `boolean` | `false` | Botão de limpar |
 | `ariaLabel` | `string` | `undefined` | Label acessível customizado |
 | `clearAriaLabel` | `string` | `'Remover arquivo selecionado'` | Label do botão de limpar |
@@ -86,10 +88,18 @@ import { DssFile } from '@dss/components/base/DssFile'
 
 | Slot | Descrição |
 |------|-----------|
-| `prepend` | Ícone ou conteúdo à esquerda do campo |
-| `append` | Ícone ou conteúdo à direita (após o botão de limpar) |
+| `prepend` | Ícone ou conteúdo à esquerda, **dentro** do campo |
+| `append` | Ícone ou conteúdo à direita, **dentro** do campo (após o botão de limpar) |
+| `before` | Conteúdo **fora** da borda, antes do campo |
+| `after` | Conteúdo **fora** da borda, após o campo |
+| `label` | Label customizada (substitui a prop `label`) |
 | `error` | Mensagem de erro customizada |
 | `hint` | Texto de ajuda customizado |
+
+> `prepend`/`append` acompanham o texto verticalmente (o campo reserva a faixa da
+> label flutuante e o adorno segue a mesma âncora). `before`/`after` ficam fora da
+> moldura e **não** recebem esse deslocamento — é o comportamento correto, não um
+> descuido.
 
 ---
 

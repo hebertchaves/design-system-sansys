@@ -138,6 +138,20 @@
         "description": "Campo somente leitura (não pode selecionar novos arquivos)"
       },
       {
+        "name": "loading",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Mostra indicador de carregamento e bloqueia a interação."
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Campo obrigatório. Emite `aria-required` e marca a label com asterisco."
+      },
+      {
         "name": "clearable",
         "type": "boolean",
         "controlHint": "toggle",
@@ -201,6 +215,21 @@
         "name": "append",
         "scope": null,
         "description": "Conteúdo dentro do campo, à direita (ex: botão de upload)"
+      },
+      {
+        "name": "before",
+        "scope": null,
+        "description": "Conteúdo ANTES de toda a estrutura do campo — fora da borda."
+      },
+      {
+        "name": "after",
+        "scope": null,
+        "description": "Conteúdo APÓS toda a estrutura do campo — fora da borda."
+      },
+      {
+        "name": "label",
+        "scope": null,
+        "description": "Label personalizada (substitui a prop `label`)."
       },
       {
         "name": "error",
@@ -577,6 +606,54 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "align-self",
+          "token": null,
+          "value": "flex-end",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top-color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-full",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "animation",
+          "token": "--dss-duration-500",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "justify-content",
           "token": null,
           "value": "center",
@@ -610,12 +687,6 @@
           "property": "line-height",
           "token": null,
           "value": "1",
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-radius",
-          "token": "--dss-radius-full",
-          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -919,12 +990,6 @@
           "source": "4-output/_states.scss"
         },
         {
-          "property": "border",
-          "token": "--dss-border-width-md",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
           "property": "border-color",
           "token": null,
           "value": "Highlight",
@@ -1188,6 +1253,14 @@
           "value": "GrayText",
           "source": "4-output/_states.scss"
         }
+      ],
+      "loading": [
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        }
       ]
     }
   },
@@ -1306,9 +1379,17 @@
         ]
       },
       {
-        "name": "--dss-spacing-6",
+        "name": "--dss-border-width-md",
         "usedIn": [
           "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "focus",
           "defaultPreview"
         ]
       },
@@ -1316,6 +1397,19 @@
         "name": "--dss-radius-full",
         "usedIn": [
           "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default",
+          "defaultPreview"
         ]
       },
       {
@@ -1347,21 +1441,6 @@
         "name": "--dss-radius-sm",
         "usedIn": [
           "default"
-        ]
-      },
-      {
-        "name": "--dss-action-primary",
-        "usedIn": [
-          "default",
-          "focus",
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-border-width-md",
-        "usedIn": [
-          "default",
-          "focus"
         ]
       },
       {

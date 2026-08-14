@@ -189,20 +189,28 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  /* ALINHAMENTO COM O TEXTO (ago/2026) — deslocamento VISUAL, sem efeito de layout.
-     O nativo reserva a faixa da label e é centrado, então o texto cai 6px
-     abaixo do centro do campo; o adorno precisa do mesmo deslocamento.
+  font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
+}
 
-     Duas tentativas anteriores falharam e o motivo vale registrar:
-     · `padding-top` INFLA a caixa — um append com DssButton (36px) virava 48px e
-       estourava os 44px do campo, que crescia para 50 (medido);
-     · `margin-top` sob `align-items: center` desloca só METADE (o flex centra a
-       caixa de MARGEM), e dobrá-la traz de volta o crescimento.
-     `position: relative` + `top` desloca o pixel certo e não entra no cálculo de
-     altura — serve a glifo e a botão. */
+/* ALINHAMENTO COM O TEXTO (ago/2026) — deslocamento VISUAL, sem efeito de layout.
+   O nativo reserva a faixa da label e é centrado, então o texto cai 6px abaixo do
+   centro do campo; o adorno precisa do mesmo deslocamento.
+
+   ⚠️ SÓ `prepend`/`append`. `before`/`after` ficam FORA da borda do campo, onde
+   não há reserva a compensar — deslocá-los criaria desalinhamento onde não havia.
+   (Estavam no mesmo seletor e pegaram o deslocamento por engano; separado aqui.)
+
+   Duas tentativas anteriores falharam e o motivo vale registrar:
+   · `padding-top` INFLA a caixa — um append com DssButton (36px) virava 48px e
+     estourava os 44px do campo, que crescia para 50 (medido);
+   · `margin-top` sob `align-items: center` desloca só METADE (o flex centra a
+     caixa de MARGEM), e dobrá-la traz de volta o crescimento.
+   `position: relative` + `top` desloca o pixel certo e não entra no cálculo de
+   altura — serve a glifo e a botão. */
+.dss-input__prepend,
+.dss-input__append {
   position: relative;
   top: var(--dss-spacing-1_5); /* 6px */
-  font-size: var(--dss-font-size-xl); // ícone inline (1em) = 20px — padrão da família
 }
 
 /* stackLabel: sem label flutuante não há faixa a reservar — o nativo perde o

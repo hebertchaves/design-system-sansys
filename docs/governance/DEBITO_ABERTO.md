@@ -194,11 +194,22 @@
     ocorre **só** no estado `q-field--float` — 41 campos sem float dão 0, os 12 com float davam 6.
     Corrigido em `themes/_quasar-overrides.scss`, escopado a `&.q-field--float`, com a mesma técnica
     (`position: relative` + `top`). Depois: **0 em todos os estados**, nos dois componentes.
-  - ⚠️ **DssFile NÃO foi exercitado** — não é o mesmo que "verificado limpo". A página tem 49 campos,
-    mas **nenhum com adorno marginal e nenhum em `--float`**, então a combinação que produz o defeito
-    não aparece ali. Como usa o mesmo mecanismo QField, a regra acima o cobre automaticamente quando
-    ocorrer. 🔲 **Vale acrescentar um caso com `prepend`/`append` + label flutuada ao playground do
-    DssFile**, senão o eixo visual continua cego para isso.
+  - ✅ **DssFile MEDIDO e corrigido** (2026-08-14). ⚠️ **Correção de um erro meu:** eu havia registrado
+    "não exercitado" — estava errado, o playground **já tinha** `#prepend`/`#append`; meu seletor é que
+    procurava classes do Quasar (`.q-field__prepend`) num componente que usa anatomia própria
+    (`.dss-file__prepend`). Medido corretamente: **5px** de desvio (1px no dense).
+    - **Mecanismo diferente dos irmãos:** aqui a reserva não é `padding`, é
+      `align-items: flex-end` + `padding-bottom` no `__control`. Por isso a correção **não** foi o
+      `position/top` dos outros — foi **espelhar o mesmo ancoramento** no adorno
+      (`align-self: flex-end` + mesmo `padding-bottom`), derivando do mesmo token em vez de um número
+      mágico que desatualizaria se a reserva mudasse.
+    - **Paridade de API fechada** (aditivo): props `loading`/`required` e slots `before`/`after`/`label`
+      — o DssFile era o único da família sem eles. O gate `validate:api-docs` **reprovou** a mudança até
+      README e `*_API.md` serem atualizados, exatamente como o passo de propagação de PROSA prevê.
+    - 🔍 **Dois defeitos encontrados na própria adição, por medição:** (a) `before`/`after` no DssInput
+      estavam **no mesmo seletor** que `prepend`/`append` e pegaram o deslocamento de 6px por engano —
+      ficam fora da moldura, onde não há reserva; escopo separado. (b) a label por SLOT não flutuava
+      (a condição olhava só `props.label`), então sobrepunha o placeholder.
 - 🟡 **Propagação CSS→meta — lotes 2–6** — catálogo com 38 divergências de *value* + 6 dimensionais
   pendentes (`sync-token-values.js`). Mesma fonte acima.
 - 🟡 **`--dss-text-secondary` reprova AA** — `#B0B0B0` ≈ 2.6:1, sistêmico. DssInput já migrou p/ gray-600

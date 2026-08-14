@@ -157,6 +157,24 @@ export interface FileProps {
    */
   readonly?: boolean
 
+  /**
+   * Mostra indicador de carregamento e bloqueia a interação.
+   *
+   * Paridade com DssInput/DssSelect/DssTextarea. No DssFile é especialmente
+   * pertinente: o intervalo entre escolher o arquivo e concluir o upload é
+   * justamente onde o campo precisa comunicar "estou ocupado" e recusar novas
+   * seleções. Também emite `aria-busy`.
+   * @default false
+   */
+  loading?: boolean
+
+  /**
+   * Campo obrigatório. Emite `aria-required` e marca a label com asterisco.
+   * Paridade com DssInput/DssSelect/DssTextarea.
+   * @default false
+   */
+  required?: boolean
+
   // ========================================
   // Features
   // ========================================
@@ -232,6 +250,24 @@ export interface FileSlots {
    * Conteúdo dentro do campo, à direita (ex: botão de upload)
    */
   append?(): any
+
+  /**
+   * Conteúdo ANTES de toda a estrutura do campo — fora da borda.
+   * Paridade com a família de campos.
+   */
+  before?(): any
+
+  /**
+   * Conteúdo APÓS toda a estrutura do campo — fora da borda.
+   * Paridade com a família de campos.
+   */
+  after?(): any
+
+  /**
+   * Label personalizada (substitui a prop `label`).
+   * Paridade com a família de campos.
+   */
+  label?(): any
 
   /**
    * Mensagem de erro customizada

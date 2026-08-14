@@ -28,6 +28,8 @@
 | `ariaLabel` | `string` | `undefined` | Label acessível para screen readers. Sobrescreve label visual. |
 | `clearAriaLabel` | `string` | `'Remover arquivo selecionado'` | Label do botão de limpar para screen readers. |
 | `tabindex` | `number \| string \| null` | `null` | Tabindex customizado. `-1` = não focável. |
+| `loading` | `boolean` | Mostra indicador de carregamento e bloqueia a interação. |
+| `required` | `boolean` | Campo obrigatório. Emite `aria-required` e marca a label com asterisco. |
 
 ---
 
@@ -74,6 +76,9 @@ modelValue: File[] | null
 | `append` | Conteúdo à direita (antes do botão clear). Renderizado dentro do `.dss-file__append`. |
 | `error` | Mensagem de erro customizada. Substitui `errorMessage` quando fornecido. |
 | `hint` | Texto de ajuda customizado. Substitui `hint` quando fornecido. |
+| `before` | Conteúdo ANTES de toda a estrutura do campo — fora da borda. |
+| `after` | Conteúdo APÓS toda a estrutura do campo — fora da borda. |
+| `label` | Label personalizada (substitui a prop `label`). |
 
 ---
 

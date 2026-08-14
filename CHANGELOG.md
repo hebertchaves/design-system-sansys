@@ -34,6 +34,36 @@ Quem as usava já não recebia nada; a migração é apagar a chamada.
   e resolviam para vazio; o `dss-aria-live` escrevia `aria-live` como *propriedade CSS*,
   que não existe. **Migração e substitutos:** tabela em `packages/core/utils/README.md`.
 
+### ✨ Paridade da família de campos — `DssFile`
+
+Aditivo (nada quebra): o DssFile era o único da família sem estes.
+
+- **Props `loading` e `required`.** `loading` mostra spinner, bloqueia interação e
+  emite `aria-busy` — no campo de arquivo é especialmente pertinente, porque o
+  intervalo entre escolher e concluir o upload é justamente onde o campo precisa
+  comunicar "ocupado". `required` emite `aria-required` e marca a label.
+- **Slots `before`, `after` e `label`.** `before`/`after` ficam **fora** da moldura;
+  `label` substitui a prop. Alinhamento: `prepend`/`append` acompanham o texto
+  (o campo reserva a faixa da label e o adorno segue a mesma âncora), enquanto
+  `before`/`after` **não** recebem esse deslocamento — ficam fora da moldura, onde
+  não há reserva a compensar.
+
+### 🎯 Alinhamento adorno × texto — família de campos inteira
+
+Defeito comum, três mecanismos diferentes, todos medidos e corrigidos:
+
+| Componente | desvio | origem |
+|---|---|---|
+| `DssInput` | 6px | `padding-top` no nativo + adorno centrado na altura total |
+| `DssField` | 8px | idem, via `__control` |
+| `DssSelect` / `DssTextarea` | 6px | reserva feita pelo **Quasar**, só no estado `q-field--float` |
+| `DssFile` | 5px | reserva por `align-items: flex-end`, não por padding |
+
+Todos a **0**. Duas técnicas foram descartadas por medição e ficam documentadas no
+código: `padding` no adorno **infla a caixa** (um `append` com `DssButton` fazia o
+campo crescer de 44 para 50px) e `margin` sob `align-items: center` desloca só
+**metade**. A correção usa deslocamento que não entra no cálculo de altura.
+
 ### ♿ Acessibilidade
 
 - **Touch target normativo passou de 48px para 44px.** Os 48 vinham do Material, não
