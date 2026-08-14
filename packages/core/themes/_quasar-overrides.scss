@@ -186,6 +186,29 @@
     }
   }
 
+  /* ALINHAMENTO DO MARGINAL COM O TEXTO — estado `--float` (ago/2026).
+
+     Quando a label FLUTUA, o Quasar empurra o `.q-field__native` para baixo para
+     abrir espaço (medido: native em 896 contra 883 do control), mas o marginal
+     (`__prepend`/`__append`) continua centrado na altura TOTAL. Resultado: o
+     glifo fica 6px acima do texto. Correlação verificada — 41 campos sem
+     `--float` dão desvio 0; os 12 com `--float` dão 6.
+
+     Escopado a `--float` de propósito: sem label flutuada não há reserva, e
+     deslocar ali criaria o desalinhamento inverso.
+
+     `position: relative` + `top` (e não padding/margin) pelo mesmo motivo já
+     documentado em DssInput e DssField: padding infla a caixa do marginal — que
+     pode conter um BOTÃO — e margem sob `align-items: center` desloca só metade.
+     Offset relativo corrige o pixel sem entrar no cálculo de altura. */
+  &.q-field--float {
+    .q-field__prepend,
+    .q-field__append {
+      position: relative;
+      top: var(--dss-spacing-1_5); /* 6px */
+    }
+  }
+
   /* Foco — anel de foco a11y (box-shadow :focus-visible). A borda azul de foco
      é desenhada pelo componente (.dss-{comp}--focused). */
   &.q-field--focused {

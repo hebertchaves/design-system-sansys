@@ -188,8 +188,17 @@
   - ✅ **`DssField.example.vue` também compensava** — as mesmas `padding-top: 20px` da página de teste,
     em 4 controles. Como o `example.vue` é a **fonte de verdade de uso**, ele propagava o padrão errado
     para quem lê a documentação. Corrigido; desvio da seção de exemplos foi de 8px para 0.
-  - 🔲 **Conferir Select/Textarea/File** — compartilham a mecânica de label flutuante. Testes passam
-    (137/137 na família), mas o alinhamento adorno×texto não foi medido neles.
+  - ✅ **Select e Textarea MEDIDOS e corrigidos** (2026-08-14). Tinham o mesmo desvio de **6px**, mas
+    por outra via: são QField-based, e quem empurra o native para abrir espaço é o **Quasar**, não o
+    SCSS do DSS (o `padding` do native é `0/0` ali). **Correlação verificada com precisão:** o desvio
+    ocorre **só** no estado `q-field--float` — 41 campos sem float dão 0, os 12 com float davam 6.
+    Corrigido em `themes/_quasar-overrides.scss`, escopado a `&.q-field--float`, com a mesma técnica
+    (`position: relative` + `top`). Depois: **0 em todos os estados**, nos dois componentes.
+  - ⚠️ **DssFile NÃO foi exercitado** — não é o mesmo que "verificado limpo". A página tem 49 campos,
+    mas **nenhum com adorno marginal e nenhum em `--float`**, então a combinação que produz o defeito
+    não aparece ali. Como usa o mesmo mecanismo QField, a regra acima o cobre automaticamente quando
+    ocorrer. 🔲 **Vale acrescentar um caso com `prepend`/`append` + label flutuada ao playground do
+    DssFile**, senão o eixo visual continua cego para isso.
 - 🟡 **Propagação CSS→meta — lotes 2–6** — catálogo com 38 divergências de *value* + 6 dimensionais
   pendentes (`sync-token-values.js`). Mesma fonte acima.
 - 🟡 **`--dss-text-secondary` reprova AA** — `#B0B0B0` ≈ 2.6:1, sistêmico. DssInput já migrou p/ gray-600
