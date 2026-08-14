@@ -244,9 +244,40 @@
     dentro do próprio `utils/` (`_helpers.scss:311,315` · `_mixins.scss:143`), então o estrago é contido.
     Também reapareceu ali `--dss-focus-ring` (1×), o fantasma de a11y que a onda `b49b6e0` zerou em
     `components/` (27 usos) — `utils/` ficou para trás por estar fora do escopo.
-    🔲 **Decidir:** `utils/` parece ser majoritariamente código morto (helpers que ninguém importa).
-    Antes de "consertar" os 20, vale medir **quem importa cada arquivo de `utils/`** — consertar token
-    de helper morto é maquiagem, o mesmo erro já evitado no `brand/index.scss` (T4 BLOQUEADO).
+    ⚠️ **VERIFICADO (2026-08-14) — `utils/` NÃO é código morto. A hipótese anterior estava errada**
+    (eu havia escrito "majoritariamente código morto"; não é). Medido compilando o fonte atual, porque
+    o `dist/style.css` está **defasado desde 25/jun** e mostrava o estado *anterior* ao `b49b6e0`:
+    - **Vivo:** importado por `packages/core/index.scss:10` (entry point) **e por 18 SCSS de componente**.
+      Cinco arquivos emitem CSS que **chega ao bundle** — `_helpers`, `_colors`, `_colors-hover`,
+      `_border-helpers`, `_layout-helpers` (todos os seletores amostrados presentes). Dois mixins são
+      load-bearing: **`dss-focus-ring` (16 usos)** e **`dss-transition` (16 usos)**.
+    - **Morto:** `_example-showcase.scss` (0/6 seletores no bundle) — e morto **de propósito**, o
+      `utils/index.scss` documenta que ele fica fora para não levar CSS de demo à produção.
+    - **Morto por símbolo:** **12 dos 16 mixins têm ZERO uso externo**, incluindo o quebrado
+      `dss-touch-target`. Usados: `dss-focus-ring`, `dss-transition`, `dss-button-variant` (1),
+      `dss-card` (1), `dss-visually-hidden` (1).
+    - 🔴 **27 declarações QUEBRADAS chegam ao CSS de produção** (contadas no bundle compilado agora):
+      `--dss-touch-target-min` 19× · `-ideal` 4× · `--dss-touch-spacing-min` 2× · `--dss-border-error`
+      e `-success` 2×. Destas, **4 são classes utilitárias públicas de `utils/_helpers.scss`** —
+      `.dss-touch-target`, `.dss-touch-target-ideal` e seus `::after`: **quem aplicar
+      `class="dss-touch-target"` não recebe nada.** O resto vem de `themes/` (`.q-btn`, `.q-tab`,
+      `.q-item`, `.q-chip`, `.dss-pagination__item`, `.dss-sidebar-accessible …`).
+    🔲 **Decidir, agora com base medida:** as 4 classes utilitárias públicas quebradas são o alvo de
+    maior valor (baixo risco, some código que promete e não entrega). Os 12 mixins sem uso são candidatos
+    a remoção, não a conserto — consertar símbolo sem consumidor é maquiagem (o erro já evitado no
+    `brand/index.scss`, T4 BLOQUEADO).
+
+- 🟡 **`dist/style.css` DEFASADO ~2 meses** (25/jun contra commits de ago) — descoberto ao investigar
+  `utils/`. Quem inspecionar o `dist` lê o estado **anterior** ao `b49b6e0`: ele ainda mostra
+  `--dss-focus-ring` 27×, o fantasma de a11y já zerado no fonte. Não é bug de código, é artefato de
+  build versionado e não regenerado. **Decidir:** regenerar no CI a cada merge, ou parar de versionar o
+  `dist` (o mesmo raciocínio já aplicado ao `build/` do MCP em `47a8182`).
+
+- 🟡 **Estilo de componente morando em `themes/`** — achado de passagem: `.dss-pagination` e
+  `.dss-pagination__item` são declarados em `themes/_quasar-utilities.scss:494`, **não** nas 4 camadas do
+  DssPagination (o SCSS do componente não tem nenhuma regra para eles). Fere o Cartão Base e explica por
+  que um fantasma de `themes/` aparece pintando classe de componente. Verificar se há outros casos ao
+  passar por cada componente na onda de adequação.
     - ✅ **Divergência 48px × 44px — RESOLVIDA na fonte normativa** (2026-08-13). A Constituição #4 do
       `CLAUDE.md` exigia "≥ 48px", valor que **não existe na escala** (32/36/44/52/64) e que vinha do
       Material, não do WCAG. Os componentes sempre entregaram 44px (`--dss-touch-target-md`), e a
