@@ -66,8 +66,56 @@ function stripComments(s) {
   return s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
 }
 
+// Escopos CONDICIONAIS: o token só existe se o contexto estiver ativo. Um token
+// definido APENAS aqui não resolve no default — usá-lo fora do contexto é o mesmo
+// modo de falha do token fantasma, mas invisível para a checagem de existência.
+// (Classe de componente NÃO entra: `.dss-timeline { --dss-timeline-*: … }` é
+// autocontido por convenção — define e consome no mesmo escopo.)
+const RE_CONDICIONAL = /\[data-theme|\[data-brand|@media|@container|@supports|prefers-|forced-colors/;
+
+// Percorre o arquivo mantendo a PILHA de seletores/at-rules, para saber sob que
+// escopo cada `--dss-x:` foi declarado. Regex simples não serve: precisa de
+// profundidade de chaves.
+function definicoesComEscopo(src) {
+  const out = [];           // { token, escopo }
+  const pilha = [];
+  let i = 0, inicioBloco = 0;
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '{') {
+      pilha.push(src.slice(inicioBloco, i).trim().split('\n').pop().trim());
+      inicioBloco = i + 1;
+    } else if (c === '}') {
+      pilha.pop();
+      inicioBloco = i + 1;
+    } else if (c === ';' || c === '\n') {
+      const trecho = src.slice(inicioBloco, i);
+      const m = /(--dss-[a-z0-9-]+)\s*:/.exec(trecho);
+      if (m) out.push({ token: m[1], escopo: pilha.join(' ') });
+      inicioBloco = i + 1;
+    }
+    i++;
+  }
+  return out;
+}
+
 // 1. Catálogo: toda definição `--dss-x:` em QUALQUER .scss de packages/core.
+//    `defined` = existe em algum lugar (checagem original).
+//    `temEscopoIncondicional` = existe FORA de tema/marca/media — só assim o
+//    token resolve no contexto default.
 const defined = new Set();
+const temEscopoIncondicional = new Set();
+const escoposDe = new Map(); // token -> Set(escopos condicionais onde vive)
+for (const f of walkScss(CORE)) {
+  for (const { token, escopo } of definicoesComEscopo(stripComments(fs.readFileSync(f, 'utf8')))) {
+    if (RE_CONDICIONAL.test(escopo)) {
+      if (!escoposDe.has(token)) escoposDe.set(token, new Set());
+      escoposDe.get(token).add(escopo.slice(-48));
+    } else {
+      temEscopoIncondicional.add(token);
+    }
+  }
+}
 for (const f of walkScss(CORE)) {
   const src = stripComments(fs.readFileSync(f, 'utf8'));
   let m;
@@ -80,6 +128,9 @@ const FIXTURES = new Set(['DssTestPageComplexity', 'DssCadrisCard', 'DssDataCard
 
 // 2. Referências `var(--dss-x)` no SCSS dos escopos acima.
 const ghosts = new Map();      // token -> [ "escopo · arquivo:linha", ... ]
+// Referenciado, existe — mas SÓ dentro de tema/marca/media. No contexto default
+// não resolve. Mesmo efeito do fantasma, e a checagem de existência não via.
+const condicionais = new Map();
 const ghostScopes = new Map(); // token -> Set(nome do escopo) — p/ o relatório
 for (const { root: scopeRoot, name: scopeName } of SCOPES)
 for (const f of walkScss(scopeRoot)) {
@@ -93,6 +144,10 @@ for (const f of walkScss(scopeRoot)) {
   const where = scopeName === 'components'
     ? `${comp}/${path.basename(f)}`
     : `${scopeName}/${rel}`;
+  const noteCondicional = (tok, linha) => {
+    if (!condicionais.has(tok)) condicionais.set(tok, []);
+    condicionais.get(tok).push(`${where}:${linha}`);
+  };
   const noteGhost = (tok, linha, sufixo = '') => {
     if (!ghosts.has(tok)) { ghosts.set(tok, []); ghostScopes.set(tok, new Set()); }
     ghosts.get(tok).push(`${where}:${linha}${sufixo}`);
@@ -114,6 +169,7 @@ for (const f of walkScss(scopeRoot)) {
       if (code[m.index + m[0].length] === '#') continue;
       const tok = m[1];
       if (!defined.has(tok)) noteGhost(tok, i + 1);
+      else if (!temEscopoIncondicional.has(tok)) noteCondicional(tok, i + 1);
     }
     // Interpolação de MARCA: `var(--dss-#{$brand}-<suffix>)` (mixins). O regex
     // literal acima não enxerga através do `#{...}` — foi assim que os ghosts
@@ -145,6 +201,8 @@ pares.sort((a, b) => a[0].localeCompare(b[0]) || a[1].localeCompare(b[1]));
 
 const porEscopo = {};
 for (const [tok, s] of pares) (porEscopo[s] ||= []).push(tok);
+// Eixo separado: não é "token inexistente", é "existe só em contexto".
+porEscopo.condicional = [...condicionais.keys()].sort();
 
 if (UPDATE) {
   fs.writeFileSync(BASELINE_PATH, JSON.stringify({
@@ -169,8 +227,15 @@ const newGhosts = [...new Set(novos.map(([tok]) => tok))].sort();
 const knownGhosts = ghostNames.filter((t) => !newGhosts.includes(t));
 // Entradas do baseline que ninguem mais referencia → limpar.
 const staleBaseline = [];
-for (const [s, lista] of Object.entries(byScope))
+for (const [s, lista] of Object.entries(byScope)) {
+  // `condicional` é outro eixo: não vive em `ghostScopes` (que indexa fantasmas
+  // por diretório). Sem esta guarda, as entradas dele eram reportadas como já
+  // corrigidas em toda execução — ruído que treina a ignorar o aviso.
+  if (s === 'condicional') continue;
   for (const tok of lista) if (!(ghostScopes.get(tok) || new Set()).has(s)) staleBaseline.push(`${s}/${tok}`);
+}
+for (const tok of byScope.condicional || [])
+  if (!condicionais.has(tok)) staleBaseline.push(`condicional/${tok}`);
 for (const tok of legado) if (!ghosts.has(tok)) staleBaseline.push(tok);
 const totalRefs = [...ghosts.values()].reduce((a, v) => a + v.length, 0);
 
@@ -183,9 +248,31 @@ if (staleBaseline.length) {
   console.log(`ℹ️  ${staleBaseline.length} entrada(s) do baseline já corrigida(s) — rode --update-baseline p/ limpar: ${staleBaseline.join(', ')}`);
 }
 
-if (!newGhosts.length) {
-  console.log('\n✅ Nenhum token fantasma NOVO (fora do baseline).');
+// ── Tokens que só existem em escopo CONDICIONAL ──────────────────────────────
+// Ratchet próprio: `condicional` no baseline, para o débito atual não travar o
+// commit e o NOVO ser bloqueado.
+const baseCond = new Set(baseRaw.byScope?.condicional || []);
+const condNomes = [...condicionais.keys()].sort();
+const condNovos = condNomes.filter((t2) => !baseCond.has(t2));
+if (condNomes.length) {
+  const conhecidos = condNomes.length - condNovos.length;
+  console.log(`\n🔎 Definidos APENAS em escopo condicional (tema/marca/media): ${condNomes.length}` +
+              (conhecidos ? ` — ${conhecidos} no baseline` : ''));
+  console.log('   No contexto default estes NÃO resolvem: `var()` cai para vazio, como fantasma.');
+  for (const tok of condNovos) {
+    console.log(`\n  ❌ ${tok}  (${condicionais.get(tok).length}× referenciado)`);
+    console.log(`     vive só em: ${[...(escoposDe.get(tok) || [])].join(' · ')}`);
+    for (const u of condicionais.get(tok).slice(0, 5)) console.log(`     ↳ ${u}`);
+  }
+}
+
+if (!newGhosts.length && !condNovos.length) {
+  console.log('\n✅ Nenhum token fantasma NOVO, nem condicional-only NOVO.');
   process.exit(0);
+}
+if (!newGhosts.length) {
+  console.log(`\n❌ ${condNovos.length} token(s) condicional-only NOVO(S).`);
+  process.exit(GATE ? 1 : 0);
 }
 
 console.log(`\n❌ ${newGhosts.length} token(s) fantasma NOVO(S) (fora do baseline):\n`);

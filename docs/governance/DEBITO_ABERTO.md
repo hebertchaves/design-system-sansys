@@ -161,6 +161,18 @@
     runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
     `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.
 
+- 🔴 **`.dss-item--divider` SEM BORDA no tema claro** (achado 2026-08-17 pela checagem nova do gate).
+  `--dss-border-default` só é definido em `[data-theme="dark"]`; no light a única ocorrência está
+  **dentro de um bloco de comentário** que documenta um tema futuro (`light-high-contrast`). Logo o
+  `border-bottom: … var(--dss-border-default)` do DssItem resolve para nada e o divisor some.
+  Referenciado 10× (DssItem `_base`/`_states` + `utils/_example-showcase`). **Corrigir exige escolher o
+  valor light** — o dark usa `gray-600`; um divisor claro pediria algo como `gray-200`/`gray-300`.
+  Decisão de design, por isso registrado em vez de arbitrado por mim.
+
+- 🟡 **Mais 2 condicional-only referenciados** (mesma checagem): `--dss-brand-primary` (11×, só sob
+  `[data-brand]` — sem marca não resolve; alimenta `--quasar-primary` em `themes/`) e
+  `--dss-border-brand-primary` (1×, idem, em `utils/_example-showcase`).
+
 - 🔴 **Visual Height do DssInput (issues #3/#4) — agora com número, e o DssField mostrou a saída**
   (2026-08-14). Auto-height do Quasar: label ~2.5px fora do centro em repouso (#3); com valor, a label
   flutuante **sobrepõe** o valor centralizado no native (#4). Tensão: altura compacta × reserva de topo.
