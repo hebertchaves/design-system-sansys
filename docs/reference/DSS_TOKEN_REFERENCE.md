@@ -1281,66 +1281,44 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-focus-ring-width` | `3px` | `3px` | — |
 | `--dss-focus-ring-offset` | `2px` | `2px` | — |
 | `--dss-focus-ring-style` | `solid` | — | — |
-| `--dss-focus-ring-opacity` | `0.5` | — | — |
 | `--dss-focus-duration` | `150ms` | — | — |
 | `--dss-focus-easing` | `ease-in-out` | — | — |
-| `--dss-focus-primary` | `rgba(0, 106, 197, 0.5)` | — | — |
-| `--dss-focus-primary-rgb` | `0, 106, 197` | — | — |
-| `--dss-focus-secondary` | `rgba(5, 156, 141, 0.5)` | — | — |
-| `--dss-focus-secondary-rgb` | `5, 156, 141` | — | — |
-| `--dss-focus-tertiary` | `rgba(227, 89, 0, 0.5)` | — | — |
-| `--dss-focus-tertiary-rgb` | `227, 89, 0` | — | — |
-| `--dss-focus-accent` | `rgba(176, 46, 197, 0.5)` | — | — |
-| `--dss-focus-accent-rgb` | `176, 46, 197` | — | — |
-| `--dss-focus-positive` | `rgba(52, 195, 12, 0.5)` | — | — |
-| `--dss-focus-positive-rgb` | `52, 195, 12` | — | — |
-| `--dss-focus-negative` | `rgba(196, 0, 27, 0.5)` | — | — |
-| `--dss-focus-negative-rgb` | `196, 0, 27` | — | — |
-| `--dss-focus-warning` | `rgba(233, 171, 0, 0.6)` | — | — |
-| `--dss-focus-warning-rgb` | `233, 171, 0` | — | — |
-| `--dss-focus-info` | `rgba(13, 178, 213, 0.5)` | — | — |
-| `--dss-focus-info-rgb` | `13, 178, 213` | — | — |
-| `--dss-focus-light` | `rgba(255, 255, 255, 0.7)` | — | — |
-| `--dss-focus-light-rgb` | `255, 255, 255` | — | — |
-| `--dss-focus-dark` | `rgba(62, 62, 62, 0.5)` | — | — |
-| `--dss-focus-dark-rgb` | `62, 62, 62` | — | — |
+| `--dss-focus-primary` | `var(--dss-primary-focus)` | — | — |
+| `--dss-focus-secondary` | `var(--dss-secondary-focus)` | — | — |
+| `--dss-focus-tertiary` | `var(--dss-tertiary-focus)` | — | — |
+| `--dss-focus-accent` | `var(--dss-accent-focus)` | — | — |
+| `--dss-focus-success` | `var(--dss-positive-deep)` | — | — |
+| `--dss-focus-positive` | `var(--dss-focus-success)` | — | — |
+| `--dss-focus-error` | `var(--dss-negative-focus)` | — | — |
+| `--dss-focus-negative` | `var(--dss-focus-error)` | — | — |
+| `--dss-focus-warning` | `var(--dss-warning-deep)` | — | — |
+| `--dss-focus-info` | `var(--dss-info-deep)` | — | — |
+| `--dss-focus-light` | `var(--dss-gray-50)` | — | — |
+| `--dss-focus-dark` | `var(--dss-dark-focus)` | — | — |
 | `--dss-focus-inverse` | `var(--dss-focus-light)` | — | — |
-| `--dss-focus-primary` | `rgba(51, 153, 229, 0.6)` | — | — |
-| `--dss-focus-primary-rgb` | `51, 153, 229` | — | — |
-| `--dss-focus-secondary` | `rgba(38, 179, 164, 0.6)` | — | — |
-| `--dss-focus-secondary-rgb` | `38, 179, 164` | — | — |
-| `--dss-focus-tertiary` | `rgba(255, 128, 51, 0.6)` | — | — |
-| `--dss-focus-tertiary-rgb` | `255, 128, 51` | — | — |
-| `--dss-focus-accent` | `rgba(208, 102, 229, 0.6)` | — | — |
-| `--dss-focus-accent-rgb` | `208, 102, 229` | — | — |
-| `--dss-focus-positive` | `rgba(102, 229, 51, 0.6)` | — | — |
-| `--dss-focus-positive-rgb` | `102, 229, 51` | — | — |
-| `--dss-focus-negative` | `rgba(229, 51, 77, 0.6)` | — | — |
-| `--dss-focus-negative-rgb` | `229, 51, 77` | — | — |
-| `--dss-focus-warning` | `rgba(255, 198, 51, 0.7)` | — | — |
-| `--dss-focus-warning-rgb` | `255, 198, 51` | — | — |
-| `--dss-focus-info` | `rgba(51, 204, 242, 0.6)` | — | — |
-| `--dss-focus-info-rgb` | `51, 204, 242` | — | — |
-| `--dss-focus-dark` | `rgba(128, 128, 128, 0.6)` | — | — |
-| `--dss-focus-dark-rgb` | `128, 128, 128` | — | — |
+| `--dss-focus-primary` | `#3399e5` | — | — |
+| `--dss-focus-secondary` | `#26b3a4` | — | — |
+| `--dss-focus-tertiary` | `#ff8033` | — | — |
+| `--dss-focus-accent` | `#d066e5` | — | — |
+| `--dss-focus-success` | `#66e533` | — | — |
+| `--dss-focus-positive` | `var(--dss-focus-success)` | — | — |
+| `--dss-focus-error` | `#e5334d` | — | — |
+| `--dss-focus-negative` | `var(--dss-focus-error)` | — | — |
+| `--dss-focus-warning` | `#ffc633` | — | — |
+| `--dss-focus-info` | `#33ccf2` | — | — |
+| `--dss-focus-dark` | `#808080` | — | — |
 | `--dss-focus-inverse` | `var(--dss-focus-light)` | — | — |
-| `--dss-focus-primary` | `rgba(191, 89, 15, 0.5)` | — | — |
-| `--dss-focus-primary-rgb` | `191, 89, 15` | — | — |
+| `--dss-focus-primary` | `var(--dss-hub-700)` | — | — |
 | `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
-| `--dss-focus-primary` | `rgba(248, 170, 63, 0.6)` | — | — |
-| `--dss-focus-primary-rgb` | `248, 170, 63` | — | — |
+| `--dss-focus-primary` | `var(--dss-hub-400)` | — | — |
 | `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
-| `--dss-focus-primary` | `rgba(2, 108, 199, 0.5)` | — | — |
-| `--dss-focus-primary-rgb` | `2, 108, 199` | — | — |
+| `--dss-focus-primary` | `var(--dss-water-600)` | — | — |
 | `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
-| `--dss-focus-primary` | `rgba(56, 166, 248, 0.6)` | — | — |
-| `--dss-focus-primary-rgb` | `56, 166, 248` | — | — |
+| `--dss-focus-primary` | `var(--dss-water-400)` | — | — |
 | `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
-| `--dss-focus-primary` | `rgba(10, 114, 78, 0.5)` | — | — |
-| `--dss-focus-primary-rgb` | `10, 114, 78` | — | — |
+| `--dss-focus-primary` | `var(--dss-waste-700)` | — | — |
 | `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
-| `--dss-focus-primary` | `rgba(24, 177, 115, 0.6)` | — | — |
-| `--dss-focus-primary-rgb` | `24, 177, 115` | — | — |
+| `--dss-focus-primary` | `var(--dss-waste-500)` | — | — |
 | `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
 | `--dss-focus-shadow-primary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary)` | — | — |
 | `--dss-focus-shadow-secondary` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-secondary)` | — | — |
@@ -1352,14 +1330,7 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-focus-shadow-info` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-info)` | — | — |
 | `--dss-focus-shadow-light` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-light)` | — | — |
 | `--dss-focus-shadow-dark` | `0 0 0 var(--dss-focus-ring-width) var(--dss-focus-dark)` | — | — |
-| `--dss-focus-ring-opacity` | `0.8` | — | — |
 | `--dss-focus-ring-width` | `4px` | `4px` | — |
-| `--dss-focus-primary` | `rgba(31, 134, 222, 0.8)` | — | — |
-| `--dss-focus-error` | `rgba(216, 24, 46, 0.8)` | — | — |
-| `--dss-focus-success` | `rgba(77, 210, 40, 0.8)` | — | — |
-| `--dss-focus-primary` | `rgba(134, 192, 243, 0.9)` | — | — |
-| `--dss-focus-error` | `rgba(255, 160, 171, 0.9)` | — | — |
-| `--dss-focus-success` | `rgba(129, 230, 99, 0.9)` | — | — |
 | `--dss-focus-primary` | `Highlight` | — | — |
 | `--dss-focus-error` | `Highlight` | — | — |
 | `--dss-focus-success` | `Highlight` | — | — |

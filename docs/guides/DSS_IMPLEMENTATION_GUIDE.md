@@ -1558,7 +1558,7 @@ O DSS agora possui **tokens completos de focus ring** para garantir WCAG 2.1 AA 
   // Gera automaticamente:
   // &:focus-visible {
   //   outline: none;
-  //   box-shadow: 0 0 0 3px rgba(0, 106, 197, 0.5);  // #006AC5 @ 50%
+  //   box-shadow: 0 0 0 3px #006AC5;  // OPACO (5.43:1) — sem alpha
   //   transition: box-shadow 150ms ease-in-out;
   // }
   //
@@ -1598,8 +1598,7 @@ O DSS agora possui **tokens completos de focus ring** para garantir WCAG 2.1 AA 
 .my-card {
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 var(--dss-focus-ring-width)
-                rgba(var(--dss-focus-primary-rgb), 0.7); // Opacidade customizada
+    box-shadow: var(--dss-focus-shadow-primary-offset); // offset, NAO transparencia
   }
 }
 ```
@@ -1610,14 +1609,16 @@ O DSS agora possui **tokens completos de focus ring** para garantir WCAG 2.1 AA 
 - `--dss-focus-ring-width`: 3px (WCAG recomenda mínimo 2px)
 - `--dss-focus-ring-offset`: 2px (espaço entre elemento e anel)
 - `--dss-focus-ring-style`: solid
-- `--dss-focus-ring-opacity`: 0.5 light / 0.6 dark (opacidade aumentada em dark mode)
+- ⚠️ `--dss-focus-ring-opacity` foi **REMOVIDO** (ago/2026): o anel e opaco. Alpha derrubava o contraste abaixo de 1.4.11.
 
 **Cores Semânticas (Light Mode):**
-| Token | Hexadecimal | RGB | RGBA @ 50% | Descrição |
-|-------|-------------|-----|------------|-----------|
-| `--dss-focus-primary` | **#006AC5** | `0, 106, 197` | `rgba(0, 106, 197, 0.5)` | 🔵 Azul escuro - Ações principais |
-| `--dss-focus-secondary` | **#059C8D** | `5, 156, 141` | `rgba(5, 156, 141, 0.5)` | 🟢 Verde/Turquesa - Ações secundárias |
-| `--dss-focus-tertiary` | **#E35900** | `227, 89, 0` | `rgba(227, 89, 0, 0.5)` | 🟠 Laranja - Ações terciárias |
+| Token | Deriva de | Hex (opaco) | Contraste vs #fff | Descrição |
+|-------|-----------|-------------|-------------------|-----------|
+| `--dss-focus-primary` | `var(--dss-primary-focus)` | **#006AC5** | 5.43:1 ✅ | 🔵 Azul escuro - Ações principais |
+| `--dss-focus-secondary` | `var(--dss-secondary-focus)` | **#009C8D** | 3.42:1 ✅ | 🟢 Verde/Turquesa - Ações secundárias |
+| `--dss-focus-tertiary` | `var(--dss-tertiary-focus)` | **#E95900** | 3.56:1 ✅ | 🟠 Laranja - Ações terciárias |
+
+> Lista completa (incl. feedback, marca e dark) em `docs/reference/FOCUS_TOKENS_REFERENCIA.md`.
 | `--dss-focus-accent` | **#B02EC5** | `176, 46, 197` | `rgba(176, 46, 197, 0.5)` | 🟣 Roxo - Ações de destaque |
 | `--dss-focus-dark` | **#3E3E3E** | `62, 62, 62` | `rgba(62, 62, 62, 0.5)` | ⚫ Cinza escuro - Fundos claros |
 
@@ -1697,8 +1698,8 @@ Focus rings adaptam automaticamente para melhor contraste em dark mode:
 ```
 
 **Exemplo:**
-- **Light Mode**: `--dss-focus-primary` = rgba(0, 106, 197, 0.5) - #006AC5 @ 50%
-- **Dark Mode**: `--dss-focus-primary` = rgba(51, 153, 229, 0.6) - #3399E5 @ 60% (mais claro)
+- **Light Mode**: `--dss-focus-primary` = #006AC5 (opaco, 5.43:1)
+- **Dark Mode**: `--dss-focus-primary` = #3399E5 (opaco, 4.92:1 sobre #262626)
 
 #### High Contrast Mode
 

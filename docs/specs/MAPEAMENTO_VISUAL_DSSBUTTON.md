@@ -186,10 +186,11 @@
   --dss-focus-duration: 150ms;             // Transição do focus
 
   /* Cores de Focus (Light Mode) */
-  --dss-focus-primary: rgba(0, 106, 197, 0.5);      // #006AC5 @ 50%
-  --dss-focus-secondary: rgba(5, 156, 141, 0.5);    // #059C8D @ 50%
-  --dss-focus-tertiary: rgba(227, 89, 0, 0.5);      // #E35900 @ 50%
-  --dss-focus-accent: rgba(176, 46, 197, 0.5);      // #B02EC5 @ 50%
+  /* OPACAS desde ago/2026 — alpha reprovava WCAG 1.4.11 */
+  --dss-focus-primary: var(--dss-primary-focus);    // #006AC5  5.43:1
+  --dss-focus-secondary: var(--dss-secondary-focus);// #009C8D  3.42:1
+  --dss-focus-tertiary: var(--dss-tertiary-focus);  // #E95900  3.56:1
+  --dss-focus-accent: var(--dss-accent-focus);      // #B02EC5  5.19:1
   --dss-focus-success: rgba(52, 195, 12, 0.5);      // #34C30C @ 50%
   --dss-focus-error: rgba(196, 0, 27, 0.5);         // #C4001B @ 50%
   --dss-focus-warning: rgba(233, 171, 0, 0.6);      // #E9AB00 @ 60%

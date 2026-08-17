@@ -783,19 +783,20 @@ const radiusTokens = [
 ]
 
 // Focus Tokens - Semantic
+// OPACOS desde ago/2026 — alpha reprovava WCAG 1.4.11 (2.19:1). opacity fixo em 100%.
 const focusSemantic = [
-  { var: '--dss-focus-primary', value: 'rgba(0, 106, 197, 0.5)', hex: '#006AC5', opacity: '50%', usage: 'Focus primary (WCAG AA)' },
-  { var: '--dss-focus-secondary', value: 'rgba(5, 156, 141, 0.5)', hex: '#059C8D', opacity: '50%', usage: 'Focus secondary' },
-  { var: '--dss-focus-tertiary', value: 'rgba(227, 89, 0, 0.5)', hex: '#E35900', opacity: '50%', usage: 'Focus tertiary' },
-  { var: '--dss-focus-accent', value: 'rgba(176, 46, 197, 0.5)', hex: '#B02EC5', opacity: '50%', usage: 'Focus accent' }
+  { var: '--dss-focus-primary', value: '#006AC5', hex: '#006AC5', opacity: '100%', usage: 'Focus primary — 5.43:1' },
+  { var: '--dss-focus-secondary', value: '#009C8D', hex: '#009C8D', opacity: '100%', usage: 'Focus secondary — 3.42:1' },
+  { var: '--dss-focus-tertiary', value: '#E95900', hex: '#E95900', opacity: '100%', usage: 'Focus tertiary — 3.56:1' },
+  { var: '--dss-focus-accent', value: '#B02EC5', hex: '#B02EC5', opacity: '100%', usage: 'Focus accent — 5.19:1' }
 ]
 
-// Focus Tokens - Feedback
+// Focus Tokens - Feedback (positive/warning/info usam o nivel -deep: zona morta)
 const focusFeedback = [
-  { var: '--dss-focus-positive', value: 'rgba(52, 195, 12, 0.5)', hex: '#34C30C', opacity: '50%', usage: 'Focus sucesso' },
-  { var: '--dss-focus-negative', value: 'rgba(196, 0, 27, 0.5)', hex: '#C4001B', opacity: '50%', usage: 'Focus erro' },
-  { var: '--dss-focus-warning', value: 'rgba(233, 171, 0, 0.6)', hex: '#E9AB00', opacity: '60%', usage: 'Focus aviso (maior opacidade)' },
-  { var: '--dss-focus-info', value: 'rgba(13, 178, 213, 0.5)', hex: '#0DB2D5', opacity: '50%', usage: 'Focus informação' }
+  { var: '--dss-focus-positive', value: '#246714', hex: '#246714', opacity: '100%', usage: 'Focus sucesso — 6.94:1 (-deep)' },
+  { var: '--dss-focus-negative', value: '#C40016', hex: '#C40016', opacity: '100%', usage: 'Focus erro — 6.25:1' },
+  { var: '--dss-focus-warning', value: '#A66D08', hex: '#A66D08', opacity: '100%', usage: 'Focus aviso — 4.36:1 (-deep)' },
+  { var: '--dss-focus-info', value: '#0D7491', hex: '#0D7491', opacity: '100%', usage: 'Focus informação — 5.35:1 (-deep)' }
 ]
 
 // Focus Tokens - Neutral
@@ -815,7 +816,7 @@ const focusBrands = [
 const focusConfig = [
   { var: '--dss-focus-ring-width', value: '3px', usage: 'Largura do anel de foco (WCAG 2.4.7)' },
   { var: '--dss-focus-ring-offset', value: '2px', usage: 'Distância entre elemento e anel' },
-  { var: '--dss-focus-ring-opacity', value: '0.5', usage: 'Opacidade padrão (50%)' },
+  { var: '--dss-focus-ring-style', value: 'solid', usage: 'Estilo da borda do anel' },
   { var: '--dss-focus-duration', value: '150ms', usage: 'Duração da transição' },
   { var: '--dss-focus-easing', value: 'cubic-bezier(0.4, 0, 0.2, 1)', usage: 'Curva de animação' }
 ]

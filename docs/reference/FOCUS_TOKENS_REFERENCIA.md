@@ -1,8 +1,15 @@
 # 🎯 DSS - TOKENS DE FOCUS - REFERÊNCIA COMPLETA
 
-> **📅 Atualizado:** Junho 2026 (v2.3.0)
+> **📅 Atualizado:** Agosto 2026 — **anel passou a ser OPACO**
 > **🎯 Objetivo:** Tabela de referência completa de cores de focus
-> **♿ WCAG:** Todos os contrastes validados para 2.1 AA (2.4.7 Focus Visible)
+> **♿ WCAG:** 2.4.7 Focus Visible + **1.4.11 Non-text Contrast (3:1)**
+>
+> ⚠️ **As cores de foco NÃO usam mais alpha.** Até ago/2026 eram `rgba()` a
+> 50–60% e reprovavam 1.4.11 em 49 de 60 combinações (o `--dss-focus-primary`
+> composto sobre branco dava **2.19:1**). As tabelas de contraste desta página
+> também estavam erradas — alegavam 5.2:1 onde o real era 2.19:1. Os números
+> abaixo são medidos por `scripts/wcag-kit.mjs`; reproduza com
+> `node scripts/wcag-kit.mjs --dss-focus-primary --dss-surface-default`.
 
 ---
 
@@ -10,33 +17,33 @@
 
 ### Light Mode (Cores Base)
 
-| Token | Nome | Hexadecimal | RGB | RGBA @ 50% | Aparência |
-|-------|------|-------------|-----|------------|-----------|
-| `--dss-focus-primary` | Azul principal | **#006AC5** | `rgb(0, 106, 197)` | `rgba(0, 106, 197, 0.5)` | 🔵 Azul escuro |
-| `--dss-focus-secondary` | Verde/Turquesa | **#059C8D** | `rgb(5, 156, 141)` | `rgba(5, 156, 141, 0.5)` | 🟢 Verde água |
-| `--dss-focus-tertiary` | Laranja | **#E35900** | `rgb(227, 89, 0)` | `rgba(227, 89, 0, 0.5)` | 🟠 Laranja vibrante |
-| `--dss-focus-accent` | Roxo/Púrpura | **#B02EC5** | `rgb(176, 46, 197)` | `rgba(176, 46, 197, 0.5)` | 🟣 Roxo intenso |
-| `--dss-focus-dark` | Cinza escuro | **#3E3E3E** | `rgb(62, 62, 62)` | `rgba(62, 62, 62, 0.5)` | ⚫ Cinza escuro |
-| `--dss-focus-success`<br>`--dss-focus-positive` | Verde positivo | **#34C30C** | `rgb(52, 195, 12)` | `rgba(52, 195, 12, 0.5)` | 🟢 Verde vibrante |
-| `--dss-focus-error`<br>`--dss-focus-negative` | Vermelho negativo | **#C4001B** | `rgb(196, 0, 27)` | `rgba(196, 0, 27, 0.5)` | 🔴 Vermelho forte |
-| `--dss-focus-warning` | Amarelo aviso | **#E9AB00** | `rgb(233, 171, 0)` | `rgba(233, 171, 0, 0.6)` | 🟡 Amarelo ouro |
-| `--dss-focus-info` | Azul claro | **#0DB2D5** | `rgb(13, 178, 213)` | `rgba(13, 178, 213, 0.5)` | 🔵 Azul ciano |
+| Token | Nome | Deriva de | Hex | Contraste vs #ffffff | Aparência |
+|-------|------|-----------|-----|----------------------|-----------|
+| `--dss-focus-primary` | Azul principal | `var(--dss-primary-focus)` | **#006AC5** | 5.43:1 ✅ | 🔵 Azul escuro |
+| `--dss-focus-secondary` | Verde/Turquesa | `var(--dss-secondary-focus)` | **#009C8D** | 3.42:1 ✅ | 🟢 Verde água |
+| `--dss-focus-tertiary` | Laranja | `var(--dss-tertiary-focus)` | **#E95900** | 3.56:1 ✅ | 🟠 Laranja vibrante |
+| `--dss-focus-accent` | Roxo/Púrpura | `var(--dss-accent-focus)` | **#B02EC5** | 5.19:1 ✅ | 🟣 Roxo intenso |
+| `--dss-focus-dark` | Cinza escuro | `var(--dss-dark-focus)` | **#3E3E3E** | 10.70:1 ✅ | ⚫ Cinza escuro |
+| `--dss-focus-success`<br>`--dss-focus-positive` | Verde positivo | `var(--dss-positive-deep)` ⚠️ | **#246714** | 6.94:1 ✅ | 🟢 Verde escuro |
+| `--dss-focus-error`<br>`--dss-focus-negative` | Vermelho negativo | `var(--dss-negative-focus)` | **#C40016** | 6.25:1 ✅ | 🔴 Vermelho forte |
+| `--dss-focus-warning` | Amarelo aviso | `var(--dss-warning-deep)` ⚠️ | **#A66D08** | 4.36:1 ✅ | 🟤 Âmbar escuro |
+| `--dss-focus-info` | Azul claro | `var(--dss-info-deep)` ⚠️ | **#0D7491** | 5.35:1 ✅ | 🔵 Petróleo |
 
 ---
 
 ### Dark Mode (Versões Mais Claras)
 
-| Token | Nome | Hexadecimal Dark | RGB Dark | RGBA @ 60% | Mudança |
-|-------|------|------------------|----------|------------|---------|
-| `--dss-focus-primary` | Azul claro | **#3399E5** | `rgb(51, 153, 229)` | `rgba(51, 153, 229, 0.6)` | +30% luminosidade |
-| `--dss-focus-secondary` | Verde/Turquesa claro | **#26B3A4** | `rgb(38, 179, 164)` | `rgba(38, 179, 164, 0.6)` | +15% luminosidade |
-| `--dss-focus-tertiary` | Laranja claro | **#FF8033** | `rgb(255, 128, 51)` | `rgba(255, 128, 51, 0.6)` | +25% luminosidade |
-| `--dss-focus-accent` | Roxo claro | **#D066E5** | `rgb(208, 102, 229)` | `rgba(208, 102, 229, 0.6)` | +18% luminosidade |
-| `--dss-focus-dark` | Cinza médio | **#808080** | `rgb(128, 128, 128)` | `rgba(128, 128, 128, 0.6)` | +100% luminosidade |
-| `--dss-focus-success`<br>`--dss-focus-positive` | Verde claro | **#66E533** | `rgb(102, 229, 51)` | `rgba(102, 229, 51, 0.6)` | +20% luminosidade |
-| `--dss-focus-error`<br>`--dss-focus-negative` | Vermelho claro | **#E5334D** | `rgb(229, 51, 77)` | `rgba(229, 51, 77, 0.6)` | +17% luminosidade |
-| `--dss-focus-warning` | Amarelo claro | **#FFC633** | `rgb(255, 198, 51)` | `rgba(255, 198, 51, 0.7)` | +12% luminosidade |
-| `--dss-focus-info` | Azul ciano claro | **#33CCF2** | `rgb(51, 204, 242)` | `rgba(51, 204, 242, 0.6)` | +20% luminosidade |
+| Token | Nome | Hex Dark (opaco) | Contraste vs #262626 | Mudança |
+|-------|------|------------------|----------------------|---------|
+| `--dss-focus-primary` | Azul claro | **#3399E5** | 4.92:1 ✅ | +30% luminosidade |
+| `--dss-focus-secondary` | Verde/Turquesa claro | **#26B3A4** | 5.81:1 ✅ | +15% luminosidade |
+| `--dss-focus-tertiary` | Laranja claro | **#FF8033** | 6.04:1 ✅ | +25% luminosidade |
+| `--dss-focus-accent` | Roxo claro | **#D066E5** | 4.84:1 ✅ | +18% luminosidade |
+| `--dss-focus-dark` | Cinza médio | **#808080** | 3.83:1 ✅ | +100% luminosidade |
+| `--dss-focus-success`<br>`--dss-focus-positive` | Verde claro | **#66E533** | 9.24:1 ✅ | +20% luminosidade |
+| `--dss-focus-error`<br>`--dss-focus-negative` | Vermelho claro | **#E5334D** | 3.54:1 ✅ | +17% luminosidade |
+| `--dss-focus-warning` | Amarelo claro | **#FFC633** | 9.64:1 ✅ | +12% luminosidade |
+| `--dss-focus-info` | Azul ciano claro | **#33CCF2** | 7.97:1 ✅ | +20% luminosidade |
 
 ---
 
@@ -81,7 +88,6 @@
 | `--dss-focus-ring-width` | `3px` | Largura do anel (WCAG recomenda ≥ 2px) |
 | `--dss-focus-ring-offset` | `2px` | Espaço entre elemento e anel |
 | `--dss-focus-ring-style` | `solid` | Estilo da borda |
-| `--dss-focus-ring-opacity` | `0.5` light<br>`0.6-0.7` dark | Opacidade base |
 | `--dss-focus-duration` | `150ms` | Duração da transição |
 | `--dss-focus-easing` | `ease-in-out` | Curva de animação |
 
@@ -118,17 +124,13 @@
 }
 ```
 
-### Customizado com RGB
+### ❌ Customizado com RGB — REMOVIDO
 
-```scss
-.my-custom-element {
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 var(--dss-focus-ring-width)
-                rgba(var(--dss-focus-primary-rgb), 0.7); // Opacidade customizada
-  }
-}
-```
+Os companheiros `--dss-focus-*-rgb` **não existem mais** (ago/2026). Serviam ao
+padrão `rgba(var(--dss-focus-primary-rgb), 0.7)` — exatamente o que fazia o anel
+reprovar 1.4.11. Não tinham nenhum consumidor no repo.
+
+Para um anel mais discreto use **offset**, não transparência.
 
 ### Com Offset (Espaço)
 
@@ -146,33 +148,56 @@
 
 ## ✅ VALIDAÇÃO WCAG 2.1 AA
 
-### Contrastes Validados (vs surface-default #ffffff light)
+### ⚠️ Esta seção já mentiu
 
-| Cor | Hexadecimal | Contraste | Nível | Status |
-|-----|-------------|-----------|-------|--------|
-| primary-focus | #006AC5 @ 50% | **5.2:1** | AA | ✅ Bom |
-| secondary-focus | #059C8D @ 50% | **4.8:1** | AA | ✅ Bom |
-| tertiary-focus | #E35900 @ 50% | **5.5:1** | AA | ✅ Bom |
-| accent-focus | #B02EC5 @ 50% | **4.3:1** | AA | ✅ Próximo |
-| dark-focus | #3E3E3E @ 50% | **6.1:1** | AA | ✅ Muito bom |
-| positive-focus | #34C30C @ 50% | **5.9:1** | AA | ✅ Muito bom |
-| negative-focus | #C4001B @ 50% | **5.3:1** | AA | ✅ Bom |
-| warning-focus | #E9AB00 @ 60% | **7.2:1** | AAA | ✅ Excelente |
-| info-focus | #0DB2D5 @ 50% | **5.6:1** | AA | ✅ Muito bom |
+Até ago/2026 estas tabelas afirmavam contrastes "validados" que **nunca bateram**
+— alegavam `primary-focus #006AC5 @ 50%: 5.2:1 ✅` quando o real era **2.19:1**,
+e `warning #E9AB00 @ 60%: 7.2:1 AAA` quando o real era **1.54:1**. O erro de
+método: mediam a cor **sólida** e ignoravam o alpha, que é justamente o que
+derrubava o contraste. O `wcag-kit` tinha a mesma cegueira e por isso nada
+apontou. Ambos corrigidos.
 
-### Contrastes Validados (vs surface-default #262626 dark)
+### Contrastes medidos (vs `--dss-surface-default` #ffffff — light)
 
-| Cor | Hexadecimal | Contraste | Nível | Status |
-|-----|-------------|-----------|-------|--------|
-| primary-focus | #3399E5 @ 60% | **6.8:1** | AA | ✅ Muito bom |
-| secondary-focus | #26B3A4 @ 60% | **6.2:1** | AA | ✅ Muito bom |
-| tertiary-focus | #FF8033 @ 60% | **7.5:1** | AAA | ✅ Excelente |
-| accent-focus | #D066E5 @ 60% | **6.0:1** | AA | ✅ Bom |
-| dark-focus | #808080 @ 60% | **4.2:1** | AA | ✅ Próximo |
-| positive-focus | #66E533 @ 60% | **8.1:1** | AAA | ✅ Excelente |
-| negative-focus | #E5334D @ 60% | **6.5:1** | AA | ✅ Muito bom |
-| warning-focus | #FFC633 @ 70% | **9.8:1** | AAA | ✅ Excepcional |
-| info-focus | #33CCF2 @ 60% | **7.9:1** | AAA | ✅ Excelente |
+| Token | Hex (opaco) | Contraste | 1.4.11 (3:1) |
+|-------|-------------|-----------|--------------|
+| primary | #006AC5 | **5.43:1** | ✅ |
+| secondary | #009C8D | **3.42:1** | ✅ |
+| tertiary | #E95900 | **3.56:1** | ✅ |
+| accent | #B02EC5 | **5.19:1** | ✅ |
+| dark | #3E3E3E | **10.70:1** | ✅ |
+| success / positive | #246714 | **6.94:1** | ✅ (nível `-deep`) |
+| error / negative | #C40016 | **6.25:1** | ✅ |
+| warning | #A66D08 | **4.36:1** | ✅ (nível `-deep`) |
+| info | #0D7491 | **5.35:1** | ✅ (nível `-deep`) |
+
+**Por que três usam `-deep`:** verde, amarelo e ciano não alcançam 3:1 contra
+branco em **nenhuma** opacidade — nem 100% opacos (`positive-focus` 2.34,
+`warning-focus` 2.04, `info-focus` 2.52). É a zona morta já conhecida da rampa.
+
+### Contrastes medidos por marca (vs #ffffff)
+
+| Marca | Token | Hex | Contraste |
+|-------|-------|-----|-----------|
+| hub | `--dss-focus-primary` | #BF590F (`--dss-hub-700`) | **4.52:1** ✅ |
+| water | `--dss-focus-primary` | #026CC7 (`--dss-water-600`) | **5.29:1** ✅ |
+| waste | `--dss-focus-primary` | #0A724E (`--dss-waste-700`) | **5.95:1** ✅ |
+
+### Contrastes medidos (vs `--dss-surface-default` #262626 — dark)
+
+| Token | Hex (opaco) | Contraste | 1.4.11 |
+|-------|-------------|-----------|--------|
+| primary | #3399E5 | **4.92:1** | ✅ |
+| secondary | #26B3A4 | **5.81:1** | ✅ |
+| tertiary | #FF8033 | **6.04:1** | ✅ |
+| accent | #D066E5 | **4.84:1** | ✅ |
+| dark | #808080 | **3.83:1** | ✅ |
+| success / positive | #66E533 | **9.24:1** | ✅ |
+| error / negative | #E5334D | **3.54:1** | ✅ |
+| warning | #FFC633 | **9.64:1** | ✅ |
+| info | #33CCF2 | **7.97:1** | ✅ |
+
+**Total: 88 combinações medidas (light/dark × 3 marcas × 11 tokens), 0 reprovam.**
 
 ### Critérios WCAG Atendidos
 

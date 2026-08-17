@@ -595,81 +595,59 @@
   --dss-focus-ring-width: 3px;
   --dss-focus-ring-offset: 2px;
   --dss-focus-ring-style: solid;
-  --dss-focus-ring-opacity: 0.5;
   /* Duração de transição (respeita prefers-reduced-motion via mixins) */
   --dss-focus-duration: 150ms;
   --dss-focus-easing: ease-in-out;
 }
 
 :root {
-  /* Primary Focus (Ações principais - Azul) */
-  --dss-focus-primary: rgba(0, 106, 197, 0.5);
-  --dss-focus-primary-rgb: 0, 106, 197;
-  /* Secondary Focus (Ações secundárias - Verde/Turquesa) */
-  --dss-focus-secondary: rgba(5, 156, 141, 0.5);
-  --dss-focus-secondary-rgb: 5, 156, 141;
-  /* Tertiary Focus (Ações terciárias - Laranja) */
-  --dss-focus-tertiary: rgba(227, 89, 0, 0.5);
-  --dss-focus-tertiary-rgb: 227, 89, 0;
-  /* Accent Focus (Ações de destaque - Roxo) */
-  --dss-focus-accent: rgba(176, 46, 197, 0.5);
-  --dss-focus-accent-rgb: 176, 46, 197;
+  /* Primary Focus (Ações principais - Azul) — 5.43:1 vs branco */
+  --dss-focus-primary: var(--dss-primary-focus);
+  /* Secondary Focus (Ações secundárias - Verde/Turquesa) — 3.42:1 */
+  --dss-focus-secondary: var(--dss-secondary-focus);
+  /* Tertiary Focus (Ações terciárias - Laranja) — 3.55:1 */
+  --dss-focus-tertiary: var(--dss-tertiary-focus);
+  /* Accent Focus (Ações de destaque - Roxo) — 5.19:1 */
+  --dss-focus-accent: var(--dss-accent-focus);
 }
 
 :root {
-  /* Success/Positive Focus (Ações positivas - Verde) */
-  --dss-focus-positive: rgba(52, 195, 12, 0.5);
-  --dss-focus-positive-rgb: 52, 195, 12;
-  /* Error/Negative Focus (Ações negativas - Vermelho) */
-  --dss-focus-negative: rgba(196, 0, 27, 0.5);
-  --dss-focus-negative-rgb: 196, 0, 27;
-  /* Warning Focus (Avisos - Amarelo) */
-  --dss-focus-warning: rgba(233, 171, 0, 0.6);
-  --dss-focus-warning-rgb: 233, 171, 0;
-  /* Info Focus (Informações - Azul Claro) */
-  --dss-focus-info: rgba(13, 178, 213, 0.5);
-  --dss-focus-info-rgb: 13, 178, 213;
+  /* Success/Positive Focus (Ações positivas - Verde) — -deep, 6.94:1 */
+  --dss-focus-success: var(--dss-positive-deep);
+  --dss-focus-positive: var(--dss-focus-success);
+  /* Error/Negative Focus (Ações negativas - Vermelho) — 6.24:1 */
+  --dss-focus-error: var(--dss-negative-focus);
+  --dss-focus-negative: var(--dss-focus-error);
+  /* Warning Focus (Avisos - Amarelo) — -deep, 4.36:1 */
+  --dss-focus-warning: var(--dss-warning-deep);
+  /* Info Focus (Informações - Azul Claro) — -deep, 5.35:1 */
+  --dss-focus-info: var(--dss-info-deep);
 }
 
 :root {
-  /* Light Focus (Para fundos escuros) */
-  --dss-focus-light: rgba(255, 255, 255, 0.7);
-  --dss-focus-light-rgb: 255, 255, 255;
-  /* Dark Focus (Para fundos claros - Cinza Escuro) */
-  --dss-focus-dark: rgba(62, 62, 62, 0.5);
-  --dss-focus-dark-rgb: 62, 62, 62;
+  /* Light Focus (Para fundos ESCUROS — 15.13:1 sobre surface dark) */
+  --dss-focus-light: var(--dss-gray-50);
+  /* Dark Focus (Para fundos CLAROS — 10.7:1 vs branco) */
+  --dss-focus-dark: var(--dss-dark-focus);
   /* Inverse Focus (Inversão automática) */
   --dss-focus-inverse: var(--dss-focus-light);
 }
 
 [data-theme=dark] {
   /* Primary Focus - Versão mais clara (Azul) */
-  --dss-focus-primary: rgba(51, 153, 229, 0.6);
-  --dss-focus-primary-rgb: 51, 153, 229;
-  /* Secondary Focus - Versão mais clara (Verde/Turquesa) */
-  --dss-focus-secondary: rgba(38, 179, 164, 0.6);
-  --dss-focus-secondary-rgb: 38, 179, 164;
-  /* Tertiary Focus - Versão mais clara (Laranja) */
-  --dss-focus-tertiary: rgba(255, 128, 51, 0.6);
-  --dss-focus-tertiary-rgb: 255, 128, 51;
-  /* Accent Focus - Versão mais clara (Roxo) */
-  --dss-focus-accent: rgba(208, 102, 229, 0.6);
-  --dss-focus-accent-rgb: 208, 102, 229;
-  /* Success/Positive Focus - Versão mais clara (Verde) */
-  --dss-focus-positive: rgba(102, 229, 51, 0.6);
-  --dss-focus-positive-rgb: 102, 229, 51;
-  /* Error/Negative Focus - Versão mais clara (Vermelho) */
-  --dss-focus-negative: rgba(229, 51, 77, 0.6);
-  --dss-focus-negative-rgb: 229, 51, 77;
-  /* Warning Focus - Versão mais clara (Amarelo) */
-  --dss-focus-warning: rgba(255, 198, 51, 0.7);
-  --dss-focus-warning-rgb: 255, 198, 51;
-  /* Info Focus - Versão mais clara (Azul Claro) */
-  --dss-focus-info: rgba(51, 204, 242, 0.6);
-  --dss-focus-info-rgb: 51, 204, 242;
+  --dss-focus-primary: #3399e5;
+  --dss-focus-secondary: #26b3a4;
+  --dss-focus-tertiary: #ff8033;
+  --dss-focus-accent: #d066e5;
+  /* Feedback - versões mais claras */
+  --dss-focus-success: #66e533;
+  --dss-focus-positive: var(--dss-focus-success);
+  --dss-focus-error: #e5334d;
+  --dss-focus-negative: var(--dss-focus-error);
+  --dss-focus-warning: #ffc633;
+  --dss-focus-info: #33ccf2;
   /* Dark Focus - Versão mais clara para dark mode */
-  --dss-focus-dark: rgba(128, 128, 128, 0.6);
-  --dss-focus-dark-rgb: 128, 128, 128;
+  --dss-focus-dark: #808080;
   /* Inverse Focus (Inversão em dark mode) */
   --dss-focus-inverse: var(--dss-focus-light);
 }
@@ -677,8 +655,7 @@
 [data-brand=hub],
 .dss-select--brand-hub,
 .dss-textarea--brand-hub {
-  --dss-focus-primary: rgba(191, 89, 15, 0.5);
-  --dss-focus-primary-rgb: 191, 89, 15;
+  --dss-focus-primary: var(--dss-hub-700);
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -689,16 +666,14 @@
 [data-brand=hub][data-theme=dark],
 [data-theme=dark] .dss-select--brand-hub,
 [data-theme=dark] .dss-textarea--brand-hub {
-  --dss-focus-primary: rgba(248, 170, 63, 0.6);
-  --dss-focus-primary-rgb: 248, 170, 63;
+  --dss-focus-primary: var(--dss-hub-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
 [data-brand=water],
 .dss-select--brand-water,
 .dss-textarea--brand-water {
-  --dss-focus-primary: rgba(2, 108, 199, 0.5);
-  --dss-focus-primary-rgb: 2, 108, 199;
+  --dss-focus-primary: var(--dss-water-600);
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -707,16 +682,14 @@
 [data-brand=water][data-theme=dark],
 [data-theme=dark] .dss-select--brand-water,
 [data-theme=dark] .dss-textarea--brand-water {
-  --dss-focus-primary: rgba(56, 166, 248, 0.6);
-  --dss-focus-primary-rgb: 56, 166, 248;
+  --dss-focus-primary: var(--dss-water-400);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
 [data-brand=waste],
 .dss-select--brand-waste,
 .dss-textarea--brand-waste {
-  --dss-focus-primary: rgba(10, 114, 78, 0.5);
-  --dss-focus-primary-rgb: 10, 114, 78;
+  --dss-focus-primary: var(--dss-waste-700);
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
@@ -725,8 +698,7 @@
 [data-brand=waste][data-theme=dark],
 [data-theme=dark] .dss-select--brand-waste,
 [data-theme=dark] .dss-textarea--brand-waste {
-  --dss-focus-primary: rgba(24, 177, 115, 0.6);
-  --dss-focus-primary-rgb: 24, 177, 115;
+  --dss-focus-primary: var(--dss-waste-500);
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
@@ -765,20 +737,9 @@
                                        0 0 0 calc(var(--dss-focus-ring-offset) + var(--dss-focus-ring-width)) var(--dss-focus-warning);
 }
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more), (prefers-contrast: high) {
   :root {
-    /* Aumentar opacidade em modo alto contraste */
-    --dss-focus-ring-opacity: 0.8;
     --dss-focus-ring-width: 4px;
-    /* Cores mais fortes */
-    --dss-focus-primary: rgba(31, 134, 222, 0.8);
-    --dss-focus-error: rgba(216, 24, 46, 0.8);
-    --dss-focus-success: rgba(77, 210, 40, 0.8);
-  }
-  [data-theme=dark] {
-    --dss-focus-primary: rgba(134, 192, 243, 0.9);
-    --dss-focus-error: rgba(255, 160, 171, 0.9);
-    --dss-focus-success: rgba(129, 230, 99, 0.9);
   }
 }
 @media (forced-colors: active) {
@@ -823,32 +784,41 @@
 }
 ```
 
-## 4. Customizado com RGB
-```scss
-.my-link {
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 var(--dss-focus-ring-width)
-                rgba(var(--dss-focus-primary-rgb), 0.7); // Customizar opacidade
-  }
-}
-```
+## 4. ❌ NÃO customizar opacidade
+
+Os companheiros `--dss-focus-*-rgb` foram REMOVIDOS (ago/2026). Existiam para o
+padrão `rgba(var(--dss-focus-primary-rgb), 0.7)` — exatamente o que causou a
+reprovação de contraste. Não tinham nenhum consumidor no repo. Se precisar de um
+anel mais discreto, use a variante com offset, não transparência.
 
 # Validação de Contraste WCAG
 
-Todas as cores de focus foram validadas para garantir contraste mínimo de 3:1 com
-elementos adjacentes (WCAG 2.1 AA - Critério 1.4.11 Non-text Contrast).
+O anel precisa de 3:1 contra as cores adjacentes (WCAG 2.1 AA — 1.4.11 Non-text
+Contrast). As cores são OPACAS; medir a razão do valor sólido contra a superfície
+é suficiente e é o que o gate faz.
 
-## Contrastes Validados (vs fundo branco):
-- Focus Primary (#1F86DE @ 50%): 3.2:1 ✅
-- Focus Error (#D8182E @ 50%): 4.1:1 ✅
-- Focus Success (#4DD228 @ 50%): 3.5:1 ✅
-- Focus Warning (#FFC107 @ 60%): 3.8:1 ✅
+⚠️ ESTA SEÇÃO JÁ MENTIU. Até ago/2026 ela afirmava "todas validadas" e listava
+números que nunca bateram — ex.: "Focus Primary (#1F86DE @ 50%): 3.2:1 ✅",
+quando o valor real era 1.88:1, e o token nem era #1F86DE (era #006AC5). Os
+números abaixo são medidos por `scripts/wcag-kit.mjs`, que agora compõe o alpha
+sobre o fundo em vez de descartá-lo. Reproduza antes de confiar:
 
-## Contrastes em Dark Mode (vs fundo #262626):
-- Focus Primary (#86C0F3 @ 60%): 5.2:1 ✅
-- Focus Error (#FFA0AB @ 60%): 4.8:1 ✅
-- Focus Success (#81E663 @ 60%): 6.1:1 ✅
+    node scripts/wcag-kit.mjs --dss-focus-primary --dss-surface-default
+
+## Light (vs --dss-surface-default #ffffff)
+- primary   #006AC5 →  5.43:1 ✅      - negative  #C40016 →  6.24:1 ✅
+- secondary #009C8D →  3.42:1 ✅      - warning   #A66D08 →  4.36:1 ✅ (-deep)
+- tertiary  #E95900 →  3.55:1 ✅      - info      #0D7491 →  5.35:1 ✅ (-deep)
+- accent    #B02EC5 →  5.19:1 ✅      - positive  #246714 →  6.94:1 ✅ (-deep)
+- dark      #3E3E3E → 10.70:1 ✅
+
+## Marca (vs branco)
+- hub #BF590F → 4.52:1 ✅   · water #026CC7 → 5.29:1 ✅   · waste #0A724E → 5.95:1 ✅
+
+## Dark (vs --dss-surface-default #262626)
+- primary #3399E5 → 4.92 ✅   secondary #26B3A4 → 5.81 ✅   tertiary #FF8033 → 6.04 ✅
+- accent  #D066E5 → 4.84 ✅   success   #66E533 → 9.24 ✅   error    #E5334D → 3.54 ✅
+- warning #FFC633 → 9.64 ✅   info      #33CCF2 → 7.97 ✅   dark     #808080 → 3.83 ✅
 
 # Referências:
 - WCAG 2.1 AA: https://www.w3.org/WAI/WCAG21/quickref/#focus-visible

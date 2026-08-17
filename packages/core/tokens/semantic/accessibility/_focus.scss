@@ -13,12 +13,20 @@
 // FOCUS RING - Configurações Base
 // -----------------------------------------------------------------------------
 
+// ⚠️ ANEL OPACO (ago/2026). As cores de foco eram `rgba()` a 50–60% de alpha e
+// REPROVAVAM o WCAG 1.4.11 (mínimo 3:1) em 49 de 60 combinações medidas — o
+// --dss-focus-primary composto sobre branco dava 2.19:1. A translucidez era a
+// causa: o anel "lavava" contra o fundo. Agora as cores são OPACAS e derivadas
+// da rampa. Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md §5.5.
+//
+// NÃO reintroduzir alpha aqui. Se precisar de anel mais suave, use offset
+// (--dss-focus-shadow-*-offset), não transparência.
+
 :root {
   /* Dimensões do Focus Ring */
   --dss-focus-ring-width: 3px;           // WCAG recomenda mínimo 2px, usamos 3px
   --dss-focus-ring-offset: 2px;          // Espaço entre elemento e focus ring
   --dss-focus-ring-style: solid;         // Estilo da borda
-  --dss-focus-ring-opacity: 0.5;         // Opacidade padrão (50%)
 
   /* Duração de transição (respeita prefers-reduced-motion via mixins) */
   --dss-focus-duration: 150ms;           // Transição rápida
@@ -30,50 +38,52 @@
 // -----------------------------------------------------------------------------
 
 :root {
-  /* Primary Focus (Ações principais - Azul) */
-  --dss-focus-primary: rgba(0, 106, 197, 0.5);         // #006AC5 @ 50%
-  --dss-focus-primary-rgb: 0, 106, 197;                // RGB para manipulação
+  /* Primary Focus (Ações principais - Azul) — 5.43:1 vs branco */
+  --dss-focus-primary: var(--dss-primary-focus);
   //
   // NOTA: a COR DO ANEL DE FOCO usada em :focus-visible é `--dss-focus-primary`
   // (brand/tema/forced-colors-aware). NÃO existe um `--dss-focus-ring` bare — um
   // alias no :root não re-resolveria por marca (custom property = var(outra) herda
   // o valor COMPUTADO no root). Componentes referenciam --dss-focus-primary direto.
+  //
+  // Os valores abaixo eram CÓPIAS CONGELADAS do nível -focus da rampa, e três
+  // haviam ficado defasadas da reconciliação c0 (secondary #059C8D≠#009C8D,
+  // tertiary #E35900≠#E95900, negative #C4001B≠#C40016). Derivar da rampa
+  // elimina a duplicata e a defasagem — delta visual de 5/255 num canal.
 
-  /* Secondary Focus (Ações secundárias - Verde/Turquesa) */
-  --dss-focus-secondary: rgba(5, 156, 141, 0.5);       // #059C8D @ 50%
-  --dss-focus-secondary-rgb: 5, 156, 141;
+  /* Secondary Focus (Ações secundárias - Verde/Turquesa) — 3.42:1 */
+  --dss-focus-secondary: var(--dss-secondary-focus);
 
-  /* Tertiary Focus (Ações terciárias - Laranja) */
-  --dss-focus-tertiary: rgba(227, 89, 0, 0.5);         // #E35900 @ 50%
-  --dss-focus-tertiary-rgb: 227, 89, 0;
+  /* Tertiary Focus (Ações terciárias - Laranja) — 3.55:1 */
+  --dss-focus-tertiary: var(--dss-tertiary-focus);
 
-  /* Accent Focus (Ações de destaque - Roxo) */
-  --dss-focus-accent: rgba(176, 46, 197, 0.5);         // #B02EC5 @ 50%
-  --dss-focus-accent-rgb: 176, 46, 197;
+  /* Accent Focus (Ações de destaque - Roxo) — 5.19:1 */
+  --dss-focus-accent: var(--dss-accent-focus);
 }
 
 // -----------------------------------------------------------------------------
 // FOCUS RING - Cores de Feedback (Light Mode)
 // -----------------------------------------------------------------------------
 
+// ⚠️ ZONA MORTA: verde, amarelo e ciano NÃO alcançam 3:1 contra branco em
+// NENHUMA opacidade — nem 100% opacos (positive-focus 2.34 · warning-focus 2.04
+// · info-focus 2.52). Para estes três o anel usa o nível **-deep** da rampa, não
+// o -focus. É a mesma zona morta registrada em [[project_color_ramp_a11y]].
+
 :root {
-  /* Success/Positive Focus (Ações positivas - Verde) */
+  /* Success/Positive Focus (Ações positivas - Verde) — -deep, 6.94:1 */
+  --dss-focus-success: var(--dss-positive-deep);
+  --dss-focus-positive: var(--dss-focus-success);      // alias
 
-  --dss-focus-positive: rgba(52, 195, 12, 0.5);        // Alias para success
-  --dss-focus-positive-rgb: 52, 195, 12;
+  /* Error/Negative Focus (Ações negativas - Vermelho) — 6.24:1 */
+  --dss-focus-error: var(--dss-negative-focus);
+  --dss-focus-negative: var(--dss-focus-error);        // alias
 
-  /* Error/Negative Focus (Ações negativas - Vermelho) */
+  /* Warning Focus (Avisos - Amarelo) — -deep, 4.36:1 */
+  --dss-focus-warning: var(--dss-warning-deep);
 
-  --dss-focus-negative: rgba(196, 0, 27, 0.5);         // Alias para error
-  --dss-focus-negative-rgb: 196, 0, 27;
-
-  /* Warning Focus (Avisos - Amarelo) */
-  --dss-focus-warning: rgba(233, 171, 0, 0.6);         // #E9AB00 @ 60% (mais opaco para contraste)
-  --dss-focus-warning-rgb: 233, 171, 0;
-
-  /* Info Focus (Informações - Azul Claro) */
-  --dss-focus-info: rgba(13, 178, 213, 0.5);           // #0DB2D5 @ 50%
-  --dss-focus-info-rgb: 13, 178, 213;
+  /* Info Focus (Informações - Azul Claro) — -deep, 5.35:1 */
+  --dss-focus-info: var(--dss-info-deep);
 }
 
 // -----------------------------------------------------------------------------
@@ -81,13 +91,11 @@
 // -----------------------------------------------------------------------------
 
 :root {
-  /* Light Focus (Para fundos escuros) */
-  --dss-focus-light: rgba(255, 255, 255, 0.7);         // White @ 70%
-  --dss-focus-light-rgb: 255, 255, 255;
+  /* Light Focus (Para fundos ESCUROS — 15.13:1 sobre surface dark) */
+  --dss-focus-light: var(--dss-gray-50);
 
-  /* Dark Focus (Para fundos claros - Cinza Escuro) */
-  --dss-focus-dark: rgba(62, 62, 62, 0.5);             // #3E3E3E @ 50%
-  --dss-focus-dark-rgb: 62, 62, 62;
+  /* Dark Focus (Para fundos CLAROS — 10.7:1 vs branco) */
+  --dss-focus-dark: var(--dss-dark-focus);
 
   /* Inverse Focus (Inversão automática) */
   --dss-focus-inverse: var(--dss-focus-light);
@@ -97,44 +105,28 @@
 // DARK MODE - Cores Ajustadas para Melhor Contraste
 // -----------------------------------------------------------------------------
 
+// Estes são valores CURADOS para dark mode — versões mais claras que não têm
+// equivalente na rampa (a rampa escurece; aqui é preciso clarear sobre #262626).
+// Por isso ficam como hex, não como var(). Todos passam 1.4.11 já opacos:
+// contraste contra --dss-surface-default do dark (#262626) na coluna à direita.
+
 [data-theme="dark"] {
   /* Primary Focus - Versão mais clara (Azul) */
-  --dss-focus-primary: rgba(51, 153, 229, 0.6);        // #3399E5 @ 60% (versão clara de #006AC5)
-  --dss-focus-primary-rgb: 51, 153, 229;
+  --dss-focus-primary: #3399e5;                        // 4.92:1
+  --dss-focus-secondary: #26b3a4;                      // 5.81:1
+  --dss-focus-tertiary: #ff8033;                       // 6.04:1
+  --dss-focus-accent: #d066e5;                         // 4.84:1
 
-  /* Secondary Focus - Versão mais clara (Verde/Turquesa) */
-  --dss-focus-secondary: rgba(38, 179, 164, 0.6);      // #26B3A4 @ 60% (versão clara de #059C8D)
-  --dss-focus-secondary-rgb: 38, 179, 164;
-
-  /* Tertiary Focus - Versão mais clara (Laranja) */
-  --dss-focus-tertiary: rgba(255, 128, 51, 0.6);       // #FF8033 @ 60% (versão clara de #E35900)
-  --dss-focus-tertiary-rgb: 255, 128, 51;
-
-  /* Accent Focus - Versão mais clara (Roxo) */
-  --dss-focus-accent: rgba(208, 102, 229, 0.6);        // #D066E5 @ 60% (versão clara de #B02EC5)
-  --dss-focus-accent-rgb: 208, 102, 229;
-
-  /* Success/Positive Focus - Versão mais clara (Verde) */
-
-  --dss-focus-positive: rgba(102, 229, 51, 0.6);       // Alias para success
-  --dss-focus-positive-rgb: 102, 229, 51;
-
-  /* Error/Negative Focus - Versão mais clara (Vermelho) */
-
-  --dss-focus-negative: rgba(229, 51, 77, 0.6);        // Alias para error
-  --dss-focus-negative-rgb: 229, 51, 77;
-
-  /* Warning Focus - Versão mais clara (Amarelo) */
-  --dss-focus-warning: rgba(255, 198, 51, 0.7);        // #FFC633 @ 70% (versão clara de #E9AB00)
-  --dss-focus-warning-rgb: 255, 198, 51;
-
-  /* Info Focus - Versão mais clara (Azul Claro) */
-  --dss-focus-info: rgba(51, 204, 242, 0.6);           // #33CCF2 @ 60% (versão clara de #0DB2D5)
-  --dss-focus-info-rgb: 51, 204, 242;
+  /* Feedback - versões mais claras */
+  --dss-focus-success: #66e533;                        // 9.24:1
+  --dss-focus-positive: var(--dss-focus-success);      // alias
+  --dss-focus-error: #e5334d;                          // 3.54:1
+  --dss-focus-negative: var(--dss-focus-error);        // alias
+  --dss-focus-warning: #ffc633;                        // 9.64:1
+  --dss-focus-info: #33ccf2;                           // 7.97:1
 
   /* Dark Focus - Versão mais clara para dark mode */
-  --dss-focus-dark: rgba(128, 128, 128, 0.6);          // #808080 @ 60% (versão clara de #3E3E3E)
-  --dss-focus-dark-rgb: 128, 128, 128;
+  --dss-focus-dark: #808080;                           // 3.83:1
 
   /* Inverse Focus (Inversão em dark mode) */
   --dss-focus-inverse: var(--dss-focus-light);
@@ -155,8 +147,7 @@
 [data-brand="hub"],
 .dss-select--brand-hub,
 .dss-textarea--brand-hub {
-  --dss-focus-primary: rgba(191, 89, 15, 0.5);         // --dss-hub-700 @ 50% (focus)
-  --dss-focus-primary-rgb: 191, 89, 15;
+  --dss-focus-primary: var(--dss-hub-700);             // 4.52:1 vs branco
 
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -168,8 +159,7 @@
 [data-brand="hub"][data-theme="dark"],
 [data-theme="dark"] .dss-select--brand-hub,
 [data-theme="dark"] .dss-textarea--brand-hub {
-  --dss-focus-primary: rgba(248, 170, 63, 0.6);        // --dss-hub-400 @ 60%
-  --dss-focus-primary-rgb: 248, 170, 63;
+  --dss-focus-primary: var(--dss-hub-400);             // 7.79:1 vs surface dark
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
@@ -177,8 +167,7 @@
 [data-brand="water"],
 .dss-select--brand-water,
 .dss-textarea--brand-water {
-  --dss-focus-primary: rgba(2, 108, 199, 0.5);         // --dss-water-600 @ 50% (focus)
-  --dss-focus-primary-rgb: 2, 108, 199;
+  --dss-focus-primary: var(--dss-water-600);           // 5.29:1 vs branco
 
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -188,8 +177,7 @@
 [data-brand="water"][data-theme="dark"],
 [data-theme="dark"] .dss-select--brand-water,
 [data-theme="dark"] .dss-textarea--brand-water {
-  --dss-focus-primary: rgba(56, 166, 248, 0.6);        // --dss-water-400 @ 60%
-  --dss-focus-primary-rgb: 56, 166, 248;
+  --dss-focus-primary: var(--dss-water-400);           // vs surface dark
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
@@ -197,8 +185,7 @@
 [data-brand="waste"],
 .dss-select--brand-waste,
 .dss-textarea--brand-waste {
-  --dss-focus-primary: rgba(10, 114, 78, 0.5);         // --dss-waste-700 @ 50% (focus)
-  --dss-focus-primary-rgb: 10, 114, 78;
+  --dss-focus-primary: var(--dss-waste-700);           // 5.95:1 vs branco
 
   /* Redefinir shadow composto para usar nova cor */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
@@ -208,8 +195,7 @@
 [data-brand="waste"][data-theme="dark"],
 [data-theme="dark"] .dss-select--brand-waste,
 [data-theme="dark"] .dss-textarea--brand-waste {
-  --dss-focus-primary: rgba(24, 177, 115, 0.6);        // --dss-waste-500 @ 60%
-  --dss-focus-primary-rgb: 24, 177, 115;
+  --dss-focus-primary: var(--dss-waste-500);           // vs surface dark
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
@@ -272,22 +258,21 @@
 // FOCUS RING - High Contrast Mode
 // -----------------------------------------------------------------------------
 
-@media (prefers-contrast: high) {
+// Este bloco usava APENAS `prefers-contrast: high` — que NÃO é valor da spec.
+// Media Queries Level 5 define `no-preference | more | less | custom`; `high` era
+// nome de rascunho, então o bloco era provavelmente inerte nos browsers atuais.
+// Agora declara `more` (spec) e mantém `high` como legado — lista separada por
+// vírgula é avaliada por item, então o item desconhecido apenas não casa.
+//
+// As sobrescritas de COR saíram: eram rgba() a 80–90% e, aplicadas por cima dos
+// tokens agora OPACOS, PIORAVAM o contraste (rgba(31,134,222,.8) sobre branco =
+// 2.9:1, contra 5.43:1 do opaco). Sobra o reforço de espessura, que é ganho real.
+// Escalar a COR em alto contraste é decisão do tema `hc` — ver
+// docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md §5.10.
+
+@media (prefers-contrast: more), (prefers-contrast: high) {
   :root {
-    /* Aumentar opacidade em modo alto contraste */
-    --dss-focus-ring-opacity: 0.8;             // 80% de opacidade
     --dss-focus-ring-width: 4px;               // 4px para maior visibilidade
-
-    /* Cores mais fortes */
-    --dss-focus-primary: rgba(31, 134, 222, 0.8);
-    --dss-focus-error: rgba(216, 24, 46, 0.8);
-    --dss-focus-success: rgba(77, 210, 40, 0.8);
-  }
-
-  [data-theme="dark"] {
-    --dss-focus-primary: rgba(134, 192, 243, 0.9);
-    --dss-focus-error: rgba(255, 160, 171, 0.9);
-    --dss-focus-success: rgba(129, 230, 99, 0.9);
   }
 }
 
@@ -343,32 +328,41 @@
 }
 ```
 
-## 4. Customizado com RGB
-```scss
-.my-link {
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 var(--dss-focus-ring-width)
-                rgba(var(--dss-focus-primary-rgb), 0.7); // Customizar opacidade
-  }
-}
-```
+## 4. ❌ NÃO customizar opacidade
+
+Os companheiros `--dss-focus-*-rgb` foram REMOVIDOS (ago/2026). Existiam para o
+padrão `rgba(var(--dss-focus-primary-rgb), 0.7)` — exatamente o que causou a
+reprovação de contraste. Não tinham nenhum consumidor no repo. Se precisar de um
+anel mais discreto, use a variante com offset, não transparência.
 
 # Validação de Contraste WCAG
 
-Todas as cores de focus foram validadas para garantir contraste mínimo de 3:1 com
-elementos adjacentes (WCAG 2.1 AA - Critério 1.4.11 Non-text Contrast).
+O anel precisa de 3:1 contra as cores adjacentes (WCAG 2.1 AA — 1.4.11 Non-text
+Contrast). As cores são OPACAS; medir a razão do valor sólido contra a superfície
+é suficiente e é o que o gate faz.
 
-## Contrastes Validados (vs fundo branco):
-- Focus Primary (#1F86DE @ 50%): 3.2:1 ✅
-- Focus Error (#D8182E @ 50%): 4.1:1 ✅
-- Focus Success (#4DD228 @ 50%): 3.5:1 ✅
-- Focus Warning (#FFC107 @ 60%): 3.8:1 ✅
+⚠️ ESTA SEÇÃO JÁ MENTIU. Até ago/2026 ela afirmava "todas validadas" e listava
+números que nunca bateram — ex.: "Focus Primary (#1F86DE @ 50%): 3.2:1 ✅",
+quando o valor real era 1.88:1, e o token nem era #1F86DE (era #006AC5). Os
+números abaixo são medidos por `scripts/wcag-kit.mjs`, que agora compõe o alpha
+sobre o fundo em vez de descartá-lo. Reproduza antes de confiar:
 
-## Contrastes em Dark Mode (vs fundo #262626):
-- Focus Primary (#86C0F3 @ 60%): 5.2:1 ✅
-- Focus Error (#FFA0AB @ 60%): 4.8:1 ✅
-- Focus Success (#81E663 @ 60%): 6.1:1 ✅
+    node scripts/wcag-kit.mjs --dss-focus-primary --dss-surface-default
+
+## Light (vs --dss-surface-default #ffffff)
+- primary   #006AC5 →  5.43:1 ✅      - negative  #C40016 →  6.24:1 ✅
+- secondary #009C8D →  3.42:1 ✅      - warning   #A66D08 →  4.36:1 ✅ (-deep)
+- tertiary  #E95900 →  3.55:1 ✅      - info      #0D7491 →  5.35:1 ✅ (-deep)
+- accent    #B02EC5 →  5.19:1 ✅      - positive  #246714 →  6.94:1 ✅ (-deep)
+- dark      #3E3E3E → 10.70:1 ✅
+
+## Marca (vs branco)
+- hub #BF590F → 4.52:1 ✅   · water #026CC7 → 5.29:1 ✅   · waste #0A724E → 5.95:1 ✅
+
+## Dark (vs --dss-surface-default #262626)
+- primary #3399E5 → 4.92 ✅   secondary #26B3A4 → 5.81 ✅   tertiary #FF8033 → 6.04 ✅
+- accent  #D066E5 → 4.84 ✅   success   #66E533 → 9.24 ✅   error    #E5334D → 3.54 ✅
+- warning #FFC633 → 9.64 ✅   info      #33CCF2 → 7.97 ✅   dark     #808080 → 3.83 ✅
 
 # Referências:
 - WCAG 2.1 AA: https://www.w3.org/WAI/WCAG21/quickref/#focus-visible
