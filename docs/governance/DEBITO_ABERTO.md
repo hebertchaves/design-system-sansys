@@ -23,6 +23,30 @@
 - ⏳ **(c1) Contraste WCAG da paleta default** — auditoria + tabela de rotas (A escurecer / B texto escuro)
   prontas; **aguardando decisão da equipe** por cor. NÃO tocar `globals.scss` até o retorno.
   `[[project_color_ramp_a11y]]`. (c0 — reconciliação da rampa com o Figma — **feito**, commit `6a4baa6`.)
+  - 📊 **QUANTO DO c1 É DE GRAÇA — medido com `scripts/wcag-kit.mjs`** (2026-08-17). Metade das 8 cores
+    fecha **sem trocar hex nenhum**; a outra metade é que exige decisão de cor.
+
+    | cor | texto branco | texto escuro | veredito |
+    |---|---|---|---|
+    | `warning` | 1,70 | **5,64** | ✅ AA trocando o texto |
+    | `positive` | 1,99 | **4,82** | ✅ AA trocando o texto |
+    | `info` | 2,08 | **4,61** | ✅ AA trocando o texto |
+    | `negative` | **5,13** | 1,87 | ✅ já passa com branco |
+    | `primary` | 3,80 | 2,52 | ❌ nenhum dos dois |
+    | `tertiary` | 2,93 | 3,27 | ❌ nenhum dos dois |
+    | `accent` | 4,20 | 2,29 | ❌ nenhum dos dois |
+    | `secondary` | *(kit não resolveu)* | 3,20 | ❌ |
+
+    **Consequência para o planejamento:** o bloco que precisa de decisão de cor é só a **família de
+    ação** (4 cores). Feedback já está resolvido — 3 por troca de texto, 1 de graça.
+    ⚠️ **Mas a troca não é local:** existe **um único** `--dss-text-on-primary` (branco), usado sobre
+    TODAS as cores. Fazer feedback usar texto escuro exige tokens por cor
+    (`--dss-text-on-{positive,info,warning}`) e tocar todo componente que pinta texto sobre fundo
+    colorido — é mudança de arquitetura de token, não ajuste pontual. Por isso está medido aqui e
+    **não implementado**: é a frente de cor/a11y do dono.
+    🔗 Isto reforça a §1 do `DSS_ALTO_CONTRASTE_SPIKE.md`: o modo HC **não** fecha o c1 (WCAG 1.4.3 mede
+    o default), e metade do c1 não precisa dele.
+
   - 📌 **Evidência medida de campo** (2026-08-13, chips `filled` no dark, texto branco): `positive`
     **1,99:1** e `primary` **3,80:1** reprovam AA para texto normal; `negative` 5,13:1 passa. Confirma a
     auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
