@@ -1,369 +1,281 @@
-# 📊 Design System Sansys v2.3.0 - Apresentação Técnica
+# Design System Sansys — Apresentação Técnica
 
-## 🎯 Objetivo
-
-Esta apresentação demonstra o **Design System Sansys (DSS)** como uma **biblioteca NPM profissional** pronta para uso em projetos Vue 3, com componentes acessíveis (WCAG 2.1 AA), sistema de tokens semânticos e brandabilidade multi-produto.
-
----
-
-## 📦 O que foi desenvolvido
-
-### **1. Biblioteca NPM Completa (Monorepo)**
-
-- **Package:** `@sansys/design-system` v2.3.0
-- **Arquitetura:** Monorepo npm (`packages/core`, `apps/sandbox`, `apps/docs-portal`, `packages/grid-inspector`, `packages/mcp`)
-- **Formato:** ES Module + UMD (compatível com bundlers e browsers)
-- **Build System:** Vite 5 + Rollup
-- **TypeScript:** 100% type safety com Composition API
-- **Tree-shakeable:** Importação individual de componentes
-- **Sass Module System:** 100% `@use`/`@forward` — sem `@import` legado
-- **Testes:** 100% de cobertura (76/76 componentes com `test.js` — gate de build bloqueante)
-
-### **2. Componentes Vue 3 Disponíveis**
-
-✅ **87 componentes selados** (Fase 1: 19 + Fase 2: 67 + Fase 3: 1 iniciada)
-✅ **DssButton**, **DssCard**, **DssInput** — exemplos de referência da Fase 1
-✅ **DssDialog**, **DssTabs**, **DssTable** — exemplos de referência da Fase 2
-✅ **DssDataCard** — primeiro composto complexo da Fase 3 (Stress Test)
-
-### **3. Sistema de Tokens DSS**
-
-- **Cores semânticas:** primary, secondary, accent, positive, negative, warning, info
-- **Spacing:** Sistema baseado em múltiplos de 4px
-- **Typography:** Escala tipográfica consistente
-- **Breakpoints:** Sistema responsivo
-- **Acessibilidade:** Contraste WCAG 2.1 AA garantido
-
-### **4. Brandabilidade**
-
-Sistema único de brandability para 3 produtos:
-
-- **Hub** 🟠 - Laranja (#FF6B00)
-- **Water** 🔵 - Azul (#0066CC)
-- **Waste** 🟢 - Verde (#00CC66)
+> **Versão:** `@sansys/design-system` v2.5.0 · **Revisado:** agosto/2026
+> **Público:** revisor técnico, arquitetura, desenvolvimento
+> **Todos os números deste documento foram conferidos contra o repositório nesta revisão.**
 
 ---
 
-## 🏗️ Arquitetura em 4 Camadas
+## 1. O que o DSS é
 
-Cada componente segue a arquitetura modular:
+Uma **camada corporativa sobre o Quasar Framework** — não uma biblioteca standalone. Entrega
+tokens semânticos, brandabilidade multi-produto, governança verificável e componentes Vue 3
+padronizados.
+
+A distinção importa para a revisão: o DSS **não reimplementa** o Quasar. Ele governa como o
+Quasar é consumido, e a maior parte da engenharia está nessa fronteira — cascata, isolamento
+por camadas de CSS e contratos derivados do código.
+
+| | |
+|---|---|
+| Pacote | `@sansys/design-system` v2.5.0 |
+| Monorepo | `packages/core` · `apps/sandbox` · `apps/docs-portal` · `packages/grid-inspector` · `packages/mcp` |
+| Formato | ES Module + UMD |
+| Build | Vite 5 + Rollup |
+| Sass | 100% `@use`/`@forward` — `@import` é proibido por gate |
+| Vue | 3, Composition API, TypeScript |
+
+---
+
+## 2. Números atuais
+
+| métrica | valor | como conferir |
+|---|---|---|
+| Componentes catalogados | **91** | `packages/core/catalog.json` |
+| Componentes selados | **88** | `find docs/Compliance/seals -name '*SELO*.md' \| wc -l` |
+| Contratos verificados | **78** | `node scripts/emit-contract.mjs --all --strict` |
+| Arquivos de teste | **91** | `find packages/core/components -name '*.test.js' \| wc -l` |
+| Travas de pre-commit | **15** | podem **bloquear** um commit |
+| Passos de propagação | **4** | sincronizam derivados; não bloqueiam |
+| Ferramentas MCP | **15** | `packages/mcp/src/tools/index.ts` |
+
+> ⚠️ **Travas ≠ passos de propagação.** Só as 15 primeiras reprovam. Os 4 passos de sincronização
+> regeneram artefatos derivados (catálogo, referência de tokens, CSS do portal) e seguem adiante.
+
+### Bundle
+
+| arquivo | tamanho |
+|---|---|
+| `dist/dss.es.js` | ~875 kB |
+| `dist/dss.umd.js` | ~654 kB |
+| `dist/style.css` | ~649 kB |
+
+O CSS é grande **por desenho**: carrega os tokens de três marcas, os temas e as regras de
+isolamento do Quasar. Ele não é tree-shakeable — tokens são custom properties, e remover o que
+"não se usa" quebraria a troca de marca em runtime.
+
+> ℹ️ O `dist/` **não é versionado**. É reconstruído por `npm run build:lib`, e há dois hooks que
+> impedem que ele fique defasado: `prepublishOnly` (antes de publicar) e `post-merge` (após um
+> pull que toque o core).
+
+---
+
+## 3. Arquitetura em 4 camadas
+
+Todo componente segue a mesma estrutura. A ordem de importação é normativa.
 
 ```
 DssButton/
-├── 1-structure/      # Estrutura base Vue
-│   └── DssButton.vue
-├── 2-composition/    # Composição de estilos
-│   └── _base.scss
-├── 3-variants/       # Variantes visuais
-│   └── index.scss
-└── 4-output/         # Output final
-    └── index.scss
+├── 1-structure/DssButton.ts.vue    Vue + TypeScript (implementação canônica)
+├── 2-composition/_base.scss        estilos base — só tokens genéricos
+├── 3-variants/                     variantes visuais
+├── 4-output/                       estados e brands
+├── composables/ · types/
+├── DssButton.vue                   entry point: re-export puro
+├── DssButton.module.scss           orquestrador: L2 → L3 → L4
+├── dss.meta.json · dss.contract.json
+└── DssButton.md · *_API.md · README.md · *.example.vue · *.test.js
 ```
 
-**Vantagens:**
-- ✅ Separação clara de responsabilidades
-- ✅ Fácil manutenção e extensão
-- ✅ Reutilização de código
-- ✅ Testes isolados por camada
+**Isolamento do Quasar** é o ponto arquitetural mais importante e o menos óbvio: CSS de
+terceiros vive dentro de `@layer vendor`, e o CSS do DSS fica **fora de qualquer layer**. Escopo
+sem layer vence escopo com layer — inclusive `!important` — o que dá ao DSS precedência sem
+guerra de especificidade.
 
 ---
 
-## 📁 Estrutura da Biblioteca
+## 4. Tokens e brandabilidade
+
+Cadeia de três camadas:
 
 ```
-dss/
-├── dist/                      # 📦 Build da biblioteca
-│   ├── dss.es.js             # ES Module (21.72 kB)
-│   ├── dss.umd.js            # UMD (13.69 kB)
-│   └── style.css             # CSS compilado (123.02 kB)
-│
-├── components/                # 🧩 Componentes Vue 3
-│   ├── base/
-│   │   ├── DssButton/
-│   │   ├── DssCard/
-│   │   └── DssInput/
-│   └── index.js              # Exportações + Plugin Vue
-│
-├── tokens/                    # 🎨 Design Tokens
-│   ├── colors/
-│   ├── spacing/
-│   ├── typography/
-│   └── index.scss
-│
-├── themes/                    # 🌈 Temas (Hub, Water, Waste)
-│   ├── hub.scss
-│   ├── water.scss
-│   └── waste.scss
-│
-├── utils/                     # 🛠️ Utilitários SCSS
-│   ├── _functions.scss
-│   ├── _mixins.scss
-│   └── _accessibility-mixins.scss
-│
-├── index.js                   # 🚀 Entry point principal
-├── package.json              # 📋 Configuração NPM
-├── vite.config.js            # ⚙️ Build config
-└── README.md                 # 📖 Documentação
-
-apps/sandbox/                 # 🎬 Sandbox de desenvolvimento (@sansys/sandbox — antiga dss-example/)
-├── src/
-│   ├── App.vue              # Exemplos de todos os componentes
-│   └── main.js              # Setup do plugin
-├── index.html
-├── package.json
-└── README.md
+primitivo    --dss-primary: #1f86de            tokens/globals.scss
+semântico    --dss-action-primary: var(--dss-primary)
+consumo      var(--dss-action-primary)         ~1348× nos componentes
 ```
+
+Componentes consomem **apenas o semântico**. Trocar marca re-aponta o semântico; nenhum
+componente é tocado.
+
+### Marcas
+
+| produto | token | valor |
+|---|---|---|
+| Hub | `--dss-hub-600` | `#ef7a11` |
+| Water | `--dss-water-500` | `#0e88e4` |
+| Waste | `--dss-waste-600` | `#0b8154` |
+
+Ativação por `[data-brand="hub\|water\|waste"]` em qualquer ancestral, ou pela prop `brand` no
+componente.
+
+> ⚠️ **Só `--dss-action-primary` é remapeada por marca.** `secondary`, `tertiary` e `accent`
+> declaram explicitamente "mantém semântico" nas três marcas. É decisão de design registrada nos
+> arquivos de marca — não é omissão.
 
 ---
 
-## 🚀 Como Testar (Revisor Técnico)
+## 5. Governança verificável
 
-### **Passo 1: Instalar dependências do Monorepo**
+É o que mais mudou desde a versão anterior deste documento, e o que distingue o DSS de uma
+biblioteca de componentes comum.
+
+### Cadeia de fonte única
+
+O CSS do componente é a **fonte**; tudo o mais é derivado e regenerado automaticamente:
+
+```
+SCSS do componente  →  dss.contract.json  →  DSS_REFERENCIA_VISUAL_ANALISE.md
+                    →  dss.meta.json      →  catalog.json  →  páginas do portal
+```
+
+O `dss.contract.json` é emitido do CSS compilado e dos tipos TypeScript. Ele carrega props,
+slots (com escopo e obrigatoriedade), eventos, estados, tokens usados e claims de acessibilidade
+— cada claim com uma **âncora verificável**: o gate reprova afirmação que não fecha.
+
+### As 15 travas
+
+Estrutura de 4 camadas · barrel · higiene de SFC · grafia de variante fiel ao Quasar ·
+tokens SCSS existentes · convenções da família de campo · paridade API↔documentação ·
+tags do sandbox · registro de demos · páginas do portal · consistência do catálogo ·
+contrato schema-válido · meta↔catálogo · type-check · teste de isolamento Quasar↔DSS.
+
+### Ferramentas MCP (15)
+
+Expostas a agentes de IA: consulta de componente e token, validação de código e de composição,
+scaffolding, sugestão de substituição de token, prontidão de spec, parecer semântico, entre outras.
+
+---
+
+## 6. Acessibilidade — o que está conforme e o que não está
+
+Esta seção é deliberadamente honesta. A versão anterior deste documento afirmava conformidade
+total, e **isso não era verdade**.
+
+### Conforme e verificado
+
+- **Anel de foco (WCAG 1.4.11):** auditado em agosto — 49 de 60 combinações reprovavam por
+  translucidez. Corrigido para opaco; hoje são **88 combinações medidas, 0 reprovam**.
+- **Touch target (WCAG 2.5.5):** **44×44px** (`--dss-touch-target-md`), o mínimo da norma.
+- **Navegação por teclado:** anel exclusivo de teclado (`:focus-visible`) na família de campos e
+  nos controles de seleção — não aparece em clique de mouse.
+- **`prefers-reduced-motion`** e **`forced-colors`** implementados.
+
+### Não conforme — dívida declarada
+
+- **Contraste de cores de ação.** Medido: `primary` 3,80:1 · `tertiary` 2,93:1 · `accent` 4,20:1
+  com texto branco — abaixo dos 4,5:1 de AA para texto normal. **Aguarda decisão de cor da
+  equipe**; nenhum hex foi alterado unilateralmente.
+- **Feedback resolve sem trocar cor:** `warning`, `positive` e `info` passam AA apenas com texto
+  escuro (5,64 · 4,82 · 4,61). Exige quebrar `--dss-text-on-primary` por cor — hoje há **um só**
+  token de texto sobre fundo colorido.
+
+> **Correção de rumo registrada:** o documento anterior afirmava "touch target mínimo 48×48px".
+> Não existe token de 48px na escala (32/36/44/52/64), e 48 é diretriz do Material, não do WCAG.
+> A norma pede 44. Corrigido em todo o repositório em agosto.
+
+---
+
+## 7. Como revisar
 
 ```bash
-# Na raiz do monorepo
-npm install
+npm install                    # raiz do monorepo
+npm run core:build             # gera packages/core/dist/
+npm run sandbox:dev            # http://localhost:5173
 ```
 
-### **Passo 2: Compilar a biblioteca core**
+O **sandbox** é a superfície de verificação visual. Cada componente adequado tem duas telas:
+
+- **Playground** — variantes, tamanhos, estados, marcas e a matriz combinatória;
+- **Preview Frame** — monta o **SFC real** num iframe, com controles derivados do contrato.
+  Se o contrato mente, o Preview Frame mostra.
+
+### Gates, individualmente
 
 ```bash
-npm run core:build
-```
-
-**Resultado esperado:**
-- ✅ `packages/core/dist/dss.es.js` - ES Module gerado
-- ✅ `packages/core/dist/dss.umd.js` - UMD gerado
-- ✅ `packages/core/dist/style.css` - CSS compilado
-
----
-
-### **Passo 3: Executar Sandbox**
-
-```bash
-npm run sandbox:dev
-# ou: cd apps/sandbox && npm run dev
-```
-
-**Acesse:** http://localhost:5173
-
-**O que você verá:**
-- ✅ Todos os componentes funcionando
-- ✅ Todas as variantes (elevated, flat, outline, etc.)
-- ✅ Sistema de cores completo
-- ✅ Tamanhos (xs, sm, md, lg, xl)
-- ✅ Estados (loading, disabled, error)
-- ✅ Brandabilidade (Hub, Water, Waste)
-- ✅ Formulário completo com validação
-
----
-
-### **Passo 4: Testar Importação Individual**
-
-Abra `apps/sandbox/src/App.vue` e mude de plugin global para importação individual:
-
-```vue
-<script setup>
-// Importação individual (tree-shaking)
-import { DssButton, DssCard, DssInput } from '@sansys/design-system'
-import '@sansys/design-system/css'
-
-// ... resto do código
-</script>
+npm run validate:type-check
+npm run validate:structure:gate
+npm run validate:scss-tokens:gate
+npm run validate:api-docs:gate
+node scripts/emit-contract.mjs --all --strict
 ```
 
 ---
 
-## 🎨 Exemplos de Uso
+## 8. Uso
 
-### **Opção 1: Plugin Global**
+### Plugin global
 
 ```javascript
-// main.js
-import { createApp } from 'vue'
 import DesignSystemSansys from '@sansys/design-system'
 import '@sansys/design-system/css'
 
-app.use(DesignSystemSansys, {
-  brand: 'hub' // hub, water, ou waste
-})
+app.use(DesignSystemSansys, { brand: 'hub' })
 ```
 
-```vue
-<!-- Componentes disponíveis globalmente -->
-<template>
-  <DssButton color="primary">Clique</DssButton>
-  <DssCard variant="elevated">
-    <DssCardSection>
-      <h2>Título</h2>
-    </DssCardSection>
-  </DssCard>
-</template>
-```
-
-### **Opção 2: Importação Individual (Tree-shaking)**
+### Importação individual
 
 ```vue
-<template>
-  <DssButton color="primary">Clique</DssButton>
-</template>
-
 <script setup>
 import { DssButton } from '@sansys/design-system'
 import '@sansys/design-system/css'
 </script>
+
+<template>
+  <DssButton color="primary">Clique</DssButton>
+</template>
 ```
 
----
-
-## ♿ Conformidade WCAG 2.1 AA
-
-### **Contraste de Cores**
-- ✅ Todas as combinações de cores testadas
-- ✅ Contraste mínimo 4.5:1 para texto normal
-- ✅ Contraste mínimo 3:1 para texto grande
-- ✅ Auto-contraste em fundos variáveis
-
-### **Touch Targets**
-- ✅ Botões com mínimo 48×48px
-- ✅ Inputs com altura mínima de 48px
-- ✅ Espaçamento adequado entre elementos
-
-### **Navegação por Teclado**
-- ✅ Todos os botões acessíveis via Tab
-- ✅ Enter/Space para ativar
-- ✅ Focus visível em todos os elementos
-
-### **ARIA e Semântica**
-- ✅ ARIA labels apropriados
-- ✅ Roles semânticos corretos
-- ✅ Live regions para feedback
-
-### **Reduced Motion**
-- ✅ Suporte a `prefers-reduced-motion`
-- ✅ Animações desabilitadas quando solicitado
+> O CSS é **único e completo** nos dois modos — ver a nota da §2 sobre tree-shaking.
 
 ---
 
-## 📊 Métricas de Performance
+## 9. Estado e frentes abertas
 
-### **Bundle Size**
-- **ES Module:** 21.72 kB (gzip: 4.87 kB)
-- **UMD:** 13.69 kB (gzip: 3.72 kB)
-- **CSS:** 123.02 kB (gzip: 11.70 kB)
+O DSS está em **onda de adequação de UI**: cada componente é revisado contra o checklist visual,
+com verificação em LIGHT e DARK e as duas telas de sandbox.
 
-### **Tree-shaking**
-Importando apenas DssButton:
-```javascript
-import { DssButton } from '@sansys/design-system'
-// Bundle final: ~8 kB (apenas DssButton + dependências)
-```
+| frente | estado |
+|---|---|
+| Família de campos (Input, Select, Textarea, File, Field) | adequada |
+| Controles de seleção (Checkbox, Radio, Toggle) | adequada |
+| DssChip | adequado |
+| Demais componentes base | **na fila** |
+| Contraste da paleta default (c1) | **aguarda decisão de cor** |
+| Alto contraste como tema | spike medido, aguarda decisão |
 
----
+**Cobertura do eixo visual: 13 páginas de Playground e 11 Preview Frames**, de 76 componentes
+base. É a regra valendo onde a adequação já passou; a fila carrega o resto.
 
-## 🔍 Diferenciais Técnicos
-
-### **1. Arquitetura em 4 Camadas**
-Separação clara entre estrutura, composição, variantes e output.
-
-### **2. Sistema de Tokens**
-100% baseado em tokens semânticos, sem valores hardcoded.
-
-### **3. Brandabilidade**
-Sistema único que permite 3 identidades visuais distintas sem duplicação de código.
-
-### **4. Acessibilidade WCAG 2.1 AA**
-Conformidade completa com diretrizes de acessibilidade.
-
-### **5. Vue 3 Composition API + Options API**
-Compatível com ambos os estilos de código.
-
-### **6. TypeScript Ready**
-Estrutura preparada para tipagens completas.
-
-### **7. Zero Config**
-Funciona out-of-the-box, sem configuração adicional.
+📖 O quadro completo e sempre atualizado do que está em aberto vive em
+[`docs/governance/DEBITO_ABERTO.md`](../governance/DEBITO_ABERTO.md).
 
 ---
 
-## 🛣️ Roadmap
+## 10. Documentação
 
-### **v2.1.0 (Próxima Release)**
-- [ ] DssCheckbox
-- [ ] DssRadio
-- [ ] DssSelect
-- [ ] DssDialog
-- [ ] Tipagens TypeScript completas
-
-### **v2.2.0**
-- [ ] DssTable
-- [ ] DssToolbar
-- [ ] DssTabs
-- [ ] DssBreadcrumb
-
-### **v3.0.0**
-- [ ] Composables utilitários
-- [ ] Testes E2E completos
-- [ ] Storybook integrado
-- [ ] CLI para scaffolding
+| documento | para quê |
+|---|---|
+| [`CLAUDE.md`](../../CLAUDE.md) | regras normativas — Constituição, roteador por tarefa, Definition of Done |
+| [`DEBITO_ABERTO.md`](../governance/DEBITO_ABERTO.md) | ponto único do que está em aberto |
+| [`DSS_ARCHITECTURE.md`](./DSS_ARCHITECTURE.md) | estrutura do sistema e integração Quasar |
+| [`DSS_COMPONENT_ARCHITECTURE.md`](./DSS_COMPONENT_ARCHITECTURE.md) | as 4 camadas, padrões e anti-patterns |
+| [`DSS_TOKEN_REFERENCE.md`](./DSS_TOKEN_REFERENCE.md) | catálogo de tokens (tabelas auto-geradas) |
+| [`CHANGELOG.md`](../../CHANGELOG.md) | histórico de versões e mudanças breaking |
 
 ---
 
-## 📚 Documentação Adicional
+## 11. Checklist de revisão técnica
 
-- **[README Principal](./README.md)** - Instalação e uso básico
-- **[DssButton Docs](./components/base/DssButton/DssButton.md)** - Documentação completa do botão
-- **[Sandbox](../../apps/sandbox/README.md)** - Como executar o sandbox de desenvolvimento
-- **[Tokens System](./tokens/README.md)** - Sistema de design tokens
-
----
-
-## 👨‍💻 Autor
-
-**Hebert Daniel Oliveira Chaves**
-
-- GitHub: [@hebertchaves](https://github.com/hebertchaves)
-- Email: hebert.chaves@jtech.com.br
+- [ ] `npm run core:build` executa sem erro e gera os três artefatos em `packages/core/dist/`
+- [ ] `npm run sandbox:dev` sobe e os componentes renderizam
+- [ ] Playground e Preview Frame de um componente adequado (ex.: DssChip) mostram o mesmo visual
+- [ ] Troca de marca (Hub/Water/Waste) altera a cor de ação, e `neutral` **não** muda
+- [ ] Alternar LIGHT/DARK não deixa nenhum elemento ilegível
+- [ ] `Tab` mostra anel de foco; **clique de mouse não mostra**
+- [ ] `node scripts/emit-contract.mjs --all --strict` sai com exit 0
+- [ ] Um commit que viole qualquer invariante é **barrado** pelo pre-commit
 
 ---
 
-## 📝 Licença
-
-Propriedade da Jtech
-
----
-
-## ✅ Checklist de Revisão Técnica
-
-Para o revisor técnico, verificar:
-
-- [ ] **Build bem-sucedido** - `npm run core:build` executa sem erros
-- [ ] **Arquivos gerados** - `packages/core/dist/` contém dss.es.js, dss.umd.js, style.css
-- [ ] **Sandbox funciona** - `npm run sandbox:dev` sobe o ambiente em http://localhost:5173
-- [ ] **Componentes renderizam** - DssButton, DssCard, DssInput aparecem
-- [ ] **Variantes funcionam** - elevated, flat, outline, etc.
-- [ ] **Cores funcionam** - primary, secondary, accent, etc.
-- [ ] **Estados funcionam** - loading, disabled, error
-- [ ] **Brandabilidade funciona** - Hub, Water, Waste mudam cores
-- [ ] **Validação funciona** - DssInput mostra erro quando inválido
-- [ ] **Formulário funciona** - Exemplo completo envia dados
-- [ ] **Acessibilidade** - Navegação por teclado funciona
-- [ ] **Responsividade** - Layout se adapta em mobile
-- [ ] **Documentação clara** - README.md é compreensível
-- [ ] **Código limpo** - Sem console.log, código comentado, etc.
-- [ ] **Padrões consistentes** - Arquitetura mantida em todos os componentes
-
----
-
-## 🎯 Conclusão
-
-O **Design System Sansys v2.0.0** está pronto para produção como biblioteca NPM profissional, com:
-
-✅ **Arquitetura sólida** - 4 camadas modulares
-✅ **Acessibilidade completa** - WCAG 2.1 AA
-✅ **Performance otimizada** - Tree-shaking + bundles pequenos
-✅ **Brandabilidade única** - Sistema multi-produto
-✅ **Developer Experience** - Fácil instalação e uso
-✅ **Documentação completa** - README + exemplos + docs
-
-**Status:** ✅ **APROVADO PARA REVISÃO TÉCNICA**
+**Autor:** Hebert Daniel Oliveira Chaves · hebert.chaves@jtech.com.br
+**Licença:** propriedade da Jtech

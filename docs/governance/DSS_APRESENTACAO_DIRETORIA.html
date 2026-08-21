@@ -360,10 +360,25 @@
 
   <p>
     Entre as bloqueantes, uma é exemplar. O código trazia
-    <span class="ev">border: 1px solid var(--dss-border-default)</span> — e
-    <strong>esse token nunca existiu</strong>. A IA inventou um nome plausível, o
-    código compilou sem erro, e a borda simplesmente não aparece na tela.
+    <span class="ev">border: 1px solid var(--dss-border-default)</span>, o código
+    compilou sem erro, e a borda simplesmente não aparece na tela.
   </p>
+
+  <div class="callout">
+    <span class="tag">Quatro meses depois, o mesmo token voltou — e a máquina o pegou</span>
+    <p>
+      Em agosto, uma trava nova do DSS encontrou esse token <strong>dentro do próprio
+      design system</strong>. Ele existe, mas só no tema escuro: no tema claro a única
+      menção está dentro de um comentário. O divisor de lista, portanto,
+      <strong>não tem borda no tema claro</strong> — o mesmo defeito que a auditoria
+      humana levou horas para achar em abril, agora encontrado sozinho, em segundos.
+    </p>
+    <p>
+      É a demonstração mais direta da tese deste documento: o erro não é de quem
+      escreve, é de uma classe que só máquina pega de forma confiável — e que passa
+      despercebida por revisão humana mesmo quando se sabe exatamente o que procurar.
+    </p>
+  </div>
 
   <p>
     Também apareceu um componente cru do framework no lugar do componente DSS, e um
@@ -566,8 +581,8 @@
     <div class="stat"><b>91</b><span>componentes catalogados</span></div>
     <div class="stat"><b>78</b><span>contratos verificados</span></div>
     <div class="stat"><b>88</b><span>selos de conformidade</span></div>
-    <div class="stat"><b>19</b><span>travas automáticas</span></div>
-    <div class="stat"><b>16</b><span>ferramentas para agentes de IA</span></div>
+    <div class="stat"><b>15</b><span>travas automáticas</span></div>
+    <div class="stat"><b>15</b><span>ferramentas para agentes de IA</span></div>
   </div>
 
   <div class="tablewrap">
@@ -601,6 +616,56 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <h3>O que a máquina encontrou depois desta apresentação</h3>
+
+  <p class="lede">
+    Entre agosto e hoje, as travas rodaram sobre o próprio design system. Estes são
+    defeitos <strong>reais e medidos</strong>, que estavam em produção e nenhuma
+    revisão humana havia pego.
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>O que foi encontrado</th><th>Antes</th><th>Depois</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Anel de foco de teclado com contraste insuficiente<br>
+              <span style="font-weight:400;opacity:.7">translúcido demais para o mínimo exigido</span></td>
+          <td class="n"><span class="chip t">49 de 60 reprovavam</span></td>
+          <td class="n"><span class="chip v">88 medidas · 0 reprovam</span></td>
+        </tr>
+        <tr>
+          <td>Chip de valor invisível no tema escuro<br>
+              <span style="font-weight:400;opacity:.7">fundo quase branco com texto quase branco</span></td>
+          <td class="n"><span class="chip t">1,04:1</span></td>
+          <td class="n"><span class="chip v">7,17:1</span></td>
+        </tr>
+        <tr>
+          <td>Ícone somindo dentro do próprio fundo sob marca ativa</td>
+          <td class="n"><span class="chip t">mesma cor</span></td>
+          <td class="n"><span class="chip v">corrigido</span></td>
+        </tr>
+        <tr>
+          <td>Regra de acessibilidade que nunca funcionou<br>
+              <span style="font-weight:400;opacity:.7">apontava para um valor inexistente; o navegador descartava</span></td>
+          <td class="n"><span class="chip t">inerte</span></td>
+          <td class="n"><span class="chip v">removida e substituída</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <span class="tag">O padrão que se repetiu</span>
+    <p>
+      Em quase todos, <strong>o comportamento correto já existia em outro componente
+      da mesma família</strong> e não havia sido propagado. Não foi preciso inventar
+      solução: foi preciso <em>medir os componentes lado a lado</em> — que é
+      exatamente o tipo de comparação que uma pessoa não faz e uma máquina faz de
+      graça.
+    </p>
   </div>
 
   <h3>O laço fechado, em um comando</h3>
@@ -652,7 +717,7 @@
       tradução é real e tem custo.
     </li>
     <li>
-      <strong>As travas protegem o DSS, não o produto.</strong> As 19 travas
+      <strong>As travas protegem o DSS, não o produto.</strong> As 15 travas
       automáticas vivem no repositório do design system. <strong>No repositório dos
       produtos não existe nenhuma.</strong> Levá-las para lá é o que transforma
       “o DSS valida” de promessa em fato.
@@ -872,7 +937,9 @@
   <p>
     Apresentação preparada a partir de material verificado: auditoria de abril,
     três especificações reais dos módulos de Negativação, Faturamento e Arrecadação,
-    e o estado atual do repositório do Design System Sansys.
+    e o estado do repositório do Design System Sansys em <strong>agosto de 2026</strong>
+    (versão 2.5.0). Todos os números foram reconferidos contra o repositório nesta
+    revisão — dois estavam superestimados e foram corrigidos para baixo.
   </p>
   <p>
     Detalhamento técnico em <code>DSS_PROCESSO_DESENVOLVIMENTO_ASSISTIDO.md</code>
