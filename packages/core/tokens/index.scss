@@ -33,3 +33,11 @@
 
 /* 6. Dark Mode Theme */
 @use 'themes/dark/colors';
+
+/* 7. Paleta de alto contraste (aditiva) + os dois temas que a consomem
+   ⚠️ SPIKE ago/2026 — só `primary`. docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md */
+@use 'palettes/high-contrast';
+@use 'themes/hc/colors' as hc-colors;        /* alias: 'colors' já é o namespace do dark */
+@use 'themes/hc/brands' as hc-brands;
+@use 'themes/hcdark/colors' as hcdark-colors;
+@use 'themes/hcdark/brands' as hcdark-brands;

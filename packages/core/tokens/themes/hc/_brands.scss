@@ -1,0 +1,80 @@
+/* ==========================================================================
+   DSS - ALTO CONTRASTE × MARCA (tema claro)
+   ⚠️ SPIKE (ago/2026). Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+
+/**
+ * POR QUE ESTE ARQUIVO EXISTE
+ * `[data-brand]` remapeia no SEMÂNTICO (`--dss-action-primary`), não no
+ * primitivo. Como `themes/hc/_colors.scss` re-aponta o PRIMITIVO, ele não
+ * alcança contexto de marca: medido, `{theme:'hc', brand:'hub'}` continuava
+ * entregando o laranja institucional #ef7a11 (2.81:1 com branco). Sem estes
+ * blocos, o alto contraste simplesmente não existe para quem usa Hub/Water/Waste.
+ *
+ * NENHUMA COR NOVA — 11 dos 12 níveis são passos que a marca JÁ tem
+ * As escalas de marca vão de 50 a 950; basta escolher o passo cujo contraste
+ * atinge 7:1. Isso mantém a identidade cromática, dispensa aval de marketing
+ * (as cores já são aprovadas) e não toca `tokens/brand/*`.
+ *
+ * A ÚNICA EXCEÇÃO é o `hover` do Hub — ver nota no bloco dele.
+ *
+ * DOIS SELETORES POR MARCA, NÃO UM
+ * O tema mora no `<html>` e a marca costuma morar num componente aninhado, então
+ * `[data-theme][data-brand]` (co-locado) não basta: é preciso também
+ * `[data-theme] [data-brand]` (descendente). Mesmo padrão que
+ * `semantic/accessibility/_focus.scss` já usa para os campos Quasar-rooted.
+ */
+
+/* Passo intermediário Hub — ÚNICO valor novo da paleta de marca.
+   A escala do Hub só tem 900 (8.88:1) e 950 (14.88:1) acima de 7:1, e a rampa
+   precisa de três níveis (base/hover/deep). Este é o ponto médio em sRGB entre
+   hub-900 e hub-950: não é cor inventada, é interpolação de dois passos já
+   aprovados, e nenhum token existente da marca muda. */
+:root {
+  --dss-hc-hub-mid: #5e2a0e;   /* 11.58:1 com branco — entre hub-900 e hub-950 */
+}
+
+/* ===========================================
+   HUB — laranja
+   base 900 (8.88) · hover mid (11.58) · deep 950 (14.88)
+   =========================================== */
+[data-brand="hub"][data-theme="hc"],
+[data-theme="hc"] [data-brand="hub"] {
+  --dss-action-primary-light: var(--dss-hub-50);    /* 9.14:1 c/ texto escuro */
+  --dss-action-primary:       var(--dss-hub-900);   /* 8.88:1 c/ branco */
+  --dss-action-primary-hover: var(--dss-hc-hub-mid);/* 11.58:1 */
+  --dss-action-primary-deep:  var(--dss-hub-950);   /* 14.88:1 */
+
+  --dss-focus-primary: var(--dss-hub-900);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WATER — azul
+   base 700 (7.37) · hover 800 (9.02) · deep 900 (10.88)
+   =========================================== */
+[data-brand="water"][data-theme="hc"],
+[data-theme="hc"] [data-brand="water"] {
+  --dss-action-primary-light: var(--dss-water-50);   /* 8.88:1 c/ texto escuro */
+  --dss-action-primary:       var(--dss-water-700);  /* 7.37:1 c/ branco */
+  --dss-action-primary-hover: var(--dss-water-800);  /* 9.02:1 */
+  --dss-action-primary-deep:  var(--dss-water-900);  /* 10.88:1 */
+
+  --dss-focus-primary: var(--dss-water-700);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WASTE — verde
+   base 800 (8.14) · hover 900 (10.28) · deep 950 (15.50)
+   =========================================== */
+[data-brand="waste"][data-theme="hc"],
+[data-theme="hc"] [data-brand="waste"] {
+  --dss-action-primary-light: var(--dss-waste-50);   /* 9.05:1 c/ texto escuro */
+  --dss-action-primary:       var(--dss-waste-800);  /* 8.14:1 c/ branco */
+  --dss-action-primary-hover: var(--dss-waste-900);  /* 10.28:1 */
+  --dss-action-primary-deep:  var(--dss-waste-950);  /* 15.50:1 */
+
+  --dss-focus-primary: var(--dss-waste-800);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}

@@ -1,0 +1,62 @@
+/* ==========================================================================
+   DSS - TEMA ALTO CONTRASTE CLARO (`hc`)
+   ⚠️ SPIKE (ago/2026) — família de AÇÃO. Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+
+/**
+ * ESTRATÉGIA: re-apontar o PRIMITIVO, não o semântico.
+ *
+ * A camada semântica inteira já é `var(--dss-<cor>-*)`:
+ *   --dss-action-primary       → var(--dss-primary)
+ *   --dss-border-primary       → 1px solid var(--dss-primary)
+ *   --dss-gradient-primary-*   → linear-gradient(… var(--dss-primary) …)
+ *   --dss-focus-primary        → var(--dss-primary-focus)
+ *
+ * Trocar o ponteiro do primitivo faz as cinco famílias de dependentes seguirem
+ * automaticamente. Re-apontar no semântico exigiria enumerar cada consumidor —
+ * e qualquer omissão vira inconsistência silenciosa.
+ *
+ * NOTA: `tokens/globals.scss` NÃO é alterado. O primitivo mantém seu valor
+ * institucional em `:root`; só DENTRO de [data-theme="hc"] ele aponta para a
+ * paleta acessível.
+ *
+ * NOME DO TEMA: `hc`, sem hífen — `scripts/wcag-kit.mjs` indexa escopos com a
+ * regex /^\[data-theme=(\w+)\]$/ e `\w` não casa `-`. `high-contrast` ficaria
+ * invisível para o gate de contraste: falha silenciosa, do tipo pior.
+ */
+
+[data-theme="hc"] {
+  /* PRIMARY */
+  --dss-primary-light:   var(--dss-hc-primary-light);
+  --dss-primary:         var(--dss-hc-primary);
+  --dss-primary-focus:   var(--dss-hc-primary-focus);
+  --dss-primary-hover:   var(--dss-hc-primary-hover);
+  --dss-primary-deep:    var(--dss-hc-primary-deep);
+
+  /* SECONDARY */
+  --dss-secondary-light:   var(--dss-hc-secondary-light);
+  --dss-secondary:         var(--dss-hc-secondary);
+  --dss-secondary-focus:   var(--dss-hc-secondary-focus);
+  --dss-secondary-hover:   var(--dss-hc-secondary-hover);
+  --dss-secondary-deep:    var(--dss-hc-secondary-deep);
+
+  /* TERTIARY */
+  --dss-tertiary-light:   var(--dss-hc-tertiary-light);
+  --dss-tertiary:         var(--dss-hc-tertiary);
+  --dss-tertiary-focus:   var(--dss-hc-tertiary-focus);
+  --dss-tertiary-hover:   var(--dss-hc-tertiary-hover);
+  --dss-tertiary-deep:    var(--dss-hc-tertiary-deep);
+
+  /* ACCENT */
+  --dss-accent-light:   var(--dss-hc-accent-light);
+  --dss-accent:         var(--dss-hc-accent);
+  --dss-accent-focus:   var(--dss-hc-accent-focus);
+  --dss-accent-hover:   var(--dss-hc-accent-hover);
+  --dss-accent-deep:    var(--dss-hc-accent-deep);
+
+  /* DARK (a cor de ação cinza, não o tema) */
+  --dss-dark-light:   var(--dss-hc-dark-light);
+
+  /* O texto sobre ação continua BRANCO no claro — o fundo é que escureceu.
+     Nenhuma sobrescrita de --dss-text-on-primary é necessária aqui. */
+}

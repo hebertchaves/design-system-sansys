@@ -1,0 +1,147 @@
+/* ==========================================================================
+   DSS - PALETA DE ALTO CONTRASTE
+   ⚠️ SPIKE (ago/2026) — família de AÇÃO nos dois temas.
+   Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+
+/**
+ * O QUE É
+ * Paleta PARALELA e ADITIVA. Não substitui nenhum valor de `tokens/globals.scss`
+ * — as cores institucionais permanecem intactas, byte a byte.
+ *
+ * ESCOPO (decisão §6.3): só a família de AÇÃO — primary, secondary, tertiary,
+ * accent, dark. São as que reprovam com texto branco. Feedback (positive/
+ * negative/warning/info) fica FORA: a medição do c1 mostrou que essas fecham
+ * com troca de TEXTO, sem trocar hex — problema diferente, solução diferente.
+ * Neutros também ficam fora: no dark já são AAA (13.88:1) e no claro o eixo
+ * cinza é dívida de tokenização, não de cor.
+ *
+ * COMO ENTRA EM USO
+ * Só através de `themes/hc/_colors.scss` e `themes/hcdark/_colors.scss`, que
+ * re-apontam os PRIMITIVOS. Nenhum componente referencia a paleta direto.
+ *
+ * REGRA DE GOVERNANÇA (gate)
+ *   ❯ grep -rn "var(--dss-hc" packages/core/components/   → deve ser 0
+ * Sem hífen no fim: cobre os dois namespaces num padrão só.
+ *
+ * DOIS NAMESPACES, NÃO UM
+ * `--dss-hc-*` = tema claro · `--dss-hcdark-*` = tema escuro. O sufixo não
+ * serviria: a família de ação TEM uma cor chamada `dark`, então um
+ * `--dss-hc-dark-primary` seria ambíguo entre "cor dark do HC claro" e "tema HC
+ * escuro". O prefixo `hcdark` casa com o valor de `data-theme` e desfaz isso.
+ *
+ * MÉTODO (reproduzível)
+ * Preserva matiz e saturação do primitivo original; varia só a luminosidade.
+ *  - CLARO: menor escurecimento que atinge 7:1 com branco; focus/hover/deep em
+ *    passos de -4% de L. Tint `-light` em L89, ≥7:1 com texto escuro.
+ *  - ESCURO: papel INVERTIDO — menor clareamento que atinge 7:1 sobre #262626;
+ *    focus/hover/deep em passos de +6% de L. Tint escuro, ≥7:1 com texto claro.
+ * Alvo AAA (7:1), não o mínimo AA: um modo que entrega 4.5 é um modo AA, não
+ * resolve baixa visão.
+ *
+ * DUAS REGRAS QUE PODARAM A PALETA (de 60 para 46 tokens)
+ *
+ * 1. NUNCA REDUZIR CONTRASTE. O gerador escolhe o MENOR escurecimento que
+ *    atinge 7:1 — o que piora a cor cujo valor original já superava a meta.
+ *    Foi o caso de `dark` no tema claro: base 9.59:1 viraria 7.00:1. Por isso os
+ *    níveis de ênfase de `dark` NÃO existem aqui no claro; só o tint `-light`,
+ *    que de fato precisava (4.42:1).
+ *
+ *    ⚠️ E havia um efeito colateral pior: `--dss-text-body` é `var(--dss-dark)`.
+ *    Re-apontar essa cor de ação clareava o TEXTO DE CORPO de toda a UI. Um
+ *    "modo de alto contraste" que reduz o contraste do texto principal — o
+ *    oposto do objetivo. `--dss-dark` é cor de ação E fonte do texto; no tema
+ *    escuro não há esse laço (`--dss-text-body` é `--dss-gray-200`), então lá o
+ *    `dark` entra completo.
+ *
+ * 2. `-disable` FICA DE FORA. Componentes desabilitados são explicitamente
+ *    isentos de 1.4.11, e os valores originais já eram melhores que os gerados.
+ *    Forçar contraste em desabilitado faz o desabilitado parecer ativo.
+ *
+ * O TINT É DE BAIXO CONTRASTE DE PROPÓSITO
+ * O nível `-light` fica abaixo de 3:1 contra a superfície porque é FUNDO. O que
+ * precisa de contraste é o texto por cima — e esse está ≥7:1.
+ */
+
+:root {
+  /* ===========================================
+     TEMA CLARO — fundo de ação ESCURO + texto BRANCO
+     Superfície de referência: #ffffff
+     =========================================== */
+
+  /* PRIMARY */
+  --dss-hc-primary-light:          #cee5f8;  /* 7.39:1 c/ texto escuro */
+  --dss-hc-primary:                #155994;  /* 7.27:1 vs superfície · 7.27:1 c/ texto */
+  --dss-hc-primary-focus:          #124e82;  /* 8.61:1 vs superfície · 8.61:1 c/ texto */
+  --dss-hc-primary-hover:          #104470;  /* 10.08:1 vs superfície · 10.08:1 c/ texto */
+  --dss-hc-primary-deep:           #0d395e;  /* 11.90:1 vs superfície · 11.90:1 c/ texto */
+
+  /* SECONDARY */
+  --dss-hc-secondary-light:        #d1f5f1;  /* 8.24:1 c/ texto escuro */
+  --dss-hc-secondary:              #165f59;  /* 7.46:1 vs superfície · 7.46:1 c/ texto */
+  --dss-hc-secondary-focus:        #124f49;  /* 9.37:1 vs superfície · 9.37:1 c/ texto */
+  --dss-hc-secondary-hover:        #0e3e3a;  /* 11.87:1 vs superfície · 11.87:1 c/ texto */
+  --dss-hc-secondary-deep:         #0a2e2a;  /* 14.61:1 vs superfície · 14.61:1 c/ texto */
+
+  /* TERTIARY */
+  --dss-hc-tertiary-light:         #ffdcc7;  /* 7.45:1 c/ texto escuro */
+  --dss-hc-tertiary:               #993b00;  /* 7.05:1 vs superfície · 7.05:1 c/ texto */
+  --dss-hc-tertiary-focus:         #853300;  /* 8.50:1 vs superfície · 8.50:1 c/ texto */
+  --dss-hc-tertiary-hover:         #702b00;  /* 10.32:1 vs superfície · 10.32:1 c/ texto */
+  --dss-hc-tertiary-deep:          #5c2300;  /* 12.39:1 vs superfície · 12.39:1 c/ texto */
+
+  /* ACCENT */
+  --dss-hc-accent-light:           #edd5f1;  /* 7.03:1 c/ texto escuro */
+  --dss-hc-accent:                 #863394;  /* 7.20:1 vs superfície · 7.20:1 c/ texto */
+  --dss-hc-accent-focus:           #782e85;  /* 8.31:1 vs superfície · 8.31:1 c/ texto */
+  --dss-hc-accent-hover:           #6b2976;  /* 9.53:1 vs superfície · 9.53:1 c/ texto */
+  --dss-hc-accent-deep:            #5d2366;  /* 11.07:1 vs superfície · 11.07:1 c/ texto */
+
+  /* DARK */
+  --dss-hc-dark-light:             #e3e3e3;  /* 7.47:1 c/ texto escuro */
+
+  /* ===========================================
+     TEMA ESCURO — fundo de ação CLARO + texto ESCURO
+     Superfície de referência: #262626 (--dss-gray-800)
+
+     A rampa deixa de significar "escuridão crescente" e passa a significar
+     ÊNFASE crescente — que é o que o nome sempre quis dizer. No escuro, mais
+     ênfase = mais claro. Não é precedente novo: o --dss-focus-primary do tema
+     dark já era mais CLARO (#3399E5) que o do claro (#006AC5).
+     =========================================== */
+
+  /* PRIMARY */
+  --dss-hcdark-primary-light:      #13548b;  /* 7.22:1 c/ texto claro */
+  --dss-hcdark-primary:            #79b7ec;  /* 7.06:1 vs superfície · 9.24:1 c/ texto */
+  --dss-hcdark-primary-focus:      #94c5f0;  /* 8.29:1 vs superfície · 10.85:1 c/ texto */
+  --dss-hcdark-primary-hover:      #aed4f4;  /* 9.75:1 vs superfície · 12.75:1 c/ texto */
+  --dss-hcdark-primary-deep:       #c9e2f8;  /* 11.33:1 vs superfície · 14.82:1 c/ texto */
+
+  /* SECONDARY */
+  --dss-hcdark-secondary-light:    #155b55;  /* 7.24:1 c/ texto claro */
+  --dss-hcdark-secondary:          #2ec7b9;  /* 7.20:1 vs superfície · 9.41:1 c/ texto */
+  --dss-hcdark-secondary-focus:    #40d3c6;  /* 8.18:1 vs superfície · 10.70:1 c/ texto */
+  --dss-hcdark-secondary-hover:    #59d9cd;  /* 8.81:1 vs superfície · 11.53:1 c/ texto */
+  --dss-hcdark-secondary-deep:     #72dfd5;  /* 9.54:1 vs superfície · 12.47:1 c/ texto */
+
+  /* TERTIARY */
+  --dss-hcdark-tertiary-light:     #8f3700;  /* 7.10:1 c/ texto claro */
+  --dss-hcdark-tertiary:           #ff9757;  /* 7.07:1 vs superfície · 9.25:1 c/ texto */
+  --dss-hcdark-tertiary-focus:     #ffaa75;  /* 8.11:1 vs superfície · 10.61:1 c/ texto */
+  --dss-hcdark-tertiary-hover:     #ffbd94;  /* 9.34:1 vs superfície · 12.22:1 c/ texto */
+  --dss-hcdark-tertiary-deep:      #ffd0b3;  /* 10.76:1 vs superfície · 14.07:1 c/ texto */
+
+  /* ACCENT */
+  --dss-hcdark-accent-light:       #7f308c;  /* 7.12:1 c/ texto claro */
+  --dss-hcdark-accent:             #d5a0de;  /* 7.14:1 vs superfície · 9.35:1 c/ texto */
+  --dss-hcdark-accent-focus:       #dfb7e6;  /* 8.69:1 vs superfície · 11.36:1 c/ texto */
+  --dss-hcdark-accent-hover:       #e9ceee;  /* 10.47:1 vs superfície · 13.70:1 c/ texto */
+  --dss-hcdark-accent-deep:        #f3e4f6;  /* 12.42:1 vs superfície · 16.25:1 c/ texto */
+
+  /* DARK */
+  --dss-hcdark-dark-light:         #525252;  /* 7.17:1 c/ texto claro */
+  --dss-hcdark-dark:               #b3b3b3;  /* 7.22:1 vs superfície · 9.44:1 c/ texto */
+  --dss-hcdark-dark-focus:         #c2c2c2;  /* 8.50:1 vs superfície · 11.11:1 c/ texto */
+  --dss-hcdark-dark-hover:         #d1d1d1;  /* 9.91:1 vs superfície · 12.96:1 c/ texto */
+  --dss-hcdark-dark-deep:          #e0e0e0;  /* 11.46:1 vs superfície · 15.00:1 c/ texto */
+}

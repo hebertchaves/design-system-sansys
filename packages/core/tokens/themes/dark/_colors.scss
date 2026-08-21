@@ -19,7 +19,13 @@
  *    - Variações -deep de qualquer cor
  */
 
-[data-theme="dark"] {
+/* ⚠️ SPIKE ago/2026 — o seletor inclui `hcdark` para que o tema de ALTO
+   CONTRASTE ESCURO herde todos os neutros daqui sem duplicar ~35 tokens.
+   Os neutros do dark já são AAA (texto corpo 13.88:1, sutil 10.21:1), então
+   não há o que endurecer; o hcdark só re-aponta o eixo de AÇÃO.
+   Reverter o spike = tirar `, [data-theme="hcdark"]` desta linha. */
+[data-theme="dark"],
+[data-theme="hcdark"] {
   /* ===========================================
      BACKGROUNDS / SURFACES
      Inverter de claro (gray-50) para escuro (gray-800)

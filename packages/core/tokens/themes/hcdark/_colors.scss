@@ -1,0 +1,73 @@
+/* ==========================================================================
+   DSS - TEMA ALTO CONTRASTE ESCURO (`hcdark`)
+   ⚠️ SPIKE (ago/2026) — família de AÇÃO. Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+
+/**
+ * ROTA A da decisão §6.1: alto contraste é um VALOR de `data-theme`, não um eixo
+ * separado. Os quatro valores são `light` · `dark` · `hc` · `hcdark`.
+ *
+ * NEUTROS VÊM DE GRAÇA — não são duplicados aqui.
+ * `themes/dark/_colors.scss` declara `[data-theme="dark"], [data-theme="hcdark"]`,
+ * então superfícies, textos, bordas, sombras e input do dark valem igual no
+ * hcdark. Isso mata o principal custo que a rota A aparentava ter (replicar ~35
+ * tokens de neutro). E é medido: no dark os neutros JÁ estão em AAA — texto
+ * corpo 13.88:1, texto sutil 10.21:1 sobre a superfície. Não há o que endurecer.
+ *
+ * O que sobra para este arquivo é só o eixo de AÇÃO, que o tema dark não toca
+ * (`--dss-action-primary` é #1f86de igual no claro e no escuro).
+ *
+ * NOME SEM HÍFEN: `hcdark`, não `hc-dark` — a regex de escopo do wcag-kit é
+ * /^\[data-theme=(\w+)\]$/ e `\w` não casa `-`.
+ */
+
+[data-theme="hcdark"] {
+  /* PRIMARY */
+  --dss-primary-light:   var(--dss-hcdark-primary-light);
+  --dss-primary:         var(--dss-hcdark-primary);
+  --dss-primary-focus:   var(--dss-hcdark-primary-focus);
+  --dss-primary-hover:   var(--dss-hcdark-primary-hover);
+  --dss-primary-deep:    var(--dss-hcdark-primary-deep);
+
+  /* SECONDARY */
+  --dss-secondary-light:   var(--dss-hcdark-secondary-light);
+  --dss-secondary:         var(--dss-hcdark-secondary);
+  --dss-secondary-focus:   var(--dss-hcdark-secondary-focus);
+  --dss-secondary-hover:   var(--dss-hcdark-secondary-hover);
+  --dss-secondary-deep:    var(--dss-hcdark-secondary-deep);
+
+  /* TERTIARY */
+  --dss-tertiary-light:   var(--dss-hcdark-tertiary-light);
+  --dss-tertiary:         var(--dss-hcdark-tertiary);
+  --dss-tertiary-focus:   var(--dss-hcdark-tertiary-focus);
+  --dss-tertiary-hover:   var(--dss-hcdark-tertiary-hover);
+  --dss-tertiary-deep:    var(--dss-hcdark-tertiary-deep);
+
+  /* ACCENT */
+  --dss-accent-light:   var(--dss-hcdark-accent-light);
+  --dss-accent:         var(--dss-hcdark-accent);
+  --dss-accent-focus:   var(--dss-hcdark-accent-focus);
+  --dss-accent-hover:   var(--dss-hcdark-accent-hover);
+  --dss-accent-deep:    var(--dss-hcdark-accent-deep);
+
+  /* DARK (a cor de ação cinza, não o tema) */
+  --dss-dark-light:   var(--dss-hcdark-dark-light);
+  --dss-dark:         var(--dss-hcdark-dark);
+  --dss-dark-focus:   var(--dss-hcdark-dark-focus);
+  --dss-dark-hover:   var(--dss-hcdark-dark-hover);
+  --dss-dark-deep:    var(--dss-hcdark-dark-deep);
+
+  /* ===========================================
+     INVERSÃO DO TEXTO SOBRE A AÇÃO
+     No hcdark TODOS os fundos de ação são claros, então o texto por cima é
+     escuro — e como as 5 cores invertem JUNTAS, o token único acerta todas.
+
+     Era este o gargalo da decisão §6.11 (existe um só --dss-text-on-primary,
+     usado sobre todas as cores). Cobrir a família INTEIRA o dissolve aqui
+     dentro: um único valor serve porque não há mistura de fundos claros e
+     escuros no mesmo tema. O gargalo continua de pé para o c1 no DEFAULT, onde
+     a proposta é escurecer o texto só sobre feedback — aí sim as cores
+     divergiriam e o token precisaria ser quebrado por cor.
+     =========================================== */
+  --dss-text-on-primary: var(--dss-text-inverse);   /* #0a0a0a no dark */
+}

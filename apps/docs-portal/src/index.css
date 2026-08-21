@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-17. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-21. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -2762,7 +2762,13 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
  *    - Dark em contextos "vazados" (flat, outline) ou texto direto
  *    - Variações -deep de qualquer cor
  */
-[data-theme=dark] {
+/* ⚠️ SPIKE ago/2026 — o seletor inclui `hcdark` para que o tema de ALTO
+   CONTRASTE ESCURO herde todos os neutros daqui sem duplicar ~35 tokens.
+   Os neutros do dark já são AAA (texto corpo 13.88:1, sutil 10.21:1), então
+   não há o que endurecer; o hcdark só re-aponta o eixo de AÇÃO.
+   Reverter o spike = tirar `, [data-theme="hcdark"]` desta linha. */
+[data-theme=dark],
+[data-theme=hcdark] {
   /* ===========================================
      BACKGROUNDS / SURFACES
      Inverter de claro (gray-50) para escuro (gray-800)
@@ -2905,6 +2911,403 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    NOTA: Todas as cores de ação e feedback mantêm contraste adequado
    em dark mode SEM precisar de versões "light"!
    =========================================== */
+/* 7. Paleta de alto contraste (aditiva) + os dois temas que a consomem
+   ⚠️ SPIKE ago/2026 — só `primary`. docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md */
+/* ==========================================================================
+   DSS - PALETA DE ALTO CONTRASTE
+   ⚠️ SPIKE (ago/2026) — família de AÇÃO nos dois temas.
+   Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+/**
+ * O QUE É
+ * Paleta PARALELA e ADITIVA. Não substitui nenhum valor de `tokens/globals.scss`
+ * — as cores institucionais permanecem intactas, byte a byte.
+ *
+ * ESCOPO (decisão §6.3): só a família de AÇÃO — primary, secondary, tertiary,
+ * accent, dark. São as que reprovam com texto branco. Feedback (positive/
+ * negative/warning/info) fica FORA: a medição do c1 mostrou que essas fecham
+ * com troca de TEXTO, sem trocar hex — problema diferente, solução diferente.
+ * Neutros também ficam fora: no dark já são AAA (13.88:1) e no claro o eixo
+ * cinza é dívida de tokenização, não de cor.
+ *
+ * COMO ENTRA EM USO
+ * Só através de `themes/hc/_colors.scss` e `themes/hcdark/_colors.scss`, que
+ * re-apontam os PRIMITIVOS. Nenhum componente referencia a paleta direto.
+ *
+ * REGRA DE GOVERNANÇA (gate)
+ *   ❯ grep -rn "var(--dss-hc" packages/core/components/   → deve ser 0
+ * Sem hífen no fim: cobre os dois namespaces num padrão só.
+ *
+ * DOIS NAMESPACES, NÃO UM
+ * `--dss-hc-*` = tema claro · `--dss-hcdark-*` = tema escuro. O sufixo não
+ * serviria: a família de ação TEM uma cor chamada `dark`, então um
+ * `--dss-hc-dark-primary` seria ambíguo entre "cor dark do HC claro" e "tema HC
+ * escuro". O prefixo `hcdark` casa com o valor de `data-theme` e desfaz isso.
+ *
+ * MÉTODO (reproduzível)
+ * Preserva matiz e saturação do primitivo original; varia só a luminosidade.
+ *  - CLARO: menor escurecimento que atinge 7:1 com branco; focus/hover/deep em
+ *    passos de -4% de L. Tint `-light` em L89, ≥7:1 com texto escuro.
+ *  - ESCURO: papel INVERTIDO — menor clareamento que atinge 7:1 sobre #262626;
+ *    focus/hover/deep em passos de +6% de L. Tint escuro, ≥7:1 com texto claro.
+ * Alvo AAA (7:1), não o mínimo AA: um modo que entrega 4.5 é um modo AA, não
+ * resolve baixa visão.
+ *
+ * DUAS REGRAS QUE PODARAM A PALETA (de 60 para 46 tokens)
+ *
+ * 1. NUNCA REDUZIR CONTRASTE. O gerador escolhe o MENOR escurecimento que
+ *    atinge 7:1 — o que piora a cor cujo valor original já superava a meta.
+ *    Foi o caso de `dark` no tema claro: base 9.59:1 viraria 7.00:1. Por isso os
+ *    níveis de ênfase de `dark` NÃO existem aqui no claro; só o tint `-light`,
+ *    que de fato precisava (4.42:1).
+ *
+ *    ⚠️ E havia um efeito colateral pior: `--dss-text-body` é `var(--dss-dark)`.
+ *    Re-apontar essa cor de ação clareava o TEXTO DE CORPO de toda a UI. Um
+ *    "modo de alto contraste" que reduz o contraste do texto principal — o
+ *    oposto do objetivo. `--dss-dark` é cor de ação E fonte do texto; no tema
+ *    escuro não há esse laço (`--dss-text-body` é `--dss-gray-200`), então lá o
+ *    `dark` entra completo.
+ *
+ * 2. `-disable` FICA DE FORA. Componentes desabilitados são explicitamente
+ *    isentos de 1.4.11, e os valores originais já eram melhores que os gerados.
+ *    Forçar contraste em desabilitado faz o desabilitado parecer ativo.
+ *
+ * O TINT É DE BAIXO CONTRASTE DE PROPÓSITO
+ * O nível `-light` fica abaixo de 3:1 contra a superfície porque é FUNDO. O que
+ * precisa de contraste é o texto por cima — e esse está ≥7:1.
+ */
+:root {
+  /* ===========================================
+     TEMA CLARO — fundo de ação ESCURO + texto BRANCO
+     Superfície de referência: #ffffff
+     =========================================== */
+  /* PRIMARY */
+  --dss-hc-primary-light: #cee5f8; /* 7.39:1 c/ texto escuro */
+  --dss-hc-primary: #155994; /* 7.27:1 vs superfície · 7.27:1 c/ texto */
+  --dss-hc-primary-focus: #124e82; /* 8.61:1 vs superfície · 8.61:1 c/ texto */
+  --dss-hc-primary-hover: #104470; /* 10.08:1 vs superfície · 10.08:1 c/ texto */
+  --dss-hc-primary-deep: #0d395e; /* 11.90:1 vs superfície · 11.90:1 c/ texto */
+  /* SECONDARY */
+  --dss-hc-secondary-light: #d1f5f1; /* 8.24:1 c/ texto escuro */
+  --dss-hc-secondary: #165f59; /* 7.46:1 vs superfície · 7.46:1 c/ texto */
+  --dss-hc-secondary-focus: #124f49; /* 9.37:1 vs superfície · 9.37:1 c/ texto */
+  --dss-hc-secondary-hover: #0e3e3a; /* 11.87:1 vs superfície · 11.87:1 c/ texto */
+  --dss-hc-secondary-deep: #0a2e2a; /* 14.61:1 vs superfície · 14.61:1 c/ texto */
+  /* TERTIARY */
+  --dss-hc-tertiary-light: #ffdcc7; /* 7.45:1 c/ texto escuro */
+  --dss-hc-tertiary: #993b00; /* 7.05:1 vs superfície · 7.05:1 c/ texto */
+  --dss-hc-tertiary-focus: #853300; /* 8.50:1 vs superfície · 8.50:1 c/ texto */
+  --dss-hc-tertiary-hover: #702b00; /* 10.32:1 vs superfície · 10.32:1 c/ texto */
+  --dss-hc-tertiary-deep: #5c2300; /* 12.39:1 vs superfície · 12.39:1 c/ texto */
+  /* ACCENT */
+  --dss-hc-accent-light: #edd5f1; /* 7.03:1 c/ texto escuro */
+  --dss-hc-accent: #863394; /* 7.20:1 vs superfície · 7.20:1 c/ texto */
+  --dss-hc-accent-focus: #782e85; /* 8.31:1 vs superfície · 8.31:1 c/ texto */
+  --dss-hc-accent-hover: #6b2976; /* 9.53:1 vs superfície · 9.53:1 c/ texto */
+  --dss-hc-accent-deep: #5d2366; /* 11.07:1 vs superfície · 11.07:1 c/ texto */
+  /* DARK */
+  --dss-hc-dark-light: #e3e3e3; /* 7.47:1 c/ texto escuro */
+  /* ===========================================
+     TEMA ESCURO — fundo de ação CLARO + texto ESCURO
+     Superfície de referência: #262626 (--dss-gray-800)
+
+     A rampa deixa de significar "escuridão crescente" e passa a significar
+     ÊNFASE crescente — que é o que o nome sempre quis dizer. No escuro, mais
+     ênfase = mais claro. Não é precedente novo: o --dss-focus-primary do tema
+     dark já era mais CLARO (#3399E5) que o do claro (#006AC5).
+     =========================================== */
+  /* PRIMARY */
+  --dss-hcdark-primary-light: #13548b; /* 7.22:1 c/ texto claro */
+  --dss-hcdark-primary: #79b7ec; /* 7.06:1 vs superfície · 9.24:1 c/ texto */
+  --dss-hcdark-primary-focus: #94c5f0; /* 8.29:1 vs superfície · 10.85:1 c/ texto */
+  --dss-hcdark-primary-hover: #aed4f4; /* 9.75:1 vs superfície · 12.75:1 c/ texto */
+  --dss-hcdark-primary-deep: #c9e2f8; /* 11.33:1 vs superfície · 14.82:1 c/ texto */
+  /* SECONDARY */
+  --dss-hcdark-secondary-light: #155b55; /* 7.24:1 c/ texto claro */
+  --dss-hcdark-secondary: #2ec7b9; /* 7.20:1 vs superfície · 9.41:1 c/ texto */
+  --dss-hcdark-secondary-focus: #40d3c6; /* 8.18:1 vs superfície · 10.70:1 c/ texto */
+  --dss-hcdark-secondary-hover: #59d9cd; /* 8.81:1 vs superfície · 11.53:1 c/ texto */
+  --dss-hcdark-secondary-deep: #72dfd5; /* 9.54:1 vs superfície · 12.47:1 c/ texto */
+  /* TERTIARY */
+  --dss-hcdark-tertiary-light: #8f3700; /* 7.10:1 c/ texto claro */
+  --dss-hcdark-tertiary: #ff9757; /* 7.07:1 vs superfície · 9.25:1 c/ texto */
+  --dss-hcdark-tertiary-focus: #ffaa75; /* 8.11:1 vs superfície · 10.61:1 c/ texto */
+  --dss-hcdark-tertiary-hover: #ffbd94; /* 9.34:1 vs superfície · 12.22:1 c/ texto */
+  --dss-hcdark-tertiary-deep: #ffd0b3; /* 10.76:1 vs superfície · 14.07:1 c/ texto */
+  /* ACCENT */
+  --dss-hcdark-accent-light: #7f308c; /* 7.12:1 c/ texto claro */
+  --dss-hcdark-accent: #d5a0de; /* 7.14:1 vs superfície · 9.35:1 c/ texto */
+  --dss-hcdark-accent-focus: #dfb7e6; /* 8.69:1 vs superfície · 11.36:1 c/ texto */
+  --dss-hcdark-accent-hover: #e9ceee; /* 10.47:1 vs superfície · 13.70:1 c/ texto */
+  --dss-hcdark-accent-deep: #f3e4f6; /* 12.42:1 vs superfície · 16.25:1 c/ texto */
+  /* DARK */
+  --dss-hcdark-dark-light: #525252; /* 7.17:1 c/ texto claro */
+  --dss-hcdark-dark: #b3b3b3; /* 7.22:1 vs superfície · 9.44:1 c/ texto */
+  --dss-hcdark-dark-focus: #c2c2c2; /* 8.50:1 vs superfície · 11.11:1 c/ texto */
+  --dss-hcdark-dark-hover: #d1d1d1; /* 9.91:1 vs superfície · 12.96:1 c/ texto */
+  --dss-hcdark-dark-deep: #e0e0e0; /* 11.46:1 vs superfície · 15.00:1 c/ texto */
+}
+
+/* ==========================================================================
+   DSS - TEMA ALTO CONTRASTE CLARO (`hc`)
+   ⚠️ SPIKE (ago/2026) — família de AÇÃO. Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+/**
+ * ESTRATÉGIA: re-apontar o PRIMITIVO, não o semântico.
+ *
+ * A camada semântica inteira já é `var(--dss-<cor>-*)`:
+ *   --dss-action-primary       → var(--dss-primary)
+ *   --dss-border-primary       → 1px solid var(--dss-primary)
+ *   --dss-gradient-primary-*   → linear-gradient(… var(--dss-primary) …)
+ *   --dss-focus-primary        → var(--dss-primary-focus)
+ *
+ * Trocar o ponteiro do primitivo faz as cinco famílias de dependentes seguirem
+ * automaticamente. Re-apontar no semântico exigiria enumerar cada consumidor —
+ * e qualquer omissão vira inconsistência silenciosa.
+ *
+ * NOTA: `tokens/globals.scss` NÃO é alterado. O primitivo mantém seu valor
+ * institucional em `:root`; só DENTRO de [data-theme="hc"] ele aponta para a
+ * paleta acessível.
+ *
+ * NOME DO TEMA: `hc`, sem hífen — `scripts/wcag-kit.mjs` indexa escopos com a
+ * regex /^\[data-theme=(\w+)\]$/ e `\w` não casa `-`. `high-contrast` ficaria
+ * invisível para o gate de contraste: falha silenciosa, do tipo pior.
+ */
+[data-theme=hc] {
+  /* PRIMARY */
+  --dss-primary-light: var(--dss-hc-primary-light);
+  --dss-primary: var(--dss-hc-primary);
+  --dss-primary-focus: var(--dss-hc-primary-focus);
+  --dss-primary-hover: var(--dss-hc-primary-hover);
+  --dss-primary-deep: var(--dss-hc-primary-deep);
+  /* SECONDARY */
+  --dss-secondary-light: var(--dss-hc-secondary-light);
+  --dss-secondary: var(--dss-hc-secondary);
+  --dss-secondary-focus: var(--dss-hc-secondary-focus);
+  --dss-secondary-hover: var(--dss-hc-secondary-hover);
+  --dss-secondary-deep: var(--dss-hc-secondary-deep);
+  /* TERTIARY */
+  --dss-tertiary-light: var(--dss-hc-tertiary-light);
+  --dss-tertiary: var(--dss-hc-tertiary);
+  --dss-tertiary-focus: var(--dss-hc-tertiary-focus);
+  --dss-tertiary-hover: var(--dss-hc-tertiary-hover);
+  --dss-tertiary-deep: var(--dss-hc-tertiary-deep);
+  /* ACCENT */
+  --dss-accent-light: var(--dss-hc-accent-light);
+  --dss-accent: var(--dss-hc-accent);
+  --dss-accent-focus: var(--dss-hc-accent-focus);
+  --dss-accent-hover: var(--dss-hc-accent-hover);
+  --dss-accent-deep: var(--dss-hc-accent-deep);
+  /* DARK (a cor de ação cinza, não o tema) */
+  --dss-dark-light: var(--dss-hc-dark-light);
+  /* O texto sobre ação continua BRANCO no claro — o fundo é que escureceu.
+     Nenhuma sobrescrita de --dss-text-on-primary é necessária aqui. */
+}
+
+/* alias: 'colors' já é o namespace do dark */
+/* ==========================================================================
+   DSS - ALTO CONTRASTE × MARCA (tema claro)
+   ⚠️ SPIKE (ago/2026). Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+/**
+ * POR QUE ESTE ARQUIVO EXISTE
+ * `[data-brand]` remapeia no SEMÂNTICO (`--dss-action-primary`), não no
+ * primitivo. Como `themes/hc/_colors.scss` re-aponta o PRIMITIVO, ele não
+ * alcança contexto de marca: medido, `{theme:'hc', brand:'hub'}` continuava
+ * entregando o laranja institucional #ef7a11 (2.81:1 com branco). Sem estes
+ * blocos, o alto contraste simplesmente não existe para quem usa Hub/Water/Waste.
+ *
+ * NENHUMA COR NOVA — 11 dos 12 níveis são passos que a marca JÁ tem
+ * As escalas de marca vão de 50 a 950; basta escolher o passo cujo contraste
+ * atinge 7:1. Isso mantém a identidade cromática, dispensa aval de marketing
+ * (as cores já são aprovadas) e não toca `tokens/brand/*`.
+ *
+ * A ÚNICA EXCEÇÃO é o `hover` do Hub — ver nota no bloco dele.
+ *
+ * DOIS SELETORES POR MARCA, NÃO UM
+ * O tema mora no `<html>` e a marca costuma morar num componente aninhado, então
+ * `[data-theme][data-brand]` (co-locado) não basta: é preciso também
+ * `[data-theme] [data-brand]` (descendente). Mesmo padrão que
+ * `semantic/accessibility/_focus.scss` já usa para os campos Quasar-rooted.
+ */
+/* Passo intermediário Hub — ÚNICO valor novo da paleta de marca.
+   A escala do Hub só tem 900 (8.88:1) e 950 (14.88:1) acima de 7:1, e a rampa
+   precisa de três níveis (base/hover/deep). Este é o ponto médio em sRGB entre
+   hub-900 e hub-950: não é cor inventada, é interpolação de dois passos já
+   aprovados, e nenhum token existente da marca muda. */
+:root {
+  --dss-hc-hub-mid: #5e2a0e; /* 11.58:1 com branco — entre hub-900 e hub-950 */
+}
+
+/* ===========================================
+   HUB — laranja
+   base 900 (8.88) · hover mid (11.58) · deep 950 (14.88)
+   =========================================== */
+[data-brand=hub][data-theme=hc],
+[data-theme=hc] [data-brand=hub] {
+  --dss-action-primary-light: var(--dss-hub-50); /* 9.14:1 c/ texto escuro */
+  --dss-action-primary: var(--dss-hub-900); /* 8.88:1 c/ branco */
+  --dss-action-primary-hover: var(--dss-hc-hub-mid); /* 11.58:1 */
+  --dss-action-primary-deep: var(--dss-hub-950); /* 14.88:1 */
+  --dss-focus-primary: var(--dss-hub-900);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WATER — azul
+   base 700 (7.37) · hover 800 (9.02) · deep 900 (10.88)
+   =========================================== */
+[data-brand=water][data-theme=hc],
+[data-theme=hc] [data-brand=water] {
+  --dss-action-primary-light: var(--dss-water-50); /* 8.88:1 c/ texto escuro */
+  --dss-action-primary: var(--dss-water-700); /* 7.37:1 c/ branco */
+  --dss-action-primary-hover: var(--dss-water-800); /* 9.02:1 */
+  --dss-action-primary-deep: var(--dss-water-900); /* 10.88:1 */
+  --dss-focus-primary: var(--dss-water-700);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WASTE — verde
+   base 800 (8.14) · hover 900 (10.28) · deep 950 (15.50)
+   =========================================== */
+[data-brand=waste][data-theme=hc],
+[data-theme=hc] [data-brand=waste] {
+  --dss-action-primary-light: var(--dss-waste-50); /* 9.05:1 c/ texto escuro */
+  --dss-action-primary: var(--dss-waste-800); /* 8.14:1 c/ branco */
+  --dss-action-primary-hover: var(--dss-waste-900); /* 10.28:1 */
+  --dss-action-primary-deep: var(--dss-waste-950); /* 15.50:1 */
+  --dss-focus-primary: var(--dss-waste-800);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ==========================================================================
+   DSS - TEMA ALTO CONTRASTE ESCURO (`hcdark`)
+   ⚠️ SPIKE (ago/2026) — família de AÇÃO. Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+/**
+ * ROTA A da decisão §6.1: alto contraste é um VALOR de `data-theme`, não um eixo
+ * separado. Os quatro valores são `light` · `dark` · `hc` · `hcdark`.
+ *
+ * NEUTROS VÊM DE GRAÇA — não são duplicados aqui.
+ * `themes/dark/_colors.scss` declara `[data-theme="dark"], [data-theme="hcdark"]`,
+ * então superfícies, textos, bordas, sombras e input do dark valem igual no
+ * hcdark. Isso mata o principal custo que a rota A aparentava ter (replicar ~35
+ * tokens de neutro). E é medido: no dark os neutros JÁ estão em AAA — texto
+ * corpo 13.88:1, texto sutil 10.21:1 sobre a superfície. Não há o que endurecer.
+ *
+ * O que sobra para este arquivo é só o eixo de AÇÃO, que o tema dark não toca
+ * (`--dss-action-primary` é #1f86de igual no claro e no escuro).
+ *
+ * NOME SEM HÍFEN: `hcdark`, não `hc-dark` — a regex de escopo do wcag-kit é
+ * /^\[data-theme=(\w+)\]$/ e `\w` não casa `-`.
+ */
+[data-theme=hcdark] {
+  /* PRIMARY */
+  --dss-primary-light: var(--dss-hcdark-primary-light);
+  --dss-primary: var(--dss-hcdark-primary);
+  --dss-primary-focus: var(--dss-hcdark-primary-focus);
+  --dss-primary-hover: var(--dss-hcdark-primary-hover);
+  --dss-primary-deep: var(--dss-hcdark-primary-deep);
+  /* SECONDARY */
+  --dss-secondary-light: var(--dss-hcdark-secondary-light);
+  --dss-secondary: var(--dss-hcdark-secondary);
+  --dss-secondary-focus: var(--dss-hcdark-secondary-focus);
+  --dss-secondary-hover: var(--dss-hcdark-secondary-hover);
+  --dss-secondary-deep: var(--dss-hcdark-secondary-deep);
+  /* TERTIARY */
+  --dss-tertiary-light: var(--dss-hcdark-tertiary-light);
+  --dss-tertiary: var(--dss-hcdark-tertiary);
+  --dss-tertiary-focus: var(--dss-hcdark-tertiary-focus);
+  --dss-tertiary-hover: var(--dss-hcdark-tertiary-hover);
+  --dss-tertiary-deep: var(--dss-hcdark-tertiary-deep);
+  /* ACCENT */
+  --dss-accent-light: var(--dss-hcdark-accent-light);
+  --dss-accent: var(--dss-hcdark-accent);
+  --dss-accent-focus: var(--dss-hcdark-accent-focus);
+  --dss-accent-hover: var(--dss-hcdark-accent-hover);
+  --dss-accent-deep: var(--dss-hcdark-accent-deep);
+  /* DARK (a cor de ação cinza, não o tema) */
+  --dss-dark-light: var(--dss-hcdark-dark-light);
+  --dss-dark: var(--dss-hcdark-dark);
+  --dss-dark-focus: var(--dss-hcdark-dark-focus);
+  --dss-dark-hover: var(--dss-hcdark-dark-hover);
+  --dss-dark-deep: var(--dss-hcdark-dark-deep);
+  /* ===========================================
+     INVERSÃO DO TEXTO SOBRE A AÇÃO
+     No hcdark TODOS os fundos de ação são claros, então o texto por cima é
+     escuro — e como as 5 cores invertem JUNTAS, o token único acerta todas.
+
+     Era este o gargalo da decisão §6.11 (existe um só --dss-text-on-primary,
+     usado sobre todas as cores). Cobrir a família INTEIRA o dissolve aqui
+     dentro: um único valor serve porque não há mistura de fundos claros e
+     escuros no mesmo tema. O gargalo continua de pé para o c1 no DEFAULT, onde
+     a proposta é escurecer o texto só sobre feedback — aí sim as cores
+     divergiriam e o token precisaria ser quebrado por cor.
+     =========================================== */
+  --dss-text-on-primary: var(--dss-text-inverse); /* #0a0a0a no dark */
+}
+
+/* ==========================================================================
+   DSS - ALTO CONTRASTE × MARCA (tema escuro)
+   ⚠️ SPIKE (ago/2026). Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+/**
+ * Mesma mecânica de `themes/hc/_brands.scss`, com o papel INVERTIDO: sobre a
+ * superfície escura (#262626) o fundo de ação é CLARO e o texto por cima é
+ * escuro. Por isso os passos escolhidos vêm da ponta clara da escala (400→100),
+ * não da escura.
+ *
+ * AQUI NÃO HÁ NENHUMA COR NOVA — as três marcas têm passos claros de sobra
+ * (5, 4 e 5 passos acima de 7:1). A escassez do Hub existia só no tema claro.
+ *
+ * TEXTO SOBRE A AÇÃO
+ * `themes/hcdark/_colors.scss` já define `--dss-text-on-primary` como
+ * `--dss-text-inverse` (#0a0a0a) e esse valor é HERDADO por estes elementos —
+ * não precisa ser repetido aqui. Vale porque as marcas invertem junto com as
+ * cores default: não há mistura de fundo claro e escuro no mesmo tema.
+ */
+/* ===========================================
+   HUB — laranja
+   base 400 (7.79) · hover 300 (10.02) · deep 200 (11.99)
+   =========================================== */
+[data-brand=hub][data-theme=hcdark],
+[data-theme=hcdark] [data-brand=hub] {
+  --dss-action-primary-light: var(--dss-hub-950); /* 13.65:1 c/ texto claro */
+  --dss-action-primary: var(--dss-hub-400); /* 7.79:1 vs superfície */
+  --dss-action-primary-hover: var(--dss-hub-300); /* 10.02:1 */
+  --dss-action-primary-deep: var(--dss-hub-200); /* 11.99:1 */
+  --dss-focus-primary: var(--dss-hub-400);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WATER — azul
+   base 300 (8.05) · hover 200 (10.78) · deep 100 (12.85)
+   =========================================== */
+[data-brand=water][data-theme=hcdark],
+[data-theme=hcdark] [data-brand=water] {
+  --dss-action-primary-light: var(--dss-water-950); /* 13.79:1 c/ texto claro */
+  --dss-action-primary: var(--dss-water-300); /* 8.05:1 vs superfície */
+  --dss-action-primary-hover: var(--dss-water-200); /* 10.78:1 */
+  --dss-action-primary-deep: var(--dss-water-100); /* 12.85:1 */
+  --dss-focus-primary: var(--dss-water-300);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WASTE — verde
+   base 400 (7.29) · hover 300 (9.46) · deep 200 (11.49)
+   =========================================== */
+[data-brand=waste][data-theme=hcdark],
+[data-theme=hcdark] [data-brand=waste] {
+  --dss-action-primary-light: var(--dss-waste-950); /* 14.21:1 c/ texto claro */
+  --dss-action-primary: var(--dss-waste-400); /* 7.29:1 vs superfície */
+  --dss-action-primary-hover: var(--dss-waste-300); /* 9.46:1 */
+  --dss-action-primary-deep: var(--dss-waste-200); /* 11.49:1 */
+  --dss-focus-primary: var(--dss-waste-400);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
 }
 /* END:DSS-TOKENS-AUTO-GENERATED */
 

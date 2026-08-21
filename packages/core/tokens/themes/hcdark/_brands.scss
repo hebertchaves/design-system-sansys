@@ -1,0 +1,65 @@
+/* ==========================================================================
+   DSS - ALTO CONTRASTE × MARCA (tema escuro)
+   ⚠️ SPIKE (ago/2026). Ver docs/governance/DSS_ALTO_CONTRASTE_SPIKE.md
+   ========================================================================== */
+
+/**
+ * Mesma mecânica de `themes/hc/_brands.scss`, com o papel INVERTIDO: sobre a
+ * superfície escura (#262626) o fundo de ação é CLARO e o texto por cima é
+ * escuro. Por isso os passos escolhidos vêm da ponta clara da escala (400→100),
+ * não da escura.
+ *
+ * AQUI NÃO HÁ NENHUMA COR NOVA — as três marcas têm passos claros de sobra
+ * (5, 4 e 5 passos acima de 7:1). A escassez do Hub existia só no tema claro.
+ *
+ * TEXTO SOBRE A AÇÃO
+ * `themes/hcdark/_colors.scss` já define `--dss-text-on-primary` como
+ * `--dss-text-inverse` (#0a0a0a) e esse valor é HERDADO por estes elementos —
+ * não precisa ser repetido aqui. Vale porque as marcas invertem junto com as
+ * cores default: não há mistura de fundo claro e escuro no mesmo tema.
+ */
+
+/* ===========================================
+   HUB — laranja
+   base 400 (7.79) · hover 300 (10.02) · deep 200 (11.99)
+   =========================================== */
+[data-brand="hub"][data-theme="hcdark"],
+[data-theme="hcdark"] [data-brand="hub"] {
+  --dss-action-primary-light: var(--dss-hub-950);  /* 13.65:1 c/ texto claro */
+  --dss-action-primary:       var(--dss-hub-400);  /* 7.79:1 vs superfície */
+  --dss-action-primary-hover: var(--dss-hub-300);  /* 10.02:1 */
+  --dss-action-primary-deep:  var(--dss-hub-200);  /* 11.99:1 */
+
+  --dss-focus-primary: var(--dss-hub-400);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WATER — azul
+   base 300 (8.05) · hover 200 (10.78) · deep 100 (12.85)
+   =========================================== */
+[data-brand="water"][data-theme="hcdark"],
+[data-theme="hcdark"] [data-brand="water"] {
+  --dss-action-primary-light: var(--dss-water-950); /* 13.79:1 c/ texto claro */
+  --dss-action-primary:       var(--dss-water-300); /* 8.05:1 vs superfície */
+  --dss-action-primary-hover: var(--dss-water-200); /* 10.78:1 */
+  --dss-action-primary-deep:  var(--dss-water-100); /* 12.85:1 */
+
+  --dss-focus-primary: var(--dss-water-300);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
+
+/* ===========================================
+   WASTE — verde
+   base 400 (7.29) · hover 300 (9.46) · deep 200 (11.49)
+   =========================================== */
+[data-brand="waste"][data-theme="hcdark"],
+[data-theme="hcdark"] [data-brand="waste"] {
+  --dss-action-primary-light: var(--dss-waste-950); /* 14.21:1 c/ texto claro */
+  --dss-action-primary:       var(--dss-waste-400); /* 7.29:1 vs superfície */
+  --dss-action-primary-hover: var(--dss-waste-300); /* 9.46:1 */
+  --dss-action-primary-deep:  var(--dss-waste-200); /* 11.49:1 */
+
+  --dss-focus-primary: var(--dss-waste-400);
+  --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
+}
