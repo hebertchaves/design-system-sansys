@@ -580,7 +580,7 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-gray-300",
+          "token": "--dss-border-default",
           "value": null,
           "source": "3-variants/_outlined.scss"
         },
@@ -726,7 +726,7 @@
       "hover": [
         {
           "property": "border-color",
-          "token": "--dss-gray-600",
+          "token": "--dss-border-strong-hover",
           "value": null,
           "source": "3-variants/_outlined.scss"
         },
@@ -880,7 +880,7 @@
       "active": [
         {
           "property": "border-color",
-          "token": "--dss-gray-700",
+          "token": "--dss-border-strong-hover",
           "value": null,
           "source": "3-variants/_outlined.scss"
         },
@@ -1086,10 +1086,9 @@
         ]
       },
       {
-        "name": "--dss-gray-300",
+        "name": "--dss-border-default",
         "usedIn": [
-          "default",
-          "active"
+          "default"
         ]
       },
       {
@@ -1131,9 +1130,10 @@
         ]
       },
       {
-        "name": "--dss-gray-600",
+        "name": "--dss-border-strong-hover",
         "usedIn": [
-          "hover"
+          "hover",
+          "active"
         ]
       },
       {
@@ -1181,7 +1181,7 @@
         ]
       },
       {
-        "name": "--dss-gray-700",
+        "name": "--dss-gray-300",
         "usedIn": [
           "active"
         ]

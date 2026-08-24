@@ -22,7 +22,7 @@
   /* Hover */
   &:not(.dss-textarea--disabled):not(.dss-textarea--readonly):not(.dss-textarea--focused):hover {
     .q-field__control {
-      border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-300);
+      border-bottom: var(--dss-border-width-thin) solid var(--dss-border-default);
     }
   }
 
@@ -48,11 +48,11 @@
 
   /* Disabled state */
   &.dss-textarea--disabled .q-field__control {
-    border-bottom: var(--dss-border-width-thin) dotted var(--dss-gray-400);
+    border-bottom: var(--dss-border-width-thin) dotted var(--dss-border-strong);
   }
 
   /* Readonly state */
   &.dss-textarea--readonly .q-field__control {
-    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   }
 }

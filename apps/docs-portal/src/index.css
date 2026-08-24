@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-21. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-24. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -264,6 +264,54 @@
    Suporte para TODAS as cores disponíveis
    ========================================================================== */
 :root {
+  /* ===========================================
+     0. CORES DE BORDA NEUTRA (semânticas, por PAPEL)
+     =========================================== */
+  /**
+   * ⚠️ ESTA FAMÍLIA NÃO EXISTIA NO TEMA CLARO (corrigido ago/2026).
+   *
+   * `--dss-border-{default,subtle,strong,disabled}` eram definidos SÓ dentro de
+   * `themes/dark/_colors.scss`. No claro resolviam para vazio — `.dss-item--divider`
+   * ficava sem borda nenhuma. E, como não havia semântico para usar, todo
+   * componente caiu no primitivo: ~131 usos de `var(--dss-gray-*)` em propriedades
+   * de borda, inertes a qualquer tema. O comentário do `DssInput/_outlined.scss`
+   * ainda registra a intenção que não pôde ser cumprida: "border-color via token
+   * semântico de borda neutra" — seguido de um `var(--dss-gray-400)`.
+   *
+   * OS PAPÉIS (o nome diz para que serve, não quão escuro é)
+   *
+   *   -subtle    divisor discreto. DECORATIVO — isento de 1.4.11.
+   *   -default   borda neutra de uso geral (divisores, separadores estruturais).
+   *              Também decorativa; não é a afordância de um controle.
+   *   -strong    ⭐ CONTORNO DE CONTROLE. É a borda que IDENTIFICA um campo,
+   *              logo precisa de 3:1 (WCAG 1.4.11). Use esta em input, select,
+   *              textarea, checkbox — em tudo que o usuário opera.
+   *   -disabled  controle desabilitado. Isento de 1.4.11.
+   *
+   * POR QUE `-strong` E NÃO `-default` PARA O CONTROLE
+   * O mesmo token precisa significar a mesma coisa nos dois temas. `-strong` já
+   * era o nível conforme no dark (gray-500 = 6.00:1); no claro, gray-600 dá
+   * 4.74:1. Os dois passam com folga, então `-strong` é o token de controle em
+   * light E dark — e o tema escuro não precisou de nenhuma alteração.
+   *
+   * O PESO VISUAL NÃO ACOMPANHA O NÚMERO DO PASSO
+   * `-default` é gray-300 no claro e gray-600 no escuro. Parece incoerente, mas
+   * é o contrário: o mesmo cinza tem peso oposto conforme a superfície. O que se
+   * mantém constante é o PAPEL (linha discreta), não o passo.
+   */
+  --dss-border-subtle: var(--dss-gray-200); /* #f5f5f5 · 1.09:1 — decorativo, isento */
+  --dss-border-default: var(--dss-gray-300); /* #e5e5e5 · 1.26:1 — decorativo, isento */
+  --dss-border-strong: var(--dss-gray-600); /* #737373 · 4.74:1 ✅ contorno de controle */
+  /* ⚠️ NÃO existe `--dss-border-disabled` COR aqui, de propósito. Esse nome já
+     está ocupado na linha ~189 por um SHORTHAND (`1px solid …`), e o tema dark
+     o define como COR — dois tipos sob um nome só, colisão que antecede esta
+     mudança. Como tem zero consumidores, não agravo: para borda de desabilitado
+     use `--dss-border-default` (mesmo valor, gray-300, e isento de 1.4.11).
+     Resolver a colisão é item à parte. */
+  /* Hover do contorno de controle. Existe porque `-strong` subiu de gray-400
+     para gray-600: o hover, que era gray-600, passaria a ser idêntico ao
+     repouso e o estado sumiria. Um degrau acima mantém a diferenciação. */
+  --dss-border-strong-hover: var(--dss-gray-700); /* #525252 · 7.44:1 ✅ */
   /* ===========================================
      1. BORDAS NEUTRAS (ESCALA DE CINZA COMPLETA)
      =========================================== */
@@ -2799,9 +2847,12 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      BORDERS
      Inverter de claro (gray-300) para médio (gray-600)
      =========================================== */
-  --dss-border-default: var(--dss-gray-600); /* #737373 */
-  --dss-border-subtle: var(--dss-gray-700); /* #525252 */
-  --dss-border-strong: var(--dss-gray-500); /* #a3a3a3 */
+  --dss-border-default: var(--dss-gray-600); /* #737373 · 3.19:1 */
+  --dss-border-subtle: var(--dss-gray-700); /* #525252 · 1.94:1 — decorativo */
+  --dss-border-strong: var(--dss-gray-500); /* #a3a3a3 · 6.00:1 ✅ contorno de controle */
+  /* Hover do contorno de controle. No escuro a ênfase sobe CLAREANDO — o
+     valor do claro (gray-700) daria 1.94:1 aqui, mais fraco que o repouso. */
+  --dss-border-strong-hover: var(--dss-gray-400); /* #d4d4d4 · 9.32:1 ✅ */
   --dss-border-disabled: var(--dss-gray-700); /* #525252 */
   /* ===========================================
      ACTIONS - MANTÉM CORES ORIGINAIS

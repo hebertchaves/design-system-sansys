@@ -16,7 +16,7 @@
 
   .q-field__control {
     background-color: transparent;
-    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border: var(--dss-border-width-thin) solid var(--dss-border-strong);
     border-radius: var(--dss-radius-sm);
     /* Padding vertical = 0 (mesmo princípio do DssInput): o spacing-3 vertical
        estourava a altura do q-field. A altura vem do control-container/native +
@@ -27,7 +27,7 @@
   /* Hover (não desabilitado, não readonly, não focado) */
   &:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover {
     .q-field__control {
-      border-color: var(--dss-gray-600);
+      border-color: var(--dss-border-strong-hover);
     }
   }
 
@@ -64,7 +64,7 @@
 
   /* Readonly state */
   &.dss-select--readonly .q-field__control {
-    border-color: var(--dss-gray-300);
+    border-color: var(--dss-border-default);
   }
 
   /* Label SEM fundo (notch) por padrão. A label flutuante fica DENTRO do campo

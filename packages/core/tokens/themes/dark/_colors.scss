@@ -62,9 +62,13 @@
      Inverter de claro (gray-300) para médio (gray-600)
      =========================================== */
 
-  --dss-border-default: var(--dss-gray-600);       /* #737373 */
-  --dss-border-subtle: var(--dss-gray-700);        /* #525252 */
-  --dss-border-strong: var(--dss-gray-500);        /* #a3a3a3 */
+  --dss-border-default: var(--dss-gray-600);       /* #737373 · 3.19:1 */
+  --dss-border-subtle: var(--dss-gray-700);        /* #525252 · 1.94:1 — decorativo */
+  --dss-border-strong: var(--dss-gray-500);        /* #a3a3a3 · 6.00:1 ✅ contorno de controle */
+
+  /* Hover do contorno de controle. No escuro a ênfase sobe CLAREANDO — o
+     valor do claro (gray-700) daria 1.94:1 aqui, mais fraco que o repouso. */
+  --dss-border-strong-hover: var(--dss-gray-400);  /* #d4d4d4 · 9.32:1 ✅ */
   --dss-border-disabled: var(--dss-gray-700);      /* #525252 */
 
   /* ===========================================

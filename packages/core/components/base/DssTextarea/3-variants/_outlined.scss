@@ -17,7 +17,7 @@
 
   .q-field__control {
     background-color: transparent;
-    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border: var(--dss-border-width-thin) solid var(--dss-border-strong);
     border-radius: var(--dss-radius-sm);
     padding: 0 var(--dss-spacing-4); /* vertical 0: reserva da label flutuante vem do control-container */
   }
@@ -25,7 +25,7 @@
   /* Hover (não desabilitado, não readonly, não focado) */
   &:not(.dss-textarea--disabled):not(.dss-textarea--readonly):not(.dss-textarea--focused):hover {
     .q-field__control {
-      border-color: var(--dss-gray-600);
+      border-color: var(--dss-border-strong-hover);
     }
   }
 
@@ -63,7 +63,7 @@
 
   /* Readonly state */
   &.dss-textarea--readonly .q-field__control {
-    border-color: var(--dss-gray-300);
+    border-color: var(--dss-border-default);
   }
 
   /* Label SEM fundo (sem "notch"): mesma decisão do DssInput/DssSelect — o fundo

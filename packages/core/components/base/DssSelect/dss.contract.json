@@ -631,7 +631,7 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-gray-300",
+          "token": "--dss-border-default",
           "value": null,
           "source": "3-variants/_outlined.scss"
         },
@@ -721,7 +721,7 @@
         },
         {
           "property": "border-bottom-color",
-          "token": "--dss-gray-200",
+          "token": "--dss-border-subtle",
           "value": null,
           "source": "3-variants/_borderless.scss"
         },
@@ -849,13 +849,13 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-gray-600",
+          "token": "--dss-border-strong-hover",
           "value": null,
           "source": "3-variants/_outlined.scss"
         },
         {
           "property": "border-bottom-color",
-          "token": "--dss-gray-600",
+          "token": "--dss-border-strong-hover",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -867,7 +867,7 @@
         },
         {
           "property": "border-bottom-color",
-          "token": "--dss-gray-300",
+          "token": "--dss-border-default",
           "value": null,
           "source": "3-variants/_borderless.scss"
         }
@@ -1271,7 +1271,7 @@
         ]
       },
       {
-        "name": "--dss-gray-300",
+        "name": "--dss-border-default",
         "usedIn": [
           "default",
           "hover"
@@ -1308,7 +1308,7 @@
         ]
       },
       {
-        "name": "--dss-gray-200",
+        "name": "--dss-border-subtle",
         "usedIn": [
           "default"
         ]
@@ -1361,7 +1361,7 @@
         ]
       },
       {
-        "name": "--dss-gray-600",
+        "name": "--dss-border-strong-hover",
         "usedIn": [
           "hover"
         ]

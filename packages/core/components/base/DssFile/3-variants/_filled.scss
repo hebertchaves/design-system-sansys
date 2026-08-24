@@ -11,7 +11,7 @@
   .dss-file__field {
     background-color: var(--dss-surface-subtle);
     border: none;
-    border-bottom: var(--dss-border-width-md) solid var(--dss-gray-400);
+    border-bottom: var(--dss-border-width-md) solid var(--dss-border-strong);
     border-radius: var(--dss-radius-sm) var(--dss-radius-sm) 0 0;
   }
 
@@ -55,6 +55,6 @@
   &.dss-file--readonly .dss-file__field {
     background-color: var(--dss-gray-50);
     border-bottom-style: dashed;
-    border-bottom-color: var(--dss-gray-300);
+    border-bottom-color: var(--dss-border-default);
   }
 }

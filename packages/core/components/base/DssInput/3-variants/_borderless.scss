@@ -26,7 +26,7 @@
 
   /* Active state */
   &:not(.dss-input--disabled):not(.dss-input--readonly):active .dss-input__field {
-    border-bottom-color: var(--dss-gray-500);
+    border-bottom-color: var(--dss-border-strong-hover);
   }
 
   /* Error state */
@@ -38,7 +38,7 @@
   /* Disabled state */
   &.dss-input--disabled .dss-input__field {
     border-bottom-style: dotted;
-    border-bottom-color: var(--dss-gray-300);
+    border-bottom-color: var(--dss-border-default);
   }
 
   /* Readonly state - completamente sem bordas */
@@ -48,7 +48,7 @@
 
   /* Hover (not disabled/readonly/focused) */
   &:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
-    border-bottom-color: var(--dss-gray-400);
+    border-bottom-color: var(--dss-border-strong);
   }
 
   /* Mantém o padding horizontal do base (`padding: 0 spacing-4`): mesmo sem

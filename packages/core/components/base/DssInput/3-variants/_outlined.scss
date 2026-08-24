@@ -14,7 +14,7 @@
   .dss-input__field {
     background-color: transparent;
     /* DSS Visual Standard: border-color via token semântico de borda neutra */
-    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border: var(--dss-border-width-thin) solid var(--dss-border-strong);
     /* DSS Visual Standard: radius-sm (4px) — cantos mais sóbrios (ref. Figma Make) */
     border-radius: var(--dss-radius-sm);
   }
@@ -59,13 +59,13 @@
 
   /* Readonly state */
   &.dss-input--readonly .dss-input__field {
-    border-color: var(--dss-gray-300);
+    border-color: var(--dss-border-default);
     background-color: var(--dss-surface-subtle);
   }
 
   /* Hover (not disabled/readonly/focused) */
   &:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
-    border-color: var(--dss-gray-600);
+    border-color: var(--dss-border-strong-hover);
   }
 
   /* Label flutuante SEM fundo (notch). A label fica DENTRO do campo (top:

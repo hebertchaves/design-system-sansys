@@ -8,13 +8,13 @@
 .dss-field--outlined {
   .dss-field__field {
     background-color: transparent;
-    border: var(--dss-border-width-thin) solid var(--dss-gray-400);
+    border: var(--dss-border-width-thin) solid var(--dss-border-strong);
     border-radius: var(--dss-radius-sm);
   }
 
   /* Hover (sem disabled/readonly/focused) */
   &:not(.dss-field--disabled):not(.dss-field--readonly):not(.dss-field--focused):hover .dss-field__field {
-    border-color: var(--dss-gray-600);
+    border-color: var(--dss-border-strong-hover);
   }
 
   /* Focus — indicador ÚNICO: borda 2px primary. SEM box-shadow (o anel de 1px
@@ -30,7 +30,7 @@
 
   /* Active (pressionado) */
   &:not(.dss-field--disabled):not(.dss-field--readonly):active .dss-field__field {
-    border-color: var(--dss-gray-700);
+    border-color: var(--dss-border-strong-hover);
   }
 
   /* Error — indicador único: borda 2px error, sem box-shadow (mesma razão do foco) */
@@ -51,7 +51,7 @@
 
   /* Readonly */
   &.dss-field--readonly .dss-field__field {
-    border-color: var(--dss-gray-300);
+    border-color: var(--dss-border-default);
   }
 
   /* Notch para label flutuante (fundo atrás do texto do label) */

@@ -21,7 +21,7 @@
   /* Hover */
   &:not(.dss-select--disabled):not(.dss-select--readonly):not(.dss-select--focused):hover {
     .q-field__control {
-      border-bottom-color: var(--dss-gray-300);
+      border-bottom-color: var(--dss-border-default);
     }
   }
 
@@ -47,6 +47,6 @@
 
   /* Readonly state */
   &.dss-select--readonly .q-field__control {
-    border-bottom-color: var(--dss-gray-200);
+    border-bottom-color: var(--dss-border-subtle);
   }
 }
