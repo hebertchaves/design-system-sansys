@@ -185,6 +185,27 @@
     runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
     `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.
 
+- 🔴 **O DSS não tem resposta para ESTADO VAZIO — vazio nas duas pontas** (achado 2026-08-24, ao
+  esboçar o join spec↔contrato). Independente do join: existe hoje.
+  - **Lado da spec:** `estado_dado.vazio` aparece **0 vez em 3 de 3** specs medidas — é uma das 5
+    lacunas bloqueantes que o portão de prontidão reporta.
+  - **Lado do DSS:** **não existe componente `DssEmpty*`**. A palavra `empty` aparece como **slot**
+    em exatamente **um** componente (`DssVirtualScroll`) — ou seja, o conteúdo é responsabilidade do
+    consumidor, e **cada tela inventa o seu**.
+  - **Por que importa mais do que parece:** o portão cobra da spec algo que o design system não sabe
+    entregar. Enquanto isso valer, preencher o campo na spec não tem para onde apontar — e o
+    consumidor vai reinventar, que é exatamente o retrabalho que a apresentação à diretoria nomeia.
+  - 🔲 **Decidir:** nasce um primitivo (`DssEmptyState`, com ilustração/título/ação opcionais), ou
+    declara-se uma **convenção de composição** que conta como resposta. As duas servem ao join; a
+    primeira serve também a quem constrói tela hoje.
+  📖 Detalhe e tabela do cruzamento: [`DSS_JOIN_SPEC_CONTRATO.md`](DSS_JOIN_SPEC_CONTRATO.md).
+
+- 🟡 **Cobertura baixa de props que o join exigiria** (mesmo esboço, medido no catálogo de
+  contratos): `required` existe em **4** componentes (Input, Select, Textarea, File) e
+  `indeterminateValue` em **1** (DssCheckbox). Não é defeito — é sinal de que, quando o join
+  existir, parte das reprovações será por **falta de peça no DSS**, não por erro de composição.
+  A mensagem de reprovação precisa distinguir os dois casos, senão vira frustração com a ferramenta.
+
 - 🔴 **`.dss-item--divider` SEM BORDA no tema claro** (achado 2026-08-17 pela checagem nova do gate).
   `--dss-border-default` só é definido em `[data-theme="dark"]`; no light a única ocorrência está
   **dentro de um bloco de comentário** que documenta um tema futuro (`light-high-contrast`). Logo o
