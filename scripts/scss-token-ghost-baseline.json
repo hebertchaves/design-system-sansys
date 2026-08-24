@@ -34,7 +34,6 @@
     ],
     "condicional": [
       "--dss-border-brand-primary",
-      "--dss-border-default",
       "--dss-brand-primary"
     ]
   }
