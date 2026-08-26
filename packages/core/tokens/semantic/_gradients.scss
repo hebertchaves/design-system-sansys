@@ -11,7 +11,11 @@
    ✅ USAR NO COMPONENTE: background: var(--dss-gradient-primary-vertical);
    ========================================================================== */
 
-:root {
+@use 'scopes' as scopes;
+
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* ===========================================
      1. GRADIENTES NEUTROS
      =========================================== */

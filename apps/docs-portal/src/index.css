@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-24. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-26. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -153,7 +153,9 @@
    DSS - TOKENS DE AÇÃO
    ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
    ========================================================================== */
-:root {
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Primary Action - Azul (#1F86DE) */
   --dss-action-primary: var(--dss-primary);
   --dss-action-primary-light: var(--dss-primary-light);
@@ -202,10 +204,16 @@
 }
 
 /* ==========================================================================
+   DSS - TOKENS DE AÇÃO
+   ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
+   ========================================================================== */
+/* ==========================================================================
    DSS - TOKENS DE TEXTO
    Hierarquia tipográfica - SISTEMA PRÓPRIO
    ========================================================================== */
-:root {
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Text Hierarchy */
   --dss-text-primary: var(--dss-dark); /* #454545 - Alias semântico de --dss-text-body */
   --dss-text-secondary: var(--dss-gray-600); /* #737373 - Texto secundário (~4.7:1, WCAG AA). Antes #B0B0B0 reprovava (~2.6:1) */
@@ -638,7 +646,13 @@
 }
 
 /* 3. Tokens de acessibilidade (Guia de Acessibilidade DSS) */
-:root {
+/* ==========================================================================
+   DSS - TOKENS DE AÇÃO
+   ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
+   ========================================================================== */
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Dimensões do Focus Ring */
   --dss-focus-ring-width: 3px;
   --dss-focus-ring-offset: 2px;
@@ -648,7 +662,9 @@
   --dss-focus-easing: ease-in-out;
 }
 
-:root {
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Primary Focus (Ações principais - Azul) — 5.43:1 vs branco */
   --dss-focus-primary: var(--dss-primary-focus);
   /* Secondary Focus (Ações secundárias - Verde/Turquesa) — 3.42:1 */
@@ -659,7 +675,9 @@
   --dss-focus-accent: var(--dss-accent-focus);
 }
 
-:root {
+/* Escopos: alem de :root, os temas que re-apontam PRIMITIVOS — sem isso o anel
+   de foco nao recomputa em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Success/Positive Focus (Ações positivas - Verde) — -deep, 6.94:1 */
   --dss-focus-success: var(--dss-positive-deep);
   --dss-focus-positive: var(--dss-focus-success);
@@ -672,7 +690,9 @@
   --dss-focus-info: var(--dss-info-deep);
 }
 
-:root {
+/* Escopos: alem de :root, os temas que re-apontam PRIMITIVOS — sem isso o anel
+   de foco nao recomputa em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Light Focus (Para fundos ESCUROS — 15.13:1 sobre surface dark) */
   --dss-focus-light: var(--dss-gray-50);
   /* Dark Focus (Para fundos CLAROS — 10.7:1 vs branco) */
@@ -750,7 +770,9 @@
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 }
 
-:root {
+/* Escopos: idem — o shadow composto embute var(--dss-focus-primary), que
+   tambem precisa recomputar no elemento do tema. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Primary Focus Shadow */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
   /* Secondary Focus Shadow */
@@ -773,7 +795,9 @@
   --dss-focus-shadow-dark: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-dark);
 }
 
-:root {
+/* Escopos: idem — o shadow composto embute var(--dss-focus-primary), que
+   tambem precisa recomputar no elemento do tema. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* Focus Ring com Offset (espaço entre elemento e anel) */
   --dss-focus-shadow-primary-offset: 0 0 0 var(--dss-focus-ring-offset) transparent,
                                        0 0 0 calc(var(--dss-focus-ring-offset) + var(--dss-focus-ring-width)) var(--dss-focus-primary);
@@ -2264,6 +2288,10 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
 */
 /* Sistema de responsividade */
 /* ==========================================================================
+   DSS - TOKENS DE AÇÃO
+   ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
+   ========================================================================== */
+/* ==========================================================================
    DSS - TOKENS DE GRADIENTE
    Gradientes pré-definidos para uso consistente
 
@@ -2275,7 +2303,9 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
    ✅ CRIAR: --dss-gradient-primary-vertical
    ✅ USAR NO COMPONENTE: background: var(--dss-gradient-primary-vertical);
    ========================================================================== */
-:root {
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* ===========================================
      1. GRADIENTES NEUTROS
      =========================================== */

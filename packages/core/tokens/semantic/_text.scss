@@ -3,7 +3,11 @@
    Hierarquia tipográfica - SISTEMA PRÓPRIO
    ========================================================================== */
 
-:root {
+@use 'scopes' as scopes;
+
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Text Hierarchy */
   --dss-text-primary: var(--dss-dark);            /* #454545 - Alias semântico de --dss-text-body */
   --dss-text-secondary: var(--dss-gray-600);      /* #737373 - Texto secundário (~4.7:1, WCAG AA). Antes #B0B0B0 reprovava (~2.6:1) */

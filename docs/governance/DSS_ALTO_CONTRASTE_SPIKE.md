@@ -337,22 +337,34 @@ Por isso o re-apontamento do primitivo não alcançava a marca: `{theme:'hc', br
 
 Verificado **no browser**, na cascata real: **32 células (2 temas × 4 contextos × 4 níveis), todas AAA, zero falhas.**
 
-#### 5.2.2 🔴 O re-apontamento do primitivo NÃO funciona em contexto aninhado
+#### 5.2.2 ✅ RESOLVIDO — contexto aninhado
 
-Descoberto ao desenhar os blocos de marca, e confirmado no browser:
+Custom property substitui seu `var()` no elemento **onde é declarada**. `--dss-action-primary: var(--dss-primary)` é declarada em `:root` e computa ali; um `[data-theme="hc"]` mais abaixo redefine o primitivo tarde demais — o semântico já virou valor fixo e só é herdado.
+
+Medido no browser, antes da correção:
 
 | `data-theme="hc"` em… | `--dss-primary` | `--dss-action-primary` |
 |---|---|---|
-| `<html>` (mesmo elemento que `:root`) | `#155994` | **`#155994` ✅** |
-| uma `<section>` aninhada | `#155994` | **`#1f86de` ❌ não pega** |
+| `<html>` | `#155994` | **`#155994` ✅** |
+| uma `<section>` aninhada | `#155994` | **`#1f86de` ❌** |
 
-**Causa:** custom property substitui seu `var()` no elemento **onde é declarada**. `--dss-action-primary: var(--dss-primary)` é declarada em `:root` e computa ali; um `[data-theme="hc"]` mais abaixo redefine o primitivo tarde demais — o semântico já foi calculado e só é herdado.
+**Não era hipótese.** O repo usa `data-theme` aninhado em **5 lugares**, e todos são superfícies de preview — `DssMarkupTable.example.vue`, `DssCadrisCard.example.vue`, `TestButton.vue`, `TestDefaultPreview.vue`, `PlaygroundLayout.vue`. Ou seja: era exatamente **onde alguém tentaria o HC pela primeira vez** que ele não funcionaria — e falharia em silêncio, parecendo que o tema não fez nada.
 
-**Consequências práticas:**
+**A correção:** `tokens/semantic/_scopes.scss` define a lista de escopos onde a camada semântica precisa ser recomputada, e os blocos dependentes passam a casar também neles:
 
-- Os blocos de marca **precisam** re-apontar o semântico (é o que fazem) — e por isso funcionam aninhados.
-- O tema `hc` só vale com `data-theme` **na raiz**. É como o DSS já opera (`PreviewSubject.vue` põe no `<html>`), mas é uma restrição não escrita até agora.
-- ⚠️ Há precedente de uso aninhado no repo: `DssMarkupTable.example.vue` usa `<section data-theme="dark">`. O dark funciona ali porque sobrescreve o **semântico**; o `hc`, não. Se uso aninhado for requisito, o tema HC precisa migrar para re-apontamento semântico — o que reintroduz o custo de enumerar as cinco famílias (§2.1).
+```scss
+$primitivos: ':root, [data-theme="hc"], [data-theme="hcdark"]';
+```
+
+A alternativa era repetir as **76 declarações dependentes** dentro de cada bloco de tema (~152 linhas), com o risco de esquecer uma e produzir inconsistência que só aparece aninhada. Assim a expressão continua num lugar só.
+
+Aplicado a `_actions.scss`, `_text.scss`, `_gradients.scss` e a 5 blocos de `accessibility/_focus.scss` (incluindo os shadows compostos, que embutem `var(--dss-focus-primary)` e têm o mesmo problema — é por isso que os blocos de marca já os redeclaravam).
+
+**Não vale para o `dark`:** ele sobrescreve os semânticos direto, então sempre funcionou aninhado. É por isso que ninguém tinha esbarrado nisso.
+
+Verificado no browser: com o tema aninhado, os 8 tokens medidos ficam **idênticos** ao caso raiz, e o default segue intocado.
+
+> ⚠️ **Ao criar um tema novo que re-aponte primitivos, acrescente-o a `$primitivos`.** Temas que sobrescrevem só semânticos não entram. Fica registrado como armadilha de manutenção — hoje sem gate.
 
 ### 5.3 ✅ CORRIGIDO — `--dss-focus-primary` não resolvia no tema default (bug do wcag-kit)
 
@@ -493,7 +505,7 @@ Esse é o motivo de a paleta usar **prefixo** (`--dss-hc-primary`) e não sufixo
 5. **O bloco B (284 cinzas) entra nesta onda ou vira frente própria?**
 6. **Relação com `forced-colors`** (§5.10) **e com o `@media (prefers-contrast)` que já existe** (§5.3). A migração `high`→`more` **não é urgente**: a correção já cobre os dois. Só remover o `high` depende de verificação em máquina real.
 7. ~~**Anel de foco default a 2.19:1**~~ — ✅ **resolvido** em `da5b83e` (opaco, §5.5).
-8. **🔴 NOVO — uso aninhado de `data-theme` é suportado?** (§5.2.2) O tema `hc` só funciona com o atributo na raiz. O dark funciona aninhado e há exemplo no repo usando assim. Se aninhado for requisito, o HC precisa migrar para re-apontamento semântico.
+8. ~~**Uso aninhado de `data-theme`**~~ — ✅ **resolvido** (§5.2.2): 5 usos aninhados no repo, todos em superfícies de preview. Corrigido via `semantic/_scopes.scss`, sem duplicar as 76 declarações dependentes.
 9. **Gate para cor congelada em `meta.json`** — `sync-token-values.js` só audita dimensão; cor não é verificada por gate nenhum (§5.2).
 10. ~~**Nenhum validador é at-rule-aware**~~ — ✅ **resolvido**: `wcag-kit` em `a525b3a`, `validate-scss-tokens.cjs` em `001140e` (§5.3.1).
 11. **🔴 `--dss-border-default` indefinido no tema claro** (§5.3.1). `.dss-item--divider` sem borda no light. Precisa de **decisão de design** (qual cinza) — a engenharia já está pronta.

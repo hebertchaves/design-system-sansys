@@ -3,7 +3,11 @@
    ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
    ========================================================================== */
 
-:root {
+@use 'scopes' as scopes;
+
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Primary Action - Azul (#1F86DE) */
   --dss-action-primary: var(--dss-primary);
   --dss-action-primary-light: var(--dss-primary-light);

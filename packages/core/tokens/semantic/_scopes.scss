@@ -1,0 +1,44 @@
+// ==========================================================================
+// DSS - ESCOPOS DE RECOMPUTAÇÃO DA CAMADA SEMÂNTICA
+// ==========================================================================
+//
+// NOTA: este arquivo usa comentário de LINHA (//) de propósito. Sass INTERPOLA
+// `#{…}` dentro de comentário CSS `/* */`, então o exemplo de uso lá embaixo
+// seria avaliado como código e quebraria a compilação.
+
+//
+// O PROBLEMA QUE ISTO RESOLVE
+//
+// Custom property substitui seu `var()` no elemento ONDE É DECLARADA, não onde
+// é usada. Então `--dss-action-primary: var(--dss-primary)`, declarada em
+// `:root`, computa ali — e um `[data-theme]` mais abaixo na árvore que redefina
+// `--dss-primary` chega tarde: o semântico já virou valor fixo e só é herdado.
+//
+// Medido no browser:
+//
+// data-theme="hc" no <html>        --dss-action-primary = #155994  ✅
+// data-theme="hc" numa <section>   --dss-action-primary = #1f86de  ❌
+//
+// Os temas que re-apontam PRIMITIVOS (`hc`, `hcdark`) precisam, portanto, que a
+// camada semântica seja RECOMPUTADA no elemento que carrega o atributo. É o que
+// esta lista faz: os blocos semânticos passam a casar também nesses escopos, e
+// a mesma expressão (`var(--dss-primary)`) resolve de novo, agora com o valor
+// do tema.
+//
+// Não vale para `dark`: ele sobrescreve os SEMÂNTICOS direto, então já funciona
+// aninhado — e é por isso que o dark nunca esbarrou nisso.
+//
+// POR QUE AQUI E NÃO DUPLICANDO NO TEMA
+// A alternativa era repetir as 76 declarações dependentes dentro de cada bloco
+// de tema (~152 linhas) — com o risco de esquecer uma e produzir inconsistência
+// silenciosa, que aparece só em contexto aninhado. Aqui a expressão continua
+// morando num lugar só.
+//
+// ⚠️ AO CRIAR UM TEMA NOVO que re-aponte primitivos, acrescente-o a esta lista.
+// Temas que sobrescrevem apenas semânticos NÃO entram.
+//
+// Uso: `@use '../scopes' as scopes;` e então
+// `#{scopes.$primitivos} { … }` no lugar de `:root { … }`.
+//
+
+$primitivos: ':root, [data-theme="hc"], [data-theme="hcdark"]';

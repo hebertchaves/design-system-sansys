@@ -1,3 +1,5 @@
+@use '../scopes' as scopes;
+
 // =============================================================================
 // DSS - Focus Tokens (WCAG 2.1 AA Compliance)
 // =============================================================================
@@ -22,7 +24,9 @@
 // NÃO reintroduzir alpha aqui. Se precisar de anel mais suave, use offset
 // (--dss-focus-shadow-*-offset), não transparência.
 
-:root {
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Dimensões do Focus Ring */
   --dss-focus-ring-width: 3px;           // WCAG recomenda mínimo 2px, usamos 3px
   --dss-focus-ring-offset: 2px;          // Espaço entre elemento e focus ring
@@ -37,7 +41,9 @@
 // FOCUS RING - Cores Semânticas (Light Mode)
 // -----------------------------------------------------------------------------
 
-:root {
+/* Escopos: alem de :root, tambem os temas que re-apontam PRIMITIVOS — sem isso
+   estes tokens nao recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Primary Focus (Ações principais - Azul) — 5.43:1 vs branco */
   --dss-focus-primary: var(--dss-primary-focus);
   //
@@ -70,7 +76,9 @@
 // · info-focus 2.52). Para estes três o anel usa o nível **-deep** da rampa, não
 // o -focus. É a mesma zona morta registrada em [[project_color_ramp_a11y]].
 
-:root {
+/* Escopos: alem de :root, os temas que re-apontam PRIMITIVOS — sem isso o anel
+   de foco nao recomputa em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Success/Positive Focus (Ações positivas - Verde) — -deep, 6.94:1 */
   --dss-focus-success: var(--dss-positive-deep);
   --dss-focus-positive: var(--dss-focus-success);      // alias
@@ -90,7 +98,9 @@
 // FOCUS RING - Cores Neutras (Light Mode)
 // -----------------------------------------------------------------------------
 
-:root {
+/* Escopos: alem de :root, os temas que re-apontam PRIMITIVOS — sem isso o anel
+   de foco nao recomputa em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Light Focus (Para fundos ESCUROS — 15.13:1 sobre surface dark) */
   --dss-focus-light: var(--dss-gray-50);
 
@@ -203,7 +213,9 @@
 // FOCUS RING - Tokens de Box Shadow (Compostos)
 // -----------------------------------------------------------------------------
 
-:root {
+/* Escopos: idem — o shadow composto embute var(--dss-focus-primary), que
+   tambem precisa recomputar no elemento do tema. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Primary Focus Shadow */
   --dss-focus-shadow-primary: 0 0 0 var(--dss-focus-ring-width) var(--dss-focus-primary);
 
@@ -239,7 +251,9 @@
 // FOCUS RING - Variantes com Offset
 // -----------------------------------------------------------------------------
 
-:root {
+/* Escopos: idem — o shadow composto embute var(--dss-focus-primary), que
+   tambem precisa recomputar no elemento do tema. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* Focus Ring com Offset (espaço entre elemento e anel) */
   --dss-focus-shadow-primary-offset: 0 0 0 var(--dss-focus-ring-offset) transparent,
                                        0 0 0 calc(var(--dss-focus-ring-offset) + var(--dss-focus-ring-width)) var(--dss-focus-primary);
