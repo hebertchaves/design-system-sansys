@@ -1,0 +1,63 @@
+/* ==========================================================================
+   DssEmptyState - LAYER 4: OUTPUT - States
+
+   RESPONSABILIDADE: Estados especiais e acessibilidade
+
+   CONVENÇÕES DESTE COMPONENTE:
+   - NÃO é interativo: sem hover, active, focus ou disabled próprios.
+     A única parte focável é o que o consumidor coloca no slot `action`, e
+     esse componente traz os próprios estados.
+   - Sem touch target próprio (WCAG 2.5.5 não se aplica a bloco não clicável).
+   - Dark mode resolve pelos tokens semânticos de texto — não há override.
+   ========================================================================== */
+
+/* ==========================================================================
+   DARK MODE
+
+   Sem regra: --dss-text-primary / --dss-text-secondary e --dss-border-default
+   já trocam de valor em [data-theme="dark"]. Adicionar
+   override aqui criaria um segundo lugar para a mesma decisão.
+   ========================================================================== */
+
+/* ==========================================================================
+   HIGH CONTRAST MODE (prefers-contrast: more)
+
+   Em alto contraste a hierarquia por tom de cinza se perde: título e
+   descrição colapsam para a mesma leitura. A distinção passa a ser feita
+   pelo peso e pela cor de texto de maior ênfase.
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  .dss-empty-state__description,
+  .dss-empty-state__icon {
+    color: var(--dss-text-primary);
+  }
+
+  /* Mesmo motivo da camada 2: a regra global de brand do DssIcon casa direto
+     no elemento e vence a cor herdada do wrapper. */
+  .dss-empty-state .dss-empty-state__icon .dss-icon {
+    color: var(--dss-text-primary);
+  }
+
+  .dss-empty-state--bordered {
+    border-style: solid;
+    border-color: currentColor;
+  }
+}
+
+/* ==========================================================================
+   FORCED COLORS (Windows High Contrast Mode)
+
+   O sistema substitui as cores; o que precisa ser garantido é que a moldura
+   NÃO desapareça (bordas transparentes somem em forced-colors).
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .dss-empty-state--bordered {
+    border-color: CanvasText;
+  }
+
+  .dss-empty-state__icon {
+    forced-color-adjust: auto;
+  }
+}

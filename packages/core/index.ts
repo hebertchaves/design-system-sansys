@@ -104,7 +104,7 @@ export const metadata = {
     'DssTimeline', 'DssTimelineEntry',
     // Avançados
     'DssVirtualScroll', 'DssInfiniteScroll', 'DssPullToRefresh', 'DssSlideItem',
-    'DssParallax', 'DssVideo', 'DssBanner',
+    'DssParallax', 'DssVideo', 'DssBanner', 'DssEmptyState',
     // Compostos
     'DssDialog', 'DssTable', 'DssCarousel', 'DssCarouselSlide',
     'DssBottomSheet', 'DssChatMessage', 'DssColorPicker', 'DssDatePicker',

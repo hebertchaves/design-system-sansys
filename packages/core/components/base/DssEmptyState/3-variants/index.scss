@@ -1,0 +1,8 @@
+/* ==========================================================================
+   DssEmptyState - LAYER 3: VARIANTS (Orchestrator)
+
+   Tratamento do conteiner: plain (padrao) e bordered.
+   ========================================================================== */
+
+@forward './plain';
+@forward './bordered';

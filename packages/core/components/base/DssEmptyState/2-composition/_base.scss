@@ -1,0 +1,166 @@
+/* ==========================================================================
+   DssEmptyState - LAYER 2: COMPOSITION (Base Styles)
+
+   RESPONSABILIDADE: Estilos fundamentais usando APENAS tokens genéricos
+
+   REGRAS:
+   ✅ APENAS tokens genéricos (--dss-spacing-*, --dss-font-size-*, etc.)
+   ✅ Reset e layout base + escala de tamanho
+   ❌ ZERO valores hardcoded
+   ❌ ZERO lógica de contêiner (vai em 3-variants/)
+
+   O componente NÃO tem cor semântica: estado vazio é informação neutra, não
+   feedback. As cores vêm dos tokens de texto — nunca de --dss-action-* nem de
+   --dss-feedback-*.
+   ========================================================================== */
+
+/* ==========================================================================
+   EMPTY STATE BASE (md = default)
+   ========================================================================== */
+
+.dss-empty-state {
+  /* Layout: coluna centrada, ocupa a largura que o pai der.
+     A largura é decisão do PAI — aqui só se limita a MEDIDA DE LEITURA do
+     texto (ver __description), para que uma tabela larga não produza linhas
+     ilegíveis. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* Tipografia */
+  font-family: var(--dss-font-family-sans);
+  text-align: center;
+
+  /* Dimensões (md) */
+  padding: var(--dss-spacing-8) var(--dss-spacing-4);
+  gap: var(--dss-spacing-3);
+}
+
+/* ==========================================================================
+   ELEMENTOS
+   ========================================================================== */
+
+/* Ilustração — decorativa por definição (a informação está no título) */
+.dss-empty-state__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Baixa ênfase: o ícone acompanha, não compete com o título.
+     NÃO usar --dss-text-muted aqui: apesar do nome, ele aponta para
+     --dss-dark-disable (#D7D7D7) — a cor de DESABILITADO. Um ícone nesse tom
+     lê como componente quebrado, não como ilustração discreta. */
+  color: var(--dss-text-secondary);
+
+  /* Dimensiona tanto o DssIcon (via font-size) quanto um SVG no slot */
+  font-size: var(--dss-icon-size-lg);
+  line-height: 1;
+
+  > svg,
+  > img {
+    width: var(--dss-icon-size-lg);
+    height: var(--dss-icon-size-lg);
+  }
+}
+
+/* POR QUE O ÍCONE PRECISA DECLARAR A PRÓPRIA COR
+   ---------------------------------------------
+   Existe uma regra GLOBAL em `DssIcon/4-output/_brands.scss`:
+   `[data-brand="hub"] .dss-icon { color: var(--dss-hub-600) }`.
+   Ela casa DIRETO no elemento do ícone, com especificidade (0,2,0), e por isso
+   vence qualquer cor apenas HERDADA do wrapper — regra herdada nunca ganha de
+   regra direta. Medido no Preview Frame: sob brand Hub o ícone saía laranja,
+   contrariando a decisão de que o estado vazio NÃO se colore por marca
+   (ver `4-output/_brands.scss`). O seletor abaixo tem (0,3,0) e vence.
+   Mesmo mecanismo — e mesmo racional — já documentado em DssChip e DssCheckbox.
+
+   Só alcança o ícone da PROP; um SVG no slot herda do wrapper normalmente,
+   que é o comportamento desejado (a ilustração do consumidor é dele). */
+.dss-empty-state .dss-empty-state__icon .dss-icon {
+  color: var(--dss-text-secondary);
+}
+
+/* Frase principal — diz o que NÃO há */
+.dss-empty-state__title {
+  margin: 0;
+  font-size: var(--dss-font-size-lg);
+  font-weight: var(--dss-font-weight-semibold);
+  line-height: var(--dss-line-height-normal);
+  color: var(--dss-text-primary);
+}
+
+/* Explicação secundária — por que está vazio e o que fazer */
+.dss-empty-state__description {
+  margin: 0;
+  font-size: var(--dss-font-size-md);
+  font-weight: var(--dss-font-weight-normal);
+  line-height: var(--dss-line-height-relaxed);
+  color: var(--dss-text-secondary);
+
+  /* Medida de leitura: token de espaçamento usado como largura máxima
+     (480px). Sem isto, o bloco dentro de uma tabela larga produz linhas
+     longas demais para ler com conforto. */
+  max-width: var(--dss-spacing-120);
+}
+
+/* Ação que tira o usuário do vazio — respiro próprio, maior que o gap */
+.dss-empty-state__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--dss-spacing-2);
+  margin-top: var(--dss-spacing-1);
+}
+
+/* ==========================================================================
+   ESCALA DE TAMANHO
+
+   Não é escala tipográfica livre: são três contextos de uso reais.
+   ========================================================================== */
+
+/* sm — dentro de tabela, painel ou lista curta */
+.dss-empty-state--sm {
+  padding: var(--dss-spacing-4) var(--dss-spacing-3);
+  gap: var(--dss-spacing-2);
+
+  .dss-empty-state__icon {
+    font-size: var(--dss-icon-size-md);
+
+    > svg,
+    > img {
+      width: var(--dss-icon-size-md);
+      height: var(--dss-icon-size-md);
+    }
+  }
+
+  .dss-empty-state__title {
+    font-size: var(--dss-font-size-md);
+  }
+
+  .dss-empty-state__description {
+    font-size: var(--dss-font-size-sm);
+    max-width: var(--dss-spacing-96);
+  }
+}
+
+/* lg — página inteira vazia (primeiro acesso, busca sem resultado global) */
+.dss-empty-state--lg {
+  padding: var(--dss-spacing-12) var(--dss-spacing-6);
+  gap: var(--dss-spacing-4);
+
+  .dss-empty-state__icon {
+    font-size: var(--dss-icon-size-xl);
+
+    > svg,
+    > img {
+      width: var(--dss-icon-size-xl);
+      height: var(--dss-icon-size-xl);
+    }
+  }
+
+  .dss-empty-state__title {
+    font-size: var(--dss-font-size-xl);
+  }
+}

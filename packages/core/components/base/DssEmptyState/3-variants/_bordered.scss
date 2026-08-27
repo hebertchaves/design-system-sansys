@@ -1,0 +1,15 @@
+/* ==========================================================================
+   DssEmptyState - LAYER 3: VARIANT - Bordered
+
+   Moldura tracejada: delimita a área vazia dentro de card ou painel, deixando
+   claro que o espaço PERTENCE a algo que ainda não tem conteúdo.
+
+   O tracejado é intencional — a borda sólida lê como componente ativo
+   (campo, card), e o estado vazio não é interativo.
+   ========================================================================== */
+
+.dss-empty-state--bordered {
+  border: var(--dss-border-width-thin) dashed var(--dss-border-default);
+  border-radius: var(--dss-radius-lg);
+  background-color: transparent;
+}

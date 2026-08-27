@@ -54,6 +54,7 @@ import DssInnerLoading     from '@components/base/DssInnerLoading/DssInnerLoadin
 import DssAjaxBar          from '@components/base/DssAjaxBar/DssAjaxBar.vue'
 
 import DssBanner        from '@components/base/DssBanner/DssBanner.vue'
+import DssEmptyState    from '@components/base/DssEmptyState/DssEmptyState.vue'
 import DssBar           from '@components/base/DssBar/DssBar.vue'
 
 import DssTabs          from '@components/base/DssTabs/DssTabs.vue'
@@ -144,6 +145,7 @@ const REGISTRY = {
   DssInnerLoading,
   DssAjaxBar,
   DssBanner,
+  DssEmptyState,
   DssBar,
   DssTabs,
   DssTab,

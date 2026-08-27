@@ -2204,6 +2204,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
 | DssDialog | contextuais | — | — | — |
 | DssDrawer | layout | persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
+| DssEmptyState | indicadores | icon:inbox, title:Nenhuma solicitacao encontrada, description:Ajuste os filtros ou limpe a busca para ver todos os registros., size:md, variant:plain | padding:32px 16px, gap:12px | Icone inbox + titulo + descricao |
 | DssExpansionItem | navegacao | label:Expansível, icon:expand_more, modelValue | minHeight:44px | Item expansível com conteúdo |
 | DssFab | acoes | color:primary, icon:add, label:Adicionar | minHeight:56px, minWidth:56px | FAB com ícone 'add' |
 | DssFabAction | acoes | color:primary, icon:mail, label:Email | minHeight:40px, minWidth:40px | FAB Action com ícone 'mail' |
@@ -2271,5 +2272,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-08-14T22:43:27.601Z_
+_Gerado em: 2026-08-27T17:45:31.955Z_
 <!-- END:AUTO-GENERATED -->

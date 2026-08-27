@@ -1,0 +1,132 @@
+{
+  "component": "DssEmptyState",
+  "dssVersion": "2.5",
+  "status": "draft",
+  "seal": null,
+  "auditMode": null,
+  "auditDate": null,
+  "goldenReference": "DssBadge",
+  "goldenContext": "DssBanner",
+  "phase": 1,
+  "category": "Bloco de estado de dado nao interativo",
+  "hasReservations": false,
+  "defaultPreview": {
+    "props": {
+      "icon": "inbox",
+      "title": "Nenhuma solicitacao encontrada",
+      "description": "Ajuste os filtros ou limpe a busca para ver todos os registros.",
+      "size": "md",
+      "variant": "plain"
+    },
+    "computedDimensions": {
+      "padding": "32px 16px",
+      "gap": "12px"
+    },
+    "visualProperties": [
+      {
+        "property": "padding",
+        "token": "--dss-spacing-8 / --dss-spacing-4",
+        "value": "32px 16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "gap",
+        "token": "--dss-spacing-3",
+        "value": "12px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-size (title)",
+        "token": "--dss-font-size-lg",
+        "value": "18px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-weight (title)",
+        "token": "--dss-font-weight-semibold",
+        "value": "600",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color (title)",
+        "token": "--dss-text-primary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "font-size (description)",
+        "token": "--dss-font-size-md",
+        "value": "16px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "line-height (description)",
+        "token": "--dss-line-height-relaxed",
+        "value": "1.625",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color (description)",
+        "token": "--dss-text-secondary",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "max-width (description)",
+        "token": "--dss-spacing-120",
+        "value": "480px",
+        "source": "2-composition/_base.scss - medida de leitura"
+      },
+      {
+        "property": "font-size (icon)",
+        "token": "--dss-icon-size-lg",
+        "value": "32px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "color (icon)",
+        "token": "--dss-text-secondary",
+        "value": null,
+        "source": "2-composition/_base.scss - icone decorativo, baixa enfase"
+      }
+    ],
+    "demoContent": "Icone inbox + titulo + descricao",
+    "demoSlots": {
+      "action": "<DssButton variant=\"outline\" size=\"sm\">Limpar filtros</DssButton>"
+    }
+  },
+  "previewGroup": "indicadores",
+  "classification": "Visual",
+  "tagline": "Bloco que explica a ausencia de dados e oferece a saida quando ha uma.",
+  "a11y": {
+    "aria": {
+      "role": "status",
+      "states": ["aria-live", "aria-label"]
+    },
+    "keyboard": [],
+    "wcag": [
+      {
+        "criterion": "4.1.3",
+        "level": "AA",
+        "implementation": "O bloco anuncia-se como mensagem de status via role=status + aria-live=polite quando substitui um resultado apos busca, filtro ou exclusao. Desligavel pela prop announce para conteudo estatico.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Titulo em --dss-text-primary e descricao em --dss-text-secondary sobre superficie neutra. A ancora mede o ELO MAIS FRACO (descricao secundaria); o icone usa a mesma --dss-text-secondary. NAO se usa --dss-text-muted: apesar do nome ele aponta para --dss-dark-disable.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-secondary",
+          "bg": "--dss-gray-50"
+        }
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "A informacao esta no texto do titulo, nunca apenas no icone; o icone e emitido como decorativo e nao e anunciado.",
+        "verifiedBy": "aria"
+      }
+    ]
+  }
+}

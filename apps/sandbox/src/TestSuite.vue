@@ -181,6 +181,14 @@
               </button>
 
               <button
+                @click="activeComponent = 'preview-frame-empty-state'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'preview-frame-empty-state' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">inbox</span></span>
+                <span class="nav-label">DssEmptyState</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'alert'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'alert' }]"
               >
@@ -546,6 +554,9 @@
       <!-- PREVIEW FRAME (durável) — playground contract-driven, iframe do SFC real -->
       <div v-else-if="activeComponent === 'preview-frame'" class="component-view">
         <PreviewFrame component="DssInput" />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-empty-state'" class="component-view">
+        <PreviewFrame component="DssEmptyState" />
       </div>
       <div v-else-if="activeComponent === 'preview-frame-select'" class="component-view">
         <PreviewFrame component="DssSelect" />

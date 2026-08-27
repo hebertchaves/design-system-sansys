@@ -140,6 +140,7 @@ export { DssSlideItem } from './base/DssSlideItem'
 export { DssParallax } from './base/DssParallax'
 export { DssVideo } from './base/DssVideo'
 export { DssBanner } from './base/DssBanner'
+export { DssEmptyState } from './base/DssEmptyState'
 
 // ============================================================================
 // COMPONENTES COMPOSTOS
@@ -240,6 +241,7 @@ import DssSlideItem from './base/DssSlideItem/DssSlideItem.vue'
 import DssParallax from './base/DssParallax/DssParallax.vue'
 import DssVideo from './base/DssVideo/DssVideo.vue'
 import DssBanner from './base/DssBanner/DssBanner.vue'
+import DssEmptyState from './base/DssEmptyState/DssEmptyState.vue'
 import DssDialog from './composed/DssDialog/DssDialog.vue'
 import DssTable from './composed/DssTable/DssTable.vue'
 import DssCarousel from './composed/DssCarousel/DssCarousel.vue'
@@ -286,7 +288,7 @@ const allComponents = [
   DssTimeline, DssTimelineEntry,
   // Avançados
   DssVirtualScroll, DssInfiniteScroll, DssPullToRefresh, DssSlideItem,
-  DssParallax, DssVideo, DssBanner,
+  DssParallax, DssVideo, DssBanner, DssEmptyState,
   // Compostos
   DssDialog, DssTable, DssCarousel, DssCarouselSlide,
   DssBottomSheet, DssChatMessage, DssColorPicker, DssDatePicker,

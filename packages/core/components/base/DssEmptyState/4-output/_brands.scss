@@ -1,0 +1,13 @@
+/* ==========================================================================
+   DssEmptyState - LAYER 4: OUTPUT - Brands
+
+   DECISAO DE DESIGN: o estado vazio NAO se colore por marca.
+
+   Ele e informacao neutra — diz que nao ha dados, nao chama para uma acao de
+   marca. Pintar o icone ou o titulo com a cor do produto competiria com a
+   acao real (o DssButton dentro do slot `action`), que ESSA sim segue a marca
+   pelos seus proprios tokens.
+
+   Este arquivo existe para registrar a decisao, nao por omissao: a ausencia
+   de regra aqui e deliberada. Ver o README, secao "Brandabilidade".
+   ========================================================================== */

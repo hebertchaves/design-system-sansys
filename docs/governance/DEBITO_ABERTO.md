@@ -54,6 +54,28 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🔴 **Gate estrutural NÃO verifica o `@forward` em `components/index.scss`** — descoberto ao criar o
+  `DssEmptyState` (ago/2026). O componente passou nos **10 gates** (estrutura, contrato, api-docs,
+  demo-registry, sandbox-tags, catálogo, type-check…) com as 4 camadas completas e o `.module.scss`
+  compilando — e mesmo assim renderizava **sem nenhum CSS**, porque ninguém tinha adicionado
+  `@forward 'base/DssEmptyState/DssEmptyState.module';` ao agregador. Medido no Preview Frame:
+  `padding: 0px · display: block`. **É um buraco real do gate estrutural:** um componente pode estar
+  100% conforme e entregar zero estilo em produção. *Correção sugerida:* o `validate-structure.cjs` já
+  varre as 4 camadas — basta cruzar cada `<Comp>.module.scss` encontrado com os `@forward` de
+  `packages/core/components/index.scss` e reprovar o que faltar. Custo baixo, pega uma classe inteira
+  de falha silenciosa.
+
+- 🟡 **`--dss-text-muted` é uma armadilha de nome: aponta para `--dss-dark-disable` (#D7D7D7)** — o
+  comentário no `tokens/semantic/_text.scss:16` diz "Texto terciário", mas o valor é a cor de
+  **desabilitado**. Quem lê o nome escolhe errado: um ícone ou texto nesse tom lê como componente
+  quebrado, não como ênfase baixa. Encontrado no `DssEmptyState`, que passou a usar
+  `--dss-text-secondary` (a decisão está registrada em `DssEmptyState.md` §7.3). **Nenhum outro
+  componente base usa `--dss-text-muted` em `2-composition/`** — o que sugere que os demais tropeçaram
+  no mesmo problema e desviaram em silêncio, sem registrar. *Decisão pendente:* ou renomear para
+  `--dss-text-disabled` (o que ele de fato é), ou criar um `--dss-text-tertiary` real entre
+  `secondary` (#737373) e `disable` (#D7D7D7). Bloqueia quem precisar de três níveis de ênfase.
+
+
 - ✅ **DssChip sem cor neutra/token + DssSelect não consome DssChip — RESOLVIDO** (`886b083`, ago/2026).
   `ChipColor` ganhou `'neutral'` (aditiva; o default segue `primary`) e o `DssSelect` passou a preencher o
   slot `selected-item` com `<DssChip color="neutral" size="xs">` — acabou a divergência de duas linguagens

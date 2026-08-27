@@ -1,0 +1,14 @@
+/* ==========================================================================
+   DssEmptyState - LAYER 3: VARIANT - Plain (default)
+
+   Sem moldura: o bloco respira no espaco que ja existe.
+
+   E o padrao porque o caso dominante e o estado vazio ocupar uma area que ja
+   tem contorno proprio (card, tabela, painel) — desenhar uma segunda moldura
+   dentro da primeira so adiciona ruido.
+   ========================================================================== */
+
+.dss-empty-state--plain {
+  border: none;
+  background-color: transparent;
+}
