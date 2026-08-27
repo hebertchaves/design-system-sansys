@@ -17,12 +17,12 @@
 
   // Hover
   &:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
-    background-color: var(--dss-gray-200);
+    background-color: var(--dss-surface-muted);
   }
 
   // Foco
   &.dss-file--focused .dss-file__field {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-default);
     border-bottom-color: var(--dss-action-primary);
     box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
   }
@@ -47,13 +47,13 @@
 
   // Desabilitado
   &.dss-file--disabled .dss-file__field {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-default);
     border-bottom-style: dotted;
   }
 
   // Readonly
   &.dss-file--readonly .dss-file__field {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-default);
     border-bottom-style: dashed;
     border-bottom-color: var(--dss-border-default);
   }

@@ -53,7 +53,7 @@
        ======================================================================== */
 
     thead {
-      background-color: var(--dss-gray-50);
+      background-color: var(--dss-surface-default);
     }
 
     th {
@@ -109,12 +109,12 @@
 
       /* Hover — linha sob cursor */
       &:hover:not(.selected) {
-        background-color: var(--dss-gray-50);
+        background-color: var(--dss-surface-default);
       }
 
       /* Selected — linha selecionada */
       &.selected {
-        background-color: var(--dss-gray-100);
+        background-color: var(--dss-surface-subtle);
       }
     }
 
@@ -123,7 +123,7 @@
        ======================================================================== */
 
     tfoot tr {
-      background-color: var(--dss-gray-50);
+      background-color: var(--dss-surface-default);
       border-top: var(--dss-border-width-md) solid var(--dss-border-subtle);
 
       td {

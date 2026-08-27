@@ -613,7 +613,7 @@
           "property": "background-color",
           "token": "--dss-surface-default",
           "value": null,
-          "source": "_helpers.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "background-color",
@@ -2392,12 +2392,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-gray-50",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "padding",
           "token": "--dss-spacing-3",
           "value": null,
@@ -3812,12 +3806,6 @@
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-gray-50",
-        "usedIn": [
-          "default"
         ]
       },
       {

@@ -28,7 +28,7 @@
 .dss-tooltip--brand-hub {
   &.dss-tooltip {
     background-color: var(--dss-hub-600);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
   }
 }
 
@@ -40,7 +40,7 @@
 .dss-tooltip--brand-water {
   &.dss-tooltip {
     background-color: var(--dss-water-500);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
   }
 }
 
@@ -52,6 +52,6 @@
 .dss-tooltip--brand-waste {
   &.dss-tooltip {
     background-color: var(--dss-waste-600);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
   }
 }

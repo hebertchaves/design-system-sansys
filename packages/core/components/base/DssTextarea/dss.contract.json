@@ -543,7 +543,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-100",
+          "token": "--dss-surface-subtle",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -719,7 +719,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-200",
+          "token": "--dss-surface-muted",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -1093,7 +1093,7 @@
         ]
       },
       {
-        "name": "--dss-gray-100",
+        "name": "--dss-surface-subtle",
         "usedIn": [
           "default"
         ]
@@ -1148,9 +1148,10 @@
         ]
       },
       {
-        "name": "--dss-gray-200",
+        "name": "--dss-surface-muted",
         "usedIn": [
-          "hover"
+          "hover",
+          "disabled"
         ]
       },
       {
@@ -1205,12 +1206,6 @@
       },
       {
         "name": "--dss-text-disabled",
-        "usedIn": [
-          "disabled"
-        ]
-      },
-      {
-        "name": "--dss-surface-muted",
         "usedIn": [
           "disabled"
         ]

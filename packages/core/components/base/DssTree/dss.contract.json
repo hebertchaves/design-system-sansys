@@ -237,7 +237,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-100",
+          "token": "--dss-surface-subtle",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -431,7 +431,7 @@
       "hover": [
         {
           "property": "background-color",
-          "token": "--dss-gray-50",
+          "token": "--dss-surface-default",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -537,7 +537,7 @@
         ]
       },
       {
-        "name": "--dss-gray-100",
+        "name": "--dss-surface-subtle",
         "usedIn": [
           "default"
         ]
@@ -658,7 +658,7 @@
         ]
       },
       {
-        "name": "--dss-gray-50",
+        "name": "--dss-surface-default",
         "usedIn": [
           "hover"
         ]

@@ -378,7 +378,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-gray-50",
+          "token": "--dss-text-on-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -651,7 +651,7 @@
         ]
       },
       {
-        "name": "--dss-gray-50",
+        "name": "--dss-text-on-primary",
         "usedIn": [
           "default"
         ]

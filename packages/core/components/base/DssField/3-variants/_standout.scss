@@ -8,19 +8,19 @@
 
 .dss-field--standout {
   .dss-field__field {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-surface-subtle);
     border: none;
     border-radius: var(--dss-radius-sm);
   }
 
   /* Hover */
   &:not(.dss-field--disabled):not(.dss-field--readonly):not(.dss-field--focused):hover .dss-field__field {
-    background-color: var(--dss-gray-200);
+    background-color: var(--dss-surface-muted);
   }
 
   /* Focus: box-shadow de destaque ao invés de border */
   &.dss-field--focused .dss-field__field {
-    background-color: var(--dss-gray-200);
+    background-color: var(--dss-surface-muted);
     box-shadow: 0 0 0 var(--dss-border-width-md) var(--dss-action-primary);
   }
 
@@ -44,11 +44,11 @@
 
   /* Disabled */
   &.dss-field--disabled .dss-field__field {
-    background-color: var(--dss-gray-200);
+    background-color: var(--dss-surface-muted);
   }
 
   /* Readonly */
   &.dss-field--readonly .dss-field__field {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-surface-subtle);
   }
 }

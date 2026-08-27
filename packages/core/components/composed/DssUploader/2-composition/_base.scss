@@ -136,7 +136,7 @@
     margin-left: auto;
     font-size: var(--dss-font-size-sm);
     font-weight: var(--dss-font-weight-normal);
-    color: var(--dss-gray-600);
+    color: var(--dss-text-subtle);
   }
 
   // ==========================================================================
@@ -151,7 +151,7 @@
     gap: var(--dss-grid-gap-sm);
     padding: var(--dss-padding-8) var(--dss-padding-4);
     text-align: center;
-    color: var(--dss-gray-600);
+    color: var(--dss-text-subtle);
     cursor: default;
     transition:
       background-color var(--dss-duration-150) var(--dss-easing-standard);
@@ -161,7 +161,7 @@
     margin: 0;
     font-size: var(--dss-font-size-sm);
     font-weight: var(--dss-font-weight-normal);
-    color: var(--dss-gray-600);
+    color: var(--dss-text-subtle);
   }
 
   &__dropzone-hint {

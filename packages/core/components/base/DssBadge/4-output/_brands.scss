@@ -17,7 +17,7 @@
 .dss-badge--brand-hub {
   &.dss-badge {
     background-color: var(--dss-hub-600);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
 
     /* Variante outline */
     &.dss-badge--outline {
@@ -43,7 +43,7 @@
 .dss-badge--brand-water {
   &.dss-badge {
     background-color: var(--dss-water-500);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
 
     /* Variante outline */
     &.dss-badge--outline {
@@ -69,7 +69,7 @@
 .dss-badge--brand-waste {
   &.dss-badge {
     background-color: var(--dss-waste-600);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
 
     /* Variante outline */
     &.dss-badge--outline {

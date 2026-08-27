@@ -48,7 +48,7 @@
   // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.7
   .q-linear-progress__track {
     border-radius: var(--dss-radius-full);
-    background-color: var(--dss-gray-200);
+    background-color: var(--dss-surface-muted);
     // Reset da opacidade padrão do Quasar (0.3–0.4) — cor já é muted pelo token
     opacity: 1;
   }

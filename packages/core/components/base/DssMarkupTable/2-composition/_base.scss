@@ -48,7 +48,7 @@
      ========================================================================== */
 
   thead {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-default);
   }
 
   th {
@@ -90,7 +90,7 @@
      ========================================================================== */
 
   tfoot tr {
-    background-color: var(--dss-gray-50);
+    background-color: var(--dss-surface-default);
     border-top: var(--dss-border-width-md) solid var(--dss-border-subtle);
     font-weight: var(--dss-font-weight-semibold);
   }

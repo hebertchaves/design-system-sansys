@@ -278,7 +278,7 @@
   transition: all var(--dss-duration-200) var(--dss-easing-standard);
 
   &:hover {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-surface-subtle);
     color: var(--dss-text-primary);
   }
 

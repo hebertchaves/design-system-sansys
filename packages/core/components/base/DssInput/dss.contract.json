@@ -857,7 +857,7 @@
       "hover": [
         {
           "property": "background-color",
-          "token": "--dss-gray-100",
+          "token": "--dss-surface-subtle",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1335,7 +1335,8 @@
       {
         "name": "--dss-surface-subtle",
         "usedIn": [
-          "default"
+          "default",
+          "hover"
         ]
       },
       {
@@ -1410,12 +1411,6 @@
         "name": "--dss-waste-800",
         "usedIn": [
           "default"
-        ]
-      },
-      {
-        "name": "--dss-gray-100",
-        "usedIn": [
-          "hover"
         ]
       },
       {

@@ -214,7 +214,7 @@
 
   .dss-chat-message__bubble {
     // Padrão sem brand: cinza neutro
-    background-color: var(--dss-gray-200);
+    background-color: var(--dss-surface-muted);
     color: var(--dss-text-body);
     // Bico no canto inferior direito (aponta para o avatar)
     border-radius: var(--dss-radius-lg) var(--dss-radius-sm) var(--dss-radius-lg) var(--dss-radius-lg);

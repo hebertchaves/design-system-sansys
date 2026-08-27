@@ -12,7 +12,7 @@
 .dss-textarea--filled {
 
   .q-field__control {
-    background-color: var(--dss-gray-100);
+    background-color: var(--dss-surface-subtle);
     border-bottom: var(--dss-border-width-thin) solid var(--dss-border-strong);
     border-radius: var(--dss-radius-sm) var(--dss-radius-sm) 0 0;
     padding: 0 var(--dss-spacing-4); /* vertical 0: reserva da label flutuante vem do control-container */
@@ -21,7 +21,7 @@
   /* Hover */
   &:not(.dss-textarea--disabled):not(.dss-textarea--readonly):not(.dss-textarea--focused):hover {
     .q-field__control {
-      background-color: var(--dss-gray-200);
+      background-color: var(--dss-surface-muted);
     }
   }
 

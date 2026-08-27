@@ -81,7 +81,7 @@
  */
 .dss-slider .q-slider__track {
   height: var(--dss-track-height-sm); /* 4px — espessura do trilho */
-  background-color: var(--dss-gray-200); /* track inativo — cinza claro canônico M3/Carbon/Salesforce */
+  background-color: var(--dss-surface-muted); /* track inativo — cinza claro canônico M3/Carbon/Salesforce */
   border-radius: var(--dss-radius-full); /* pill shape do track */
   overflow: hidden; /* garante que .q-slider__selection respeite o radius */
 }

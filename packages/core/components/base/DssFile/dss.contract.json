@@ -841,7 +841,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-50",
+          "token": "--dss-surface-default",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -1029,7 +1029,7 @@
       "hover": [
         {
           "property": "background-color",
-          "token": "--dss-gray-100",
+          "token": "--dss-surface-subtle",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1047,7 +1047,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-200",
+          "token": "--dss-surface-muted",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -1103,7 +1103,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-50",
+          "token": "--dss-surface-default",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -1225,7 +1225,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-50",
+          "token": "--dss-surface-default",
           "value": null,
           "source": "3-variants/_filled.scss"
         },
@@ -1459,11 +1459,12 @@
       {
         "name": "--dss-surface-subtle",
         "usedIn": [
-          "default"
+          "default",
+          "hover"
         ]
       },
       {
-        "name": "--dss-gray-50",
+        "name": "--dss-surface-default",
         "usedIn": [
           "default",
           "focus",
@@ -1542,21 +1543,16 @@
         ]
       },
       {
-        "name": "--dss-gray-100",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
         "name": "--dss-border-strong-hover",
         "usedIn": [
           "hover"
         ]
       },
       {
-        "name": "--dss-gray-200",
+        "name": "--dss-surface-muted",
         "usedIn": [
-          "hover"
+          "hover",
+          "defaultPreview"
         ]
       },
       {
@@ -1604,12 +1600,6 @@
       },
       {
         "name": "--dss-radius-md",
-        "usedIn": [
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-surface-muted",
         "usedIn": [
           "defaultPreview"
         ]

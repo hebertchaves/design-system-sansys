@@ -16,7 +16,7 @@
 .dss-button--brand-hub {
   &.dss-button {
     background-color: var(--dss-hub-600);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
 
     &.dss-button--flat {
       background-color: transparent;
@@ -56,7 +56,7 @@
 .dss-button--brand-water {
   &.dss-button {
     background-color: var(--dss-water-500);
-    color: var(--dss-gray-50);;
+    color: var(--dss-text-on-primary);;
 
     &.dss-button--flat {
       background-color: transparent;
@@ -96,7 +96,7 @@
 .dss-button--brand-waste {
   &.dss-button {
     background-color: var(--dss-waste-600);
-    color: var(--dss-gray-50);
+    color: var(--dss-text-on-primary);
 
     &.dss-button--flat {
       background-color: transparent;

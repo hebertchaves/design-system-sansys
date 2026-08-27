@@ -10,7 +10,7 @@
   .dss-carousel {
     /* Pontos inativos mais visíveis em fundo escuro */
     .q-carousel__navigation-icon:not(.q-carousel__navigation-icon--active) {
-      color: var(--dss-gray-600) !important;
+      color: var(--dss-text-subtle) !important;
     }
   }
 }

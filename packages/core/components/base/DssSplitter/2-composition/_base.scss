@@ -46,7 +46,7 @@
   -webkit-tap-highlight-color: transparent; /* remove tap highlight nativo iOS/Safari — Golden Reference: DssChip */
   position: relative;
   overflow: visible;
-  background-color: var(--dss-gray-200);
+  background-color: var(--dss-surface-muted);
   transition:
     background-color var(--dss-duration-250) var(--dss-easing-ease-out);
 

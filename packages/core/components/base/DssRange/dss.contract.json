@@ -233,7 +233,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-200",
+          "token": "--dss-surface-muted",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -348,12 +348,6 @@
         {
           "property": "line-height",
           "token": "--dss-line-height-normal",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-surface-muted",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -695,7 +689,7 @@
         ]
       },
       {
-        "name": "--dss-gray-200",
+        "name": "--dss-surface-muted",
         "usedIn": [
           "default"
         ]
@@ -759,12 +753,6 @@
       },
       {
         "name": "--dss-line-height-normal",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-surface-muted",
         "usedIn": [
           "default"
         ]
