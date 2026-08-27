@@ -74,6 +74,7 @@ Leia o **NÚCLEO** sempre; consulte o **CONDICIONAL** só pelo que a tarefa exig
 | **Adequar UI de componente BASE** (Fase 1/2) — *foco da onda atual* | **Cartão Base** ↓ | `DSS_UI_ADEQUACAO_CHECKLIST.md` *(rode o Gate de adequação, LIGHT e DARK)* |
 | **Criar componente BASE do zero** *(só após adequação da base)* | **Cartão Base** ↓ | `PRD_DSS.md`, `DSS_ARCHITECTURE.md`, `DSS_COMPONENT_ARCHITECTURE.md`, `DSS_IMPLEMENTATION_GUIDE.md` |
 | **Criar / adequar COMPOSTO** (Fase 3) | **Cartão Composto** ↓ | `DSS_GUIA_COMPOSICAO_FASE3.md`, `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md` |
+| **Fechar / auditar BASE** (Fase 1/2) | — | `prompt_auditoria_v2.5.txt` + `prompt_emissao_selo_conformidade_v2.5.txt`, dirigidos por **`prompt_revisao_independente_v1.0.md`** *(quem constrói NÃO sela — a auditoria é de outro agente)* |
 | **Fechar / auditar COMPOSTO** (Fase 3) | — | `DSS_ROTEIRO_FECHAMENTO_FASE3.md` *(4 etapas; substitui o par "Modo Auditor + Selo" das Fases 1/2)* |
 
 ### Condicional por assunto

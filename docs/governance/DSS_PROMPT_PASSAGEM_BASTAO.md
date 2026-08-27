@@ -2,6 +2,19 @@
 
 **Objetivo:** Este prompt deve ser o **primeiro envio** em qualquer novo chat do Manus/Claude destinado à criação de um componente da Fase 2. Ele injeta o contexto arquitetural, as decisões táticas recentes e o rigor exigido, garantindo que o novo chat opere com a mesma inteligência do chat de planejamento.
 
+> ⚠️ **Emenda de escopo (ago/2026) — este prompt vai até "pronto para auditoria", NÃO até o selo.**
+> A versão anterior mandava o mesmo chat levar o componente "do pré-prompt até o selo", ou seja:
+> quem constrói também sela. Isso é exatamente a **auto-certificação** que o
+> [`prompt_emissao_selo_conformidade_v2.5.txt`](./prompt_emissao_selo_conformidade_v2.5.txt)
+> proíbe — os dois documentos se contradiziam, e quem lesse este primeiro obedecia ao errado.
+>
+> Descoberto na criação do `DssEmptyState`, quando o agente construtor auditou o próprio trabalho
+> e teve de declarar a fraqueza no topo do relatório: quem constrói não enxerga na revisão o que
+> não enxergou na construção.
+>
+> **A auditoria e o selo passaram a ser de outro agente**, via
+> [`prompt_revisao_independente_v1.0.md`](./prompt_revisao_independente_v1.0.md).
+
 ---
 
 ## 📋 Como usar
@@ -18,7 +31,9 @@
 
 ```markdown
 Você está assumindo a execução da **Fase 2 do Design System Sansys (DSS)**. 
-Este chat será dedicado exclusivamente à codificação, auditoria e selagem de um único componente composto. O pré-prompt já foi criado pelo Chat Estratégico e estará disponível no repositório.
+Este chat será dedicado exclusivamente à **codificação e adequação** de um único componente composto, até declará-lo **PRONTO PARA AUDITORIA DSS v2.2**. O pré-prompt já foi criado pelo Chat Estratégico e estará disponível no repositório.
+
+**Você NÃO audita nem sela este componente.** Auditoria e selo pertencem a um agente independente, que não participou da construção — é o que garante que a revisão enxergue o que você não enxergou. Ao final, entregue o componente com os gates verdes e a declaração de prontidão; não emita selo nem registre `record_audit_event`.
 
 Para garantir a continuidade do conhecimento e o rigor arquitetural estabelecido no planejamento, você DEVE operar sob as seguintes premissas e ler os arquivos indicados antes de tomar qualquer ação.
 
@@ -35,7 +50,8 @@ Antes de responder a este prompt, use suas ferramentas para ler e processar os s
 3. `docs/guides/dss_governanca_e_documentacao_de_componentes_compostos_fase_2.md` (Regras de composição interna)
 
 ### 3. Diretrizes de Execução para este Chat
-- **Foco Único:** Este chat tratará de apenas UM componente do início ao fim (desde o pré-prompt até o selo). Não misture escopos.
+- **Foco Único:** Este chat tratará de apenas UM componente, do pré-prompt até **pronto para auditoria**. Não misture escopos.
+- **Fronteira de responsabilidade:** você **não** emite selo e **não** se auto-certifica. Terminado o seu escopo, o componente segue para revisão independente (`prompt_revisao_independente_v1.0.md`).
 - **Responsabilidade do Pré-prompt:** O pré-prompt do componente foi criado pelo Chat Estratégico e está disponível em `docs/governance/pre-prompts/`. Você deve **lê-lo e confirmá-lo** antes de iniciar a codificação, mas **não deve criá-lo nem alterá-lo**.
 - **Composição Estrita:** Componentes da Fase 2 NÃO PODEM usar componentes Quasar diretamente em seus templates. Eles devem usar exclusivamente componentes DSS da Fase 1.
 - **Isolamento:** Não redefina estilos internos de componentes filhos via CSS no componente pai. Use a API de props do filho.
