@@ -12,6 +12,6 @@
 .dss-btn-group--unelevated {
   /* Separador sutil entre botões unelevated adjacentes */
   > .dss-button:not(:last-child) {
-    border-right: var(--dss-border-width-thin) solid var(--dss-gray-200);
+    border-right: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   }
 }

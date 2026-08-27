@@ -13,5 +13,5 @@
 
 /* Separador entre todos os filhos diretos, exceto o primeiro */
 .dss-list--separator > * + * {
-  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 }

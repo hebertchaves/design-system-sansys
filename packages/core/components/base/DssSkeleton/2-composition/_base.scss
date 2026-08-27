@@ -42,5 +42,5 @@
 // QSkeleton's .q-skeleton--bordered applies its own border-color; DSS overrides with
 // the neutral border token for visual consistency.
 .dss-skeleton .q-skeleton.q-skeleton--bordered {
-  border-color: var(--dss-gray-200);
+  border-color: var(--dss-border-subtle);
 }

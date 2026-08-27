@@ -70,7 +70,7 @@
 
   /* Dividers between sections */
   & + & {
-    border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+    border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   }
 }
 
@@ -112,5 +112,5 @@
   }
 
   /* Divider above actions */
-  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 }

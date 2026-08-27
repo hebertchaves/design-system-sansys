@@ -55,5 +55,5 @@
 // container quando o passo ainda não possui classe .dss-step — fallback)
 // ------------------------------------------------------------------
 .dss-stepper .q-stepper--vertical .q-stepper__step-inner::before {
-  border-color: var(--dss-gray-300);
+  border-color: var(--dss-border-default);
 }

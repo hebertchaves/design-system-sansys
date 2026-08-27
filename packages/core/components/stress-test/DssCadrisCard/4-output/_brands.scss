@@ -15,7 +15,7 @@
 [data-brand='hub'] {
   .dss-cadris-card__thead th[role='columnheader'] {
     background-color: var(--dss-surface-muted);
-    border-bottom-color: var(--dss-hub-primary, var(--dss-gray-300));
+    border-bottom-color: var(--dss-hub-primary, var(--dss-border-default));
   }
 
   .dss-cadris-card__row:hover {
@@ -30,7 +30,7 @@
 [data-brand='water'] {
   .dss-cadris-card__thead th[role='columnheader'] {
     background-color: var(--dss-surface-muted);
-    border-bottom-color: var(--dss-water-primary, var(--dss-gray-300));
+    border-bottom-color: var(--dss-water-primary, var(--dss-border-default));
   }
 
   .dss-cadris-card__row:hover {
@@ -45,7 +45,7 @@
 [data-brand='waste'] {
   .dss-cadris-card__thead th[role='columnheader'] {
     background-color: var(--dss-surface-muted);
-    border-bottom-color: var(--dss-waste-primary, var(--dss-gray-300));
+    border-bottom-color: var(--dss-waste-primary, var(--dss-border-default));
   }
 
   .dss-cadris-card__row:hover {

@@ -102,7 +102,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--dss-padding-4) var(--dss-padding-6);
-  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-100);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   flex-shrink: 0;
 }
 
@@ -126,6 +126,6 @@
   justify-content: flex-end;
   gap: var(--dss-spacing-2);
   padding: var(--dss-padding-4) var(--dss-padding-6);
-  border-top: var(--dss-border-width-thin) solid var(--dss-gray-100);
+  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   flex-shrink: 0;
 }

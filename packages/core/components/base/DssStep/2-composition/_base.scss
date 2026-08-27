@@ -66,7 +66,7 @@
   // Caps do dot (linhas conectoras integradas ao dot)
   // ------------------------------------------------------------------
   .q-stepper__dot-cap {
-    border-color: var(--dss-gray-300);
+    border-color: var(--dss-border-default);
   }
 
   // ------------------------------------------------------------------
@@ -106,7 +106,7 @@
   // Linha conectora entre passos
   // ------------------------------------------------------------------
   .q-stepper__line {
-    border-color: var(--dss-gray-300);
+    border-color: var(--dss-border-default);
     transition: border-color var(--dss-duration-150) var(--dss-easing-standard);
   }
 

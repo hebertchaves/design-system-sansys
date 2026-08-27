@@ -49,7 +49,7 @@
   // DssToolbar é suprimida via seletor descendente em DssHeader/_base.scss
   // para evitar dupla borda.
   // ------------------------------------------------------------------
-  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 
   // ------------------------------------------------------------------
   // Variante inset — padding-inline-start ampliado

@@ -340,7 +340,7 @@
     display: inline-block;
     width: var(--dss-spacing-4);
     height: var(--dss-spacing-4);
-    border: var(--dss-border-width-md) solid var(--dss-gray-300);
+    border: var(--dss-border-width-md) solid var(--dss-border-default);
     border-top-color: var(--dss-action-primary);
     border-radius: var(--dss-radius-full);
     animation: dss-input-spin var(--dss-duration-500) linear infinite;

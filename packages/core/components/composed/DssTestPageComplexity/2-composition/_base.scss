@@ -402,7 +402,7 @@
   }
 
   &__table-row {
-    border-bottom: 1px solid var(--dss-gray-200);
+    border-bottom: 1px solid var(--dss-border-subtle);
     padding: var(--dss-layout-gap-y, var(--dss-spacing-3)) var(--dss-layout-gap-x, var(--dss-spacing-4));
     transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
     font-size: var(--dss-font-size-sm);
@@ -432,7 +432,7 @@
 
   // Rodapé da tabela: resultados + paginação
   &__table-footer {
-    border-top: 1px solid var(--dss-gray-200);
+    border-top: 1px solid var(--dss-border-subtle);
     padding: var(--dss-layout-gap-y, var(--dss-spacing-3)) var(--dss-layout-gap-x, var(--dss-spacing-4));
     flex-wrap: nowrap;
   }
@@ -528,7 +528,7 @@
 
     &--row {
       height: var(--dss-spacing-10);
-      border-bottom: 1px solid var(--dss-gray-200);
+      border-bottom: 1px solid var(--dss-border-subtle);
     }
   }
 }

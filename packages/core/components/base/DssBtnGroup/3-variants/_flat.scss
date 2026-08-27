@@ -12,6 +12,6 @@
 
 .dss-btn-group--flat {
   > .dss-button:not(:last-child) {
-    border-right: var(--dss-border-width-thin) solid var(--dss-gray-300);
+    border-right: var(--dss-border-width-thin) solid var(--dss-border-default);
   }
 }

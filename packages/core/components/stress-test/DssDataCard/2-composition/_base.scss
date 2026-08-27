@@ -45,7 +45,7 @@
 
   &__toolbar {
     flex-shrink: 0;
-    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-300);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-border-default);
   }
 
   // --------------------------------------------------------------------------
@@ -85,7 +85,7 @@
 
   &__tabs {
     flex-shrink: 0;
-    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-300);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-border-default);
   }
 
   // --------------------------------------------------------------------------
@@ -130,7 +130,7 @@
     justify-content: flex-end;
     gap: var(--dss-spacing-1);
     padding: var(--dss-spacing-2) var(--dss-spacing-4);
-    border-top: var(--dss-border-width-thin) solid var(--dss-gray-300);
+    border-top: var(--dss-border-width-thin) solid var(--dss-border-default);
     flex-shrink: 0;
   }
 
@@ -147,7 +147,7 @@
 
   &__footer {
     padding: var(--dss-spacing-2) var(--dss-spacing-4);
-    border-top: var(--dss-border-width-thin) solid var(--dss-gray-300);
+    border-top: var(--dss-border-width-thin) solid var(--dss-border-default);
     flex-shrink: 0;
   }
 }

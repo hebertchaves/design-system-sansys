@@ -51,7 +51,7 @@
 
   border-width: var(--dss-border-width-thin);
   border-style: solid;
-  border-color: var(--dss-gray-300);
+  border-color: var(--dss-border-default);
 
   // ── Comportamento ─────────────────────────────────────────────────────────
   user-select: none;
@@ -118,7 +118,7 @@
     padding: var(--dss-padding-4);
     border-bottom-width: var(--dss-border-width-thin);
     border-bottom-style: solid;
-    border-bottom-color: var(--dss-gray-100);
+    border-bottom-color: var(--dss-border-subtle);
     min-height: unset;
   }
 
@@ -191,7 +191,7 @@
     padding: var(--dss-padding-2) var(--dss-padding-4);
     border-bottom-width: var(--dss-border-width-thin);
     border-bottom-style: solid;
-    border-bottom-color: var(--dss-gray-100);
+    border-bottom-color: var(--dss-border-subtle);
     transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
 
     &:last-child {

@@ -231,7 +231,7 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-gray-300",
+          "token": "--dss-border-default",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -701,10 +701,9 @@
         ]
       },
       {
-        "name": "--dss-gray-300",
+        "name": "--dss-border-default",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -859,6 +858,12 @@
       },
       {
         "name": "--dss-gray-400",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
         "usedIn": [
           "defaultPreview"
         ]

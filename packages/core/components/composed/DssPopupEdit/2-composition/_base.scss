@@ -45,7 +45,7 @@
   .q-item-label--header {
     padding: var(--dss-padding-4) var(--dss-padding-4) var(--dss-spacing-2);
     color: var(--dss-text-body);
-    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-100);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   }
 
   // -------------------------------------------------------------------------
@@ -63,6 +63,6 @@
     display: flex;
     justify-content: flex-end;
     gap: var(--dss-spacing-2);
-    border-top: var(--dss-border-width-thin) solid var(--dss-gray-100);
+    border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   }
 }

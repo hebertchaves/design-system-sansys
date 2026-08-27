@@ -12,6 +12,6 @@
 .dss-btn-toggle--unelevated {
   /* Separador sutil entre botões unelevated adjacentes */
   > .q-btn-item:not(:last-child) {
-    border-right: var(--dss-border-width-thin) solid var(--dss-gray-200);
+    border-right: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   }
 }

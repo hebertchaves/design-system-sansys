@@ -11,9 +11,9 @@
 // ==========================================================================
 
 .dss-drawer--bordered.dss-drawer--left {
-  border-right: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-right: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 }
 
 .dss-drawer--bordered.dss-drawer--right {
-  border-left: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-left: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 }

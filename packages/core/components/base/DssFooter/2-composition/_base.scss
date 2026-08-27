@@ -29,5 +29,5 @@
   // DssHeader tem border-bottom; DssFooter tem border-top pela simetria.
   // M3, Carbon e Salesforce usam separador na parte superior do rodapé.
   // ------------------------------------------------------------------
-  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 }

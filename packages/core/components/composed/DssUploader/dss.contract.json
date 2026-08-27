@@ -291,7 +291,7 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-gray-300",
+          "token": "--dss-border-default",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -387,7 +387,7 @@
         },
         {
           "property": "border-bottom-color",
-          "token": "--dss-gray-100",
+          "token": "--dss-border-subtle",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -597,7 +597,7 @@
         },
         {
           "property": "border-color",
-          "token": "--dss-gray-100",
+          "token": "--dss-border-subtle",
           "value": null,
           "source": "3-variants/_variant.scss"
         },
@@ -789,10 +789,9 @@
         ]
       },
       {
-        "name": "--dss-gray-300",
+        "name": "--dss-border-default",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -808,7 +807,7 @@
         ]
       },
       {
-        "name": "--dss-gray-100",
+        "name": "--dss-border-subtle",
         "usedIn": [
           "default"
         ]
@@ -967,6 +966,12 @@
         "name": "--dss-opacity-disabled",
         "usedIn": [
           "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-300",
+        "usedIn": [
+          "defaultPreview"
         ]
       }
     ]

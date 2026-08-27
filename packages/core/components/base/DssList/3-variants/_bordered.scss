@@ -6,7 +6,7 @@
 
 .dss-list--bordered {
   /* Borda externa delimitando a lista */
-  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
+  border: var(--dss-border-width-thin) solid var(--dss-border-default);
 
   /* Border-radius apenas com bordered */
   border-radius: var(--dss-radius-md);

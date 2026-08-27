@@ -27,7 +27,7 @@
   }
 
   .dss-bottom-sheet__header {
-    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-border-subtle));
   }
 }
 
@@ -42,7 +42,7 @@
   }
 
   .dss-bottom-sheet__header {
-    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-border-subtle));
   }
 }
 
@@ -57,6 +57,6 @@
   }
 
   .dss-bottom-sheet__header {
-    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-border-subtle));
   }
 }

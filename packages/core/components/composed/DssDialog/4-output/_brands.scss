@@ -12,6 +12,6 @@
 [data-brand] .dss-dialog,
 .dss-dialog[data-brand] {
   .dss-dialog__header {
-    border-bottom-color: var(--dss-action-primary, var(--dss-gray-100));
+    border-bottom-color: var(--dss-action-primary, var(--dss-border-subtle));
   }
 }

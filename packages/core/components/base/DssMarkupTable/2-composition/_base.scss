@@ -60,7 +60,7 @@
     white-space: nowrap;
 
     /* Separadores naturais do th */
-    border-bottom: var(--dss-border-width-md) solid var(--dss-gray-200);
+    border-bottom: var(--dss-border-width-md) solid var(--dss-border-subtle);
   }
 
   /* ==========================================================================
@@ -78,7 +78,7 @@
      ========================================================================== */
 
   tbody tr {
-    border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-100);
+    border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 
     &:last-child {
       border-bottom: none;
@@ -91,7 +91,7 @@
 
   tfoot tr {
     background-color: var(--dss-gray-50);
-    border-top: var(--dss-border-width-md) solid var(--dss-gray-200);
+    border-top: var(--dss-border-width-md) solid var(--dss-border-subtle);
     font-weight: var(--dss-font-weight-semibold);
   }
 

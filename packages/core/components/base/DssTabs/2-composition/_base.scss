@@ -31,7 +31,7 @@
   // divisória entre o tab bar e o conteúdo. Reforça a hierarquia visual
   // sem elevação (tabs são controles de navegação superficiais, não cards).
   // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.11
-  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
 }
 
 // ==========================================================================

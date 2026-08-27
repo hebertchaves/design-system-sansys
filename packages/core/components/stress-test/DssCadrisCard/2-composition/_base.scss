@@ -88,8 +88,8 @@
     font-size: var(--dss-font-size-sm);
     font-weight: var(--dss-font-weight-semibold);
     color: var(--dss-text-secondary);
-    border-top: 1px solid var(--dss-gray-200);
-    border-bottom: 1px solid var(--dss-gray-200);
+    border-top: 1px solid var(--dss-border-subtle);
+    border-bottom: 1px solid var(--dss-border-subtle);
   }
 
   // --------------------------------------------------------------------------
@@ -140,7 +140,7 @@
 
   &__tbody {
     .dss-cadris-card__row {
-      border-bottom: 1px solid var(--dss-gray-200);
+      border-bottom: 1px solid var(--dss-border-subtle);
       transition: background-color var(--dss-duration-150) var(--dss-easing-standard);
 
       &:last-child {
@@ -288,7 +288,7 @@
   // --------------------------------------------------------------------------
 
   &__pagination {
-    border-top: 1px solid var(--dss-gray-200);
+    border-top: 1px solid var(--dss-border-subtle);
     padding: var(--dss-spacing-2) var(--dss-spacing-3);
     gap: var(--dss-spacing-1);
   }
@@ -317,7 +317,7 @@
   &__footer {
     display: flex;
     justify-content: center;
-    border-top: 1px solid var(--dss-gray-200);
+    border-top: 1px solid var(--dss-border-subtle);
     padding: var(--dss-spacing-3) var(--dss-spacing-4);
   }
 

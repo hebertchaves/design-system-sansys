@@ -63,7 +63,7 @@
       text-align: left;
       color: var(--dss-gray-700);
       white-space: nowrap;
-      border-bottom: var(--dss-border-width-md) solid var(--dss-gray-200);
+      border-bottom: var(--dss-border-width-md) solid var(--dss-border-subtle);
       transition: color var(--dss-duration-250) ease;
 
       /* Sort icon — alinhamento e cor */
@@ -93,7 +93,7 @@
       padding: var(--dss-spacing-3) var(--dss-spacing-4);
       vertical-align: middle;
       white-space: nowrap;
-      border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-100);
+      border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
     }
 
     /* ========================================================================
@@ -124,7 +124,7 @@
 
     tfoot tr {
       background-color: var(--dss-gray-50);
-      border-top: var(--dss-border-width-md) solid var(--dss-gray-200);
+      border-top: var(--dss-border-width-md) solid var(--dss-border-subtle);
 
       td {
         font-weight: var(--dss-font-weight-semibold);
@@ -162,7 +162,7 @@
 
   .q-table__bottom {
     padding: var(--dss-spacing-1_5) var(--dss-spacing-4);
-    border-top: var(--dss-border-width-thin) solid var(--dss-gray-100);
+    border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
     font-size: var(--dss-font-size-sm);
     color: var(--dss-gray-700);
     min-height: var(--dss-touch-target-md);
