@@ -28,6 +28,11 @@
   align-items: center;
   justify-content: center;
 
+  /* Item de flex/grid tem `min-width: auto` por padrão, o que o impede de encolher
+     abaixo do próprio conteúdo. Sem isto o bloco estoura célula estreita de tabela
+     ou matriz (item G1 do checklist de adequação). */
+  min-width: 0;
+
   /* Tipografia */
   font-family: var(--dss-font-family-sans);
   text-align: center;
@@ -88,6 +93,12 @@
   font-weight: var(--dss-font-weight-semibold);
   line-height: var(--dss-line-height-normal);
   color: var(--dss-text-primary);
+
+  /* Palavra longa sem espaço (e-mail, ID, nome de arquivo) precisa quebrar: medido
+     em pai de 200px, o título extrapolava 85px. `anywhere` (e não `break-word`)
+     porque só ele reduz o tamanho MIN-CONTENT — é o que deixa o flex encolher de
+     fato, em vez de apenas quebrar depois de já ter estourado. */
+  overflow-wrap: anywhere;
 }
 
 /* Explicação secundária — por que está vazio e o que fazer */
@@ -97,6 +108,7 @@
   font-weight: var(--dss-font-weight-normal);
   line-height: var(--dss-line-height-relaxed);
   color: var(--dss-text-secondary);
+  overflow-wrap: anywhere;
 
   /* Medida de leitura: token de espaçamento usado como largura máxima
      (480px). Sem isto, o bloco dentro de uma tabela larga produz linhas

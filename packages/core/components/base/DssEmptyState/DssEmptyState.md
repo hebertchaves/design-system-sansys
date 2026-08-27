@@ -196,8 +196,12 @@ Não há prop `color`. Estado vazio é **informação neutra**, não feedback: p
 ### 7.2 — O componente não se colore por marca
 
 `4-output/_brands.scss` existe e está **deliberadamente sem regras**, com a justificativa no
-próprio arquivo. Pintar o ícone ou o título com a cor do produto competiria com a ação real
-(o `DssButton` do slot `action`), que essa sim segue a marca pelos próprios tokens.
+próprio arquivo. Pintar o ícone ou o título com a cor do produto competiria com a **ação**, que é
+o lugar legítimo da marca.
+
+> ⚠️ **Ressalva medida (ago/2026):** hoje a ação **não** segue a marca — `.bg-primary` usa o
+> primitivo `--dss-primary` em vez do semântico `--dss-action-primary` (`utils/_colors.scss`).
+> É defeito do sistema, registrado no `DEBITO_ABERTO`; a neutralidade do bloco não depende dele.
 
 ### 7.3 — O ícone usa `--dss-text-secondary`, não `--dss-text-muted`
 

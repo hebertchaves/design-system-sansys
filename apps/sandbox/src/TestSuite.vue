@@ -181,11 +181,19 @@
               </button>
 
               <button
-                @click="activeComponent = 'preview-frame-empty-state'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'preview-frame-empty-state' }]"
+                @click="activeComponent = 'empty-state'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'empty-state' }]"
               >
                 <span class="nav-icon"><span class="material-icons">inbox</span></span>
                 <span class="nav-label">DssEmptyState</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'preview-frame-empty-state'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-empty-state' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
               </button>
 
               <button
@@ -555,6 +563,9 @@
       <div v-else-if="activeComponent === 'preview-frame'" class="component-view">
         <PreviewFrame component="DssInput" />
       </div>
+      <div v-else-if="activeComponent === 'empty-state'" class="component-view">
+        <TestDssEmptyState />
+      </div>
       <div v-else-if="activeComponent === 'preview-frame-empty-state'" class="component-view">
         <PreviewFrame component="DssEmptyState" />
       </div>
@@ -712,6 +723,7 @@ import PreviewFrame from './preview/PreviewFrame.vue'
 import TestDefaultPreview from './TestDefaultPreview.vue'
 import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'
+import TestDssEmptyState from './TestDssEmptyState.vue'
 import TestChip from './TestChip.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestInput from './TestInput.vue'

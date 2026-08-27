@@ -200,8 +200,16 @@ tipografia ainda não tomada — registrado como ponto a revisitar.
 sem regras**, com a justificativa dentro do próprio arquivo — é decisão, não omissão.
 
 Racional: o estado vazio é informação neutra. Pintar ícone ou título com a cor do produto
-competiria com a ação real (o `DssButton` do slot `action`), que **essa sim** segue a marca pelos
-próprios tokens. Verificado nas 3 marcas × 2 temas: ícone e texto neutros nas 6 combinações.
+competiria com a **ação**, que é o lugar legítimo da marca. Verificado nas 3 marcas × 2 temas:
+ícone e texto neutros nas 6 combinações.
+
+> ⚠️ **A segunda metade do racional não se sustenta hoje — e o defeito é do sistema, não deste
+> componente.** Medido no Playground: o `DssButton` do slot `action` fica **#1F86DE nas três
+> marcas**. Causa: `utils/_colors.scss` define `.bg-primary { background: var(--dss-primary) }` —
+> o **primitivo** — enquanto a brandabilidade remapeia o **semântico** `--dss-action-primary`. O
+> botão chega a herdar `--dss-action-primary: #ef7a11` sob `[data-brand="hub"]` e simplesmente
+> não o consome. Registrado no `DEBITO_ABERTO`. A decisão de neutralidade do bloco **não depende**
+> disso e permanece.
 
 ---
 

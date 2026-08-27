@@ -54,6 +54,43 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🟡 **A escala `--dss-surface-*` inverte o próprio sentido no dark** (medido ago/2026, na
+  adequação do DssEmptyState). Valores computados:
+
+  | token | light | dark |
+  |---|---|---|
+  | `--dss-surface-default` | `#ffffff` | `#262626` |
+  | `--dss-surface-subtle` | `#fafafa` | `#525252` |
+  | `--dss-surface-muted` | `#f5f5f5` | `#737373` |
+
+  No light a progressão é **discreta** (4% de passo a partir do branco) — "muted" quer dizer
+  *quase igual ao fundo*. No dark, `muted` (#737373) é o mais **claro** dos três, ou seja o mais
+  **berrante** sobre o `default` (#262626): salta ~45% de luminância. O nome passa a significar o
+  oposto. Consequência medida: um cabeçalho com texto `--dss-text-secondary` sobre
+  `--dss-surface-muted` fica em **~2,8:1** no dark — reprova AA. *Não é o mesmo item do
+  `--dss-text-muted`* (aquele é nome↔valor; este é a **escala inverter a direção** entre temas).
+  Precisa de decisão de cor, não de conserto local.
+
+
+- 🔴 **A classe utilitária `.bg-*` fura a camada semântica — a brandabilidade não chega ao
+  componente colorido por ela** (medido ago/2026, na adequação do DssEmptyState).
+  `utils/_colors.scss:40` define `.bg-primary { background: var(--dss-primary) }` — o
+  **PRIMITIVO**. A brandabilidade remapeia o **SEMÂNTICO** `--dss-action-primary`. Resultado
+  medido: um `DssButton color="primary"` dentro de `[data-brand="hub|water|waste"]` fica
+  **#1F86DE nas três marcas**. O botão chega a **herdar** `--dss-action-primary: #ef7a11`
+  corretamente — e simplesmente não o consome.
+  **Por que é grave:** contradiz a promessa central do sistema, escrita na apresentação técnica
+  §4 ("componentes consomem apenas o semântico; trocar marca re-aponta o semântico, nenhum
+  componente é tocado"). O mapeamento do Quasar está **certo**
+  (`themes/_quasar-tokens-mapping.scss:203` → `--q-primary: var(--dss-action-primary)`); quem
+  fura é o utilitário do próprio DSS, e o comentário logo acima dele diz "usada por TODOS".
+  **Alcance:** 6 composables de componente montam classe `bg-${color}`, mais qualquer consumidor
+  que use o utilitário direto. *Correção sugerida:* apontar `.bg-primary`/`-secondary`/`-tertiary`/
+  `-accent` para os `--dss-action-*`. É de uma linha por cor, mas muda cor em todo o sistema —
+  **exige decisão, não conserto silencioso**. Relacionado a `[[project_brand_prop_vs_data_brand_focus]]`
+  e à nota de `meta.visualProperties` sobre "token aplicado via classe Quasar".
+
+
 - 🔴 **Gate estrutural NÃO verifica o `@forward` em `components/index.scss`** — descoberto ao criar o
   `DssEmptyState` (ago/2026). O componente passou nos **10 gates** (estrutura, contrato, api-docs,
   demo-registry, sandbox-tags, catálogo, type-check…) com as 4 camadas completas e o `.module.scss`

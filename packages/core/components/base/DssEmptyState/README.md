@@ -152,8 +152,11 @@ coloca no slot `action`, e ele traz os próprios estados.
 `4-output/_brands.scss`, não ausência de implementação.
 
 Ele é informação neutra — diz que não há dados, não chama para uma ação de marca. Pintar o
-ícone ou o título com a cor do produto competiria com a ação real (o `DssButton` do slot
-`action`), que **essa sim** segue a marca pelos seus próprios tokens.
+ícone ou o título com a cor do produto competiria com a **ação**, que é o lugar legítimo da marca.
+
+> ⚠️ Medido em ago/2026: a ação **ainda não** segue a marca. A classe utilitária `.bg-primary`
+> usa o primitivo `--dss-primary`, não o semântico `--dss-action-primary`. Defeito do sistema
+> (ver `DEBITO_ABERTO`), não deste componente.
 
 ---
 

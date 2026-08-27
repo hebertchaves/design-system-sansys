@@ -149,6 +149,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "font-family",
           "token": "--dss-font-family-sans",
           "value": null,
@@ -231,6 +237,12 @@
           "token": "--dss-text-primary",
           "value": null,
           "source": "4-output/_states.scss"
+        },
+        {
+          "property": "overflow-wrap",
+          "token": null,
+          "value": "anywhere",
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "font-size",
