@@ -74,6 +74,21 @@ if echo "$STAGED" | grep -qE 'packages/core/(components|tokens|themes|utils)/.+\
   fi
 fi
 
+# ── 0c-bis. Escopo de tema: quem re-aponta PRIMITIVO recomputa o SEMANTICO ────
+# Custom property substitui seu var() onde e' DECLARADA. Um tema que redefine
+# --dss-primary sem que a camada semantica seja redeclarada no escopo dele
+# funciona com o atributo na RAIZ e falha em contexto ANINHADO — em silencio.
+# O repo usa tema aninhado em 5 superficies de preview, entao o silencio custa.
+if echo "$STAGED" | grep -qE 'packages/core/tokens/.+\.scss$|scripts/validate-theme-scopes\.mjs'; then
+  echo "🔍 Validando escopos de tema (primitivo re-apontado ↔ semântico recomputado)..."
+  node scripts/validate-theme-scopes.mjs --quiet
+  if [ $? -ne 0 ]; then
+    echo "❌ Tema re-aponta primitivo sem recomputar o semântico — falha aninhado."
+    echo "   Acrescente o tema a \$primitivos em tokens/semantic/_scopes.scss"
+    exit 1
+  fi
+fi
+
 # ── 0d. Convenções visuais da família de campo (radius-sm + foco sem shadow) ──
 if echo "$STAGED" | grep -qE 'packages/core/components/base/Dss(Input|Select|Textarea|File|Field)/.+\.scss$|scripts/validate-field-conventions\.cjs'; then
   echo "🔍 Validando convenções da família de campo (outlined)..."

@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-26. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-08-27. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -268,10 +268,17 @@
 }
 
 /* ==========================================================================
+   DSS - TOKENS DE AÇÃO
+   ÚNICA CATEGORIA com sufixos -primary/-secondary/-tertiary
+   ========================================================================== */
+/* ==========================================================================
    DSS - TOKENS DE BORDA
    Suporte para TODAS as cores disponíveis
    ========================================================================== */
-:root {
+/* Escopos: alem de :root, os temas que re-apontam PRIMITIVOS. Vale mesmo para
+   os shorthands sem consumidor hoje — o invariante e' binario de proposito,
+   sem lista de excecao. Ver semantic/_scopes.scss. */
+:root, [data-theme=hc], [data-theme=hcdark] {
   /* ===========================================
      0. CORES DE BORDA NEUTRA (semânticas, por PAPEL)
      =========================================== */

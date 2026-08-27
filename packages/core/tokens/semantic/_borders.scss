@@ -3,7 +3,12 @@
    Suporte para TODAS as cores disponíveis
    ========================================================================== */
 
-:root {
+@use 'scopes' as scopes;
+
+/* Escopos: alem de :root, os temas que re-apontam PRIMITIVOS. Vale mesmo para
+   os shorthands sem consumidor hoje — o invariante e' binario de proposito,
+   sem lista de excecao. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
   /* ===========================================
      0. CORES DE BORDA NEUTRA (semânticas, por PAPEL)
      =========================================== */
