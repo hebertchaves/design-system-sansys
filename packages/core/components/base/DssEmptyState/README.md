@@ -76,7 +76,7 @@ import { DssEmptyState, DssButton } from '@sansys/design-system'
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Densidade do bloco |
 | `variant` | `'plain' \| 'bordered'` | `'plain'` | Tratamento do contêiner |
 | `announce` | `boolean` | `true` | Emite `role="status"` + `aria-live="polite"` |
-| `ariaLabel` | `string` | `''` | Rótulo acessível, quando o `title` não basta |
+| `ariaLabel` | `string` | `''` | Rótulo acessível. ⚠️ **Só tem efeito com `announce=true`** — §8.2 |
 
 ### Slots
 
@@ -162,10 +162,11 @@ Ele é informação neutra — diz que não há dados, não chama para uma açã
 
 ## Acessibilidade
 
-- **WCAG 4.1.3 (AA)** — `role="status"` + `aria-live="polite"` por padrão. O caso dominante é
-  o vazio **substituir** um resultado após busca, filtro ou exclusão, e essa troca precisa ser
-  anunciada. Desligue com `:announce="false"` quando o bloco já nasce na tela e nunca muda —
-  anunciar conteúdo estático é ruído.
+- **WCAG 4.1.3 (AA) — claim rebaixada.** O componente **emite** `role="status"` +
+  `aria-live="polite"` quando `announce=true`. Isso **não garante** que o leitor de tela anuncie:
+  no uso canônico (`v-if` montando o componente) a região entra no DOM já preenchida, e várias
+  ATs não anunciam nesse caso. **Para anúncio confiável, mantenha um contêiner `aria-live`
+  persistente em volta da área que troca** — ver `DssEmptyState.md` §8.1.
 - **WCAG 1.4.1 (A)** — a informação está no **texto** do título, nunca apenas no ícone. O ícone
   é emitido como decorativo e não é anunciado.
 - **WCAG 1.4.3 (AA)** — título em `--dss-text-primary`, descrição em `--dss-text-secondary`.

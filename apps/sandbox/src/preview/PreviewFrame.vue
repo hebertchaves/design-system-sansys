@@ -332,8 +332,16 @@ const snippet = computed(() => {
     // como atributo string — colar `options="a,b"` reproduziria o bug de iterar
     // caracteres no código do consumidor.
     const v = coerceKnobValue(k, state[k.name])
-    if (v === k.default || v === '' || v == null || v === false) continue
-    if (v === true) parts.push(k.name)
+    if (v === k.default || v === '' || v == null) continue
+    // `false` NÃO pode ser descartado em bloco: quando o default da prop é `true`
+    // (announce, chipsRemovable…), o `false` é um override SIGNIFICATIVO e some do
+    // snippet — quem COPIA leva um componente diferente do que está na tela. Mesmo
+    // raciocínio já aplicado no postState() acima (v === false → só omite se o
+    // default também for false); a divergência entre os dois caminhos era o bug.
+    // Encontrado na revisão independente do DssEmptyState (R-01), medido byte a
+    // byte contra o DOM. O caso `v === k.default` acima já cobre o false-default-false.
+    if (v === false) parts.push(`:${k.name}="false"`)
+    else if (v === true) parts.push(k.name)
     // Aspas simples DENTRO do binding: `:options="["a"]"` fecharia o atributo no
     // primeiro `"` e o snippet colado não compilaria.
     else if (Array.isArray(v)) parts.push(`:${k.name}="${JSON.stringify(v).replace(/"/g, "'")}"`)

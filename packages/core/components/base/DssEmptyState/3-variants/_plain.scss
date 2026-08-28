@@ -6,9 +6,22 @@
    E o padrao porque o caso dominante e o estado vazio ocupar uma area que ja
    tem contorno proprio (card, tabela, painel) — desenhar uma segunda moldura
    dentro da primeira so adiciona ruido.
-   ========================================================================== */
 
-.dss-empty-state--plain {
-  border: none;
-  background-color: transparent;
-}
+   ESTE ARQUIVO NAO TEM DECLARACAO, E ISSO E DELIBERADO
+   ----------------------------------------------------
+   `plain` e a AUSENCIA de tratamento, nao um tratamento alternativo. As duas
+   variantes sao classes mutuamente exclusivas no mesmo elemento, entao `plain`
+   nao precisa desfazer nada que `bordered` tenha posto — nunca coexistem.
+
+   Ate ago/2026 este arquivo declarava `border: none` e `background-color:
+   transparent`. Ambos sao o valor INICIAL de um `<div>`: o arquivo inteiro era
+   no-op, dando impressao de tratamento que nao existia. Encontrado na revisao
+   independente (R-03), que corrigiu o escopo do achado anterior — a auditoria
+   do construtor pegara o CASO (`forced-color-adjust: auto`) e nao a CLASSE.
+
+   A classe `.dss-empty-state--plain` continua sendo emitida pelo composable e
+   documentada na API: ela existe como ancora de estilo para o consumidor e
+   como valor explicito da prop `variant`. So nao carrega regra propria.
+
+   Mesmo padrao — e mesmo racional — do `4-output/_brands.scss`.
+   ========================================================================== */

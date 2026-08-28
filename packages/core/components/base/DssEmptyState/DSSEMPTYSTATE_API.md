@@ -60,7 +60,7 @@ envolve componente Quasar. O único subcomponente usado é o `DssIcon`.
 | prop | tipo | padrão | descrição |
 |---|---|---|---|
 | `announce` | `boolean` | `true` | Emite `role="status"` + `aria-live="polite"` no elemento raiz |
-| `ariaLabel` | `string` | `''` | Emite `aria-label`. String vazia **não** emite o atributo. |
+| `ariaLabel` | `string` | `''` | Emite `aria-label`. String vazia **não** emite o atributo. ⚠️ **Inerte com `announce=false`**: sem `role`, o rótulo cai num elemento `generic`, papel em que a ARIA 1.2 proíbe `aria-label` — e não é anunciado. |
 
 ### Props que **não** existem — e por quê
 
@@ -258,7 +258,7 @@ conforme a regra de composição do DSS ("layout mora no pai").
 
 | critério | nível | como é atendido | `verifiedBy` |
 |---|---|---|---|
-| 4.1.3 | AA | `role="status"` + `aria-live="polite"` quando `announce` | `aria` |
+| 4.1.3 | AA | **Rebaixada** — o componente *emite* os atributos; o anúncio exige contêiner `aria-live` persistente do consumidor | `test` |
 | 1.4.1 | A | informação no texto; ícone `decorative` | `aria` |
 | 1.4.3 | AA | `--dss-text-primary` / `--dss-text-secondary` | `css` |
 | 2.5.5 | — | não se aplica: sem alvo clicável | — |

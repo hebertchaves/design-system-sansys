@@ -360,18 +360,6 @@
         },
         {
           "property": "border",
-          "token": null,
-          "value": "none",
-          "source": "3-variants/_plain.scss"
-        },
-        {
-          "property": "background-color",
-          "token": null,
-          "value": "transparent",
-          "source": "3-variants/_bordered.scss"
-        },
-        {
-          "property": "border",
           "token": "--dss-border-width-thin",
           "value": null,
           "source": "3-variants/_bordered.scss"
@@ -380,6 +368,12 @@
           "property": "border-radius",
           "token": "--dss-radius-lg",
           "value": null,
+          "source": "3-variants/_bordered.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "transparent",
           "source": "3-variants/_bordered.scss"
         },
         {
@@ -580,8 +574,8 @@
       {
         "criterion": "4.1.3",
         "level": "AA",
-        "implementation": "O bloco anuncia-se como mensagem de status via role=status + aria-live=polite quando substitui um resultado apos busca, filtro ou exclusao. Desligavel pela prop announce para conteudo estatico.",
-        "verifiedBy": "aria"
+        "implementation": "REBAIXADA (ago/2026, apos duas auditorias). O componente EMITE role=status + aria-live=polite quando announce=true — isso e o que o .test.js verifica e o unico fato que esta claim afirma. NAO se afirma mais que o anuncio OCORRE ao substituir um resultado: no uso canonico (v-if montando o componente) a regiao e o texto entram no DOM no mesmo commit, e varias ATs nao anunciam regiao inserida ja preenchida. Duas auditorias tentaram verificar e nenhuma teve leitor de tela disponivel. REQUISITO DE USO: para anuncio confiavel, o consumidor mantem um conteiner com aria-live persistente em volta da area que troca. Ver DssEmptyState.md secao 8.",
+        "verifiedBy": "test"
       },
       {
         "criterion": "1.4.3",

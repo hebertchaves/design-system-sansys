@@ -88,6 +88,12 @@
         "token": "--dss-text-secondary",
         "value": null,
         "source": "2-composition/_base.scss - icone decorativo, baixa enfase"
+      },
+      {
+        "property": "line-height (icon)",
+        "token": "1",
+        "value": null,
+        "source": "2-composition/_base.scss - adimensional, sem token; ver DssEmptyState.md secao 4"
       }
     ],
     "demoContent": "Icone inbox + titulo + descricao",
@@ -101,15 +107,18 @@
   "a11y": {
     "aria": {
       "role": "status",
-      "states": ["aria-live", "aria-label"]
+      "states": [
+        "aria-live",
+        "aria-label"
+      ]
     },
     "keyboard": [],
     "wcag": [
       {
         "criterion": "4.1.3",
         "level": "AA",
-        "implementation": "O bloco anuncia-se como mensagem de status via role=status + aria-live=polite quando substitui um resultado apos busca, filtro ou exclusao. Desligavel pela prop announce para conteudo estatico.",
-        "verifiedBy": "aria"
+        "implementation": "REBAIXADA (ago/2026, apos duas auditorias). O componente EMITE role=status + aria-live=polite quando announce=true — isso e o que o .test.js verifica e o unico fato que esta claim afirma. NAO se afirma mais que o anuncio OCORRE ao substituir um resultado: no uso canonico (v-if montando o componente) a regiao e o texto entram no DOM no mesmo commit, e varias ATs nao anunciam regiao inserida ja preenchida. Duas auditorias tentaram verificar e nenhuma teve leitor de tela disponivel. REQUISITO DE USO: para anuncio confiavel, o consumidor mantem um conteiner com aria-live persistente em volta da area que troca. Ver DssEmptyState.md secao 8.",
+        "verifiedBy": "test"
       },
       {
         "criterion": "1.4.3",
@@ -128,5 +137,16 @@
         "verifiedBy": "aria"
       }
     ]
-  }
+  },
+  "auditHistory": [
+    {
+      "date": "2026-08-28",
+      "phase": "initial-audit",
+      "verdict": "pending",
+      "ncs": 0,
+      "gaps": 12,
+      "auditor": "Claude Opus 5 — Auditor Independente DSS v2.5",
+      "notes": "Revisao independente (auditor != construtor). 0 NC; 16/16 gates de comando e 22/22 testes passando. SELO NAO CONCEDIDO: o item que decide (G-01 — live region inserida junto com o conteudo) permanece NAO VERIFICADO — sem NVDA no host Windows e sem stack a11y (orca/speech-dispatcher/at-spi) na WSL; axe-core nao substitui o teste (analise estatica). Protocolo: \"nao conseguiu verificar -> nao sele\". 12 gaps: 7 novos (R-01 snippet do Preview Frame nao reflete announce=false, defeito de harness em 3 componentes; R-02 ariaLabel+announce=false gera aria-label em papel generic, prop inerte; R-03 _plain.scss integralmente no-op; R-04 doc §4 afirma \"excecoes: nenhuma\" mas ha line-height:1 sem token; R-05 ariaLabel e slot default nunca exercitados nas demos; R-06 titulo <p> sem semantica de heading e sem decisao registrada; R-07 32 live regions numa pagina) + 5 carregados (G-01, G-02, G-04, G-05, G-06). G-02 confirmado e agravado: a ancora verifiedBy:\"aria\" casa /aria|required/i contra o NOME da prop — \"variant\" a satisfaz por substring; alcance 32 componentes / 36 claims, portanto o verde do emit-contract sobre 4.1.3 nao e evidencia. Medido por conta propria e confirmado: neutralidade de marca (3 marcas x 2 temas, 33 icones, cor unica), contraste AA (light 9,59/4,74/4,74; dark 13,88/10,21/10,21), sem estouro em celula de 200px, 12 knobs = 7 props + 5 slots, console limpo. Caminho mais curto para o selo: rebaixar a claim 4.1.3 na doc e no meta, documentando o requisito de conteiner aria-live persistente. Verdict \"pending\" e nao \"non-compliant\" porque ncs=0 — o selo esta retido por claim nao verificada, nao por violacao. Relatorio: docs/Compliance/audits/DssEmptyState/DSSEMPTYSTATE_REAUDIT_v2.2.md"
+    }
+  ]
 }

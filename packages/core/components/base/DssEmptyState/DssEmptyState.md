@@ -132,7 +132,17 @@ Nenhuma altura fixa é definida: o bloco tem a altura do seu conteúdo mais o pa
 
 ### Exceções documentadas (valores sem token)
 
-**Nenhuma.** Todo valor dimensional vem de `var(--dss-*)`.
+**Uma:** `line-height: 1` em `.dss-empty-state__icon` (`2-composition/_base.scss`).
+
+Zera o espaço da linha em volta do glifo, para que o ícone ocupe exatamente a altura declarada
+pelo `--dss-icon-size-*`. É **adimensional** — não existe token de line-height unitário, e usar
+`--dss-line-height-normal` (1.5) somaria altura fantasma ao ícone. Mesmo tratamento e mesma
+justificativa do `DssBadge`, que também o declara no `visualProperties`.
+
+> **Correção (ago/2026):** esta seção afirmava "**Nenhuma**". Era falso. A verificação que a
+> sustentava (`grep -rEn "#[0-9a-fA-F]{3,6}|[0-9]+px"`) só alcança hex e px — **valor
+> adimensional passa batido**. Encontrado na revisão independente (R-04). Todo valor
+> **dimensional** continua vindo de `var(--dss-*)`; o que não era verdade é a ausência de exceção.
 
 > **Nota sobre a medida de leitura.** `max-width` da descrição usa `--dss-spacing-120` (480px).
 > Usar um token de espaçamento como largura é deliberado: a escala de spacing do DSS vai até
@@ -215,7 +225,32 @@ A distinção de ênfase fica por conta do **tamanho**, não de um cinza mais cl
 O caso dominante é o vazio **substituir** um resultado após busca, filtro ou exclusão, e essa
 troca precisa ser anunciada. O padrão serve ao caso dominante; o caso estático desliga.
 
-### 7.5 — A borda de `bordered` é tracejada
+### 7.5 — O título é um `<p>`, não um heading
+
+Registrado após a revisão independente (R-06) apontar que a escolha existia sem decisão declarada.
+
+**Fica `<p>`**, por dois motivos:
+
+1. **O componente não sabe o nível.** `h2` numa página e `h3` noutra depende da hierarquia da tela
+   hospedeira, que o componente não enxerga. Emitir nível fixo arrisca quebrar a hierarquia de
+   cabeçalhos de quem o consome — uma falha de a11y pior do que não ter heading.
+2. **Heading dentro de `role="status"` tem problema próprio:** a região é anunciada de forma
+   atômica, e a estrutura de cabeçalho dentro dela não ajuda a navegação por headings — o bloco é
+   efêmero, não é seção de conteúdo.
+
+**O que se perde:** quem navega por cabeçalhos não encontra o estado vazio como marco. É aceitável
+porque o bloco não é destino de navegação — ele *substitui* conteúdo, e o texto é curto.
+
+**Se um caso real exigir heading**, a saída é o slot `title` (que aceita markup do consumidor), não
+uma mudança de default:
+
+```vue
+<DssEmptyState icon="inbox">
+  <template #title><h3>Nenhuma solicitação</h3></template>
+</DssEmptyState>
+```
+
+### 7.6 — A borda de `bordered` é tracejada
 
 Borda sólida lê como componente ativo (campo, card). O estado vazio não é interativo, e o
 tracejado comunica "área que aguarda conteúdo".
@@ -226,10 +261,54 @@ tracejado comunica "área que aguarda conteúdo".
 
 | critério | nível | implementação | verificado por |
 |---|---|---|---|
-| **4.1.3** Mensagens de status | AA | `role="status"` + `aria-live="polite"` quando `announce` | `aria` |
+| **4.1.3** Mensagens de status | AA | **Rebaixada** — o componente *emite* `role="status"` + `aria-live="polite"`; não se afirma que o anúncio ocorre. Ver 8.1 | `test` |
 | **1.4.1** Uso de cor | A | informação sempre no texto do título; ícone decorativo | `aria` |
 | **1.4.3** Contraste mínimo | AA | título `--dss-text-primary`, descrição e ícone `--dss-text-secondary` | `css` |
 | **2.5.5** Tamanho do alvo | — | **não se aplica** — sem alvo clicável | — |
+
+### 8.1 — Requisito de uso para o anúncio funcionar (leia antes de confiar no `announce`)
+
+O componente emite `role="status"` + `aria-live="polite"`. Isso é o que ele **faz**, e é o que o
+`.test.js` verifica. **Não** é garantia de que o leitor de tela anuncie.
+
+**Por quê:** uma live region só anuncia com confiabilidade quando **já existe no DOM antes** de o
+conteúdo mudar. No uso canônico — `v-if="!items.length"` montando o componente — a região e o
+texto entram no DOM no mesmo commit, e várias tecnologias assistivas não anunciam região inserida
+já preenchida. Ou seja: o cenário mais comum é o mais frágil.
+
+**O que fazer:** mantenha um contêiner com `aria-live` **persistente** em volta da área que troca,
+e deixe o `DssEmptyState` entrar dentro dele:
+
+```vue
+<!-- a região vive aqui, e sobrevive à troca de conteúdo -->
+<div aria-live="polite" aria-atomic="true">
+  <DssLista v-if="itens.length" :itens="itens" />
+  <DssEmptyState v-else :announce="false" icon="search_off" title="Nenhum resultado" />
+</div>
+```
+
+Note o `:announce="false"` — com o contêiner externo cuidando do anúncio, a região interna vira
+redundante (e aninhar live regions gera anúncio duplicado em algumas ATs).
+
+> **Procedência desta seção.** A documentação afirmava que o bloco "anuncia-se ao substituir um
+> resultado". Duas auditorias tentaram verificar; nenhuma tinha leitor de tela disponível
+> (sem NVDA no host, sem `orca`/`at-spi` na WSL). A claim foi **rebaixada** para o que é
+> verificável, em vez de selada sem lastro. Se alguém testar com NVDA/VoiceOver e o anúncio
+> ocorrer no caso de montagem, esta seção pode ser revista **com a evidência anexada**.
+
+### 8.2 — `ariaLabel` depende de `announce`
+
+`ariaLabel` só tem efeito com **`announce=true`**.
+
+Com `announce=false` o componente não emite `role`, e o `aria-label` cai num elemento de papel
+`generic` — a **ARIA 1.2 lista `aria-label` como atributo proibido** nesse papel, e um `generic`
+nomeado não é anunciado. A prop fica **inerte** nessa configuração.
+
+Medido na árvore de acessibilidade do Chrome (revisão independente, R-02). O `axe-core` **não**
+acusa no uso comum: ele só reprova `aria-prohibited-attr` quando o elemento não tem conteúdo
+textual — com título presente, a ferramenta passa e o rótulo mesmo assim não chega ao usuário.
+
+O Playground traz as duas configurações lado a lado, na seção **Estados & Acessibilidade**.
 
 ### Alto contraste (`prefers-contrast: more`)
 

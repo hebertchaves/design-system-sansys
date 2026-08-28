@@ -77,6 +77,14 @@
             <template #description>Veja também a aba <em>Concluídos</em>.</template>
           </DssEmptyState>
         </PgTile>
+        <PgTile code="#default — conteúdo adicional, ABAIXO da ação">
+          <DssEmptyState icon="inbox" title="Nenhuma solicitação">
+            <template #action>
+              <DssButton variant="outline" size="sm">Limpar filtros</DssButton>
+            </template>
+            <small>Filtros ativos: status=aberta, período=7 dias</small>
+          </DssEmptyState>
+        </PgTile>
         <PgTile code="#action com duas ações (flex-wrap)">
           <DssEmptyState icon="inbox" title="Você ainda não tem solicitações">
             <template #action>
@@ -89,7 +97,7 @@
     </PgSection>
 
     <!-- ── 05. Estados ─────────────────────────────────────────────────── -->
-    <PgSection id="estados" index="05" title="Estados" count="0 interativos"
+    <PgSection id="estados" index="05" title="Estados & Acessibilidade" count="4"
       desc="O componente NÃO é interativo: não tem hover, focus, active nem disabled próprios. É decisão de arquitetura declarada, não escopo reduzido — o único elemento focável é o que o consumidor põe no slot action, e ele traz os próprios estados.">
       <PgGrid>
         <PgTile code="announce (default: true) — role=status + aria-live=polite">
@@ -99,6 +107,15 @@
         <PgTile code=":announce=&quot;false&quot; — conteúdo estático">
           <DssEmptyState :announce="false" icon="folder_open" title="Esta pasta está vazia"
             description="Desligue quando o bloco já nasce na tela e nunca muda: anunciar conteúdo estático é ruído." />
+        </PgTile>
+        <PgTile code="ariaLabel + announce (padrão) — rótulo chega">
+          <DssEmptyState icon="inbox" aria-label="Lista de solicitações vazia"
+            title="Nenhuma solicitação" description="Com role=status, o aria-label nomeia a região." />
+        </PgTile>
+        <PgTile code="⚠️ ariaLabel + announce=false — rótulo INERTE">
+          <DssEmptyState :announce="false" icon="inbox" aria-label="Lista de solicitações vazia"
+            title="Nenhuma solicitação"
+            description="Sem role, o aria-label cai num elemento generic — a ARIA 1.2 o proíbe nesse papel e o rótulo NÃO é anunciado. Ver R-02." />
         </PgTile>
       </PgGrid>
     </PgSection>
