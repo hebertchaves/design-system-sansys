@@ -10,7 +10,7 @@
       desc="Três tamanhos ligados a CONTEXTOS DE USO reais, não a uma escala tipográfica livre: sm cabe na linha vazia de uma tabela; md é a área de conteúdo de uma seção; lg é a página inteira vazia.">
       <PgGrid>
         <PgTile v-for="s in SIZES" :key="s" :code="`size=&quot;${s}&quot;`">
-          <DssEmptyState :size="s" icon="inbox" title="Nenhuma solicitação encontrada"
+          <DssEmptyState :announce="false" :size="s" icon="inbox" title="Nenhuma solicitação encontrada"
             description="Ajuste os filtros ou limpe a busca." />
         </PgTile>
       </PgGrid>
@@ -21,7 +21,7 @@
       desc="plain (default) não desenha moldura — o caso dominante é o bloco ocupar uma área que já tem contorno (card, tabela). bordered usa borda TRACEJADA de propósito: borda sólida lê como componente ativo, e o estado vazio não é interativo.">
       <PgGrid>
         <PgTile v-for="v in VARIANTS" :key="v" :code="`variant=&quot;${v}&quot;`">
-          <DssEmptyState :variant="v" icon="attach_file" title="Nenhum anexo"
+          <DssEmptyState :announce="false" :variant="v" icon="attach_file" title="Nenhum anexo"
             description="Arraste arquivos para esta área." />
         </PgTile>
       </PgGrid>
@@ -32,18 +32,18 @@
       desc="Todas as props de conteúdo são opcionais de propósito. Um estado vazio só de título é legítimo; um só de ícone (célula estreita) também.">
       <PgGrid>
         <PgTile code="icon + title + description">
-          <DssEmptyState icon="search_off" title="Nenhum resultado"
+          <DssEmptyState :announce="false" icon="search_off" title="Nenhum resultado"
             description="Nenhum registro corresponde aos filtros aplicados." />
         </PgTile>
         <PgTile code="icon + title">
-          <DssEmptyState icon="event_busy" title="Nenhum evento agendado para hoje" />
+          <DssEmptyState :announce="false" icon="event_busy" title="Nenhum evento agendado para hoje" />
         </PgTile>
         <PgTile code="title + description (sem ícone)">
-          <DssEmptyState title="Caixa de entrada vazia"
+          <DssEmptyState :announce="false" title="Caixa de entrada vazia"
             description="Você está em dia — não há nada aguardando resposta." />
         </PgTile>
         <PgTile code="só icon">
-          <DssEmptyState size="sm" icon="folder_open" />
+          <DssEmptyState :announce="false" size="sm" icon="folder_open" />
         </PgTile>
       </PgGrid>
     </PgSection>
@@ -53,7 +53,7 @@
       desc="5 slots. Os três de conteúdo (icon, title, description) PRECEDEM a prop equivalente — passar os dois não é erro, a prop é ignorada (CCI §3.2). O slot action é o que tira o usuário do vazio.">
       <PgGrid>
         <PgTile code="#action — desfaz a causa do vazio">
-          <DssEmptyState icon="search_off" title="Nenhuma solicitação encontrada"
+          <DssEmptyState :announce="false" icon="search_off" title="Nenhuma solicitação encontrada"
             description="Nenhum registro corresponde aos filtros.">
             <template #action>
               <DssButton variant="outline" size="sm">Limpar filtros</DssButton>
@@ -61,7 +61,7 @@
           </DssEmptyState>
         </PgTile>
         <PgTile code="#icon — ilustração própria (precede a prop)">
-          <DssEmptyState title="Nada por aqui" description="SVG fornecido pelo consumidor.">
+          <DssEmptyState :announce="false" title="Nada por aqui" description="SVG fornecido pelo consumidor.">
             <template #icon>
               <svg viewBox="0 0 48 48" aria-hidden="true" fill="none"
                    stroke="currentColor" stroke-width="2">
@@ -72,13 +72,13 @@
           </DssEmptyState>
         </PgTile>
         <PgTile code="#title + #description — rich text">
-          <DssEmptyState icon="filter_alt_off">
+          <DssEmptyState :announce="false" icon="filter_alt_off">
             <template #title>Nenhum item em <strong>Pendentes</strong></template>
             <template #description>Veja também a aba <em>Concluídos</em>.</template>
           </DssEmptyState>
         </PgTile>
         <PgTile code="#default — conteúdo adicional, ABAIXO da ação">
-          <DssEmptyState icon="inbox" title="Nenhuma solicitação">
+          <DssEmptyState :announce="false" icon="inbox" title="Nenhuma solicitação">
             <template #action>
               <DssButton variant="outline" size="sm">Limpar filtros</DssButton>
             </template>
@@ -86,7 +86,7 @@
           </DssEmptyState>
         </PgTile>
         <PgTile code="#action com duas ações (flex-wrap)">
-          <DssEmptyState icon="inbox" title="Você ainda não tem solicitações">
+          <DssEmptyState :announce="false" icon="inbox" title="Você ainda não tem solicitações">
             <template #action>
               <DssButton color="primary" size="sm" icon="add">Nova</DssButton>
               <DssButton variant="outline" size="sm">Importar</DssButton>
@@ -98,7 +98,7 @@
 
     <!-- ── 05. Estados ─────────────────────────────────────────────────── -->
     <PgSection id="estados" index="05" title="Estados & Acessibilidade" count="4"
-      desc="O componente NÃO é interativo: não tem hover, focus, active nem disabled próprios. É decisão de arquitetura declarada, não escopo reduzido — o único elemento focável é o que o consumidor põe no slot action, e ele traz os próprios estados.">
+      desc="O componente NÃO é interativo: não tem hover, focus, active nem disabled próprios. É decisão de arquitetura declarada, não escopo reduzido — o único elemento focável é o que o consumidor põe no slot action, e ele traz os próprios estados. ⚠️ Só os tiles DESTA seção usam announce; todos os outros da página recebem :announce=&quot;false&quot;, praticando o que a doc §7.4 recomenda — vários role=status simultâneos enfileiram anúncios polite. Antes desta correção a página tinha 34 live regions.">
       <PgGrid>
         <PgTile code="announce (default: true) — role=status + aria-live=polite">
           <DssEmptyState icon="check_circle" title="Anuncia-se a leitores de tela"
@@ -109,11 +109,11 @@
             description="Desligue quando o bloco já nasce na tela e nunca muda: anunciar conteúdo estático é ruído." />
         </PgTile>
         <PgTile code="ariaLabel + announce (padrão) — rótulo chega">
-          <DssEmptyState icon="inbox" aria-label="Lista de solicitações vazia"
+          <DssEmptyState icon="inbox" ariaLabel="Lista de solicitações vazia"
             title="Nenhuma solicitação" description="Com role=status, o aria-label nomeia a região." />
         </PgTile>
         <PgTile code="⚠️ ariaLabel + announce=false — rótulo INERTE">
-          <DssEmptyState :announce="false" icon="inbox" aria-label="Lista de solicitações vazia"
+          <DssEmptyState :announce="false" icon="inbox" ariaLabel="Lista de solicitações vazia"
             title="Nenhuma solicitação"
             description="Sem role, o aria-label cai num elemento generic — a ARIA 1.2 o proíbe nesse papel e o rótulo NÃO é anunciado. Ver R-02." />
         </PgTile>
@@ -126,7 +126,7 @@
       <PgGrid>
         <PgTile v-for="b in BRANDS" :key="b" :code="`[data-brand=&quot;${b}&quot;]`">
           <div :data-brand="b">
-            <DssEmptyState size="sm" icon="inbox" title="Nenhuma solicitação"
+            <DssEmptyState :announce="false" size="sm" icon="inbox" title="Nenhuma solicitação"
               description="Bloco neutro por decisão; a ação deveria seguir a marca.">
               <template #action>
                 <DssButton color="primary" size="sm">Nova solicitação</DssButton>
@@ -146,16 +146,16 @@
             <div class="ctx-tabela__head">
               <span>Solicitação</span><span>Status</span><span>Data</span>
             </div>
-            <DssEmptyState size="sm" icon="table_rows" title="Sem registros no período" />
+            <DssEmptyState :announce="false" size="sm" icon="table_rows" title="Sem registros no período" />
           </div>
         </PgTile>
         <PgTile code="área de anexos (bordered)">
-          <DssEmptyState variant="bordered" size="sm" icon="attach_file" title="Nenhum anexo"
+          <DssEmptyState :announce="false" variant="bordered" size="sm" icon="attach_file" title="Nenhum anexo"
             description="Arraste arquivos para esta área." />
         </PgTile>
         <PgTile code="célula estreita — sem estouro (G1)">
           <div class="ctx-estreito">
-            <DssEmptyState size="sm" icon="inbox"
+            <DssEmptyState :announce="false" size="sm" icon="inbox"
               title="Nenhumaresponsabilidadeatribuídaaesteusuário"
               description="Palavra longa sem espaço para provar que o bloco não estoura a célula." />
           </div>
@@ -168,7 +168,7 @@
       desc="As 6 combinações. Verificar em LIGHT e DARK: o bloco é transparente por desenho, então a legibilidade depende da superfície do contêiner.">
       <PgGrid>
         <PgTile v-for="c in MATRIZ" :key="c.k" :code="c.k">
-          <DssEmptyState :size="c.size" :variant="c.variant" icon="inbox"
+          <DssEmptyState :announce="false" :size="c.size" :variant="c.variant" icon="inbox"
             title="Nenhuma solicitação" description="Ajuste os filtros." />
         </PgTile>
       </PgGrid>

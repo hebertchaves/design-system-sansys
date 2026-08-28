@@ -53,11 +53,11 @@
    ========================================================================== */
 
 @media (forced-colors: active) {
+  /* So a moldura precisa de regra: borda transparente DESAPARECE em
+     forced-colors. O icone nao entra aqui — `forced-color-adjust: auto` e o
+     valor INICIAL da propriedade, entao declara-lo seria no-op disfarcado de
+     tratamento. Removido na revalidacao independente (V-01). */
   .dss-empty-state--bordered {
     border-color: CanvasText;
-  }
-
-  .dss-empty-state__icon {
-    forced-color-adjust: auto;
   }
 }

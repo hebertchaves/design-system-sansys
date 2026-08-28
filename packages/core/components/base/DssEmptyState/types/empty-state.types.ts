@@ -109,14 +109,15 @@ export interface EmptyStateProps {
   // ========================================
 
   /**
-   * Anuncia o bloco a leitores de tela quando ele aparece.
+   * Emite `role="status"` + `aria-live="polite"` no elemento raiz.
    *
-   * Emite `role="status"` + `aria-live="polite"`. Verdadeiro por padrão porque
-   * o caso dominante é o estado vazio SUBSTITUIR um resultado — após busca,
-   * filtro ou exclusão —, e essa troca precisa ser anunciada.
+   * NÃO garante que o leitor de tela anuncie: uma live region só anuncia com
+   * confiabilidade quando já existe no DOM antes de o conteúdo mudar, e no uso
+   * canônico (`v-if` montando o componente) região e texto entram juntos.
+   * Para anúncio confiável, mantenha um contêiner `aria-live` PERSISTENTE em
+   * volta da área que troca — ver `DssEmptyState.md` §8.1.
    *
-   * **Desligue** quando o bloco já está na tela no primeiro render e nunca
-   * muda: anunciar conteúdo estático é ruído para quem usa leitor de tela.
+   * Só tem efeito sobre `ariaLabel` quando `true` (§8.2).
    * @default true
    */
   announce?: boolean

@@ -115,6 +115,7 @@ Não é escala tipográfica livre — são três contextos de uso reais.
 | padding (sm) | `--dss-spacing-4` / `--dss-spacing-3` |
 | padding (lg) | `--dss-spacing-12` / `--dss-spacing-6` |
 | gap | `--dss-spacing-3` (sm: `--dss-spacing-2` · lg: `--dss-spacing-4`) |
+| respiro da ação (`margin-top`) | `--dss-spacing-1` |
 | família tipográfica | `--dss-font-family-sans` |
 | título — tamanho | `--dss-font-size-lg` (sm: `--dss-font-size-md` · lg: `--dss-font-size-xl`) |
 | título — peso | `--dss-font-weight-semibold` |

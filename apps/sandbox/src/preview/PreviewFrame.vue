@@ -332,7 +332,12 @@ const snippet = computed(() => {
     // como atributo string — colar `options="a,b"` reproduziria o bug de iterar
     // caracteres no código do consumidor.
     const v = coerceKnobValue(k, state[k.name])
-    if (v === k.default || v === '' || v == null) continue
+    // `k.default ?? false`: booleano SEM @default no tipo chega com default
+    // `undefined`, e `false === undefined` é falso — sem o coalescing, todo boolean
+    // em repouso vazava para o snippet (`:square="false" :dense="false" …` no
+    // DssChip sem tocar em knob). Foi a REGRESSÃO que a correção do R-01
+    // introduziu: 6 componentes hoje, 35 latentes, contra os 3 do bug original.
+    if (v === (k.default ?? false) || v === '' || v == null) continue
     // `false` NÃO pode ser descartado em bloco: quando o default da prop é `true`
     // (announce, chipsRemovable…), o `false` é um override SIGNIFICATIVO e some do
     // snippet — quem COPIA leva um componente diferente do que está na tela. Mesmo

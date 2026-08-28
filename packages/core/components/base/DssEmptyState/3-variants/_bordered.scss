@@ -11,5 +11,6 @@
 .dss-empty-state--bordered {
   border: var(--dss-border-width-thin) dashed var(--dss-border-default);
   border-radius: var(--dss-radius-lg);
-  background-color: transparent;
+  /* Sem `background-color: transparent` — e o valor inicial de um <div>. Era
+     no-op, irmao do que ja saiu do _plain.scss (V-01). */
 }

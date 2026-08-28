@@ -63,7 +63,7 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": true,
-        "description": "Anuncia o bloco a leitores de tela quando ele aparece."
+        "description": "Emite `role=\"status\"` + `aria-live=\"polite\"` no elemento raiz."
       },
       {
         "name": "ariaLabel",
@@ -371,12 +371,6 @@
           "source": "3-variants/_bordered.scss"
         },
         {
-          "property": "background-color",
-          "token": null,
-          "value": "transparent",
-          "source": "3-variants/_bordered.scss"
-        },
-        {
           "property": "border-style",
           "token": null,
           "value": "solid",
@@ -392,12 +386,6 @@
           "property": "border-color",
           "token": null,
           "value": "CanvasText",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "forced-color-adjust",
-          "token": null,
-          "value": "auto",
           "source": "4-output/_states.scss"
         }
       ]

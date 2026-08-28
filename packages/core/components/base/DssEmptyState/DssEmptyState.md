@@ -26,7 +26,8 @@ Componente **base**, Fase 1. `classification: "Visual"`. Não envolve componente
 
 1. **Não interativo** — sem hover, focus, active ou disabled próprios.
 2. **Neutro por decisão** — não se colore por marca nem por cor semântica.
-3. **Anuncia-se por padrão** — `role="status"` + `aria-live="polite"`, desligável.
+3. **Emite `role="status"` + `aria-live="polite"` por padrão** — desligável. Emitir ≠ ser
+   anunciado: ver §8.1 antes de contar com o anúncio.
 4. **Ícone decorativo** — a informação vive no texto, sempre.
 5. **Três tamanhos** ligados a contextos de uso reais, não a uma escala tipográfica livre.
 
@@ -116,7 +117,7 @@ Tabela completa em [`README.md`](./README.md#tokens-consumidos). Categorias cons
 
 | categoria | tokens |
 |---|---|
-| Espaçamento | `--dss-spacing-{2,3,4,6,8,12,96,120}` |
+| Espaçamento | `--dss-spacing-{1,2,3,4,6,8,12,96,120}` |
 | Tipografia | `--dss-font-family-sans` · `--dss-font-size-{sm,md,lg,xl}` · `--dss-font-weight-{normal,semibold}` · `--dss-line-height-{normal,relaxed}` |
 | Texto | `--dss-text-primary` · `--dss-text-secondary` |
 | Ícone | `--dss-icon-size-{md,lg,xl}` |
@@ -222,8 +223,13 @@ A distinção de ênfase fica por conta do **tamanho**, não de um cinza mais cl
 
 ### 7.4 — `announce` é `true` por padrão
 
-O caso dominante é o vazio **substituir** um resultado após busca, filtro ou exclusão, e essa
-troca precisa ser anunciada. O padrão serve ao caso dominante; o caso estático desliga.
+O padrão serve ao caso mais comum (o bloco entra no lugar de um resultado) e o caso estático
+desliga. **Mas emitir os atributos não é o mesmo que ser anunciado** — a condição de
+confiabilidade está em §8.1, e nenhuma das duas auditorias conseguiu testá-la com leitor de tela.
+
+**Vários estados vazios na mesma tela:** mantenha `announce` apenas naquele que responde à ação do
+usuário. Vários `role="status"` simultâneos enfileiram anúncios `polite` e geram verbosidade —
+num dashboard com múltiplos painéis vazios, o resto deve usar `:announce="false"`.
 
 ### 7.5 — O título é um `<p>`, não um heading
 

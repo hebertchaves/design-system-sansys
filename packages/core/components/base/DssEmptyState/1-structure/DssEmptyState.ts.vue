@@ -2,10 +2,10 @@
   <!-- ==========================================================================
        DssEmptyState — o que a tela mostra quando NÃO há dados.
 
-       `role="status"` + `aria-live="polite"` por padrão: o caso dominante é o
-       estado vazio SUBSTITUIR um resultado (após busca, filtro ou exclusão), e
-       essa troca precisa ser anunciada. Desligável via `announce` para quando o
-       bloco já nasce na tela e nunca muda — anunciar conteúdo estático é ruído.
+       `role="status"` + `aria-live="polite"` por padrão. O componente EMITE os
+       atributos; NÃO se afirma que o anúncio ocorre — região inserida já
+       preenchida não é anunciada de forma confiável. O requisito de uso (contêiner
+       `aria-live` persistente no consumidor) está em `DssEmptyState.md` §8.1.
        ========================================================================== -->
   <div
     :class="rootClasses"
