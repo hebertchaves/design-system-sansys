@@ -173,7 +173,8 @@ export interface TextareaProps {
    * Altura máxima do campo (CSS value, ex.: '300px', '50vh').
    * Implementado via CSS custom property --dss-textarea-max-height.
    * Útil para limitar o crescimento quando autogrow=true.
-   * @default undefined (sem limite)
+   * Sem limite.
+   * @default undefined
    */
   maxHeight?: string
 
@@ -195,7 +196,8 @@ export interface TextareaProps {
 
   /**
    * Tabindex customizado
-   * @default null (usa 0 por padrão)
+   * Usa 0 por padrão.
+   * @default null
    */
   tabindex?: number | string | null
 }

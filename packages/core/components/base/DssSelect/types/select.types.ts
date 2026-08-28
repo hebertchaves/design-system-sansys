@@ -220,7 +220,8 @@ export interface SelectProps {
 
   /**
    * Tabindex customizado
-   * @default null (usa 0 por padrão)
+   * Usa 0 por padrão.
+   * @default null
    */
   tabindex?: number | string | null
 }

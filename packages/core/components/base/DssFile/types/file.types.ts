@@ -72,13 +72,15 @@ export interface FileProps {
 
   /**
    * Número máximo de arquivos (apenas quando `multiple=true`)
-   * @default undefined (ilimitado)
+   * Ilimitado.
+   * @default undefined
    */
   maxFiles?: number
 
   /**
    * Tamanho máximo por arquivo em bytes
-   * @default undefined (ilimitado)
+   * Ilimitado.
+   * @default undefined
    * @example 5242880 (5MB)
    */
   maxFileSize?: number
@@ -202,7 +204,8 @@ export interface FileProps {
 
   /**
    * Tabindex customizado
-   * @default null (usa 0 por padrão)
+   * Usa 0 por padrão.
+   * @default null
    */
   tabindex?: number | string | null
 }

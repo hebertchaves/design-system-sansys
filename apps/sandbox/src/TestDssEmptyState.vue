@@ -101,8 +101,8 @@
       desc="O componente NÃO é interativo: não tem hover, focus, active nem disabled próprios. É decisão de arquitetura declarada, não escopo reduzido — o único elemento focável é o que o consumidor põe no slot action, e ele traz os próprios estados. ⚠️ Só os tiles DESTA seção usam announce; todos os outros da página recebem :announce=&quot;false&quot;, praticando o que a doc §7.4 recomenda — vários role=status simultâneos enfileiram anúncios polite. Antes desta correção a página tinha 34 live regions.">
       <PgGrid>
         <PgTile code="announce (default: true) — role=status + aria-live=polite">
-          <DssEmptyState icon="check_circle" title="Anuncia-se a leitores de tela"
-            description="O caso dominante é o vazio SUBSTITUIR um resultado após busca ou filtro — essa troca precisa ser anunciada." />
+          <DssEmptyState icon="check_circle" title="Emite role=status e aria-live=polite"
+            description="Emitir os atributos NÃO garante que o leitor de tela anuncie: região inserida já preenchida não é anunciada de forma confiável. O anúncio exige um contêiner aria-live persistente no consumidor — ver DssEmptyState.md §8.1." />
         </PgTile>
         <PgTile code=":announce=&quot;false&quot; — conteúdo estático">
           <DssEmptyState :announce="false" icon="folder_open" title="Esta pasta está vazia"

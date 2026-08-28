@@ -149,7 +149,7 @@
         "name": "maxHeight",
         "type": "string",
         "controlHint": "text",
-        "default": "undefined (sem limite)",
+        "default": "undefined",
         "description": "Altura máxima do campo (CSS value, ex.: '300px', '50vh')."
       },
       {
@@ -169,7 +169,7 @@
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
-        "default": "null (usa 0 por padrão)",
+        "default": "null",
         "description": "Tabindex customizado"
       }
     ],

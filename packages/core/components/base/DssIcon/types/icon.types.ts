@@ -93,7 +93,8 @@ export interface IconProps {
    * Tamanho do icone via tokens DSS
    * Mapeado para --dss-icon-size-{size}
    *
-   * @default 'md' (24px)
+   * 24px.
+   * @default 'md'
    */
   size?: IconSize
 
@@ -102,7 +103,8 @@ export interface IconProps {
    * Aplicada via classe utilitaria .text-{color}
    * Quando nulo, herda cor do contexto (currentColor)
    *
-   * @default null (herda do contexto)
+   * Herda do contexto.
+   * @default null
    */
   color?: IconColor | null
 
@@ -116,7 +118,8 @@ export interface IconProps {
    * (DssButton, DssChip, DssAvatar, DssCheckbox...).
    *
    * @see docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md (§2.2)
-   * @default false (standalone usa o token de size)
+   * Standalone usa o token de size; ver `inline` no README.
+   * @default false
    */
   inline?: boolean
 

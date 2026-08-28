@@ -64,6 +64,22 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🟡 **A API de slots não é verificada pelo TypeScript — `defineSlots` ausente em 37 de 57
+  componentes base** (aberto desde ago/2026; **registrado com 3 rodadas de atraso**). Componentes
+  declaram uma interface `XxxSlots` em `types/*.types.ts`, mas o SFC não a aplica via
+  `defineSlots` — a interface é documentação, não contrato verificado. Um consumidor que escreva
+  `#titel` em vez de `#title` **não recebe erro de tipo**.
+  **Não é desvio de um componente:** entre os 57 base que declaram slots no contrato, **37 não
+  usam `defineSlots`** — incluindo `DssBadge`, `DssBanner`, `DssButton` e `DssChip`. Quem usa é a
+  minoria (27 no total do repo). *Decisão pendente:* adotar `defineSlots` como convenção — e, se
+  adotada, migrar os 37, não consertar isolado.
+  **Como este item chegou aqui atrasado:** levantado na 1ª auditoria do `DssEmptyState` (G-04),
+  citado em três Cargas como "aberto · sistêmico" e **nunca escrito no índice de débito**. A
+  revalidação 2 o pegou (V-08) — é a mesma fuga de *carry-forward* que já tinha engolido o G-03,
+  e que a Carga foi escrita para impedir. Mudou o item, não o mecanismo: **citar numa Carga não é
+  registrar.** O registro é aqui.
+
+
 - 🟡 **A escala `--dss-surface-*` inverte o próprio sentido no dark** (medido ago/2026, na
   adequação do DssEmptyState). Valores computados:
 

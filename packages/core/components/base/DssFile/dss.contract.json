@@ -43,14 +43,14 @@
         "name": "maxFiles",
         "type": "number",
         "controlHint": "stepper",
-        "default": "undefined (ilimitado)",
+        "default": "undefined",
         "description": "Número máximo de arquivos (apenas quando `multiple=true`)"
       },
       {
         "name": "maxFileSize",
         "type": "number",
         "controlHint": "stepper",
-        "default": "undefined (ilimitado)",
+        "default": "undefined",
         "description": "Tamanho máximo por arquivo em bytes"
       },
       {
@@ -175,7 +175,7 @@
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
-        "default": "null (usa 0 por padrão)",
+        "default": "null",
         "description": "Tabindex customizado"
       }
     ],

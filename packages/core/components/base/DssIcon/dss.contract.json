@@ -31,7 +31,7 @@
         "name": "size",
         "type": "IconSize",
         "controlHint": "select",
-        "default": "md' (24px)",
+        "default": "md",
         "description": "Tamanho do icone via tokens DSS",
         "validValues": [
           "xs",
@@ -45,7 +45,7 @@
         "name": "color",
         "type": "IconColor | null",
         "controlHint": "picker-color",
-        "default": "null (herda do contexto)",
+        "default": "null",
         "description": "Cor semantica do icone",
         "validValues": [
           "primary",
@@ -62,7 +62,7 @@
         "name": "inline",
         "type": "boolean",
         "controlHint": "toggle",
-        "default": "false (standalone usa o token de size)",
+        "default": false,
         "description": "Modo inline (sizing dirigido pelo host)"
       },
       {

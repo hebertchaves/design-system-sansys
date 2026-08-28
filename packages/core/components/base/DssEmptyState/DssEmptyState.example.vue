@@ -2,6 +2,15 @@
   <div class="dss-empty-state-examples">
     <h1>DssEmptyState - Exemplos Completos</h1>
 
+    <!-- Estes cenários convivem numa página só, então praticam a §7.4: `announce`
+         fica APENAS no que responde à ação do usuário (cenário 1, busca sem
+         resultado). Vários `role="status"` simultâneos enfileiram anúncios polite.
+         Em uso real, cada cenário aparece sozinho e mantém o default. -->
+    <p class="example-note">
+      ⚠️ Os cenários abaixo usam <code>:announce="false"</code> por conviverem na mesma página
+      (§7.4). Isoladamente, cada um manteria o default <code>true</code>.
+    </p>
+
     <!-- 1. Busca sem resultado — o caso mais comum -->
     <section class="example-section">
       <h2>1. Busca sem resultado</h2>
@@ -32,6 +41,7 @@
       </p>
       <div class="example-frame">
         <DssEmptyState
+          :announce="false"
           size="lg"
           icon="inbox"
           title="Você ainda não tem solicitações"
@@ -52,6 +62,7 @@
       </p>
       <div class="example-frame example-frame--table">
         <DssEmptyState
+          :announce="false"
           size="sm"
           icon="table_rows"
           title="Sem registros no período"
@@ -68,6 +79,7 @@
       </p>
       <div class="example-frame">
         <DssEmptyState
+          :announce="false"
           variant="bordered"
           icon="attach_file"
           title="Nenhum anexo"
@@ -88,7 +100,7 @@
         um botão que não resolve nada. Sem descrição e sem ação, só o fato.
       </p>
       <div class="example-frame">
-        <DssEmptyState icon="event_busy" title="Nenhum evento agendado para hoje" />
+        <DssEmptyState :announce="false" icon="event_busy" title="Nenhum evento agendado para hoje" />
       </div>
     </section>
 
@@ -99,7 +111,7 @@
         O slot tem precedência sobre a prop <code>icon</code>. Use para SVG de marca.
       </p>
       <div class="example-frame">
-        <DssEmptyState title="Nada por aqui" description="Ilustração fornecida pelo consumidor.">
+        <DssEmptyState :announce="false" title="Nada por aqui" description="Ilustração fornecida pelo consumidor.">
           <template #icon>
             <svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" fill="none"
                  stroke="currentColor" stroke-width="2">
