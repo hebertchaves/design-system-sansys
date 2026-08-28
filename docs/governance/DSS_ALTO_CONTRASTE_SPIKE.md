@@ -337,6 +337,16 @@ Por isso o re-apontamento do primitivo não alcançava a marca: `{theme:'hc', br
 
 Verificado **no browser**, na cascata real: **32 células (2 temas × 4 contextos × 4 níveis), todas AAA, zero falhas.**
 
+> ⚠️ **Escopo desta afirmação: vale para o ATRIBUTO `[data-brand]`, não para a prop `brand`.**
+> Descoberto depois: o `4-output/_brands.scss` de 92 componentes pinta com o
+> primitivo cru (`var(--dss-hub-600)`), fora da camada de token — então nada que
+> remapeie o semântico o alcança, HC incluído. Medido: pelo atributo o texto
+> branco vai de 2.81 para 8.88; pela prop fica em **2.81**. São **577 usos** contra
+> 175 do semântico, ou seja a maior parte da brandabilidade passa por fora.
+> Frente própria, com tamanho, riscos e piloto sugerido:
+> **`DSS_FRENTE_MARCA_PRIMITIVOS.md`**. Não é pré-requisito do HC — o HC funciona
+> via atributo; essa frente **amplia** o alcance dele.
+
 #### 5.2.2 ✅ RESOLVIDO — contexto aninhado
 
 Custom property substitui seu `var()` no elemento **onde é declarada**. `--dss-action-primary: var(--dss-primary)` é declarada em `:root` e computa ali; um `[data-theme="hc"]` mais abaixo redefine o primitivo tarde demais — o semântico já virou valor fixo e só é herdado.

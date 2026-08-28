@@ -11,6 +11,16 @@
 
 ## Frentes desta onda (cadeia de fonte única / contraste)
 
+- 🔲 **(d) Brandabilidade passa por fora da camada de token** — **medida, não iniciada.**
+  92 componentes pintam marca com o primitivo cru (`var(--dss-hub-600)`) no
+  `4-output/_brands.scss`, em vez do semântico. **577 usos** contra 175 do
+  `--dss-action-primary`. Consequência medida: o alto contraste alcança o atributo
+  `[data-brand]` (texto branco 2.81 → 8.88) e **não** alcança a prop `brand`
+  (fica em 2.81) — que é o caminho que os produtos usam. Mesma raiz já registrada
+  em "prop brand não remapeia action-primary", agora com número.
+  Tamanho, riscos, forma da correção e piloto sugerido (Badge/Button/Chip):
+  **`DSS_FRENTE_MARCA_PRIMITIVOS.md`**. Não bloqueia o HC.
+
 - ✅ **(a) Escalar `dss.contract.json`** — **CONCLUÍDO (76/76)**, `--all --strict` exit 0. Todos os
   grupos (Form/Input 23, Feedback 1, Navigation 9, Overlay 1, Data 3, Layout 10, Outros 27) emitidos,
   schema-válidos, a11y verificada. Relatórios em `relatorios/CONTRATOS_*.md`. `classification` é enum
