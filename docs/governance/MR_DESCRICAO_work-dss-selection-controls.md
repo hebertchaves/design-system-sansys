@@ -1,9 +1,9 @@
 # Onda de adequação de UI + DssEmptyState + governança de selagem
 
-**50 commits · 288 arquivos · +22.384 / −15.096**
+**55 commits · 305 arquivos · +24.457 / −15.125**
 
 > ⚠️ MR grande, resultado de uma onda longa. A leitura mais rápida é pela seção
-> **"Como revisar isto sem ler 50 commits"** no fim.
+> **"Como revisar isto sem ler 55 commits"** no fim.
 
 ---
 
@@ -96,15 +96,21 @@ Temas `hc`/`hcdark` adicionados **inertes** — nenhum efeito até alguém ligar
 7 props · 5 slots · **0 eventos** · 3 tamanhos · 2 variantes · 22 testes.
 Não interativo. Golden Context `DssBanner`, Golden Reference `DssBadge`.
 
-> 🟡 **Entra como `draft`, sem selo.** Passou por adequação de UI, auditoria técnica (0 NC) e
-> **revisão independente** por outro agente (7 gaps, todos verificados e 5 fechados). O selo
-> depende de uma última revalidação — ver
-> `docs/Compliance/audits/DssEmptyState/`.
+> ✅ **SELO DSS v2.2 CONCEDIDO** — 89º componente selado.
 >
-> **Ressalva que acompanha o componente:** a claim WCAG 4.1.3 foi **rebaixada** porque nenhuma
-> das duas auditorias conseguiu testá-la com leitor de tela. O componente afirma apenas que
-> *emite* `role="status"`; o anúncio confiável exige contêiner `aria-live` persistente no
-> consumidor (documentado em `DssEmptyState.md` §8.1). Isso está no `dss.meta.json` — não some.
+> **Quatro passagens de auditoria, e o número é o dado mais útil:** auto-auditoria (0 NC, 6 gaps)
+> → revisão independente por outro agente (7 gaps novos) → revalidação (1 NC) → revalidação 2
+> (1 NC) → revalidação 3 (conforme). **21 itens distintos**, e a mesma afirmação falsa sobrevivendo
+> em **5 lugares**, um por rodada. O que fechou o ciclo foi passar a auditar a **demo renderizada**,
+> não o fonte — três rodadas corrigiram comentário, tipo, contrato e prosa sem olhar o texto que a
+> tela exibe.
+>
+> **Três ressalvas constam do selo, e não somem com ele:**
+> 1. **Claim WCAG 4.1.3 rebaixada sem teste de leitor de tela** — nenhuma das quatro passagens teve
+>    NVDA/VoiceOver disponível. O componente afirma apenas que *emite* `role="status"`; o anúncio
+>    confiável exige contêiner `aria-live` persistente no consumidor (`DssEmptyState.md` §8.1).
+> 2. **Pré-prompt retroativo** — escrito depois do código, declarado no próprio documento.
+> 3. **Dependências sistêmicas declaradas** — ver a seção de dívida.
 
 ### Adequados — `DssChip` · `DssField` · `DssFile` · `DssInput`
 
@@ -136,8 +142,17 @@ Todos verdes no `HEAD` da branch: estrutura · tokens SCSS · paridade API↔doc
 grafia de variante · registry do DemoRenderer · tags do sandbox · páginas do portal · barrel ·
 catálogo · type-check · contratos (`emit-contract --all --strict`).
 
+Catálogo: **92 componentes, 89 selados**, 0 contradições status↔selo.
+
 Dois gates **novos** nesta branch: token definido só em escopo condicional, e tema que re-aponta
 primitivo sem recomputar o semântico.
+
+**Uma quebra de infraestrutura consertada:** `npm run portal:sync-docs` lançava
+`ReferenceError: require is not defined in ES module scope` — script CommonJS num pacote
+`"type": "module"`. Quebra de jun/2026 que só apareceu agora, porque o selo do `DssEmptyState` foi
+o primeiro a precisar do gerador desde a migração para ESM. Renomeado para `.cjs`, com o racional
+no cabeçalho. ⚠️ Há outra worktree (`work/dss-a11y-contraste`) que recebeu a mesma tarefa — se ela
+também a fizer, **espere conflito trivial no rename**.
 
 ---
 
@@ -147,6 +162,9 @@ Registrada em `docs/governance/DEBITO_ABERTO.md`:
 
 | item | por que não foi resolvido aqui |
 |---|---|
+| 🔴 **58% das claims WCAG são "verificadas" por âncora que não verifica nada** — medido nos 185 claims dos 79 contratos: `css` 78 (verifica de verdade), `test` 72 (só checa se o arquivo existe), `aria` 35 (só checa se existe prop cujo nome casa `/aria\|required/`). **107 claims passam sem que nada olhe para a implementação** | Corrigir **reprova contratos hoje verdes**; exige onda própria. Ver a nota abaixo — este item contradiz material já apresentado |
+| **Pré-prompt é superfície de retratação que ninguém varre** — ficou fora das 4 rodadas de correção do `DssEmptyState` | Caso corrigido; a **classe** fica: nenhuma checklist lista `docs/governance/pre-prompts/` |
+| **A Regra de Ouro da Fase 1 exige "wrapper direto de UM único componente Quasar"** — e o `DssEmptyState` não tem base Quasar | Decisão de governança: a regra precisa distinguir **wrapper governado** de **primitivo nativo** |
 | **`.bg-*` fura a camada semântica** (`utils/_colors.scss:40` usa o primitivo `--dss-primary`) — um `DssButton color="primary"` fica `#1F86DE` nas 3 marcas | Muda cor em todo o sistema; exige decisão, não conserto de passagem |
 | **Escala `--dss-surface-*` inverte de sentido no dark** — texto secundário sobre `muted` cai a ~2,8:1 | Idem |
 | **Âncora `verifiedBy:"aria"` não verifica o que afirma** — a regex casa "aria" dentro de "v**aria**nt" | Afeta 36 claims; corrigir pode reprovar contratos hoje verdes |
@@ -155,9 +173,19 @@ Registrada em `docs/governance/DEBITO_ABERTO.md`:
 
 ---
 
-## Como revisar isto sem ler 50 commits
+> ⚠️ **Correção de rumo que precisa chegar a quem viu a apresentação técnica.** O documento
+> `docs/reference/APRESENTACAO_TECNICA.md` §5 afirma: *"cada claim com uma âncora verificável: o
+> gate reprova afirmação que não fecha"*. **Isso vale hoje só para o terço ancorado em `css`.**
+> A medição está no `DEBITO_ABERTO`; a apresentação **não foi alterada nesta MR** porque a
+> correção do texto depende de decidir se a âncora será consertada ou se a promessa será
+> reescrita — e essa decisão não é de quem abre a MR.
 
-1. **`docs/governance/DEBITO_ABERTO.md`** — o quadro do que ficou aberto e por quê.
+---
+
+## Como revisar isto sem ler 55 commits
+
+1. **`docs/governance/DEBITO_ABERTO.md`** — o quadro do que ficou aberto e por quê. **Comece pelo
+   item das âncoras**: é o de maior alcance da MR e o único que contradiz material já apresentado.
 2. **Suba o sandbox** (`npm run sandbox:dev`) e compare um componente adequado (DssChip, DssInput)
    em **LIGHT e DARK**, com `Tab` para ver o anel de foco — é onde a mudança visual se vê.
 3. **`docs/Compliance/audits/DssEmptyState/`** — os dois relatórios (auto-auditoria e revisão
