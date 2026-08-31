@@ -112,21 +112,38 @@
   linha alterada além da exceção declarada.
 
 
-- 🟡 **A API de slots não é verificada pelo TypeScript — `defineSlots` ausente em 37 de 57
-  componentes base** (aberto desde ago/2026; **registrado com 3 rodadas de atraso**). Componentes
-  declaram uma interface `XxxSlots` em `types/*.types.ts`, mas o SFC não a aplica via
-  `defineSlots` — a interface é documentação, não contrato verificado. Um consumidor que escreva
-  `#titel` em vez de `#title` **não recebe erro de tipo**.
-  **Não é desvio de um componente:** entre os 57 base que declaram slots no contrato, **37 não
-  usam `defineSlots`** — incluindo `DssBadge`, `DssBanner`, `DssButton` e `DssChip`. Quem usa é a
-  minoria (27 no total do repo). *Decisão pendente:* adotar `defineSlots` como convenção — e, se
-  adotada, migrar os 37, não consertar isolado.
-  **Como este item chegou aqui atrasado:** levantado na 1ª auditoria do `DssEmptyState` (G-04),
-  citado em três Cargas como "aberto · sistêmico" e **nunca escrito no índice de débito**. A
-  revalidação 2 o pegou (V-08) — é a mesma fuga de *carry-forward* que já tinha engolido o G-03,
-  e que a Carga foi escrita para impedir. Mudou o item, não o mecanismo: **citar numa Carga não é
-  registrar.** O registro é aqui.
+- 🟡 **A API de slots não é verificada pelo TypeScript — e `defineSlots` NÃO é o conserto**
+  (levantado como G-04 em ago/2026; **premissa refutada por experimento em 2026-08-31**).
 
+  **Medição atual:** 58 componentes declaram slots no contrato · **20 já usam `defineSlots`** ·
+  **38 declaram a interface e não a aplicam** · **0 estão sem interface**. Ou seja, a correção
+  parecia ser só "ligar o que já existe".
+
+  **O experimento que refutou isso** (controle negativo, não leitura de código):
+  1. `defineSlots<ItemSlots>()` aplicado ao `DssItem`;
+  2. num consumidor **dentro do escopo do type-check** (`DssMultiselectAutocomplete`, que é
+     `components/**/*.vue`), o slot `#leading` foi trocado por `#leadng` — nome **inexistente**;
+  3. `vue-tsc` → **exit 0**. Não acusou.
+
+  **Causa:** `packages/core/tsconfig.json` **não tem `vueCompilerOptions`**, então
+  `strictTemplates` está desligado (padrão `false`). Sem ele, o `vue-tsc` não confere slot nem
+  prop no template — `defineSlots` vira declaração sem consumidor.
+
+  > ⚠️ **Consequência para o planejamento:** migrar os 38 seria **puramente cosmético** e, pior,
+  > *pareceria* fechar o item. A primeira tentativa de fechar o G-04 ia fazer exatamente isso.
+
+  **Um primeiro controle negativo foi INVÁLIDO e vale registrar:** o slot errado foi injetado num
+  `.example.vue`, que está no **`exclude`** do tsconfig — o arquivo nem é verificado. *Grep que
+  não acha não é ausência; type-check que passa em arquivo excluído não é verificação.*
+
+  **O item real é o `strictTemplates`, e ele é grande:** ligado experimentalmente, produz
+  **215 erros**. A amostra mostra que a maioria **não é defeito** — são atributos legítimos que
+  caem por `$attrs` (`ref`, `role`, `aria-hidden`, `aria-label` em componente). Ligar exige
+  tratar essa classe primeiro (tipar os fall-through ou relaxar por componente), não é conserto
+  de passagem.
+
+  *Sequência sugerida:* (1) decidir se `strictTemplates` é meta; (2) se for, resolver a classe
+  dos `$attrs`; (3) só então `defineSlots` nos 38, que aí passa a valer alguma coisa.
 
 - 🟡 **A escala `--dss-surface-*` inverte o próprio sentido no dark** (medido ago/2026, na
   adequação do DssEmptyState). Valores computados:
