@@ -201,7 +201,7 @@
         },
         {
           "property": "stroke",
-          "token": "--dss-gray-200",
+          "token": "--dss-surface-muted",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -410,10 +410,9 @@
         ]
       },
       {
-        "name": "--dss-gray-200",
+        "name": "--dss-surface-muted",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -484,6 +483,12 @@
         "name": "--dss-border-width-thick",
         "usedIn": [
           "focus",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
+        "usedIn": [
           "defaultPreview"
         ]
       },

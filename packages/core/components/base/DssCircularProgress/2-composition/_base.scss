@@ -48,7 +48,7 @@
   // --dss-gray-200: cinza claro canônico para track inativo (M3, Carbon, Salesforce).
   // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.8
   .q-circular-progress__track {
-    stroke: var(--dss-gray-200);
+    stroke: var(--dss-surface-muted);
     opacity: 1;
   }
 

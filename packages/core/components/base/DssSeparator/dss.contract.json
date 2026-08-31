@@ -132,9 +132,9 @@
         },
         {
           "property": "color",
-          "token": "--dss-gray-200",
+          "token": "--dss-border-subtle",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_colors.scss"
         },
         {
           "property": "border-top-style",
@@ -222,13 +222,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-gray-100",
-          "value": null,
-          "source": "3-variants/_colors.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-gray-300",
+          "token": "--dss-border-default",
           "value": null,
           "source": "3-variants/_colors.scss"
         },
@@ -419,7 +413,7 @@
     ],
     "instances": [
       {
-        "name": "--dss-gray-200",
+        "name": "--dss-border-subtle",
         "usedIn": [
           "default"
         ]
@@ -444,13 +438,7 @@
         ]
       },
       {
-        "name": "--dss-gray-100",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-gray-300",
+        "name": "--dss-border-default",
         "usedIn": [
           "default"
         ]

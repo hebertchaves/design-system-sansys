@@ -41,7 +41,7 @@
      translúcido (40%), então o cinza chapado nunca aparece cru. A cor semântica
      só entra no estado LIGADO (bloco CORES SEMÂNTICAS).
      Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 11 e 13.7 */
-  color: var(--dss-gray-400);
+  color: var(--dss-text-muted);
 
   /* Interaction */
   cursor: pointer;

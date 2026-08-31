@@ -50,9 +50,10 @@
      ========================================================================== */
 
   /* Cor default — var(--dss-gray-200) */
-  /* Nota: --dss-border-divider-default foi REMOVIDO (Sprint Jan 2025).       */
-  /* Usar diretamente var(--dss-gray-200). Ver _borders.scss seção REMOVIDOS. */
-  color: var(--dss-gray-200);
+  /* Nota: --dss-border-divider-default foi REMOVIDO (Sprint Jan 2025) e a
+     familia semantica de borda nao existia no tema CLARO, entao so' restava o
+     primitivo. Ela passou a existir em ago/2026 — divisor volta ao semantico. */
+  color: var(--dss-border-subtle);
   border-top-style: solid;
   border-top-width: var(--dss-border-width-thin); /* 1px */
   border-top-color: currentColor;

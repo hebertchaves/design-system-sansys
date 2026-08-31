@@ -65,7 +65,9 @@
 
 // Offline - cinza (neutral)
 .dss-avatar__status--offline {
-  background-color: var(--dss-gray-400, #9E9E9E);
+  /* fallback removido: era #9E9E9E, cor DIFERENTE do proprio token (#d4d4d4) —
+     se o token falhasse, a cor pularia. O token sempre resolve. */
+  background-color: var(--dss-gray-400);
 }
 
 /* ========================================
