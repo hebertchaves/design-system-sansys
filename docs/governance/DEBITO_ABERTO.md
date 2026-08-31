@@ -318,13 +318,14 @@
     runtime** (depende dos times de produto). Refs.: `DSS_BLUEPRINT_CADEIA_FONTE_UNICA.md` §D4 + §4.2 ·
     `DSS_OBSERVABILITY_SIGNALS.md` (v0.1, 6 sinais especificados e **não instrumentados**) · `RELATORIO_STRESS_TEST_FASE3.md`.
 
-- 🔴 **O DSS não tem resposta para ESTADO VAZIO — vazio nas duas pontas** (achado 2026-08-24, ao
-  esboçar o join spec↔contrato). Independente do join: existe hoje.
-  - **Lado da spec:** `estado_dado.vazio` aparece **0 vez em 3 de 3** specs medidas — é uma das 5
-    lacunas bloqueantes que o portão de prontidão reporta.
-  - **Lado do DSS:** **não existe componente `DssEmpty*`**. A palavra `empty` aparece como **slot**
-    em exatamente **um** componente (`DssVirtualScroll`) — ou seja, o conteúdo é responsabilidade do
-    consumidor, e **cada tela inventa o seu**.
+- 🟡 **ESTADO VAZIO — metade RESOLVIDA** (achado 2026-08-24; lado do DSS fechado em 2026-08-31).
+  - ✅ **Lado do DSS: RESOLVIDO.** O primitivo **`DssEmptyState`** existe, está **selado**
+    (`DSS v2.2`, após 4 passagens de auditoria independente) e é o 89º componente do catálogo.
+    Substitui o slot `empty` solto do `DssVirtualScroll` como resposta canônica.
+  - 🟡 **Lado da spec: ABERTO.** `estado_dado.vazio` aparece **0 vez em 3 de 3** specs medidas.
+    Continua entre as lacunas que o portão de prontidão reporta — **mas mudou de natureza**: antes
+    o gate acusava uma ausência que o DS não tinha como suprir; agora ele pode apontar o componente.
+    O que falta é o lado do analista passar a declarar o estado vazio na spec.
   - **Por que importa mais do que parece:** o portão cobra da spec algo que o design system não sabe
     entregar. Enquanto isso valer, preencher o campo na spec não tem para onde apontar — e o
     consumidor vai reinventar, que é exatamente o retrabalho que a apresentação à diretoria nomeia.
@@ -749,7 +750,8 @@
 
 ## Frente em curso
 
-- 🔴 **Gates de componente no MCP** (branch `work/dss-selection-controls`, NÃO empurrado). Commits
+- 🔴 **Gates de componente no MCP** (branch `work/dss-selection-controls`, **empurrado em 2026-08-31**
+  nos dois remotes; MR !8 aberto no GitLab). Commits
   `a2722fe`→`4460c93`: Gate Estrutural (4 camadas, wrapper puro, barrel, orquestrador) · escopo do gate de
   higiene por REGRA e não por arquivo · `validate_component_code` implementa o regime de exceções da
   Constituição #1 (fallback de `var()`, px em `@media`/`@container`, bloco `forced-colors`) · Token First
