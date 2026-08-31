@@ -276,7 +276,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-gray-500",
+          "token": "--dss-text-subtle",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -995,10 +995,9 @@
         ]
       },
       {
-        "name": "--dss-gray-500",
+        "name": "--dss-text-subtle",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -1209,6 +1208,12 @@
         "name": "--dss-opacity-50",
         "usedIn": [
           "disabled"
+        ]
+      },
+      {
+        "name": "--dss-gray-500",
+        "usedIn": [
+          "defaultPreview"
         ]
       }
     ]

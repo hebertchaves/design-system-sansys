@@ -35,7 +35,7 @@
      As três referências (M3, Carbon, Lightning) usam cinza médio na borda unchecked.
      A cor primary só aparece no estado CHECKED (via bg-primary text-white no control).
      Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 11 */
-  color: var(--dss-gray-500);
+  color: var(--dss-text-subtle);
 
   /* Interaction */
   cursor: pointer;

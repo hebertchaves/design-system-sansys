@@ -2398,12 +2398,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "color",
-          "token": "--dss-gray-700",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "border-bottom",
           "token": "--dss-border-width-md",
           "value": null,
@@ -3806,12 +3800,6 @@
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-gray-700",
-        "usedIn": [
-          "default"
         ]
       },
       {

@@ -464,12 +464,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "color",
-          "token": "--dss-gray-500",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "list-style",
           "token": null,
           "value": "none",
@@ -513,7 +507,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-gray-800",
+          "token": "--dss-text-body",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -849,19 +843,13 @@
         ]
       },
       {
-        "name": "--dss-gray-500",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-padding-2",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-gray-800",
+        "name": "--dss-text-body",
         "usedIn": [
           "default"
         ]
