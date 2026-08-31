@@ -8,14 +8,14 @@
     "category": "Bloco de estado de dado nao interativo",
     "classification": "Visual",
     "phase": 1,
-    "status": "draft",
+    "status": "sealed",
     "goldenReference": "DssBadge",
     "goldenContext": "DssBanner"
   },
   "audit": {
-    "status": "draft",
-    "date": "1970-01-01",
-    "sealPath": "docs/Compliance/seals/__MISSING__"
+    "status": "sealed",
+    "date": "2026-08-28",
+    "sealPath": "docs/Compliance/seals/DssEmptyState/DSSEMPTYSTATE_SELO_v2.2.md"
   },
   "api": {
     "props": [
@@ -636,6 +636,7 @@
       "readme": "README.md"
     },
     "examples": "DssEmptyState.example.vue",
-    "tests": "DssEmptyState.test.js"
+    "tests": "DssEmptyState.test.js",
+    "seal": "docs/Compliance/seals/DssEmptyState/DSSEMPTYSTATE_SELO_v2.2.md"
   }
 }

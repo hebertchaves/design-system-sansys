@@ -47,6 +47,7 @@ Todos os componentes abaixo possuem **Selo DSS v2.2 emitido** e são considerado
 | **DssItem** | Estrutural dual-mode | DssChip |
 | **DssSpinner** | Feedback de Status — indicador de carregamento | DssIcon |
 | **DssFile** | Action Control — campo de seleção de arquivos | DssChip |
+| **DssEmptyState** | Estado de dado não interativo — bloco DSS nativo (sem motor Quasar) | DssBadge |
 
 ### Fase 2 — Em andamento
 

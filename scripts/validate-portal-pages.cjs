@@ -5,7 +5,7 @@
  * Consome packages/core/catalog.json (fonte canônica de "selado" = arquivo físico
  * de selo). Regra dura: todo componente SELADO precisa ter página de documentação
  * em apps/docs-portal/src/pages/components/<Component>Page.tsx (gerada por
- * generate-portal-landing-pages.js / npm run portal:sync-docs).
+ * generate-portal-landing-pages.cjs / npm run portal:sync-docs).
  *
  * Aviso (não bloqueante): páginas Dss*Page.tsx órfãs (sem componente no catálogo),
  * tirando a allowlist de fixtures/demos conhecidos.

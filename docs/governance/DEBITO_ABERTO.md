@@ -64,6 +64,54 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🔴 **58% das claims WCAG são "verificadas" por âncora que não verifica nada** (medido ago/2026,
+  na 4ª passagem do `DssEmptyState`). Distribuição real dos 185 claims dos 79 contratos:
+
+  | âncora | claims | componentes | o que de fato checa |
+  |---|---|---|---|
+  | `css` | **78** | 51 | **verifica de verdade** — computa contraste ou casa regra no SCSS |
+  | `test` | **72** | 72 | apenas que o arquivo `*.test.js` **existe** |
+  | `aria` | **35** | 32 | apenas que existe prop cujo nome casa `/aria\|required/i` |
+
+  **107 claims (58%) passam sem que nada olhe para a implementação.** O `emit-contract --all
+  --strict` reporta essas claims como ✅, e a promessa escrita na apresentação técnica §5 — *"cada
+  claim com uma âncora verificável: o gate reprova afirmação que não fecha"* — vale hoje só para
+  o terço ancorado em `css`.
+  **Como apareceu:** o `G-02` levantou a `aria` (a regex casa "aria" dentro de "v**aria**nt"); a
+  4ª passagem mostrou que a `test` é igualmente vazia e alcança o **dobro**. Agravante registrado
+  pelo auditor: o rebaixamento da claim 4.1.3 do `DssEmptyState` moveu a claim **de uma âncora
+  vazia para outra** — a substância continua correta (o teste assere `role`, `aria-live` e a
+  remoção com `announce=false`), mas não é a âncora que a torna verificada.
+  *Correção sugerida:* `aria` deve casar o atributo no SFC; `test` deve casar o **nome do caso**
+  no `*.test.js` (ex.: procurar `role="status"` ou o critério no `describe`). Ambas em
+  `scripts/emit-contract.mjs`. **Corrigir vai reprovar contratos hoje verdes** — precisa de onda
+  própria, não de conserto de passagem.
+
+- 🟡 **Pré-prompt é superfície de retratação que ninguém varre** (ago/2026). Ao retratar a claim
+  4.1.3 do `DssEmptyState` a correção foi aplicada em 5 lugares ao longo de 3 rodadas — comentário
+  do SFC, `types`, contrato, prosa e demo renderizada — e o **pré-prompt ficou fora da varredura
+  nas quatro**. A 4ª passagem o encontrou: `pre_prompt_dss_empty_state.md` mantinha a frase
+  retratada e a âncora `aria` antiga na tabela WCAG.
+  **Gravidade pelo próprio protocolo:** o Gate G do `prompt_auditoria_v2.5.txt` diz que cobertura
+  incompleta de pré-prompt é *"não bloqueante para o componente, mas **bloqueante para o próximo
+  componente da mesma família**"* — o pré-prompt é insumo do próximo, então ele propaga o erro.
+  **Este caso foi corrigido**; o que fica em aberto é a **classe**: nenhuma checklist de retratação
+  lista `docs/governance/pre-prompts/` entre as superfícies a varrer. *Correção sugerida:* incluir
+  o pré-prompt na ordem de verificação (contrato → types → prosa → demo renderizada →
+  **pré-prompt**).
+
+- 🟡 **A definição de Fase 1 não acomoda primitivo nativo do DSS** (ago/2026).
+  `docs/reference/DSS_FASEAMENTO_COMPONENTES.md:16` define: *"O componente deve ser um wrapper
+  direto de **UM único componente Quasar**"*. O `DssEmptyState` é **Fase 1 e não tem base
+  Quasar** — o Quasar não tem equivalente, e o componente é HTML próprio do DSS.
+  O auditor marcou a linha do faseamento como `— (DSS nativo)` com exceção declarada, em vez de
+  forçar a regra a acomodá-lo. **É a decisão certa para um caso e insustentável como padrão:** se
+  o DSS passa a criar primitivos nativos (e o `DssEmptyState` existe porque o Quasar não oferece
+  resposta para estado vazio), a Regra de Ouro precisa distinguir **wrapper governado** de
+  **primitivo nativo** — hoje ela só prevê o primeiro. *Decisão pendente de governança;* nenhuma
+  linha alterada além da exceção declarada.
+
+
 - 🟡 **A API de slots não é verificada pelo TypeScript — `defineSlots` ausente em 37 de 57
   componentes base** (aberto desde ago/2026; **registrado com 3 rodadas de atraso**). Componentes
   declaram uma interface `XxxSlots` em `types/*.types.ts`, mas o SFC não a aplica via

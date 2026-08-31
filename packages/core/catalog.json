@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-28",
+  "generated": "2026-08-31",
   "total": 92,
-  "sealed": 88,
+  "sealed": 89,
   "components": [
     {
       "component": "DssAjaxBar",
@@ -344,11 +344,11 @@
       "dir": "packages/core/components/base/DssEmptyState",
       "phase": 1,
       "category": "Bloco de estado de dado nao interativo",
-      "status": "draft",
-      "sealDate": null,
-      "sealField": null,
-      "sealed": false,
-      "sealFile": null,
+      "status": "sealed",
+      "sealDate": "2026-08-28",
+      "sealField": "DSS v2.2",
+      "sealed": true,
+      "sealFile": "docs/Compliance/seals/DssEmptyState/DSSEMPTYSTATE_SELO_v2.2.md",
       "previewGroup": "indicadores",
       "goldenReference": "DssBadge",
       "goldenContext": "DssBanner"

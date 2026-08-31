@@ -100,6 +100,7 @@ import DssToolbarTitlePage from "./pages/components/DssToolbarTitlePage";
 import DssTreePage from "./pages/components/DssTreePage";
 import DssUploaderPage from "./pages/components/DssUploaderPage";
 import DssVirtualScrollPage from "./pages/components/DssVirtualScrollPage";
+import DssEmptyStatePage from "./pages/components/DssEmptyStatePage";
 import ComponentPlaceholder from "./pages/components/ComponentPlaceholder";
 import ArchitecturePage from "./pages/governance/ArchitecturePage";
 import ClassificationPage from "./pages/governance/ClassificationPage";
@@ -224,6 +225,7 @@ const App = () => (
             <Route path="/componentes/dss-tree" element={<DssTreePage />} />
             <Route path="/componentes/dss-uploader" element={<DssUploaderPage />} />
             <Route path="/componentes/dss-virtual-scroll" element={<DssVirtualScrollPage />} />
+                        <Route path="/componentes/dss-empty-state" element={<DssEmptyStatePage />} />
             <Route path="/componentes/:componentId" element={<ComponentPlaceholder />} />
             
             {/* Governança */}

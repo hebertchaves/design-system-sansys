@@ -15,7 +15,12 @@ Todo componente Quasar **DEVE** ser classificado em uma fase antes de entrar no 
 
 **Regra de Ouro da Fase 1:** O componente deve ser um wrapper direto de **UM único componente Quasar**, sem composição interna relevante, sem layout complexo, com API pública curada e mínima, e sem lógica de negócio.
 
-**Status: FASE 1 COMPLETA — 19 componentes selados.**
+**Status: FASE 1 COMPLETA — 20 componentes selados.**
+
+> **Exceção declarada (ago/2026):** o `DssEmptyState` é Fase 1 (`phase: 1` no `dss.meta.json`) mas
+> **não é wrapper de componente Quasar** — é HTML próprio do DSS, composto apenas com `DssIcon`.
+> A Regra de Ouro acima descreve a origem da fase (wrappers Quasar) e não acomoda componentes DSS
+> nativos. A entrada abaixo registra o fato; a redação da regra é questão de governança em aberto.
 
 | Componente DSS | Quasar Base | Status |
 |---|---|---|
@@ -38,6 +43,7 @@ Todo componente Quasar **DEVE** ser classificado em uma fase antes de entrar no 
 | `DssSeparator` | `QSeparator` | ✅ Selado |
 | `DssSpace` | `QSpace` | ✅ Selado |
 | `DssItem` | `QItem` | ✅ Selado |
+| `DssEmptyState` | — (DSS nativo) | ✅ Selado |
 
 ---
 
@@ -229,7 +235,7 @@ Componentes Quasar sem representação visual própria, utilitários comportamen
 
 | Fase | Total | Selados | Pendentes |
 |---|---|---|---|
-| Fase 1 — Atômicos | 19 | 19 | 0 ✅ |
+| Fase 1 — Atômicos | 20 | 20 | 0 ✅ |
 | Fase 2 — Nível 1 (Independentes) | 38 | 38 | 0 ✅ |
 | Fase 2 — Nível 2 (1º Grau) | 16 | 16 | 0 ✅ |
 | Fase 2 — Nível 3 (2º Grau) | 7 | 7 | 0 ✅ |

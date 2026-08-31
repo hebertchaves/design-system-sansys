@@ -238,15 +238,16 @@ competiria com a **ação**, que é o lugar legítimo da marca. Verificado nas 3
 
 | Critério | Nível | Implementação | Âncora |
 |---|---|---|---|
-| **4.1.3** Mensagens de status | AA | `role="status"` + `aria-live="polite"` quando `announce` | `aria` |
+| **4.1.3** Mensagens de status | AA | **REBAIXADA** — o componente *emite* `role="status"` + `aria-live="polite"`; NÃO se afirma que o anúncio ocorre. Requisito de uso: contêiner `aria-live` persistente no consumidor (`DssEmptyState.md` §8.1) | `test` |
 | **1.4.3** Contraste mínimo | AA | título `--dss-text-primary`, descrição e ícone `--dss-text-secondary`; a âncora mede o **elo mais fraco** | `css` (contraste computado) |
 | **1.4.1** Uso de cor | A | informação sempre no texto do título; ícone `decorative` | `aria` |
 | **2.5.5** Tamanho do alvo | — | **não se aplica**: sem alvo clicável | — |
 
 ### `announce` — a decisão de a11y que exige justificativa
 
-`true` por padrão. O caso dominante é o estado vazio **substituir** um resultado — após busca,
-filtro ou exclusão — e essa troca precisa ser anunciada a quem usa leitor de tela.
+`true` por padrão: o caso mais comum é o bloco entrar no lugar de um resultado. **Mas emitir os
+atributos não é o mesmo que ser anunciado** — nenhuma das quatro passagens conseguiu testar com
+leitor de tela, e a claim foi rebaixada ao que é verificável (ver `DssEmptyState.md` §8.1).
 
 Desligável (`:announce="false"`) para quando o bloco já nasce na tela e nunca muda: anunciar
 conteúdo estático é ruído. O padrão serve ao caso dominante; o caso estático desliga.
