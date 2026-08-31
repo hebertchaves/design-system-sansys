@@ -163,24 +163,40 @@
   Precisa de decisão de cor, não de conserto local.
 
 
-- 🔴 **A classe utilitária `.bg-*` fura a camada semântica — a brandabilidade não chega ao
-  componente colorido por ela** (medido ago/2026, na adequação do DssEmptyState).
-  `utils/_colors.scss:40` define `.bg-primary { background: var(--dss-primary) }` — o
-  **PRIMITIVO**. A brandabilidade remapeia o **SEMÂNTICO** `--dss-action-primary`. Resultado
-  medido: um `DssButton color="primary"` dentro de `[data-brand="hub|water|waste"]` fica
-  **#1F86DE nas três marcas**. O botão chega a **herdar** `--dss-action-primary: #ef7a11`
-  corretamente — e simplesmente não o consome.
-  **Por que é grave:** contradiz a promessa central do sistema, escrita na apresentação técnica
-  §4 ("componentes consomem apenas o semântico; trocar marca re-aponta o semântico, nenhum
-  componente é tocado"). O mapeamento do Quasar está **certo**
-  (`themes/_quasar-tokens-mapping.scss:203` → `--q-primary: var(--dss-action-primary)`); quem
-  fura é o utilitário do próprio DSS, e o comentário logo acima dele diz "usada por TODOS".
-  **Alcance:** 6 composables de componente montam classe `bg-${color}`, mais qualquer consumidor
-  que use o utilitário direto. *Correção sugerida:* apontar `.bg-primary`/`-secondary`/`-tertiary`/
-  `-accent` para os `--dss-action-*`. É de uma linha por cor, mas muda cor em todo o sistema —
-  **exige decisão, não conserto silencioso**. Relacionado a `[[project_brand_prop_vs_data_brand_focus]]`
-  e à nota de `meta.visualProperties` sobre "token aplicado via classe Quasar".
+- 🔴 **O PLAYGROUND do sandbox mostra cor que produção NÃO mostra** — diagnóstico corrigido em
+  2026-08-31; o verbete anterior culpava o token errado.
 
+  **O que eu havia registrado (ERRADO):** *"`.bg-*` fura a camada semântica — `utils/_colors.scss:40`
+  usa o primitivo `--dss-primary`"*, com o sintoma de um `DssButton color="primary"` ficando
+  `#1F86DE` nas três marcas.
+
+  **O sintoma é real e reproduzível — a causa não era essa.** `.bg-primary` está definida **duas
+  vezes**, de propósito:
+  - `utils/_colors.scss:40` → `background: var(--dss-primary)` (primitivo)
+  - `themes/_quasar-overrides.scss:1058` → `background-color: var(--dss-action-primary)` (semântico)
+
+  A segunda **sobrescreve** a primeira, e a ordem de `packages/core/index.scss` (tokens → utils →
+  themes → components) garante isso. **Compilado, o core está correto:** `npx sass index.scss`
+  emite 2 regras e a semântica é a última. **Produção brandeia.**
+
+  **O defeito está no BUNDLE DE DEV do sandbox.** Medido no navegador: **3** regras `.bg-primary`,
+  e a última (ordem 7159) é o **primitivo** — vem de uma folha separada com 579 regras que começa
+  em `.dss-block`/`.dss-flex`, ou seja `utils/` **reemitido depois de `themes/`**. O resultado:
+
+  | superfície | `DssButton color="primary"` sob `[data-brand]` | fiel? |
+  |---|---|---|
+  | Core compilado (produção) | segue a marca | ✅ |
+  | **Preview Frame** (iframe) | segue a marca | ✅ |
+  | **Playground** (documento principal) | **`#1F86DE` nas 3 marcas** | ❌ |
+
+  > ⚠️ **Por que isto é grave e não é cosmético:** o Playground é **instrumento de medição** da
+  > onda de adequação. Um instrumento que diverge de produção nesta classe faz o adequador ver
+  > defeito que não existe — foi exatamente o que aconteceu comigo: medi, acreditei, e registrei
+  > uma dívida 🔴 contra o token errado.
+
+  *Correção sugerida:* eliminar a duplicidade (uma única definição de `.bg-*`, no semântico) — aí
+  a ordem deixa de importar e as três superfícies convergem. Enquanto isso, **o Preview Frame é a
+  superfície confiável para cor**, não o Playground.
 
 - 🔴 **Gate estrutural NÃO verifica o `@forward` em `components/index.scss`** — descoberto ao criar o
   `DssEmptyState` (ago/2026). O componente passou nos **10 gates** (estrutura, contrato, api-docs,
