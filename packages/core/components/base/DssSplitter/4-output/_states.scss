@@ -8,10 +8,8 @@
    ========================================================================== */
 
 [data-theme="dark"] .dss-splitter .q-splitter__separator {
-  background-color: var(--dss-gray-700);
-
-  &:hover  { background-color: var(--dss-gray-500); }
-  &:active { background-color: var(--dss-gray-400); }
+  /* As cores de repouso/hover/active sairam daqui (ago/2026): --dss-control-*
+     ja' inverte por tema. Fixar cinza aqui contradiria o token. */
 
   /* Dark mode: focus ring branco (EXC-States-01 — não existe token --dss-focus-shadow-*-dark) */
   &:focus-visible {

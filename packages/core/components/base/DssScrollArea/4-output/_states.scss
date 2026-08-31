@@ -10,15 +10,10 @@
 // Override sutil: em fundos escuros, uma scrollbar mais clara melhora
 // o contraste visual. --dss-gray-600 (#737373) sobre --dss-gray-800.
 
-[data-theme="dark"] .dss-scroll-area {
-  .q-scrollarea__thumb {
-    background: var(--dss-gray-600);
-
-    &:hover {
-      background: var(--dss-gray-500);
-    }
-  }
-}
+// REMOVIDO (ago/2026): este bloco fixava gray-600/gray-500 para clarear a
+// scrollbar no escuro. A intencao virou token: --dss-control-thumb ja' inverte
+// por tema e entrega MAIS contraste que o override fazia (6.00 contra 3.19).
+// Manter o bloco seria fixar cinza por cima de um token que ja' resolve.
 
 // ─── Reduced Motion (WCAG 2.3.3) ─────────────────────────────────────────────
 //

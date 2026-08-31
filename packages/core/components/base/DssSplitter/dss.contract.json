@@ -257,7 +257,7 @@
       "hover": [
         {
           "property": "background-color",
-          "token": "--dss-gray-400",
+          "token": "--dss-control-thumb",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -303,7 +303,7 @@
       "active": [
         {
           "property": "background-color",
-          "token": "--dss-gray-600",
+          "token": "--dss-control-thumb-active",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -371,12 +371,11 @@
       {
         "name": "--dss-gray-600",
         "usedIn": [
-          "default",
-          "active"
+          "default"
         ]
       },
       {
-        "name": "--dss-gray-400",
+        "name": "--dss-control-thumb",
         "usedIn": [
           "hover"
         ]
@@ -398,6 +397,12 @@
         "name": "--dss-focus-shadow-primary",
         "usedIn": [
           "focus"
+        ]
+      },
+      {
+        "name": "--dss-control-thumb-active",
+        "usedIn": [
+          "active"
         ]
       },
       {

@@ -143,7 +143,7 @@
         },
         {
           "property": "background",
-          "token": "--dss-gray-400",
+          "token": "--dss-control-thumb",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -229,7 +229,7 @@
       "hover": [
         {
           "property": "background",
-          "token": "--dss-gray-500",
+          "token": "--dss-control-thumb-hover",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -282,7 +282,7 @@
         ]
       },
       {
-        "name": "--dss-gray-400",
+        "name": "--dss-control-thumb",
         "usedIn": [
           "default"
         ]
@@ -307,7 +307,7 @@
         ]
       },
       {
-        "name": "--dss-gray-500",
+        "name": "--dss-control-thumb-hover",
         "usedIn": [
           "hover"
         ]
