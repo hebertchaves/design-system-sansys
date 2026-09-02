@@ -774,16 +774,17 @@
   | Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
   |---|---|---|---|---|---|
   | 1 — Atômicos | 20 | **9** | 0 | 3 | 8 |
-  | 2 — Compostos | 68 | **1** | 1 | 1 | 65 |
-  | **Total** | **88** | **10** | 1 | 4 | 73 |
+  | 2 — Compostos | 68 | **2** | 0 | 1 | 65 |
+  | **Total** | **88** | **11** | 0 | 4 | 73 |
 
-  - **Adequados (10):** Chip, Input, Select, Textarea, File, Checkbox, Radio, Toggle, EmptyState
-    (Fase 1) · Field (Fase 2).
+  - **Adequados (11):** Chip, Input, Select, Textarea, File, Checkbox, Radio, Toggle, EmptyState
+    (Fase 1) · Field, Uploader (Fase 2).
   - **Só Playground (4)** — falta o Preview Frame: **DssAvatar, DssBadge, DssButton, DssCard**. Se a
     fila for ordenada por menor esforço, **começa aqui**.
-  - **Só Preview Frame (1): `DssUploader`.** Não é adequação não iniciada — o fluxo dele foi validado
-    ponta a ponta; falta o artefato Playground. O próprio `TestSuite.vue` registra o motivo em
-    comentário ("não têm página de teste onde ancorar") e instrui a mover o item quando a página existir.
+  - **Só Preview Frame: zerado** (set/2026). Era o `DssUploader` — tinha o frame e não tinha página.
+    `TestUploader.vue` foi criado (11 seções sobre a API real, template Playground) e o frame dele
+    saiu da seção temporária de topo do `TestSuite.vue` para debaixo do componente, em Campos, como o
+    comentário do próprio arquivo instruía. Sobrou lá só o `DssMultiselectAutocomplete` (Fase 3).
 
   **Correções em relação à contagem de 2026-08-11:**
   1. **São 12 Preview Frames, não 11** — faltava o `DssEmptyState`. (11 pertencem a componentes de

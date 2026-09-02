@@ -8,7 +8,7 @@
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
-> **100% selados**; a adequação de UI é uma onda posterior, e cobre **10** deles. Um
+> **100% selados**; a adequação de UI é uma onda posterior, e cobre **11** deles. Um
 > componente selado em janeiro/2026 foi auditado contra as regras de então — não contra o checklist
 > de adequação.
 
@@ -31,16 +31,13 @@ inferência, não selo.
 | Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
 |---|---|---|---|---|---|
 | **Fase 1 — Atômicos** | 20 | **9** | 0 | 3 | 8 |
-| **Fase 2 — Compostos** | 68 | **1** | 1 | 1 | 65 |
-| **Total** | **88** | **10** | 1 | 4 | 73 |
+| **Fase 2 — Compostos** | 68 | **2** | 0 | 1 | 65 |
+| **Total** | **88** | **11** | 0 | 4 | 73 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
 `DssAvatar`, `DssBadge`, `DssButton`, `DssCard`.
 
-**Só Preview Frame** (`DssUploader`): o `TestSuite.vue` registra o motivo no
-próprio código — *"não têm página de teste onde ancorar"*. Não é adequação não iniciada: no caso do
-`DssUploader` o fluxo foi validado ponta a ponta. É o artefato Playground que falta, e o comentário
-no sandbox já instrui a mover o item quando a página existir.
+_Nenhum componente na situação "só Preview Frame" — todo frame registrado tem página Playground._
 
 ## Fase 1 — Componentes Atômicos (9/20)
 
@@ -67,12 +64,12 @@ no sandbox já instrui a mover o item quando a página existir.
 | ⬜ | `DssSpinner` | Indicador de carregamento | 24/03/2026 | — | — |
 | ⬜ | `DssTooltip` | Dica contextual | 06/02/2026 | — | — |
 
-## Fase 2 — Componentes Compostos (1/68)
+## Fase 2 — Componentes Compostos (2/68)
 
 | | Componente | Categoria | Selo | Playground | Preview Frame |
 |---|---|---|---|---|---|
 | ✅ | `DssField` | Inputs Compostos | 19/05/2026 | sim | sim |
-| 🔵 | `DssUploader` | Upload / File Management | 07/05/2026 | — | sim |
+| ✅ | `DssUploader` | Upload / File Management | 07/05/2026 | sim | sim |
 | 🟡 | `DssCard` | Superfície e Layout | 12/02/2026 | sim | — |
 | ⬜ | `DssAjaxBar` | Progresso e Feedback | 18/05/2026 | — | — |
 | ⬜ | `DssBanner` | Notificações e Alertas | 20/05/2026 | — | — |

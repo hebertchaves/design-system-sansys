@@ -208,10 +208,12 @@ inferência, não selo.
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
 ${nomes(comps, 'parcial') || '_nenhum_'}.
 
-**Só Preview Frame** (${nomes(comps, 'soFrame') || '_nenhum_'}): o \`TestSuite.vue\` registra o motivo no
-próprio código — *"não têm página de teste onde ancorar"*. Não é adequação não iniciada: no caso do
-\`DssUploader\` o fluxo foi validado ponta a ponta. É o artefato Playground que falta, e o comentário
-no sandbox já instrui a mover o item quando a página existir.
+${cont(comps, 'soFrame')
+  ? `**Só Preview Frame** (${nomes(comps, 'soFrame')}): têm o frame e **não** têm página Playground — o
+\`TestSuite.vue\` registra o motivo no próprio código ("não têm página de teste onde ancorar"). Não é
+adequação não iniciada; é o artefato Playground que falta, e o comentário no sandbox já instrui a mover
+o item para baixo da página quando ela existir.`
+  : '_Nenhum componente na situação "só Preview Frame" — todo frame registrado tem página Playground._'}
 
 ## Fase 1 — Componentes Atômicos (${cont(f1, 'fechada')}/${f1.length})
 

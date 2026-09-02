@@ -45,16 +45,11 @@
         <!-- PREVIEW FRAME sem página de teste correspondente.
              Os demais Preview Frames moram aninhados sob o próprio componente,
              na árvore de COMPONENTS — este bloco guarda só os que não têm
-             página de teste onde ancorar. Ao criar a página de teste destes
-             dois, mova o item para baixo dela e apague esta seção. -->
+             página de teste onde ancorar. Ao criar a página de teste do que
+             sobrou aqui, mova o item para baixo dela e APAGUE esta seção.
+             (set/2026: o DssUploader saiu daqui — ganhou TestUploader.vue e o
+             frame dele foi aninhado sob o componente, em Campos.) -->
         <div class="nav-section">
-          <button
-            @click="activeComponent = 'preview-frame-uploader'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-uploader' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssUploader</span>
-          </button>
           <button
             @click="activeComponent = 'preview-frame-multiselect'"
             :class="['nav-item', { active: activeComponent === 'preview-frame-multiselect' }]"
@@ -319,6 +314,22 @@
               <button
                 @click="activeComponent = 'preview-frame-field'"
                 :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-field' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
+
+              <button
+                @click="activeComponent = 'uploader'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'uploader' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">cloud_upload</span></span>
+                <span class="nav-label">DssUploader</span>
+              </button>
+              <button
+                @click="activeComponent = 'preview-frame-uploader'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-uploader' }]"
               >
                 <span class="nav-icon"><span class="material-icons">dvr</span></span>
                 <span class="nav-label">Preview Frame</span>
@@ -660,6 +671,11 @@
         <TestField />
       </div>
 
+      <!-- DssUploader Test View -->
+      <div v-else-if="activeComponent === 'uploader'" class="component-view">
+        <TestUploader />
+      </div>
+
       <!-- DssCard Test View -->
       <div v-else-if="activeComponent === 'card'" class="component-view">
         <TestCard />
@@ -734,6 +750,7 @@ import TestSelect from './TestSelect.vue'
 import TestTextarea from './TestTextarea.vue'
 import TestFile from './TestFile.vue'
 import TestField from './TestField.vue'
+import TestUploader from './TestUploader.vue'
 import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
 import TestDataCard from './TestDataCard.vue'
