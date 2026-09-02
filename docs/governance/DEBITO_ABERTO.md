@@ -163,8 +163,9 @@
   Precisa de decisão de cor, não de conserto local.
 
 
-- 🔴 **O PLAYGROUND do sandbox mostra cor que produção NÃO mostra** — diagnóstico corrigido em
-  2026-08-31; o verbete anterior culpava o token errado.
+- ✅ **O PLAYGROUND do sandbox mostra cor que produção NÃO mostra — RESOLVIDO** (2026-09-01,
+  `utils/_colors.scss`). Diagnóstico corrigido em 2026-08-31; o verbete anterior culpava o token
+  errado. Mantido na íntegra abaixo porque o **erro de diagnóstico** é a parte reaproveitável.
 
   **O que eu havia registrado (ERRADO):** *"`.bg-*` fura a camada semântica — `utils/_colors.scss:40`
   usa o primitivo `--dss-primary`"*, com o sintoma de um `DssButton color="primary"` ficando
@@ -194,9 +195,100 @@
   > defeito que não existe — foi exatamente o que aconteceu comigo: medi, acreditei, e registrei
   > uma dívida 🔴 contra o token errado.
 
-  *Correção sugerida:* eliminar a duplicidade (uma única definição de `.bg-*`, no semântico) — aí
-  a ordem deixa de importar e as três superfícies convergem. Enquanto isso, **o Preview Frame é a
-  superfície confiável para cor**, não o Playground.
+  **O que foi feito (variação em relação à correção sugerida).** A sugestão era *eliminar* a
+  duplicidade. O que entrou **alinha** as duas definições no mesmo token: `utils/_colors.scss`
+  passou de primitivo para semântico (`--dss-action-*` / `--dss-feedback-*`), que é o alvo que
+  `themes/_quasar-overrides.scss:1058+` já usava. A ordem de emissão **deixa de decidir** — que era
+  o objetivo — sem tocar em `themes/`. Custo aceito: as duas fontes continuam existindo; a mitigação
+  é o bloco de comentário no cabeçalho de `utils/_colors.scss`, que documenta a duplicidade e proíbe
+  reverter para o primitivo.
+
+  **Delta de cor: zero.** Verificado: (a) os 12 tokens semânticos existem; (b) em `:root` são alias
+  direto dos primitivos, então só muda onde deve — sob `[data-brand]` e sob `hc`/`hcdark`; (c) 7 dos
+  8 pares já eram vencidos por `themes/` (mudou-se o código *perdedor*); (d) `.bg-tertiary` /
+  `.text-tertiary` são a exceção — não existem em `themes/`, mas `--dss-action-tertiary` é alias puro
+  de `--dss-tertiary` nas 3 marcas; (e) `npx sass index.scss` exit 0, e as duas regras emitidas
+  (4409 e 7230) apontam para o mesmo token; (f) `validate:scss-tokens:gate` e `validate:theme-scopes`
+  verdes.
+
+  Doc derivada sincronizada junto: `DssIcon/3-variants/_semantic.scss` e `DssIcon.md` documentavam a
+  tabela `.text-* → --dss-primitivo` (Constituição #6).
+
+  > ⚠️ **A linha "o Preview Frame é a superfície confiável para cor, não o Playground" deixa de
+  > valer.** As três superfícies convergem.
+
+- 🔴 **O hover das utilitárias de cor NÃO brandeia e reprova AA — `utils/_colors-hover.scss`**
+  (aberto em 2026-09-01, medido em 2026-09-02). **Bug de produção pré-existente, não regressão** do
+  item acima — e **fila da adequação de UI**, não defeito escapado: os dois componentes que o arquivo
+  mira (`.dss-button`, `.dss-badge`) ainda não foram adequados.
+
+  O arquivo irmão de `_colors.scss` não foi migrado: as 40+ regras de hover/active de
+  `.dss-button` e `.dss-badge` usam `--dss-primary-hover`, `--dss-tertiary-light`,
+  `--dss-positive-hover`… — todos **primitivos**. É a única definição desses estados (não há
+  concorrente em `themes/`) e entra em `utils/index.scss:22`.
+
+  **Por que não brandeia:** `tokens/brand/_hub.scss:14` remapeia `--dss-action-primary-hover` →
+  `--dss-hub-800`. **Nenhuma marca remapeia `--dss-primary-hover`** — o primitivo é, por definição,
+  o que não muda por marca. Logo o hover cai no azul base sob qualquer `[data-brand]`.
+
+  **O ramo que dói em produção é o flat/outline** (`_colors-hover.scss:70+`), não o filled:
+
+  | ramo | declaração | competidor | efeito real |
+  |---|---|---|---|
+  | filled (`.bg-*`) | `background: var(--dss-primary-hover)` | `.bg-primary{…!important}` do Quasar (`quasar.css:6469`) | **inerte** onde o CSS do Quasar carrega (é o que o comentário T2b do arquivo já afirma) |
+  | flat/outline (`.text-*`) | `background: var(--dss-primary-light)` | **nenhum** — o `.text-*` do Quasar só disputa `color` | **aplica** — `DssButton flat color="primary"` sob `[data-brand="hub"]` acende **fundo azul** no hover |
+
+  **MEDIDO no sandbox** (2026-09-02, chrome-devtools MCP, `DssButton` real na página de teste,
+  `[data-brand]` no `<html>`, transições desligadas para não ler valor intermediário):
+
+  | marca | fundo do hover (atual) | deveria ser | texto | contraste |
+  |---|---|---|---|---|
+  | hub | **`#86c0f3`** (azul) | `#fbcb76` | `#ef7a11` | **1,45:1** ❌ |
+  | water | **`#86c0f3`** (azul) | `#7dc4fc` | `#0e88e4` | **1,92:1** ❌ |
+  | waste | **`#86c0f3`** (azul) | `#74e1ae` | `#0b8154` | **2,53:1** ❌ |
+
+  O fundo é `--dss-primary-light` **nas três marcas** — o primitivo não se move. Vale igual para
+  `variant="flat"` e `variant="outline"` (ambos medidos). **Não é só brandabilidade: é reprovação
+  de contraste WCAG AA** (4,5:1) no estado hover — e o hub, a 1,45:1, é laranja sobre azul claro.
+
+  Confirmado na mesma sessão que o ramo **filled é mesmo inerte**: no hover o `.bg-primary` fica em
+  `#ef7a11` (a cor **base**), não em cor de hover alguma — quem dá o feedback é a elevação
+  (`box-shadow` `0 4px 6px` → `0 10px 15px`). Ou seja, as 24 regras de `.bg-*` em `_colors-hover.scss`
+  são **código morto** onde o CSS do Quasar carrega. Migrá-las é inócuo; o que precisa de conserto é
+  o ramo `.text-*`.
+
+  **ISTO É FILA DA ADEQUAÇÃO, NÃO DEFEITO ESCAPADO.** `_colors-hover.scss` mira exatamente dois
+  seletores — `.dss-button` e `.dss-badge` — e **nenhum dos dois passou pela adequação de UI**. O selo
+  do DssButton é de 20/01/2026, anterior à onda; **ambos têm página Playground mas nenhum tem Preview
+  Frame** — estão os dois na faixa *parcial* do quadro (ver
+  [`DSS_ESTADO_ADEQUACAO_UI.md`](DSS_ESTADO_ADEQUACAO_UI.md)). O arquivo inteiro vive em território
+  não processado, e seus dois donos estão a **um artefato** de entrar na onda.
+
+  **A correção NÃO é migrar os tokens.** O DssChip — adequado (2026-08-13), Golden Reference de
+  interativo — faz hover assim:
+
+  ```scss
+  &.dss-chip--clickable:hover::after { opacity: var(--dss-opacity-hover); }
+  ```
+
+  Overlay em `::after` com opacidade/brightness, **sem nomear cor de hover alguma**. Por construção não
+  desbrandeia: herda a cor base. É o que o Cartão Base já manda (`::after` = efeitos visuais).
+  Trocar `background` por uma cor nomeada — como `_colors-hover.scss` faz — é o anti-pattern; migrá-lo
+  1:1 para a rampa semântica preservaria a técnica errada com a cor certa.
+
+  **Encaminhamento:** dobrar este item na **adequação de UI do DssButton e do DssBadge**, com a tabela
+  medida acima servindo de evidência do que consertar. O desfecho provável é `_colors-hover.scss`
+  **deixar de existir** (regras absorvidas pelo `4-output/_states.scss` de cada componente, no padrão
+  overlay), não ser migrado. Enquanto a adequação não chega, o contraste de 1,45:1 no hover do flat/
+  outline segue valendo como defeito conhecido.
+
+  **Por que ficou fora do commit do item acima:** aquele é convergência de superfícies com delta de
+  cor **zero**; este tem delta de cor **real** em produção e, como mostrado acima, nem sequer é
+  conserto de token — é redesenho de estado, que pertence à adequação do componente.
+
+  *Mesma raiz da frente **(d) Brandabilidade passa por fora da camada de token*** (topo deste doc):
+  primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
+  camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
 - 🔴 **Gate estrutural NÃO verifica o `@forward` em `components/index.scss`** — descoberto ao criar o
   `DssEmptyState` (ago/2026). O componente passou nos **10 gates** (estrutura, contrato, api-docs,
@@ -667,18 +759,50 @@
   zero"**, que é quando o agente realmente os lê. Ref.: `PROPOSTA_READEQUACAO_CLAUDE_MD.md` (mesma tese: núcleo
   enxuto + gates + índice para lookup). `[[project_claudemd_higiene]]`.
 
-- 🔴 **Eixo visual da adequação — cobertura muito abaixo da regra** (medido 2026-08-11). O
+- 🔴 **Eixo visual da adequação — cobertura muito abaixo da regra** (medido 2026-08-11;
+  **recontado do disco em 2026-09-02**, com 3 correções — os números anteriores estavam errados). O
   `DSS_UI_ADEQUACAO_CHECKLIST.md` exige, por componente adequado, **página Playground**
   (`apps/sandbox/src/Test‹Nome›.vue`) **e** **Preview Frame** registrado — é o que torna possível a
-  análise visual, o passo que FECHA a adequação. Estado real:
-  - **Página Playground: 13 de 76** componentes base *(+DssChip, `97c517e`)*.
-  - **Preview Frame: 11** registrados (Input, Select, Textarea, Field, File, Checkbox, Radio, Toggle,
-    Uploader, MultiselectAutocomplete, **Chip**).
+  análise visual, o passo que FECHA a adequação.
+
+  📖 **Quadro completo, componente a componente: [`DSS_ESTADO_ADEQUACAO_UI.md`](DSS_ESTADO_ADEQUACAO_UI.md)**
+  — **gerado por script** (`npm run build:adequacao-status`) a partir de `CERTIFIED_COMPONENTS.md` +
+  `TestSuite.vue`. **Não recontar à mão:** foi assim que os números abaixo apodreceram. Há
+  `npm run validate:adequacao-status` (exit 1 se o quadro estiver defasado) para virar gate quando
+  se decidir o ratchet.
+
+  | Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
+  |---|---|---|---|---|---|
+  | 1 — Atômicos | 20 | **9** | 0 | 3 | 8 |
+  | 2 — Compostos | 68 | **1** | 1 | 1 | 65 |
+  | **Total** | **88** | **10** | 1 | 4 | 73 |
+
+  - **Adequados (10):** Chip, Input, Select, Textarea, File, Checkbox, Radio, Toggle, EmptyState
+    (Fase 1) · Field (Fase 2).
+  - **Só Playground (4)** — falta o Preview Frame: **DssAvatar, DssBadge, DssButton, DssCard**. Se a
+    fila for ordenada por menor esforço, **começa aqui**.
+  - **Só Preview Frame (1): `DssUploader`.** Não é adequação não iniciada — o fluxo dele foi validado
+    ponta a ponta; falta o artefato Playground. O próprio `TestSuite.vue` registra o motivo em
+    comentário ("não têm página de teste onde ancorar") e instrui a mover o item quando a página existir.
+
+  **Correções em relação à contagem de 2026-08-11:**
+  1. **São 12 Preview Frames, não 11** — faltava o `DssEmptyState`. (11 pertencem a componentes de
+     Fase 1/2; o 12º é o `DssMultiselectAutocomplete`, que é Fase 3 e não entra neste placar.)
+  2. **O do `DssInput` usa a chave SEM sufixo** (`activeComponent === 'preview-frame'`, por ter sido o
+     primeiro) — escapa de qualquer busca por `preview-frame-*`. Cuidado ao recontar por grep.
+  3. **A base são 88 componentes de Fase 1/2, não 76**, e há **15** páginas Playground (não 13).
+  4. **Preview Frame ≠ adequado.** Ao automatizar, o script separou o `DssUploader`: ter frame não
+     implica ter Playground. A contagem manual anterior somava os dois artefatos como se fossem um,
+     e por isso dizia 11 adequados onde são **10 + 1 caso à parte**.
+
   - Não é dívida de um componente: é a regra valendo só onde a adequação já passou. **Cada componente
     adequado daqui em diante entra com os dois** — e a fila de não-adequados carrega o resto.
-  - ⚠️ **Sem gate automatizado.** Hoje é item de checklist marcado à mão. Um gate desses reprovaria 64/76
-    de saída, então precisaria de baseline/ratchet como o de tokens fantasma. **Decisão pendente:**
-    construir o ratchet ou manter curadoria manual.
+  - ⚠️ **Sem gate automatizado.** Hoje é item de checklist marcado à mão — e o quadro acima é
+    **derivado da presença dos artefatos em disco**, que é o sinal mais confiável disponível, mas é
+    inferência, não selo. Um gate desses reprovaria **78/88** de saída, então precisaria de
+    baseline/ratchet como o de tokens fantasma. **Decisão pendente:** construir o ratchet ou manter
+    curadoria manual. *(O `validate:adequacao-status` já existe, mas gateia a **frescura do quadro**,
+    não a cobertura — são coisas diferentes.)*
   - ⚠️ **Não chamar esse gate de `validate:portal-pages`** — o nome JÁ EXISTE e significa outra coisa:
     `scripts/validate-portal-pages.cjs` (no pre-commit, §3c) valida as páginas **React do docs-portal**
     (`apps/docs-portal/src/pages/components/‹Comp›Page.tsx`) para componentes **SELADOS**. Eixo diferente

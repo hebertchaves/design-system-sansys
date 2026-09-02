@@ -10,14 +10,18 @@
    que NAO podem ser resolvidos por classes utilitarias.
 
    CORES DISPONIVEIS (via classes utilitarias):
-   - .text-primary   → var(--dss-primary)
-   - .text-secondary → var(--dss-secondary)
-   - .text-tertiary  → var(--dss-tertiary)
-   - .text-accent    → var(--dss-accent)
-   - .text-positive  → var(--dss-positive)
-   - .text-negative  → var(--dss-negative)
-   - .text-warning   → var(--dss-warning)
-   - .text-info      → var(--dss-info)
+   - .text-primary   → var(--dss-action-primary)
+   - .text-secondary → var(--dss-action-secondary)
+   - .text-tertiary  → var(--dss-action-tertiary)
+   - .text-accent    → var(--dss-action-accent)
+   - .text-positive  → var(--dss-feedback-success)
+   - .text-negative  → var(--dss-feedback-error)
+   - .text-warning   → var(--dss-feedback-warning)
+   - .text-info      → var(--dss-feedback-info)
+
+   Estas classes apontam para o SEMANTICO desde 2026-08-31 (antes: primitivo).
+   O semantico e o que a marca remapeia — o primitivo, por definicao, nao muda
+   por marca. Ver o cabecalho de utils/_colors.scss.
    ========================================================================== */
 
 /* ==========================================================================

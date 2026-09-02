@@ -89,6 +89,7 @@ Leia o **NÚCLEO** sempre; consulte o **CONDICIONAL** só pelo que a tarefa exig
 | Nomear/citar variante `outline`/`outlined` | `docs/governance/DSS_VARIANT_NAMING.md` *(espelha o Quasar; gate `validate:variant-naming`)* |
 | Abrir PR | `.github/pull_request_template.md` |
 | Consultar status de selos | `docs/governance/CERTIFIED_COMPONENTS.md` |
+| Saber se um componente já foi **adequado** (≠ selado) | `docs/governance/DSS_ESTADO_ADEQUACAO_UI.md` |
 
 ### Histórico (arquivado — só se investigar decisão de fase anterior)
 

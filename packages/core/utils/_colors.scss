@@ -20,7 +20,32 @@
  * .dss-avatar--primary { background: var(--dss-primary); }
  *
  * DEPOIS (modelo Quasar - reutilizável):
- * .bg-primary { background: var(--dss-primary); } // usada por TODOS
+ * .bg-primary { background: var(--dss-action-primary); }  // usada por TODOS
+ *
+ * ==========================================================================
+ * POR QUE O SEMÂNTICO E NÃO O PRIMITIVO (corrigido em 2026-08-31)
+ * ==========================================================================
+ *
+ * Estas classes apontavam para os PRIMITIVOS (--dss-primary, --dss-positive…).
+ * Elas são definidas em DOIS lugares:
+ *
+ *   - aqui, em utils/_colors.scss
+ *   - em themes/_quasar-overrides.scss (~linha 1058), com os SEMÂNTICOS
+ *
+ * Como themes/ é importado DEPOIS de utils/ em index.scss, o semântico vencia e
+ * produção brandeava corretamente. Mas o bundle de DEV do sandbox reemitia
+ * utils/ como folha separada DEPOIS de themes/ — e ali o primitivo voltava a
+ * vencer. Resultado medido: o mesmo DssButton aparecia com a cor da marca no
+ * Preview Frame e #1F86DE nas três marcas no Playground.
+ *
+ * Isso não é bug de cor: o Playground é o INSTRUMENTO da onda de adequação, e um
+ * instrumento que diverge de produção faz o adequador ver defeito que não existe.
+ * (Foi o que aconteceu — gerou um item 🔴 no DEBITO_ABERTO contra o token errado.)
+ *
+ * O conserto: as duas definições passam a apontar para o MESMO token, então a
+ * ordem de importação deixa de decidir. NÃO reverter para --dss-primary — a
+ * brandabilidade remapeia o SEMÂNTICO, e o primitivo é justamente o que não muda
+ * por marca.
  *
  * ==========================================================================
  */
@@ -37,35 +62,35 @@
  */
 
 .bg-primary {
-  background: var(--dss-primary);
+  background: var(--dss-action-primary);
 }
 
 .bg-secondary {
-  background: var(--dss-secondary);
+  background: var(--dss-action-secondary);
 }
 
 .bg-tertiary {
-  background: var(--dss-tertiary);
+  background: var(--dss-action-tertiary);
 }
 
 .bg-accent {
-  background: var(--dss-accent);
+  background: var(--dss-action-accent);
 }
 
 .bg-positive {
-  background: var(--dss-positive);
+  background: var(--dss-feedback-success);
 }
 
 .bg-negative {
-  background: var(--dss-negative);
+  background: var(--dss-feedback-error);
 }
 
 .bg-warning {
-  background: var(--dss-warning);
+  background: var(--dss-feedback-warning);
 }
 
 .bg-info {
-  background: var(--dss-info);
+  background: var(--dss-feedback-info);
 }
 
 /* ==========================================================================
@@ -80,35 +105,35 @@
  */
 
 .text-primary {
-  color: var(--dss-primary);
+  color: var(--dss-action-primary);
 }
 
 .text-secondary {
-  color: var(--dss-secondary);
+  color: var(--dss-action-secondary);
 }
 
 .text-tertiary {
-  color: var(--dss-tertiary);
+  color: var(--dss-action-tertiary);
 }
 
 .text-accent {
-  color: var(--dss-accent);
+  color: var(--dss-action-accent);
 }
 
 .text-positive {
-  color: var(--dss-positive);
+  color: var(--dss-feedback-success);
 }
 
 .text-negative {
-  color: var(--dss-negative);
+  color: var(--dss-feedback-error);
 }
 
 .text-warning {
-  color: var(--dss-warning);
+  color: var(--dss-feedback-warning);
 }
 
 .text-info {
-  color: var(--dss-info);
+  color: var(--dss-feedback-info);
 }
 
 /* ==========================================================================
@@ -129,7 +154,7 @@
 }
 
 .text-dark {
-  color: var(--dss-gray-900);
+  color: var(--dss-text-body);
 }
 
 .text-grey {

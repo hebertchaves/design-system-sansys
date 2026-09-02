@@ -352,7 +352,7 @@ Referencia: DssBadge (Golden Context, mesma decisao).
 --dss-icon-color-primary: #1976D2;
 
 /* CORRETO: Usar token semantico existente */
-.text-primary { color: var(--dss-primary); }
+.text-primary { color: var(--dss-action-primary); }
 ```
 
 ### Anti-pattern 5: Touch target no icone
