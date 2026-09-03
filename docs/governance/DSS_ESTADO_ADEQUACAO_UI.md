@@ -4,11 +4,11 @@
      Regenerar: `npm run build:adequacao-status` (ou node scripts/build-adequacao-status.cjs)
      Fontes: docs/governance/CERTIFIED_COMPONENTS.md + apps/sandbox/src/TestSuite.vue -->
 
-> **Gerado do disco em 02/09/2026**, não de memória. Fase, categoria e selo saem do
+> **Gerado do disco em 03/09/2026**, não de memória. Fase, categoria e selo saem do
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
-> **100% selados**; a adequação de UI é uma onda posterior, e cobre **11** deles. Um
+> **100% selados**; a adequação de UI é uma onda posterior, e cobre **12** deles. Um
 > componente selado em janeiro/2026 foi auditado contra as regras de então — não contra o checklist
 > de adequação.
 
@@ -30,19 +30,20 @@ inferência, não selo.
 
 | Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
 |---|---|---|---|---|---|
-| **Fase 1 — Atômicos** | 20 | **9** | 0 | 3 | 8 |
+| **Fase 1 — Atômicos** | 20 | **10** | 0 | 2 | 8 |
 | **Fase 2 — Compostos** | 68 | **2** | 0 | 1 | 65 |
-| **Total** | **88** | **11** | 0 | 4 | 73 |
+| **Total** | **88** | **12** | 0 | 3 | 73 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
-`DssAvatar`, `DssBadge`, `DssButton`, `DssCard`.
+`DssAvatar`, `DssBadge`, `DssCard`.
 
 _Nenhum componente na situação "só Preview Frame" — todo frame registrado tem página Playground._
 
-## Fase 1 — Componentes Atômicos (9/20)
+## Fase 1 — Componentes Atômicos (10/20)
 
 | | Componente | Categoria | Selo | Playground | Preview Frame |
 |---|---|---|---|---|---|
+| ✅ | `DssButton` | Ação primária interativa | 20/01/2026 | sim | sim |
 | ✅ | `DssCheckbox` | Compact Control interativo | 01/02/2026 | sim | sim |
 | ✅ | `DssChip` | Compact Control interativo | 27/01/2026 | sim | sim |
 | ✅ | `DssEmptyState` | Estado de dado não interativo | 28/08/2026 | sim | sim |
@@ -54,7 +55,6 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ✅ | `DssToggle` | Controle de estado binário | 05/02/2026 | sim | sim |
 | 🟡 | `DssAvatar` | Visual/Identity | 02/02/2026 | sim | — |
 | 🟡 | `DssBadge` | Compact Control não-interativo | 27/01/2026 | sim | — |
-| 🟡 | `DssButton` | Ação primária interativa | 20/01/2026 | sim | — |
 | ⬜ | `DssIcon` | Ícone decorativo/semântico | 13/02/2026 | — | — |
 | ⬜ | `DssItem` | Item de lista | — | — | — |
 | ⬜ | `DssRange` | Controle de intervalo | 23/03/2026 | — | — |

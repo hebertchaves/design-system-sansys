@@ -352,7 +352,8 @@ se for `composed/`, confirmar que os globs do Preview Frame o alcançam (`{base,
 ## Página do componente (sandbox) — aplicar o template Playground
 
 > **A adequação NÃO termina no Preview Frame.** Ela também **ajusta/cria a página de
-> demonstração do componente no sandbox**: `apps/sandbox/src/TestDss‹Nome›.vue`, aplicando o
+> demonstração do componente no sandbox**: `apps/sandbox/src/Test‹Nome›.vue` — **sem o prefixo `Dss`**
+> (ex.: `DssInput` → `TestInput.vue`) —, aplicando o
 > **template Playground já desenvolvido** — `PlaygroundLayout` + `PgSection`/`PgGrid`/`PgTile`
 > (referência golden: **`TestInput.vue`**). É **distinta** da página do Preview Frame: o Preview
 > Frame é o validador ao vivo (iframe do SFC + knobs do contrato); esta é o **showcase por
@@ -361,7 +362,7 @@ se for `composed/`, confirmar que os globs do Preview Frame o alcançam (`{base,
 
 **Gate da página (marcar por componente):**
 
-- [ ] **Página existe** (`TestDss‹Nome›.vue`) e está **ligada no `TestSuite.vue`** (import + bloco
+- [ ] **Página existe** (`Test‹Nome›.vue`, sem o prefixo `Dss`) e está **ligada no `TestSuite.vue`** (import + bloco
   `v-else-if="activeComponent === '‹nome›'"` — a nav costuma existir apontando p/ view inexistente).
 - [ ] Usa o **template Playground** (`PlaygroundLayout` + `PgSection`/`PgGrid`/`PgTile`), **não** HTML ad-hoc.
 - [ ] **Seções por aspecto** cobrindo a API real (do `types/*.types.ts`): estados, tamanhos/variantes, cores,

@@ -773,18 +773,30 @@
 
   | Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
   |---|---|---|---|---|---|
-  | 1 — Atômicos | 20 | **9** | 0 | 3 | 8 |
+  | 1 — Atômicos | 20 | **10** | 0 | 2 | 8 |
   | 2 — Compostos | 68 | **2** | 0 | 1 | 65 |
-  | **Total** | **88** | **11** | 0 | 4 | 73 |
+  | **Total** | **88** | **12** | 0 | 3 | 73 |
 
-  - **Adequados (11):** Chip, Input, Select, Textarea, File, Checkbox, Radio, Toggle, EmptyState
-    (Fase 1) · Field, Uploader (Fase 2).
-  - **Só Playground (4)** — falta o Preview Frame: **DssAvatar, DssBadge, DssButton, DssCard**. Se a
-    fila for ordenada por menor esforço, **começa aqui**.
+  - **Adequados (12):** Button, Chip, Input, Select, Textarea, File, Checkbox, Radio, Toggle,
+    EmptyState (Fase 1) · Field, Uploader (Fase 2).
+  - **Só Playground (3)** — falta o Preview Frame: **DssAvatar, DssBadge, DssCard**. Se a fila for
+    ordenada por menor esforço, **começa aqui**.
   - **Só Preview Frame: zerado** (set/2026). Era o `DssUploader` — tinha o frame e não tinha página.
     `TestUploader.vue` foi criado (11 seções sobre a API real, template Playground) e o frame dele
     saiu da seção temporária de topo do `TestSuite.vue` para debaixo do componente, em Campos, como o
     comentário do próprio arquivo instruía. Sobrou lá só o `DssMultiselectAutocomplete` (Fase 3).
+  - **`DssButton` fechado** (set/2026): ganhou o Preview Frame — só registro (nav + `<PreviewFrame
+    component="DssButton" />`), porque o `PreviewSubject` descobre o entry-wrapper por glob e o
+    `dss.contract.json` já tinha os 26 `controlHint`. Verificado: 26 knobs, knob→reação em
+    variant/size/loading, brand waste (`#0b8154`), console limpo.
+
+  ⚠️ **Achado ao registrar o frame do Button — vale para os 12.** No realm do iframe, `Tema=dark`
+  aplica `[data-theme="dark"]` e os tokens invertem corretamente (`--dss-surface-default` → `#262626`,
+  `--dss-text-body` → `#f5f5f5`), mas o **`body` do iframe continua `#f5f5f5`** — o palco não escurece.
+  Medido **idêntico** no `DssChip`, frame que já existia e passou pela adequação, então é característica
+  pré-existente do Preview Frame, não deste registro. Enfraquece a inspeção de dark: o componente é
+  avaliado sobre um fundo claro que produção não teria. *Correção provável: pintar o `body` do realm de
+  preview a partir de `--dss-surface-default`, em vez do valor literal.*
 
   **Correções em relação à contagem de 2026-08-11:**
   1. **São 12 Preview Frames, não 11** — faltava o `DssEmptyState`. (11 pertencem a componentes de
