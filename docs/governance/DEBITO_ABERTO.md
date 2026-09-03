@@ -21,6 +21,34 @@
   Tamanho, riscos, forma da correção e piloto sugerido (Badge/Button/Chip):
   **`DSS_FRENTE_MARCA_PRIMITIVOS.md`**. Não bloqueia o HC.
 
+- 🟡 **(e) Cinzas crus → camada semântica** — **fatia mecânica FECHADA, resíduo triado.**
+  Frente tocada na worktree isolada `work/dss-a11y-contraste` (commits `c261609`, `8fab0cf`,
+  `f5f18da`, ago–set/2026). O placar saiu de **201 → 59** declarações fora de bloco dark, e
+  **47 dessas são isentas por contexto legítimo** (22 `--standout` = campo escuro por desenho do
+  Quasar · 12 `prefers-contrast` · 8 `@media print` · 4 `prefers-color-scheme` · 1 DssTooltip).
+  **Resíduo real: ~12, todos já triados.**
+
+  **O que a frente descobriu é mais importante que o placar:** parte do que parecia dívida de
+  tokenização era **falha de contraste** que a falta de token escondia — mesma classe do anel de
+  foco (`da5b83e`) e da borda de campo (`e515807`). Três achados com número:
+  - `--dss-gray-500` (#a3a3a3) usado como **cor de texto** em DssCheckbox, DssRadio e DssUploader
+    dava **2,52:1** — reprovava 1.4.3. Migrado para `--dss-text-subtle` (4,74:1).
+  - Thumb de scroll-area e alça de splitter são **arrastáveis**, então 1.4.11 se aplica (3:1) —
+    davam 1,48 e 2,52. Origem da família nova `--dss-control-*`, que **deriva** de
+    `--dss-border-strong` em vez de fixar hex (nenhum passo único de cinza cumpre nos dois temas).
+  - O número "86 cinzas restantes" que circulava **estava errado — era 29**: 10 dos supostos casos
+    eram texto de comentário, não CSS. Bug do analisador (não tratava comentário de bloco
+    multi-linha); corrigido.
+
+  **Lição de método registrada:** migração em lote lê a *propriedade* e erra o *papel*. Em `c261609`
+  um `color: var(--dss-gray-400)` do DssToggle virou `--dss-text-muted` porque a propriedade era
+  `color` — mas era o `currentColor` do trilho desligado, consumido translúcido a 40%. Revertido em
+  `8fab0cf`. **Só o seletor e o comentário revelavam o papel.** Ver `[[project_color_ramp_a11y]]`.
+
+  *O que sobra:* os ~12 residuais não têm equivalente exato (`gray-700` fica **entre** `text-body`
+  e `text-subtle`; `gray-500` não tem par). Pedem decisão de **papel**, não arredondamento de tom —
+  por isso a frente parou aqui em vez de forçar a última fatia.
+
 - ✅ **(a) Escalar `dss.contract.json`** — **CONCLUÍDO (76/76)**, `--all --strict` exit 0. Todos os
   grupos (Form/Input 23, Feedback 1, Navigation 9, Overlay 1, Data 3, Layout 10, Outros 27) emitidos,
   schema-válidos, a11y verificada. Relatórios em `relatorios/CONTRATOS_*.md`. `classification` é enum
@@ -357,6 +385,55 @@
   no mesmo problema e desviaram em silêncio, sem registrar. *Decisão pendente:* ou renomear para
   `--dss-text-disabled` (o que ele de fato é), ou criar um `--dss-text-tertiary` real entre
   `secondary` (#737373) e `disable` (#D7D7D7). Bloqueia quem precisar de três níveis de ênfase.
+
+  **📊 Agora com número (medido em `8fab0cf`, set/2026):** `--dss-text-muted` (#D7D7D7) dá **1,44:1**
+  sobre superfície clara. **O próprio token reprova como texto** — não é só nome ambíguo, é valor
+  inutilizável para conteúdo legível. Serve **exclusivamente** para decorativo/desabilitado.
+  Isso estreita a decisão pendente acima: renomear para `--dss-text-disabled` deixou de ser uma das
+  duas saídas equivalentes e virou a leitura **honesta** do que o token é; um `--dss-text-tertiary`
+  real continua sendo necessário à parte, e teria de nascer com contraste medido.
+  *Correção sugerida de baixo custo, enquanto a decisão não vem:* aviso no
+  `tokens/semantic/_text.scss` ao lado da declaração, para o próximo leitor não repetir a escolha.
+
+- 🔴 **Dois sistemas de dark convivem: 8 componentes pintam por `@media (prefers-color-scheme: dark)`,
+  fora do eixo `[data-theme]`** (levantado em `c261609` como "DssChatMessage tem 4 usos";
+  **ao registrar aqui a varredura mostrou que é sistêmico**, set/2026).
+
+  **A doutrina já está escrita no repo** — `DssToggle/4-output/_states.scss:17` e o Golden Component
+  `DssCheckbox/4-output/_states.scss:20` explicam por que o eixo é o **tema da aplicação**:
+
+  > *"`@media (prefers-color-scheme: dark)` erra nas DUAS direções: com o SO escuro e o app claro,
+  > pintava a cor de erro clara sobre fundo claro; com o SO claro e o app escuro, não pintava nada."*
+
+  Ou seja: não é preferência de estilo, é **defeito de renderização já diagnosticado** — e três
+  componentes (DssCheckbox, DssRadio, DssToggle) documentaram a decisão de não usar. Os outros não
+  receberam o recado:
+
+  | componente | arquivo |
+  |---|---|
+  | DssChip | `4-output/_states.scss:17` |
+  | DssItem | `4-output/_states.scss:17` **e** `4-output/_brands.scss:31` |
+  | DssRange | `4-output/_states.scss:10` |
+  | DssSlider | `4-output/_states.scss:15` |
+  | DssChatMessage | `4-output/_states.scss:12` |
+  | DssCarousel | `4-output/_states.scss:9` |
+  | DssPagination | `4-output/_states.scss:2` |
+  | DssInnerLoading | `4-output/_brands.scss:39` |
+
+  **8 componentes · 9 arquivos** (verificado por `git grep`). `DssCadrisCard` também aparece, mas é
+  fixture de stress-test — fora do escopo por decisão de governança.
+  ⚠️ **Tamanho ainda não medido com precisão:** a varredura devolveu ~175 declarações, mas é
+  **limite superior** — contei da abertura do `@media` até o fim do arquivo, então blocos irmãos
+  posteriores entraram na conta. Medir por bloco antes de planejar a correção.
+
+  **Por que é 🔴 e não faxina:** o usuário com SO claro e app em dark **não recebe o dark** desses
+  componentes; com SO escuro e app claro, recebe cor de dark sobre fundo claro. E como a família de
+  seleção já foi corrigida, o sistema hoje é **incoerente entre componentes** — DssCheckbox obedece
+  ao `[data-theme]` e o DssChip ao lado dele obedece ao SO.
+  *Correção sugerida:* trocar o seletor por `[data-theme="dark"]` (mesmo padrão de
+  DssInput/DssField/DssCheckbox) e **rodar o gate de escopo de tema** — parte desses blocos existe
+  para compensar valor claro hardcoded e pode virar contradição ao migrar, como aconteceu com
+  DssScrollArea/DssSplitter em `f5f18da`. Candidato natural a onda própria, não a conserto de passagem.
 
 
 - ✅ **DssChip sem cor neutra/token + DssSelect não consome DssChip — RESOLVIDO** (`886b083`, ago/2026).
