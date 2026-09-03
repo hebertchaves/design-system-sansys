@@ -290,6 +290,53 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- 🟡 **`DssButton.example.vue` é catálogo, não composição — e usa uma prop inexistente**
+  (2026-09-03). O checklist manda a última seção do Playground renderizar o `.example.vue` como
+  "composições reais (não repete variantes/estados)". O do Button repete **cores, tamanhos, variantes,
+  ícones, estados, modificadores e brand** — sobrepõe inteiras as seções 01–11 da própria página.
+  Além disso, `DssButton.example.vue:82` usa `block`, que **não existe** na API (o contrato tem 26
+  props; a de largura total é `stretch`) — cai como atributo solto e não faz nada. A página de teste
+  declara a ressalva no `desc` da seção 14 em vez de esconder. Vale auditar os outros `.example.vue`
+  pelo mesmo padrão.
+
+- 🔴 **A ponte `--q-*` é declarada só em `:root` — `[data-brand]` em subárvore NÃO brandeia**
+  (descoberto em 2026-09-03, ao reescrever a página do DssButton sobre o template).
+
+  `themes/_quasar-tokens-mapping.scss:202` declara as **9** vars da ponte em `:root`:
+  `--q-primary: var(--dss-action-primary)` etc. **Nenhum** arquivo de `tokens/brand/` redeclara
+  qualquer `--q-*`. Custom property resolve **no elemento onde é declarada**: `--q-primary` é
+  computada no `<html>`, onde `--dss-action-primary` ainda é o default, e o valor **já resolvido**
+  desce por herança. Redeclarar `--dss-action-primary` num descendente **não** recomputa `--q-primary`.
+
+  E como `.bg-primary { background: var(--q-primary) !important }` do Quasar é **layered**, é a ponte
+  que de fato pinta. Resultado: com a marca numa subárvore, o botão **não brandeia**.
+
+  **Medido no Playground do DssButton** (transições desligadas, para não ler valor intermediário):
+
+  | marca em… | `--dss-action-primary` no botão | `--q-primary` no botão | fundo |
+  |---|---|---|---|
+  | `.pg-page` (subárvore) | `#ef7a11` ✅ | **`#1f86de`** ❌ | **azul** ❌ |
+  | `<html>` (raiz) | `#ef7a11` ✅ | `#ef7a11` ✅ | laranja ✅ |
+
+  O mesmo A/B nas 3 marcas: `--dss-action-primary` acompanha (`#ef7a11`/`#0e88e4`/`#0b8154`), `--q-primary`
+  fica preso em `#1f86de` nas quatro condições.
+
+  **Isto não invalida o conserto de `utils/_colors.scss`** (2026-09-01): aquele acerta o lado DSS, que é
+  quem decide onde o CSS do Quasar não está carregado. São camadas diferentes do mesmo caminho de cor.
+
+  **Duas consequências, e a de produção é a pior:**
+  1. O Playground é instrumento enganoso para cor de qualquer consumidor de `.bg-*`/`.text-*` — as
+     pílulas de marca põem `[data-brand]` no `.pg-page`, não no `<html>`. Mesma classe do débito do
+     bundle de dev já fechado.
+  2. **Produção:** qualquer app que escope marca a uma subárvore (um módulo Water dentro de casca Hub,
+     por exemplo) recebe Quasar não-brandeado. Só funciona com a marca no `<html>`.
+
+  *Correção sugerida:* extrair a ponte para um mixin e aplicá-la **também** em cada escopo que re-aponta
+  `--dss-action-*` — os 3 `tokens/brand/_*.scss` e os escopos `hc`/`hcdark`. É a mesma regra que o
+  `validate-theme-scopes.mjs` já enforça um nível abaixo ("quem re-aponta primitivo recomputa o
+  semântico"); falta a terceira camada: **quem re-aponta semântico recomputa a ponte `--q-*`**. O gate
+  pode ser estendido para cobri-la. Relacionado à frente **(d)** no topo deste doc.
+
 - 🔴 **Gate estrutural NÃO verifica o `@forward` em `components/index.scss`** — descoberto ao criar o
   `DssEmptyState` (ago/2026). O componente passou nos **10 gates** (estrutura, contrato, api-docs,
   demo-registry, sandbox-tags, catálogo, type-check…) com as 4 camadas completas e o `.module.scss`
