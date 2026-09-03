@@ -49,6 +49,35 @@
   e `text-subtle`; `gray-500` não tem par). Pedem decisão de **papel**, não arredondamento de tom —
   por isso a frente parou aqui em vez de forçar a última fatia.
 
+  ⚠️ **A migração fica INERTE no dark quando o bloco dark não acompanha** (medido em 2026-09-03, ao
+  revalidar a página do DssUploader). Para o MESMO elemento, o `2-composition/_base.scss` foi migrado
+  para o semântico e o override de dark em `4-output/_states.scss` ficou no primitivo — então quem
+  vence no escuro é o primitivo, e o token novo não pinta nada ali:
+
+  | `.dss-uploader__dropzone-hint` | regra | valor | contraste |
+  |---|---|---|---|
+  | light | `_base.scss` → `--dss-text-subtle` | `#737373` | **4,74:1** ✅ (era 2,52) |
+  | dark | `_states.scss` → `--dss-gray-500` | `#a3a3a3` sobre `#262626` | 6,00:1 ✅ |
+  | dark *se usasse o token* | `--dss-text-subtle` no dark = `#d4d4d4` | — | ~10,9:1 |
+
+  **Não é reprovação** — 6,00:1 passa. É perda de efeito: o override de dark *reduz* o contraste que o
+  semântico daria, e quem alterar `--dss-text-subtle` amanhã não verá mudança no escuro.
+
+  Isto é diferente de "blocos dark ainda não migrados" (que o placar desta frente já isenta de
+  propósito, ao contar "59 **fora de bloco dark**"): aqui o par light/dark do mesmo elemento ficou
+  **meio migrado**. Levantamento: **9 componentes** desta frente têm `--dss-gray-*` cru no
+  `4-output/_states.scss` — DssUploader (11 usos), DssScrollArea (6), DssTree (5), DssRadio (3),
+  DssSlider (3), DssRange (3), DssSplitter (3), DssSeparator (2), DssToggle (1). Ao retomar a frente,
+  **migrar por PAR (base + dark), não por arquivo** — senão o token entra e não vale.
+
+  🔗 **O `$temas` desta frente vale para além dela.** A lista foi criada para o caso "semântico que
+  deriva de semântico que um TEMA sobrescreve". O item 🔴 da **ponte `--q-*`** (mais abaixo) é o
+  mesmo mecanismo no eixo da **MARCA**: `--q-primary: var(--dss-action-primary)` também só existe em
+  `:root`, também congela, e como o `.bg-primary` do Quasar é layered `!important`, é ele quem pinta —
+  logo `[data-brand]` em subárvore não brandeia nada. Medido: marca no `.pg-page` → `#1f86de` nas 3
+  marcas; a mesma marca no `<html>` → `#ef7a11`. **Quem for fechar aquele item começa por aqui:**
+  falta um `$marcas` irmão do `$temas`.
+
 - ✅ **(a) Escalar `dss.contract.json`** — **CONCLUÍDO (76/76)**, `--all --strict` exit 0. Todos os
   grupos (Form/Input 23, Feedback 1, Navigation 9, Overlay 1, Data 3, Layout 10, Outros 27) emitidos,
   schema-válidos, a11y verificada. Relatórios em `relatorios/CONTRATOS_*.md`. `classification` é enum
@@ -390,11 +419,21 @@
   2. **Produção:** qualquer app que escope marca a uma subárvore (um módulo Water dentro de casca Hub,
      por exemplo) recebe Quasar não-brandeado. Só funciona com a marca no `<html>`.
 
-  *Correção sugerida:* extrair a ponte para um mixin e aplicá-la **também** em cada escopo que re-aponta
-  `--dss-action-*` — os 3 `tokens/brand/_*.scss` e os escopos `hc`/`hcdark`. É a mesma regra que o
-  `validate-theme-scopes.mjs` já enforça um nível abaixo ("quem re-aponta primitivo recomputa o
-  semântico"); falta a terceira camada: **quem re-aponta semântico recomputa a ponte `--q-*`**. O gate
-  pode ser estendido para cobri-la. Relacionado à frente **(d)** no topo deste doc.
+  🔗 **MESMA RAIZ da frente (e) — e o molde do conserto já existe.** A frente dos cinzas bateu neste
+  mesmo mecanismo por outro gatilho e o resolveu: `tokens/semantic/_scopes.scss` ganhou a lista
+  **`$temas`** justamente porque `--dss-control-thumb: var(--dss-border-strong)`, declarado só em
+  `:root`, "computaria com o valor CLARO e ficaria preso nele em contexto aninhado" (comentário do
+  próprio arquivo). É a mesma física — custom property resolve no elemento onde é declarada — em dois
+  eixos: **eles pelo TEMA, este item pela MARCA.**
+
+  *Correção sugerida:* replicar a solução da frente (e). Ao lado de `$primitivos` (quem depende de
+  primitivo) e `$temas` (semântico que deriva de semântico), falta um **`$marcas`** — e a ponte `--q-*`
+  extraída para mixin, aplicada em `:root` **e** em cada escopo que re-aponta `--dss-action-*`: os 3
+  `tokens/brand/_*.scss` mais `hc`/`hcdark`.
+
+  O gate acompanha a mesma progressão: `validate-theme-scopes.mjs` hoje enforça "quem re-aponta
+  primitivo recomputa o semântico"; falta **"quem re-aponta semântico recomputa a ponte `--q-*`"**.
+  Relacionado à frente **(d)** no topo deste doc.
 
 - 🔴 **Gate estrutural NÃO verifica o `@forward` em `components/index.scss`** — descoberto ao criar o
   `DssEmptyState` (ago/2026). O componente passou nos **10 gates** (estrutura, contrato, api-docs,
