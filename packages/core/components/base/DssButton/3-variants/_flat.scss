@@ -6,16 +6,33 @@
    CARACTERÍSTICAS:
    - Background transparente (seguindo padrão Quasar)
    - Sem box-shadow
-   - Hover adiciona background light + text hover
-   - Cores gerenciadas por classes utilitárias (utils/_colors-hover.scss)
+   - Hover/active via overlay ::after (padrão do Golden Reference DssChip)
    ========================================================================== */
 
 .dss-button--flat {
   background-color: transparent;
   box-shadow: none;
 
-  /* Hover e active gerenciados por:
-     - utils/_colors-hover.scss (cores semânticas)
-     - components/base/DssButton/4-output/_brands.scss (brands)
-  */
+  /* HOVER/ACTIVE — overlay sutil via ::after.
+     set/2026: antes o hover vinha de `utils/_colors-hover.scss`, que pintava
+     `background: var(--dss-primary-light)` (#86c0f3 — azul FORTE, e primitivo,
+     logo não brandeava). Trocado pelo padrão do DssChip (Golden Reference de
+     interativo): `currentColor` a `--dss-opacity-hover`.
+     Dois ganhos: é sutil, e segue a marca de graça — `currentColor` vem da
+     classe utilitária `.text-*`, que já resolve o token semântico.
+     `::before` continua RESERVADO ao touch target (WCAG 2.5.5). */
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: var(--dss-opacity-hover);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  &:active:not(.dss-button--disabled):not(.dss-button--loading)::after {
+    opacity: var(--dss-opacity-active);
+  }
 }

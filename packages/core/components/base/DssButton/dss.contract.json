@@ -230,26 +230,24 @@
       {
         "name": "default",
         "scope": null,
-        "required": true,
-        "description": "Conteúdo principal do botão"
+        "description": "Conteúdo principal do botão."
       },
       {
         "name": "icon-left",
         "scope": null,
-        "required": true,
-        "description": "Ícone à esquerda do conteúdo (precede a prop icon — CCI §3.2)"
+        "description": "Ícone à esquerda do conteúdo (precede a prop icon — CCI §3.2)."
       },
       {
         "name": "icon-right",
         "scope": null,
-        "required": true,
-        "description": "Ícone à direita do conteúdo (precede a prop iconRight — CCI §3.2)"
+        "description": "Ícone à direita do conteúdo (precede a prop iconRight — CCI §3.2)."
       }
     ]
   },
   "visual": {
     "defaultPreview": {
       "props": {
+        "label": "Button",
         "variant": "elevated",
         "color": "primary",
         "size": "md"
@@ -913,22 +911,58 @@
       ],
       "hover": [
         {
-          "property": "box-shadow",
-          "token": "--dss-elevation-3",
-          "value": null,
-          "source": "3-variants/_elevated.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-surface-hover",
-          "value": null,
-          "source": "3-variants/_outline.scss"
-        },
-        {
           "property": "filter",
           "token": null,
           "value": "brightness(0.95)",
           "source": "3-variants/_unelevated.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "inset",
+          "token": null,
+          "value": "0",
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "currentColor",
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-hover",
+          "value": null,
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": null,
+          "value": "inherit",
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "-1",
+          "source": "3-variants/_outline.scss"
         },
         {
           "property": "box-shadow",
@@ -947,60 +981,6 @@
           "token": null,
           "value": "0 4px 6px rgba(0, 0, 0, 0.2)",
           "source": "3-variants/_glossy.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-hub-700",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-hub-100",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-hub-800",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-water-100",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-800",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-waste-800",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-waste-100",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-800",
-          "value": null,
-          "source": "4-output/_brands.scss"
         }
       ],
       "focus": [
@@ -1088,7 +1068,7 @@
           "property": "opacity",
           "token": "--dss-opacity-active",
           "value": null,
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_outline.scss"
         },
         {
           "property": "border-radius",
@@ -1113,12 +1093,6 @@
           "token": "--dss-elevation-1",
           "value": null,
           "source": "3-variants/_elevated.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-surface-active",
-          "value": null,
-          "source": "3-variants/_outline.scss"
         },
         {
           "property": "filter",
@@ -1468,61 +1442,7 @@
         ]
       },
       {
-        "name": "--dss-elevation-3",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-surface-hover",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-hub-700",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-hub-100",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-hub-800",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-water-600",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-water-100",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-water-800",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-waste-800",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-waste-100",
+        "name": "--dss-opacity-hover",
         "usedIn": [
           "hover"
         ]
@@ -1556,12 +1476,6 @@
         "usedIn": [
           "active",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-surface-active",
-        "usedIn": [
-          "active"
         ]
       },
       {

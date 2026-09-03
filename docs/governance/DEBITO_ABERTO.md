@@ -245,10 +245,22 @@
   > ⚠️ **A linha "o Preview Frame é a superfície confiável para cor, não o Playground" deixa de
   > valer.** As três superfícies convergem.
 
-- 🔴 **O hover das utilitárias de cor NÃO brandeia e reprova AA — `utils/_colors-hover.scss`**
-  (aberto em 2026-09-01, medido em 2026-09-02). **Bug de produção pré-existente, não regressão** do
-  item acima — e **fila da adequação de UI**, não defeito escapado: os dois componentes que o arquivo
-  mira (`.dss-button`, `.dss-badge`) ainda não foram adequados.
+- 🟠 **O hover das utilitárias de cor NÃO brandeia e reprova AA — `utils/_colors-hover.scss`**
+  (aberto em 2026-09-01, medido em 2026-09-02, **metade resolvida em 2026-09-03**).
+
+  ✅ **`.dss-button` — RESOLVIDO.** As 3 seções de botão saíram do utilitário para a camada de
+  variante do componente, no padrão do Golden Reference: `_flat/_outline.scss` usam overlay `::after`
+  com `currentColor` a `--dss-opacity-hover` (10%), e `_elevated.scss` responde por
+  `brightness(0.95)`. Medido depois: `::after` com `bg #1f86de α0.1` — sobre branco dá ≈`#e8f3fc`,
+  contra o `#86c0f3` sólido de antes. E brandeia sozinho: `currentColor` de um flat com brand hub é
+  `#ef7a11`, waste `#0b8154`. Removidos junto os 3 blocos de hover de
+  `DssButton/4-output/_brands.scss`, que pintavam `-100`/`-700` (tom forte e divergente) — era a
+  razão de "o hover só mudar de cor nos modos brand".
+
+  🔴 **`.dss-badge` — ABERTO.** As seções de badge continuam no arquivo com os MESMOS 4 problemas
+  (técnica errada, token primitivo, atropela o componente, metade código morto). Ao adequar o
+  DssBadge, mova-as do mesmo jeito — aí `utils/_colors-hover.scss` deixa de existir. O aviso está
+  escrito no topo do próprio arquivo.
 
   O arquivo irmão de `_colors.scss` não foi migrado: as 40+ regras de hover/active de
   `.dss-button` e `.dss-badge` usam `--dss-primary-hover`, `--dss-tertiary-light`,
@@ -317,6 +329,25 @@
   *Mesma raiz da frente **(d) Brandabilidade passa por fora da camada de token*** (topo deste doc):
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
+
+- 🟡 **Falta um degrau na escala de elevação entre `-2` e `-3`** (2026-09-03). O hover do
+  `DssButton--elevated` fazia `--dss-elevation-2` → `--dss-elevation-3`, ou seja
+  `0 4px 6px/.30` → `0 10px 15px/.35`: o blur mais que dobra e o offset sobe 2,5×. Lido como
+  "dropshadow exagerado" — e não havia degrau intermediário para suavizar. A correção adotada foi
+  **tirar a elevação da resposta de hover** (agora responde por `brightness`, como o DssChip filled),
+  mantendo `-2` no repouso e caindo para `-1` no active. Funciona, mas o "lift" no hover deixou de
+  existir. Devolvê-lo exige um `--dss-elevation-2` intermediário na escala — decisão de design, não
+  conserto local.
+
+- 🟡 **Slots opcionais chegando ao contrato como `required` — o Preview Frame liga todos**
+  (2026-09-03). O emissor deriva `required` da ausência de `?` na assinatura TS, e o
+  `PreviewFrame` nasce com todo slot obrigatório LIGADO (regra correta: slot obrigatório é
+  estrutural). Mas `ButtonSlots` declarava `default()`, `'icon-left'()` e `'icon-right'()` **sem
+  `?`** — os três viravam `required: true` e o preview abria com `«icon-left»«default»«icon-right»`
+  em vez do componente limpo. Nenhum dos três é obrigatório (o JSDoc do `default` até dizia
+  `@default label prop`). Corrigido em `button.types.ts` + contrato reemitido; slots agora abrem
+  desligados. **Vale varrer os outros `*.types.ts`** — o mesmo descuido de digitação produz o mesmo
+  sintoma em qualquer componente, e é invisível fora do Preview Frame.
 
 - 🟡 **`DssButton.example.vue` é catálogo, não composição — e usa uma prop inexistente**
   (2026-09-03). O checklist manda a última seção do Playground renderizar o `.example.vue` como

@@ -237,20 +237,23 @@ export interface ButtonEmits {
  */
 export interface ButtonSlots {
   /**
-   * Conteúdo principal do botão
+   * Conteúdo principal do botão.
+   * OPCIONAL: sem ele o botão renderiza a prop `label`.
    * @default label prop
    */
-  default(): any
+  default?(): any
 
   /**
-   * Ícone à esquerda do conteúdo (precede a prop icon — CCI §3.2)
+   * Ícone à esquerda do conteúdo (precede a prop icon — CCI §3.2).
+   * OPCIONAL.
    */
-  'icon-left'(): any
+  'icon-left'?(): any
 
   /**
-   * Ícone à direita do conteúdo (precede a prop iconRight — CCI §3.2)
+   * Ícone à direita do conteúdo (precede a prop iconRight — CCI §3.2).
+   * OPCIONAL.
    */
-  'icon-right'(): any
+  'icon-right'?(): any
 }
 
 // ==========================================================================

@@ -12,6 +12,7 @@
   "auditDate": "2026-01-20",
   "defaultPreview": {
     "props": {
+      "label": "Button",
       "variant": "elevated",
       "color": "primary",
       "size": "md"

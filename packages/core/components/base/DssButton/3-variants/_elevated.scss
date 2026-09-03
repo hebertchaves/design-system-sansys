@@ -6,7 +6,7 @@
    CARACTERÍSTICAS:
    - Background sólido
    - Box-shadow para elevação via tokens DSS
-   - Hover aumenta elevação
+   - Hover responde por COR (brightness), não por salto de sombra
    ========================================================================== */
 
 /* DSS Visual Standard: usa tokens de elevação DSS para consistência com DssCard e DssFab.
@@ -14,11 +14,40 @@
 .dss-button--elevated {
   box-shadow: var(--dss-elevation-2);
 
+  /* HOVER — set/2026.
+     ANTES: a única resposta era `--dss-elevation-2` → `--dss-elevation-3`, ou seja
+     `0 4px 6px/.30` → `0 10px 15px/.35`. O blur mais que dobra e o offset sobe 2,5×:
+     lido como sombra exagerada. E a cor não mexia, porque a troca de background do
+     `utils/_colors-hover.scss` é INERTE aqui — `.bg-primary` do Quasar é
+     `!important` dentro de `@layer quasar`, e layered-important vence unlayered.
+
+     AGORA: a elevação fica onde está e quem responde é a cor, via `brightness`,
+     que é o padrão do DssChip filled (Golden Reference de interativo) e passa por
+     cima do problema de layer — filtro não disputa cascata com `background`.
+
+     ⚠️ Não há token de elevação intermediário entre `-2` e `-3`. Se um dia se
+     quiser devolver o "lift" no hover sem o salto, a escala precisa de um degrau
+     no meio — registrado no DEBITO_ABERTO. */
   &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-    box-shadow: var(--dss-elevation-3);
+    filter: brightness(0.95);
+  }
+
+  /* ACTIVE — afunda: elevação cai e escurece mais.
+     0.90 e 0.95 são da tabela canônica de brightness (Cartão Base). */
+  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
+    box-shadow: var(--dss-elevation-1);
+    filter: brightness(0.90);
+  }
+}
+
+/* DARK MODE — no escuro, escurecer some no fundo: clareia.
+   1.10/1.20 são os valores canônicos de dark do Cartão Base. */
+[data-theme="dark"] .dss-button--elevated {
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
+    filter: brightness(1.10);
   }
 
   &:active:not(.dss-button--disabled):not(.dss-button--loading) {
-    box-shadow: var(--dss-elevation-1);
+    filter: brightness(1.20);
   }
 }

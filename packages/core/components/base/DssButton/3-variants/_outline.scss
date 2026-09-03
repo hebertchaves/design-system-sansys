@@ -5,8 +5,8 @@
 
    CARACTERÍSTICAS:
    - Background transparente
-   - Border colorida
-   - Hover preenche background
+   - Border colorida (currentColor)
+   - Hover/active via overlay ::after (padrão do Golden Reference DssChip)
    ========================================================================== */
 
 .dss-button--outline {
@@ -16,13 +16,25 @@
   border-color: currentColor;
   box-shadow: none;
 
-  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-    /* DSS Visual Standard: overlay via surface-hover token — consistênte com DssItem e DssChip.
-       Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
-    background-color: var(--dss-surface-hover);
+  /* HOVER/ACTIVE — mesmo overlay do flat; ver racional em _flat.scss.
+     set/2026: aqui já existia um hover correto e sutil
+     (`background-color: var(--dss-surface-hover)`), mas ele NUNCA aparecia:
+     `utils/_colors-hover.scss` tinha especificidade maior (0,5,0 contra 0,4,0)
+     e pintava `--dss-primary-light` por cima. Removida a regra do utilitário,
+     o overlay passa a valer — e `currentColor` brandeia, coisa que o
+     `--dss-surface-hover` (cinza neutro) não fazia. */
+  &:hover:not(.dss-button--disabled):not(.dss-button--loading)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: var(--dss-opacity-hover);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
   }
 
-  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
-    background-color: var(--dss-surface-active);
+  &:active:not(.dss-button--disabled):not(.dss-button--loading)::after {
+    opacity: var(--dss-opacity-active);
   }
 }

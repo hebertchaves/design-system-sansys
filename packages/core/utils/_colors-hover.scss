@@ -25,132 +25,30 @@
    { background-color: transparent !important }`; como o T3 removeu o !important dessa
    base, o hover (0,3,0) já vence a base (0,1,0) por especificidade. 0 mudança de computed.
    ========================================================================== */
-
 /* ==========================================================================
-   HOVER - BOTÕES COM BACKGROUND COLORIDO (elevated, unelevated)
+   HOVER/ACTIVE DE BOTÃO — REMOVIDO DAQUI (set/2026)
+
+   As 3 seções de `.dss-button` que existiam aqui (hover filled, hover
+   flat/outline, active filled) saíram para o próprio componente:
+   `components/base/DssButton/3-variants/_{flat,outline,elevated}.scss`.
+
+   Por quê:
+   1. TÉCNICA ERRADA. Trocavam `background` por uma cor NOMEADA
+      (`--dss-primary-light` = #86c0f3, azul forte). O Cartão Base manda usar
+      `::after` para efeito visual, e o Golden Reference (DssChip) usa overlay
+      `currentColor` a `--dss-opacity-hover` — sutil e brandeável de graça.
+   2. TOKEN ERRADO. Eram PRIMITIVOS: `--dss-primary-*` não se move por marca.
+      Medido: fundo #86c0f3 nas três marcas, com contraste de 1,45:1 no hub.
+   3. ATROPELAVAM O COMPONENTE. `_outline.scss` já tinha o hover certo e sutil,
+      mas perdia por especificidade (0,4,0 contra os 0,5,0 daqui).
+   4. METADE ERA CÓDIGO MORTO. As regras de `.bg-*` são inertes onde o CSS do
+      Quasar carrega: `.bg-primary { background: … !important }` vive em
+      `@layer quasar`, e layered-important vence qualquer unlayered.
+
+   ⚠️ As seções de `.dss-badge` abaixo têm os MESMOS 4 problemas e continuam
+   aqui de propósito — DssBadge ainda não passou pela adequação de UI. Ao
+   adequá-lo, mova-as do mesmo jeito e este arquivo deixa de existir.
    ========================================================================== */
-
-.dss-button:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-  &.bg-primary {
-    background: var(--dss-primary-hover);
-  }
-
-  &.bg-secondary {
-    background: var(--dss-secondary-hover);
-  }
-
-  &.bg-tertiary {
-    background: var(--dss-tertiary-hover);
-  }
-
-  &.bg-accent {
-    background: var(--dss-accent-hover);
-  }
-
-  &.bg-positive {
-    background: var(--dss-positive-hover);
-  }
-
-  &.bg-negative {
-    background: var(--dss-negative-hover);
-  }
-
-  &.bg-warning {
-    background: var(--dss-warning-hover);
-  }
-
-  &.bg-info {
-    background: var(--dss-info-hover);
-  }
-}
-
-/* ==========================================================================
-   HOVER - BOTÕES FLAT/OUTLINE (apenas texto)
-   ========================================================================== */
-
-.dss-button--flat:hover:not(.dss-button--disabled):not(.dss-button--loading),
-.dss-button--outline:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-  &.text-primary {
-    background: var(--dss-primary-light);
-    color: var(--dss-primary-hover);
-  }
-
-  &.text-secondary {
-    background: var(--dss-secondary-light);
-    color: var(--dss-secondary-hover);
-  }
-
-  &.text-tertiary {
-    background: var(--dss-tertiary-light);
-    color: var(--dss-tertiary-hover);
-  }
-
-  &.text-accent {
-    background: var(--dss-accent-light);
-    color: var(--dss-accent-hover);
-  }
-
-  &.text-positive {
-    background: var(--dss-positive-light);
-    color: var(--dss-positive-hover);
-  }
-
-  &.text-negative {
-    background: var(--dss-negative-light);
-    color: var(--dss-negative-hover);
-  }
-
-  &.text-warning {
-    background: var(--dss-warning-light);
-    color: var(--dss-warning-hover);
-  }
-
-  &.text-info {
-    background: var(--dss-info-light);
-    color: var(--dss-info-hover);
-  }
-}
-
-/* ==========================================================================
-   ACTIVE STATE - BOTÕES
-   ========================================================================== */
-
-.dss-button:active:not(.dss-button--disabled):not(.dss-button--loading) {
-  /* Active state usa hover color + leve scale */
-  transform: scale(0.98);
-
-  &.bg-primary {
-    background: var(--dss-primary-hover);
-  }
-
-  &.bg-secondary {
-    background: var(--dss-secondary-hover);
-  }
-
-  &.bg-tertiary {
-    background: var(--dss-tertiary-hover);
-  }
-
-  &.bg-accent {
-    background: var(--dss-accent-hover);
-  }
-
-  &.bg-positive {
-    background: var(--dss-positive-hover);
-  }
-
-  &.bg-negative {
-    background: var(--dss-negative-hover);
-  }
-
-  &.bg-warning {
-    background: var(--dss-warning-hover);
-  }
-
-  &.bg-info {
-    background: var(--dss-info-hover);
-  }
-}
 
 /* ==========================================================================
    HOVER - BADGES
