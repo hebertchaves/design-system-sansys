@@ -625,13 +625,13 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-gray-400",
+          "token": "--dss-control-disabled",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "fill",
-          "token": "--dss-gray-400",
+          "token": "--dss-control-disabled",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -867,7 +867,7 @@
         ]
       },
       {
-        "name": "--dss-gray-400",
+        "name": "--dss-control-disabled",
         "usedIn": [
           "disabled"
         ]

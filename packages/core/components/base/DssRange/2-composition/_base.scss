@@ -181,11 +181,11 @@
 }
 
 .dss-range--disabled .q-slider__selection {
-  background-color: var(--dss-gray-400);
+  background-color: var(--dss-control-disabled);
 }
 
 .dss-range--disabled .q-slider__thumb-shape {
-  fill: var(--dss-gray-400);
+  fill: var(--dss-control-disabled);
 }
 
 // ─── Estado Readonly ──────────────────────────────────────────────────────────

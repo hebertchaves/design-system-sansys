@@ -8,21 +8,21 @@
    Isso garante que um único modificador de cor funcione para horizontal E vertical.
 
    TOKENS USADOS (os --dss-border-divider-* foram REMOVIDOS em Jan 2025):
-   - subtle    → var(--dss-gray-100)
+   - subtle    → var(--dss-border-subtle)
    - default   → var(--dss-gray-200)  [definido na Layer 2 — sem classe]
-   - strong    → var(--dss-gray-300)
+   - strong    → var(--dss-border-default)
    - primary   → var(--dss-primary)
    - secondary → var(--dss-secondary)
    ========================================================================== */
 
 /* Subtle — Linha mais suave (fundo com pouco contraste) */
 .dss-separator--color-subtle {
-  color: var(--dss-gray-100);
+  color: var(--dss-border-subtle);
 }
 
 /* Strong — Linha com mais ênfase */
 .dss-separator--color-strong {
-  color: var(--dss-gray-300);
+  color: var(--dss-border-default);
 }
 
 /* Primary — Linha na cor primária da paleta de ação */

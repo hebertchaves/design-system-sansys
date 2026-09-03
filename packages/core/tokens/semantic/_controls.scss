@@ -1,0 +1,71 @@
+/* ==========================================================================
+   DSS - TOKENS DE CHROME DE CONTROLE (trilho, manípulo, estado)
+   ========================================================================== */
+
+@use 'scopes' as scopes;
+
+/**
+ * O QUE É
+ * Cor das peças que o usuário OPERA mas que não são texto, nem borda, nem
+ * superfície de conteúdo: manípulo de scroll-area, alça de splitter, trilho e
+ * preenchimento de slider/range.
+ *
+ * POR QUE UMA FAMÍLIA PRÓPRIA
+ * Antes de existir, esses 10 usos caíam no primitivo (`var(--dss-gray-400)`),
+ * inertes a tema. E o token "mais próximo" seria `--dss-border-strong`, que tem
+ * exatamente o mesmo valor — mas é token de BORDA. Usar borda para pintar fundo
+ * é a mesma mentira de nome que já custou uma reversão neste repo (o
+ * `--dss-text-muted` no trilho do DssToggle, ago/2026). O nome é o que impede a
+ * próxima migração em lote de errar o papel.
+ *
+ * ⚠️ O MANÍPULO É COMPONENTE DE UI — 1.4.11 SE APLICA
+ * Thumb de scroll e alça de splitter são arrastáveis, então precisam de 3:1
+ * contra a superfície. **Reprovavam**: thumb estava em `gray-400` (1.48:1) e o
+ * hover em `gray-500` (2.52:1). Esta família nasce corrigindo isso.
+ *
+ * POR QUE DERIVAR EM VEZ DE FIXAR O HEX
+ * Nenhum passo único da escala serve nos dois temas:
+ *
+ *   gray-600   claro 4.74 ✅   escuro 3.19 ⚠️  (no limite)
+ *   gray-700   claro 7.81 ✅   escuro 1.94 ❌
+ *   gray-500   claro 2.52 ❌   escuro 6.00 ✅
+ *
+ * O par que cumpre com folga nos dois é claro `gray-600` / escuro `gray-500` —
+ * que é a inversão que `--dss-border-strong` já faz. Derivar dele mantém os dois
+ * em sincronia por construção: ambos respondem ao mesmo requisito ("o nível que
+ * cumpre 3:1 nos dois temas"). Se um dia precisarem divergir, desacopla-se aqui,
+ * numa linha.
+ *
+ * ESCOPO: usa `$temas` (todos), não `$primitivos`. Motivo em `_scopes.scss` —
+ * isto deriva de um SEMÂNTICO que o tema dark sobrescreve, então precisa
+ * recomputar em todo tema, inclusive aninhado.
+ */
+
+#{scopes.$temas} {
+  /* ===========================================
+     MANÍPULO — operável, 1.4.11 (3:1) obrigatório
+     =========================================== */
+  --dss-control-thumb: var(--dss-border-strong);              /* claro 4.74 · escuro 6.00 ✅ */
+  --dss-control-thumb-hover: var(--dss-border-strong-hover);  /* claro 7.81 · escuro 9.32 ✅ */
+  --dss-control-thumb-active: var(--dss-text-body);           /* mais ênfase ainda, e já inverte por tema */
+
+  /* ===========================================
+     DECORATIVOS — isentos de 1.4.11
+     =========================================== */
+
+  /* Trilho / groove: o sulco por onde o manípulo corre. Não é o controle, é o
+     fundo dele — não precisa de 3:1. */
+  --dss-control-track: var(--dss-surface-muted);
+
+  /* Desabilitado. Componentes inativos são EXPLICITAMENTE isentos de 1.4.11, e
+     forçar contraste aqui faz o desabilitado parecer ativo. Mantém o valor que
+     já se usava (gray-400), agora nomeado e responsivo a tema. */
+  --dss-control-disabled: var(--dss-gray-400);
+}
+
+/* No escuro o desabilitado precisa escurecer, não clarear: gray-400 (#d4d4d4)
+   sobre #262626 daria 10.21:1 — chamaria mais atenção que o estado ativo. */
+[data-theme="dark"],
+[data-theme="hcdark"] {
+  --dss-control-disabled: var(--dss-gray-600);
+}

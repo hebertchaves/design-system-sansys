@@ -13,9 +13,9 @@
  * @see DSS/tokens/semantic/_borders.scss (seção ⚠️ TOKENS REMOVIDOS)
  */
 export type SeparatorColor =
-  | 'subtle'     // var(--dss-gray-100)
+  | 'subtle'     // var(--dss-border-subtle)
   | 'default'    // var(--dss-gray-200) ← default
-  | 'strong'     // var(--dss-gray-300)
+  | 'strong'     // var(--dss-border-default)
   | 'primary'    // var(--dss-primary)
   | 'secondary'  // var(--dss-secondary)
 

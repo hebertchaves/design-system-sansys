@@ -168,7 +168,7 @@
     margin: 0;
     font-size: var(--dss-font-size-xs);
     font-weight: var(--dss-font-weight-normal);
-    color: var(--dss-gray-500);
+    color: var(--dss-text-subtle);
   }
 
   // ==========================================================================
@@ -216,7 +216,7 @@
 
   &__file-icon {
     flex-shrink: 0;
-    color: var(--dss-gray-500);
+    color: var(--dss-text-subtle);
   }
 
   &__file-info {
@@ -230,7 +230,7 @@
   &__file-name {
     font-size: var(--dss-font-size-sm);
     font-weight: var(--dss-font-weight-normal);
-    color: var(--dss-gray-800);
+    color: var(--dss-text-body);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -239,7 +239,7 @@
   &__file-meta {
     font-size: var(--dss-font-size-xs);
     font-weight: var(--dss-font-weight-normal);
-    color: var(--dss-gray-500);
+    color: var(--dss-text-subtle);
   }
 
   &__file-progress {

@@ -15,9 +15,9 @@
 
 | Valor       | Token CSS                | Valor Resolvido |
 |-------------|--------------------------|-----------------|
-| `subtle`    | `var(--dss-gray-100)`    | ~#f5f5f5        |
+| `subtle`    | `var(--dss-border-subtle)`  | ~#f5f5f5 (claro) |
 | `default`   | `var(--dss-gray-200)`    | ~#eeeeee        |
-| `strong`    | `var(--dss-gray-300)`    | ~#e0e0e0        |
+| `strong`    | `var(--dss-border-default)` | ~#e5e5e5 (claro) |
 | `primary`   | `var(--dss-primary)`     | Varia por brand |
 | `secondary` | `var(--dss-secondary)`   | Varia por brand |
 

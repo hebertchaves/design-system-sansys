@@ -72,7 +72,7 @@
      ========================================================================== */
 
   .q-tree__arrow {
-    color: var(--dss-gray-700);
+    color: var(--dss-text-body);
     transition: transform var(--dss-duration-250) ease,
                 color var(--dss-duration-250) ease;
   }
@@ -141,7 +141,7 @@
 
   .q-tree__no-nodes-label,
   .q-tree__no-results-label {
-    color: var(--dss-gray-700);
+    color: var(--dss-text-body);
     font-size: var(--dss-font-size-sm);
     padding: var(--dss-spacing-3) var(--dss-spacing-4);
   }

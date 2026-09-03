@@ -254,12 +254,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "color",
-          "token": "--dss-gray-700",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "line-height",
           "token": null,
           "value": "1.5",
@@ -550,12 +544,6 @@
       },
       {
         "name": "--dss-font-weight-semibold",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-gray-700",
         "usedIn": [
           "default"
         ]

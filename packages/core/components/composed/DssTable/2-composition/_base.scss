@@ -61,14 +61,14 @@
       font-size: var(--dss-font-size-sm);
       font-weight: var(--dss-font-weight-semibold);
       text-align: left;
-      color: var(--dss-gray-700);
+      color: var(--dss-text-body);
       white-space: nowrap;
       border-bottom: var(--dss-border-width-md) solid var(--dss-border-subtle);
       transition: color var(--dss-duration-250) ease;
 
       /* Sort icon — alinhamento e cor */
       .q-table__sort-icon {
-        color: var(--dss-gray-700);
+        color: var(--dss-text-body);
         opacity: 0.6;
       }
 
@@ -164,7 +164,7 @@
     padding: var(--dss-spacing-1_5) var(--dss-spacing-4);
     border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
     font-size: var(--dss-font-size-sm);
-    color: var(--dss-gray-700);
+    color: var(--dss-text-body);
     min-height: var(--dss-touch-target-md);
   }
 

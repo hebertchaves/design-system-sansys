@@ -46,14 +46,14 @@
   // Hover usa --dss-gray-500 (#a3a3a3) — uma etapa mais escura na escala.
 
   .q-scrollarea__thumb {
-    background: var(--dss-gray-400);
+    background: var(--dss-control-thumb);
     border-radius: var(--dss-radius-full);
     transition:
       background-color var(--dss-duration-250) var(--dss-easing-ease-out),
       opacity var(--dss-duration-250) var(--dss-easing-ease-out);
 
     &:hover {
-      background: var(--dss-gray-500);
+      background: var(--dss-control-thumb-hover);
     }
 
     &--v {

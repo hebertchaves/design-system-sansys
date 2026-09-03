@@ -42,3 +42,19 @@
 //
 
 $primitivos: ':root, [data-theme="hc"], [data-theme="hcdark"]';
+
+// -----------------------------------------------------------------------------
+// $temas — para SEMANTICO que deriva de SEMANTICO
+// -----------------------------------------------------------------------------
+//
+// `$primitivos` acima cobre quem depende de PRIMITIVO. Existe um segundo caso:
+// um token semantico que deriva de OUTRO semantico que algum tema sobrescreve.
+//
+// Ex.: `--dss-control-thumb: var(--dss-border-strong)`. O tema `dark` redefine
+// `--dss-border-strong`, mas nao redefine `--dss-control-thumb` — que, declarado
+// so' em `:root`, computaria com o valor CLARO e ficaria preso nele em contexto
+// aninhado. Mesmo mecanismo, gatilho diferente.
+//
+// Por isso esta lista inclui TODOS os temas, nao so' os que re-apontam primitivo.
+
+$temas: ':root, [data-theme="dark"], [data-theme="hc"], [data-theme="hcdark"]';

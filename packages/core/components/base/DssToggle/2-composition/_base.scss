@@ -40,7 +40,11 @@
   /* gray-400 no root é o currentColor do trilho DESLIGADO — o trilho o consome
      translúcido (40%), então o cinza chapado nunca aparece cru. A cor semântica
      só entra no estado LIGADO (bloco CORES SEMÂNTICAS).
-     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 11 e 13.7 */
+     Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 11 e 13.7
+
+     NAO tokenizar para --dss-text-*: isto NAO e' texto, e' cor de trilho. O
+     primitivo aqui e' deliberado (ago/2026: uma migracao em lote chegou a
+     trocar por --dss-text-muted; revertido — valor quase igual, nome mentiroso). */
   color: var(--dss-gray-400);
 
   /* Interaction */
