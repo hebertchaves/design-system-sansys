@@ -58,3 +58,34 @@ $primitivos: ':root, [data-theme="hc"], [data-theme="hcdark"]';
 // Por isso esta lista inclui TODOS os temas, nao so' os que re-apontam primitivo.
 
 $temas: ':root, [data-theme="dark"], [data-theme="hc"], [data-theme="hcdark"]';
+
+// -----------------------------------------------------------------------------
+// $marcas — para quem deriva de SEMANTICO QUE A MARCA RE-APONTA
+// -----------------------------------------------------------------------------
+//
+// Terceiro caso do mesmo mecanismo. `$primitivos` cobre quem depende de
+// primitivo; `$temas` cobre semantico-que-deriva-de-semantico sobrescrito por
+// TEMA; falta o eixo da MARCA.
+//
+// `[data-brand]` re-aponta `--dss-action-primary` (e a rampa dele). Quem deriva
+// disso e' declarado so' em `:root` congela do mesmo jeito — e neste eixo o
+// sintoma e' PIOR, porque a ponte `--q-*` alimenta as utilitarias do Quasar, que
+// vivem em `@layer quasar` com `!important` e por isso VENCEM o CSS do DSS. Ou
+// seja: com a marca numa subarvore, quem pinta e' um valor congelado.
+//
+// Medido em 2026-09-03, DssButton no Playground, transicoes desligadas:
+//
+// [data-brand="hub"] no .pg-page   --q-primary = #1f86de  ❌ (botao azul)
+// [data-brand="hub"] no <html>     --q-primary = #ef7a11  ✅ (botao laranja)
+//
+// Atinge PRODUCAO, nao so' o sandbox: um app que escope marca a uma subarvore
+// (modulo Water dentro de casca Hub) recebia Quasar nao-brandeado.
+//
+// Superset de `$temas`: um tema pode mexer no que a ponte consome (ex.: `hc`
+// re-aponta os primitivos por baixo de `--dss-action-primary`), entao os dois
+// eixos precisam recomputar. Re-declarar de novo e' inocuo — a expressao apenas
+// resolve outra vez, agora no escopo certo.
+//
+// ⚠️ AO CRIAR UMA MARCA NOVA, acrescente-a a esta lista.
+
+$marcas: '#{$temas}, [data-brand="hub"], [data-brand="water"], [data-brand="waste"]';

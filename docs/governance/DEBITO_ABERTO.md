@@ -65,10 +65,32 @@
 
   Isto é diferente de "blocos dark ainda não migrados" (que o placar desta frente já isenta de
   propósito, ao contar "59 **fora de bloco dark**"): aqui o par light/dark do mesmo elemento ficou
-  **meio migrado**. Levantamento: **9 componentes** desta frente têm `--dss-gray-*` cru no
-  `4-output/_states.scss` — DssUploader (11 usos), DssScrollArea (6), DssTree (5), DssRadio (3),
-  DssSlider (3), DssRange (3), DssSplitter (3), DssSeparator (2), DssToggle (1). Ao retomar a frente,
-  **migrar por PAR (base + dark), não por arquivo** — senão o token entra e não vale.
+  **meio migrado**.
+
+  ✅ **FECHADO em 2026-09-03.** A triagem por BLOCO desmontou o número: dos 32 usos levantados,
+  só **19 eram par meio-migrado**. Os outros 13 são deliberados e **não deviam ser tocados** —
+  6 em `@media (prefers-contrast: more)` (DssScrollArea, DssSplitter), onde alto contraste exige
+  extremos absolutos, e 7 em `@media print` (DssSlider, DssRange, DssSeparator), onde semântico
+  relativo a tema não significa nada no papel.
+
+  Dos 19, a triagem por PAPEL (a lição desta frente) fechou assim:
+
+  | componente | usos | desfecho |
+  |---|---|---|
+  | DssUploader | 10 | **removidos** — 9 eram o valor EXATO que o semântico já dá; o do `dropzone-hint` diferia para pior |
+  | DssTree | 5 | **removidos** — os 5 eram o valor exato; sobra só o EXC-01 dos conectores |
+  | DssRadio | 3 | 2 já eram semânticos com fallback; **1 (`__control`) fica** — decisão de papel |
+  | DssToggle | 1 | **não tocar** — o `gray-50` do thumb tem comentário: "não há semântico para superfície que não inverte" |
+
+  **O desfecho foi REMOVER, não migrar.** Quando o `_base.scss` já usa um semântico que inverte, o
+  override de dark é redundante por construção — e ativo: vencia por especificidade e travava o
+  token. Delta visual medido: **zero** nas 14 equivalentes (ex.: borda do Uploader segue `#737373`),
+  e o `dropzone-hint` **melhorou de 6,00:1 para 10,21:1** por deixar de ser travado em `#a3a3a3`.
+  Light intacto (4,74:1, idêntico).
+
+  *Sobra 1 item de papel:* `DssRadio .dss-radio__control { color: gray-400 }` no dark. O `--dss-control-*`
+  desta frente é o candidato natural, mas `--dss-control-thumb` vale `gray-500` no dark, não `gray-400` —
+  logo há mudança de valor, e isso é decisão de design, não conserto mecânico.
 
   🔗 **O `$temas` desta frente vale para além dela.** A lista foi criada para o caso "semântico que
   deriva de semântico que um TEMA sobrescreve". O item 🔴 da **ponte `--q-*`** (mais abaixo) é o
@@ -387,8 +409,16 @@
   declara a ressalva no `desc` da seção 14 em vez de esconder. Vale auditar os outros `.example.vue`
   pelo mesmo padrão.
 
-- 🔴 **A ponte `--q-*` é declarada só em `:root` — `[data-brand]` em subárvore NÃO brandeia**
-  (descoberto em 2026-09-03, ao reescrever a página do DssButton sobre o template).
+- ✅ **A ponte `--q-*` era declarada só em `:root` — `[data-brand]` em subárvore NÃO brandeava — RESOLVIDO**
+  (descoberto e corrigido em 2026-09-03).
+
+  **Conserto:** `semantic/_scopes.scss` ganhou **`$marcas`** (superset de `$temas` + as 3
+  `[data-brand]`), e a Seção 12 de `themes/_quasar-tokens-mapping.scss` passou de `:root` para
+  `#{scopes.$marcas}`. Nove vars, um seletor. **Medido depois, com a marca no `.pg-page` — a
+  subárvore que estava quebrada:** `--q-primary` = `#1f86de` / `#ef7a11` / `#0e88e4` / `#0b8154` em
+  neutro/hub/water/waste, e o fundo do botão acompanha. Antes era `#1f86de` nas quatro.
+
+  Diagnóstico original preservado abaixo.
 
   `themes/_quasar-tokens-mapping.scss:202` declara as **9** vars da ponte em `:root`:
   `--q-primary: var(--dss-action-primary)` etc. **Nenhum** arquivo de `tokens/brand/` redeclara

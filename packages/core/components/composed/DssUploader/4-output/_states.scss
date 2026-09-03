@@ -18,55 +18,34 @@
 // 1. DARK MODE
 // =============================================================================
 
+// OS 10 OVERRIDES DE COR DESTE BLOCO FORAM REMOVIDOS (set/2026).
+//
+// Eles vinham de antes da migração para a camada semântica e tinham virado peso
+// morto — pior, peso morto ATIVO: o `2-composition/_base.scss` já usa o token
+// semântico, que INVERTE sozinho no dark, e o override aqui vencia por
+// especificidade e travava o valor no primitivo. Quem mudasse `--dss-text-subtle`
+// não veria efeito nenhum no escuro.
+//
+// Conferido par a par — 9 dos 10 eram EXATAMENTE o valor que o semântico já dá:
+//
+//   base (light)                    override daqui   valor do semântico no dark
+//   --dss-border-default            gray-600         gray-600   idêntico
+//   --dss-border-subtle  (×2, --subtle)  gray-700    gray-700   idêntico
+//   --dss-text-body      (file-name)     gray-200    gray-200   idêntico
+//   --dss-text-subtle    (×4)            gray-400    gray-400   idêntico
+//   --dss-text-subtle    (dropzone-hint) gray-500    gray-400   ← DIFERIA
+//
+// O único que diferia era o `dropzone-hint`, e para PIOR: o override o prendia em
+// #a3a3a3 (6,00:1) quando o semântico dá #d4d4d4 (~10,9:1). Remover melhora.
+//
+// Delta visual das outras nove: ZERO. Ver o verbete da frente (e) no
+// DEBITO_ABERTO.md — migrar por PAR (base + dark), não por arquivo.
+
 [data-theme="dark"] {
-  .dss-uploader {
-    // --dss-surface-default, --dss-gray-300 e tokens de feedback têm
-    // overrides de dark mode nos tokens globais — sem override adicional.
-
-    // Borda com mais contraste em dark mode
-    border-color: var(--dss-gray-600);
-
-    &__header {
-      border-bottom-color: var(--dss-gray-700);
-    }
-
-    &__file-item {
-      border-bottom-color: var(--dss-gray-700);
-    }
-
-    &__file-name {
-      color: var(--dss-gray-200);
-    }
-
-    &__file-meta {
-      color: var(--dss-gray-400);
-    }
-
-    &__progress-info {
-      color: var(--dss-gray-400);
-    }
-
-    &__dropzone-text {
-      color: var(--dss-gray-400);
-    }
-
-    &__dropzone-hint {
-      color: var(--dss-gray-500);
-    }
-
-    &__file-icon {
-      color: var(--dss-gray-400);
-    }
-  }
-
-  // Variante elevated em dark mode
+  // Sombra é o único ajuste que o dark ainda precisa aqui: a escala de elevação
+  // não inverte por tema, e no escuro a sombra média fica pesada demais.
   .dss-uploader--elevated {
     box-shadow: var(--dss-shadow-sm);
-  }
-
-  // Variante subtle em dark mode: usa surface-muted dark
-  .dss-uploader--subtle {
-    border-color: var(--dss-gray-700);
   }
 }
 

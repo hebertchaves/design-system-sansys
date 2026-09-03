@@ -3,6 +3,8 @@
    Tradução das variáveis do Quasar para nossos tokens
    ========================================================================== */
 
+@use '../tokens/semantic/scopes' as scopes;
+
 /* ===========================================
    1. CORES PRINCIPAIS DO QUASAR
    =========================================== */
@@ -199,7 +201,14 @@ $transition-easing: var(--dss-easing-standard) !default;
    a paleta DSS sem precisar de overrides individuais.
    =========================================== */
 
-:root {
+/* ESCOPO: `$marcas`, não `:root`.
+   Custom property resolve NO ELEMENTO onde é declarada. Declarada só em `:root`,
+   `--q-primary` computava com o `--dss-action-primary` DEFAULT e descia herdada
+   já resolvida — então `[data-brand]` numa subárvore não a movia. E como as
+   utilitárias do Quasar (`.bg-primary { … !important }` em `@layer quasar`)
+   vencem o CSS DSS unlayered, era esta ponte congelada que pintava: o botão
+   ficava azul nas três marcas. Medido e detalhado em `semantic/_scopes.scss`. */
+#{scopes.$marcas} {
   --q-primary:   var(--dss-action-primary);
   --q-secondary: var(--dss-action-secondary);
   --q-accent:    var(--dss-action-accent);

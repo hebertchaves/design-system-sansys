@@ -13,34 +13,28 @@
    DARK MODE
    ========================================================================== */
 
+/* OS 5 OVERRIDES DE COR DESTE BLOCO FORAM REMOVIDOS (set/2026).
+
+   Mesmo caso do DssUploader: o `2-composition/_base.scss` já usa o semântico,
+   que inverte sozinho, e o override aqui vencia por especificidade e travava o
+   valor no primitivo — o token virava inerte no escuro.
+
+   Conferido par a par; os CINCO eram exatamente o valor que o semântico já dá:
+
+     base (light)                          override       semântico no dark
+     --dss-surface-default  (hover)        gray-800       gray-800   idêntico
+     --dss-surface-subtle   (selected)     gray-700       gray-700   idêntico
+     --dss-text-body        (label)        gray-200       gray-200   idêntico
+     --dss-text-body        (arrow)        gray-200       gray-200   idêntico
+     --dss-text-body        (no-nodes ×2)  gray-200       gray-200   idêntico
+
+   Delta visual: ZERO. Fica só o EXC-01 dos conectores, que não tem equivalente. */
+
 [data-theme='dark'] .dss-tree {
-  .q-tree__node-header {
-    &:hover:not(.q-tree__node-header--selected) {
-      background-color: var(--dss-gray-800);
-    }
-
-    &.q-tree__node-header--selected {
-      background-color: var(--dss-gray-700);
-    }
-  }
-
-  .q-tree__label {
-    color: var(--dss-gray-200);
-  }
-
-  .q-tree__arrow {
-    color: var(--dss-gray-200);
-  }
-
   .q-tree__node::before,
   .q-tree__node::after {
     /* EXC-01: border white com alpha — sem token DSS equivalente para dark connectors */
     border-color: rgba(255, 255, 255, 0.15);
-  }
-
-  .q-tree__no-nodes-label,
-  .q-tree__no-results-label {
-    color: var(--dss-gray-200);
   }
 }
 
