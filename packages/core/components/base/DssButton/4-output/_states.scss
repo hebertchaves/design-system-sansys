@@ -4,6 +4,74 @@
    RESPONSABILIDADE: Estados especiais (dark mode, a11y)
    ========================================================================== */
 
+@use 'sass:list';
+
+/* ==========================================================================
+   HOVER / ACTIVE DAS VARIANTES PREENCHIDAS — via rampa de cor
+
+   COMO FUNCIONA (e por que não é `background-color:` direto)
+
+   A cor de um botão preenchido é pintada pela utilitária do Quasar
+   (`.bg-primary { background: var(--q-primary) !important }`), que vive em
+   `@layer quasar`. Layered-`!important` vence qualquer CSS DSS unlayered — então
+   declarar `background-color` aqui seria inerte, por mais específico que fosse.
+
+   Em vez de disputar a cascata, mexemos no INSUMO: redefinir `--q-primary` no
+   `:hover` faz a própria regra do Quasar resolver para a cor de hover. É o mesmo
+   ponto de integração que a Seção 12 de `themes/_quasar-tokens-mapping.scss` já
+   usa — aqui só se estende da cor BASE para os ESTADOS.
+
+   POR QUE A RAMPA, E NÃO brightness()/overlay
+
+   A rampa de cor já tem os degraus desenhados para isto (`-hover` e `-deep`).
+   `filter: brightness()` — que esteve aqui até set/2026 — tinha dois defeitos:
+   escurecia POUCO (5%) e escurecia TAMBÉM o label, porque `filter` se aplica ao
+   elemento inteiro. Medido no primary: o contraste do label CAÍA de 3,80:1 para
+   3,73:1 no hover. Com a rampa, sobe para 7,89:1 — o label fica intacto.
+
+   Contraste do label branco sobre o fundo de hover, medido por marca:
+     default #0f5295 → 7,89:1 · hub #984614 → 6,52:1
+     water   #0356a1 → 7,37:1 · waste #0a5b3e → 8,14:1
+   (todas passam AA; três passam AAA. No repouso o default dá 3,80:1 e REPROVA —
+   isso é da paleta base, frente (c1), não deste estado.)
+
+   Brandeia de graça: a rampa `-hover` é remapeada por marca e a ponte recomputa
+   no escopo da marca desde o `$marcas` (ver `semantic/_scopes.scss`).
+
+   ESCOPO: só `.bg-*`, que apenas botão preenchido carrega. Flat e outline usam
+   `.text-*` e têm o próprio hover (overlay `::after`) em `3-variants/`.
+   ========================================================================== */
+
+$cores-quasar: (
+  'primary':   ('--q-primary',   '--dss-action-primary'),
+  'secondary': ('--q-secondary', '--dss-action-secondary'),
+  'accent':    ('--q-accent',    '--dss-action-accent'),
+  'positive':  ('--q-positive',  '--dss-feedback-success'),
+  'negative':  ('--q-negative',  '--dss-feedback-error'),
+  'warning':   ('--q-warning',   '--dss-feedback-warning'),
+  'info':      ('--q-info',      '--dss-feedback-info')
+);
+
+.dss-button:not(.dss-button--disabled):not(.dss-button--loading) {
+  @each $nome, $par in $cores-quasar {
+    $qvar: list.nth($par, 1);
+    $dss:  list.nth($par, 2);
+
+    &.bg-#{$nome} {
+      &:hover  { #{$qvar}: var(#{$dss}-hover); }
+      &:active { #{$qvar}: var(#{$dss}-deep); }
+    }
+  }
+
+  /* TERTIARY é exclusiva do DSS — o Quasar não tem `--q-tertiary` nem
+     `.bg-tertiary` (conferido no `quasar.css`). Sem regra concorrente layered,
+     aqui o `background-color` direto vence e é o caminho certo. */
+  &.bg-tertiary {
+    &:hover  { background-color: var(--dss-action-tertiary-hover); }
+    &:active { background-color: var(--dss-action-tertiary-deep); }
+  }
+}
+
 /* ==========================================================================
    DARK MODE
    ========================================================================== */

@@ -911,12 +911,6 @@
       ],
       "hover": [
         {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(0.95)",
-          "source": "3-variants/_unelevated.scss"
-        },
-        {
           "property": "content",
           "token": null,
           "value": "\"\"",
@@ -981,6 +975,12 @@
           "token": null,
           "value": "0 4px 6px rgba(0, 0, 0, 0.2)",
           "source": "3-variants/_glossy.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-hover",
+          "value": null,
+          "source": "4-output/_states.scss"
         }
       ],
       "focus": [
@@ -1095,12 +1095,6 @@
           "source": "3-variants/_elevated.scss"
         },
         {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(0.9)",
-          "source": "3-variants/_unelevated.scss"
-        },
-        {
           "property": "box-shadow",
           "token": null,
           "value": "0 1px 0 rgba(0, 0, 0, 0.15)",
@@ -1123,6 +1117,12 @@
           "token": null,
           "value": "0 1px 2px rgba(0, 0, 0, 0.15)",
           "source": "3-variants/_glossy.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-deep",
+          "value": null,
+          "source": "4-output/_states.scss"
         }
       ],
       "disabled": [
@@ -1448,6 +1448,12 @@
         ]
       },
       {
+        "name": "--dss-action-tertiary-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
         "name": "--dss-border-width-thick",
         "usedIn": [
           "focus"
@@ -1480,6 +1486,12 @@
       },
       {
         "name": "--dss-gradient-glossy-active",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-tertiary-deep",
         "usedIn": [
           "active"
         ]

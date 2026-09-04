@@ -11,12 +11,7 @@
 
 .dss-button--unelevated {
   box-shadow: none;
-
-  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-    filter: brightness(0.95);
-  }
-
-  &:active:not(.dss-button--disabled):not(.dss-button--loading) {
-    filter: brightness(0.9);
-  }
+  /* HOVER/ACTIVE de cor: em `4-output/_states.scss` (rampa + `--q-*`).
+     set/2026: havia `filter: brightness(0.95/0.9)` aqui — escurecia o label
+     junto e derrubava o contraste. Ver o racional em `4-output/_states.scss`. */
 }

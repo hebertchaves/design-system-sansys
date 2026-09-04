@@ -301,8 +301,8 @@
 
   ✅ **`.dss-button` — RESOLVIDO.** As 3 seções de botão saíram do utilitário para a camada de
   variante do componente, no padrão do Golden Reference: `_flat/_outline.scss` usam overlay `::after`
-  com `currentColor` a `--dss-opacity-hover` (10%), e `_elevated.scss` responde por
-  `brightness(0.95)`. Medido depois: `::after` com `bg #1f86de α0.1` — sobre branco dá ≈`#e8f3fc`,
+  com `currentColor` a `--dss-opacity-hover` (10%). O PREENCHIDO passou por duas iterações — primeiro
+  `brightness(0.95)`, depois (04/set) a **rampa de cor**, ver o verbete logo abaixo. Medido depois: `::after` com `bg #1f86de α0.1` — sobre branco dá ≈`#e8f3fc`,
   contra o `#86c0f3` sólido de antes. E brandeia sozinho: `currentColor` de um flat com brand hub é
   `#ef7a11`, waste `#0b8154`. Removidos junto os 3 blocos de hover de
   `DssButton/4-output/_brands.scss`, que pintavam `-100`/`-700` (tom forte e divergente) — era a
@@ -381,14 +381,50 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Hover do botão preenchido passou a usar a RAMPA de cor — `-hover`/`-deep`** (04/set/2026,
+  a pedido: *"existe a variação hover na tabela de cores... e a gente não usa em lugar nenhum"*).
+  Estava certo — a rampa tem `-hover` e `-deep` para as 8 cores desde sempre, e o único consumidor
+  era o `utils/_colors-hover.scss`, **pelo primitivo** (`--dss-primary-hover`), que não brandeia.
+
+  **Mecanismo.** `background-color:` aqui seria inerte: `.bg-primary { background: … !important }` do
+  Quasar vive em `@layer quasar` e vence qualquer DSS unlayered. Em vez de disputar a cascata,
+  redefine-se o INSUMO — `--q-primary: var(--dss-action-primary-hover)` no `:hover` — e a própria
+  regra do Quasar resolve para a cor de hover. É o mesmo ponto de integração da ponte (Seção 12 do
+  `_quasar-tokens-mapping.scss`), estendido da cor BASE para os ESTADOS. Um bloco em
+  `4-output/_states.scss` cobre as 4 variantes preenchidas × 8 cores.
+
+  `tertiary` é caso à parte: o Quasar não tem `--q-tertiary` nem `.bg-tertiary` (conferido no
+  `quasar.css`), então ali `background-color` direto vence e é o caminho certo.
+
+  **Por que saiu o `brightness`** (que esteve lá 3 dias): `filter` aplica ao elemento INTEIRO, então
+  escurecia o label junto. Medido no primary: o contraste do label **caía** de 3,80:1 para 3,73:1 no
+  hover — o estado piorava a legibilidade. E 5% era imperceptível.
+
+  | marca | repouso | hover (rampa) | contraste do label |
+  |---|---|---|---|
+  | default | `#1f86de` | `#0f5295` | 3,80 → **7,89:1** |
+  | hub | `#ef7a11` | `#984614` | 2,81 → **6,52:1** |
+  | water | `#0e88e4` | `#0356a1` | 3,71 → **7,37:1** |
+  | waste | `#0b8154` | `#0a5b3e` | 4,90 → **8,14:1** |
+
+  Label branco intacto nas quatro; `:active` usa `-deep` (primary: **11,50:1**). Brandeia de graça —
+  a rampa é remapeada por marca e a ponte recomputa no escopo desde o `$marcas`.
+
+  ⚠️ **Dois contrastes que continuam reprovando e NÃO são deste estado:** o **repouso** do primary
+  (3,80:1) e o **hover do tertiary** (3,89:1, rampa própria). São da paleta base — frente **(c1)**.
+  Este ajuste melhora ambos, não conserta a origem.
+
+  📌 **A decidir: até onde isto alcança.** O mesmo `filter: brightness()` chapado está em outros
+  componentes da família (o DssChip filled é o Golden Reference dele, e há registro de `brightness`
+  no Checkbox/Radio/Slider). Onde houver label ou ícone sobre o fundo, o defeito é o mesmo.
+
 - 🟡 **Falta um degrau na escala de elevação entre `-2` e `-3`** (2026-09-03). O hover do
   `DssButton--elevated` fazia `--dss-elevation-2` → `--dss-elevation-3`, ou seja
   `0 4px 6px/.30` → `0 10px 15px/.35`: o blur mais que dobra e o offset sobe 2,5×. Lido como
   "dropshadow exagerado" — e não havia degrau intermediário para suavizar. A correção adotada foi
-  **tirar a elevação da resposta de hover** (agora responde por `brightness`, como o DssChip filled),
+  **tirar a elevação da resposta de hover** (quem responde é a COR, pela rampa `-hover`/`-deep`),
   mantendo `-2` no repouso e caindo para `-1` no active. Funciona, mas o "lift" no hover deixou de
-  existir. Devolvê-lo exige um `--dss-elevation-2` intermediário na escala — decisão de design, não
-  conserto local.
+  existir. Devolvê-lo exige um degrau intermediário na escala — decisão de design, não conserto local.
 
 - 🟡 **Slots opcionais chegando ao contrato como `required` — o Preview Frame liga todos**
   (2026-09-03). O emissor deriva `required` da ausência de `?` na assinatura TS, e o
