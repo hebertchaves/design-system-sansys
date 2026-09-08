@@ -299,7 +299,7 @@ Default ──hover──> Hover ──click──> Active ──release──> 
 **Características Técnicas:**
 - Background: Cor base via classe utilitária (`bg-primary`)
 - Texto: Cor contrastante (`text-white`)
-- Hover: `filter: brightness(0.92)`
+- Hover: `background-color: var(--dss-{cor}-hover)` — degrau da rampa (era `brightness(0.92)`, que escurecia o label junto)
 - Uso: Tags de destaque, categorias principais
 
 **Exemplo:**
@@ -398,7 +398,7 @@ Aplica brand via atributo no elemento pai.
 > Para detalhes das paletas de cores por brand (Hub, Water, Waste), consulte [`DSS_TOKEN_REFERENCE.md - Seção 2.2 Brand Palettes`](../../../docs/reference/DSS_TOKEN_REFERENCE.md#22-brand-palettes).
 
 **Comportamento de Hover por Brand:**
-- **Filled**: Cor base com `brightness(0.92)` no hover
+- **Filled**: Cor base; hover/active pelos degraus `-hover`/`-deep` da rampa
 - **Outline/Flat**: Texto colorido, hover inverte para background colorido + texto branco
 
 **Fallback quando nenhum brand está definido:**

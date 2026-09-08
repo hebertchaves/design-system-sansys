@@ -48,27 +48,48 @@
    daqui; empate se resolve por ordem de origem, e quem deve vencer e o ESTADO.
    ========================================================================== */
 
+/* O mapa guarda o NOME do token, não o `var()` pronto (set/2026).
+   Motivo: a partir dele derivam-se os DEGRAUS da rampa — `-hover` e `-deep` —
+   usados nos estados do filled logo abaixo. Com o `var()` pronto não dava para
+   compor o sufixo, e o hover acabava em `filter: brightness()`, que escurece o
+   TEXTO junto do fundo (ver §M do checklist de adequação). */
 $dss-chip-semantic-colors: (
-  'primary': var(--dss-action-primary),
-  'secondary': var(--dss-action-secondary),
-  'tertiary': var(--dss-action-tertiary),
-  'accent': var(--dss-action-accent),
-  'positive': var(--dss-feedback-success),
-  'negative': var(--dss-feedback-error),
-  'warning': var(--dss-feedback-warning),
-  'info': var(--dss-feedback-info)
+  'primary':   '--dss-action-primary',
+  'secondary': '--dss-action-secondary',
+  'tertiary':  '--dss-action-tertiary',
+  'accent':    '--dss-action-accent',
+  'positive':  '--dss-feedback-success',
+  'negative':  '--dss-feedback-error',
+  'warning':   '--dss-feedback-warning',
+  'info':      '--dss-feedback-info'
 );
 
-@each $name, $color in $dss-chip-semantic-colors {
+@each $name, $tok in $dss-chip-semantic-colors {
   .dss-chip--#{$name} {
     /* FILLED: acento no fundo, conteudo invertido. */
     &.dss-chip--filled {
-      background-color: #{$color};
+      background-color: var(#{$tok});
       color: var(--dss-text-on-primary);
 
       .dss-chip__label,
       .dss-chip__icon {
         color: var(--dss-text-on-primary);
+      }
+
+      /* ESTADOS pela RAMPA (set/2026) — antes era `filter: brightness(0.92/0.85)`
+         em `_filled.scss`. `filter` aplica ao elemento INTEIRO, então escurecia o
+         label junto: medido no primary, o contraste CAÍA de 3,80:1 para 3,70:1 —
+         o hover piorava a legibilidade. A rampa mexe só no fundo.
+
+         Aqui `background-color` direto basta: o chip pinta por classe PRÓPRIA
+         (`.dss-chip--primary`), não pela utilitária `.bg-*` do Quasar — logo não
+         há regra layered `!important` para disputar, ao contrário do DssButton. */
+      &.dss-chip--clickable:hover {
+        background-color: var(#{$tok}-hover);
+      }
+
+      &.dss-chip--clickable:active {
+        background-color: var(#{$tok}-deep);
       }
     }
 
@@ -78,11 +99,11 @@ $dss-chip-semantic-colors: (
        menos o icone, pela regra global explicada acima. */
     &.dss-chip--outline,
     &.dss-chip--flat {
-      color: #{$color};
+      color: var(#{$tok});
 
       .dss-chip__label,
       .dss-chip__icon {
-        color: #{$color};
+        color: var(#{$tok});
       }
     }
   }

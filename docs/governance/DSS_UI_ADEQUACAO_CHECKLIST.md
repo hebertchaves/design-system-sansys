@@ -224,8 +224,64 @@
   (lar dos rgba de foco — sem hardcode em componente), remapeando `--dss-focus-primary` pela classe.
 - **K3 — Dark do brand pela classe = seletor DESCENDENTE.** `&[data-theme=dark]` aninhado exige
   `data-theme` co-locado; ele mora no `body`. Usar `[data-theme="dark"] .dss-x--brand-*` (descendente).
+- **K5 — A prop remapeia a RAMPA INTEIRA, não só o token de foco.** `-hover` e `-deep` também
+  precisam ser remapeados no escopo da classe, senão o **estado** não brandeia mesmo com a cor base
+  certa. Medido no DssButton (set/2026): sob `.dss-button--brand-hub`, `--dss-action-primary`
+  resolvia `#1f86de` (azul default) e o fundo no hover ficava **idêntico ao repouso** — hover
+  ausente. Forma canônica, no `4-output/_brands.scss` do componente:
+
+  ```scss
+  [data-brand="hub"], .dss-x--brand-hub {
+    --dss-action-primary:       var(--dss-hub-600);
+    --dss-action-primary-hover: var(--dss-hub-800);
+    --dss-action-primary-deep:  var(--dss-hub-900);
+    /* …e as regras consomem o SEMÂNTICO, não o primitivo */
+  }
+  ```
+  Sob `[data-brand]` a redeclaração é redundante (mesmo valor); sob a classe é o que faz a marca
+  existir. Efeito colateral bem-vindo: o arquivo deixa de pintar marca com primitivo cru — frente (d).
 - **K4 — Verificar pela PROP, não só pelo ancestral.** No Preview Frame, teste o **knob `brand`**
   (interno) — não só o brand global da página. Ambos devem colorir borda **e** anel de foco.
+
+---
+
+## L. Ícone embutido herda `currentColor` — nunca é brandeado por contexto
+
+> **Sintoma:** com brand **global** (`[data-brand]` ancestral), o ícone dentro de um botão/chip
+> preenchido pega a cor da MARCA e some contra o fundo. Medido no DssButton sob `[data-brand="hub"]`:
+> fundo `#ef7a11` · label `#ffffff` · ícone `#ef7a11` → contraste ícone/fundo **1,00:1**.
+
+- **L1 — A causa é sempre um descendente sem restrição.** Uma regra do tipo
+  `[data-brand="hub"] .dss-icon { color: … }` pega QUALQUER ícone em QUALQUER subárvore brandeada,
+  inclusive embutido. Regra explícita vence herança → o `currentColor` do host é descartado.
+- **L2 — Norma (CCI §2.3):** *"Sem `color`/`brand` → `color: inherit` (currentColor). Ícone embutido
+  herda a cor do host (ex.: cor do texto do botão)."* Brandabilidade de ícone é **só pela prop**
+  (`.dss-icon--brand-*`). Corrigido globalmente no `DssIcon` (set/2026) — mas conferir no componente,
+  porque um `_brands.scss` local pode reintroduzir o mesmo descendente para o ícone dele.
+- **L3 — Vale para o PRIMITIVO embutido, não para superfície.** O mesmo descendente em `DssBar`,
+  `DssItem`, `DssKnob` é herança contextual legítima — são componentes de superfície. A distinção é
+  "vive DENTRO de outro componente?", não o formato do seletor.
+
+---
+
+## M. Hover/active de COR: rampa semântica, não `filter: brightness()`
+
+> **Sintoma:** o hover escurece de menos e o LABEL escurece junto. `filter` aplica ao elemento
+> inteiro — fundo, texto e ícone. Medido no DssButton primary: com `brightness(0.95)` o contraste do
+> label **caía** de 3,80:1 para 3,73:1; o estado piorava a legibilidade.
+
+- **M1 — Usar os degraus que já existem:** `--dss-{token}-hover` e `-deep`, para as 8 cores. Antes de
+  set/2026 a rampa não era consumida por ninguém (só o `utils/_colors-hover.scss`, e pelo primitivo).
+- **M2 — Preenchido com utilitária `.bg-*`: redefinir `--q-*`, não `background-color`.**
+  `.bg-primary { background: … !important }` do Quasar vive em `@layer quasar` e vence qualquer DSS
+  unlayered — declarar `background-color` é inerte. Mexer no INSUMO faz a regra do Quasar resolver
+  para a cor certa. (`tertiary` é exceção: o Quasar não tem essa cor, então ali `background-color`
+  direto vence.)
+- **M3 — Excluir as variantes transparentes.** `:not(--flat):not(--outline)` — elas têm o próprio
+  estado (overlay `::after` com `currentColor` a `--dss-opacity-hover`) e seriam preenchidas por
+  especificidade.
+- **M4 — `brightness()` continua legítimo** onde o alvo NÃO tem conteúdo por cima (trilho, thumb,
+  box de controle). O defeito é escurecer texto/ícone junto — **medir antes de trocar**.
 
 ---
 
@@ -246,6 +302,9 @@
 - [ ] **slot `error`** fiel ao Quasar: renderiza sem errorMessage; errorMessage tem prioridade (E10)
 - [ ] **anel de foco `:focus-visible`** próprio, no elemento visível (não overlay, não só a global) (J)
 - [ ] **brand pela PROP** colore borda + anel de foco (knob interno, não só `[data-brand]` global) (K)
+- [ ] **brand pela PROP** remapeia a rampa inteira — o **hover/active também brandeia** (K5)
+- [ ] **ícone embutido acompanha o texto** sob brand global — não some contra o fundo (L)
+- [ ] **hover de cor pela rampa** (`-hover`/`-deep`); contraste do label **sobe** no hover (M)
 - [ ] **sem overflow** em grid/matriz (`min-width: 0` na raiz real)
 - [ ] verificado **sem** `!important` reflexo (só onde há override global — A3)
 

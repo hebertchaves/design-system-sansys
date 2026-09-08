@@ -892,10 +892,52 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(0.92)",
-          "source": "3-variants/_filled.scss"
+          "property": "background-color",
+          "token": "--dss-action-primary-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-secondary-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-accent-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-success-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-error-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-warning-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-info-hover",
+          "value": null,
+          "source": "3-variants/_colors.scss"
         },
         {
           "property": "color",
@@ -944,12 +986,6 @@
           "token": null,
           "value": "-1",
           "source": "3-variants/_flat.scss"
-        },
-        {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(1.1)",
-          "source": "4-output/_states.scss"
         },
         {
           "property": "opacity",
@@ -1088,16 +1124,52 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(0.85)",
-          "source": "3-variants/_filled.scss"
+          "property": "background-color",
+          "token": "--dss-action-primary-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
         },
         {
-          "property": "filter",
-          "token": null,
-          "value": "brightness(1.2)",
-          "source": "4-output/_states.scss"
+          "property": "background-color",
+          "token": "--dss-action-secondary-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-accent-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-success-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-error-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-warning-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-feedback-info-deep",
+          "value": null,
+          "source": "3-variants/_colors.scss"
         },
         {
           "property": "animation",
@@ -1453,6 +1525,54 @@
         ]
       },
       {
+        "name": "--dss-action-primary-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-action-secondary-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-action-tertiary-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-action-accent-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-feedback-warning-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-feedback-info-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
         "name": "--dss-opacity-active",
         "usedIn": [
           "active"
@@ -1460,6 +1580,54 @@
       },
       {
         "name": "--dss-duration-slowest",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-primary-deep",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-secondary-deep",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-tertiary-deep",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-accent-deep",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success-deep",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error-deep",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-feedback-warning-deep",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-feedback-info-deep",
         "usedIn": [
           "active"
         ]

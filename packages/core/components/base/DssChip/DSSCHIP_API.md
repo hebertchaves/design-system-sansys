@@ -325,8 +325,8 @@ function handleRemove(event) {
 | Estado | Background | Texto |
 |--------|------------|-------|
 | Default | `bg-{color}` | `text-white` |
-| Hover | `brightness(0.92)` | - |
-| Active | `brightness(0.85)` | - |
+| Hover | `var(--dss-{cor}-hover)` | degrau da rampa |
+| Active | `var(--dss-{cor}-deep)` | degrau da rampa |
 | Disabled | opacity 0.4 | - |
 
 ### Outline
@@ -357,7 +357,7 @@ O DssChip responde automaticamente às brands Sansys (Hub, Water, Waste).
 
 | Variante | Comportamento |
 |----------|---------------|
-| **Filled** | Cor base com `brightness(0.92)` no hover |
+| **Filled** | Cor base; hover/active pelos degraus da rampa |
 | **Outline** | Background preenche com cor da brand, texto inverte para branco |
 | **Flat** | Overlay sutil com cor da brand |
 

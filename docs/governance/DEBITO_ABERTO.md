@@ -381,6 +381,39 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Onda §M aplicada aos adequados — só o DssChip precisava** (08/set/2026). Varredura dos 12
+  componentes com adequação fechada, medindo **antes de mexer** (a pedido — e é a lição da frente
+  (e): migração em lote lê a propriedade e erra o papel).
+
+  | componente | alvo do `brightness` | veredito |
+  |---|---|---|
+  | **DssChip** | `--filled` (tem label dentro) | **defeito — ajustado** |
+  | DssCheckbox | `__control` (0 filhos, sem texto) | legítimo (§M4) — não tocado |
+  | DssRadio | `__control` (0 filhos, sem texto) | legítimo (§M4) — não tocado |
+  | DssToggle | `__track` (thumb junto, sem texto) | legítimo — thumb e trilho escurecem juntos, 3,07 → 3,00:1 |
+  | Input/Select/Textarea/File/Field/Uploader/EmptyState | sem `brightness` | nada a fazer |
+
+  **DssChip — medido nos dois temas.** Light: `brightness(0.92)` levava o label de `#ffffff` a
+  `#ebebeb` e o contraste **caía** 3,80 → 3,70:1. Dark era pior: `brightness(1.1)` **clareava** o
+  fundo com o branco já saturado, caindo para **3,21:1**. Com a rampa, os dois temas vão a
+  **7,89:1**.
+
+  Aqui `background-color` direto basta — o chip pinta por classe PRÓPRIA (`.dss-chip--primary`), não
+  pela utilitária `.bg-*`, então não há regra layered `!important` para disputar (ao contrário do
+  DssButton, que precisou redefinir `--q-*`). O mapa `$dss-chip-semantic-colors` passou a guardar o
+  **nome** do token, para os degraus `-hover`/`-deep` serem derivados dele. O `brightness` genérico do
+  `_base.scss` ganhou `:not(--filled)`; nas demais variantes o acento está no `color`/borda sobre
+  fundo claro, onde escurecer **aumenta** o contraste.
+
+  ⚠️ **Decisão estética exposta, não tomada por mim:** no dark, o filled agora **escurece** no hover
+  em vez de clarear. O comentário original dizia "fundos escuros precisam ser CLAREADOS" — mas o
+  filled não tem fundo escuro, tem fundo de acento, e o número mostra que escurecer é o que preserva
+  a legibilidade. Se a direção visual quiser clarear no dark, o degrau certo é um `-light` da rampa,
+  não `brightness`.
+
+  📌 Os três aprendizados viraram **§K5, §L e §M** do `DSS_UI_ADEQUACAO_CHECKLIST.md`, com itens no
+  Gate — é o que trava o padrão para os próximos componentes.
+
 - ✅ **Ícone embutido sumia sob `[data-brand]` — contraste 1,00:1 — RESOLVIDO** (08/set/2026).
   `DssIcon/4-output/_brands.scss` tinha, além da regra da prop, um **descendente sem restrição**:
 

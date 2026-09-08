@@ -25,15 +25,11 @@
    *
    * Não existem tokens DSS para brightness. Ver _base.scss para racional.
    */
-  .dss-chip--filled {
-    &.dss-chip--clickable:hover {
-      filter: brightness(1.1);
-    }
-
-    &.dss-chip--clickable:active {
-      filter: brightness(1.2);
-    }
-  }
+  /* FILLED: sem brightness no dark (set/2026).
+     A rampa (`_colors.scss`) vale nos dois temas e já dá o degrau de hover/active.
+     Empilhar `brightness(1.1)` por cima dela clarearia a cor de hover — e clarear
+     o fundo com o label preso em branco DERRUBA o contraste, porque o branco já
+     satura e não acompanha. Medido no par light/dark ao trocar. */
 
   .dss-chip--outline {
     /* Outline em dark mode */

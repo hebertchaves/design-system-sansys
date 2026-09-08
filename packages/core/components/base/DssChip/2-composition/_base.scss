@@ -184,11 +184,16 @@
    * Alternativa recusada: Tokens --dss-state-brightness-* exigiriam
    * autorização explícita e podem não ser necessários globalmente.
    */
-  &:hover {
+  /* `:not(--filled)` — set/2026. O filled tem estados PRÓPRIOS de cor, pela
+     rampa (`_colors.scss`); sem a exclusão, este `filter` genérico continuaria
+     escurecendo o label dele por cima, que é justamente o defeito corrigido.
+     Nas demais variantes o acento está no `color`/borda sobre fundo claro:
+     escurecer AUMENTA o contraste, então aqui o brightness segue legítimo. */
+  &:hover:not(.dss-chip--filled) {
     filter: brightness(0.95);
   }
 
-  &:active {
+  &:active:not(.dss-chip--filled) {
     filter: brightness(0.9);
   }
 }

@@ -13,26 +13,13 @@
   /* Fundo solido - cor aplicada via classe utilitaria .bg-{color} */
   /* Texto branco - aplicado via classe utilitaria .text-white */
 
-  /*
-   * ⚠️ EXCEÇÃO DOCUMENTADA: Valores de brightness específicos para filled
-   *
-   * Variante filled usa valores mais agressivos que o padrão porque
-   * fundos sólidos precisam de maior contraste visual para feedback.
-   *
-   * Valores:
-   * - hover: 0.92 (vs 0.95 padrão) - escurecimento 8%
-   * - active: 0.85 (vs 0.90 padrão) - escurecimento 15%
-   *
-   * Estes valores NÃO têm tokens DSS equivalentes.
-   * Ver _base.scss para racional completo.
-   */
-  &.dss-chip--clickable:hover {
-    filter: brightness(0.92);
-  }
+  /* ESTADOS DE COR: em `_colors.scss`, pela rampa (`-hover` / `-deep`).
 
-  &.dss-chip--clickable:active {
-    filter: brightness(0.85);
-  }
+     set/2026: aqui havia `filter: brightness(0.92)` no hover e `0.85` no active,
+     documentados como "exceção" por não terem token equivalente. Passaram a ter:
+     a rampa já trazia os dois degraus para as 8 cores — só não era consumida.
+     E `filter` escurecia o LABEL junto do fundo (contraste 3,80 → 3,70:1 no
+     primary). Ver §M do DSS_UI_ADEQUACAO_CHECKLIST.md. */
 
   /* Remove button styling para fundo solido */
   .dss-chip__remove:hover {
