@@ -3,9 +3,33 @@
 
    RESPONSABILIDADE: Brandability (Hub, Water, Waste)
 
-   CARACTERÍSTICAS:
-   - Usa tokens genéricos de brand
-   - Aplica cor da brand ao botão
+   DOIS CAMINHOS DE MARCA — e eles NÃO são equivalentes (set/2026)
+
+   O DSS aplica marca de duas formas, e cada uma pinta por um mecanismo:
+
+   1. ATRIBUTO `[data-brand]` (ancestral). É escopo de TOKEN: `tokens/brand/_*.scss`
+      remapeia `--dss-action-primary*` ali, e a ponte `--q-*` recomputa junto (ver
+      `$marcas` em `semantic/_scopes.scss`). O botão mantém as utilitárias
+      (`.bg-primary`), então quem pinta é a regra LAYERED do Quasar — e o hover
+      vem de `4-output/_states.scss`, que redefine `--q-primary`.
+
+   2. PROP `brand` → classe `.dss-button--brand-*`. **NÃO é escopo de token** e o
+      `useButtonClasses.ts` não aplica as utilitárias quando a prop está presente.
+      Sem `.bg-*` não há regra do Quasar para pintar, nem `--q-*` para redefinir:
+      quem pinta é o `background-color` DESTE arquivo.
+
+   Por isso o hover precisa existir aqui também. Ele sumiu no caminho da prop
+   entre set/03 e set/08 — os blocos antigos foram removidos junto com a troca
+   para a rampa, e a substituição só cobria o caminho do atributo.
+
+   A CORREÇÃO remapeia a rampa semântica no escopo do seletor e faz as regras
+   consumirem o SEMÂNTICO, não o primitivo cru. Com isso os dois caminhos passam
+   a dar a MESMA cor de hover — a redeclaração é redundante (mesmo valor) sob
+   `[data-brand]` e essencial sob a classe da prop.
+
+   Efeito colateral bem-vindo: este arquivo deixa de ser um dos 55 que pintam
+   marca com primitivo cru — é a forma que a frente (d) do DEBITO_ABERTO propõe,
+   aplicada a um componente.
    ========================================================================== */
 
 /* ==========================================================================
@@ -15,12 +39,30 @@
 [data-brand="hub"],
 .dss-button--brand-hub {
   &.dss-button {
-    background-color: var(--dss-hub-600);
+    /* Rampa remapeada no escopo: sob `[data-brand]` isto é redundante (o token
+       global já vale); sob `.dss-button--brand-*` é o que faz a marca existir. */
+    --dss-action-primary:       var(--dss-hub-600);
+    --dss-action-primary-hover: var(--dss-hub-800);
+    --dss-action-primary-deep:  var(--dss-hub-900);
+
+    background-color: var(--dss-action-primary);
     color: var(--dss-text-on-primary);
+
+    /* HOVER/ACTIVE do PREENCHIDO. `:not(--flat):not(--outline)` porque essas duas
+       são transparentes e têm o próprio estado (overlay `::after` com
+       `currentColor`, em `3-variants/`) — sem a exclusão, o `:hover` daqui venceria
+       o `background: transparent` delas por especificidade e as preencheria. */
+    &:hover:not(.dss-button--flat):not(.dss-button--outline):not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-action-primary-hover);
+    }
+
+    &:active:not(.dss-button--flat):not(.dss-button--outline):not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-action-primary-deep);
+    }
 
     &.dss-button--flat {
       background-color: transparent;
-      color: var(--dss-hub-600);
+      color: var(--dss-action-primary);
     }
 
     &.dss-button--outline {
@@ -29,20 +71,8 @@
       border-style: solid;
       border-color: currentColor;
       box-shadow: none;
-      color: var(--dss-hub-600);
+      color: var(--dss-action-primary);
     }
-
-    /* HOVER — removido em set/2026.
-       Pintava um degrau mais escuro do primitivo (filled) e `-100` + `-800`
-       (flat/outline): tom FORTE e divergente do resto do componente — era a
-       razão de o hover "mudar de cor só nos modos brand".
-       Agora o hover é uniforme e mora na camada de variante:
-       `_flat/_outline.scss` (overlay `::after` com `currentColor`) e
-       `_elevated.scss` (brightness). Ambos derivam da cor BASE, que estas regras
-       acima já definem — então a marca continua brandeando o hover, de graça e
-       com a mesma sutileza das demais variantes.
-       (Os primitivos `--dss-{brand}-*` das regras base seguem aqui: trocá-los
-       pelo semântico é a frente (d) do DEBITO_ABERTO, não este ajuste.) */
   }
 }
 
@@ -53,12 +83,30 @@
 [data-brand="water"],
 .dss-button--brand-water {
   &.dss-button {
-    background-color: var(--dss-water-500);
-    color: var(--dss-text-on-primary);;
+    /* Rampa remapeada no escopo: sob `[data-brand]` isto é redundante (o token
+       global já vale); sob `.dss-button--brand-*` é o que faz a marca existir. */
+    --dss-action-primary:       var(--dss-water-500);
+    --dss-action-primary-hover: var(--dss-water-700);
+    --dss-action-primary-deep:  var(--dss-water-800);
+
+    background-color: var(--dss-action-primary);
+    color: var(--dss-text-on-primary);
+
+    /* HOVER/ACTIVE do PREENCHIDO. `:not(--flat):not(--outline)` porque essas duas
+       são transparentes e têm o próprio estado (overlay `::after` com
+       `currentColor`, em `3-variants/`) — sem a exclusão, o `:hover` daqui venceria
+       o `background: transparent` delas por especificidade e as preencheria. */
+    &:hover:not(.dss-button--flat):not(.dss-button--outline):not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-action-primary-hover);
+    }
+
+    &:active:not(.dss-button--flat):not(.dss-button--outline):not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-action-primary-deep);
+    }
 
     &.dss-button--flat {
       background-color: transparent;
-      color: var(--dss-water-500);
+      color: var(--dss-action-primary);
     }
 
     &.dss-button--outline {
@@ -67,20 +115,8 @@
       border-style: solid;
       border-color: currentColor;
       box-shadow: none;
-      color: var(--dss-water-500);
+      color: var(--dss-action-primary);
     }
-
-    /* HOVER — removido em set/2026.
-       Pintava um degrau mais escuro do primitivo (filled) e `-100` + `-800`
-       (flat/outline): tom FORTE e divergente do resto do componente — era a
-       razão de o hover "mudar de cor só nos modos brand".
-       Agora o hover é uniforme e mora na camada de variante:
-       `_flat/_outline.scss` (overlay `::after` com `currentColor`) e
-       `_elevated.scss` (brightness). Ambos derivam da cor BASE, que estas regras
-       acima já definem — então a marca continua brandeando o hover, de graça e
-       com a mesma sutileza das demais variantes.
-       (Os primitivos `--dss-{brand}-*` das regras base seguem aqui: trocá-los
-       pelo semântico é a frente (d) do DEBITO_ABERTO, não este ajuste.) */
   }
 }
 
@@ -91,12 +127,30 @@
 [data-brand="waste"],
 .dss-button--brand-waste {
   &.dss-button {
-    background-color: var(--dss-waste-600);
+    /* Rampa remapeada no escopo: sob `[data-brand]` isto é redundante (o token
+       global já vale); sob `.dss-button--brand-*` é o que faz a marca existir. */
+    --dss-action-primary:       var(--dss-waste-600);
+    --dss-action-primary-hover: var(--dss-waste-800);
+    --dss-action-primary-deep:  var(--dss-waste-900);
+
+    background-color: var(--dss-action-primary);
     color: var(--dss-text-on-primary);
+
+    /* HOVER/ACTIVE do PREENCHIDO. `:not(--flat):not(--outline)` porque essas duas
+       são transparentes e têm o próprio estado (overlay `::after` com
+       `currentColor`, em `3-variants/`) — sem a exclusão, o `:hover` daqui venceria
+       o `background: transparent` delas por especificidade e as preencheria. */
+    &:hover:not(.dss-button--flat):not(.dss-button--outline):not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-action-primary-hover);
+    }
+
+    &:active:not(.dss-button--flat):not(.dss-button--outline):not(.dss-button--disabled):not(.dss-button--loading) {
+      background-color: var(--dss-action-primary-deep);
+    }
 
     &.dss-button--flat {
       background-color: transparent;
-      color: var(--dss-waste-600);
+      color: var(--dss-action-primary);
     }
 
     &.dss-button--outline {
@@ -105,19 +159,7 @@
       border-style: solid;
       border-color: currentColor;
       box-shadow: none;
-      color: var(--dss-waste-600);
+      color: var(--dss-action-primary);
     }
-
-    /* HOVER — removido em set/2026.
-       Pintava um degrau mais escuro do primitivo (filled) e `-100` + `-800`
-       (flat/outline): tom FORTE e divergente do resto do componente — era a
-       razão de o hover "mudar de cor só nos modos brand".
-       Agora o hover é uniforme e mora na camada de variante:
-       `_flat/_outline.scss` (overlay `::after` com `currentColor`) e
-       `_elevated.scss` (brightness). Ambos derivam da cor BASE, que estas regras
-       acima já definem — então a marca continua brandeando o hover, de graça e
-       com a mesma sutileza das demais variantes.
-       (Os primitivos `--dss-{brand}-*` das regras base seguem aqui: trocá-los
-       pelo semântico é a frente (d) do DEBITO_ABERTO, não este ajuste.) */
   }
 }

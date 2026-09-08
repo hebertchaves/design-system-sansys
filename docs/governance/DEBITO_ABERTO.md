@@ -381,6 +381,37 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Hover não aparecia no caminho da PROP `brand` — RESOLVIDO** (08/set/2026). Regressão minha,
+  aberta entre 03 e 08/set: ao trocar o hover para a rampa, removi os blocos de hover de
+  `DssButton/4-output/_brands.scss` e a substituição cobria **só o caminho do atributo**.
+
+  **Os dois caminhos de marca NÃO são equivalentes** — e esta é a lição reutilizável:
+
+  | | `[data-brand]` (atributo) | prop `brand` → `.dss-button--brand-*` |
+  |---|---|---|
+  | é escopo de token? | **sim** (`tokens/brand/_*.scss`) | **não** |
+  | ponte `--q-*` recomputa? | sim (`$marcas`) | não |
+  | tem `.bg-*`? | sim | **não** — `useButtonClasses.ts:44` não aplica utilitária quando há prop |
+  | quem pinta? | regra layered do Quasar via `--q-primary` | `background-color` do `_brands.scss` |
+
+  Medido antes: sob a prop, `--dss-action-primary` resolvia **`#1f86de`** (azul default) e o fundo no
+  hover ficava igual ao repouso (`#ef7a11`) — hover ausente, exatamente como relatado.
+
+  **Correção:** `_brands.scss` remapeia a rampa (`--dss-action-primary`/`-hover`/`-deep`) no escopo do
+  seletor e as regras passam a consumir o **semântico**. Sob `[data-brand]` a redeclaração é redundante
+  (mesmo valor); sob a classe da prop é o que faz a marca existir. Hover/active excluem
+  `:not(--flat):not(--outline)`, que são transparentes e têm overlay próprio.
+
+  Medido depois — prop e atributo dão a MESMA cor: hub `#984614` (6,52:1), water `#0356a1` (7,37:1),
+  waste `#0a5b3e` (8,14:1). Flat segue transparente com overlay `currentColor` a 10%. Verificado
+  também no **Preview Frame pelo knob interno**, que é o caminho da prop.
+
+  *Efeito colateral bem-vindo:* este arquivo deixou de pintar marca com primitivo cru — é a forma que
+  a frente **(d)** propõe, aplicada a um componente. Restam 54 arquivos.
+
+  ⚠️ **Vale para a família inteira.** Todo componente com prop `brand` tem a mesma assimetria: a
+  classe não é escopo de token. Onde o estado depender de token semântico, ele não vale pela prop.
+
 - ✅ **Hover do botão preenchido passou a usar a RAMPA de cor — `-hover`/`-deep`** (04/set/2026,
   a pedido: *"existe a variação hover na tabela de cores... e a gente não usa em lugar nenhum"*).
   Estava certo — a rampa tem `-hover` e `-deep` para as 8 cores desde sempre, e o único consumidor
