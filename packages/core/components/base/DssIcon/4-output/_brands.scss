@@ -3,18 +3,36 @@
 
    RESPONSABILIDADE: Brandability (Hub, Water, Waste)
 
-   CARACTERISTICAS:
-   - Usa tokens numericos de brand (--dss-hub-*, --dss-water-*, --dss-waste-*)
-   - Aplica cor da brand ao icone
-   - Suporta seletor via prop (.dss-icon--brand-*) e data-attribute ([data-brand])
-   - Suporta heranca contextual ([data-brand] no pai)
+   ⚠️ SÓ VIA PROP. Não há herança contextual por `[data-brand]` aqui — e isso é
+   deliberado.
 
-   NOTA: Tokens semanticos de brand (--dss-{brand}-primary) nao existem ainda.
-   Usando tokens numericos conforme padrao DssBadge/DssCard.
-   ========================================================================== */
+   POR QUE (set/2026)
 
-/* ==========================================================================
-   HUB BRAND (Orange)
+   Até aqui este arquivo tinha, para cada marca, um par de regras:
+
+       .dss-icon--brand-hub.dss-icon { color: var(--dss-hub-600); }
+       [data-brand="hub"] .dss-icon { color: var(--dss-hub-600); }   ← REMOVIDA
+
+   A segunda é um descendente SEM RESTRIÇÃO: pegava qualquer `.dss-icon` dentro
+   de qualquer `[data-brand]`, inclusive o ícone embutido num botão preenchido —
+   onde a cor certa é a do label, não a da marca. Como regra explícita vence
+   herança, o `currentColor` do host era descartado.
+
+   Medido num `DssButton` preenchido sob `[data-brand="hub"]`:
+     fundo #ef7a11 · label #ffffff · ícone #ef7a11 → contraste ícone/fundo 1,00:1
+   Ou seja: o ícone ficava com EXATAMENTE a cor do fundo, invisível.
+
+   Contraria o CCI §2.3, que é autoridade sobre renderização de ícone e cita
+   justamente este caso:
+     "Sem `color`/`brand` → `color: inherit` (currentColor). Ícone embutido herda
+      a cor do host (ex.: cor do texto do botão)."
+
+   O ícone é o único primitivo que vive DENTRO de outros componentes (botão,
+   chip, badge, item). Herança contextual de marca faz sentido para um componente
+   de superfície — para um primitivo embutido, sequestra a cor do host.
+
+   Quem quiser ícone brandeado pede explicitamente: `<DssIcon brand="hub" />`.
+   📖 `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md` §2.3
    ========================================================================== */
 
 /* Via prop: <DssIcon brand="hub" /> */
@@ -22,35 +40,12 @@
   color: var(--dss-hub-600);
 }
 
-/* Via heranca contextual: <div data-brand="hub"><DssIcon /></div> */
-[data-brand="hub"] .dss-icon {
-  color: var(--dss-hub-600);
-}
-
-/* ==========================================================================
-   WATER BRAND (Blue)
-   ========================================================================== */
-
 /* Via prop: <DssIcon brand="water" /> */
 .dss-icon--brand-water.dss-icon {
   color: var(--dss-water-500);
 }
 
-/* Via heranca contextual: <div data-brand="water"><DssIcon /></div> */
-[data-brand="water"] .dss-icon {
-  color: var(--dss-water-500);
-}
-
-/* ==========================================================================
-   WASTE BRAND (Green)
-   ========================================================================== */
-
 /* Via prop: <DssIcon brand="waste" /> */
 .dss-icon--brand-waste.dss-icon {
-  color: var(--dss-waste-600);
-}
-
-/* Via heranca contextual: <div data-brand="waste"><DssIcon /></div> */
-[data-brand="waste"] .dss-icon {
   color: var(--dss-waste-600);
 }

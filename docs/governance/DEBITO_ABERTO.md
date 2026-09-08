@@ -381,6 +381,32 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Ícone embutido sumia sob `[data-brand]` — contraste 1,00:1 — RESOLVIDO** (08/set/2026).
+  `DssIcon/4-output/_brands.scss` tinha, além da regra da prop, um **descendente sem restrição**:
+
+      [data-brand="hub"] .dss-icon { color: var(--dss-hub-600); }
+
+  Pegava QUALQUER `.dss-icon` dentro de QUALQUER `[data-brand]` — inclusive o ícone embutido num
+  botão preenchido, onde a cor certa é a do label. Como regra explícita vence herança, o
+  `currentColor` do host era descartado.
+
+  **Medido** num `DssButton` preenchido sob `[data-brand="hub"]`: fundo `#ef7a11` · label `#ffffff` ·
+  ícone **`#ef7a11`** → contraste ícone/fundo **1,00:1**. Literalmente a cor do fundo: invisível.
+
+  Contraria o **CCI §2.3**, que é autoridade sobre renderização de ícone e cita justamente este caso:
+  *"Sem `color`/`brand` → `color: inherit` (currentColor). Ícone embutido herda a cor do host (ex.:
+  cor do texto do botão)."*
+
+  **Correção:** removidas as 3 regras de herança contextual; ficou só o caminho da prop
+  (`.dss-icon--brand-*`). Medido depois: ícone == label nas 4 condições (neutro/hub/water/waste), e
+  também em flat/outline, onde o label É a cor da marca e o ícone acompanha. A prop segue viva —
+  `<DssIcon brand="hub">` dá `#ef7a11`; sem prop, herda o host.
+
+  **Por que só o ícone.** O mesmo descendente existe em `DssBar`, `DssItem`, `DssKnob` e outros, e lá
+  é herança contextual legítima: são componentes de superfície. O ícone é o único **primitivo que
+  vive dentro de outros componentes** — para ele, herança de marca sequestra a cor do host. Não
+  mexer nos demais sem o mesmo tipo de análise.
+
 - ✅ **Hover não aparecia no caminho da PROP `brand` — RESOLVIDO** (08/set/2026). Regressão minha,
   aberta entre 03 e 08/set: ao trocar o hover para a rampa, removi os blocos de hover de
   `DssButton/4-output/_brands.scss` e a substituição cobria **só o caminho do atributo**.
