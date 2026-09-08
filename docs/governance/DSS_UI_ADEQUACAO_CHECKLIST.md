@@ -258,6 +258,24 @@
   herda a cor do host (ex.: cor do texto do botão)."* Brandabilidade de ícone é **só pela prop**
   (`.dss-icon--brand-*`). Corrigido globalmente no `DssIcon` (set/2026) — mas conferir no componente,
   porque um `_brands.scss` local pode reintroduzir o mesmo descendente para o ícone dele.
+- **L4 — Ícone é dimensionado por token de ÍCONE, não de TEXTO.** A escala do sistema é
+  `--dss-icon-size-{xs..xl}` = **16 · 20 · 24 · 32 · 48px**. Usar `--dss-font-size-*` para dimensionar
+  ícone mistura duas escalas e costuma cair **abaixo do mínimo**: no `DssChip`, o ícone de remoção usa
+  `--dss-font-size-sm` (14px) — 2px menor que o menor token de ícone que existe.
+  *Nota:* com `inline`, o ícone escala pela `font-size` do host **de propósito** (CCI §2.3) — o
+  mecanismo está certo; o que sai da escala é o VALOR atribuído a essa `font-size`.
+- **L5 — "Ícone cortado": separe RECORTE de RASTERIZAÇÃO antes de mexer.** São causas diferentes e a
+  correção não é a mesma. Roteiro de 4 medições (usado no DssChip, set/2026):
+  1. **Métricas do glyph** — `ctx.measureText()` com a fonte do ícone: `actualBoundingBoxAscent +
+     Descent` vs a caixa de `1em`. Se o desenho **não** excede a caixa, não há o que recortar.
+     *(No chip a 14px: glyph 12px em caixa 14px — sobra 2px.)*
+  2. **Cadeia de recorte até o `<html>`** — `overflow`, `clip-path`, `mask-image`, `contain`. Varrer
+     TUDO, não só o pai imediato.
+  3. **Clonar para fora da cadeia** (`body > div`, sem ancestral que recorte) e comparar o desenho.
+     **Se o clone renderiza igual, não é recorte** — é o teste decisivo.
+  4. **Comparar DPR 1 x DPR 4** (`emulate` com `viewport=...x4`). Se em DPR 4 fica perfeito e em DPR 1
+     achata, e **rasterizacao**: o glyph e pequeno demais para o traco circular resolver em 1 pixel.
+     A correcao e **subir o tamanho** (L4), nao cacar `overflow`.
 - **L3 — Vale para o PRIMITIVO embutido, não para superfície.** O mesmo descendente em `DssBar`,
   `DssItem`, `DssKnob` é herança contextual legítima — são componentes de superfície. A distinção é
   "vive DENTRO de outro componente?", não o formato do seletor.
@@ -304,6 +322,7 @@
 - [ ] **brand pela PROP** colore borda + anel de foco (knob interno, não só `[data-brand]` global) (K)
 - [ ] **brand pela PROP** remapeia a rampa inteira — o **hover/active também brandeia** (K5)
 - [ ] **ícone embutido acompanha o texto** sob brand global — não some contra o fundo (L)
+- [ ] **ícone dimensionado por `--dss-icon-size-*`**, nunca por `--dss-font-size-*` (L4)
 - [ ] **hover de cor pela rampa** (`-hover`/`-deep`); contraste do label **sobe** no hover (M)
 - [ ] **sem overflow** em grid/matriz (`min-width: 0` na raiz real)
 - [ ] verificado **sem** `!important` reflexo (só onde há override global — A3)

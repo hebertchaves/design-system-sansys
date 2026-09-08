@@ -381,6 +381,33 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- 🟡 **Ícone do DssChip dimensionado por token de TEXTO — fora da escala de ícones**
+  (08/set/2026). Relatado como "algo cortando a pontinha do ícone". **Investiguei recorte a fundo,
+  a pedido — e não é recorte.** Quatro medições:
+  1. **Métricas do glyph:** `cancel` a 14px desenha **12px** (`ascent 13`, `descent −1`) numa caixa de
+     `1em` = 14px. **Sobra 2px** — não há o que recortar.
+  2. **Cadeia até o `<html>`** (`overflow`/`clip-path`/`mask-image`/`contain`): os únicos recortes são
+     da **página de teste** (`.pg-tile`, `.test-content`, `.test-suite`) — nenhum no componente, e
+     todos longe do ícone. Forçar `overflow: visible` em todos não muda o desenho.
+  3. **Clone fora da cadeia** (`body > div`, sem ancestral que recorte): renderiza **idêntico**. É o
+     teste decisivo — se houvesse máscara, o clone sairia diferente.
+  4. **DPR 1 × DPR 4:** em DPR 4 o círculo sai perfeito; em DPR 1 achata. E numa régua de 12→24px com
+     `overflow: visible` explícito, o achatamento é **função do tamanho**, não do contexto.
+
+  **O que existe:** `.dss-chip__icon--remove` usa `font-size: var(--dss-font-size-sm)` (14px) — um
+  token de **tipografia**. A escala de ícones do sistema começa em `--dss-icon-size-xs: 16px`, então o
+  ícone está **abaixo do mínimo**. A 14px o traço circular do `cancel` não resolve em 1 pixel e as
+  bordas achatam — daí a leitura de "cortado".
+
+  ⚠️ **NÃO corrigido: a escala não fecha.** Trocar por `--dss-icon-size-xs` (16px) resolve `md`/`lg`,
+  mas o botão de remoção do chip **`xs` tem 12px** — menor que qualquer token de ícone. Três saídas,
+  todas com custo de design: (a) tokenizar só onde a caixa comporta; (b) criar `--dss-icon-size-2xs`
+  (12px), estendendo a escala para baixo; (c) aumentar a caixa do botão nos tamanhos pequenos, que
+  mexe no layout do chip. **Decisão de design pendente.**
+
+  📌 Virou **§L4** (dimensionar por token de ícone) e **§L5** (roteiro de 4 medições para separar
+  recorte de rasterização) do `DSS_UI_ADEQUACAO_CHECKLIST.md`, com item no Gate.
+
 - ✅ **Onda §M aplicada aos adequados — só o DssChip precisava** (08/set/2026). Varredura dos 12
   componentes com adequação fechada, medindo **antes de mexer** (a pedido — e é a lição da frente
   (e): migração em lote lê a propriedade e erra o papel).
