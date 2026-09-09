@@ -381,9 +381,9 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
-- 🟡 **Ícone do DssChip dimensionado por token de TEXTO — fora da escala de ícones**
-  (08/set/2026). Relatado como "algo cortando a pontinha do ícone". **Investiguei recorte a fundo,
-  a pedido — e não é recorte.** Quatro medições:
+- ✅ **Ícone do DssChip dimensionado por token de TEXTO — RESOLVIDO** (09/set/2026; investigação em
+  08/set). Relatado como "algo cortando a pontinha do ícone". **Investiguei recorte a fundo, a
+  pedido — e não é recorte.** Quatro medições:
   1. **Métricas do glyph:** `cancel` a 14px desenha **12px** (`ascent 13`, `descent −1`) numa caixa de
      `1em` = 14px. **Sobra 2px** — não há o que recortar.
   2. **Cadeia até o `<html>`** (`overflow`/`clip-path`/`mask-image`/`contain`): os únicos recortes são
@@ -399,11 +399,42 @@
   ícone está **abaixo do mínimo**. A 14px o traço circular do `cancel` não resolve em 1 pixel e as
   bordas achatam — daí a leitura de "cortado".
 
-  ⚠️ **NÃO corrigido: a escala não fecha.** Trocar por `--dss-icon-size-xs` (16px) resolve `md`/`lg`,
-  mas o botão de remoção do chip **`xs` tem 12px** — menor que qualquer token de ícone. Três saídas,
-  todas com custo de design: (a) tokenizar só onde a caixa comporta; (b) criar `--dss-icon-size-2xs`
-  (12px), estendendo a escala para baixo; (c) aumentar a caixa do botão nos tamanhos pequenos, que
-  mexe no layout do chip. **Decisão de design pendente.**
+  **CORRIGIDO com custo dimensional ZERO** — depois de simular as 3 saídas e medir os efeitos:
+
+  | tamanho | altura | largura | folga | ícone antes → depois |
+  |---|---|---|---|---|
+  | xs | 20 (=) | 90,7 (=) | 4 (=) | 12px → **12px** (`2xs`) |
+  | sm | 24 (=) | 125,4 (=) | 4 (=) | 14px → **16px** (`xs`) |
+  | md | 28 (=) | 114,1 (=) | 4 (=) | 14px → **16px** (`xs`) |
+  | lg | 32 (=) | 139,6 (=) | 4 (=) | 16px → **16px** (`xs`) |
+
+  A simulação desmontou a premissa de que "aumentar a caixa" seria necessário: em `sm`/`md` a caixa já
+  tinha 16px — bastava o ícone preenchê-la. Só o `xs` precisaria de caixa maior, e ali o custo era
+  real (folga 4→0, +4px de largura, ícone 1,33× o texto num chip de 20px). Por isso o `xs` ganhou o
+  degrau **`--dss-icon-size-2xs: 12px`** (mesmo valor efetivo de antes, token correto) em vez de
+  subir. Estender a escala legitima o tamanho; manter `--dss-font-size-xs` violaria o §L4 recém-escrito.
+
+  🔍 **Dois achados de cascata no caminho — a regra que eu tinha corrigido era INERTE.** Medindo o
+  CSSOM, três regras casam com o span do ícone, todas (0,1,0), e o empate resolve por ORDEM:
+
+      4142  .dss-chip__icon          font-size: var(--dss-font-size-md)
+      4151  .dss-chip__icon--remove  font-size: …            ← onde eu tinha mexido
+      4597  .dss-icon--inline        font-size: inherit      ← ÚLTIMA, vence
+
+  `.dss-icon--inline` vence as duas — que é o CCI §2.3 funcionando como projetado: com `inline`, o
+  ícone escala pela `font-size` do HOST. **O único jeito de dimensioná-lo é mexer no host**
+  (`.dss-chip__remove`). E o que escondia isso: como o botão herda a tipografia do chip, os valores
+  que a regra inerte declarava batiam com o que o `inherit` já dava — ela *parecia* funcionar.
+
+  Segundo achado: as regras por tamanho `.dss-chip--{sz} .dss-chip__icon` têm (0,2,0) e **vencem** o
+  `.dss-icon--inline`, capturando o ícone de remoção junto. Resolvido com
+  `:not(.dss-chip__icon--remove)` nas três — os ícones comuns (`--left`, `--selected`) seguem em 14px,
+  verificado.
+
+  ⚠️ **Fica aberto (não é deste ajuste):** o botão de remoção **não tem touch target próprio**. A área
+  clicável real é a caixa: 144px² no `xs` a 400px² no `lg`, contra os **1936px²** (44×44) do WCAG
+  2.5.5. O `::before` de 44px existe no `.dss-chip`, mas com `pointer-events: none` — é documental,
+  não amplia área clicável de nada.
 
   📌 Virou **§L4** (dimensionar por token de ícone) e **§L5** (roteiro de 4 medições para separar
   recorte de rasterização) do `DSS_UI_ADEQUACAO_CHECKLIST.md`, com item no Gate.

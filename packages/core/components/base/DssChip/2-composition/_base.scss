@@ -124,6 +124,13 @@
   padding: 0;
   width: var(--dss-spacing-4); /* 16px */
   height: var(--dss-spacing-4); /* 16px */
+
+  /* Dimensiona o ícone `inline` que vive aqui dentro (ver nota abaixo da regra).
+     Token de ÍCONE, não de texto: antes o ícone caía em 14px por herança da
+     tipografia do chip — 2px abaixo do menor token de ícone que existia, e a
+     14px o traço circular do `cancel` não resolve em 1px (§L4/§L5 do checklist).
+     A caixa já tem 16px, então não muda altura, largura nem folga. */
+  font-size: var(--dss-icon-size-xs); /* 16px */
   border: none;
   border-radius: var(--dss-radius-full);
   background-color: transparent;
@@ -155,9 +162,23 @@
   }
 }
 
-.dss-chip__icon--remove {
-  font-size: var(--dss-font-size-sm);
-}
+/* O TAMANHO DO ÍCONE DE REMOÇÃO MORA NO BOTÃO, não aqui (set/2026).
+
+   Havia neste ponto um `.dss-chip__icon--remove { font-size: … }` que era INERTE
+   — descoberto medindo o CSSOM. Três regras casam com esse span, todas com
+   especificidade (0,1,0), e o empate resolve por ORDEM DE ORIGEM:
+
+     4142  .dss-chip__icon         font-size: var(--dss-font-size-md)
+     4151  .dss-chip__icon--remove font-size: …              ← a regra daqui
+     4597  .dss-icon--inline       font-size: inherit        ← ÚLTIMA, vence
+
+   `.dss-icon--inline` é do DssIcon e vence as duas. Isso é o CCI §2.3 funcionando
+   como projetado: com `inline`, o ícone escala pela `font-size` do HOST. Logo o
+   único jeito de dimensioná-lo é mexer no host — o `.dss-chip__remove`.
+
+   Coincidência que escondia o problema: como o botão herda a `font-size` do chip,
+   os valores que a regra inerte declarava batiam com o que o `inherit` já dava.
+   Ela parecia funcionar. */
 
 /* ==========================================================================
    CLICKABLE STATE
@@ -231,7 +252,11 @@
   line-height: var(--dss-line-height-xs-tight);
   gap: var(--dss-spacing-0_5);
 
-  .dss-chip__icon {
+  /* `:not(--remove)`: o ícone de remoção é dimensionado pelo BOTÃO (token de
+     ícone), não pela tipografia do chip. Sem a exclusão esta regra (0,2,0)
+     vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
+
+  .dss-chip__icon:not(.dss-chip__icon--remove) {
     font-size: var(--dss-font-size-sm);
   }
 
@@ -240,8 +265,12 @@
     height: var(--dss-spacing-3); /* 12px */
   }
 
-  .dss-chip__icon--remove {
-    font-size: var(--dss-font-size-xs);
+  /* `2xs` (12px) — MESMO valor efetivo de antes, agora por token de ícone. A caixa
+     do botão aqui é 12px e a área útil do chip é 16px: subir para `-xs` (16px)
+     zeraria a folga vertical (4→0) e deixaria o ícone 1,33× o texto num chip de
+     20px de altura. Por isso o `xs` fica no seu próprio degrau. */
+  .dss-chip__remove {
+    font-size: var(--dss-icon-size-2xs);
   }
 }
 
@@ -251,7 +280,11 @@
   font-size: var(--dss-font-size-xs);
   line-height: var(--dss-line-height-xs-tight);
 
-  .dss-chip__icon {
+  /* `:not(--remove)`: o ícone de remoção é dimensionado pelo BOTÃO (token de
+     ícone), não pela tipografia do chip. Sem a exclusão esta regra (0,2,0)
+     vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
+
+  .dss-chip__icon:not(.dss-chip__icon--remove) {
     font-size: var(--dss-font-size-sm);
   }
 }
@@ -270,7 +303,11 @@
   line-height: var(--dss-line-height-md-tight);
   gap: var(--dss-spacing-2);
 
-  .dss-chip__icon {
+  /* `:not(--remove)`: o ícone de remoção é dimensionado pelo BOTÃO (token de
+     ícone), não pela tipografia do chip. Sem a exclusão esta regra (0,2,0)
+     vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
+
+  .dss-chip__icon:not(.dss-chip__icon--remove) {
     font-size: var(--dss-font-size-lg);
   }
 
@@ -279,9 +316,8 @@
     height: var(--dss-spacing-5); /* 20px */
   }
 
-  .dss-chip__icon--remove {
-    font-size: var(--dss-font-size-md);
-  }
+  /* Herda os 16px da regra base do botão — sem redeclarar. A caixa aqui é 20px
+     (maior que o ícone), o que mantém a folga de 4px comum a todos os tamanhos. */
 }
 
 /* Icon-only size adjustments */

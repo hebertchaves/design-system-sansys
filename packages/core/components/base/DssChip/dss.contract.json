@@ -476,6 +476,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "background-color",
           "token": null,
           "value": "transparent",
@@ -544,6 +550,12 @@
         {
           "property": "height",
           "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-2xs",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1319,6 +1331,12 @@
         ]
       },
       {
+        "name": "--dss-icon-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-duration-150",
         "usedIn": [
           "default"
@@ -1360,6 +1378,12 @@
         "usedIn": [
           "default",
           "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-2xs",
+        "usedIn": [
+          "default"
         ]
       },
       {

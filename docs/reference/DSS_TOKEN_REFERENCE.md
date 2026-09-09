@@ -1503,6 +1503,7 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 <!-- BEGIN:TOKEN-TABLE:accessibility-icons -->
 | Token | Valor | px | Descrição |
 |---|---|---|---|
+| `--dss-icon-size-2xs` | `12px` | `12px` | Controle compacto (chip xs) |
 | `--dss-icon-size-xs` | `16px` | `16px` | Ícones inline |
 | `--dss-icon-size-sm` | `20px` | `20px` | Ícones secundários |
 | `--dss-icon-size-md` | `24px` | `24px` | ✅ Padrão - Ícones interativos |

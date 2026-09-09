@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-09-03. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-09-09. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -1118,6 +1118,12 @@ sobre o fundo em vez de descartá-lo. Reproduza antes de confiar:
      4. ÍCONES E GRÁFICOS
      Escala size="xs|sm|md|lg|xl"
      =========================================== */
+  /* 2xs existe para CONTROLE COMPACTO (set/2026): o botão de remoção do chip `xs`
+     tem caixa de 12px — abaixo do antigo mínimo da escala (16px). Sem este degrau,
+     o componente caía em `--dss-font-size-xs`, ou seja, dimensionava ícone com token
+     de TEXTO (ver §L4 do DSS_UI_ADEQUACAO_CHECKLIST.md). Estender a escala legitima
+     o tamanho em vez de abrir exceção — o valor é o mesmo que já era usado. */
+  --dss-icon-size-2xs: 12px; /* Controle compacto (chip xs) */
   --dss-icon-size-xs: 16px; /* Ícones inline */
   --dss-icon-size-sm: 20px; /* Ícones secundários */
   --dss-icon-size-md: 24px; /* ✅ Padrão - Ícones interativos */
