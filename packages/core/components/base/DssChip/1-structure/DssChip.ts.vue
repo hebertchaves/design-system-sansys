@@ -139,7 +139,15 @@ const props = withDefaults(defineProps<ChipProps>(), {
   label: '',
   icon: '',
   iconRight: '',
-  iconRemove: 'cancel',
+  // 'close' (X simples), não 'cancel' (X em círculo) — set/2026.
+  // O círculo do `cancel` rasteriza ACHATADO em cima e embaixo nos DPRs mais
+  // comuns: medindo os pixels a 16px, a 1ª e a última linha do glyph ficam com
+  // 50% da largura máxima em DPR 1 e 44% em DPR 1,5 (num círculo bem formado
+  // seriam ~13%). Era o "ícone cortado" relatado — não havia recorte algum.
+  // O `close` é traço reto, sem curva fechada para achatar, e fica em 33%.
+  // A affordance circular não se perde: o próprio botão tem `border-radius: full`
+  // e ganha fundo no hover. Quem quiser o glyph antigo passa `icon-remove="cancel"`.
+  iconRemove: 'close',
   iconSelected: 'check',
 
   // Visual
@@ -210,7 +218,7 @@ const computedIconRight = computed(() => props.iconRight || '')
 /**
  * Icone de remover computado
  */
-const computedIconRemove = computed(() => props.iconRemove || 'cancel')
+const computedIconRemove = computed(() => props.iconRemove || 'close')
 
 /**
  * Icone de selecionado computado

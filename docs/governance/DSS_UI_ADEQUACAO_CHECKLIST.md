@@ -275,7 +275,18 @@
      **Se o clone renderiza igual, não é recorte** — é o teste decisivo.
   4. **Comparar DPR 1 x DPR 4** (`emulate` com `viewport=...x4`). Se em DPR 4 fica perfeito e em DPR 1
      achata, e **rasterizacao**: o glyph e pequeno demais para o traco circular resolver em 1 pixel.
-     A correcao e **subir o tamanho** (L4), nao cacar `overflow`.
+     A correcao e **subir o tamanho** (L4) ou trocar o GLYPH, nao cacar `overflow`.
+  5. **Se for rasterizacao, meça o glyph por PIXEL** — nao confie no `measureText()` da ligature:
+     `measureText('cancel')` renderiza as seis letras `c-a-n-c-e-l`, nao o icone. Use o **code point**
+     (`String.fromCharCode(0xe5c9)`), pinte num canvas e meça quanto da 1a/ultima linha e reta.
+     Curva fechada achatada = topo/base perto de 50% da largura maxima; bem formada = ~13%.
+     ⚠️ Dois avisos deste caso (DssChip, set/2026): **(a)** o achatamento OSCILA com o tamanho
+     (12px 60% · 16px 50% · 18px 29% · 20px 13% · 24px 44%) — nao vale "quanto maior, melhor";
+     **(b)** a metrica so compara o MESMO glyph em tamanhos/DPRs diferentes. Entre glifos diferentes
+     ela mede outra coisa (num X, mede a espessura das pontas). Para escolher glyph, use comparacao
+     visual em DPR 1 — traco reto rasteriza melhor que curva fechada.
+     ⚠️ E capture em **DPR 1**, nao so em DPR alto: em DPR 4 o defeito some e voce conclui que nao
+     existe.
 - **L3 — Vale para o PRIMITIVO embutido, não para superfície.** O mesmo descendente em `DssBar`,
   `DssItem`, `DssKnob` é herança contextual legítima — são componentes de superfície. A distinção é
   "vive DENTRO de outro componente?", não o formato do seletor.

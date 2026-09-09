@@ -113,7 +113,7 @@ O **DssChip** é um componente de chip/tag para exibição de informações comp
 | `label` | `String` | `''` | Texto do chip |
 | `icon` | `String` | `''` | Ícone Material Icons à esquerda |
 | `iconRight` | `String` | `''` | Ícone Material Icons à direita |
-| `iconRemove` | `String` | `'cancel'` | Ícone do botão de remover |
+| `iconRemove` | `String` | `'close'` | Ícone do botão de remover |
 | `iconSelected` | `String` | `'check'` | Ícone quando selecionado |
 | `variant` | `'filled' \| 'outline' \| 'flat'` | `'filled'` | Variante visual |
 | `color` | `String` | `'primary'` | Cor semântica DSS |

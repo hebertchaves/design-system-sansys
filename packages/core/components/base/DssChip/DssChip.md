@@ -201,7 +201,7 @@ O DssChip utiliza pseudo-elemento `::before` para garantir touch target ≥44px:
 | `label` | String | `''` | - | Texto do chip |
 | `icon` | String | `''` | Material Icons | Ícone à esquerda |
 | `icon-right` | String | `''` | Material Icons | Ícone à direita |
-| `icon-remove` | String | `'cancel'` | Material Icons | Ícone do botão remover |
+| `icon-remove` | String | `'close'` | Material Icons | Ícone do botão remover |
 | `icon-selected` | String | `'check'` | Material Icons | Ícone quando selecionado |
 | `variant` | String | `'filled'` | `filled`, `outline`, `flat` | Variante visual |
 | `color` | String | `'primary'` | `primary`, `secondary`, `accent`, `positive`, `negative`, `warning`, `info`, `grey` | Cor do chip |

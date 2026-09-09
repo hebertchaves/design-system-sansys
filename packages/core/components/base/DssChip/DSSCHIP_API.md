@@ -15,7 +15,7 @@ O `DssChip` é um wrapper DSS baseado no QChip, com **API pública governada pel
 | `label` | String | `''` | Texto do chip |
 | `icon` | String | `''` | Ícone à esquerda (Material Icons) |
 | `icon-right` | String | `''` | Ícone à direita (Material Icons) |
-| `icon-remove` | String | `'cancel'` | Ícone do botão remover |
+| `icon-remove` | String | `'close'` | Ícone do botão remover |
 | `icon-selected` | String | `'check'` | Ícone quando selecionado |
 
 **Exemplo:**

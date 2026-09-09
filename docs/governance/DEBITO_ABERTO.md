@@ -381,6 +381,46 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **"Ícone cortado" no chip: era RASTERIZAÇÃO do glyph `cancel` — RESOLVIDO** (09/set/2026).
+  Fechamento da investigação que se arrastou por três rodadas. **O relato estava certo e minhas duas
+  primeiras conclusões, erradas.**
+
+  **Meus dois erros, para não repetir:**
+  1. Medi `measureText('cancel')` no canvas — que renderiza as SEIS LETRAS `c-a-n-c-e-l`, não a
+     ligature do ícone. O "glyph de 12px" era o texto literal. Correto é usar o **code point**
+     (`String.fromCharCode(0xe5c9)`).
+  2. Numa captura de diagnóstico desenhei um `outline` na caixa do `<i>` e **interpretei a moldura
+     como corte**. Sem a moldura, `height:1em` e `height:auto` dão o mesmo desenho.
+
+  **A causa real, medida por PIXEL.** Rasterizando o glyph e medindo quanto da 1ª/última linha é reta
+  (num círculo bem formado ela é curta; achatada, é longa):
+
+  | DPR | `cancel` topo/base |
+  |---|---|
+  | **1** | **50% / 50%** |
+  | 1,25 | 7% / 7% |
+  | **1,5** | **44% / 33%** |
+  | 2 | 8% / 25% |
+  | 4 | 17% / 17% |
+
+  Em **DPR 1 e 1,5** — os mais comuns — o círculo do `cancel` rasteriza achatado em cima e embaixo.
+  **Não havia recorte** (nenhum `overflow`/`mask`) nem problema de caixa. Minhas capturas anteriores
+  estavam em DPR 4, onde o defeito não aparece: foi por isso que eu não reproduzia.
+
+  **E subir o tamanho não resolve monotonicamente** — o achatamento OSCILA com a interação
+  fonte×grade de pixels: 12px 60% · 14px 36% · 16px 50% · 18px 29% · **20px 13%** · 24px 44%.
+
+  **Correção adotada:** trocar o glyph default de `cancel` (X em círculo) para **`close`** (X simples)
+  — traço reto, sem curva fechada para achatar. Mantém 16px, caixa, folga e proporção intactos. A
+  affordance circular não se perde: o botão já tem `border-radius: full` e ganha fundo no hover.
+  A prop `iconRemove` segue disponível para quem quiser o glyph antigo.
+
+  ⚠️ **A métrica de achatamento NÃO é comparável entre glifos diferentes** — foi desenhada para curva
+  fechada; aplicada ao X ela mede a espessura das pontas das diagonais. A validação da troca é visual
+  (comparação lado a lado em DPR 1) + conceitual (não há curva para achatar), não o número.
+
+  📌 O roteiro §L5 do checklist ganhou o 5º passo com este caso.
+
 - ✅ **Ícone do DssChip dimensionado por token de TEXTO — RESOLVIDO** (09/set/2026; investigação em
   08/set). Relatado como "algo cortando a pontinha do ícone". **Investiguei recorte a fundo, a
   pedido — e não é recorte.** Quatro medições:
