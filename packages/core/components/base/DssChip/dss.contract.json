@@ -1038,6 +1038,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "outline-offset",
           "token": "--dss-spacing-0_5",
           "value": null,

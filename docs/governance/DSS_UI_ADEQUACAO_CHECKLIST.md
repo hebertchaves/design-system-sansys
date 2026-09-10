@@ -245,6 +245,28 @@
 
 ---
 
+## J-bis. Anel de foco × indicador de ESTADO: cuidado com dois claros somados
+
+> **Sintoma:** o anel de foco parece "invadido por uma faixa branca" / afastado do componente.
+> Medido no DssChip `filled` + `selected` (set/2026).
+
+- **J-bis1 — Antes de mexer na margem, some as camadas.** O `outline-offset` mostra o fundo ATRÁS do
+  componente. Se o estado (selected/checked) desenha um anel INTERNO claro, os dois claros ficam
+  contíguos e o anel de a11y parece descolado:
+  `[outline] [gap = fundo da página] [inset do estado] [fundo do componente]`.
+- **J-bis2 — Aumentar o `outline-offset` PIORA.** Testado: de 2px para 4px levou a faixa clara de
+  4px para 6px. O offset do DSS (`--dss-focus-ring-offset`, 2px) já é o mesmo em toda a família —
+  **se parece "colado demais", desconfie da soma, não da margem.**
+- **J-bis3 — Suprimir o indicador interno no foco é seguro SE houver outro.** No chip, o ícone de
+  check é renderizado sempre que `selected` é true (não é prop opcional) e há `aria-selected` — então
+  o inset pode sair no `:focus-visible` sem perder a informação. **Confirme no `1-structure` que o
+  indicador alternativo não é condicional** antes de aplicar.
+- **J-bis4 — Restrinja à variante onde o defeito existe.** No chip só o `filled` funde (ali
+  `currentColor` é branco); em `outline` o inset tem a cor do fundo e em `flat` é a cor de acento.
+- [ ] **anel de foco legível no estado SELECIONADO**, não só no repouso (J-bis)
+
+---
+
 ## L. Ícone embutido herda `currentColor` — nunca é brandeado por contexto
 
 > **Sintoma:** com brand **global** (`[data-brand]` ancestral), o ícone dentro de um botão/chip

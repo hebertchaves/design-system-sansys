@@ -402,6 +402,32 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Anel de foco do chip SELECIONADO parecia invadido por uma faixa branca — RESOLVIDO**
+  (10/set/2026). Relatado como "o contorno de a11y está sendo sobreposto por uma linha branca, muito
+  colado ao componente, ao invés de dar a margem que os demais aplicam".
+
+  **A margem NÃO era o problema** — medi: `outline-offset: 2px`, o mesmo valor de Button, Checkbox,
+  Radio, Toggle e Badge, e igual ao token `--dss-focus-ring-offset`. O que havia era **soma de dois
+  claros**. No `filled`, o `currentColor` é BRANCO (texto invertido sobre fundo de acento), e o
+  `box-shadow: inset … currentColor` do `--selected` desenha um anel branco colado à borda interna:
+
+      [outline 2px #006ac5] [gap 2px BRANCO] [inset 2px BRANCO] [fundo azul]
+                             └──── 4px de branco contíguo ────┘
+
+  ⚠️ **Aumentar a margem PIORA** — testado com `outline-offset: 4px`: a faixa vai a 6px. Foi a
+  primeira coisa que verifiquei, justamente porque era a hipótese natural.
+
+  **Correção:** suprimir o inset apenas quando `filled` + `selected` + `:focus-visible`. Seguro
+  porque o selecionado mantém dois outros indicadores — o ícone de **check**, que
+  `showSelectedIcon = computed(() => props.selected)` renderiza SEMPRE (não é opcional), e o
+  `aria-selected`. **Em repouso o inset continua lá:** o visual do selecionado não muda.
+
+  Restrito ao `filled`: em `outline` o inset tem a cor do próprio fundo (invisível — medido) e em
+  `flat` é a cor de acento, que não funde com o gap claro.
+
+  Medido depois: com foco `box-shadow: none` + outline íntegro; em repouso `inset … #ffffff`
+  preservado; check presente nos dois.
+
 - ✅ **§L/§M ganharam GATE — o "lembrar na adequação" virou cobrança automática** (10/set/2026).
   Verificação a pedido: *"acho que já está através dos gates, mas vale verificar"*. **Não estava.**
   Nenhum dos 17 validadores do pre-commit olhava para estados interativos; o `validate-scss-tokens`

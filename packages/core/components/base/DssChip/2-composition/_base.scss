@@ -238,6 +238,32 @@
   box-shadow: inset 0 0 0 var(--dss-border-width-md) currentColor;
 }
 
+/* FOCO + SELECTED no FILLED: o inset sai (set/2026).
+   No filled o `currentColor` é BRANCO (texto invertido sobre fundo de acento),
+   então o inset desenha um anel branco colado à borda interna. Com o foco, ele
+   soma ao gap do `outline-offset` — que mostra o fundo da página, também claro:
+
+       [outline 2px]  [gap 2px BRANCO]  [inset 2px BRANCO]  [fundo do chip]
+                       └──────── 4px de branco contíguo ────────┘
+
+   O anel de a11y fica lido como "afastado por uma faixa branca". Medido: outline
+   `2px solid #006ac5`, offset `2px`, inset `#ffffff`.
+
+   ⚠️ AUMENTAR a margem PIORA — testado: com `outline-offset: 4px` a faixa branca
+   passa a 6px. O problema não é falta de margem (o offset já é o mesmo dos demais
+   componentes, 2px = `--dss-focus-ring-offset`); é a SOMA de dois claros.
+
+   Suprimir o inset só no foco é seguro porque o `selected` mantém DOIS outros
+   indicadores: o ícone de check — que o `showSelectedIcon` renderiza sempre que
+   `selected` é true, não é opcional — e o próprio `aria-selected`. Em repouso o
+   inset continua lá: o visual do selecionado não muda.
+
+   Restrito ao `--filled`: em `outline` o inset tem a cor do fundo (invisível) e em
+   `flat` é a cor de acento, que não funde com o gap claro. */
+.dss-chip--filled.dss-chip--selected.dss-chip--clickable:focus-visible {
+  box-shadow: none;
+}
+
 /* ==========================================================================
    SIZE VARIANTS
    ========================================================================== */
