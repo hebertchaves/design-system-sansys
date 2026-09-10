@@ -145,7 +145,7 @@ Quando `tableRows` está vazio (e não está em loading):
 | 2.1.1 Keyboard | Todos os controles interativos acessíveis via teclado (QBtn, QPagination) |
 | 2.4.3 Focus Order | Ordem de foco lógica: breadcrumb → header → toggle → filtros → tabela → paginação |
 | 2.4.7 Focus Visible | Focus ring visível em links (`outline: 2px solid`) |
-| 2.5.5 Target Size | Botões de view: touch target via QBtn (≥ 48px) |
+| 2.5.5 Target Size | Botões de view: touch target via QBtn (≥ 44px) |
 | 4.1.2 Name, Role, Value | ARIA via Quasar (QBtn, QBreadcrumbs, QPagination) |
 
 ### Skeletons de loading

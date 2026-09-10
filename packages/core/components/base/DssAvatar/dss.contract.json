@@ -145,10 +145,10 @@
     },
     "dimensions": {
       "minHeight": {
-        "value": "48px"
+        "value": "44px"
       },
       "minWidth": {
-        "value": "48px"
+        "value": "44px"
       }
     },
     "states": {

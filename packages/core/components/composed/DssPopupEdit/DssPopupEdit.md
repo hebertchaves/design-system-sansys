@@ -55,7 +55,7 @@ O `v-model` do `DssPopupEdit` controla o **valor em edição**, não a abertura/
 
 - `DssPopupEdit` não renderiza nenhum elemento no DOM quando fechado.
 - O touch target é responsabilidade do **elemento pai hospedeiro** (ex: `<td>`, `<li>`, `<div>`).
-- O consumidor é responsável por garantir área clicável ≥ 48×48px no hospedeiro.
+- O consumidor é responsável por garantir área clicável ≥ 44×44px no hospedeiro.
 - `::before` não é utilizado no container do popup (correto para Opção B).
 - Interatividade interna (DssInput, DssButton no slot) carrega seu próprio touch target (Opção A via DssInput/DssButton).
 

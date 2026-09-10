@@ -119,7 +119,7 @@ O **DssAvatar** consome tokens de **multiplas categorias** do Design System Sans
 | **Cores de Texto** | `--dss-text-primary`, `--dss-text-inverse` | Texto/iniciais dentro do avatar |
 | **Cores Neutras** | `--dss-neutral-200`, `--dss-neutral-700` | Background padrao |
 | **Brands** | `--dss-hub-600`, `--dss-water-600`, `--dss-waste-600` | Bordas e status por brand (tokens canonicos) |
-| **Dimensoes** | `--dss-touch-target-min/sm/xl` | Tamanhos predefinidos (48, 36, 64px). Ver Secao 14 (EXC-01) |
+| **Dimensoes** | `--dss-touch-target-md/sm/xl` | Tamanhos predefinidos (44, 36, 64px). Ver Secao 14 (EXC-01) |
 | **Tipografia** | `--dss-font-family-sans`, `--dss-font-size-xs/sm/md/lg/xl` | Fonte e tamanho do texto (canonicos) |
 | **Bordas** | `--dss-radius-full`, `--dss-radius-md` | Forma circular/rounded (canonicos) |
 | **Border Width** | `--dss-border-width-thin/md/thick` | Espessuras de borda (1px/2px/3px) |
@@ -128,7 +128,7 @@ O **DssAvatar** consome tokens de **multiplas categorias** do Design System Sans
 
 ### Observacoes Importantes
 
-- **Touch Target**: Tamanhos xs/sm podem nao atender WCAG 2.5.5 AAA (48px minimo)
+- **Touch Target**: Tamanhos xs/sm podem nao atender WCAG 2.5.5 AAA (44px minimo)
 - **Brandabilidade**: Quando `brand` e aplicado, borda colorida identifica a marca
 - **Status**: Cores de status seguem tokens semanticos (positive, warning, negative, neutral)
 
@@ -620,7 +620,7 @@ Cada excecao e referenciada no codigo-fonte via comentario `/* EXCECAO DOCUMENTA
 
 | ID | Valor | Local | Justificativa |
 |----|-------|-------|---------------|
-| EXC-01 | `--dss-touch-target-min` (48px), `--dss-touch-target-sm` (36px), `--dss-touch-target-xl` (64px) | `_base.scss` (classes md, xs, lg) | DssAvatar e Visual/Identity (nao interativo). Reutiliza tokens `--dss-touch-target-*` como dimensionais porque o catalogo DSS nao possui tokens genericos `--dss-size-*`. Os valores coincidem com as dimensoes desejadas do QAvatar. |
+| EXC-01 | `--dss-touch-target-md` (44px), `--dss-touch-target-sm` (36px), `--dss-touch-target-xl` (64px) | `_base.scss` (classes md, xs, lg) | DssAvatar e Visual/Identity (nao interativo). Reutiliza tokens `--dss-touch-target-*` como dimensionais porque o catalogo DSS nao possui tokens genericos `--dss-size-*`. Os valores coincidem com as dimensoes desejadas do QAvatar. |
 | EXC-02 | `40px`, `80px`, `64px`, `56px` | `_base.scss` (classes sm, xl, responsivo) | Nenhum token canonico do DSS corresponde a estes valores. Mantidos como valores fixos para preservar fidelidade dimensional ao QAvatar. |
 | EXC-03 | `outline: 2px`, `outline-offset: 2px` | `_base.scss` (focus-visible) | Focus ring com valores fixos por convencao CSS de acessibilidade WCAG 2.1 AA. Token `--dss-border-width-md` (2px) poderia ser usado, mas outline segue padrao absoluto. |
 | EXC-04 | `@media (max-width: 768px)` | `_base.scss` (responsividade) | CSS @media queries nao suportam `var()` (CSS custom properties). Breakpoint 768px corresponde ao `$breakpoint-sm-max` do Quasar Framework. Limitacao tecnica do CSS. |

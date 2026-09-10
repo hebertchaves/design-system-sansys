@@ -67,7 +67,7 @@
 `--dss-text-body`, `--dss-text-subtle`, `--dss-action-primary`, `--dss-surface-active`, `--dss-border-default`
 
 ### Interaction
-`--dss-touch-target-min`, `--dss-opacity-hover`, `--dss-opacity-active`, `--dss-opacity-disabled`, `--dss-opacity-50`, `--dss-focus-ring`
+`--dss-touch-target-md`, `--dss-opacity-hover`, `--dss-opacity-active`, `--dss-opacity-disabled`, `--dss-opacity-50`, `--dss-focus-ring`
 
 ### Motion
 `--dss-duration-150`, `--dss-easing-standard`

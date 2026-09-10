@@ -23,7 +23,7 @@
   position: relative;
   vertical-align: middle;
 
-  // Dimensoes padrao (md = 48px)
+  // Dimensoes padrao (md = 44px — o token vale 44, ver EXCECAO abaixo)
   /* EXCECAO DOCUMENTADA: Reutiliza --dss-touch-target-md (44px) como
      token dimensional. Avatar e Visual/Identity, nao interativo.
      Nao existem tokens genericos --dss-size-* no catalogo DSS.
@@ -156,7 +156,7 @@
   }
 }
 
-// Tamanho md (medium) - 48px (padrao, ja definido na classe base)
+// Tamanho md (medium) - 44px (padrao, ja definido na classe base)
 
 // Tamanho lg (large) - 64px
 .dss-avatar--lg {

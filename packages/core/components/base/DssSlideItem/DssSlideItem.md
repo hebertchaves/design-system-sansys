@@ -96,7 +96,7 @@
 ## 6. Acessibilidade
 
 - **WCAG 2.1 AA:** O gesto de swipe não é acessível via teclado. Toda interface com `DssSlideItem` **DEVE** fornecer alternativas acessíveis (botões, menus contextuais) para cada ação.
-- **Touch target:** O conteúdo do slot `left` e `right` deve ter touch target mínimo de 48px (WCAG 2.5.5). Use `DssButton` ou adicione padding adequado.
+- **Touch target:** O conteúdo do slot `left` e `right` deve ter touch target mínimo de 44px (WCAG 2.5.5). Use `DssButton` ou adicione padding adequado.
 - **ARIA:** O `DssSlideItem` deve ser filho de `<q-list>` com `role="list"` implícito. As ações reveladas devem ter texto descritivo visível ou `aria-label`.
 - **Navegação por teclado:** Não disponível no motor QSlideItem. Alternativa obrigatória no consumer.
 - **Leitores de tela:** O conteúdo das áreas de ação (slots `left`/`right`) é lido quando revelado.

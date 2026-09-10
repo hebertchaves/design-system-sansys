@@ -85,11 +85,11 @@
 | 1.4.11 Contraste Não Textual | ✅ | `@media (forced-colors: active)` com SystemColor keywords |
 | 2.1.1 Teclado | ✅ | `focus-visible` no elemento raiz; filhos interativos acessíveis via Tab |
 | 2.4.7 Foco visível | ✅ | `outline: --dss-border-width-md solid --dss-focus-ring` com `--dss-spacing-1` offset |
-| 2.5.5 Tamanho do Alvo | ✅ N/A | Container de conteúdo — altura natural da mensagem sempre ≥ 48px |
+| 2.5.5 Tamanho do Alvo | ✅ N/A | Container de conteúdo — altura natural da mensagem sempre ≥ 44px |
 | 3.3.1 Identificação de Erros | ✅ | `status="error"` + ícone `error_outline` + cor `--dss-feedback-error` |
 
 ### Touch Target
-N/A — DssChatMessage é container de conteúdo cuja altura natural supera 48px. Touch target ::before não aplicável.
+N/A — DssChatMessage é container de conteúdo cuja altura natural supera 44px. Touch target ::before não aplicável.
 
 ### ARIA
 - **`role="listitem"`** no elemento raiz — cada mensagem é um item de lista WAI-ARIA
@@ -181,7 +181,7 @@ N/A — DssChatMessage é container de conteúdo cuja altura natural supera 48px
 | `defineOptions({ name, inheritAttrs })` | ✅ | ✅ | **Igual** | — |
 | `inheritAttrs: false` + `v-bind="$attrs"` | ✅ | ✅ | **Igual** | — |
 | `-webkit-tap-highlight-color: transparent` | ✅ | ✅ | **Igual** | — |
-| Touch target `::before` (WCAG 2.5.5) | ✅ | ❌ N/A | **Diferente (intencional)** | DssChatMessage é container, não controle compacto. Altura natural ≥ 48px. |
+| Touch target `::before` (WCAG 2.5.5) | ✅ | ❌ N/A | **Diferente (intencional)** | DssChatMessage é container, não controle compacto. Altura natural ≥ 44px. |
 | Focus-visible com `--dss-focus-ring` | ✅ | ✅ | **Igual** | — |
 | `opacity: --dss-opacity-disabled` no disable | ✅ | ✅ | **Igual** | — |
 | Brand system (`--dss-{brand}-primary`) | ✅ | ✅ | **Igual** | — |

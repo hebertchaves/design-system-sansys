@@ -71,7 +71,7 @@ O DssExpansionItem adota a **Opção A** do DSS para touch target (WCAG 2.5.5):
 | Opção A | Tamanho visual ≥ 44px | ✅ (padrão: 48px, dense: 44px) |
 | Opção B | Tamanho visual < 44px → `::before` | ❌ |
 
-O header (`.q-item`) tem `min-height: --dss-spacing-12` (48px) por padrão. No modo `dense`, `min-height: --dss-touch-target-md` (44px) — mínimo WCAG mantido.
+O header (`.q-item`) tem `min-height: --dss-spacing-12` (44px) por padrão. No modo `dense`, `min-height: --dss-touch-target-md` (44px) — mínimo WCAG mantido.
 
 ---
 

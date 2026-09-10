@@ -191,7 +191,7 @@ O componente utiliza `inheritAttrs: false` e aplica `v-bind="$attrs"` no element
 | `--dss-focus-ring` | Acessibilidade | Cor do focus ring |
 | `--dss-border-width-md` | Borda | Espessura do focus ring |
 | `--dss-border-width-thick` | Borda | Espessura do indicador ativo |
-| `--dss-touch-target-md` | Dimensão | Altura mínima (48px) — WCAG 2.5.5 |
+| `--dss-touch-target-md` | Dimensão | Altura mínima (44px) — WCAG 2.5.5 |
 | `--dss-spacing-3` | Espaçamento | Padding block e padding icon-only |
 | `--dss-spacing-4` | Espaçamento | Padding inline padrão |
 | `--dss-duration-150` | Motion | Duração de transições |

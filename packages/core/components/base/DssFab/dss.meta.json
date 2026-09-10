@@ -37,7 +37,7 @@
     "error": "FAB é ação flutuante primária — estados de erro pertencem a componentes de formulário.",
     "indeterminate": "Não aplicável a botões de ação."
   },
-  "touchTarget": "Opção A — O FAB padrão tem 56×56px, garantindo touch target ≥ 48×48px (WCAG 2.5.5) sem necessidade de pseudo-elemento ::before. Diferente de Compact Controls (DssChip/DssRadio) que usam ::before porque seu tamanho visual é inferior a 48px.",
+  "touchTarget": "Opção A — O FAB padrão tem 56×56px, garantindo touch target ≥ 44×44px (WCAG 2.5.5) sem necessidade de pseudo-elemento ::before. Diferente de Compact Controls (DssChip/DssRadio) que usam ::before porque seu tamanho visual é inferior a 44px.",
   "ariaRole": "delegado ao QFab — role='button' com aria-expanded e aria-haspopup gerenciados pelo Quasar",
   "accessibility": {
     "keyboardNavigation": "Totalmente gerenciado pelo QFab: Enter/Space abre/fecha, Escape fecha, Tab navega entre ações",

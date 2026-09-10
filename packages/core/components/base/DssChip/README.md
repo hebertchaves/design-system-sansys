@@ -87,7 +87,7 @@ O **DssChip** é um componente de chip/tag para exibição de informações comp
 | `md` | `--dss-compact-control-height-md` | 28px | Via ::before (48px) |
 | `lg` | `--dss-compact-control-height-lg` | 32px | Via ::before (48px) |
 
-> **⚠️ Altura Visual vs Touch Target**: A altura visual do chip é menor que 44px por razões estéticas. O touch target mínimo de 48×44px (WCAG 2.5.5) é garantido via pseudo-elemento `::before` invisível com `pointer-events: none`. O pseudo-elemento NÃO intercepta eventos de clique — ele existe apenas para ferramentas de acessibilidade medirem a área tocável. Consulte [DSS_IMPLEMENTATION_GUIDE.md - Touch Target vs Visual Height](../../docs/guides/DSS_IMPLEMENTATION_GUIDE.md#touch-target-vs-visual-height-wcag-255) para detalhes.
+> **⚠️ Altura Visual vs Touch Target**: A altura visual do chip é menor que 44px por razões estéticas. O touch target mínimo de 44×44px (WCAG 2.5.5) é garantido via pseudo-elemento `::before` invisível com `pointer-events: none`. O pseudo-elemento NÃO intercepta eventos de clique — ele existe apenas para ferramentas de acessibilidade medirem a área tocável. Consulte [DSS_IMPLEMENTATION_GUIDE.md - Touch Target vs Visual Height](../../docs/guides/DSS_IMPLEMENTATION_GUIDE.md#touch-target-vs-visual-height-wcag-255) para detalhes.
 
 > **📖 Convenção de Pseudo-elementos**: `::before` é RESERVADO para touch target. Efeitos visuais (hover, active, selected na variante flat) usam `::after`. Consulte [DSS_COMPONENT_ARCHITECTURE.md - Convenção de Pseudo-elementos](../../docs/reference/DSS_COMPONENT_ARCHITECTURE.md#convenção-de-pseudo-elementos-normativa).
 

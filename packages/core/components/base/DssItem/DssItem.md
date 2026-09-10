@@ -39,7 +39,7 @@ O **DssItem** e o elemento base estrutural do DSS para listas, menus e navegacao
 
 ```
 <div class="dss-item dss-item--default dss-item--clickable">
-  ::before                                    <- Touch target (48px, apenas quando clickable)
+  ::before                                    <- Touch target (44px, apenas quando clickable)
   ::after                                     <- Overlay visual (hover, active)
   <div class="dss-item__leading">             <- Area esquerda (icone, avatar)
     <slot name="leading" />
@@ -109,7 +109,7 @@ O **DssItem** e o elemento base estrutural do DSS para listas, menus e navegacao
 
 | Token | Uso |
 |-------|-----|
-| `--dss-touch-target-min` | Touch target 48px (clickable) |
+| `--dss-touch-target-md` | Touch target 44px (clickable) |
 | `--dss-opacity-hover` | Overlay opacity hover |
 | `--dss-opacity-active` | Overlay opacity active |
 | `--dss-opacity-disabled` | Opacity disabled (0.4) |
@@ -534,7 +534,7 @@ Nenhuma excecao documentada. Todos os valores usam tokens DSS.
 ### Touch target muito pequeno
 
 1. Verificar se `density` nao e `compact` (compact remove touch target)
-2. Verificar se o token `--dss-touch-target-min` esta definido
+2. Verificar se o token `--dss-touch-target-md` esta definido
 
 ### Inset nao alinha
 

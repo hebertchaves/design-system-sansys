@@ -90,7 +90,7 @@ import { DssButton } from '@sansys/design-system'
 | **disabled** | `opacity: var(--dss-opacity-38)`, cursor not-allowed, não responde a eventos |
 | **loading** | Spinner sobreposto, label ocultado, largura preservada |
 
-Touch target mínimo: 48×48px garantido via `::before` (WCAG 2.5.5).
+Touch target mínimo: 44×44px garantido via `::before` (WCAG 2.5.5).
 
 ## Exemplos
 
@@ -134,7 +134,7 @@ Touch target mínimo: 48×48px garantido via `::before` (WCAG 2.5.5).
 
 ## Acessibilidade
 
-- Touch target ≥ 48px via `::before` (reservado exclusivamente para isso)
+- Touch target ≥ 44px via `::before` (reservado exclusivamente para isso)
 - Focus ring visível em todos os temas e modos de contraste
 - `aria-disabled` para estado disabled (não `disabled` HTML puro)
 - Botão de ícone sem label: fornecer `aria-label` obrigatoriamente

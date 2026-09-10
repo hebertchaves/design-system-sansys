@@ -65,7 +65,7 @@
   "accessibility": {
     "role": "tab (herdado do QRouteTab — elemento nativo da navegação por abas)",
     "wcagLevel": "2.1 AA",
-    "touchTarget": "min-height: var(--dss-touch-target-md) — herdado via .dss-tab (WCAG 2.5.5, 48px)",
+    "touchTarget": "min-height: var(--dss-touch-target-md) — herdado via .dss-tab (WCAG 2.5.5, 44px)",
     "keyboardNavigation": "Setas ← → navegam entre abas (gerenciado pelo DssTabs/QTabs pai). Enter/Space ativa a navegação de rota.",
     "ariaManagement": "aria-selected gerenciado pelo DssTabs pai via integração Vue Router/Quasar. DssRouteTab não duplica."
   },

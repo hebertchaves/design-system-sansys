@@ -74,7 +74,7 @@ O DssTree adota **Opção A** (tamanho visual ≥ 44px) para nodes interativos:
 | Opção A | Tamanho visual ≥ 44px | ✅ (`min-height: var(--dss-touch-target-md)`) |
 | Opção B | Tamanho visual < 44px → `::before` | ❌ |
 
-O cabeçalho do nó (`.q-tree__node-header`) tem `min-height: var(--dss-touch-target-md)` (48px). No modo `dense`, o mínimo é reduzido — documentado como trade-off de densidade (ver Seção 7).
+O cabeçalho do nó (`.q-tree__node-header`) tem `min-height: var(--dss-touch-target-md)` (44px). No modo `dense`, o mínimo é reduzido — documentado como trade-off de densidade (ver Seção 7).
 
 ---
 
@@ -200,7 +200,7 @@ Reduz o padding interno dos nós para layout compacto. A prop `dense` é encamin
 - **`aria-level`** — indicando nível de profundidade na hierarquia
 - **`aria-disabled`** — em nós com `disabled: true`
 - **Navegação por teclado** — `↑↓` navega entre nós, `←→` expande/colapsa, `Enter`/`Space` seleciona
-- **Touch target ≥ 48px** — `min-height: var(--dss-touch-target-md)` nos headers de nó
+- **Touch target ≥ 44px** — `min-height: var(--dss-touch-target-md)` nos headers de nó
 - **Focus visível** — `outline` com `var(--dss-border-width-md)` e `var(--dss-action-primary)` em `:focus-visible`
 
 ---

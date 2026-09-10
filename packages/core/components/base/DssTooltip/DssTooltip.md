@@ -342,7 +342,7 @@ O elemento disparador DEVE associar-se ao tooltip via `aria-describedby`:
 |----------|------------------|------------------|
 | Associacao semantica | `aria-describedby` no disparador | Consumidor |
 | Visibilidade | `visible` prop | Consumidor |
-| Touch target do disparador | 48px minimo (WCAG 2.5.5) | Consumidor |
+| Touch target do disparador | 44px minimo (WCAG 2.5.5) | Consumidor |
 | Navegacao por teclado | Focus no disparador | Consumidor |
 | Semantica do tooltip | `role="tooltip"` | DssTooltip |
 | Label acessivel | `aria-label` | DssTooltip |

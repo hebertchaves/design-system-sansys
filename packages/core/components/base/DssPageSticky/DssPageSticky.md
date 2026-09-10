@@ -94,7 +94,7 @@ base (1) < dropdown (1000) < sticky (1020) < fixed (1030) < backdrop (1040) < mo
 ## 6. Acessibilidade
 
 - **WCAG 2.1 AA**: Conforme.
-- **Touch Target**: Opção B — não implementado. DssPageSticky é container de posicionamento. Touch targets são responsabilidade do conteúdo interno (ex.: `DssButton` com `min-width/height: 48px`).
+- **Touch Target**: Opção B — não implementado. DssPageSticky é container de posicionamento. Touch targets são responsabilidade do conteúdo interno (ex.: `DssButton` com `min-width/height: 44px`).
 - **Role**: Nenhum role próprio — semântica pertence ao conteúdo no slot.
 - **ARIA**: Recomendado `aria-label` via `$attrs` para descrever a região quando necessário.
 - **Navegação por teclado**: Responsabilidade do conteúdo no slot.

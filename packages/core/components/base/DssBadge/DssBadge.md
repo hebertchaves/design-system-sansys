@@ -120,7 +120,7 @@ O **DssBadge** consome tokens de **multiplas categorias** do Design System Sansy
 
 ### Altura Visual vs Touch Target
 
-> **⚠️ IMPORTANTE**: A altura visual do badge (24px default) e menor que o touch target minimo WCAG (48px).
+> **⚠️ IMPORTANTE**: A altura visual do badge (24px default) e menor que o touch target minimo WCAG (44px).
 
 #### Regra DSS (NORMATIVA)
 

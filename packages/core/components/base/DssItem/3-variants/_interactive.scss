@@ -17,7 +17,7 @@
 .dss-item--clickable {
   cursor: pointer;
 
-  /* Touch Target WCAG 2.5.5 (48px minimo) via pseudo-elemento */
+  /* Touch Target WCAG 2.5.5 (44px minimo) via pseudo-elemento */
   &::before {
     content: '';
     position: absolute;

@@ -27,7 +27,7 @@
 | `--dss-font-size-md` | Tamanho de fonte base |
 | `--dss-font-weight-normal` | Peso de fonte base |
 | `--dss-line-height-md` | Altura de linha |
-| `--dss-touch-target-md` | Altura mínima padrão (48px) |
+| `--dss-touch-target-md` | Altura mínima padrão (44px) |
 | `--dss-compact-control-height-sm` | Altura mínima em modo compacto |
 | `--dss-padding-4` | Padding horizontal padrão |
 | `--dss-padding-2` | Padding horizontal em modo denso |

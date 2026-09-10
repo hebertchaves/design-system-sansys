@@ -227,10 +227,10 @@ O DssButton utiliza tokens das seguintes categorias:
 
 | Estado | Aparência | Interação | Tokens Aplicados | Notas |
 |--------|-----------|-----------|------------------|-------|
-| **Default** | Background cor base, texto branco/contrastante, borda (outline) | Hover habilitado, clique habilitado | `--dss-primary`, `--dss-radius-sm` | Estado padrão |
-| **Hover** | Background escurece (`-hover`) ou clareia (`-light`), cursor pointer | Clique habilitado | `--dss-primary-hover` (elevated), `--dss-primary-light` (flat/outline) | Transição suave 150ms |
+| **Default** | Background cor base, texto branco/contrastante, borda (outline) | Hover habilitado, clique habilitado | `--dss-action-primary`, `--dss-radius-sm` | Estado padrão |
+| **Hover** | Preenchidas: fundo desce um degrau na rampa. Flat/outline: overlay de `currentColor` | Clique habilitado | `--dss-action-primary-hover` (preenchidas) · `--dss-opacity-hover` sobre `currentColor` (flat/outline) | O label NÃO escurece — ver nota abaixo |
 | **Focus** | Focus ring visível (3px, offset 2px) | Navegação por teclado ativa | `--dss-focus-primary`, `--dss-focus-ring-width` | WCAG 2.4.7 AA |
-| **Active** | Background ainda mais escuro, botão "afunda" | Clique em progresso | `--dss-primary-deep` | Feedback tátil |
+| **Active** | Preenchidas: mais um degrau (`-deep`). Flat/outline: overlay mais opaco | Clique em progresso | `--dss-action-primary-deep` · `--dss-opacity-active` | Feedback tátil |
 | **Disabled** | Opacidade 0.5, cursor not-allowed | Hover desabilitado, clique bloqueado | `--dss-opacity-disabled` | `aria-disabled="true"` |
 | **Loading** | Spinner animado, opacidade reduzida, cursor wait | Hover desabilitado, clique bloqueado | - | Click event não emitido |
 | **Loading + Percentage** | Barra de progresso na base do botão | Hover desabilitado, clique bloqueado | - | Progresso de 0-100% |
@@ -254,8 +254,8 @@ Default ──hover──> Hover ──click──> Active ──release──> 
 **Descrição:** Botão preenchido com elevação (box-shadow).
 
 **Características Técnicas:**
-- Background: Cor base (`--dss-primary`)
-- Hover: Cor escurecida (`--dss-primary-hover`)
+- Background: Cor base (`--dss-action-primary`)
+- Hover: `--dss-action-primary-hover` · Active: `--dss-action-primary-deep` (degraus da rampa)
 - Elevação: `box-shadow` sutil
 - Uso: Ações primárias de destaque
 
@@ -274,8 +274,8 @@ Default ──hover──> Hover ──click──> Active ──release──> 
 
 **Características Técnicas:**
 - Base: `background-color: transparent`
-- Texto: Cor principal (`--dss-primary`)
-- Hover: `background-color: --dss-primary-light` + `color: --dss-primary-hover`
+- Texto: Cor principal (`--dss-action-primary`, via classe `.text-*`)
+- Hover: overlay `::after` de `currentColor` a `--dss-opacity-hover` · Active: `--dss-opacity-active`
 - Compatível com dark mode (background sempre transparente)
 
 **Exemplo:**
@@ -293,8 +293,8 @@ Default ──hover──> Hover ──click──> Active ──release──> 
 
 **Características Técnicas:**
 - Base: `background-color: transparent` + borda colorida
-- Texto: Cor principal (`--dss-primary`)
-- Hover: `background-color: --dss-primary-light` + `color: --dss-primary-hover`
+- Texto: Cor principal (`--dss-action-primary`, via classe `.text-*`)
+- Hover: overlay `::after` de `currentColor` a `--dss-opacity-hover` · Active: `--dss-opacity-active`
 - Borda: `1px solid` cor principal
 - Compatível com dark mode
 
@@ -312,8 +312,8 @@ Default ──hover──> Hover ──click──> Active ──release──> 
 **Descrição:** Botão preenchido sem elevação (sem box-shadow).
 
 **Características Técnicas:**
-- Background: Cor base (`--dss-primary`)
-- Hover: Cor escurecida (`--dss-primary-hover`)
+- Background: Cor base (`--dss-action-primary`)
+- Hover: `--dss-action-primary-hover` · Active: `--dss-action-primary-deep` (degraus da rampa)
 - Sem elevação (`box-shadow: none`)
 - Uso: Ações primárias em interfaces flat
 
@@ -417,48 +417,66 @@ Aplica brand via atributo no elemento pai.
 
 **⚠️ Prioridade:** Se ambos estiverem presentes, a prop `brand` tem prioridade sobre `data-brand`.
 
-### Sistema de Hover - Flat e Outline
+### Sistema de Hover — Flat e Outline
 
-Os botões `flat` e `outline` seguem um **padrão consistente** de hover entre cores semânticas e brands:
+> ⚠️ **Reescrito em set/2026.** Antes existia aqui uma tabela com um par de valores
+> por marca (`hub-100` de fundo + `hub-800` de texto, e assim por diante). Ela
+> descrevia o `utils/_colors-hover.scss` antigo, que pintava
+> `background: var(--dss-primary-light)` — um **primitivo**, que não se move por
+> marca, e um azul forte (`#86c0f3`). A tabela por marca deixou de existir porque
+> **não é mais preciso listar marca por marca.**
 
-#### Padrão de Hover
+`flat` e `outline` não pintam fundo: consomem a classe utilitária `.text-*`, então
+a cor vive em `currentColor`. O hover é um overlay `::after` do próprio
+`currentColor`:
 
-| Tipo | Base State | Hover State |
-|------|-----------|-------------|
-| **Flat (Semantic)** | `transparent` bg + `color` text | `color-light` bg + `color-hover` text |
-| **Outline (Semantic)** | `transparent` bg + `color` text + borda | `color-light` bg + `color-hover` text |
-| **Flat (Brand Hub)** | `transparent` bg + `hub-600` text | `hub-100` bg + `hub-800` text |
-| **Outline (Brand Hub)** | `transparent` bg + `hub-600` text + borda | `hub-100` bg + `hub-800` text |
-| **Flat (Brand Water)** | `transparent` bg + `water-500` text | `water-100` bg + `water-800` text |
-| **Outline (Brand Water)** | `transparent` bg + `water-500` text + borda | `water-100` bg + `water-800` text |
-| **Flat (Brand Waste)** | `transparent` bg + `waste-600` text | `waste-100` bg + `waste-800` text |
-| **Outline (Brand Waste)** | `transparent` bg + `waste-600` text + borda | `waste-100` bg + `waste-800` text |
+| Estado | O que acontece |
+|---|---|
+| Base | `background-color: transparent` + texto na cor semântica (`.text-*`) |
+| Hover | `::after` com `background-color: currentColor` a `--dss-opacity-hover` |
+| Active | mesmo overlay, a `--dss-opacity-active` |
 
-**Características:**
-- ✅ Background sempre transparente no base state (dark mode ready)
-- ✅ Hover adiciona background claro (`-100`) + texto escuro (`-800`)
-- ✅ Melhor contraste no hover (WCAG 2.1 AA)
-- ✅ Padrão consistente entre semânticos e brands
+**Por que não há tabela por marca:** `currentColor` resolve a partir da classe
+utilitária, que já aponta o token **semântico**. Trocar a marca re-aponta o
+semântico e o hover acompanha — sem uma linha de CSS por marca. É o padrão do
+**DssChip**, Golden Reference de interativo.
 
-### Variantes Elevated e Unelevated (Brands)
+`::before` permanece **reservado ao touch target** (WCAG 2.5.5) — o overlay usa
+`::after`, conforme o Cartão Base.
 
-Botões `elevated` e `unelevated` com brands mantêm hover tradicional:
+### Variantes preenchidas (elevated, unelevated, push, glossy)
 
-| Brand | Base | Hover |
-|-------|------|-------|
-| **Hub** | `hub-600` | `hub-700` |
-| **Water** | `water-500` | `water-600` |
-| **Waste** | `waste-600` | `waste-800` |
+As preenchidas descem um **degrau da rampa de cor**: `-hover` no hover e `-deep` no
+active. Não há `filter: brightness()` — ele foi removido porque escurecia o
+**label** junto do fundo, e o hover chegava a *piorar* a legibilidade.
+
+Medido no navegador (fundo e contraste do label branco):
+
+| Marca | Repouso | Hover | Contraste do label |
+|---|---|---|---|
+| default | `#1f86de` | `#0f5295` | 3,80 → **7,89:1** |
+| hub | `#ef7a11` | `#984614` | 2,81 → **6,52:1** |
+| water | `#0e88e4` | `#0356a1` | 3,71 → **7,37:1** |
+| waste | `#0b8154` | `#0a5b3e` | 4,90 → **8,14:1** |
+
+**Mecanismo:** `.bg-primary { background: … !important }` do Quasar vive em
+`@layer quasar` e vence CSS DSS unlayered, então declarar `background-color` aqui
+seria inerte. Em vez de disputar a cascata, o `:hover` redefine o **insumo** —
+`--q-primary: var(--dss-action-primary-hover)` — e a própria regra do Quasar
+resolve para a cor de hover. Brandeia de graça: a rampa é remapeada por marca.
+
+> `tertiary` é caso à parte — o Quasar não tem `--q-tertiary` nem `.bg-tertiary`,
+> então ali `background-color` direto vence e é o que se usa.
 
 ```vue
 <template>
-  <!-- Hub: hover escurece para 700 -->
+  <!-- Hub: hover desce para --dss-action-primary-hover da marca -->
   <DssButton brand="hub" variant="elevated">Hub Elevated</DssButton>
 
-  <!-- Water: hover escurece para 600 -->
+  <!-- Water: idem — a rampa é remapeada por [data-brand] e pela prop -->
   <DssButton brand="water" variant="unelevated">Water Unelevated</DssButton>
 
-  <!-- Waste: hover escurece para 800 -->
+  <!-- Waste: idem -->
   <DssButton brand="waste" variant="elevated">Waste Elevated</DssButton>
 </template>
 ```
@@ -476,7 +494,7 @@ Botões `elevated` e `unelevated` com brands mantêm hover tradicional:
 | **1.4.3 Contraste (Mínimo)** | AA | Todas as combinações de cores têm contraste ≥ 4.5:1 |
 | **2.1.1 Teclado** | A | Totalmente navegável por teclado (Tab, Enter, Space) |
 | **2.4.7 Foco Visível** | AA | Focus rings com 3px e contraste 4.5:1 |
-| **2.5.5 Tamanho do Alvo** | AAA | Touch targets ≥ 48×48px (ideal) |
+| **2.5.5 Tamanho do Alvo** | AAA | Touch targets ≥ 44×44px (ideal) |
 | **3.2.4 Identificação Consistente** | AA | Padrões visuais consistentes em todo o sistema |
 | **4.1.2 Nome, Função, Valor** | A | ARIA labels e estados corretos (`aria-label`, `aria-disabled`) |
 
@@ -929,11 +947,11 @@ export default {
 
 <!-- ✅ CORRETO -->
 <DssButton size="sm">
-  Small (mínimo 48px touch target)
+  Small (mínimo 44px touch target)
 </DssButton>
 ```
 
-**Por quê:** WCAG 2.5.5 exige touch targets mínimos de 48×48px.
+**Por quê:** WCAG 2.5.5 exige touch targets mínimos de 44×44px.
 
 ---
 
@@ -1122,7 +1140,7 @@ Verifique se `isDisabled` ou `isLoading` não estão `true` acidentalmente.
 
 ### Problema: Botão muito pequeno no mobile
 
-**Causa:** Touch target menor que 48×48px.
+**Causa:** Touch target menor que 44×44px.
 
 **Solução:**
 ```vue
@@ -1130,7 +1148,7 @@ Verifique se `isDisabled` ou `isLoading` não estão `true` acidentalmente.
 <DssButton size="xs" dense>Micro</DssButton>
 
 <!-- ✅ CORRETO -->
-<DssButton size="sm">Small (48px touch target)</DssButton>
+<DssButton size="sm">Small (44px touch target)</DssButton>
 ```
 
 ---

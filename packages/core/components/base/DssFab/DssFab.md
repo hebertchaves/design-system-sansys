@@ -200,7 +200,7 @@ O DssFab é classificado como Fase 2 porque:
 | `--dss-elevation-3` | L2, L4 | Sombra no hover/active |
 | `--dss-duration-200` | L2 | Duração da transição |
 | `--dss-easing-standard` | L2 | Easing das transições (cubic-bezier(0.4,0,0.2,1)) |
-| `--dss-spacing-14` | L2 | Dimensão mínima do trigger (56px — touch target ≥ 48px) |
+| `--dss-spacing-14` | L2 | Dimensão mínima do trigger (56px — touch target ≥ 44px) |
 | `--dss-padding-4` | L3 | Padding horizontal do Extended FAB (16px) |
 | `--dss-opacity-disabled` | L2 | Opacidade disabled = 0.4 |
 | `--dss-focus-ring` | L2 | Ring de foco (WCAG 2.4.7 AA) |
@@ -229,7 +229,7 @@ O DssFab é classificado como Fase 2 porque:
 
 **Opção A — Tamanho intrínseco.**
 
-O FAB padrão tem `56×56px`, garantindo touch target ≥ 48×48px (WCAG 2.5.5) sem necessidade de pseudo-elemento `::before`. O `::before` é reservado exclusivamente para touch target em Compact Controls com tamanho visual inferior a 48px (DssChip, DssRadio, DssCheckbox). Esta distinção é intencional e documentada.
+O FAB padrão tem `56×56px`, garantindo touch target ≥ 44×44px (WCAG 2.5.5) sem necessidade de pseudo-elemento `::before`. O `::before` é reservado exclusivamente para touch target em Compact Controls com tamanho visual inferior a 44px (DssChip, DssRadio, DssCheckbox). Esta distinção é intencional e documentada.
 
 ### Navegação por Teclado
 
@@ -295,7 +295,7 @@ O DssFab aplica acento visual de marca via `box-shadow` inset na borda inferior 
 | Gate exception para Quasar internals | ✅ `.q-btn-dropdown__arrow-container` | ✅ `.q-fab__trigger`, `.q-fab__actions` | Mesmo precedente |
 | Tokens brand numéricos | ✅ | ✅ | Mesma justificativa |
 | Focus ring | ✅ (delegado ao Quasar) | ✅ (explícito via `&:focus-visible`) | Diferença justificada: QFab não tem focus ring nativo tão visível quanto QBtnDropdown |
-| Sem touch target `::before` | ✅ (Opção B delegado) | ✅ (Opção A intrínseco 56px) | **Diferença intencional**: FAB 56px já supera 48px |
+| Sem touch target `::before` | ✅ (Opção B delegado) | ✅ (Opção A intrínseco 56px) | **Diferença intencional**: FAB 56px já supera 44px |
 
 ---
 

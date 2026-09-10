@@ -76,7 +76,7 @@ Nenhum. `DssBar` é um container não-emissor. Eventos são emitidos pelos eleme
 | `--dss-font-size-md` | Tamanho de fonte |
 | `--dss-font-weight-normal` | Peso de fonte |
 | `--dss-line-height-md` | Altura de linha |
-| `--dss-touch-target-md` | Altura mínima (48px) |
+| `--dss-touch-target-md` | Altura mínima (44px) |
 | `--dss-compact-control-height-sm` | Altura mínima em modo compacto |
 | `--dss-padding-4` | Padding horizontal |
 | `--dss-padding-2` | Padding horizontal compacto |
@@ -96,7 +96,7 @@ Nenhum. `DssBar` é um container não-emissor. Eventos são emitidos pelos eleme
 ## 6. Acessibilidade
 
 - **WCAG 2.1 AA:** A barra é um container — os elementos internos são responsáveis pela acessibilidade individual
-- **Touch target:** N/A — a barra não é focável nem clicável diretamente. Elementos interativos internos (DssButton) têm touch target próprio de 48px
+- **Touch target:** N/A — a barra não é focável nem clicável diretamente. Elementos interativos internos (DssButton) têm touch target próprio de 44px
 - **ARIA:** Não há atributos ARIA obrigatórios no root. Consumer deve adicionar `role="banner"` ou `aria-label` conforme o contexto
 - **Navegação por teclado:** Elementos internos são responsáveis pela navegação via teclado
 - **Contraste:** Tokens de brand usam `--dss-text-inverse` sobre fundos escuros — verificar contraste mínimo 4.5:1 na configuração de brand

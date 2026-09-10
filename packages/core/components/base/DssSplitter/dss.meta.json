@@ -173,7 +173,7 @@
       {
         "criterion": "2.5.5",
         "level": "AAA",
-        "implementation": "Alvo de toque de 48px expandido via ::before (WCAG 2.5.5).",
+        "implementation": "Alvo de toque de 44px expandido via ::before (WCAG 2.5.5).",
         "verifiedBy": "css",
         "cssRule": {
           "selectorIncludes": "::before",

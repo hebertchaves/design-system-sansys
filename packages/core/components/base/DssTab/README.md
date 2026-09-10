@@ -144,7 +144,7 @@ import { DssTab } from '@dss/components/base/DssTab'
 | `--dss-focus-ring` | Cor do focus ring |
 | `--dss-border-width-md` | Espessura do focus ring |
 | `--dss-border-width-thick` | Espessura do indicador |
-| `--dss-touch-target-md` | Altura mínima (48px) |
+| `--dss-touch-target-md` | Altura mínima (44px) |
 | `--dss-spacing-3` | Padding block (12px) |
 | `--dss-spacing-4` | Padding inline (16px) |
 | `--dss-duration-150` | Duração da transição |

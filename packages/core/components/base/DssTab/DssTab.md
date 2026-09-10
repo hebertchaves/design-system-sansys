@@ -170,7 +170,7 @@ q-tabs (ou DssTabs — futuro)
 | Critério | Implementação |
 |----------|---------------|
 | **Role** | `tab` (herdado do `QTab` — elemento nativo da navegação por abas) |
-| **Touch target** | `min-height: var(--dss-touch-target-md)` — WCAG 2.5.5 (48px) |
+| **Touch target** | `min-height: var(--dss-touch-target-md)` — WCAG 2.5.5 (44px) |
 | **`::before`** | **Não usado** — `min-height` é suficiente pois `QTab` é block-level |
 | **Teclado** | Setas ← → navegam entre abas (gerenciado pelo `QTabs` pai) |
 | **`aria-selected`** | Gerenciado pelo `QTabs` pai — `DssTab` não duplica |
@@ -245,7 +245,7 @@ Aplicar `.dss-tab--brand-*` diretamente no `DssTab` via `class`. Útil quando ap
 | `--dss-focus-ring` | Acessibilidade | Cor do focus ring |
 | `--dss-border-width-md` | Borda | Espessura do focus ring |
 | `--dss-border-width-thick` | Borda | Espessura do indicador ativo |
-| `--dss-touch-target-md` | Dimensão | Altura mínima (48px) — WCAG 2.5.5 |
+| `--dss-touch-target-md` | Dimensão | Altura mínima (44px) — WCAG 2.5.5 |
 | `--dss-spacing-3` | Espaçamento | Padding block (12px) e padding icon-only |
 | `--dss-spacing-4` | Espaçamento | Padding inline padrão (16px) |
 | `--dss-duration-150` | Motion | Duração de transições |

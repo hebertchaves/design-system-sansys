@@ -46,7 +46,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
-  /* Touch Target WCAG 2.5.5 (48px mínimo) via padding expandido
+  /* Touch Target WCAG 2.5.5 (44px mínimo) via padding expandido
      Para badges pequenos, o touch target é garantido pelo elemento pai
      ou via wrapper com classe .dss-touch-wrapper */
 }

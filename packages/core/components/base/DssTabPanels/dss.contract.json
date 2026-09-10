@@ -2602,62 +2602,6 @@
           "source": "_mixins.scss"
         }
       ],
-      "active": [
-        {
-          "property": "transform",
-          "token": null,
-          "value": "scale(0.98)",
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-primary-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-secondary-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-tertiary-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-accent-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-positive-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-negative-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-warning-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        },
-        {
-          "property": "background",
-          "token": "--dss-info-hover",
-          "value": null,
-          "source": "_colors-hover.scss"
-        }
-      ],
       "disabled": [
         {
           "property": "border",
@@ -3597,57 +3541,49 @@
       {
         "name": "--dss-primary-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {
         "name": "--dss-secondary-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {
         "name": "--dss-tertiary-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {
         "name": "--dss-accent-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {
         "name": "--dss-positive-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {
         "name": "--dss-negative-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {
         "name": "--dss-warning-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {
         "name": "--dss-info-hover",
         "usedIn": [
-          "hover",
-          "active"
+          "hover"
         ]
       },
       {

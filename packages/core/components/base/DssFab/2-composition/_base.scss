@@ -59,7 +59,7 @@
   border-radius: var(--dss-radius-full);
 
   /* Dimensões mínimas do FAB padrão (--dss-spacing-14 = 56px)
-     Garante touch target ≥ 48×48px (WCAG 2.5.5) sem pseudo-elemento ::before.
+     Garante touch target ≥ 44×44px (WCAG 2.5.5) sem pseudo-elemento ::before.
      O FAB é classificado como Opção A: tamanho intrínseco garante o mínimo.
      Diferente de Compact Controls (DssChip, DssRadio) que precisam de ::before
      porque seu tamanho visual é inferior a 48px. */

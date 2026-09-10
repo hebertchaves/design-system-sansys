@@ -81,7 +81,7 @@ O `useRouteTabClasses` composable computa as seguintes classes no elemento raiz:
 | `--dss-focus-ring` | Acessibilidade | Cor do focus ring |
 | `--dss-border-width-md` | Borda | Espessura do focus ring |
 | `--dss-border-width-thick` | Borda | Espessura do indicador ativo |
-| `--dss-touch-target-md` | Dimensão | Altura mínima (48px) — WCAG 2.5.5 |
+| `--dss-touch-target-md` | Dimensão | Altura mínima (44px) — WCAG 2.5.5 |
 | `--dss-spacing-3` | Espaçamento | Padding block (12px) e aba somente ícone |
 | `--dss-spacing-4` | Espaçamento | Padding inline padrão (16px) |
 | `--dss-duration-150` | Motion | Duração de transições |
@@ -130,7 +130,7 @@ O `useRouteTabClasses` composable computa as seguintes classes no elemento raiz:
 |---------------|---------------|
 | **2.1.1** Teclado | Setas ← → navegam entre abas (QTabs); Enter/Space aciona rota |
 | **2.4.7** Focus Visível | `outline` com `--dss-focus-ring` em `:focus-visible` |
-| **2.5.5** Touch Target | `min-height: var(--dss-touch-target-md)` — 48px |
+| **2.5.5** Touch Target | `min-height: var(--dss-touch-target-md)` — 44px |
 | **1.4.11** Contrast (Non-text) | Indicador usa `currentColor` (herda contraste do texto) |
 | **4.1.2** Name, Role, Value | `role="tab"`, `aria-selected` herdados do QRouteTab/QTabs |
 
