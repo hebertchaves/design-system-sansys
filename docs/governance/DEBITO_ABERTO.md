@@ -435,7 +435,18 @@
   | overlay `::after` | Step, Tab, Item (+ flat/outline de Button e Chip) |
   | **primitivo, no utilitario global** | **DssBadge** |
 
-  **Triagem dos 12 adequados — nada mais a fazer neles:** Button e Chip usam a rampa; Checkbox,
+  ✅ **Ao MEDIR a triagem (10/set), apareceram 4 pares meio migrados — corrigidos.** A leitura
+  estática dizia "véu neutro, nada a fazer"; o CSSOM mostrou `border-color: var(--dss-gray-400)` no
+  bloco de dark de **Input, Select, Textarea e File**, contra `--dss-border-strong-hover` no light.
+  Mesmo caso do DssUploader: **no dark, `--dss-border-strong-hover` JÁ vale `gray-400`** — o override
+  era redundante e ativo (vencia por especificidade e travava o token).
+
+  Os comentários justificavam a regra ("o hover do L3 (gray-600) coincidia com a borda de repouso do
+  dark → hover invisível") — mas o L3 mudou desde então e passou a usar o semântico. Medido depois de
+  remover: dark `#737373` → `#d4d4d4` (razão 3,20:1), light `#737373` → `#525252`. **Hover perceptível
+  nos dois temas**, delta visual zero.
+
+  **Triagem dos 12 adequados — o que restou:** Button e Chip usam a rampa; Checkbox,
   Radio e Toggle tem `brightness` legitimo (§M4 — alvo sem conteudo por cima); os **5 campos**
   (Input, Select, Textarea, File, Field) pintam **veu NEUTRO**, onde a rampa nao se aplica — campo
   nao tem cor de marca no fundo, e forca-la pintaria o campo de azul no hover (§M5); Uploader e
@@ -451,6 +462,11 @@
 
   📌 O guia ganhou **§M5** (veu neutro ≠ rampa, com a tabela de decisao) e **§M6** (regra em classe
   nao emitida e codigo morto — e ao remover, checar se carrega intencao viva), com 2 itens no Gate.
+
+  ⚠️ **Lição de método desta rodada:** a triagem por LEITURA de CSS deu "nada a fazer" nos 5 campos;
+  ao MEDIR pelo CSSOM apareceram os 4 pares meio migrados. **Ler o SCSS não substitui inspecionar as
+  regras que de fato casam** — o override morava no `4-output/_states.scss`, longe da regra do L3 que
+  ele sobrescrevia. Registrado no §M5 do checklist.
 
 - ✅ **"Ícone cortado" no chip: era RASTERIZAÇÃO do glyph `cancel` — RESOLVIDO** (09/set/2026).
   Fechamento da investigação que se arrastou por três rodadas. **O relato estava certo e minhas duas

@@ -29,11 +29,16 @@
       border-width: var(--dss-border-width-md);
     }
 
-    // B3 — hover no dark precisa diferir do repouso (gray-600), senão fica
-    // imperceptível. Repouso gray-600 → hover gray-400 (paridade DssInput).
-    &--outlined:not(.dss-file--disabled):not(.dss-file--readonly):not(.dss-file--focused):hover .dss-file__field {
-      border-color: var(--dss-gray-400);
-    }
+    /* OVERRIDE DE DARK REMOVIDO (set/2026) — virou redundante.
+       O comentário original dizia: "o hover do L3 (gray-600) coincidia com a borda
+       de repouso do dark → hover invisível", e por isso fixava `gray-400` aqui.
+       Desde então o L3 passou a usar `--dss-border-strong-hover`, que **no dark já
+       resolve para `gray-400`** (#d4d4d4). Medido: mesmo valor, e o hover segue
+       distinto do repouso (#a3a3a3 / #737373).
+       Pior que redundante, era ATIVO: vencia por especificidade e travava o token —
+       mexer em `--dss-border-strong-hover` não mudaria nada no escuro.
+       (§M5 do checklist: véu neutro é a técnica certa aqui; o problema era o
+       primitivo cru no par light/dark, não a técnica.) */
 
     // Label notch em dark mode
     // NC-02 fix: --dss-surface-dark-default não existe. --dss-surface-default é

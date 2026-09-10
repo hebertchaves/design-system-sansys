@@ -321,9 +321,17 @@
   | nada (o componente não é interativo) | — | DssUploader, DssEmptyState |
 
   Campo de formulário **não tem cor de marca no fundo**: trocar o véu neutro pela rampa pintaria o
-  campo inteiro de azul no hover. Triado nos 12 adequados (set/2026) — nos 5 campos o véu já é o
-  certo, nada a fazer. *(Cinza cru numa variante deliberadamente escura, como o `standout`
+  campo inteiro de azul no hover. *(Cinza cru numa variante deliberadamente escura, como o `standout`
   (`--dss-gray-800`), também é identidade da variante, não lapso de tokenização.)*
+
+  ⚠️ **Mas confirme o véu pelo CSSOM, não lendo o SCSS.** Triando os 12 adequados (set/2026), a
+  LEITURA dizia "véu neutro, nada a fazer" nos 5 campos; ao inspecionar as regras que de fato casam,
+  4 deles (Input, Select, Textarea, File) tinham `border-color: var(--dss-gray-400)` num bloco de
+  dark — primitivo cru sobrescrevendo o `--dss-border-strong-hover` do L3, que **no dark já vale
+  `gray-400`**. Redundante e ativo: travava o token. O override morava no `4-output/_states.scss`,
+  longe da regra que sobrescrevia — por isso a leitura linear não pega.
+  **Como conferir:** varra `document.styleSheets` por regras `:hover` que casem com o componente e
+  compare o par light/dark do MESMO elemento (§L5 tem o padrão de varredura).
 - **M6 — Regra de estado em classe que o componente NÃO EMITE é código morto.** Confira no
   `use*Classes.ts` se a classe do seletor existe de fato. Caso real: o `DssButton` tinha regras de
   dark para `.dss-button--primary`/`--secondary` que nunca valeram — o composable só emite

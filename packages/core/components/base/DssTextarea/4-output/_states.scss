@@ -34,12 +34,16 @@
       border-color: var(--dss-gray-600);
     }
 
-    /* Outlined hover em dark mode. Sem esta regra, o hover do L3 (gray-600)
-       coincidia com a borda de repouso do dark (gray-600) → hover "invisível".
-       No dark a borda mais clara (gray-400) torna o hover perceptível. */
-    &.dss-textarea--outlined:not(.dss-textarea--disabled):not(.dss-textarea--readonly):not(.dss-textarea--focused):hover .q-field__control {
-      border-color: var(--dss-gray-400);
-    }
+    /* OVERRIDE DE DARK REMOVIDO (set/2026) — virou redundante.
+       O comentário original dizia: "o hover do L3 (gray-600) coincidia com a borda
+       de repouso do dark → hover invisível", e por isso fixava `gray-400` aqui.
+       Desde então o L3 passou a usar `--dss-border-strong-hover`, que **no dark já
+       resolve para `gray-400`** (#d4d4d4). Medido: mesmo valor, e o hover segue
+       distinto do repouso (#a3a3a3 / #737373).
+       Pior que redundante, era ATIVO: vencia por especificidade e travava o token —
+       mexer em `--dss-border-strong-hover` não mudaria nada no escuro.
+       (§M5 do checklist: véu neutro é a técnica certa aqui; o problema era o
+       primitivo cru no par light/dark, não a técnica.) */
 
     /* Standout em dark mode — É o variant de DESTAQUE: fundo preto (gray-900),
        claramente mais escuro que o stage (gray-700), espelhando o light mode
