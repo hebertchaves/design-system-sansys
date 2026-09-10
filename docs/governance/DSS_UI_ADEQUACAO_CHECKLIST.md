@@ -311,6 +311,27 @@
   especificidade.
 - **M4 — `brightness()` continua legítimo** onde o alvo NÃO tem conteúdo por cima (trilho, thumb,
   box de controle). O defeito é escurecer texto/ícone junto — **medir antes de trocar**.
+- **M5 — A rampa só vale para hover de ACENTO. Véu neutro é outra coisa, e está certo.** Antes de
+  aplicar §M, pergunte **o que o hover pinta**:
+
+  | o hover pinta… | técnica correta | exemplos |
+  |---|---|---|
+  | cor de ACENTO num fundo preenchido | **rampa** `-hover`/`-deep` | DssButton, DssChip |
+  | véu NEUTRO sobre superfície neutra | `--dss-surface-hover` / `-active` / `--dss-border-strong-hover` | DssInput, DssSelect, DssTextarea, DssFile, DssField |
+  | nada (o componente não é interativo) | — | DssUploader, DssEmptyState |
+
+  Campo de formulário **não tem cor de marca no fundo**: trocar o véu neutro pela rampa pintaria o
+  campo inteiro de azul no hover. Triado nos 12 adequados (set/2026) — nos 5 campos o véu já é o
+  certo, nada a fazer. *(Cinza cru numa variante deliberadamente escura, como o `standout`
+  (`--dss-gray-800`), também é identidade da variante, não lapso de tokenização.)*
+- **M6 — Regra de estado em classe que o componente NÃO EMITE é código morto.** Confira no
+  `use*Classes.ts` se a classe do seletor existe de fato. Caso real: o `DssButton` tinha regras de
+  dark para `.dss-button--primary`/`--secondary` que nunca valeram — o composable só emite
+  `--{variant}`, `--{size}`, `--brand-*` e `--align-*`. **E emitir não teria bastado:** a utilitária
+  layered do Quasar venceria (verificado no navegador — adicionar a classe à mão não muda um pixel).
+  ⚠️ Ao remover, **verifique se a regra morta carregava uma intenção ainda válida** — aquela mirava
+  uma reprovação de AA no dark (primary 3,80:1, secondary 3,00:1) que continua de pé. Apagar sem
+  registrar apaga o problema junto.
 
 ---
 
@@ -335,6 +356,8 @@
 - [ ] **ícone embutido acompanha o texto** sob brand global — não some contra o fundo (L)
 - [ ] **ícone dimensionado por `--dss-icon-size-*`**, nunca por `--dss-font-size-*` (L4)
 - [ ] **hover de cor pela rampa** (`-hover`/`-deep`); contraste do label **sobe** no hover (M)
+- [ ] **véu neutro** onde o hover não é de acento — não forçar a rampa em campo (M5)
+- [ ] **sem regra de estado em classe não emitida** pelo `use*Classes.ts` (M6)
 - [ ] **sem overflow** em grid/matriz (`min-width: 0` na raiz real)
 - [ ] verificado **sem** `!important` reflexo (só onde há override global — A3)
 

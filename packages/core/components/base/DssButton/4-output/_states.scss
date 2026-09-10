@@ -76,22 +76,36 @@ $cores-quasar: (
    DARK MODE
    ========================================================================== */
 
+/* CÓDIGO MORTO REMOVIDO (set/2026) — mas a INTENÇÃO segue válida e virou débito.
+
+   Havia aqui um par de regras de dark para `.dss-button--primary` e
+   `--secondary`, trocando o fundo por um tom CLARO com texto escuro:
+
+       &--primary   { background-color: var(--dss-primary-light);  color: var(--dss-gray-900); }
+       &--secondary { background-color: var(--dss-secondary-light); color: var(--dss-gray-900); }
+
+   Nunca valeram, por DOIS motivos independentes:
+   1. `useButtonClasses` não emite essas classes — só `--{variant}`, `--{size}`,
+      `--brand-*` e `--align-*`. O seletor não casava com nada.
+   2. E emitir não bastaria: `.bg-primary { … !important }` do Quasar vive em
+      `@layer quasar` e vence qualquer regra DSS unlayered. **Verificado no
+      navegador:** adicionar `.dss-button--primary` à mão não muda um pixel.
+
+   ⚠️ A intenção era CORRIGIR CONTRASTE, e o problema que ela mirava continua de pé:
+
+       no dark, hoje          primary   #1f86de + branco = 3,80:1  ❌ reprova AA
+                              secondary #26a69a + branco = 3,00:1  ❌ reprova AA
+       o que a regra queria   primary   #86c0f3 + escuro = 10,23:1 ✅
+                              secondary #6ddbcb + escuro = 11,92:1 ✅
+
+   Implementar de verdade exige a técnica do `--q-*` (como o hover faz) e INVERTE
+   o botão no dark — decisão de design, não conserto local. Registrado no
+   DEBITO_ABERTO, ligado à frente (c1). */
+
 [data-theme="dark"] {
-  .dss-button {
-    /* Buttons em dark mode mantêm cores mas ajustam contraste */
-    &--primary {
-      background-color: var(--dss-primary-light, #86c0f3);
-      color: var(--dss-gray-900);
-    }
-
-    &--secondary {
-      background-color: var(--dss-secondary-light, #6ddbcb);
-      color: var(--dss-gray-900);
-    }
-
-    &--outline {
-      border-color: currentColor;
-    }
+  /* `--outline` É emitido (`dss-button--${variant}`), então esta regra vale. */
+  .dss-button--outline {
+    border-color: currentColor;
   }
 }
 

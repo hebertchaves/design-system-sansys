@@ -402,6 +402,56 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- 🔴 **Botão preenchido REPROVA AA no dark — e a correção existia, morta, no código**
+  (10/set/2026). Levantado ao mapear o uso da rampa de hover na família.
+
+  | no dark, hoje | contraste |
+  |---|---|
+  | `primary` `#1f86de` + branco | **3,80:1** |
+  | `secondary` `#26a69a` + branco | **3,00:1** |
+
+  `tokens/themes/dark/_colors.scss` comenta *"--dss-action-primary: mantem valor original"* — o
+  preenchido nao muda no escuro, e o branco por cima nao alcanca 4,5:1.
+
+  **Havia uma correcao escrita** em `DssButton/4-output/_states.scss`: trocar o fundo por um tom claro
+  com texto escuro (`#86c0f3`/`#6ddbcb` + `gray-900`), o que daria **10,23:1** e **11,92:1**. Nunca
+  valeu, por dois motivos independentes: (a) o seletor era `.dss-button--primary`, classe que o
+  `useButtonClasses` **nao emite**; (b) e emitir nao bastaria — a utilitaria layered do Quasar vence.
+  **Verificado no navegador:** adicionar a classe a mao nao muda um pixel. O codigo morto foi
+  removido (o racional ficou no arquivo); **o problema de contraste, nao.**
+
+  *Correcao possivel:* redefinir `--q-primary` sob `[data-theme="dark"]`, a mesma tecnica do hover.
+  Mas isso **inverte o botao no escuro** (fundo claro, texto escuro) — decisao de design, ligada a
+  frente **(c1)**. Nao implementei.
+
+- ✅ **Uso da rampa de hover na familia — MAPEADO e triado** (10/set/2026). Pergunta que originou:
+  *"o ajuste foi feito apenas no DssButton?"* Resposta: **Button e Chip**, e o mapa mostra por que.
+
+  | tecnica | componentes |
+  |---|---|
+  | **rampa `-hover`/`-deep`** | DssButton, DssChip |
+  | veu neutro (`--dss-surface-hover/-active`) | Input, Select, Textarea, File, Field, Card, Tabs, Item, Uploader, DatePicker, TimePicker, ExpansionItem |
+  | `filter: brightness()` | Checkbox, Radio, Toggle, Slider, Range, Knob, Rating, Splitter, ColorPicker, ChatMessage |
+  | overlay `::after` | Step, Tab, Item (+ flat/outline de Button e Chip) |
+  | **primitivo, no utilitario global** | **DssBadge** |
+
+  **Triagem dos 12 adequados — nada mais a fazer neles:** Button e Chip usam a rampa; Checkbox,
+  Radio e Toggle tem `brightness` legitimo (§M4 — alvo sem conteudo por cima); os **5 campos**
+  (Input, Select, Textarea, File, Field) pintam **veu NEUTRO**, onde a rampa nao se aplica — campo
+  nao tem cor de marca no fundo, e forca-la pintaria o campo de azul no hover (§M5); Uploader e
+  EmptyState nao tem hover de cor. *(O `--dss-gray-800` no `standout` e a identidade da variante,
+  que e escura por definicao — nao e lapso.)*
+
+  **Fora dos adequados, dois pontos ficam para quando chegarem na fila:**
+  - **DssBadge** — unico que ainda pinta hover pelo **primitivo**, com os mesmos 4 problemas que o
+    Button tinha, nas 27 declaracoes restantes de `utils/_colors-hover.scss`. O aviso esta no topo
+    daquele arquivo; ao adequa-lo, o arquivo deixa de existir.
+  - **6 nunca triados** para o §M4: Slider, Range, Knob, Rating, ColorPicker, ChatMessage — usam
+    `brightness` e nao verifiquei se o alvo tem label/icone por cima.
+
+  📌 O guia ganhou **§M5** (veu neutro ≠ rampa, com a tabela de decisao) e **§M6** (regra em classe
+  nao emitida e codigo morto — e ao remover, checar se carrega intencao viva), com 2 itens no Gate.
+
 - ✅ **"Ícone cortado" no chip: era RASTERIZAÇÃO do glyph `cancel` — RESOLVIDO** (09/set/2026).
   Fechamento da investigação que se arrastou por três rodadas. **O relato estava certo e minhas duas
   primeiras conclusões, erradas.**
