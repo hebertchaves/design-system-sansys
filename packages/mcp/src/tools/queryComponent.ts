@@ -112,6 +112,22 @@ function normalizeComponentName(name: string): string {
   return `Dss${pascal}`;
 }
 
+/**
+ * O corpus de dss.meta.json tem DUAS grafias para os mesmos fatos, e o summary
+ * lia apenas uma:
+ *
+ *   versão  ->  `dssVersion` (83 arquivos)  |  `version` (20)
+ *   selo    ->  `sealDate`   (24)           |  `seal` + `auditDate` (39/51)
+ *
+ * Medido em set/2026: 32 dos 92 componentes TÊM selo e o summary imprimia
+ * "not sealed" — incluindo o DssButton, que é o Golden Sample. O `meta` no mesmo
+ * retorno trazia o valor certo, então a tool se contradizia num único JSON.
+ *
+ * Correção aqui é TOLERAR as duas grafias, não migrar os 92 arquivos: o meta.json
+ * é fonte de verdade de outra cadeia (contrato, referência visual) e normalizá-lo
+ * é decisão de governança, não conserto de leitor. A divergência está registrada
+ * como débito.
+ */
 function buildSummary(
   component: string,
   meta: Record<string, unknown> | null,
@@ -127,10 +143,11 @@ function buildSummary(
     `- **Status:** ${meta.status ?? "unknown"}`,
     `- **Phase:** ${meta.phase ?? "unknown"}`,
     `- **Category:** ${meta.category ?? "unknown"}`,
-    `- **DSS Version:** ${meta.dssVersion ?? "unknown"}`,
+    `- **DSS Version:** ${meta.dssVersion ?? meta.version ?? "unknown"}`,
     `- **Golden Reference:** ${meta.goldenReference ?? "—"}`,
     `- **Golden Context:** ${meta.goldenContext ?? "—"}`,
-    `- **Seal Date:** ${meta.sealDate ?? "not sealed"}`,
+    `- **Seal:** ${meta.seal ?? "not sealed"}`,
+    `- **Seal Date:** ${meta.sealDate ?? meta.auditDate ?? "—"}`,
     `- **Has Pre-Prompt:** ${hasPrePrompt ? "yes" : "no"}`,
     `- **Has Documentation:** ${hasDoc ? "yes" : "no"}`,
   ];

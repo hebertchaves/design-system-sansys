@@ -143,6 +143,27 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🟡 **O corpus de `dss.meta.json` tem DUAS grafias para os mesmos fatos** (medido set/2026, ao
+  consertar o `query_component` do MCP).
+
+  | fato | grafia A | grafia B |
+  |---|---|---|
+  | versão | `dssVersion` (83 arquivos) | `version` (20) |
+  | selo | `sealDate` (24) | `seal` (39) + `auditDate` (51) |
+
+  **Como apareceu:** o `summary` do `query_component` lia só uma grafia e imprimia
+  **`Seal Date: not sealed` para 32 dos 92 componentes** — incluindo o DssButton, que é o Golden
+  Sample. Pior: o bloco `meta` do **mesmo JSON** trazia o valor certo, então a tool se contradizia
+  num único retorno. Descoberto ao preparar uma demonstração do MCP, não por gate.
+
+  **O leitor foi corrigido para tolerar as duas grafias** (`dssVersion ?? version`,
+  `sealDate ?? auditDate`, mais uma linha `Seal:` própria) — 32→0 e 9→0. O que fica em aberto é a
+  **causa**: o `meta.json` é fonte de verdade de outras cadeias (contrato, referência visual,
+  catálogo), e normalizar o schema é decisão de governança, não conserto de leitor.
+  ⚠️ **Enquanto não normalizar, todo novo consumidor de `meta.json` precisa saber das duas grafias** —
+  e nada hoje avisa. *Correção sugerida:* escolher uma grafia, migrar os 92 e gatear no
+  `validate-structure.cjs`, que já varre esses arquivos.
+
 - 🔴 **58% das claims WCAG são "verificadas" por âncora que não verifica nada** (medido ago/2026,
   na 4ª passagem do `DssEmptyState`). Distribuição real dos 185 claims dos 79 contratos:
 

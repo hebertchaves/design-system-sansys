@@ -39,6 +39,8 @@
     "validate:portal-pages": "node scripts/validate-portal-pages.cjs --gate",
     "validate:demo-registry": "node scripts/validate-demo-registry.cjs --gate",
     "validate:barrel-ext": "node scripts/validate-barrel-ext.cjs --gate",
+    "validate:mcp-docs": "node scripts/validate-mcp-docs.cjs",
+    "validate:mcp-docs:gate": "node scripts/validate-mcp-docs.cjs --gate",
     "probe:visual": "node scripts/probe-visual-contract.mjs",
     "validate:structure": "node scripts/validate-structure.cjs",
     "validate:structure:gate": "node scripts/validate-structure.cjs --gate",
