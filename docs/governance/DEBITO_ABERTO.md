@@ -402,6 +402,34 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **§L/§M ganharam GATE — o "lembrar na adequação" virou cobrança automática** (10/set/2026).
+  Verificação a pedido: *"acho que já está através dos gates, mas vale verificar"*. **Não estava.**
+  Nenhum dos 17 validadores do pre-commit olhava para estados interativos; o `validate-scss-tokens`
+  só checa se o token EXISTE, não se é o certo. A garantia era o checklist — marcado à mão.
+
+  `scripts/validate-hover-tokens.cjs`, no pre-commit, cobra o que se prova por leitura estática:
+
+  | | detecção | ação |
+  |---|---|---|
+  | A | **primitivo** em `-hover`/`-deep`/`-light` | **bloqueia** (baseline) |
+  | B | `filter: brightness` em regra de estado | **avisa** — exige triagem §M4 (baseline) |
+  | C | `[data-brand] .dss-icon` descendente | **bloqueia** |
+
+  **Comment-aware, e isso não é detalhe:** os arquivos estão cheios de comentários que CITAM os
+  padrões proibidos ao explicar por que saíram. Sem strip, a própria documentação do conserto
+  reprovaria o gate — dos 27 hits brutos de (A), **3 eram comentário** (DssButton).
+
+  **Baseline por ARQUIVO** (linha muda a cada edição e geraria ruído): 1 arquivo em (A) —
+  `utils/_colors-hover.scss`, o DssBadge, 24 refs — e 17 em (B), os que aguardam triagem §M4.
+  **Ao adequar um componente, removê-lo do baseline** é o passo que fecha o ciclo.
+
+  **Provado que pega:** injetei uma violação de (A) e uma de (C) no DssBadge → **exit 1**; removi →
+  **exit 0**. Um gate que nunca reprova não é gate.
+
+  ⚠️ **O que ele NÃO cobre, e continua sendo julgamento:** se o alvo do `brightness` tem conteúdo por
+  cima (§M4, exige DOM) e se o hover é de acento ou véu neutro (§M5). Por isso (B) avisa em vez de
+  bloquear. O aviso está escrito no topo do Gate do checklist.
+
 - 🔴 **Botão preenchido REPROVA AA no dark — e a correção existia, morta, no código**
   (10/set/2026). Levantado ao mapear o uso da rampa de hover na família.
 

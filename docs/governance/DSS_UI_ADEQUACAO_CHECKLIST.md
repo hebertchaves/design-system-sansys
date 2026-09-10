@@ -343,6 +343,15 @@
 
 ---
 
+> 🤖 **§L e §M têm gate automatizado** (set/2026): `npm run validate:hover-tokens`, no pre-commit.
+> Ele cobra o que se prova por leitura estática — **primitivo** em degrau de estado (bloqueia),
+> `filter: brightness` em regra de estado (avisa: exige triagem §M4) e `[data-brand] .dss-icon`
+> descendente (bloqueia). Baseline **por arquivo**: tolera o débito conhecido e barra o NOVO.
+> **Ao adequar um componente, remova-o de `scripts/hover-tokens-baseline.json`** — é isso que
+> transforma "lembrar de aplicar §L/§M" em algo que o gate cobra.
+> ⚠️ O gate **não substitui a triagem**: se o alvo do `brightness` tem label/ícone por cima só se
+> descobre olhando o DOM (§M4), e se o hover é de acento ou véu neutro é julgamento (§M5).
+
 ## Gate de adequação (marcar por componente — LIGHT e DARK)
 
 - [ ] **standout (light)** distinto do borderless (chip escuro `gray-800` + texto inverso)

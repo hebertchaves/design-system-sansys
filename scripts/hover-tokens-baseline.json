@@ -1,0 +1,25 @@
+{
+  "note": "Debito conhecido de estados interativos, POR ARQUIVO. O gate bloqueia NOVOS fora desta lista. Ao adequar um componente, aplique §L/§M do DSS_UI_ADEQUACAO_CHECKLIST.md e remova-o daqui.",
+  "primitivo": [
+    "utils/_colors-hover.scss"
+  ],
+  "brightness": [
+    "components/base/DssCheckbox/2-composition/_base.scss",
+    "components/base/DssCheckbox/4-output/_states.scss",
+    "components/base/DssChip/2-composition/_base.scss",
+    "components/base/DssChip/3-variants/_outline.scss",
+    "components/base/DssKnob/2-composition/_base.scss",
+    "components/base/DssRadio/2-composition/_base.scss",
+    "components/base/DssRadio/4-output/_states.scss",
+    "components/base/DssRange/2-composition/_base.scss",
+    "components/base/DssRange/4-output/_states.scss",
+    "components/base/DssRating/2-composition/_base.scss",
+    "components/base/DssSlider/2-composition/_base.scss",
+    "components/base/DssSlider/4-output/_states.scss",
+    "components/base/DssSplitter/4-output/_brands.scss",
+    "components/base/DssToggle/2-composition/_base.scss",
+    "components/base/DssToggle/4-output/_states.scss",
+    "components/composed/DssChatMessage/2-composition/_base.scss",
+    "components/composed/DssColorPicker/2-composition/_base.scss"
+  ]
+}

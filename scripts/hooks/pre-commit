@@ -74,6 +74,27 @@ if echo "$STAGED" | grep -qE 'packages/core/(components|tokens|themes|utils)/.+\
   fi
 fi
 
+# ── 0c-ter. Estados interativos: token certo e tecnica triada (§L/§M) ────────
+# set/2026. Adequar DssButton e DssChip revelou tres defeitos de ESTADO que
+# nenhum dos outros validadores via:
+#   - primitivo em degrau de hover/active → o estado nao brandeia (hub media
+#     1,45:1 de contraste no hover do flat);
+#   - `filter: brightness` sobre alvo COM conteudo → escurece o label junto e
+#     DERRUBA o contraste (3,80 → 3,73:1 no botao primary);
+#   - `[data-brand] .dss-icon` descendente → o icone embutido pega a cor da marca
+#     e some contra o fundo (contraste medido: 1,00:1).
+# Viraram §L/§M do checklist de adequacao — que e marcado a MAO. Este gate cobra
+# o que da para provar por leitura estatica, para os componentes ainda na fila
+# nao repetirem. Baseline por ARQUIVO: bloqueia NOVO, tolera o debito conhecido.
+if echo "$STAGED" | grep -qE 'packages/core/(components|utils|themes)/.+\.scss$|scripts/validate-hover-tokens\.cjs|scripts/hover-tokens-baseline\.json'; then
+  echo "🔍 Validando estados interativos (primitivo/brightness/icone — §L/§M)..."
+  node scripts/validate-hover-tokens.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Estado interativo NOVO fora do padrao. Ver §L/§M do DSS_UI_ADEQUACAO_CHECKLIST.md."
+    exit 1
+  fi
+fi
+
 # ── 0c-bis. Escopo de tema: quem re-aponta PRIMITIVO recomputa o SEMANTICO ────
 # Custom property substitui seu var() onde e' DECLARADA. Um tema que redefine
 # --dss-primary sem que a camada semantica seja redeclarada no escopo dele
