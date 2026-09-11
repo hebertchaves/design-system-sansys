@@ -17,6 +17,30 @@
 
 .dss-chip {
   position: relative;
+
+  /* ISOLA O CONTEXTO DE EMPILHAMENTO (set/2026).
+
+     As variantes transparentes desenham o hover com `::after { z-index: -1 }` —
+     atrás do conteúdo, à frente do fundo. Mas `z-index: -1` NÃO é auto-contido:
+     sem um contexto de empilhamento próprio, o pseudo sobe até o contexto mais
+     próximo ACIMA do componente e é pintado atrás do fundo de quem estiver lá.
+
+     Foi o que causou uma divergência real entre duas superfícies que consomem o
+     MESMO componente e o MESMO CSS:
+
+       Playground     `.pg-tile__stage` tem `transform` → cria contexto →
+                      o overlay fica contido e APARECE
+       Preview Frame  nenhum ancestral cria contexto → o overlay desce e some
+                      atrás do `.pv-stage` (branco sólido)
+
+     Ou seja: o hover funcionava por ACIDENTE do host, não por contrato. Com
+     `isolation: isolate` o componente passa a garantir o próprio contexto e
+     renderiza igual em qualquer lugar — que é o que um componente deve fazer.
+
+     `position: relative` acima não basta: sozinho, sem `z-index`, não cria
+     contexto de empilhamento. */
+  isolation: isolate;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;

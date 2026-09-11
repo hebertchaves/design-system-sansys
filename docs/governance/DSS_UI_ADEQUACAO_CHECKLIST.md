@@ -245,6 +245,32 @@
 
 ---
 
+## I-bis. Overlay com `z-index: -1` PRECISA de `isolation: isolate` no componente
+
+> **Sintoma:** o mesmo componente, com o MESMO CSS, mostra o hover numa superfície e não em outra.
+> Medido no DssButton (set/2026): hover de `flat`/`outline` aparecia no Playground e **sumia** no
+> Preview Frame.
+
+- **I-bis1 — `z-index: -1` não é auto-contido.** Sem um contexto de empilhamento PRÓPRIO, o pseudo
+  sobe até o contexto mais próximo **acima** do componente e é pintado atrás do fundo de quem estiver
+  lá. O componente passa a depender do host — acidente, não contrato:
+
+  | superfície | ancestral cria contexto? | resultado |
+  |---|---|---|
+  | Playground | **sim** (`.pg-tile__stage` tem `transform`) | overlay contido → aparece |
+  | Preview Frame | **nenhum** | overlay desce → some atrás do `.pv-stage` branco |
+
+- **I-bis2 — `position: relative` NÃO basta.** Sozinho, sem `z-index`, não cria contexto de
+  empilhamento. O componente precisa de **`isolation: isolate`** (ou `z-index` explícito).
+- **I-bis3 — Divergência entre superfícies nem sempre é reimplementação.** Antes de caçar CSS
+  duplicado, compare a CADEIA DE ANCESTRAIS das duas: `position`, `z-index`, `transform`, `opacity`,
+  `filter`, `contain`, `isolation`. Se os valores computados do componente forem IGUAIS e só o
+  resultado visual diferir, o problema está no contexto — e a correção é tornar o componente
+  auto-contido, não mexer na superfície.
+- [ ] **overlay de estado renderiza igual em Playground e Preview Frame** (I-bis)
+
+---
+
 ## J-bis. Anel de foco × indicador de ESTADO: cuidado com dois claros somados
 
 > **Sintoma:** o anel de foco parece "invadido por uma faixa branca" / afastado do componente.

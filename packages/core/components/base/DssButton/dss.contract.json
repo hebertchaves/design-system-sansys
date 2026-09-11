@@ -273,6 +273,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "isolation",
+          "token": null,
+          "value": "isolate",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "display",
           "token": null,
           "value": "inline-flex",

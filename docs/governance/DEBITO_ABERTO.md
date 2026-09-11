@@ -402,6 +402,35 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Hover de flat/outline sumia no Preview Frame — `z-index: -1` vazava do componente**
+  (11/set/2026). Relatado com a suspeita certa: *"ambas deveriam puxar da base e montar visuais 100%
+  similares; a divergência indica que uma das 2 frentes está reimplementando"*.
+
+  **NENHUMA das duas reimplementa** — e é isso que torna o achado interessante. As duas consomem o
+  mesmo componente e o mesmo CSS; os valores computados do `::after` eram IDÊNTICOS nas duas
+  (`content:""`, `bg #1f86de`, `opacity .1`, `z-index:-1`). Só o resultado VISUAL diferia.
+
+  **A causa é o componente, não a superfície.** O `z-index: -1` do overlay não é auto-contido: sem um
+  contexto de empilhamento próprio, o pseudo sobe até o contexto mais próximo ACIMA e é pintado atrás
+  do fundo de quem estiver lá.
+
+  | superfície | ancestral cria contexto? | hover |
+  |---|---|---|
+  | Playground | **sim** — `.pg-tile__stage` tem `transform` | aparece ✅ |
+  | Preview Frame | **nenhum** | some atrás do `.pv-stage` branco ❌ |
+
+  Ou seja: **o hover funcionava por acidente do host.** O Playground acertava porque o template do
+  tile usa `transform`, não porque o componente estivesse correto.
+
+  **Correção:** `isolation: isolate` no `.dss-button` e no `.dss-chip` — os dois usam o mesmo padrão
+  de overlay. `position: relative`, que ambos já tinham, **não basta**: sozinho, sem `z-index`, não
+  cria contexto. Medido depois: hover idêntico nas duas superfícies, flat e outline.
+
+  📌 Virou **§I-bis** do checklist, com o ponto de método que vale além deste caso: **divergência
+  entre superfícies nem sempre é reimplementação** — se os valores computados batem e só o visual
+  difere, compare a cadeia de ancestrais (`transform`/`opacity`/`filter`/`contain`/`isolation`) antes
+  de caçar CSS duplicado.
+
 - ✅ **Visual de `selected` do DssChip ALINHADO AO QUASAR — 3 invenções removidas** (10/set/2026).
   Relatado: *"o outline fica preenchido quando selecionado, a linha branca continua, e no QChip
   nenhuma interação oferece linha ao selecionar"*. **Os três pontos conferem.**
