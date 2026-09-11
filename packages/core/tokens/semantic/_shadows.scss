@@ -15,13 +15,25 @@
   /* ===========================================
      1. SOMBRAS BASE (ELEVAÇÃO) - LIGHT MODE
      =========================================== */
+  /* OPACIDADES REBAIXADAS AO PADRÃO DE MERCADO (set/2026).
+     A escala era 2x a 3x mais pesada que a referência — camada ÚNICA com
+     opacidade alta, o que produz sombra "dura" em vez de profundidade:
+
+       antes  sm .25 · md .30 · lg .35 · xl .40 · 2xl .45
+       agora  sm .10 · md .12 · lg .15 · xl .18 · 2xl .22
+       ref.   Tailwind md .10 · Bootstrap .15 · Material 3 .15
+
+     A GEOMETRIA não mudou (offsets e blur idênticos): a identidade da escala é
+     preservada, só o peso cai. Verificado antes de mexer que NÃO havia
+     duplicação — o `box-shadow` computado do botão elevated tinha uma camada só,
+     e a única outra regra que casa declara `none`. Era o token mesmo. */
   --dss-shadow-xs: 0 0 0 1px rgba(0, 0, 0, 0.05);
-  --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);   /* Dark: 0.5 */
-  --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.30);   /* Dark: 0.6 */
-  --dss-shadow-up-md: 0 -4px 6px rgba(0, 0, 0, 0.30); /* Sombra ascendente (footers fixos) — resolve EXC-05 do DssFooter (Onda P2/G4.4) */
-  --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.35); /* Dark: 0.7 */
-  --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.40); /* Dark: 0.8 */
-  --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.45); /* Dark: 0.9 */
+  --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.10);   /* Dark: 0.30 */
+  --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.12);   /* Dark: 0.36 */
+  --dss-shadow-up-md: 0 -4px 6px rgba(0, 0, 0, 0.12); /* Sombra ascendente (footers fixos) — resolve EXC-05 do DssFooter (Onda P2/G4.4) */
+  --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15); /* Dark: 0.44 */
+  --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.18); /* Dark: 0.52 */
+  --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.22); /* Dark: 0.60 */
   
   /* Sombras internas (inset) */
   --dss-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);

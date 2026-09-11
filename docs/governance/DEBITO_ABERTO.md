@@ -402,6 +402,39 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Escala de sombra rebaixada ao padrão de mercado + glossy passa a aparecer** (11/set/2026).
+
+  **Sombra — era o TOKEN, não duplicação.** Verificado antes de mexer: o `box-shadow` computado do
+  botão elevated tinha **uma camada só** (`rgba(0,0,0,.3) 0 4px 6px`), e a única outra regra que casa
+  declara `none`. Sem empilhamento. A escala é que estava 2x a 3x mais pesada que a referência —
+  camada ÚNICA com opacidade alta produz sombra "dura" em vez de profundidade:
+
+  | | antes | agora | referência |
+  |---|---|---|---|
+  | sm | .25 | **.10** | Tailwind md = .10 |
+  | md | .30 | **.12** | Bootstrap = .15 |
+  | lg | .35 | **.15** | Material 3 = .15 |
+  | xl / 2xl | .40 / .45 | **.18 / .22** | — |
+
+  Dark rebaixado junto (.50→.30, .60→.36, .70→.44, .80→.52, .90→.60): continua mais forte que o
+  claro de propósito — sombra sobre fundo escuro precisa de mais peso —, mas .90 era quase preto
+  opaco. **A geometria não mudou** (offsets e blur idênticos): a identidade da escala é preservada.
+  Alcance: **21 componentes** consomem a escala; grau escolhido com aval.
+
+  **Glossy — o verniz NUNCA apareceu**, em nenhuma superfície (não só no preview). Medido:
+  `background-image` computado = `none`. Causa: `.bg-primary { background: … !important }` do Quasar
+  é **SHORTHAND** — ao aplicar, reseta `background-image` para `none`; e sendo layered `!important`,
+  vence qualquer DSS unlayered. O gradiente era apagado antes de pintar.
+
+  Corrigido movendo o verniz para `::after` (outra caixa, não disputa), com `z-index: -1` dentro do
+  `isolation: isolate` da base — fica acima do fundo e abaixo do conteúdo. É a mesma família do hover
+  das preenchidas, mas ali a solução foi redefinir `--q-*`; aqui não serve, porque o insumo é uma COR
+  e o que falta é uma camada de gradiente.
+
+  Saíram junto as sombras hardcoded do glossy (`rgba(0,0,0,.15)` / `.2`), que eram "exceção
+  documentada por não haver token equivalente" — eram single-stop, e a escala rebaixada passou a
+  cobrir o caso. Agora usa `--dss-elevation-1`.
+
 - ✅ **Hover de flat/outline sumia no Preview Frame — `z-index: -1` vazava do componente**
   (11/set/2026). Relatado com a suspeita certa: *"ambas deveriam puxar da base e montar visuais 100%
   similares; a divergência indica que uma das 2 frentes está reimplementando"*.

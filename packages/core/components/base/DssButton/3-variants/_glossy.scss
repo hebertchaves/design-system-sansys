@@ -4,25 +4,57 @@
    RESPONSABILIDADE: Botão com efeito brilhante/glossy
 
    CARACTERÍSTICAS:
-   - Background com gradiente (usa token --dss-gradient-glossy)
-   - Efeito de brilho sutil
-   - Hover intensifica sombra
-   - Active inverte gradiente (usa token --dss-gradient-glossy-active)
+   - Verniz de gradiente sobre a cor de fundo, via overlay `::after`
+   - Active inverte o gradiente
+   - Elevação pela escala DSS
    ========================================================================== */
 
-/* EXCEÇÃO DOCUMENTADA: box-shadow rgba reproduz elevação glossy do Quasar.
-   Não existem tokens DSS para shadow multi-stop glossy.
-   Ref: DSS_COMPONENT_ARCHITECTURE.md */
 .dss-button--glossy {
-  background-image: var(--dss-gradient-glossy);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--dss-elevation-1);
 
-  &:hover:not(.dss-button--disabled):not(.dss-button--loading) {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  /* O VERNIZ VAI NO `::after`, não em `background-image` (set/2026).
+
+     Antes era `background-image: var(--dss-gradient-glossy)` no próprio botão —
+     e NUNCA aparecia. Medido: `background-image` computado = `none`, em TODAS as
+     superfícies (não só no Preview Frame).
+
+     Causa: a utilitária de cor do Quasar é
+         `.bg-primary { background: var(--q-primary) !important }`
+     e `background` é SHORTHAND — ao ser aplicado, reseta `background-image` para
+     `none`. Como ela vive em `@layer quasar` com `!important`, vence qualquer
+     declaração DSS unlayered. O gradiente era apagado antes de pintar.
+
+     O `::after` não disputa: é outra caixa. Com `z-index: -1` dentro do
+     `isolation: isolate` da base, o verniz fica ACIMA do fundo do botão e ABAIXO
+     do conteúdo — que é exatamente a ordem que o efeito pede.
+
+     (Mesma família de problema do hover das variantes preenchidas, resolvido lá
+     redefinindo `--q-*`. Aqui não serve: o insumo é uma COR, e o que falta é uma
+     camada de gradiente por cima.) */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--dss-gradient-glossy);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
   }
 
   &:active:not(.dss-button--disabled):not(.dss-button--loading) {
-    background-image: var(--dss-gradient-glossy-active);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--dss-elevation-1);
+
+    &::after {
+      background-image: var(--dss-gradient-glossy-active);
+    }
   }
+
+  /* HOVER de cor: em `4-output/_states.scss`, pela rampa (`-hover`/`-deep`),
+     como as demais variantes preenchidas. Aqui não se declara sombra de hover —
+     a elevação fica estável, e quem responde é a cor (ver `_elevated.scss`).
+
+     As sombras hardcoded (`0 2px 4px rgba(0,0,0,.15)` e `0 4px 6px …/.2`) saíram:
+     eram "exceção documentada" por não haver token equivalente, mas eram
+     single-stop, e a escala rebaixada em set/2026 (`elevation-1` = .10) passou a
+     cobrir o caso. */
 }

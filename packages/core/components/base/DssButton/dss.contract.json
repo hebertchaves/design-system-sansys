@@ -444,7 +444,7 @@
           "property": "position",
           "token": null,
           "value": "absolute",
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_glossy.scss"
         },
         {
           "property": "display",
@@ -456,7 +456,7 @@
           "property": "inset",
           "token": null,
           "value": "0",
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_glossy.scss"
         },
         {
           "property": "display",
@@ -654,7 +654,7 @@
           "property": "border-radius",
           "token": null,
           "value": "inherit",
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_glossy.scss"
         },
         {
           "property": "top",
@@ -690,7 +690,7 @@
           "property": "pointer-events",
           "token": null,
           "value": "none",
-          "source": "2-composition/_base.scss"
+          "source": "3-variants/_glossy.scss"
         },
         {
           "property": "justify-content",
@@ -801,15 +801,27 @@
           "source": "3-variants/_push.scss"
         },
         {
+          "property": "box-shadow",
+          "token": "--dss-elevation-1",
+          "value": null,
+          "source": "3-variants/_glossy.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "3-variants/_glossy.scss"
+        },
+        {
           "property": "background-image",
           "token": "--dss-gradient-glossy",
           "value": null,
           "source": "3-variants/_glossy.scss"
         },
         {
-          "property": "box-shadow",
+          "property": "z-index",
           "token": null,
-          "value": "0 2px 4px rgba(0, 0, 0, 0.15)",
+          "value": "-1",
           "source": "3-variants/_glossy.scss"
         },
         {
@@ -953,12 +965,6 @@
           "source": "3-variants/_push.scss"
         },
         {
-          "property": "box-shadow",
-          "token": null,
-          "value": "0 4px 6px rgba(0, 0, 0, 0.2)",
-          "source": "3-variants/_glossy.scss"
-        },
-        {
           "property": "background-color",
           "token": "--dss-action-primary-hover",
           "value": null,
@@ -1080,7 +1086,7 @@
           "property": "box-shadow",
           "token": "--dss-elevation-1",
           "value": null,
-          "source": "3-variants/_elevated.scss"
+          "source": "3-variants/_glossy.scss"
         },
         {
           "property": "box-shadow",
@@ -1098,12 +1104,6 @@
           "property": "background-image",
           "token": "--dss-gradient-glossy-active",
           "value": null,
-          "source": "3-variants/_glossy.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": null,
-          "value": "0 1px 2px rgba(0, 0, 0, 0.15)",
           "source": "3-variants/_glossy.scss"
         },
         {
@@ -1400,6 +1400,14 @@
         ]
       },
       {
+        "name": "--dss-elevation-1",
+        "usedIn": [
+          "default",
+          "active",
+          "defaultPreview"
+        ]
+      },
+      {
         "name": "--dss-gradient-glossy",
         "usedIn": [
           "default"
@@ -1464,13 +1472,6 @@
         "name": "--dss-duration-slowest",
         "usedIn": [
           "active"
-        ]
-      },
-      {
-        "name": "--dss-elevation-1",
-        "usedIn": [
-          "active",
-          "defaultPreview"
         ]
       },
       {

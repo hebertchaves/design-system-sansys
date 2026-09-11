@@ -129,11 +129,14 @@
      SHADOWS (mais sutis em dark mode)
      =========================================== */
 
-  --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-  --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6);
-  --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.7);
-  --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.8);
-  --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.9);
+  /* Rebaixadas junto com a escala do light (set/2026). O dark continua MAIS forte
+     que o claro de propósito — sombra sobre fundo escuro precisa de mais peso
+     para existir —, mas 0.6/0.7/0.9 era quase preto opaco. Proporção mantida. */
+  --dss-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.30);
+  --dss-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.36);
+  --dss-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.44);
+  --dss-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.52);
+  --dss-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.60);
 
   /* ===========================================
      ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 3)
