@@ -229,20 +229,23 @@ export interface ChipEmits {
  */
 export interface ChipSlots {
   /**
-   * Conteudo principal do chip
+   * Conteudo principal do chip.
+   * OPCIONAL: sem ele o chip renderiza a prop `label`.
    * @default label prop
    */
-  default(): any
+  default?(): any
 
   /**
-   * Ícone à esquerda (precede a prop/ícone de seleção — CCI §3.2)
+   * Ícone à esquerda (precede a prop/ícone de seleção — CCI §3.2).
+   * OPCIONAL.
    */
-  'icon-left'(): any
+  'icon-left'?(): any
 
   /**
-   * Ícone à direita (precede o botão de remover — CCI §3.2)
+   * Ícone à direita (precede o botão de remover — CCI §3.2).
+   * OPCIONAL.
    */
-  'icon-right'(): any
+  'icon-right'?(): any
 }
 
 // ==========================================================================
