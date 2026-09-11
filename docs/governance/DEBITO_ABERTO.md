@@ -402,8 +402,46 @@
   primitivo onde deveria haver semântico. Aquela mede `4-output/_brands.scss` (577 usos); esta é a
   camada de utilitárias. Se (d) virar frente, este item entra no mesmo lote.
 
+- ✅ **Visual de `selected` do DssChip ALINHADO AO QUASAR — 3 invenções removidas** (10/set/2026).
+  Relatado: *"o outline fica preenchido quando selecionado, a linha branca continua, e no QChip
+  nenhuma interação oferece linha ao selecionar"*. **Os três pontos conferem.**
+
+  **Evidência no motor.** O QChip tem UMA regra para o estado:
+  `.q-chip--selected .q-avatar { display: none; }` — troca o avatar pelo `icon-selected`. **Sem
+  linha, borda ou preenchimento.** E `clickable`, na API: *"add hover effects and emit click
+  events"* — nada de mudar aparência.
+
+  **O DSS tinha inventado três coisas, nenhuma justificada** em SCSS, contrato ou doc (o contrato
+  sequer listava `selected` entre os estados — só default/hover/focus/active/disabled):
+  1. `box-shadow: inset 0 0 0 2px currentColor` — a "linha";
+  2. `background-color: currentColor` no `outline--selected` — fazia um chip de CONTORNO virar
+     SÓLIDO, o oposto do que o nome promete;
+  3. véu `::after` no `flat--selected`.
+
+  **Removidas as três.** O indicador passa a ser o ícone de check, que `showSelectedIcon` renderiza
+  sempre que `selected` é true. Medido depois: nas 3 variantes o fundo do selecionado é IGUAL ao do
+  não-selecionado, `box-shadow: none`, check presente — exatamente o comportamento do motor.
+
+  **Saiu junto o fix de `:focus-visible` de 2h antes** — ele suprimia o inset no foco para resolver a
+  faixa branca de 4px. Tratava o SINTOMA: com o anel removido, a causa deixou de existir. Fica a
+  lição registrada no §J-bis (somar camadas claras), que vale para qualquer componente.
+
+  **PERMANECEM, e só nelas:** `prefers-contrast: more` (anel reforçado — o usuário pediu mais
+  contraste) e `forced-colors: active` (`Highlight`/`HighlightText` — as cores do sistema mandam e o
+  ícone sozinho não basta se a paleta do autor foi suprimida).
+
+  ⚠️ **Lacuna de ARIA que isto expôs.** `aria-selected` só é emitido quando `computedRole ===
+  'option'` — ou seja, quando o consumidor declara `role="option"`. Isso é ARIA correto (o atributo
+  exige role compatível), mas significa que um chip `clickable` + `selected`, que cai no
+  `role="button"` implícito, fica **sem estado semântico**: o `aria-pressed` que caberia ali não é
+  emitido. Lacuna PRÉ-EXISTENTE (o inset também era só visual), agora sem disfarce. **Não corrigida**
+  — mexe na API de acessibilidade do componente.
+
+  📌 Erro de doc corrigido junto: `DssChip.md` dizia "ícone de check (opcional)"; o código diz
+  `showSelectedIcon = computed(() => props.selected)` — **não é opcional**.
+
 - ✅ **Anel de foco do chip SELECIONADO parecia invadido por uma faixa branca — RESOLVIDO**
-  (10/set/2026). Relatado como "o contorno de a11y está sendo sobreposto por uma linha branca, muito
+  (10/set/2026; o fix pontual foi SUBSTITUÍDO pelo alinhamento ao Quasar acima). Relatado como "o contorno de a11y está sendo sobreposto por uma linha branca, muito
   colado ao componente, ao invés de dar a margem que os demais aplicam".
 
   **A margem NÃO era o problema** — medi: `outline-offset: 2px`, o mesmo valor de Button, Checkbox,

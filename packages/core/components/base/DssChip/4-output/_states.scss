@@ -111,7 +111,11 @@
     text-decoration: line-through;
   }
 
-  /* Selected state mais obvio */
+  /* SELECTED reforçado — PERMANECE, e só aqui (set/2026).
+     No modo normal o indicador de selecionado é apenas o ícone de check, alinhado
+     ao Quasar (ver `2-composition/_base.scss`). Sob `prefers-contrast: more` o
+     usuário pediu explicitamente MAIS contraste, e um anel é o reforço adequado —
+     é exceção de acessibilidade, não o padrão da variante. */
   .dss-chip--selected {
     box-shadow: inset 0 0 0 var(--dss-border-width-thick) currentColor;
   }
@@ -202,6 +206,9 @@
     }
   }
 
+  /* PERMANECE: em `forced-colors` as cores do SISTEMA mandam e `Highlight` é o
+     par canônico para "selecionado". O ícone sozinho não basta aqui porque o
+     usuário pode ter suprimido a paleta do autor. */
   .dss-chip--selected {
     background-color: Highlight;
     color: HighlightText;

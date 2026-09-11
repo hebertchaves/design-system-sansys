@@ -275,7 +275,7 @@ O DssChip utiliza pseudo-elemento `::before` para garantir touch target ≥44px:
 | **Focus** | Focus ring visível (3px, offset 2px) | Navegação por teclado | `--dss-focus-ring` | WCAG 2.4.7 AA |
 | **Active** | Background mais escuro, "afunda" visualmente | Clique em progresso | `filter: brightness(0.85-0.9)` | Feedback tátil |
 | **Disabled** | Opacidade 0.4, cursor not-allowed | Interações bloqueadas | `--dss-opacity-disabled` | `aria-disabled="true"` |
-| **Selected** | Box-shadow inset, ícone de check (opcional) | Toggle via clique | Variante-específico | `aria-selected="true"` |
+| **Selected** | Ícone de check (sempre que `selected`) — sem anel nem preenchimento, alinhado ao QChip | Toggle via clique | Igual nas 3 variantes | `aria-selected="true"` |
 | **Clickable** | Cursor pointer, hover effects | Clique habilitado | - | Requer prop `clickable` |
 
 ### Diagramas de Transição

@@ -37,21 +37,9 @@
     &::after {
       opacity: var(--dss-opacity-active);
     }
-  }
-
-  /* Selected state para flat - fundo sutil via ::after */
-  &.dss-chip--selected {
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-color: currentColor;
-      opacity: var(--dss-opacity-selected);
-      border-radius: inherit;
-      pointer-events: none;
-      z-index: -1; /* Atrás do conteúdo, acima do touch target */
-    }
-  }
+  }  /* SELECTED: nada aqui — alinhado ao Quasar (set/2026).
+     Havia um véu `::after` com `--dss-opacity-selected`, sem paralelo no QChip.
+     O indicador é o ícone de check. Racional em `2-composition/_base.scss`. */
 
   /* Remove button styling para flat */
   .dss-chip__remove {

@@ -233,36 +233,43 @@
    SELECTED STATE
    ========================================================================== */
 
-.dss-chip--selected {
-  /* Visual feedback for selected state */
-  box-shadow: inset 0 0 0 var(--dss-border-width-md) currentColor;
-}
+/* SELECTED — o indicador é o ÍCONE, não um anel. Alinhado ao Quasar (set/2026).
 
-/* FOCO + SELECTED no FILLED: o inset sai (set/2026).
-   No filled o `currentColor` é BRANCO (texto invertido sobre fundo de acento),
-   então o inset desenha um anel branco colado à borda interna. Com o foco, ele
-   soma ao gap do `outline-offset` — que mostra o fundo da página, também claro:
+   O QChip tem UMA regra para o estado, e é esta:
 
-       [outline 2px]  [gap 2px BRANCO]  [inset 2px BRANCO]  [fundo do chip]
-                       └──────── 4px de branco contíguo ────────┘
+       .q-chip--selected .q-avatar { display: none; }
 
-   O anel de a11y fica lido como "afastado por uma faixa branca". Medido: outline
-   `2px solid #006ac5`, offset `2px`, inset `#ffffff`.
+   Ou seja: selecionar troca o avatar pelo `icon-selected`. Não há linha, borda
+   nem preenchimento — o indicador é a FORMA (o check), não a cor.
 
-   ⚠️ AUMENTAR a margem PIORA — testado: com `outline-offset: 4px` a faixa branca
-   passa a 6px. O problema não é falta de margem (o offset já é o mesmo dos demais
-   componentes, 2px = `--dss-focus-ring-offset`); é a SOMA de dois claros.
+   O DSS tinha inventado três coisas, nenhuma justificada em SCSS, contrato ou
+   doc (o contrato sequer listava `selected` entre os estados):
+     1. `box-shadow: inset 0 0 0 2px currentColor` aqui — a "linha";
+     2. `background-color: currentColor` no `outline--selected` — que fazia um
+        chip de CONTORNO virar sólido, o oposto do que o nome promete;
+     3. véu `::after` no `flat--selected`.
 
-   Suprimir o inset só no foco é seguro porque o `selected` mantém DOIS outros
-   indicadores: o ícone de check — que o `showSelectedIcon` renderiza sempre que
-   `selected` é true, não é opcional — e o próprio `aria-selected`. Em repouso o
-   inset continua lá: o visual do selecionado não muda.
+   Além de divergirem do motor, as três criavam um efeito colateral no foco: no
+   `filled` o `currentColor` é branco, então o inset somava ao gap do
+   `outline-offset` (que mostra o fundo claro da página) e o anel de a11y ficava
+   lido como "afastado por uma faixa branca de 4px". Isso motivou uma supressão
+   no `:focus-visible` que também sai agora — tratava o sintoma; a causa era o
+   anel não dever existir.
 
-   Restrito ao `--filled`: em `outline` o inset tem a cor do fundo (invisível) e em
-   `flat` é a cor de acento, que não funde com o gap claro. */
-.dss-chip--filled.dss-chip--selected.dss-chip--clickable:focus-visible {
-  box-shadow: none;
-}
+   Acessibilidade: o indicador passa a ser o ícone de check, que `showSelectedIcon`
+   renderiza SEMPRE que `selected` é true (não é opcional — a doc dizia que era, e
+   estava errada). É indicador de FORMA, não de cor: atende 1.4.1 sem depender de
+   contraste, e é exatamente o que o QChip faz.
+
+   ⚠️ Precisão sobre o ARIA: `aria-selected` é emitido apenas quando
+   `computedRole === 'option'` — ou seja, quando o CONSUMIDOR declara `role="option"`
+   (num listbox). Isso é ARIA correto: o atributo exige role compatível. Mas
+   significa que um chip `clickable` + `selected` com o `role="button"` implícito
+   fica SEM estado semântico — o `aria-pressed` que caberia ali não é emitido hoje.
+   Lacuna pré-existente (o inset também era só visual), agora mais exposta.
+   Registrada no DEBITO_ABERTO.
+
+   📖 §J-bis do DSS_UI_ADEQUACAO_CHECKLIST.md. */
 
 /* ==========================================================================
    SIZE VARIANTS

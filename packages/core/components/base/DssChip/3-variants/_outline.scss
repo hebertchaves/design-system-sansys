@@ -40,15 +40,11 @@
     filter: brightness(0.9);
   }
 
-  /* Selected state para outline */
-  &.dss-chip--selected {
-    background-color: currentColor;
-
-    .dss-chip__label,
-    .dss-chip__icon {
-      color: var(--dss-text-inverse);
-    }
-  }
+  /* SELECTED: nada aqui — alinhado ao Quasar (set/2026).
+     Havia `background-color: currentColor` + texto inverso, que fazia o chip de
+     CONTORNO virar SÓLIDO ao ser selecionado — o oposto do que a variante
+     promete, e sem paralelo no QChip. O indicador é o ícone de check.
+     Ver o racional completo em `2-composition/_base.scss`, seção SELECTED. */
 
   /* Remove button styling para outline.
      SEM override de :hover — o comportamento correto já vem de _base.scss
