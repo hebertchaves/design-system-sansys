@@ -185,16 +185,21 @@
    acidental, não decisão — e §L4 do checklist proíbe dimensionar ícone por token
    de texto.
 
-     botão  altura  antes        agora
-       xs    32px   14px (44%)   16px (50%)  --dss-icon-size-xs
-       sm    36px   16px (44%)   20px (56%)  --dss-icon-size-sm
-       md    44px   14px (32%)   24px (55%)  --dss-icon-size-md
-       lg    52px   20px (38%)   32px (62%)  --dss-icon-size-lg
-       xl    64px   25px (39%)   32px (50%)  --dss-icon-size-lg
+     botão  altura  antes (acidental)  agora
+       xs    32px   14px (44%)         12px (38%)  --dss-icon-size-2xs
+       sm    36px   16px (44%)         16px (44%)  --dss-icon-size-xs
+       md    44px   14px (32%)         20px (45%)  --dss-icon-size-sm
+       lg    56px   20px (38%)         24px (43%)  --dss-icon-size-md
+       xl    64px   25px (39%)         32px (50%)  --dss-icon-size-lg
 
-   Referência: o QBtn usa `font-size: 1.715em` — no `md` daria 24px, o mesmo que
-   agora. A diferença é que aqui o valor vem da ESCALA, não de um multiplicador,
-   então acompanha o sistema em vez da tipografia do host.
+   A tabela ocupa CINCO DEGRAUS CONSECUTIVOS da escala — 12 · 16 · 20 · 24 · 32 —
+   um por tamanho de botão, sem platô e sem pular nenhum. A proporção
+   ícone/altura fica em 38–50%, contra 32–44% oscilante de antes.
+
+   Referência: o QBtn usa `font-size: 1.715em`, que no `md` daria 24px. Ficamos
+   abaixo disso de propósito — o multiplicador do Quasar infla o ícone junto com a
+   tipografia (no `xl` daria 34px), enquanto a escala mantém a progressão sob
+   controle do sistema.
    ========================================================================== */
 
 .dss-button--xs {
@@ -204,7 +209,7 @@
   font-size: var(--dss-font-size-xs);
 
   .dss-button__icon {
-    font-size: var(--dss-icon-size-xs); /* 16px */
+    font-size: var(--dss-icon-size-2xs); /* 12px */
   }
 }
 
@@ -218,7 +223,7 @@
   font-size: var(--dss-font-size-sm);
 
   .dss-button__icon {
-    font-size: var(--dss-icon-size-sm); /* 20px */
+    font-size: var(--dss-icon-size-xs); /* 16px */
   }
 }
 
@@ -230,7 +235,7 @@
      14px, a MESMA do texto (razão 1,00×). Era o único tamanho sem regra, e por
      isso o mais defasado da família. */
   .dss-button__icon {
-    font-size: var(--dss-icon-size-md); /* 24px */
+    font-size: var(--dss-icon-size-sm); /* 20px */
   }
 }
 
@@ -241,7 +246,7 @@
   font-size: var(--dss-font-size-lg);
 
   .dss-button__icon {
-    font-size: var(--dss-icon-size-lg); /* 32px */
+    font-size: var(--dss-icon-size-md); /* 24px */
   }
 }
 
@@ -251,9 +256,8 @@
   min-width: var(--dss-spacing-24); /* 96px */
   font-size: var(--dss-font-size-xl);
 
-  /* `-lg` (32px), o mesmo do `lg`: o próximo degrau da escala é 48px, que num
-     botão de 64px ocuparia 75% da altura. O platô aqui é deliberado — a escala de
-     ícone salta de 32 para 48 e não há degrau intermediário. */
+  /* `-lg` (32px) fecha a progressão. O próximo degrau é 48px, que num botão de
+     64px ocuparia 75% da altura — por isso a escala para aqui. */
   .dss-button__icon {
     font-size: var(--dss-icon-size-lg); /* 32px */
   }

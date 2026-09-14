@@ -532,7 +532,7 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-icon-size-xs",
+          "token": "--dss-icon-size-2xs",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -550,13 +550,13 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-icon-size-sm",
+          "token": "--dss-icon-size-xs",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "font-size",
-          "token": "--dss-icon-size-md",
+          "token": "--dss-icon-size-sm",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -580,7 +580,7 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-icon-size-lg",
+          "token": "--dss-icon-size-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -605,6 +605,12 @@
         {
           "property": "font-size",
           "token": "--dss-font-size-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1334,7 +1340,7 @@
         ]
       },
       {
-        "name": "--dss-icon-size-xs",
+        "name": "--dss-icon-size-2xs",
         "usedIn": [
           "default"
         ]
@@ -1352,13 +1358,13 @@
         ]
       },
       {
-        "name": "--dss-icon-size-sm",
+        "name": "--dss-icon-size-xs",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-icon-size-md",
+        "name": "--dss-icon-size-sm",
         "usedIn": [
           "default"
         ]
@@ -1382,7 +1388,7 @@
         ]
       },
       {
-        "name": "--dss-icon-size-lg",
+        "name": "--dss-icon-size-md",
         "usedIn": [
           "default"
         ]
@@ -1407,6 +1413,12 @@
       },
       {
         "name": "--dss-font-size-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
         "usedIn": [
           "default"
         ]
