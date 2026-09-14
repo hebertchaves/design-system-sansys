@@ -531,6 +531,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-height",
           "token": "--dss-touch-target-sm",
           "value": null,
@@ -544,7 +550,13 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-font-size-md",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -568,7 +580,7 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-font-size-xl",
+          "token": "--dss-icon-size-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -587,6 +599,12 @@
         {
           "property": "min-width",
           "token": "--dss-spacing-24",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xl",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1316,6 +1334,12 @@
         ]
       },
       {
+        "name": "--dss-icon-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-touch-target-sm",
         "usedIn": [
           "default"
@@ -1328,7 +1352,13 @@
         ]
       },
       {
-        "name": "--dss-font-size-md",
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-md",
         "usedIn": [
           "default"
         ]
@@ -1352,7 +1382,7 @@
         ]
       },
       {
-        "name": "--dss-font-size-xl",
+        "name": "--dss-icon-size-lg",
         "usedIn": [
           "default"
         ]
@@ -1371,6 +1401,12 @@
       },
       {
         "name": "--dss-spacing-24",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xl",
         "usedIn": [
           "default"
         ]

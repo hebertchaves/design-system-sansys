@@ -175,6 +175,26 @@
 
 /* ==========================================================================
    SIZE VARIANTS
+
+   TAMANHO DE ÍCONE — token de ÍCONE, um degrau acima (set/2026).
+
+   Antes cada tamanho dimensionava o ícone com token de TIPOGRAFIA
+   (`--dss-font-size-*`), e o `xl` com um `calc(… * 1.25)` hardcoded. Resultado
+   medido: a razão ícone/texto oscilava entre 1,00× e 1,25× SEM regra, e os
+   valores efetivos (14px, 25px) nem pertenciam à escala de ícone. Era herança
+   acidental, não decisão — e §L4 do checklist proíbe dimensionar ícone por token
+   de texto.
+
+     botão  altura  antes        agora
+       xs    32px   14px (44%)   16px (50%)  --dss-icon-size-xs
+       sm    36px   16px (44%)   20px (56%)  --dss-icon-size-sm
+       md    44px   14px (32%)   24px (55%)  --dss-icon-size-md
+       lg    52px   20px (38%)   32px (62%)  --dss-icon-size-lg
+       xl    64px   25px (39%)   32px (50%)  --dss-icon-size-lg
+
+   Referência: o QBtn usa `font-size: 1.715em` — no `md` daria 24px, o mesmo que
+   agora. A diferença é que aqui o valor vem da ESCALA, não de um multiplicador,
+   então acompanha o sistema em vez da tipografia do host.
    ========================================================================== */
 
 .dss-button--xs {
@@ -184,7 +204,7 @@
   font-size: var(--dss-font-size-xs);
 
   .dss-button__icon {
-    font-size: var(--dss-font-size-sm);
+    font-size: var(--dss-icon-size-xs); /* 16px */
   }
 }
 
@@ -198,12 +218,20 @@
   font-size: var(--dss-font-size-sm);
 
   .dss-button__icon {
-    font-size: var(--dss-font-size-md);
+    font-size: var(--dss-icon-size-sm); /* 20px */
   }
 }
 
 .dss-button--md {
-  /* Default size - já definido no .dss-button */
+  /* Dimensões: já definidas no `.dss-button`.
+
+     Mas o ÍCONE precisa de regra própria (set/2026): sem ela, ele caía no
+     `.dss-icon--inline { font-size: inherit }` e herdava a tipografia do botão —
+     14px, a MESMA do texto (razão 1,00×). Era o único tamanho sem regra, e por
+     isso o mais defasado da família. */
+  .dss-button__icon {
+    font-size: var(--dss-icon-size-md); /* 24px */
+  }
 }
 
 .dss-button--lg {
@@ -213,7 +241,7 @@
   font-size: var(--dss-font-size-lg);
 
   .dss-button__icon {
-    font-size: var(--dss-font-size-xl);
+    font-size: var(--dss-icon-size-lg); /* 32px */
   }
 }
 
@@ -223,8 +251,11 @@
   min-width: var(--dss-spacing-24); /* 96px */
   font-size: var(--dss-font-size-xl);
 
+  /* `-lg` (32px), o mesmo do `lg`: o próximo degrau da escala é 48px, que num
+     botão de 64px ocuparia 75% da altura. O platô aqui é deliberado — a escala de
+     ícone salta de 32 para 48 e não há degrau intermediário. */
   .dss-button__icon {
-    font-size: calc(var(--dss-font-size-xl) * 1.25);
+    font-size: var(--dss-icon-size-lg); /* 32px */
   }
 }
 
