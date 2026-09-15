@@ -352,7 +352,7 @@
         },
         {
           "property": "padding",
-          "token": "--dss-spacing-6",
+          "token": "--dss-spacing-4",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -581,12 +581,6 @@
         {
           "property": "font-size",
           "token": "--dss-icon-size-md",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding",
-          "token": "--dss-spacing-4",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1249,10 +1243,9 @@
         ]
       },
       {
-        "name": "--dss-spacing-6",
+        "name": "--dss-spacing-4",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -1389,12 +1382,6 @@
       },
       {
         "name": "--dss-icon-size-md",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-spacing-4",
         "usedIn": [
           "default"
         ]
@@ -1544,6 +1531,12 @@
         "name": "--dss-opacity-disabled",
         "usedIn": [
           "disabled",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
           "defaultPreview"
         ]
       },
