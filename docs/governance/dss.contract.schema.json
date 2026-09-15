@@ -363,6 +363,10 @@
               },
               "default": {
                 "type": "string"
+              },
+              "inertWhen": {
+                "type": "string",
+                "$comment": "Valor NEUTRO: aquele em que uma prop que escapa deste token não tem efeito. Distinto de `default` — foram o mesmo valor até set/2026 e confundi-los inverte o aviso do Preview Frame."
               }
             }
           }

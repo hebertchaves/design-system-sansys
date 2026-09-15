@@ -52,8 +52,9 @@
   font-weight: var(--dss-font-weight-medium);
   line-height: var(--dss-line-height-sm-tight);
   /* Capitalização do rótulo — governada por TOKEN, não fixada aqui.
-     Padrão `none`: o DSS não força maiúsculas (Material 3, IBM Carbon,
-     Salesforce Lightning). Ref: DSS_VISUAL_DEFAULTS_AUDIT.md, linha 20.
+     Padrão `uppercase` (set/2026). Foi `none` de jan/2025 a set/2026 —
+     DSS_VISUAL_DEFAULTS_AUDIT.md linha 20, revertida por decisão do dono do DS:
+     sem um padrão para desligar, `no-caps` não expressa intenção nenhuma.
 
      Era `none` FIXO, e esse era o bug: a prop `no-caps` não tinha o que
      desligar — `.dss-button--no-caps` declarava o mesmo `none` que a base já

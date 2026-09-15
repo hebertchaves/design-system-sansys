@@ -17,7 +17,7 @@ Os ajustes foram realizados diretamente nos arquivos SCSS e Vue dos componentes,
 
 | Categoria | Componente | Ajustes Realizados |
 | :--- | :--- | :--- |
-| **Ação** | DssButton | Remoção da propriedade `text-transform: uppercase` para melhorar a legibilidade. O `border-radius` foi alterado para `var(--dss-radius-full)`, adotando o formato de pílula. O `letter-spacing` foi ajustado para `0.01em` para compensar a mudança tipográfica. As variantes `elevated` e `outline` foram atualizadas para utilizar os tokens oficiais de elevação e opacidade do DSS. |
+| **Ação** | DssButton | ~~Remoção da propriedade `text-transform: uppercase` para melhorar a legibilidade.~~ **REVERTIDO em set/2026** (ver nota ao final). O `border-radius` foi alterado para `var(--dss-radius-full)`, adotando o formato de pílula. O `letter-spacing` foi ajustado para `0.01em` para compensar a mudança tipográfica. As variantes `elevated` e `outline` foram atualizadas para utilizar os tokens oficiais de elevação e opacidade do DSS. |
 | **Formulário** | DssInput & DssSelect | A cor do rótulo flutuante (label) no estado `focused` foi modificada para utilizar a cor primária (`--dss-action-primary`), garantindo destaque visual imediato durante a interação do usuário. As variantes `outlined` e `filled` foram revisadas para consumir os tokens semânticos corretos de superfície e feedback. |
 | **Formulário** | DssCheckbox, DssRadio & DssToggle | O estado inativo (`unchecked`) destes controles agora herda a cor primária no elemento raiz, em vez de herdar a cor do texto padrão. Esta mudança alinha o sistema ao Material 3, indicando interatividade mesmo quando o controle não está selecionado. A cor do rótulo associado foi isolada para utilizar `--dss-text-body`, evitando herança indesejada da cor primária. |
 | **Indicadores** | DssAvatar | Foram identificados e substituídos tokens inexistentes no catálogo (`--dss-neutral-200` e `--dss-neutral-700`). O componente agora utiliza `--dss-surface-muted` para o fundo padrão e `--dss-text-body` para o texto, garantindo conformidade com o sistema de design. |
@@ -39,3 +39,34 @@ Por fim, a **ponte entre Vue e SCSS via classes utilitárias** apresenta fragili
 ## 4. Conclusão
 
 Os componentes base do Design System Sansys foram refatorados para apresentar um visual padrão moderno, coeso e fortemente ancorado na cor primária da marca. Todas as modificações foram aplicadas estritamente nas camadas de composição e variantes, respeitando a arquitetura de quatro camadas estabelecida pelo projeto. Com esta base sólida e alinhada às melhores práticas de mercado, a equipe de design possui total liberdade para modificar os tokens semânticos globais, injetando a identidade visual final da Sansys com a garantia de que a estrutura dos componentes responderá de forma consistente e previsível.
+
+
+---
+
+## Reversão — capitalização de rótulo (set/2026)
+
+A linha do **DssButton** acima registrava a remoção do `text-transform: uppercase`
+por legibilidade. **Essa decisão foi revertida** por decisão do dono do DS: o
+padrão de `--dss-text-transform-control` passou a ser `uppercase`.
+
+**Por quê.** Com o padrão em `none`, a prop `no-caps` não tinha nada para
+desligar — ficou **inerte** por 20 meses (jan/2025 → set/2026), exibida em
+página de teste, Preview Frame e exemplo como um modificador que não modificava.
+Um padrão que ninguém pode desligar não é padrão: é ausência. Com `uppercase`, a
+prop volta a carregar a intenção de quem escreve a tela — caixa alta por default,
+caixa natural onde o autor pedir.
+
+**O que muda de aparência.** Rótulo de todo controle de ação nos três produtos:
+`DssButton`, `DssTab`, `DssRouteTab`, `DssBtnToggle`. Para `DssTab` e
+`DssRouteTab` o efeito visual é um RETORNO: eles herdavam
+`.q-tab { text-transform: uppercase }` do Quasar e só passaram a renderizar em
+caixa natural na janela entre os dois commits desta mesma onda.
+
+**O que NÃO muda.** A crítica de legibilidade que motivou a remoção original
+continua válida e não foi apagada — está acima, riscada e datada. Quem quiser o
+comportamento anterior tem duas saídas, ambas sem tocar em componente:
+`:root { --dss-text-transform-control: none; }` para o app inteiro, ou `no-caps`
+caso a caso.
+
+**Não é regra dura de acessibilidade.** WCAG não proíbe caixa alta; a objeção é
+de legibilidade (velocidade de leitura de palavras longas), não de conformidade.

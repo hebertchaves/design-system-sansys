@@ -82,13 +82,11 @@
         <DssButton block color="primary">Block (Full Width)</DssButton>
       </div>
 
-      <!-- `no-caps` só é observável onde a capitalização NÃO é o padrão do DSS.
-           O padrão de `--dss-text-transform-control` é `none`, então aqui os
-           dois botões seriam idênticos e o exemplo não exemplificaria nada — era
-           o defeito deste bloco. O wrapper redefine o token (API pública) para
-           criar o contexto em que a prop tem o que desligar. -->
+      <!-- Padrão do token = `uppercase` (set/2026): o par diverge sem contexto
+           extra. Enquanto o padrão foi `none`, este bloco precisava redefinir o
+           token para exemplificar coisa alguma. -->
       <h3>Capitalização — <code>--dss-text-transform-control</code></h3>
-      <div class="button-row example-caps">
+      <div class="button-row">
         <DssButton color="primary">Segue o token</DssButton>
         <DssButton no-caps color="primary">no-caps escapa</DssButton>
       </div>
@@ -216,14 +214,6 @@ export default {
 <style lang="scss" scoped>
 /* Importar estilos de showcase (apenas para exemplos) */
 @use '../../../utils/example-showcase' as *;
-
-/* Contexto de DEMONSTRAÇÃO do `no-caps`: no padrão do DSS o token já é `none`,
-   então sem redefini-lo a prop não teria o que desligar e os dois botões do
-   bloco sairiam iguais. Aqui o exemplo CONSOME o token público para mostrar a
-   prop funcionando — não reimplementa nada do componente. */
-.example-caps {
-  --dss-text-transform-control: uppercase;
-}
 
 /* Estilos adicionais específicos deste exemplo */
 .dss-button-examples {

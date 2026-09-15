@@ -224,25 +224,25 @@ function startUpload() {
 | `dense` | Boolean | `false` | - | Versão compacta do botão |
 | `no-caps` | Boolean | `false` | - | Força capitalização natural, ignorando `--dss-text-transform-control` |
 
-> **`no-caps` e o token de capitalização.** O DSS **não** força maiúsculas: o
-> padrão de `--dss-text-transform-control` é `none` (decisão registrada em
-> `DSS_VISUAL_DEFAULTS_AUDIT.md`, linha 20 — legibilidade, alinhada a Material 3
-> / IBM Carbon / Salesforce). Logo, **no tema padrão `no-caps` não muda nada** —
-> não há maiúscula para remover. Ela serve para escapar de um contexto que tenha
-> redefinido o token:
+> **`no-caps` e o token de capitalização.** O padrão de
+> `--dss-text-transform-control` é `uppercase` (set/2026), então `no-caps` tem
+> efeito visível **sem configurar nada**: o rótulo sai em caixa natural em vez de
+> maiúsculas.
 >
-> ```scss
-> .toolbar-legada { --dss-text-transform-control: uppercase; }
-> ```
 > ```vue
 > <DssButton label="Salvar" />           <!-- SALVAR -->
 > <DssButton label="Salvar" no-caps />   <!-- Salvar -->
 > ```
 >
 > O token é um **provedor tipográfico de categoria** (rótulo de controle de
-> ação), não um token component-specific — estes foram removidos em jan/2025.
-> Até set/2026 ele não existia e a prop era **inerte**: a base fixava `none`, e a
-> classe `--no-caps` repetia esse mesmo `none`.
+> ação), não um token component-specific — estes foram removidos em jan/2025. Ele
+> é redefinível em `:root`, tema, marca, um wrapper de tela ou o próprio
+> elemento; `no-caps` escapa do valor vigente, qualquer que seja.
+>
+> Histórico: o padrão foi `none` de jan/2025 a set/2026
+> (`DSS_VISUAL_DEFAULTS_AUDIT.md`, linha 20 — legibilidade). Nesse período a prop
+> era **inerte**: a base fixava `none` e a classe `--no-caps` repetia esse mesmo
+> `none`.
 
 **Exemplo:**
 ```vue

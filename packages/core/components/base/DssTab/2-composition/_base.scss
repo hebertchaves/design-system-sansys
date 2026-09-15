@@ -29,11 +29,13 @@
   // de que "a capitalização é governada por CSS/tokens DSS". Até set/2026 a
   // frase apontava para o vazio: o token não existia E esta camada não
   // declarava `text-transform`, então quem mandava era o Quasar —
-  // `.q-tab { text-transform: uppercase }`. A aba renderizava MAIÚSCULA,
-  // contra o padrão do DS (DSS_VISUAL_DEFAULTS_AUDIT, linha 20).
+  // `.q-tab { text-transform: uppercase }`.
   //
-  // Esta linha faz a justificativa do selo virar verdade. Vale para o
-  // DssRouteTab também: ele reaproveita `.dss-tab` por inteiro.
+  // Esta linha faz a justificativa do selo virar verdade. Com o padrão do token
+  // em `uppercase` (set/2026) o RESULTADO VISUAL volta a ser o de sempre — mas
+  // a aba passa a obedecer ao DS em vez do Quasar: redefinir o token move a aba
+  // junto com o resto da família. Vale para o DssRouteTab: reaproveita
+  // `.dss-tab` por inteiro.
   text-transform: var(--dss-text-transform-control, none);
 
   // ------------------------------------------------------------------

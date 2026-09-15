@@ -110,7 +110,7 @@ O DssButton utiliza tokens das seguintes categorias:
 | **Espaçamento (Padding/Gap)** | `--dss-spacing-1` a `--dss-spacing-24` | [Seção 1.1 - Escala Base](../../../DSS_TOKEN_REFERENCE.md#11-escala-base) | Padding interno (xs=1+2, sm=1.5+3, md=2+4, lg=3+5, xl=4+6), gap entre label/ícone (spacing-2), min-width por size |
 | **Touch Targets (Sizing)** | `--dss-touch-target-xs` (32px), `--dss-touch-target-sm` (36px), `--dss-touch-target-md` (44px), `--dss-touch-target-lg` (52px), `--dss-touch-target-xl` (64px) | [Seção 7.2 - Touch Targets](../../../DSS_TOKEN_REFERENCE.md#72-touch-targets) | Min-height do botão por size (xs=32px, sm=36px, md=44px ✅ WCAG, lg=52px, xl=64px) |
 | **Tipografia** | `--dss-font-family-sans`, `--dss-font-weight-medium`, `--dss-line-height-tight`, `--dss-font-size-xs` a `--dss-font-size-xl` | [Seção 6 - Tipografia](../../../DSS_TOKEN_REFERENCE.md#6-tipografia) | Texto do label (size dependente: xs=12px, sm=14px, md=16px, lg=18px, xl=20px) e ícones |
-| **Capitalização** | `--dss-text-transform-control` | `tokens/semantic/_text.scss` | Capitalização do rótulo. Padrão `none` (o DSS não força maiúsculas). Aceita `none` · `uppercase` · `capitalize` · `lowercase`; a prop `no-caps` força `none` acima do valor vigente |
+| **Capitalização** | `--dss-text-transform-control` | `tokens/semantic/_text.scss` | Capitalização do rótulo. Padrão `uppercase`. Aceita `none` · `uppercase` · `capitalize` · `lowercase`; a prop `no-caps` força `none` acima do valor vigente |
 | **Bordas** | `--dss-radius-sm`, `--dss-radius-full`, `--dss-border-width-md` | [Seção 8 - Bordas](../../../DSS_TOKEN_REFERENCE.md#8-bordas) | Border radius (padrão=sm, round=full, square=0), outline variant e focus ring |
 | **Sombras** | `--dss-elevation-1`, `--dss-elevation-2`, `--dss-shadow-md` | [Seção 9 - Shadows](../../../DSS_TOKEN_REFERENCE.md#9-shadows-e-elevação) | Variant `push` e `elevated` |
 | **Acessibilidade (Focus)** | `--dss-focus-ring`, `--dss-border-width-md`, outline offset via `--dss-spacing-1` | [Seção 7.1 - Focus](../../../DSS_TOKEN_REFERENCE.md#71-focus-configurações-base) | Focus ring (WCAG 2.4.7) aplicado em `:focus-visible` |
@@ -187,25 +187,25 @@ O DssButton utiliza tokens das seguintes categorias:
 | `dense` | Boolean | `false` | - | Padding reduzido (versão compacta) |
 | `no-caps` | Boolean | `false` | - | Força capitalização natural, ignorando `--dss-text-transform-control` |
 
-> **`no-caps` e o token de capitalização.** O DSS **não** força maiúsculas: o
-> padrão de `--dss-text-transform-control` é `none` (decisão registrada em
-> `DSS_VISUAL_DEFAULTS_AUDIT.md`, linha 20 — legibilidade, alinhada a Material 3
-> / IBM Carbon / Salesforce). Logo, **no tema padrão `no-caps` não muda nada** —
-> não há maiúscula para remover. Ela serve para escapar de um contexto que tenha
-> redefinido o token:
+> **`no-caps` e o token de capitalização.** O padrão de
+> `--dss-text-transform-control` é `uppercase` (set/2026), então `no-caps` tem
+> efeito visível **sem configurar nada**: o rótulo sai em caixa natural em vez de
+> maiúsculas.
 >
-> ```scss
-> .toolbar-legada { --dss-text-transform-control: uppercase; }
-> ```
 > ```vue
 > <DssButton label="Salvar" />           <!-- SALVAR -->
 > <DssButton label="Salvar" no-caps />   <!-- Salvar -->
 > ```
 >
 > O token é um **provedor tipográfico de categoria** (rótulo de controle de
-> ação), não um token component-specific — estes foram removidos em jan/2025.
-> Até set/2026 ele não existia e a prop era **inerte**: a base fixava `none`, e a
-> classe `--no-caps` repetia esse mesmo `none`.
+> ação), não um token component-specific — estes foram removidos em jan/2025. Ele
+> é redefinível em `:root`, tema, marca, um wrapper de tela ou o próprio
+> elemento; `no-caps` escapa do valor vigente, qualquer que seja.
+>
+> Histórico: o padrão foi `none` de jan/2025 a set/2026
+> (`DSS_VISUAL_DEFAULTS_AUDIT.md`, linha 20 — legibilidade). Nesse período a prop
+> era **inerte**: a base fixava `none` e a classe `--no-caps` repetia esse mesmo
+> `none`.
 
 ### Props de Navegação (Vue Router)
 

@@ -248,9 +248,14 @@
    ==========================================================================
 
    `--dss-text-transform-control` governa a capitalização do RÓTULO de controles
-   de ação (botão, tab, toggle). Padrão `none`: o DSS não força maiúsculas —
-   decisão de legibilidade registrada em DSS_VISUAL_DEFAULTS_AUDIT.md (linha 20,
-   alinhada a Material 3 / IBM Carbon / Salesforce).
+   de ação (botão, tab, toggle). Padrão `uppercase`.
+
+   O padrão foi `none` entre jan/2025 e set/2026 — a remoção do uppercase está
+   registrada em DSS_VISUAL_DEFAULTS_AUDIT.md (linha 20), por legibilidade,
+   alinhada a Material 3 / IBM Carbon / Salesforce. REVERTIDO por decisão do dono
+   do DS (set/2026): com o padrão em `none` a prop `no-caps` não tinha o que
+   desligar e não expressava intenção nenhuma de quem escreve a tela. O racional
+   antigo continua no AUDIT, com a data da reversão — não foi apagado.
 
    POR QUE ELE EXISTE. DssTab, DssRouteTab, DssTabs e DssBtnToggle bloqueiam a
    prop `no-caps` justificando que "a capitalização é governada por CSS/tokens
@@ -274,7 +279,7 @@
 
    O consumidor escapa do valor vigente com `no-caps` no componente. */
 :root {
-  --dss-text-transform-control: none;
+  --dss-text-transform-control: uppercase;
 }
 
 /* ==========================================================================

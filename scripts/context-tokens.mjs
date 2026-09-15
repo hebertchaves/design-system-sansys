@@ -33,7 +33,13 @@ export const CONTEXT_TOKENS = [
     name: '--dss-text-transform-control',
     label: 'Capitalização',
     values: ['none', 'uppercase', 'capitalize', 'lowercase'],
-    default: 'none',
+    default: 'uppercase',
+    // Valor em que uma prop que ESCAPA deste token não tem o que fazer.
+    // Separado do `default` de propósito: eram o mesmo valor até set/2026 e
+    // dava para confundir os dois. Ao inverter o padrão para `uppercase` a
+    // confusão apareceria como aviso invertido no Preview Frame — alertando
+    // "sem efeito" justamente quando `no-caps` funciona.
+    inertWhen: 'none',
   },
 ]
 
@@ -59,5 +65,5 @@ export function contextTokensFromCss(css) {
     // dentro de um nome MAIOR — `--dss-x-control` acharia `--dss-x-control-legado`.
     // Achado pelo teste estático, não por revisão.
     .filter(t => new RegExp(`var\\(\\s*${t.name}(?![\\w-])`).test(semComentarios))
-    .map(t => ({ name: t.name, label: t.label, values: t.values, default: t.default }))
+    .map(t => ({ name: t.name, label: t.label, values: t.values, default: t.default, ...(t.inertWhen != null ? { inertWhen: t.inertWhen } : {}) }))
 }

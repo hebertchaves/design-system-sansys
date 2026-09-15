@@ -179,9 +179,9 @@ export interface ButtonProps {
   /**
    * Força capitalização natural, ignorando `--dss-text-transform-control`.
    *
-   * Sem efeito visível no padrão do DSS, cujo token já é `none` — serve para
-   * escapar de um tema, marca ou tela que o tenha redefinido (ex.: `uppercase`
-   * numa toolbar legada).
+   * O padrão do DS é `uppercase`, então ela É observável sem configurar nada:
+   * o rótulo sai em caixa natural em vez de maiúsculas. Também escapa de tema,
+   * marca ou tela que tenham redefinido o token.
    */
   noCaps?: boolean
 

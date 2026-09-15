@@ -147,10 +147,8 @@
           <DssButton dense label="Compact" />
         </PgTile>
         <PgTile code="no-caps" align="start">
-          <!-- `no-caps` só é observável onde o token de capitalização NÃO é o
-               padrão: o wrapper redefine `--dss-text-transform-control` para
-               `uppercase` (é a API pública do token — consumo, não
-               reimplementação), e aí os dois botões divergem. -->
+          <!-- Desde set/2026 o padrão do token é `uppercase`, então a prop é
+               observável sem contexto nenhum — o par abaixo diverge por si. -->
           <div class="tb-caps">
             <DssButton label="Padrão" />
             <DssButton no-caps label="no-caps" />
@@ -298,12 +296,10 @@ const brandLabel = (b: string) => ({ hub: '🟠 Hub', water: '🔵 Water', waste
 .tb-w240 { width: 240px; }
 .tb-w160 { max-width: 160px; }
 
-/* Mesma lógica para `no-caps`: no padrão do DSS o token já é `none`, então a
-   prop não teria o que desligar e o tile mostraria um modificador que não
-   modifica — que era exatamente o defeito reportado. O wrapper CONSOME o token
-   público para criar o contexto onde a prop é observável. */
+/* Só layout: o par de botões lado a lado. O `uppercase` que este wrapper
+   forçava saiu — virou o padrão do DS (set/2026), e mantê-lo aqui esconderia
+   uma eventual regressão no token. */
 .tb-caps {
-  --dss-text-transform-control: uppercase;
   display: flex;
   gap: var(--dss-spacing-2);
   align-items: center;

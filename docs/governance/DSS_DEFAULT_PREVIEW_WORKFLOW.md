@@ -179,16 +179,19 @@ módulo do `DssTab`. No fonte pareceria não usar o token; no compilado, usa.
 ### Prova manual (Preview Frame de um componente que consome o token)
 
 1. `npm run sandbox:dev` → **DssButton › Preview Frame**
-2. Cabeçalho: **Capitalização** → `uppercase`. O rótulo do sujeito vira `BUTTON`.
+2. O palco abre no padrão do DS — **Capitalização `uppercase`**, rótulo `BUTTON`.
    *Se o controle não existir*, o contrato não declarou — rode
    `node scripts/emit-contract.mjs DssButton --write` e confira
    `visual.contextTokens`.
-3. Ligue o knob **noCaps**. O rótulo volta a `Button`, **sem** mexer no controle
-   de contexto — é a prop escapando do ambiente.
-4. O snippet no rodapé acompanha (`… noCaps />`).
+3. Ligue o knob **noCaps**. O rótulo vira `Button`, **sem** mexer no controle de
+   contexto — é a prop escapando do ambiente.
+4. Ponha **Capitalização** em `none`. O aviso âmbar aparece no knob (*"sem efeito
+   agora"*) e ligar/desligar `noCaps` não muda nada — correto: não há maiúscula
+   para remover. Este é o `inertWhen` do contrato, que NÃO é o `default`.
+5. O snippet no rodapé acompanha (`… noCaps />`).
 
-Se o passo 2 funciona e o 3 não, o problema é do componente; se o 2 não funciona,
-é da cadeia acima.
+Se o passo 3 não funciona, o problema é do componente; se o palco não abre em
+`uppercase` no passo 2, é da cadeia acima.
 
 ### Prova automatizada
 

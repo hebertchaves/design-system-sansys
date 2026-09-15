@@ -44,12 +44,17 @@ describe('Registro de tokens de contexto', () => {
     }
   })
 
-  it('o token de capitalização está registrado e tem `none` como padrão do DS', () => {
+  it('o token de capitalização tem `uppercase` como padrão e `none` como neutro', () => {
     const t = CONTEXT_TOKENS.find(x => x.name === TOKEN)
     expect(t).toBeDefined()
-    // O DSS não força maiúsculas (DSS_VISUAL_DEFAULTS_AUDIT, linha 20). Se este
-    // default virar `uppercase`, TODO botão e TODA aba do DS mudam de aparência.
-    expect(t!.default).toBe('none')
+    // Mudar qualquer um destes dois muda a aparência de TODO botão, aba e toggle
+    // dos três produtos. O padrão foi `none` até set/2026 (reversão registrada em
+    // DSS_VISUAL_DEFAULTS_AUDIT.md).
+    expect(t!.default).toBe('uppercase')
+    // NEUTRO ≠ PADRÃO. Eram o mesmo `none` e dava para confundir; com o padrão em
+    // `uppercase`, usar o default como neutro inverte o aviso do Preview Frame.
+    expect(t!.inertWhen).toBe('none')
+    expect(t!.inertWhen).not.toBe(t!.default)
   })
 
   it('o default do registro é o MESMO valor declarado na camada de tokens', () => {
@@ -104,7 +109,8 @@ describe('Contratos emitidos', () => {
       const achado = ct.find((t: { name: string }) => t.name === TOKEN)
       expect(achado, `${nome} perdeu o controle de contexto`).toBeDefined()
       expect(achado.values).toContain('uppercase')
-      expect(achado.default).toBe('none')
+      expect(achado.default).toBe('uppercase')
+      expect(achado.inertWhen).toBe('none')
     }
   )
 
@@ -165,6 +171,11 @@ describe('Fiação do Preview Frame', () => {
     const src = frame()
     expect(src).toMatch(/function inerte\(k\)/)
     expect(src).toMatch(/class="pv__inert"/)
+    // Compara com o NEUTRO, não com o default: com o padrão em `uppercase`,
+    // comparar com o default avisaria "sem efeito" no estado em que a prop
+    // funciona — o aviso pelo avesso.
+    expect(src).toMatch(/const neutro = ct\.inertWhen/)
+    expect(src).not.toMatch(/contextState\[ct\.name\] === ct\.default/)
     // O aviso é sobre o ESTADO atual, não sobre a prop: "sem efeito agora".
     expect(src).toMatch(/sem efeito agora/)
   })

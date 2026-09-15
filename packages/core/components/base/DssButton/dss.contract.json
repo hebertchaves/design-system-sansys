@@ -1212,7 +1212,8 @@
           "capitalize",
           "lowercase"
         ],
-        "default": "none"
+        "default": "uppercase",
+        "inertWhen": "none"
       }
     ]
   },

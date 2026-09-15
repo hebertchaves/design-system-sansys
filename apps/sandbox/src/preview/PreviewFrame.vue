@@ -217,18 +217,23 @@ const frameEl = ref(null)
  * Knob que depende de CONTEXTO e está inerte no valor atual do palco.
  *
  * Genérico, sem lista por componente: a descrição da prop (vinda do contrato)
- * CITA o token do qual ela escapa; se esse token está no valor padrão, a prop
+ * CITA o token do qual ela escapa; se esse token está no valor NEUTRO, a prop
  * não tem o que fazer. É o caso do `noCaps` com Capitalização `none` — mexer no
  * knob não muda nada, e sem este aviso o palco parece quebrado.
  *
- * Diz só o que sabe: "sem efeito agora", não "sem efeito". Qual valor do token
- * torna a prop observável é coisa do componente, não do frame.
+ * O valor neutro é `inertWhen`, do contrato — NÃO o `default`. Os dois eram o
+ * mesmo `none` até set/2026, e tratá-los como sinônimo passava despercebido;
+ * quando o padrão virou `uppercase`, comparar com o default inverteria o aviso:
+ * "sem efeito" apareceria justamente no estado em que a prop funciona.
+ *
+ * Diz só o que sabe: "sem efeito agora", não "sem efeito".
  */
 function inerte(k) {
   if (!k.description) return null
   for (const ct of contextTokens.value) {
     if (!k.description.includes(ct.name)) continue
-    if (contextState[ct.name] === ct.default) return { label: ct.label, valor: ct.default }
+    const neutro = ct.inertWhen
+    if (neutro != null && contextState[ct.name] === neutro) return { label: ct.label, valor: neutro }
   }
   return null
 }

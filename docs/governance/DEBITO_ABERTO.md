@@ -173,12 +173,24 @@
   `uppercase` → `uppercase`. No DssBtnToggle o `q-btn--no-uppercase` sumiu do DOM e o computado
   seguiu `none` — aparência intacta, fonte de verdade movida do Quasar para o DSS.
 
-  **⚠️ Em aberto — decisão VISUAL, não técnica.** O `DssTab` MUDOU de aparência: renderizava
-  MAIÚSCULAS (herança do Quasar) e agora segue o padrão do DS (`none`). Isso atinge telas reais
-  — na página Parcelamento as abas passaram de `FINANCEIRO` para `Financeiro`. É o padrão do DS
-  aplicado com consistência (DSS_VISUAL_DEFAULTS_AUDIT, linha 20), mas as abas foram desenhadas
-  sob o comportamento antigo. Se a decisão for manter abas em caixa alta, o caminho é
-  `--dss-text-transform-control: uppercase` no escopo das abas — **não** voltar o valor fixo.
+  **RESOLVIDO o item visual** (set/2026, mesma onda): o padrão do token passou a `uppercase` por
+  decisão do dono do DS, então `DssTab`/`DssRouteTab` voltaram ao que sempre renderizaram e o
+  `DssButton` mudou. Reversão registrada em `DSS_VISUAL_DEFAULTS_AUDIT.md`.
+
+  **🔴 CORREÇÃO DE UM REGISTRO ERRADO MEU.** A versão anterior desta entrada dizia que na página
+  Parcelamento as abas "passaram de `FINANCEIRO` para `Financeiro`". **Falso.** Aquela página
+  injeta `text-transform: none` dentro de `:deep(.q-tab)` (TestParcelamento.vue:710) — sempre
+  venceu tudo, antes e depois. Nunca renderizou `FINANCEIRO`. Eu não medi o estado ANTERIOR: medi
+  depois da mudança, provei à parte que `.q-tab` solto é `uppercase` e **inferi** a transição. O
+  elemento sintético que usei como prova estava fora do `.parc__bar`, então não carregava o
+  override da página.
+
+  **Em aberto (achado novo).** As páginas de PATTERN injetam tipografia nas abas por `:deep()`,
+  cada uma com seu valor — `TestParcelamento` (`none`), `TestParcelamentoClaude` e
+  `TestAtenderSolicitacoesClaude` (`uppercase`). Isso passa por cima do token e torna a
+  capitalização ingovernável por tela. O caminho limpo é a página CONSUMIR o token no container
+  (`--dss-text-transform-control: none`) em vez de injetar CSS no componente. Não refatorado
+  aqui: são réplicas fiéis de telas legadas, fora do escopo pedido.
 
   **Também em aberto:** os quatro são componentes SELADOS. A mudança exige reemissão de selo
   (v2.2) — não feita aqui.
