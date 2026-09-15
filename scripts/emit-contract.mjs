@@ -27,7 +27,7 @@ import fs   from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { extractStates, compiledCss } from './extract-css-states.mjs'
-import { CONTEXT_TOKENS } from './context-tokens.mjs'
+import { contextTokensFromCss } from './context-tokens.mjs'
 import { checkContrast, hasCssRule, resolveToken } from './wcag-kit.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -244,11 +244,7 @@ function buildTokens(states, meta) {
 function buildContextTokens(compDir) {
   let css
   try { css = compiledCss(compDir) } catch { return [] }
-  if (!css) return []
-  const semComentarios = css.replace(/\/\*[\s\S]*?\*\//g, ' ')
-  return CONTEXT_TOKENS
-    .filter(t => new RegExp(`var\\(\\s*${t.name}\\b`).test(semComentarios))
-    .map(t => ({ name: t.name, label: t.label, values: t.values, default: t.default }))
+  return contextTokensFromCss(css)
 }
 
 // ── a11y ← meta.a11y VERIFICADO (âncora css/aria/test) ───────────────────────

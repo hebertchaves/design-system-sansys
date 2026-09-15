@@ -153,6 +153,56 @@ Copia `scripts/hooks/pre-commit` para `.git/hooks/pre-commit` e torna executáve
 
 ---
 
+## 6-bis. Tokens de CONTEXTO no Preview Frame (e como testá-los)
+
+Nem toda prop pinta alguma coisa. Algumas só **escapam** de um token de ambiente
+— `no-caps` do DssButton é o caso: ela força `none` por cima de
+`--dss-text-transform-control`. Num palco onde o token vale o padrão (`none`),
+ligar e desligar dá na mesma, e o knob parece quebrado sem estar.
+
+Por isso o Preview Frame tem **controles de contexto** no cabeçalho, ao lado de
+Tema e Brand — mesma categoria: ambiente que o sujeito herda, não prop que ele
+recebe.
+
+**Nada é declarado por componente.** A cadeia é derivada:
+
+| elo | arquivo | papel |
+| :--- | :--- | :--- |
+| registro | `scripts/context-tokens.mjs` | o que PODE ser dirigido (herdável, valores fechados) |
+| derivação | `scripts/emit-contract.mjs` | quem de fato CONSOME — varre o **CSS compilado** → `visual.contextTokens` |
+| host | `apps/sandbox/src/preview/PreviewFrame.vue` | um `<select>` por token declarado |
+| sujeito | `apps/sandbox/src/preview/PreviewSubject.vue` | aplica no `<html>` do realm |
+
+Varre o compilado, não o fonte: o `DssRouteTab` não declara nada — importa o
+módulo do `DssTab`. No fonte pareceria não usar o token; no compilado, usa.
+
+### Prova manual (Preview Frame de um componente que consome o token)
+
+1. `npm run sandbox:dev` → **DssButton › Preview Frame**
+2. Cabeçalho: **Capitalização** → `uppercase`. O rótulo do sujeito vira `BUTTON`.
+   *Se o controle não existir*, o contrato não declarou — rode
+   `node scripts/emit-contract.mjs DssButton --write` e confira
+   `visual.contextTokens`.
+3. Ligue o knob **noCaps**. O rótulo volta a `Button`, **sem** mexer no controle
+   de contexto — é a prop escapando do ambiente.
+4. O snippet no rodapé acompanha (`… noCaps />`).
+
+Se o passo 2 funciona e o 3 não, o problema é do componente; se o 2 não funciona,
+é da cadeia acima.
+
+### Prova automatizada
+
+`apps/sandbox/tests/regression/static/context-tokens.spec.ts` — roda no
+pre-commit (`cd apps/sandbox && npm run test:static`). Cobre os **elos**, que é
+onde a regressão é silenciosa: registro bem-formado · derivação detecta consumo
+e **ignora menção em comentário** · os 4 contratos que devem ter o campo o têm e
+o `DssTabs` não · o frame lê/renderiza/envia e o sujeito aplica no `<html>`.
+
+O que ele **não** cobre: a mudança visual no palco (exige iframe + postMessage em
+browser real). Para isso, a receita manual acima.
+
+---
+
 ## 7. Relação com Outros Documentos
 
 | Documento | Relação |

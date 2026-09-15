@@ -38,3 +38,26 @@ export const CONTEXT_TOKENS = [
 ]
 
 export const CONTEXT_TOKEN_NAMES = CONTEXT_TOKENS.map(t => t.name)
+
+/**
+ * Quais tokens do registro este CSS de fato consome.
+ *
+ * Recebe CSS (não um diretório) de propósito: é o pedaço que pode falhar em
+ * silêncio, e assim fica testável sem compilar componente nenhum — ver
+ * apps/sandbox/tests/regression/static/context-tokens.spec.ts.
+ *
+ * O strip de comentário não é zelo: o `_base.scss` do DssButton CITA o nome do
+ * token na prosa que explica a regra, e o Sass preserva comentário de bloco no
+ * output. Sem ele, escrever a documentação do conserto faria o emissor
+ * "descobrir" o token em quem não o consome.
+ */
+export function contextTokensFromCss(css) {
+  if (!css) return []
+  const semComentarios = String(css).replace(/\/\*[\s\S]*?\*\//g, ' ')
+  return CONTEXT_TOKENS
+    // `(?![\w-])` e não `\b`: hífen é não-palavra, então `\b` casaria o token
+    // dentro de um nome MAIOR — `--dss-x-control` acharia `--dss-x-control-legado`.
+    // Achado pelo teste estático, não por revisão.
+    .filter(t => new RegExp(`var\\(\\s*${t.name}(?![\\w-])`).test(semComentarios))
+    .map(t => ({ name: t.name, label: t.label, values: t.values, default: t.default }))
+}
