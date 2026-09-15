@@ -51,6 +51,20 @@ describe('Registro de tokens de contexto', () => {
     // default virar `uppercase`, TODO botão e TODA aba do DS mudam de aparência.
     expect(t!.default).toBe('none')
   })
+
+  it('o default do registro é o MESMO valor declarado na camada de tokens', () => {
+    // O `default` do registro é escrito à mão; o valor que vale em produção mora
+    // no SCSS. Nada amarrava os dois. Se divergirem, o Preview Frame abre num
+    // valor que não é o do DS — e o palco passa a mentir sobre o padrão, que é
+    // exatamente o que o Preview Frame existe para não fazer.
+    const scss = ler('packages/core/tokens/semantic/_text.scss')
+    for (const t of CONTEXT_TOKENS) {
+      const m = scss.match(new RegExp(`^\\s*${t.name}:\\s*([^;]+);`, 'm'))
+      expect(m, `${t.name} não está declarado em tokens/semantic/_text.scss`).not.toBeNull()
+      expect(m![1].trim(), `registro diz "${t.default}", o token diz "${m![1].trim()}"`)
+        .toBe(t.default)
+    }
+  })
 })
 
 describe('Derivação a partir do CSS', () => {
