@@ -436,19 +436,37 @@
   justify-content: space-evenly;
 }
 
-/* Stack - layout vertical */
+/* Stack — layout vertical (ícone sobre rótulo)
+   ==========================================================================
+
+   Empilhado, a balança do espaço se inverte e os valores do layout horizontal
+   param de servir. Medido no `md` antes deste ajuste: `gap` 8px herdado do
+   lado-a-lado e `padding-block` 0/0 — o ícone encostava no topo e o rótulo na
+   base (46px de altura), com todo o espaço vertical entre os dois e nenhum em
+   volta. Lido como um bloco solto dentro do botão.
+
+   Agora: 4px ENTRE ícone e rótulo (eles são uma unidade) e 8px de respiro em
+   volta. O dobro fora do que dentro — é o que faz os dois lerem como um só
+   elemento em vez de dois empilhados.
+
+   O `padding-block` genérico existe para o `md`, o único tamanho sem regra
+   própria de padding (herda `0` do bloco base, onde `min-height` governa a
+   altura). Os demais RESTAURAM o seu, logo abaixo: sem isso, esta regra
+   achataria `lg` (12px) e `xl` (16px) para 8px.
+
+   `padding-block`, não `padding`: o shorthand zeraria o padding horizontal do
+   tamanho. */
 .dss-button--stack {
   flex-direction: column;
-
-  .dss-button__icon {
-    margin: 0 0 var(--dss-spacing-1) 0;
-  }
-
-  .dss-button__icon--left,
-  .dss-button__icon--right {
-    margin: 0;
-  }
+  gap: var(--dss-spacing-1);
+  padding-block: var(--dss-spacing-2);
 }
+
+/* Cada tamanho reassume seu respiro vertical (o mesmo que usa deitado). */
+.dss-button--stack.dss-button--xs { padding-block: var(--dss-spacing-1); }
+.dss-button--stack.dss-button--sm { padding-block: var(--dss-spacing-2); }
+.dss-button--stack.dss-button--lg { padding-block: var(--dss-spacing-3); }
+.dss-button--stack.dss-button--xl { padding-block: var(--dss-spacing-4); }
 
 /* Stretch - expande para preencher */
 .dss-button--stretch {

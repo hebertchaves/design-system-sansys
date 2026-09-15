@@ -753,15 +753,33 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "margin",
+          "property": "gap",
           "token": "--dss-spacing-1",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "margin",
-          "token": null,
-          "value": "0",
+          "property": "padding-block",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-spacing-4",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
