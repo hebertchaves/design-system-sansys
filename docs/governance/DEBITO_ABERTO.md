@@ -185,12 +185,19 @@
   elemento sintético que usei como prova estava fora do `.parc__bar`, então não carregava o
   override da página.
 
-  **Em aberto (achado novo).** As páginas de PATTERN injetam tipografia nas abas por `:deep()`,
-  cada uma com seu valor — `TestParcelamento` (`none`), `TestParcelamentoClaude` e
-  `TestAtenderSolicitacoesClaude` (`uppercase`). Isso passa por cima do token e torna a
-  capitalização ingovernável por tela. O caminho limpo é a página CONSUMIR o token no container
-  (`--dss-text-transform-control: none`) em vez de injetar CSS no componente. Não refatorado
-  aqui: são réplicas fiéis de telas legadas, fora do escopo pedido.
+  **RESOLVIDO (set/2026).** As páginas de PATTERN injetavam tipografia nas abas por `:deep()`,
+  cada uma com seu valor, passando por cima do token. As três passaram a CONSUMIR o token no
+  container — `TestParcelamento` (`none`), `TestParcelamentoClaude` e
+  `TestAtenderSolicitacoesClaude` (`uppercase`). O valor ficou EXPLÍCITO em vez de herdado: são
+  réplicas de telas legadas e precisam ficar estáveis se o padrão do DS mudar outra vez.
+  Medido antes e depois: `none` e `uppercase` idênticos — mesma aparência, mecanismo governado.
+
+  Fora do escopo do token e mantidos: `text-transform` em CSS próprio das páginas (eyebrow,
+  badge, `dt`, rótulo de seção) e em `:deep(thead th)` — cabeçalho de tabela não é rótulo de
+  controle de ação.
+
+  ⚠️ `TestAtenderSolicitacoesClaude.vue` **não está roteada** no `TestSuite.vue` (zero
+  referências): foi refatorada por leitura, sem verificação visual possível no sandbox.
 
   **Também em aberto:** os quatro são componentes SELADOS. A mudança exige reemissão de selo
   (v2.2) — não feita aqui.

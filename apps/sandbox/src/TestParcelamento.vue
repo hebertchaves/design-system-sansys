@@ -702,12 +702,18 @@ function rowAction(action: string, row: Row) {
   border-radius: var(--dss-radius-md, 8px);
   overflow: hidden;
 
+  /* Capitalização: CONSOME o token público em vez de injetar `text-transform`
+     no `.q-tab` por `:deep()`. Mesmo resultado (`none`), mas a tela passa a
+     falar a língua do DS — e deixa de disputar a cascata com o componente.
+     Esta tela replica um legado em caixa natural, por isso o valor é explícito
+     e não herda o padrão do DS (hoje `uppercase`). */
+  &__bar { --dss-text-transform-control: none; }
+
   &__bar :deep(.q-tab) {
     min-height: 56px;
     font-weight: 500;
     font-size: 0.875rem;
     letter-spacing: 0.3px;
-    text-transform: none;
     transition: background 150ms ease;
   }
   &__bar :deep(.q-tab:hover):not(.q-tab--active) {

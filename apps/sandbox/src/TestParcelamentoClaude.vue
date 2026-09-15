@@ -1030,6 +1030,12 @@ function openDetail(row: Row) {
 }
 
 .pc-tabs {
+  // Capitalização: CONSOME o token público em vez de injetar `text-transform`
+  // no `.q-tab` por `:deep()`. Mesmo resultado, mas sem disputar a cascata com
+  // o componente. Explícito, e não herdado: esta tela é réplica PIXEL de um
+  // legado — precisa ficar estável mesmo se o padrão do DS mudar de novo.
+  --dss-text-transform-control: uppercase;
+
   // Tabs inativos: opacidade reduzida (rgba branco 75% → opacity-75 no elemento)
   :deep(.q-tab) {
     color: var(--dss-text-inverse) !important;
@@ -1038,7 +1044,6 @@ function openDetail(row: Row) {
     font-weight: var(--dss-font-weight-medium);
     // 48px → --dss-spacing-12: 48px
     min-height: var(--dss-spacing-12);
-    text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: opacity var(--dss-duration-200) var(--dss-easing-standard),
                 background var(--dss-duration-200) var(--dss-easing-standard);

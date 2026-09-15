@@ -885,13 +885,18 @@ function rowAction(action: string, row: Row) { console.log('[AtenderClaude]', ac
 }
 
 .as-tabs {
+  // Capitalização: CONSOME o token público em vez de injetar `text-transform`
+  // no `.q-tab` por `:deep()`. Mesmo resultado, sem disputar a cascata com o
+  // componente. Explícito, e não herdado: réplica de tela legada, precisa ficar
+  // estável se o padrão do DS mudar.
+  --dss-text-transform-control: uppercase;
+
   // Tab inativo: opacidade reduzida
   :deep(.q-tab) {
     color: var(--dss-text-inverse) !important;
     opacity: var(--dss-opacity-75);
     // 44px → --dss-spacing-11
     min-height: var(--dss-spacing-11);
-    text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: opacity var(--dss-duration-200) var(--dss-easing-standard),
                 background var(--dss-duration-200) var(--dss-easing-standard);
