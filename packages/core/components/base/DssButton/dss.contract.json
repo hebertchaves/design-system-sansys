@@ -160,7 +160,7 @@
         "name": "noCaps",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita text-transform: uppercase"
+        "description": "Força capitalização natural, ignorando `--dss-text-transform-control`."
       },
       {
         "name": "align",
@@ -328,8 +328,8 @@
         },
         {
           "property": "text-transform",
-          "token": null,
-          "value": "none",
+          "token": "--dss-text-transform-control",
+          "value": null,
           "source": "2-composition/_base.scss"
         },
         {
@@ -414,6 +414,12 @@
           "property": "-webkit-tap-highlight-color",
           "token": null,
           "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-transform",
+          "token": null,
+          "value": "none",
           "source": "2-composition/_base.scss"
         },
         {
@@ -1238,6 +1244,12 @@
       },
       {
         "name": "--dss-line-height-sm-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-transform-control",
         "usedIn": [
           "default"
         ]

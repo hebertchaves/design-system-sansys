@@ -51,9 +51,18 @@
   font-size: var(--dss-font-size-sm);
   font-weight: var(--dss-font-weight-medium);
   line-height: var(--dss-line-height-sm-tight);
-  /* DSS Visual Standard: sem uppercase — alinhado com Material 3, IBM Carbon, Salesforce Lightning.
-     Ref: DSS_VISUAL_DEFAULTS_STANDARD.md */
-  text-transform: none;
+  /* Capitalização do rótulo — governada por TOKEN, não fixada aqui.
+     Padrão `none`: o DSS não força maiúsculas (Material 3, IBM Carbon,
+     Salesforce Lightning). Ref: DSS_VISUAL_DEFAULTS_AUDIT.md, linha 20.
+
+     Era `none` FIXO, e esse era o bug: a prop `no-caps` não tinha o que
+     desligar — `.dss-button--no-caps` declarava o mesmo `none` que a base já
+     declarava, e a prop era inerte (medido: text-transform computado `none`
+     com e sem ela). Lendo o token, o padrão continua idêntico e a prop passa a
+     ser um override REAL de quem redefiniu o token — tema, marca, wrapper de
+     tela ou o próprio elemento.
+     Ref: tokens/semantic/_text.scss → --dss-text-transform-control */
+  text-transform: var(--dss-text-transform-control, none);
   /* EXCEÇÃO DOCUMENTADA: letter-spacing neutro para text-transform: none.
      Material 3 e IBM Carbon não usam letter-spacing em botões sem uppercase. */
   letter-spacing: 0.01em;
@@ -93,7 +102,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Remove uppercase if noCaps */
+/* Escape hatch da capitalização: força `none` seja qual for o valor vigente de
+   `--dss-text-transform-control`.
+
+   Vence a base por ORDEM, não por especificidade — `.dss-button` e
+   `.dss-button--no-caps` empatam em (0,1,0) e esta regra vem depois. Por isso
+   ela declara `text-transform` direto em vez de só redefinir o token: assim o
+   override independe de onde o token foi setado (inclusive inline no elemento,
+   que ganharia de qualquer redefinição nossa via classe). */
 .dss-button--no-caps {
   text-transform: none;
 }

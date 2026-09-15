@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-09-11. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-09-15. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -241,6 +241,40 @@
   --dss-text-brand-hub: var(--dss-hub-500);
   --dss-text-brand-water: var(--dss-water-500);
   --dss-text-brand-waste: var(--dss-waste-500);
+}
+
+/* ==========================================================================
+   TEXT TRANSFORM — capitalização de rótulo de controle
+   ==========================================================================
+
+   `--dss-text-transform-control` governa a capitalização do RÓTULO de controles
+   de ação (botão, tab, toggle). Padrão `none`: o DSS não força maiúsculas —
+   decisão de legibilidade registrada em DSS_VISUAL_DEFAULTS_AUDIT.md (linha 20,
+   alinhada a Material 3 / IBM Carbon / Salesforce).
+
+   POR QUE ELE EXISTE. DssTab, DssRouteTab, DssTabs e DssBtnToggle bloqueiam a
+   prop `no-caps` justificando que "a capitalização é governada por CSS/tokens
+   DSS". Até set/2026 esse token NÃO EXISTIA: a justificativa apontava para o
+   vazio, e o DssButton, que expunha a prop, aplicava `none` fixo — a prop não
+   tinha o que desligar e era inerte. Este token é o "tokens" daquela frase.
+
+   NÃO é token component-specific (aqueles foram removidos em jan/2025 —
+   "Tokens = Provedores, Componentes = Consumidores"): é um provedor tipográfico
+   de categoria, consumido por qualquer controle de ação.
+
+   Valores: `none` | `uppercase` | `capitalize` | `lowercase`.
+
+   Escopo `:root` e não a lista de scopes: o valor não deriva de PRIMITIVO, então
+   não precisa recomputar em contexto aninhado — herda como qualquer custom
+   property e pode ser redefinido em qualquer nível (tema, marca, um wrapper de
+   tela, o próprio elemento).
+
+     :root           { --dss-text-transform-control: uppercase; }  → todo o app
+     .toolbar-legada { --dss-text-transform-control: uppercase; }  → só ali
+
+   O consumidor escapa do valor vigente com `no-caps` no componente. */
+:root {
+  --dss-text-transform-control: none;
 }
 
 /* ==========================================================================

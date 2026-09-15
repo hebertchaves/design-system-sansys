@@ -147,7 +147,14 @@
           <DssButton dense label="Compact" />
         </PgTile>
         <PgTile code="no-caps" align="start">
-          <DssButton no-caps label="Texto Normal" />
+          <!-- `no-caps` só é observável onde o token de capitalização NÃO é o
+               padrão: o wrapper redefine `--dss-text-transform-control` para
+               `uppercase` (é a API pública do token — consumo, não
+               reimplementação), e aí os dois botões divergem. -->
+          <div class="tb-caps">
+            <DssButton label="Padrão" />
+            <DssButton no-caps label="no-caps" />
+          </div>
         </PgTile>
         <PgTile code='padding="20px 40px"' align="start">
           <DssButton padding="20px 40px" label="Padding custom" />
@@ -290,4 +297,15 @@ const brandLabel = (b: string) => ({ hub: '🟠 Hub', water: '🔵 Water', waste
    botão encolhe até o conteúdo e os dois viram no-op visual. */
 .tb-w240 { width: 240px; }
 .tb-w160 { max-width: 160px; }
+
+/* Mesma lógica para `no-caps`: no padrão do DSS o token já é `none`, então a
+   prop não teria o que desligar e o tile mostraria um modificador que não
+   modifica — que era exatamente o defeito reportado. O wrapper CONSOME o token
+   público para criar o contexto onde a prop é observável. */
+.tb-caps {
+  --dss-text-transform-control: uppercase;
+  display: flex;
+  gap: var(--dss-spacing-2);
+  align-items: center;
+}
 </style>

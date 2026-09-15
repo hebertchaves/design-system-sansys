@@ -143,6 +143,28 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🟡 **Quatro componentes selados alegam capitalização "governada por CSS/tokens" — e o token
+  acabou de nascer** (set/2026, ao consertar `no-caps` do DssButton).
+
+  `DssTab`, `DssRouteTab`, `DssTabs` e `DssBtnToggle` BLOQUEIAM a prop `no-caps` com esta
+  justificativa, registrada inclusive no selo v2.2 do DssTab:
+
+  > "no-caps: transformação de texto governada por tokens, não configurável pelo consumidor"
+
+  **Até set/2026 esse token não existia.** A justificativa apontava para o vazio: os quatro
+  fixam capitalização no CSS (ou simplesmente não a declaram), e o DssButton — que expunha a
+  prop — fixava `text-transform: none` na base, deixando `no-caps` **inerte**: a classe
+  `--no-caps` repetia o mesmo `none`. Medido no navegador: computado `none` com e sem a prop.
+
+  **Feito:** criado `--dss-text-transform-control` (`tokens/semantic/_text.scss`, padrão `none`)
+  e o DssButton passou a lê-lo, tornando a prop um override real.
+
+  **Em aberto:** os quatro selados ainda não consomem o token — a frase dos selos continua
+  parcialmente a descoberto. Não foram tocados aqui por serem componentes selados (mexer exige
+  reemissão de selo). Ao reabrir cada um, trocar o `text-transform` fixo por
+  `var(--dss-text-transform-control, none)`. Custo estimado: 1 linha por componente.
+
+
 - 🟡 **O corpus de `dss.meta.json` tem DUAS grafias para os mesmos fatos** (medido set/2026, ao
   consertar o `query_component` do MCP).
 

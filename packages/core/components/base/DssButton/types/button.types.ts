@@ -176,7 +176,13 @@ export interface ButtonProps {
   /** Modo compacto (reduz padding) */
   dense?: boolean
 
-  /** Desabilita text-transform: uppercase */
+  /**
+   * Força capitalização natural, ignorando `--dss-text-transform-control`.
+   *
+   * Sem efeito visível no padrão do DSS, cujo token já é `none` — serve para
+   * escapar de um tema, marca ou tela que o tenha redefinido (ex.: `uppercase`
+   * numa toolbar legada).
+   */
   noCaps?: boolean
 
   /** Alinhamento interno do conteúdo */
