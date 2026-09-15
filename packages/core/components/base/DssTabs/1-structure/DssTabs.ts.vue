@@ -12,7 +12,7 @@
  * - Bloqueia props de cor (active-color, active-bg-color, indicator-color)
  *   — DSS governa cores via tokens no DssTab
  * - Bloqueia `ripple` (sempre false) — DSS governa feedback visual
- * - Bloqueia `no-caps` — governado por CSS/tokens DSS
+ * - Bloqueia `no-caps` — governado por `--dss-text-transform-control`
  * - Impõe ícones oficiais DSS nas setas de navegação (chevron_left/right)
  * - Propaga [data-brand] para coloração automática dos DssTab filhos
  *
@@ -21,7 +21,10 @@
  * - active-bg-color: tokens DSS no DssTab governam cor de fundo ativa
  * - indicator-color: tokens DSS no DssTab governam cor do indicador
  * - ripple: desativado permanentemente (:ripple="false")
- * - no-caps: CSS/tokens DSS controlam transformação de texto
+ * - no-caps: governado por `--dss-text-transform-control` (padrão `none`).
+ *   A declaração NÃO mora aqui: o container não tem rótulo próprio, e quem
+ *   carrega o texto é a DssTab filha — é o `.dss-tab` que lê o token. Uma
+ *   regra de capitalização neste container seria inerte.
  *
  * Regra de Composição v2.4:
  * - Aceita apenas DssTab (ou DssRouteTab futuro) em seu slot default

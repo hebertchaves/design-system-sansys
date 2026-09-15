@@ -15,7 +15,7 @@
  *
  * Props bloqueadas:
  * - ripple: desativado por padrão (:ripple="false")
- * - no-caps: governado pelo CSS/tokens DSS, não por prop
+ * - no-caps: governado por `--dss-text-transform-control` (2-composition/_base.scss)
  *
  * @version 1.0.0
  */

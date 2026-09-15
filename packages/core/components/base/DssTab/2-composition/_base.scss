@@ -23,6 +23,19 @@
   line-height: var(--dss-line-height-sm-tight);
   color: var(--dss-text-subtle);
 
+  // Capitalização — governada por TOKEN, não pelo Quasar.
+  //
+  // O `no-caps` é prop BLOQUEADA aqui (e no DssRouteTab) sob a justificativa
+  // de que "a capitalização é governada por CSS/tokens DSS". Até set/2026 a
+  // frase apontava para o vazio: o token não existia E esta camada não
+  // declarava `text-transform`, então quem mandava era o Quasar —
+  // `.q-tab { text-transform: uppercase }`. A aba renderizava MAIÚSCULA,
+  // contra o padrão do DS (DSS_VISUAL_DEFAULTS_AUDIT, linha 20).
+  //
+  // Esta linha faz a justificativa do selo virar verdade. Vale para o
+  // DssRouteTab também: ele reaproveita `.dss-tab` por inteiro.
+  text-transform: var(--dss-text-transform-control, none);
+
   // ------------------------------------------------------------------
   // Dimensões e layout
   // ------------------------------------------------------------------

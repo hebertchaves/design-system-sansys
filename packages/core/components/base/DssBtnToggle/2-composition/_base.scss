@@ -32,6 +32,29 @@
 }
 
 /* ==========================================================================
+   CAPITALIZAÇÃO DOS RÓTULOS — via token
+
+   `no-caps` é prop BLOQUEADA aqui sob a justificativa de que a capitalização
+   é "governada por tokens, não configurável pelo consumidor" (selo v2.2).
+   Até set/2026 ela era, na verdade, governada por uma PROP DO QUASAR: o
+   template passava `no-caps` fixo ao QBtnToggle, que repassava a cada QBtn
+   interno. Funcionava, mas a fonte de verdade estava no Quasar, não no DSS —
+   e o token citado pelo selo não existia.
+
+   Agora a regra é nossa e lê o token. O `.q-btn` do Quasar declara
+   `text-transform: uppercase` em @layer, e escopo unlayered vence layered
+   (Constituição #3) — esta regra ganha sem `!important`.
+
+   Gate de Composição v2.4 — mesmo EXC do bloco de border-radius abaixo:
+   `.q-btn-item` é seletor interno do QBtnToggle, registrado em
+   dss.meta.json → gateExceptions.compositionGateV24.
+   ========================================================================== */
+
+.dss-btn-toggle > .q-btn-item {
+  text-transform: var(--dss-text-transform-control, none);
+}
+
+/* ==========================================================================
    GERENCIAMENTO DE BORDER-RADIUS DOS BOTÕES INTERNOS
 
    O QBtnToggle renderiza cada opção como um elemento com classe .q-btn-item.

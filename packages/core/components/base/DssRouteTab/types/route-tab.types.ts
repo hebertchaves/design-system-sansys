@@ -23,7 +23,7 @@
  *
  * Props bloqueadas:
  * - ripple: desativado por padrão (:ripple="false") — DSS governa feedback visual
- * - no-caps: governado pelo CSS/tokens DSS, não por prop
+ * - no-caps: governado por `--dss-text-transform-control`, via `.dss-tab` do DssTab
  * - color, text-color: governados por tokens DSS/brands, não por prop
  */
 export interface RouteTabProps {

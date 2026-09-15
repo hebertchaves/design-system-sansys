@@ -143,8 +143,9 @@
 
 ## Débito de fundo (ondas anteriores)
 
-- 🟡 **Quatro componentes selados alegam capitalização "governada por CSS/tokens" — e o token
-  acabou de nascer** (set/2026, ao consertar `no-caps` do DssButton).
+- 🟢 **Quatro componentes selados alegavam capitalização "governada por CSS/tokens" sem que o
+  token existisse — resolvido** (set/2026, na sequência do conserto do `no-caps` do DssButton).
+  Resta apenas decidir o item de VISUAL abaixo e reemitir selos.
 
   `DssTab`, `DssRouteTab`, `DssTabs` e `DssBtnToggle` BLOQUEIAM a prop `no-caps` com esta
   justificativa, registrada inclusive no selo v2.2 do DssTab:
@@ -159,10 +160,28 @@
   **Feito:** criado `--dss-text-transform-control` (`tokens/semantic/_text.scss`, padrão `none`)
   e o DssButton passou a lê-lo, tornando a prop um override real.
 
-  **Em aberto:** os quatro selados ainda não consomem o token — a frase dos selos continua
-  parcialmente a descoberto. Não foram tocados aqui por serem componentes selados (mexer exige
-  reemissão de selo). Ao reabrir cada um, trocar o `text-transform` fixo por
-  `var(--dss-text-transform-control, none)`. Custo estimado: 1 linha por componente.
+  **Feito nos quatro:**
+
+  | componente | antes | agora |
+  |---|---|---|
+  | `DssTab` | nenhuma declaração → `.q-tab` do Quasar mandava: **uppercase** | lê o token (`.dss-tab`) |
+  | `DssRouteTab` | idem (reaproveita `.dss-tab`) | coberto pela mesma linha |
+  | `DssBtnToggle` | `no-caps` FIXO no template → prop do **Quasar** governava | regra DSS em `.dss-btn-toggle > .q-btn-item`; prop removida |
+  | `DssTabs` | — | **nenhum CSS**: o container não tem rótulo; regra ali seria inerte. Doc corrigida |
+
+  Medido no navegador: `.q-tab` sozinho → `uppercase`; `.q-tab.dss-tab` → `none`; com o token em
+  `uppercase` → `uppercase`. No DssBtnToggle o `q-btn--no-uppercase` sumiu do DOM e o computado
+  seguiu `none` — aparência intacta, fonte de verdade movida do Quasar para o DSS.
+
+  **⚠️ Em aberto — decisão VISUAL, não técnica.** O `DssTab` MUDOU de aparência: renderizava
+  MAIÚSCULAS (herança do Quasar) e agora segue o padrão do DS (`none`). Isso atinge telas reais
+  — na página Parcelamento as abas passaram de `FINANCEIRO` para `Financeiro`. É o padrão do DS
+  aplicado com consistência (DSS_VISUAL_DEFAULTS_AUDIT, linha 20), mas as abas foram desenhadas
+  sob o comportamento antigo. Se a decisão for manter abas em caixa alta, o caminho é
+  `--dss-text-transform-control: uppercase` no escopo das abas — **não** voltar o valor fixo.
+
+  **Também em aberto:** os quatro são componentes SELADOS. A mudança exige reemissão de selo
+  (v2.2) — não feita aqui.
 
 
 - 🟡 **O corpus de `dss.meta.json` tem DUAS grafias para os mesmos fatos** (medido set/2026, ao

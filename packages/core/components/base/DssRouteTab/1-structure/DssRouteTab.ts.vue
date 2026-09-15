@@ -16,7 +16,7 @@
  *
  * Props bloqueadas:
  * - ripple: desativado (:ripple="false") — DSS governa feedback via ::after
- * - no-caps: governado pelo CSS/tokens DSS, não por prop
+ * - no-caps: governado por `--dss-text-transform-control`, via `.dss-tab` do DssTab
  * - color, text-color: governados por tokens DSS/brands, não por prop
  *
  * @version 1.0.0

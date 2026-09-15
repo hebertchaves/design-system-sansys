@@ -266,14 +266,22 @@ describe('DssBtnToggle', () => {
       expect(wrapper.attributes('aria-label')).toBeUndefined()
     })
 
-    it('aplica no-caps nos botoes internos (sem uppercase automatico)', () => {
+    // Capitalizacao: governada por --dss-text-transform-control (set/2026).
+    // Ate entao o template passava `no-caps` FIXO ao QBtnToggle — funcionava,
+    // mas a fonte de verdade era uma prop do Quasar, nao o DSS, e o token que o
+    // selo v2.2 citava nao existia. A regra agora e nossa
+    // (.dss-btn-toggle > .q-btn-item, 2-composition/_base.scss).
+    // O efeito visual e CSS: nao observavel em jsdom. O que da para travar aqui
+    // e que a prop do Quasar nao voltou — duas fontes de verdade e o bug de
+    // origem.
+    it('nao delega capitalizacao ao Quasar (governada por token DSS)', () => {
       const wrapper = mount(DssBtnToggle, {
         props: { options: defaultOptions }
       })
-      // no-caps e passado como prop ao QBtnToggle — texto do label nao e uppercase
-      const text = wrapper.text()
-      // Verifica que o texto das opcoes nao e convertido para maiusculas automaticamente
-      expect(text).toContain('Esquerda')
+      const toggle = wrapper.findComponent({ name: 'QBtnToggle' })
+      expect(toggle.exists()).toBe(true)
+      expect(toggle.props('noCaps')).toBe(false)
+      expect(wrapper.text()).toContain('Esquerda')
     })
   })
 

@@ -138,6 +138,12 @@
           "source": "_base.scss"
         },
         {
+          "property": "text-transform",
+          "token": "--dss-text-transform-control",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
           "property": "min-height",
           "token": "--dss-touch-target-md",
           "value": null,
@@ -437,6 +443,12 @@
         "usedIn": [
           "default",
           "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-text-transform-control",
+        "usedIn": [
+          "default"
         ]
       },
       {

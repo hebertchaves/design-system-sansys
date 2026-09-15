@@ -43,7 +43,6 @@
     :toggle-text-color="toggleTextColor || undefined"
     role="group"
     :aria-label="ariaLabel || undefined"
-    no-caps
     v-bind="$attrs"
   >
     <!--
