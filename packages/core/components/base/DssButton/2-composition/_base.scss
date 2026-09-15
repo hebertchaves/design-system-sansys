@@ -48,7 +48,16 @@
 
   /* Typography */
   font-family: var(--dss-font-family-sans);
-  font-size: var(--dss-font-size-sm);
+  /* `-md` (16px) porque o `md` é o TAMANHO DEFAULT e não tem regra própria de
+     tipografia — o que a base declarar aqui É a fonte do md.
+
+     Era `-sm` (14px), e isso empatava md com sm: a escala rendia 12 · 14 · 14 ·
+     18 · 20, com dois tamanhos de texto idênticos e um salto de 4px depois. Foi
+     o que se via no seletor de tamanho — o botão crescia, o texto não. O README
+     do componente já documentava 12/14/16/18/20; quem divergia era o CSS.
+     Molde: DssAvatar, o único da família com a escala completa, faz exatamente
+     isto — a base declara o valor do tamanho default. */
+  font-size: var(--dss-font-size-md);
   font-weight: var(--dss-font-weight-medium);
   line-height: var(--dss-line-height-sm-tight);
   /* Capitalização do rótulo — governada por TOKEN, não fixada aqui.
@@ -254,12 +263,17 @@
 }
 
 .dss-button--md {
-  /* Dimensões: já definidas no `.dss-button`.
+  /* Dimensões e FONTE: já definidas no `.dss-button` — este é o tamanho default,
+     e a base carrega os valores dele (`min-height` 44px, `font-size` 16px).
+     Não redeclarar aqui: duas fontes para o mesmo valor é como nasceram os bugs
+     desta família.
 
-     Mas o ÍCONE precisa de regra própria (set/2026): sem ela, ele caía no
-     `.dss-icon--inline { font-size: inherit }` e herdava a tipografia do botão —
-     14px, a MESMA do texto (razão 1,00×). Era o único tamanho sem regra, e por
-     isso o mais defasado da família. */
+     ESCALA DE FONTE da família, para conferir de um lugar só:
+       xs 12px · sm 14px · md 16px (base) · lg 18px · xl 20px
+
+     O ÍCONE, esse, precisa de regra própria (set/2026): sem ela caía no
+     `.dss-icon--inline { font-size: inherit }` e herdava a tipografia do botão.
+     Era o único tamanho sem regra, e por isso o mais defasado da família. */
   .dss-button__icon {
     font-size: var(--dss-icon-size-sm); /* 20px */
   }

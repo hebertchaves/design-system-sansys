@@ -143,6 +143,39 @@
 
 ## Débito de fundo (ondas anteriores)
 
+- 🔴 **Escala de FONTE incompleta em 6 componentes — o mesmo defeito estrutural, três vezes no
+  DssButton** (medido set/2026, ao investigar "o botão cresce mas o texto não").
+
+  **A raiz é sempre a mesma:** `md` é o único tamanho SEM regra própria — ele herda o que a
+  regra base declarar. Quando a base declara o valor de OUTRO degrau, o `md` some da escala. Já
+  mordeu três vezes no DssButton: tamanho de ícone, padding horizontal e agora fonte.
+
+  | componente | xs | sm | md | lg | xl | diagnóstico |
+  |---|---|---|---|---|---|---|
+  | `DssAvatar` | 12 | 14 | **16** | 18 | 20 | ✅ correto — a base declara `-md`. **É o molde.** |
+  | `DssButton` | 12 | 14 | ~~14~~ **16** | 18 | 20 | ✅ CORRIGIDO nesta onda |
+  | `DssChip` | 12 | **12** | 14 | 16 | **14** | ❌ `xl` MENOR que `lg` |
+  | `DssPagination` | 12 | **12** | 14 | 16 | **14** | ❌ `xl` MENOR que `lg` |
+  | `DssCheckbox` | 12 | **12** | 14 | 16 | 18 | ⚠ `xs` = `sm` |
+  | `DssRadio` | 12 | **12** | 14 | 16 | 18 | ⚠ `xs` = `sm` |
+  | `DssToggle` | 12 | **12** | 14 | 16 | 18 | ⚠ `xs` = `sm` |
+
+  **Dois defeitos distintos, e só um é objetivo.**
+
+  1. **`xl` menor que `lg`** (`DssChip`, `DssPagination`): o `xl` não tem regra, cai na base
+     (14px) e fica ABAIXO do `lg` (16px). Ninguém projeta uma escala que encolhe no topo — é
+     acidente de fallback, não escolha. Correção óbvia; não aplicada aqui por serem componentes
+     já adequados, e por estar fora do que foi pedido.
+
+  2. **`xs` = `sm` = 12px** (5 componentes de controle): pode ser DELIBERADO — controles
+     compactos compartilhando tipografia — ou o mesmo acidente. Exige decisão de design, não
+     conserto. Confrontar com o `dss.meta.json` de cada um antes de mexer.
+
+  **Prevenção.** Nenhum gate pega isto: o CSS é válido, compila, e a escala só é "errada" quando
+  comparada com a intenção. Um validador que compile o componente e compare a escala declarada
+  contra a documentada no README/meta fecharia os três casos de uma vez. Não escrito ainda.
+
+
 - 🟢 **Quatro componentes selados alegavam capitalização "governada por CSS/tokens" sem que o
   token existisse — resolvido** (set/2026, na sequência do conserto do `no-caps` do DssButton).
   Resta apenas decidir o item de VISUAL abaixo e reemitir selos.
