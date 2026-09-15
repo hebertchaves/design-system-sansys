@@ -135,6 +135,26 @@ describe('Fiação do Preview Frame', () => {
     expect(frame()).toMatch(/watch\(\(\) => JSON\.stringify\([^)]*ct:\s*contextState/)
   })
 
+  it('o painel mostra a descrição da prop (vinda do contrato)', () => {
+    // O contrato carrega `description` em 26/26 props do DssButton e o painel a
+    // descartava — mostrava só nome e widget. Para prop que pinta algo o nome
+    // basta; para prop que só ESCAPA de um token, não: é a descrição que diz de
+    // QUE token, e onde procurar o controle.
+    const src = frame()
+    expect(src).toMatch(/description: p\.description/)
+    expect(src).toMatch(/class="pv__hint"/)
+  })
+
+  it('o painel avisa quando o knob está inerte no contexto atual', () => {
+    // Sem isto, `noCaps` com Capitalização=none é indistinguível de prop
+    // quebrada — foi lido como defeito três vezes.
+    const src = frame()
+    expect(src).toMatch(/function inerte\(k\)/)
+    expect(src).toMatch(/class="pv__inert"/)
+    // O aviso é sobre o ESTADO atual, não sobre a prop: "sem efeito agora".
+    expect(src).toMatch(/sem efeito agora/)
+  })
+
   it('o sujeito recebe contextTokens da mensagem', () => {
     expect(subject()).toMatch(/d\.contextTokens/)
   })

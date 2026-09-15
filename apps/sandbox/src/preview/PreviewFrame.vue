@@ -56,6 +56,15 @@
         <p v-if="!contract" class="pv__empty">Sem <code>dss.contract.json</code> para {{ component }}.</p>
         <div v-for="k in knobs" :key="k.name" class="pv__knob">
           <label :for="'k-' + k.name">{{ k.name }} <small>{{ k.controlHint }}</small></label>
+          <!-- A descrição vem do contrato (@default/JSDoc do types.ts) e até aqui era
+               DESCARTADA: o painel mostrava só nome e widget. Para prop que pinta algo o
+               nome basta; para prop que só ESCAPA de um token de ambiente, não —
+               `noCaps` foi lido como quebrado três vezes porque nada no painel dizia de
+               que ele escapa, nem que o controle está no cabeçalho. -->
+          <p v-if="k.description" class="pv__hint">{{ k.description }}</p>
+          <p v-if="inerte(k)" class="pv__inert">
+            sem efeito agora — {{ inerte(k).label }} está em <code>{{ inerte(k).valor }}</code>
+          </p>
           <input v-if="k.controlHint === 'toggle'" :id="'k-' + k.name" type="checkbox" v-model="state[k.name]" />
           <select v-else-if="k.options" :id="'k-' + k.name" v-model="state[k.name]">
             <option v-for="o in k.options" :key="String(o)" :value="o">{{ o === null ? '—' : o }}</option>
@@ -204,6 +213,26 @@ const contextTokens = ref([])      // visual.contextTokens do contrato
 const contextState = reactive({})  // --token -> valor escolhido no palco
 const frameEl = ref(null)
 
+/**
+ * Knob que depende de CONTEXTO e está inerte no valor atual do palco.
+ *
+ * Genérico, sem lista por componente: a descrição da prop (vinda do contrato)
+ * CITA o token do qual ela escapa; se esse token está no valor padrão, a prop
+ * não tem o que fazer. É o caso do `noCaps` com Capitalização `none` — mexer no
+ * knob não muda nada, e sem este aviso o palco parece quebrado.
+ *
+ * Diz só o que sabe: "sem efeito agora", não "sem efeito". Qual valor do token
+ * torna a prop observável é coisa do componente, não do frame.
+ */
+function inerte(k) {
+  if (!k.description) return null
+  for (const ct of contextTokens.value) {
+    if (!k.description.includes(ct.name)) continue
+    if (contextState[ct.name] === ct.default) return { label: ct.label, valor: ct.default }
+  }
+  return null
+}
+
 const frameSrc = computed(() => `${location.pathname}?frame=${props.component}`)
 
 function load() {
@@ -216,6 +245,7 @@ function load() {
     .map((p) => ({
       name: p.name,
       controlHint: p.controlHint,
+      description: p.description || '',
       default: p.default,
       options: p.validValues ? (/\bnull\b/.test(p.type) ? [null, ...p.validValues] : p.validValues) : null,
       isArray: isArrayType(p.type),
@@ -405,6 +435,9 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__knob { display: flex; flex-direction: column; margin-bottom: 8px; font-size: 13px; gap: 2px; }
 .pv__knob > label { font-weight: 600; }
 .pv__knob small { color: #999; font-weight: normal; }
+.pv__hint { margin: 0; font-size: 11.5px; line-height: 1.35; color: #777; }
+.pv__hint code, .pv__inert code { font-family: ui-monospace, monospace; font-size: 11px; }
+.pv__inert { margin: 2px 0 0; font-size: 11.5px; line-height: 1.35; color: #8a6d00; background: #fff8e1; border-left: 2px solid #e0b400; padding: 3px 6px; }
 .pv__slots-h { margin: 16px 0 8px; padding-top: 12px; border-top: 1px solid #e5e5e5; }
 .pv__slot { font-size: 13px; margin-bottom: 6px; }
 .pv__slot label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
