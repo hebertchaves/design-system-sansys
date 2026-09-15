@@ -26,6 +26,17 @@
            todo o palco, esconde os problemas de layout apertado (chips que quebram
            em muitas linhas, rótulos truncados). Larguras típicas de coluna de
            formulário / card lateral. -->
+      <!-- Tokens de CONTEXTO (contrato → visual.contextTokens). Mesma categoria de
+           Tema e Brand: ambiente que o sujeito herda, não prop que ele recebe.
+           Sem isto, uma prop que só ESCAPA de um token (no-caps) aparece como
+           interruptor sem lâmpada — o palco sempre no valor padrão, o knob sem
+           efeito visível. A lista vem do CSS compilado do componente: quem não
+           consome o token não ganha o controle. -->
+      <label v-for="ct in contextTokens" :key="ct.name" class="pv__ctl">{{ ct.label }}
+        <select v-model="contextState[ct.name]">
+          <option v-for="v in ct.values" :key="v" :value="v">{{ v }}</option>
+        </select>
+      </label>
       <label class="pv__ctl">Largura
         <select v-model="stageWidth">
           <option value="">cheia</option>
@@ -189,6 +200,8 @@ const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
 const state = reactive({})
 const theme = ref('light')
 const brand = ref('')
+const contextTokens = ref([])      // visual.contextTokens do contrato
+const contextState = reactive({})  // --token -> valor escolhido no palco
 const frameEl = ref(null)
 
 const frameSrc = computed(() => `${location.pathname}?frame=${props.component}`)
@@ -229,6 +242,10 @@ function load() {
   // Slots: 1 toggle por slot do contrato (o Preview injeta conteúdo de demo no
   // sujeito). Sem isto, slots como prepend/append nunca apareciam no Preview
   // (o v-if="slots.x" ficava falso — só props eram exercitadas).
+  contextTokens.value = contract.value.visual?.contextTokens || []
+  Object.keys(contextState).forEach((k) => delete contextState[k])
+  for (const ct of contextTokens.value) contextState[ct.name] = ct.default
+
   slotDefs.value = contract.value.api?.slots || []
   Object.keys(activeSlots).forEach((k) => delete activeSlots[k])
   // Slot OBRIGATÓRIO (`required` do contrato, derivado da ausência de `?` na
@@ -307,7 +324,7 @@ function postState() {
   const activeSlotIcons = {}
   for (const n of slots) if (ICON_SLOTS.includes(n) && slotIcons[n]) activeSlotIcons[n] = slotIcons[n]
   const emits = emitDefs.value.map((ev) => ev.name)
-  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, modelProp, modelDefault, slots, slotIcons: activeSlotIcons, emits }))
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, contextTokens: { ...contextState }, modelProp, modelDefault, slots, slotIcons: activeSlotIcons, emits }))
   el.contentWindow.postMessage(payload, '*')
 }
 // Chama um método exposto (exposedRefs) no sujeito, via postMessage.
@@ -367,7 +384,7 @@ const snippet = computed(() => {
   return `<${props.component}${attrs}>\n${inner}\n</${props.component}>`
 })
 
-watch(() => JSON.stringify({ s: state, t: theme.value, b: brand.value, sl: activeSlots, si: slotIcons }), postState)
+watch(() => JSON.stringify({ s: state, t: theme.value, b: brand.value, ct: contextState, sl: activeSlots, si: slotIcons }), postState)
 watch(() => props.component, load)
 onMounted(() => { window.addEventListener('message', onMsg); load() })
 onUnmounted(() => window.removeEventListener('message', onMsg))

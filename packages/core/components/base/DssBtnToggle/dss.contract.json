@@ -2778,7 +2778,20 @@
           "source": "_border-helpers.scss"
         }
       ]
-    }
+    },
+    "contextTokens": [
+      {
+        "name": "--dss-text-transform-control",
+        "label": "Capitalização",
+        "values": [
+          "none",
+          "uppercase",
+          "capitalize",
+          "lowercase"
+        ],
+        "default": "none"
+      }
+    ]
   },
   "tokens": {
     "categories": [

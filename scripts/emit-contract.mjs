@@ -26,7 +26,8 @@ import Ajv  from 'ajv'
 import fs   from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { extractStates } from './extract-css-states.mjs'
+import { extractStates, compiledCss } from './extract-css-states.mjs'
+import { CONTEXT_TOKENS } from './context-tokens.mjs'
 import { checkContrast, hasCssRule, resolveToken } from './wcag-kit.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -224,6 +225,32 @@ function buildTokens(states, meta) {
   return { categories, instances }
 }
 
+// ── visual.contextTokens ← CSS COMPILADO do componente ───────────────────────
+/**
+ * Tokens de AMBIENTE que este componente de fato consome — o que o Preview Frame
+ * precisa saber para oferecer um controle de contexto (irmão de tema e brand).
+ *
+ * Deriva do CSS COMPILADO, não do SCSS fonte, por dois motivos:
+ *   1. resolve `@use`: o DssRouteTab não declara nada, importa o módulo do
+ *      DssTab — no fonte ele pareceria não usar o token; no compilado, usa;
+ *   2. é o mesmo artefato que alimenta `visual.states` (uma compilação, uma
+ *      verdade).
+ *
+ * COMMENT-AWARE, e isso não é detalhe: o `_base.scss` do DssButton CITA o nome
+ * do token na prosa que explica a regra, e o Sass preserva comentário de bloco
+ * no output. Sem o strip, documentar o conserto faria o emissor "descobrir" o
+ * token em componentes que não o consomem.
+ */
+function buildContextTokens(compDir) {
+  let css
+  try { css = compiledCss(compDir) } catch { return [] }
+  if (!css) return []
+  const semComentarios = css.replace(/\/\*[\s\S]*?\*\//g, ' ')
+  return CONTEXT_TOKENS
+    .filter(t => new RegExp(`var\\(\\s*${t.name}\\b`).test(semComentarios))
+    .map(t => ({ name: t.name, label: t.label, values: t.values, default: t.default }))
+}
+
 // ── a11y ← meta.a11y VERIFICADO (âncora css/aria/test) ───────────────────────
 function verifyA11y(meta, compDir, api, gaps) {
   const a = meta.a11y
@@ -304,6 +331,7 @@ function emit(name) {
   const typesFile = path.join(compDir, 'types', firstFile(path.join(compDir, 'types'), /\.types\.ts$/) || '')
   const types = parseTypes(typesFile)
   const states = extractStates(compDir)
+  const ctxTokens = buildContextTokens(compDir)
   const { sources, sealPath } = buildSources(compDir, name)
   const api = buildApi(types)
   const status = deriveStatus(meta, sealPath)
@@ -337,6 +365,7 @@ function emit(name) {
       defaultPreview: { props: meta.defaultPreview?.props || {}, ...(meta.defaultPreview?.demoSlots != null ? { slots: meta.defaultPreview.demoSlots } : {}) },
       dimensions: Object.fromEntries(Object.entries(meta.defaultPreview?.computedDimensions || {}).map(([k, v]) => [k, { value: v }])),
       states: states || {},
+      ...(ctxTokens.length ? { contextTokens: ctxTokens } : {}),
     },
     tokens: buildTokens(states, meta),
     a11y: verifyA11y(meta, compDir, api, gaps) || { wcag: [], aria: {}, keyboard: [] },

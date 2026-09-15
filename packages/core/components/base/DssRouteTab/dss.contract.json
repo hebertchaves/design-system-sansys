@@ -402,7 +402,20 @@
           "source": "_base.scss"
         }
       ]
-    }
+    },
+    "contextTokens": [
+      {
+        "name": "--dss-text-transform-control",
+        "label": "Capitalização",
+        "values": [
+          "none",
+          "uppercase",
+          "capitalize",
+          "lowercase"
+        ],
+        "default": "none"
+      }
+    ]
   },
   "tokens": {
     "categories": [

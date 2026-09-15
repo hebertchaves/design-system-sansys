@@ -59,6 +59,7 @@ const subjectRef = ref(null)  // ref do SFC real — permite chamar exposedRefs 
 const props = reactive({})
 const theme = ref('light')
 const brand = ref('')
+const contextTokens = reactive({})   // --token -> valor vindo do palco
 const model = ref(null) // null é o "vazio" universal (File/array/objeto aceitam; '' quebrava File)
 // Valor do controle que o Preview monta dentro de slot escopado com `fieldId`
 // (componentes-moldura, ex.: DssField). Separado do `model` porque não é o
@@ -130,6 +131,10 @@ function onMsg(e) {
   Object.assign(props, d.props || {})
   if (d.theme != null) theme.value = d.theme
   if (d.brand != null) brand.value = d.brand
+  if (d.contextTokens && typeof d.contextTokens === 'object') {
+    Object.keys(contextTokens).forEach((k) => delete contextTokens[k])
+    Object.assign(contextTokens, d.contextTokens)
+  }
   if ('modelProp' in d) modelProp.value = d.modelProp
   // Semeia o model com o default do vModel (@default do contrato) — só na 1ª
   // mensagem, para não sobrescrever a interação do usuário depois. Sem semente,
@@ -160,6 +165,23 @@ watch([theme, brand], ([t, b]) => {
   if (b) html.setAttribute('data-brand', b)
   else html.removeAttribute('data-brand')
 }, { immediate: true })
+
+/**
+ * Tokens de CONTEXTO: mesma decisão do tema e do brand, pelo mesmo motivo.
+ *
+ * Vão para <html> deste realm, não para a div do palco, porque custom property
+ * é HERDADA e overlay teleportado para o <body> não é descendente do palco —
+ * preso à div, um menu ou diálogo resolveria o valor padrão enquanto o sujeito
+ * usa outro. Em <html> cobre o documento, que é como um app real redefine um
+ * token de ambiente.
+ */
+watch(contextTokens, (map) => {
+  const html = document.documentElement
+  for (const [nome, valor] of Object.entries(map)) {
+    if (valor == null || valor === '') html.style.removeProperty(nome)
+    else html.style.setProperty(nome, valor)
+  }
+}, { deep: true, immediate: true })
 
 onMounted(() => {
   window.addEventListener('message', onMsg)

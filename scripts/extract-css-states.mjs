@@ -97,6 +97,15 @@ function relSource(src, compDir) {
   return rel.startsWith('..') ? path.basename(p) : rel.split(path.sep).join('/')
 }
 
+/** CSS plano do componente, para quem precisa varrer o resultado e não os estados.
+ *  Exportado para o emit-contract derivar `visual.contextTokens` do CSS REAL —
+ *  compilado, com todo `@use` já resolvido. É o que faz o DssRouteTab ser
+ *  coberto: ele não declara nada, importa o módulo do DssTab. */
+export function compiledCss(compDir) {
+  const c = compileComponent(compDir)
+  return c ? c.css : null
+}
+
 /** Extrai visual.states de um diretório de componente. */
 export function extractStates(compDir) {
   const compiled = compileComponent(compDir)

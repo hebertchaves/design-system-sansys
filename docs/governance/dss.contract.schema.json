@@ -333,6 +333,39 @@
               }
             }
           }
+        },
+        "contextTokens": {
+          "type": "array",
+          "$comment": "TIER MUST-derivado — CSS COMPILADO do componente. Tokens de AMBIENTE que ele consome (herdáveis, de valor fechado), para o Preview Frame oferecer controle de contexto irmão de tema/brand. Quem pode ser dirigido está em scripts/context-tokens.mjs; quem de fato usa é o CSS que decide. Omitido quando o componente não consome nenhum.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "label",
+              "values",
+              "default"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^--dss-[a-z0-9-]+$"
+              },
+              "label": {
+                "type": "string"
+              },
+              "values": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "default": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },
