@@ -47,6 +47,17 @@
 // Tokens: --dss-font-size-*-min, --dss-line-height-*
 @use 'typography';
 
+// -----------------------------------------------------------------------------
+// DECLARAÇÃO DA FONTE (self-hosted) + normalização de métrica
+// -----------------------------------------------------------------------------
+// O token de família pedia 'Inter' desde sempre, mas o DS nunca DECLAROU a fonte
+// — em máquina sem Inter instalado, renderizava com o substituto do sistema, cuja
+// métrica desloca a banda visível do texto em 1,5px (fonte 16px). Ver o cabeçalho
+// do arquivo para a medição.
+// Emite @font-face (não tokens): precisa vir DEPOIS de typography, que declara
+// --dss-font-family-sans.
+@use 'font-face';
+
 // =============================================================================
 // NOTAS DE USO
 // =============================================================================

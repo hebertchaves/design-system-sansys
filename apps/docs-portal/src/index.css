@@ -1306,8 +1306,15 @@ sobre o fundo em vez de descartá-lo. Reproduza antes de confiar:
      1. FAMÍLIAS DE FONTE (Página 8)
      "Fontes sans-serif preferidas para melhor legibilidade em telas"
      =========================================== */
-  --dss-font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont,
-                         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* 'DSS Sans' é o Inter SERVIDO POR NÓS (ver _font-face.scss); 'DSS Sans
+     Fallback' é a fonte do sistema com métrica CASADA à do Inter — entra
+     enquanto o arquivo carrega ou se ele falhar, sem salto de layout e sem
+     trazer de volta o deslocamento óptico. O resto da pilha é rede de segurança
+     final. `Inter` cru sai daqui de propósito: casava por NOME, sem garantia de
+     versão nem de métrica. */
+  --dss-font-family-sans: 'DSS Sans', 'DSS Sans Fallback', -apple-system,
+                         BlinkMacSystemFont, 'Segoe UI', Roboto,
+                         'Helvetica Neue', Arial, sans-serif;
   --dss-font-family-mono: 'Roboto Mono', 'SF Mono', Monaco, 'Courier New', monospace;
   --dss-font-family-system: -apple-system, BlinkMacSystemFont,
                            'Segoe UI', Roboto, sans-serif;
@@ -1471,6 +1478,105 @@ sobre o fundo em vez de descartá-lo. Reproduza antes de confiar:
   font-size: 100%;
 }
 
+/* ==========================================================================
+   DSS — DECLARAÇÃO DA FONTE (self-hosted) + normalização de métrica
+   ==========================================================================
+
+   POR QUE ISTO EXISTE (set/2026). O token `--dss-font-family-sans` pedia
+   `'Inter', -apple-system, …` desde sempre — mas o DS NUNCA declarou a fonte.
+   Resultado: em toda máquina sem Inter instalado, o DS renderizava com o
+   substituto do sistema. Medido no ambiente de desenvolvimento: Liberation Sans,
+   cap 0,688em e `ascent − descent` = 0,50em.
+
+   Isso não era só "outra letra": produzia um DESLOCAMENTO ÓPTICO. A linha de
+   base fica em `centro + (A − D)/2` e a banda de maiúscula vai daí até `−cap`,
+   então o desvio do centro é `(A − D − cap)/2`. Com A−D = 0,50 e cap = 0,688,
+   dá −0,094em — **1,5px de texto alto em fonte de 16px**, medido igual no
+   DssChip (caixa 28px) e no DssButton (caixa 44px). Foi relatado como "o texto
+   não centraliza, e só no md": `md` é justamente o tamanho que usa 16px.
+
+   O Inter NÃO tem esse problema: A−D = 0,969−0,242 = 0,727 = cap. Ele é
+   auto-centrado. Carregá-lo já conserta — os overrides abaixo são normalização
+   explícita, para o dia em que a versão do arquivo mudar.
+
+   POR QUE SELF-HOST, e não `local()` nem CDN:
+   - `local('Inter')` casa POR NOME e não garante versão; medido aqui, `local()`
+     das candidatas caía numa fonte que não era a pedida. Determinismo zero.
+   - CDN só entraria em ação se os assets da própria aplicação falhassem — e aí
+     a fonte é o menor problema. Em troca, exigiria liberar `fonts.gstatic.com`
+     na CSP e criaria requisição externa a partir de uma app corporativa.
+   São 133KB (2 arquivos), em cache, sem rede em runtime.
+
+   VARIÁVEL, e isso importa: o Inter distribuído hoje é uma fonte variável
+   100–900 num único arquivo por subset. Os quatro pesos que o DS mais usa
+   (400 · 500 · 600 · 700) saem do mesmo arquivo com desenho REAL — verificado
+   medindo quatro larguras distintas para a mesma frase. Sem faux-bold.
+
+   CAMINHO via alias `@core`, não relativo: o Sass NÃO reescreve `url()` de
+   arquivo parcial — o caminho sai na saída compilada relativo ao CSS final, que
+   muda por consumidor. Medido: com `../../../` o dev server respondia 200 com o
+   HTML do SPA e a face entrava em `error`. O `@core` é o caminho canônico entre
+   pacotes no monorepo (DSS_MONOREPO_PATH_MAP) e é resolvido pelo bundler.
+
+   Subsets: `latin` cobre pt-BR inteiro (acentuação está no Latin-1 Supplement);
+   `latin-ext` entra para nomes europeus. O `unicode-range` faz o navegador
+   baixar só o que a página precisa.
+   ========================================================================== */
+/* --------------------------------------------------------------------------
+   1. Inter — a fonte do DS
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: "DSS Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("@core/assets/fonts/inter-var-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  /* Métrica normalizada: `ascent − descent = cap` centra a banda VISÍVEL do
+     texto na caixa de linha. Valores medidos NESTE arquivo (cap 0,7275em,
+     ascent+descent 1,21em), não copiados de tabela. */
+  ascent-override: 96.88%;
+  descent-override: 24.12%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "DSS Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("@core/assets/fonts/inter-var-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  ascent-override: 96.88%;
+  descent-override: 24.12%;
+  line-gap-override: 0%;
+}
+/* --------------------------------------------------------------------------
+   2. Fallback com MÉTRICA CASADA
+   --------------------------------------------------------------------------
+
+   Este é o fallback que serve para alguma coisa — não uma CDN.
+
+   Enquanto o Inter carrega (ou se falhar), o texto sai na fonte do sistema. Sem
+   esta face, essa troca traz de volta o deslocamento óptico E provoca salto de
+   layout, porque o substituto tem largura e métrica diferentes.
+
+   `size-adjust` casa a LARGURA (medido: a fonte do sistema é 7,06% mais estreita
+   para a mesma frase), e os overrides casam a métrica VERTICAL — expressos no em
+   já ajustado, por isso divididos pelo size-adjust. É o mesmo cálculo que o
+   Next.js automatiza como `adjustFontFallback`.
+
+   `local()` aqui é legítimo: o objetivo NÃO é escolher um desenho específico, e
+   sim normalizar o que o sistema oferecer. -------------------------------- */
+@font-face {
+  font-family: "DSS Sans Fallback";
+  font-style: normal;
+  font-weight: 100 900;
+  src: local("Liberation Sans"), local("Arial"), local("Helvetica Neue"), local("Segoe UI"), local("Roboto"), local("DejaVu Sans");
+  size-adjust: 107.06%;
+  ascent-override: 90.49%;
+  descent-override: 22.53%;
+  line-gap-override: 0%;
+}
 /*
 # Importar Tokens de Acessibilidade
 

@@ -141,42 +141,38 @@
     auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
     abrir a lista quando a decisão vier.
 
-## 🔵 Decisão pendente — a banda visível do texto sobe ~1,5px em 16px (todo o DS)
+## ✅ RESOLVIDO — o DS pedia Inter e nunca declarou a fonte (set/2026)
 
-**Medido por DOM** (set/2026), com sonda de linha de base (`inline-block` de altura zero) e
-altura de maiúscula pela unidade `cap` — sem canvas, que já mentiu duas vezes nesta frente:
+O texto subia ~1,5px opticamente em fonte de 16px. Medido igual no `DssChip` (caixa 28px) e no
+`DssButton` (caixa 44px) — o que os unia não era o componente, era a fonte.
 
-| componente | altura | cap | acima | abaixo | desvio |
-|---|---|---|---|---|---|
-| `DssChip` md | 28px | 11 | 7,00 | 10,00 | **−1,50 (alto)** |
-| `DssButton` md | 44px | 11 | 15,00 | 18,00 | **−1,50 (alto)** |
-| `DssChip` xs (12px) | 20px | 8,25 | 5,25 | 6,50 | −0,63 |
-| `DssChip` sm (14px) | 24px | 9,63 | 7,38 | 7,00 | +0,19 |
-| `DssChip` lg (18px) | 32px | 12,38 | 9,13 | 10,50 | −0,69 |
+**Causa.** `--dss-font-family-sans` pedia `'Inter', …` desde sempre, mas o DS **nunca declarou
+`@font-face`**. Em máquina sem Inter instalado — o caso do ambiente de desenvolvimento — quem
+pintava era o substituto do sistema (Liberation Sans: cap 0,688em, `ascent − descent` = 0,50em).
+O desvio da banda visível é `(A − D − cap)/2`, que dá −0,094em = **−1,5px a 16px**. O Inter não
+tem o problema: `A − D = 0,969 − 0,242 = 0,727 = cap`. Ele é auto-centrado.
 
-**NÃO é defeito do componente.** Chip e botão dão o MESMO −1,50px, em caixas de 28px e 44px: o
-que os une é a fonte em **16px**. O relato "só acontece no md" se explica por aí — `md` é o único
-tamanho do chip que usa 16px.
+**Feito.** Inter self-hosted (`packages/core/assets/fonts/`, 2 arquivos, 133KB), declarado em
+`tokens/semantic/accessibility/_font-face.scss` com métrica normalizada, mais uma face de
+**fallback com métrica casada** (`size-adjust` + overrides) para a troca não trazer de volta o
+desvio nem causar salto de layout.
 
-**Causa.** A caixa de linha é centrada corretamente (`align-items: center` medido funcionando); o
-que está fora do centro é a BANDA VISÍVEL. A linha de base fica em `centro + (A − D)/2`, e a
-banda de maiúscula vai daí até `−cap`. O desvio é `(A − D − cap)/2` — só métrica da fonte.
+| | antes | agora |
+|---|---|---|
+| `DssChip` md | −1,50px | **+0,18px** |
+| `DssButton` md | −1,50px | **+0,18px** |
+| `DssChip` xs · sm · lg | −0,63 · +0,19 · −0,69 | +0,14 · −0,09 · −0,05 |
 
-**Duas alavancas foram testadas e NÃO funcionam:**
-- `line-height` (testado no disco, 20px → 18px no md): desvio **inalterado** em −1,50. O flex
-  recentra a caixa menor e a linha de base sobe junto — net zero.
-- `padding`: mesma coisa. Enquanto o `min-height` governa e o rótulo é centrado, mover o padding
-  não move a banda.
+**Descartado, e por quê:** `local('Inter')` casa por NOME, sem garantia de versão — medido, caía
+em fonte que não era a pedida. CDN só entraria se os assets da própria app falhassem, e custaria
+liberar `fonts.gstatic.com` na CSP de uma app corporativa.
 
-**A alavanca que funcionaria** é mexer nas métricas da fonte, num lugar só, para todo o DS:
-`@font-face` com `ascent-override` / `descent-override` simétricos. Hoje o DS **não declara
-`@font-face`** — `--dss-font-family-sans` é `'Inter', -apple-system, …` e a fonte vem do ambiente,
-então a correção exige primeiro assumir a declaração da fonte. É decisão de tipografia do DS, com
-efeito em TODO texto, não ajuste de componente.
+**Pesos:** o Inter distribuído hoje é variável (100–900) num arquivo por subset. Verificado: seis
+pesos, seis larguras distintas — sem faux-bold.
 
-*(A nota anterior desta seção falava em "2px em caixa alta" a partir de medição por canvas. O
-número certo é o da tabela acima: canvas usa fallback de fonte e dava valores que a tela não
-confirma.)*
+**Nota de caminho:** o Sass NÃO reescreve `url()` de parcial. Com caminho relativo o dev server
+respondia 200 com o HTML do SPA e a face entrava em `error`; o `url()` usa o alias `@core`, que é
+o caminho canônico entre pacotes.
 
 ## 🔵 (histórico) Medição por canvas — caixa alta
 
