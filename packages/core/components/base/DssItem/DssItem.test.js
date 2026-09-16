@@ -208,21 +208,30 @@ describe('DssItem', () => {
     })
 
     describe('color', () => {
-      it('sem brand: aplica text-primary por padrão', () => {
+      // A cor pinta o estado ATIVO — é o que a prop `color` sempre documentou
+      // ("cor principal para itens ativos"). Até set/2026 a classe era aplicada
+      // em TODO item: o rótulo de uma lista comum saía azul de ação em vez de
+      // texto corpo, e o item selecionado ficava idêntico ao não selecionado.
+      it('em REPOUSO não aplica text-*, mesmo com o default primary', () => {
         const wrapper = mount(DssItem)
+        expect(wrapper.classes()).not.toContain('text-primary')
+      })
+
+      it('ATIVO sem brand: aplica text-primary (default)', () => {
+        const wrapper = mount(DssItem, { props: { active: true } })
         expect(wrapper.classes()).toContain('text-primary')
       })
 
-      it('sem brand: cor customizada aplica text-{color}', () => {
+      it('ATIVO sem brand: cor customizada aplica text-{color}', () => {
         const wrapper = mount(DssItem, {
-          props: { color: 'secondary' }
+          props: { active: true, color: 'secondary' }
         })
         expect(wrapper.classes()).toContain('text-secondary')
       })
 
-      it('com brand: NÃO aplica classe text-*', () => {
+      it('ATIVO com brand: NÃO aplica classe text-* (brand pinta pelo CSS)', () => {
         const wrapper = mount(DssItem, {
-          props: { brand: 'hub', color: 'primary' }
+          props: { active: true, brand: 'hub', color: 'primary' }
         })
         expect(wrapper.classes()).not.toContain('text-primary')
       })

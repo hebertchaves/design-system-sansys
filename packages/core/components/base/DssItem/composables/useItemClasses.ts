@@ -24,13 +24,25 @@ export function useItemClasses(props: Readonly<ItemProps>) {
    *
    * Logica de cores:
    * - brand: NAO usa classes utilitarias (CSS proprio em 4-output/_brands.scss)
-   * - color prop: usa .text-{color} (classe utilitaria global)
-   * - sem color: herda cor do contexto via currentColor
+   * - color prop: usa .text-{color} (classe utilitaria global) — SO NO ATIVO
+   * - sem color, ou em repouso: herda a cor do contexto via currentColor
+   *
+   * POR QUE `active` ENTROU NA CONDICAO (set/2026, rodada de adequacao).
+   * A prop `color` ja nascia com default `'primary'` e o comentario ao lado dela
+   * dizia, desde sempre: "cor principal para itens ATIVOS". A classe, porem, era
+   * aplicada em todo item — entao um item comum de lista pintava o rotulo de AZUL
+   * DE ACAO (#1f86de) em vez de texto corpo (#454545), e o item selecionado ficava
+   * VISUALMENTE IDENTICO ao nao selecionado. Medido na pagina: rotulo azul nos
+   * tres estados (repouso, clicavel e ativo).
+   *
+   * O caminho de brand, no `_brands.scss` ao lado, ja fazia certo: pinta so
+   * `&.dss-item--active`. Esta condicao alinha os dois caminhos e faz a
+   * implementacao cumprir o que a prop dizia.
    */
   const itemClasses = computed(() => {
-    // Cor via classe utilitaria (apenas se NAO tem brand)
+    // Cor via classe utilitaria — so no ATIVO, e so se NAO tem brand
     let colorClass = ''
-    if (!props.brand && props.color) {
+    if (!props.brand && props.color && props.active) {
       colorClass = `text-${props.color}`
     }
 
