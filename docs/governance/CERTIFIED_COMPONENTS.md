@@ -27,7 +27,7 @@
 | `DssSpace` | Espaçador flexível | 18/03/2026 | — | DssChip | — |
 | `DssSpinner` | Indicador de carregamento | 24/03/2026 | — | DssChip | — |
 | `DssTooltip` | Dica contextual | 06/02/2026 | — | DssChip | — |
-| `DssItem` | Item de lista | — | — | DssChip | Retroativo — Fase 1 |
+| `DssItem` | Item de lista | 13/02/2026 | — | DssChip | Retroativo — Fase 1 |
 | `DssFile` | Upload de arquivo | 24/03/2026 | — | DssInput | — |
 | `DssEmptyState` | Estado de dado não interativo | 28/08/2026 | — | DssBanner | 3 ressalvas não-bloqueantes; 4 passagens de auditoria (3 independentes); sem motor Quasar |
 

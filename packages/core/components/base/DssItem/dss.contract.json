@@ -227,7 +227,7 @@
           "property": "color",
           "token": "--dss-text-body",
           "value": null,
-          "source": "4-output/_states.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "text-decoration",
@@ -311,7 +311,7 @@
           "property": "color",
           "token": "--dss-text-subtle",
           "value": null,
-          "source": "4-output/_states.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "flex-direction",
@@ -497,7 +497,7 @@
           "property": "background-color",
           "token": "--dss-surface-active",
           "value": null,
-          "source": "4-output/_states.scss"
+          "source": "3-variants/_interactive.scss"
         },
         {
           "property": "color",
@@ -537,19 +537,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-hub-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
           "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-400",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -558,18 +546,6 @@
           "token": "--dss-waste-600",
           "value": null,
           "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-bottom-color",
-          "token": "--dss-border-default",
-          "value": null,
-          "source": "4-output/_states.scss"
         },
         {
           "property": "border-left",
@@ -703,7 +679,7 @@
           "property": "opacity",
           "token": "--dss-opacity-disabled",
           "value": null,
-          "source": "4-output/_states.scss"
+          "source": "3-variants/_interactive.scss"
         },
         {
           "property": "cursor",
@@ -903,37 +879,13 @@
         ]
       },
       {
-        "name": "--dss-hub-500",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-water-500",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-water-400",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-waste-600",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-500",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-border-default",
         "usedIn": [
           "default"
         ]

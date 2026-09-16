@@ -4,7 +4,7 @@
      Regenerar: `npm run build:adequacao-status` (ou node scripts/build-adequacao-status.cjs)
      Fontes: docs/governance/CERTIFIED_COMPONENTS.md + apps/sandbox/src/TestSuite.vue -->
 
-> **Gerado do disco em 03/09/2026**, não de memória. Fase, categoria e selo saem do
+> **Gerado do disco em 16/09/2026**, não de memória. Fase, categoria e selo saem do
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
@@ -56,7 +56,7 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | 🟡 | `DssAvatar` | Visual/Identity | 02/02/2026 | sim | — |
 | 🟡 | `DssBadge` | Compact Control não-interativo | 27/01/2026 | sim | — |
 | ⬜ | `DssIcon` | Ícone decorativo/semântico | 13/02/2026 | — | — |
-| ⬜ | `DssItem` | Item de lista | — | — | — |
+| ⬜ | `DssItem` | Item de lista | 13/02/2026 | — | — |
 | ⬜ | `DssRange` | Controle de intervalo | 23/03/2026 | — | — |
 | ⬜ | `DssSeparator` | Divisor visual | 17/03/2026 | — | — |
 | ⬜ | `DssSlider` | Controle deslizante | 20/03/2026 | — | — |

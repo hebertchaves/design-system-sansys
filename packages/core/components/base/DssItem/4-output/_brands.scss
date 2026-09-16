@@ -27,14 +27,15 @@
     }
   }
 
-  /* Dark mode */
-  @media (prefers-color-scheme: dark) {
-    &.dss-item--active {
-      color: #{$color-dark};
+  /* Dark mode — pelo TEMA DA APLICAÇÃO, não pela preferência do SO.
+     Diferente do `_states.scss` ao lado, esta regra NÃO é redundante: troca o
+     tom da marca (ex.: hub-600 → hub-500), que o token não faz sozinho. O que
+     estava errado era só o eixo. Doutrina: DssCheckbox/_states.scss:19. */
+  @at-root [data-theme="dark"] &.dss-item--active {
+    color: #{$color-dark};
 
-      .dss-item__leading {
-        color: #{$color-dark};
-      }
+    .dss-item__leading {
+      color: #{$color-dark};
     }
   }
 }

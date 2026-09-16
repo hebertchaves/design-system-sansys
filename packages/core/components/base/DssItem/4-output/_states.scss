@@ -14,38 +14,29 @@
    DARK MODE
    ========================================================================== */
 
-@media (prefers-color-scheme: dark) {
-  .dss-item {
-    color: var(--dss-text-body);
-  }
+/* ==========================================================================
+   DARK MODE — NÃO HÁ REGRA AQUI, E ISSO É DELIBERADO
 
-  .dss-item__caption {
-    color: var(--dss-text-subtle);
-  }
+   Havia um bloco `@media (prefers-color-scheme: dark)` com cinco declarações.
+   Todas eram IDÊNTICAS às da base, token por token:
 
-  .dss-item__leading,
-  .dss-item__trailing {
-    color: var(--dss-text-subtle);
-  }
+     color: var(--dss-text-body)                (base :28)
+     color: var(--dss-text-subtle)              (base :60 e :89)
+     background-color: var(--dss-surface-active)(base :69)
+     opacity: var(--dss-opacity-disabled)       (base :83)
+     border-bottom-color: var(--dss-border-default) (base :111)
 
-  /*
-   * Hover/active em dark mode usa mesma estrategia de overlay
-   * (::after com currentColor) — funciona automaticamente com
-   * cores invertidas do dark mode
-   */
+   Esses tokens JÁ trocam de valor no tema escuro. Redeclará-los não pintava
+   nada de diferente — só dava a impressão de que o dark estava tratado.
 
-  .dss-item--active {
-    background-color: var(--dss-surface-active);
-  }
+   E estava no EIXO ERRADO: `prefers-color-scheme` é a preferência do SO, não o
+   tema da aplicação. Erra nas duas direções — SO escuro + app claro aplicava
+   dark sobre fundo claro; SO claro + app escuro não aplicava nada. Doutrina em
+   DssCheckbox/4-output/_states.scss:19 e DssToggle idem.
 
-  .dss-item--disabled {
-    opacity: var(--dss-opacity-disabled);
-  }
-
-  .dss-item--divider {
-    border-bottom-color: var(--dss-border-default);
-  }
-}
+   Quando este componente precisar de um valor DIFERENTE no escuro, a regra
+   entra sob `[data-theme="dark"]`, como no `_brands.scss` ao lado.
+   ========================================================================== */
 
 /* ==========================================================================
    HIGH CONTRAST MODE

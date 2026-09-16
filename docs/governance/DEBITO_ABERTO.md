@@ -1278,7 +1278,7 @@ rodar o checklist. O que estiver aqui entra no escopo daquela rodada.
   | componente | arquivo |
   |---|---|
   | DssChip | `4-output/_states.scss:17` |
-  | DssItem | `4-output/_states.scss:17` **e** `4-output/_brands.scss:31` |
+  | ~~DssItem~~ | ✅ set/2026 — `_states` era 100% redundante (removido), `_brands` migrado p/ `[data-theme]` |
   | DssRange | `4-output/_states.scss:10` |
   | DssSlider | `4-output/_states.scss:15` |
   | DssChatMessage | `4-output/_states.scss:12` |
@@ -1455,12 +1455,12 @@ rodar o checklist. O que estiver aqui entra no escopo daquela rodada.
   existir, parte das reprovações será por **falta de peça no DSS**, não por erro de composição.
   A mensagem de reprovação precisa distinguir os dois casos, senão vira frustração com a ferramenta.
 
-- 🔴 **`.dss-item--divider` SEM BORDA no tema claro** (achado 2026-08-17 pela checagem nova do gate).
-  `--dss-border-default` só é definido em `[data-theme="dark"]`; no light a única ocorrência está
-  **dentro de um bloco de comentário** que documenta um tema futuro (`light-high-contrast`). Logo o
-  `border-bottom: … var(--dss-border-default)` do DssItem resolve para nada e o divisor some.
-  Referenciado 10× (DssItem `_base`/`_states` + `utils/_example-showcase`). **Corrigir exige escolher o
-  valor light** — o dark usa `gray-600`; um divisor claro pediria algo como `gray-200`/`gray-300`.
+- ✅ **`.dss-item--divider` SEM BORDA no tema claro — VENCIDO** (achado 2026-08-17; reverificado
+  set/2026 na rodada de adequação do DssItem). O registro dizia que `--dss-border-default` só
+  existia em `[data-theme="dark"]`. **Não é mais verdade:** hoje ele é definido na camada
+  semântica (`semantic/_borders.scss:48` = `gray-300`), e o dark apenas o sobrescreve. Medido no
+  navegador, com a classe aplicada: light `1px solid #e5e5e5`, dark `1px solid #737373` — o
+  divisor aparece nos dois. Nada a corrigir; o débito é que estava desatualizado.
   Decisão de design, por isso registrado em vez de arbitrado por mim.
 
 - 🟡 **Mais 2 condicional-only referenciados** (mesma checagem): `--dss-brand-primary` (11×, só sob
