@@ -178,6 +178,24 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "padding-block",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-md-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "transition",
           "token": "--dss-duration-150",
           "value": null,
@@ -214,6 +232,18 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "line-height",
+          "token": "--dss-line-height-xs-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-width",
           "token": "--dss-compact-control-height-sm",
           "value": null,
@@ -232,6 +262,18 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "line-height",
+          "token": "--dss-line-height-sm-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-width",
           "token": "--dss-compact-control-height-lg",
           "value": null,
@@ -246,6 +288,12 @@
         {
           "property": "font-size",
           "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-lg-tight",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -383,6 +431,18 @@
         ]
       },
       {
+        "name": "--dss-line-height-md-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-duration-150",
         "usedIn": [
           "default"
@@ -407,6 +467,18 @@
         ]
       },
       {
+        "name": "--dss-line-height-xs-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-compact-control-height-sm",
         "usedIn": [
           "default"
@@ -419,6 +491,18 @@
         ]
       },
       {
+        "name": "--dss-line-height-sm-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-compact-control-height-lg",
         "usedIn": [
           "default"
@@ -426,6 +510,12 @@
       },
       {
         "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-lg-tight",
         "usedIn": [
           "default"
         ]

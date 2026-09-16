@@ -26,6 +26,37 @@
     min-height: var(--dss-compact-control-height-md);
     font-size: var(--dss-font-size-md);
     font-weight: var(--dss-font-weight-medium);
+
+    // A ALTURA VEM DO TOKEN — e o `!important` aqui é o ÚNICO jeito.
+    //
+    // EXC-IMPORTANT-01. O QPagination escreve ESTILO INLINE em cada botão:
+    //   style="padding: 3px 2px; min-width: 0px; min-height: 0px;"
+    // Inline vence qualquer folha de estilo. Por isso o token de altura estava
+    // declarado, resolvia para 28px e não governava NADA: era anulado por um
+    // `min-height: 0px` inline, e a caixa acabava em 36–43px, definida pelo
+    // `line-height: 1.715em` do QBtn mais o padding. Medido: forçar
+    // `min-height: 28px` pela folha não mexia um pixel.
+    //
+    // Contra estilo inline não existe especificidade que resolva — só
+    // `!important`. Verificado no navegador: com ele, a caixa cai para
+    // exatamente 28px; sem ele, fica em 40px. Não é o caso de `!important`
+    // "por precaução" que a higiene T1–T4 varreu; é o único mecanismo do CSS
+    // para o que precisa ser feito aqui.
+    //
+    // O padding vertical vai a zero e o `em` do Quasar dá lugar ao token
+    // pareado de line-height, para o conteúdo caber DENTRO do piso. O padding
+    // HORIZONTAL fica: é ele que acomoda "10"/"100" sem espremer.
+    padding-block: 0 !important;
+    line-height: var(--dss-line-height-md-tight);
+    min-height: var(--dss-compact-control-height-md) !important;
+
+    // O ícone das setas precisa CABER na caixa, senão ele é que define a altura
+    // e o token volta a não governar. O QIcon vem com 24px fixo: cabe em md
+    // (28px) e lg (32px), mas ESTOURA o xs (20px) — medido, a seta saía 24px
+    // enquanto os números saíam 20px, no mesmo componente.
+    .q-icon {
+      font-size: var(--dss-icon-size-md); // 24px
+    }
     transition:
       background-color var(--dss-duration-150) var(--dss-easing-standard),
       color var(--dss-duration-150) var(--dss-easing-standard),
@@ -55,19 +86,30 @@
   // Size variants — adjust button dimensions via compact-control tokens
   &--xs .q-pagination .q-btn {
     min-width: var(--dss-compact-control-height-xs);
-    min-height: var(--dss-compact-control-height-xs);
+    min-height: var(--dss-compact-control-height-xs) !important; // EXC-IMPORTANT-01
     font-size: var(--dss-font-size-xs);
+    line-height: var(--dss-line-height-xs-tight);
+
+    .q-icon {
+      font-size: var(--dss-icon-size-xs); // 16px
+    }
   }
 
   &--sm .q-pagination .q-btn {
     min-width: var(--dss-compact-control-height-sm);
-    min-height: var(--dss-compact-control-height-sm);
+    min-height: var(--dss-compact-control-height-sm) !important; // EXC-IMPORTANT-01
     font-size: var(--dss-font-size-sm);
+    line-height: var(--dss-line-height-sm-tight);
+
+    .q-icon {
+      font-size: var(--dss-icon-size-sm); // 20px
+    }
   }
 
   &--lg .q-pagination .q-btn {
     min-width: var(--dss-compact-control-height-lg);
-    min-height: var(--dss-compact-control-height-lg);
+    min-height: var(--dss-compact-control-height-lg) !important; // EXC-IMPORTANT-01
     font-size: var(--dss-font-size-lg);
+    line-height: var(--dss-line-height-lg-tight);
   }
 }

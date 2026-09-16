@@ -216,10 +216,23 @@
   18/32 · 20/36). O `line-height` pareado subiu junto no Chip — sem isso o texto maior estouraria
   a caixa, que é o acidente que o próprio `--lg` do Chip já documentava.
 
-  **Fica em aberto (achado do caminho, não regressão):** no `DssPagination` a altura do botão NÃO
-  vem do token — mede 40px com o token em 28px, e não mudou quando a fonte foi de 14 para 16px.
-  Quem governa é a geometria do `.q-btn` do Quasar (`line-height: 1.715em` + padding). Mesma
-  família do bug conhecido de altura do `q-field`.
+  **RESOLVIDO (set/2026):** a altura do botão do `DssPagination` não vinha do token — media 40px
+  com o token em 28px. A CAUSA não era o Quasar em folha de estilo: o **QPagination escreve
+  ESTILO INLINE** em cada botão (`padding: 3px 2px; min-width: 0; min-height: 0`). Inline vence
+  qualquer folha, então o token resolvia para 28px e era anulado; a caixa acabava definida pelo
+  `line-height: 1.715em` do QBtn mais padding. Contra inline não há especificidade — só
+  `!important`, registrado como **EXC-IMPORTANT-01** no `2-composition/_base.scss` e verificado
+  no navegador (com ele 28px, sem ele 40px).
+
+  Junto veio um segundo governante escondido: o ícone das setas, fixo em 24px, ESTOURAVA a caixa
+  do `xs` (20px) — a seta saía 24px enquanto os números saíam 20px, no mesmo componente. Agora o
+  ícone é dimensionado por token de ícone por degrau (16 · 20 · 24 · 24).
+
+  Medido nos 4 tamanhos, todos os botões (números E setas): 20 · 24 · 28 · 32, cravados no token.
+
+  **Fica em aberto, mesma causa:** o `min-width` também é anulado pelo inline (`2em` nos números),
+  então a largura NÃO vem do token e os botões não são quadrados. Não corrigido aqui — o pedido
+  era a altura, e mexer na largura muda o layout de forma visível.
 
   **Recomendação original (mantida como registro).**
 
