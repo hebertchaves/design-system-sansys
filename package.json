@@ -60,7 +60,9 @@
     "build:adequacao-status": "node scripts/build-adequacao-status.cjs",
     "validate:adequacao-status": "node scripts/build-adequacao-status.cjs --check",
     "validate:hover-tokens": "node scripts/validate-hover-tokens.cjs",
-    "validate:hover-tokens:gate": "node scripts/validate-hover-tokens.cjs --gate"
+    "validate:hover-tokens:gate": "node scripts/validate-hover-tokens.cjs --gate",
+    "validate:scale": "node scripts/validate-scale.mjs",
+    "validate:scale:gate": "node scripts/validate-scale.mjs --gate"
   },
   "type": "module",
   "overrides": {

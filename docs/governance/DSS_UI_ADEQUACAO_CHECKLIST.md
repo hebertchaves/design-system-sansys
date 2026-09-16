@@ -406,8 +406,48 @@
 > ⚠️ O gate **não substitui a triagem**: se o alvo do `brightness` tem label/ícone por cima só se
 > descobre olhando o DOM (§M4), e se o hover é de acento ou véu neutro é julgamento (§M5).
 
+## N. Escala por tamanho: sem empate, sem inversão
+
+**Sintoma.** Você troca o tamanho no seletor e o componente cresce — mas o TEXTO não. Ou o `lg`
+sai menor que o `md`. O componente parece "quase certo" e ninguém consegue apontar o quê.
+
+**Causa-raiz (a mesma, sempre).** O `md` costuma ser o ÚNICO tamanho sem regra própria, porque é
+o default e "já está na base". Isso é **saudável** — enquanto a base declarar o valor DELE. No dia
+em que a base declara o valor de outro degrau, o `md` some da escala **sem quebrar nada**: o CSS
+é válido, compila, e nenhum gate pisca.
+
+No DssButton isso mordeu **três vezes numa única onda** (set/2026), sempre pelo mesmo buraco:
+
+| propriedade | o que o `md` herdava | escala resultante |
+|---|---|---|
+| tamanho de ícone | nada — caía no `inherit` do DssIcon | ícone do tamanho do texto (1,00×) |
+| padding horizontal | `spacing-6` (24px) | 8 · 12 · **24** · 20 · 24 — subia, descia e voltava |
+| `font-size` | `-sm` (14px) | 12 · 14 · **14** · 18 · 20 — empate com o `sm` |
+
+**Fix canônico.** Duas formas, ambas válidas — o que **não** vale é a base declarar o valor de um
+degrau que não é o dela:
+
+1. **Molde DssAvatar** (preferido): a base declara o valor do tamanho DEFAULT, e o `md` segue sem
+   regra própria. Uma fonte só para o valor.
+2. Cada tamanho declara o seu, inclusive o `md`.
+
+**Cuidado ao consertar:** uma regra genérica no modificador (ex.: `.dss-x--stack { padding-block }`)
+empata em especificidade com as regras de tamanho e vence por ORDEM — achatando `lg` e `xl` junto.
+Se for por esse caminho, cada tamanho precisa reassumir o seu logo abaixo.
+
+**Antes de chamar de defeito, CRUZE COM A API.** "Sem regra própria" é inócuo num tamanho que o
+componente não expõe. Eu reportei `xl` menor que `lg` no DssChip sem checar que `ChipSize` não tem
+`xl` — não havia fallback porque não havia tamanho.
+
+> **Gate:** `npm run validate:scale` (bloqueia no pre-commit via `validate:scale:gate`).
+> Cobra **empate** entre tamanhos vizinhos e **inversão** (maior com valor menor), sobre o valor
+> EFETIVO — já contando o que o tamanho herda da base. Cruza com a lista de tamanhos do
+> `types/*.types.ts`. Baseline por chave: bloqueia o NOVO, tolera o débito conhecido.
+> "Sem regra própria" aparece como ℹ️ informativo, não como falha.
+
 ## Gate de adequação (marcar por componente — LIGHT e DARK)
 
+- [ ] **escala por tamanho** sem empate e sem inversão em `font-size`, altura e `gap` (§N) — `npm run validate:scale` limpo para o componente
 - [ ] **standout (light)** distinto do borderless (chip escuro `gray-800` + texto inverso)
 - [ ] **standout (dark)** destaca (`gray-900`, não some no stage)
 - [ ] **filled (dark)** não-preto (`gray-600`)

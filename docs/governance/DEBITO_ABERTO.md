@@ -151,6 +151,12 @@ teste no ar.
 **Como usar:** ao começar a adequação de um componente, procure o nome dele nesta seção ANTES de
 rodar o checklist. O que estiver aqui entra no escopo daquela rodada.
 
+### `DssChip` — já adequado (✅), mas com um degrau empatado
+
+| # | pendência | detalhe |
+|---|---|---|
+| 1 | **`gap` empata entre `sm` e `md`** (4px nos dois) | A escala é 2 · 4 · 4 · 8. O `sm` e o `md` não têm regra própria de `gap` e herdam os 4px da base. Linear seria 2 · 4 · 6 · 8 (`spacing-0_5` · `-1` · `-1_5` · `-2`). Único empate/inversão que sobrou em TODA a família — está no baseline do `validate:scale`. Não corrigido avulso: muda o espaço ícone↔rótulo de um componente selado |
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |
