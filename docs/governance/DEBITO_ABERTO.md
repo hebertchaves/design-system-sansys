@@ -170,10 +170,58 @@
   Lição: "sem regra própria" só vira defeito depois de confrontar com a API do componente. O
   mesmo dado é inócuo num tamanho inexistente e grave no tamanho default.
 
-  **Sobra UM defeito, e ele não é objetivo:** `xs` = `sm` = 12px em 5 componentes de controle.
-  Pode ser DELIBERADO — controles compactos compartilhando tipografia — ou o mesmo acidente do
-  `md`. Exige decisão de design, não conserto. Confrontar com o `dss.meta.json` de cada um antes
-  de mexer.
+  **DE-PARA dos 5 componentes de controle compacto** (confronto CSS × `dss.meta.json`, set/2026).
+
+  Os cinco têm o MESMO desenho — não são cinco casos, é uma família:
+
+  | tamanho | altura (token) | px | fonte (token) | px |
+  |---|---|---|---|---|
+  | `xs` | `--dss-compact-control-height-xs` | 20 | `--dss-font-size-xs` | 12 |
+  | `sm` | `--dss-compact-control-height-sm` | 24 | `--dss-font-size-xs` | **12** ← empate |
+  | `md` (base) | `--dss-compact-control-height-md` | 28 | `--dss-font-size-sm` | 14 |
+  | `lg` | `--dss-compact-control-height-lg` | 32 | `--dss-font-size-md` | 16 |
+  | `xl` ¹ | `--dss-compact-control-height-lg` | **32** ← empate | `--dss-font-size-lg` | 18 |
+
+  ¹ só `DssCheckbox`, `DssRadio`, `DssToggle`. `DssChip` e `DssPagination` são `xs|sm|md|lg` —
+  a família diverge na API sem motivo aparente.
+
+  **A regra implícita, e por que ela quebra.** A fonte é sempre o token UM DEGRAU ABAIXO do nome
+  do tamanho (`md`→`-sm`, `lg`→`-md`, `xl`→`-lg`): controle compacto usa tipo menor do que o nome
+  sugere. É consistente em 4 dos 5 degraus. Quebra só onde o deslocamento sai da escala:
+
+  - **no piso:** `xs` precisaria de `--dss-font-size-2xs`, que **não existe** (12px é o piso).
+    Resultado: a caixa cresce 20→24 e o texto não.
+  - **no topo:** `xl` precisaria de `--dss-compact-control-height-xl`, que **não existe** (a
+    escala vai de `xs` a `lg`). Resultado: o texto cresce 16→18 e a caixa não.
+
+  Ou seja: **um fenômeno só, nas duas pontas** — a escala de TOKENS é mais curta que a escala de
+  TAMANHOS. Não é descuido de componente; é alcance de token.
+
+  **Recomendação.**
+
+  1. **Topo (objetivo, não-breaking):** criar `--dss-compact-control-height-xl: 36px`. O `xl`
+     passa a 36px/18px e o platô some sem tocar em nenhum componente — eles só trocam a
+     referência. Alternativa: alinhar a API dos cinco em `xs|sm|md|lg` (elimina o `xl`), que
+     resolve o platô E a divergência de API, mas é breaking.
+  2. **Piso (decisão de design):** recomendo **documentar o empate**, não criar `-2xs`. O próprio
+     token declara que 12px é "apenas para rótulos, não para corpo" — descer para 11px pede aval.
+     E `xs` e `sm` continuam distinguíveis pela ALTURA (20 vs 24). Fonte igual com alturas
+     diferentes incomoda menos que fonte diferente com altura igual, que é o caso do topo.
+
+  **Drift meta × CSS (objetivo, independe das decisões acima).**
+
+  | componente | meta diz | CSS diz | veredito |
+  |---|---|---|---|
+  | `DssChip` | `--dss-font-size-sm` = `12px` | `-sm` = 14px | token certo, **valor errado** |
+  | `DssPagination` | `--dss-font-size-md` = `14px` | `-sm` = 14px | **token errado**, valor certo |
+  | `DssCheckbox` | `--dss-font-size-md` = `14px` | `-sm` = 14px | **token errado**, valor certo |
+  | `DssRadio` | — | `-sm` = 14px | **não declara fonte** |
+  | `DssToggle` | — | `-sm` = 14px | **não declara fonte** |
+
+  E `computedDimensions.minHeight` tem DOIS significados no corpus: `DssChip` registra `28px` (a
+  CAIXA), os outros quatro registram `44px` (o TOUCH TARGET do `::before`). Medido: os quatro
+  renderizam caixa de 28px com `::before` de 44px — mesma anatomia, mesmo CSS, campo preenchido
+  com coisas diferentes. Eco do débito das duas grafias do corpus de meta, logo abaixo.
 
   **Prevenção.** Nenhum gate pega isto: o CSS é válido, compila, e a escala só é "errada" quando
   comparada com a intenção. Um validador que compile o componente e compare a escala declarada
