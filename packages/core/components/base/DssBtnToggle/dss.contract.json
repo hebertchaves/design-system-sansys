@@ -2442,6 +2442,24 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-md-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "border-radius",
           "token": null,
           "value": "0",
@@ -3723,6 +3741,19 @@
         ]
       },
       {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-line-height-md-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-border-width-thin",
         "usedIn": [
           "default"
@@ -3852,12 +3883,6 @@
         "name": "--dss-focus-shadow-error",
         "usedIn": [
           "focus"
-        ]
-      },
-      {
-        "name": "--dss-touch-target-md",
-        "usedIn": [
-          "defaultPreview"
         ]
       }
     ]

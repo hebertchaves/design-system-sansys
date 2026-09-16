@@ -8,7 +8,7 @@
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
-> **100% selados**; a adequação de UI é uma onda posterior, e cobre **13** deles. Um
+> **100% selados**; a adequação de UI é uma onda posterior, e cobre **14** deles. Um
 > componente selado em janeiro/2026 foi auditado contra as regras de então — não contra o checklist
 > de adequação.
 
@@ -31,8 +31,8 @@ inferência, não selo.
 | Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
 |---|---|---|---|---|---|
 | **Fase 1 — Atômicos** | 20 | **11** | 0 | 2 | 7 |
-| **Fase 2 — Compostos** | 68 | **2** | 0 | 1 | 65 |
-| **Total** | **88** | **13** | 0 | 3 | 72 |
+| **Fase 2 — Compostos** | 68 | **3** | 0 | 1 | 64 |
+| **Total** | **88** | **14** | 0 | 3 | 71 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
 `DssAvatar`, `DssBadge`, `DssCard`.
@@ -64,10 +64,11 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssSpinner` | Indicador de carregamento | 24/03/2026 | — | — |
 | ⬜ | `DssTooltip` | Dica contextual | 06/02/2026 | — | — |
 
-## Fase 2 — Componentes Compostos (2/68)
+## Fase 2 — Componentes Compostos (3/68)
 
 | | Componente | Categoria | Selo | Playground | Preview Frame |
 |---|---|---|---|---|---|
+| ✅ | `DssBtnToggle` | Botões e Controles de Grupo | 27/03/2026 | sim | sim |
 | ✅ | `DssField` | Inputs Compostos | 19/05/2026 | sim | sim |
 | ✅ | `DssUploader` | Upload / File Management | 07/05/2026 | sim | sim |
 | 🟡 | `DssCard` | Superfície e Layout | 12/02/2026 | sim | — |
@@ -79,7 +80,6 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssBreadcrumbsEl` | Navegação Estrutural | 10/04/2026 | — | — |
 | ⬜ | `DssBtnDropdown` | Botões e Controles de Grupo | 27/03/2026 | — | — |
 | ⬜ | `DssBtnGroup` | Botões e Controles de Grupo | 26/03/2026 | — | — |
-| ⬜ | `DssBtnToggle` | Botões e Controles de Grupo | 27/03/2026 | — | — |
 | ⬜ | `DssCarousel` | Mídia e Visualização | 21/05/2026 | — | — |
 | ⬜ | `DssChatMessage` | Visualização de Dados | 21/05/2026 | — | — |
 | ⬜ | `DssCircularProgress` | Progresso e Feedback | 18/05/2026 | — | — |

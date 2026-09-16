@@ -52,6 +52,21 @@
 
 .dss-btn-toggle > .q-btn-item {
   text-transform: var(--dss-text-transform-control, none);
+
+  /* ALTURA PELO TOKEN — antes vinha do Quasar, e oscilava.
+     Medido na rodada de adequação (set/2026): `min-height` computava
+     **41,152px**, que é o `2.572em` do `.q-btn` do Quasar na fonte de 16px do
+     DS — o token de 44px nunca chegou aos botões internos. Pior, a altura
+     RENDERIZADA variava com o conteúdo: 41,1px sem ícone e 43,4px com ícone, no
+     mesmo grupo. Um controle de alternância com altura dependente do conteúdo
+     não alinha com nenhum outro campo do formulário.
+
+     Os três valores andam juntos, como no DssPagination: `min-height` sozinho é
+     PISO e não encolhe nada — é preciso tirar o excesso (padding vertical do
+     QBtn e seu `line-height` em `em`) para o conteúdo caber dentro dele. */
+  min-height: var(--dss-touch-target-md);
+  padding-block: 0;
+  line-height: var(--dss-line-height-md-tight);
 }
 
 /* ==========================================================================
