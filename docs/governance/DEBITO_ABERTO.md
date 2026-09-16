@@ -154,22 +154,26 @@
   |---|---|---|---|---|---|---|
   | `DssAvatar` | 12 | 14 | **16** | 18 | 20 | ✅ correto — a base declara `-md`. **É o molde.** |
   | `DssButton` | 12 | 14 | ~~14~~ **16** | 18 | 20 | ✅ CORRIGIDO nesta onda |
-  | `DssChip` | 12 | **12** | 14 | 16 | **14** | ❌ `xl` MENOR que `lg` |
-  | `DssPagination` | 12 | **12** | 14 | 16 | **14** | ❌ `xl` MENOR que `lg` |
+  | `DssChip` | 12 | **12** | 14 | 16 | n/a | ⚠ `xs` = `sm` |
+  | `DssPagination` | 12 | **12** | 14 | 16 | n/a | ⚠ `xs` = `sm` |
   | `DssCheckbox` | 12 | **12** | 14 | 16 | 18 | ⚠ `xs` = `sm` |
   | `DssRadio` | 12 | **12** | 14 | 16 | 18 | ⚠ `xs` = `sm` |
   | `DssToggle` | 12 | **12** | 14 | 16 | 18 | ⚠ `xs` = `sm` |
 
-  **Dois defeitos distintos, e só um é objetivo.**
+  **🔴 CORREÇÃO DE UM ACHADO FALSO MEU** (set/2026). A versão anterior desta tabela acusava
+  `DssChip` e `DssPagination` de ter `xl` MENOR que `lg` (14px contra 16px). **Falso — nenhum dos
+  dois tem `xl`.** `ChipSize` e `DssPaginationSize` são `'xs' | 'sm' | 'md' | 'lg'`, e o CSS
+  compilado dos dois tem ZERO ocorrências de `--xl`. Minha varredura reportou corretamente "sem
+  regra própria para xl"; fui EU que li isso como "cai no fallback da base" sem antes checar se
+  `xl` existe na API. Não existe fallback: não existe o tamanho.
 
-  1. **`xl` menor que `lg`** (`DssChip`, `DssPagination`): o `xl` não tem regra, cai na base
-     (14px) e fica ABAIXO do `lg` (16px). Ninguém projeta uma escala que encolhe no topo — é
-     acidente de fallback, não escolha. Correção óbvia; não aplicada aqui por serem componentes
-     já adequados, e por estar fora do que foi pedido.
+  Lição: "sem regra própria" só vira defeito depois de confrontar com a API do componente. O
+  mesmo dado é inócuo num tamanho inexistente e grave no tamanho default.
 
-  2. **`xs` = `sm` = 12px** (5 componentes de controle): pode ser DELIBERADO — controles
-     compactos compartilhando tipografia — ou o mesmo acidente. Exige decisão de design, não
-     conserto. Confrontar com o `dss.meta.json` de cada um antes de mexer.
+  **Sobra UM defeito, e ele não é objetivo:** `xs` = `sm` = 12px em 5 componentes de controle.
+  Pode ser DELIBERADO — controles compactos compartilhando tipografia — ou o mesmo acidente do
+  `md`. Exige decisão de design, não conserto. Confrontar com o `dss.meta.json` de cada um antes
+  de mexer.
 
   **Prevenção.** Nenhum gate pega isto: o CSS é válido, compila, e a escala só é "errada" quando
   comparada com a intenção. Um validador que compile o componente e compare a escala declarada
