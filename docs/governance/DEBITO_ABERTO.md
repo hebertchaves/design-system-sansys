@@ -141,6 +141,38 @@
     auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
     abrir a lista quando a decisão vier.
 
+## 🔵 Decisão pendente — texto em CAIXA ALTA sobe 2px opticamente (todo o DS)
+
+**Medido** (set/2026, varredura de pixel da rasterização real, não da caixa):
+
+| o que é medido | acima | abaixo | assimetria |
+|---|---|---|---|
+| `DssChip` com descendente ("Chip") | 6,75 | 6,00 | 0,75px — invisível |
+| `DssChip` só x-height ("nnn") | 9,75 | 9,50 | 0,25px — invisível |
+| **`DssChip` só caixa alta ("CHIP")** | 7,25 | 9,25 | **−2px (alto)** |
+| **`DssButton` "ELEVATED"** (uppercase é o padrão) | 15,50 | 17,50 | **−2px (alto)** |
+
+**Causa.** A caixa de linha reserva espaço para DESCENDENTE abaixo da linha de base. Texto sem
+descendente — todo texto em caixa alta — deixa esse espaço vazio, e a massa visível sobe. É
+propriedade da métrica da fonte, não bug de CSS: as caixas medem centradas (`align-items: center`
+funcionando), o que está fora do centro é a TINTA.
+
+**Por que virou assunto agora:** a inversão do padrão para `uppercase` (set/2026) fez todo rótulo
+de botão, aba e toggle ficar sem descendente. Antes só acontecia em rótulo escrito em caixa alta
+pelo autor.
+
+**As duas saídas, ambas testadas ao vivo:**
+
+| saída | resultado medido | custo |
+|---|---|---|
+| Compensar o padding (ex.: `5px/3px` no chip) | assimetria −0,04px — **perfeito para caixa alta** | INVERTE o problema: texto com descendente passa a cair ~2px. Só serve onde o texto é SEMPRE caixa alta |
+| `text-box: trim-both cap alphabetic` | suportado pelo browser, mas **sem efeito** no rótulo atual (é contêiner flex) e, com `display:block`, a caixa encolhe para 11px e o flex centra a caixa ERRADA (+6,96) | exige rever a estrutura do rótulo; é o conserto principiado, mas não é drop-in |
+
+**Recomendação:** não compensar no `DssChip` — ele não usa o token de capitalização, e a maioria
+dos rótulos é caixa mista, onde hoje o erro é 0,75px. A compensação faz sentido apenas onde o
+`uppercase` é garantido (botão/aba/toggle), e aí como decisão explícita de tipografia, não como
+ajuste local de componente.
+
 ## Pendências por componente (resolver na rodada de ADEQUAÇÃO de cada um)
 
 Achados que não são urgentes nem isolados: mexer neles fora da rodada de adequação do componente

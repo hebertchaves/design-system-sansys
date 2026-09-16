@@ -122,14 +122,28 @@
   flex-shrink: 0;
 }
 
-/* Icon positioning */
-.dss-chip__icon--left,
-.dss-chip__icon--selected {
-  margin-right: var(--dss-spacing-0_5);
-}
+/* Icon positioning — o espaçamento é do `gap`, não de margem.
+   ==========================================================================
 
+   As margens de 2px que moravam aqui (`--left`/`--selected` à direita,
+   `--right` à esquerda) eram uma SEGUNDA via de espaçamento, sobrevivente de
+   antes do `gap` no flex. Faziam dois estragos, os dois medidos:
+
+   1. SOMAVAM ao gap. A distância real ícone↔rótulo saía 4 · 6 · 8 · 10 por
+      tamanho, enquanto a escala declarada era 2 · 4 · 6 · 8. Quem lesse o CSS
+      (ou a propriedade `gap` computada) via um número; a tela pintava outro.
+
+   2. DESCENTRALIZAVAM o chip `icon-only`. Sem rótulo, a margem vira peso morto
+      de um lado só: num chip de 32px com ícone de 18px e padding 4/4, a folga
+      de 6px saía 2 à esquerda e 4 à direita em vez de 3/3. O ícone encostava
+      para a esquerda — exatamente o sintoma relatado.
+
+   O DssButton já resolve assim (`__icon--left`/`--right` sem margem, com o
+   comentário "espaçamento automático via gap"). */
+.dss-chip__icon--left,
+.dss-chip__icon--selected,
 .dss-chip__icon--right {
-  margin-left: var(--dss-spacing-0_5);
+  /* sem margem: ver bloco acima */
 }
 
 /* Selected icon styling */

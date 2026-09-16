@@ -437,18 +437,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "margin-right",
-          "token": "--dss-spacing-0_5",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "margin-left",
-          "token": "--dss-spacing-0_5",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "font-size",
           "token": "--dss-font-size-sm",
           "value": null,
@@ -1309,13 +1297,6 @@
         ]
       },
       {
-        "name": "--dss-spacing-0_5",
-        "usedIn": [
-          "default",
-          "focus"
-        ]
-      },
-      {
         "name": "--dss-font-size-sm",
         "usedIn": [
           "default"
@@ -1349,6 +1330,13 @@
         "name": "--dss-opacity-70",
         "usedIn": [
           "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0_5",
+        "usedIn": [
+          "default",
+          "focus"
         ]
       },
       {
