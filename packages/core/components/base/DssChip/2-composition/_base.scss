@@ -44,7 +44,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--dss-spacing-1);
+  /* `gap` do `md` (tamanho default, sem regra própria). Era `-1` (4px), o MESMO
+     valor que o `sm` herdava daqui: a escala saía 2 · 4 · 4 · 8, com um degrau
+     empatado no meio. Agora 2 · 4 · 6 · 8, um passo de 2px por tamanho. */
+  gap: var(--dss-spacing-1_5);
 
   /* Typography */
   font-family: var(--dss-font-family-sans);
@@ -110,7 +113,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--dss-font-size-md);
+  /* UM degrau acima do texto — é a razão ~1,15× que o chip sempre teve, e que
+     vale para o `md` (sem regra própria). Ficou 1,00× quando a escala de FONTE
+     subiu um degrau (set/2026) e a do ícone não foi junto: o ícone passou a ter
+     exatamente o tamanho da letra. Medido na época: 1,00× em sm, md e lg. */
+  font-size: var(--dss-font-size-lg);
   line-height: 1;
   flex-shrink: 0;
 }
@@ -336,18 +343,28 @@
   min-height: var(--dss-compact-control-height-sm); /* 24px - altura VISUAL */
   font-size: var(--dss-font-size-sm);
   line-height: var(--dss-line-height-sm-tight);
+  gap: var(--dss-spacing-1); /* 4px — próprio, não mais herdado do md */
 
   /* `:not(--remove)`: o ícone de remoção é dimensionado pelo BOTÃO (token de
      ícone), não pela tipografia do chip. Sem a exclusão esta regra (0,2,0)
      vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
 
   .dss-chip__icon:not(.dss-chip__icon--remove) {
-    font-size: var(--dss-font-size-sm);
+    font-size: var(--dss-font-size-md);
   }
 }
 
 .dss-chip--md {
-  /* Default size - ja definido no .dss-chip */
+  /* Dimensões e tipografia: já definidas no `.dss-chip` (tamanho default).
+
+     O ÍCONE, não. A regra base `.dss-chip__icon` é (0,1,0) e EMPATA com o
+     `.dss-icon--inline { font-size: inherit }`, perdendo por ordem — o ícone do
+     `md` caía na tipografia do chip e saía 1,00× o texto. Os outros tamanhos já
+     escapam disso com o seletor (0,2,0) abaixo; o `md` era o único sem, e por
+     isso o único defasado. Mesmo defeito, mesma solução do DssButton. */
+  .dss-chip__icon:not(.dss-chip__icon--remove) {
+    font-size: var(--dss-font-size-lg);
+  }
 }
 
 .dss-chip--lg {
@@ -365,7 +382,7 @@
      vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
 
   .dss-chip__icon:not(.dss-chip__icon--remove) {
-    font-size: var(--dss-font-size-lg);
+    font-size: var(--dss-font-size-xl);
   }
 
   .dss-chip__remove {
