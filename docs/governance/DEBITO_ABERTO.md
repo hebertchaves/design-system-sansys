@@ -141,6 +141,30 @@
     auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
     abrir a lista quando a decisão vier.
 
+## Pendências por componente (resolver na rodada de ADEQUAÇÃO de cada um)
+
+Achados que não são urgentes nem isolados: mexer neles fora da rodada de adequação do componente
+custa uma verificação visual inteira para uma linha de CSS, e o risco de regressão não compensa.
+Ficam aqui esperando o momento em que o componente já vai estar aberto, medido e com página de
+teste no ar.
+
+**Como usar:** ao começar a adequação de um componente, procure o nome dele nesta seção ANTES de
+rodar o checklist. O que estiver aqui entra no escopo daquela rodada.
+
+### `DssPagination` — adequação ainda não iniciada (⬜)
+
+| # | pendência | causa | custo |
+|---|---|---|---|
+| 1 | **Largura não vem do token**: os botões não são quadrados (`min-width` do token é anulado) | O QPagination escreve `min-width` INLINE (`2em` nos números, `0` nas setas). Inline vence folha de estilo — mesma causa da altura, resolvida em set/2026 | 1 linha: `min-width: … !important` no mesmo bloco, sob a EXC-IMPORTANT-01 já registrada |
+| 2 | **`computedDimensions.minHeight` do meta diz `44px`; medido, a caixa é `28px`** | O campo registra o TOUCH TARGET (`::before`), enquanto o `DssChip` registra a CAIXA no mesmo campo — corpus com dois significados | decidir o significado do campo e alinhar; vale para Checkbox, Radio e Toggle também |
+
+> A altura JÁ foi corrigida (set/2026) e está cravada no token nos 4 tamanhos — 20 · 24 · 28 · 32.
+> O `!important` que isso exigiu está documentado como **EXC-IMPORTANT-01** no
+> `2-composition/_base.scss`, com a medição que o justifica. A pendência 1 é a mesma história na
+> outra dimensão.
+
+---
+
 ## Débito de fundo (ondas anteriores)
 
 - 🔴 **Escala de FONTE incompleta em 6 componentes — o mesmo defeito estrutural, três vezes no
@@ -230,9 +254,9 @@
 
   Medido nos 4 tamanhos, todos os botões (números E setas): 20 · 24 · 28 · 32, cravados no token.
 
-  **Fica em aberto, mesma causa:** o `min-width` também é anulado pelo inline (`2em` nos números),
-  então a largura NÃO vem do token e os botões não são quadrados. Não corrigido aqui — o pedido
-  era a altura, e mexer na largura muda o layout de forma visível.
+  **Fica em aberto, mesma causa:** o `min-width` também é anulado pelo inline. Arquivado em
+  *Pendências por componente* (logo abaixo), para ser resolvido na rodada de adequação do
+  `DssPagination` — não faz sentido mexer na largura fora dela.
 
   **Recomendação original (mantida como registro).**
 

@@ -8,6 +8,12 @@
 > **Como ler:** cada item traz o *sintoma* observado, a *causa-raiz* e o *fix
 > canônico*. A seção final é o **Gate** (caixas para marcar por componente).
 >
+> **PASSO ZERO, antes de tudo:** abra a seção **"Pendências por componente"** do
+> [`DEBITO_ABERTO.md`](DEBITO_ABERTO.md) e procure o nome do componente. O que estiver
+> lá é achado JÁ MEDIDO, parado à espera desta rodada — entra no escopo dela. Foram
+> deixados para cá de propósito: consertar fora da adequação custa uma verificação
+> visual inteira para uma linha de CSS.
+>
 > **Dois meta-princípios (aprendidos na marra, valem para TODA a análise):**
 > 1. **Quasar é a referência de COMPORTAMENTO, não só de estilo.** Em dúvida sobre
 >    *como algo se comporta* (slot `error`, altura, placeholder, foco), **consulte a
