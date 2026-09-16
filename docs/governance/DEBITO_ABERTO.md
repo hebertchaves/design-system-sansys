@@ -141,7 +141,44 @@
     auditoria com número de componente real — `positive` é o caso mais grave e o candidato natural a
     abrir a lista quando a decisão vier.
 
-## 🔵 Decisão pendente — texto em CAIXA ALTA sobe 2px opticamente (todo o DS)
+## 🔵 Decisão pendente — a banda visível do texto sobe ~1,5px em 16px (todo o DS)
+
+**Medido por DOM** (set/2026), com sonda de linha de base (`inline-block` de altura zero) e
+altura de maiúscula pela unidade `cap` — sem canvas, que já mentiu duas vezes nesta frente:
+
+| componente | altura | cap | acima | abaixo | desvio |
+|---|---|---|---|---|---|
+| `DssChip` md | 28px | 11 | 7,00 | 10,00 | **−1,50 (alto)** |
+| `DssButton` md | 44px | 11 | 15,00 | 18,00 | **−1,50 (alto)** |
+| `DssChip` xs (12px) | 20px | 8,25 | 5,25 | 6,50 | −0,63 |
+| `DssChip` sm (14px) | 24px | 9,63 | 7,38 | 7,00 | +0,19 |
+| `DssChip` lg (18px) | 32px | 12,38 | 9,13 | 10,50 | −0,69 |
+
+**NÃO é defeito do componente.** Chip e botão dão o MESMO −1,50px, em caixas de 28px e 44px: o
+que os une é a fonte em **16px**. O relato "só acontece no md" se explica por aí — `md` é o único
+tamanho do chip que usa 16px.
+
+**Causa.** A caixa de linha é centrada corretamente (`align-items: center` medido funcionando); o
+que está fora do centro é a BANDA VISÍVEL. A linha de base fica em `centro + (A − D)/2`, e a
+banda de maiúscula vai daí até `−cap`. O desvio é `(A − D − cap)/2` — só métrica da fonte.
+
+**Duas alavancas foram testadas e NÃO funcionam:**
+- `line-height` (testado no disco, 20px → 18px no md): desvio **inalterado** em −1,50. O flex
+  recentra a caixa menor e a linha de base sobe junto — net zero.
+- `padding`: mesma coisa. Enquanto o `min-height` governa e o rótulo é centrado, mover o padding
+  não move a banda.
+
+**A alavanca que funcionaria** é mexer nas métricas da fonte, num lugar só, para todo o DS:
+`@font-face` com `ascent-override` / `descent-override` simétricos. Hoje o DS **não declara
+`@font-face`** — `--dss-font-family-sans` é `'Inter', -apple-system, …` e a fonte vem do ambiente,
+então a correção exige primeiro assumir a declaração da fonte. É decisão de tipografia do DS, com
+efeito em TODO texto, não ajuste de componente.
+
+*(A nota anterior desta seção falava em "2px em caixa alta" a partir de medição por canvas. O
+número certo é o da tabela acima: canvas usa fallback de fonte e dava valores que a tela não
+confirma.)*
+
+## 🔵 (histórico) Medição por canvas — caixa alta
 
 **Medido** (set/2026, varredura de pixel da rasterização real, não da caixa):
 
