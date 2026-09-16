@@ -533,7 +533,7 @@ O DSS sintetiza padrões de três referências:
 | **border-color (unchecked)** | `--dss-gray-500` | — | 2-composition/_base.scss |
 | **background (checked)** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **gap (controle + label)** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
-| **label font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **label font-size** | `--dss-font-size-md` | `16px` | 2-composition/_base.scss |
 | **label color** | `--dss-text-body` | — | 2-composition/_base.scss |
 | **touch target** | `--dss-touch-target-md` | `44px` | Via `::before` (WCAG 2.5.5) |
 <!-- END:VISUAL-TABLE:DssCheckbox -->
@@ -559,7 +559,7 @@ O DSS sintetiza padrões de três referências:
 | **border-color** | `--dss-gray-300` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **background** | `--dss-surface-muted` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **color** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
-| **font-size** | `--dss-font-size-sm` | `12px` | 2-composition/_base.scss |
+| **font-size** | `--dss-font-size-md` | `16px` | 2-composition/_base.scss |
 | **font-weight** | `--dss-font-weight-medium` | `500` | 2-composition/_base.scss |
 | **gap** | `--dss-spacing-2` | `8px` | 2-composition/_base.scss |
 | **selected background** | `--dss-action-primary` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
@@ -1194,7 +1194,7 @@ O DSS sintetiza padrões de três referências:
 | **min-height** | `--dss-touch-target-md` | `44px` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **item width × height** | — | `32px × 32px` | Seção 13.24 |
 | **item border-radius** | `--dss-radius-sm` | `4px` | 2-composition/_base.scss |
-| **item font-size** | `--dss-font-size-md` | `14px` | 2-composition/_base.scss |
+| **item font-size** | `--dss-font-size-md` | `16px` | 2-composition/_base.scss |
 | **item color (inativo)** | `--dss-text-body` | — | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **item color (ativo)** | `--dss-text-inverse` | `branco` | via Quasar :color → packages/core/themes/_quasar-tokens-mapping.scss |
 | **item background (ativo)** | `--dss-action-primary` | — | 2-composition/_base.scss |
@@ -2272,5 +2272,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-09-10T11:42:59.561Z_
+_Gerado em: 2026-09-16T04:30:48.430Z_
 <!-- END:AUTO-GENERATED -->

@@ -29,7 +29,7 @@
 
   /* Typography */
   font-family: var(--dss-font-family-sans);
-  font-size: var(--dss-font-size-sm);
+  font-size: var(--dss-font-size-md);
   line-height: var(--dss-line-height-normal);
   /* DSS Visual Standard: cor gray-500 no root define currentColor do controle unchecked.
      As três referências (M3, Carbon, Lightning) usam cinza médio na borda unchecked.
@@ -316,7 +316,7 @@ $dss-checkbox-semantic-colors: (
 .dss-checkbox--sm {
   gap: var(--dss-spacing-1_5); /* 6px */
   min-height: var(--dss-compact-control-height-sm); /* 24px */
-  font-size: var(--dss-font-size-xs);
+  font-size: var(--dss-font-size-sm);
 
   .dss-checkbox__control {
     width: var(--dss-spacing-5); /* 20px */
@@ -336,7 +336,7 @@ $dss-checkbox-semantic-colors: (
 .dss-checkbox--lg {
   gap: var(--dss-spacing-3); /* 12px */
   min-height: var(--dss-compact-control-height-lg); /* 32px */
-  font-size: var(--dss-font-size-md);
+  font-size: var(--dss-font-size-lg);
 
   .dss-checkbox__control {
     width: var(--dss-spacing-6); /* 24px */
@@ -358,11 +358,11 @@ $dss-checkbox-semantic-colors: (
 
 .dss-checkbox--xl {
   gap: var(--dss-spacing-4); /* 16px */
-  /* Reusa a altura -lg da escala compacta compartilhada (badge/chip/checkbox):
-     não há compact-control-height-xl e a taxonomia é compartilhada. O box de 28px
-     cabe folgado em 32px; o touch target (44px) vem do ::before (WCAG 2.5.5). */
-  min-height: var(--dss-compact-control-height-lg); /* 32px */
-  font-size: var(--dss-font-size-lg);
+  /* O `-xl` (36px) nasceu em set/2026 junto com esta escala. Até então não havia
+     degrau `xl` de altura e este bloco reapontava para `-lg`: o texto crescia e
+     a caixa não. */
+  min-height: var(--dss-compact-control-height-xl); /* 36px */
+  font-size: var(--dss-font-size-xl);
 
   .dss-checkbox__control {
     width: var(--dss-spacing-7); /* 28px */

@@ -230,7 +230,7 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-font-size-sm",
+          "token": "--dss-font-size-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -649,6 +649,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "width",
           "token": "--dss-spacing-8",
           "value": null,
@@ -668,7 +674,7 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-font-size-md",
+          "token": "--dss-font-size-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -709,8 +715,14 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "min-height",
+          "token": "--dss-compact-control-height-xl",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "font-size",
-          "token": "--dss-font-size-lg",
+          "token": "--dss-font-size-xl",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -983,7 +995,7 @@
         ]
       },
       {
-        "name": "--dss-font-size-sm",
+        "name": "--dss-font-size-md",
         "usedIn": [
           "default"
         ]
@@ -1179,6 +1191,12 @@
         ]
       },
       {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-8",
         "usedIn": [
           "default"
@@ -1191,7 +1209,7 @@
         ]
       },
       {
-        "name": "--dss-font-size-md",
+        "name": "--dss-font-size-lg",
         "usedIn": [
           "default"
         ]
@@ -1215,7 +1233,13 @@
         ]
       },
       {
-        "name": "--dss-font-size-lg",
+        "name": "--dss-compact-control-height-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xl",
         "usedIn": [
           "default"
         ]

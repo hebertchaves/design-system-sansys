@@ -1553,11 +1553,12 @@ Tokens para garantir conformidade WCAG 2.1 AA (foco, touch targets, contraste).
 | `--dss-compact-control-height-sm` | `24px` | `24px` | Badge/Chip small |
 | `--dss-compact-control-height-md` | `28px` | `28px` | Badge/Chip medium (padrão) |
 | `--dss-compact-control-height-lg` | `32px` | `32px` | Badge/Chip large |
+| `--dss-compact-control-height-xl` | `36px` | `36px` | Badge/Chip extra large |
 | `--dss-chip-height-xs` | `var(--dss-compact-control-height-xs)` | — | — |
 | `--dss-chip-height-sm` | `var(--dss-compact-control-height-sm)` | — | — |
 | `--dss-chip-height-md` | `var(--dss-compact-control-height-md)` | — | — |
 | `--dss-chip-height-lg` | `var(--dss-compact-control-height-lg)` | — | — |
-| `--dss-chip-height-xl` | `var(--dss-compact-control-height-lg)` | — | xl → lg (sem diferença visual) |
+| `--dss-chip-height-xl` | `var(--dss-compact-control-height-xl)` | — | — |
 <!-- END:TOKEN-TABLE:accessibility-compact-controls -->
 
 ### Filosofia de Uso

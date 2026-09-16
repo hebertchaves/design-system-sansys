@@ -65,8 +65,8 @@
       },
       {
         "property": "font-size",
-        "token": "--dss-font-size-sm",
-        "value": "12px",
+        "token": "--dss-font-size-md",
+        "value": "16px",
         "source": "2-composition/_base.scss"
       },
       {

@@ -264,7 +264,7 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-font-size-sm",
+          "token": "--dss-font-size-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -276,7 +276,7 @@
         },
         {
           "property": "line-height",
-          "token": "--dss-line-height-sm-tight",
+          "token": "--dss-line-height-md-tight",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -419,12 +419,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "font-size",
-          "token": "--dss-font-size-md",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "line-height",
           "token": null,
           "value": "1",
@@ -445,6 +439,12 @@
         {
           "property": "margin-left",
           "token": "--dss-spacing-0_5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -563,26 +563,32 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "line-height",
+          "token": "--dss-line-height-sm-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-height",
           "token": "--dss-compact-control-height-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "line-height",
-          "token": "--dss-line-height-md-tight",
+          "token": "--dss-line-height-lg-tight",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
           "property": "gap",
           "token": "--dss-spacing-2",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-font-size-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1232,7 +1238,7 @@
         ]
       },
       {
-        "name": "--dss-font-size-sm",
+        "name": "--dss-font-size-md",
         "usedIn": [
           "default",
           "defaultPreview"
@@ -1246,7 +1252,7 @@
         ]
       },
       {
-        "name": "--dss-line-height-sm-tight",
+        "name": "--dss-line-height-md-tight",
         "usedIn": [
           "default"
         ]
@@ -1279,16 +1285,16 @@
         ]
       },
       {
-        "name": "--dss-font-size-md",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-spacing-0_5",
         "usedIn": [
           "default",
           "focus"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
         ]
       },
       {
@@ -1359,13 +1365,25 @@
         ]
       },
       {
+        "name": "--dss-line-height-sm-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-compact-control-height-lg",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-line-height-md-tight",
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-lg-tight",
         "usedIn": [
           "default"
         ]
@@ -1375,12 +1393,6 @@
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-font-size-lg",
-        "usedIn": [
-          "default"
         ]
       },
       {

@@ -24,7 +24,7 @@
     border-radius: var(--dss-radius-sm);
     min-width: var(--dss-compact-control-height-md);
     min-height: var(--dss-compact-control-height-md);
-    font-size: var(--dss-font-size-sm);
+    font-size: var(--dss-font-size-md);
     font-weight: var(--dss-font-weight-medium);
     transition:
       background-color var(--dss-duration-150) var(--dss-easing-standard),
@@ -62,12 +62,12 @@
   &--sm .q-pagination .q-btn {
     min-width: var(--dss-compact-control-height-sm);
     min-height: var(--dss-compact-control-height-sm);
-    font-size: var(--dss-font-size-xs);
+    font-size: var(--dss-font-size-sm);
   }
 
   &--lg .q-pagination .q-btn {
     min-width: var(--dss-compact-control-height-lg);
     min-height: var(--dss-compact-control-height-lg);
-    font-size: var(--dss-font-size-md);
+    font-size: var(--dss-font-size-lg);
   }
 }

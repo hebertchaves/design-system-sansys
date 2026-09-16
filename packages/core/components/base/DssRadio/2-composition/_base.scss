@@ -19,7 +19,7 @@
   gap: var(--dss-spacing-2); // 8px
   min-height: var(--dss-compact-control-height-md); // 28px
   font-family: var(--dss-font-family-sans);
-  font-size: var(--dss-font-size-sm); // 14px
+  font-size: var(--dss-font-size-md); // 14px
   line-height: var(--dss-line-height-normal);
   /* DSS Visual Standard: cor gray-500 no root define currentColor do controle unchecked.
      As três referências (M3, Carbon, Lightning) usam cinza médio na borda unchecked.
@@ -214,7 +214,7 @@
 .dss-radio--sm {
   gap: var(--dss-spacing-1_5); // 6px
   min-height: var(--dss-compact-control-height-sm); // 24px
-  font-size: var(--dss-font-size-xs); // 12px
+  font-size: var(--dss-font-size-sm); // 12px
 
   .dss-radio__control {
     // Só o DIÂMETRO: anel e ponto derivam dele em `em`
@@ -233,7 +233,7 @@
 .dss-radio--lg {
   gap: var(--dss-spacing-3); // 12px
   min-height: var(--dss-compact-control-height-lg); // 32px
-  font-size: var(--dss-font-size-md); // 16px
+  font-size: var(--dss-font-size-lg); // 16px
 
   .dss-radio__control {
     // Só o DIÂMETRO: anel e ponto derivam dele em `em`
@@ -257,11 +257,11 @@
 // --- XL ---
 .dss-radio--xl {
   gap: var(--dss-spacing-4); // 16px
-  // Reusa a altura -lg da escala compacta compartilhada (badge/chip/checkbox/radio):
-  // nao ha compact-control-height-xl e a taxonomia e compartilhada. O circulo de
-  // 28px cabe folgado em 32px; o touch target (44px) vem do ::before (WCAG 2.5.5).
-  min-height: var(--dss-compact-control-height-lg); // 32px
-  font-size: var(--dss-font-size-lg); // 18px
+  /* O `-xl` (36px) nasceu em set/2026 junto com esta escala. Até então não havia
+     degrau `xl` de altura e este bloco reapontava para `-lg`: o texto crescia e
+     a caixa não. */
+  min-height: var(--dss-compact-control-height-xl); /* 36px */
+  font-size: var(--dss-font-size-xl); // 20px
 
   .dss-radio__control {
     // Só o DIÂMETRO: anel e ponto derivam dele em `em`

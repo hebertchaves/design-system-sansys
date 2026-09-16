@@ -66,7 +66,7 @@
       {
         "property": "label font-size",
         "token": "--dss-font-size-md",
-        "value": "14px",
+        "value": "16px",
         "source": "2-composition/_base.scss"
       },
       {

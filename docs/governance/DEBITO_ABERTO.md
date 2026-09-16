@@ -197,7 +197,31 @@
   Ou seja: **um fenômeno só, nas duas pontas** — a escala de TOKENS é mais curta que a escala de
   TAMANHOS. Não é descuido de componente; é alcance de token.
 
-  **Recomendação.**
+  **APLICADO em set/2026** (recomendação 1 + escala linear, por decisão do dono do DS):
+
+  | tamanho | altura | fonte (antes → agora) |
+  |---|---|---|
+  | `xs` | 20px | 12px → **12px** (inalterada) |
+  | `sm` | 24px | 12px → **14px** |
+  | `md` | 28px | 14px → **16px** |
+  | `lg` | 32px | 16px → **18px** |
+  | `xl` | 32px → **36px** | 18px → **20px** |
+
+  O deslocamento de um degrau foi ABANDONADO: a fonte agora acompanha o nome do tamanho
+  (`xs`→`-xs` … `xl`→`-xl`), nascendo em 12px e terminando em 20px, sem empate em nenhuma ponta.
+  Criado `--dss-compact-control-height-xl: 36px`, que mantém o passo de +4px da escala
+  (20·24·28·32·36) e fecha o platô do topo sem quebrar API.
+
+  Medido nos 4 componentes × 5 tamanhos: caixa bate com o token em TODOS (12/20 · 14/24 · 16/28 ·
+  18/32 · 20/36). O `line-height` pareado subiu junto no Chip — sem isso o texto maior estouraria
+  a caixa, que é o acidente que o próprio `--lg` do Chip já documentava.
+
+  **Fica em aberto (achado do caminho, não regressão):** no `DssPagination` a altura do botão NÃO
+  vem do token — mede 40px com o token em 28px, e não mudou quando a fonte foi de 14 para 16px.
+  Quem governa é a geometria do `.q-btn` do Quasar (`line-height: 1.715em` + padding). Mesma
+  família do bug conhecido de altura do `q-field`.
+
+  **Recomendação original (mantida como registro).**
 
   1. **Topo (objetivo, não-breaking):** criar `--dss-compact-control-height-xl: 36px`. O `xl`
      passa a 36px/18px e o platô some sem tocar em nenhum componente — eles só trocam a
