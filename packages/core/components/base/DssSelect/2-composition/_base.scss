@@ -163,16 +163,23 @@
     font-size: var(--dss-font-size-sm) !important;
   }
 
-  /* Altura do campo alinhada ao DssInput. O Quasar fixa o .q-field__marginal
-     (coluna do append/prepend, ex.: seta do dropdown) em 56px (40px dense), o que
-     DITA a altura do campo acima do token (control ficava 58px/42px). Alinhamos a
-     marginal à altura-alvo do token → campo ~44px/36px, igual ao DssInput. */
-  .q-field__marginal {
-    height: var(--dss-input-height-md);
-  }
+  /* A marginal (coluna do append/prepend, ex.: seta do dropdown) não DITA mais a
+     altura: ela ACOMPANHA.
 
-  &.dss-select--dense .q-field__marginal {
-    height: var(--dss-input-height-sm);
+     O Quasar a fixa em 56px (40px dense), o que puxava o campo muito acima do
+     token. A correção anterior trocou esse valor pelo token — e o comentário
+     dizia "campo ~44px". O `~` era o defeito: a marginal mora DENTRO da caixa de
+     conteúdo do `.q-field__control`, que tem 1px de borda de cada lado. Uma
+     marginal de 44 exige conteúdo de 44 e leva o controle a 46. Medido: 46px
+     contra os 44 do contrato, e gap rótulo↔valor 1px acima do DssInput.
+
+     Com `height: auto` + `stretch`, quem governa é o `min-height` do controle
+     (o token) e a marginal preenche o que sobra. Medido: controle 44, marginal
+     42 — e o `dense` deixa de precisar de regra própria, porque passa a seguir
+     o seu próprio min-height. */
+  .q-field__marginal {
+    height: auto;
+    align-self: stretch;
   }
 
   /* ==========================================================================

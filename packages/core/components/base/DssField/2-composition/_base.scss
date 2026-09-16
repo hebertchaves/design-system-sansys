@@ -78,6 +78,12 @@
    ========================================================================== */
 
 .dss-field__control {
+  /* ESTICA na vertical — mesma correção do DssInput, e a MESMA causa, conferida
+     por medição e não por analogia: o `.dss-field__field` carrega o token de
+     altura (44px) mas é `align-items: center`, e o `flex: 1` do controle só
+     cresce no eixo horizontal. Medido antes: controle de 32px centrado numa
+     caixa de 44, com `min-height: auto`. */
+  align-self: stretch;
   position: relative;
   display: flex;
   flex-direction: column;

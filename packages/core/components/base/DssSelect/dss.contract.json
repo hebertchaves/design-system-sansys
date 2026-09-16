@@ -469,14 +469,14 @@
         },
         {
           "property": "height",
-          "token": "--dss-input-height-md",
-          "value": null,
+          "token": null,
+          "value": "auto",
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "height",
-          "token": "--dss-input-height-sm",
-          "value": null,
+          "property": "align-self",
+          "token": null,
+          "value": "stretch",
           "source": "2-composition/_base.scss"
         },
         {
