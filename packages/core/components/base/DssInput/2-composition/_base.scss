@@ -72,6 +72,17 @@
      (Este comentário dizia `--dss-spacing-5`, valor que a regra nunca usou —
      corrigido em ago/2026 junto com o alinhamento dos adornos.) */
   padding: 0 var(--dss-spacing-4);
+
+  /* ESTICA na vertical. O `.dss-input__field` já carrega o token de altura
+     (--dss-input-height-md, 44px), mas ele é `align-items: center`, e `flex: 1`
+     acima só cresce no eixo PRINCIPAL (horizontal). Sem esta linha o controle
+     ficava na altura do conteúdo — medido, 36px centrados numa caixa de 44 —, e
+     como a label flutuante é `position: absolute` ANCORADA NO CONTROLE, todo o
+     arranjo vertical acontecia numa caixa 8px menor que o campo.
+     Efeito medido: gap label↔valor de 6,18px no DssInput contra 10,18px no
+     DssSelect, que é QField e não tem esse encolhimento. Era a divergência
+     relatada — mesma família, aspectos diferentes. */
+  align-self: stretch;
 }
 
 .dss-input--dense .dss-input__control {

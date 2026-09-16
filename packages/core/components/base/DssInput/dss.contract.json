@@ -380,6 +380,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "align-self",
+          "token": null,
+          "value": "stretch",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "padding",
           "token": "--dss-spacing-3",
           "value": null,

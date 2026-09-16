@@ -206,6 +206,31 @@ dos rótulos é caixa mista, onde hoje o erro é 0,75px. A compensação faz sen
 `uppercase` é garantido (botão/aba/toggle), e aí como decisão explícita de tipografia, não como
 ajuste local de componente.
 
+## 🟡 Família de campos — altura do controle ainda diverge do contrato (set/2026)
+
+Medido no Defaults Preview, ALTURA DO CONTROLE (a caixa que hospeda rótulo + valor), contra os
+44px que os quatro `dss.meta.json` declaram:
+
+| componente | raiz | controle | `min-height` do controle | contrato |
+|---|---|---|---|---|
+| `DssInput` | 44 | 36 → **42 + 2 de borda = 44** ✅ | — | ✓ corrigido |
+| `DssTextarea` | 44 | 44 | 44px | ✓ |
+| `DssSelect` | 46 | **46** | 44px | ✗ **+2px** |
+| `DssField` | 69 | **32** | `auto` | ✗ **−12px** |
+
+**`DssSelect` (+2px).** O `.q-field__control` tem `min-height: 44` e `box-sizing: border-box`,
+mas o container interno do Quasar mede 44 sozinho (`padding-top: 12` + native 32), e com 1px de
+borda de cada lado o total vai a 46. Efeito medido no gap rótulo↔valor: 10,18px contra 9,18px do
+Input já corrigido — 1px de diferença, contra os 4px de antes.
+
+**`DssField` (−12px).** Controle com `min-height: auto`, mesmo sintoma que o `DssInput` tinha.
+Provavelmente a mesma causa (o controle não estica dentro da caixa que carrega o token), mas NÃO
+foi verificado — o `DssField` tem anatomia própria e merece medição antes de repetir o conserto
+por analogia.
+
+Ambos ficam para a rodada de adequação dos respectivos componentes: são ajustes de 1–2 linhas,
+mas mexem na geometria de campos JÁ ADEQUADOS, e a verificação visual é o custo real.
+
 ## Pendências por componente (resolver na rodada de ADEQUAÇÃO de cada um)
 
 Achados que não são urgentes nem isolados: mexer neles fora da rodada de adequação do componente
