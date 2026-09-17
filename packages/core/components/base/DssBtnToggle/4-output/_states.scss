@@ -15,6 +15,7 @@
 .dss-btn-toggle > .q-btn-item {
   &:not([disabled]):not(.disabled) {
     @include utils.rampa-hover;
+    @include utils.sem-realce-quasar;
   }
 }
 

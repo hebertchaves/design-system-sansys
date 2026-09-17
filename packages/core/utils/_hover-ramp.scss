@@ -62,3 +62,59 @@ $cores-quasar: (
     &:active { background-color: var(--dss-action-tertiary-deep); }
   }
 }
+
+
+/* ==========================================================================
+   NEUTRALIZA O REALCE PRÓPRIO DO QUASAR (só para wrappers de `.q-btn`)
+   ==========================================================================
+
+   O `.q-btn` do Quasar traz DOIS efeitos que o DSS não pediu e que competem com
+   a rampa:
+
+   1. VÉU DE HOVER. `body.desktop .q-hoverable:hover > .q-focus-helper` pinta
+      `currentColor` a `opacity: .15`, e o `::after` do helper põe BRANCO a
+      `opacity: .4` por cima. Sobre a cor já escurecida pela rampa, isso lê como
+      um brilho — o "bright por cima" relatado. O DSS escurece pela rampa; véu
+      neutro por cima é a técnica que o §M5 do checklist manda NÃO empilhar.
+
+   2. EMPURRÃO NO CLIQUE. `.q-btn--actionable.q-btn--standard:active:before`
+      aplica uma sombra de elevação, que lê como o botão afundando — o efeito de
+      `push` sem ninguém ter pedido a variante. No DssButton, `push` é uma
+      VARIANTE explícita; aqui vinha de fábrica.
+
+   O FOCO FICA. Só o hover do helper é zerado, não o `:focus`. O DssBtnDropdown
+   não tem anel de foco próprio (conferido: zero `focus-visible` no SCSS), e matar
+   o helper inteiro tiraria dele o único indicador de teclado — trocaria um
+   incômodo visual por uma regressão de acessibilidade. Registrado como débito.
+
+   Não se aplica ao DssButton: ele é `<button>` nativo, sem `.q-focus-helper` nem
+   `::before` do Quasar (medido — é justamente por isso que ele já se comportava
+   como o esperado). */
+
+@mixin sem-realce-quasar($elevacao: null) {
+  /* 1. véu de hover — o escurecimento é da rampa */
+  &:hover > .q-focus-helper {
+    opacity: 0;
+  }
+
+  /* 2. empurrão no clique — `push` é variante, não padrão.
+     COMO zerar depende de onde mora a sombra de REPOUSO, e isso difere por
+     componente (medido): no BtnToggle não há sombra nenhuma; no Fab, FabAction
+     e BtnDropdown a elevação de repouso vem do `::before` do QUASAR.
+     Zerar o `:active` nos três deixaria o botão ACHATADO ao clicar — troca de
+     artefato, não conserto. Por isso, quando há elevação, o DSS assume a sombra
+     com token próprio e declara o MESMO valor em repouso e em active: nada se
+     move no clique, e a elevação deixa de ser do Quasar. */
+  @if $elevacao == null {
+    &:active::before,
+    &.q-btn--active::before {
+      box-shadow: none;
+    }
+  } @else {
+    &::before,
+    &:active::before,
+    &.q-btn--active::before {
+      box-shadow: var(#{$elevacao});
+    }
+  }
+}

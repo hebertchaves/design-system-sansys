@@ -1251,7 +1251,7 @@
           "property": "box-shadow",
           "token": "--dss-elevation-1",
           "value": null,
-          "source": "_helpers.scss"
+          "source": "_hover-ramp.scss"
         },
         {
           "property": "box-shadow",
@@ -2754,6 +2754,12 @@
           "token": "--dss-action-tertiary-hover",
           "value": null,
           "source": "_hover-ramp.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "0",
+          "source": "_hover-ramp.scss"
         }
       ],
       "focus": [
@@ -2828,6 +2834,12 @@
         {
           "property": "background-color",
           "token": "--dss-action-tertiary-deep",
+          "value": null,
+          "source": "_hover-ramp.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-1",
           "value": null,
           "source": "_hover-ramp.scss"
         }
@@ -3413,7 +3425,8 @@
       {
         "name": "--dss-elevation-1",
         "usedIn": [
-          "default"
+          "default",
+          "active"
         ]
       },
       {

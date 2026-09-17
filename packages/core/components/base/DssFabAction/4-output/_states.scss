@@ -15,6 +15,7 @@
 .dss-fab-action .q-btn {
   &:not([disabled]):not(.disabled) {
     @include utils.rampa-hover;
+    @include utils.sem-realce-quasar('--dss-elevation-2');
   }
 }
 

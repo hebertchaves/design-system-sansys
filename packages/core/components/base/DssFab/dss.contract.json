@@ -2677,6 +2677,12 @@
           "source": "_hover-ramp.scss"
         },
         {
+          "property": "opacity",
+          "token": null,
+          "value": "0",
+          "source": "_hover-ramp.scss"
+        },
+        {
           "property": "background-color",
           "token": null,
           "value": "Highlight",
@@ -2803,6 +2809,12 @@
         {
           "property": "background-color",
           "token": "--dss-action-tertiary-deep",
+          "value": null,
+          "source": "_hover-ramp.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-elevation-2",
           "value": null,
           "source": "_hover-ramp.scss"
         }
@@ -3416,7 +3428,8 @@
       {
         "name": "--dss-elevation-2",
         "usedIn": [
-          "default"
+          "default",
+          "active"
         ]
       },
       {
