@@ -1,10 +1,10 @@
+@use '../../../../utils/index' as utils;
 /* ==========================================================================
    DssButton - LAYER 4: OUTPUT - States
 
    RESPONSABILIDADE: Estados especiais (dark mode, a11y)
    ========================================================================== */
 
-@use 'sass:list';
 
 /* ==========================================================================
    HOVER / ACTIVE DAS VARIANTES PREENCHIDAS — via rampa de cor
@@ -42,34 +42,14 @@
    `.text-*` e têm o próprio hover (overlay `::after`) em `3-variants/`.
    ========================================================================== */
 
-$cores-quasar: (
-  'primary':   ('--q-primary',   '--dss-action-primary'),
-  'secondary': ('--q-secondary', '--dss-action-secondary'),
-  'accent':    ('--q-accent',    '--dss-action-accent'),
-  'positive':  ('--q-positive',  '--dss-feedback-success'),
-  'negative':  ('--q-negative',  '--dss-feedback-error'),
-  'warning':   ('--q-warning',   '--dss-feedback-warning'),
-  'info':      ('--q-info',      '--dss-feedback-info')
-);
+/* O mapa e a lógica agora moram em `utils/_hover-ramp.scss`, consumidos também
+   por DssBtnToggle, DssBtnDropdown, DssFab e DssFabAction (set/2026). Eram um
+   bloco local aqui; ao aplicar o mesmo hover à família de ações, copiar quatro
+   vezes garantiria divergência na primeira correção. O comportamento é idêntico
+   — os 99 testes do DssButton seguem passando sem alteração. */
 
 .dss-button:not(.dss-button--disabled):not(.dss-button--loading) {
-  @each $nome, $par in $cores-quasar {
-    $qvar: list.nth($par, 1);
-    $dss:  list.nth($par, 2);
-
-    &.bg-#{$nome} {
-      &:hover  { #{$qvar}: var(#{$dss}-hover); }
-      &:active { #{$qvar}: var(#{$dss}-deep); }
-    }
-  }
-
-  /* TERTIARY é exclusiva do DSS — o Quasar não tem `--q-tertiary` nem
-     `.bg-tertiary` (conferido no `quasar.css`). Sem regra concorrente layered,
-     aqui o `background-color` direto vence e é o caminho certo. */
-  &.bg-tertiary {
-    &:hover  { background-color: var(--dss-action-tertiary-hover); }
-    &:active { background-color: var(--dss-action-tertiary-deep); }
-  }
+  @include utils.rampa-hover;
 }
 
 /* ==========================================================================

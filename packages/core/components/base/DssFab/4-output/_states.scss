@@ -1,3 +1,23 @@
+@use '../../../../utils/index' as utils;
+
+/* ==========================================================================
+   HOVER / ACTIVE — rampa semântica, o MESMO do DssButton
+
+   Antes deste bloco o componente não escurecia no hover: o único retorno era
+   elevação.
+   O mixin é o mesmo que o DssButton consome (`utils/_hover-ramp.scss`), então a
+   família inteira reage igual — inclusive por marca, porque a rampa `-hover` é
+   remapeada e a ponte `--q-*` recomputa no escopo da marca.
+
+   Seletor no FILHO, não na raiz: o botão do FAB é um `.q-btn` interno do QFab.
+   ========================================================================== */
+
+.dss-fab .q-btn {
+  &:not([disabled]):not(.disabled) {
+    @include utils.rampa-hover;
+  }
+}
+
 /* ==========================================================================
    DssFab - LAYER 4: OUTPUT (States)
 

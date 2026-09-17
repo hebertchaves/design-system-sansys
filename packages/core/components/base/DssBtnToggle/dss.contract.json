@@ -2706,6 +2706,12 @@
           "token": null,
           "value": "1",
           "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-hover",
+          "value": null,
+          "source": "_hover-ramp.scss"
         }
       ],
       "focus": [
@@ -2786,6 +2792,14 @@
           "token": null,
           "value": "1",
           "source": "3-variants/_outline.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "background-color",
+          "token": "--dss-action-tertiary-deep",
+          "value": null,
+          "source": "_hover-ramp.scss"
         }
       ],
       "disabled": [
@@ -3868,6 +3882,12 @@
         ]
       },
       {
+        "name": "--dss-action-tertiary-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
         "name": "--dss-focus-shadow-primary",
         "usedIn": [
           "focus"
@@ -3883,6 +3903,12 @@
         "name": "--dss-focus-shadow-error",
         "usedIn": [
           "focus"
+        ]
+      },
+      {
+        "name": "--dss-action-tertiary-deep",
+        "usedIn": [
+          "active"
         ]
       }
     ]

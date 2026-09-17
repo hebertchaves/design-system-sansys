@@ -12,6 +12,11 @@
 /* 3. Mixins de acessibilidade avancada — @forward expõe dss-sr-only, etc. */
 @forward 'accessibility-mixins';
 
+/* 3b. Hover/active pela rampa semântica — @forward expõe o mixin `rampa-hover`,
+   usado por todo componente cujo preenchido carrega `.bg-*` (DssButton,
+   DssBtnToggle, DssBtnDropdown, DssFab, DssFabAction). */
+@forward 'hover-ramp';
+
 /* 4. Classes utilitarias — @use: CSS output sem re-exportar membros */
 @use 'helpers';
 

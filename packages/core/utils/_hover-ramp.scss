@@ -1,0 +1,64 @@
+@use 'sass:list';
+
+/* ==========================================================================
+   HOVER/ACTIVE PELA RAMPA SEMÂNTICA — mixin compartilhado
+   ==========================================================================
+
+   ORIGEM. Nasceu no DssButton (set/2026) ao consertar um hover que escurecia
+   POUCO e escurecia o LABEL junto. A técnica anterior era `filter: brightness()`,
+   que escurece o conteúdo por cima — medido, o contraste do label CAÍA de 3,80:1
+   para 3,73:1 no hover. Com a rampa, sobe para 7,89:1 e o label fica intacto.
+
+   COMO FUNCIONA, e por que não é `background-color`. O `.bg-*` do Quasar é
+   `background: … !important` dentro de `@layer quasar`. Important layered vence
+   CSS DSS unlayered (Constituição #3 ao contrário), então declarar
+   `background-color` no hover é inerte para essas cores. Em vez de brigar com a
+   cascata, o mixin REDEFINE A ENTRADA: troca o valor de `--q-<cor>` no escopo do
+   hover, e o próprio `background` do Quasar recomputa para o degrau da rampa.
+
+   BRANDEIA DE GRAÇA: a rampa `-hover`/`-deep` é remapeada por marca, e a ponte
+   `--q-*` recomputa no escopo da marca (ver `semantic/_scopes.scss` → `$marcas`).
+
+   ESCOPO: só `.bg-*`, que apenas o preenchido carrega. Flat e outline usam
+   `.text-*` e têm hover próprio por overlay `::after`.
+
+   USO — inclua no seletor que carrega (ou contém) o `.bg-*`:
+
+     .dss-button:not(.dss-button--disabled) { @include rampa-hover; }
+     .dss-btn-toggle > .q-btn-item          { @include rampa-hover; }
+
+   Componentes cujo `.bg-*` mora num `.q-btn` interno (BtnToggle, BtnDropdown,
+   Fab, FabAction) incluem no seletor do FILHO, não na raiz.
+   ========================================================================== */
+
+/* `tertiary` fica FORA do mapa de propósito: é exclusiva do DSS — o Quasar não
+   tem `--q-tertiary` nem `.bg-tertiary` (conferido no `quasar.css`). Sem regra
+   concorrente layered, ali o `background-color` direto vence, e é o caminho
+   certo. O mixin trata os dois casos. */
+$cores-quasar: (
+  'primary':   ('--q-primary',   '--dss-action-primary'),
+  'secondary': ('--q-secondary', '--dss-action-secondary'),
+  'accent':    ('--q-accent',    '--dss-action-accent'),
+  'positive':  ('--q-positive',  '--dss-feedback-success'),
+  'negative':  ('--q-negative',  '--dss-feedback-error'),
+  'warning':   ('--q-warning',   '--dss-feedback-warning'),
+  'info':      ('--q-info',      '--dss-feedback-info')
+);
+
+@mixin rampa-hover {
+  @each $nome, $par in $cores-quasar {
+    $qvar: list.nth($par, 1);
+    $dss:  list.nth($par, 2);
+
+    &.bg-#{$nome} {
+      &:hover  { #{$qvar}: var(#{$dss}-hover); }
+      &:active { #{$qvar}: var(#{$dss}-deep); }
+    }
+  }
+
+  /* Tertiary: sem `--q-*` no Quasar, o caminho é a propriedade direta. */
+  &.bg-tertiary {
+    &:hover  { background-color: var(--dss-action-tertiary-hover); }
+    &:active { background-color: var(--dss-action-tertiary-deep); }
+  }
+}
