@@ -236,6 +236,58 @@ CAIXA EXTERNA contra os 44px que os quatro `dss.meta.json` declaram:
 (controle 32, `align-self: auto`, pai `align-items: center`) — a analogia estava certa, mas
 confirmá-la custou uma medição e evitou repetir o erro de consertar por semelhança.
 
+## 🔜 ONDE PARAMOS — decisões já tomadas, execução pendente (set/2026)
+
+Itens que o dono do DS **já decidiu** e que não chegaram a ser executados. Não são
+dúvidas: são trabalho combinado.
+
+### 1. Remover a `margin-bottom` global de `.q-field` — DECIDIDO, não executado
+
+`themes/_quasar-overrides.scss:143` dá `margin-bottom: var(--dss-spacing-4)` (16px)
+a **toda** `.q-field`. Num container centrado, quem é centrado é a caixa de
+MARGEM — então `DssSelect`/`DssTextarea`/`DssField` ficam **8px acima** do
+`DssInput`/`DssFile`, que não são `.q-field` e não herdam a regra.
+
+Medido no Defaults Preview (palco 96px, todas as raízes com 44px):
+
+| componente | topo no palco | base |
+|---|---|---|
+| `DssInput` · `DssFile` | **26** | 26 ✓ centrado |
+| `DssSelect` · `DssTextarea` | **18** | 34 ✗ |
+
+Conta: `(96 − (44+16))/2 = 18`. Reproduz em qualquer tela com select e input lado
+a lado.
+
+**Decisão tomada: opção 1 — remover a regra.** Espaçamento entre campos é do
+container, não do campo (mesmo princípio do `:deep()` proibido para layout).
+
+**PRIMEIRO PASSO OBRIGATÓRIO, que não chegou a rodar: varredura de impacto.**
+Telas que hoje dependem dessa margem ficarão com campos colados. Meça a folga
+vertical entre campos empilhados ANTES de remover, nas páginas de pattern (Login
+Forms, Atender Solicitações, Parcelamento) e nos playgrounds de campo; depois
+devolva o espaçamento no CONTAINER (gap/grid) onde tiver sumido.
+
+### 2. Reemissão de selo v2.2 — 4 componentes selados que mudaram
+
+`DssTab`, `DssRouteTab`, `DssTabs` e `DssBtnToggle` mudaram de comportamento nesta
+onda (token de capitalização, escala, props novas). Os selos não foram reemitidos.
+
+### 3. Verificações que dependem de RESTART do dev server
+
+O Vite não reprocessa o SFC quando só o arquivo de TIPOS muda, e o servidor é do
+usuário — não reinicie por conta própria.
+
+- **`DssTabs`/`DssTab`/`DssRouteTab`**: as 11 props novas do de-para estão no disco
+  e nos contratos (7→14, 5→7, 10→12) e os testes passam (121/121), mas a lista
+  compilada servida ainda tem as antigas — o atributo `inline-label` VAZA para o
+  DOM. Depois do restart, conferir `inlineLabel` de fato mudando o empilhamento.
+- **`DssFabAction`**: a elevação por token está no CSS compilado (conferido), mas a
+  tela ainda serve a versão anterior. Conferir que o `::before` usa
+  `--dss-elevation-2` e que o Quasar não o sobrescreve no `:active`.
+- **`:active` dos quatro de ação**: validado por cascata, não com clique
+  sustentado. Se ainda houver movimento ao clicar, o alvo é o
+  `sem-realce-quasar` do `utils/_hover-ramp.scss`.
+
 ## Pendências por componente (resolver na rodada de ADEQUAÇÃO de cada um)
 
 Achados que não são urgentes nem isolados: mexer neles fora da rodada de adequação do componente
