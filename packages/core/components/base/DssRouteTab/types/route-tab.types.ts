@@ -88,6 +88,24 @@ export interface RouteTabProps {
    * Use "_blank" para abrir em nova aba.
    */
   target?: string
+
+  // ========================================================================
+  // Expostas em set/2026 pelo de-para com o QRouteTab
+  // ========================================================================
+
+  /**
+   * Ícone no lugar do ponto de alerta.
+   * Só tem efeito com `alert` ativo — um alerta sem marca não existe.
+   *
+   * @example 'priority_high'
+   */
+  alertIcon?: string
+
+  /**
+   * Posição na ordem de tabulação.
+   * `-1` tira a aba da navegação por Tab sem desabilitá-la.
+   */
+  tabindex?: number | string
 }
 
 // ==========================================================================

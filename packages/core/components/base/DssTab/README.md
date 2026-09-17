@@ -83,6 +83,8 @@ import { DssTab } from '@dss/components/base/DssTab'
 | `icon` | `String` | `undefined` | Nome do ícone Material Icons |
 | `alert` | `Boolean \| String` | `undefined` | Exibe indicador de alerta (`true` = cor padrão; `string` = cor Quasar) |
 | `disable` | `Boolean` | `false` | Desabilita interação |
+| `alertIcon` | `String` | `undefined` | Ícone no lugar do ponto de alerta (exige `alert`) |
+| `tabindex` | `Number \| String` | `undefined` | Posição na ordem de tabulação; `-1` tira do Tab sem desabilitar |
 
 **Props bloqueadas:**
 - `ripple` — sempre `false` (DSS governa feedback visual via `::after`)

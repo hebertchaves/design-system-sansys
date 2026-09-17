@@ -29,7 +29,13 @@ defineOptions({ name: 'DssRouteTab', inheritAttrs: false })
 const props = withDefaults(defineProps<RouteTabProps>(), {
   label: undefined,
   icon: undefined,
-  alert: undefined,
+  // `false`, não `undefined`: o QTab renderiza o ponto de alerta quando a prop
+  // é DIFERENTE de false. Passando `undefined`, ele criava um
+  // `.q-tab__alert text-undefined` de 10×10px em TODA aba — o círculo que
+  // aparecia sem ninguém ter pedido. Medido na rodada de adequação (set/2026).
+  alert: false,
+  alertIcon: undefined,
+  tabindex: undefined,
   disable: false,
   to: undefined,
   exact: false,
@@ -50,6 +56,8 @@ const { routeTabClasses } = useRouteTabClasses(props)
     :label="props.label"
     :icon="props.icon"
     :alert="props.alert"
+    :alert-icon="props.alertIcon"
+    :tabindex="props.tabindex"
     :disable="props.disable"
     :to="props.to"
     :exact="props.exact"

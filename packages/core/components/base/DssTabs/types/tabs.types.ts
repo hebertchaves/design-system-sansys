@@ -60,10 +60,17 @@ export interface TabsProps {
   align?: TabsAlign
 
   /**
-   * Largura mínima do container (em px) para exibir as setas de navegação.
-   * Abaixo desse breakpoint, as setas aparecem para permitir scroll.
+   * Largura (px) abaixo da qual o alinhamento é FORÇADO a `justify`.
    *
-   * @default 600
+   * NÃO controla as setas de navegação — elas aparecem por transbordo, não por
+   * largura. A documentação anterior desta prop dizia o contrário; conferido na
+   * fonte do Quasar (`QTabs.js`: `justify.value = size < breakpoint`).
+   *
+   * Default `0` (o Quasar usa 600): em 0 a condição nunca é satisfeita e a prop
+   * `align` é respeitada em qualquer largura. Declare um valor para reativar o
+   * justify responsivo.
+   *
+   * @default 0
    */
   breakpoint?: number
 
@@ -100,6 +107,62 @@ export interface TabsProps {
    * @example 'Seções do painel'
    */
   ariaLabel?: string
+
+  // ========================================================================
+  // APRESENTAÇÃO — expostas em set/2026 pelo de-para com o QTabs
+  //
+  // Sete props do QTabs não estavam expostas nem bloqueadas: simplesmente não
+  // tinham chegado ao wrapper. O efeito prático era um componente sem variação
+  // visual — toda barra saía igual, com ícone empilhado sobre o rótulo.
+  // Bloqueio é decisão; ausência silenciosa não é.
+  // ========================================================================
+
+  /**
+   * Coloca ícone e rótulo LADO A LADO, em vez de empilhados.
+   *
+   * O empilhado é o padrão Material e ocupa mais altura; inline é o formato de
+   * barra de navegação densa. Sem esta prop, só existia o empilhado.
+   *
+   * @default false
+   */
+  inlineLabel?: boolean
+
+  /**
+   * Indicador com a largura do RÓTULO, em vez da aba inteira.
+   * @default false
+   */
+  narrowIndicator?: boolean
+
+  /**
+   * Inverte o lado do indicador (topo em barra horizontal).
+   * @default false
+   */
+  switchIndicator?: boolean
+
+  /**
+   * O grupo ocupa apenas a largura do conteúdo, em vez de esticar.
+   * @default false
+   */
+  shrink?: boolean
+
+  /**
+   * Estica o grupo na altura do container pai.
+   * @default false
+   */
+  stretch?: boolean
+
+  /**
+   * Setas de navegação FORA da área das abas, quando há transbordo.
+   * @default false
+   */
+  outsideArrows?: boolean
+
+  /**
+   * Mantém as setas em dispositivos móveis (onde o Quasar as esconde por
+   * padrão, assumindo gesto de arrastar).
+   * @default false
+   */
+  mobileArrows?: boolean
 }
 
 // ==========================================================================

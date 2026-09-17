@@ -115,6 +115,47 @@ describe('DssTabs — Props', () => {
 // PROPS BLOQUEADAS
 // ==========================================================================
 
+describe('DssTabs — Props de apresentação (de-para QTabs, set/2026)', () => {
+  // Sete props do QTabs não estavam expostas NEM bloqueadas: nunca chegaram ao
+  // wrapper, e o componente saía sem variação visual — toda barra igual, com
+  // ícone empilhado sobre o rótulo. Estes testes travam o REPASSE ao QTabs, que
+  // é onde a ausência passou despercebida.
+  const APRESENTACAO = [
+    ['inlineLabel', 'inlineLabel'],
+    ['narrowIndicator', 'narrowIndicator'],
+    ['switchIndicator', 'switchIndicator'],
+    ['shrink', 'shrink'],
+    ['stretch', 'stretch'],
+    ['outsideArrows', 'outsideArrows'],
+    ['mobileArrows', 'mobileArrows'],
+  ]
+
+  it.each(APRESENTACAO)('%s é reconhecida e repassada ao QTabs', (prop, qprop) => {
+    const wrapper = mount(DssTabs, { props: { [prop]: true } })
+    // reconhecida: não vaza como atributo no DOM
+    expect(wrapper.attributes()).not.toHaveProperty(
+      prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase())
+    )
+    // repassada: chega ao QTabs interno
+    expect(wrapper.findComponent(QTabs).props(qprop)).toBe(true)
+  })
+
+  it('default de todas é false — apresentação é opt-in', () => {
+    const wrapper = mount(DssTabs)
+    const q = wrapper.findComponent(QTabs)
+    for (const [, qprop] of APRESENTACAO) {
+      expect(q.props(qprop)).toBe(false)
+    }
+  })
+
+  it('breakpoint default é 0, para o align NÃO ser anulado', () => {
+    // No Quasar `justify.value = size < breakpoint`: com o default 600 herdado,
+    // qualquer barra em painel comum nascia justificada e a prop `align` virava
+    // letra morta. Medido antes: os quatro aligns saíam todos `align-justify`.
+    expect(mount(DssTabs).findComponent(QTabs).props('breakpoint')).toBe(0)
+  })
+})
+
 describe('DssTabs — Props Bloqueadas', () => {
   it('NÃO expõe prop active-color no template', () => {
     // Verificar que a prop não está declarada no componente

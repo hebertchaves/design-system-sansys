@@ -80,6 +80,18 @@
         "type": "string",
         "controlHint": "text",
         "description": "Target do link externo (apenas com `href`)."
+      },
+      {
+        "name": "alertIcon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Ícone no lugar do ponto de alerta."
+      },
+      {
+        "name": "tabindex",
+        "type": "number | string",
+        "controlHint": "text",
+        "description": "Posição na ordem de tabulação."
       }
     ],
     "emits": [],

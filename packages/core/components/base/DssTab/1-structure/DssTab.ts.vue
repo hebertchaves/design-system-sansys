@@ -27,7 +27,13 @@ defineOptions({ name: 'DssTab', inheritAttrs: false })
 const props = withDefaults(defineProps<TabProps>(), {
   label: undefined,
   icon: undefined,
-  alert: undefined,
+  // `false`, não `undefined`: o QTab renderiza o ponto de alerta quando a prop
+  // é DIFERENTE de false. Passando `undefined`, ele criava um
+  // `.q-tab__alert text-undefined` de 10×10px em TODA aba — o círculo que
+  // aparecia sem ninguém ter pedido. Medido na rodada de adequação (set/2026).
+  alert: false,
+  alertIcon: undefined,
+  tabindex: undefined,
   disable: false
 })
 
@@ -43,6 +49,8 @@ const { tabClasses } = useTabClasses(props)
     :label="props.label"
     :icon="props.icon"
     :alert="props.alert"
+    :alert-icon="props.alertIcon"
+    :tabindex="props.tabindex"
     :disable="props.disable"
     :ripple="false"
     v-bind="$attrs"

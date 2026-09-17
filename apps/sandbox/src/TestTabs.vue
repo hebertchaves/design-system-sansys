@@ -91,6 +91,43 @@
       </PgGrid>
     </PgSection>
 
+    <!-- ── 04b. Apresentação ───────────────────────────────────────────── -->
+    <PgSection id="apresentacao" index="04b" title="Apresentação" :count="5"
+      desc="Sete props do QTabs não estavam expostas NEM bloqueadas — simplesmente não tinham chegado ao wrapper, e o componente saía sem variação visual. Expostas em set/2026 pelo de-para. inlineLabel é a que muda mais: põe ícone e rótulo lado a lado em vez de empilhados.">
+      <PgGrid>
+        <PgTile code="padrão (empilhado)" align="start">
+          <DssTabs :model-value="'a'" aria-label="Empilhado">
+            <DssTab name="a" icon="description" label="Documentos" />
+            <DssTab name="b" icon="payments" label="Faturas" />
+          </DssTabs>
+        </PgTile>
+        <PgTile code="inline-label" align="start">
+          <DssTabs :model-value="'a'" inline-label aria-label="Lado a lado">
+            <DssTab name="a" icon="description" label="Documentos" />
+            <DssTab name="b" icon="payments" label="Faturas" />
+          </DssTabs>
+        </PgTile>
+        <PgTile code="narrow-indicator" align="start">
+          <DssTabs :model-value="'a'" narrow-indicator aria-label="Indicador estreito">
+            <DssTab name="a" label="Estreito" />
+            <DssTab name="b" label="Outra" />
+          </DssTabs>
+        </PgTile>
+        <PgTile code="switch-indicator" align="start">
+          <DssTabs :model-value="'a'" switch-indicator aria-label="Indicador invertido">
+            <DssTab name="a" label="Invertido" />
+            <DssTab name="b" label="Outra" />
+          </DssTabs>
+        </PgTile>
+        <PgTile code="alert-icon" align="start">
+          <DssTabs :model-value="'a'" aria-label="Alerta com ícone">
+            <DssTab name="a" label="Aprovadas" />
+            <DssTab name="b" label="Pendentes" alert alert-icon="priority_high" />
+          </DssTabs>
+        </PgTile>
+      </PgGrid>
+    </PgSection>
+
     <!-- ── 05. Estados ─────────────────────────────────────────────────── -->
     <PgSection id="estados" index="05" title="Estados" :count="2"
       desc="A aba ativa é definida pelo v-model do container, não por prop da aba. disable bloqueia uma aba individual — o teclado a pula.">
@@ -223,6 +260,7 @@ const SECTIONS = [
   { id: 'conteudo',   index: '02', title: 'Conteúdo da aba' },
   { id: 'align',      index: '03', title: 'Alinhamento' },
   { id: 'orientacao', index: '04', title: 'Orientação & densidade' },
+  { id: 'apresentacao', index: '04b', title: 'Apresentação' },
   { id: 'estados',    index: '05', title: 'Estados' },
   { id: 'brand',      index: '06', title: 'Brandabilidade' },
   { id: 'routetab',   index: '07', title: 'DssRouteTab' },

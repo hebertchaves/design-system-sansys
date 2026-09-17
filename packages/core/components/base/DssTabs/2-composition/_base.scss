@@ -43,6 +43,26 @@
 // EXC-01 — seletores Quasar internos (Gate de Composição v2.4 exception)
 // ==========================================================================
 
+/* AS SETAS SÓ EXISTEM QUANDO HÁ TRANSBORDO.
+   ==========================================================================
+
+   O Quasar já declara isso — `.q-tabs--not-scrollable .q-tabs__arrow
+   { display: none }` —, mas a regra vive em `@layer quasar` e estava sendo
+   perdida na cascata: medido, as duas setas saíam `display: block`, 36px cada,
+   em TODA barra, mesmo sem transbordo. Provado por injeção: repetir a MESMA
+   regra sem layer faz as setas sumirem.
+
+   Não achei o autor do `display: block` — não está no CSS compilado do DS, o
+   Quasar não é carregado duas vezes, e o enumerador de CSSOM não funciona neste
+   ambiente. Então o DSS declara a intenção no escopo que governa (unlayered),
+   que é robusto independentemente de quem a estava vencendo.
+
+   Setas permanentes não são decoração: viram dois alvos clicáveis inertes de
+   36px em cada barra, anunciados a leitor de tela. */
+.dss-tabs .q-tabs--not-scrollable .q-tabs__arrow {
+  display: none;
+}
+
 /* EXC-01 — seletores Quasar (Gate de Composição v2.4 Regra 1 + Regra 2 exception) */
 .dss-tabs .q-tabs__arrow {
   // Cor padrão: texto secundário (sutil)

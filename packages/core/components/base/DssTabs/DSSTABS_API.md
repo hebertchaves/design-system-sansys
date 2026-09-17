@@ -24,6 +24,13 @@ import type { TabsProps, TabsBrand, TabsAlign } from '@/dss/components/base/DssT
 | `dense` | `boolean` | `false` | Modo compacto — reduz padding das setas de navegação |
 | `brand` | `TabsBrand \| null` | `null` | Marca Sansys: `hub`, `water`, `waste` |
 | `ariaLabel` | `string` | `undefined` | Label acessível para o grupo (aria-label) |
+| `inlineLabel` | `boolean` | Coloca ícone e rótulo LADO A LADO, em vez de empilhados. |
+| `narrowIndicator` | `boolean` | Indicador com a largura do RÓTULO, em vez da aba inteira. |
+| `switchIndicator` | `boolean` | Inverte o lado do indicador (topo em barra horizontal). |
+| `shrink` | `boolean` | O grupo ocupa apenas a largura do conteúdo, em vez de esticar. |
+| `stretch` | `boolean` | Estica o grupo na altura do container pai. |
+| `outsideArrows` | `boolean` | Setas de navegação FORA da área das abas, quando há transbordo. |
+| `mobileArrows` | `boolean` | Mantém as setas em dispositivos móveis (onde o Quasar as esconde por |
 
 ## Props Bloqueadas
 

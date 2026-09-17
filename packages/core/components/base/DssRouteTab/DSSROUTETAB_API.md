@@ -18,6 +18,8 @@
 | `replace` | `Boolean` | `false` | Não | Substitui a entrada atual no histórico de navegação (sem adicionar nova entrada) |
 | `href` | `String` | `undefined` | Não | URL de link externo. A aba renderiza como `<a href="...">`. Use como fallback ao `to` para recursos externos |
 | `target` | `String` | `undefined` | Não | Target do link externo (ex.: `"_blank"` para nova aba). Funciona apenas com `href` |
+| `alertIcon` | `string` | Ícone no lugar do ponto de alerta. |
+| `tabindex` | `number | string` | Posição na ordem de tabulação. |
 
 ---
 

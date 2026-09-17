@@ -91,6 +91,8 @@ import { DssRouteTab } from '@dss/components/base/DssRouteTab'
 | `icon` | `String` | `undefined` | Nome do ícone Material Icons |
 | `alert` | `Boolean \| String` | `undefined` | Indicador de alerta (`true` = cor padrão; `string` = cor Quasar) |
 | `disable` | `Boolean` | `false` | Desabilita interação |
+| `alertIcon` | `String` | `undefined` | Ícone no lugar do ponto de alerta (exige `alert`) |
+| `tabindex` | `Number \| String` | `undefined` | Posição na ordem de tabulação; `-1` tira do Tab sem desabilitar |
 | `to` | `String \| Object` | `undefined` | Rota de destino Vue Router |
 | `exact` | `Boolean` | `false` | Correspondência exata de rota |
 | `replace` | `Boolean` | `false` | Substitui entrada no histórico |

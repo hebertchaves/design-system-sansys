@@ -84,6 +84,40 @@ Exibe um ponto de alerta na aba.
 
 ---
 
+### `alertIcon`
+
+| Atributo | Valor |
+|----------|-------|
+| **Tipo** | `String` |
+| **Padrão** | `undefined` |
+| **Obrigatório** | Não |
+
+Ícone Material no lugar do ponto de alerta. Só tem efeito com `alert` ativo — um
+alerta sem marca não existe.
+
+```vue
+<DssTab name="pend" label="Pendentes" alert alert-icon="priority_high" />
+```
+
+---
+
+### `tabindex`
+
+| Atributo | Valor |
+|----------|-------|
+| **Tipo** | `Number \| String` |
+| **Padrão** | `undefined` |
+| **Obrigatório** | Não |
+
+Posição na ordem de tabulação. `-1` tira a aba da navegação por Tab **sem**
+desabilitá-la — ela continua clicável e anunciada.
+
+```vue
+<DssTab name="extra" label="Fora da tabulação" :tabindex="-1" />
+```
+
+---
+
 ### `disable`
 
 | Atributo | Valor |

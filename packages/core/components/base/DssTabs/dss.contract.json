@@ -43,8 +43,8 @@
         "name": "breakpoint",
         "type": "number",
         "controlHint": "stepper",
-        "default": "600",
-        "description": "Largura mínima do container (em px) para exibir as setas de navegação."
+        "default": "0",
+        "description": "Largura (px) abaixo da qual o alinhamento é FORÇADO a `justify`."
       },
       {
         "name": "vertical",
@@ -77,6 +77,55 @@
         "type": "string",
         "controlHint": "text",
         "description": "Label acessível para o grupo de abas (aria-label)."
+      },
+      {
+        "name": "inlineLabel",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Coloca ícone e rótulo LADO A LADO, em vez de empilhados."
+      },
+      {
+        "name": "narrowIndicator",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Indicador com a largura do RÓTULO, em vez da aba inteira."
+      },
+      {
+        "name": "switchIndicator",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Inverte o lado do indicador (topo em barra horizontal)."
+      },
+      {
+        "name": "shrink",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "O grupo ocupa apenas a largura do conteúdo, em vez de esticar."
+      },
+      {
+        "name": "stretch",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Estica o grupo na altura do container pai."
+      },
+      {
+        "name": "outsideArrows",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Setas de navegação FORA da área das abas, quando há transbordo."
+      },
+      {
+        "name": "mobileArrows",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Mantém as setas em dispositivos móveis (onde o Quasar as esconde por"
       }
     ],
     "emits": [

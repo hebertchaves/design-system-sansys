@@ -52,11 +52,26 @@ defineOptions({
 const props = withDefaults(defineProps<TabsProps>(), {
   modelValue: undefined,
   align: 'left',
-  breakpoint: 600,
+  // 0, não 600. No Quasar o breakpoint NÃO controla setas: ele força
+  // `justify` quando a largura do container é MENOR que o valor
+  // (`justify.value = size < breakpoint`, QTabs.js:239). Com o default 600
+  // herdado do Quasar, qualquer barra dentro de um painel comum — quase toda
+  // barra — nascia justificada, e a prop `align` virava letra morta. Medido:
+  // quatro tiles com align left/center/right/justify saíam TODOS
+  // `q-tabs__content--align-justify`. Em 0 a condição nunca é satisfeita e o
+  // `align` manda; quem quiser o justify responsivo declara o breakpoint.
+  breakpoint: 0,
   vertical: false,
   dense: false,
   brand: null,
   ariaLabel: undefined,
+  inlineLabel: false,
+  narrowIndicator: false,
+  switchIndicator: false,
+  shrink: false,
+  stretch: false,
+  outsideArrows: false,
+  mobileArrows: false,
 })
 
 // ==========================================================================
@@ -119,6 +134,13 @@ function onUpdate(val: string | number): void {
       :aria-label="props.ariaLabel || undefined"
       left-icon="chevron_left"
       right-icon="chevron_right"
+      :inline-label="props.inlineLabel"
+      :narrow-indicator="props.narrowIndicator"
+      :switch-indicator="props.switchIndicator"
+      :shrink="props.shrink"
+      :stretch="props.stretch"
+      :outside-arrows="props.outsideArrows"
+      :mobile-arrows="props.mobileArrows"
       :ripple="false"
       @update:model-value="onUpdate"
     >
