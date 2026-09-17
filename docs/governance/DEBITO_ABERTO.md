@@ -241,31 +241,59 @@ confirmá-la custou uma medição e evitou repetir o erro de consertar por semel
 Itens que o dono do DS **já decidiu** e que não chegaram a ser executados. Não são
 dúvidas: são trabalho combinado.
 
-### 1. Remover a `margin-bottom` global de `.q-field` — DECIDIDO, não executado
+### 1. ~~Remover a `margin-bottom` global de `.q-field`~~ — ✅ RESOLVIDO (set/2026)
 
-`themes/_quasar-overrides.scss:143` dá `margin-bottom: var(--dss-spacing-4)` (16px)
-a **toda** `.q-field`. Num container centrado, quem é centrado é a caixa de
-MARGEM — então `DssSelect`/`DssTextarea`/`DssField` ficam **8px acima** do
-`DssInput`/`DssFile`, que não são `.q-field` e não herdam a regra.
+Executado. `themes/_quasar-overrides.scss` não declara mais `margin-bottom` em
+`.q-field`; o lugar da regra ficou com o comentário do porquê.
 
-Medido no Defaults Preview (palco 96px, todas as raízes com 44px):
+**A varredura de impacto mudou o diagnóstico em dois pontos** — vale registrar,
+porque a premissa escrita aqui antes estava errada:
 
-| componente | topo no palco | base |
-|---|---|---|
-| `DssInput` · `DssFile` | **26** | 26 ✓ centrado |
-| `DssSelect` · `DssTextarea` | **18** | 34 ✗ |
+1. **`DssInput` e `DssField` não usam QField.** São `div`s DSS puros (conferido no
+   DOM e no template: nenhum dos dois renderiza `<QInput>`/`<QField>`). A margem
+   nunca os alcançou — não era "não herdam", era "não são". Quem carrega
+   `.q-field` NA RAIZ é só `DssSelect` e `DssTextarea`; o `DssFile` tem um
+   `.q-field` interno, visualmente inerte.
+2. **As páginas de pattern não têm campo nenhum.** Login Forms, Atender
+   Solicitações e Parcelamento: zero componentes da família (conferido por grep,
+   nas duas grafias). A tela que reproduzia o desalinhamento é a
+   `DssTestPageComplexity`.
 
-Conta: `(96 − (44+16))/2 = 18`. Reproduz em qualquer tela com select e input lado
-a lado.
+**Consumidores reais, todos já com o espaçamento no container** — nada precisou
+ser devolvido:
 
-**Decisão tomada: opção 1 — remover a regra.** Espaçamento entre campos é do
-container, não do campo (mesmo princípio do `:deep()` proibido para layout).
+| consumidor | espaçamento |
+|---|---|
+| `DssTestPageComplexity` | `grid` + `gap: 16px` (nos dois eixos) |
+| `DssCadrisCard` | `flex` + `gap: 12px` |
+| `DssForm` | `flex column` + `gap: var(--dss-form-gap)` |
 
-**PRIMEIRO PASSO OBRIGATÓRIO, que não chegou a rodar: varredura de impacto.**
-Telas que hoje dependem dessa margem ficarão com campos colados. Meça a folga
-vertical entre campos empilhados ANTES de remover, nas páginas de pattern (Login
-Forms, Atender Solicitações, Parcelamento) e nos playgrounds de campo; depois
-devolva o espaçamento no CONTAINER (gap/grid) onde tiver sumido.
+O `DssForm` é o achado mais forte: o SCSS dele já documentava que "consumidores
+não precisam adicionar margin-bottom nos campos". A regra global estava
+**duplicando** o espaçamento ali — Select/Textarea fechavam 32px contra 16px do
+Input.
+
+**Segunda causa, na própria página de complexidade.** Remover a margem global
+arrumou a altura da linha (60→48) mas sobrava 4px: o
+`__input-search-btn` trazia `margin-bottom: var(--dss-spacing-1)` e o grupo
+alinha por `align-items: flex-end` — a margem LEVANTA o botão e empurra o input
+para baixo. Removida também.
+
+**Resultado medido.** Defaults Preview (palco 96px): os cinco componentes da
+família em **26/26**. Página de complexidade: as três colunas em 0/44, linha com
+44px. Playgrounds: a folga mínima entre campos empilhados caiu de 24px para os
+8px do próprio `pg-matrix-row__items` — inspecionado visualmente, não ficou
+apertado (os 8px são entre *cards*, que têm folga interna própria).
+
+Gates: `scss-tokens`, `field-conventions`, `css-meta`, `theme-scopes`, `scale`,
+`contracts`, `type-check`, `structure`, `sandbox-tags` — todos verdes. Testes:
+137/137 na família de campos, 43/43 em Form + PageComplexity.
+
+**Observação separada, não tratada:** no playground do `DssFile`, seção
+Densidade, o rótulo da variante `filled` compacta sobrepõe o placeholder
+("Compacto" por cima de "Altura reduzida"). É anterior a esta mudança — a margem
+removida era do lado de baixo da raiz e não move rótulo. Entra na rodada de
+adequação do `DssFile`.
 
 ### 2. Reemissão de selo v2.2 — 4 componentes selados que mudaram
 

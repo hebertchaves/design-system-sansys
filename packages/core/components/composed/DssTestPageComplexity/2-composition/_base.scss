@@ -341,7 +341,10 @@
 
   &__input-search-btn {
     flex-shrink: 0;
-    margin-bottom: var(--dss-spacing-1);
+    /* Sem margin-bottom: o grupo alinha por `flex-end`, e uma margem no botão
+       o LEVANTA, empurrando o input 4px para baixo e dessincronizando-o do
+       Select da coluna vizinha. Medido: com a margem, input e botão fechavam
+       em 48 contra 44 do Select; sem ela, as três colunas fecham em 44. */
   }
 
   // Botão Pesquisar — centralizado, laranja (hub brand)

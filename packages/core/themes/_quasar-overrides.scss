@@ -141,9 +141,16 @@
    =========================================== */
 
 .q-field {
-  /* Margin bottom padrão */
-  margin-bottom: var(--dss-spacing-4);
-  
+  /* SEM margin-bottom. Removido em set/2026.
+     Espaçamento entre campos é do CONTAINER, nunca do campo. A margem aqui
+     valia só para quem tem `.q-field` NA RAIZ — DssSelect e DssTextarea — e
+     não para DssInput/DssField, que nem usam QField (são divs DSS). O efeito
+     era desalinhar irmãos lado a lado (o Select ficava 16px mais alto que o
+     Input na mesma linha) e DUPLICAR o espaçamento dentro do DssForm, que já
+     declara `gap: var(--dss-form-gap)` e documenta que o campo não deve trazer
+     margem própria. Conferidos os consumidores reais (PageComplexity, CadrisCard,
+     DssForm): todos já dão o espaçamento por `gap` no container. */
+
   /* Label acessível — padrão único com o DssInput: secundário, peso normal */
   &__label {
     color: var(--dss-text-secondary);

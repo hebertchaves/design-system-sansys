@@ -223,6 +223,30 @@ margem vira peso morto de um lado só e descentraliza.
 
 **Meça a distância entre as caixas, não a propriedade.**
 
+### 3.3-b Margem no CAMPO é desalinhamento disfarçado de espaçamento
+
+`themes/_quasar-overrides.scss` dava `margin-bottom: 16px` a toda `.q-field`. Lido
+como "espaçamento entre campos", era na prática um desalinhamento:
+
+- num container centrado, o que se centra é a caixa de MARGEM — o campo com margem
+  sobe. Select e Input lado a lado fechavam em 18/34 contra 26/26;
+- dentro do `DssForm`, que já declara `gap: var(--dss-form-gap)`, o espaçamento
+  **dobrava** só para quem tinha a margem (32px contra 16px).
+
+**Espaçamento entre irmãos é do CONTAINER** (`gap`/grid) — mesmo princípio do
+`:deep()` proibido para layout: quem posiciona é o pai. Antes de remover uma
+margem global, varra os consumidores reais; aqui os três já davam `gap`, e nada
+precisou ser devolvido.
+
+**E cuidado com a premissa de quem escreveu o débito** (inclusive você, semana
+passada): a nota dizia que `DssInput`/`DssField` "não herdavam" a regra. Eles
+simplesmente **não usam QField** — são `div`s DSS puros. Conferir no DOM (`el.classList
+.contains('q-field')`) e no template custa 30 segundos e muda o diagnóstico.
+
+Variante da mesma armadilha, no mesmo conserto: `margin-bottom` num botão dentro
+de um grupo `align-items: flex-end` **levanta o botão** e empurra o irmão para
+baixo. Em `flex-end`, margem de baixo é deslocamento, não folga.
+
 ### 3.4 Regra inerte: existe, compila, não faz nada
 
 Colecionadas nesta onda:
