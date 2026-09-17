@@ -246,6 +246,22 @@ teste no ar.
 **Como usar:** ao começar a adequação de um componente, procure o nome dele nesta seção ANTES de
 rodar o checklist. O que estiver aqui entra no escopo daquela rodada.
 
+### `DssTab` e `DssRouteTab` — adequados VIA `DssTabs`, sem Preview Frame próprio
+
+Os dois **não podem ter Preview Frame**, e isso é da arquitetura, não da ferramenta: o frame monta
+o SFC SOZINHO, e o Quasar recusa — `QTab/QRouteTab component needs to be child of QTabs`. Medido:
+o sujeito não renderiza, e o crash ainda **envenena o iframe para o frame seguinte** (foi o que me
+fez ler o `DssTabs` como quebrado antes de testá-lo isolado).
+
+Os dois estão adequados pela página do trio (`TestTabs.vue`), que é onde eles existem de verdade —
+`DssTabs` aceita apenas `DssTab`/`DssRouteTab` no slot. No placar aparecem como ⬜ porque o gerador
+conta **página por componente**; é limitação do critério, não falta de artefato.
+
+**Em aberto (decisão):** o Preview Frame assume que todo componente monta standalone. Para cobrir
+os que exigem pai, ele precisaria de um `requiresParent` no contrato e de um wrapper no palco.
+Vale para qualquer futuro filho-obrigatório (`DssItemSection`, `DssFabAction`…), então é decisão de
+ferramenta, não deste componente.
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |

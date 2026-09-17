@@ -487,6 +487,14 @@
               </button>
 
               <button
+                @click="activeComponent = 'preview-frame-tabs'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-tabs' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'breadcrumb'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'breadcrumb' }]"
               >
@@ -630,6 +638,12 @@
       </div>
       <div v-else-if="activeComponent === 'preview-frame-btn-toggle'" class="component-view">
         <PreviewFrame component="DssBtnToggle" />
+      </div>
+      <div v-else-if="activeComponent === 'tabs'" class="component-view">
+        <TestTabs />
+      </div>
+      <div v-else-if="activeComponent === 'preview-frame-tabs'" class="component-view">
+        <PreviewFrame component="DssTabs" />
       </div>
       <div v-else-if="activeComponent === 'preview-frame-button'" class="component-view">
         <PreviewFrame component="DssButton" />
@@ -796,6 +810,7 @@ import TestBadge from './TestBadge.vue'
 import TestEmptyState from './TestEmptyState.vue'
 import TestItem from './TestItem.vue'
 import TestBtnToggle from './TestBtnToggle.vue'
+import TestTabs from './TestTabs.vue'
 import TestChip from './TestChip.vue'
 import TestAvatar from './TestAvatar.vue'
 import TestInput from './TestInput.vue'
