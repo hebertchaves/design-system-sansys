@@ -8,6 +8,13 @@
 > **Como ler:** cada item traz o *sintoma* observado, a *causa-raiz* e o *fix
 > canônico*. A seção final é o **Gate** (caixas para marcar por componente).
 >
+> **LEIA UMA VEZ, antes da primeira adequação:**
+> [`HANDOFF_ADEQUACAO_APRENDIZADOS.md`](HANDOFF_ADEQUACAO_APRENDIZADOS.md) — os
+> erros que a onda de set/2026 já cometeu, com a medição que os expôs. Este
+> checklist diz O QUE verificar; aquele diz **como não se enganar ao verificar**
+> (transição que falseia leitura, canvas que mente sobre fonte, CSSOM que não
+> enumera, `!important` layered que vence tudo, a armadilha do `md`…).
+>
 > **PASSO ZERO, antes de tudo:** abra a seção **"Pendências por componente"** do
 > [`DEBITO_ABERTO.md`](DEBITO_ABERTO.md) e procure o nome do componente. O que estiver
 > lá é achado JÁ MEDIDO, parado à espera desta rodada — entra no escopo dela. Foram
