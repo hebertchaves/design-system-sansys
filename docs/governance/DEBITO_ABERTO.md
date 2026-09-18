@@ -340,21 +340,6 @@ os que exigem pai, ele precisaria de um `requiresParent` no contrato e de um wra
 Vale para qualquer futuro filho-obrigatório (`DssItemSection`, `DssFabAction`…), então é decisão de
 ferramenta, não deste componente.
 
-### `DssField` — notch de label que não recorta nada (nos DOIS temas)
-
-`3-variants/_outlined.scss` pinta `background-color: var(--dss-surface-default)` +
-`padding: 0 var(--dss-spacing-1)` atrás da label flutuante. Um notch existe para
-RECORTAR a borda quando a label cavalga nela — e aqui ela não cavalga: medido, a
-label flutuante fica a 9px do topo do campo, inteiramente dentro
-(`cruzaBorda: false`). No claro o fundo é branco sobre card branco e não aparece;
-no escuro vira um retângulo cinza visível, que foi exatamente o defeito corrigido
-no `DssFile` (set/2026).
-
-**Por que não foi junto:** remover o `padding: 0 4px` desloca o texto da label 4px
-para a esquerda — é mudança visual além do relatado, e o componente merece a
-verificação da própria rodada. A referência da família é o `DssInput`, que não tem
-notch nenhum.
-
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |
@@ -2204,6 +2189,15 @@ do `__control` zerada no denso.
 Detalhe que custou uma medição: a `font-size` da dica mora no `__drop-text`, não
 no `__drop-hint` — declarar no pai é inerte, o filho já declara a própria. E a
 altura da dica vinha da linha de texto, não de ícone (a dica tem um único filho).
+
+**3. `DssField` — o mesmo notch, e nos DOIS temas (set/2026).** Corrigido em
+seguida, no mesmo padrão. Lá a regra vinha de `3-variants/_outlined.scss` e trazia
+também `padding: 0 var(--dss-spacing-1)`, que causava um segundo defeito, mais
+sutil e mais visível no uso: o TEXTO da label pulava 4px para a direita só ao
+flutuar — medido, 17px em repouso contra 21px flutuando, um deslocamento
+horizontal a cada foco/preenchimento. Sem o padding, os dois estados fecham em
+17px. No claro o fundo era branco sobre card branco e passava despercebido; no
+escuro apareceria igual ao do DssFile. 57/57 testes (Field + File).
 
 Medido depois (claro e escuro): sobreposição de CAIXAS de 4px no default e 2,8px
 no denso, contra 3,3px do `DssInput` — dentro da folga que o rótulo escalado (0.75)

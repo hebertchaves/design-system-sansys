@@ -528,7 +528,7 @@
           "property": "padding",
           "token": "--dss-spacing-1",
           "value": null,
-          "source": "3-variants/_outlined.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "line-height",
@@ -587,12 +587,6 @@
         {
           "property": "border-color",
           "token": "--dss-border-default",
-          "value": null,
-          "source": "3-variants/_outlined.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-surface-default",
           "value": null,
           "source": "3-variants/_outlined.scss"
         },
@@ -1098,13 +1092,6 @@
         ]
       },
       {
-        "name": "--dss-surface-default",
-        "usedIn": [
-          "default",
-          "disabled"
-        ]
-      },
-      {
         "name": "--dss-surface-subtle",
         "usedIn": [
           "default"
@@ -1195,6 +1182,12 @@
       },
       {
         "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
         "usedIn": [
           "disabled"
         ]

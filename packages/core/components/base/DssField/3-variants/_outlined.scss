@@ -54,9 +54,20 @@
     border-color: var(--dss-border-default);
   }
 
-  /* Notch para label flutuante (fundo atrás do texto do label) */
-  .dss-field__label--float {
-    background-color: var(--dss-surface-default);
-    padding: 0 var(--dss-spacing-1);
-  }
+  /* NOTCH REMOVIDO (set/2026) — mesmo conserto do DssFile.
+     A regra pintava `--dss-surface-default` + `padding: 0 spacing-1` atrás da
+     label flutuante. Notch existe para RECORTAR a borda quando a label cavalga
+     nela; medido, esta fica a 9px do topo do campo, inteiramente DENTRO
+     (`cruzaBorda: false`) — é o padrão B da família, label ancorada no topo, não
+     a label Material que sobe para a moldura.
+
+     Dois efeitos, os dois indesejados:
+     - no dark, `--dss-surface-default` não coincide com a superfície do card e o
+       "notch" virava um retângulo cinza visível (no claro era branco no branco e
+       passava despercebido);
+     - o `padding` empurrava o TEXTO da label 4px para a direita só ao flutuar —
+       medido, 17px em repouso contra 21px flutuando: um pulo horizontal a cada
+       foco/preenchimento. Sem ele, os dois estados fecham em 17px.
+
+     Referência da família: o DssInput não tem notch nenhum. */
 }
