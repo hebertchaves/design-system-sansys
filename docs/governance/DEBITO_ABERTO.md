@@ -2165,6 +2165,37 @@ ferramenta, não deste componente.
 
 ## Resolvidos nesta onda (para não reabrir por engano)
 
+### `DssInput` / `DssField` — controle no slot de adorno estourava o campo (set/2026)
+
+Relatado no exemplo "formulário de login" do `DssInput`: o botão de revelar senha
+saía 2px por baixo da borda. **É do componente, não do exemplo** — e a pergunta
+era justa, porque o exemplo parece atípico e não é.
+
+O adorno (`__prepend`/`__append`) leva um deslocamento de `position: relative` +
+`top` para alinhar com a FAIXA DO TEXTO — 16→40 num campo de 44. Isso está certo
+e medido para conteúdo do tamanho de um glifo: o ícone de 20px e o `__clear` de
+24px fecham a base exatamente na base do texto (desvio 0). **Um controle não cabe
+nessa faixa**: o menor `DssButton` é 32px (`xs`) e o `sm` tem 36px. Deslocar 36px
+num campo de 44 (12px de folga) empurra 2px para fora.
+
+Não havia tamanho de botão que resolvesse pelo lado do exemplo, e o slot é
+documentado para ícones E botões — então a regra passou a distinguir os dois
+casos: quem não cabe na faixa se alinha pela PRÓPRIA CAIXA. Centrado, o botão de
+36px fecha a base em 40, que é exatamente onde o texto termina.
+
+Escopado a `.dss-button` de propósito: o `__clear` interno não é `.dss-button` e
+mantém o deslocamento, que para ele está certo.
+
+Medido — `DssInput`: de 10/−2 (estourando) para 4/4, base coincidente com a do
+texto; ícone e `__clear` inalterados. `DssField`: o defeito era LATENTE e foi
+provado injetando um controle de 36px — no campo padrão (58px) a base fechava a
+3px da borda, e no DENSO (46px) estourava 3px; com a regra, 7/7 e 1/1.
+
+Descartada a alternativa de unificar a família na técnica do `DssFile`
+(`align-self: flex-end`): medida, ela degrada o alinhamento dos glifos, que hoje
+é exato (desvio 0 → −1, e −9 num adorno mais alto).
+
+
 ### `DssFile` — rótulo com fundo no escuro + sobreposição no denso (set/2026)
 
 Dois defeitos, uma causa comum: o componente nunca recebeu a paridade tipográfica

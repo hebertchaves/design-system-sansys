@@ -179,6 +179,19 @@
   top: var(--dss-spacing-1);
 }
 
+/* CONTROLE NO SLOT: sem deslocamento (set/2026) — mesma regra do DssInput.
+   O deslocamento alinha o adorno com a FAIXA DO TEXTO, e isso só funciona para
+   conteúdo do tamanho de um glifo. Um controle não cabe nessa faixa: o menor
+   DssButton é 32px (`xs`) e o `sm` tem 36px. Medido com um controle de 36px no
+   append: no campo padrão (58px) a base fechava a 3px da borda; no DENSO (46px)
+   estourava 3px PARA FORA. Sem o deslocamento, 7/7 e 1/1 respectivamente.
+   Escopado a `.dss-button`: adorno de glifo mantém o deslocamento, que para ele
+   está certo. */
+.dss-field__prepend:has(.dss-button),
+.dss-field__append:has(.dss-button) {
+  top: 0;
+}
+
 /* ==========================================================================
    PREFIX E SUFFIX (texto inline)
    ========================================================================== */

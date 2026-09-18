@@ -240,6 +240,25 @@
   top: 0;
 }
 
+/* CONTROLE NO SLOT: sem deslocamento (set/2026).
+   O deslocamento acima alinha o adorno com a FAIXA DO TEXTO (16→40 num campo de
+   44). Isso funciona para conteúdo do tamanho de um glifo — ícone de 20px, o
+   `__clear` de 24px: medido, os dois fecham a base exatamente na base do texto.
+   Um CONTROLE não cabe nessa faixa: o menor DssButton é 32px (`xs`) e o `sm` tem
+   36px. Deslocar um botão de 36px num campo de 44 (12px de folga, 6 de cada lado)
+   o empurra 2px PARA FORA da borda de baixo — foi o que apareceu no exemplo de
+   formulário de login, com o botão de revelar senha.
+   Não é erro do exemplo: o slot `#append` é documentado para ícones E botões, e
+   NENHUM tamanho de botão caberia na faixa do texto. Quem não cabe na faixa se
+   alinha pela própria caixa — centrado, o botão de 36px fecha a base em 40, que é
+   exatamente onde o texto termina. Medido: de 10/−2 para 4/4, base coincidente.
+   Escopado a `.dss-button` de propósito: o `__clear` interno NÃO é `.dss-button` e
+   continua com o deslocamento, que para ele está certo. */
+.dss-input__prepend:has(.dss-button),
+.dss-input__append:has(.dss-button) {
+  top: 0;
+}
+
 .dss-input__prepend {
   padding-left: var(--dss-spacing-1); // espaçamento apertado (paridade DssSelect)
   color: var(--dss-text-secondary);
