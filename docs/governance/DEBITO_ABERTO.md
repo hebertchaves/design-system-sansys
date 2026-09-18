@@ -340,6 +340,29 @@ os que exigem pai, ele precisaria de um `requiresParent` no contrato e de um wra
 Vale para qualquer futuro filho-obrigatório (`DssItemSection`, `DssFabAction`…), então é decisão de
 ferramenta, não deste componente.
 
+### Família de campos — mais ocorrências de sobreposição usada como fundo
+
+Mesmo defeito corrigido no `DssInput` filled (ver "Resolvidos nesta onda"), ainda
+presente em:
+
+| arquivo | linha | estado |
+|---|---|---|
+| `DssInput/3-variants/_filled.scss` | 35 | `:active` → `--dss-surface-active` |
+| `DssSelect/3-variants/_filled.scss` | 26, 34 | `--dss-surface-hover` |
+| `DssFile/3-variants/_filled.scss` | 32 | `--dss-surface-hover` |
+| `DssFile/3-variants/_outlined.scss` | 33 | `--dss-surface-hover` |
+| `DssFile/3-variants/_standout.scss` | 45 | `--dss-surface-hover` |
+| `DssFile/3-variants/_borderless.scss` | 32 | `--dss-surface-hover` |
+
+**Como decidir caso a caso:** substituir por opaco só é obrigatório onde o REPOUSO
+é opaco (aí o véu troca a natureza do fundo). Onde o repouso é transparente —
+`outlined` e `borderless` — a sobreposição é a técnica CERTA e deve ficar. Cada um
+precisa da medição nos dois temas, como foi feito no `DssInput`: o sintoma só
+aparece quando se compara repouso × hover contra a cor do palco.
+
+Não foram junto porque cada componente pede verificação visual própria nos dois
+temas, e o `DssFile` acabou de fechar uma rodada.
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |
@@ -2164,6 +2187,42 @@ ferramenta, não deste componente.
     não corrigir isoladamente; o fix é sistêmico. `[[project_brand_prop_vs_data_brand_focus]]`.
 
 ## Resolvidos nesta onda (para não reabrir por engano)
+
+### `DssInput` filled — token de SOBREPOSIÇÃO usado como fundo (set/2026)
+
+Pergunta que originou: "o filled aplica background no hover e as demais variantes
+não — é intencional?". **As duas coisas eram verdade ao mesmo tempo.**
+
+**O que é intencional:** cada variante reage no SEU canal de identidade. Medido com
+hover real, todas as quatro reagem — `outlined` escurece a borda (115→82),
+`borderless` acende a linha inferior (transparente→115), `filled` e `standout`
+mudam o PREENCHIMENTO. A impressão de "só o filled tem hover" vem de a borda ser
+1px e o preenchimento ser a área toda.
+
+**O que estava errado:** o `filled` usava `--dss-surface-hover` como
+`background-color`. Esse token é `rgba(0,0,0,.04)` — uma SOBREPOSIÇÃO, feita para
+ser aplicada sobre uma superfície, não para substituir uma. Como o repouso é
+opaco (`--dss-surface-subtle`), o hover trocava fundo sólido por véu translúcido e
+a cor final passava a depender do que estivesse ATRÁS do campo:
+
+| tema | repouso | hover (antes) | efeito |
+|---|---|---|---|
+| claro | 250 | ≈245 sobre branco | passava despercebido |
+| escuro | 115 | **≈55** | o campo ESCURECIA e afundava no card (38) |
+
+No escuro isso é hover invertido: a affordance ENFRAQUECE ao passar o mouse — e é
+exatamente o que o comentário do bloco dark do próprio componente proíbe
+("gray-900 sumia no fundo escuro"). O bloco dark já tinha corrigido repouso e
+foco para gray-600, mas **esqueceu o hover**.
+
+Corrigido: L3 passa a usar `--dss-surface-muted` (degrau opaco, não depende do
+fundo) e o L4 dark ganha o degrau que faltava, `gray-500` — o próximo passo na
+direção que a variante já segue no escuro (palco gray-700 → fill gray-600 → hover
+gray-500), mesma convenção do standout em dark (gray-900 → gray-800).
+
+Medido depois: claro 250 → 245 (mesmo pixel de antes sobre branco, agora
+determinístico); escuro 115 → 163, mais claro e distinto do palco. 37/37 testes.
+
 
 ### `DssInput` / `DssField` — controle no slot de adorno estourava o campo (set/2026)
 

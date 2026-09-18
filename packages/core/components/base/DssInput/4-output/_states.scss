@@ -27,6 +27,20 @@
       background-color: var(--dss-gray-600);
     }
 
+    /* Hover do filled em dark (set/2026). Faltava — e a ausência não era neutra:
+       sem override, o hover caía no `--dss-surface-muted` do L3, que no dark
+       resolve para gray-600, ou seja, A MESMA COR DO REPOUSO — hover invisível.
+       (Antes da correção do L3 era pior: o token de sobreposição
+       `rgba(255,255,255,.08)` sobre o card media ~55 contra 115 do repouso, e o
+       campo ESCURECIA no hover.)
+       O degrau segue a regra escrita acima para esta variante: no dark o filled
+       caminha para o CLARO (palco gray-700 → fill gray-600), então o hover é o
+       próximo passo na mesma direção, gray-500. Mesma convenção do standout em
+       dark, que vai de gray-900 para gray-800 no hover. */
+    &--filled:not(.dss-input--focused):not(.dss-input--disabled):not(.dss-input--readonly):hover .dss-input__field {
+      background-color: var(--dss-gray-500);
+    }
+
     /* Outlined variant in dark mode — borda neutra só em repouso (no foco
        prevalece a borda action-primary/brand do L3). */
     &--outlined:not(.dss-input--focused) .dss-input__field {

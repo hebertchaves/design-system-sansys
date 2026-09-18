@@ -20,7 +20,7 @@
 
   /* Focus state — borda e label em primary */
   &.dss-input--focused .dss-input__field {
-    background-color: var(--dss-surface-hover);
+    background-color: var(--dss-surface-muted);
     border-bottom-color: var(--dss-action-primary);
     box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
   }
@@ -58,8 +58,17 @@
     border-bottom-color: transparent;
   }
 
-  /* Hover (not disabled/readonly) */
+  /* Hover (not disabled/readonly).
+     SUPERFÍCIE OPACA, não o token de sobreposição (set/2026). `--dss-surface-hover`
+     é `rgba(0,0,0,.04)` — feito para ser aplicado SOBRE uma superfície, não para
+     SUBSTITUIR uma. Como o repouso aqui é opaco (`--dss-surface-subtle`), usá-lo no
+     hover trocava um fundo sólido por um véu translúcido: a cor final passava a
+     depender do que estivesse ATRÁS do campo. No claro sobre branco dava #f5f5f5 e
+     passava despercebido; no escuro o resultado media ~55 contra 115 do repouso —
+     o campo ESCURECIA e afundava no card, justamente o que o comentário do bloco
+     dark proíbe ("gray-900 sumia no fundo escuro"). `--dss-surface-muted` é o
+     degrau opaco seguinte e não depende do fundo. O dark tem o seu (ver L4). */
   &:not(.dss-input--disabled):not(.dss-input--readonly):not(.dss-input--focused):hover .dss-input__field {
-    background-color: var(--dss-surface-hover);
+    background-color: var(--dss-surface-muted);
   }
 }
