@@ -22,11 +22,22 @@
    ========================================================================== */
 
 .dss-timeline {
-  /* Token de cor para a linha conectora — sobrescrito em _brands.scss */
-  --dss-timeline-line-color: var(--dss-gray-300);
+  /* Cor da linha conectora — sobrescrita em _brands.scss.
+     Era `--dss-gray-300` cru; passou ao semântico equivalente, que vale o MESMO
+     no claro (#e5e5e5) e ainda adapta no escuro (gray-600), coisa que o
+     primitivo não faz. */
+  --dss-timeline-line-color: var(--dss-border-default);
 
-  /* Token de cor para o marcador/ponto — sobrescrito em _brands.scss */
-  --dss-timeline-dot-color: var(--dss-gray-400);
+  /* Cor do marcador — sobrescrita em _brands.scss.
+     Era `--dss-gray-400` (#d4d4d4, 1,26:1): como MARCADOR isso é quase invisível.
+     `--dss-border-strong` é o degrau de contorno de controle (4,74:1 no claro) e
+     adapta no escuro. */
+  --dss-timeline-dot-color: var(--dss-border-strong);
+
+  /* Cor do glifo DENTRO do marcador. Precisa ser declarada: o glifo herda a cor
+     do dot, e a cor do dot é o que pinta o próprio círculo — herdada, o ícone
+     sumiria contra o fundo dele. */
+  --dss-timeline-dot-fg: var(--dss-text-inverse);
 
   /* Tipografia base */
   font-family: var(--dss-font-family-sans);
@@ -45,16 +56,119 @@
    cores do conector e do marcador sem selectors descendentes.
    ========================================================================== */
 
-/* Linha conectora entre os itens */
-.dss-timeline .q-timeline__connector {
-  background-color: var(--dss-timeline-line-color);
+/* ==========================================================================
+   PONTO E LINHA — corrigidos em set/2026
+   ==========================================================================
+
+   O que havia aqui não pintava nada do que dizia pintar, e pintava uma coisa
+   que ninguém pediu. Conferido no DOM:
+
+   1. `.q-timeline__connector` NÃO EXISTE nesta versão do Quasar. A regra da
+      linha era inerte desde sempre.
+   2. Quem desenha o círculo é `.q-timeline__dot::before` e quem desenha a linha
+      é `.q-timeline__dot::after` — ambos com `background: currentcolor`. Ou
+      seja, o que governa os dois é a COR do dot, não o `background` dele.
+   3. O `background-color` que estava no `.q-timeline__dot` pintava o ELEMENTO,
+      que é um bloco alto — saía uma faixa cinza vertical atrás dos pontos.
+      Era artefato visível, não regra inócua.
+
+   A cor do dot vem de `.text-primary`, que o QTimelineEntry põe por padrão:
+   `color: var(--q-primary) !important` dentro de `@layer quasar`. Important
+   layered vence CSS DSS unlayered (Constituição #3), então não adianta declarar
+   `color` aqui. O caminho é o mesmo do `utils/_hover-ramp.scss`: redefinir a
+   ENTRADA da ponte no escopo, e deixar a regra do Quasar recomputar.
+   ========================================================================== */
+
+.dss-timeline .q-timeline__dot {
+  --q-primary: var(--dss-timeline-dot-color);
 }
 
-/* Marcador/ponto de cada entrada */
-.dss-timeline .q-timeline__dot {
-  background-color: var(--dss-timeline-dot-color);
-  border-color: var(--dss-timeline-dot-color);
-  color: var(--dss-text-inverse);
+/* A linha não precisa ser da cor do ponto: `::after` é regra layered NÃO
+   important, então o valor DSS unlayered vence direto. */
+.dss-timeline .q-timeline__dot::after {
+  background: var(--dss-timeline-line-color);
+}
+
+/* Glifo do marcador — cor própria, senão herda a do círculo e desaparece. */
+.dss-timeline .q-timeline__dot .q-icon {
+  color: var(--dss-timeline-dot-fg);
+}
+
+/* ==========================================================================
+   RESERVA DE ESPAÇO DO MARCADOR — redeclarada pelo DSS (set/2026)
+   ==========================================================================
+
+   O QTimeline reserva o espaço do ponto com paddings PRÓPRIOS. Medido no DOM do
+   sandbox, nenhum deles chegava: um reset universal `* { margin: 0; padding: 0 }`
+   sem escopo (em `apps/sandbox/src/App.vue`) os zerava. `*` tem especificidade
+   zero, mas é UNLAYERED, e unlayered vence layered — a regra do Quasar vive em
+   `@layer quasar` (Constituição #3). O resultado eram colisões: o ponto por cima
+   do começo do subtítulo no `dense` (23px de sobreposição medidos) e a cauda do
+   subtítulo por baixo do ponto no `comfortable` (8px).
+
+   Um componente de DS não pode depender de o app hospedeiro ter — ou não ter —
+   um reset. Redeclaramos a reserva aqui, tokenizada: o componente passa a
+   desenhar igual com reset ou sem ele, no sandbox e em produção.
+
+   Os 30px do Quasar viram `--dss-spacing-8` (32px): a diferença de 2px não é
+   perceptível e o valor passa a vir da escala, não de um número solto.
+   ========================================================================== */
+
+.dss-timeline.q-timeline--dense--right .q-timeline__entry {
+  padding-left: var(--dss-spacing-10);
+}
+
+.dss-timeline.q-timeline--comfortable--right .q-timeline__subtitle {
+  padding-right: var(--dss-spacing-8);
+}
+
+.dss-timeline.q-timeline--comfortable--right .q-timeline__content {
+  padding-left: var(--dss-spacing-8);
+}
+
+/* Layout `loose`: as colunas se alternam, e o Quasar as separa por padding nos
+   dois sentidos. O ponto ainda é puxado por MARGEM negativa para ficar sobre a
+   linha central — e o reset zera margem também, o que o deixava encostado no
+   texto. */
+.dss-timeline.q-timeline--loose .q-timeline__entry {
+  padding-bottom: var(--dss-spacing-6);
+}
+
+.dss-timeline.q-timeline--loose .q-timeline__entry--left .q-timeline__content,
+.dss-timeline.q-timeline--loose .q-timeline__entry--right .q-timeline__subtitle {
+  padding-right: var(--dss-spacing-8);
+}
+
+.dss-timeline.q-timeline--loose .q-timeline__entry--left .q-timeline__subtitle,
+.dss-timeline.q-timeline--loose .q-timeline__entry--right .q-timeline__content {
+  padding-left: var(--dss-spacing-8);
+}
+
+.dss-timeline.q-timeline--loose .q-timeline__entry--icon .q-timeline__content {
+  padding-top: var(--dss-spacing-2);
+}
+
+/* O círculo com ícone do Quasar tem 31px — número ímpar, que não centra em
+   valor inteiro e não vem de escala nenhuma. A regra dele é layered e NÃO
+   important, então o DSS a substitui limpo: 32px do token, e a margem de
+   centragem passa a ser metade exata do mesmo token. */
+.dss-timeline .q-timeline__entry--icon .q-timeline__dot::before {
+  width: var(--dss-icon-size-lg);
+  height: var(--dss-icon-size-lg);
+}
+
+.dss-timeline.q-timeline--loose .q-timeline__entry--icon .q-timeline__dot {
+  margin-left: calc(-1 * var(--dss-icon-size-lg) / 2);
+}
+
+/* Entradas com ícone: o ponto é maior (32px contra 15px), e o Quasar desce o
+   texto para acompanhar. */
+.dss-timeline .q-timeline__entry--icon .q-timeline__subtitle {
+  padding-top: var(--dss-spacing-2);
+}
+
+.dss-timeline.q-timeline--comfortable .q-timeline__entry--icon .q-timeline__content {
+  padding-top: var(--dss-spacing-2);
 }
 
 /* Título de cada entrada */

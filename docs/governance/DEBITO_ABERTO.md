@@ -363,6 +363,75 @@ aparece quando se compara repouso × hover contra a cor do palco.
 Não foram junto porque cada componente pede verificação visual própria nos dois
 temas, e o `DssFile` acabou de fechar uma rodada.
 
+### 🚨 Reset universal do sandbox zera o espaçamento interno do Quasar
+
+`apps/sandbox/src/App.vue` tem um `<style>` SEM escopo com:
+
+```css
+* { margin: 0; padding: 0; box-sizing: border-box; }
+```
+
+`*` tem especificidade zero, mas é **unlayered** — e unlayered vence layered
+(Constituição #3). O CSS do Quasar vive em `@layer quasar`. Resultado: **todo
+`padding` e `margin` que o Quasar declara para a estrutura INTERNA dos
+componentes é zerado no sandbox.**
+
+Descoberto ao adequar o `DssTimeline`, onde o efeito era visível: o marcador
+cobria o começo do subtítulo (23px de sobreposição medidos no `dense`), porque o
+`padding-left: 40px` que o Quasar dá ao `.q-timeline__entry` nunca chegava.
+Foram zeradas também as reservas do `comfortable` e do `loose`, e até a
+`margin-left: -15px` que centra o ponto.
+
+**Por que passou despercebido até agora:** a maioria dos componentes DSS
+redeclara o próprio espaçamento, então não depende do Quasar. Só quem apoia o
+layout na estrutura interna dele sente.
+
+**Por que isso é grave além do visual:** o sandbox é a fonte de verdade visual do
+DS. Um app real que NÃO tenha esse reset renderiza diferente do que vemos aqui —
+e um app que TENHA (reset universal é padrão comum) reproduz o problema. Ou seja,
+hoje o sandbox mente nos dois sentidos, dependendo do componente.
+
+**Duas frentes, e as duas valem:**
+
+1. **Escopar/remover o reset do `App.vue`** — conserta todos os componentes de
+   uma vez e devolve ao sandbox a fidelidade com produção. Não foi feito aqui
+   porque o raio de alcance é a aplicação inteira e merece uma passada visual
+   própria.
+2. **Cada componente declarar a própria reserva** — o `DssTimeline` já fez isso
+   (`2-composition/_base.scss`), e passa a desenhar igual com reset ou sem. É a
+   postura correta para um DS, mas precisa ser verificada componente a
+   componente.
+
+**Como procurar em outros componentes:** comparar o `padding`/`margin` computado
+de um elemento interno do Quasar com o que `node_modules/quasar/dist/quasar.css`
+declara para ele. Se der 0 e o CSS declarar valor, é este defeito.
+
+### `DssStepper` — props do QStepper não expostas (de-para pendente)
+
+O de-para com o `dist/api/QStepper.json` mostrou props de APRESENTAÇÃO que não
+estão expostas nem bloqueadas — simplesmente não chegaram ao wrapper (mesmo
+padrão que o `DssTabs` tinha antes de set/2026):
+
+`alternative-labels` (rótulo abaixo do dot, layout alternativo de verdade),
+`contracted` (só os dots, sem rótulo — útil no responsivo), `swipeable`,
+`infinite`, `keep-alive` (+ include/exclude/max), `transition-prev`/`-next`,
+`transition-duration`, `header-class`.
+
+Bloqueadas com razão, não mexer: `done-color`, `active-color`, `error-color`,
+`inactive-color` (cor é do token, não do consumidor) e `dark` (tema é
+`[data-theme]`, não prop).
+
+Não foi feito junto porque expor prop exige tipo, contrato, doc e verificação no
+Preview Frame — é uma rodada própria, como foi a do `DssTabs`.
+
+### `DssTimeline` — prop `dark` compete com o tema
+
+`DssTimelineProps.dark` é repasse direto do QTimeline e o próprio JSDoc já diz
+"prefira `[data-theme="dark"]`". Uma prop que duplica o sistema de temas é porta
+para divergência: o componente pode ficar escuro num app claro sem que nenhum
+token saiba disso. Candidata a bloqueio na próxima rodada — não removida agora
+porque é mudança de API pública.
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |

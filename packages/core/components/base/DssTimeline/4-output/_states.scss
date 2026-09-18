@@ -78,12 +78,14 @@
    ========================================================================== */
 
 @media print {
-  .dss-timeline .q-timeline__connector {
-    background-color: var(--dss-gray-400) !important;
+  /* Os alvos antigos eram `.q-timeline__connector` (classe que não existe) e o
+     `background` do `.q-timeline__dot` (que não pinta o círculo). Na impressão
+     valem os mesmos painters do resto: os pseudos do dot. */
+  .dss-timeline .q-timeline__dot {
+    --q-primary: var(--dss-gray-600);
   }
 
-  .dss-timeline .q-timeline__dot {
-    border: var(--dss-border-width-thin) solid currentColor !important;
-    background-color: transparent !important;
+  .dss-timeline .q-timeline__dot::after {
+    background: var(--dss-gray-600) !important;
   }
 }

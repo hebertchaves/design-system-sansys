@@ -247,6 +247,58 @@ Variante da mesma armadilha, no mesmo conserto: `margin-bottom` num botão dentr
 de um grupo `align-items: flex-end` **levanta o botão** e empurra o irmão para
 baixo. Em `flex-end`, margem de baixo é deslocamento, não folga.
 
+### 3.3-c O CSS pode estar escopado num ancestral que NÃO contém o alvo
+
+No `DssStep`, todo o cabeçalho (dot, título, linha, estados) vivia em
+`.dss-step .q-stepper__*`. Parece óbvio que alcança — o cabeçalho é do passo. Só
+que o QStepper renderiza o cabeçalho em DOIS lugares, conforme a orientação:
+
+- **horizontal** (o padrão): tabs e dots vão para `.q-stepper__header`, que é
+  IRMÃO dos passos — fora do `.dss-step`;
+- **vertical**: cada tab fica dentro do seu `.dss-step`.
+
+Resultado: o componente tinha duas aparências. Medido — tab de 72px e dot de 24px
+no horizontal (Quasar cru) contra 44px e 32px no vertical (DSS). Ninguém tinha
+notado porque as duas isoladamente parecem plausíveis.
+
+**Como pegar isto em 30 segundos:** antes de confiar num seletor descendente,
+pergunte ao DOM se ele casa —
+`document.querySelectorAll('.dss-x .q-alvo').length` contra
+`document.querySelectorAll('.q-alvo').length`. Divergiu, o escopo está errado.
+
+E o corolário: **escope pelo ancestral que contém TODAS as montagens**. Aqui é o
+container (`.dss-stepper`), não o filho.
+
+### 3.3-d Estado do Quasar: a classe que você acha que existe pode não existir
+
+Ainda no `DssStep`: os estados se penduravam em `&.q-stepper__step--active`. Essa
+classe **nunca** é emitida — o Quasar marca a TAB (`.q-stepper__tab--active`),
+não a raiz do passo. O bloco era inerte de nascença, nas duas orientações.
+
+Três checagens que valem sempre, e custam um comando cada:
+
+1. **A classe existe?** `document.querySelectorAll('.classe-que-vou-estilizar').length`
+   — zero significa regra morta.
+2. **A classe é EMITIDA pelo DSS?** confira o `use*Classes.ts`. No `DssStep`,
+   `_brands.scss` inteiro mirava `.dss-step--brand-*`, que o composable não gera e
+   que nem tem prop correspondente. Código morto desde o primeiro commit.
+3. **A classe existe no QUASAR?** `grep -c "q-componente--variante" node_modules/quasar/dist/quasar.css`.
+   O `_dense.scss` do `DssStep` mirava `.q-stepper--dense`: zero ocorrências, e o
+   QStepper não tem prop `dense`. Não era escopo errado — era uma variante que
+   nunca existiu.
+
+### 3.3-e Reset universal do app vence o Quasar inteiro
+
+`* { margin: 0; padding: 0 }` sem escopo, no app hospedeiro, **zera todo o
+espaçamento interno declarado pelo Quasar** — especificidade zero não importa,
+porque unlayered vence layered. No sandbox isso quebrava a timeline (ponto por
+cima do texto) e deixa o sandbox divergente de produção nos dois sentidos.
+
+Ao adequar um componente que apoia o layout na estrutura interna do Quasar:
+compare o computado com o que `node_modules/quasar/dist/quasar.css` declara. Se o
+CSS diz 40px e o DOM diz 0, é isto. A postura certa é o componente declarar a
+própria reserva, tokenizada — não depender de o app ter ou não um reset.
+
 ### 3.4 Regra inerte: existe, compila, não faz nada
 
 Colecionadas nesta onda:

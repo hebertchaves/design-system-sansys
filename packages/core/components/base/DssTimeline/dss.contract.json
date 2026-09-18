@@ -121,26 +121,62 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "background-color",
+          "property": "background",
           "token": "--dss-timeline-line-color",
           "value": null,
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-timeline-dot-color",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "border-color",
-          "token": "--dss-timeline-dot-color",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "color",
-          "token": "--dss-text-inverse",
+          "token": "--dss-timeline-dot-fg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-10",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-left",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-top",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-left",
+          "token": "--dss-icon-size-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -176,12 +212,6 @@
         },
         {
           "property": "padding-bottom",
-          "token": "--dss-spacing-6",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "padding-bottom",
           "token": "--dss-spacing-3",
           "value": null,
           "source": "3-variants/_variant.scss"
@@ -199,21 +229,9 @@
           "source": "4-output/_states.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-gray-400",
+          "property": "background",
+          "token": "--dss-gray-600",
           "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "border",
-          "token": "--dss-border-width-thin",
-          "value": null,
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "background-color",
-          "token": null,
-          "value": "transparent",
           "source": "4-output/_states.scss"
         }
       ]
@@ -221,7 +239,6 @@
   },
   "tokens": {
     "categories": [
-      "border",
       "color",
       "other",
       "spacing",
@@ -265,13 +282,37 @@
         ]
       },
       {
-        "name": "--dss-timeline-dot-color",
+        "name": "--dss-timeline-dot-fg",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-text-inverse",
+        "name": "--dss-spacing-10",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
         "usedIn": [
           "default"
         ]
@@ -301,37 +342,13 @@
         ]
       },
       {
-        "name": "--dss-spacing-2",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-spacing-6",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-spacing-3",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-spacing-8",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-gray-400",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-border-width-thin",
+        "name": "--dss-gray-600",
         "usedIn": [
           "default"
         ]

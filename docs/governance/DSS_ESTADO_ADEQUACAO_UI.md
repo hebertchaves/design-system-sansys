@@ -4,11 +4,11 @@
      Regenerar: `npm run build:adequacao-status` (ou node scripts/build-adequacao-status.cjs)
      Fontes: docs/governance/CERTIFIED_COMPONENTS.md + apps/sandbox/src/TestSuite.vue -->
 
-> **Gerado do disco em 17/09/2026**, não de memória. Fase, categoria e selo saem do
+> **Gerado do disco em 18/09/2026**, não de memória. Fase, categoria e selo saem do
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
-> **100% selados**; a adequação de UI é uma onda posterior, e cobre **15** deles. Um
+> **100% selados**; a adequação de UI é uma onda posterior, e cobre **17** deles. Um
 > componente selado em janeiro/2026 foi auditado contra as regras de então — não contra o checklist
 > de adequação.
 
@@ -31,8 +31,8 @@ inferência, não selo.
 | Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
 |---|---|---|---|---|---|
 | **Fase 1 — Atômicos** | 20 | **11** | 0 | 2 | 7 |
-| **Fase 2 — Compostos** | 68 | **4** | 0 | 1 | 63 |
-| **Total** | **88** | **15** | 0 | 3 | 70 |
+| **Fase 2 — Compostos** | 68 | **6** | 0 | 1 | 61 |
+| **Total** | **88** | **17** | 0 | 3 | 68 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
 `DssAvatar`, `DssBadge`, `DssCard`.
@@ -64,13 +64,15 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssSpinner` | Indicador de carregamento | 24/03/2026 | — | — |
 | ⬜ | `DssTooltip` | Dica contextual | 06/02/2026 | — | — |
 
-## Fase 2 — Componentes Compostos (4/68)
+## Fase 2 — Componentes Compostos (6/68)
 
 | | Componente | Categoria | Selo | Playground | Preview Frame |
 |---|---|---|---|---|---|
 | ✅ | `DssBtnToggle` | Botões e Controles de Grupo | 27/03/2026 | sim | sim |
 | ✅ | `DssField` | Inputs Compostos | 19/05/2026 | sim | sim |
+| ✅ | `DssStepper` | Navegação por etapas | 20/04/2026 | sim | sim |
 | ✅ | `DssTabs` | Tabs | 02/04/2026 | sim | sim |
+| ✅ | `DssTimeline` | Visualização de Dados | 21/05/2026 | sim | sim |
 | ✅ | `DssUploader` | Upload / File Management | 07/05/2026 | sim | sim |
 | 🟡 | `DssCard` | Superfície e Layout | 12/02/2026 | sim | — |
 | ⬜ | `DssAjaxBar` | Progresso e Feedback | 18/05/2026 | — | — |
@@ -123,12 +125,10 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssSlideItem` | Interação Gestual | 20/05/2026 | — | — |
 | ⬜ | `DssSplitter` | Layout Auxiliar | 19/05/2026 | — | — |
 | ⬜ | `DssStep` | Navegação Estrutural | 20/04/2026 | — | — |
-| ⬜ | `DssStepper` | Navegação por etapas | 20/04/2026 | — | — |
 | ⬜ | `DssTab` | Tabs | 01/04/2026 | — | — |
 | ⬜ | `DssTable` | Tabelas e Dados | 22/05/2026 | — | — |
 | ⬜ | `DssTabPanel` | Tabs | 09/04/2026 | — | — |
 | ⬜ | `DssTabPanels` | Tabs | 09/04/2026 | — | — |
-| ⬜ | `DssTimeline` | Visualização de Dados | 21/05/2026 | — | — |
 | ⬜ | `DssTimelineEntry` | Visualização de Dados | 21/05/2026 | — | — |
 | ⬜ | `DssTimePicker` | Seletores e Pickers | 22/05/2026 | — | — |
 | ⬜ | `DssToolbar` | Estrutura de Página | 16/04/2026 | — | — |

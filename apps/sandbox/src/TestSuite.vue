@@ -270,6 +270,22 @@
                 <span class="nav-icon"><span class="material-icons">format_list_bulleted</span></span>
                 <span class="nav-label">DssList</span>
               </button>
+
+              <button
+                @click="activeComponent = 'timeline'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'timeline' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">timeline</span></span>
+                <span class="nav-label">DssTimeline</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'preview-frame-timeline'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-timeline' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
             </div>
 
             <!-- Forms & Input -->
@@ -495,6 +511,22 @@
               </button>
 
               <button
+                @click="activeComponent = 'stepper'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'stepper' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">linear_scale</span></span>
+                <span class="nav-label">DssStepper</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'preview-frame-stepper'"
+                :class="['nav-item nav-previewitem', { active: activeComponent === 'preview-frame-stepper' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dvr</span></span>
+                <span class="nav-label">Preview Frame</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'breadcrumb'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'breadcrumb' }]"
               >
@@ -627,6 +659,22 @@
       <div v-else-if="activeComponent === 'preview-frame-empty-state'" class="component-view">
         <PreviewFrame component="DssEmptyState" />
       </div>
+      <div v-else-if="activeComponent === 'stepper'" class="component-view">
+        <TestStepper />
+      </div>
+
+      <div v-else-if="activeComponent === 'preview-frame-stepper'" class="component-view">
+        <PreviewFrame component="DssStepper" />
+      </div>
+
+      <div v-else-if="activeComponent === 'timeline'" class="component-view">
+        <TestTimeline />
+      </div>
+
+      <div v-else-if="activeComponent === 'preview-frame-timeline'" class="component-view">
+        <PreviewFrame component="DssTimeline" />
+      </div>
+
       <div v-else-if="activeComponent === 'item'" class="component-view">
         <TestItem />
       </div>
@@ -809,6 +857,8 @@ import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'
 import TestEmptyState from './TestEmptyState.vue'
 import TestItem from './TestItem.vue'
+import TestStepper from './TestStepper.vue'
+import TestTimeline from './TestTimeline.vue'
 import TestBtnToggle from './TestBtnToggle.vue'
 import TestTabs from './TestTabs.vue'
 import TestChip from './TestChip.vue'

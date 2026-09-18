@@ -188,6 +188,16 @@
         "verifiedBy": "aria"
       },
       {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Anel de foco visível no cabeçalho navegável do passo (:focus-visible com outline). Mora no container porque o QStepper renderiza o cabeçalho fora do DssStep no layout horizontal.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "selectorIncludes": ":focus-visible",
+          "property": "outline"
+        }
+      },
+      {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",

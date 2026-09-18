@@ -385,6 +385,17 @@
   gap: var(--dss-spacing-4);
 }
 
+/* Faixa inteira — para componentes que SÃO um bloco de largura total e não
+   cabem numa coluna de 280px sem mudar de comportamento: o stepper horizontal
+   quebra os passos em várias linhas, a timeline perde o conector do
+   enquadramento. Usar só nesses casos; o padrão continua sendo o grid
+   automático, que é o que permite comparar variantes lado a lado.
+   Uso: <PgGrid class="pg-grid--full">. */
+.pg-grid--full,
+.pg-main[data-density="comfortable"] .pg-grid--full {
+  grid-template-columns: 1fr;
+}
+
 .pg-tile,
 .dss-ex__item {
   display: flex; flex-direction: column; /* sem gap — separador justaposto ao stage */

@@ -47,6 +47,33 @@
   }
 }
 
+// ==================================================================
+// CABEÇALHO — blocos adaptativos (set/2026)
+// ==================================================================
+// Vieram do DssStep pelo mesmo motivo das regras de base: lá estavam escopados
+// em `.dss-step`, que não alcança o header no layout horizontal. E usavam
+// `&.q-stepper__step--active`, classe que o Quasar não emite.
+
+@media (prefers-contrast: more) {
+  .dss-stepper .q-stepper__dot {
+    border: var(--dss-border-width-md) solid var(--dss-text-body);
+  }
+
+  .dss-stepper .q-stepper__tab--navigation:focus-visible {
+    outline-width: var(--dss-border-width-thick);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-stepper .q-stepper__tab,
+  .dss-stepper .q-stepper__tab--navigation::after,
+  .dss-stepper .q-stepper__dot,
+  .dss-stepper .q-stepper__title,
+  .dss-stepper .q-stepper__line {
+    transition: none;
+  }
+}
+
 // ------------------------------------------------------------------
 // Forced Colors (Windows High Contrast Mode)
 // EXC-02 — System color keywords obrigatórios neste contexto.
@@ -57,6 +84,45 @@
     background-color: Canvas !important;
     color: CanvasText;
     border-color: ButtonText;
+  }
+
+  /* O cabeçalho precisa do mesmo tratamento: em forced-colors o navegador
+     ignora os tokens, e sem isto o dot ficaria sem contorno e os estados
+     indistinguíveis entre si. */
+  .dss-stepper .q-stepper__dot {
+    background-color: Canvas !important;
+    box-shadow: none !important;
+    border: var(--dss-border-width-md) solid ButtonText;
+    color: CanvasText;
+  }
+
+  .dss-stepper .q-stepper__tab--active .q-stepper__dot,
+  .dss-stepper .q-stepper__tab--done .q-stepper__dot,
+  .dss-stepper .q-stepper__tab--error .q-stepper__dot {
+    background-color: Highlight !important;
+    color: HighlightText;
+  }
+
+  .dss-stepper .q-stepper__title,
+  .dss-stepper .q-stepper__caption {
+    color: CanvasText;
+  }
+
+  .dss-stepper .q-stepper__line {
+    border-color: ButtonText;
+  }
+
+  .dss-stepper .q-stepper__tab--disabled {
+    opacity: 1;
+
+    .q-stepper__title,
+    .q-stepper__caption {
+      color: GrayText;
+    }
+  }
+
+  .dss-stepper .q-stepper__tab--navigation:focus-visible {
+    outline: var(--dss-border-width-md) solid Highlight;
   }
 }
 

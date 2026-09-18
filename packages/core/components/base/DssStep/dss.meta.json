@@ -240,16 +240,6 @@
     ],
     "wcag": [
       {
-        "criterion": "2.4.7",
-        "level": "AA",
-        "implementation": "Anel de foco visível via outline no estado :focus.",
-        "verifiedBy": "css",
-        "cssRule": {
-          "selectorIncludes": ":focus",
-          "property": "outline"
-        }
-      },
-      {
         "criterion": "1.4.3",
         "level": "AA",
         "implementation": "Texto do componente (text-primary) sobre superfície clara atinge contraste AA.",
