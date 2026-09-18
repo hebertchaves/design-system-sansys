@@ -406,6 +406,44 @@ hoje o sandbox mente nos dois sentidos, dependendo do componente.
 de um elemento interno do Quasar com o que `node_modules/quasar/dist/quasar.css`
 declara para ele. Se der 0 e o CSS declarar valor, é este defeito.
 
+### Preview Frame não semeia FILHOS — todo componente container monta vazio
+
+Descoberto ao fechar `DssStepper` e `DssTimeline` (set/2026). Os dois frames
+montam o SFC real e o console fica limpo, mas o componente aparece **vazio**:
+medido dentro do iframe, `.dss-stepper` = 1 e `.dss-step` = **0**;
+`.dss-timeline` = 1 e `.dss-timeline-entry` = **0**.
+
+**Causa:** o `PreviewSubject.vue` preenche apenas os slots que o parent liga, e
+com marcadores genéricos (`«default»`, `📎`, `⬆`). Ele **não lê**
+`defaultPreview.demoSlots` do `dss.meta.json` — que é justamente onde mora a
+semente de filhos reais. O `DssTimeline`, por exemplo, já declara duas
+`DssTimelineEntry` ali, e elas nunca chegam à tela.
+
+Quem sabe montar isso já existe: `DemoRenderer.vue` tem `renderNode`/`buildSlots`
+e um REGISTRY com todos os base (inclusive `DssTimelineEntry`). O que falta é o
+realm do preview usar essa mesma máquina.
+
+**Por que importa:** a premissa de fechamento do checklist é "o componente
+renderiza FIEL no Preview Frame". Para um container, uma casca vazia não prova
+nada — nenhum knob de layout (`vertical`, `layout`, `side`, `headerNav`) tem efeito
+observável sem filhos. Vale para `DssStepper`, `DssTimeline`, `DssTabs`,
+`DssList`, `DssBtnToggle` e qualquer outro que exista para conter.
+
+**Nota de honestidade sobre o quadro:** `DSS_ESTADO_ADEQUACAO_UI.md` marca esses
+dois como ✅ porque o quadro deriva de "tem playground E frame registrado" — não
+avalia o conteúdo do frame. A adequação de CSS está fechada e medida; a validação
+visual pelo frame, para containers, está limitada por este débito.
+
+**Correção de tamanho contido:** passar o `meta.defaultPreview.demoSlots` ao
+`PreviewSubject` e renderizá-lo no slot correspondente com o `renderNode` do
+`DemoRenderer`, caindo no marcador genérico só quando não houver semente. Não foi
+feito junto porque é infraestrutura compartilhada por todos os frames e merece a
+própria verificação.
+
+Enquanto isso, um `demoSlots` com prop inexistente passa batido: o do
+`DssTimeline` declara `color` nas entradas, e `DssTimelineEntry` não tem essa prop
+(ver `types/timeline-entry.types.ts`). Nenhum gate pega, porque nada renderiza.
+
 ### `DssStepper` — props do QStepper não expostas (de-para pendente)
 
 O de-para com o `dist/api/QStepper.json` mostrou props de APRESENTAÇÃO que não
