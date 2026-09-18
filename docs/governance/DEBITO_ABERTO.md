@@ -289,11 +289,9 @@ Gates: `scss-tokens`, `field-conventions`, `css-meta`, `theme-scopes`, `scale`,
 `contracts`, `type-check`, `structure`, `sandbox-tags` — todos verdes. Testes:
 137/137 na família de campos, 43/43 em Form + PageComplexity.
 
-**Observação separada, não tratada:** no playground do `DssFile`, seção
-Densidade, o rótulo da variante `filled` compacta sobrepõe o placeholder
-("Compacto" por cima de "Altura reduzida"). É anterior a esta mudança — a margem
-removida era do lado de baixo da raiz e não move rótulo. Entra na rodada de
-adequação do `DssFile`.
+**Observação separada:** a sobreposição de rótulo no `DssFile` denso citada aqui
+foi **resolvida em seguida** (set/2026), junto com o fundo de rótulo no escuro —
+ver "Resolvidos nesta onda".
 
 ### 2. Reemissão de selo v2.2 — 4 componentes selados que mudaram
 
@@ -341,6 +339,21 @@ conta **página por componente**; é limitação do critério, não falta de art
 os que exigem pai, ele precisaria de um `requiresParent` no contrato e de um wrapper no palco.
 Vale para qualquer futuro filho-obrigatório (`DssItemSection`, `DssFabAction`…), então é decisão de
 ferramenta, não deste componente.
+
+### `DssField` — notch de label que não recorta nada (nos DOIS temas)
+
+`3-variants/_outlined.scss` pinta `background-color: var(--dss-surface-default)` +
+`padding: 0 var(--dss-spacing-1)` atrás da label flutuante. Um notch existe para
+RECORTAR a borda quando a label cavalga nela — e aqui ela não cavalga: medido, a
+label flutuante fica a 9px do topo do campo, inteiramente dentro
+(`cruzaBorda: false`). No claro o fundo é branco sobre card branco e não aparece;
+no escuro vira um retângulo cinza visível, que foi exatamente o defeito corrigido
+no `DssFile` (set/2026).
+
+**Por que não foi junto:** remover o `padding: 0 4px` desloca o texto da label 4px
+para a esquerda — é mudança visual além do relatado, e o componente merece a
+verificação da própria rodada. A referência da família é o `DssInput`, que não tem
+notch nenhum.
 
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
@@ -2166,6 +2179,37 @@ ferramenta, não deste componente.
     não corrigir isoladamente; o fix é sistêmico. `[[project_brand_prop_vs_data_brand_focus]]`.
 
 ## Resolvidos nesta onda (para não reabrir por engano)
+
+### `DssFile` — rótulo com fundo no escuro + sobreposição no denso (set/2026)
+
+Dois defeitos, uma causa comum: o componente nunca recebeu a paridade tipográfica
+da família.
+
+**1. Fundo do rótulo no dark.** `4-output/_states.scss` pintava
+`--dss-surface-default` atrás da label flutuante do `outlined`, só no tema escuro,
+sob o rótulo de "notch". Notch serve para RECORTAR a borda quando a label cavalga
+nela; medido, a label fica 1px ABAIXO da borda superior, inteiramente dentro do
+campo (padrão B da família, não a label Material que sobe para a moldura). Sem
+borda para recortar, o fundo só pintava um retângulo cinza que não coincide com a
+superfície do card. Regra removida — o `DssInput`, referência adequada da família,
+não tem notch nenhum.
+
+**2. Sobreposição rótulo↔dica no denso.** Em 36px não cabem rótulo (18px) + dica
+(24px). A dica é ancorada no rodapé do `__control`, então subia por baixo do
+rótulo: 12px de sobreposição, texto legível pela metade. O `DssInput` já tinha
+resolvido e documentado a receita — encolher a TIPOGRAFIA no denso, não deslocar
+por número. Aplicado o mesmo: rótulo e `__drop-text` em `sm`, e a reserva de baixo
+do `__control` zerada no denso.
+
+Detalhe que custou uma medição: a `font-size` da dica mora no `__drop-text`, não
+no `__drop-hint` — declarar no pai é inerte, o filho já declara a própria. E a
+altura da dica vinha da linha de texto, não de ícone (a dica tem um único filho).
+
+Medido depois (claro e escuro): sobreposição de CAIXAS de 4px no default e 2,8px
+no denso, contra 3,3px do `DssInput` — dentro da folga que o rótulo escalado (0.75)
+deixa acima dos glifos. Nenhum pinta texto sobre texto. Fundo do rótulo
+transparente nas 4 variantes. 26/26 testes.
+
 
 - ✅ **Merge da v2.4.0 para `main` — CONCLUÍDO** (2026-07-17). As 3 branches penduradas
   (`import/dss-v2.4.0`, `chore/apidocs-passthrough`, `chore/eol-normalization`) foram consolidadas

@@ -40,13 +40,16 @@
        (§M5 do checklist: véu neutro é a técnica certa aqui; o problema era o
        primitivo cru no par light/dark, não a técnica.) */
 
-    // Label notch em dark mode
-    // NC-02 fix: --dss-surface-dark-default não existe. --dss-surface-default é
-    // o token semântico que é automaticamente sobrescrito pelo tema dark via
-    // tokens/themes/dark/_colors.scss — nenhuma variante dark-specific necessária.
-    &--outlined .dss-file__label--float {
-      background-color: var(--dss-surface-default);
-    }
+    /* NOTCH DE LABEL REMOVIDO (set/2026).
+       A regra pintava `--dss-surface-default` atrás da label flutuante do
+       `outlined`, só no dark. Um notch existe para RECORTAR a borda quando a
+       label cavalga em cima dela — e aqui ela não cavalga: medido, a label fica
+       1px ABAIXO da borda superior, inteiramente dentro do campo (é o padrão B
+       da família, label ancorada no topo, não a label Material que sobe para a
+       moldura). Sem borda para recortar, o fundo só pintava um retângulo cinza
+       visível sobre o card, que no dark não coincide com a superfície atrás.
+       O DssInput — referência adequada da família — não tem notch nenhum.
+       (O DssField ainda tem, nos DOIS temas: registrado no débito.) */
 
     // Filled dark — B2: repouso um tom MAIS CLARO que o stage (gray-600), senão
     // (gray-900) some no fundo. Paridade DssInput.

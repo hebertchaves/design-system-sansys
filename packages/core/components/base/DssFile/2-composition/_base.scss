@@ -137,6 +137,13 @@
     align-items: flex-end;
     padding-bottom: var(--dss-spacing-1);
   }
+
+  // No DENSO a reserva de baixo não cabe: 36px não comportam label + dica + folga
+  // (ver bloco "DENSO" no fim deste arquivo). Ancorado no rodapé sem padding, a
+  // dica desce e sai de baixo da label.
+  .dss-file--dense.dss-file--labeled & {
+    padding-bottom: var(--dss-spacing-0);
+  }
 }
 
 // =============================================================================
@@ -293,6 +300,33 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+}
+
+// =============================================================================
+// DENSO — label e dica em `sm` (paridade DssInput)
+// =============================================================================
+//
+// O campo compacto tem 36px. A label flutuante ocupa a faixa de cima em repouso
+// (padrão B da família) e a dica de arraste vem logo abaixo: em `md` são 18px de
+// label + 24px de dica = 42px, que não cabem — MEDIDO, a dica subia por baixo da
+// label com 12px de sobreposição, e o texto saía legível pela metade.
+//
+// A receita é a mesma que o DssInput já documentou ("dense: fonte 14px em vez de
+// 16px; reduz a linha de texto 24px → 21px e o tamanho da label, eliminando a
+// sobreposição"): não é um deslocamento numérico, é a TIPOGRAFIA que encolhe, e a
+// geometria segue. Medido depois: 2,8px de sobreposição de CAIXAS no denso contra
+// 4px no default e 3,3px no DssInput — ou seja, dentro da folga que a label
+// escalada (0.75) deixa acima dos glifos. Nenhum dos três pinta texto sobre texto.
+//
+// A font-size da dica mora no `__drop-text`, não no `__drop-hint`: declarar no pai
+// é inerte, porque o filho já declara a própria.
+
+.dss-file--dense .dss-file__label {
+  font-size: var(--dss-font-size-sm);
+}
+
+.dss-file--dense .dss-file__drop-text {
+  font-size: var(--dss-font-size-sm);
 }
 
 // =============================================================================

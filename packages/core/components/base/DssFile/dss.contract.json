@@ -468,6 +468,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "padding-bottom",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "left",
           "token": "--dss-spacing-0",
           "value": null,
