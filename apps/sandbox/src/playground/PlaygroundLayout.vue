@@ -1,7 +1,23 @@
 <template>
+  <!--
+    ESCOPO DOS SELETORES DO HEADER — a distinção não é detalhe, é o motivo pelo
+    qual estas páginas nasceram em React.
+
+      data-theme  FICA na raiz. Escurecer é preferência de PÁGINA: o chrome
+                  (hero, menu, tiles) acompanha, e é o que se vê na tela.
+      data-brand  DESCE para o conteúdo. Marca é assunto dos COMPONENTES. Com o
+                  atributo na raiz, o chrome ficava dentro do escopo de marca e
+                  qualquer regra sua que usasse token semântico derivava junto —
+                  foi o que aconteceu com o item ativo do menu, pintado de laranja
+                  sob [data-brand="hub"].
+
+    Por que importa mais que a cor errada: um instrumento que muda onde não
+    deveria mascara acerto e erro do que ele existe para medir. O adequador vê
+    marca aplicada numa superfície que o escopo da marca não deveria tocar, e
+    deixa de distinguir o que é do componente do que é da casca.
+  -->
   <div
     class="pg-page"
-    :data-brand="activeBrand || undefined"
     :data-theme="isDark ? 'dark' : undefined"
   >
     <!-- ══════════════════════════════════════════════════════════════════
@@ -171,7 +187,12 @@
         </ul>
       </aside>
 
-      <main ref="mainEl" class="pg-main" :data-density="density">
+      <main
+        ref="mainEl"
+        class="pg-main"
+        :data-density="density"
+        :data-brand="activeBrand || undefined"
+      >
         <!--
           O slot fica MONTADO (v-show, não v-if) quando se vai ao frame: as
           seções carregam dezenas de tiles e o contador de exemplos é medido do

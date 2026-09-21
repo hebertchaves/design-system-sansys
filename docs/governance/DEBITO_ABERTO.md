@@ -549,6 +549,44 @@ porque é mudança de API pública.
 
 ## Débito de fundo (ondas anteriores)
 
+- 🔲 **O modo `embedded` do Preview Frame está pronto e SEM CONSUMIDOR** — aguarda a página de
+  componente em Vue (set/2026).
+
+  Hoje as páginas de componente existem só em **React (`doc.dev`)**. Elas nasceram assim por um
+  receio concreto e correto: montá-las em Vue faria os ajustes de layout da página **vazarem para
+  os componentes**, atrapalhando a leitura do que é a raiz do sistema.
+
+  O `embedded` foi construído para esse destino — `PreviewFrame` com altura limitada e seção
+  recolhível, para conviver com o conteúdo da página em vez de ocupar a viewport. **Foi verificado
+  quando nasceu e depois perdeu o consumidor:** o frame virou vista própria do menu do Playground,
+  que usa altura cheia.
+
+  ⚠️ **Caminho não exercitado apodrece em silêncio.** Quando a página em Vue entrar, o `embedded`
+  precisa ser MEDIDO de novo, não assumido — em especial a altura (já mordeu uma vez: `height`
+  declarada era vencida pelo `flex: 1 1 0%` do item, e o computado saía 665px em vez de 440).
+  *Alternativa honesta se a página demorar:* remover o modo e reconstruí-lo quando houver destino.
+
+- 🟡 **O chrome do sandbox vive DENTRO do escopo de marca — classe de vazamento** (medido
+  set/2026; o caso concreto está corrigido).
+
+  **O caso:** `PlaygroundLayout` aplicava `data-brand` na RAIZ (`.pg-page`), que contém hero, menu
+  e conteúdo. Bastou uma regra do menu usar `--dss-action-primary-light` para o item ativo virar
+  **laranja sob `hub`** e verde sob `waste`. Corrigido movendo `data-brand` para o `<main>`:
+  `data-theme` fica na raiz (escurecer é preferência de PÁGINA, e o chrome deve acompanhar), a
+  marca desce para o conteúdo.
+
+  **Por que é mais grave que uma cor errada:** este é o motivo pelo qual as páginas de componente
+  foram escritas em React. Um instrumento que muda onde não deveria **mascara acerto e erro
+  daquilo que ele existe para medir** — o adequador vê marca aplicada numa superfície que o escopo
+  da marca não alcança, e deixa de distinguir o que é do componente do que é da casca.
+
+  **O que fica aberto é a CLASSE.** Hoje só 2 usos vazavam (a mesma regra, minha). Mas nada impede
+  a próxima: chrome e conteúdo dividem o documento, e a única coisa que os separa é onde o atributo
+  está. *Correção sugerida:* gate que reprove token remapeado por `[data-brand]` (a lista sai de
+  `tokens/brand/_hub.scss` — 62 tokens) usado em CSS de **casca** (`playground.scss`, estilos do
+  `TestSuite.vue`). Demos que exercitam marca de propósito (`TestCard`, `TestBtnToggle`,
+  `TestAtenderSolicitacoes`) são conteúdo e ficam fora do escopo do gate.
+
 - 🔴 **Escala de FONTE incompleta em 6 componentes — o mesmo defeito estrutural, três vezes no
   DssButton** (medido set/2026, ao investigar "o botão cresce mas o texto não").
 

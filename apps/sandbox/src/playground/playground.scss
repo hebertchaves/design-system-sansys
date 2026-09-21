@@ -608,7 +608,11 @@
   color: var(--dss-text-body);
 }
 .pg-nav__top:hover { background: var(--dss-surface-subtle); }
-.pg-nav__top.is-active { background: var(--dss-action-primary-light); color: var(--dss-action-primary-deep); }
+/* Item ativo do menu usa tokens NEUTROS, não a família de ação.
+   `--dss-action-primary-*` é remapeado por marca — com ele, o menu virava
+   laranja sob hub e verde sob waste. O menu é CASCA: não deve mudar de cor com
+   o seletor que existe para mudar o componente. */
+.pg-nav__top.is-active { background: var(--dss-surface-subtle); color: var(--dss-text-primary); box-shadow: inset 2px 0 0 var(--dss-text-primary); }
 .pg-nav__top-icon { font-size: var(--dss-icon-size-sm); }
 .pg-nav__top-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pg-nav__top-caret { font-size: var(--dss-icon-size-sm); opacity: .6; }
