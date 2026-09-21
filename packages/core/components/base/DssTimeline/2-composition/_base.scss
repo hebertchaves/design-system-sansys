@@ -94,6 +94,35 @@
   color: var(--dss-timeline-dot-fg);
 }
 
+/* GEOMETRIA DO GLIFO (set/2026) — ele estava maior que o próprio círculo.
+   O Quasar dá `font-size: 16px` ao ícone do marcador, mas quem vence é o
+   `.material-icons { font-size: 24px }` do CSS do Google: o do Quasar é layered
+   e o do Material é UNLAYERED — mesma inversão que o reset universal explora.
+   Resultado medido: glifo de 24px numa caixa de 38px dentro de um círculo de
+   32px. A caixa começava no topo do dot enquanto o círculo começa 4px abaixo,
+   então o glifo subia 1px E transbordava 6px — lia-se como "ícone alinhado pelo
+   topo e cortado embaixo".
+
+   Aqui a caixa do glifo passa a ser EXATAMENTE o círculo: mesmo topo, mesma
+   altura, mesma linha. Os dois derivam do mesmo token, então não têm como
+   divergir se o tamanho do marcador mudar. Medido depois: desvio 0 nos três
+   layouts, e o glifo cabe. Proporção igual à do dot do DssStepper — glifo `sm`
+   (20px) num círculo `lg` (32px). */
+.dss-timeline .q-timeline__entry--icon .q-timeline__dot .q-icon {
+  font-size: var(--dss-icon-size-sm);
+  top: var(--dss-spacing-1);
+  height: var(--dss-icon-size-lg);
+  line-height: var(--dss-icon-size-lg);
+}
+
+/* O marcador por AVATAR é o caminho irmão do ícone, e o Quasar o desenha com os
+   mesmos 31px ímpares. Normalizado pelo mesmo token, senão o avatar fica 1px
+   menor que o círculo do ícone e meio pixel fora do centro. */
+.dss-timeline .q-timeline__dot-img {
+  height: var(--dss-icon-size-lg);
+  width: var(--dss-icon-size-lg);
+}
+
 /* ==========================================================================
    RESERVA DE ESPAÇO DO MARCADOR — redeclarada pelo DSS (set/2026)
    ==========================================================================

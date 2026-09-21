@@ -52,7 +52,7 @@
     </PgSection>
 
     <!-- ── 03. Marcador ────────────────────────────────────────────────── -->
-    <PgSection id="marcador" index="03" title="Marcador da entrada" :count="3"
+    <PgSection id="marcador" index="03" title="Marcador da entrada" :count="4"
       desc="O ponto da entrada aceita ícone ou avatar; sem nenhum dos dois, fica o ponto sólido. O slot #icon tem precedência sobre as props.">
       <PgGrid class="pg-grid--full">
         <PgTile code="ponto sólido (padrão)" align="start">
@@ -63,6 +63,14 @@
         <PgTile code="icon" align="start">
           <DssTimeline class="tt-largura">
             <DssTimelineEntry title="Com ícone" subtitle="icon=&quot;done&quot;" icon="done">Marcador com glifo.</DssTimelineEntry>
+          </DssTimeline>
+        </PgTile>
+        <PgTile code="avatar" align="start">
+          <DssTimeline class="tt-largura">
+            <DssTimelineEntry title="Com avatar" subtitle="avatar=&quot;…&quot;"
+              :avatar="AVATAR_DEMO">
+              Marcador com imagem.
+            </DssTimelineEntry>
           </DssTimeline>
         </PgTile>
         <PgTile code="#icon (slot)" align="start">
@@ -170,6 +178,17 @@ import { PlaygroundLayout, PgSection, PgGrid, PgTile } from './playground'
 // API canônica (vide DssTimeline/types/timeline.types.ts e
 // DssTimelineEntry/types/timeline-entry.types.ts)
 // ──────────────────────────────────────────────────────────────────────────
+// Avatar de demonstração embutido: uma URL externa deixaria a página dependente
+// de rede (e de CSP) para mostrar um marcador.
+const AVATAR_DEMO =
+  'data:image/svg+xml;utf8,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' +
+    '<circle cx="16" cy="16" r="16" fill="%23525252"/>' +
+    '<circle cx="16" cy="12" r="5" fill="%23f5f5f5"/>' +
+    '<path d="M6 30a10 10 0 0 1 20 0z" fill="%23f5f5f5"/></svg>'
+  )
+
 const LAYOUTS = ['dense', 'comfortable', 'loose'] as const
 const BRANDS = ['hub', 'water', 'waste'] as const
 

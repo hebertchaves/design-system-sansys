@@ -133,6 +133,36 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "padding-left",
           "token": "--dss-spacing-10",
           "value": null,
@@ -159,18 +189,6 @@
         {
           "property": "padding-top",
           "token": "--dss-spacing-2",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "width",
-          "token": "--dss-icon-size-lg",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "height",
-          "token": "--dss-icon-size-lg",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -288,6 +306,24 @@
         ]
       },
       {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-10",
         "usedIn": [
           "default"
@@ -312,19 +348,7 @@
         ]
       },
       {
-        "name": "--dss-icon-size-lg",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-font-weight-semibold",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-spacing-1",
         "usedIn": [
           "default"
         ]
