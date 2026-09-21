@@ -83,22 +83,37 @@ function lerCertificados() {
 function lerArtefatos() {
   const suite = fs.readFileSync(SUITE, 'utf8');
 
-  // Resolução do DONO de cada Preview Frame — híbrida, porque o sandbox tem duas
-  // formas de registro:
-  //   a) `preview-frame-<comp>` → o sufixo nomeia o dono. Vale para os aninhados
-  //      sob o componente E para os de TOPO (Uploader, Multiselect), que não têm
-  //      item de componente antes deles — só a posição erraria esses dois.
-  //   b) `preview-frame` sem sufixo → dono = último item de componente declarado
-  //      antes (é o caso do DssInput, o primeiro registrado). Só a posição resolve.
-  const chaves = [...suite.matchAll(/activeComponent = '([a-z0-9-]+)'/g)].map((m) => m[1]);
-  const frames = new Set();
-  let ultimoComponente = null;
-  for (const chave of chaves) {
-    if (!chave.startsWith('preview-frame')) { ultimoComponente = chave; continue; }
-    const sufixo = chave.slice('preview-frame'.length).replace(/^-/, '');
-    if (sufixo) frames.add(norm(sufixo));
-    else if (ultimoComponente) frames.add(norm(ultimoComponente));
+  // Resolução do DONO de cada Preview Frame — agora DIRETA.
+  //
+  // Até set/2026 os frames eram itens de menu (`preview-frame-<comp>`) e o dono
+  // saía do sufixo, com um caso resolvido só pela POSIÇÃO (o `preview-frame` sem
+  // sufixo, do DssInput, o primeiro registrado). Recontar por grep perdia
+  // justamente ele — foi assim que a contagem antiga errou.
+  //
+  // Com o frame embutido na página de teste, o registro virou um MAPA explícito
+  // no TestSuite.vue (`PREVIEW_FRAMES`), cujo VALOR é o nome do componente. Some
+  // a heurística de posição e some a classe de erro que ela criava.
+  //
+  // O `preview-frame-multiselect` continua sendo item de menu: é Fase 3 e não tem
+  // página de teste onde ancorar. Fica fora do mapa e fora deste placar, mas é
+  // reportado à parte como AVULSO (ver abaixo).
+  const bloco = suite.match(/const PREVIEW_FRAMES = \{([\s\S]*?)\n\}/);
+  if (!bloco) {
+    console.error('❌ `const PREVIEW_FRAMES = {...}` não encontrado em TestSuite.vue.');
+    console.error('   O placar deriva DESSE mapa. Se o registro mudou de forma, este script precisa acompanhar.');
+    process.exit(1);
   }
+  const frames = new Set(
+    [...bloco[1].matchAll(/:\s*'(Dss[A-Za-z]+)'/g)].map((m) => norm(m[1]))
+  );
+
+  // Frames que continuam sendo ITEM DE MENU, fora do mapa. Hoje só o
+  // `preview-frame-multiselect`. Ficam fora do placar (não são Fase 1/2), mas
+  // PRECISAM ser reportados: a primeira versão desta mudança simplesmente parou
+  // de mencioná-los, e um frame que existe e ninguém conta é o começo do drift
+  // que esta derivação existe para evitar.
+  const avulsos = [...suite.matchAll(/activeComponent = '(preview-frame-[a-z0-9-]+)'/g)]
+    .map((m) => m[1].replace('preview-frame-', ''));
 
   const playgrounds = new Set(
     fs.readdirSync(SANDBOX_SRC)
@@ -106,7 +121,7 @@ function lerArtefatos() {
       .map((f) => norm(f.slice(4, -4)))
   );
 
-  return { frames, playgrounds };
+  return { frames, playgrounds, avulsos: [...new Set(avulsos)] };
 }
 
 // ---------------------------------------------------------------------------
@@ -329,6 +344,7 @@ function main() {
   console.log('🔎 Adequação de UI — Fases 1 e 2 (derivado do disco)\n');
   console.log(`   componentes: ${comps.length} · fechados: ${fechadas} · frame sem conteúdo: ${conta('casca')} · só frame: ${conta('soFrame')} · só playground: ${conta('parcial')} · não iniciados: ${conta('ausente')}`);
   if (orfaos.length) console.log(`   ⚠️  Preview Frames fora de Fase 1/2: ${orfaos.join(', ')}`);
+  if (artefatos.avulsos.length) console.log(`   ℹ️  Frames avulsos (item de menu, sem página de teste): ${artefatos.avulsos.join(', ')}`);
   console.log(`\n✅ Escrito: ${path.relative(ROOT, OUT)}`);
 }
 

@@ -8,7 +8,24 @@
   exemplo curado (D4). A casca (esta view) NÃO reimplementa o componente.
 -->
 <template>
-  <div class="pv">
+  <div class="pv" :class="{ 'pv--embedded': embedded }">
+    <!--
+      Cabeçalho de SEÇÃO — só no modo embutido. A página de teste tem cenários
+      abaixo; abrir com um palco de viewport inteira obrigaria a rolar tudo antes
+      de chegar neles. Recolhível e com altura limitada.
+    -->
+    <button
+      v-if="embedded"
+      class="pv__section-h"
+      :aria-expanded="String(secaoAberta)"
+      @click="secaoAberta = !secaoAberta"
+    >
+      <span class="pv__section-caret">{{ secaoAberta ? '▾' : '▸' }}</span>
+      Preview Frame
+      <small>— SFC real em iframe, knobs derivados do contrato</small>
+    </button>
+
+    <template v-if="!embedded || secaoAberta">
     <header class="pv__bar">
       <strong>{{ component }}</strong>
       <span class="pv__tag">{{ contract?.identity?.tagline }}</span>
@@ -51,10 +68,35 @@
       <div class="pv__stage">
         <iframe ref="frameEl" class="pv__frame" :style="stageStyle" :src="frameSrc" @load="postState" />
       </div>
-      <aside class="pv__knobs">
+      <aside class="pv__knobs" :class="{ 'is-collapsed': knobsCollapsed }">
+        <button
+          class="pv__knobs-toggle"
+          :aria-expanded="String(!knobsCollapsed)"
+          :title="knobsCollapsed ? 'Abrir controles' : 'Recolher controles'"
+          @click="knobsCollapsed = !knobsCollapsed"
+        >{{ knobsCollapsed ? '‹' : '›' }}</button>
+
+        <div v-show="!knobsCollapsed" class="pv__knobs-inner">
         <h4>Controles <small>— derivados do contrato ({{ knobs.length }})</small></h4>
         <p v-if="!contract" class="pv__empty">Sem <code>dss.contract.json</code> para {{ component }}.</p>
-        <div v-for="k in knobs" :key="k.name" class="pv__knob">
+
+        <template v-for="grupo in gruposDeKnobs" :key="grupo.id">
+          <!--
+            ESSENCIAIS abertos, DEMAIS recolhidos. O corte vem do
+            `defaultPreview.props` do contrato — média de 1,9 props contra até 26
+            disponíveis. Sem o corte o painel nasce rolando no DssSelect (24
+            props) e o scroll aninhado vira armadilha dentro da página de teste.
+          -->
+          <button
+            v-if="grupo.colapsavel"
+            class="pv__group"
+            :aria-expanded="String(restantesAbertos)"
+            @click="restantesAbertos = !restantesAbertos"
+          >
+            {{ restantesAbertos ? '▾' : '▸' }} Demais props
+            <small>({{ knobsRestantes.length }})</small>
+          </button>
+        <div v-for="k in grupo.itens" :key="k.name" class="pv__knob">
           <label :for="'k-' + k.name">{{ k.name }} <small>{{ k.controlHint }}</small></label>
           <!-- A descrição vem do contrato (@default/JSDoc do types.ts) e até aqui era
                DESCARTADA: o painel mostrava só nome e widget. Para prop que pinta algo o
@@ -80,6 +122,7 @@
           />
           <input v-else :id="'k-' + k.name" type="text" v-model="state[k.name]" :placeholder="String(k.default ?? '')" />
         </div>
+        </template>
 
         <!-- Autocomplete de ícone compartilhado (knobs *icon + slots prepend/append).
              Fora do bloco de slots p/ existir mesmo em componentes sem slot. -->
@@ -114,6 +157,7 @@
             @click="callMethod(m.name)"
           >{{ m.name }}()</button>
         </template>
+        </div>
       </aside>
     </div>
 
@@ -136,13 +180,32 @@
     </div>
 
     <pre class="pv__snippet">{{ snippet }}</pre>
+    </template>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 
-const props = defineProps({ component: { type: String, default: 'DssInput' } })
+const props = defineProps({
+  component: { type: String, default: 'DssInput' },
+  // Embutido como PRIMEIRA SEÇÃO da página de teste (em vez de página própria).
+  // Muda duas coisas: a altura deixa de ser de viewport (senão o leitor rola um
+  // palco inteiro antes de chegar aos cenários) e a seção ganha cabeçalho
+  // recolhível.
+  embedded: { type: Boolean, default: false },
+})
+
+// Painel de controles recolhido — mesmo padrão do aside do PlaygroundLayout
+// (200px → 44px). Ancorado, NÃO flutuante: vários componentes do DS SÃO overlays
+// (Select, Menu, Tooltip, Dialog, PopupProxy, BtnDropdown) e um painel sobre o
+// palco cobriria justamente o que se quer inspecionar.
+const knobsCollapsed = ref(false)
+// Seção inteira recolhida (só no modo embutido).
+const secaoAberta = ref(true)
+// Grupo "completos" começa fechado: o defaultPreview declara em média 1,9 props
+// essenciais contra até 26 disponíveis. Abrir tudo faz o painel nascer rolando.
+const restantesAbertos = ref(false)
 
 /**
  * O tipo declarado no contrato é uma prop de ARRAY?
@@ -210,6 +273,23 @@ const state = reactive({})
 const theme = ref('light')
 const brand = ref('')
 const contextTokens = ref([])      // visual.contextTokens do contrato
+
+// ESSENCIAIS vêm do `defaultPreview.props` do contrato — a mesma declaração que
+// define a vista canônica do componente. Não é lista curada à mão: é derivada,
+// e acompanha o meta sem manutenção paralela.
+const nomesEssenciais = computed(() => Object.keys(contract.value?.visual?.defaultPreview?.props || {}))
+const knobsEssenciais = computed(() => knobs.value.filter((k) => nomesEssenciais.value.includes(k.name)))
+const knobsRestantes = computed(() => knobs.value.filter((k) => !nomesEssenciais.value.includes(k.name)))
+
+// Um único v-for sobre GRUPOS, para o corpo do knob (que tem 6 variantes de
+// widget) existir uma vez só. Duplicá-lo por grupo garantiria divergência.
+const gruposDeKnobs = computed(() => {
+  const gs = [{ id: 'essenciais', itens: knobsEssenciais.value, colapsavel: false }]
+  if (knobsRestantes.value.length) {
+    gs.push({ id: 'restantes', itens: restantesAbertos.value ? knobsRestantes.value : [], colapsavel: true })
+  }
+  return gs
+})
 // Semente de FILHOS do contrato (visual.defaultPreview.slots, vindo do
 // defaultPreview.demoSlots do meta). Sem ela o container monta como casca
 // vazia e nenhum knob de layout tem efeito observável — o frame não prova
@@ -442,7 +522,54 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    cinza demarca a área FORA do sujeito (deixa a largura escolhida evidente). */
 .pv__stage { flex: 1; display: flex; justify-content: center; min-width: 0; border-right: 1px solid #e5e5e5; background: #f4f4f5; }
 .pv__frame { flex: 1; min-width: 0; border: 0; background: #fff; }
-.pv__knobs { width: 300px; padding: 12px 14px; overflow: auto; background: #fafafa; }
+.pv__knobs {
+  width: 300px; padding: 12px 14px; overflow: auto; background: #fafafa;
+  position: relative;
+  /* Mesma transição do aside do PlaygroundLayout — o sandbox já tem esse
+     vocabulário de "recolher lateral"; inventar um segundo criaria duas
+     gramáticas para a mesma função. */
+  transition: width .18s ease;
+}
+.pv__knobs.is-collapsed { width: 34px; padding: 12px 4px; overflow: visible; }
+.pv__knobs-toggle {
+  position: absolute; top: 8px; right: 6px;
+  width: 22px; height: 22px; line-height: 1;
+  border: 1px solid #e5e5e5; border-radius: 4px;
+  background: #fff; cursor: pointer; font-size: 13px; color: #555;
+}
+.pv__knobs-toggle:hover { background: #f0f0f0; }
+.pv__knobs-inner { padding-top: 4px; }
+/* Grupo "Demais props": cabeçalho clicável, não um <details> — precisa do mesmo
+   peso visual dos <h4> que já existem no painel. */
+.pv__group {
+  display: block; width: 100%; text-align: left;
+  margin: 12px 0 6px; padding: 4px 6px;
+  border: 0; border-top: 1px solid #e5e5e5; border-radius: 0;
+  background: transparent; cursor: pointer;
+  font: 600 12px/1.4 system-ui, sans-serif; color: #444;
+}
+.pv__group:hover { background: #f0f0f0; }
+.pv__group small { font-weight: 400; color: #999; }
+
+/* ── MODO EMBUTIDO (primeira seção da página de teste) ────────────────────── */
+.pv__section-h {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 10px 14px; border: 0; border-bottom: 1px solid #e5e5e5;
+  background: #fafafa; cursor: pointer;
+  font: 600 13px/1.4 system-ui, sans-serif; color: #333; text-align: left;
+}
+.pv__section-h:hover { background: #f0f0f0; }
+.pv__section-h small { font-weight: 400; color: #888; }
+.pv__section-caret { width: 12px; }
+/* Altura LIMITADA, não de viewport: embutido, o palco divide a página com os
+   cenários. Altura de viewport obrigaria a rolar o palco inteiro antes de
+   chegar neles — e criaria o terceiro nível de scroll (página + palco + painel). */
+.pv--embedded { height: auto; min-height: 0; border: 1px solid #e5e5e5; border-radius: 6px; overflow: hidden; }
+/* `flex: 0 0 auto` é obrigatório aqui, não estilo: o `.pv__body` é item flex com
+   `flex: 1 1 0%`, e no eixo principal o flex VENCE a altura declarada. Medido:
+   com `height: 420px` sozinho, o computado saía 665px. */
+.pv--embedded .pv__body { flex: 0 0 auto; min-height: 0; height: 440px; }
+.pv--embedded .pv__snippet { max-height: 120px; }
 .pv__knob { display: flex; flex-direction: column; margin-bottom: 8px; font-size: 13px; gap: 2px; }
 .pv__knob > label { font-weight: 600; }
 .pv__knob small { color: #999; font-weight: normal; }

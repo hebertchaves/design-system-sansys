@@ -161,7 +161,7 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 
 ## Fora desta contagem
 
-- **Preview Frames sem componente de Fase 1/2 correspondente:** `multiselect` — tipicamente Fase 3 (ex.: `DssMultiselectAutocomplete`), que não entra neste placar.
+- Nenhum Preview Frame órfão.
 - `DssDataCard` (Fase 3), `DssCadrisCard` e `DssTestPageComplexity` — fixtures/stress test, fora
   do escopo por decisão de governança.
 
