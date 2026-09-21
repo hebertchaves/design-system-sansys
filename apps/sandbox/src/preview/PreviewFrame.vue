@@ -540,89 +540,236 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 </script>
 
 <style scoped>
-.pv { display: flex; flex-direction: column; height: 100%; min-height: 520px; font-family: system-ui, sans-serif; }
-.pv__bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid #e5e5e5; }
-.pv__tag { color: #666; font-size: 13px; }
+/* ══════════════════════════════════════════════════════════════════════════
+   UI do Preview Frame — mesmo vocabulário do PlaygroundLayout.
+
+   Antes daqui eram 57 valores crus (hex e px) e controles de formulário com a
+   aparência nativa do browser. Agora o painel usa os tokens que o template já
+   usa: as famílias surface, text e border, a escala de spacing e a de tipografia.
+
+   ⚠️ REGRA QUE VALE PARA TODO ESTE ARQUIVO: o Preview Frame é CASCA, não
+   componente. Nada aqui pode usar token remapeado por [data-brand]
+   (--dss-action-*, --dss-brand-*, --dss-surface-brand-*). Um instrumento que
+   muda de cor com o seletor de marca mascara o que ele existe para medir — foi
+   o defeito corrigido no menu do Playground. Aqui só entram tokens NEUTROS.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.pv {
+  display: flex; flex-direction: column;
+  height: 100%; min-height: 520px;
+  font-family: var(--dss-font-family-sans, system-ui, sans-serif);
+  color: var(--dss-text-body);
+  background: var(--dss-surface-default);
+}
+
+/* ── Barra de contexto ────────────────────────────────────────────────────── */
+.pv__bar {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: var(--dss-spacing-3);
+  padding: var(--dss-spacing-2_5) var(--dss-spacing-4);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  background: var(--dss-surface-subtle);
+}
+.pv__bar > strong { font-size: var(--dss-font-size-sm); font-weight: var(--dss-font-weight-semibold); }
+.pv__tag { color: var(--dss-text-subtle); font-size: var(--dss-font-size-xs); }
 .pv__spacer { flex: 1; }
-.pv__ctl { font-size: 13px; display: flex; gap: 4px; align-items: center; }
+.pv__ctl {
+  display: flex; align-items: center; gap: var(--dss-spacing-1_5);
+  font-size: var(--dss-font-size-xs); color: var(--dss-text-subtle);
+}
+
+/* ── Controles de formulário ──────────────────────────────────────────────────
+   O que mais datava a tela: <select> e <input> com o desenho nativo. Aqui eles
+   ganham a mesma caixa dos campos do DS (sem VIRAR DssInput — o painel é casca
+   e não deve depender do componente que está inspecionando). */
+.pv select,
+.pv input[type='text'],
+.pv input[type='number'] {
+  font-family: inherit;
+  font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-body);
+  background: var(--dss-surface-default);
+  border: var(--dss-border-width-thin) solid var(--dss-border-default);
+  border-radius: var(--dss-radius-sm);
+  padding: var(--dss-spacing-1) var(--dss-spacing-2);
+  min-height: var(--dss-touch-target-xs);
+  transition: border-color var(--dss-duration-200) var(--dss-easing-standard);
+}
+.pv select:hover,
+.pv input[type='text']:hover,
+.pv input[type='number']:hover { border-color: var(--dss-border-strong); }
+.pv select:focus-visible,
+.pv input[type='text']:focus-visible,
+.pv input[type='number']:focus-visible {
+  /* Anel NEUTRO de propósito: `--dss-focus-primary` seguiria a marca, e casca não
+     brandeia. `--dss-focus-ring` (sem sufixo) NÃO existe no catálogo — é fantasma
+     conhecido, no baseline, com 1 uso em utils/_example-showcase.scss. */
+  outline: var(--dss-focus-ring-width) var(--dss-focus-ring-style) var(--dss-text-primary);
+  outline-offset: var(--dss-focus-ring-offset);
+  border-color: var(--dss-border-strong);
+}
+.pv input[type='checkbox'] { width: var(--dss-spacing-4); height: var(--dss-spacing-4); cursor: pointer; accent-color: var(--dss-gray-700); }
+
+/* ── Corpo: palco + painel ────────────────────────────────────────────────── */
 .pv__body { display: flex; flex: 1; min-height: 380px; }
 /* Palco: hospeda o iframe e o centraliza quando a largura é restrita. O fundo
-   cinza demarca a área FORA do sujeito (deixa a largura escolhida evidente). */
-.pv__stage { flex: 1; display: flex; justify-content: center; min-width: 0; border-right: 1px solid #e5e5e5; background: #f4f4f5; }
-.pv__frame { flex: 1; min-width: 0; border: 0; background: #fff; }
+   demarca a área FORA do sujeito (deixa a largura escolhida evidente). */
+.pv__stage {
+  flex: 1; display: flex; justify-content: center; min-width: 0;
+  border-right: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  background: var(--dss-surface-muted);
+}
+.pv__frame { flex: 1; min-width: 0; border: 0; background: var(--dss-surface-default); }
+
 .pv__knobs {
-  width: 300px; padding: 12px 14px; overflow: auto; background: #fafafa;
-  position: relative;
+  width: 300px; overflow: auto; position: relative;
+  padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  background: var(--dss-surface-subtle);
   /* Mesma transição do aside do PlaygroundLayout — o sandbox já tem esse
      vocabulário de "recolher lateral"; inventar um segundo criaria duas
      gramáticas para a mesma função. */
-  transition: width .18s ease;
+  transition: width var(--dss-duration-200) var(--dss-easing-standard);
 }
-.pv__knobs.is-collapsed { width: 34px; padding: 12px 4px; overflow: visible; }
+.pv__knobs.is-collapsed { width: 34px; padding: var(--dss-spacing-3) var(--dss-spacing-1); overflow: visible; }
 .pv__knobs-toggle {
-  position: absolute; top: 8px; right: 6px;
-  width: 22px; height: 22px; line-height: 1;
-  border: 1px solid #e5e5e5; border-radius: 4px;
-  background: #fff; cursor: pointer; font-size: 13px; color: #555;
+  position: absolute; top: var(--dss-spacing-2); right: var(--dss-spacing-1_5);
+  display: grid; place-items: center;
+  width: var(--dss-spacing-6); height: var(--dss-spacing-6);
+  border: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  border-radius: var(--dss-radius-sm);
+  background: var(--dss-surface-default);
+  color: var(--dss-text-subtle);
+  font-size: var(--dss-font-size-sm);
+  cursor: pointer;
 }
-.pv__knobs-toggle:hover { background: #f0f0f0; }
-.pv__knobs-inner { padding-top: 4px; }
-/* Grupo "Demais props": cabeçalho clicável, não um <details> — precisa do mesmo
-   peso visual dos <h4> que já existem no painel. */
+.pv__knobs-toggle:hover { background: var(--dss-surface-hover); color: var(--dss-text-body); }
+.pv__knobs-inner { padding-top: var(--dss-spacing-1); }
+
+/* Grupo "Demais props": cabeçalho clicável com o mesmo peso dos <h4> do painel. */
 .pv__group {
   display: block; width: 100%; text-align: left;
-  margin: 12px 0 6px; padding: 4px 6px;
-  border: 0; border-top: 1px solid #e5e5e5; border-radius: 0;
+  margin: var(--dss-spacing-3) 0 var(--dss-spacing-1_5);
+  padding: var(--dss-spacing-1) var(--dss-spacing-1_5);
+  border: 0; border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   background: transparent; cursor: pointer;
-  font: 600 12px/1.4 system-ui, sans-serif; color: #444;
+  font-size: var(--dss-font-size-xs); font-weight: var(--dss-font-weight-semibold);
+  color: var(--dss-text-body);
 }
-.pv__group:hover { background: #f0f0f0; }
-.pv__group small { font-weight: 400; color: #999; }
+.pv__group:hover { background: var(--dss-surface-hover); }
+.pv__group small { font-weight: var(--dss-font-weight-normal); color: var(--dss-text-subtle); }
 
-/* ── MODO EMBUTIDO (primeira seção da página de teste) ────────────────────── */
+/* ── Modo embutido ────────────────────────────────────────────────────────── */
 .pv__section-h {
-  display: flex; align-items: center; gap: 8px; width: 100%;
-  padding: 10px 14px; border: 0; border-bottom: 1px solid #e5e5e5;
-  background: #fafafa; cursor: pointer;
-  font: 600 13px/1.4 system-ui, sans-serif; color: #333; text-align: left;
+  display: flex; align-items: center; gap: var(--dss-spacing-2); width: 100%;
+  padding: var(--dss-spacing-2_5) var(--dss-spacing-4);
+  border: 0; border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  background: var(--dss-surface-subtle); cursor: pointer; text-align: left;
+  font-size: var(--dss-font-size-sm); font-weight: var(--dss-font-weight-semibold);
+  color: var(--dss-text-body);
 }
-.pv__section-h:hover { background: #f0f0f0; }
-.pv__section-h small { font-weight: 400; color: #888; }
-.pv__section-caret { width: 12px; }
+.pv__section-h:hover { background: var(--dss-surface-hover); }
+.pv__section-h small { font-weight: var(--dss-font-weight-normal); color: var(--dss-text-subtle); }
+.pv__section-caret { width: var(--dss-spacing-3); }
 /* Altura LIMITADA, não de viewport: embutido, o palco divide a página com os
    cenários. Altura de viewport obrigaria a rolar o palco inteiro antes de
    chegar neles — e criaria o terceiro nível de scroll (página + palco + painel). */
-.pv--embedded { height: auto; min-height: 0; border: 1px solid #e5e5e5; border-radius: 6px; overflow: hidden; }
+.pv--embedded {
+  height: auto; min-height: 0; overflow: hidden;
+  border: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  border-radius: var(--dss-radius-sm);
+}
 /* `flex: 0 0 auto` é obrigatório aqui, não estilo: o `.pv__body` é item flex com
    `flex: 1 1 0%`, e no eixo principal o flex VENCE a altura declarada. Medido:
    com `height: 420px` sozinho, o computado saía 665px. */
 .pv--embedded .pv__body { flex: 0 0 auto; min-height: 0; height: 440px; }
 .pv--embedded .pv__snippet { max-height: 120px; }
-.pv__knob { display: flex; flex-direction: column; margin-bottom: 8px; font-size: 13px; gap: 2px; }
-.pv__knob > label { font-weight: 600; }
-.pv__knob small { color: #999; font-weight: normal; }
-.pv__hint { margin: 0; font-size: 11.5px; line-height: 1.35; color: #777; }
-.pv__hint code, .pv__inert code { font-family: ui-monospace, monospace; font-size: 11px; }
-.pv__inert { margin: 2px 0 0; font-size: 11.5px; line-height: 1.35; color: #8a6d00; background: #fff8e1; border-left: 2px solid #e0b400; padding: 3px 6px; }
-.pv__slots-h { margin: 16px 0 8px; padding-top: 12px; border-top: 1px solid #e5e5e5; }
-.pv__slot { font-size: 13px; margin-bottom: 6px; }
-.pv__slot label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-.pv__slot small { color: #999; }
-.pv__slot-icon { margin: 4px 0 2px 22px; width: calc(100% - 22px); font-size: 12px; padding: 2px 4px; }
-.pv__method { display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 6px 10px; font-size: 13px; font-family: ui-monospace, monospace; background: #fff; border: 1px solid #d4d4d4; border-radius: 6px; cursor: pointer; }
-.pv__method:hover { background: #eef2ff; border-color: #a5b4fc; }
-.pv__empty { color: #b00020; font-size: 13px; }
-.pv__events { border-top: 1px solid #e5e5e5; background: #fafafa; max-height: 140px; display: flex; flex-direction: column; }
-.pv__events-h { display: flex; align-items: center; gap: 8px; padding: 6px 14px; font-size: 13px; font-weight: 600; border-bottom: 1px solid #eee; }
-.pv__events-h small { color: #999; font-weight: normal; }
-.pv__events-clear { margin-left: auto; font-size: 12px; background: none; border: 1px solid #d4d4d4; border-radius: 4px; padding: 2px 8px; cursor: pointer; }
-.pv__events-body { overflow: auto; padding: 6px 14px; }
-.pv__events-empty { color: #999; font-size: 12px; margin: 4px 0; }
-.pv__event { display: flex; gap: 8px; align-items: baseline; font-size: 12px; padding: 2px 0; font-family: ui-monospace, monospace; }
-.pv__event-t { color: #999; flex-shrink: 0; }
-.pv__event strong { color: #4338ca; flex-shrink: 0; }
-.pv__event code { color: #475569; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.pv__snippet { margin: 0; padding: 12px 14px; background: #0f172a; color: #e2e8f0; font-size: 13px; border-top: 1px solid #e5e5e5; overflow: auto; }
-h4 { margin: 0 0 10px; }
-h4 small { color: #999; font-weight: normal; }
+
+/* ── Knobs ────────────────────────────────────────────────────────────────── */
+.pv__knob {
+  display: flex; flex-direction: column; gap: var(--dss-spacing-0_5);
+  margin-bottom: var(--dss-spacing-2_5);
+  font-size: var(--dss-font-size-xs);
+}
+.pv__knob > label { font-weight: var(--dss-font-weight-semibold); color: var(--dss-text-body); }
+.pv__knob small { color: var(--dss-text-subtle); font-weight: var(--dss-font-weight-normal); }
+.pv__hint { margin: 0; font-size: var(--dss-font-size-xs); line-height: var(--dss-line-height-normal); color: var(--dss-text-subtle); }
+.pv__hint code, .pv__inert code { font-family: var(--dss-font-family-mono, monospace); }
+/* Aviso de knob inerte: cor de FEEDBACK (warning), que não é remapeada por marca. */
+.pv__inert {
+  margin: var(--dss-spacing-0_5) 0 0;
+  padding: var(--dss-spacing-1) var(--dss-spacing-1_5);
+  font-size: var(--dss-font-size-xs); line-height: var(--dss-line-height-normal);
+  color: var(--dss-feedback-warning-deep, var(--dss-text-body));
+  background: var(--dss-feedback-warning-light);
+  border-left: var(--dss-border-width-md) solid var(--dss-feedback-warning);
+  border-radius: var(--dss-radius-sm);
+}
+
+.pv__slots-h {
+  margin: var(--dss-spacing-4) 0 var(--dss-spacing-2);
+  padding-top: var(--dss-spacing-3);
+  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+}
+.pv__slot { font-size: var(--dss-font-size-xs); margin-bottom: var(--dss-spacing-1_5); }
+.pv__slot label { display: flex; align-items: center; gap: var(--dss-spacing-1_5); cursor: pointer; }
+.pv__slot small { color: var(--dss-text-subtle); }
+.pv__slot-icon { margin: var(--dss-spacing-1) 0 var(--dss-spacing-0_5) var(--dss-spacing-6); width: calc(100% - var(--dss-spacing-6)); }
+
+.pv__method {
+  display: block; width: 100%; text-align: left;
+  margin-bottom: var(--dss-spacing-1_5);
+  padding: var(--dss-spacing-1_5) var(--dss-spacing-2_5);
+  font-family: var(--dss-font-family-mono, monospace); font-size: var(--dss-font-size-xs);
+  color: var(--dss-text-body);
+  background: var(--dss-surface-default);
+  border: var(--dss-border-width-thin) solid var(--dss-border-default);
+  border-radius: var(--dss-radius-sm); cursor: pointer;
+}
+.pv__method:hover { background: var(--dss-surface-hover); border-color: var(--dss-border-strong); }
+.pv__empty { color: var(--dss-feedback-error); font-size: var(--dss-font-size-xs); }
+
+/* ── Eventos ──────────────────────────────────────────────────────────────── */
+.pv__events {
+  display: flex; flex-direction: column; max-height: 140px;
+  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  background: var(--dss-surface-subtle);
+}
+.pv__events-h {
+  display: flex; align-items: center; gap: var(--dss-spacing-2);
+  padding: var(--dss-spacing-1_5) var(--dss-spacing-4);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  font-size: var(--dss-font-size-xs); font-weight: var(--dss-font-weight-semibold);
+}
+.pv__events-h small { color: var(--dss-text-subtle); font-weight: var(--dss-font-weight-normal); }
+.pv__events-clear {
+  margin-left: auto; padding: var(--dss-spacing-0_5) var(--dss-spacing-2);
+  font-size: var(--dss-font-size-xs); color: var(--dss-text-subtle);
+  background: var(--dss-surface-default);
+  border: var(--dss-border-width-thin) solid var(--dss-border-default);
+  border-radius: var(--dss-radius-sm); cursor: pointer;
+}
+.pv__events-clear:hover { background: var(--dss-surface-hover); color: var(--dss-text-body); }
+.pv__events-body { overflow: auto; padding: var(--dss-spacing-1_5) var(--dss-spacing-4); }
+.pv__events-empty { margin: var(--dss-spacing-1) 0; font-size: var(--dss-font-size-xs); color: var(--dss-text-subtle); }
+.pv__event {
+  display: flex; gap: var(--dss-spacing-2); align-items: baseline;
+  padding: var(--dss-spacing-0_5) 0;
+  font-family: var(--dss-font-family-mono, monospace); font-size: var(--dss-font-size-xs);
+}
+.pv__event-t { color: var(--dss-text-subtle); flex-shrink: 0; }
+.pv__event strong { color: var(--dss-text-primary); flex-shrink: 0; }
+.pv__event code { color: var(--dss-text-subtle); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Snippet: superfície escura por ser BLOCO DE CÓDIGO, não por tema. Usa o degrau
+   mais escuro da escala neutra, que existe nos dois temas. */
+.pv__snippet {
+  margin: 0; padding: var(--dss-spacing-3) var(--dss-spacing-4);
+  background: var(--dss-gray-900); color: var(--dss-gray-100);
+  font-family: var(--dss-font-family-mono, monospace); font-size: var(--dss-font-size-xs);
+  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  overflow: auto;
+}
+
+h4 { margin: 0 0 var(--dss-spacing-2_5); font-size: var(--dss-font-size-sm); font-weight: var(--dss-font-weight-semibold); }
+h4 small { color: var(--dss-text-subtle); font-weight: var(--dss-font-weight-normal); }
 </style>
