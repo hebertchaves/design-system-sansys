@@ -153,9 +153,9 @@
         {
           "component": "DssButton",
           "props": {
-            "flat": true,
             "color": "primary",
-            "size": "sm"
+            "size": "sm",
+            "variant": "flat"
           },
           "children": "Entendido"
         }

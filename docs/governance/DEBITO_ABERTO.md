@@ -429,17 +429,41 @@ declara para ele. Se der 0 e o CSS declarar valor, é este defeito.
 >    enxerga UM filho (o wrapper), não os filhos reais. Por isso os nós de topo
 >    vão como `<component :is>` no próprio template.
 >
-> ⚠️ **O que NÃO foi fechado:** o quadro de adequação continua derivando ✅ de
-> "tem playground E frame registrado", **sem avaliar o conteúdo do frame**. Os
-> dois componentes deste verbete estavam ✅ com casca vazia. Enquanto o quadro não
-> olhar o conteúdo, ele pode voltar a atestar casca.
+> ✅ **Fechado em 2026-09-21 (mesma leva):** o quadro de adequação derivava ✅ de
+> "tem playground E frame registrado" — presença de artefato, não conteúdo. Ganhou
+> o estado **🟠 Frame sem conteúdo**: o ✅ agora exige que o palco receba semente
+> de filhos **ou** props de preview. Conservador em dois pontos, e os dois vieram
+> de medição: não exige semente de quem tem props (exigir rebaixaria 20
+> componentes corretos), e não se aplica a componente sem slot — foi o
+> `DssUploader` (0 slots, 0 props) que expôs isso, rebaixado pela primeira versão
+> da regra estando certo. Testado nos dois sentidos: removendo a semente do
+> DssTimeline ele cai para 🟠; restaurando, volta a ✅.
 >
-> ⚠️ **E o achado da prop inexistente PIOROU de justificativa:** o `demoSlots` do
-> DssTimeline declara `color` nos dois `DssTimelineEntry` da semente — e o
-> `DssTimelineEntry` **não tem essa prop** (confirmado: as props são heading/tag/side/icon/avatar/
-> title/subtitle). O verbete original dizia que nada pegava "porque nada
-> renderiza". Agora renderiza — e continua sem pegar: medido, `color` não vira nem
-> atributo no DOM, some em silêncio. Nenhum gate lê o conteúdo do `demoSlots`.
+> ⚠️ **O que o 🟠 ainda NÃO vê:** se a semente é *visualmente representativa*.
+> Verifica que existe algo a renderizar, não que seja um bom exemplar. Segue
+> sendo julgamento do adequador.
+>
+> ✅ **Fechado em 2026-09-21 (mesma leva):** a prop inexistente agora tem gate.
+> `scripts/validate-demo-seeds.cjs` confere que todo `component` citado na semente
+> existe e que toda `prop` declarada é prop do alvo.
+>
+> **O erro era invisível nos DOIS regimes**, e essa é a parte reaproveitável:
+> antes, porque nada renderizava; depois de consertar o consumidor, porque prop
+> inexistente **não vira nem atributo no DOM**. Some calada.
+>
+> Primeira passagem: 0 componentes inexistentes e **7 props inexistentes**, todas
+> corrigidas na fonte (`meta.json`) e o contrato reemitido:
+>
+> | semente | citação | correção |
+> |---|---|---|
+> | DssBanner · DssCard · DssLayout | `DssButton.flat` (×3) | `flat` é **valor** de `variant`, não prop → `variant: "flat"` |
+> | DssLayout | `DssHeader.elevated` · `DssPage.padding` | os dois **não declaram prop nenhuma** → removidas |
+> | DssTimeline | `DssTimelineEntry.color` (×2) | props reais: heading/tag/side/icon/avatar/title/subtitle → removida |
+>
+> ⚠️ **Limite declarado:** o gate confere NOME, não VALOR — não valida enum nem
+> tipo. Os `DssButton.flat` eram inertes; virando `variant: "flat"`, os botões
+> dessas três sementes passam a renderizar flat de verdade. É a intenção original
+> do autor, mas é **mudança visível** no preview dos três.
 
 <details>
 <summary>Registro original (mantido — o diagnóstico é reaproveitável)</summary>

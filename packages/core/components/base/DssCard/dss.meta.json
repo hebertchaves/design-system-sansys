@@ -189,8 +189,8 @@
             {
               "component": "DssButton",
               "props": {
-                "flat": true,
-                "size": "sm"
+                "size": "sm",
+                "variant": "flat"
               },
               "children": "Ação"
             }

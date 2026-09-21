@@ -4,7 +4,7 @@
      Regenerar: `npm run build:adequacao-status` (ou node scripts/build-adequacao-status.cjs)
      Fontes: docs/governance/CERTIFIED_COMPONENTS.md + apps/sandbox/src/TestSuite.vue -->
 
-> **Gerado do disco em 18/09/2026**, não de memória. Fase, categoria e selo saem do
+> **Gerado do disco em 21/09/2026**, não de memória. Fase, categoria e selo saem do
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
@@ -16,22 +16,44 @@
 
 | | Significado | Critério objetivo |
 |---|---|---|
-| ✅ | **Adequação fechada** | Tem página Playground **e** Preview Frame registrado |
+| ✅ | **Adequação fechada** | Playground **e** Preview Frame **e** o frame tem o que renderizar |
+| 🟠 | **Frame sem conteúdo** | Tem os dois artefatos, mas o frame monta **casca** — ver abaixo |
 | 🔵 | **Só Preview Frame** | Tem o frame, falta a página Playground — ver nota abaixo |
 | 🟡 | **Só Playground** | Tem a página, falta o Preview Frame — não fecha |
 | ⬜ | **Não iniciada** | Nenhum dos dois artefatos |
 
 O critério vem do `DSS_UI_ADEQUACAO_CHECKLIST.md`: os dois artefatos juntos são o que torna possível
-a análise visual, **o passo que FECHA a adequação**. Não há gate automatizado — esta marcação é
-**inferida da presença dos artefatos no disco**, que é o sinal mais confiável disponível hoje, mas é
-inferência, não selo.
+a análise visual, **o passo que FECHA a adequação**. A marcação é **inferida do disco**, não é selo.
+
+### Por que existe o 🟠 — e por que ele foi acrescentado depois
+
+Até set/2026 o ✅ derivava só de **presença de artefato**: "tem Playground e tem frame registrado".
+Isso atestava moldura, não conteúdo. Medido no navegador, `DssStepper` e `DssTimeline` estavam
+**✅ montando com ZERO filhos** — o frame não consumia a semente do contrato. O consumidor foi
+consertado; este critério impede a classe de voltar.
+
+Um frame prova algo quando o palco recebe **semente de filhos** (`visual.defaultPreview.slots`)
+**ou props de preview** (`visual.defaultPreview.props`). Sem nenhum dos dois, o componente monta
+como casca.
+
+O critério é **deliberadamente conservador**, em dois pontos:
+- **Não exige semente de quem tem props.** Um `DssButton` com `label` mostra algo real sem filho
+  nenhum; exigir os dois rebaixaria 20 componentes corretos.
+- **Não se aplica a componente sem slot.** Ele renderiza inteiro a partir dos próprios defaults.
+  Foi o `DssUploader` (0 slots, 0 props de preview) que expôs isso: a primeira versão da regra o
+  rebaixava, e ele estava certo.
+
+⚠️ **O que o 🟠 ainda NÃO vê:** se a semente é *visualmente representativa*. Ele verifica que existe
+algo a renderizar, não que o que se renderiza seja um bom exemplar. Isso é julgamento, e continua
+sendo do adequador. O conteúdo da semente — se cita componente e prop que existem — é verificado à
+parte pelo `validate:demo-seeds`.
 
 ## Placar
 
-| Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
-|---|---|---|---|---|---|
-| **Fase 1 — Atômicos** | 20 | **11** | 0 | 2 | 7 |
-| **Fase 2 — Compostos** | 68 | **6** | 0 | 1 | 61 |
+| Fase | Componentes | Adequados | Casca | Só frame | Só playground | Não iniciados |
+|---|---|---|---|---|---|---|
+| **Fase 1 — Atômicos** | 20 | **11** | 0 | 0 | 2 | 7 |
+| **Fase 2 — Compostos** | 68 | **6** | 0 | 0 | 1 | 61 |
 | **Total** | **88** | **17** | 0 | 3 | 68 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:

@@ -114,10 +114,48 @@ function lerArtefatos() {
 // ---------------------------------------------------------------------------
 const ESTADOS = {
   fechada:  { marca: '✅', rotulo: 'Adequação fechada',  ordem: 0 },
-  soFrame:  { marca: '🔵', rotulo: 'Só Preview Frame',   ordem: 1 },
-  parcial:  { marca: '🟡', rotulo: 'Só Playground',      ordem: 2 },
-  ausente:  { marca: '⬜', rotulo: 'Não iniciada',       ordem: 3 },
+  casca:    { marca: '🟠', rotulo: 'Frame sem conteúdo', ordem: 1 },
+  soFrame:  { marca: '🔵', rotulo: 'Só Preview Frame',   ordem: 2 },
+  parcial:  { marca: '🟡', rotulo: 'Só Playground',      ordem: 3 },
+  ausente:  { marca: '⬜', rotulo: 'Não iniciada',       ordem: 4 },
 };
+
+/**
+ * O frame tem o QUE renderizar?
+ *
+ * O ✅ derivava só de "tem playground E frame registrado" — presença de
+ * artefato, não conteúdo. Medido em set/2026: DssStepper e DssTimeline estavam
+ * ✅ montando com ZERO filhos, porque o frame não consumia a semente. Conserto
+ * do consumidor no mesmo dia; este critério impede a classe de voltar.
+ *
+ * Um frame prova algo quando o palco recebe ou uma SEMENTE de filhos
+ * (`visual.defaultPreview.slots`) ou PROPS de preview
+ * (`visual.defaultPreview.props`). Sem nenhum dos dois, o componente monta como
+ * casca e o ✅ estaria atestando moldura vazia.
+ *
+ * Deliberadamente CONSERVADOR: não exige semente de quem tem props (um
+ * DssButton com `label` mostra algo de verdade sem filho nenhum). Exigir os dois
+ * marcaria 20 componentes que estão corretos.
+ */
+function frameTemConteudo(nome) {
+  for (const grupo of ['base', 'composed']) {
+    const c = path.join(ROOT, 'packages', 'core', 'components', grupo, nome, 'dss.contract.json');
+    if (!fs.existsSync(c)) continue;
+    try {
+      const d = JSON.parse(fs.readFileSync(c, 'utf8'));
+      const dp = d?.visual?.defaultPreview;
+      if (!dp) return false;
+      // Componente SEM slot não pode virar casca por falta de filhos: ele
+      // renderiza inteiro a partir dos próprios defaults. Foi o DssUploader
+      // (0 slots, 0 props de preview) que expôs isto — a primeira versão da
+      // regra o rebaixava, e ele estava correto.
+      if (!(d.api?.slots || []).length) return true;
+      return !!dp.slots || Object.keys(dp.props || {}).length > 0;
+    } catch { return false; }
+  }
+  // Sem contrato não dá para afirmar que é casca — não rebaixa por ausência de prova.
+  return true;
+}
 
 function classificar(comps, { frames, playgrounds }) {
   for (const c of comps) {
@@ -128,7 +166,9 @@ function classificar(comps, { frames, playgrounds }) {
     // Frame e NÃO tem página Playground — o próprio TestSuite.vue registra o
     // motivo ("não têm página de teste onde ancorar"). Colapsar esse caso em
     // "não iniciada" seria falso: a adequação dele foi validada ponta a ponta.
-    c.estado = c.frame && c.playground ? 'fechada'
+    c.conteudo = c.frame ? frameTemConteudo(c.nome) : null;
+    c.estado = c.frame && c.playground && c.conteudo ? 'fechada'
+             : c.frame && c.playground ? 'casca'
              : c.frame ? 'soFrame'
              : c.playground ? 'parcial'
              : 'ausente';
@@ -187,22 +227,44 @@ function montarDoc(comps, orfaos) {
 
 | | Significado | Critério objetivo |
 |---|---|---|
-| ✅ | **Adequação fechada** | Tem página Playground **e** Preview Frame registrado |
+| ✅ | **Adequação fechada** | Playground **e** Preview Frame **e** o frame tem o que renderizar |
+| 🟠 | **Frame sem conteúdo** | Tem os dois artefatos, mas o frame monta **casca** — ver abaixo |
 | 🔵 | **Só Preview Frame** | Tem o frame, falta a página Playground — ver nota abaixo |
 | 🟡 | **Só Playground** | Tem a página, falta o Preview Frame — não fecha |
 | ⬜ | **Não iniciada** | Nenhum dos dois artefatos |
 
 O critério vem do \`DSS_UI_ADEQUACAO_CHECKLIST.md\`: os dois artefatos juntos são o que torna possível
-a análise visual, **o passo que FECHA a adequação**. Não há gate automatizado — esta marcação é
-**inferida da presença dos artefatos no disco**, que é o sinal mais confiável disponível hoje, mas é
-inferência, não selo.
+a análise visual, **o passo que FECHA a adequação**. A marcação é **inferida do disco**, não é selo.
+
+### Por que existe o 🟠 — e por que ele foi acrescentado depois
+
+Até set/2026 o ✅ derivava só de **presença de artefato**: "tem Playground e tem frame registrado".
+Isso atestava moldura, não conteúdo. Medido no navegador, \`DssStepper\` e \`DssTimeline\` estavam
+**✅ montando com ZERO filhos** — o frame não consumia a semente do contrato. O consumidor foi
+consertado; este critério impede a classe de voltar.
+
+Um frame prova algo quando o palco recebe **semente de filhos** (\`visual.defaultPreview.slots\`)
+**ou props de preview** (\`visual.defaultPreview.props\`). Sem nenhum dos dois, o componente monta
+como casca.
+
+O critério é **deliberadamente conservador**, em dois pontos:
+- **Não exige semente de quem tem props.** Um \`DssButton\` com \`label\` mostra algo real sem filho
+  nenhum; exigir os dois rebaixaria 20 componentes corretos.
+- **Não se aplica a componente sem slot.** Ele renderiza inteiro a partir dos próprios defaults.
+  Foi o \`DssUploader\` (0 slots, 0 props de preview) que expôs isso: a primeira versão da regra o
+  rebaixava, e ele estava certo.
+
+⚠️ **O que o 🟠 ainda NÃO vê:** se a semente é *visualmente representativa*. Ele verifica que existe
+algo a renderizar, não que o que se renderiza seja um bom exemplar. Isso é julgamento, e continua
+sendo do adequador. O conteúdo da semente — se cita componente e prop que existem — é verificado à
+parte pelo \`validate:demo-seeds\`.
 
 ## Placar
 
-| Fase | Componentes | Adequados | Só frame | Só playground | Não iniciados |
-|---|---|---|---|---|---|
-| **Fase 1 — Atômicos** | ${f1.length} | **${cont(f1, 'fechada')}** | ${cont(f1, 'soFrame')} | ${cont(f1, 'parcial')} | ${cont(f1, 'ausente')} |
-| **Fase 2 — Compostos** | ${f2.length} | **${cont(f2, 'fechada')}** | ${cont(f2, 'soFrame')} | ${cont(f2, 'parcial')} | ${cont(f2, 'ausente')} |
+| Fase | Componentes | Adequados | Casca | Só frame | Só playground | Não iniciados |
+|---|---|---|---|---|---|---|
+| **Fase 1 — Atômicos** | ${f1.length} | **${cont(f1, 'fechada')}** | ${cont(f1, 'casca')} | ${cont(f1, 'soFrame')} | ${cont(f1, 'parcial')} | ${cont(f1, 'ausente')} |
+| **Fase 2 — Compostos** | ${f2.length} | **${cont(f2, 'fechada')}** | ${cont(f2, 'casca')} | ${cont(f2, 'soFrame')} | ${cont(f2, 'parcial')} | ${cont(f2, 'ausente')} |
 | **Total** | **${comps.length}** | **${totFechada}** | ${cont(comps, 'soFrame')} | ${cont(comps, 'parcial')} | ${cont(comps, 'ausente')} |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
@@ -265,7 +327,7 @@ function main() {
 
   fs.writeFileSync(OUT, doc, 'utf8');
   console.log('🔎 Adequação de UI — Fases 1 e 2 (derivado do disco)\n');
-  console.log(`   componentes: ${comps.length} · fechados: ${fechadas} · só frame: ${conta('soFrame')} · só playground: ${conta('parcial')} · não iniciados: ${conta('ausente')}`);
+  console.log(`   componentes: ${comps.length} · fechados: ${fechadas} · frame sem conteúdo: ${conta('casca')} · só frame: ${conta('soFrame')} · só playground: ${conta('parcial')} · não iniciados: ${conta('ausente')}`);
   if (orfaos.length) console.log(`   ⚠️  Preview Frames fora de Fase 1/2: ${orfaos.join(', ')}`);
   console.log(`\n✅ Escrito: ${path.relative(ROOT, OUT)}`);
 }

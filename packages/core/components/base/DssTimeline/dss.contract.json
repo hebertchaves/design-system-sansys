@@ -69,8 +69,7 @@
             "props": {
               "title": "Evento 1",
               "subtitle": "Jan 2026",
-              "icon": "check",
-              "color": "primary"
+              "icon": "check"
             },
             "children": "Primeiro evento."
           },
@@ -79,8 +78,7 @@
             "props": {
               "title": "Evento 2",
               "subtitle": "Fev 2026",
-              "icon": "star",
-              "color": "secondary"
+              "icon": "star"
             },
             "children": "Segundo evento."
           }
