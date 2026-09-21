@@ -30,15 +30,22 @@
       <strong>{{ component }}</strong>
       <span class="pv__tag">{{ contract?.identity?.tagline }}</span>
       <span class="pv__spacer" />
-      <label class="pv__ctl">Tema
-        <select v-model="theme"><option value="light">light</option><option value="dark">dark</option></select>
-      </label>
-      <label class="pv__ctl">Brand
-        <select v-model="brand">
-          <option value="">—</option><option value="hub">hub</option>
-          <option value="water">water</option><option value="waste">waste</option>
-        </select>
-      </label>
+      <!--
+        Tema e Brand só aparecem no uso AVULSO. Dentro do PlaygroundLayout eles
+        já estão no header da página, e duplicá-los aqui criava dois controles
+        para o mesmo eixo — com o de baixo sempre pronto a contradizer o de cima.
+      -->
+      <template v-if="!dirigidoDeFora">
+        <label class="pv__ctl">Tema
+          <select v-model="temaLocal"><option value="light">light</option><option value="dark">dark</option></select>
+        </label>
+        <label class="pv__ctl">Brand
+          <select v-model="brandLocal">
+            <option value="">—</option><option value="hub">hub</option>
+            <option value="water">water</option><option value="waste">waste</option>
+          </select>
+        </label>
+      </template>
       <!-- Largura do PALCO (não do componente): o sujeito é responsivo e, ocupando
            todo o palco, esconde os problemas de layout apertado (chips que quebram
            em muitas linhas, rótulos truncados). Larguras típicas de coluna de
@@ -194,7 +201,19 @@ const props = defineProps({
   // palco inteiro antes de chegar aos cenários) e a seção ganha cabeçalho
   // recolhível.
   embedded: { type: Boolean, default: false },
+  // Tema e brand DIRIGIDOS DE FORA. Dentro do PlaygroundLayout quem manda é o
+  // header da página — os mesmos seletores que pintam as seções. Ter um segundo
+  // par aqui era redundância que só podia divergir: o leitor mudava a marca no
+  // topo e o palco continuava no valor antigo.
+  //
+  // `null` = ninguém dirige (uso avulso, como o frame do multiselect no menu
+  // principal). Aí os seletores internos continuam existindo — remover sem
+  // substituto deixaria esse caso preso em claro/sem marca.
+  theme: { type: String, default: null },
+  brand: { type: String, default: null },
 })
+
+const dirigidoDeFora = computed(() => props.theme != null || props.brand != null)
 
 // Painel de controles recolhido — mesmo padrão do aside do PlaygroundLayout
 // (200px → 44px). Ancorado, NÃO flutuante: vários componentes do DS SÃO overlays
@@ -270,8 +289,17 @@ const emitDefs = ref([])          // api.emits do contrato
 const methodDefs = ref([])        // api.exposedRefs do contrato
 const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
 const state = reactive({})
-const theme = ref('light')
-const brand = ref('')
+// Refs LOCAIS — só valem no uso avulso. Nome distinto da prop de propósito:
+// com os dois chamados `theme`, o binding do template fica ambíguo e o leitor
+// não consegue dizer qual dos dois está vendo.
+const temaLocal = ref('light')
+const brandLocal = ref('')
+// Valor EFETIVO: o de fora quando existe, o interno quando não. Tudo o que vai
+// para o iframe lê daqui — nunca dos refs internos direto —, senão o palco
+// obedeceria a um controle que o leitor não está vendo.
+const temaEfetivo = computed(() => props.theme ?? temaLocal.value)
+const brandEfetivo = computed(() => props.brand ?? brandLocal.value)
+
 const contextTokens = ref([])      // visual.contextTokens do contrato
 
 // ESSENCIAIS vêm do `defaultPreview.props` do contrato — a mesma declaração que
@@ -445,7 +473,7 @@ function postState() {
   const activeSlotIcons = {}
   for (const n of slots) if (ICON_SLOTS.includes(n) && slotIcons[n]) activeSlotIcons[n] = slotIcons[n]
   const emits = emitDefs.value.map((ev) => ev.name)
-  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, contextTokens: { ...contextState }, modelProp, modelDefault, slots, slotIcons: activeSlotIcons, emits, demoSlots: demoSlots.value }))
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: temaEfetivo.value, brand: brandEfetivo.value, contextTokens: { ...contextState }, modelProp, modelDefault, slots, slotIcons: activeSlotIcons, emits, demoSlots: demoSlots.value }))
   el.contentWindow.postMessage(payload, '*')
 }
 // Chama um método exposto (exposedRefs) no sujeito, via postMessage.
@@ -505,7 +533,7 @@ const snippet = computed(() => {
   return `<${props.component}${attrs}>\n${inner}\n</${props.component}>`
 })
 
-watch(() => JSON.stringify({ s: state, t: theme.value, b: brand.value, ct: contextState, sl: activeSlots, si: slotIcons }), postState)
+watch(() => JSON.stringify({ s: state, t: temaEfetivo.value, b: brandEfetivo.value, ct: contextState, sl: activeSlots, si: slotIcons }), postState)
 watch(() => props.component, load)
 onMounted(() => { window.addEventListener('message', onMsg); load() })
 onUnmounted(() => window.removeEventListener('message', onMsg))

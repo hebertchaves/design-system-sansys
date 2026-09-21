@@ -182,10 +182,19 @@
           <slot />
         </div>
 
+        <!--
+          Tema e brand vêm do HEADER da página — os mesmos pills e o mesmo botão
+          de dark que pintam as seções. As seções herdam por cascata do
+          `data-theme`/`data-brand` da raiz; o frame NÃO herda, porque é iframe
+          (documento à parte). Passar por prop é o que coloca os dois sob o mesmo
+          controle, em vez de um par de seletores redundante dentro do palco.
+        -->
         <PreviewFrame
           v-if="view === 'frame' && componenteDoFrame"
           :key="componenteDoFrame"
           :component="componenteDoFrame"
+          :theme="isDark ? 'dark' : 'light'"
+          :brand="activeBrand"
           class="pg-frame"
         />
       </main>
