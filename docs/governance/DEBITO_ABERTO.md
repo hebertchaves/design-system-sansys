@@ -406,7 +406,44 @@ hoje o sandbox mente nos dois sentidos, dependendo do componente.
 de um elemento interno do Quasar com o que `node_modules/quasar/dist/quasar.css`
 declara para ele. Se der 0 e o CSS declarar valor, é este defeito.
 
-### Preview Frame não semeia FILHOS — todo componente container monta vazio
+### ✅ Preview Frame não semeia FILHOS — todo componente container monta vazio (RESOLVIDO)
+
+> **Fechado em 2026-09-21.** O `PreviewSubject` passou a consumir a semente
+> (`visual.defaultPreview.slots` do contrato, vinda do `defaultPreview.demoSlots`
+> do meta). Verificado no navegador em três formatos: lista simples (DssTimeline,
+> 2 entries), subcomponentes aninhados (DssCard → Section/Actions → DssButton) e
+> container de painéis (DssStepper, 2 tabs + conteúdo do passo ativo).
+>
+> **A cadeia já estava inteira** — 39 contratos carregavam a semente. Faltava só o
+> último consumidor lê-la; o `DemoRenderer` já fazia isso desde sempre. Era um
+> consumidor infiel, não uma lacuna de dados.
+>
+> **Três armadilhas medidas no caminho, todas de assíncrono, todas SILENCIOSAS:**
+> 1. `defineAsyncComponent` dentro do render cria wrapper novo a cada passagem —
+>    a identidade muda, a resolução nunca assenta, slot vazio para sempre.
+> 2. Cachear o wrapper conserta (1) e ainda falha em container de PAINÉIS:
+>    QStepper/QTabPanels/QCarousel **introspectam** os vnodes do slot para montar
+>    o cabeçalho, e um wrapper assíncrono não casa. Header e content vazios, zero
+>    erro no console.
+> 3. Embrulhar a semente num componente de render tem o mesmo efeito: o pai
+>    enxerga UM filho (o wrapper), não os filhos reais. Por isso os nós de topo
+>    vão como `<component :is>` no próprio template.
+>
+> ⚠️ **O que NÃO foi fechado:** o quadro de adequação continua derivando ✅ de
+> "tem playground E frame registrado", **sem avaliar o conteúdo do frame**. Os
+> dois componentes deste verbete estavam ✅ com casca vazia. Enquanto o quadro não
+> olhar o conteúdo, ele pode voltar a atestar casca.
+>
+> ⚠️ **E o achado da prop inexistente PIOROU de justificativa:** o `demoSlots` do
+> DssTimeline declara `color` nos dois `DssTimelineEntry` da semente — e o
+> `DssTimelineEntry` **não tem essa prop** (confirmado: as props são heading/tag/side/icon/avatar/
+> title/subtitle). O verbete original dizia que nada pegava "porque nada
+> renderiza". Agora renderiza — e continua sem pegar: medido, `color` não vira nem
+> atributo no DOM, some em silêncio. Nenhum gate lê o conteúdo do `demoSlots`.
+
+<details>
+<summary>Registro original (mantido — o diagnóstico é reaproveitável)</summary>
+
 
 Descoberto ao fechar `DssStepper` e `DssTimeline` (set/2026). Os dois frames
 montam o SFC real e o console fica limpo, mas o componente aparece **vazio**:
@@ -443,6 +480,8 @@ própria verificação.
 Enquanto isso, um `demoSlots` com prop inexistente passa batido: o do
 `DssTimeline` declara `color` nas entradas, e `DssTimelineEntry` não tem essa prop
 (ver `types/timeline-entry.types.ts`). Nenhum gate pega, porque nada renderiza.
+
+</details>
 
 ### `DssStepper` — props do QStepper não expostas (de-para pendente)
 

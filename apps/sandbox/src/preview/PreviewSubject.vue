@@ -18,8 +18,32 @@
     <component :is="Comp" v-if="Comp" ref="subjectRef" v-bind="allBindings">
       <!-- Slots ligados no parent recebem conteúdo de demo, para exercitar
            prepend/append/hint/error (que não são props e não apareciam). -->
-      <template v-for="s in activeSlots" :key="s" #[s]="scope">
-        <DssIcon v-if="slotIcons[s]" :name="slotIcons[s]" inline decorative />
+      <template v-for="s in renderedSlots" :key="s" #[s]="scope">
+        <!--
+          SEMENTE primeiro: quando o contrato declara filhos para este slot, eles
+          vencem o marcador genérico. O marcador prova que o slot EXISTE; a
+          semente prova que o componente FUNCIONA — que é o que o fechamento
+          ("renderiza fiel no Preview Frame") afirma.
+        -->
+        <!--
+          Os filhos de TOPO vão como <component :is> no próprio template, não
+          embrulhados num componente de render. QStepper/QTabPanels/QCarousel
+          INTROSPECTAM os vnodes do slot para montar o cabeçalho; com um wrapper
+          no meio, o pai enxerga UM filho (o wrapper) e monta header vazio — foi
+          o que eu medi. O aninhamento abaixo do topo pode usar o render, porque
+          aí quem lê os filhos é o próprio componente semeado.
+        -->
+        <template v-if="seedFor(s)">
+          <component
+            v-for="(n, i) in seedTopo(s)"
+            :key="i"
+            :is="n.comp"
+            v-bind="n.props"
+          >
+            <SeedSlot v-if="n.children != null" :node="n.children" />
+          </component>
+        </template>
+        <DssIcon v-else-if="slotIcons[s]" :name="slotIcons[s]" inline decorative />
         <!--
           Slot ESCOPADO que entrega `fieldId`: o componente é uma MOLDURA e está
           pedindo que o consumidor monte o controle (DssField). Renderizar o
@@ -44,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted, onUnmounted, defineAsyncComponent, toHandlerKey } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted, defineAsyncComponent, toHandlerKey, h } from 'vue'
 import DssIcon from '../../../../packages/core/components/base/DssIcon/DssIcon.vue'
 
 const name = new URLSearchParams(location.search).get('frame') || ''
@@ -54,6 +78,96 @@ const name = new URLSearchParams(location.search).get('frame') || ''
 const modules = import.meta.glob('../../../../packages/core/components/{base,composed}/*/*.vue')
 const key = Object.keys(modules).find(k => k.endsWith(`/${name}/${name}.vue`))
 const Comp = key ? defineAsyncComponent(modules[key]) : null
+
+// ── SEMENTE DE FILHOS (visual.defaultPreview.slots do contrato) ──────────────
+// Um container montado VAZIO não prova nada: nenhum knob de layout tem efeito
+// observável sem filhos, e o frame passava a atestar casca (medido em
+// DssStepper e DssTimeline — 1 container, 0 filhos). A semente já existia no
+// meta e já viajava no contrato; faltava o último consumidor lê-la.
+//
+// Subcomponentes (DssCardSection, DssCardActions) NÃO têm wrapper na raiz do
+// componente — são named exports do barrel do pai e moram em 1-structure/.
+// Por isso o segundo glob: sem ele a semente do DssCard renderiza o aviso de
+// "não encontrado" em vez do cartão.
+const subModules = import.meta.glob('../../../../packages/core/components/{base,composed}/*/1-structure/*.vue')
+
+// RESOLUÇÃO ANTECIPADA E SÍNCRONA — e não é otimização, é correção.
+//
+// Duas tentativas falharam antes desta, e as duas por causa do assíncrono:
+//
+// 1. `defineAsyncComponent` DENTRO do render cria um wrapper novo a cada
+//    passagem. A identidade muda, o Vue descarta a resolução anterior e
+//    recomeça: nunca assenta, slot vazio para sempre.
+// 2. Cachear o wrapper conserta (1) e ainda falha em container de PAINÉIS.
+//    QStepper/QTabPanels/QCarousel leem os filhos do slot para montar o
+//    cabeçalho — introspecção sobre o vnode. Um wrapper assíncrono não casa
+//    com o que eles procuram. Medido: QStepper montava header e content
+//    VAZIOS, sem erro no console.
+//
+// Por isso a semente é resolvida ANTES de renderizar: quando o demoSlots chega,
+// varremos a árvore, aguardamos os módulos e guardamos o componente RESOLVIDO.
+// O render passa a ser síncrono e o pai enxerga filhos de verdade. A lazy
+// continua de pé — carrega só o que a semente cita, não o catálogo.
+const seedCompCache = new Map()   // nome -> componente resolvido (ou null)
+const seedReady = ref(false)
+
+function seedCompNames(node, acc = new Set()) {
+  if (Array.isArray(node)) { for (const n of node) seedCompNames(n, acc); return acc }
+  if (!node || typeof node !== 'object') return acc
+  if (node.component) {
+    acc.add(node.component)
+    if (node.children != null) seedCompNames(node.children, acc)
+    return acc
+  }
+  // Não é um NÓ — é o MAPA de slots (`{ default: [...], header: ... }`) ou um
+  // objeto container. Desce pelos valores. Sem isto a varredura recebia o mapa,
+  // não achava `.component` no topo e devolvia lista VAZIA: nada era pré-carregado
+  // e todo slot semeado renderizava vazio, sem erro nenhum.
+  for (const v of Object.values(node)) seedCompNames(v, acc)
+  return acc
+}
+
+async function loadSeedComps(tree) {
+  seedReady.value = false
+  const nomes = [...seedCompNames(tree)]
+  await Promise.all(nomes.map(async (nome) => {
+    if (seedCompCache.has(nome)) return
+    // Subcomponentes (DssCardSection/DssCardActions) não têm wrapper na raiz —
+    // são named exports do barrel do pai e moram em 1-structure/. Sem o segundo
+    // glob a semente do DssCard cairia no aviso de "não encontrado".
+    const k = Object.keys(modules).find((m) => m.endsWith(`/${nome}/${nome}.vue`))
+      || Object.keys(subModules).find((m) => m.endsWith(`/1-structure/${nome}.vue`))
+    const loader = k ? (modules[k] || subModules[k]) : null
+    if (!loader) { seedCompCache.set(nome, null); return }
+    try { const mod = await loader(); seedCompCache.set(nome, mod.default ?? mod) }
+    catch { seedCompCache.set(nome, null) }
+  }))
+  seedReady.value = true
+}
+
+// Mesmo formato do demoSlots consumido pelo DemoRenderer: string | {component,
+// props, children} | {html} | Array. Mantido compatível de propósito — os dois
+// leem a MESMA declaração do meta, e formatos diferentes reabririam a divergência
+// entre consumidores que esta correção existe para fechar.
+function renderSeed(node) {
+  if (node == null) return null
+  if (typeof node === 'string') return node
+  if (Array.isArray(node)) return node.map(renderSeed)
+  if (typeof node !== 'object') return String(node)
+  if (node.html != null) return h('div', { innerHTML: node.html })
+  if (!node.component) return null
+  const comp = seedCompCache.get(node.component)
+  // Falha VISÍVEL: semente que cita componente inexistente vira aviso no palco,
+  // não silêncio. É o único lugar onde esse erro aparece — nenhum gate lê o
+  // conteúdo do demoSlots.
+  if (!comp) return h('span', { class: 'pv-seed-missing' }, `\u26a0 ${node.component}`)
+  return node.children != null
+    ? h(comp, node.props || {}, { default: () => renderSeed(node.children) })
+    : h(comp, node.props || {})
+}
+
+const SeedSlot = (p) => renderSeed(p.node)
+SeedSlot.props = ['node']
 
 const subjectRef = ref(null)  // ref do SFC real — permite chamar exposedRefs (métodos)
 const props = reactive({})
@@ -68,6 +182,7 @@ const slotControl = ref('')
 const modelProp = ref(null)
 let modelSeeded = false  // semeia o model com o default do vModel só na 1ª mensagem
 const activeSlots = ref([]) // slots ligados no parent (nomes)
+const demoSlots = ref(null)  // semente vinda do contrato, via postMessage
 const slotIcons = ref({})   // nome do slot -> nome do ícone (prepend/append) escolhido no parent
 const emitNames = ref([])   // api.emits do contrato — p/ logar TODOS os eventos
 
@@ -76,6 +191,34 @@ function slotDemo(s) {
   const demo = { prepend: '📎', append: '⬆', hint: 'Texto de ajuda (demo)', error: 'Mensagem de erro (demo)' }
   return demo[s] ?? `«${s}»`
 }
+
+// Slot semeado pelo contrato para este nome (null = sem semente).
+function seedFor(s) {
+  const d = demoSlots.value
+  return d && typeof d === 'object' ? (d[s] ?? null) : null
+}
+
+// Normaliza o TOPO da semente para o template: cada item vira {comp, props,
+// children}. Texto puro no topo não tem componente — vira nó de texto pelo
+// caminho do render, que o `v-else` abaixo cobre.
+function seedTopo(s) {
+  const raw = seedFor(s)
+  const arr = Array.isArray(raw) ? raw : [raw]
+  return arr
+    .filter((n) => n && typeof n === 'object' && n.component)
+    .map((n) => ({ comp: seedCompCache.get(n.component) || null, props: n.props || {}, children: n.children }))
+    .filter((n) => n.comp)
+}
+
+// Slots a renderizar = os ligados no palco UNIDOS aos semeados.
+// A união (em vez de só `activeSlots`) é o ponto: a semente é o estado DEFAULT
+// declarado pelo componente, não algo que o inspetor precise ligar. Exigir o
+// toque preservaria a casca vazia na primeira pintura — exatamente o que o
+// fechamento passava a atestar sem querer.
+const renderedSlots = computed(() => {
+  const semeados = seedReady.value && demoSlots.value && typeof demoSlots.value === 'object' ? Object.keys(demoSlots.value) : []
+  return [...new Set([...activeSlots.value, ...semeados])]
+})
 
 // Resume um argumento de evento para dado PLANO serializável (payloads carregam
 // File/FocusEvent/etc. que o postMessage não clona).
@@ -144,6 +287,7 @@ function onMsg(e) {
     modelSeeded = true
   }
   if (Array.isArray(d.slots)) activeSlots.value = d.slots
+  if ('demoSlots' in d) { demoSlots.value = d.demoSlots; loadSeedComps(d.demoSlots) }
   if (d.slotIcons && typeof d.slotIcons === 'object') slotIcons.value = d.slotIcons
   if (Array.isArray(d.emits)) emitNames.value = d.emits
 }
@@ -200,6 +344,9 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    distintos do stage gray-800). */
 .pv-stage { padding: 32px; min-height: 100vh; box-sizing: border-box; background: var(--dss-surface-default); }
 .pv-missing { color: #b00020; font-family: system-ui, sans-serif; }
+/* Semente citando componente que não resolve. Visível de propósito: é o único
+   lugar onde esse erro aparece — nenhum gate lê o conteúdo do demoSlots. */
+.pv-seed-missing { color: #b26a00; font: 11px/1.4 ui-monospace, monospace; padding: 2px 4px; }
 /* Controle montado pelo Preview dentro de slot escopado com `fieldId`
    (componente-moldura). Deliberadamente CRU — sem borda, fundo ou padding
    próprios: quem desenha a moldura é o componente sob teste, e um controle

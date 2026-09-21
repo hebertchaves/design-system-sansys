@@ -210,6 +210,11 @@ const state = reactive({})
 const theme = ref('light')
 const brand = ref('')
 const contextTokens = ref([])      // visual.contextTokens do contrato
+// Semente de FILHOS do contrato (visual.defaultPreview.slots, vindo do
+// defaultPreview.demoSlots do meta). Sem ela o container monta como casca
+// vazia e nenhum knob de layout tem efeito observável — o frame não prova
+// nada para Timeline, Stepper, Tabs, List, BtnToggle e afins.
+const demoSlots = ref(null)
 const contextState = reactive({})  // --token -> valor escolhido no palco
 const frameEl = ref(null)
 
@@ -278,6 +283,7 @@ function load() {
   // sujeito). Sem isto, slots como prepend/append nunca apareciam no Preview
   // (o v-if="slots.x" ficava falso — só props eram exercitadas).
   contextTokens.value = contract.value.visual?.contextTokens || []
+  demoSlots.value = contract.value.visual?.defaultPreview?.slots || null
   Object.keys(contextState).forEach((k) => delete contextState[k])
   for (const ct of contextTokens.value) contextState[ct.name] = ct.default
 
@@ -359,7 +365,7 @@ function postState() {
   const activeSlotIcons = {}
   for (const n of slots) if (ICON_SLOTS.includes(n) && slotIcons[n]) activeSlotIcons[n] = slotIcons[n]
   const emits = emitDefs.value.map((ev) => ev.name)
-  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, contextTokens: { ...contextState }, modelProp, modelDefault, slots, slotIcons: activeSlotIcons, emits }))
+  const payload = JSON.parse(JSON.stringify({ __frame: true, props: clean, theme: theme.value, brand: brand.value, contextTokens: { ...contextState }, modelProp, modelDefault, slots, slotIcons: activeSlotIcons, emits, demoSlots: demoSlots.value }))
   el.contentWindow.postMessage(payload, '*')
 }
 // Chama um método exposto (exposedRefs) no sujeito, via postMessage.
