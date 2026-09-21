@@ -83,35 +83,32 @@ function lerCertificados() {
 function lerArtefatos() {
   const suite = fs.readFileSync(SUITE, 'utf8');
 
-  // Resolução do DONO de cada Preview Frame — agora DIRETA.
+  // Resolução do DONO de cada Preview Frame — agora ESTRUTURAL.
   //
-  // Até set/2026 os frames eram itens de menu (`preview-frame-<comp>`) e o dono
-  // saía do sufixo, com um caso resolvido só pela POSIÇÃO (o `preview-frame` sem
-  // sufixo, do DssInput, o primeiro registrado). Recontar por grep perdia
-  // justamente ele — foi assim que a contagem antiga errou.
+  // Terceira forma em três dias, e vale registrar por quê:
+  //   1º  item de menu `preview-frame-<comp>`, com heurística de POSIÇÃO para o
+  //       caso sem sufixo (o DssInput). A heurística já tinha feito a contagem
+  //       errar uma vez.
+  //   2º  mapa explícito `PREVIEW_FRAMES` no TestSuite.vue. Sem heurística, mas
+  //       mantido à mão — podia divergir da realidade sem nada acusar.
+  //   3º  (aqui) a página de teste que usa o `PlaygroundLayout` GANHA o frame,
+  //       porque o layout o monta a partir do próprio `code` da página.
   //
-  // Com o frame embutido na página de teste, o registro virou um MAPA explícito
-  // no TestSuite.vue (`PREVIEW_FRAMES`), cujo VALOR é o nome do componente. Some
-  // a heurística de posição e some a classe de erro que ela criava.
+  // Então "tem Preview Frame" == "a página usa PlaygroundLayout". Não é
+  // convenção: é o que o código faz. Não há lista para manter nem para driftar.
   //
-  // O `preview-frame-multiselect` continua sendo item de menu: é Fase 3 e não tem
-  // página de teste onde ancorar. Fica fora do mapa e fora deste placar, mas é
-  // reportado à parte como AVULSO (ver abaixo).
-  const bloco = suite.match(/const PREVIEW_FRAMES = \{([\s\S]*?)\n\}/);
-  if (!bloco) {
-    console.error('❌ `const PREVIEW_FRAMES = {...}` não encontrado em TestSuite.vue.');
-    console.error('   O placar deriva DESSE mapa. Se o registro mudou de forma, este script precisa acompanhar.');
-    process.exit(1);
-  }
+  // A distinção com "tem Playground" continua real — DssAvatar, DssBadge e
+  // DssCard têm página de teste e NÃO usam o layout, então seguem sem frame.
+  const paginas = fs.readdirSync(SANDBOX_SRC).filter((f) => /^Test.+\.vue$/.test(f));
   const frames = new Set(
-    [...bloco[1].matchAll(/:\s*'(Dss[A-Za-z]+)'/g)].map((m) => norm(m[1]))
+    paginas
+      .filter((f) => /PlaygroundLayout/.test(fs.readFileSync(path.join(SANDBOX_SRC, f), 'utf8')))
+      .map((f) => norm(f.slice(4, -4)))
   );
 
-  // Frames que continuam sendo ITEM DE MENU, fora do mapa. Hoje só o
-  // `preview-frame-multiselect`. Ficam fora do placar (não são Fase 1/2), mas
-  // PRECISAM ser reportados: a primeira versão desta mudança simplesmente parou
-  // de mencioná-los, e um frame que existe e ninguém conta é o começo do drift
-  // que esta derivação existe para evitar.
+  // Frames que continuam sendo ITEM DE MENU avulso, sem página de teste onde
+  // ancorar. Hoje só o `preview-frame-multiselect` (Fase 3). Fora do placar, mas
+  // reportados: frame que existe e ninguém conta é o começo do drift.
   const avulsos = [...suite.matchAll(/activeComponent = '(preview-frame-[a-z0-9-]+)'/g)]
     .map((m) => m[1].replace('preview-frame-', ''));
 

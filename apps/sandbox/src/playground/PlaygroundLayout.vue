@@ -89,7 +89,7 @@
         aria-label="Navegação por seção"
       >
         <div class="pg-nav__head">
-          <span class="pg-nav__title">Seções</span>
+          <span class="pg-nav__title">Navegação</span>
           <button
             type="button"
             class="pg-nav__toggle"
@@ -102,7 +102,38 @@
           </button>
         </div>
 
-        <div v-show="!navCollapsed" class="pg-nav__search">
+        <!--
+          PREVIEW FRAME como item de PRIMEIRO NÍVEL, par de "Seções".
+          Antes ele era um acordeão ACIMA da página inteira: ninguém que chegasse
+          pela primeira vez imaginaria que era preciso fechá-lo para ver o
+          conteúdo. Menu resolve a descoberta — o instrumento aparece ao lado do
+          que ele inspeciona, e a página abre nos cenários, não no palco.
+        -->
+        <button
+          type="button"
+          :class="['pg-nav__top', { 'is-active': view === 'frame' }]"
+          :title="navCollapsed ? 'Preview Frame' : ''"
+          @click="view = 'frame'"
+        >
+          <span class="material-icons pg-nav__top-icon">dvr</span>
+          <span v-show="!navCollapsed" class="pg-nav__top-label">Preview Frame</span>
+        </button>
+
+        <button
+          type="button"
+          :class="['pg-nav__top', { 'is-active': view === 'sections' }]"
+          :title="navCollapsed ? 'Seções' : ''"
+          :aria-expanded="String(secoesAbertas)"
+          @click="irParaSecoes"
+        >
+          <span class="material-icons pg-nav__top-icon">list</span>
+          <span v-show="!navCollapsed" class="pg-nav__top-label">Seções</span>
+          <span v-show="!navCollapsed" class="material-icons pg-nav__top-caret">
+            {{ secoesAbertas ? 'expand_less' : 'expand_more' }}
+          </span>
+        </button>
+
+        <div v-show="!navCollapsed && secoesAbertas" class="pg-nav__search">
           <span class="material-icons pg-nav__search-icon">search</span>
           <input
             v-model="query"
@@ -122,7 +153,7 @@
           </button>
         </div>
 
-        <ul class="pg-nav__list" @mouseover="onNavOver" @mouseout="onNavOut">
+        <ul v-show="secoesAbertas" class="pg-nav__list" @mouseover="onNavOver" @mouseout="onNavOut">
           <li v-for="s in sections" :key="s.id">
             <a
               :href="`#pg-${s.id}`"
@@ -141,7 +172,22 @@
       </aside>
 
       <main ref="mainEl" class="pg-main" :data-density="density">
-        <slot />
+        <!--
+          O slot fica MONTADO (v-show, não v-if) quando se vai ao frame: as
+          seções carregam dezenas de tiles e o contador de exemplos é medido do
+          DOM real. Desmontar zeraria o KPI e pagaria a remontagem a cada ida e
+          volta.
+        -->
+        <div v-show="view === 'sections'">
+          <slot />
+        </div>
+
+        <PreviewFrame
+          v-if="view === 'frame' && componenteDoFrame"
+          :key="componenteDoFrame"
+          :component="componenteDoFrame"
+          class="pg-frame"
+        />
       </main>
     </div>
 
@@ -157,6 +203,7 @@
 <script setup lang="ts">
 import { ref, computed, provide, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import './playground.scss'
+import PreviewFrame from '../preview/PreviewFrame.vue'
 
 interface SectionMeta { id: string; index: string; title: string }
 interface Kpi { value: string | number; label: string }
@@ -186,6 +233,31 @@ const isDark = ref(false)
 const density = ref<'comfortable' | 'compact'>('comfortable')
 const query = ref('')
 const navCollapsed = ref(false)
+// Qual VISTA o conteúdo mostra. Default 'sections': a página abre nos cenários,
+// que é o que o leitor veio ver. O frame fica a um clique, visível no menu.
+const view = ref<'sections' | 'frame'>('sections')
+const secoesAbertas = ref(true)
+// O componente que o frame monta sai do `code` da própria página
+// ("base/DssChip" -> "DssChip"). Sem prop nova e sem tocar nas 17 páginas.
+const componenteDoFrame = computed(() => props.code.split('/').pop() || '')
+
+/**
+ * Clique em "Seções" faz DUAS coisas diferentes conforme o estado — e a
+ * diferença importa:
+ *   - vindo do Preview Frame, VOLTA para os cenários e garante a lista ABERTA.
+ *     Fazer as duas coisas sempre (trocar a vista e alternar o grupo) fechava a
+ *     lista justo na volta, que é quando o leitor mais precisa dela.
+ *   - já nos cenários, alterna o grupo — aí o clique só pode significar isso.
+ * Com o menu retraído não há lista para alternar; só troca a vista.
+ */
+function irParaSecoes() {
+  if (view.value !== 'sections') {
+    view.value = 'sections'
+    if (!navCollapsed.value) secoesAbertas.value = true
+    return
+  }
+  if (!navCollapsed.value) secoesAbertas.value = !secoesAbertas.value
+}
 const activeSection = ref<string>(props.sections[0]?.id ?? '')
 
 // KPI "Exemplos" — total de tiles de demonstração (.pg-tile) realmente renderizados

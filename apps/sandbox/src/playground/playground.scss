@@ -595,3 +595,28 @@
 @media (prefers-reduced-motion: reduce) {
   .pg-page, .pg-section, .pg-tile, .pg-icon-btn { animation: none !important; transition: none !important; }
 }
+
+/* ── Item de PRIMEIRO NÍVEL do menu (Preview Frame · Seções) ──────────────────
+   Peso visual acima dos links de seção: são as duas VISTAS da página, não itens
+   dentro de uma delas. O caret só existe em "Seções", que agrupa a lista. */
+.pg-nav__top {
+  display: flex; align-items: center; gap: var(--dss-spacing-2);
+  width: 100%; padding: var(--dss-spacing-2) var(--dss-spacing-2_5);
+  border: 0; border-radius: var(--dss-radius-sm);
+  background: transparent; cursor: pointer; text-align: left;
+  font-size: var(--dss-font-size-sm); font-weight: var(--dss-font-weight-medium);
+  color: var(--dss-text-body);
+}
+.pg-nav__top:hover { background: var(--dss-surface-subtle); }
+.pg-nav__top.is-active { background: var(--dss-action-primary-light); color: var(--dss-action-primary-deep); }
+.pg-nav__top-icon { font-size: var(--dss-icon-size-sm); }
+.pg-nav__top-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pg-nav__top-caret { font-size: var(--dss-icon-size-sm); opacity: .6; }
+
+/* Retraído: só os ícones, centralizados — mesma régua dos links de seção. */
+.pg-nav.is-collapsed .pg-nav__top { justify-content: center; padding-left: 0; padding-right: 0; }
+
+/* Vista do Preview Frame ocupando o conteúdo. Altura própria: aqui ele NÃO
+   divide espaço com os cenários (são vistas alternativas), então pode usar a
+   altura cheia da área útil. */
+.pg-frame { height: calc(100vh - var(--pg-hero-h) - var(--dss-spacing-8)); min-height: 520px; }

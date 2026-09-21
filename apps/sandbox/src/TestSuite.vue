@@ -525,15 +525,6 @@
 
     <!-- Main Content Area -->
     <div class="test-content">
-      <!--
-        PREVIEW FRAME embutido — primeira seção da página, acima dos cenários.
-        `:key` força remontagem ao trocar de componente: sem ela o iframe
-        reaproveitaria o realm do componente anterior.
-      -->
-      <div v-if="frameDoAtivo" class="frame-slot">
-        <PreviewFrame :key="frameDoAtivo" :component="frameDoAtivo" embedded />
-      </div>
-
       <!-- Index/Dashboard View -->
       <div v-if="activeComponent === 'index'" class="component-view">
         <TestIndex />
@@ -687,52 +678,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import TestIndex from './TestIndex.vue'
 // PREVIEW FRAME (durável) — playground contract-driven
 import PreviewFrame from './preview/PreviewFrame.vue'
 
-/**
- * PREVIEW FRAME POR PÁGINA DE TESTE.
- *
- * Antes, cada frame era um ITEM DE MENU próprio ("Preview Frame", aninhado sob
- * o componente). Eram 17 itens e 17 ramos no v-if — e o menu passou a ter mais
- * entradas de instrumento do que de componente.
- *
- * Agora o frame é a PRIMEIRA SEÇÃO da própria página de teste. Isso encosta as
- * duas superfícies uma na outra de propósito: as duas são CONSUMIDORAS do mesmo
- * componente, então divergência entre elas só pode ser defeito — e fica visível
- * em vez de escondida em abas separadas. Já valeu uma vez: o hover que não
- * aparecia no frame e aparecia na página era um pseudo-elemento sem contexto de
- * empilhamento próprio, no COMPONENTE.
- *
- * A chave é a da página de teste; o valor, o componente DSS que o frame monta.
- * `DssMultiselectAutocomplete` fica de FORA: é Fase 3 e não tem página de teste
- * onde ancorar, então segue como item avulso do menu.
- *
- * ⚠️ Componente que não aparece aqui NÃO tem frame — e isso é informação, não
- * lacuna: significa que ele ainda não passou pela adequação de UI. O quadro em
- * DSS_ESTADO_ADEQUACAO_UI.md é derivado deste mapa.
- */
-const PREVIEW_FRAMES = {
-  button: 'DssButton',
-  chip: 'DssChip',
-  'empty-state': 'DssEmptyState',
-  item: 'DssItem',
-  'btn-toggle': 'DssBtnToggle',
-  timeline: 'DssTimeline',
-  stepper: 'DssStepper',
-  tabs: 'DssTabs',
-  input: 'DssInput',
-  select: 'DssSelect',
-  textarea: 'DssTextarea',
-  file: 'DssFile',
-  field: 'DssField',
-  uploader: 'DssUploader',
-  checkbox: 'DssCheckbox',
-  radio: 'DssRadio',
-  toggle: 'DssToggle',
-}
 import TestDefaultPreview from './TestDefaultPreview.vue'
 import TestButton from './TestButton.vue'
 import TestBadge from './TestBadge.vue'
@@ -764,9 +714,6 @@ import TestAtenderSolicitacoes from './TestAtenderSolicitacoes.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')
-// Componente cujo frame deve abrir nesta página (null = a página não tem frame,
-// ou seja, o componente ainda não passou pela adequação).
-const frameDoAtivo = computed(() => PREVIEW_FRAMES[activeComponent.value] ?? null)
 
 // Sidebar collapse state (retrair lateralmente)
 const sidebarCollapsed = ref(false)
@@ -1214,10 +1161,6 @@ function onNavOut(e) {
 /* ========================================
    MAIN CONTENT AREA
    ======================================== */
-/* Slot do Preview Frame embutido: primeira seção da página, com respiro antes
-   dos cenários. Sem altura própria — quem limita é o `.pv--embedded`. */
-.frame-slot { margin: 0 0 20px; }
-
 .test-content {
   flex: 1;
   min-width: 0;
