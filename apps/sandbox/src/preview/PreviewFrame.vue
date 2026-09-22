@@ -27,8 +27,8 @@
 
     <template v-if="!embedded || secaoAberta">
     <header class="pv__bar">
-      <strong>{{ component }}</strong>
-      <span class="pv__tag">{{ contract?.identity?.tagline }}</span>
+      <strong class="pg-section__title">{{ component }}</strong>
+      <span class="pv__tag pg-section__desc">{{ contract?.identity?.tagline }}</span>
       <span class="pv__spacer" />
       <!--
         Tema e Brand só aparecem no uso AVULSO. Dentro do PlaygroundLayout eles
@@ -36,11 +36,13 @@
         para o mesmo eixo — com o de baixo sempre pronto a contradizer o de cima.
       -->
       <template v-if="!dirigidoDeFora">
-        <label class="pv__ctl">Tema
-          <select v-model="temaLocal"><option value="light">light</option><option value="dark">dark</option></select>
+        <label class="pv__ctl pg-brand-pills">
+          <span class="pg-pill">Tema</span>
+          <select class="pg-nav__search-input" v-model="temaLocal"><option value="light">light</option><option value="dark">dark</option></select>
         </label>
-        <label class="pv__ctl">Brand
-          <select v-model="brandLocal">
+        <label class="pv__ctl pg-brand-pills">
+          <span class="pg-pill">Brand</span>
+          <select class="pg-nav__search-input" v-model="brandLocal">
             <option value="">—</option><option value="hub">hub</option>
             <option value="water">water</option><option value="waste">waste</option>
           </select>
@@ -56,13 +58,15 @@
            interruptor sem lâmpada — o palco sempre no valor padrão, o knob sem
            efeito visível. A lista vem do CSS compilado do componente: quem não
            consome o token não ganha o controle. -->
-      <label v-for="ct in contextTokens" :key="ct.name" class="pv__ctl">{{ ct.label }}
-        <select v-model="contextState[ct.name]">
+      <label v-for="ct in contextTokens" :key="ct.name" class="pv__ctl pg-brand-pills">
+        <span class="pg-pill">{{ ct.label }}</span>
+        <select class="pg-nav__search-input" v-model="contextState[ct.name]">
           <option v-for="v in ct.values" :key="v" :value="v">{{ v }}</option>
         </select>
       </label>
-      <label class="pv__ctl">Largura
-        <select v-model="stageWidth">
+      <label class="pv__ctl pg-brand-pills">
+        <span class="pg-pill">Largura</span>
+        <select class="pg-nav__search-input" v-model="stageWidth">
           <option value="">cheia</option>
           <option value="480">480px</option>
           <option value="360">360px</option>
@@ -84,7 +88,7 @@
         >{{ knobsCollapsed ? '‹' : '›' }}</button>
 
         <div v-show="!knobsCollapsed" class="pv__knobs-inner">
-        <h4>Controles <small>— derivados do contrato ({{ knobs.length }})</small></h4>
+        <h4 class="pg-nav__title">Controles <small>— derivados do contrato ({{ knobs.length }})</small></h4>
         <p v-if="!contract" class="pv__empty">Sem <code>dss.contract.json</code> para {{ component }}.</p>
 
         <template v-for="grupo in gruposDeKnobs" :key="grupo.id">
@@ -96,7 +100,7 @@
           -->
           <button
             v-if="grupo.colapsavel"
-            class="pv__group"
+            class="pv__group pg-nav__link"
             :aria-expanded="String(restantesAbertos)"
             @click="restantesAbertos = !restantesAbertos"
           >
@@ -115,19 +119,20 @@
             sem efeito agora — {{ inerte(k).label }} está em <code>{{ inerte(k).valor }}</code>
           </p>
           <input v-if="k.controlHint === 'toggle'" :id="'k-' + k.name" type="checkbox" v-model="state[k.name]" />
-          <select v-else-if="k.options" :id="'k-' + k.name" v-model="state[k.name]">
+          <select class="pg-nav__search-input" v-else-if="k.options" :id="'k-' + k.name" v-model="state[k.name]">
             <option v-for="o in k.options" :key="String(o)" :value="o">{{ o === null ? '—' : o }}</option>
           </select>
-          <input v-else-if="k.controlHint === 'stepper'" :id="'k-' + k.name" type="number" v-model.number="state[k.name]" />
+          <input v-else-if="k.controlHint === 'stepper'" class="pg-nav__search-input" :id="'k-' + k.name" type="number" v-model.number="state[k.name]" />
           <input
             v-else-if="isIconKnob(k)"
+            class="pg-nav__search-input"
             :id="'k-' + k.name"
             type="text"
             list="pv-icon-suggestions"
             v-model="state[k.name]"
             :placeholder="String(k.default ?? 'ícone (ex.: check, mdi-account)')"
           />
-          <input v-else :id="'k-' + k.name" type="text" v-model="state[k.name]" :placeholder="String(k.default ?? '')" />
+          <input v-else class="pg-nav__search-input" :id="'k-' + k.name" type="text" v-model="state[k.name]" :placeholder="String(k.default ?? '')" />
         </div>
         </template>
 
@@ -138,7 +143,7 @@
         </datalist>
 
         <template v-if="slotDefs.length">
-          <h4 class="pv__slots-h">Slots <small>— do contrato ({{ slotDefs.length }})</small></h4>
+          <h4 class="pv__slots-h pg-nav__title">Slots <small>— do contrato ({{ slotDefs.length }})</small></h4>
           <div v-for="s in slotDefs" :key="s.name" class="pv__slot">
             <label :for="'s-' + s.name" :title="s.description || ''">
               <input :id="'s-' + s.name" type="checkbox" v-model="activeSlots[s.name]" />
@@ -149,7 +154,7 @@
               v-model="slotIcons[s.name]"
               type="text"
               list="pv-icon-suggestions"
-              class="pv__slot-icon"
+              class="pv__slot-icon pg-nav__search-input"
               placeholder="ícone (ex.: attach_file, mdi-account)"
               :aria-label="'Ícone do slot ' + s.name"
             />
@@ -157,7 +162,7 @@
         </template>
 
         <template v-if="methodDefs.length">
-          <h4 class="pv__slots-h">Métodos <small>— exposedRefs ({{ methodDefs.length }})</small></h4>
+          <h4 class="pv__slots-h pg-nav__title">Métodos <small>— exposedRefs ({{ methodDefs.length }})</small></h4>
           <button
             v-for="m in methodDefs" :key="m.name" class="pv__method"
             :title="(m.description || '') + '  ' + (m.type || '')"
@@ -576,60 +581,22 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
   border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
   background: var(--dss-surface-default);
 }
-.pv__bar > strong {
-  font-size: 0.9375rem; font-weight: var(--dss-font-weight-bold);
-  line-height: 1.1; letter-spacing: -0.01em;
-  color: var(--pg-accent, var(--dss-text-primary));
-}
-.pv__tag { font-size: 0.6875rem; color: var(--dss-text-subtle); }
+/* Título e tagline NÃO são estilizados aqui: o template usa
+   `.pg-section__title` / `.pg-section__desc`, e são essas as classes aplicadas
+   no template deste componente. Reescrever os valores aqui foi o erro corrigido
+   nesta passagem — a transcrição já tinha divergido (0.9375rem no lugar de
+   `--dss-font-size-md`, line-height 1.1 no lugar de `--dss-line-height-tight`).
+   A tagline só limita a largura, porque na barra ela divide a linha. */
+.pv__tag { max-width: 48ch; }
 .pv__spacer { flex: 1; }
 
-/* Controles agrupados como as brand pills do hero: contêiner com fundo muted,
-   borda fina e o raio do template. Sem isto eram <label>+<select> soltos no
-   branco, enquanto todo controle do hero vive dentro de uma caixa. */
-.pv__ctl {
-  display: inline-flex; align-items: center; gap: var(--dss-spacing-1_5);
-  padding: 3px 3px 3px 9px;
-  background: var(--dss-surface-muted);
-  border: var(--dss-border-width-thin) solid var(--dss-gray-200);
-  border-radius: var(--pg-radius, var(--dss-radius-sm));
-  font-size: 0.6875rem; color: var(--dss-text-subtle); white-space: nowrap;
-}
-/* Dentro do grupo o campo dispensa a própria borda — quem desenha a caixa é o
-   contêiner, como nas pills. */
-.pv__ctl select {
-  height: 28px; width: auto; min-width: 0;
-  border-color: transparent; background: var(--dss-surface-default);
-}
+/* Caixa e tipografia vêm de `.pg-brand-pills` + `.pg-pill`, as MESMAS do grupo
+   de marca no hero — aplicadas no template. Local fica só o alinhamento
+   vertical, que as pills não precisam (lá tudo é botão de mesma altura; aqui há
+   um <select> ao lado do rótulo). */
+.pv__ctl { align-items: center; }
+.pv__ctl .pg-nav__search-input { width: auto; min-width: 0; border-color: transparent; }
 
-/* ── Controles de formulário ──────────────────────────────────────────────────
-   O que mais datava a tela: <select> e <input> com o desenho nativo. Aqui eles
-   ganham a mesma caixa dos campos do DS (sem VIRAR DssInput — o painel é casca
-   e não deve depender do componente que está inspecionando). */
-/* Mesma caixa do campo de busca do aside (`.pg-nav__search-input`): 30px de
-   altura, raio do template, borda gray-300 e, no foco, o anel de accent do
-   PLAYGROUND — que é hex fixo, não token de marca. Casca não brandeia. */
-.pv select,
-.pv input[type='text'],
-.pv input[type='number'] {
-  width: 100%; height: 30px;
-  padding: 0 var(--dss-spacing-2);
-  font-family: inherit; font-size: 0.75rem;
-  color: var(--dss-text-body);
-  background: var(--dss-surface-default);
-  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
-  border-radius: var(--pg-radius, var(--dss-radius-sm));
-  transition: border-color .18s ease, box-shadow .18s ease;
-}
-.pv input::placeholder { color: var(--dss-text-subtle); }
-.pv select:focus,
-.pv input[type='text']:focus,
-.pv input[type='number']:focus {
-  outline: none;
-  border-color: var(--pg-accent, var(--dss-text-primary));
-  box-shadow: 0 0 0 3px var(--pg-accent-18, transparent);
-}
-.pv input[type='checkbox'] { accent-color: var(--pg-accent, var(--dss-gray-700)); }
 .pv input[type='checkbox'] { width: var(--dss-spacing-4); height: var(--dss-spacing-4); cursor: pointer; }
 
 /* ── Corpo: palco + painel ────────────────────────────────────────────────── */
@@ -677,19 +644,10 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__knobs-inner { padding-top: var(--dss-spacing-1); }
 
 /* Grupo "Demais props": cabeçalho clicável com o mesmo peso dos <h4> do painel. */
-/* Desenho de ITEM DE MENU, como os links de seção do aside. */
-.pv__group {
-  display: flex; align-items: center; gap: var(--dss-spacing-1_5);
-  width: 100%; text-align: left;
-  margin: var(--dss-spacing-3) 0 var(--dss-spacing-1_5);
-  padding: var(--dss-spacing-1_5) var(--dss-spacing-2);
-  border: 0; border-radius: var(--pg-radius, var(--dss-radius-sm));
-  background: transparent; cursor: pointer;
-  font-size: 0.75rem; font-weight: var(--dss-font-weight-medium);
-  color: var(--dss-text-body);
-  transition: background .15s ease, color .15s ease;
-}
-.pv__group:hover { background: var(--pg-accent-12, var(--dss-surface-hover)); color: var(--pg-accent, var(--dss-text-body)); }
+/* Aparência vem de `.pg-nav__link` (aplicada no template): padding, raio, hover
+   de accent e a barra do estado ativo. Aqui só a margem de separação do grupo —
+   `.pg-nav__link` é item de lista e não carrega margem própria. */
+.pv__group { width: 100%; margin: var(--dss-spacing-3) 0 var(--dss-spacing-1_5); border: 0; background: transparent; text-align: left; }
 .pv__group small { font-weight: var(--dss-font-weight-normal); color: var(--dss-text-subtle); }
 
 /* ── Modo embutido ────────────────────────────────────────────────────────── */
@@ -804,13 +762,9 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
   overflow: auto;
 }
 
-/* Mesmo micro-rótulo de "NAVEGAÇÃO" no aside: caixa alta, peso bold, tracking
-   aberto. É o que faz os dois painéis lerem como um sistema só. */
-h4, .pv__slots-h {
-  margin: 0 0 var(--dss-spacing-2);
-  font-size: 0.625rem; font-weight: var(--dss-font-weight-bold);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--dss-text-subtle);
-}
+/* Caixa alta/tracking/cor vêm de `.pg-nav__title`, aplicada no template. Aqui
+   fica só a margem (o aside não tem uma abaixo do rótulo) e o desligamento do
+   caps no <small>, que é texto corrido dentro do rótulo. */
+h4, .pv__slots-h { margin: 0 0 var(--dss-spacing-2); }
 h4 small, .pv__slots-h small { text-transform: none; letter-spacing: 0; font-weight: var(--dss-font-weight-normal); }
 </style>
