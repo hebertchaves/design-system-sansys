@@ -166,8 +166,56 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "border-color",
+          "property": "padding-block",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-spacing-8",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-inline-end",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-inline-start",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-bottom",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-inline-end",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
           "token": "--dss-border-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-bottom",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-2",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -282,6 +330,12 @@
         {
           "property": "font-size",
           "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-color",
+          "token": "--dss-border-default",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -571,19 +625,43 @@
         ]
       },
       {
-        "name": "--dss-border-default",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-spacing-4",
         "usedIn": [
           "default"
         ]
       },
       {
+        "name": "--dss-spacing-8",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-default",
         "usedIn": [
           "default"
         ]
@@ -596,12 +674,6 @@
       },
       {
         "name": "--dss-duration-150",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-icon-size-lg",
         "usedIn": [
           "default"
         ]

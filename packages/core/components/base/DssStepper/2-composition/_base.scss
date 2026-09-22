@@ -50,12 +50,67 @@
   background-color: inherit;
 }
 
-// ------------------------------------------------------------------
-// Linha conectora no modo vertical (gerada pelo QStepper no nível do
-// container quando o passo ainda não possui classe .dss-step — fallback)
-// ------------------------------------------------------------------
-.dss-stepper .q-stepper--vertical .q-stepper__step-inner::before {
-  border-color: var(--dss-border-default);
+// ==================================================================
+// LAYOUT VERTICAL — espaçamento redeclarado e linha no elemento certo
+// ==================================================================
+//
+// Duas coisas estavam erradas aqui, e juntas produziam o sintoma de "conteúdo
+// empilhado por cima da linha, sem margem nem padding".
+//
+// 1. A LINHA NÃO MORA NO `step-inner`. A regra anterior coloria
+//    `.q-stepper__step-inner::before`, que não desenha nada — medido,
+//    `content: none` e `border-width: 0`. No vertical a linha conectora são os
+//    pseudos do DOT (`.q-stepper__dot::before` acima, `::after` abaixo). Era
+//    mais uma regra inerte, como as que esta adequação encontrou no resto do
+//    componente. E a cor real vinha do Quasar: `rgba(0,0,0,.12)` cru, que no
+//    tema escuro praticamente some.
+//
+// 2. O ESPAÇAMENTO DO VERTICAL É TODO DO QUASAR — e o reset universal do
+//    hospedeiro (`* { margin: 0; padding: 0 }`, unlayered, vence layered) zerava
+//    os cinco: o respiro do bloco, o RECUO de 60px do `step-inner` que tira o
+//    conteúdo de baixo da linha, a margem entre dot e rótulo, as folgas de 8px
+//    da linha ao redor do dot e o fecho do último passo. Sem eles, o painel de
+//    conteúdo encostava na coluna do dot e passava por cima da linha.
+//
+// O recuo é DERIVADO, não um 60 solto: padding do tab + diâmetro do dot +
+// margem do dot. Se o dot mudar de tamanho, o recuo acompanha.
+
+.dss-stepper .q-stepper--vertical {
+  padding-block: var(--dss-spacing-4);
+}
+
+.dss-stepper .q-stepper--vertical .q-stepper__step-inner {
+  padding-block: 0 var(--dss-spacing-8);
+  padding-inline-end: var(--dss-spacing-6);
+  /* O conteúdo alinha com o TÍTULO do passo, não com a borda do cabeçalho: é a
+     mesma coluna de leitura. Medido a partir da caixa do `step-inner`, que já
+     começa recuada pelo padding do `step-content`, a conta é o diâmetro do dot
+     + a margem dele + o padding do label — os três tokens que posicionam o
+     título. Derivado assim, título e painel não têm como se separar. */
+  padding-inline-start: calc(
+    var(--dss-icon-size-lg) + var(--dss-spacing-3) + var(--dss-spacing-3)
+  );
+}
+
+.dss-stepper .q-stepper--vertical .q-stepper__step:last-child .q-stepper__step-inner {
+  padding-bottom: var(--dss-spacing-2);
+}
+
+.dss-stepper .q-stepper--vertical .q-stepper__dot {
+  margin-inline-end: var(--dss-spacing-3);
+}
+
+.dss-stepper .q-stepper--vertical .q-stepper__dot::before,
+.dss-stepper .q-stepper--vertical .q-stepper__dot::after {
+  background: var(--dss-border-default);
+}
+
+.dss-stepper .q-stepper--vertical .q-stepper__dot::before {
+  margin-bottom: var(--dss-spacing-2);
+}
+
+.dss-stepper .q-stepper--vertical .q-stepper__dot::after {
+  margin-top: var(--dss-spacing-2);
 }
 
 // ==================================================================
