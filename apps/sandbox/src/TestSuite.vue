@@ -554,7 +554,7 @@
         <TestTabs />
       </div>
       <div v-else-if="activeComponent === 'preview-frame-multiselect'" class="component-view">
-        <PreviewFrame component="DssMultiselectAutocomplete" />
+        <PreviewFrame component="DssMultiselectAutocomplete" class="frame-avulso" />
       </div>
 
       <!-- DssButton Test View -->
@@ -1161,6 +1161,15 @@ function onNavOut(e) {
 /* ========================================
    MAIN CONTENT AREA
    ======================================== */
+/* Frame AVULSO (sem PlaygroundLayout em volta). O PreviewFrame deixou de impor
+   `height: 100%` — ele agora OBEDECE a altura de quem o coloca na tela, para o
+   painel de controles rolar por dentro em vez de esticar tudo.
+   A altura vai NO COMPONENTE, não num wrapper: altura no pai não constrange o
+   filho que não recebeu ordem de preenchê-lo. Medido com a classe no wrapper —
+   wrapper 720px e `.pv` transbordando em 2240. É o mesmo lugar em que o template
+   põe a dele (`.pg-frame` no próprio PreviewFrame). */
+.frame-avulso { height: calc(100vh - var(--dss-spacing-8)); min-height: 520px; }
+
 .test-content {
   flex: 1;
   min-width: 0;

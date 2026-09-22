@@ -571,7 +571,14 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 
 .pv {
   display: flex; flex-direction: column;
-  height: 100%; min-height: 520px;
+  /* SEM `height: 100%` — e a ausência é a correção.
+     Com ela, a regra escopada (`.pv[data-v-…]`, especificidade 0,2,0) vencia a
+     altura que o consumidor dá (`.pg-frame`, 0,1,0). E `height: 100%` contra um
+     pai de altura AUTOMÁTICA resolve para auto: quem passava a mandar era o
+     conteúdo — o painel de controles esticava tudo. Medido: 2440px de altura
+     num viewport de 720, e o painel sem scroll nenhum.
+     Agora o componente OBEDECE: quem define a altura é quem o coloca na tela. */
+  min-height: 520px;
   font-family: var(--dss-font-family-sans, system-ui, sans-serif);
   color: var(--dss-text-body);
   background: var(--dss-surface-default);
@@ -610,11 +617,15 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv input[type='checkbox'] { width: var(--dss-spacing-4); height: var(--dss-spacing-4); cursor: pointer; }
 
 /* ── Corpo: palco + painel ────────────────────────────────────────────────── */
-.pv__body { display: flex; flex: 1; min-height: 380px; }
+/* `min-height: 0` é o que permite o encolhimento. O padrão de item flex é
+   `min-height: auto`, que impede ficar menor que o conteúdo — com ele, o painel
+   empurra o corpo e o scroll nunca aparece. O piso de 380px saiu daqui e foi
+   para o `min-height` do `.pv`, onde não bloqueia o encolhimento. */
+.pv__body { display: flex; flex: 1; min-height: 0; }
 /* Palco: hospeda o iframe e o centraliza quando a largura é restrita. O fundo
    demarca a área FORA do sujeito (deixa a largura escolhida evidente). */
 .pv__stage {
-  flex: 1; display: flex; justify-content: center; min-width: 0;
+  flex: 1; display: flex; justify-content: center; min-width: 0; min-height: 0;
   border-right: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   background: var(--dss-surface-muted);
 }
@@ -627,7 +638,7 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    property. Os fallbacks existem para o uso AVULSO (frame fora do template),
    onde essas vars não estão declaradas. */
 .pv__knobs {
-  width: 300px; overflow: auto; position: relative;
+  width: 300px; overflow-y: auto; min-height: 0; position: relative;
   margin: var(--dss-spacing-3);
   padding: var(--dss-spacing-2);
   background: var(--dss-surface-default);
