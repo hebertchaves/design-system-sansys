@@ -582,33 +582,31 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    O que mais datava a tela: <select> e <input> com o desenho nativo. Aqui eles
    ganham a mesma caixa dos campos do DS (sem VIRAR DssInput — o painel é casca
    e não deve depender do componente que está inspecionando). */
+/* Mesma caixa do campo de busca do aside (`.pg-nav__search-input`): 30px de
+   altura, raio do template, borda gray-300 e, no foco, o anel de accent do
+   PLAYGROUND — que é hex fixo, não token de marca. Casca não brandeia. */
 .pv select,
 .pv input[type='text'],
 .pv input[type='number'] {
-  font-family: inherit;
-  font-size: var(--dss-font-size-xs);
+  width: 100%; height: 30px;
+  padding: 0 var(--dss-spacing-2);
+  font-family: inherit; font-size: 0.75rem;
   color: var(--dss-text-body);
   background: var(--dss-surface-default);
-  border: var(--dss-border-width-thin) solid var(--dss-border-default);
-  border-radius: var(--dss-radius-sm);
-  padding: var(--dss-spacing-1) var(--dss-spacing-2);
-  min-height: var(--dss-touch-target-xs);
-  transition: border-color var(--dss-duration-200) var(--dss-easing-standard);
+  border: var(--dss-border-width-thin) solid var(--dss-gray-300);
+  border-radius: var(--pg-radius, var(--dss-radius-sm));
+  transition: border-color .18s ease, box-shadow .18s ease;
 }
-.pv select:hover,
-.pv input[type='text']:hover,
-.pv input[type='number']:hover { border-color: var(--dss-border-strong); }
-.pv select:focus-visible,
-.pv input[type='text']:focus-visible,
-.pv input[type='number']:focus-visible {
-  /* Anel NEUTRO de propósito: `--dss-focus-primary` seguiria a marca, e casca não
-     brandeia. `--dss-focus-ring` (sem sufixo) NÃO existe no catálogo — é fantasma
-     conhecido, no baseline, com 1 uso em utils/_example-showcase.scss. */
-  outline: var(--dss-focus-ring-width) var(--dss-focus-ring-style) var(--dss-text-primary);
-  outline-offset: var(--dss-focus-ring-offset);
-  border-color: var(--dss-border-strong);
+.pv input::placeholder { color: var(--dss-text-subtle); }
+.pv select:focus,
+.pv input[type='text']:focus,
+.pv input[type='number']:focus {
+  outline: none;
+  border-color: var(--pg-accent, var(--dss-text-primary));
+  box-shadow: 0 0 0 3px var(--pg-accent-18, transparent);
 }
-.pv input[type='checkbox'] { width: var(--dss-spacing-4); height: var(--dss-spacing-4); cursor: pointer; accent-color: var(--dss-gray-700); }
+.pv input[type='checkbox'] { accent-color: var(--pg-accent, var(--dss-gray-700)); }
+.pv input[type='checkbox'] { width: var(--dss-spacing-4); height: var(--dss-spacing-4); cursor: pointer; }
 
 /* ── Corpo: palco + painel ────────────────────────────────────────────────── */
 .pv__body { display: flex; flex: 1; min-height: 380px; }
@@ -621,16 +619,25 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 }
 .pv__frame { flex: 1; min-width: 0; border: 0; background: var(--dss-surface-default); }
 
+/* O painel é o irmão do aside de "Seções" e passa a ter a MESMA casca: cartão
+   branco com borda fina e cantos do template. Antes era uma coluna cinza chapada
+   — não parecia do mesmo sistema que o menu ao lado.
+   Os `--pg-*` são do PlaygroundLayout e chegam aqui por herança de custom
+   property. Os fallbacks existem para o uso AVULSO (frame fora do template),
+   onde essas vars não estão declaradas. */
 .pv__knobs {
   width: 300px; overflow: auto; position: relative;
-  padding: var(--dss-spacing-3) var(--dss-spacing-4);
-  background: var(--dss-surface-subtle);
+  margin: var(--dss-spacing-3);
+  padding: var(--dss-spacing-2);
+  background: var(--dss-surface-default);
+  border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-radius: var(--pg-radius-lg, var(--dss-radius-sm));
   /* Mesma transição do aside do PlaygroundLayout — o sandbox já tem esse
      vocabulário de "recolher lateral"; inventar um segundo criaria duas
      gramáticas para a mesma função. */
   transition: width var(--dss-duration-200) var(--dss-easing-standard);
 }
-.pv__knobs.is-collapsed { width: 34px; padding: var(--dss-spacing-3) var(--dss-spacing-1); overflow: visible; }
+.pv__knobs.is-collapsed { width: 34px; padding: var(--dss-spacing-2) var(--dss-spacing-1); overflow: visible; }
 .pv__knobs-toggle {
   position: absolute; top: var(--dss-spacing-2); right: var(--dss-spacing-1_5);
   display: grid; place-items: center;
@@ -646,16 +653,19 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__knobs-inner { padding-top: var(--dss-spacing-1); }
 
 /* Grupo "Demais props": cabeçalho clicável com o mesmo peso dos <h4> do painel. */
+/* Desenho de ITEM DE MENU, como os links de seção do aside. */
 .pv__group {
-  display: block; width: 100%; text-align: left;
+  display: flex; align-items: center; gap: var(--dss-spacing-1_5);
+  width: 100%; text-align: left;
   margin: var(--dss-spacing-3) 0 var(--dss-spacing-1_5);
-  padding: var(--dss-spacing-1) var(--dss-spacing-1_5);
-  border: 0; border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  padding: var(--dss-spacing-1_5) var(--dss-spacing-2);
+  border: 0; border-radius: var(--pg-radius, var(--dss-radius-sm));
   background: transparent; cursor: pointer;
-  font-size: var(--dss-font-size-xs); font-weight: var(--dss-font-weight-semibold);
+  font-size: 0.75rem; font-weight: var(--dss-font-weight-medium);
   color: var(--dss-text-body);
+  transition: background .15s ease, color .15s ease;
 }
-.pv__group:hover { background: var(--dss-surface-hover); }
+.pv__group:hover { background: var(--pg-accent-12, var(--dss-surface-hover)); color: var(--pg-accent, var(--dss-text-body)); }
 .pv__group small { font-weight: var(--dss-font-weight-normal); color: var(--dss-text-subtle); }
 
 /* ── Modo embutido ────────────────────────────────────────────────────────── */
@@ -706,9 +716,9 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 }
 
 .pv__slots-h {
-  margin: var(--dss-spacing-4) 0 var(--dss-spacing-2);
+  margin-top: var(--dss-spacing-4);
   padding-top: var(--dss-spacing-3);
-  border-top: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  border-top: var(--dss-border-width-thin) solid var(--dss-gray-200);
 }
 .pv__slot { font-size: var(--dss-font-size-xs); margin-bottom: var(--dss-spacing-1_5); }
 .pv__slot label { display: flex; align-items: center; gap: var(--dss-spacing-1_5); cursor: pointer; }
@@ -723,9 +733,9 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
   color: var(--dss-text-body);
   background: var(--dss-surface-default);
   border: var(--dss-border-width-thin) solid var(--dss-border-default);
-  border-radius: var(--dss-radius-sm); cursor: pointer;
+  border-radius: var(--pg-radius, var(--dss-radius-sm)); cursor: pointer;
 }
-.pv__method:hover { background: var(--dss-surface-hover); border-color: var(--dss-border-strong); }
+.pv__method:hover { background: var(--pg-accent-12, var(--dss-surface-hover)); border-color: var(--pg-accent, var(--dss-border-strong)); color: var(--pg-accent, var(--dss-text-body)); }
 .pv__empty { color: var(--dss-feedback-error); font-size: var(--dss-font-size-xs); }
 
 /* ── Eventos ──────────────────────────────────────────────────────────────── */
@@ -770,6 +780,13 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
   overflow: auto;
 }
 
-h4 { margin: 0 0 var(--dss-spacing-2_5); font-size: var(--dss-font-size-sm); font-weight: var(--dss-font-weight-semibold); }
-h4 small { color: var(--dss-text-subtle); font-weight: var(--dss-font-weight-normal); }
+/* Mesmo micro-rótulo de "NAVEGAÇÃO" no aside: caixa alta, peso bold, tracking
+   aberto. É o que faz os dois painéis lerem como um sistema só. */
+h4, .pv__slots-h {
+  margin: 0 0 var(--dss-spacing-2);
+  font-size: 0.625rem; font-weight: var(--dss-font-weight-bold);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--dss-text-subtle);
+}
+h4 small, .pv__slots-h small { text-transform: none; letter-spacing: 0; font-weight: var(--dss-font-weight-normal); }
 </style>

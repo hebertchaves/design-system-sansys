@@ -615,7 +615,6 @@
 .pg-nav__top.is-active { background: var(--dss-surface-subtle); color: var(--dss-text-primary); box-shadow: inset 2px 0 0 var(--dss-text-primary); }
 .pg-nav__top-icon { font-size: var(--dss-icon-size-sm); }
 .pg-nav__top-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pg-nav__top-caret { font-size: var(--dss-icon-size-sm); opacity: .6; }
 
 /* Retraído: só os ícones, centralizados — mesma régua dos links de seção. */
 .pg-nav.is-collapsed .pg-nav__top { justify-content: center; padding-left: 0; padding-right: 0; }

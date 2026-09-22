@@ -139,17 +139,13 @@
           type="button"
           :class="['pg-nav__top', { 'is-active': view === 'sections' }]"
           :title="navCollapsed ? 'Seções' : ''"
-          :aria-expanded="String(secoesAbertas)"
-          @click="irParaSecoes"
+          @click="view = 'sections'"
         >
           <span class="material-icons pg-nav__top-icon">list</span>
           <span v-show="!navCollapsed" class="pg-nav__top-label">Seções</span>
-          <span v-show="!navCollapsed" class="material-icons pg-nav__top-caret">
-            {{ secoesAbertas ? 'expand_less' : 'expand_more' }}
-          </span>
         </button>
 
-        <div v-show="!navCollapsed && secoesAbertas" class="pg-nav__search">
+        <div v-show="secoesAbertas" class="pg-nav__search">
           <span class="material-icons pg-nav__search-icon">search</span>
           <input
             v-model="query"
@@ -266,28 +262,16 @@ const navCollapsed = ref(false)
 // Qual VISTA o conteúdo mostra. Default 'sections': a página abre nos cenários,
 // que é o que o leitor veio ver. O frame fica a um clique, visível no menu.
 const view = ref<'sections' | 'frame'>('sections')
-const secoesAbertas = ref(true)
+// A lista de seções NÃO tem estado próprio: ela é a expansão do item ativo.
+// Aparece quando "Seções" está selecionado e recolhe quando o Preview Frame
+// está. Sem toggle manual — ter dois controles (escolher a vista E abrir a
+// lista) permitia o estado sem sentido "Seções ativo, lista fechada", em que o
+// menu não mostra para onde navegar.
+const secoesAbertas = computed(() => view.value === 'sections' && !navCollapsed.value)
 // O componente que o frame monta sai do `code` da própria página
 // ("base/DssChip" -> "DssChip"). Sem prop nova e sem tocar nas 17 páginas.
 const componenteDoFrame = computed(() => props.code.split('/').pop() || '')
 
-/**
- * Clique em "Seções" faz DUAS coisas diferentes conforme o estado — e a
- * diferença importa:
- *   - vindo do Preview Frame, VOLTA para os cenários e garante a lista ABERTA.
- *     Fazer as duas coisas sempre (trocar a vista e alternar o grupo) fechava a
- *     lista justo na volta, que é quando o leitor mais precisa dela.
- *   - já nos cenários, alterna o grupo — aí o clique só pode significar isso.
- * Com o menu retraído não há lista para alternar; só troca a vista.
- */
-function irParaSecoes() {
-  if (view.value !== 'sections') {
-    view.value = 'sections'
-    if (!navCollapsed.value) secoesAbertas.value = true
-    return
-  }
-  if (!navCollapsed.value) secoesAbertas.value = !secoesAbertas.value
-}
 const activeSection = ref<string>(props.sections[0]?.id ?? '')
 
 // KPI "Exemplos" — total de tiles de demonstração (.pg-tile) realmente renderizados
