@@ -88,7 +88,15 @@
         >{{ knobsCollapsed ? '‹' : '›' }}</button>
 
         <div v-show="!knobsCollapsed" class="pv__knobs-inner">
-        <h4 class="pg-nav__title">Controles <small>— derivados do contrato ({{ knobs.length }})</small></h4>
+        <!--
+          Título do painel usa `.pg-section__title` — o mesmo (azul) dos títulos
+          de seção da página, não o micro-rótulo do aside. Os subgrupos abaixo
+          (CONTEÚDO, APARÊNCIA…) seguem em `.pg-nav__title`: a diferença entre os
+          dois é o que dá hierarquia ao painel.
+          A contagem e "— derivados do contrato" saíram: o número já aparece em
+          cada subgrupo, e a procedência está dita no cabeçalho de cada knob.
+        -->
+        <h4 class="pv__titulo pg-section__title">Controles</h4>
         <p v-if="!contract" class="pv__empty">Sem <code>dss.contract.json</code> para {{ component }}.</p>
 
         <template v-for="grupo in gruposDeKnobs" :key="grupo.id">
@@ -805,7 +813,9 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    aquilo é micro-rótulo de uma coluna estreita; aqui são os cabeçalhos do painel
    de trabalho, e a pedido ficam em `--dss-font-size-sm` com peso maior — a
    descrição ao lado no MESMO tamanho, para o par ler como um bloco só. */
-h4, .pv__slots-h, .pv__group {
+/* `.pv__titulo` fica FORA desta regra: ele usa `.pg-section__title` e não deve
+   ser rebaixado ao tamanho dos subgrupos. */
+h4:not(.pv__titulo), .pv__slots-h, .pv__group {
   margin: 0 0 var(--dss-spacing-2);
   font-size: var(--dss-font-size-sm);
   font-weight: var(--dss-font-weight-bold);
@@ -822,7 +832,7 @@ h4, .pv__slots-h, .pv__group {
 /* A descrição vai para a PRÓPRIA LINHA. No tamanho pedido ela não cabe ao lado
    do título nos 300px do painel: medido, o par quebrava em 3 linhas (80px) e o
    "(26)" sobrava sozinho embaixo. Em bloco, lê como título + subtítulo. */
-h4 small, .pv__slots-h small {
+h4:not(.pv__titulo) small, .pv__slots-h small {
   display: block;
   font-size: var(--dss-font-size-sm);
   text-transform: none; letter-spacing: 0;
@@ -839,4 +849,8 @@ h4 small, .pv__slots-h small {
 /* O botão de recolher é absoluto no canto: sem esta reserva o título de
    "CONTROLES" corre por baixo dele. */
 .pv__knobs-inner > h4:first-of-type { padding-right: var(--dss-spacing-7); }
+/* line-height declarado pelo mesmo motivo dos outros cabeçalhos: o reset de <h4>
+   do Quasar vive em @layer quasar com 2.5rem, e o que não se declara fica com o
+   valor dele. */
+.pv__titulo { margin: 0 0 var(--dss-spacing-3); line-height: var(--dss-line-height-tight); }
 </style>
