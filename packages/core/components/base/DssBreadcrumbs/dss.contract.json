@@ -25,14 +25,18 @@
         "type": "string",
         "controlHint": "text",
         "default": "/",
-        "description": "Caractere separador exibido entre os itens da trilha."
+        "description": "Caractere separador exibido entre os itens da trilha.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "separatorColor",
         "type": "string",
         "controlHint": "text",
         "default": "subtle",
-        "description": "Cor do separador."
+        "description": "Cor do separador.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "gutter",
@@ -44,7 +48,9 @@
           "sm",
           "md",
           "lg"
-        ]
+        ],
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "align",
@@ -58,7 +64,9 @@
           "right",
           "between",
           "around"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -70,7 +78,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [],

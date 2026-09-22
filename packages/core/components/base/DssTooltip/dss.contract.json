@@ -24,7 +24,9 @@
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Conteudo textual do tooltip (alternativa ao slot default)"
+        "description": "Conteudo textual do tooltip (alternativa ao slot default)",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "color",
@@ -40,26 +42,34 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "textColor",
         "type": "string | null",
         "controlHint": "text",
-        "description": "Cor customizada do texto (sobrescreve cor padrao)"
+        "description": "Cor customizada do texto (sobrescreve cor padrao)",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "multiLine",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Permite multiplas linhas de texto (word-wrap)"
+        "description": "Permite multiplas linhas de texto (word-wrap)",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "visible",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Controle externo de visibilidade"
+        "description": "Controle externo de visibilidade",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -70,13 +80,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers"
+        "description": "Label de acessibilidade customizado para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

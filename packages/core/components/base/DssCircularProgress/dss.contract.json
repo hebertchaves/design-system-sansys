@@ -23,19 +23,25 @@
         "name": "value",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Valor atual do progresso (min..max). Omitir + indeterminate ativa animação contínua."
+        "description": "Valor atual do progresso (min..max). Omitir + indeterminate ativa animação contínua.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "min",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Valor mínimo. Padrão: 0."
+        "description": "Valor mínimo. Padrão: 0.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "max",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Valor máximo. Padrão: 100."
+        "description": "Valor máximo. Padrão: 100.",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "color",
@@ -49,7 +55,9 @@
           "success",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -62,7 +70,9 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -73,43 +83,57 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "indeterminate",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Força estado indeterminado (animação contínua)."
+        "description": "Força estado indeterminado (animação contínua).",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "thickness",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Espessura do traço (0–1, relativo ao raio). Padrão: 0.2."
+        "description": "Espessura do traço (0–1, relativo ao raio). Padrão: 0.2.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "angle",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Ângulo de início do arco em graus. Padrão: 0."
+        "description": "Ângulo de início do arco em graus. Padrão: 0.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "reverse",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Inverte a direção do preenchimento/animação."
+        "description": "Inverte a direção do preenchimento/animação.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "instantFeedback",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Remove transição de valor (feedback imediato, sem animação de fill)."
+        "description": "Remove transição de valor (feedback imediato, sem animação de fill).",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Reduz opacidade ao nível desabilitado (não interativo)."
+        "description": "Reduz opacidade ao nível desabilitado (não interativo).",
+        "category": "Estado",
+        "categorySource": "excecao"
       }
     ],
     "emits": [],

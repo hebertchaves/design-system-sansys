@@ -24,54 +24,70 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estado aberto/fechado do FAB (v-model)."
+        "description": "Estado aberto/fechado do FAB (v-model).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "color",
         "type": "string",
         "controlHint": "text",
         "default": "primary",
-        "description": "Cor do FAB (compatível com paleta Quasar e DSS)."
+        "description": "Cor do FAB (compatível com paleta Quasar e DSS).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "textColor",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor do ícone/texto (sobrescreve o contraste automático)."
+        "description": "Cor do ícone/texto (sobrescreve o contraste automático).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto exibido ao lado do ícone."
+        "description": "Texto exibido ao lado do ícone.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
         "default": "add",
-        "description": "Ícone exibido quando o FAB está fechado."
+        "description": "Ícone exibido quando o FAB está fechado.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "activeIcon",
         "type": "string",
         "controlHint": "text",
         "default": "close",
-        "description": "Ícone exibido quando o FAB está aberto."
+        "description": "Ícone exibido quando o FAB está aberto.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "hideIcon",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Oculta o ícone do FAB."
+        "description": "Oculta o ícone do FAB.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "hideLabel",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Oculta o label do FAB."
+        "description": "Oculta o label do FAB.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "direction",
@@ -84,7 +100,9 @@
           "down",
           "left",
           "right"
-        ]
+        ],
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "verticalActionsAlign",
@@ -96,21 +114,27 @@
           "left",
           "center",
           "right"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "persistent",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Não fecha o FAB ao clicar fora da área de ações."
+        "description": "Não fecha o FAB ao clicar fora da área de ações.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Desabilita o FAB (trigger e ações)."
+        "description": "Desabilita o FAB (trigger e ações).",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -122,13 +146,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o trigger (aria-label)."
+        "description": "Label acessível para o trigger (aria-label).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

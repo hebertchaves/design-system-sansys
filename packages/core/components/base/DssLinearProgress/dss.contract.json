@@ -23,19 +23,25 @@
         "name": "value",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Progresso (0.0–1.0). Omitir ativa estado indeterminado automaticamente."
+        "description": "Progresso (0.0–1.0). Omitir ativa estado indeterminado automaticamente.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "indeterminate",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Força estado indeterminado independente de value."
+        "description": "Força estado indeterminado independente de value.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "reverse",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Inverte a direção do preenchimento/animação."
+        "description": "Inverte a direção do preenchimento/animação.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "color",
@@ -49,7 +55,9 @@
           "success",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -62,7 +70,9 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -73,19 +83,25 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "stripe",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Aplica padrão listrado à barra de progresso."
+        "description": "Aplica padrão listrado à barra de progresso.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Reduz opacidade ao nível desabilitado (não interativo)."
+        "description": "Reduz opacidade ao nível desabilitado (não interativo).",
+        "category": "Estado",
+        "categorySource": "excecao"
       }
     ],
     "emits": [],

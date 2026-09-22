@@ -31,21 +31,27 @@
           "flat",
           "bordered",
           "outlined"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove border-radius (cantos quadrados)"
+        "description": "Remove border-radius (cantos quadrados)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "dark",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Modo escuro"
+        "description": "Modo escuro",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -57,21 +63,27 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "clickable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Torna o card clicável (adiciona efeitos hover)"
+        "description": "Torna o card clicável (adiciona efeitos hover)",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "horizontal",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Layout horizontal (flex-row)"
+        "description": "Layout horizontal (flex-row)",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "align",
@@ -85,14 +97,18 @@
           "right",
           "between",
           "around"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "vertical",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Alinhamento vertical (botões empilhados)"
+        "description": "Alinhamento vertical (botões empilhados)",
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [

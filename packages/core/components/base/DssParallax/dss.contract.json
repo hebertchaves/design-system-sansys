@@ -23,39 +23,51 @@
         "name": "src",
         "type": "string",
         "controlHint": "text",
-        "description": "URL da imagem de fundo para o efeito de paralaxe"
+        "description": "URL da imagem de fundo para o efeito de paralaxe",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "height",
         "type": "number",
         "controlHint": "stepper",
         "default": "500",
-        "description": "Altura do componente em pixels."
+        "description": "Altura do componente em pixels.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "speed",
         "type": "number",
         "controlHint": "stepper",
         "default": "0.5",
-        "description": "Velocidade do efeito de paralaxe."
+        "description": "Velocidade do efeito de paralaxe.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "scrollTarget",
         "type": "string | Element",
         "controlHint": "text",
-        "description": "Elemento alvo para o cálculo de scroll."
+        "description": "Elemento alvo para o cálculo de scroll.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "alt",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto alternativo para acessibilidade (WCAG 1.1.1)."
+        "description": "Texto alternativo para acessibilidade (WCAG 1.1.1).",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "decorative",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Marca o componente como puramente decorativo."
+        "description": "Marca o componente como puramente decorativo.",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       }
     ],
     "emits": [],

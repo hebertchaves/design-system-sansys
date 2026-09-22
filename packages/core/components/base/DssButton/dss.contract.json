@@ -23,19 +23,25 @@
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto do botão (alternativa ao slot default)"
+        "description": "Texto do botão (alternativa ao slot default)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone à esquerda (Material Icons)"
+        "description": "Ícone à esquerda (Material Icons)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconRight",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone à direita (Material Icons)"
+        "description": "Ícone à direita (Material Icons)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -49,7 +55,9 @@
           "unelevated",
           "push",
           "glossy"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "color",
@@ -65,7 +73,9 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -78,43 +88,57 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "round",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Botão completamente circular"
+        "description": "Botão completamente circular",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Botão completamente quadrado (sem border-radius)"
+        "description": "Botão completamente quadrado (sem border-radius)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado de carregamento (mostra spinner)"
+        "description": "Estado de carregamento (mostra spinner)",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado desabilitado"
+        "description": "Estado desabilitado",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "percentage",
         "type": "number | null",
         "controlHint": "text",
-        "description": "Porcentagem de progresso (0-100)"
+        "description": "Porcentagem de progresso (0-100)",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "darkPercentage",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Usar indicador escuro na barra de progresso"
+        "description": "Usar indicador escuro na barra de progresso",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "type",
@@ -125,19 +149,25 @@
           "button",
           "submit",
           "reset"
-        ]
+        ],
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "to",
         "type": "RouteLocationRaw | null",
         "controlHint": "text",
-        "description": "Rota Vue Router (transforma em router-link)"
+        "description": "Rota Vue Router (transforma em router-link)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "replace",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Usar router.replace ao invés de router.push"
+        "description": "Usar router.replace ao invés de router.push",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -148,19 +178,25 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo compacto (reduz padding)"
+        "description": "Modo compacto (reduz padding)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "noCaps",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Força capitalização natural, ignorando `--dss-text-transform-control`."
+        "description": "Força capitalização natural, ignorando `--dss-text-transform-control`.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "align",
@@ -174,49 +210,65 @@
           "between",
           "around",
           "evenly"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "stack",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Empilha ícone e label verticalmente"
+        "description": "Empilha ícone e label verticalmente",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "stretch",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estica o botão para ocupar largura total"
+        "description": "Estica o botão para ocupar largura total",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "noWrap",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Previne quebra de linha do label"
+        "description": "Previne quebra de linha do label",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "padding",
         "type": "string | null",
         "controlHint": "text",
-        "description": "Padding customizado (ex: \"16px 32px\")"
+        "description": "Padding customizado (ex: \"16px 32px\")",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ripple",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Ativa efeito ripple ao clicar"
+        "description": "Ativa efeito ripple ao clicar",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
-        "description": "Tabindex customizado"
+        "description": "Tabindex customizado",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers"
+        "description": "Label de acessibilidade customizado para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

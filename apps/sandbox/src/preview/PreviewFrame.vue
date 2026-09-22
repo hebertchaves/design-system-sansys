@@ -93,29 +93,17 @@
 
         <template v-for="grupo in gruposDeKnobs" :key="grupo.id">
           <!--
-            ESSENCIAIS abertos, DEMAIS recolhidos. O corte vem do
-            `defaultPreview.props` do contrato — média de 1,9 props contra até 26
-            disponíveis. Sem o corte o painel nasce rolando no DssSelect (24
-            props) e o scroll aninhado vira armadilha dentro da página de teste.
+            Um cabeçalho por CATEGORIA, sempre na mesma ordem (Conteúdo →
+            Aparência → Estado → Comportamento → Acessibilidade). Grupo vazio não
+            aparece: cabeçalho sem conteúdo é ruído, não estrutura.
           -->
           <button
-            v-if="grupo.colapsavel"
             class="pv__group pg-nav__title"
-            :aria-expanded="String(restantesAbertos)"
-            @click="restantesAbertos = !restantesAbertos"
+            :aria-expanded="String(!gruposFechados[grupo.id])"
+            @click="gruposFechados[grupo.id] = !gruposFechados[grupo.id]"
           >
-            <!--
-              Era `.pg-nav__link`, e isso QUEBROU o layout: aquela classe é
-              `grid-template-columns: 20px 1fr` (índice + nome), e aqui há três
-              filhos — o "(22)" caía na coluna do nome e sobrepunha o texto.
-              Reusar classe exige conferir a ESTRUTURA que ela pressupõe, não só
-              a aparência.
-              Agora é irmão de "CONTROLES": mesmo micro-rótulo, com o caret do
-              Material que o template já usa no menu (chevron/expand), em vez de
-              um triângulo de texto.
-            -->
-            <span class="material-icons pv__group-caret">{{ restantesAbertos ? 'expand_less' : 'expand_more' }}</span>
-            Demais props <small>({{ knobsRestantes.length }})</small>
+            <span class="material-icons pv__group-caret">{{ gruposFechados[grupo.id] ? 'expand_more' : 'expand_less' }}</span>
+            {{ grupo.titulo }} <small>({{ grupo.total }})</small>
           </button>
         <div v-for="k in grupo.itens" :key="k.name" class="pv__knob">
           <label :for="'k-' + k.name">{{ k.name }} <small>{{ k.controlHint }}</small></label>
@@ -237,9 +225,7 @@ const dirigidoDeFora = computed(() => props.theme != null || props.brand != null
 const knobsCollapsed = ref(false)
 // Seção inteira recolhida (só no modo embutido).
 const secaoAberta = ref(true)
-// Grupo "completos" começa fechado: o defaultPreview declara em média 1,9 props
-// essenciais contra até 26 disponíveis. Abrir tudo faz o painel nascer rolando.
-const restantesAbertos = ref(true)
+
 
 /**
  * O tipo declarado no contrato é uma prop de ARRAY?
@@ -317,21 +303,43 @@ const brandEfetivo = computed(() => props.brand ?? brandLocal.value)
 
 const contextTokens = ref([])      // visual.contextTokens do contrato
 
-// ESSENCIAIS vêm do `defaultPreview.props` do contrato — a mesma declaração que
-// define a vista canônica do componente. Não é lista curada à mão: é derivada,
-// e acompanha o meta sem manutenção paralela.
-const nomesEssenciais = computed(() => Object.keys(contract.value?.visual?.defaultPreview?.props || {}))
-const knobsEssenciais = computed(() => knobs.value.filter((k) => nomesEssenciais.value.includes(k.name)))
-const knobsRestantes = computed(() => knobs.value.filter((k) => !nomesEssenciais.value.includes(k.name)))
+/**
+ * AGRUPAMENTO POR PAPEL — a ordem abaixo é fixa e vale para todo componente.
+ *
+ * Antes eram dois baldes ("essenciais", do defaultPreview, e "o resto") e, dentro
+ * deles, a ordem em que alguém declarou as props no types.ts. Não havia o que
+ * prever: `brand` é a 14ª prop no DssChip e a 5ª no DssInput.
+ *
+ * A categoria vem do CONTRATO (`api.props[].category`), derivada no emissor a
+ * partir da api.json do Quasar, do CSS do componente e de uma lista de exceções
+ * para as props próprias do DSS. Não é curadoria deste painel.
+ *
+ * Os ESSENCIAIS deixaram de ser um grupo: eram um segundo eixo brigando com este.
+ * Com dois critérios ao mesmo tempo, `variant` podia estar em "essenciais" num
+ * componente e em "o resto" noutro — de novo imprevisível.
+ */
+const ORDEM_CATEGORIAS = ['Conteúdo', 'Aparência', 'Estado', 'Comportamento', 'Acessibilidade', 'Outros']
 
-// Um único v-for sobre GRUPOS, para o corpo do knob (que tem 6 variantes de
-// widget) existir uma vez só. Duplicá-lo por grupo garantiria divergência.
+// Recolhimento por grupo. Todos abertos: o painel rola por dentro desde que a
+// altura passou a vir do container, então esconder deixou de pagar por si.
+const gruposFechados = reactive({})
+
 const gruposDeKnobs = computed(() => {
-  const gs = [{ id: 'essenciais', itens: knobsEssenciais.value, colapsavel: false }]
-  if (knobsRestantes.value.length) {
-    gs.push({ id: 'restantes', itens: restantesAbertos.value ? knobsRestantes.value : [], colapsavel: true })
+  const porCat = new Map()
+  for (const k of knobs.value) {
+    if (!porCat.has(k.category)) porCat.set(k.category, [])
+    porCat.get(k.category).push(k)
   }
-  return gs
+  return ORDEM_CATEGORIAS
+    .filter((c) => porCat.has(c))
+    .map((c) => ({
+      id: c,
+      titulo: c,
+      // Alfabético DENTRO do grupo: com a categoria dizendo onde procurar, a
+      // ordem alfabética diz onde exatamente. Ordem de declaração não diz nada.
+      itens: gruposFechados[c] ? [] : porCat.get(c).slice().sort((a, b) => a.name.localeCompare(b.name, 'pt')),
+      total: porCat.get(c).length,
+    }))
 })
 // Semente de FILHOS do contrato (visual.defaultPreview.slots, vindo do
 // defaultPreview.demoSlots do meta). Sem ela o container monta como casca
@@ -377,6 +385,7 @@ function load() {
     .filter((p) => p.name !== vmodel)
     .map((p) => ({
       name: p.name,
+      category: p.category || 'Outros',
       controlHint: p.controlHint,
       description: p.description || '',
       default: p.default,

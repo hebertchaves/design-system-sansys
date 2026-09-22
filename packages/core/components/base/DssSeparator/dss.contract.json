@@ -24,7 +24,9 @@
         "name": "vertical",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Define orientação vertical. Default: false (horizontal)"
+        "description": "Define orientação vertical. Default: false (horizontal)",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "inset",
@@ -34,13 +36,17 @@
         "validValues": [
           "item",
           "item-thumbnail"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "spaced",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Aplica margem ao redor do separador (separação com o conteúdo adjacente)."
+        "description": "Aplica margem ao redor do separador (separação com o conteúdo adjacente).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "color",
@@ -53,7 +59,9 @@
           "strong",
           "primary",
           "secondary"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -65,13 +73,17 @@
           "thin",
           "md",
           "thick"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaHidden",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Remove o separador da árvore de acessibilidade."
+        "description": "Remove o separador da árvore de acessibilidade.",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

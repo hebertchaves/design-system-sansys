@@ -25,35 +25,45 @@
         "type": "string | number",
         "controlHint": "text",
         "required": true,
-        "description": "Identificador do painel ativo."
+        "description": "Identificador do painel ativo.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "animated",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Habilita transição animada (fade governado pelo DSS) ao trocar de painel."
+        "description": "Habilita transição animada (fade governado pelo DSS) ao trocar de painel.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "swipeable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Habilita navegação por gesto de swipe (útil em dispositivos touch/mobile)."
+        "description": "Habilita navegação por gesto de swipe (útil em dispositivos touch/mobile).",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "infinite",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Ao chegar no último painel, retorna ao primeiro (e vice-versa)."
+        "description": "Ao chegar no último painel, retorna ao primeiro (e vice-versa).",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "keepAlive",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mantém o estado dos painéis inativos em memória via Vue KeepAlive."
+        "description": "Mantém o estado dos painéis inativos em memória via Vue KeepAlive.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

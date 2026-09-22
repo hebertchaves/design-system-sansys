@@ -23,25 +23,33 @@
         "name": "breakpoint",
         "type": "DssBreakpoint[]",
         "controlHint": "text",
-        "description": "Breakpoints on which to show the slot content. Alias for showOn."
+        "description": "Breakpoints on which to show the slot content. Alias for showOn.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "showOn",
         "type": "DssBreakpoint[]",
         "controlHint": "text",
-        "description": "Breakpoints on which to show the slot content. Takes priority over hideOn."
+        "description": "Breakpoints on which to show the slot content. Takes priority over hideOn.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "hideOn",
         "type": "DssBreakpoint[]",
         "controlHint": "text",
-        "description": "Breakpoints on which to hide the slot content."
+        "description": "Breakpoints on which to hide the slot content.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "tag",
         "type": "string",
         "controlHint": "text",
-        "description": "HTML tag to render as the wrapper element."
+        "description": "HTML tag to render as the wrapper element.",
+        "category": "Comportamento",
+        "categorySource": "override"
       }
     ],
     "emits": [],

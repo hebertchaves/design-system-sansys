@@ -28,27 +28,37 @@
           "bottom",
           "left",
           "right"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "skipHijack",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "reverse",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "hijackFilter",
         "type": "(url: string) => boolean",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -58,7 +68,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [

@@ -24,62 +24,80 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Controla a visibilidade do popup (v-model:open)."
+        "description": "Controla a visibilidade do popup (v-model:open).",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "breakpoint",
         "type": "number | string",
         "controlHint": "text",
         "default": "450",
-        "description": "Breakpoint em pixels para alternar entre QMenu (≥) e QDialog (<)."
+        "description": "Breakpoint em pixels para alternar entre QMenu (≥) e QDialog (<).",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "target",
         "type": "string | Element | boolean | null",
         "controlHint": "text",
-        "description": "Elemento alvo para posicionamento. Pode ser seletor CSS string,"
+        "description": "Elemento alvo para posicionamento. Pode ser seletor CSS string,",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "noParentEvent",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Impede o QPopupProxy de adicionar listener de evento no elemento pai."
+        "description": "Impede o QPopupProxy de adicionar listener de evento no elemento pai.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "contextMenu",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Exibe o popup ao clique-direito do mouse (context menu)."
+        "description": "Exibe o popup ao clique-direito do mouse (context menu).",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "persistent",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Impede o fechamento do popup ao clicar fora ou pressionar ESC."
+        "description": "Impede o fechamento do popup ao clicar fora ou pressionar ESC.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "noFocus",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Impede que o popup capture o foco ao abrir."
+        "description": "Impede que o popup capture o foco ao abrir.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "noRefocus",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Impede que o foco retorne ao elemento trigger ao fechar."
+        "description": "Impede que o foco retorne ao elemento trigger ao fechar.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "autoClose",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Fecha o popup automaticamente ao clicar em qualquer elemento interno."
+        "description": "Fecha o popup automaticamente ao clicar em qualquer elemento interno.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "anchor",
@@ -102,7 +120,9 @@
           "bottom right",
           "bottom start",
           "bottom end"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "self",
@@ -125,57 +145,75 @@
           "bottom right",
           "bottom start",
           "bottom end"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "offset",
         "type": "[number, number]",
         "controlHint": "text",
-        "description": "Deslocamento [x, y] em pixels a partir do ponto de ancoragem."
+        "description": "Deslocamento [x, y] em pixels a partir do ponto de ancoragem.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "fit",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Ajusta a largura do popup para ser igual à largura do elemento trigger."
+        "description": "Ajusta a largura do popup para ser igual à largura do elemento trigger.",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "cover",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Cobre completamente o elemento trigger."
+        "description": "Cobre completamente o elemento trigger.",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "maxHeight",
         "type": "string",
         "controlHint": "text",
-        "description": "Altura máxima do popup. Aceita string CSS (ex: '300px', '50vh')."
+        "description": "Altura máxima do popup. Aceita string CSS (ex: '300px', '50vh').",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "maxWidth",
         "type": "string",
         "controlHint": "text",
-        "description": "Largura máxima do popup. Aceita string CSS (ex: '400px', '80vw')."
+        "description": "Largura máxima do popup. Aceita string CSS (ex: '400px', '80vw').",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "transitionShow",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome da transição de entrada do popup."
+        "description": "Nome da transição de entrada do popup.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "transitionHide",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome da transição de saída do popup."
+        "description": "Nome da transição de saída do popup.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "scrollTarget",
         "type": "string | Element",
         "controlHint": "text",
-        "description": "Elemento para escutar eventos de scroll."
+        "description": "Elemento para escutar eventos de scroll.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       }
     ],
     "emits": [

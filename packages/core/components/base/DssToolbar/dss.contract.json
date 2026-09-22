@@ -24,7 +24,9 @@
         "name": "inset",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Adiciona recuo extra à esquerda (padding-inline-start ampliado)."
+        "description": "Adiciona recuo extra à esquerda (padding-inline-start ampliado).",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -35,7 +37,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [],

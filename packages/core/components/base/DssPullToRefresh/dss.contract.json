@@ -23,19 +23,25 @@
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desativa a funcionalidade de puxar para atualizar"
+        "description": "Desativa a funcionalidade de puxar para atualizar",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "noMouse",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desativa interação via mouse (apenas toque habilitado)"
+        "description": "Desativa interação via mouse (apenas toque habilitado)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone Material exibido no indicador de pull. Padrão: 'refresh' (Quasar)"
+        "description": "Ícone Material exibido no indicador de pull. Padrão: 'refresh' (Quasar)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -46,7 +52,9 @@
           "sm",
           "md",
           "lg"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       }
     ],
     "emits": [

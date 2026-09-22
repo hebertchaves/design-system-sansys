@@ -28,7 +28,9 @@
           "dense",
           "comfortable",
           "loose"
-        ]
+        ],
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "side",
@@ -38,13 +40,17 @@
         "validValues": [
           "left",
           "right"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "dark",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Ativa o modo escuro no QTimeline."
+        "description": "Ativa o modo escuro no QTimeline.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       }
     ],
     "emits": [],

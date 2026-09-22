@@ -29,22 +29,30 @@
           "circle",
           "heading",
           "avatar"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "width",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "height",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "lines",
         "type": "number",
-        "controlHint": "stepper"
+        "controlHint": "stepper",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "animation",
@@ -54,17 +62,23 @@
           "wave",
           "pulse",
           "none"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "bordered",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "tag",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "radius",
@@ -79,7 +93,9 @@
           "--dss-radius-2xl",
           "--dss-radius-3xl",
           "--dss-radius-full"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "brand",
@@ -89,7 +105,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [],

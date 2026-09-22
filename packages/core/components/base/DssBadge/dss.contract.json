@@ -24,7 +24,9 @@
         "name": "label",
         "type": "string | number",
         "controlHint": "text",
-        "description": "Conteúdo do badge (alternativa ao slot default)"
+        "description": "Conteúdo do badge (alternativa ao slot default)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "color",
@@ -40,43 +42,57 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "textColor",
         "type": "string | null",
         "controlHint": "text",
-        "description": "Cor customizada do texto (sobrescreve cor padrão)"
+        "description": "Cor customizada do texto (sobrescreve cor padrão)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "transparent",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Badge transparente (apenas texto colorido)"
+        "description": "Badge transparente (apenas texto colorido)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "outline",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Badge com outline (borda colorida)"
+        "description": "Badge com outline (borda colorida)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "rounded",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Badge arredondado (border-radius aumentado)"
+        "description": "Badge arredondado (border-radius aumentado)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "multiLine",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Permite múltiplas linhas de texto"
+        "description": "Permite múltiplas linhas de texto",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "floating",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Badge flutuante (posicionamento absoluto)"
+        "description": "Badge flutuante (posicionamento absoluto)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "align",
@@ -87,7 +103,9 @@
           "top",
           "middle",
           "bottom"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -98,13 +116,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers"
+        "description": "Label de acessibilidade customizado para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

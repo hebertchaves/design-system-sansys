@@ -23,7 +23,9 @@
         "name": "url",
         "type": "string",
         "controlHint": "text",
-        "description": "URL para envio dos arquivos"
+        "description": "URL para envio dos arquivos",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "method",
@@ -33,91 +35,121 @@
         "validValues": [
           "POST",
           "PUT"
-        ]
+        ],
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "headers",
         "type": "Record<string, string> | Array<{ name: string; value: string }>",
         "controlHint": "text",
-        "description": "Cabeçalhos HTTP adicionais"
+        "description": "Cabeçalhos HTTP adicionais",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "formFields",
         "type": "Array<{ name: string; value: string }>",
         "controlHint": "text",
-        "description": "Campos de formulário adicionais"
+        "description": "Campos de formulário adicionais",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "withCredentials",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Envia credenciais (cookies, auth headers)"
+        "description": "Envia credenciais (cookies, auth headers)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "sendRaw",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Envia arquivo como binário puro (sem FormData)"
+        "description": "Envia arquivo como binário puro (sem FormData)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "factory",
         "type": "UploaderFactory",
         "controlHint": "text",
-        "description": "Configuração dinâmica de upload via função"
+        "description": "Configuração dinâmica de upload via função",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "multiple",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Permite selecionar múltiplos arquivos. Padrão: false."
+        "description": "Permite selecionar múltiplos arquivos. Padrão: false.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "accept",
         "type": "string",
         "controlHint": "text",
-        "description": "Filtro de tipos aceitos (ex: \".pdf,image/*\")"
+        "description": "Filtro de tipos aceitos (ex: \".pdf,image/*\")",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "maxFiles",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Número máximo de arquivos na fila"
+        "description": "Número máximo de arquivos na fila",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "maxFileSize",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Tamanho máximo por arquivo em bytes"
+        "description": "Tamanho máximo por arquivo em bytes",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "maxTotalSize",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Tamanho máximo total da fila em bytes"
+        "description": "Tamanho máximo total da fila em bytes",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "autoUpload",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Inicia o upload automaticamente ao adicionar arquivos. Padrão: false."
+        "description": "Inicia o upload automaticamente ao adicionar arquivos. Padrão: false.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "batch",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Envia todos os arquivos em um único request. Padrão: false."
+        "description": "Envia todos os arquivos em um único request. Padrão: false.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita toda interação com o componente. Padrão: false."
+        "description": "Desabilita toda interação com o componente. Padrão: false.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo somente leitura — mostra arquivos mas impede adição/remoção. Padrão: false."
+        "description": "Modo somente leitura — mostra arquivos mas impede adição/remoção. Padrão: false.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -128,7 +160,9 @@
           "elevated",
           "outline",
           "subtle"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "brand",
@@ -139,37 +173,49 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto da dropzone vazia"
+        "description": "Texto da dropzone vazia",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "addAriaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "aria-label do botão \"Adicionar arquivos\""
+        "description": "aria-label do botão \"Adicionar arquivos\"",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "uploadAriaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "aria-label do botão \"Fazer upload\""
+        "description": "aria-label do botão \"Fazer upload\"",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "abortAriaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "aria-label do botão \"Cancelar upload\""
+        "description": "aria-label do botão \"Cancelar upload\"",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "clearAriaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "aria-label do botão \"Limpar fila\""
+        "description": "aria-label do botão \"Limpar fila\"",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

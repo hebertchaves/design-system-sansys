@@ -23,25 +23,33 @@
         "name": "src",
         "type": "string",
         "controlHint": "text",
-        "description": "URL da imagem a ser carregada"
+        "description": "URL da imagem a ser carregada",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "alt",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto alternativo — obrigatório para imagens não-decorativas (WCAG 1.1.1)"
+        "description": "Texto alternativo — obrigatório para imagens não-decorativas (WCAG 1.1.1)",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "decorative",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Marca a imagem como puramente decorativa."
+        "description": "Marca a imagem como puramente decorativa.",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       },
       {
         "name": "ratio",
         "type": "number | string",
         "controlHint": "text",
-        "description": "Proporção de aspecto da imagem (largura / altura)."
+        "description": "Proporção de aspecto da imagem (largura / altura).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "fit",
@@ -54,7 +62,9 @@
           "fill",
           "none",
           "scale-down"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "loading",
@@ -64,25 +74,33 @@
         "validValues": [
           "lazy",
           "eager"
-        ]
+        ],
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "fallbackSrc",
         "type": "string",
         "controlHint": "text",
-        "description": "Imagem de fallback exibida quando `src` falha"
+        "description": "Imagem de fallback exibida quando `src` falha",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "placeholderSrc",
         "type": "string",
         "controlHint": "text",
-        "description": "LQIP (Low Quality Image Placeholder): imagem de baixa qualidade exibida"
+        "description": "LQIP (Low Quality Image Placeholder): imagem de baixa qualidade exibida",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "position",
         "type": "string",
         "controlHint": "text",
-        "description": "Posição da imagem dentro do container (equivalente a background-position)"
+        "description": "Posição da imagem dentro do container (equivalente a background-position)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "radius",
@@ -95,13 +113,17 @@
           "md",
           "lg",
           "full"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "css-variants"
       },
       {
         "name": "noTransition",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desativa a transição de fade-in ao carregar"
+        "description": "Desativa a transição de fade-in ao carregar",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

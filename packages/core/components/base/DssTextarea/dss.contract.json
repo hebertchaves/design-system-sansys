@@ -24,7 +24,9 @@
         "name": "modelValue",
         "type": "string",
         "controlHint": "text",
-        "description": "Valor do textarea (v-model)"
+        "description": "Valor do textarea (v-model)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -37,14 +39,18 @@
           "outlined",
           "standout",
           "borderless"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Versão compacta (menor altura inicial e espaçamentos reduzidos)"
+        "description": "Versão compacta (menor altura inicial e espaçamentos reduzidos)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -56,121 +62,157 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Label do textarea (floating label)"
+        "description": "Label do textarea (floating label)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "stackLabel",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Label sempre visível no topo (não flutua)"
+        "description": "Label sempre visível no topo (não flutua)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "placeholder",
         "type": "string",
         "controlHint": "text",
-        "description": "Placeholder do textarea"
+        "description": "Placeholder do textarea",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "hint",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto de ajuda exibido abaixo do textarea"
+        "description": "Texto de ajuda exibido abaixo do textarea",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "errorMessage",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem de erro exibida abaixo do textarea"
+        "description": "Mensagem de erro exibida abaixo do textarea",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estado de erro (muda cor para negativo)"
+        "description": "Estado de erro (muda cor para negativo)",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Textarea desabilitado"
+        "description": "Textarea desabilitado",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Textarea somente leitura"
+        "description": "Textarea somente leitura",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra indicador de loading (spinner)"
+        "description": "Mostra indicador de loading (spinner)",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "required",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Textarea obrigatório (adiciona aria-required)"
+        "description": "Textarea obrigatório (adiciona aria-required)",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "clearable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra botão de limpar (×) quando há valor"
+        "description": "Mostra botão de limpar (×) quando há valor",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "autogrow",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Cresce automaticamente conforme o conteúdo é digitado."
+        "description": "Cresce automaticamente conforme o conteúdo é digitado.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "rows",
         "type": "number | string",
         "controlHint": "text",
         "default": "1",
-        "description": "Número de linhas visíveis inicialmente."
+        "description": "Número de linhas visíveis inicialmente.",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "maxHeight",
         "type": "string",
         "controlHint": "text",
         "default": "undefined",
-        "description": "Altura máxima do campo (CSS value, ex.: '300px', '50vh')."
+        "description": "Altura máxima do campo (CSS value, ex.: '300px', '50vh').",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers."
+        "description": "Label de acessibilidade customizado para screen readers.",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "clearAriaLabel",
         "type": "string",
         "controlHint": "text",
         "default": "Clear textarea",
-        "description": "Label de acessibilidade para o botão de limpar"
+        "description": "Label de acessibilidade para o botão de limpar",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
         "default": "null",
-        "description": "Tabindex customizado"
+        "description": "Tabindex customizado",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

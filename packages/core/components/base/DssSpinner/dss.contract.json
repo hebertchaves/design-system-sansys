@@ -35,7 +35,9 @@
           "rings",
           "pie",
           "bars"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "color",
@@ -51,7 +53,9 @@
           "success",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -65,14 +69,18 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "thickness",
         "type": "number",
         "controlHint": "stepper",
         "default": "5",
-        "description": "Espessura do traço circular. Aplicável APENAS ao tipo 'standard' (QSpinner)."
+        "description": "Espessura do traço circular. Aplicável APENAS ao tipo 'standard' (QSpinner).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -84,14 +92,18 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
         "default": "Carregando",
-        "description": "Texto acessível para screen readers (conteúdo do .dss-spinner__label sr-only)."
+        "description": "Texto acessível para screen readers (conteúdo do .dss-spinner__label sr-only).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

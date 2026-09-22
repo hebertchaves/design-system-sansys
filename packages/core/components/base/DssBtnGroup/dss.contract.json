@@ -25,63 +25,81 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estilo flat (sem elevação, sem borda)."
+        "description": "Estilo flat (sem elevação, sem borda).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "outline",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estilo com borda visível."
+        "description": "Estilo com borda visível.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "push",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estilo 3D com sombra inferior (push/pressed effect)."
+        "description": "Estilo 3D com sombra inferior (push/pressed effect).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "unelevated",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove a sombra (sem elevação)."
+        "description": "Remove a sombra (sem elevação).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "rounded",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Aplica border-radius completamente arredondado (pill) nas extremidades do grupo."
+        "description": "Aplica border-radius completamente arredondado (pill) nas extremidades do grupo.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove todo border-radius do grupo (cantos retos)."
+        "description": "Remove todo border-radius do grupo (cantos retos).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "glossy",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Efeito glossy (gradiente brilhante)."
+        "description": "Efeito glossy (gradiente brilhante).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "spread",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Distribui os botões horizontalmente ocupando toda a largura disponível."
+        "description": "Distribui os botões horizontalmente ocupando toda a largura disponível.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "stretch",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Em contexto flexbox, os botões esticam até a altura do elemento pai."
+        "description": "Em contexto flexbox, os botões esticam até a altura do elemento pai.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -93,13 +111,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o grupo de botões (aria-label)."
+        "description": "Label acessível para o grupo de botões (aria-label).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

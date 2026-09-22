@@ -29,6 +29,7 @@ import { fileURLToPath } from 'url'
 import { extractStates, compiledCss } from './extract-css-states.mjs'
 import { contextTokensFromCss } from './context-tokens.mjs'
 import { checkContrast, hasCssRule, resolveToken } from './wcag-kit.mjs'
+import { derivarCategoria, baseQuasar } from './lib/prop-category.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT      = path.resolve(__dirname, '..')
@@ -166,7 +167,38 @@ function deriveControlHint(type, validValues, unionName) {
   return 'text'
 }
 
-function buildApi(types) {
+/**
+ * Props do Quasar que serve de base (para herdar `category`), ou null.
+ * O Quasar declara categoria em 100% das props; os componentes DSS são wrappers,
+ * então herdar cobre 2/3 do catálogo sem uma linha de anotação à mão.
+ */
+function quasarPropsDe(nome) {
+  const q = baseQuasar(nome)
+  if (!q) return null
+  const f = path.join(ROOT, 'node_modules/quasar/dist/api', `${q}.json`)
+  if (!exists(f)) return null
+  try { return JSON.parse(fs.readFileSync(f, 'utf8')).props || null } catch { return null }
+}
+
+/**
+ * SCSS de uma camada, concatenado — para detectar classe modificadora da prop.
+ * `filtro` existe porque `4-output/` mistura papéis: `_states.scss` é estado,
+ * `_brands.scss` é aparência. Ler a pasta inteira classificava `brand` errado.
+ */
+function scssDaCamada(compDir, sub, filtro = null) {
+  const d = path.join(compDir, sub)
+  if (!exists(d)) return ''
+  return fs.readdirSync(d)
+    .filter(f => f.endsWith('.scss') && (!filtro || filtro.test(f)))
+    .map(f => read(path.join(d, f)) || '').join('\n')
+}
+
+function buildApi(types, { nome, compDir } = {}) {
+  const quasarProps = nome ? quasarPropsDe(nome) : null
+  const scssVariants = compDir ? scssDaCamada(compDir, '3-variants') : ''
+  const scssStates   = compDir ? scssDaCamada(compDir, '4-output', /_states\.scss$/) : ''
+  const scssBrands   = compDir ? scssDaCamada(compDir, '4-output', /_brands\.scss$/) : ''
+  const vModelNome   = types.props.some(p => p.name === 'modelValue') ? 'modelValue' : null
   const props = types.props.map(p => {
     // resolve validValues: type é nome de union OU union inline de literais
     let unionName = null, validValues
@@ -178,6 +210,14 @@ function buildApi(types) {
     if (p.required) out.required = true
     if (p.desc) out.description = p.desc
     if (validValues) out.validValues = validValues
+    // Categoria de PAPEL — agrupa o painel do Preview Frame. Derivada, não
+    // anotada: ver scripts/lib/prop-category.mjs para a ordem das fontes.
+    const cat = derivarCategoria({
+      componente: nome, prop: p.name, quasarProps,
+      scssVariants, scssStates, scssBrands, vModel: vModelNome,
+    })
+    out.category = cat.category
+    out.categorySource = cat.source
     return out
   })
   const emits = types.events.map(e => ({ name: e.name, ...(e.payload ? { payload: e.payload } : {}), ...(e.desc ? { description: e.desc } : {}) }))
@@ -329,7 +369,7 @@ function emit(name) {
   const states = extractStates(compDir)
   const ctxTokens = buildContextTokens(compDir)
   const { sources, sealPath } = buildSources(compDir, name)
-  const api = buildApi(types)
+  const api = buildApi(types, { nome: name, compDir })
   const status = deriveStatus(meta, sealPath)
 
   if (!meta.classification) gaps.push('identity.classification: ausente no meta (MUST-derivado) — backfill')

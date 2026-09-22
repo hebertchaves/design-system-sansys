@@ -24,31 +24,41 @@
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto do chip (alternativa ao slot default)"
+        "description": "Texto do chip (alternativa ao slot default)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Icone a esquerda (Material Icons)"
+        "description": "Icone a esquerda (Material Icons)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconRight",
         "type": "string",
         "controlHint": "text",
-        "description": "Icone a direita (Material Icons)"
+        "description": "Icone a direita (Material Icons)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconRemove",
         "type": "string",
         "controlHint": "text",
-        "description": "Icone customizado para o botao de remover"
+        "description": "Icone customizado para o botao de remover",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconSelected",
         "type": "string",
         "controlHint": "text",
-        "description": "Icone customizado para estado selecionado"
+        "description": "Icone customizado para estado selecionado",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -59,7 +69,9 @@
           "filled",
           "outline",
           "flat"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "color",
@@ -76,7 +88,9 @@
           "warning",
           "info",
           "neutral"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -88,37 +102,49 @@
           "sm",
           "md",
           "lg"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Chip completamente quadrado (raio reduzido)."
+        "description": "Chip completamente quadrado (raio reduzido).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "selected",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado selecionado (mostra icone de check)"
+        "description": "Estado selecionado (mostra icone de check)",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado desabilitado"
+        "description": "Estado desabilitado",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "clickable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Torna o chip clicavel (adiciona hover effects e emite 'click')"
+        "description": "Torna o chip clicavel (adiciona hover effects e emite 'click')",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "removable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Mostra icone de remover e emite evento 'remove' ao clicar"
+        "description": "Mostra icone de remover e emite evento 'remove' ao clicar",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -129,44 +155,58 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo compacto (reduz padding)"
+        "description": "Modo compacto (reduz padding)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "ripple",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Ativa efeito ripple ao clicar"
+        "description": "Ativa efeito ripple ao clicar",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
-        "description": "Tabindex customizado"
+        "description": "Tabindex customizado",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "role",
         "type": "string",
         "controlHint": "text",
-        "description": "Papel ARIA do chip. **O papel depende do contexto, não do componente.**"
+        "description": "Papel ARIA do chip. **O papel depende do contexto, não do componente.**",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "removeAriaLabel",
         "type": "string",
         "controlHint": "text",
         "default": "Remove",
-        "description": "Label de acessibilidade para o botao de remover"
+        "description": "Label de acessibilidade para o botao de remover",
+        "category": "Acessibilidade",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers"
+        "description": "Label de acessibilidade customizado para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

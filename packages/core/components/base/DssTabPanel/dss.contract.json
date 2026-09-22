@@ -25,14 +25,18 @@
         "type": "string | number",
         "controlHint": "text",
         "required": true,
-        "description": "Identificador único do painel."
+        "description": "Identificador único do painel.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Desabilita o painel, bloqueando interações com seu conteúdo."
+        "description": "Desabilita o painel, bloqueando interações com seu conteúdo.",
+        "category": "Estado",
+        "categorySource": "quasar"
       }
     ],
     "emits": [],

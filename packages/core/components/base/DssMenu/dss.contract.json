@@ -25,21 +25,27 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Controle de visibilidade do menu (v-model)"
+        "description": "Controle de visibilidade do menu (v-model)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "fit",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Faz o menu ter a mesma largura que o elemento disparador"
+        "description": "Faz o menu ter a mesma largura que o elemento disparador",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "cover",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "O menu cobre o elemento disparador"
+        "description": "O menu cobre o elemento disparador",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "anchor",
@@ -62,7 +68,9 @@
           "bottom right",
           "bottom start",
           "bottom end"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "self",
@@ -85,13 +93,17 @@
           "bottom right",
           "bottom start",
           "bottom end"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "offset",
         "type": "[number, number]",
         "controlHint": "text",
-        "description": "Deslocamento [x, y] em pixels a partir do ponto de ancoragem"
+        "description": "Deslocamento [x, y] em pixels a partir do ponto de ancoragem",
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [

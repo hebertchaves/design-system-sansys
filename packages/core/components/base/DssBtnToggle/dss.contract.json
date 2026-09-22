@@ -24,14 +24,18 @@
         "name": "modelValue",
         "type": "any",
         "controlHint": "text",
-        "description": "Valor atualmente selecionado (v-model)."
+        "description": "Valor atualmente selecionado (v-model).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "options",
         "type": "BtnToggleOption[]",
         "controlHint": "text",
         "required": true,
-        "description": "Array de opções que definem os botões internos."
+        "description": "Array de opções que definem os botões internos.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -45,80 +49,104 @@
           "outline",
           "unelevated",
           "push"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "color",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor dos botões inativos (não selecionados)."
+        "description": "Cor dos botões inativos (não selecionados).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "toggleColor",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor do botão ativo (selecionado)."
+        "description": "Cor do botão ativo (selecionado).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "textColor",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor do texto dos botões inativos."
+        "description": "Cor do texto dos botões inativos.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "toggleTextColor",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor do texto do botão ativo."
+        "description": "Cor do texto do botão ativo.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "rounded",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Aplica border-radius completamente arredondado (pill) nas extremidades do grupo."
+        "description": "Aplica border-radius completamente arredondado (pill) nas extremidades do grupo.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove todo border-radius do grupo (cantos retos)."
+        "description": "Remove todo border-radius do grupo (cantos retos).",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "spread",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Distribui os botões horizontalmente ocupando toda a largura disponível."
+        "description": "Distribui os botões horizontalmente ocupando toda a largura disponível.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "stretch",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Em contexto flexbox, os botões esticam até a altura do elemento pai."
+        "description": "Em contexto flexbox, os botões esticam até a altura do elemento pai.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Desabilita todo o grupo de alternância."
+        "description": "Desabilita todo o grupo de alternância.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Modo somente leitura — exibe seleção mas bloqueia alteração."
+        "description": "Modo somente leitura — exibe seleção mas bloqueia alteração.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "clearable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Permite desmarcar a opção atual clicando nela novamente."
+        "description": "Permite desmarcar a opção atual clicando nela novamente.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -130,13 +158,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o grupo de alternância (aria-label)."
+        "description": "Label acessível para o grupo de alternância (aria-label).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

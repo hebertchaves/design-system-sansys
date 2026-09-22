@@ -24,7 +24,9 @@
         "type": "boolean",
         "controlHint": "toggle",
         "required": true,
-        "description": "Controla a visibilidade do overlay de loading."
+        "description": "Controla a visibilidade do overlay de loading.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "color",
@@ -39,7 +41,9 @@
           "success",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -53,19 +57,25 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto opcional exibido abaixo do spinner."
+        "description": "Texto opcional exibido abaixo do spinner.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "delay",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Atraso em milissegundos antes da exibição do overlay."
+        "description": "Atraso em milissegundos antes da exibição do overlay.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "brand",
@@ -76,7 +86,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [],

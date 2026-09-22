@@ -24,19 +24,25 @@
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Rótulo do botão trigger."
+        "description": "Rótulo do botão trigger.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone à esquerda do label (Material Icons)."
+        "description": "Ícone à esquerda do label (Material Icons).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconRight",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone à direita do label (antes do ícone de seta)."
+        "description": "Ícone à direita do label (antes do ícone de seta).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -49,19 +55,25 @@
           "flat",
           "outline",
           "unelevated"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "color",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor do botão (compatível com paleta Quasar e DSS)."
+        "description": "Cor do botão (compatível com paleta Quasar e DSS).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "textColor",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor do texto (sobrescreve o contraste automático)."
+        "description": "Cor do texto (sobrescreve o contraste automático).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -75,98 +87,126 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove o border-radius (cantos retos)."
+        "description": "Remove o border-radius (cantos retos).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "rounded",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Border-radius pill completo."
+        "description": "Border-radius pill completo.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Reduz padding e altura (modo compacto)."
+        "description": "Reduz padding e altura (modo compacto).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "split",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Modo split: separa o botão de ação da seta de dropdown."
+        "description": "Modo split: separa o botão de ação da seta de dropdown.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Desabilita o componente inteiro (trigger + dropdown)."
+        "description": "Desabilita o componente inteiro (trigger + dropdown).",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Indica estado de carregamento no trigger."
+        "description": "Indica estado de carregamento no trigger.",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "closeOnEsc",
         "type": "boolean",
         "controlHint": "toggle",
         "default": true,
-        "description": "Fecha o dropdown ao pressionar Escape."
+        "description": "Fecha o dropdown ao pressionar Escape.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "dropdownIcon",
         "type": "string",
         "controlHint": "text",
         "default": "arrow_drop_down",
-        "description": "Ícone de seta do dropdown."
+        "description": "Ícone de seta do dropdown.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "menuAnchor",
         "type": "string",
         "controlHint": "text",
         "default": "bottom left",
-        "description": "Opções de posicionamento do painel (QMenu anchor)."
+        "description": "Opções de posicionamento do painel (QMenu anchor).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "menuSelf",
         "type": "string",
         "controlHint": "text",
         "default": "top left",
-        "description": "Ponto de self do painel (QMenu self)."
+        "description": "Ponto de self do painel (QMenu self).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "menuOffset",
         "type": "[number, number]",
         "controlHint": "text",
         "default": "[0, 0]",
-        "description": "Offset do painel em pixels [horizontal, vertical]."
+        "description": "Offset do painel em pixels [horizontal, vertical].",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "stretch",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Largura mínima do painel igual à largura do trigger."
+        "description": "Largura mínima do painel igual à largura do trigger.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "persistent",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mantém o conteúdo do painel montado mesmo quando fechado."
+        "description": "Mantém o conteúdo do painel montado mesmo quando fechado.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -178,13 +218,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o trigger (aria-label)."
+        "description": "Label acessível para o trigger (aria-label).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

@@ -23,28 +23,38 @@
         "name": "modelValue",
         "type": "number",
         "controlHint": "stepper",
-        "required": true
+        "required": true,
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "max",
         "type": "number",
         "controlHint": "stepper",
-        "required": true
+        "required": true,
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "maxPages",
         "type": "number",
-        "controlHint": "stepper"
+        "controlHint": "stepper",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "size",
@@ -55,37 +65,51 @@
           "sm",
           "md",
           "lg"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "ellipses",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "boundaryLinks",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "directionLinks",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "flat",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "outline",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "round",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -95,12 +119,16 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

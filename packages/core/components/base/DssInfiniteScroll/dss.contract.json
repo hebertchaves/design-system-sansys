@@ -23,37 +23,49 @@
         "name": "offset",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Offset em pixels a partir do fundo do container para acionar o carregamento"
+        "description": "Offset em pixels a partir do fundo do container para acionar o carregamento",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "debounce",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Debounce em milissegundos para o evento de scroll"
+        "description": "Debounce em milissegundos para o evento de scroll",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "initialIndex",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Índice inicial de paginação passado para o primeiro evento @load"
+        "description": "Índice inicial de paginação passado para o primeiro evento @load",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "scrollTarget",
         "type": "string | Element | null",
         "controlHint": "text",
-        "description": "Seletor CSS ou referência DOM para o container de scroll pai"
+        "description": "Seletor CSS ou referência DOM para o container de scroll pai",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "reverse",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo reverso: carrega ao atingir o topo (ex: chats, feeds de mensagens)"
+        "description": "Modo reverso: carrega ao atingir o topo (ex: chats, feeds de mensagens)",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita a detecção de scroll e o acionamento de @load"
+        "description": "Desabilita a detecção de scroll e o acionamento de @load",
+        "category": "Estado",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

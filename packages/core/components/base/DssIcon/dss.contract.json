@@ -25,7 +25,9 @@
         "type": "string",
         "controlHint": "text",
         "required": true,
-        "description": "Nome do icone Material Icons"
+        "description": "Nome do icone Material Icons",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "size",
@@ -39,7 +41,9 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "color",
@@ -56,14 +60,18 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "inline",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Modo inline (sizing dirigido pelo host)"
+        "description": "Modo inline (sizing dirigido pelo host)",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -74,34 +82,44 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "spin",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Ativa animacao de rotacao continua"
+        "description": "Ativa animacao de rotacao continua",
+        "category": "Aparência",
+        "categorySource": "css-variants"
       },
       {
         "name": "pulse",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Ativa animacao de pulso"
+        "description": "Ativa animacao de pulso",
+        "category": "Aparência",
+        "categorySource": "css-variants"
       },
       {
         "name": "decorative",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Marca o icone como decorativo (aria-hidden=\"true\")"
+        "description": "Marca o icone como decorativo (aria-hidden=\"true\")",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade para screen readers"
+        "description": "Label de acessibilidade para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

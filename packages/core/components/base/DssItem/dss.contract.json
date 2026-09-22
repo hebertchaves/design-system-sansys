@@ -23,31 +23,41 @@
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto principal do item"
+        "description": "Texto principal do item",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "caption",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto secundario (subtitulo) abaixo do label"
+        "description": "Texto secundario (subtitulo) abaixo do label",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "clickable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Torna o item clicavel (adiciona hover, active, focus, touch target)"
+        "description": "Torna o item clicavel (adiciona hover, active, focus, touch target)",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado desabilitado (requer clickable)"
+        "description": "Estado desabilitado (requer clickable)",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "active",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado ativo (destaque visual, requer clickable)"
+        "description": "Estado ativo (destaque visual, requer clickable)",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "density",
@@ -57,7 +67,9 @@
         "validValues": [
           "default",
           "compact"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "color",
@@ -73,19 +85,25 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "inset",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Recuo do conteudo para alinhar com itens que possuem leading"
+        "description": "Recuo do conteudo para alinhar com itens que possuem leading",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "divider",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Mostra divider (borda inferior)"
+        "description": "Mostra divider (borda inferior)",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "brand",
@@ -96,31 +114,41 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers"
+        "description": "Label de acessibilidade customizado para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
-        "description": "Tabindex customizado (sobrescreve logica automatica)"
+        "description": "Tabindex customizado (sobrescreve logica automatica)",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "leadingDecorative",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Marca o conteudo do slot leading como decorativo (aria-hidden=\"true\")"
+        "description": "Marca o conteudo do slot leading como decorativo (aria-hidden=\"true\")",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       },
       {
         "name": "trailingDecorative",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Marca o conteudo do slot trailing como decorativo (aria-hidden=\"true\")"
+        "description": "Marca o conteudo do slot trailing como decorativo (aria-hidden=\"true\")",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       }
     ],
     "emits": [

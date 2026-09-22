@@ -24,31 +24,41 @@
         "name": "modelValue",
         "type": "any",
         "controlHint": "text",
-        "description": "Valor atual do grupo (v-model)"
+        "description": "Valor atual do grupo (v-model)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "val",
         "type": "any",
         "controlHint": "text",
-        "description": "Valor que este radio representa"
+        "description": "Valor que este radio representa",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "name",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome do grupo (agrupa radios nativamente)"
+        "description": "Nome do grupo (agrupa radios nativamente)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto do label"
+        "description": "Texto do label",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "leftLabel",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Posicionar label a esquerda do controle"
+        "description": "Posicionar label a esquerda do controle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "color",
@@ -64,7 +74,9 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "size",
@@ -77,44 +89,58 @@
           "md",
           "lg",
           "xl"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "keepColor",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Escape hatch de cor: mantem a cor (semantica/brand) no stroke tambem no"
+        "description": "Escape hatch de cor: mantem a cor (semantica/brand) no stroke tambem no",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "checkedIcon",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome do glifo exibido no estado CHECKED, composto via DssIcon (CCI §7)."
+        "description": "Nome do glifo exibido no estado CHECKED, composto via DssIcon (CCI §7).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado desabilitado"
+        "description": "Estado desabilitado",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo compacto: reduz gap, altura e tamanho da fonte, e remove touch target expandido"
+        "description": "Modo compacto: reduz gap, altura e tamanho da fonte, e remove touch target expandido",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado de erro (validacao de formulario)"
+        "description": "Estado de erro (validacao de formulario)",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "errorMessage",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem de erro"
+        "description": "Mensagem de erro",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "brand",
@@ -125,19 +151,25 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
-        "description": "Indice de tabulacao"
+        "description": "Indice de tabulacao",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessivel (quando label visual nao e suficiente)"
+        "description": "Label acessivel (quando label visual nao e suficiente)",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

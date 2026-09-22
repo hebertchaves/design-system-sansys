@@ -25,67 +25,89 @@
         "type": "string | number",
         "controlHint": "text",
         "required": true,
-        "description": "Identificador único do passo."
+        "description": "Identificador único do passo.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "title",
         "type": "string",
         "controlHint": "text",
-        "description": "Título principal do passo."
+        "description": "Título principal do passo.",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "caption",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto secundário exibido abaixo do título."
+        "description": "Texto secundário exibido abaixo do título.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone customizado (Material Icons name)."
+        "description": "Ícone customizado (Material Icons name).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "activeIcon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone exibido quando o passo está ativo."
+        "description": "Ícone exibido quando o passo está ativo.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "doneIcon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone exibido quando o passo está concluído (done=true)."
+        "description": "Ícone exibido quando o passo está concluído (done=true).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "errorIcon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone exibido quando o passo tem erro (error=true)."
+        "description": "Ícone exibido quando o passo tem erro (error=true).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "done",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Marca o passo como concluído."
+        "description": "Marca o passo como concluído.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Marca o passo com estado de erro."
+        "description": "Marca o passo com estado de erro.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita a interação com o passo."
+        "description": "Desabilita a interação com o passo.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "headerNav",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Permite que o cabeçalho do passo seja clicável para navegação direta."
+        "description": "Permite que o cabeçalho do passo seja clicável para navegação direta.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [],

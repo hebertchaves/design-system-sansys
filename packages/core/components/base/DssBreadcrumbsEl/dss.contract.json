@@ -24,37 +24,49 @@
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto do item de breadcrumb"
+        "description": "Texto do item de breadcrumb",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome do ícone Material Icons exibido antes do conteúdo"
+        "description": "Nome do ícone Material Icons exibido antes do conteúdo",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "to",
         "type": "string | Record<string, unknown>",
         "controlHint": "text",
-        "description": "Destino de roteamento Vue Router — torna o item clicável"
+        "description": "Destino de roteamento Vue Router — torna o item clicável",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "href",
         "type": "string",
         "controlHint": "text",
-        "description": "URL externa — alternativa ao `to` para links externos"
+        "description": "URL externa — alternativa ao `to` para links externos",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita a interação com o item"
+        "description": "Desabilita a interação com o item",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "tag",
         "type": "string",
         "controlHint": "text",
-        "description": "Sobrescreve a tag HTML renderizada (padrão QBreadcrumbsEl: `a` quando clicável, `div` quando estático)"
+        "description": "Sobrescreve a tag HTML renderizada (padrão QBreadcrumbsEl: `a` quando clicável, `div` quando estático)",
+        "category": "Comportamento",
+        "categorySource": "override"
       }
     ],
     "emits": [],

@@ -24,106 +24,140 @@
         "type": "any[]",
         "controlHint": "text",
         "default": "[]",
-        "description": "Valores selecionados. Sempre um array (multiseleção)."
+        "description": "Valores selecionados. Sempre um array (multiseleção).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "options",
         "type": "any[]",
         "controlHint": "text",
-        "description": "Lista de opções (objetos ou primitivos)."
+        "description": "Lista de opções (objetos ou primitivos).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "optionValue",
         "type": "string | ((option: any) => any)",
         "controlHint": "text",
-        "description": "Campo/função que extrai o VALOR de cada opção (para emitValue/mapOptions)."
+        "description": "Campo/função que extrai o VALOR de cada opção (para emitValue/mapOptions).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "optionLabel",
         "type": "string | ((option: any) => string)",
         "controlHint": "text",
-        "description": "Campo/função que extrai o RÓTULO exibido de cada opção."
+        "description": "Campo/função que extrai o RÓTULO exibido de cada opção.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "emitValue",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Emite apenas o valor (optionValue) em vez do objeto inteiro."
+        "description": "Emite apenas o valor (optionValue) em vez do objeto inteiro.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "mapOptions",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Mapeia os valores emitidos de volta para objetos (requer emitValue)."
+        "description": "Mapeia os valores emitidos de volta para objetos (requer emitValue).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "inputDebounce",
         "type": "number | string",
         "controlHint": "text",
         "default": "300",
-        "description": "Debounce (ms) do filtro do autocomplete. @default 300"
+        "description": "Debounce (ms) do filtro do autocomplete. @default 300",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "loadOptions",
         "type": "(query: string) => any[] | Promise<any[]>",
         "controlHint": "text",
-        "description": "Busca ASSÍNCRONA (server-side) das opções — para tabelas grandes demais"
+        "description": "Busca ASSÍNCRONA (server-side) das opções — para tabelas grandes demais",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "loadMore",
         "type": "(query: string, loaded: number) => any[] | Promise<any[]>",
         "controlHint": "text",
-        "description": "Carregamento INCREMENTAL (lazy / infinite scroll): chamado quando o usuário"
+        "description": "Carregamento INCREMENTAL (lazy / infinite scroll): chamado quando o usuário",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Rótulo do campo."
+        "description": "Rótulo do campo.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "placeholder",
         "type": "string",
         "controlHint": "text",
-        "description": "Placeholder exibido no input de busca."
+        "description": "Placeholder exibido no input de busca.",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Exibe indicador de carregamento."
+        "description": "Exibe indicador de carregamento.",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita o campo inteiro (propagado às peças internas via inject)."
+        "description": "Desabilita o campo inteiro (propagado às peças internas via inject).",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Somente leitura."
+        "description": "Somente leitura.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "clearable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Exibe botão de limpar toda a seleção."
+        "description": "Exibe botão de limpar toda a seleção.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "chipsRemovable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": true,
-        "description": "Torna os chips de seleção removíveis (botão × + evento remove)."
+        "description": "Torna os chips de seleção removíveis (botão × + evento remove).",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "showSelectedSummary",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Exibe uma seção \"Selecionados\" FIXA no topo do painel do dropdown (via slot"
+        "description": "Exibe uma seção \"Selecionados\" FIXA no topo do painel do dropdown (via slot",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "brand",
@@ -134,13 +168,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label ARIA do campo (role=combobox, aria-multiselectable)."
+        "description": "Label ARIA do campo (role=combobox, aria-multiselectable).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

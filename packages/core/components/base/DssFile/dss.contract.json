@@ -24,34 +24,44 @@
         "name": "modelValue",
         "type": "File | File[] | null",
         "controlHint": "text",
-        "description": "Arquivo(s) selecionado(s) (v-model)"
+        "description": "Arquivo(s) selecionado(s) (v-model)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "multiple",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Permite seleção de múltiplos arquivos"
+        "description": "Permite seleção de múltiplos arquivos",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "accept",
         "type": "string",
         "controlHint": "text",
-        "description": "Tipos de arquivo aceitos (MIME types ou extensões)"
+        "description": "Tipos de arquivo aceitos (MIME types ou extensões)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "maxFiles",
         "type": "number",
         "controlHint": "stepper",
         "default": "undefined",
-        "description": "Número máximo de arquivos (apenas quando `multiple=true`)"
+        "description": "Número máximo de arquivos (apenas quando `multiple=true`)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "maxFileSize",
         "type": "number",
         "controlHint": "stepper",
         "default": "undefined",
-        "description": "Tamanho máximo por arquivo em bytes"
+        "description": "Tamanho máximo por arquivo em bytes",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -64,14 +74,18 @@
           "outlined",
           "standout",
           "borderless"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Versão compacta (menor altura)"
+        "description": "Versão compacta (menor altura)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -83,100 +97,130 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Label do campo (floating label)"
+        "description": "Label do campo (floating label)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "stackLabel",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Label sempre visível no topo (não flutua)"
+        "description": "Label sempre visível no topo (não flutua)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "placeholder",
         "type": "string",
         "controlHint": "text",
-        "description": "Placeholder exibido quando nenhum arquivo selecionado"
+        "description": "Placeholder exibido quando nenhum arquivo selecionado",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "hint",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto de ajuda exibido abaixo do campo"
+        "description": "Texto de ajuda exibido abaixo do campo",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "errorMessage",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem de erro exibida abaixo do campo"
+        "description": "Mensagem de erro exibida abaixo do campo",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estado de erro (muda cor para negativo)"
+        "description": "Estado de erro (muda cor para negativo)",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Campo desabilitado"
+        "description": "Campo desabilitado",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Campo somente leitura (não pode selecionar novos arquivos)"
+        "description": "Campo somente leitura (não pode selecionar novos arquivos)",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra indicador de carregamento e bloqueia a interação."
+        "description": "Mostra indicador de carregamento e bloqueia a interação.",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "required",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Campo obrigatório. Emite `aria-required` e marca a label com asterisco."
+        "description": "Campo obrigatório. Emite `aria-required` e marca a label com asterisco.",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "clearable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra botão de limpar quando há arquivo selecionado"
+        "description": "Mostra botão de limpar quando há arquivo selecionado",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers"
+        "description": "Label de acessibilidade customizado para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "clearAriaLabel",
         "type": "string",
         "controlHint": "text",
         "default": "Remover arquivo selecionado",
-        "description": "Label do botão de limpar para screen readers"
+        "description": "Label do botão de limpar para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
         "default": "null",
-        "description": "Tabindex customizado"
+        "description": "Tabindex customizado",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

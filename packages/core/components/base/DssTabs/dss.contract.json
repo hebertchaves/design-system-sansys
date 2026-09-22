@@ -24,7 +24,9 @@
         "name": "modelValue",
         "type": "string | number",
         "controlHint": "text",
-        "description": "Identificador da aba atualmente selecionada (v-model)."
+        "description": "Identificador da aba atualmente selecionada (v-model).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "align",
@@ -37,28 +39,36 @@
           "center",
           "right",
           "justify"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "breakpoint",
         "type": "number",
         "controlHint": "stepper",
         "default": "0",
-        "description": "Largura (px) abaixo da qual o alinhamento é FORÇADO a `justify`."
+        "description": "Largura (px) abaixo da qual o alinhamento é FORÇADO a `justify`.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "vertical",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Exibe as abas em layout vertical (coluna)."
+        "description": "Exibe as abas em layout vertical (coluna).",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Modo compacto: reduz o padding interno do container de abas."
+        "description": "Modo compacto: reduz o padding interno do container de abas.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -70,62 +80,80 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o grupo de abas (aria-label)."
+        "description": "Label acessível para o grupo de abas (aria-label).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "inlineLabel",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Coloca ícone e rótulo LADO A LADO, em vez de empilhados."
+        "description": "Coloca ícone e rótulo LADO A LADO, em vez de empilhados.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "narrowIndicator",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Indicador com a largura do RÓTULO, em vez da aba inteira."
+        "description": "Indicador com a largura do RÓTULO, em vez da aba inteira.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "switchIndicator",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Inverte o lado do indicador (topo em barra horizontal)."
+        "description": "Inverte o lado do indicador (topo em barra horizontal).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "shrink",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "O grupo ocupa apenas a largura do conteúdo, em vez de esticar."
+        "description": "O grupo ocupa apenas a largura do conteúdo, em vez de esticar.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "stretch",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estica o grupo na altura do container pai."
+        "description": "Estica o grupo na altura do container pai.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "outsideArrows",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Setas de navegação FORA da área das abas, quando há transbordo."
+        "description": "Setas de navegação FORA da área das abas, quando há transbordo.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "mobileArrows",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mantém as setas em dispositivos móveis (onde o Quasar as esconde por"
+        "description": "Mantém as setas em dispositivos móveis (onde o Quasar as esconde por",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

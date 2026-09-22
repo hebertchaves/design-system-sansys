@@ -25,35 +25,45 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Configura a seção como container de avatar."
+        "description": "Configura a seção como container de avatar.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "thumbnail",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Configura a seção como container de thumbnail."
+        "description": "Configura a seção como container de thumbnail.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "side",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Indica que a seção é secundária (side section)."
+        "description": "Indica que a seção é secundária (side section).",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "top",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Alinha o conteúdo da seção ao topo do item."
+        "description": "Alinha o conteúdo da seção ao topo do item.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "noWrap",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Impede a quebra de linha do conteúdo interno da seção."
+        "description": "Impede a quebra de linha do conteúdo interno da seção.",
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [],

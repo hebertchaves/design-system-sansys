@@ -24,25 +24,33 @@
         "name": "header",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Define o label como um cabeçalho de lista."
+        "description": "Define o label como um cabeçalho de lista.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "caption",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Define o label como texto secundário (caption)."
+        "description": "Define o label como texto secundário (caption).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "overline",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Define o label como texto de sobreposição (overline)."
+        "description": "Define o label como texto de sobreposição (overline).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "lines",
         "type": "number | string",
         "controlHint": "text",
-        "description": "Número máximo de linhas antes de truncar o texto com ellipsis."
+        "description": "Número máximo de linhas antes de truncar o texto com ellipsis.",
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [],

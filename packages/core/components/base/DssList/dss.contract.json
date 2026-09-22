@@ -25,21 +25,27 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Aplica borda externa ao container da lista."
+        "description": "Aplica borda externa ao container da lista.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "padding",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Aplica padding vertical (topo e base) no container da lista."
+        "description": "Aplica padding vertical (topo e base) no container da lista.",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "separator",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Aplica divisores automáticos entre os itens filhos da lista."
+        "description": "Aplica divisores automáticos entre os itens filhos da lista.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -51,21 +57,27 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
         "default": "undefined",
-        "description": "Label acessível da lista para leitores de tela."
+        "description": "Label acessível da lista para leitores de tela.",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "ariaLabelledby",
         "type": "string",
         "controlHint": "text",
         "default": "undefined",
-        "description": "ID do elemento que rotula a lista (aria-labelledby)."
+        "description": "ID do elemento que rotula a lista (aria-labelledby).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

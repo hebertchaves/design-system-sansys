@@ -23,13 +23,17 @@
         "name": "heading",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Quando true, renderiza como cabeçalho/separador visual dentro da timeline."
+        "description": "Quando true, renderiza como cabeçalho/separador visual dentro da timeline.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "tag",
         "type": "string",
         "controlHint": "text",
-        "description": "Tag HTML raiz do item. Padrão: 'li'."
+        "description": "Tag HTML raiz do item. Padrão: 'li'.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "side",
@@ -39,7 +43,9 @@
         "validValues": [
           "left",
           "right"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "color",
@@ -55,30 +61,40 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "avatar",
         "type": "string",
         "controlHint": "text",
-        "description": "URL de imagem de avatar exibida no lugar do ícone."
+        "description": "URL de imagem de avatar exibida no lugar do ícone.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "title",
         "type": "string",
         "controlHint": "text",
-        "description": "Título textual do evento."
+        "description": "Título textual do evento.",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "subtitle",
         "type": "string",
         "controlHint": "text",
-        "description": "Subtítulo textual — geralmente data/hora do evento."
+        "description": "Subtítulo textual — geralmente data/hora do evento.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       }
     ],
     "emits": [],

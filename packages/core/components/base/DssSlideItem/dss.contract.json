@@ -23,7 +23,9 @@
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita o gesto de swipe"
+        "description": "Desabilita o gesto de swipe",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "leftColor",
@@ -35,7 +37,9 @@
           "success",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "rightColor",
@@ -47,7 +51,9 @@
           "success",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

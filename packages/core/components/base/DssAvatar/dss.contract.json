@@ -25,13 +25,17 @@
         "type": "AvatarSize | string | null",
         "controlHint": "text",
         "default": "md",
-        "description": "Tamanho do avatar"
+        "description": "Tamanho do avatar",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "fontSize",
         "type": "string | null",
         "controlHint": "text",
-        "description": "Tamanho da fonte do conteúdo"
+        "description": "Tamanho da fonte do conteúdo",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "color",
@@ -47,13 +51,17 @@
           "negative",
           "warning",
           "info"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "textColor",
         "type": "string | null",
         "controlHint": "text",
-        "description": "Cor customizada do texto (sobrescreve cor padrão)"
+        "description": "Cor customizada do texto (sobrescreve cor padrão)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -65,27 +73,35 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "icon",
         "type": "string | null",
         "controlHint": "text",
-        "description": "Nome do ícone Material Icons"
+        "description": "Nome do ícone Material Icons",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Avatar quadrado (border-radius: 0)"
+        "description": "Avatar quadrado (border-radius: 0)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "rounded",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Avatar arredondado (border-radius: 8px)"
+        "description": "Avatar arredondado (border-radius: 8px)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "status",
@@ -98,19 +114,25 @@
           "away",
           "busy",
           "offline"
-        ]
+        ],
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade para screen readers"
+        "description": "Label de acessibilidade para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "alt",
         "type": "string",
         "controlHint": "text",
-        "description": "Alt text para imagens (usado no slot default)"
+        "description": "Alt text para imagens (usado no slot default)",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       }
     ],
     "emits": [

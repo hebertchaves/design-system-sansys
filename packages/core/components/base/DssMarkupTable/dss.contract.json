@@ -29,21 +29,27 @@
           "compact",
           "standard",
           "comfortable"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "flat",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove sombra e bordas do container (superfície plana)."
+        "description": "Remove sombra e bordas do container (superfície plana).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "bordered",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Aplica borda externa ao container da tabela."
+        "description": "Aplica borda externa ao container da tabela.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "separator",
@@ -56,21 +62,27 @@
           "vertical",
           "cell",
           "none"
-        ]
+        ],
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "square",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove o border-radius do container (cantos quadrados)."
+        "description": "Remove o border-radius do container (cantos quadrados).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "wrapCells",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Permite que o conteúdo das células quebre em múltiplas linhas."
+        "description": "Permite que o conteúdo das células quebre em múltiplas linhas.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -82,7 +94,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [],

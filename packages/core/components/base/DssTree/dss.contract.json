@@ -24,73 +24,97 @@
         "type": "DssTreeNode[]",
         "controlHint": "text",
         "required": true,
-        "description": "Dados hierárquicos da árvore (obrigatório)"
+        "description": "Dados hierárquicos da árvore (obrigatório)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "nodeKey",
         "type": "string",
         "controlHint": "text",
-        "description": "Campo identificador único de cada nó"
+        "description": "Campo identificador único de cada nó",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "labelKey",
         "type": "string",
         "controlHint": "text",
-        "description": "Campo do texto exibido de cada nó"
+        "description": "Campo do texto exibido de cada nó",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "childrenKey",
         "type": "string",
         "controlHint": "text",
-        "description": "Campo dos filhos de cada nó"
+        "description": "Campo dos filhos de cada nó",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "selected",
         "type": "string | null",
         "controlHint": "text",
-        "description": "Nó selecionado (v-model:selected)."
+        "description": "Nó selecionado (v-model:selected).",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "expanded",
         "type": "string[]",
         "controlHint": "text",
-        "description": "Nós expandidos (v-model:expanded)."
+        "description": "Nós expandidos (v-model:expanded).",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "ticked",
         "type": "string[]",
         "controlHint": "text",
-        "description": "Nós marcados/checked (v-model:ticked)."
+        "description": "Nós marcados/checked (v-model:ticked).",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "accordion",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo acordeão: apenas um nó de cada nível expandido por vez"
+        "description": "Modo acordeão: apenas um nó de cada nível expandido por vez",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "noConnectors",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Oculta as linhas de conexão entre nós"
+        "description": "Oculta as linhas de conexão entre nós",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "defaultExpandAll",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Expande todos os nós ao montar o componente"
+        "description": "Expande todos os nós ao montar o componente",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "filter",
         "type": "string",
         "controlHint": "text",
-        "description": "String de filtro para busca client-side"
+        "description": "String de filtro para busca client-side",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "filterMethod",
         "type": "(node: DssTreeNode, filter: string, update: (fn: () => void) => void) => boolean",
         "controlHint": "text",
-        "description": "Função customizada de filtro"
+        "description": "Função customizada de filtro",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "tickStrategy",
@@ -102,31 +126,41 @@
           "strict",
           "leaf",
           "leaf-filtered"
-        ]
+        ],
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "noNodesLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem quando não há nós"
+        "description": "Mensagem quando não há nós",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "noResultsLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem quando filtro não retorna resultados"
+        "description": "Mensagem quando filtro não retorna resultados",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconSize",
         "type": "string",
         "controlHint": "text",
-        "description": "Tamanho dos ícones de expansão"
+        "description": "Tamanho dos ícones de expansão",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo compacto (equivale ao dense do Quasar)"
+        "description": "Modo compacto (equivale ao dense do Quasar)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

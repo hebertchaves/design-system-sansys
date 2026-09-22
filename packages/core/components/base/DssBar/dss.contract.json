@@ -23,13 +23,17 @@
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo compacto — reduz a altura e o padding interno (delegado ao QBar)"
+        "description": "Modo compacto — reduz a altura e o padding interno (delegado ao QBar)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "elevated",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Adiciona sombra de elevação à barra"
+        "description": "Adiciona sombra de elevação à barra",
+        "category": "Estado",
+        "categorySource": "css-states"
       }
     ],
     "emits": [],

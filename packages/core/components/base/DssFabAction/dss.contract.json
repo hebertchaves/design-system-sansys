@@ -24,31 +24,41 @@
         "type": "string",
         "controlHint": "text",
         "default": "primary",
-        "description": "Cor do botão de ação (compatível com paleta Quasar e DSS)."
+        "description": "Cor do botão de ação (compatível com paleta Quasar e DSS).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "textColor",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor do ícone/texto (sobrescreve o contraste automático)."
+        "description": "Cor do ícone/texto (sobrescreve o contraste automático).",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone exibido no centro do botão de ação."
+        "description": "Ícone exibido no centro do botão de ação.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto exibido ao lado do ícone (dentro do botão)."
+        "description": "Texto exibido ao lado do ícone (dentro do botão).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "externalLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto do label exibido FORA do botão circular (ao lado), via"
+        "description": "Texto do label exibido FORA do botão circular (ao lado), via",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "labelPosition",
@@ -61,33 +71,43 @@
           "right",
           "bottom",
           "left"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "to",
         "type": "string | object",
         "controlHint": "text",
-        "description": "Rota Vue Router para navegação ao clicar."
+        "description": "Rota Vue Router para navegação ao clicar.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "href",
         "type": "string",
         "controlHint": "text",
-        "description": "URL externa para navegação ao clicar."
+        "description": "URL externa para navegação ao clicar.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "target",
         "type": "string",
         "controlHint": "text",
         "default": "_self",
-        "description": "Alvo do link quando `href` é fornecido."
+        "description": "Alvo do link quando `href` é fornecido.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Desabilita o botão de ação."
+        "description": "Desabilita o botão de ação.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -99,13 +119,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o botão (aria-label)."
+        "description": "Label acessível para o botão (aria-label).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

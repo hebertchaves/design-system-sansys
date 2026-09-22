@@ -28,7 +28,9 @@
           "filled",
           "borderless",
           "standout"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "size",
@@ -37,7 +39,9 @@
         "validValues": [
           "sm",
           "md"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "brand",
@@ -47,69 +51,95 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "label",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "stackLabel",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "hasValue",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Sinaliza externamente que o controle interno possui valor (mantém label flutuante)"
+        "description": "Sinaliza externamente que o controle interno possui valor (mantém label flutuante)",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "hint",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "error",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "errorMessage",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "prefix",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "suffix",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "loading",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "fieldId",
         "type": "string",
         "controlHint": "text",
-        "description": "ID do controle interno — para associação label[for]. Auto-gerado se omitido."
+        "description": "ID do controle interno — para associação label[for]. Auto-gerado se omitido.",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       }
     ],
     "emits": [],

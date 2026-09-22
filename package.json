@@ -39,6 +39,8 @@
     "validate:portal-pages": "node scripts/validate-portal-pages.cjs --gate",
     "validate:demo-registry": "node scripts/validate-demo-registry.cjs --gate",
     "validate:barrel-ext": "node scripts/validate-barrel-ext.cjs --gate",
+    "validate:prop-categories": "node scripts/validate-prop-categories.cjs",
+    "validate:prop-categories:gate": "node scripts/validate-prop-categories.cjs --gate",
     "validate:demo-seeds": "node scripts/validate-demo-seeds.cjs",
     "validate:demo-seeds:gate": "node scripts/validate-demo-seeds.cjs --gate",
     "validate:mcp-docs": "node scripts/validate-mcp-docs.cjs",

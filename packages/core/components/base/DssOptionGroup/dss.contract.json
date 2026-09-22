@@ -25,14 +25,18 @@
         "type": "any | any[]",
         "controlHint": "text",
         "required": true,
-        "description": "Valor selecionado (v-model)."
+        "description": "Valor selecionado (v-model).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "options",
         "type": "OptionGroupItem[]",
         "controlHint": "text",
         "required": true,
-        "description": "Array de opções que define os controles renderizados"
+        "description": "Array de opções que define os controles renderizados",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "type",
@@ -43,55 +47,73 @@
           "radio",
           "checkbox",
           "toggle"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "color",
         "type": "string",
         "controlHint": "text",
-        "description": "Cor aplicada a todos os controles do grupo"
+        "description": "Cor aplicada a todos os controles do grupo",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "keepColor",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Mantém a cor quando o controle não está ativo"
+        "description": "Mantém a cor quando o controle não está ativo",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "inline",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Layout horizontal (side-by-side). Padrão: false (vertical)"
+        "description": "Layout horizontal (side-by-side). Padrão: false (vertical)",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita todo o grupo"
+        "description": "Desabilita todo o grupo",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Somente leitura — exibe estado atual sem permitir interação"
+        "description": "Somente leitura — exibe estado atual sem permitir interação",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo compacto — reduz o gap entre os controles"
+        "description": "Modo compacto — reduz o gap entre os controles",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o grupo (aria-label)"
+        "description": "Label acessível para o grupo (aria-label)",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "ariaLabelledby",
         "type": "string",
         "controlHint": "text",
-        "description": "ID de elemento externo que serve como label (aria-labelledby)"
+        "description": "ID de elemento externo que serve como label (aria-labelledby)",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

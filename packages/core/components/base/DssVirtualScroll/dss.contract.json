@@ -24,13 +24,17 @@
         "type": "T[]",
         "controlHint": "text",
         "required": true,
-        "description": "Array de dados a serem virtualizados"
+        "description": "Array de dados a serem virtualizados",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "itemSize",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Tamanho estimado de cada item em pixels (height para vertical, width para horizontal)"
+        "description": "Tamanho estimado de cada item em pixels (height para vertical, width para horizontal)",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "type",
@@ -40,37 +44,49 @@
         "validValues": [
           "list",
           "table"
-        ]
+        ],
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "scrollTarget",
         "type": "string | Element | null",
         "controlHint": "text",
-        "description": "Seletor CSS ou referência DOM para o container de scroll pai"
+        "description": "Seletor CSS ou referência DOM para o container de scroll pai",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "sliceSize",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Número de itens renderizados simultaneamente no DOM"
+        "description": "Número de itens renderizados simultaneamente no DOM",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "horizontal",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Habilita rolagem horizontal"
+        "description": "Habilita rolagem horizontal",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado de carregamento inicial ou incremental"
+        "description": "Estado de carregamento inicial ou incremental",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita o componente"
+        "description": "Desabilita o componente",
+        "category": "Estado",
+        "categorySource": "excecao"
       }
     ],
     "emits": [

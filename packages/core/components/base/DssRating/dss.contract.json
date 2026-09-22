@@ -23,57 +23,79 @@
         "name": "modelValue",
         "type": "number",
         "controlHint": "stepper",
-        "required": true
+        "required": true,
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "max",
         "type": "number",
-        "controlHint": "stepper"
+        "controlHint": "stepper",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "size",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string | string[]",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconSelected",
         "type": "string | string[]",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "iconHalf",
         "type": "string | string[]",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "noReset",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "tabindex",
         "type": "number | string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "name",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -83,7 +105,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [

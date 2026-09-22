@@ -22,22 +22,30 @@
       {
         "name": "src",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "title",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Acessibilidade",
+        "categorySource": "override"
       },
       {
         "name": "decorative",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       },
       {
         "name": "ratio",
         "type": "number | string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "radius",
@@ -49,7 +57,9 @@
           "md",
           "lg",
           "full"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "css-variants"
       }
     ],
     "emits": [],

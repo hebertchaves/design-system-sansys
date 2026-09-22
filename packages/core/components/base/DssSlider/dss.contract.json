@@ -25,117 +25,151 @@
         "type": "number",
         "controlHint": "stepper",
         "required": true,
-        "description": "Valor reativo do slider (v-model)"
+        "description": "Valor reativo do slider (v-model)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "min",
         "type": "number",
         "controlHint": "stepper",
         "default": "0",
-        "description": "Valor mínimo do slider"
+        "description": "Valor mínimo do slider",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "max",
         "type": "number",
         "controlHint": "stepper",
         "default": "100",
-        "description": "Valor máximo do slider"
+        "description": "Valor máximo do slider",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "step",
         "type": "number",
         "controlHint": "stepper",
         "default": "1",
-        "description": "Incremento por passo"
+        "description": "Incremento por passo",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "snap",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Fixar valor ao passo mais próximo durante arrasto"
+        "description": "Fixar valor ao passo mais próximo durante arrasto",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "markers",
         "type": "boolean | number",
         "controlHint": "text",
         "default": false,
-        "description": "Exibir marcadores de passo na trilha"
+        "description": "Exibir marcadores de passo na trilha",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "label",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Exibir tooltip com o valor atual durante arrasto"
+        "description": "Exibir tooltip com o valor atual durante arrasto",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "labelAlways",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Exibir tooltip com o valor atual sempre visível"
+        "description": "Exibir tooltip com o valor atual sempre visível",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "labelValue",
         "type": "string | number | null",
         "controlHint": "text",
         "default": "null",
-        "description": "Valor customizado exibido no tooltip"
+        "description": "Valor customizado exibido no tooltip",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "hint",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto de ajuda exibido abaixo do slider"
+        "description": "Texto de ajuda exibido abaixo do slider",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "errorMessage",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem de erro exibida abaixo do slider quando error=true"
+        "description": "Mensagem de erro exibida abaixo do slider quando error=true",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Ativa estado de erro"
+        "description": "Ativa estado de erro",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Desabilita o slider"
+        "description": "Desabilita o slider",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Slider somente leitura"
+        "description": "Slider somente leitura",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Modo denso — reduz a área vertical do controle"
+        "description": "Modo denso — reduz a área vertical do controle",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "vertical",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Orientação vertical do slider"
+        "description": "Orientação vertical do slider",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "reverse",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Inverte a direção do slider"
+        "description": "Inverte a direção do slider",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "brand",
@@ -147,19 +181,25 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
-        "description": "Tabindex customizado para o QSlider"
+        "description": "Tabindex customizado para o QSlider",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade para screen readers"
+        "description": "Label de acessibilidade para screen readers",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

@@ -24,42 +24,54 @@
         "name": "modelValue",
         "type": "any",
         "controlHint": "text",
-        "description": "Valor selecionado (v-model)."
+        "description": "Valor selecionado (v-model).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "options",
         "type": "any[]",
         "controlHint": "text",
         "default": "[]",
-        "description": "Lista de opções disponíveis para seleção."
+        "description": "Lista de opções disponíveis para seleção.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "optionValue",
         "type": "string | ((option: any) => any)",
         "controlHint": "text",
         "default": "value",
-        "description": "Chave do objeto usada como valor da opção."
+        "description": "Chave do objeto usada como valor da opção.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "optionLabel",
         "type": "string | ((option: any) => string)",
         "controlHint": "text",
         "default": "label",
-        "description": "Chave do objeto usada como label exibido da opção."
+        "description": "Chave do objeto usada como label exibido da opção.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "emitValue",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Emite apenas o valor extraído da opção (não o objeto inteiro)."
+        "description": "Emite apenas o valor extraído da opção (não o objeto inteiro).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "mapOptions",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mapeia os valores emitidos de volta para objetos ao usar emitValue=true."
+        "description": "Mapeia os valores emitidos de volta para objetos ao usar emitValue=true.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "variant",
@@ -72,14 +84,18 @@
           "outlined",
           "standout",
           "borderless"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Versão compacta (menor altura)"
+        "description": "Versão compacta (menor altura)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -91,107 +107,139 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Label do select (floating label)"
+        "description": "Label do select (floating label)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "stackLabel",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Label sempre visível no topo (não flutua)"
+        "description": "Label sempre visível no topo (não flutua)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "placeholder",
         "type": "string",
         "controlHint": "text",
-        "description": "Placeholder do select quando não há valor selecionado"
+        "description": "Placeholder do select quando não há valor selecionado",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "hint",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto de ajuda exibido abaixo do select"
+        "description": "Texto de ajuda exibido abaixo do select",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "errorMessage",
         "type": "string",
         "controlHint": "text",
-        "description": "Mensagem de erro exibida abaixo do select"
+        "description": "Mensagem de erro exibida abaixo do select",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estado de erro (muda cor para --dss-error-600)"
+        "description": "Estado de erro (muda cor para --dss-error-600)",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "disabled",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Select desabilitado"
+        "description": "Select desabilitado",
+        "category": "Estado",
+        "categorySource": "css-states"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Select somente leitura"
+        "description": "Select somente leitura",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "loading",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra indicador de loading (spinner do QSelect)"
+        "description": "Mostra indicador de loading (spinner do QSelect)",
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "required",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Select obrigatório (adiciona aria-required=\"true\")"
+        "description": "Select obrigatório (adiciona aria-required=\"true\")",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "multiple",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Permite seleção de múltiplas opções."
+        "description": "Permite seleção de múltiplas opções.",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "useChips",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Exibe seleções múltiplas como chips dentro do campo."
+        "description": "Exibe seleções múltiplas como chips dentro do campo.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "clearable",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Mostra botão de limpar (×) quando há valor selecionado"
+        "description": "Mostra botão de limpar (×) quando há valor selecionado",
+        "category": "Comportamento",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label de acessibilidade customizado para screen readers."
+        "description": "Label de acessibilidade customizado para screen readers.",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "tabindex",
         "type": "number | string | null",
         "controlHint": "text",
         "default": "null",
-        "description": "Tabindex customizado"
+        "description": "Tabindex customizado",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

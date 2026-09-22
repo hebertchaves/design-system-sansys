@@ -22,47 +22,65 @@
       {
         "name": "label",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "caption",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "expandIcon",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "modelValue",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "defaultOpened",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "group",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "dense",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -72,12 +90,16 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

@@ -23,19 +23,25 @@
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome do ícone (Material Icons), renderizado via DssIcon."
+        "description": "Nome do ícone (Material Icons), renderizado via DssIcon.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "title",
         "type": "string",
         "controlHint": "text",
-        "description": "Frase principal. Diz o que NÃO há, na linguagem do domínio."
+        "description": "Frase principal. Diz o que NÃO há, na linguagem do domínio.",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "description",
         "type": "string",
         "controlHint": "text",
-        "description": "Explicação secundária: por que está vazio e o que fazer a respeito."
+        "description": "Explicação secundária: por que está vazio e o que fazer a respeito.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "size",
@@ -46,7 +52,9 @@
           "sm",
           "md",
           "lg"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "variant",
@@ -56,20 +64,26 @@
         "validValues": [
           "plain",
           "bordered"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "announce",
         "type": "boolean",
         "controlHint": "toggle",
         "default": true,
-        "description": "Emite `role=\"status\"` + `aria-live=\"polite\"` no elemento raiz."
+        "description": "Emite `role=\"status\"` + `aria-live=\"polite\"` no elemento raiz.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Rótulo acessível do bloco, quando o `title` não basta sozinho."
+        "description": "Rótulo acessível do bloco, quando o `title` não basta sozinho.",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

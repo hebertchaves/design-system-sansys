@@ -24,103 +24,137 @@
         "type": "number",
         "controlHint": "stepper",
         "required": true,
-        "description": "Valor atual do knob (obrigatório, bidireccional via v-model)"
+        "description": "Valor atual do knob (obrigatório, bidireccional via v-model)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "min",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Valor mínimo permitido"
+        "description": "Valor mínimo permitido",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "max",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Valor máximo permitido"
+        "description": "Valor máximo permitido",
+        "category": "Conteúdo",
+        "categorySource": "override"
       },
       {
         "name": "innerMin",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Mínimo interno (restringe o modelo dentro do intervalo da trilha)"
+        "description": "Mínimo interno (restringe o modelo dentro do intervalo da trilha)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "innerMax",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Máximo interno (restringe o modelo dentro do intervalo da trilha)"
+        "description": "Máximo interno (restringe o modelo dentro do intervalo da trilha)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "step",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Incremento de valor por interação"
+        "description": "Incremento de valor por interação",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "reverse",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Inverte a direção do progresso"
+        "description": "Inverte a direção do progresso",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "instantFeedback",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desativa animação ao mudar o valor (sem transição de arco)"
+        "description": "Desativa animação ao mudar o valor (sem transição de arco)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "readonly",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Apenas leitura — não editável, sem feedback visual de desabilitado"
+        "description": "Apenas leitura — não editável, sem feedback visual de desabilitado",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilitado — não interativo, com opacidade reduzida"
+        "description": "Desabilitado — não interativo, com opacidade reduzida",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "thickness",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Espessura do arco (razão 0–1 do raio)"
+        "description": "Espessura do arco (razão 0–1 do raio)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "angle",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Ângulo inicial do arco em graus"
+        "description": "Ângulo inicial do arco em graus",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "rounded",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Terminações arredondadas no arco de progresso"
+        "description": "Terminações arredondadas no arco de progresso",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "tabindex",
         "type": "number | string",
         "controlHint": "text",
-        "description": "Índice de tabulação para navegação por teclado"
+        "description": "Índice de tabulação para navegação por teclado",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       },
       {
         "name": "size",
         "type": "string",
         "controlHint": "text",
-        "description": "Tamanho visual do knob como string CSS (ex: '48px', '4rem')"
+        "description": "Tamanho visual do knob como string CSS (ex: '48px', '4rem')",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "name",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome do campo para formulários nativos"
+        "description": "Nome do campo para formulários nativos",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "showValue",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Exibe o conteúdo do slot default no centro do knob"
+        "description": "Exibe o conteúdo do slot default no centro do knob",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -131,7 +165,9 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       }
     ],
     "emits": [

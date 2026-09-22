@@ -24,42 +24,54 @@
         "name": "modelValue",
         "type": "string | number",
         "controlHint": "text",
-        "description": "Identificador do passo atualmente ativo (v-model)."
+        "description": "Identificador do passo atualmente ativo (v-model).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "vertical",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Exibe os passos em layout vertical (coluna)."
+        "description": "Exibe os passos em layout vertical (coluna).",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "headerNav",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Permite navegação direta clicando nos cabeçalhos dos passos."
+        "description": "Permite navegação direta clicando nos cabeçalhos dos passos.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "animated",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Ativa transições animadas ao navegar entre painéis de conteúdo."
+        "description": "Ativa transições animadas ao navegar entre painéis de conteúdo.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "flat",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Remove a sombra do container."
+        "description": "Remove a sombra do container.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "bordered",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Adiciona borda ao container."
+        "description": "Adiciona borda ao container.",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "brand",
@@ -71,13 +83,17 @@
           "hub",
           "water",
           "waste"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Label acessível para o stepper (aria-label)."
+        "description": "Label acessível para o stepper (aria-label).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [

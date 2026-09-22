@@ -25,73 +25,97 @@
         "type": "string | number",
         "controlHint": "text",
         "required": true,
-        "description": "Identificador único da aba."
+        "description": "Identificador único da aba.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Texto principal exibido na aba."
+        "description": "Texto principal exibido na aba.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome do ícone Material Icons a exibir."
+        "description": "Nome do ícone Material Icons a exibir.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "alert",
         "type": "boolean | string",
         "controlHint": "text",
-        "description": "Exibe um ponto de alerta na aba."
+        "description": "Exibe um ponto de alerta na aba.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Desabilita a interação com a aba."
+        "description": "Desabilita a interação com a aba.",
+        "category": "Estado",
+        "categorySource": "quasar"
       },
       {
         "name": "to",
         "type": "string | Record<string, unknown>",
         "controlHint": "text",
-        "description": "Rota de destino — equivalente ao `to` do RouterLink."
+        "description": "Rota de destino — equivalente ao `to` do RouterLink.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "exact",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Ativa correspondência exata de rota."
+        "description": "Ativa correspondência exata de rota.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "replace",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Substitui a entrada atual no histórico de navegação em vez de adicionar."
+        "description": "Substitui a entrada atual no histórico de navegação em vez de adicionar.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "href",
         "type": "string",
         "controlHint": "text",
-        "description": "URL externa como fallback quando `to` não é adequado."
+        "description": "URL externa como fallback quando `to` não é adequado.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "target",
         "type": "string",
         "controlHint": "text",
-        "description": "Target do link externo (apenas com `href`)."
+        "description": "Target do link externo (apenas com `href`).",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "alertIcon",
         "type": "string",
         "controlHint": "text",
-        "description": "Ícone no lugar do ponto de alerta."
+        "description": "Ícone no lugar do ponto de alerta.",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "tabindex",
         "type": "number | string",
         "controlHint": "text",
-        "description": "Posição na ordem de tabulação."
+        "description": "Posição na ordem de tabulação.",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
       }
     ],
     "emits": [],

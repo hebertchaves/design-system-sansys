@@ -22,7 +22,9 @@
       {
         "name": "modelValue",
         "type": "number",
-        "controlHint": "stepper"
+        "controlHint": "stepper",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "orientation",
@@ -31,27 +33,37 @@
         "validValues": [
           "horizontal",
           "vertical"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "limits",
         "type": "[number, number]",
-        "controlHint": "text"
+        "controlHint": "text",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "reverse",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Aparência",
+        "categorySource": "override"
       },
       {
         "name": "disabled",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Estado",
+        "categorySource": "excecao"
       },
       {
         "name": "emitImmediately",
         "type": "boolean",
-        "controlHint": "toggle"
+        "controlHint": "toggle",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       },
       {
         "name": "unit",
@@ -60,7 +72,9 @@
         "validValues": [
           "%",
           "px"
-        ]
+        ],
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

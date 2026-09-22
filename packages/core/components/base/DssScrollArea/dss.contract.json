@@ -28,31 +28,41 @@
           "auto",
           "always",
           "never"
-        ]
+        ],
+        "category": "Estado",
+        "categorySource": "override"
       },
       {
         "name": "horizontal",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Enable horizontal scrolling in addition to vertical"
+        "description": "Enable horizontal scrolling in addition to vertical",
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "barDelay",
         "type": "number",
         "controlHint": "stepper",
-        "description": "Delay in milliseconds before the scrollbar hides after scroll ends."
+        "description": "Delay in milliseconds before the scrollbar hides after scroll ends.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "scrollTarget",
         "type": "Element | string",
         "controlHint": "text",
-        "description": "External element or CSS selector to use as scroll target."
+        "description": "External element or CSS selector to use as scroll target.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "label",
         "type": "string",
         "controlHint": "text",
-        "description": "Accessible label for the scroll region."
+        "description": "Accessible label for the scroll region.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       }
     ],
     "emits": [

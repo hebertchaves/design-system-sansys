@@ -25,7 +25,9 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Impede que o título cresça para ocupar o espaço disponível (flex-shrink)."
+        "description": "Impede que o título cresça para ocupar o espaço disponível (flex-shrink).",
+        "category": "Comportamento",
+        "categorySource": "override"
       }
     ],
     "emits": [],

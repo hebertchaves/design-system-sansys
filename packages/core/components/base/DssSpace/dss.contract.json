@@ -47,7 +47,9 @@
           "16",
           "20",
           "24"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "css-variants"
       }
     ],
     "emits": [],

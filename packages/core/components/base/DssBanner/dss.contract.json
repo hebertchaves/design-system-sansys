@@ -30,43 +30,57 @@
           "success",
           "warning",
           "error"
-        ]
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
       },
       {
         "name": "icon",
         "type": "string",
         "controlHint": "text",
-        "description": "Nome do ícone Material Icons (opcional; se omitido, usa ícone padrão da variante)"
+        "description": "Nome do ícone Material Icons (opcional; se omitido, usa ícone padrão da variante)",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
       },
       {
         "name": "dismissible",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Exibe botão de fechar"
+        "description": "Exibe botão de fechar",
+        "category": "Comportamento",
+        "categorySource": "excecao"
       },
       {
         "name": "dismissLabel",
         "type": "string",
         "controlHint": "text",
-        "description": "Rótulo acessível do botão fechar"
+        "description": "Rótulo acessível do botão fechar",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
       },
       {
         "name": "dense",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Modo compacto (reduz padding)"
+        "description": "Modo compacto (reduz padding)",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "rounded",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Aplica bordas arredondadas"
+        "description": "Aplica bordas arredondadas",
+        "category": "Aparência",
+        "categorySource": "quasar"
       },
       {
         "name": "inlineActions",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Ações exibidas inline com o conteúdo (ao invés de abaixo)"
+        "description": "Ações exibidas inline com o conteúdo (ao invés de abaixo)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
       }
     ],
     "emits": [
