@@ -100,12 +100,22 @@
           -->
           <button
             v-if="grupo.colapsavel"
-            class="pv__group pg-nav__link"
+            class="pv__group pg-nav__title"
             :aria-expanded="String(restantesAbertos)"
             @click="restantesAbertos = !restantesAbertos"
           >
-            {{ restantesAbertos ? '▾' : '▸' }} Demais props
-            <small>({{ knobsRestantes.length }})</small>
+            <!--
+              Era `.pg-nav__link`, e isso QUEBROU o layout: aquela classe é
+              `grid-template-columns: 20px 1fr` (índice + nome), e aqui há três
+              filhos — o "(22)" caía na coluna do nome e sobrepunha o texto.
+              Reusar classe exige conferir a ESTRUTURA que ela pressupõe, não só
+              a aparência.
+              Agora é irmão de "CONTROLES": mesmo micro-rótulo, com o caret do
+              Material que o template já usa no menu (chevron/expand), em vez de
+              um triângulo de texto.
+            -->
+            <span class="material-icons pv__group-caret">{{ restantesAbertos ? 'expand_less' : 'expand_more' }}</span>
+            Demais props <small>({{ knobsRestantes.length }})</small>
           </button>
         <div v-for="k in grupo.itens" :key="k.name" class="pv__knob">
           <label :for="'k-' + k.name">{{ k.name }} <small>{{ k.controlHint }}</small></label>
@@ -229,7 +239,7 @@ const knobsCollapsed = ref(false)
 const secaoAberta = ref(true)
 // Grupo "completos" começa fechado: o defaultPreview declara em média 1,9 props
 // essenciais contra até 26 disponíveis. Abrir tudo faz o painel nascer rolando.
-const restantesAbertos = ref(false)
+const restantesAbertos = ref(true)
 
 /**
  * O tipo declarado no contrato é uma prop de ARRAY?
@@ -644,10 +654,16 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 .pv__knobs-inner { padding-top: var(--dss-spacing-1); }
 
 /* Grupo "Demais props": cabeçalho clicável com o mesmo peso dos <h4> do painel. */
-/* Aparência vem de `.pg-nav__link` (aplicada no template): padding, raio, hover
-   de accent e a barra do estado ativo. Aqui só a margem de separação do grupo —
-   `.pg-nav__link` é item de lista e não carrega margem própria. */
-.pv__group { width: 100%; margin: var(--dss-spacing-3) 0 var(--dss-spacing-1_5); border: 0; background: transparent; text-align: left; }
+/* Cabeçalho de grupo, irmão de "CONTROLES": a tipografia vem de
+   `.pg-nav__title`; local fica o que um <button> precisa e o rótulo não tem. */
+.pv__group {
+  display: flex; align-items: center; gap: var(--dss-spacing-1);
+  width: 100%; text-align: left; cursor: pointer;
+  margin: var(--dss-spacing-4) 0 var(--dss-spacing-2);
+  padding: 0; border: 0; background: transparent;
+}
+.pv__group:hover { color: var(--pg-accent, var(--dss-text-body)); }
+.pv__group-caret { font-size: var(--dss-icon-size-sm); }
 .pv__group small { font-weight: var(--dss-font-weight-normal); color: var(--dss-text-subtle); }
 
 /* ── Modo embutido ────────────────────────────────────────────────────────── */
@@ -765,6 +781,42 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 /* Caixa alta/tracking/cor vêm de `.pg-nav__title`, aplicada no template. Aqui
    fica só a margem (o aside não tem uma abaixo do rótulo) e o desligamento do
    caps no <small>, que é texto corrido dentro do rótulo. */
-h4, .pv__slots-h { margin: 0 0 var(--dss-spacing-2); }
-h4 small, .pv__slots-h small { text-transform: none; letter-spacing: 0; font-weight: var(--dss-font-weight-normal); }
+/* DIVERGÊNCIA DELIBERADA de `.pg-nav__title` (10px), não transcrição: no aside
+   aquilo é micro-rótulo de uma coluna estreita; aqui são os cabeçalhos do painel
+   de trabalho, e a pedido ficam em `--dss-font-size-sm` com peso maior — a
+   descrição ao lado no MESMO tamanho, para o par ler como um bloco só. */
+h4, .pv__slots-h, .pv__group {
+  margin: 0 0 var(--dss-spacing-2);
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-bold);
+  /* line-height DECLARADO, e não é detalhe de estilo.
+     O Quasar tem um reset global de <h4> em `@layer quasar` com
+     `line-height: 2.5rem` (40px). Eu havia sobrescrito font-size, font-weight e
+     letter-spacing — mas NÃO o line-height, então a do vendor continuava
+     valendo: o cabeçalho media 80px (duas linhas de 40) e corria por baixo do
+     botão de recolher.
+     Lição: em elemento com reset de vendor, o que você NÃO declara não fica
+     neutro — fica com o valor dele. */
+  line-height: var(--dss-line-height-tight);
+}
+/* A descrição vai para a PRÓPRIA LINHA. No tamanho pedido ela não cabe ao lado
+   do título nos 300px do painel: medido, o par quebrava em 3 linhas (80px) e o
+   "(26)" sobrava sozinho embaixo. Em bloco, lê como título + subtítulo. */
+h4 small, .pv__slots-h small {
+  display: block;
+  font-size: var(--dss-font-size-sm);
+  text-transform: none; letter-spacing: 0;
+  font-weight: var(--dss-font-weight-normal);
+  color: var(--dss-text-subtle);
+}
+/* No grupo a contagem fica NA LINHA — é curta e completa o rótulo. */
+.pv__group small {
+  font-size: var(--dss-font-size-sm);
+  text-transform: none; letter-spacing: 0;
+  font-weight: var(--dss-font-weight-normal);
+  color: var(--dss-text-subtle);
+}
+/* O botão de recolher é absoluto no canto: sem esta reserva o título de
+   "CONTROLES" corre por baixo dele. */
+.pv__knobs-inner > h4:first-of-type { padding-right: var(--dss-spacing-7); }
 </style>

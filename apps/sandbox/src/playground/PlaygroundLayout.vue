@@ -259,9 +259,10 @@ const isDark = ref(false)
 const density = ref<'comfortable' | 'compact'>('comfortable')
 const query = ref('')
 const navCollapsed = ref(false)
-// Qual VISTA o conteúdo mostra. Default 'sections': a página abre nos cenários,
-// que é o que o leitor veio ver. O frame fica a um clique, visível no menu.
-const view = ref<'sections' | 'frame'>('sections')
+// Qual VISTA o conteúdo mostra. Default 'frame': o palco é o que responde
+// "como este componente se comporta", e é por ele que a adequação começa. Os
+// cenários ficam a um clique, no item ao lado.
+const view = ref<'sections' | 'frame'>('frame')
 // A lista de seções NÃO tem estado próprio: ela é a expansão do item ativo.
 // Aparece quando "Seções" está selecionado e recolhe quando o Preview Frame
 // está. Sem toggle manual — ter dois controles (escolher a vista E abrir a
