@@ -562,20 +562,44 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
   background: var(--dss-surface-default);
 }
 
-/* ── Barra de contexto ────────────────────────────────────────────────────── */
+/* ── Barra de contexto ──────────────────────────────────────────────────────
+   Segunda faixa logo abaixo do hero do template, então precisa ler como
+   CONTINUAÇÃO dele, não como outro produto. Antes era cinza chapada com texto
+   neutro ao lado de um hero branco com título em accent — a diferença saltava.
+
+   Herda do hero: fundo da superfície default com borda inferior gray-200,
+   título em --pg-accent e subtítulo miúdo em text-subtle. */
 .pv__bar {
   display: flex; align-items: center; flex-wrap: wrap;
   gap: var(--dss-spacing-3);
   padding: var(--dss-spacing-2_5) var(--dss-spacing-4);
-  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
-  background: var(--dss-surface-subtle);
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  background: var(--dss-surface-default);
 }
-.pv__bar > strong { font-size: var(--dss-font-size-sm); font-weight: var(--dss-font-weight-semibold); }
-.pv__tag { color: var(--dss-text-subtle); font-size: var(--dss-font-size-xs); }
+.pv__bar > strong {
+  font-size: 0.9375rem; font-weight: var(--dss-font-weight-bold);
+  line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--pg-accent, var(--dss-text-primary));
+}
+.pv__tag { font-size: 0.6875rem; color: var(--dss-text-subtle); }
 .pv__spacer { flex: 1; }
+
+/* Controles agrupados como as brand pills do hero: contêiner com fundo muted,
+   borda fina e o raio do template. Sem isto eram <label>+<select> soltos no
+   branco, enquanto todo controle do hero vive dentro de uma caixa. */
 .pv__ctl {
-  display: flex; align-items: center; gap: var(--dss-spacing-1_5);
-  font-size: var(--dss-font-size-xs); color: var(--dss-text-subtle);
+  display: inline-flex; align-items: center; gap: var(--dss-spacing-1_5);
+  padding: 3px 3px 3px 9px;
+  background: var(--dss-surface-muted);
+  border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+  border-radius: var(--pg-radius, var(--dss-radius-sm));
+  font-size: 0.6875rem; color: var(--dss-text-subtle); white-space: nowrap;
+}
+/* Dentro do grupo o campo dispensa a própria borda — quem desenha a caixa é o
+   contêiner, como nas pills. */
+.pv__ctl select {
+  height: 28px; width: auto; min-width: 0;
+  border-color: transparent; background: var(--dss-surface-default);
 }
 
 /* ── Controles de formulário ──────────────────────────────────────────────────
