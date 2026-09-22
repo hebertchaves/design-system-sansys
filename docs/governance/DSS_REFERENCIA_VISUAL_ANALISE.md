@@ -2260,7 +2260,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssTabPanels | navegacao | modelValue:inicio | minHeight:48px | Container de painéis de abas |
 | DssTabs | navegacao | modelValue:inicio | minHeight:44px | 3 abas: Início, Perfil, Configurações |
 | DssTextarea | form-campos | variant:outlined, label:Mensagem, placeholder:Escreva aqui | minHeight:88px, minWidth:240px | Placeholder 'Escreva sua mensagem aqui' |
-| DssTimeline | timeline | side:right | — | 3 eventos na linha do tempo |
+| DssTimeline | timeline | side:right | — | 3 eventos na linha do tempo, com cor semântica no marcador |
 | DssTimelineEntry | timeline | title:Evento, subtitle:Data, icon:check | minHeight:44px | Entrada de timeline com ícone e conteúdo |
 | DssTimePicker | contextuais | modelValue:14:30, format24h | — | — |
 | DssToggle | form-controles | color:primary, size:md, label:Ativar | minHeight:44px | Label 'Ativar' |
@@ -2272,5 +2272,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-09-21T15:29:04.721Z_
+_Gerado em: 2026-09-22T21:09:43.385Z_
 <!-- END:AUTO-GENERATED -->

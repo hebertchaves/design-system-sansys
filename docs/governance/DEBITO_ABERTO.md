@@ -525,26 +525,34 @@ Bloqueadas com razão, não mexer: `done-color`, `active-color`, `error-color`,
 Não foi feito junto porque expor prop exige tipo, contrato, doc e verificação no
 Preview Frame — é uma rodada própria, como foi a do `DssTabs`.
 
-### `DssTimelineEntry` — `color` precisa de RESTART do dev server para valer
+### ~~`DssTimelineEntry` — `color` precisa de RESTART~~ — DIAGNÓSTICO ERRADO, resolvido
 
-A prop `color` (cor semântica do marcador) foi implementada em set/2026: tipo,
-classe no composable, CSS e doc. O Vite **não reprocessa o SFC quando só o
-arquivo de TIPOS muda** — e como as props vêm de `defineProps<Interface>()`, a
-lista compilada servida continua sem `color`.
+Registrei aqui que a prop `color` só valeria após reiniciar o dev server, por
+"tipos velhos no Vite". **Estava errado, e o erro foi meu: eu medi uma página
+velha.** O módulo servido pelo Vite já declarava `color: { type: String }` —
+conferido buscando o SFC transformado direto do servidor, que é o jeito de não
+depender do que a aba está mostrando.
 
-Sintoma exato, medido na tela: a entrada NÃO recebe
-`.dss-timeline-entry--color-*` (o composable lê `props.color` como `undefined`) e
-o valor VAZA por `$attrs` até o QTimelineEntry, que aplica `.text-<nome>` — ou
-seja, funciona por acidente, pelo caminho que a implementação evita de propósito.
+A causa real do que se via no Preview Frame era outra, e é uma cadeia bonita:
 
-O CSS foi validado à parte, injetando a classe no estado real pós-restart: neutro
-115 sem cor; `negative` 216,24,46 · `positive` 77,210,40 · `warning` 250,189,20 ·
-`info` 12,196,233 — todos batendo com os tokens, glifo branco, e a linha seguindo
-neutra nos quatro.
+1. o `demoSlots` do `DssTimeline` (no `dss.meta.json`) declarava `color` nas
+   entradas desde sempre;
+2. `color` NÃO era prop do `DssTimelineEntry`, então isso era uma citação a algo
+   inexistente — eu mesmo tinha registrado essa drift;
+3. o gate de semente criado em `acfcb099` pegou a drift e **limpou** o `color` do
+   meta, corretamente para aquele momento;
+4. ao implementar a prop de verdade, a semente ficou defasada para o outro lado:
+   agora `color` existia, e a semente não o citava mais.
 
-**Depois do restart, conferir:** a classe `--color-*` presente na entrada, o
-atributo `color` AUSENTE do DOM e o dot mantendo o `.text-primary` padrão do
-Quasar (é ele que consome `var(--q-primary)`, redefinido no escopo).
+Reposto no meta (`positive` e `warning`, que mostram a variação), contrato
+reemitido, gate de semente verde. Conferido no frame: `--color-positive`
+(77,210,40) e `--color-warning` (250,189,20), glifo branco.
+
+**Lição que vale além deste caso:** quando o Playground mostra uma coisa e o
+Preview Frame outra, o suspeito não é o CSS — é a SEMENTE. As seções montam o
+componente com o que a página escreve; o frame monta com o que o CONTRATO diz, e
+o contrato copia o `demoSlots` do meta. São duas fontes diferentes, e só a
+segunda tem gate.
 
 ### `DssTimeline` — prop `dark` compete com o tema
 

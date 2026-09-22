@@ -109,7 +109,7 @@
         "source": "N/A — Componente estrutural adaptativo"
       }
     ],
-    "demoContent": "3 eventos na linha do tempo",
+    "demoContent": "3 eventos na linha do tempo, com cor semântica no marcador",
     "demoSlots": {
       "default": [
         {
@@ -117,7 +117,8 @@
           "props": {
             "title": "Evento 1",
             "subtitle": "Jan 2026",
-            "icon": "check"
+            "icon": "check",
+            "color": "positive"
           },
           "children": "Primeiro evento."
         },
@@ -126,7 +127,8 @@
           "props": {
             "title": "Evento 2",
             "subtitle": "Fev 2026",
-            "icon": "star"
+            "icon": "star",
+            "color": "warning"
           },
           "children": "Segundo evento."
         }
