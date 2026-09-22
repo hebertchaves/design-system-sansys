@@ -2,6 +2,28 @@
 
 export type DssTimelineEntrySide = 'left' | 'right'
 
+/**
+ * Cor SEMÂNTICA do marcador da entrada.
+ *
+ * Não é a paleta do Quasar (`teal`, `teal-10`, …): é o vocabulário do DSS, o
+ * mesmo do DssBadge, DssChip e DssItem. A entrada da linha do tempo quase sempre
+ * carrega um status — criado, aprovado, recusado —, e sem esta prop o único
+ * controle de cor era a marca herdada de um ancestral, igual para todos os
+ * eventos.
+ *
+ * A cor pinta o MARCADOR, não a linha: o ponto identifica o evento, a linha é o
+ * fio que liga os eventos e permanece neutra.
+ */
+export type DssTimelineEntryColor =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'accent'
+  | 'positive'
+  | 'negative'
+  | 'warning'
+  | 'info'
+
 export interface DssTimelineEntryProps {
   /**
    * Quando true, renderiza como cabeçalho/separador visual dentro da timeline.
@@ -20,6 +42,12 @@ export interface DssTimelineEntryProps {
    * Nome do ícone Material Icons exibido no marcador do item.
    * Não utilizado se o slot #icon estiver preenchido.
    */
+  /**
+   * Cor semântica do marcador desta entrada.
+   * Sem valor, o marcador usa o neutro do DssTimeline (ou a marca, quando há
+   * `[data-brand]` num ancestral).
+   */
+  color?: DssTimelineEntryColor
   icon?: string
   /**
    * URL de imagem de avatar exibida no lugar do ícone.

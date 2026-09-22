@@ -1,7 +1,66 @@
 /* ==========================================================================
    DssTimelineEntry — LAYER 3: VARIANTS
-   DssTimelineEntry não possui variantes visuais independentes.
-   Variantes de espaçamento são controladas pelo DssTimeline pai.
+   Cor semântica do marcador (set/2026)
+   ==========================================================================
 
-   Este arquivo existe para satisfazer a arquitetura obrigatória de 4 camadas.
+   ANTES desta adição o componente não tinha variação de cor nenhuma: o único
+   controle era o `[data-brand]` de um ancestral, que pinta TODOS os marcadores
+   da linha igual. Numa linha do tempo isso é justamente o que não se quer — a
+   entrada quase sempre carrega um status (aberto, aprovado, recusado), e o
+   marcador é onde esse status se lê.
+
+   O vocabulário é o do DSS (o mesmo do DssBadge, DssChip e DssItem), não a
+   paleta do Quasar: `primary … info`. A prop `color` do QTimelineEntry NÃO é
+   repassada de propósito — ela adicionaria `.text-<nome>`, que é
+   `color: var(--q-<nome>) !important` dentro de `@layer quasar` e passaria por
+   cima da cadeia de tokens. Aqui a classe DSS só troca a CUSTOM PROPERTY que o
+   `2-composition` já usa para pintar; a ponte `--q-primary` recomputa sozinha.
+
+   A cor pinta o MARCADOR, não a linha. O ponto identifica o evento; a linha é o
+   fio que liga os eventos e segue neutra — colorir o trecho por evento faria a
+   linha mudar de cor no meio, sugerindo uma transição que não existe.
+
+   O glifo vai a `--dss-text-on-primary` (branco fixo) e não a `text-inverse`:
+   estes preenchimentos são SATURADOS e não mudam de tom entre os temas, então o
+   texto sobre eles também não deve mudar.
    ========================================================================== */
+
+.dss-timeline-entry--color-primary {
+  --dss-timeline-dot-color: var(--dss-action-primary);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}
+
+.dss-timeline-entry--color-secondary {
+  --dss-timeline-dot-color: var(--dss-action-secondary);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}
+
+.dss-timeline-entry--color-tertiary {
+  --dss-timeline-dot-color: var(--dss-action-tertiary);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}
+
+.dss-timeline-entry--color-accent {
+  --dss-timeline-dot-color: var(--dss-action-accent);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}
+
+.dss-timeline-entry--color-positive {
+  --dss-timeline-dot-color: var(--dss-feedback-success);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}
+
+.dss-timeline-entry--color-negative {
+  --dss-timeline-dot-color: var(--dss-feedback-error);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}
+
+.dss-timeline-entry--color-warning {
+  --dss-timeline-dot-color: var(--dss-feedback-warning);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}
+
+.dss-timeline-entry--color-info {
+  --dss-timeline-dot-color: var(--dss-feedback-info);
+  --dss-timeline-dot-fg: var(--dss-text-on-primary);
+}

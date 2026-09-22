@@ -525,6 +525,27 @@ Bloqueadas com razão, não mexer: `done-color`, `active-color`, `error-color`,
 Não foi feito junto porque expor prop exige tipo, contrato, doc e verificação no
 Preview Frame — é uma rodada própria, como foi a do `DssTabs`.
 
+### `DssTimelineEntry` — `color` precisa de RESTART do dev server para valer
+
+A prop `color` (cor semântica do marcador) foi implementada em set/2026: tipo,
+classe no composable, CSS e doc. O Vite **não reprocessa o SFC quando só o
+arquivo de TIPOS muda** — e como as props vêm de `defineProps<Interface>()`, a
+lista compilada servida continua sem `color`.
+
+Sintoma exato, medido na tela: a entrada NÃO recebe
+`.dss-timeline-entry--color-*` (o composable lê `props.color` como `undefined`) e
+o valor VAZA por `$attrs` até o QTimelineEntry, que aplica `.text-<nome>` — ou
+seja, funciona por acidente, pelo caminho que a implementação evita de propósito.
+
+O CSS foi validado à parte, injetando a classe no estado real pós-restart: neutro
+115 sem cor; `negative` 216,24,46 · `positive` 77,210,40 · `warning` 250,189,20 ·
+`info` 12,196,233 — todos batendo com os tokens, glifo branco, e a linha seguindo
+neutra nos quatro.
+
+**Depois do restart, conferir:** a classe `--color-*` presente na entrada, o
+atributo `color` AUSENTE do DOM e o dot mantendo o `.text-primary` padrão do
+Quasar (é ele que consome `var(--q-primary)`, redefinido no escopo).
+
 ### `DssTimeline` — prop `dark` compete com o tema
 
 `DssTimelineProps.dark` é repasse direto do QTimeline e o próprio JSDoc já diz

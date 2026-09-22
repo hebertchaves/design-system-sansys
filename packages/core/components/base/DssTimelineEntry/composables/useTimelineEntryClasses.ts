@@ -8,6 +8,7 @@ export function useTimelineEntryClasses(props: DssTimelineEntryProps) {
     'dss-timeline-entry--side-right': props.side === 'right',
     'dss-timeline-entry--has-icon': !!props.icon,
     'dss-timeline-entry--has-avatar': !!props.avatar,
+    [`dss-timeline-entry--color-${props.color}`]: !!props.color,
   }))
 
   return { rootClasses }

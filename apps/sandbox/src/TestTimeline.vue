@@ -122,8 +122,37 @@
       </PgGrid>
     </PgSection>
 
+    <!-- ── 06. Cor semântica ───────────────────────────────────────────── -->
+    <PgSection id="cores" index="06" title="Cor semântica do marcador" :count="CORES.length"
+      desc="Prop color na ENTRADA. Pinta o marcador, não a linha — o ponto identifica o evento, a linha é o fio que liga os eventos. Vocabulário do DSS, não a paleta do Quasar.">
+      <PgGrid class="pg-grid--full">
+        <PgTile code="linha de status (uso típico)" align="start">
+          <DssTimeline class="tt-largura">
+            <DssTimelineEntry title="Solicitação aberta" subtitle="02/09, 08:12" icon="play_arrow" color="info">
+              Registrada pelo atendimento.
+            </DssTimelineEntry>
+            <DssTimelineEntry title="Em análise" subtitle="02/09, 09:30" icon="hourglass_empty" color="warning">
+              Aguardando parecer técnico.
+            </DssTimelineEntry>
+            <DssTimelineEntry title="Aprovada" subtitle="02/09, 15:47" icon="check" color="positive">
+              Liberada para execução.
+            </DssTimelineEntry>
+          </DssTimeline>
+        </PgTile>
+        <PgTile code="todas as cores" align="start">
+          <DssTimeline layout="dense" class="tt-largura">
+            <DssTimelineEntry v-for="c in CORES" :key="c" :color="c" :title="c" :subtitle="`color=&quot;${c}&quot;`" icon="circle" />
+          </DssTimeline>
+        </PgTile>
+      </PgGrid>
+      <p class="tt-nota">
+        Sem <code>color</code>, o marcador usa o neutro do container — ou a marca, quando há
+        <code>[data-brand]</code> num ancestral. A cor explícita da entrada vence a marca ambiente.
+      </p>
+    </PgSection>
+
     <!-- ── 06. Brandabilidade ──────────────────────────────────────────── -->
-    <PgSection id="brand" index="06" title="Brandabilidade" :count="BRANDS.length"
+    <PgSection id="brand" index="07" title="Brandabilidade" :count="BRANDS.length"
       desc="A marca colore a linha conectora e o marcador. O DssTimeline não tem prop brand — a cor vem do [data-brand] de um ancestral.">
       <PgGrid class="pg-grid--full">
         <PgTile v-for="b in BRANDS" :key="b" :code="`[data-brand=&quot;${b}&quot;]`" align="start">
@@ -142,7 +171,7 @@
     </PgSection>
 
     <!-- ── 07. Matriz ──────────────────────────────────────────────────── -->
-    <PgSection id="matriz" index="07" title="Matriz layout × marcador" :count="LAYOUTS.length"
+    <PgSection id="matriz" index="08" title="Matriz layout × marcador" :count="LAYOUTS.length"
       desc="Cobertura combinatória: cada layout com entrada de ícone, entrada sem ícone e heading.">
       <PgGrid class="pg-grid--full">
         <PgTile v-for="l in LAYOUTS" :key="l" :code="`layout=&quot;${l}&quot;`" align="start">
@@ -156,7 +185,7 @@
     </PgSection>
 
     <!-- ── 08. Exemplos ────────────────────────────────────────────────── -->
-    <PgSection id="exemplos" index="08" title="Exemplos de uso" :count="1"
+    <PgSection id="exemplos" index="09" title="Exemplos de uso" :count="1"
       desc="Renderiza o DssTimeline.example.vue — fonte única, também usável na documentação.">
       <DssTimelineExample />
     </PgSection>
@@ -191,6 +220,7 @@ const AVATAR_DEMO =
 
 const LAYOUTS = ['dense', 'comfortable', 'loose'] as const
 const BRANDS = ['hub', 'water', 'waste'] as const
+const CORES = ['primary', 'secondary', 'tertiary', 'accent', 'positive', 'negative', 'warning', 'info'] as const
 
 const EVENTOS = [
   { title: 'Chamado aberto',   subtitle: '02/09, 08:12', icon: 'play_arrow', body: 'Registrado pelo atendimento.' },
@@ -204,13 +234,15 @@ const SECTIONS = [
   { id: 'marcador',  index: '03', title: 'Marcador' },
   { id: 'heading',   index: '04', title: 'Cabeçalho' },
   { id: 'conteudo',  index: '05', title: 'Título e corpo' },
-  { id: 'brand',     index: '06', title: 'Brandabilidade' },
-  { id: 'matriz',    index: '07', title: 'Matriz' },
-  { id: 'exemplos',  index: '08', title: 'Exemplos de uso' },
+  { id: 'cores',     index: '06', title: 'Cor semântica' },
+  { id: 'brand',     index: '07', title: 'Brandabilidade' },
+  { id: 'matriz',    index: '08', title: 'Matriz' },
+  { id: 'exemplos',  index: '09', title: 'Exemplos de uso' },
 ]
 
 const KPIS = [
   { value: LAYOUTS.length, label: 'Layouts' },
+  { value: CORES.length,   label: 'Cores' },
   { value: 2,              label: 'Lados' },
   { value: BRANDS.length,  label: 'Brands' },
   { value: 4,              label: 'Slots' },
@@ -224,5 +256,11 @@ const brandLabel = (b: string) => ({ hub: '🟠 Hub', water: '🔵 Water', waste
    largura total: solta num tile ela encolhe e o conector some do enquadramento. */
 .tt-largura {
   width: 100%;
+}
+
+.tt-nota {
+  margin: var(--dss-spacing-3) 0 0;
+  font-size: var(--dss-font-size-sm);
+  color: var(--dss-text-subtle);
 }
 </style>

@@ -42,10 +42,25 @@
         ]
       },
       {
+        "name": "color",
+        "type": "DssTimelineEntryColor",
+        "controlHint": "picker-color",
+        "description": "Nome do ícone Material Icons exibido no marcador do item.",
+        "validValues": [
+          "primary",
+          "secondary",
+          "tertiary",
+          "accent",
+          "positive",
+          "negative",
+          "warning",
+          "info"
+        ]
+      },
+      {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
-        "description": "Nome do ícone Material Icons exibido no marcador do item."
+        "controlHint": "text"
       },
       {
         "name": "avatar",
