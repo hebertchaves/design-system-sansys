@@ -149,7 +149,7 @@
         </datalist>
 
         <template v-if="slotDefs.length">
-          <h4 class="pv__slots-h pg-nav__title">Slots <small>— do contrato ({{ slotDefs.length }})</small></h4>
+          <h4 class="pv__slots-h pv__titulo pg-section__title">Slots <small>— do contrato ({{ slotDefs.length }})</small></h4>
           <div v-for="s in slotDefs" :key="s.name" class="pv__slot">
             <label :for="'s-' + s.name" :title="s.description || ''">
               <input :id="'s-' + s.name" type="checkbox" v-model="activeSlots[s.name]" />
@@ -168,7 +168,7 @@
         </template>
 
         <template v-if="methodDefs.length">
-          <h4 class="pv__slots-h pg-nav__title">Métodos <small>— exposedRefs ({{ methodDefs.length }})</small></h4>
+          <h4 class="pv__slots-h pv__titulo pg-section__title">Métodos <small>— exposedRefs ({{ methodDefs.length }})</small></h4>
           <button
             v-for="m in methodDefs" :key="m.name" class="pv__method"
             :title="(m.description || '') + '  ' + (m.type || '')"
@@ -815,7 +815,7 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    descrição ao lado no MESMO tamanho, para o par ler como um bloco só. */
 /* `.pv__titulo` fica FORA desta regra: ele usa `.pg-section__title` e não deve
    ser rebaixado ao tamanho dos subgrupos. */
-h4:not(.pv__titulo), .pv__slots-h, .pv__group {
+h4:not(.pv__titulo), .pv__group {
   margin: 0 0 var(--dss-spacing-2);
   font-size: var(--dss-font-size-sm);
   font-weight: var(--dss-font-weight-bold);
@@ -832,7 +832,7 @@ h4:not(.pv__titulo), .pv__slots-h, .pv__group {
 /* A descrição vai para a PRÓPRIA LINHA. No tamanho pedido ela não cabe ao lado
    do título nos 300px do painel: medido, o par quebrava em 3 linhas (80px) e o
    "(26)" sobrava sozinho embaixo. Em bloco, lê como título + subtítulo. */
-h4:not(.pv__titulo) small, .pv__slots-h small {
+h4:not(.pv__titulo) small {
   display: block;
   font-size: var(--dss-font-size-sm);
   text-transform: none; letter-spacing: 0;
@@ -853,4 +853,12 @@ h4:not(.pv__titulo) small, .pv__slots-h small {
    do Quasar vive em @layer quasar com 2.5rem, e o que não se declara fica com o
    valor dele. */
 .pv__titulo { margin: 0 0 var(--dss-spacing-3); line-height: var(--dss-line-height-tight); }
+/* A contagem FICA em Slots e Métodos — ao contrário de "Controles", aqui ela não
+   é redundante: não há subgrupo abaixo repetindo o número. Fica na linha, em
+   peso e cor de apoio, para não competir com o título. */
+.pv__titulo small {
+  font-size: var(--dss-font-size-sm);
+  font-weight: var(--dss-font-weight-normal);
+  color: var(--dss-text-subtle);
+}
 </style>
