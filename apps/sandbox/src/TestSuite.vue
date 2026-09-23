@@ -408,6 +408,14 @@
 
 
               <button
+                @click="activeComponent = 'header'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'header' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">web_asset</span></span>
+                <span class="nav-label">DssHeader</span>
+              </button>
+
+              <button
                 @click="activeComponent = 'breadcrumb'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'breadcrumb' }]"
               >
@@ -534,6 +542,10 @@
       <div v-else-if="activeComponent === 'empty-state'" class="component-view">
         <TestEmptyState />
       </div>
+      <div v-else-if="activeComponent === 'header'" class="component-view">
+        <TestHeader />
+      </div>
+
       <div v-else-if="activeComponent === 'breadcrumb'" class="component-view">
         <TestBreadcrumbs />
       </div>
@@ -694,6 +706,7 @@ import TestEmptyState from './TestEmptyState.vue'
 import TestItem from './TestItem.vue'
 import TestStepper from './TestStepper.vue'
 import TestBreadcrumbs from './TestBreadcrumbs.vue'
+import TestHeader from './TestHeader.vue'
 import TestTimeline from './TestTimeline.vue'
 import TestBtnToggle from './TestBtnToggle.vue'
 import TestTabs from './TestTabs.vue'

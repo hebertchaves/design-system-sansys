@@ -8,8 +8,7 @@
     <section class="dss-example-section">
       <h2 class="dss-example-title">1. Básico</h2>
       <div class="dss-example-layout-wrapper">
-        <!-- EXC-01: q-layout usado temporariamente até DssLayout (Nível 4) existir -->
-        <q-layout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
+        <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader>
             <DssToolbar>
               <DssButton flat round aria-label="Menu" icon="menu" />
@@ -18,12 +17,12 @@
               <DssButton flat round aria-label="Buscar" icon="search" />
             </DssToolbar>
           </DssHeader>
-          <q-page-container>
+          <DssPageContainer>
             <div class="dss-example-page-content text-caption text-center q-pa-md">
               Conteúdo da página
             </div>
-          </q-page-container>
-        </q-layout>
+          </DssPageContainer>
+        </DssLayout>
       </div>
     </section>
 
@@ -34,7 +33,7 @@
     <section class="dss-example-section">
       <h2 class="dss-example-title">2. Elevated</h2>
       <div class="dss-example-layout-wrapper">
-        <q-layout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
+        <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader elevated>
             <DssToolbar>
               <DssButton flat round aria-label="Voltar" icon="arrow_back" />
@@ -43,12 +42,12 @@
               <DssButton flat round aria-label="Mais opções" icon="more_vert" />
             </DssToolbar>
           </DssHeader>
-          <q-page-container>
+          <DssPageContainer>
             <div class="dss-example-page-content text-caption text-center q-pa-md">
               Conteúdo com header elevado
             </div>
-          </q-page-container>
-        </q-layout>
+          </DssPageContainer>
+        </DssLayout>
       </div>
     </section>
 
@@ -59,7 +58,7 @@
     <section class="dss-example-section">
       <h2 class="dss-example-title">3. Bordered</h2>
       <div class="dss-example-layout-wrapper">
-        <q-layout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
+        <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader bordered>
             <DssToolbar>
               <span class="text-subtitle1 q-ml-sm">Relatórios</span>
@@ -67,12 +66,12 @@
               <DssButton flat label="Exportar" icon="download" />
             </DssToolbar>
           </DssHeader>
-          <q-page-container>
+          <DssPageContainer>
             <div class="dss-example-page-content text-caption text-center q-pa-md">
               Conteúdo com header bordeado
             </div>
-          </q-page-container>
-        </q-layout>
+          </DssPageContainer>
+        </DssLayout>
       </div>
     </section>
 
@@ -84,7 +83,7 @@
     <section class="dss-example-section">
       <h2 class="dss-example-title">4. Com Brand (Hub)</h2>
       <div class="dss-example-layout-wrapper">
-        <q-layout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
+        <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader elevated>
             <DssToolbar brand="hub">
               <DssButton flat round aria-label="Menu" icon="menu" />
@@ -93,12 +92,12 @@
               <DssButton flat round aria-label="Perfil" icon="account_circle" />
             </DssToolbar>
           </DssHeader>
-          <q-page-container>
+          <DssPageContainer>
             <div class="dss-example-page-content text-caption text-center q-pa-md">
               Brand hub no DssToolbar (não no DssHeader)
             </div>
-          </q-page-container>
-        </q-layout>
+          </DssPageContainer>
+        </DssLayout>
       </div>
     </section>
 
@@ -111,7 +110,7 @@
     <section class="dss-example-section">
       <h2 class="dss-example-title">5. Com Múltiplos Toolbars</h2>
       <div class="dss-example-layout-wrapper">
-        <q-layout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
+        <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader elevated>
             <DssToolbar>
               <DssButton flat round aria-label="Menu" icon="menu" />
@@ -126,12 +125,12 @@
               <DssButton flat label="Configurações" no-caps />
             </DssToolbar>
           </DssHeader>
-          <q-page-container>
+          <DssPageContainer>
             <div class="dss-example-page-content text-caption text-center q-pa-md">
               Header com toolbar de ações + toolbar de navegação
             </div>
-          </q-page-container>
-        </q-layout>
+          </DssPageContainer>
+        </DssLayout>
       </div>
     </section>
 
@@ -140,6 +139,12 @@
 
 <script setup lang="ts">
 import DssHeader from './DssHeader.vue'
+// DssLayout e DssPageContainer existem e estão SELADOS desde abr/2026 — o
+// comentário "q-layout temporário até DssLayout existir" que vivia aqui estava
+// desatualizado, e mantinha QComponent cru no template contra o Gate de
+// Composição v2.4.
+import DssLayout from '../DssLayout/DssLayout.vue'
+import DssPageContainer from '../DssPageContainer/DssPageContainer.vue'
 import DssToolbar from '../DssToolbar/DssToolbar.vue'
 import DssButton from '../DssButton/DssButton.vue'
 import DssSpace from '../DssSpace/DssSpace.vue'

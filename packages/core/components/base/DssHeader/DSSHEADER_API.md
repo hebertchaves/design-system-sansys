@@ -6,6 +6,24 @@
 
 ## Props
 
+### `modelValue` (v-model)
+
+- **Tipo:** `Boolean`
+- **Padrão:** `true`
+- **Descrição:** Visibilidade do header. Controla a presença da faixa sem desmontar o layout — o conteúdo sobe e desce acompanhando.
+
+### `reveal`
+
+- **Tipo:** `Boolean`
+- **Padrão:** `false`
+- **Descrição:** Esconde o header ao rolar para baixo e o traz de volta ao rolar para cima.
+
+### `revealOffset`
+
+- **Tipo:** `Number`
+- **Padrão:** `250`
+- **Descrição:** Distância de rolagem (px) antes de o `reveal` começar a agir. Evita que o header pisque em rolagens curtas.
+
 ### `elevated`
 
 - **Tipo:** `Boolean`
@@ -34,6 +52,15 @@
 
 ---
 
+## Eventos
+
+| Evento | Payload | Descrição |
+|--------|---------|-----------|
+| `reveal` | `boolean` | Emitido quando o header é revelado (`true`) ou escondido (`false`) pelo comportamento de `reveal`. |
+| `update:modelValue` | `boolean` | v-model da visibilidade. |
+
+---
+
 ## Props Bloqueadas (Não Disponíveis)
 
 | Prop QHeader | Status | Motivo |
@@ -48,10 +75,14 @@
 
 Props QHeader aceitas pelo componente via `v-bind="$attrs"` (não declaradas como props DSS):
 
+> `reveal` e `reveal-offset` SAÍRAM desta lista em set/2026: passaram a ser props
+> declaradas do DSS (ver acima), com tipo, default e documentação próprios. Passar
+> comportamento por `$attrs` funciona, mas não aparece na API — e o que não aparece
+> não é escolhido.
+
 | Prop | Tipo | Descrição |
 |------|------|-----------|
-| `reveal` | `Boolean` | Oculta header ao rolar para baixo, exibe ao rolar para cima |
-| `reveal-offset` | `Number` | Offset em pixels para ativar o reveal (padrão: 250) |
+| — | — | Nenhuma prop de comportamento depende mais de `$attrs`. |
 | `height-hint` | `String\|Number` | **Bloqueada** — não usar |
 
 ```vue
@@ -85,14 +116,13 @@ Props QHeader aceitas pelo componente via `v-bind="$attrs"` (não declaradas com
 
 ---
 
-## Events
+## Events (legado desta seção)
 
-DssHeader não emite eventos próprios. É um container não-interativo.
-
-| Evento | Status |
-|--------|--------|
-| `click` | Não aplicável — container estrutural |
-| `focus` | Não aplicável — container estrutural |
+> Esta seção afirmava "DssHeader não emite eventos próprios" e listava `click` e
+> `focus` como "não aplicáveis". Desde set/2026 o componente EMITE dois eventos —
+> ver a seção **Eventos** acima. `click`/`focus` nunca foram eventos declarados:
+> eram entradas de documentação sem contrapartida no código, e o gate de paridade
+> de API as acusava como "sobram (não tipados"). Removidas.
 
 ---
 
@@ -206,3 +236,39 @@ Atributos recomendados:
 | Props bloqueadas (color, dark) | ✅ `color`, `dark`, `glossy` | ✅ `color`, `height-hint` | Leve diferença — contexto QHeader vs QToolbar |
 | `brand` prop | ✅ (toolbar aplica brand) | ❌ (brand é do DssToolbar) | Intencional — DssHeader delega brand ao filho |
 | Background override | `background-color: transparent` | `background-color: var(--dss-surface-default) !important` | EXC-02 — QHeader aplica `bg-primary !important` |
+
+
+## Separação do conteúdo — o que cada prop faz (set/2026)
+
+| combinação | sombra | linha |
+|---|---|---|
+| padrão | `--dss-elevation-1` | `--dss-border-subtle` |
+| `elevated` | `--dss-elevation-2` | `--dss-border-subtle` |
+| `bordered` | **nenhuma** | `--dss-border-default` |
+| `elevated` + `bordered` | nenhuma | `--dss-border-default` |
+
+`bordered` é a **alternativa flat**: troca o separador, não o acrescenta.
+Combinar com `elevated` é contraditório e `bordered` vence — é a última na
+cascata.
+
+**As duas props eram INERTES até set/2026.** A camada de composição declarava
+`box-shadow: … !important`, então o `elevation-2` do `elevated` nunca vencia; e
+o `bordered` só redeclarava a mesma borda que a base já aplicava. Medido na
+página de teste, as quatro combinações saíam pixel a pixel iguais.
+
+O `!important` foi removido porque a justificativa registrada nele era falsa: ele
+alegava que o QHeader aplica `bg-primary !important`, mas a regra real é
+`.q-layout__section--marginal { background-color: var(--q-primary) }` — layered e
+SEM `!important`. CSS DSS unlayered já vencia sozinho.
+
+## `reveal`, `revealOffset` e `v-model` (novas em set/2026)
+
+Vieram do de-para com o `QHeader`, que tem 6 props enquanto o DSS expunha 2.
+`reveal` esconde o header ao rolar para baixo e o traz de volta ao rolar para
+cima; `revealOffset` (px) é a distância mínima antes de isso começar, evitando
+piscar em rolagens curtas; o `v-model` controla a presença da faixa sem desmontar
+o layout.
+
+`height-hint` segue **não exposta**: é a altura que o QLayout assume para o header
+antes de medi-lo, e no DSS a altura é consequência do DssToolbar que vai dentro —
+expor a dica abriria uma segunda fonte de verdade para dimensão.

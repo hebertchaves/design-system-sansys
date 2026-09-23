@@ -650,6 +650,32 @@ próximos que passam, mas a frente c1 ("contraste WCAG default") já previa que
 valores de contraste precisam de aval. Se o azul do link precisar ser outro, a
 troca é de uma linha em `semantic/_text.scss` e outra em `themes/dark/_colors.scss`.
 
+### `DssHeader` — `defineEmits<HeaderEmits>` bloqueado pelo cache de tipos do Vite
+
+O `@vue/compiler-sfc` resolve tipos importados a partir de um cache do arquivo de
+tipos que **não invalida por mtime**. Ao adicionar `HeaderEmits` em
+`types/header.types.ts`, o compilador seguiu enxergando a versão ANTIGA do
+arquivo e respondia **500** (`Unresolvable type reference`), derrubando o sandbox
+inteiro.
+
+Tentado, SEM efeito: `touch` no arquivo de tipos, `touch` no SFC, trocar o
+especificador do import para `'../types/header.types.ts'` (cache não é por
+especificador), e converter `type` → `interface`.
+
+Prova de que é cache e não erro de código: o módulo compilado listava só
+`elevated` e `bordered` nas props, **ignorando** `modelValue`, `reveal` e
+`revealOffset` que o `withDefaults` declara. E com o tipo de emits escrito INLINE
+no SFC, tudo compila (200).
+
+**Estado atual:** o `defineEmits` está inline, com o motivo comentado no próprio
+SFC. `HeaderEmits` segue exportado em `types/header.types.ts` — é o que a doc e o
+contrato leem.
+
+**Depois do restart do dev server:** trocar o inline de volta por
+`defineEmits<HeaderEmits>()` e conferir que o módulo compilado passa a listar as
+cinco props. Enquanto não reiniciar, `reveal`/`revealOffset` chegam ao QHeader por
+`$attrs` (funcionam), mas o comportamento de rolagem não foi verificado na tela.
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |

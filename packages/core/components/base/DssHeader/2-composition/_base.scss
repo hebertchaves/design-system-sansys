@@ -15,30 +15,45 @@
 //   Precedente: DssToolbar sobrescreve padding/min-height do QToolbar (EXC-01).
 // ==========================================================================
 
-/* EXC-02 — Override de background-color do QHeader (bg-primary !important) */
 /* EXC-03 — Supressão da borda do DssToolbar quando dentro do DssHeader:
    O DssToolbar tem border-bottom por padrão (separador standalone).
-   Dentro do DssHeader, a border-bottom do próprio header é o separador.
-   Seletor descendente documentado como EXC-03 (análogo ao EXC-02 estendida). */
+   Dentro do DssHeader, a border-bottom do próprio header é o separador. */
 
 .dss-header .dss-toolbar {
   border-bottom: none;
 }
 
+// ==========================================================================
+// O `!important` SAIU, e com ele a inércia do `elevated` (set/2026)
+// ==========================================================================
+//
+// A EXC-02 dizia que o `!important` era necessário porque "o QHeader aplica
+// bg-primary !important via classes utilitárias". **A justificativa era falsa.**
+// Conferido no CSS servido: a regra que pinta o header é
+// `.q-layout__section--marginal { background-color: var(--q-primary); … }`,
+// dentro de `@layer quasar` e SEM `!important`. CSS DSS unlayered vence layered
+// normal (Constituição #3) — não havia nada a forçar.
+//
+// E o `!important` não era só supérfluo: espalhado também no `box-shadow`, ele
+// ATROPELAVA a própria variante. Medido nas quatro combinações da página, a
+// sombra saía idêntica em todas — `elevated` era inerte porque o
+// `--dss-elevation-2` do Layer 3 não vence o `--dss-elevation-1` com
+// `!important` do Layer 2.
+
 .dss-header {
   // ------------------------------------------------------------------
-  // Cor de fundo — sobrescreve bg-primary !important do QHeader nativo
+  // Cor de fundo — o `.q-layout__section--marginal` do Quasar pinta com
+  // `--q-primary`; a regra DSS unlayered vence sem precisar de `!important`.
   // ------------------------------------------------------------------
-  background-color: var(--dss-surface-default) !important;
-  color: var(--dss-text-body) !important;
+  background-color: var(--dss-surface-default);
+  color: var(--dss-text-body);
 
   // ------------------------------------------------------------------
   // Elevação padrão — elevation-1 separa o header do conteúdo da página.
   // M3, Carbon e Salesforce usam sombra sutil como default em app bars.
   // Ref: DSS_REFERENCIA_VISUAL_ANALISE.md Seção 13.20
-  // EXC-02 estendida: !important necessário pelo mesmo motivo do background
   // ------------------------------------------------------------------
-  box-shadow: var(--dss-elevation-1) !important;
+  box-shadow: var(--dss-elevation-1);
 
   // ------------------------------------------------------------------
   // Borda inferior padrão — complementa a elevação como separador visual.

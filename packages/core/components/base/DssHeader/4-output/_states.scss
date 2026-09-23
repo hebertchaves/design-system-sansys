@@ -11,13 +11,20 @@
 // ------------------------------------------------------------------
 [data-theme='dark'] .dss-header,
 .dss-header.body--dark {
-  // --dss-surface-default resolve para superfície escura em dark mode.
-  // border-bottom usa gray-200 que no tema escuro resolve para cinza escuro.
-  background-color: var(--dss-surface-default) !important;
-  color: var(--dss-text-body) !important;
+  // `--dss-surface-default` e `--dss-text-body` já trocam de valor sozinhos no
+  // tema escuro — este bloco existe só para vencer o `--q-primary` do Quasar no
+  // contexto dark. Sem `!important`: a regra DSS é unlayered e a do Quasar é
+  // layered normal (ver a nota no Layer 2).
+  background-color: var(--dss-surface-default);
+  color: var(--dss-text-body);
 
+  // A regra anterior fixava `--dss-gray-200` com o comentário "no tema escuro
+  // resolve para cinza escuro". NÃO resolve: primitivo não inverte com o tema —
+  // `gray-200` é #f5f5f5 em qualquer tema, ou seja, uma linha quase BRANCA sob o
+  // header escuro. O semântico `--dss-border-default` é quem adapta (gray-300 no
+  // claro, gray-600 no escuro).
   &.dss-header--bordered {
-    border-bottom-color: var(--dss-gray-200);
+    border-bottom-color: var(--dss-border-default);
   }
 }
 

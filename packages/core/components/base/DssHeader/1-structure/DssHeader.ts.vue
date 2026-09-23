@@ -33,10 +33,26 @@ import { useHeaderClasses } from '../composables'
 defineOptions({ name: 'DssHeader', inheritAttrs: false })
 
 const props = withDefaults(defineProps<HeaderProps>(), {
+  modelValue: true,
+  reveal: false,
+  revealOffset: 250,
   elevated: false,
   bordered: false
 })
 
+/* Emits declarados INLINE, não via `HeaderEmits` importado (set/2026).
+   O `@vue/compiler-sfc` resolve tipos importados a partir de um cache do arquivo
+   de tipos que NÃO invalida por mtime — conferido: mudei o conteúdo, dei touch e
+   troquei o especificador do import, e ele seguiu servindo a versão antiga (o
+   módulo compilado listava só `elevated` e `bordered`). Com o tipo nomeado o
+   módulo respondia 500 e derrubava o sandbox inteiro.
+   A forma inline é equivalente e compila. `HeaderEmits` continua exportado em
+   `types/header.types.ts`, que é o que a doc e o contrato leem — e é para lá que
+   este `defineEmits` deve voltar depois de um restart do dev server. */
+defineEmits<{
+  (e: 'reveal', revealed: boolean): void
+  (e: 'update:modelValue', value: boolean): void
+}>()
 defineSlots<HeaderSlots>()
 
 const { headerClasses } = useHeaderClasses(props)
@@ -45,7 +61,12 @@ const { headerClasses } = useHeaderClasses(props)
 <template>
   <q-header
     :class="headerClasses"
+    :model-value="modelValue"
+    :reveal="reveal"
+    :reveal-offset="revealOffset"
     v-bind="$attrs"
+    @update:model-value="$emit('update:modelValue', $event)"
+    @reveal="$emit('reveal', $event)"
   >
     <slot />
   </q-header>

@@ -2,10 +2,17 @@
 // DssHeader — Layer 3: Variante Bordered
 // ==========================================================================
 //
-// Aplica borda inferior sutil como alternativa flat à sombra de elevação.
-// Indicado para layouts com fundo claro onde sombra seria excessiva.
+// A ALTERNATIVA FLAT à sombra: linha no lugar da elevação.
+//
+// Antes esta variante só REDECLARAVA a mesma `border-bottom` que a base já
+// aplica — medido, `bordered` e padrão saíam pixel a pixel iguais. A prop
+// existia, entrava no DOM como classe e não mudava nada.
+//
+// O que ela promete (e agora cumpre) é trocar o separador: some a sombra, fica a
+// linha. Indicado para fundos claros onde a elevação pesa.
 // ==========================================================================
 
 .dss-header--bordered {
-  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  box-shadow: none;
+  border-bottom: var(--dss-border-width-thin) solid var(--dss-border-default);
 }

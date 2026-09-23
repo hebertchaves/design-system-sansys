@@ -52,11 +52,15 @@ import DssHeader from '@dss/components/base/DssHeader'
 | `color` | Fundo governado por `--dss-surface-default` |
 | `height-hint` | Calculado automaticamente pelo Quasar |
 
-## Props Repassadas via $attrs
+## Props
 
-| Prop Quasar | Descrição |
-|-------------|-----------|
-| `reveal` | Oculta/exibe o header ao rolar a página |
+| Prop | Tipo | Padrão | Descrição |
+|------|------|--------|-----------|
+| `modelValue` | `Boolean` | `true` | Visibilidade do header (v-model), sem desmontar o layout |
+| `reveal` | `Boolean` | `false` | Esconde ao rolar para baixo, devolve ao rolar para cima |
+| `revealOffset` | `Number` | `250` | Distância (px) antes de o `reveal` agir — evita piscar |
+| `elevated` | `Boolean` | `false` | Sobe a sombra para `--dss-elevation-2` |
+| `bordered` | `Boolean` | `false` | Alternativa FLAT: tira a sombra, fica a linha |
 
 ## Slots
 
@@ -128,3 +132,11 @@ Brand é responsabilidade do `DssToolbar` interno, não do `DssHeader`:
 - [API Reference](./DSSHEADER_API.md)
 - [Exemplos](./DssHeader.example.vue)
 - [Metadados](./dss.meta.json)
+
+
+> `reveal` e `revealOffset` saíram da lista de "$attrs" em set/2026 e viraram props
+> declaradas: vieram do de-para com o QHeader, que tem 6 props enquanto o DSS
+> expunha 2. Funcionavam por `$attrs`, mas não apareciam na API — e o que não
+> aparece não é escolhido.
+>
+> Eventos: `reveal` (boolean) e `update:modelValue` (boolean).

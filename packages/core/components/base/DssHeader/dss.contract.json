@@ -19,9 +19,75 @@
     "sealPath": "docs/Compliance/seals/DssHeader/DSSHEADER_SELO_v2.2.md"
   },
   "api": {
-    "props": [],
-    "emits": [],
-    "slots": []
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Visibilidade do header (v-model).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "reveal",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Esconde o header ao rolar para baixo e o traz de volta ao rolar para cima.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "revealOffset",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "250",
+        "description": "Distância de rolagem (px) antes de o `reveal` começar a agir.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "elevated",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Aplica sombra de elevação (--dss-elevation-2) para destacar o header.",
+        "category": "Aparência",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Aplica borda inferior sutil em vez de sombra. Alternativa flat ao elevated.",
+        "category": "Aparência",
+        "categorySource": "quasar"
+      }
+    ],
+    "emits": [
+      {
+        "name": "reveal",
+        "payload": "boolean",
+        "description": "Emitido quando o header é revelado (`true`) ou escondido (`false`)."
+      },
+      {
+        "name": "update:modelValue",
+        "payload": "boolean",
+        "description": "v-model da visibilidade."
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "required": true,
+        "description": "Conteúdo do header. Deve conter exclusivamente componentes DssToolbar."
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
   },
   "visual": {
     "defaultPreview": {
@@ -84,8 +150,14 @@
           "source": "3-variants/_elevated.scss"
         },
         {
+          "property": "box-shadow",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
           "property": "border-bottom-color",
-          "token": "--dss-gray-200",
+          "token": "--dss-border-default",
           "value": null,
           "source": "4-output/_states.scss"
         },
@@ -111,12 +183,6 @@
           "property": "border-bottom",
           "token": null,
           "value": "1px solid ButtonFace",
-          "source": "4-output/_states.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": null,
-          "value": "none",
           "source": "4-output/_states.scss"
         },
         {
@@ -189,10 +255,9 @@
         ]
       },
       {
-        "name": "--dss-gray-200",
+        "name": "--dss-border-default",
         "usedIn": [
-          "default",
-          "defaultPreview"
+          "default"
         ]
       },
       {
@@ -209,6 +274,12 @@
       },
       {
         "name": "--dss-spacing-6",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gray-200",
         "usedIn": [
           "defaultPreview"
         ]
