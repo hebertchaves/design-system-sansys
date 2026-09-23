@@ -11,10 +11,10 @@
         <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader>
             <DssToolbar>
-              <DssButton flat round aria-label="Menu" icon="menu" />
+              <DssButton variant="flat" round aria-label="Menu" icon="menu" />
               <span class="text-subtitle1">Sansys Hub</span>
               <DssSpace />
-              <DssButton flat round aria-label="Buscar" icon="search" />
+              <DssButton variant="flat" round aria-label="Buscar" icon="search" />
             </DssToolbar>
           </DssHeader>
           <DssPageContainer>
@@ -36,10 +36,10 @@
         <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader elevated>
             <DssToolbar>
-              <DssButton flat round aria-label="Voltar" icon="arrow_back" />
+              <DssButton variant="flat" round aria-label="Voltar" icon="arrow_back" />
               <span class="text-subtitle1">Detalhe do Pedido</span>
               <DssSpace />
-              <DssButton flat round aria-label="Mais opções" icon="more_vert" />
+              <DssButton variant="flat" round aria-label="Mais opções" icon="more_vert" />
             </DssToolbar>
           </DssHeader>
           <DssPageContainer>
@@ -63,7 +63,7 @@
             <DssToolbar>
               <span class="text-subtitle1 q-ml-sm">Relatórios</span>
               <DssSpace />
-              <DssButton flat label="Exportar" icon="download" />
+              <DssButton variant="flat" label="Exportar" icon="download" />
             </DssToolbar>
           </DssHeader>
           <DssPageContainer>
@@ -86,10 +86,10 @@
         <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader elevated>
             <DssToolbar brand="hub">
-              <DssButton flat round aria-label="Menu" icon="menu" />
+              <DssButton variant="flat" round aria-label="Menu" icon="menu" />
               <span class="text-subtitle1">Sansys Hub</span>
               <DssSpace />
-              <DssButton flat round aria-label="Perfil" icon="account_circle" />
+              <DssButton variant="flat" round aria-label="Perfil" icon="account_circle" />
             </DssToolbar>
           </DssHeader>
           <DssPageContainer>
@@ -113,16 +113,16 @@
         <DssLayout view="hHh lpR fFf" style="min-height: var(--dss-spacing-72)">
           <DssHeader elevated>
             <DssToolbar>
-              <DssButton flat round aria-label="Menu" icon="menu" />
+              <DssButton variant="flat" round aria-label="Menu" icon="menu" />
               <span class="text-subtitle1">Sansys Water</span>
               <DssSpace />
-              <DssButton flat round aria-label="Notificações" icon="notifications" />
-              <DssButton flat round aria-label="Perfil" icon="account_circle" />
+              <DssButton variant="flat" round aria-label="Notificações" icon="notifications" />
+              <DssButton variant="flat" round aria-label="Perfil" icon="account_circle" />
             </DssToolbar>
             <DssToolbar dense>
-              <DssButton flat label="Dashboard" no-caps />
-              <DssButton flat label="Relatórios" no-caps />
-              <DssButton flat label="Configurações" no-caps />
+              <DssButton variant="flat" label="Dashboard" no-caps />
+              <DssButton variant="flat" label="Relatórios" no-caps />
+              <DssButton variant="flat" label="Configurações" no-caps />
             </DssToolbar>
           </DssHeader>
           <DssPageContainer>

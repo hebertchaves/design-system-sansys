@@ -13,10 +13,10 @@
           <DssLayout view="hHh lpR fFf" class="th-palco">
             <DssHeader>
               <DssToolbar>
-                <DssButton flat round aria-label="Menu" icon="menu" />
+                <DssButton variant="flat" round aria-label="Menu" icon="menu" />
                 <span class="th-titulo">Sansys Hub</span>
                 <DssSpace />
-                <DssButton flat round aria-label="Buscar" icon="search" />
+                <DssButton variant="flat" round aria-label="Buscar" icon="search" />
               </DssToolbar>
             </DssHeader>
             <DssPageContainer>
@@ -117,7 +117,7 @@
           <DssLayout view="hHh lpR fFf" class="th-palco">
             <DssHeader>
               <DssToolbar :brand="b">
-                <DssButton flat round aria-label="Menu" icon="menu" />
+                <DssButton variant="flat" round aria-label="Menu" icon="menu" />
                 <span class="th-titulo">{{ brandLabel(b) }}</span>
               </DssToolbar>
             </DssHeader>
@@ -137,10 +137,10 @@
           <DssLayout view="hHh lpR fFf" class="th-palco">
             <DssHeader :elevated="m.elevated" :bordered="m.bordered">
               <DssToolbar>
-                <DssButton flat round aria-label="Voltar" icon="arrow_back" />
+                <DssButton variant="flat" round aria-label="Voltar" icon="arrow_back" />
                 <span class="th-titulo">Detalhe</span>
                 <DssSpace />
-                <DssButton flat round aria-label="Mais opções" icon="more_vert" />
+                <DssButton variant="flat" round aria-label="Mais opções" icon="more_vert" />
               </DssToolbar>
             </DssHeader>
             <DssPageContainer>

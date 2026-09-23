@@ -676,6 +676,49 @@ contrato leem.
 cinco props. Enquanto não reiniciar, `reveal`/`revealOffset` chegam ao QHeader por
 `$attrs` (funcionam), mas o comportamento de rolagem não foi verificado na tela.
 
+### 🚨 Variante do DssButton passada à moda Quasar — 67 ocorrências, 10 arquivos
+
+Encontrado ao adequar o `DssHeader` (set/2026): os botões do header apareciam
+ELEVADOS e em `bg-primary` quando deveriam ser flat. Causa: o template escrevia
+`<DssButton flat round …>`, e **`flat` não é prop do DssButton** — o DSS usa
+`variant="flat"`. O atributo cai em `$attrs`, VAZA para o DOM como atributo
+inerte, e o botão renderiza com o default (`elevated` + `bg-primary`).
+
+É silencioso: nada avisa, o Vue não reclama de atributo desconhecido, e o botão
+aparece — só que com a variante errada.
+
+Levantamento (`<DssButton …>` com o atributo solto, mesma linha):
+
+| atributo | ocorrências |
+|---|---|
+| `flat` | 43 |
+| `outline` | 12 |
+| `unelevated` | 12 |
+
+**10 arquivos**, e dois deles NÃO são exemplo — são implementação que vai para
+produção:
+
+- `DssBtnGroup/1-structure/DssBtnGroup.ts.vue`
+- `DssTestPageComplexity/1-structure/DssTestPageComplexity.ts.vue`
+
+Os outros oito são `*.example.vue` (BtnGroup, Drawer, Footer, Menu, PageSticky,
+PopupProxy, BottomSheet, Form) — e exemplo é "fonte única, também usável na
+documentação": eles ensinam a API errada além de renderizar errado.
+
+As 18 ocorrências do `DssHeader` (exemplo + playground) foram corrigidas nesta
+adequação. Faltam 49.
+
+**A correção é mecânica** (`flat` → `variant="flat"`), mas cada arquivo muda de
+aparência — botões que hoje saem sólidos passam a sair planos. Precisa de
+conferência visual, não de um `sed` global.
+
+**GATE QUE FALTA, e que pegaria isto sozinho.** Nenhum validador hoje checa
+"atributo passado a componente DSS que não é prop declarada". A fonte já existe e
+é a mesma do `validate:api-docs`: os `types/*.types.ts`. Um gate que varra os
+templates procurando atributos não declarados nos componentes `Dss*` pegaria esta
+classe inteira — e ela não é exclusiva do Button: qualquer prop renomeada na
+tradução Quasar→DSS tem o mesmo risco.
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |
