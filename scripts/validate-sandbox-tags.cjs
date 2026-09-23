@@ -105,11 +105,59 @@ for (const f of files) {
     problems.push({ file: path.relative(ROOT, f).replace(/\\/g, '/'), missing });
 }
 
+// ---------------------------------------------------------------------------
+// B. `code` do PlaygroundLayout aponta para um componente que existe
+// ---------------------------------------------------------------------------
+//
+// O `code` da página era só ROTULO ("Contrato canônico · base/DssChip"). A
+// refatoração do Preview Frame o tornou ESTRUTURAL: o frame deriva qual
+// componente montar de `code.split('/').pop()`. Uma página com `code` decorativo
+// — por exemplo "base/DssTabs · DssTab · DssRouteTab", que nomeava o trio — passa
+// a pedir ao registry um componente com aquele nome inteiro, e o frame quebra com
+// "não encontrado no registry de preview".
+//
+// Falha silenciosa clássica: nada avisa, a página das Seções continua perfeita, e
+// só o frame daquele componente fica quebrado. Por isso o gate.
+function codeDoPlayground(src) {
+  const m = src.match(/<PlaygroundLayout[\s\S]*?>/);
+  if (!m) return null;
+  const c = m[0].match(/\bcode="([^"]*)"/);
+  return c ? c[1] : null;
+}
+
+const semComponente = [];
+let paginas = 0;
+
+for (const f of files) {
+  const src = fs.readFileSync(f, 'utf8');
+  const code = codeDoPlayground(src);
+  if (!code) continue;
+  paginas++;
+  const nome = code.split('/').pop().trim();
+  const existe = ['base', 'composed', 'stress-test'].some(g =>
+    fs.existsSync(path.join(ROOT, 'packages/core/components', g, nome)));
+  if (!existe)
+    semComponente.push({ file: path.relative(ROOT, f).replace(/\\/g, '/'), code, nome });
+}
+
 console.log(`🔎 Sandbox: ${scanned} .vue com template escaneados.`);
-if (!problems.length) {
+console.log(`🔎 Playground: ${paginas} página(s) com \`code\` verificado(s).`);
+
+if (semComponente.length) {
+  console.log(`\n❌ ${semComponente.length} página(s) cujo \`code\` NÃO resolve para um componente:\n`);
+  for (const p of semComponente)
+    console.log(`  ${p.file}\n    code="${p.code}" → procurou por "${p.nome}"`);
+  console.log('\n  O Preview Frame deriva o componente do último segmento do `code`.');
+  console.log('  Use o id canônico (ex.: code="base/DssTabs") e deixe o rótulo no `title`.\n');
+}
+
+if (!problems.length && !semComponente.length) {
   console.log('✅ Nenhuma tag <Dss*> não-resolvida (todas importadas/registradas).');
+  console.log('✅ Todo `code` de Playground aponta para um componente existente.');
   process.exit(0);
 }
+
+if (!problems.length) process.exit(GATE ? 1 : 0);
 
 console.log(`\n❌ ${problems.length} arquivo(s) com tag DSS usada mas NÃO importada:\n`);
 for (const p of problems) console.log(`  ${p.file}\n    → ${p.missing.join(', ')}`);

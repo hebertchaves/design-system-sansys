@@ -1,7 +1,7 @@
 <template>
   <PlaygroundLayout
-    title="DssTabs — Playground"
-    code="base/DssTabs · DssTab · DssRouteTab"
+    title="DssTabs · DssTab · DssRouteTab — Playground"
+    code="base/DssTabs"
     :sections="SECTIONS"
     :kpis="KPIS"
   >
