@@ -36,8 +36,15 @@ export interface DssTimelineProps {
   color?: DssTimelineColor
   layout?: DssTimelineLayout
   /**
-   * Define de qual lado os itens aparecem em relação à linha central.
-   * Sobrescrito individualmente por cada DssTimelineEntry.
+   * Lado em que as entradas aparecem em relação à linha central.
+   *
+   * ⚠️ Vale em `dense` e `comfortable` APENAS. No layout `loose` o lado é
+   * decidido por CADA ENTRADA (`DssTimelineEntry.side`, cujo default é
+   * `'right'`), e esta prop é ignorada — contrato do Quasar, não limitação do
+   * DSS. Conferido na tela: em `loose`, alternar esta prop não move nada,
+   * porque as entradas continuam com a classe `--right`.
+   *
+   * Para alternar lados no `loose`, declare `side` em cada entrada.
    */
   side?: DssTimelineSide
 }

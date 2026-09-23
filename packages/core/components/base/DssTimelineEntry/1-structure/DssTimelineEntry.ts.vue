@@ -33,9 +33,6 @@ const { rootClasses } = useTimelineEntryClasses(props)
     <template v-if="$slots.subtitle" #subtitle>
       <slot name="subtitle" />
     </template>
-    <template v-if="$slots.icon" #icon>
-      <slot name="icon" />
-    </template>
     <slot />
   </QTimelineEntry>
 </template>

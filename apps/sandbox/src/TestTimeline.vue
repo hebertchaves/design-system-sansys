@@ -26,8 +26,8 @@
     </PgSection>
 
     <!-- ── 02. Lado das entradas ───────────────────────────────────────── -->
-    <PgSection id="lado" index="02" title="Lado das entradas" :count="3"
-      desc="side no container define o lado padrão; side na entrada sobrescreve o do pai. O Quasar só alterna os lados no layout loose — nos demais a prop é aceita mas não muda o desenho.">
+    <PgSection id="lado" index="02" title="Lado das entradas" :count="4"
+      desc="Quem decide o lado MUDA com o layout: em dense e comfortable manda o side do CONTAINER; em loose manda o side de CADA ENTRADA (default right), e o do container é ignorado. Contrato do Quasar.">
       <PgGrid class="pg-grid--full">
         <PgTile code="loose + side=&quot;right&quot; (padrão)" align="start">
           <DssTimeline layout="loose" side="right" class="tt-largura">
@@ -35,10 +35,15 @@
             <DssTimelineEntry title="Triagem" subtitle="08:40" icon="filter_alt">Encaminhado à equipe.</DssTimelineEntry>
           </DssTimeline>
         </PgTile>
-        <PgTile code="loose + side=&quot;left&quot;" align="start">
-          <DssTimeline layout="loose" side="left" class="tt-largura">
+        <PgTile code="comfortable + side=&quot;left&quot; (container manda)" align="start">
+          <DssTimeline layout="comfortable" side="left" class="tt-largura">
             <DssTimelineEntry title="Abertura" subtitle="08:12" icon="play_arrow">Chamado registrado.</DssTimelineEntry>
             <DssTimelineEntry title="Triagem" subtitle="08:40" icon="filter_alt">Encaminhado à equipe.</DssTimelineEntry>
+          </DssTimeline>
+        </PgTile>
+        <PgTile code="loose + side=&quot;left&quot; no container = IGNORADO" align="start">
+          <DssTimeline layout="loose" side="left" class="tt-largura">
+            <DssTimelineEntry title="Abertura" subtitle="08:12" icon="play_arrow">Sem side próprio, cai no default da entrada (right).</DssTimelineEntry>
           </DssTimeline>
         </PgTile>
         <PgTile code="loose + side por ENTRADA (alternado)" align="start">
@@ -53,7 +58,7 @@
 
     <!-- ── 03. Marcador ────────────────────────────────────────────────── -->
     <PgSection id="marcador" index="03" title="Marcador da entrada" :count="4"
-      desc="O ponto da entrada aceita ícone ou avatar; sem nenhum dos dois, fica o ponto sólido. O slot #icon tem precedência sobre as props.">
+      desc="O ponto aceita ícone (prop icon) ou imagem (prop avatar); sem nenhum dos dois, fica sólido. NÃO existe slot de ícone — o QTimelineEntry só tem default, title e subtitle.">
       <PgGrid class="pg-grid--full">
         <PgTile code="ponto sólido (padrão)" align="start">
           <DssTimeline class="tt-largura">
@@ -73,11 +78,11 @@
             </DssTimelineEntry>
           </DssTimeline>
         </PgTile>
-        <PgTile code="#icon (slot)" align="start">
+        <PgTile code="heading (sem marcador)" align="start">
           <DssTimeline class="tt-largura">
-            <DssTimelineEntry title="Slot de ícone" subtitle="precede a prop">
-              <template #icon><DssIcon name="bolt" decorative /></template>
-              Marcador vindo do slot.
+            <DssTimelineEntry heading tag="h4" title="Grupo sem marcador" />
+            <DssTimelineEntry title="Evento" subtitle="o marcador é da entrada" icon="done">
+              Entradas heading não têm ponto.
             </DssTimelineEntry>
           </DssTimeline>
         </PgTile>
@@ -196,7 +201,6 @@
 // Imports canônicos DSS — Entry Point Wrappers (Princípio Fundamental #11)
 import DssTimeline from '@components/base/DssTimeline/DssTimeline.vue'
 import DssTimelineEntry from '@components/base/DssTimelineEntry/DssTimelineEntry.vue'
-import DssIcon from '@components/base/DssIcon/DssIcon.vue'
 import DssTimelineExample from '@components/base/DssTimeline/DssTimeline.example.vue'
 
 // Template das páginas de teste. A página CONSOME o layout; não reimplementa

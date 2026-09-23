@@ -73,6 +73,21 @@ export interface DssTimelineEntrySlots {
   title: () => unknown
   /** Slot para customizar o subtítulo com formatação especial de data/hora. */
   subtitle: () => unknown
-  /** Slot para customizar o marcador/ícone com SVG ou componente customizado. */
-  icon: () => unknown
 }
+
+/**
+ * SLOTS E PROPS DO QTimelineEntry FORA DA API DSS
+ * ------------------------------------------------
+ *
+ * `#icon` — REMOVIDO em set/2026. O DSS declarava e REPASSAVA um slot `icon`,
+ * mas o `QTimelineEntry` não tem esse slot (conferido em
+ * `dist/api/QTimelineEntry.json`: os slots são `default`, `title` e `subtitle`).
+ * O conteúdo passado simplesmente desaparecia — medido na página de teste, o
+ * glifo não aparecia nem no marcador nem no corpo. Para ícone no marcador existe
+ * a prop `icon`; para imagem, `avatar`.
+ *
+ * `body` — NÃO exposta, de propósito. É a alternativa do Quasar ao slot default
+ * ("Use this prop or the default slot"), e o DSS já oferece o slot, que aceita
+ * markup e componentes. Duas portas para a mesma coisa só criam dúvida sobre
+ * qual vence.
+ */

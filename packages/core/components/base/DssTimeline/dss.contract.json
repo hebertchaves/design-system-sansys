@@ -53,7 +53,7 @@
         "name": "side",
         "type": "DssTimelineSide",
         "controlHint": "segmented",
-        "description": "Define de qual lado os itens aparecem em relação à linha central.",
+        "description": "Lado em que as entradas aparecem em relação à linha central.",
         "validValues": [
           "left",
           "right"

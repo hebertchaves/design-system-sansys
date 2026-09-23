@@ -23,7 +23,6 @@
 | `default` | Corpo do evento — texto, componentes DSS |
 | `#title` | Customização do título — markup rico (badges, ícones) |
 | `#subtitle` | Customização do subtítulo — `<time>`, formatações especiais |
-| `#icon` | Customização do marcador — SVG ou componente customizado |
 
 ## Eventos
 
@@ -72,3 +71,19 @@ semântico do DSS (`positive`, `negative`, …) e não a paleta do Quasar
 
 Precedência: a cor explícita da entrada vence a marca ambiente do `[data-brand]`,
 porque a custom property é redefinida num ancestral mais próximo do marcador.
+
+
+## Slots e props do QTimelineEntry FORA da API DSS
+
+| item | motivo |
+|---|---|
+| slot `#icon` | **Não existe no QTimelineEntry.** Os slots do motor são `default`, `title` e `subtitle` (`dist/api/QTimelineEntry.json`). O DSS declarava e repassava esse slot, e o conteúdo desaparecia — medido: o glifo não saía nem no marcador nem no corpo. Para ícone no marcador use a prop `icon`; para imagem, `avatar`. |
+| prop `body` | Alternativa do Quasar ao slot default ("Use this prop or the default slot"). O DSS já oferece o slot, que aceita markup e componentes — duas portas para a mesma coisa só criam dúvida sobre qual vence. |
+
+## `side` — o que ele governa de verdade
+
+Só vale no layout **`loose`**. É o contrato do Quasar, não uma limitação do DSS:
+
+- `dense` e `comfortable` → o lado é decidido pelo **container** (`DssTimeline.side`);
+- `loose` → o lado é decidido por **cada entrada**, e o default dela é `'right'` —
+  é por isso que, no `loose`, mudar o `side` do container não muda nada.

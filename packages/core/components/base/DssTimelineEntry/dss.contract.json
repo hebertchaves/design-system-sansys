@@ -116,12 +116,6 @@
         "scope": null,
         "required": true,
         "description": "Slot para customizar o subtítulo com formatação especial de data/hora."
-      },
-      {
-        "name": "icon",
-        "scope": null,
-        "required": true,
-        "description": "Slot para customizar o marcador/ícone com SVG ou componente customizado."
       }
     ]
   },
@@ -278,9 +272,6 @@
   "antiPatterns": [
     {
       "rule": "P01"
-    },
-    {
-      "rule": "P14"
     }
   ],
   "bindingRules": [
@@ -289,13 +280,6 @@
       "name": "Token First",
       "appliesTo": [
         "visual.states"
-      ]
-    },
-    {
-      "id": "P14",
-      "name": "Icon Composition",
-      "appliesTo": [
-        "api.slots"
       ]
     }
   ],
