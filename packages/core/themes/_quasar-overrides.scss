@@ -544,11 +544,21 @@
   /* Individual tab */
   .q-tab {
     /* touch target removido — ver nota no topo deste arquivo (`--dss-touch-target-min` nunca existiu). */
-    padding: 0 var(--dss-spacing-3);
+
+    /* O eixo VERTICAL era 0 (set/2026 — corrigido). Com rótulo só, o `min-height`
+       centralizava o texto e ninguém notava. Com ÍCONE + rótulo a pilha (ícone 24
+       + margem 4 + rótulo 21 = 49px) preenchia a aba INTEIRA: medido, 0px de folga
+       acima do ícone e 0px abaixo do rótulo — o ícone encostava no topo.
+       Esta regra (0,2,0) também vencia o `padding-block` que o próprio `.dss-tab`
+       declara (0,1,0): o DSS contradizia a si mesmo, e quem carregava a intenção
+       era a regra menos específica. Agora as duas dizem o mesmo. */
+    padding: var(--dss-spacing-3) var(--dss-spacing-3);
     
-    /* Ícone */
+    /* Ícone — tamanho por TOKEN, não por `em` herdado.
+       `1.25em` sobre o rótulo de 14px dava 17,5px: um valor fora da escala, e
+       menor que a própria caixa de 24×24 que o Quasar reserva para o glifo. */
     .q-icon {
-      font-size: 1.25em;
+      font-size: var(--dss-icon-size-md);
       margin-bottom: var(--dss-spacing-1);
     }
     

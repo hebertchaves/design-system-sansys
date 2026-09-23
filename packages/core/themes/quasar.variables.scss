@@ -98,6 +98,10 @@ $table-stripe-bg: var(--dss-surface-subtle) !default;
 
 // Tabs
 $tabs-border-radius: var(--dss-radius-md) !default;
+/* ⚠️ VARIÁVEL NÃO CONSUMIDA (conferido por grep em set/2026). O padding real das
+   abas é declarado em `_quasar-overrides.scss` (`.q-tabs .q-tab`), não aqui — foi
+   lá que o eixo vertical estava zerado. Mantida com o valor original para não
+   sugerir que editá-la muda algo. */
 $tabs-padding: 0 var(--dss-spacing-3) !default;
 $tabs-min-height: var(--dss-touch-target-md) !default; /* 44px */
 $tabs-font-size: var(--dss-font-size-sm) !default;

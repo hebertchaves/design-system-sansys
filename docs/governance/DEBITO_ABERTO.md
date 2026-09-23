@@ -719,6 +719,27 @@ templates procurando atributos não declarados nos componentes `Dss*` pegaria es
 classe inteira — e ela não é exclusiva do Button: qualquer prop renomeada na
 tradução Quasar→DSS tem o mesmo risco.
 
+### `DssTabs` — o que o Preview Frame NÃO oferece, e por quê (fechado, para não reabrir)
+
+Relatado como "o componente parece cru no frame: não consigo aplicar ícones,
+mudar estilo visual, indicar cores". Medido, o frame monta **13 knobs** (15
+controles) — não é cru. Mas cada item do relato tem uma resposta diferente:
+
+| pedido | situação |
+|---|---|
+| **ícones** | Era a semente, não o frame. O `demoSlots` declarava 3 abas só com `name` e `label`; agora traz `icon` nas três e `alert` numa. Corrigido. |
+| **estilo visual (filled, elevated…)** | NÃO EXISTE — nem no QTabs/QTab nem no DSS. Aba não tem variante de preenchimento; o vocabulário é do Button. Seria feature nova, não conserto. |
+| **cores além da marca** | BLOQUEADO por decisão do DS. `active-color`, `active-bg-color` e `indicator-color` do QTabs não são expostos: a cor da aba vem de token, e é o que mantém a trilha consistente entre produtos. Está documentado em `types/tabs.types.ts`. |
+
+**A lição que fica:** uma semente pobre faz o frame parecer incompleto. Metade dos
+knobs do DssTabs (`inlineLabel`, `narrowIndicator`, `switchIndicator`) só tem
+efeito observável quando há ícone — sem ele, o usuário mexe no controle e nada
+acontece, e a conclusão natural é "o componente está cru". Medido depois de
+enriquecer a semente: `inlineLabel` passou de 73×67 empilhado para 52×91 em linha.
+
+**Vale revisar as outras 38 sementes com o mesmo olhar:** elas exercitam os knobs
+do componente ou só provam que ele monta?
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |

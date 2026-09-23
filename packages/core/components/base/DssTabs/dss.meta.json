@@ -167,28 +167,32 @@
         "source": "2-composition/_base.scss"
       }
     ],
-    "demoContent": "3 abas: Início, Perfil, Configurações",
+    "demoContent": "3 abas com ícone e rótulo; a última com alert",
     "demoSlots": {
       "default": [
         {
           "component": "DssTab",
           "props": {
             "name": "inicio",
-            "label": "Início"
+            "label": "Início",
+            "icon": "home"
           }
         },
         {
           "component": "DssTab",
           "props": {
             "name": "perfil",
-            "label": "Perfil"
+            "label": "Perfil",
+            "icon": "person"
           }
         },
         {
           "component": "DssTab",
           "props": {
             "name": "config",
-            "label": "Config"
+            "label": "Config",
+            "icon": "settings",
+            "alert": true
           }
         }
       ]

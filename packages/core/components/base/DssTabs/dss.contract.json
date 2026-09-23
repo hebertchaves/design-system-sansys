@@ -187,21 +187,25 @@
             "component": "DssTab",
             "props": {
               "name": "inicio",
-              "label": "Início"
+              "label": "Início",
+              "icon": "home"
             }
           },
           {
             "component": "DssTab",
             "props": {
               "name": "perfil",
-              "label": "Perfil"
+              "label": "Perfil",
+              "icon": "person"
             }
           },
           {
             "component": "DssTab",
             "props": {
               "name": "config",
-              "label": "Config"
+              "label": "Config",
+              "icon": "settings",
+              "alert": true
             }
           }
         ]

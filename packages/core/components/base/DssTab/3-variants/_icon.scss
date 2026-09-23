@@ -9,3 +9,16 @@
 .dss-tab--icon {
   padding-inline: var(--dss-spacing-3);
 }
+
+
+// ---------------------------------------------------------------------------
+// TAMANHO DO GLIFO — governado no TEMA, não aqui (set/2026)
+// ---------------------------------------------------------------------------
+//
+// Cheguei a declarar `.dss-tab .q-tab__icon { font-size: … }` neste arquivo e
+// NÃO pegou: quem governa o glifo da aba é `.q-tabs .q-tab .q-icon`, em
+// `themes/_quasar-overrides.scss`, com especificidade (0,3,0) contra os (0,2,0)
+// daqui. Foi lá que o `1.25em` virou `--dss-icon-size-md`.
+//
+// Registrado para o próximo: antes de escrever regra de ícone de aba, confira o
+// bloco `.q-tabs` do tema — ele alcança o mesmo elemento e vence.
