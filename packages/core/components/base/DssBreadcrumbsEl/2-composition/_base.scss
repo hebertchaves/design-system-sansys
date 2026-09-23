@@ -40,14 +40,28 @@
     cursor: pointer;
     transition: color var(--dss-duration-150) var(--dss-easing-standard);
 
-    &:hover {
-      color: var(--dss-text-action-hover);
-      text-decoration: underline; // EXC-02
-    }
-
+    // SUBLINHADO POR `box-shadow`, não por `text-decoration` (set/2026).
+    //
+    // O degrau é `inline-flex` (ícone + rótulo lado a lado). Num container flex
+    // cada filho é blocado, e o `text-decoration` propaga para CADA UM,
+    // desenhado na linha de base do próprio item. Com ícone, o resultado eram
+    // DOIS sublinhados em alturas diferentes — um sob o glifo, outro sob o
+    // texto —, porque o ícone tem altura e base próprias. Sem ícone o defeito
+    // não aparece, e foi por isso que passou despercebido.
+    //
+    // `text-decoration: none` no filho não resolve: decoração propagada não é
+    // cancelável pelo descendente.
+    //
+    // `box-shadow: inset` desenha UMA linha na base do elemento inteiro, não
+    // entra no cálculo de layout (sem deslocar o texto ao entrar/sair do hover)
+    // e usa `currentColor`, então acompanha a cor de marca sozinha.
+    //
+    // EXC-02 mantida no espírito: a affordance de link não é só a cor — há uma
+    // linha, como o WCAG 2.1 SC 1.4.1 pede em navegação estrutural.
+    &:hover,
     &:active {
       color: var(--dss-text-action-hover);
-      text-decoration: underline; // EXC-02
+      box-shadow: inset 0 -1px 0 0 currentColor; // EXC-02
     }
 
     &:focus-visible {

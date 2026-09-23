@@ -238,15 +238,21 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "text-decoration",
+          "property": "box-shadow",
           "token": null,
-          "value": "underline",
-          "source": "4-output/_states.scss"
+          "value": "inset 0 -1px 0 0 currentColor",
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
           "token": null,
           "value": "ActiveText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "underline",
           "source": "4-output/_states.scss"
         },
         {
@@ -326,15 +332,21 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "text-decoration",
+          "property": "box-shadow",
           "token": null,
-          "value": "underline",
-          "source": "4-output/_states.scss"
+          "value": "inset 0 -1px 0 0 currentColor",
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "color",
           "token": null,
           "value": "ActiveText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "text-decoration",
+          "token": null,
+          "value": "underline",
           "source": "4-output/_states.scss"
         },
         {
