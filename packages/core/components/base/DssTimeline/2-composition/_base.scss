@@ -32,7 +32,13 @@
      Era `--dss-gray-400` (#d4d4d4, 1,26:1): como MARCADOR isso é quase invisível.
      `--dss-border-strong` é o degrau de contorno de controle (4,74:1 no claro) e
      adapta no escuro. */
-  --dss-timeline-dot-color: var(--dss-border-strong);
+  /* `--dss-timeline-dot-override` é o degrau da ESCOLHA EXPLÍCITA (prop `color`
+     do container ou da entrada). Ele entra como primeiro termo do `var()` aqui e
+     também nas regras de marca, e é assim que a escolha explícita vence a marca
+     ambiente SEM disputa de especificidade: a própria regra da marca cede a vez
+     quando o override existe. Entre container e entrada, vence a entrada — ela é
+     ancestral mais próxima do marcador. */
+  --dss-timeline-dot-color: var(--dss-timeline-dot-override, var(--dss-border-strong));
 
   /* Cor do glifo DENTRO do marcador. Precisa ser declarada: o glifo herda a cor
      do dot, e a cor do dot é o que pinta o próprio círculo — herdada, o ícone
@@ -188,6 +194,22 @@
 
 .dss-timeline.q-timeline--loose .q-timeline__entry--icon .q-timeline__dot {
   margin-left: calc(-1 * var(--dss-icon-size-lg) / 2);
+}
+
+/* O MESMO, ESPELHADO, para `side="left"` (set/2026).
+   A primeira rodada só redeclarou o lado direito, e o `left` continuou sem
+   reserva: o conteúdo voltava a passar por cima da linha. O Quasar tem o par
+   completo — é o mesmo defeito, só que do outro lado. */
+.dss-timeline.q-timeline--dense--left .q-timeline__entry {
+  padding-right: var(--dss-spacing-10);
+}
+
+.dss-timeline.q-timeline--comfortable--left .q-timeline__subtitle {
+  padding-left: var(--dss-spacing-8);
+}
+
+.dss-timeline.q-timeline--comfortable--left .q-timeline__content {
+  padding-right: var(--dss-spacing-8);
 }
 
 /* Entradas com ícone: o ponto é maior (32px contra 15px), e o Quasar desce o

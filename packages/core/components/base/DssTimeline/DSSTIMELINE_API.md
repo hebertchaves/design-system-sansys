@@ -4,9 +4,9 @@
 
 | Prop | Tipo | Padrão | Descrição |
 |------|------|--------|-----------|
+| `color` | `'primary' \| 'secondary' \| 'tertiary' \| 'accent' \| 'positive' \| 'negative' \| 'warning' \| 'info'` | `undefined` | Cor semântica PADRÃO dos marcadores. Cada `DssTimelineEntry` pode sobrescrever com a própria `color` |
 | `layout` | `'dense' \| 'comfortable' \| 'loose'` | `undefined` | Espaçamento entre itens da timeline. Mapeia para `QTimeline.layout`. |
 | `side` | `'left' \| 'right'` | `undefined` | Lado padrão dos itens em relação à linha central. Mapeia para `QTimeline.side`. |
-| `dark` | `Boolean` | `false` | Ativa modo escuro interno do QTimeline. Prefira cascade `[data-theme="dark"]`. |
 
 **Props NÃO expostas (DSS governa via CSS):**
 - `color` — governa via `--dss-timeline-line-color` e `--dss-timeline-dot-color`
@@ -68,3 +68,27 @@
 | `--dss-spacing-6` | 24px | Padding bottom — comfortable |
 | `--dss-spacing-8` | 32px | Padding bottom — loose |
 | `--dss-border-width-thin` | 1px | Print fallback |
+
+
+## Nota — `dark` foi BLOQUEADA (set/2026)
+
+A prop `dark` do `QTimeline` era estruturalmente inerte aqui: tudo que
+`.q-timeline--dark` faz é `color: #fff` na raiz e `opacity: .7` no subtítulo, e o
+DSS declara essas duas propriedades com regras unlayered, que vencem as do
+`@layer quasar`. Marcar o toggle não mudava um pixel.
+
+O tema é governado GLOBALMENTE por `[data-theme="dark"]`, como em todo o DSS.
+Bloqueio é decisão; prop que promete controle e não entrega, não.
+
+## Precedência de cor
+
+Do mais forte para o mais fraco:
+
+1. `color` na ENTRADA (`DssTimelineEntry`) — ancestral mais próximo do marcador;
+2. `color` no CONTAINER (`DssTimeline`);
+3. `[data-brand]` num ancestral;
+4. neutro (`--dss-border-strong`).
+
+As duas primeiras escrevem em `--dss-timeline-dot-override`, que as regras de
+marca consultam como primeiro termo do `var()`. Por isso a escolha explícita
+vence a marca sem depender de especificidade nem de ordem de arquivo.

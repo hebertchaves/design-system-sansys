@@ -554,13 +554,29 @@ componente com o que a página escreve; o frame monta com o que o CONTRATO diz, 
 o contrato copia o `demoSlots` do meta. São duas fontes diferentes, e só a
 segunda tem gate.
 
-### `DssTimeline` — prop `dark` compete com o tema
+### `DssTimeline` — `color` do container só aparece depois de RESTART do dev server
 
-`DssTimelineProps.dark` é repasse direto do QTimeline e o próprio JSDoc já diz
-"prefira `[data-theme="dark"]`". Uma prop que duplica o sistema de temas é porta
-para divergência: o componente pode ficar escuro num app claro sem que nenhum
-token saiba disso. Candidata a bloqueio na próxima rodada — não removida agora
-porque é mudança de API pública.
+Diferente do caso anterior (que era página velha e eu diagnostiquei errado), aqui
+há prova no servidor: buscando o SFC transformado,
+`DssTimeline.ts.vue` ainda declara `dark: { type: Boolean }` e NÃO declara
+`color`. O `DssTimelineEntry`, no mesmo teste, já traz `color` — ou seja, o Vite
+reprocessou um e não o outro.
+
+Tentado sem restart e SEM efeito: `touch` no SFC e `touch` no arquivo de tipos. A
+resolução de `defineProps<Interface>()` fica em cache e não invalida por mtime.
+
+**Sintoma enquanto não reiniciar:** o knob `color` do Preview Frame pinta, mas
+pelo caminho errado — o valor vai por `$attrs` até o QTimeline, que repassa aos
+filhos como `.text-<nome>` (`!important` layered) e ATROPELA a cor própria de
+cada entrada. Medido: com `color="negative"` no container, as duas entradas
+ficaram vermelhas apesar de terem `--color-positive` e `--color-warning`.
+
+**Depois do restart, conferir:** a classe `dss-timeline--color-*` presente na
+RAIZ, o knob `dark` ausente dos controles, e a precedência correta — entrada
+vence container, container vence `[data-brand]`.
+
+Nada disso afeta o CSS, que é independente de recompilação: `side="left"` já está
+conferido nos dois layouts.
 
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 

@@ -15,7 +15,7 @@
 [data-brand="hub"] .dss-timeline,
 .dss-timeline--brand-hub {
   --dss-timeline-line-color: var(--dss-hub-600);
-  --dss-timeline-dot-color: var(--dss-hub-600);
+  --dss-timeline-dot-color: var(--dss-timeline-dot-override, var(--dss-hub-600));
   /* Sob marca o ponto é um preenchimento SATURADO, e não acompanha o tema — o
      glifo precisa ser o branco fixo, não o `text-inverse` que vira escuro no
      dark. */
@@ -29,7 +29,7 @@
 [data-brand="water"] .dss-timeline,
 .dss-timeline--brand-water {
   --dss-timeline-line-color: var(--dss-water-500);
-  --dss-timeline-dot-color: var(--dss-water-500);
+  --dss-timeline-dot-color: var(--dss-timeline-dot-override, var(--dss-water-500));
   /* Sob marca o ponto é um preenchimento SATURADO, e não acompanha o tema — o
      glifo precisa ser o branco fixo, não o `text-inverse` que vira escuro no
      dark. */
@@ -43,7 +43,7 @@
 [data-brand="waste"] .dss-timeline,
 .dss-timeline--brand-waste {
   --dss-timeline-line-color: var(--dss-waste-600);
-  --dss-timeline-dot-color: var(--dss-waste-600);
+  --dss-timeline-dot-color: var(--dss-timeline-dot-override, var(--dss-waste-600));
   /* Sob marca o ponto é um preenchimento SATURADO, e não acompanha o tema — o
      glifo precisa ser o branco fixo, não o `text-inverse` que vira escuro no
      dark. */

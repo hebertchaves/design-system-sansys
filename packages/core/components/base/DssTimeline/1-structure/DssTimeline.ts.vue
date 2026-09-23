@@ -18,7 +18,6 @@ const { rootClasses } = useTimelineClasses(props)
     :class="rootClasses"
     :layout="layout"
     :side="side"
-    :dark="dark"
     class="dss-timeline"
   >
     <slot />

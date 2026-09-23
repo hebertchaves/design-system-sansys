@@ -27,3 +27,25 @@
 .dss-timeline.dss-timeline--loose .q-timeline__content {
   padding-bottom: var(--dss-spacing-8);
 }
+
+/* ==========================================================================
+   COR SEMÂNTICA PADRÃO DA LINHA (set/2026)
+   ==========================================================================
+   Define o marcador de TODAS as entradas de uma vez; cada DssTimelineEntry
+   ainda pode sobrescrever com a própria `color`, porque a entrada é ancestral
+   mais próxima do marcador e ganha a cascata da custom property.
+
+   Escreve em `--dss-timeline-dot-override`, e não direto em
+   `--dss-timeline-dot-color`: é o degrau que as regras de marca consultam
+   primeiro, então a escolha explícita vence o `[data-brand]` ambiente sem
+   depender de ordem de arquivo nem de especificidade.
+   ========================================================================== */
+
+.dss-timeline--color-primary   { --dss-timeline-dot-override: var(--dss-action-primary);   --dss-timeline-dot-fg: var(--dss-text-on-primary); }
+.dss-timeline--color-secondary { --dss-timeline-dot-override: var(--dss-action-secondary); --dss-timeline-dot-fg: var(--dss-text-on-primary); }
+.dss-timeline--color-tertiary  { --dss-timeline-dot-override: var(--dss-action-tertiary);  --dss-timeline-dot-fg: var(--dss-text-on-primary); }
+.dss-timeline--color-accent    { --dss-timeline-dot-override: var(--dss-action-accent);    --dss-timeline-dot-fg: var(--dss-text-on-primary); }
+.dss-timeline--color-positive  { --dss-timeline-dot-override: var(--dss-feedback-success); --dss-timeline-dot-fg: var(--dss-text-on-primary); }
+.dss-timeline--color-negative  { --dss-timeline-dot-override: var(--dss-feedback-error);   --dss-timeline-dot-fg: var(--dss-text-on-primary); }
+.dss-timeline--color-warning   { --dss-timeline-dot-override: var(--dss-feedback-warning); --dss-timeline-dot-fg: var(--dss-text-on-primary); }
+.dss-timeline--color-info      { --dss-timeline-dot-override: var(--dss-feedback-info);    --dss-timeline-dot-fg: var(--dss-text-on-primary); }

@@ -26,41 +26,41 @@
    ========================================================================== */
 
 .dss-timeline-entry--color-primary {
-  --dss-timeline-dot-color: var(--dss-action-primary);
+  --dss-timeline-dot-override: var(--dss-action-primary);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }
 
 .dss-timeline-entry--color-secondary {
-  --dss-timeline-dot-color: var(--dss-action-secondary);
+  --dss-timeline-dot-override: var(--dss-action-secondary);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }
 
 .dss-timeline-entry--color-tertiary {
-  --dss-timeline-dot-color: var(--dss-action-tertiary);
+  --dss-timeline-dot-override: var(--dss-action-tertiary);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }
 
 .dss-timeline-entry--color-accent {
-  --dss-timeline-dot-color: var(--dss-action-accent);
+  --dss-timeline-dot-override: var(--dss-action-accent);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }
 
 .dss-timeline-entry--color-positive {
-  --dss-timeline-dot-color: var(--dss-feedback-success);
+  --dss-timeline-dot-override: var(--dss-feedback-success);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }
 
 .dss-timeline-entry--color-negative {
-  --dss-timeline-dot-color: var(--dss-feedback-error);
+  --dss-timeline-dot-override: var(--dss-feedback-error);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }
 
 .dss-timeline-entry--color-warning {
-  --dss-timeline-dot-color: var(--dss-feedback-warning);
+  --dss-timeline-dot-override: var(--dss-feedback-warning);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }
 
 .dss-timeline-entry--color-info {
-  --dss-timeline-dot-color: var(--dss-feedback-info);
+  --dss-timeline-dot-override: var(--dss-feedback-info);
   --dss-timeline-dot-fg: var(--dss-text-on-primary);
 }

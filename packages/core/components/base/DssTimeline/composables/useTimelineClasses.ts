@@ -8,6 +8,7 @@ export function useTimelineClasses(props: DssTimelineProps) {
     'dss-timeline--loose': props.layout === 'loose',
     'dss-timeline--side-left': props.side === 'left',
     'dss-timeline--side-right': props.side === 'right',
+    [`dss-timeline--color-${props.color}`]: !!props.color,
   }))
 
   return { rootClasses }

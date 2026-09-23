@@ -20,10 +20,27 @@
   "api": {
     "props": [
       {
+        "name": "color",
+        "type": "DssTimelineColor",
+        "controlHint": "picker-color",
+        "description": "Controla o espaçamento entre os itens da linha do tempo.",
+        "validValues": [
+          "primary",
+          "secondary",
+          "tertiary",
+          "accent",
+          "positive",
+          "negative",
+          "warning",
+          "info"
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
+      },
+      {
         "name": "layout",
         "type": "DssTimelineLayout",
         "controlHint": "segmented",
-        "description": "Controla o espaçamento entre os itens da linha do tempo.",
         "validValues": [
           "dense",
           "comfortable",
@@ -43,14 +60,6 @@
         ],
         "category": "Aparência",
         "categorySource": "override"
-      },
-      {
-        "name": "dark",
-        "type": "boolean",
-        "controlHint": "toggle",
-        "description": "Ativa o modo escuro no QTimeline.",
-        "category": "Aparência",
-        "categorySource": "quasar"
       }
     ],
     "emits": [],
@@ -201,6 +210,12 @@
         {
           "property": "margin-left",
           "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-right",
+          "token": "--dss-spacing-10",
           "value": null,
           "source": "2-composition/_base.scss"
         },
