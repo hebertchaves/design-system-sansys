@@ -18,9 +18,63 @@
     "sealPath": "docs/Compliance/seals/DssPageSticky/DSSPAGESTICKY_SELO_v2.2.md"
   },
   "api": {
-    "props": [],
+    "props": [
+      {
+        "name": "position",
+        "type": "PageStickyPosition",
+        "controlHint": "select",
+        "default": "bottom-right",
+        "description": "Posição na viewport onde o elemento fixo será ancorado.",
+        "validValues": [
+          "top-right",
+          "top-left",
+          "bottom-right",
+          "bottom-left",
+          "top",
+          "bottom",
+          "left",
+          "right"
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "offset",
+        "type": "[number, number]",
+        "controlHint": "text",
+        "default": "[18, 18]",
+        "description": "Deslocamento [x, y] em pixels a partir da posição definida.",
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "expand",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Quando true, expande o elemento para ocupar toda a largura ou",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "elevated",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Prop DSS exclusiva. Aplica sombra de elevação governada pelo token",
+        "category": "Estado",
+        "categorySource": "css-states"
+      }
+    ],
     "emits": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "required": true,
+        "description": "Conteúdo fixo. Aceita qualquer elemento DSS: DssButton (FAB),"
+      }
+    ]
   },
   "visual": {
     "defaultPreview": {

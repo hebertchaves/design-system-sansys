@@ -19,9 +19,33 @@
     "sealPath": "docs/Compliance/seals/DssPage/DSSPAGE_SELO_v2.2.md"
   },
   "api": {
-    "props": [],
+    "props": [
+      {
+        "name": "padding",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Aplica padding interno padrão ao redor do conteúdo.",
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "styleFn",
+        "type": "PageStyleFn",
+        "controlHint": "text",
+        "description": "Sobrescreve a função de cálculo de min-height do Quasar.",
+        "category": "Aparência",
+        "categorySource": "quasar"
+      }
+    ],
     "emits": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "required": true,
+        "description": "Conteúdo principal da página. Destinado a qualquer conteúdo de aplicação."
+      }
+    ]
   },
   "visual": {
     "defaultPreview": {

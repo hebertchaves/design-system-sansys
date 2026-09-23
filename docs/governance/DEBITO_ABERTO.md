@@ -712,7 +712,18 @@ adequação. Faltam 49.
 aparência — botões que hoje saem sólidos passam a sair planos. Precisa de
 conferência visual, não de um `sed` global.
 
-**GATE QUE FALTA, e que pegaria isto sozinho.** Nenhum validador hoje checa
+**GATE IMPLEMENTADO (set/2026):** `npm run validate:dss-props`, ligado ao
+pre-commit. Compara cada atributo de tag `<Dss*>` contra a API declarada no
+`dss.contract.json`, aceitando props, emits, eventos DOM nativos, slots,
+diretivas do Vue e atributos HTML/ARIA. Testado reintroduzindo o `flat` do
+DssHeader: exit 1 apontando arquivo e prop.
+
+Dívida inicial registrada em `scripts/dss-props-baseline.json`: **82 combinações**
+(arquivo × componente × atributo), das 226 ocorrências brutas. O gate reprova só o
+que for NOVO; ao corrigir um arquivo, rode `--update-baseline` para a dívida
+encolher.
+
+**Nota original, mantida pelo racional:** Nenhum validador hoje checa
 "atributo passado a componente DSS que não é prop declarada". A fonte já existe e
 é a mesma do `validate:api-docs`: os `types/*.types.ts`. Um gate que varra os
 templates procurando atributos não declarados nos componentes `Dss*` pegaria esta
@@ -765,6 +776,27 @@ enriquecer a semente: `inlineLabel` passou de 73×67 empilhado para 52×91 em li
 
 **Vale revisar as outras 38 sementes com o mesmo olhar:** elas exercitam os knobs
 do componente ou só provam que ele monta?
+
+### Emissor de contrato ignorava `type` alias — 6 contratos saíam VAZIOS
+
+Descoberto ao construir o gate de atributos (set/2026), que usa o contrato como
+fonte: o `DssLayout` aparecia com a prop `view` "inexistente", embora os tipos a
+declarem. O contrato tinha **zero props**.
+
+Causa no `scripts/emit-contract.mjs`: o parser só lia `interface`
+(`if (!ts.isInterfaceDeclaration(node)) return`), e antes disso um ramo de
+uniões dava `return` em TODO `type` alias. Quem escreve
+`export type XProps = { … }` — forma equivalente em TS — saía do contrato sem
+props.
+
+Seis componentes de layout estavam assim: `DssLayout` (2 props), `DssDrawer` (7),
+`DssFooter` (2), `DssPage` (2), `DssPageScroller` (5), `DssPageSticky` (4).
+Consequências em cadeia: **nenhum knob no Preview Frame** para esses seis, e
+nenhuma fonte para o gate de atributos.
+
+Corrigido no emissor (aceita as duas formas) e os 79 contratos reemitidos — 6
+mudaram. **O que ainda vale conferir:** esses seis nunca tiveram knobs, então a
+adequação deles nunca exercitou prop nenhuma pelo frame.
 
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 

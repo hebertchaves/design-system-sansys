@@ -18,9 +18,72 @@
     "sealPath": "docs/Compliance/seals/DssPageScroller/DSSPAGESCROLLER_SELO_v2.2.md"
   },
   "api": {
-    "props": [],
+    "props": [
+      {
+        "name": "position",
+        "type": "PageScrollerPosition",
+        "controlHint": "select",
+        "default": "bottom-right",
+        "description": "Posição na tela onde o componente flutuante será ancorado.",
+        "validValues": [
+          "top-right",
+          "top-left",
+          "bottom-right",
+          "bottom-left",
+          "top",
+          "bottom",
+          "left",
+          "right"
+        ],
+        "category": "Aparência",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "offset",
+        "type": "[number, number]",
+        "controlHint": "text",
+        "default": "[18, 18]",
+        "description": "Deslocamento [x, y] em pixels a partir da posição definida.",
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "scrollOffset",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "1000",
+        "description": "Quantidade de pixels que a página deve rolar antes do componente",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "duration",
+        "type": "number",
+        "controlHint": "stepper",
+        "default": "250",
+        "description": "Duração da animação de scroll suave ao clicar no componente,",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "reverse",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Quando true, o componente aparece ao rolar na direção oposta (para cima),",
+        "category": "Aparência",
+        "categorySource": "override"
+      }
+    ],
     "emits": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "required": true,
+        "description": "Conteúdo do scroller. Aceita qualquer elemento DSS."
+      }
+    ]
   },
   "visual": {
     "defaultPreview": {

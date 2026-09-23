@@ -28,6 +28,8 @@
     "validate:token-values": "node scripts/sync-token-values.js --audit",
     "validate:api-docs": "node scripts/validate-api-docs.cjs",
     "validate:api-docs:gate": "node scripts/validate-api-docs.cjs --gate",
+    "validate:dss-props": "node scripts/validate-dss-props.cjs",
+    "validate:dss-props:gate": "node scripts/validate-dss-props.cjs --gate",
     "catalog:build": "node scripts/build-catalog.cjs",
     "catalog:validate": "node scripts/build-catalog.cjs --validate",
     "contracts:emit": "node scripts/emit-contract.mjs --all --write",

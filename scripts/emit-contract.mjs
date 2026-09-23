@@ -98,13 +98,27 @@ function parseTypes(typesFile) {
       const members = []
       const collect = t => { if (ts.isLiteralTypeNode(t) && ts.isStringLiteral(t.literal)) members.push(t.literal.text) }
       if (ts.isUnionTypeNode(node.type)) node.type.types.forEach(collect); else collect(node.type)
-      if (members.length) out.unions[node.name.text] = members
-      return
+      if (members.length) { out.unions[node.name.text] = members; return }
+      /* Sem membros de união: pode ser `type XProps = { … }`. NÃO retorna —
+         deixa seguir para o bloco abaixo, que hoje aceita as duas formas. */
     }
-    if (!ts.isInterfaceDeclaration(node)) return
+    /* Aceita INTERFACE e TYPE ALIAS de objeto (set/2026).
+       Antes só `interface` era lida, e `export type XProps = { … }` saía do
+       contrato com ZERO props. Sete componentes de layout estavam assim
+       (DssLayout, DssDrawer, DssFooter, DssPage, DssPageContainer,
+       DssPageScroller, DssPageSticky): contrato vazio ⇒ nenhum knob no Preview
+       Frame e nenhuma fonte para o gate de atributos. As duas formas são
+       equivalentes em TS; o parser é que escolhia uma. */
+    const membrosDe = n => {
+      if (ts.isInterfaceDeclaration(n)) return n.members
+      if (ts.isTypeAliasDeclaration(n) && n.type && ts.isTypeLiteralNode(n.type)) return n.type.members
+      return null
+    }
+    const membros = membrosDe(node)
+    if (!membros) return
     const name = node.name.text
     if (/Props$/.test(name)) {
-      for (const m of node.members) {
+      for (const m of membros) {
         if (ts.isPropertySignature(m) && m.name) {
           out.props.push({
             name: m.name.getText(sf).replace(/^['"]|['"]$/g, ''),
@@ -122,7 +136,7 @@ function parseTypes(typesFile) {
       // ele entrega `{ fieldId }` esperando que você monte o controle. O frame
       // renderizava um <span> de demo e o componente aparecia como moldura vazia,
       // divergindo da página de teste. Ver DEBITO_ABERTO.
-      for (const m of node.members) {
+      for (const m of membros) {
         if (!((ts.isPropertySignature(m) || ts.isMethodSignature(m)) && m.name)) continue
         // Assinaturas aceitas: `nome: (scope: {...}) => X` e `nome(scope: {...}): X`
         const fn = ts.isMethodSignature(m)
@@ -140,13 +154,13 @@ function parseTypes(typesFile) {
         })
       }
     } else if (/Emits$/.test(name)) {
-      for (const m of node.members) if (ts.isCallSignatureDeclaration(m) && m.parameters.length) {
+      for (const m of membros) if (ts.isCallSignatureDeclaration(m) && m.parameters.length) {
         const p0 = m.parameters[0]
         if (p0.type && ts.isLiteralTypeNode(p0.type) && ts.isStringLiteral(p0.type.literal))
           out.events.push({ name: p0.type.literal.text, payload: m.parameters[1]?.type ? m.parameters[1].type.getText(sf) : undefined, desc: jsDocFirst(m, sf) })
       }
     } else if (/Expose$/.test(name)) {
-      for (const m of node.members) if ((ts.isPropertySignature(m) || ts.isMethodSignature(m)) && m.name)
+      for (const m of membros) if ((ts.isPropertySignature(m) || ts.isMethodSignature(m)) && m.name)
         out.expose.push({ name: m.name.getText(sf).replace(/^['"]|['"]$/g, ''), type: m.type ? m.type.getText(sf) : '', description: jsDocFirst(m, sf) })
     }
   })

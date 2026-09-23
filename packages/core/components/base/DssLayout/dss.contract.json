@@ -19,9 +19,33 @@
     "sealPath": "docs/Compliance/seals/DssLayout/DssLayout_SELO_v2.2.md"
   },
   "api": {
-    "props": [],
+    "props": [
+      {
+        "name": "view",
+        "type": "LayoutView",
+        "controlHint": "text",
+        "description": "Configuração estrutural do layout (QLayout view).",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "container",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Quando true, o layout renderiza dentro do elemento pai com dimensões",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      }
+    ],
     "emits": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "required": true,
+        "description": "Conteúdo do layout. Deve conter exclusivamente:"
+      }
+    ]
   },
   "visual": {
     "defaultPreview": {

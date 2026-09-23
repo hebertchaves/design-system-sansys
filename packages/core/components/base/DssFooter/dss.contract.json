@@ -19,9 +19,33 @@
     "sealPath": "docs/Compliance/seals/DssFooter/DSSFOOTER_SELO_v2.2.md"
   },
   "api": {
-    "props": [],
+    "props": [
+      {
+        "name": "elevated",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Aplica sombra de elevação projetada para cima (EXC-05) para destacar o footer.",
+        "category": "Aparência",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Aplica borda superior sutil em vez de sombra. Alternativa flat ao elevated.",
+        "category": "Aparência",
+        "categorySource": "quasar"
+      }
+    ],
     "emits": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "required": true,
+        "description": "Conteúdo do footer. Deve conter exclusivamente componentes DssToolbar."
+      }
+    ]
   },
   "visual": {
     "defaultPreview": {
