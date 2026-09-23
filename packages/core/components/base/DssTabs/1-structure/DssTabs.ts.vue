@@ -11,7 +11,7 @@
  * - Gerencia o estado global de seleção (v-model) entre as DssTab filhas
  * - Bloqueia props de cor (active-color, active-bg-color, indicator-color)
  *   — DSS governa cores via tokens no DssTab
- * - Bloqueia `ripple` (sempre false) — DSS governa feedback visual
+ * - Feedback visual é governado pelo DSS no DssTab (ver nota sobre ripple abaixo)
  * - Bloqueia `no-caps` — governado por `--dss-text-transform-control`
  * - Impõe ícones oficiais DSS nas setas de navegação (chevron_left/right)
  * - Propaga [data-brand] para coloração automática dos DssTab filhos
@@ -20,7 +20,10 @@
  * - active-color: tokens DSS no DssTab governam cor ativa
  * - active-bg-color: tokens DSS no DssTab governam cor de fundo ativa
  * - indicator-color: tokens DSS no DssTab governam cor do indicador
- * - ripple: desativado permanentemente (:ripple="false")
+ * - ripple: desligado no DssTab/DssRouteTab, que é onde a prop EXISTE.
+ *   O `:ripple="false"` que ficava aqui era inócuo — o QTabs não tem essa prop
+ *   (conferido em `dist/api/QTabs.json`), então o valor caía em `$attrs` e só
+ *   vazava para o DOM como atributo `ripple="false"`. Removido em set/2026.
  * - no-caps: governado por `--dss-text-transform-control` (padrão `none`).
  *   A declaração NÃO mora aqui: o container não tem rótulo próprio, e quem
  *   carrega o texto é a DssTab filha — é o `.dss-tab` que lê o token. Uma
@@ -141,7 +144,6 @@ function onUpdate(val: string | number): void {
       :stretch="props.stretch"
       :outside-arrows="props.outsideArrows"
       :mobile-arrows="props.mobileArrows"
-      :ripple="false"
       @update:model-value="onUpdate"
     >
       <!-- Slot default: aceita DssTab (e DssRouteTab quando implementado) -->

@@ -147,12 +147,24 @@ export interface TabsProps {
 
   /**
    * Estica o grupo na altura do container pai.
+   *
+   * ⚠️ PRÉ-CONDIÇÃO: só surte efeito quando o pai é FLEX e tem altura própria —
+   * é o contrato do Quasar ("when used on flexbox parent"). Num pai `display:
+   * block` a classe é aplicada e nada muda; conferido no Preview Frame, cuja
+   * moldura dimensiona pelo conteúdo.
+   *
    * @default false
    */
   stretch?: boolean
 
   /**
-   * Setas de navegação FORA da área das abas, quando há transbordo.
+   * Setas de navegação FORA da área das abas.
+   *
+   * ⚠️ PRÉ-CONDIÇÃO: as setas só existem quando as abas TRANSBORDAM o container.
+   * Sem transbordo o Quasar marca `q-tabs--not-scrollable` e o DSS as esconde —
+   * esta prop troca a classe e nada aparece. Para observá-la, estreite o
+   * container ou aumente o número/tamanho das abas.
+   *
    * @default false
    */
   outsideArrows?: boolean
@@ -160,6 +172,10 @@ export interface TabsProps {
   /**
    * Mantém as setas em dispositivos móveis (onde o Quasar as esconde por
    * padrão, assumindo gesto de arrastar).
+   *
+   * ⚠️ PRÉ-CONDIÇÃO: dupla — viewport móvel E transbordo. Num desktop sem
+   * transbordo a prop não tem como se manifestar.
+   *
    * @default false
    */
   mobileArrows?: boolean

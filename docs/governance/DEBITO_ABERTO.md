@@ -719,6 +719,32 @@ templates procurando atributos não declarados nos componentes `Dss*` pegaria es
 classe inteira — e ela não é exclusiva do Button: qualquer prop renomeada na
 tradução Quasar→DSS tem o mesmo risco.
 
+### `DssTabs` — varredura knob a knob: NÃO há quebra na raiz (set/2026)
+
+Relato: "ao usar alguns seletores nada é aplicado — setas e outros". Varri os 14
+knobs medindo a assinatura do DOM antes e depois de cada um. **Nenhuma prop deixa
+de chegar ao QTabs.** O que existe são PRÉ-CONDIÇÕES que a cena do preview não
+cria:
+
+| knob | veredito |
+|---|---|
+| `inlineLabel`, `vertical`, `dense`, `shrink` | efeito visual direto ✅ |
+| `narrowIndicator` | ✅ estreita o indicador de 67 → 43px |
+| `switchIndicator` | ✅ move para o topo (`absolute-top`) |
+| `outsideArrows`, `mobileArrows` | ⚠️ **precisam de TRANSBORDO**. Medido: conteúdo 399px num container de 399px → `q-tabs--not-scrollable`, e o DSS esconde as setas. A prop troca a classe e não há o que mostrar. |
+| `stretch` | ⚠️ **precisa de pai FLEX com altura** (contrato do Quasar). Medido: a classe é aplicada, mas o pai é `display: block` e o palco dimensiona pelo conteúdo. |
+
+**Erro meu no caminho, que vale registrar:** na primeira varredura dei
+`narrowIndicator` e `switchIndicator` como inertes porque a assinatura procurava
+`.q-tabs__indicator` — a classe real é `.q-tab__indicator`, no singular, porque o
+indicador é POR ABA. Medindo o elemento certo, os dois funcionam. Seletor errado
+numa medição produz exatamente o mesmo sintoma que um defeito.
+
+As pré-condições foram escritas no JSDoc das três props, então o próprio knob
+passa a explicar por que nada acontece. O que ainda faltaria para observá-las no
+frame é um palco estreito ou uma semente com mais abas — fica como ideia, não
+como defeito.
+
 ### `DssTabs` — o que o Preview Frame NÃO oferece, e por quê (fechado, para não reabrir)
 
 Relatado como "o componente parece cru no frame: não consigo aplicar ícones,

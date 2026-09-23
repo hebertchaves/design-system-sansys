@@ -142,7 +142,7 @@
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Setas de navegação FORA da área das abas, quando há transbordo.",
+        "description": "Setas de navegação FORA da área das abas.",
         "category": "Conteúdo",
         "categorySource": "quasar"
       },
