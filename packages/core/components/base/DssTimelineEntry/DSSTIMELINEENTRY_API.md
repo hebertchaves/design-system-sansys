@@ -87,3 +87,51 @@ Só vale no layout **`loose`**. É o contrato do Quasar, não uma limitação do
 - `dense` e `comfortable` → o lado é decidido pelo **container** (`DssTimeline.side`);
 - `loose` → o lado é decidido por **cada entrada**, e o default dela é `'right'` —
   é por isso que, no `loose`, mudar o `side` do container não muda nada.
+
+
+## Como trocar o marcador (ícone / avatar)
+
+São duas props na ENTRADA, e não existe slot:
+
+```vue
+<DssTimelineEntry icon="check" title="Aprovado" />          <!-- glifo Material -->
+<DssTimelineEntry :avatar="urlOuDataUri" title="Comentou" /> <!-- imagem -->
+<DssTimelineEntry title="Sem marcador especial" />           <!-- ponto sólido -->
+```
+
+Precedência do próprio motor: `icon` vence `avatar`; sem nenhum dos dois, fica o
+ponto sólido. A cor vem de `color` (ver acima).
+
+### EXC-ICON-01 — por que aqui o ícone NÃO é `DssIcon`, e por que não há slot
+
+O `DSS_ICON_COMPOSITION_CONTRACT.md` (§3.1/§3.2) manda que todo prop de ícone
+renderize `<DssIcon inline decorative>` e que exista slot com precedência sobre o
+prop. **O `DssTimelineEntry` não consegue cumprir nenhum dos dois**, e a razão é
+estrutural, não preguiça:
+
+o `QTimelineEntry` monta o conteúdo do marcador a partir das PROPS, em código:
+
+```js
+// node_modules/quasar/src/components/timeline/QTimelineEntry.js
+if (props.icon !== void 0)        dot = [ h(QIcon, { name: props.icon }) ]
+else if (props.avatar !== void 0) dot = [ h('img', { class: 'q-timeline__dot-img', src: props.avatar }) ]
+h('div', { class: dotClass.value }, dot)
+```
+
+Não há slot nem ponto de injeção: o `<div>` do dot é criado pelo motor com esses
+filhos. Para pôr um `DssIcon` ali seria preciso substituir o `QTimelineEntry`
+inteiro — escopo de reescrita, não de adequação. (Foi exatamente por isso que o
+slot `#icon` que existia aqui não funcionava: o DSS o declarava, o Quasar o
+ignorava, e o conteúdo sumia.)
+
+**O que o DSS garante mesmo assim:**
+
+- o glifo sai `aria-hidden="true"` (o QIcon já faz) — §3.3 do contrato atendido;
+- o AVATAR recebe `alt=""` + `aria-hidden` pelo wrapper, porque o Quasar renderiza
+  o `<img>` sem `alt` e um `<img>` sem alt é anunciado pela URL. A imagem é
+  ornamento: quem carrega o significado é o título da entrada;
+- o tamanho e a centragem do glifo vêm de token (`--dss-icon-size-sm` numa caixa
+  de `--dss-icon-size-lg`), não do default do Material Icons.
+
+`DssTimelineEntry` não estava na matriz §4 do contrato de ícone (piloto da Fase 2:
+Avatar, Button, Chip, Checkbox). Esta é a primeira vez que o caso é examinado.

@@ -578,6 +578,38 @@ vence container, container vence `[data-brand]`.
 Nada disso afeta o CSS, que é independente de recompilação: `side="left"` já está
 conferido nos dois layouts.
 
+### Contrato de ícone — componentes cujo MOTOR desenha o ícone (EXC a formalizar)
+
+O `DSS_ICON_COMPOSITION_CONTRACT.md` manda que todo prop de ícone renderize
+`<DssIcon inline decorative>` e que exista slot com precedência (§3.1/§3.2). A
+matriz §4 do contrato lista só o piloto da Fase 2 — Avatar, Button, Chip,
+Checkbox —, e o resto nunca foi examinado.
+
+Ao responder "como o dev troca o ícone no DssTimeline?" apareceu uma classe de
+componentes que **não consegue cumprir o contrato**, e por motivo estrutural: o
+motor Quasar monta o ícone a partir das PROPS, sem slot nem ponto de injeção.
+Conferido na fonte do `QTimelineEntry`:
+
+```js
+if (props.icon !== void 0)        dot = [ h(QIcon, { name: props.icon }) ]
+else if (props.avatar !== void 0) dot = [ h('img', { src: props.avatar }) ]
+h('div', { class: dotClass.value }, dot)
+```
+
+Cumprir o contrato ali exigiria substituir o componente do motor — reescrita, não
+adequação. Documentado no `DSSTIMELINEENTRY_API.md` como **EXC-ICON-01**, com o
+que o DSS garante em troca (glifo `aria-hidden`, avatar com `alt=""`, tamanho por
+token).
+
+**O que falta decidir (e vale para mais de um componente):** o contrato precisa de
+uma cláusula para este caso — "motor desenha o ícone" —, dizendo o que basta para
+fechar: a11y do glifo, dimensionamento por token e documentação da limitação. Hoje
+cada componente vai ter que inventar a própria exceção.
+
+**Candidatos à mesma cláusula** (mesma estrutura de prop → ícone do motor, a
+conferir um a um): `DssStep` (`icon`, `activeIcon`, `doneIcon`, `errorIcon` vão
+para o QStep), `DssBreadcrumb`, `DssTab`, `DssBtnDropdown`.
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |
