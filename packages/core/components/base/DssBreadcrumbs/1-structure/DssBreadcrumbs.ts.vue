@@ -91,10 +91,22 @@ const separatorColorValue = computed<string>(() => {
  * Abordagem: CSS custom properties → tokens DSS → valores visuais.
  * Isso mantém toda a lógica de mapeamento no Layer 1 (Vue) e o SCSS apenas consome.
  */
-const breadcrumbsStyle = computed(() => ({
-  '--dss-breadcrumbs-gap': gutterValue.value,
-  '--dss-breadcrumbs-separator-color': separatorColorValue.value,
-}))
+const breadcrumbsStyle = computed(() => {
+  /* Injeta SÓ o que o autor escolheu. Antes as duas variáveis eram emitidas
+     sempre, inclusive com o valor default — e estilo inline vence qualquer
+     seletor, então a marca nunca conseguiria pintar o separador. Com a emissão
+     condicional, o CSS guarda o default, a marca entra como fallback e a escolha
+     explícita do consumidor ganha de ambos. */
+  const estilo: Record<string, string> = {}
+  /* Compara com o DEFAULT, não com `undefined`: o `withDefaults` acima já
+     preenche `gutter: 'md'` e `separatorColor: 'subtle'`, então testar a
+     existência da prop injetaria sempre. Os defaults do CSS são exatamente
+     estes dois valores — emiti-los de novo aqui só serviria para o estilo
+     inline bloquear a marca. */
+  if (props.gutter !== 'md') estilo['--dss-breadcrumbs-gap'] = gutterValue.value
+  if (props.separatorColor !== 'subtle') estilo['--dss-breadcrumbs-separator-color'] = separatorColorValue.value
+  return estilo
+})
 </script>
 
 <template>

@@ -131,8 +131,14 @@
     "states": {
       "default": [
         {
+          "property": "-webkit-tap-highlight-color",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "gap",
-          "token": "--dss-spacing-3",
+          "token": "--dss-breadcrumbs-gap",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -143,14 +149,8 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "-webkit-tap-highlight-color",
-          "token": null,
-          "value": "transparent",
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "color",
-          "token": "--dss-text-subtle",
+          "token": "--dss-breadcrumbs-separator-color",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -203,24 +203,6 @@
           "source": "4-output/_states.scss"
         },
         {
-          "property": "color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
           "property": "outline",
           "token": "--dss-border-width-thin",
           "value": null,
@@ -251,13 +233,13 @@
     ],
     "instances": [
       {
-        "name": "--dss-spacing-3",
+        "name": "--dss-breadcrumbs-gap",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-text-subtle",
+        "name": "--dss-breadcrumbs-separator-color",
         "usedIn": [
           "default"
         ]
@@ -277,24 +259,6 @@
       },
       {
         "name": "--dss-font-weight-bold",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-500",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
         "usedIn": [
           "default"
         ]

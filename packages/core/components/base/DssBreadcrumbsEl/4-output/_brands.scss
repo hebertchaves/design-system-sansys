@@ -7,6 +7,12 @@
 //
 // Governança: a cor do item clicável é sobrescrita pela cor primária da
 // marca. O item atual (--current) mantém --dss-text-body para legibilidade.
+//
+// HOVER CORRIGIDO EM SET/2026. As regras de marca repetiam a cor de repouso no
+// `:hover`/`:active` — ou seja, sob marca o link PARAVA de reagir, enquanto no
+// neutro ele vai de `text-action` para `text-action-hover`. É o §K5 do checklist:
+// a marca tem de remapear a RAMPA inteira, não só o repouso. No claro o hover
+// escurece um degrau; no escuro clareia, afastando-se do fundo.
 // =============================================================================
 
 // ─── Hub (laranja) ─────────────────────────────────────────────────────────
@@ -16,7 +22,7 @@
 
     &:hover,
     &:active {
-      color: var(--dss-hub-600);
+      color: var(--dss-hub-700);
     }
   }
 }
@@ -27,7 +33,7 @@
 
     &:hover,
     &:active {
-      color: var(--dss-hub-400);
+      color: var(--dss-hub-300);
     }
   }
 }
@@ -39,7 +45,7 @@
 
     &:hover,
     &:active {
-      color: var(--dss-water-500);
+      color: var(--dss-water-600);
     }
   }
 }
@@ -50,7 +56,7 @@
 
     &:hover,
     &:active {
-      color: var(--dss-water-400);
+      color: var(--dss-water-300);
     }
   }
 }
@@ -62,7 +68,7 @@
 
     &:hover,
     &:active {
-      color: var(--dss-waste-600);
+      color: var(--dss-waste-700);
     }
   }
 }
@@ -73,7 +79,7 @@
 
     &:hover,
     &:active {
-      color: var(--dss-waste-500);
+      color: var(--dss-waste-400);
     }
   }
 }

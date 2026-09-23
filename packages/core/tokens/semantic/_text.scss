@@ -26,7 +26,14 @@
   --dss-text-on-primary: var(--dss-gray-50);      /* #ffffff - Texto sobre action-primary */
 
   /* Text Actions */
-  --dss-text-action: var(--dss-action-primary);     /* Links padrão */
+  /* LINKS — degrau `focus` e não o `primary` base (set/2026).
+     O azul base (#1f86de) sobre branco mede 3,80:1 e REPROVA o AA de texto
+     (4,5:1). Medido no DssBreadcrumbsEl, hoje o único consumidor em CSS. O
+     `focus` (#006AC5) é o degrau seguinte da MESMA rampa: 5,43:1, ainda
+     reconhecível como o azul primário, sem inventar cor fora da escala.
+     O par de hover (`action-primary-hover`, 7,89:1) já escurece na direção
+     certa. No tema escuro a rampa inverte — ver `themes/dark/_colors.scss`. */
+  --dss-text-action: var(--dss-action-primary-focus);
   --dss-text-action-hover: var(--dss-action-primary-hover);
   --dss-text-action-alt: var(--dss-action-secondary); /* Links alternativos */
   

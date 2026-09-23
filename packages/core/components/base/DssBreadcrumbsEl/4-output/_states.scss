@@ -15,8 +15,8 @@
   }
 }
 
-// ─── prefers-contrast: high ───────────────────────────────────────────────────
-@media (prefers-contrast: high) {
+// ─── prefers-contrast: more ───────────────────────────────────────────────────
+@media (prefers-contrast: more) {
   .dss-breadcrumbs-el {
     &.dss-breadcrumbs-el--clickable {
       outline: var(--dss-border-width-thin) solid currentColor;

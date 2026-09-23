@@ -11,6 +11,10 @@
 //   A cor dos DssBreadcrumbsEl filhos é governada pelo _brands.scss do
 //   próprio DssBreadcrumbsEl — não é responsabilidade deste arquivo.
 //
+// Precedência (set/2026): a marca entra como FALLBACK do `var()`, não como valor
+// direto. Assim a prop `separatorColor` — que o template injeta inline só quando
+// o autor a declara — vence a marca ambiente, sem disputa de especificidade.
+//
 // Brand tokens:
 //   Tokens numéricos (--dss-hub-600, etc.) usados intencionalmente, seguindo
 //   o precedente do DssBreadcrumbsEl _brands.scss e DssBtnGroup _brands.scss.
@@ -18,34 +22,34 @@
 // =============================================================================
 
 // ─── Hub (laranja) ─────────────────────────────────────────────────────────
-[data-brand="hub"] .dss-breadcrumbs .q-breadcrumbs__separator,
-.dss-breadcrumbs--brand-hub .q-breadcrumbs__separator {
-  color: var(--dss-hub-600);
+[data-brand="hub"] .dss-breadcrumbs,
+.dss-breadcrumbs--brand-hub {
+  --dss-breadcrumbs-separator-color: var(--dss-hub-600);
 }
 
-[data-theme="dark"] [data-brand="hub"] .dss-breadcrumbs .q-breadcrumbs__separator,
-[data-theme="dark"] .dss-breadcrumbs--brand-hub .q-breadcrumbs__separator {
-  color: var(--dss-hub-400);
+[data-theme="dark"] [data-brand="hub"] .dss-breadcrumbs,
+[data-theme="dark"] .dss-breadcrumbs--brand-hub {
+  --dss-breadcrumbs-separator-color: var(--dss-hub-400);
 }
 
 // ─── Water (azul) ──────────────────────────────────────────────────────────
-[data-brand="water"] .dss-breadcrumbs .q-breadcrumbs__separator,
-.dss-breadcrumbs--brand-water .q-breadcrumbs__separator {
-  color: var(--dss-water-500);
+[data-brand="water"] .dss-breadcrumbs,
+.dss-breadcrumbs--brand-water {
+  --dss-breadcrumbs-separator-color: var(--dss-water-500);
 }
 
-[data-theme="dark"] [data-brand="water"] .dss-breadcrumbs .q-breadcrumbs__separator,
-[data-theme="dark"] .dss-breadcrumbs--brand-water .q-breadcrumbs__separator {
-  color: var(--dss-water-400);
+[data-theme="dark"] [data-brand="water"] .dss-breadcrumbs,
+[data-theme="dark"] .dss-breadcrumbs--brand-water {
+  --dss-breadcrumbs-separator-color: var(--dss-water-400);
 }
 
 // ─── Waste (verde) ─────────────────────────────────────────────────────────
-[data-brand="waste"] .dss-breadcrumbs .q-breadcrumbs__separator,
-.dss-breadcrumbs--brand-waste .q-breadcrumbs__separator {
-  color: var(--dss-waste-600);
+[data-brand="waste"] .dss-breadcrumbs,
+.dss-breadcrumbs--brand-waste {
+  --dss-breadcrumbs-separator-color: var(--dss-waste-600);
 }
 
-[data-theme="dark"] [data-brand="waste"] .dss-breadcrumbs .q-breadcrumbs__separator,
-[data-theme="dark"] .dss-breadcrumbs--brand-waste .q-breadcrumbs__separator {
-  color: var(--dss-waste-500);
+[data-theme="dark"] [data-brand="waste"] .dss-breadcrumbs,
+[data-theme="dark"] .dss-breadcrumbs--brand-waste {
+  --dss-breadcrumbs-separator-color: var(--dss-waste-500);
 }

@@ -22,8 +22,8 @@
 // DssBreadcrumbs não usa transitions próprias.
 // Transitions dos filhos (DssBreadcrumbsEl) são gerenciadas pelo DssBreadcrumbsEl.
 
-// ─── prefers-contrast: high ───────────────────────────────────────────────────
-@media (prefers-contrast: high) {
+// ─── prefers-contrast: more ───────────────────────────────────────────────────
+@media (prefers-contrast: more) {
   .dss-breadcrumbs .q-breadcrumbs__separator {
     // Reforça separadores em alto contraste com a cor atual do contexto
     // (herda da cor do texto do container)

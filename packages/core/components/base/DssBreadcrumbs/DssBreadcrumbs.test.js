@@ -87,10 +87,13 @@ describe('DssBreadcrumbs — Prop gutter', () => {
     expect(style).toContain('var(--dss-spacing-2)')
   })
 
-  it('injeta --dss-breadcrumbs-gap via inline style para gutter md', () => {
+  it('NÃO injeta --dss-breadcrumbs-gap no gutter padrão (md) — o default é do CSS', () => {
+    // O valor default mora no SCSS (`.dss-breadcrumbs.q-breadcrumbs`). Emiti-lo
+    // também no estilo inline faria o inline vencer qualquer seletor e bloquear
+    // a marca. O template injeta só o que DIFERE do default.
     const wrapper = mountBreadcrumbs({ gutter: 'md' })
     const style = wrapper.find('.dss-breadcrumbs').attributes('style') ?? ''
-    expect(style).toContain('var(--dss-spacing-3)')
+    expect(style).not.toContain('--dss-breadcrumbs-gap')
   })
 
   it('injeta --dss-breadcrumbs-gap via inline style para gutter lg', () => {
@@ -125,11 +128,14 @@ describe('DssBreadcrumbs — Prop align', () => {
 // ==========================================================================
 
 describe('DssBreadcrumbs — Prop separatorColor', () => {
-  it('injeta --dss-breadcrumbs-separator-color com token subtle por padrão', () => {
+  it('NÃO injeta --dss-breadcrumbs-separator-color na cor padrão (subtle)', () => {
+    // Mesmo motivo do gutter: o neutro é o default do CSS, e a marca precisa
+    // poder sobrescrevê-lo. Antes este teste afirmava a INJEÇÃO — e passava
+    // enquanto o SCSS sequer lia a variável, ou seja, atestava encanamento em
+    // vez de comportamento.
     const wrapper = mountBreadcrumbs({ separatorColor: 'subtle' })
     const style = wrapper.find('.dss-breadcrumbs').attributes('style') ?? ''
-    expect(style).toContain('--dss-breadcrumbs-separator-color')
-    expect(style).toContain('var(--dss-text-subtle)')
+    expect(style).not.toContain('--dss-breadcrumbs-separator-color')
   })
 
   it('mapeia separatorColor="body" para var(--dss-text-body)', () => {

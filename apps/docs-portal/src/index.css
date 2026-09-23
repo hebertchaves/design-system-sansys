@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-09-16. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-09-23. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -229,7 +229,14 @@
   /* Text On-Color (sobre fundos de cor sólida) */
   --dss-text-on-primary: var(--dss-gray-50); /* #ffffff - Texto sobre action-primary */
   /* Text Actions */
-  --dss-text-action: var(--dss-action-primary); /* Links padrão */
+  /* LINKS — degrau `focus` e não o `primary` base (set/2026).
+     O azul base (#1f86de) sobre branco mede 3,80:1 e REPROVA o AA de texto
+     (4,5:1). Medido no DssBreadcrumbsEl, hoje o único consumidor em CSS. O
+     `focus` (#006AC5) é o degrau seguinte da MESMA rampa: 5,43:1, ainda
+     reconhecível como o azul primário, sem inventar cor fora da escala.
+     O par de hover (`action-primary-hover`, 7,89:1) já escurece na direção
+     certa. No tema escuro a rampa inverte — ver `themes/dark/_colors.scss`. */
+  --dss-text-action: var(--dss-action-primary-focus);
   --dss-text-action-hover: var(--dss-action-primary-hover);
   --dss-text-action-alt: var(--dss-action-secondary); /* Links alternativos */
   /* Text Feedback */
@@ -3120,6 +3127,17 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-text-muted: var(--dss-gray-500); /* #a3a3a3 - Texto terciário */
   --dss-text-inverse: var(--dss-gray-900); /* #0a0a0a - Texto escuro */
   --dss-text-disabled: var(--dss-gray-600); /* #737373 - Desabilitado */
+  /* LINKS (set/2026) — faltavam no dark, como já haviam faltado `text-primary` e
+     `text-secondary` acima. `--dss-text-action` aponta para `--dss-action-primary`,
+     que NÃO muda entre os temas: o azul #1f86de sobre a superfície escura mede
+     3,98:1 e REPROVA o AA de texto (4,5:1). Medido no DssBreadcrumbsEl, hoje o
+     único consumidor em CSS.
+     No escuro a rampa inverte: o repouso vai para o degrau CLARO do primary
+     (7,82:1) e o hover CLAREIA mais ainda, em vez de escurecer — o
+     `action-primary-hover` é mais escuro que o repouso e mediria 1,92:1 aqui,
+     ou seja, o hover pioraria a legibilidade. */
+  --dss-text-action: var(--dss-action-primary-light); /* #86c0f3 · 7,82:1 ✅ */
+  --dss-text-action-hover: var(--dss-text-body); /* #f5f5f5 · 13,88:1 ✅ (+ sublinhado) */
   /* ===========================================
      BORDERS
      Inverter de claro (gray-300) para médio (gray-600)

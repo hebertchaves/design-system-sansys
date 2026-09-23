@@ -412,7 +412,7 @@
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'breadcrumb' }]"
               >
                 <span class="nav-icon"><span class="material-icons">account_tree</span></span>
-                <span class="nav-label">DssBreadcrumb</span>
+                <span class="nav-label">DssBreadcrumbs</span>
               </button>
             </div>
           </div>
@@ -534,6 +534,10 @@
       <div v-else-if="activeComponent === 'empty-state'" class="component-view">
         <TestEmptyState />
       </div>
+      <div v-else-if="activeComponent === 'breadcrumb'" class="component-view">
+        <TestBreadcrumbs />
+      </div>
+
       <div v-else-if="activeComponent === 'stepper'" class="component-view">
         <TestStepper />
       </div>
@@ -689,6 +693,7 @@ import TestBadge from './TestBadge.vue'
 import TestEmptyState from './TestEmptyState.vue'
 import TestItem from './TestItem.vue'
 import TestStepper from './TestStepper.vue'
+import TestBreadcrumbs from './TestBreadcrumbs.vue'
 import TestTimeline from './TestTimeline.vue'
 import TestBtnToggle from './TestBtnToggle.vue'
 import TestTabs from './TestTabs.vue'

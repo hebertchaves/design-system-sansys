@@ -57,6 +57,18 @@
   --dss-text-inverse: var(--dss-gray-900);         /* #0a0a0a - Texto escuro */
   --dss-text-disabled: var(--dss-gray-600);        /* #737373 - Desabilitado */
 
+  /* LINKS (set/2026) — faltavam no dark, como já haviam faltado `text-primary` e
+     `text-secondary` acima. `--dss-text-action` aponta para `--dss-action-primary`,
+     que NÃO muda entre os temas: o azul #1f86de sobre a superfície escura mede
+     3,98:1 e REPROVA o AA de texto (4,5:1). Medido no DssBreadcrumbsEl, hoje o
+     único consumidor em CSS.
+     No escuro a rampa inverte: o repouso vai para o degrau CLARO do primary
+     (7,82:1) e o hover CLAREIA mais ainda, em vez de escurecer — o
+     `action-primary-hover` é mais escuro que o repouso e mediria 1,92:1 aqui,
+     ou seja, o hover pioraria a legibilidade. */
+  --dss-text-action: var(--dss-action-primary-light);   /* #86c0f3 · 7,82:1 ✅ */
+  --dss-text-action-hover: var(--dss-text-body);        /* #f5f5f5 · 13,88:1 ✅ (+ sublinhado) */
+
   /* ===========================================
      BORDERS
      Inverter de claro (gray-300) para médio (gray-600)

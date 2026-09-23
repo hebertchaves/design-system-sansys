@@ -695,7 +695,7 @@ Cores semânticas de texto — hierarquia, estados, on-color (sobre fundo escuro
 | `--dss-text-inverse-hint` | `var(--dss-gray-400)` | — | #d4d4d4 - Placeholder/hint sobre fundo escuro |
 | `--dss-text-disabled` | `var(--dss-gray-600)` | — | #737373 - Texto desabilitado (subido 2 tons: gray-400 → gray-600 p/ legibilidade; alinhado ao dark mode) |
 | `--dss-text-on-primary` | `var(--dss-gray-50)` | — | #ffffff - Texto sobre action-primary |
-| `--dss-text-action` | `var(--dss-action-primary)` | — | Links padrão |
+| `--dss-text-action` | `var(--dss-action-primary-focus)` | — | — |
 | `--dss-text-action-hover` | `var(--dss-action-primary-hover)` | — | — |
 | `--dss-text-action-alt` | `var(--dss-action-secondary)` | — | Links alternativos |
 | `--dss-text-brand-hub` | `var(--dss-hub-500)` | — | — |

@@ -251,19 +251,19 @@
         },
         {
           "property": "color",
-          "token": "--dss-hub-600",
+          "token": "--dss-hub-700",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "color",
-          "token": "--dss-water-500",
+          "token": "--dss-water-600",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "color",
-          "token": "--dss-waste-600",
+          "token": "--dss-waste-700",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -339,19 +339,19 @@
         },
         {
           "property": "color",
-          "token": "--dss-hub-600",
+          "token": "--dss-hub-700",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "color",
-          "token": "--dss-water-500",
+          "token": "--dss-water-600",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
           "property": "color",
-          "token": "--dss-waste-600",
+          "token": "--dss-waste-700",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -441,29 +441,44 @@
       {
         "name": "--dss-hub-600",
         "usedIn": [
-          "default",
-          "hover",
-          "active"
+          "default"
         ]
       },
       {
         "name": "--dss-water-500",
         "usedIn": [
-          "default",
-          "hover",
-          "active"
+          "default"
         ]
       },
       {
         "name": "--dss-waste-600",
         "usedIn": [
-          "default",
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-action-hover",
+        "usedIn": [
           "hover",
           "active"
         ]
       },
       {
-        "name": "--dss-text-action-hover",
+        "name": "--dss-hub-700",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-water-600",
+        "usedIn": [
+          "hover",
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-waste-700",
         "usedIn": [
           "hover",
           "active"

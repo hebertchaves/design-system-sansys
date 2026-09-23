@@ -610,6 +610,46 @@ cada componente vai ter que inventar a própria exceção.
 conferir um a um): `DssStep` (`icon`, `activeIcon`, `doneIcon`, `errorIcon` vão
 para o QStep), `DssBreadcrumb`, `DssTab`, `DssBtnDropdown`.
 
+### `prefers-contrast: high` — 18 regras mortas espalhadas pelo DS
+
+Ao adequar o `DssBreadcrumbs` (set/2026) apareceu um bloco `@media
+(prefers-contrast: high)`. **`high` não é valor válido** da media feature: a spec
+define `no-preference | more | less | custom`. `high` era nome de rascunho e
+nunca chegou a existir nos navegadores — toda regra sob ele é morta.
+
+O DS usa as duas grafias: **148 ocorrências de `more`** (certas) contra **20 de
+`high`** (mortas). As 2 do Breadcrumbs foram corrigidas nesta adequação; sobram
+**18**, em outros componentes.
+
+**Como encontrar:** `grep -rn "prefers-contrast: high" packages/core --include=*.scss`
+
+**Por que não foi feito em lote:** trocar `high` por `more` ATIVA regras que nunca
+rodaram — cada uma precisa de conferência visual no modo de alto contraste antes
+de entrar. Não é troca mecânica.
+
+### `--dss-text-action` reprovava AA nos DOIS temas — corrigido, valor a referendar
+
+O token de link apontava para `--dss-action-primary` (#1f86de), que mede **3,80:1
+sobre branco** e **3,98:1 sobre a superfície escura** — abaixo dos 4,5:1 que o AA
+exige para texto. Medido no `DssBreadcrumbsEl`, hoje o único consumidor do token
+em CSS (os demais hits são contrato/meta, derivados).
+
+Corrigido usando degraus da PRÓPRIA rampa, sem inventar cor:
+
+| tema | antes | depois | razão |
+|---|---|---|---|
+| claro | `action-primary` · 3,80 ❌ | `action-primary-focus` · **5,43** ✅ | degrau seguinte da rampa |
+| escuro | `action-primary` · 3,98 ❌ | `action-primary-light` · **7,82** ✅ | no escuro a rampa inverte |
+
+O hover também foi acertado no escuro: apontava para `action-primary-hover`, que
+é MAIS ESCURO que o repouso e mediria 1,92:1 — o hover pioraria a legibilidade.
+Agora clareia para `text-body` (13,88:1), com o sublinhado mantendo a affordance.
+
+**Fica para referendo do dono do DS:** os valores escolhidos são os degraus mais
+próximos que passam, mas a frente c1 ("contraste WCAG default") já previa que
+valores de contraste precisam de aval. Se o azul do link precisar ser outro, a
+troca é de uma linha em `semantic/_text.scss` e outra em `themes/dark/_colors.scss`.
+
 ### `DssPagination` — adequação ainda não iniciada (⬜)
 
 | # | pendência | causa | custo |
