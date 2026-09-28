@@ -165,7 +165,7 @@
         "controlHint": "toggle",
         "description": "Modo compacto (reduz padding)",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "ripple",

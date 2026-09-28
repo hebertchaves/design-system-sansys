@@ -90,7 +90,7 @@
         "default": false,
         "description": "Modo compacto — reduz touch target para --dss-touch-target-sm (36px). @default false",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "disabled",

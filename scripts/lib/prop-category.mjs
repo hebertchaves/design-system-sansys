@@ -52,6 +52,10 @@ export const ANCHOR = {
   DssMultiselectAutocomplete: 'QSelect',
   // Primitivo NATIVO do DSS: o Quasar não tem equivalente para estado vazio.
   DssEmptyState: null,
+  // Composto NATIVO: barra de ações com sub-ações. O Quasar não tem equivalente
+  // (QBtnDropdown é UM botão com menu, não uma barra). Sem o null, `baseQuasar`
+  // tentaria `QActionMenu`, que não existe.
+  DssActionMenu: null,
 }
 
 /** Vocabulário do Quasar → eixo do DSS. Categoria composta ('behavior|state') usa a primeira. */
@@ -108,6 +112,8 @@ export const OVERRIDE = {
   tag: 'Comportamento', clearable: 'Comportamento', multiple: 'Comportamento',
   breakpoint: 'Comportamento', shrink: 'Comportamento',
   placeholder: 'Conteúdo',
+  tooltip: 'Conteúdo',   // o TEXTO da dica; onde ela aparece é do componente
+  dense: 'Aparência',    // resolvido pelo Quasar na maioria; aqui para os nativos
 
   // ── Polissemia REAL — a prop significa coisas diferentes, e aí divergir é certo
   'DssVideo.title': 'Acessibilidade',        // atributo title do iframe, não texto exibido

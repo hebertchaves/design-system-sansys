@@ -159,7 +159,7 @@
         "controlHint": "toggle",
         "description": "Modo compacto (reduz espacamento)",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "error",

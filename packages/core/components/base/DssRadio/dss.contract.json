@@ -124,7 +124,7 @@
         "controlHint": "toggle",
         "description": "Modo compacto: reduz gap, altura e tamanho da fonte, e remove touch target expandido",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "error",

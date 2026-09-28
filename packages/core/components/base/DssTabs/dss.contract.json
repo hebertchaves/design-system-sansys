@@ -68,7 +68,7 @@
         "default": false,
         "description": "Modo compacto: reduz o padding interno do container de abas.",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "brand",

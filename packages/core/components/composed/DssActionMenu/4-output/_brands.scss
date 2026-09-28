@@ -1,0 +1,10 @@
+/* ==========================================================================
+   DssActionMenu — LAYER 4: BRANDS
+
+   A marca NÃO é pintada aqui. Ela chega por `data-brand` no nó raiz (propagado
+   pela prop) e desce por cascata de custom property até DssButton e DssMenu,
+   que a consomem via camada SEMÂNTICA.
+
+   Pintar marca aqui com primitivo cru (`--dss-hub-600`) é o débito 🟡 aberto em
+   577 usos no catálogo — não se acrescenta o 578º.
+   ========================================================================== */

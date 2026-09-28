@@ -140,7 +140,7 @@
         "default": false,
         "description": "Modo denso - reduz densidade visual",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "error",

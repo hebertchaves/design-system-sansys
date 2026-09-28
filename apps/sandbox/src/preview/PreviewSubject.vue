@@ -34,14 +34,12 @@
           aí quem lê os filhos é o próprio componente semeado.
         -->
         <template v-if="seedFor(s)">
-          <component
-            v-for="(n, i) in seedTopo(s)"
-            :key="i"
-            :is="n.comp"
-            v-bind="n.props"
-          >
-            <SeedSlot v-if="n.children != null" :node="n.children" />
-          </component>
+          <template v-for="(n, i) in seedTopo(s)" :key="i">
+            <component v-if="n.comp" :is="n.comp" v-bind="n.props">
+              <SeedSlot v-if="n.children != null" :node="n.children" />
+            </component>
+            <span v-else class="pv-seed-missing">&#9888; {{ n.nome }}</span>
+          </template>
         </template>
         <DssIcon v-else-if="slotIcons[s]" :name="slotIcons[s]" inline decorative />
         <!--
@@ -132,11 +130,17 @@ async function loadSeedComps(tree) {
   const nomes = [...seedCompNames(tree)]
   await Promise.all(nomes.map(async (nome) => {
     if (seedCompCache.has(nome)) return
-    // Subcomponentes (DssCardSection/DssCardActions) não têm wrapper na raiz —
-    // são named exports do barrel do pai e moram em 1-structure/. Sem o segundo
-    // glob a semente do DssCard cairia no aviso de "não encontrado".
+    // Três formas de um componente existir no disco, tentadas em ordem:
+    //   1. wrapper na PRÓPRIA pasta            Dss X/DssX.vue
+    //   2. implementação em 1-structure/       DssX/1-structure/DssX.vue
+    //   3. wrapper de SUBCOMPONENTE, na pasta do PAI
+    //      (DssActionMenu/DssActionMenuItem.vue, DssCard/DssCardSection.vue)
+    // A terceira faltava, e o sintoma foi mudo: a semente do DssActionMenu
+    // montava a barra com ZERO ações e sem erro nenhum.
     const k = Object.keys(modules).find((m) => m.endsWith(`/${nome}/${nome}.vue`))
       || Object.keys(subModules).find((m) => m.endsWith(`/1-structure/${nome}.vue`))
+      || Object.keys(subModules).find((m) => m.endsWith(`/1-structure/${nome}.ts.vue`))
+      || Object.keys(modules).find((m) => m.endsWith(`/${nome}.vue`))
     const loader = k ? (modules[k] || subModules[k]) : null
     if (!loader) { seedCompCache.set(nome, null); return }
     try { const mod = await loader(); seedCompCache.set(nome, mod.default ?? mod) }
@@ -206,8 +210,10 @@ function seedTopo(s) {
   const arr = Array.isArray(raw) ? raw : [raw]
   return arr
     .filter((n) => n && typeof n === 'object' && n.component)
-    .map((n) => ({ comp: seedCompCache.get(n.component) || null, props: n.props || {}, children: n.children }))
-    .filter((n) => n.comp)
+    // NÃO filtrar quem não resolveu: o `renderSeed` do nó já emite o aviso
+    // visível. Descartar aqui fazia o componente sumir sem erro — foi o que
+    // aconteceu com o DssActionMenuItem, e levou uma rodada até aparecer.
+    .map((n) => ({ nome: n.component, comp: seedCompCache.get(n.component) || null, props: n.props || {}, children: n.children }))
 }
 
 // Slots a renderizar = os ligados no palco UNIDOS aos semeados.

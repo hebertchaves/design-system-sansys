@@ -1,0 +1,169 @@
+{
+  "component": "DssActionMenu",
+  "dssVersion": "2.5",
+  "status": "draft",
+  "phase": 3,
+  "category": "Action",
+  "classification": "Action",
+  "classificationNote": "Barra de comando — orquestra ações, não exibe dado.",
+  "goldenReference": "DssChip",
+  "goldenContext": "DssMultiselectAutocomplete",
+  "tagline": "Barra de ações em que uma ação pode abrir sub-ações relacionadas.",
+  "previewGroup": "acoes",
+  "defaultPreview": {
+    "props": {
+      "ariaLabel": "Ações do registro",
+      "variant": "flat",
+      "color": "primary",
+      "size": "md"
+    },
+    "computedDimensions": {
+      "minHeight": "44px"
+    },
+    "visualProperties": [
+      {
+        "property": "display",
+        "token": null,
+        "value": "flex",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "gap (entre ações)",
+        "token": "--dss-spacing-1",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "largura mínima do painel de sub-ações",
+        "token": "--dss-spacing-40",
+        "value": null,
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "altura da ação",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "herdado do DssButton — o composto não define altura"
+      }
+    ],
+    "demoContent": "Quatro ações, a última com sub-ações",
+    "demoSlots": {
+      "default": [
+        {
+          "component": "DssActionMenuItem",
+          "props": {
+            "name": "novo",
+            "label": "Novo",
+            "icon": "add"
+          }
+        },
+        {
+          "component": "DssActionMenuItem",
+          "props": {
+            "name": "editar",
+            "label": "Editar",
+            "icon": "edit"
+          }
+        },
+        {
+          "component": "DssActionMenuItem",
+          "props": {
+            "name": "excluir",
+            "label": "Excluir",
+            "icon": "delete",
+            "disabled": true
+          }
+        },
+        {
+          "component": "DssActionMenuItem",
+          "props": {
+            "name": "exportar",
+            "label": "Exportar",
+            "icon": "download"
+          },
+          "children": [
+            {
+              "component": "DssActionMenuSubItem",
+              "props": {
+                "name": "pdf",
+                "label": "PDF"
+              }
+            },
+            {
+              "component": "DssActionMenuSubItem",
+              "props": {
+                "name": "xlsx",
+                "label": "Planilha"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "a11y": {
+    "aria": {
+      "role": "toolbar",
+      "states": [
+        "aria-label",
+        "aria-disabled",
+        "aria-haspopup",
+        "aria-expanded"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "entra e sai da barra — UMA parada para o conjunto (roving tabindex)"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "próxima ação"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "ação anterior"
+      },
+      {
+        "key": "Home",
+        "action": "primeira ação"
+      },
+      {
+        "key": "End",
+        "action": "última ação"
+      },
+      {
+        "key": "ArrowDown",
+        "action": "próxima sub-ação, com o menu aberto"
+      },
+      {
+        "key": "ArrowUp",
+        "action": "sub-ação anterior, com o menu aberto"
+      },
+      {
+        "key": "Escape",
+        "action": "fecha o sub-menu e devolve o foco ao gatilho"
+      }
+    ],
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Toolbar navegável por setas com roving tabindex; sub-menu por ArrowUp/Down; Escape fecha.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "role=toolbar com aria-label; gatilho com aria-haspopup=menu e aria-expanded; painel role=menu.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "2.4.3",
+        "level": "A",
+        "implementation": "Ao fechar o sub-menu por qualquer via, o foco retorna ao gatilho que o abriu.",
+        "verifiedBy": "test"
+      }
+    ]
+  }
+}

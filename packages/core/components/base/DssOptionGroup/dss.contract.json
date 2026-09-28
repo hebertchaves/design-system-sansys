@@ -97,7 +97,7 @@
         "controlHint": "toggle",
         "description": "Modo compacto — reduz o gap entre os controles",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "ariaLabel",

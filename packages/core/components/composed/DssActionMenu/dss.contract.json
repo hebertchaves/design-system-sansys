@@ -1,0 +1,452 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssActionMenu",
+  "version": "2.5",
+  "identity": {
+    "displayName": "Action Menu",
+    "tagline": "Barra de ações em que uma ação pode abrir sub-ações relacionadas.",
+    "category": "Action",
+    "classification": "Action",
+    "phase": 3,
+    "status": "draft",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssMultiselectAutocomplete"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "required": true,
+        "description": "Nome acessível da barra (`aria-label` do `role=\"toolbar\"`).",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
+      },
+      {
+        "name": "variant",
+        "type": "ActionMenuVariant",
+        "controlHint": "segmented",
+        "default": "flat",
+        "validValues": [
+          "flat",
+          "outline",
+          "unelevated"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "color",
+        "type": "ActionMenuColor",
+        "controlHint": "picker-color",
+        "default": "primary",
+        "validValues": [
+          "primary",
+          "secondary",
+          "tertiary",
+          "accent",
+          "positive",
+          "negative",
+          "warning",
+          "info"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "size",
+        "type": "ActionMenuSize",
+        "controlHint": "segmented",
+        "default": "md",
+        "validValues": [
+          "xs",
+          "sm",
+          "md",
+          "lg"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "brand",
+        "type": "ActionMenuBrand | null",
+        "controlHint": "picker-brand",
+        "default": "null",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Desabilita a barra INTEIRA — cada ação e a abertura dos sub-menus. @default false",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "controlHint": "text",
+        "required": true,
+        "description": "Identificador da sub-ação. Vai no payload de `@action`.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Rótulo visível.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto secundário abaixo do rótulo.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "controlHint": "text",
+        "required": true,
+        "description": "Identificador da ação. Vai no payload de `@action` e controla o menu aberto.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Rótulo visível.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Ícone à esquerda (nome do glifo).",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Desabilita SOMENTE esta ação. Soma com o `disabled` da barra. @default false",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "tooltip",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto da dica contextual. Ausente = sem tooltip.",
+        "category": "Conteúdo",
+        "categorySource": "override"
+      }
+    ],
+    "emits": [
+      {
+        "name": "action",
+        "payload": "string",
+        "description": "Ação acionada. Payload PLANO (só o nome) — evento serializável."
+      },
+      {
+        "name": "action",
+        "payload": "string"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "As ações da barra. Espera `DssActionMenuItem`."
+      },
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Sub-ações. A PRESENÇA deste slot é o que transforma a ação em gatilho de"
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "ariaLabel": "Ações do registro",
+        "variant": "flat",
+        "color": "primary",
+        "size": "md"
+      },
+      "slots": {
+        "default": [
+          {
+            "component": "DssActionMenuItem",
+            "props": {
+              "name": "novo",
+              "label": "Novo",
+              "icon": "add"
+            }
+          },
+          {
+            "component": "DssActionMenuItem",
+            "props": {
+              "name": "editar",
+              "label": "Editar",
+              "icon": "edit"
+            }
+          },
+          {
+            "component": "DssActionMenuItem",
+            "props": {
+              "name": "excluir",
+              "label": "Excluir",
+              "icon": "delete",
+              "disabled": true
+            }
+          },
+          {
+            "component": "DssActionMenuItem",
+            "props": {
+              "name": "exportar",
+              "label": "Exportar",
+              "icon": "download"
+            },
+            "children": [
+              {
+                "component": "DssActionMenuSubItem",
+                "props": {
+                  "name": "pdf",
+                  "label": "PDF"
+                }
+              },
+              {
+                "component": "DssActionMenuSubItem",
+                "props": {
+                  "name": "xlsx",
+                  "label": "Planilha"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "minHeight": {
+        "value": "44px"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-wrap",
+          "token": null,
+          "value": "wrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": "--dss-spacing-40",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-40",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Toolbar navegável por setas com roving tabindex; sub-menu por ArrowUp/Down; Escape fecha.",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "role=toolbar com aria-label; gatilho com aria-haspopup=menu e aria-expanded; painel role=menu.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "2.4.3",
+        "level": "A",
+        "implementation": "Ao fechar o sub-menu por qualquer via, o foco retorna ao gatilho que o abriu.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "toolbar",
+      "states": [
+        "aria-label",
+        "aria-disabled",
+        "aria-haspopup",
+        "aria-expanded"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "entra e sai da barra — UMA parada para o conjunto (roving tabindex)"
+      },
+      {
+        "key": "ArrowRight",
+        "action": "próxima ação"
+      },
+      {
+        "key": "ArrowLeft",
+        "action": "ação anterior"
+      },
+      {
+        "key": "Home",
+        "action": "primeira ação"
+      },
+      {
+        "key": "End",
+        "action": "última ação"
+      },
+      {
+        "key": "ArrowDown",
+        "action": "próxima sub-ação, com o menu aberto"
+      },
+      {
+        "key": "ArrowUp",
+        "action": "sub-ação anterior, com o menu aberto"
+      },
+      {
+        "key": "Escape",
+        "action": "fecha o sub-menu e devolve o foco ao gatilho"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssActionMenu.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/action-menu.types.ts",
+    "docs": {
+      "normative": "DssActionMenu.md",
+      "api": "DSSACTIONMENU_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssActionMenu.example.vue",
+    "tests": "DssActionMenu.test.js"
+  }
+}

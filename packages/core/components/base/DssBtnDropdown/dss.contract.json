@@ -116,7 +116,7 @@
         "default": false,
         "description": "Reduz padding e altura (modo compacto).",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "split",

@@ -80,7 +80,7 @@
         "type": "boolean",
         "controlHint": "toggle",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "brand",

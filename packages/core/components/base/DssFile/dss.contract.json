@@ -85,7 +85,7 @@
         "default": false,
         "description": "Versão compacta (menor altura)",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "brand",

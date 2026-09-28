@@ -59,6 +59,10 @@ const ANCHOR = {
 //  — ex.: DssDataCard, DssCadrisCard — ficam fora do gate por decisão de
 //  governança; se promovidos a produção, o gate cobra a classificação.)
 const DS_CHOICE = {
+  // Composto NATIVO, sem base Quasar (QBtnDropdown é UM botão com menu, não uma
+  // barra). A grafia segue o DssButton — `outline` —, porque a variante é dele:
+  // a barra repassa a prop, não implementa a aparência.
+  DssActionMenu: 'outline',
   DssCard: 'outlined',
   DssCarousel: 'outline',
   DssUploader: 'outline',

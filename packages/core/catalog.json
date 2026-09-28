@@ -1,8 +1,22 @@
 {
-  "generated": "2026-09-23",
-  "total": 92,
+  "generated": "2026-09-28",
+  "total": 93,
   "sealed": 89,
   "components": [
+    {
+      "component": "DssActionMenu",
+      "dir": "packages/core/components/composed/DssActionMenu",
+      "phase": 3,
+      "category": "Action",
+      "status": "draft",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "acoes",
+      "goldenReference": "DssChip",
+      "goldenContext": "DssMultiselectAutocomplete"
+    },
     {
       "component": "DssAjaxBar",
       "dir": "packages/core/components/base/DssAjaxBar",

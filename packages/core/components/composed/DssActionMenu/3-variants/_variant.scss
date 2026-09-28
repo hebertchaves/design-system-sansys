@@ -1,0 +1,12 @@
+/* ==========================================================================
+   DssActionMenu — LAYER 3: VARIANTS
+
+   SEM variante visual própria, e isto é decisão, não lacuna.
+
+   A variante das ações (`flat` / `outline` / `unelevated`) é repassada ao
+   DssButton, que já a implementa nas 4 camadas dele. Reimplementar aqui criaria
+   uma segunda fonte para a mesma aparência — o anti-pattern que o Cartão
+   Composto nomeia como "reimplementar primitivo".
+
+   O arquivo existe para manter a estrutura obrigatória de 4 camadas.
+   ========================================================================== */

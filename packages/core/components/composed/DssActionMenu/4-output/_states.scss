@@ -1,0 +1,16 @@
+/* ==========================================================================
+   DssActionMenu — LAYER 4: STATES
+
+   DARK MODE: o eixo é o TEMA DA APLICAÇÃO (`[data-theme="dark"]`), nunca
+   `@media (prefers-color-scheme: dark)`. A media query erra nas DUAS direções —
+   com SO escuro e app claro, pinta escuro sobre claro; com SO claro e app
+   escuro, não pinta nada. Mesma doutrina do DssCheckbox (Golden Component).
+
+   Aqui não há NADA a declarar: a barra não define cor própria, e cada peça
+   (DssToolbar, DssButton, DssMenu, DssList) resolve o próprio tema. Declarar
+   qualquer cor neste arquivo seria introduzir uma terceira fonte de verdade.
+   ========================================================================== */
+
+/* Barra desabilitada: o cursor é do CONJUNTO, não de cada botão — o DssButton
+   já cuida da opacidade e do bloqueio de ponteiro dele. */
+.dss-action-menu[aria-disabled='true'] { cursor: not-allowed; }

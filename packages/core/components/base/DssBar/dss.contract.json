@@ -25,7 +25,7 @@
         "controlHint": "toggle",
         "description": "Modo compacto — reduz a altura e o padding interno (delegado ao QBar)",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       },
       {
         "name": "elevated",

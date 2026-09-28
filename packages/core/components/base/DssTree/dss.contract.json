@@ -160,7 +160,7 @@
         "controlHint": "toggle",
         "description": "Modo compacto (equivale ao dense do Quasar)",
         "category": "Aparência",
-        "categorySource": "quasar"
+        "categorySource": "override"
       }
     ],
     "emits": [

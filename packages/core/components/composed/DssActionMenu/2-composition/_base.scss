@@ -1,0 +1,31 @@
+/* ==========================================================================
+   DssActionMenu — LAYER 2: COMPOSITION
+
+   O composto quase não pinta. Variante, cor, tamanho, foco, alvo de toque e
+   rampa de hover são do DssButton; a faixa é do DssToolbar. O que sobra aqui é
+   o ARRANJO — e é deliberadamente pouco.
+   ========================================================================== */
+
+.dss-action-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-1);
+  /* `flex-wrap` e não overflow com scroll: barra de comando que rola
+     horizontalmente esconde ação, e esconder comando é pior que quebrar linha.
+     O padrão "mais ações" está declarado FORA de escopo no pré-prompt §2.1. */
+  flex-wrap: wrap;
+}
+
+/* Envelope da ação. Existe por uma razão FUNCIONAL, não visual: o DssMenu ancora
+   no elemento pai, e ele não pode morar dentro do DssButton (lá ocupa o slot
+   `default` e apaga o `label`). O wrapper é `inline-flex` para não interferir no
+   arranjo da barra. */
+.dss-action-menu__slot { display: inline-flex; flex: 0 0 auto; }
+
+/* A ação não recebe estilo próprio — a classe existe como ponto de ancoragem
+   para o estado e para o seletor do teste. */
+.dss-action-menu__item { flex: 0 0 auto; }
+
+/* Painel de sub-ações. Largura mínima para o rótulo não quebrar em duas linhas
+   num menu de uma coluna. */
+.dss-action-menu__sub { min-width: var(--dss-spacing-40); }

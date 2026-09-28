@@ -2181,6 +2181,7 @@ Em caso de conflito entre fontes de informação visual:
 
 | Componente | Grupo | Props Default | Dimensões | demoContent |
 |---|---|---|---|---|
+| DssActionMenu | acoes | ariaLabel:Ações do registro, variant:flat, color:primary, size:md | minHeight:44px | Quatro ações, a última com sub-ações |
 | DssAjaxBar | progresso | position:top, color:primary | minHeight:3px | Barra de progresso de requisições AJAX |
 | DssAvatar | indicadores | size:md, icon:person | minHeight:44px, minWidth:44px | Iniciais 'AB' |
 | DssBadge | indicadores | color:primary | minHeight:24px, minWidth:24px | Label '99+' |
@@ -2272,5 +2273,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-09-23T18:29:22.076Z_
+_Gerado em: 2026-09-28T13:57:15.226Z_
 <!-- END:AUTO-GENERATED -->
