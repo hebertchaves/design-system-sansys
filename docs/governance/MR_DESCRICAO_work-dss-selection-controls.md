@@ -1,9 +1,13 @@
 # Adequação de UI, brandabilidade, contraste e governança de selagem
 
-**139 commits · 463 arquivos · +38.855 / −23.280**
+**174 commits · 548 arquivos · +49.740 / −20.907**
 
 > ⚠️ MR grande, resultado de uma onda longa com duas frentes em paralelo. A leitura mais
-> rápida é pela seção **"Como revisar isto sem ler 139 commits"** no fim.
+> rápida é pela seção **"Como revisar isto sem ler 174 commits"** no fim.
+>
+> 🔄 **Atualizado em set/2026 com +13 commits** — a internalização do `DssActionMenu` e a onda
+> de adequação que ela destravou (seção 7). Esses 13 trazem **mudança de comportamento em
+> componentes selados e muito usados**: leia a tabela de breaking changes.
 
 ---
 
@@ -30,20 +34,34 @@ repetiu tantas vezes que virou o método: **medir ao vivo revela o que ler o SCS
 
 - [x] Token (criação / ajuste)
 - [x] Componente Básico DSS (wrapper Quasar)
-- [ ] Componente Composto DSS
+- [x] Componente Composto DSS
 - [x] Documentação
 - [x] Correção / Refino técnico
 
 ---
 
-## ⚠️ Breaking changes (2)
+## ⚠️ Breaking changes (2) e mudanças de comportamento (4)
+
+**Breaking de API — 2, ambos sem migração:**
 
 | commit | o que muda | migração |
 |---|---|---|
 | `refactor(chip)!` | Prop **`round`** removida do `DssChip` | Nenhuma ação: a prop era **inerte nas duas posições** — não produzia efeito visual. |
 | `refactor(utils)!` | **11 mixins** removidos de `utils/` | Nenhum tinha consumidor (verificado por varredura). Os que **ficaram** e estavam quebrados foram consertados no mesmo commit. |
 
-Nenhum dos dois altera comportamento observável de código que funcionava.
+**Mudança de COMPORTAMENTO em componente existente — 4.** Não quebram a API (nenhuma prop
+mudou de nome ou saiu), mas o que o componente FAZ mudou, e em três deles o componente é
+selado. É a parte desta MR com maior alcance, então vai com a contagem de usos medida:
+
+| commit | componente | o que muda | usos afetados |
+|---|---|---|---|
+| `fix(menu,button)` | **DssButton** *(selado v2.2 · Golden Sample)* | `label` e slot default agora **MESCLAM**, em vez de o slot substituir o label. E o wrapper de conteúdo passa a levar `q-anchor--skip` | **54** usos que hoje perdem o label voltam a tê-lo. Nenhum caso medido de regressão: os 4 suspeitos do parser passavam `aria-label`, não `label` |
+| `fix(list,item)` | **DssItem** *(selado)* | `role` deixa de alternar para `button` quando clicável: agora é **sempre `listitem`**, com `tabindex` | **139** usos clicáveis. Ganho: a `DssList` volta a ser lista ARIA válida. Custo declarado: o item clicável anuncia "listitem" e não "button" |
+| `fix(menu,button)` | **DssMenu** *(selado)* | `v-model` virou **opcional** — o default de `modelValue` foi de `false` para `undefined` | Aditivo: quem passa `v-model` não muda; quem não passa ganha o idioma não-controlado do Quasar, que antes não funcionava |
+| `feat(tokens)` | **tema escuro (global)** | `--dss-border-subtle` vira **branco+alpha**; token novo `--dss-border-separator` | **18** componentes usam o token. Medido em cada superfície do escuro: melhora muito onde havia colisão (1,00 → 1,70), empata na padrão (1,94 → 1,91), piora pouco na `muted` (1,65 → 1,47) |
+
+Os três componentes selados entram na fila de **reemissão de selo** — enquanto não for feita, o
+`CERTIFIED_COMPONENTS` afirma qualidade sobre um comportamento que não é mais o auditado.
 
 ---
 
@@ -200,6 +218,67 @@ primeiro a precisar do gerador desde a migração para ESM.
 
 ---
 
+## 7. Internalização do `DssActionMenu` e a onda que ela destravou
+
+*(+13 commits, set/2026)*
+
+**O `DssActionMenu` é o primeiro componente trazido do `framework-jtech` para o DSS.** A missão
+declarada era não perpetuar erro do legado: foi construído sob a arquitetura do DSS do zero, com
+pré-prompt escrito ANTES de reabrir o código antigo, para o legado informar o *escopo* e não a
+*implementação*.
+
+Ao montá-lo, 8 das 10 peças que ele compõe ainda não tinham passado por adequação. Adequá-las
+virou a onda — e **cada peça escondia defeito que os gates automáticos não alcançavam**:
+
+| componente | o defeito, medido ao vivo |
+|---|---|
+| **DssMenu + DssButton** | `<DssButton label="x"><DssMenu/></DssButton>` — o idioma canônico do Quasar — **não abria**, e o botão ficava **sem nome acessível**. Dois dos cinco defeitos eram do DssButton |
+| **DssToolbar** | 14 ações numa barra de 206px: **594px de botões invisíveis e não-clicáveis**, o último em x=1640 fora da viewport. E barra com marca pintava o texto do filho **na cor do próprio fundo** — contraste **1:1** em hub e waste |
+| **DssList + DssItem** | `role="list"` com **zero `listitem`** quando o item é clicável — o caso mais comum, 139 usos. O leitor de tela anuncia lista sem item nenhum |
+| **DssIcon** | três contradições aceitas em silêncio; a pior: ícone informativo sem `ariaLabel` vira `role="img"` sem nome, que o Chrome **poda** da árvore. 62 usos nesse estado |
+| **DssSeparator** | no tema escuro a prop `color` era **inerte** — as cinco variantes renderizavam a mesma cor, por especificidade (0,2,0) atropelando (0,1,0) |
+| **DssActionMenu** | o submenu **nunca abriu por clique real** — dois donos do mesmo gesto. Abria por clique *sintético*, e é por isso que 21 testes unitários não viram |
+
+**O padrão que se repetiu:** quase todo defeito veio de **divergir do primitivo do Quasar sem
+registrar por quê** — e em quase todos havia teste ou doc *protegendo* o comportamento errado.
+A correção foi sempre espelhar o Quasar, com o número de linha da fonte no comentário.
+
+**Três exceções documentadas caíram**, todas pela mesma decisão de token (branco+alpha no
+escuro): `DssList` EXC-01/02, borda do `DssToolbar` e `DssSeparator` EXC-01. Uma decisão fechou
+três frentes. O `DssCard` tem as duas mesmas e fica para a rodada dele.
+
+**Revisão de julgamento que vale citar:** eu ia registrar a exceção white+alpha do `DssList` como
+violação da Constituição #1. Medi antes, e era o contrário — era a **única** coisa mantendo a
+borda visível sobre superfície sutil. O `DssList` já tinha resolvido o problema que o `DssToolbar`
+tinha; faltava o token.
+
+**Ferramental:** 6 páginas de Playground novas, palco do Preview Frame centralizado, picker de
+ícone derivado do contrato, knob inerte declarado na fonte (`@inertWhen`), e — o item de
+governança — **14 gates que só rodavam no pre-commit subiram para o CI**.
+
+---
+
+## 🛠️ CI — 14 gates saíram da máquina do dev para o servidor
+
+*(commit `ci:`)*
+
+O CI cobria **6** checagens (build, unit, css-meta, type-check, contracts). Outros **14
+validadores rodavam apenas no pre-commit** — hook é opt-in por clone e ignorável com
+`--no-verify`, então dependiam de disciplina individual.
+
+Isso é aceitável quando cada MR tem revisão humana atenta. **Deixa de ser quando o merge
+acontece em lote**: aí a automação é o revisor, e 14 dos gates do DS não rodavam onde ele está.
+
+Não é hipótese — **nesta mesma onda, dois deslizes foram pegos por gates dessa lista e por
+nenhum dos que já estavam no CI**: `validate:dss-props` (prop chegando ao Quasar por `$attrs`,
+fora da API) e `validate:sandbox-tags` (`code` de Playground que não resolvia).
+
+Três jobs paralelos, divididos por natureza para a pipeline dizer **onde** quebrou:
+`quality:estrutura`, `quality:tokens`, `quality:api`. Os 14 foram rodados antes de entrar: todos
+verdes.
+
+---
+
 ## 🎨 Tokens
 
 - [x] Todos os valores visuais utilizam tokens DSS
@@ -251,6 +330,13 @@ Registrada em `docs/governance/DEBITO_ABERTO.md`:
 | 🟡 **Pré-prompt é superfície de retratação que ninguém varre** | Caso corrigido; a **classe** fica: nenhuma checklist lista `docs/governance/pre-prompts/` |
 | 🟡 **A Regra de Ouro da Fase 1 exige "wrapper direto de UM único componente Quasar"** — e o `DssEmptyState` não tem base Quasar | A regra precisa distinguir **wrapper governado** de **primitivo nativo** |
 | ⏳ **Contraste da paleta default (c1)** — `primary` 3,80:1 · `tertiary` 2,93:1 · `accent` 4,20:1 | Aguarda decisão de cor da equipe; nenhum hex alterado unilateralmente. Metade das 8 cores fecha **sem trocar hex** |
+| ⏳ **Contraste da paleta default (c1) — agora medido por DOIS lados** | No `DssIcon` (cor SOBRE branco, critério 1.4.11 = **3:1**) reprovam `tertiary` 2,93 · `info` 2,08 · `positive` 1,99 · `warning` 1,70. No `DssTooltip` (texto branco SOBRE a cor, critério 1.4.3 = **4,5:1**) reprovam `primary` 3,80 · `info` 2,08 · `positive` 1,99 · `warning` 1,70. Mesmos tokens, critérios diferentes — e nenhum hex alterado sem decisão |
+| 🔴 **Fundo Hub do `DssToolbar` reprova AA** — branco sobre `--dss-hub-600` = **2,81:1**, que reprova AA normal (4,5) **e** AA de texto grande (3,0) | O comentário do arquivo *alegava* que atendia texto grande; era falso e foi corrigido. Opção medida: `--dss-hub-700` (#bf590f) → **4,52:1**. É contrato visual, pede decisão |
+| 🟡 **A colisão de token do dark existe igual no CLARO** — `--dss-surface-muted` e `--dss-border-subtle` são ambos **#f5f5f5** | O escuro foi resolvido com branco+alpha. O simétrico seria preto+alpha, mas muda a aparência do claro em **todo** o DS |
+| 🟡 **65 slots marcados `required` por falta de `?` na assinatura** — inclui `loading` e `empty` do `DssVirtualScroll` | O Preview Frame honra o `required` injetando placeholder no palco. Só o `DssIcon` foi corrigido; os outros entram na adequação de cada um |
+| 🟡 **49 usos de `DssTooltip` renderizam markup morto** (sem `visible`) e **62 de `DssIcon` sem declarar intenção de a11y** | Os do `DssIcon` agora advertem em DEV, que é o objetivo. Limpeza dimensionada, não feita |
+| 🟡 **`DssBar`, `DssTimeline` e `DssToolbarTitle` têm o mesmo defeito de brand do `DssToolbar`** | Padrão idêntico em `4-output/_brands.scss`; o fix é conhecido. Cada um pede sua varredura visual |
+| 🔴 **O CI não abre navegador** | O defeito do `DssActionMenu` era invisível aos 21 testes unitários **por construção** — jsdom não dispara os tratadores de ponteiro do QMenu. Nenhum `it(...)` a mais pegaria. É o item mais caro da lista |
 
 ---
 
@@ -263,7 +349,7 @@ Registrada em `docs/governance/DEBITO_ABERTO.md`:
 
 ---
 
-## Como revisar isto sem ler 139 commits
+## Como revisar isto sem ler 174 commits
 
 1. **`docs/governance/DEBITO_ABERTO.md`** — o quadro do que ficou aberto e por quê. **Comece pelo
    item das âncoras**: é o de maior alcance e o único que contradiz material já apresentado.
@@ -274,6 +360,12 @@ Registrada em `docs/governance/DEBITO_ABERTO.md`:
    Era exatamente isso que não funcionava.
 4. **`docs/Compliance/audits/DssEmptyState/`** — os relatórios mostram o padrão de rigor adotado.
 5. **Os 2 commits `!`** — os únicos com impacto de API, ambos removendo código inerte.
+6. **Para os +13 commits de set/2026**, o caminho mais curto é a **tabela de mudança de
+   comportamento** no topo (DssButton 54 usos · DssItem 139 · DssMenu · tokens do dark em 18
+   componentes) — é ali que mora o risco de produção. Depois, abra o sandbox na página
+   **`DssActionMenu → seção 03`**: ela põe lado a lado o composto e o idioma canônico
+   `<DssButton><DssMenu/></DssButton>`, e **um clique exercita as quatro correções de uma vez**
+   (abre · painel 98px em vez de 192 · itens `listitem` · botão com nome).
 
 ---
 
