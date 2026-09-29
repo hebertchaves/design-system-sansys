@@ -293,33 +293,80 @@ Gates: `scss-tokens`, `field-conventions`, `css-meta`, `theme-scopes`, `scale`,
 foi **resolvida em seguida** (set/2026), junto com o fundo de rótulo no escuro —
 ver "Resolvidos nesta onda".
 
-### 2. Reemissão de selo v2.2 — 6 componentes selados que mudaram
+### 2. Reemissão de selo v2.2 — 11 componentes selados que mudaram
 
-`DssTab`, `DssRouteTab`, `DssTabs` e `DssBtnToggle` mudaram de comportamento nesta
-onda (token de capitalização, escala, props novas). Os selos não foram reemitidos.
+Enquanto a reemissão não acontece, o `CERTIFIED_COMPONENTS` afirma qualidade sobre um
+comportamento que **não é mais o auditado**. É o custo de governança desta onda, e está
+aqui declarado em vez de diluído.
 
-`DssMenu` e `DssButton` entraram na fila em set/2026, na adequação do `DssMenu`.
-O do `DssButton` é o que pesa: `label` e slot default agora **mesclam** em vez de o
-slot substituir o label, e o wrapper de conteúdo passou a levar `q-anchor--skip`.
-São mudanças de comportamento num componente selado **e** Golden Sample de
-documentação. Detalhe e medições na seção "o idioma do overlay do Quasar estava
-quebrado", em *Pendências por componente*.
+**Onda anterior (4):** `DssTab`, `DssRouteTab`, `DssTabs` e `DssBtnToggle` — token de
+capitalização, escala, props novas.
 
-### 3. Verificações que dependem de RESTART do dev server
+**Onda de adequação, set/2026 (7):** todos com arquivo de selo no disco e comportamento
+alterado. Em ordem de peso:
 
-O Vite não reprocessa o SFC quando só o arquivo de TIPOS muda, e o servidor é do
-usuário — não reinicie por conta própria.
+| componente | o que mudou | por que pesa |
+|---|---|---|
+| **`DssButton`** | `label` e slot default agora **mesclam**; wrapper leva `q-anchor--skip` | Selado **e** Golden Sample de documentação. **54 usos** mudam de comportamento |
+| **`DssItem`** | `role` deixa de alternar para `button`: agora é sempre `listitem` + `tabindex` | **139 usos** clicáveis. Muda o que o leitor de tela anuncia |
+| **`DssMenu`** | `v-model` virou opcional; `min-height` removido; `overflow-y: auto`; borda do dark tokenizada | Seis defeitos, dois deles bloqueadores funcionais |
+| **`DssToolbar`** | `overflow-x: auto`; brand remapeia `--dss-action-primary` no escopo | Barra com marca deixou de tornar o filho invisível (1:1) |
+| **`DssList`** | EXC-01/02 removidas (cores cruas → token) | `dss.meta.json` foi de 6 para 4 exceções |
+| **`DssSeparator`** | EXC-01 removida; override cego de dark que matava as variantes de `color` | A prop `color` voltou a valer no escuro |
+| **`DssIcon`** | adverte em DEV nas três contradições e cai para fallback seguro; slot default virou opcional | Muda o ARIA emitido em **62 usos** que não declaravam intenção |
 
-- **`DssTabs`/`DssTab`/`DssRouteTab`**: as 11 props novas do de-para estão no disco
-  e nos contratos (7→14, 5→7, 10→12) e os testes passam (121/121), mas a lista
-  compilada servida ainda tem as antigas — o atributo `inline-label` VAZA para o
-  DOM. Depois do restart, conferir `inlineLabel` de fato mudando o empilhamento.
-- **`DssFabAction`**: a elevação por token está no CSS compilado (conferido), mas a
-  tela ainda serve a versão anterior. Conferir que o `::before` usa
-  `--dss-elevation-2` e que o Quasar não o sobrescreve no `:active`.
-- **`:active` dos quatro de ação**: validado por cascata, não com clique
-  sustentado. Se ainda houver movimento ao clicar, o alvo é o
-  `sem-realce-quasar` do `utils/_hover-ramp.scss`.
+> ⚠️ **NÃO entram na fila, e a distinção importa:** `DssTooltip`, `DssItemSection` e
+> `DssItemLabel` são selados mas **não foram alterados** — ganharam só página de teste.
+> `DssActionMenu` é novo (`status: draft`), nunca foi selado.
+
+> 🧭 **Quem sela não é quem constrói.** O `CLAUDE.md` prescreve auditoria independente
+> (`prompt_revisao_independente_v1.0.md`), e a ferramenta que grava selo
+> (`record_audit_event`) exige pedido humano explícito por contrato. Reemitir aqui seria
+> eu auditando o meu próprio trabalho — por isso a fila está declarada e não executada.
+
+### 2b. 🟡 O `dss.meta.json` de 3 componentes NÃO registra o selo que existe no disco
+
+Descoberto ao montar a fila acima (set/2026), e quase me fez excluir um componente dela.
+
+| componente | `meta.json` | disco |
+|---|---|---|
+| `DssToolbar` | `status: sealed`, campo `seal` **ausente** | `DssToolbar_SELO_v2.2.md` ✅ |
+| `DssItemSection` | `status: sealed`, campo `seal` **ausente** | `DSSITEMSECTION_SELO_v2.2.md` ✅ |
+| `DssItemLabel` | `status: sealed`, campo `seal` **ausente** | `DssItemLabel_SELO_v2.2.md` ✅ |
+
+O selo existe; o metadado é que está mudo. Quem consultar o `meta.json` — e o MCP consulta —
+lê "não selado" para componente selado. É instância concreta do débito **"11 drifts
+status↔selo"** já registrado na frente do pipeline de propagação, e reforça a regra que o
+`build-catalog` já adota: **selado = arquivo físico**, não campo de metadado.
+
+### 3. ~~Verificações que dependem de RESTART do dev server~~ — 2 de 3 VERIFICADAS (set/2026)
+
+O bloqueio era o servidor do usuário não ter sido reiniciado. **Na onda de adequação
+ele foi reiniciado várias vezes**, então os dois primeiros puderam ser medidos.
+
+- ✅ **`DssTabs`/`DssTab`/`DssRouteTab` — resolvido, nas duas metades.** Medido no
+  navegador: o atributo `inline-label` **não vaza mais** (o root serve só `class`), e
+  `inlineLabel` **muda o empilhamento de fato** — `flex-direction: column` (73×67) com a
+  prop desligada, `row` (52×91) com ela ligada. Contratos no disco: 14 / 7 / 12 props.
+
+- ✅ **`DssFabAction` — resolvido, e o enunciado deste item estava ERRADO.** Pedia
+  "conferir que o `::before` usa `--dss-elevation-2`". Dois erros:
+  1. A elevação está **no elemento**, não no pseudo: `box-shadow: var(--dss-elevation-1)`
+     em `2-composition/_base.scss:76`. Tokenizada, que era o que se queria confirmar.
+  2. É **elevation-1**, não -2 — e de propósito: o comentário no código diz
+     *"menor que DssFab (elevation-1 vs elevation-2)"*. A ação é subordinada ao FAB.
+
+  E `::before` **não podia** carregar elevação: o próprio arquivo declara
+  *"`::before` é EXCLUSIVAMENTE para touch target no DSS (Princípio #7)"*. Quem pegasse
+  o item como estava escrito iria procurar elevação num pseudo que a regra proíbe de ter.
+  Fica só a metade que precisa de interação: se o Quasar sobrescreve no `:active`.
+  *(O `DssFabAction` não monta avulso no Preview Frame — precisa estar dentro de um
+  `DssFab` —, então essa metade cai no item abaixo.)*
+
+- 🔲 **`:active` dos quatro de ação — CONTINUA ABERTO.** Validado por cascata, não com
+  clique sustentado. Precisa de interação real nos quatro componentes; o restart não
+  destrava isto. Se houver movimento ao clicar, o alvo é o `sem-realce-quasar` do
+  `utils/_hover-ramp.scss`.
 
 ## Pendências por componente (resolver na rodada de ADEQUAÇÃO de cada um)
 
@@ -2935,12 +2982,21 @@ adequação deles nunca exercitou prop nenhuma pelo frame.
 
 ## Verificar (pode já estar resolvido)
 
-- 🔍 **`DssResponsive`** — lista scope-props do slot default como slots (baixa prioridade). Mesmo arquivo.
+- ✅ ~~**`DssResponsive`** — lista scope-props do slot default como slots.~~ **RESOLVIDO**
+  (verificado set/2026). O `dss.contract.json` emite **um** slot, `default` — as scope-props
+  não aparecem mais como slots irmãos. Fechado pelo conserto do emissor, que passou a ler
+  escopo e obrigatoriedade da assinatura TS em vez de gravar `scope: null` fixo.
+  *(Resíduo de outra classe, não deste item: o slot sai como `required: true` por falta de
+  `?` na interface — é o débito dos "65 slots required", registrado na seção do `DssIcon`.)*
+
+*(Seção vazia de itens abertos. Novos candidatos entram aqui.)*
 
 ## Frente em curso
 
-- 🔴 **Gates de componente no MCP** (branch `work/dss-selection-controls`, **empurrado em 2026-08-31**
-  nos dois remotes; MR !8 aberto no GitLab). Commits
+- 🔴 **Gates de componente no MCP** (branch `work/dss-selection-controls`; MR !8 aberto no GitLab).
+  ⚠️ *A marca "empurrado em 2026-08-31" que estava aqui ficou velha: o MR !8 foi atualizado em
+  set/2026 e hoje tem **174 commits**, com a onda de adequação dos 8 e o job de CI. A frente do
+  MCP em si continua aberta — o que mudou foi só o tamanho do MR que a carrega.* Commits
   `a2722fe`→`4460c93`: Gate Estrutural (4 camadas, wrapper puro, barrel, orquestrador) · escopo do gate de
   higiene por REGRA e não por arquivo · `validate_component_code` implementa o regime de exceções da
   Constituição #1 (fallback de `var()`, px em `@media`/`@container`, bloco `forced-colors`) · Token First
@@ -2960,7 +3016,10 @@ adequação deles nunca exercitou prop nenhuma pelo frame.
   - 🔲 **`tests/` não é type-checked** — `tsconfig.json` do MCP tem `include: ["src/**/*"]` + `rootDir: src`;
     o vitest transpila sem checar tipo. Erro de tipo no `.spec.ts` passa batido.
 
-- ⏳ **MR !6 — consistência da família de campos** (`work/dss-continuidade` → `main`, aberto 2026-07-22).
+- ✅ **MR !6 — consistência da família de campos** (`work/dss-continuidade` → `main`, aberto
+  2026-07-22) — **MERGEADO**, verificado em set/2026: o commit `af5c038c` é ancestral de
+  `gitlab/main`. A branch local foi removida (0 commits próprios); a remota ficou como
+  histórico, que é decisão de quem administra o repositório corporativo.
   16 commits: brand no anel de foco (rotas A/B + dark), label×placeholder padrão B, base font 16 + ícone
   20px + paridade pixel-perfect do prepend, slot `error` fiel ao `getBottom` do Quasar, anel de foco do
   DssFile, + Preview Frames Textarea/Field e seletor de ícone no sandbox. Gates verdes, testes 5/5.
@@ -3024,7 +3083,20 @@ adequação deles nunca exercitou prop nenhuma pelo frame.
     - **Cor tinha DUAS fontes** → dois defeitos. Com `brand` + 6 das 9 cores nada casava e o chip ficava
       **preto** (`rgb(0,0,0)` medido); e o **ícone era sequestrado** pela marca. Unificado em
       `3-variants/_colors.scss` (9 cores); `_brands.scss` esvaziado, como já ocorrera na família.
-    - 🔍 **ACHADO SISTÊMICO — `[data-brand] .dss-icon` é regra GLOBAL.** Mora em
+    - ✅ **ACHADO SISTÊMICO — `[data-brand] .dss-icon` era regra GLOBAL — RESOLVIDO**
+      *(verificado set/2026, em dois lugares independentes)*: o
+      `DssIcon/4-output/_brands.scss` marca a regra como `← REMOVIDA` no próprio arquivo, e o
+      gate `validate:hover-tokens` reporta **`C. [data-brand] .dss-icon (descendente): 0`** —
+      ou seja, além de removida, existe guarda automática contra o retorno.
+      Confirmado por medição independente na adequação do `DssIcon`: prop `brand` e
+      `[data-brand]` ancestral resolvem **a mesma cor** nas três marcas, que é justamente o
+      conflito que este item descrevia. O texto original fica abaixo como registro do
+      diagnóstico, porque a **classe** de defeito que ele nomeia — regra global casando direto
+      no elemento e vencendo herança — continua valendo como coisa a procurar.
+
+      <details><summary>diagnóstico original (histórico)</summary>
+
+      **`[data-brand] .dss-icon` é regra GLOBAL.** Mora em
       `DssIcon/4-output/_brands.scss` e casa **direto no elemento** do ícone (0,2,0), vencendo qualquer
       cor apenas **herdada** do componente pai. Sob marca global, um `filled` ficava com fundo e ícone
       na mesma cor — o glifo sumia. **Qualquer componente que componha `DssIcon` e conte com herança
@@ -3033,6 +3105,8 @@ adequação deles nunca exercitou prop nenhuma pelo frame.
       especificidade); Chip é o segundo caso. **Vale varrer a base na Onda Higiene** — o candidato
       natural é todo componente com prop de ícone. *(Alternativa de fundo, mais limpa e mais arriscada:
       restringir a regra global do DssIcon a ícones que não estejam dentro de outro componente DSS.)*
+
+      </details>
     - ⚠️ **Correção de premissa registrada:** eu havia escrito que as 4 cores de AÇÃO acompanham a
       marca. **Não acompanham** — `tokens/brand/_{hub,water,waste}.scss` declaram `secondary`,
       `tertiary` e `accent` como "Mantém … semântico" nas três marcas; **só `--dss-action-primary` é
