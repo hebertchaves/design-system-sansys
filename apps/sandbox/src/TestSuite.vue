@@ -472,6 +472,14 @@
             </button>
 
             <button
+              @click="activeComponent = 'actionmenu'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'actionmenu' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">more_horiz</span></span>
+              <span class="nav-label">DssActionMenu</span>
+            </button>
+
+            <button
               @click="activeComponent = 'cadriscard'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'cadriscard' }]"
             >
@@ -606,6 +614,10 @@
 
       <div v-else-if="activeComponent === 'septip'" class="component-view">
         <TestSeparatorTooltip />
+      </div>
+
+      <div v-else-if="activeComponent === 'actionmenu'" class="component-view">
+        <TestActionMenu />
       </div>
       <div v-else-if="activeComponent === 'btn-toggle'" class="component-view">
         <TestBtnToggle />
@@ -778,6 +790,7 @@ import TestToolbar from './TestToolbar.vue'
 import TestList from './TestList.vue'
 import TestIcon from './TestIcon.vue'
 import TestSeparatorTooltip from './TestSeparatorTooltip.vue'
+import TestActionMenu from './TestActionMenu.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')

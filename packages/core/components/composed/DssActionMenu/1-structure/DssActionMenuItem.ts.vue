@@ -16,7 +16,13 @@
     as quatro declararem `aria-haspopup="menu"`. O QMenu ancora no elemento pai,
     então o wrapper é âncora suficiente.
   -->
-  <span class="dss-action-menu__slot">
+  <span
+    class="dss-action-menu__slot"
+    @mouseenter="dicaVisivel = true"
+    @mouseleave="dicaVisivel = false"
+    @focusin="dicaVisivel = true"
+    @focusout="dicaVisivel = false"
+  >
     <DssButton
       ref="btnRef"
       data-action-menu-item
@@ -35,11 +41,42 @@
       @click="onClick"
     />
 
-    <DssTooltip v-if="tooltip">{{ tooltip }}</DssTooltip>
+    <!--
+      `visible` é OBRIGATÓRIO e faltava aqui — a página de teste mostrou.
+      O DssTooltip não governa a própria visibilidade nem se posiciona: é decisão
+      de governança declarada na doc dele ("controlado externamente via `visible`";
+      posicionamento "fora de escopo"). O default é `false`, então
+      `<DssTooltip>{{ tooltip }}</DssTooltip>` renderizava markup que NUNCA aparecia
+      — a prop `tooltip` deste componente era letra morta. Varredura do repositório:
+      50 usos de DssTooltip estavam nesse estado.
 
+      Quem liga o gatilho e quem posiciona é o HOST, que aqui é este composto (o
+      Cartão Composto manda o layout morar no pai). O posicionamento vive na nossa
+      2-composition, não injetado no filho.
+    -->
+    <DssTooltip v-if="tooltip" :visible="dicaVisivel" class="dss-action-menu__dica">
+      {{ tooltip }}
+    </DssTooltip>
+
+    <!--
+      `no-parent-event` é obrigatório aqui, e a página de teste é que mostrou por quê.
+
+      Este componente dirige o menu EXPLICITAMENTE: `onClick` chama `ctx.abrir(...)`
+      e o estado desce por `v-model`. Mas o QMenu, por padrão, também instala os
+      próprios tratadores no elemento âncora — que é o wrapper
+      `span.dss-action-menu__slot`, e o botão está DENTRO dele. Resultado medido:
+      um único clique real era tratado DUAS vezes — o QMenu abria e o `onClick`
+      alternava de volta —, então o menu abria e fechava no mesmo gesto e parecia
+      não abrir. Com clique SINTÉTICO funcionava, porque este só dispara o `@click`
+      do Vue e não os tratadores de ponteiro do QMenu: foi assim que o defeito
+      passou pelos 21 testes unitários e pelo exemplo.
+
+      `no-parent-event` desliga os tratadores do QMenu e deixa UM dono do gesto.
+    -->
     <DssMenu
       v-if="temSubAcoes"
       v-model="aberto"
+      no-parent-event
       anchor="bottom left"
       self="top left"
       @hide="onHide"
@@ -125,6 +162,9 @@ const aberto = computed({
   get: () => ctx.abertoId === props.name,
   set: (v: boolean) => ctx.abrir(v ? props.name : null),
 })
+
+/** Gatilho da dica — hover e foco, para teclado também alcançar. */
+const dicaVisivel = ref(false)
 
 function onClick() {
   if (desabilitado.value) return

@@ -20,7 +20,26 @@
    no elemento pai, e ele não pode morar dentro do DssButton (lá ocupa o slot
    `default` e apaga o `label`). O wrapper é `inline-flex` para não interferir no
    arranjo da barra. */
-.dss-action-menu__slot { display: inline-flex; flex: 0 0 auto; }
+.dss-action-menu__slot {
+  display: inline-flex;
+  flex: 0 0 auto;
+
+  /* Contexto de posicionamento para a dica. O DssTooltip declara posicionamento
+     FORA DE ESCOPO — quem posiciona é o host, e o host é este composto. Sem isto
+     a dica entraria no fluxo e empurraria a barra ao aparecer. */
+  position: relative;
+}
+
+/* Dica da ação. Vive aqui, na camada do PAI, e não injetada no filho com
+   `:deep()` — o Cartão Composto proíbe `:deep()` para layout. */
+.dss-action-menu__dica {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  margin-top: var(--dss-spacing-1);
+  white-space: nowrap;
+}
 
 /* A ação não recebe estilo próprio — a classe existe como ponto de ancoragem
    para o estado e para o seletor do teste. */
