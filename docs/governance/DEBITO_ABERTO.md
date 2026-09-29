@@ -293,10 +293,17 @@ Gates: `scss-tokens`, `field-conventions`, `css-meta`, `theme-scopes`, `scale`,
 foi **resolvida em seguida** (set/2026), junto com o fundo de rótulo no escuro —
 ver "Resolvidos nesta onda".
 
-### 2. Reemissão de selo v2.2 — 4 componentes selados que mudaram
+### 2. Reemissão de selo v2.2 — 6 componentes selados que mudaram
 
 `DssTab`, `DssRouteTab`, `DssTabs` e `DssBtnToggle` mudaram de comportamento nesta
 onda (token de capitalização, escala, props novas). Os selos não foram reemitidos.
+
+`DssMenu` e `DssButton` entraram na fila em set/2026, na adequação do `DssMenu`.
+O do `DssButton` é o que pesa: `label` e slot default agora **mesclam** em vez de o
+slot substituir o label, e o wrapper de conteúdo passou a levar `q-anchor--skip`.
+São mudanças de comportamento num componente selado **e** Golden Sample de
+documentação. Detalhe e medições na seção "o idioma do overlay do Quasar estava
+quebrado", em *Pendências por componente*.
 
 ### 3. Verificações que dependem de RESTART do dev server
 
@@ -323,6 +330,438 @@ teste no ar.
 
 **Como usar:** ao começar a adequação de um componente, procure o nome dele nesta seção ANTES de
 rodar o checklist. O que estiver aqui entra no escopo daquela rodada.
+
+### ✅ PARCIAL — `DssSeparator` + `DssTooltip`: a prop `color` era inerte no escuro (set/2026)
+
+Quinto e último grupo da fila. Uma exceção removida, um defeito real consertado, e dois falsos
+defeitos que NÃO registrei porque medi antes.
+
+**Consertado — no tema escuro a prop `color` do `DssSeparator` não fazia nada.** A camada 4 tinha
+`[data-theme="dark"] .dss-separator { color: rgba(255,255,255,.12) }`, especificidade **(0,2,0)**,
+atropelando toda classe de variante, que é **(0,1,0)**. Medido no Playground: no escuro, `subtle`,
+`default`, `strong`, `primary` e `secondary` renderizavam **as cinco a mesma cor** — a prop ficava
+inerte, em silêncio. Depois do conserto: **5 cores distintas**.
+
+**A exceção EXC-01 do separador caiu — e a justificativa dela envelheceu HOJE.** Dizia *"nenhum
+token DSS fornece branco com alpha parcial"*. Era verdade e deixou de ser: o `--dss-border-separator`
+criado na adequação do `DssList` (item acima) vale, no escuro, exatamente `rgba(255,255,255,0.12)`
+— o mesmo valor que estava hardcoded. A camada 2 passou a consumi-lo, e o override cego virou
+redundante além de nocivo. No claro os dois valores coincidem (#f5f5f5), então a aparência não muda.
+
+> Este é o **terceiro** componente cuja cor crua de dark mode o token novo eliminou: `DssList`
+> (EXC-01/02), `DssToolbar` (borda invisível) e agora `DssSeparator` (EXC-01). Sobra o `DssCard`,
+> que tem as duas mesmas e está fora desta fila.
+
+**NÃO eram defeitos — medi antes de registrar:**
+
+1. **`hairline` renderiza igual a `thin`.** O token existe e vale `0.5px`, a classe é aplicada, mas
+   `borderTopWidth` computa `1px`. Sondei com `0.5px` LITERAL num elemento avulso: também dá `1px`.
+   É o **navegador** arredondando sub-pixel com `devicePixelRatio: 1` — em tela 2x o hairline é de
+   fato mais fino. Plataforma, não componente.
+2. **`DssTooltip` não abre sozinho.** Confirmado que é decisão de governança declarada: a doc do
+   componente diz textualmente *"O DssTooltip NÃO governa sua própria visibilidade"*, e lista
+   posicionamento, seta, animação e delay como **fora de escopo**. O componente cumpre o que declara.
+
+**🟡 O que É defeito no Tooltip está nos CONSUMIDORES: 50 usos renderizam markup morto.** Varredura:
+18 usos ligam `visible`, **50 não ligam nem `visible` nem nada** — e como o default é `false`, essas
+dicas nunca aparecem. Concentrados em páginas de sandbox que imitam telas de produção
+(`TestParcelamento*`, `TestAtenderSolicitacoes*`), mais o exemplo do `DssCard` e — o meu —
+`DssActionMenuItem`. **O meu eu consertei** (abaixo). Os outros 49 ficam para uma passada de limpeza:
+ou ligam o gatilho, ou removem a dica que não existe.
+
+**✅ `DssActionMenuItem` — a prop `tooltip` era letra morta, agora funciona.** Renderizava
+`<DssTooltip>{{ tooltip }}</DssTooltip>` sem `visible`. Ligado a hover **e foco** (para o teclado
+também alcançar), com o posicionamento na **2-composition do próprio composto** — o Cartão Composto
+manda o layout morar no pai, e proíbe `:deep()` para isso. Verificado: `none → block → none`,
+`position: absolute` abaixo do botão, e a altura da barra é **93px com e sem a dica** — não empurra
+o layout.
+
+**🔴 EM ABERTO — 4 das 6 cores de dica reprovam AA (precisa do seu aval).** Aqui o critério **é**
+4,5:1, porque o conteúdo da dica é TEXTO — diferente do ícone, que é objeto gráfico a 3:1. O texto
+da dica é sempre branco:
+
+| cor | fundo | branco sobre ele | AA (4.5) |
+|---|---|---|---|
+| `dark` | `#0a0a0a` | 19,80 | ✅ |
+| `negative` | `#d8182e` | 5,13 | ✅ |
+| `primary` | `#1f86de` | **3,80** | ❌ |
+| `info` | `#0cc4e9` | **2,08** | ❌ |
+| `positive` | `#4dd228` | **1,99** | ❌ |
+| `warning` | `#fabd14` | **1,70** | ❌ |
+
+São os mesmos tokens semânticos que reprovaram no `DssIcon`, medidos agora pelo outro lado (texto
+SOBRE a cor, em vez da cor sobre branco). `warning` a 1,70:1 é branco sobre amarelo. Terceira
+aparição da frente **c1** nesta onda — e a mais grave, porque é texto.
+
+---
+
+### ✅ RESOLVIDO — `DssActionMenu`: o submenu nunca abriu por clique real, e 21 testes não viam (set/2026)
+
+O composto não tinha página de teste — só Preview Frame, exemplo, testes e docs. Lacuna minha: a
+fila dos 8 existia para adequar as PEÇAS dele, e o composto ficou sem o lugar onde se mede o todo.
+Ao montar o Playground, o defeito apareceu no primeiro clique.
+
+**O defeito.** `<DssActionMenuItem>` com sub-ações **não abria o submenu** com clique real. Mas
+abria com clique sintético — e é essa diferença que explica tudo:
+
+| gesto | `aria-expanded` | menu no DOM |
+|---|---|---|
+| clique **sintético** (`el.click()`) | false → **true** | **1** |
+| clique **real** (ponteiro) | false → **false** | 0 |
+
+**Causa: dois donos do mesmo gesto.** O item dirige o menu EXPLICITAMENTE (`onClick` chama
+`ctx.abrir(...)`, o estado desce por `v-model`). Só que o QMenu, por padrão, também instala os
+próprios tratadores no elemento âncora — que aqui é o wrapper `span.dss-action-menu__slot`, e o
+botão está **dentro** dele. Um clique real era tratado **duas vezes**: o QMenu abria e o `onClick`
+alternava de volta. Abria e fechava no mesmo gesto, e parecia não abrir.
+
+**Fix:** `no-parent-event` no DssMenu — a prop que o Quasar tem exatamente para isto ("skips
+attaching events to the target DOM element"). Um dono do gesto. Verificado no navegador com clique
+real: abre (painel 208×98), subitens `role="menuitem"` + `tabindex="0"`, lista `role="menu"`,
+clique no subitem emite `action: exportar:pdf` até a barra, menu fecha, `aria-expanded` volta a
+false e **o foco retorna ao gatilho**.
+
+> ⚠️ **Por que os 21 testes unitários não pegaram, e por que nenhum teste unitário pegaria.** O
+> defeito só existe no gesto de ponteiro REAL. O jsdom dispara o `@click` do Vue mas **não** os
+> tratadores de ponteiro do QMenu — ou seja, no ambiente de teste só um dos dois donos existia, e
+> por isso funcionava. Não é buraco de cobertura que se tape com mais um `it(...)`: é classe de
+> defeito que **só a página de teste no navegador encontra**. Reforça a regra do fechamento —
+> "renderiza fiel no Preview Frame" é gate porque medição em jsdom não substitui.
+
+**Diagnóstico honesto do caminho:** minha primeira suspeita foi ter quebrado o composto com as
+mudanças no `DssMenu`. Testei revertendo o `DssMenu` via `git stash`: **não abria também**. Não era
+regressão — o composto nunca tinha sido verificado abrindo por clique. O que eu havia verificado
+antes era o FECHAMENTO por Escape.
+
+### 🟡 Efeito da adequação, medido no composto (set/2026)
+
+A seção 03 do Playground do `DssActionMenu` existe para provar o que a fila entregou: põe lado a
+lado o contorno do composto e o idioma canônico `<DssButton><DssMenu/></DssButton>`, que antes não
+funcionava. Um clique no segundo exercita as quatro correções de uma vez:
+
+| medida | antes da fila | agora |
+|---|---|---|
+| abre? | **não abria** | abre |
+| painel com 2 itens | 192px (96 de vazio) | **98px** |
+| papel dos itens | `button` → lista com 0 `listitem` | **`listitem` + `tabindex=0`** |
+| nome acessível do botão | nenhum | **"ABRIR"** |
+
+---
+
+### ✅ PARCIAL — `DssIcon`: três contradições aceitas em silêncio, e 4 cores reprovando 1.4.11 (set/2026)
+
+Quarto da fila. O componente estava **estruturalmente são** — escala exata nos cinco degraus (span e
+`q-icon` concordam em 16/20/24/32/48), `prefers-reduced-motion` corretamente tratado
+(`animation: none !important` em `.dss-icon, .dss-icon *`), e brand **sem** o bug de família: prop e
+`[data-brand]` ancestral resolvem a mesma cor nas três marcas. O que havia era outra coisa: o
+componente aceitava configuração contraditória e escolhia um lado **sem avisar ninguém**.
+
+**Consertado — o `DssIcon` era o fora-da-curva da própria família.** O `DssImg` adverte em DEV quando
+falta `alt` (WCAG 1.1.1) e o `DssVideo` quando falta `title` (WCAG 4.1.2), ambos caindo para fallback
+seguro. O `DssIcon`, não. Agora faz o mesmo, sem padrão novo:
+
+| # | Contradição | O que acontecia | Agora |
+|---|---|---|---|
+| 1 | `decorative=false` **sem** `ariaLabel` | O `DSS_ICON_COMPOSITION_CONTRACT` §2.1 diz que `ariaLabel` é **obrigatório** aí, mas o tipo declara `ariaLabel?` e nada verificava. Medido na árvore de a11y do Chrome: `role="img"` sem nome, cujo único conteúdo é `aria-hidden`, é **PODADO** — o ícone informativo não existe para o leitor de tela. **62 usos** do repositório estavam nesse estado | adverte em DEV citando o §2.1 + cai para `aria-hidden` (fallback seguro: o Chrome já podava, agora é explícito e consistente entre navegadores) |
+| 2 | `decorative` **com** `ariaLabel` | o nome era descartado em silêncio | adverte em DEV, explicando que os dois se excluem |
+| 3 | `spin` **com** `pulse` | as duas classes disputam a propriedade `animation` com a mesma especificidade; medido, resolve para `dss-icon-pulse` e o `spin` é descartado calado | adverte em DEV |
+
+Os três avisos foram **vistos disparando** no console da página de teste, e as quatro combinações da
+seção 03 foram medidas no DOM depois do conserto: nenhuma produz mais `role="img"` sem nome.
+
+**NÃO era defeito (conferido antes de registrar):** com `inline`, as classes de tamanho são ignoradas
+e o ícone segue a `font-size` do host. Eu ia registrar isso como "a prop `size` é descartada em
+silêncio" — mas o contrato §2.2 declara exatamente esse comportamento (*"as classes de tamanho
+(`--xs..xl`) são ignoradas"*) e o composable cita o §2.2 no código. É normativo, não bug.
+
+**🔴 EM ABERTO — 4 das 8 cores semânticas de ícone reprovam WCAG 1.4.11 (precisa do seu aval)**
+
+Ícone informativo é objeto gráfico, então o critério é **1.4.11 Non-text Contrast: 3:1** — não os
+4,5:1 de texto. Medido sobre a superfície padrão do tema claro:
+
+| cor | valor | contraste | 3:1 |
+|---|---|---|---|
+| `negative` | `#d8182e` | 5,13 | ✅ |
+| `accent` | `#b454c4` | 4,20 | ✅ |
+| `primary` | `#1f86de` | 3,80 | ✅ |
+| `secondary` | `#26a69a` | 3,00 | ✅ no limite exato |
+| `tertiary` | `#ff6607` | **2,93** | ❌ |
+| `info` | `#0cc4e9` | **2,08** | ❌ |
+| `positive` | `#4dd228` | **1,99** | ❌ |
+| `warning` | `#fabd14` | **1,70** | ❌ |
+
+Não é defeito do `DssIcon` — são os **valores dos tokens semânticos**, os mesmos que o DS usa em
+alerta, badge, chip e estado. O `DssIcon` só os expôs limpo, sem fundo colorido por trás para
+disfarçar. `warning` a 1,70:1 e `positive` a 1,99:1 são os piores: amarelo e verde claros sobre
+branco. Conecta diretamente com a **frente c1** (contraste WCAG default, pendente de aval de
+valores) e com a **rampa de cores**. Valor pede sua decisão; não mexi.
+
+**🟡 Limpeza pendente — 62 usos de `DssIcon` sem declarar intenção de a11y.** Varredura: 103 usos
+passam `decorative`, 20 passam `aria-label`, e **62 não passam nenhum dos dois nem `aria-hidden`**.
+Com o fallback novo eles deixaram de emitir ARIA inválida, mas seguem **advertindo em DEV** — o que é
+o objetivo: a intenção tem de ser declarada. A maioria é `.example.vue` e página de sandbox, e quase
+todos querem dizer `decorative`. Vale uma passada de limpeza; não fiz aqui para a rodada não virar
+refatoração de 16 arquivos.
+
+> 🧪 **Nota de execução:** os testes do `DssIcon` **não rodaram** nesta sessão. Escrevi 5 casos de
+> regressão (as 4 combinações + a asserção de que o estado `role="img"` sem nome nunca mais ocorre),
+> mas o worker do vitest se recusa a subir — *"Timeout starting forks runner"* — com `forks`, com
+> `threads`, com `--maxWorkers=1`, com o patch de `START_TIMEOUT`, com o dev server desligado e com o
+> cache do Vite limpo. É o problema do 9p em `/mnt/c` num modo pior que o timeout habitual (mesmo
+> sintoma do `DssItemLabel`, item acima). **As mesmas asserções foram verificadas no navegador**, que
+> para a11y é evidência mais forte que jsdom. Fica declarado, não presumido.
+
+---
+
+### ✅ RESOLVIDO — `DssList`: lista com zero `listitem` quando o item é clicável (set/2026)
+
+Terceiro da fila (`DssList` · `DssItemSection` · `DssItemLabel`, uma passada). **Nada consertado
+ainda**: o único defeito real é semântico e a escolha do alvo é sua.
+
+**O achado.** O `DssList` fixa `role="list"` no root, e o `DssItem` faz
+`:role="clickable ? 'button' : 'listitem'"`. Medido no DOM da página de teste:
+
+| composição | papéis dos filhos | `listitem` | ARIA |
+|---|---|---|---|
+| itens estáticos | `listitem` ×3 | 3 | ✅ válido |
+| **itens clicáveis** | `button` ×3 | **0** | ❌ lista sem nenhum item |
+| misto (1 clicável) | `button` ×1, `listitem` ×2 | 2 | ❌ contagem errada |
+
+Item clicável é o caso **comum** (menu, navegação, lista de ações): **139 usos em 16 arquivos**. Ou
+seja, a composição padrão do DS produz lista que o leitor de tela anuncia sem itens.
+
+**O QItem não faz isso.** `QItem.js:152` define `role: 'listitem'` **sempre**; quando clicável
+apenas acrescenta `tabindex` (linha 158). O DSS divergiu do primitivo — e, como no `DssButton`
+(item acima), a divergência quebrou algo. Aqui foi deliberado: há teste fixando
+`expect(attributes('role')).toBe('button')` — mas sem racional registrado no SFC.
+
+**Três alvos possíveis, com o custo de cada um:**
+
+| | O que faz | Ganha | Custa |
+|---|---|---|---|
+| **A — espelhar o QItem** | `role="listitem"` sempre + `tabindex` quando clicável | lista válida; 1 linha; alinha com o primitivo | item clicável anuncia "listitem", não "button" — acionabilidade sub-anunciada (limitação que o Quasar aceita) |
+| **B — ARIA canônico** | item é `listitem`; o interativo vai DENTRO | correto pelos dois lados; é o que Carbon/Material fazem | muda a estrutura do DOM do `DssItem` → risco em CSS/layout nos 139 usos; é onda própria |
+| **C — papel da lista configurável** | mantém `button`; consumidor põe `role` adequado na lista | nenhuma mudança no item | terceiriza a11y para quem não tem como saber — o mesmo anti-padrão que acabei de remover do `DssToolbar` |
+
+**Decisão tomada (aval de set/2026): alvo A.** O `DssItem` passou a usar `role="listitem"` sempre,
+mantendo `tabindex` quando clicável — exatamente o contrato do QItem. Verificado no navegador: os
+três casos da página (estático, clicável, misto) agora têm **3 `listitem` cada** e o clicável mantém
+`tabindex="0"`. O teste que fixava `toBe('button')` foi reescrito, mais 2 de regressão (tabindex
+preservado; lista de clicáveis com `listitem` em todos os filhos). **131 testes passam** nos quatro
+arquivos da família.
+
+**B fica registrado como onda própria:** `listitem` contendo o elemento interativo, para o item
+voltar a anunciar acionabilidade. Não caber nesta rodada é consequência dos 139 usos a revalidar, não
+falta de mérito — é o alvo tecnicamente melhor. **C** está descartada.
+
+**O que foi medido e está CERTO (não mexer):**
+- **Moldura:** `bordered` (1px + radius 8px), `separator` (1px no topo do item), `padding` (8/8) e as
+  três combinadas — sem duplicação de borda, sem briga com o padding.
+- **Truncamento:** `lines=1` usa `nowrap` + `text-overflow: ellipsis` e corta na horizontal
+  (1134px → 301px); `lines=2` usa `-webkit-line-clamp: 2` e corta em 2 linhas (38,4px). Funciona.
+- **`DssItemSection`:** `avatar`, `thumbnail`, `side`, `top` e o padrão ocupam as regiões corretas.
+- **Contraste do texto:** claro 9,59:1 / 9,19:1 · escuro 13,88:1 / 7,17:1 — passa AA nos dois temas.
+- **Brand:** o `DssList` também põe `[data-brand]` no root (padrão correto, igual ao `DssToolbar`) e
+  remapeia `--dss-action-primary` por marca, sem apagar o texto do item.
+
+### 🟢 REVISÃO DE JULGAMENTO — a exceção white+alpha do `DssList` é a SOLUÇÃO, não a dívida
+
+Eu ia registrar `EXC-01`/`EXC-02` do `DssList` (`rgba(255,255,255,0.2)` na borda e
+`rgba(255,255,255,0.12)` no separador, em `4-output/_states.scss`) como violação da Constituição #1
+— cor crua sem token. **Medi antes, e é o contrário.** Alpha **compõe** com o fundo:
+
+| fundo (escuro) | borda por alpha 0.2 | borda pelo token fixo `--dss-border-subtle` |
+|---|---|---|
+| `--dss-surface-default` #262626 | #515151 · **1,91:1** | #525252 · 1,94:1 |
+| `--dss-surface-subtle` #525252 | #757575 · **1,70:1** | #525252 · **1,00:1 — invisível** |
+
+Sobre a superfície padrão os dois empatam. Sobre a **sutil**, só o alpha sobrevive — porque é
+exatamente ali que `--dss-surface-subtle` e `--dss-border-subtle` são o **mesmo #525252** (a colisão
+registrada no item do `DssToolbar`). O `DssList` não tem dívida aqui: ele **já resolveu** o problema
+que o `DssToolbar` tem.
+
+**✅ APLICADO (aval de set/2026) — uma decisão de token fechou as duas frentes.** No tema escuro:
+
+```scss
+--dss-border-subtle:    rgba(255, 255, 255, 0.2);   /* era var(--dss-gray-700) = #525252 */
+--dss-border-separator: rgba(255, 255, 255, 0.12);  /* token NOVO — era o EXC-02 do DssList */
+```
+
+`--dss-border-separator` foi definido **também no bloco semântico (claro)**, como
+`var(--dss-gray-200)` — o valor que o `DssList` já renderizava —, para não nascer token fantasma. O
+gate `validate:scss-tokens` confirma: *"Nenhum token fantasma NOVO, nem condicional-only NOVO"*.
+
+Resultado medido nos dois consumidores:
+
+| | antes | depois |
+|---|---|---|
+| `DssList` — EXC-01/EXC-02 | 2 cores cruas no componente | **removidas**; usa os tokens. Docs e `dss.meta.json` atualizados (6 → 4 exceções) |
+| `DssToolbar` — borda sobre `surface-subtle` (escuro) | **1,00:1 — invisível** | **1,70:1 — visível** |
+| `DssToolbar` — borda sobre `surface-default` (escuro) | 1,94:1 | 1,91:1 (imperceptível) |
+
+**Ressalva honesta, medida:** sobre `--dss-surface-muted` (#737373) o alpha fica **levemente pior**
+que o valor fixo — 1,47:1 contra 1,65:1. Os dois são fracos ali; o alpha ganha onde havia colisão
+total e perde pouco onde já era ruim. `surface-muted` merece o mesmo tratamento, e é a parceira de
+colisão do tema claro (abaixo).
+
+**Ainda em aberto, duas caudas desta mesma decisão:**
+
+1. **O tema CLARO tem a mesma colisão, um degrau acima:** `--dss-surface-muted` e
+   `--dss-border-subtle` são ambos **#f5f5f5** → borda sutil sobre superfície rebaixada é invisível
+   no claro também. O conserto simétrico é preto+alpha: `rgba(0,0,0,.06)` dá #f0f0f0 sobre branco
+   (imperceptível) e #e6e6e6 sobre muted (visível). **Muda a aparência do claro em todo o DS**, então
+   não apliquei — pede o mesmo tipo de aval.
+2. **`DssCard` pode abandonar as exceções dele.** A justificativa do `DssList` citava
+   *"padrão idêntico ao DssCard EXC-02"*, e de fato `DssCard/4-output/_states.scss` tem as duas
+   mesmas cores cruas (ids invertidos: EXC-01 = .12, EXC-02 = .2). Agora existem tokens para ambas.
+   Não mexi: o `DssCard` é selado e não está nesta fila.
+
+### 🟡 `DssCard` — dois cartões com borda BRANCA no escuro (set/2026)
+
+Encontrado ao varrer os 18 consumidores de `--dss-border-subtle` depois da troca de token: na página
+de teste do `DssCard`, em tema escuro, 2 de 5 cartões renderizam `border-color: rgb(245,245,245)` —
+branco de 1px sobre `#262626`. Os outros 3 usam o `rgba(255,255,255,0.2)` da exceção própria.
+
+**Não é efeito da minha troca**, e o raciocínio é verificável: #f5f5f5 é o valor do tema **claro** de
+`--dss-border-subtle`; a mudança tocou só o escuro. Se esses cartões lessem o token no escuro,
+mostrariam `rgba(…)`. Mostrarem o valor claro significa que, para eles, **o escopo escuro não
+aplica** — o que aponta para o débito já registrado dos **dois sistemas de dark mode** (componentes
+que trocam de tema por `@media (prefers-color-scheme: dark)`, inerte quando o SO está em claro,
+em vez de `[data-theme="dark"]`). Fica para a rodada do `DssCard`, com esta pista.
+
+---
+
+
+
+> 🧪 **Nota de execução:** os testes de `DssItemLabel` **não rodaram** nesta sessão — o worker do
+> vitest não sobe ("Timeout starting forks runner"), com `forks` e com `threads`, mesmo com o patch
+> de `START_TIMEOUT` e com recurso sobrando (9 GB livres, 12 cores). É o problema conhecido do 9p em
+> `/mnt/c`, num modo pior que o timeout habitual. `DssList` (22) e `DssItemSection` (26) passaram.
+> Nenhum dos três foi alterado, então não há regressão a cobrir — mas o número fica declarado, não
+> presumido.
+
+---
+
+### ✅ PARCIAL — `DssToolbar`: transbordo apagava ações e marca apagava o conteúdo (set/2026)
+
+Segundo da fila dos 8. Dois defeitos consertados, dois registrados porque o conserto é **valor de
+token** e valor não se muda sem aval.
+
+**Consertado — transbordo horizontal apagava ações em silêncio.** `flex-wrap: nowrap` (deliberado:
+barra é uma linha) sem rolagem no eixo. Medido: 14 ações numa barra de 206px = 802px de conteúdo; o
+último botão ("Excluir") ia para **x=1640, fora da viewport de 1280**, e *todos* os ancestrais
+recortam — a página nem rolava para o lado. **594px de ações existiam no DOM, invisíveis e
+não-clicáveis.** Fix: `overflow-x: auto` / `overflow-y: hidden`. Agora rola 610px e o último item é
+alcançável. É a mesma classe de falha do `DssMenu` (item anterior): conteúdo presente e inacessível.
+
+**Consertado — barra com marca tornava o filho invisível (1:1).** A camada de brand definia
+`color: var(--dss-text-inverse)`, mas `color` só serve a quem **herda**. O `DssButton` flat pinta a
+própria cor pela utilitária `.text-primary` → `var(--dss-action-primary)`, e como a barra põe
+`[data-brand]` no root, esse token virou a cor da marca — igual ao fundo:
+
+| brand | fundo | texto do filho ANTES | contraste | DEPOIS |
+|---|---|---|---|---|
+| hub | `#ef7a11` | `#ef7a11` | **1:1 — invisível** | branco · 2.81:1 |
+| waste | `#0b8154` | `#0b8154` | **1:1 — invisível** | branco · 4.90:1 ✅ |
+| water | `#026cc7` | `#0e88e4` | 1.43:1 — ilegível | branco · 5.29:1 ✅ |
+
+Fix: a barra de marca é **superfície inversa**, então remapeia `--dss-action-primary` para
+`--dss-text-inverse` no escopo — padrão que o DS já usa em `DssButton/4-output/_brands.scss`. O
+filho passa a acertar sozinho, sem o consumidor saber que há caso especial.
+
+> ⚠️ **Mesmo defeito em 3 outros componentes, não consertados aqui.** `DssBar`, `DssTimeline` e
+> `DssToolbarTitle` têm o padrão idêntico em `4-output/_brands.scss` (fundo de marca +
+> `color: inverse`, **sem** remapear o token). Entram na fila de adequação com o fix já conhecido:
+> acrescentar `--dss-action-primary: var(--dss-text-inverse)` em cada bloco de brand. Não mexi
+> porque cada um pede sua varredura visual (regra desta própria seção).
+
+**🔴 EM ABERTO — precisa do seu aval (é contrato visual / valor de token)**
+
+1. **Fundo Hub da barra reprova AA.** Branco sobre `--dss-hub-600` (#ef7a11) = **2.81:1**. Reprova AA
+   normal (4.5) **e** AA de texto grande (3.0). O comentário do arquivo alegava que 2.8:1 "atende AA
+   para texto grande" — não atende, 2.81 < 3; e alegava "Water ~7.0:1", quando o medido é 5.29:1.
+   Corrigi os números falsos no arquivo e deixei a reprovação **declarada**, não mascarada.
+   **Opção concreta:** trocar o fundo Hub da barra para `--dss-hub-700` (#bf590f) → **4.52:1 ✅ AA
+   normal**. É mudança de aparência: precisa da sua decisão.
+
+2. **Colisão de tokens no tema escuro — dois pares idênticos, DS inteiro.** Medido no navegador:
+   - `--dss-surface-subtle` = `--dss-border-subtle` = **`#525252`** → toda borda sutil sobre
+     superfície sutil é **invisível (1:1)**. Foi assim que apareceu: a borda inferior do
+     `DssToolbar`, única separação visual da barra, desaparece quando a barra está sobre superfície
+     sutil no escuro.
+   - `--dss-surface-muted` = `--dss-border-default` = **`#737373`** → mesma coisa um degrau acima.
+
+   Não é defeito de componente: é a rampa do tema escuro. Qualquer componente que desenhe borda
+   sutil/default sobre essas superfícies perde a borda. Conecta com a **frente (e)** e com a
+   **rampa de cores** — e o conserto é escolher valores, então fica para o seu aval.
+
+3. **🟡 Taxonomia: token de espaçamento usado como altura.** `min-height: var(--dss-spacing-14)`
+   (3.5rem = 56px). Não existe token de **altura** de 56px na escala (`min-h-md`=48px,
+   `touch-target-lg`=52px), então trocar o token trocaria o valor — e 56px é o contrato visual
+   vigente. Declarado no SCSS; pertence à frente de taxonomia de dimensão.
+
+**Observação colhida de passagem (pertence à adequação do `DssButton`, não a esta):** o `::before`
+do `DssButton` tem `content: none` — não há pseudo-elemento de alvo de toque. As alturas vêm direto
+da escala `--dss-touch-target-*`, então em `size="sm"` o alvo **efetivo** é 36×36 e em `xs` é 32×32,
+abaixo dos 44 que a Constituição #4 exige. A escala 32/36/44/52/64 já é reconhecida no `CLAUDE.md`,
+mas ali se lê "altura visual ≠ touch target (documentar separadamente)" — e aqui os dois são o
+**mesmo** valor, com nome de touch target. Medido, não consertado: é rodada do `DssButton`.
+
+---
+
+### ✅ RESOLVIDO — `DssMenu` + `DssButton`: o idioma do overlay do Quasar estava quebrado (set/2026)
+
+Encontrado ao adequar o `DssMenu` (1º da fila dos 8 que o `DssActionMenu` depende). **Nenhum dos
+cinco defeitos estava no lugar onde o sintoma aparecia** — três eram do `DssMenu`, dois do
+`DssButton`, que é **selado v2.2 e Golden Sample de documentação**.
+
+O sintoma: `<DssButton label="Ações"><DssMenu>…</DssMenu></DssButton>` — o idioma canônico do
+Quasar — **não abria o menu, e o botão não tinha nome acessível**. Medido no Playground: 17 dos 18
+disparadores da página apareciam no snapshot de a11y como `button` sem rótulo nenhum.
+
+| # | Onde | Defeito | Medida antes → depois |
+|---|---|---|---|
+| 1 | `DssButton` L1 | `<slot>{{ label }}</slot>` — a prop `label` era só **fallback** do slot, então qualquer conteúdo no slot a descartava em silêncio. Com overlay ou badge no slot (que não renderizam texto), o botão ficava **sem nome acessível**. O QBtn nunca fez isso: `inner.push(label)` + `hMergeSlot(slots.default, inner)` — ele MESCLA (QBtn.js:356-359) | 17/18 disparadores sem nome → **18/18 com nome** |
+| 2 | `DssButton` L1 | Sem `q-anchor--skip` no wrapper de conteúdo. O QMenu ancora em `proxy.$el.parentNode` subindo apenas por essa classe (use-anchor.js:148-164) — a âncora virava o `span.dss-button__label`, inline e de largura zero, que o clique no `<button>` nunca alcança. O QBtn põe a classe no próprio `q-btn__content` (QBtn.js:402) | menu **não abria** → abre no clique |
+| 3 | `DssMenu` L1 | `withDefaults({ modelValue: false })` repassava `:model-value="false"` em toda renderização → QMenu em **modo controlado permanente** (o contrato do QMenu usa `null` para "não controlado"). Agora `undefined` + espelho interno: v-model virou **opcional** (funciona controlado E não controlado) | v-model obrigatório → opcional |
+| 4 | `DssMenu` L2 | `min-height: var(--dss-min-h-lg)` (192px), justificado como "previne menu colapsado". Menu de 2 itens tem 96px de conteúdo → **96px de vazio reservado, metade do painel**. Menu é overlay dirigido por conteúdo; o QMenu não tem min-height | painel 192px p/ 96px de conteúdo → **98px** |
+| 5 | `DssMenu` L2 | `overflow: hidden` nos dois eixos + `max-height: 300px` de L3 → menu de 12 itens tem 576px de conteúdo e **277px ficavam cortados e INALCANÇÁVEIS**: "Opção 12" não aparecia nem rolava. 6 de 12 opções não existiam para quem usa mouse. Qualquer overflow ≠ `visible` já recorta no radius, então `auto` no eixo Y preserva os cantos e devolve o acesso | 277px inalcançáveis → **rola 278px, último item alcançável** |
+| 6 | `DssMenu` L4 | Borda do dark mode em `--dss-gray-200` — **cinza CRU**, que não vira com o tema: contorno **branco** de 1px a 13,88:1 sobre o painel `#262626`, onde a regra pedia "borda sutil". `--dss-border-subtle` é semântico e dark-aware (#525252 no escuro). Instância concreta da **frente (e)** — cinzas crus | borda a 13,88:1 → **1,94:1** |
+
+**Raio de impacto medido antes de mexer no selado:** 51 usos de `DssButton` com `label` + overlay no
+slot (todos quebrados, todos consertados) + 3 com `DssBadge floating` (idem). Os 4 "de risco"
+apontados pelo parser eram falso-positivo — passam `aria-label`, não `label`.
+
+**Teste que cristalizava o defeito:** `DssMenu.test.js` afirmava `expect(props('modelValue')).toBe(false)`
+— ou seja, a suíte *protegia* o modo controlado forçado. Reescrito para o contrato correto, mais
+2 testes de v-model opcional e 4 de regressão no `DssButton` (label+slot e `q-anchor--skip`).
+**119 testes passam** nos dois componentes.
+
+> ⚠️ **Consequência de governança:** o `DssButton` é selado v2.2 e mudou de comportamento
+> (label+slot agora mesclam). Entra na fila do item **"Reemissão de selo v2.2 — componentes selados
+> que mudaram"** desta mesma página.
+
+### 🟡 O ✅ do quadro de adequação não significa "medido" — demonstrado (set/2026)
+
+`DSS_ESTADO_ADEQUACAO_UI.md` é auto-gerado e deriva o ✅ de três fatos de **existência**: selo,
+página de Playground e Preview Frame. Nenhum deles é medição.
+
+A prova concreta: o `DssMenu` figurava como **✅, selado em 18/04/2026, com Playground e Preview
+Frame** — e a rodada de set/2026 encontrou nele 6 defeitos, **dois deles bloqueadores funcionais**
+(o menu não abria no idioma canônico do Quasar; 6 de 12 itens eram inalcançáveis). O quadro não
+estava errado sobre o que mede; ele mede outra coisa do que o nome sugere.
+
+**O que fazer com isso:** não é para "consertar o ✅" — a informação de existência é útil. É para
+não usar o quadro como resposta a "este componente já foi medido?". Enquanto não houver uma coluna
+derivada de medição (ex.: data da última varredura LIGHT/DARK no navegador), a resposta a essa
+pergunta mora **nesta** página, por componente. Decisão de como derivar essa coluna: em aberto.
+
+---
+
+**Lição que vale para a fila inteira:** o `DssMenu` era o suspeito e o `DssButton` era o culpado em
+2 dos 5 defeitos. Adequar a peça de baixo **antes** do composto foi o que expôs isso — e a origem
+dos dois defeitos do `DssButton` é a mesma: **divergir do QBtn sem registrar por quê**. A correção
+foi espelhar o Quasar, com o número de linha da fonte no comentário.
 
 ### `DssTab` e `DssRouteTab` — adequados VIA `DssTabs`, sem Preview Frame próprio
 

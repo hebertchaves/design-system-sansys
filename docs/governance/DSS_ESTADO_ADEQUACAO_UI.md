@@ -4,11 +4,11 @@
      Regenerar: `npm run build:adequacao-status` (ou node scripts/build-adequacao-status.cjs)
      Fontes: docs/governance/CERTIFIED_COMPONENTS.md + apps/sandbox/src/TestSuite.vue -->
 
-> **Gerado do disco em 23/09/2026**, não de memória. Fase, categoria e selo saem do
+> **Gerado do disco em 28/09/2026**, não de memória. Fase, categoria e selo saem do
 > `CERTIFIED_COMPONENTS.md`; os artefatos visuais saem do `TestSuite.vue` do sandbox.
 >
 > ⚠️ **Selo ≠ adequado.** São eixos diferentes. Os 88 componentes das Fases 1 e 2 estão
-> **100% selados**; a adequação de UI é uma onda posterior, e cobre **19** deles. Um
+> **100% selados**; a adequação de UI é uma onda posterior, e cobre **20** deles. Um
 > componente selado em janeiro/2026 foi auditado contra as regras de então — não contra o checklist
 > de adequação.
 
@@ -53,8 +53,8 @@ parte pelo `validate:demo-seeds`.
 | Fase | Componentes | Adequados | Casca | Só frame | Só playground | Não iniciados |
 |---|---|---|---|---|---|---|
 | **Fase 1 — Atômicos** | 20 | **11** | 0 | 0 | 2 | 7 |
-| **Fase 2 — Compostos** | 68 | **8** | 0 | 0 | 1 | 59 |
-| **Total** | **88** | **19** | 0 | 3 | 66 |
+| **Fase 2 — Compostos** | 68 | **9** | 0 | 0 | 1 | 58 |
+| **Total** | **88** | **20** | 0 | 3 | 65 |
 
 **Próximos da fila por menor esforço** — já têm Playground, falta só o Preview Frame:
 `DssAvatar`, `DssBadge`, `DssCard`.
@@ -86,7 +86,7 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssSpinner` | Indicador de carregamento | 24/03/2026 | — | — |
 | ⬜ | `DssTooltip` | Dica contextual | 06/02/2026 | — | — |
 
-## Fase 2 — Componentes Compostos (8/68)
+## Fase 2 — Componentes Compostos (9/68)
 
 | | Componente | Categoria | Selo | Playground | Preview Frame |
 |---|---|---|---|---|---|
@@ -94,6 +94,7 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ✅ | `DssBtnToggle` | Botões e Controles de Grupo | 27/03/2026 | sim | sim |
 | ✅ | `DssField` | Inputs Compostos | 19/05/2026 | sim | sim |
 | ✅ | `DssHeader` | Estrutura de Página | 17/04/2026 | sim | sim |
+| ✅ | `DssMenu` | Navegação / Overlays | 18/04/2026 | sim | sim |
 | ✅ | `DssStepper` | Navegação por etapas | 20/04/2026 | sim | sim |
 | ✅ | `DssTabs` | Tabs | 02/04/2026 | sim | sim |
 | ✅ | `DssTimeline` | Visualização de Dados | 21/05/2026 | sim | sim |
@@ -128,7 +129,6 @@ _Nenhum componente na situação "só Preview Frame" — todo frame registrado t
 | ⬜ | `DssLinearProgress` | Indicador de Progresso não interativo | 06/05/2026 | — | — |
 | ⬜ | `DssList` | Lista e Itens | 31/03/2026 | — | — |
 | ⬜ | `DssMarkupTable` | Tabela Simples | 19/05/2026 | — | — |
-| ⬜ | `DssMenu` | Navegação / Overlays | 18/04/2026 | — | — |
 | ⬜ | `DssOptionGroup` | Botões e Controles de Grupo | 27/03/2026 | — | — |
 | ⬜ | `DssPage` | Layout Global — conteúdo principal | 22/04/2026 | — | — |
 | ⬜ | `DssPageContainer` | Layout Global — container com offset | 22/04/2026 | — | — |
