@@ -49,11 +49,17 @@
      Cor padrão: var(--dss-gray-200) (equivale ao divider-default removido)
      ========================================================================== */
 
-  /* Cor default — var(--dss-gray-200) */
-  /* Nota: --dss-border-divider-default foi REMOVIDO (Sprint Jan 2025) e a
+  /* Cor default.
+     Nota historica: --dss-border-divider-default foi REMOVIDO (Sprint Jan 2025) e a
      familia semantica de borda nao existia no tema CLARO, entao so' restava o
-     primitivo. Ela passou a existir em ago/2026 — divisor volta ao semantico. */
-  color: var(--dss-border-subtle);
+     primitivo. Ela passou a existir em ago/2026 — divisor voltou ao semantico.
+
+     set/2026: passou de `--dss-border-subtle` para `--dss-border-separator`, o token
+     criado na adequacao do DssList. No claro os dois valem #f5f5f5, entao a aparencia
+     NAO muda; no escuro o separador ganha rgba(255,255,255,0.12) — exatamente o valor
+     que a EXC-01 deste componente fixava a mao. Foi o que permitiu remover a excecao
+     E o override cego de dark que matava as variantes de cor (ver 4-output/_states). */
+  color: var(--dss-border-separator);
   border-top-style: solid;
   border-top-width: var(--dss-border-width-thin); /* 1px */
   border-top-color: currentColor;

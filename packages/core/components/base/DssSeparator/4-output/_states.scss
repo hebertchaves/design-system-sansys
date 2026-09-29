@@ -24,24 +24,23 @@
    DARK MODE
    ========================================================================== */
 
-[data-theme="dark"] {
-  .dss-separator {
-    /*
-     * ⚠️ EXCEÇÃO DOCUMENTADA — EXC-01
-     *
-     * ID:          EXC-01
-     * Valor:       rgba(255, 255, 255, 0.12)
-     * Local:       4-output/_states.scss — bloco [data-theme="dark"]
-     * Justificativa: Dark mode divider conforme Material Design Guidelines.
-     *   Nenhum token DSS fornece branco com alpha parcial.
-     *   Tokens --dss-gray-* são tons de cinza absolutos, não semi-transparentes.
-     *   O padrão rgba(255,255,255,0.12) é consagrado para separadores em dark mode
-     *   pois preserva contraste sem "branquear" o fundo escuro.
-     * Referência: Material Design — Dividers in dark themes
-     */
-    color: rgba(255, 255, 255, 0.12);
-  }
-}
+/* ==========================================================================
+   DARK MODE — bloco REMOVIDO em set/2026, e o motivo tem duas partes.
+
+   Havia aqui `[data-theme="dark"] .dss-separator { color: rgba(255,255,255,.12) }`,
+   registrado como EXC-01 com a justificativa "nenhum token DSS fornece branco com
+   alpha parcial". A justificativa era verdadeira e DEIXOU DE SER: a adequacao do
+   DssList criou `--dss-border-separator`, que no escuro vale exatamente
+   rgba(255,255,255,0.12) — o mesmo valor. A camada 2 agora o consome, entao o
+   escuro continua identico sem nenhuma cor crua.
+
+   A segunda parte e' um DEFEITO que esta regra causava e ninguem tinha medido.
+   O seletor `[data-theme="dark"] .dss-separator` tem especificidade (0,2,0) e
+   atropelava TODA classe de variante, que e' (0,1,0). Medido no Playground: no
+   tema escuro, `subtle`, `default`, `strong`, `primary` e `secondary` renderizavam
+   as CINCO a mesma cor — a prop `color` ficava inerte no escuro, em silencio.
+   Sem o override cego, cada variante volta a valer nos dois temas.
+   ========================================================================== */
 
 /* ==========================================================================
    HIGH CONTRAST MODE

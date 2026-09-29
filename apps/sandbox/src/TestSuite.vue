@@ -210,6 +210,14 @@
                 <span class="nav-icon"><span class="material-icons">emoji_symbols</span></span>
                 <span class="nav-label">DssIcon</span>
               </button>
+
+              <button
+                @click="activeComponent = 'septip'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'septip' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">horizontal_rule</span></span>
+                <span class="nav-label">Separator &amp; Tooltip</span>
+              </button>
             </div>
 
             <!-- Data Display -->
@@ -595,6 +603,10 @@
       <div v-else-if="activeComponent === 'icon'" class="component-view">
         <TestIcon />
       </div>
+
+      <div v-else-if="activeComponent === 'septip'" class="component-view">
+        <TestSeparatorTooltip />
+      </div>
       <div v-else-if="activeComponent === 'btn-toggle'" class="component-view">
         <TestBtnToggle />
       </div>
@@ -765,6 +777,7 @@ import TestMenu from './TestMenu.vue'
 import TestToolbar from './TestToolbar.vue'
 import TestList from './TestList.vue'
 import TestIcon from './TestIcon.vue'
+import TestSeparatorTooltip from './TestSeparatorTooltip.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')
