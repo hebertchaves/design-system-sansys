@@ -6,6 +6,7 @@
 #   - suíte unitária (2553 testes, projeto "unit")
 #   - validação meta.json ↔ catálogo de tokens
 #   - type-check (GATE bloqueante desde jun/2026 — baseline de 66 erros zerada)
+#   - 14 gates estruturais/token/API (set/2026 — antes só no pre-commit local)
 #
 # Node 20 (engine usado no desenvolvimento). Cache de node_modules por lock.
 # ==========================================================================
@@ -112,6 +113,66 @@ type-check:
   script:
     - cd packages/core && npm run type-check
 
+# --------------------------------------------------------------------------
+# GATES ESTRUTURAIS — subidos do pre-commit para o servidor (set/2026).
+#
+# POR QUE existe: estes 14 validadores rodavam APENAS no pre-commit, ou seja,
+# na máquina de quem commita. Hook é opt-in por clone e ignorável com
+# `--no-verify`, então na prática o CI cobria 6 checagens e as outras 14
+# dependiam de disciplina individual. Num fluxo em que a revisão humana é leve,
+# o servidor precisa ser o revisor — e não era.
+#
+# Não é hipótese: na própria onda que motivou este job, dois deslizes foram
+# pegos por gates desta lista e por NENHUM dos que já estavam no CI —
+# `dss-props` (prop chegando ao Quasar por $attrs, fora da API declarada) e
+# `sandbox-tags` (`code` de Playground que não resolvia para um componente).
+#
+# Divididos em três jobs por NATUREZA do que verificam, para a pipeline dizer
+# onde quebrou em vez de só "falhou". Rodam em paralelo (mesmo stage).
+# --------------------------------------------------------------------------
+quality:estrutura:
+  stage: quality
+  needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
+  # Forma do componente: 4 camadas, wrapper, barrel, orquestrador, import
+  # canônico, sem estilo inline dimensional.
+  script:
+    - npm run validate:structure:gate
+    - npm run validate:sfc-hygiene:gate
+    - npm run validate:barrel-ext
+
+quality:tokens:
+  stage: quality
+  needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
+  # Constituição #1 (token first) e a escala: todo var(--dss-*) existe, estado
+  # não usa primitivo, hover vem de token, dimensão não empata nem inverte.
+  script:
+    - npm run validate:scss-tokens:gate
+    - npm run validate:hover-tokens:gate
+    - npm run validate:scale:gate
+    - npm run validate:theme-scopes
+
+quality:api:
+  stage: quality
+  needs: ["install"]
+  rules:
+    - !reference [.dss-rules, rules]
+  # A API declarada é a fonte de verdade: atributo usado existe no types,
+  # a doc bate com o types, a grafia de variante espelha o Quasar, e o
+  # sandbox/portal referencia componente que existe.
+  script:
+    - npm run validate:dss-props:gate
+    - npm run validate:api-docs:gate
+    - npm run validate:variant-naming:gate
+    - npm run validate:field-conventions:gate
+    - npm run validate:sandbox-tags
+    - npm run validate:demo-registry
+    - npm run validate:portal-pages
+
+# --------------------------------------------------------------------------
 contracts:gate:
   stage: quality
   needs: ["install"]
