@@ -99,7 +99,7 @@ export interface ActionMenuProps {
 /*
  * NÃO existe prop `dense`, e a ausência é decisão medida.
  * Ela chegou a ser declarada e repassada ao DssToolbar — que NÃO a tem na API
- * (só `inset` e `brand`). O gate `validate-dss-attrs` pegou: a prop prometia
+ * (só `inset` e `brand`). O gate `validate:dss-props` pegou: a prop prometia
  * densidade que a composição não entrega. Expor algo que só funcionaria por
  * $attrs chegando ao Quasar é API por acidente.
  * Reabrir isto é decisão do DssToolbar, não deste composto.
