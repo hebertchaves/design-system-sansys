@@ -13,7 +13,8 @@
   "defaultPreview": {
     "props": {
       "name": "star",
-      "size": "md"
+      "size": "md",
+      "decorative": true
     },
     "computedDimensions": {
       "minHeight": "24px",

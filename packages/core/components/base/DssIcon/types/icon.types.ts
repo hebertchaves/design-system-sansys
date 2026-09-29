@@ -94,7 +94,15 @@ export interface IconProps {
    * Mapeado para --dss-icon-size-{size}
    *
    * 24px.
+   *
+   * NAO tem efeito quando `inline` esta ativo: o CCI §2.2 manda o sizing ser
+   * dirigido pelo host (1em da font-size ao redor) e as classes de tamanho serem
+   * ignoradas. Medido no Preview Frame: com `inline`, `size="sm"` e `size="xl"`
+   * rendem os dois 14x14 — a font-size do palco. Antes disto nada dizia isso, e
+   * girar o knob de tamanho sem reacao nenhuma parecia defeito.
+   *
    * @default 'md'
+   * @inertWhen inline=true
    */
   size?: IconSize
 
@@ -184,6 +192,15 @@ export interface IconSlots {
   /**
    * Slot default - Permite conteudo customizado dentro do wrapper do icone
    * Uso avancado: SVG inline, imagens, etc.
+   *
+   * OPCIONAL (`?`), corrigido em set/2026. Sem a interrogação, o emissor de
+   * contrato deriva `required: !questionToken` → `required: true`, e o Preview
+   * Frame honra isso injetando um placeholder visivel «default» no palco. O
+   * resultado media assim: o preview do DssIcon mostrava o texto «default»
+   * dominando o quadro e o icone de 24px sumia ao lado dele.
+   *
+   * O slot nunca foi obrigatorio — o icone vem da prop `name`; isto aqui e uma
+   * escotilha para SVG inline. A assinatura e que estava mentindo.
    */
-  default(): any
+  default?(): any
 }

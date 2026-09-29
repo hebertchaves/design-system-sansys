@@ -116,11 +116,20 @@ describe('DssIcon', () => {
         expect(wrapper.attributes('aria-label')).toBe('Ir para o início')
       })
 
-      it('does not set aria-hidden when decorative is false', () => {
+      // O `ariaLabel` passou a ser necessário AQUI em set/2026, e a mudança é de
+      // contrato, não de teste. Antes, `decorative: false` sem rótulo produzia
+      // `role="img"` sem nome — que o Chrome PODA da árvore de acessibilidade, ou
+      // seja, o ícone informativo não existia para o leitor de tela. O componente
+      // agora cai para `aria-hidden` nesse caso e adverte em DEV (ver o bloco
+      // "contradições silenciosas" no fim deste arquivo).
+      // A intenção original do teste — ícone informativo NÃO é escondido — segue
+      // valendo; o que mudou é que ela exige a configuração VÁLIDA.
+      it('does not set aria-hidden when decorative is false and ariaLabel is provided', () => {
         const wrapper = mount(DssIcon, {
-          props: { name: 'home', decorative: false }
+          props: { name: 'home', decorative: false, ariaLabel: 'Início' }
         })
         expect(wrapper.attributes('aria-hidden')).toBeUndefined()
+        expect(wrapper.attributes('role')).toBe('img')
       })
     })
 
@@ -260,5 +269,62 @@ describe('DssIcon', () => {
       expect(wrapper.classes()).not.toContain('dss-icon--md')
       expect(wrapper.classes()).not.toContain('dss-icon--sm')
     })
+  })
+})
+
+// ==========================================================================
+// Contradições silenciosas — REGRESSÃO da adequação (set/2026)
+//
+// O DssIcon aceitava três combinações contraditórias e resolvia cada uma em
+// silêncio. A pior: o DSS_ICON_COMPOSITION_CONTRACT §2.1 exige `ariaLabel` quando
+// `decorative=false`, mas o tipo declara a prop opcional e nada verificava. Medido
+// na árvore de a11y do Chrome: `role="img"` sem nome, cujo único conteúdo é
+// aria-hidden, é PODADO — o ícone informativo não existe para o leitor de tela.
+// Varredura: 62 usos no repositório estavam nesse estado.
+//
+// O DssImg (alt) e o DssVideo (title) já advertiam em DEV e caíam para fallback
+// seguro; o DssIcon era o fora-da-curva da família. Agora faz o mesmo.
+// ==========================================================================
+describe('DssIcon — contradições silenciosas (WCAG 1.1.1 · CCI §2.1)', () => {
+  it('informativo SEM ariaLabel cai para oculto, em vez de emitir role=img sem nome', () => {
+    const wrapper = mount(DssIcon, { props: { name: 'star' } })
+    expect(wrapper.attributes('role')).toBeUndefined()
+    expect(wrapper.attributes('aria-hidden')).toBe('true')
+  })
+
+  it('informativo COM ariaLabel expõe role=img e o nome', () => {
+    const wrapper = mount(DssIcon, { props: { name: 'star', ariaLabel: 'Favorito' } })
+    expect(wrapper.attributes('role')).toBe('img')
+    expect(wrapper.attributes('aria-label')).toBe('Favorito')
+    expect(wrapper.attributes('aria-hidden')).toBeUndefined()
+  })
+
+  it('decorative some da árvore e não carrega nome', () => {
+    const wrapper = mount(DssIcon, { props: { name: 'star', decorative: true } })
+    expect(wrapper.attributes('aria-hidden')).toBe('true')
+    expect(wrapper.attributes('role')).toBeUndefined()
+    expect(wrapper.attributes('aria-label')).toBeUndefined()
+  })
+
+  it('decorative + ariaLabel: o nome é descartado, não aplicado por engano', () => {
+    const wrapper = mount(DssIcon, {
+      props: { name: 'star', decorative: true, ariaLabel: 'Favorito' },
+    })
+    expect(wrapper.attributes('aria-hidden')).toBe('true')
+    expect(wrapper.attributes('aria-label')).toBeUndefined()
+  })
+
+  it('nunca produz o estado inválido role=img sem nome acessível', () => {
+    const combinacoes = [
+      { name: 'star' },
+      { name: 'star', decorative: true },
+      { name: 'star', decorative: true, ariaLabel: 'x' },
+      { name: 'star', ariaLabel: 'x' },
+    ]
+    for (const props of combinacoes) {
+      const w = mount(DssIcon, { props })
+      const semNome = w.attributes('role') === 'img' && !w.attributes('aria-label')
+      expect(semNome).toBe(false)
+    }
   })
 })

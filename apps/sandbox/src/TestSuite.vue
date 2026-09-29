@@ -202,6 +202,14 @@
                 <span class="nav-icon"><span class="material-icons">warning_amber</span></span>
                 <span class="nav-label">DssAlert</span>
               </button>
+
+              <button
+                @click="activeComponent = 'icon'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'icon' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">emoji_symbols</span></span>
+                <span class="nav-label">DssIcon</span>
+              </button>
             </div>
 
             <!-- Data Display -->
@@ -583,6 +591,10 @@
       <div v-else-if="activeComponent === 'list'" class="component-view">
         <TestList />
       </div>
+
+      <div v-else-if="activeComponent === 'icon'" class="component-view">
+        <TestIcon />
+      </div>
       <div v-else-if="activeComponent === 'btn-toggle'" class="component-view">
         <TestBtnToggle />
       </div>
@@ -752,6 +764,7 @@ import TestAtenderSolicitacoes from './TestAtenderSolicitacoes.vue'
 import TestMenu from './TestMenu.vue'
 import TestToolbar from './TestToolbar.vue'
 import TestList from './TestList.vue'
+import TestIcon from './TestIcon.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')
