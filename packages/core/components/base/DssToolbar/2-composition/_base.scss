@@ -22,6 +22,11 @@
   // ------------------------------------------------------------------
   // Dimensões — sobrescreve QToolbar default (min-height: 50px)
   // ------------------------------------------------------------------
+  // 🟡 TAXONOMIA (adequação set/2026): este é um token de ESPAÇAMENTO usado como
+  // ALTURA. Não há token de altura de 56px na escala (min-h-md=48px,
+  // touch-target-lg=52px), então trocar o token trocaria o valor — e 56px é o
+  // contrato visual vigente. Fica declarado e registrado em DEBITO_ABERTO.md;
+  // o conserto pertence à frente de taxonomia de dimensão, não a esta rodada.
   min-height: var(--dss-spacing-14);       // 56px (padrão DSS toolbar)
   padding-inline: var(--dss-spacing-4);    // 16px — sobrescreve padding: 0 12px do QToolbar
 
@@ -33,6 +38,23 @@
   align-items: center;
   flex-wrap: nowrap;
   width: 100%;
+
+  // ------------------------------------------------------------------
+  // Transbordo horizontal — CORRIGIDO na adequação (set/2026)
+  //
+  // `flex-wrap: nowrap` é deliberado (barra de ferramentas é UMA linha), mas
+  // sem rolagem no eixo ele apagava conteúdo em silêncio. Medido: 14 ações numa
+  // barra de 206px somam 802px de conteúdo; o último botão ("Excluir") ia para
+  // x=1640 — fora da viewport de 1280 — e TODOS os ancestrais recortam, então a
+  // página nem rolava para o lado. 594px de ações existiam no DOM e não eram
+  // visíveis nem clicáveis.
+  //
+  // `auto` no eixo X devolve o acesso e só aparece quando há transbordo de fato.
+  // Eixo Y fica `hidden`: a barra é de uma linha e não deve rolar na vertical.
+  // (Overlay de filho não é afetado — QMenu/QTooltip teleportam para o body.)
+  // ------------------------------------------------------------------
+  overflow-x: auto;
+  overflow-y: hidden;
 
   // ------------------------------------------------------------------
   // Cores padrão (sem brand)

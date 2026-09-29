@@ -14,13 +14,47 @@
 // E modificador de classe direto .dss-toolbar--brand-* no DssToolbar.
 // Paridade com DssCard (Golden Reference) e DssTab/DssStep.
 //
-// Nota de acessibilidade (WCAG 1.4.3 AA — contraste):
-// - Hub: #ef7a11 sobre branco → branco sobre #ef7a11: ~2.8:1 (texto grande/bold)
-// - Water: #026cc7 sobre branco → branco sobre #026cc7: ~7.0:1 (passes AA e AAA)
-// - Waste: #0b8154 sobre branco → branco sobre #0b8154: ~5.0:1 (passes AA)
-// Para Hub: o contraste de 2.8:1 atende WCAG AA para texto grande (≥18pt ou 14pt bold).
-// O consumidor deve garantir que o conteúdo da toolbar seja texto grande ou bold.
+// Nota de acessibilidade (WCAG 1.4.3 AA) — MEDIDO no navegador, set/2026.
+// Os números abaixo substituem os que estavam aqui, que estavam errados:
+//
+// | brand | fundo    | branco sobre ele | AA normal (4.5) | AA grande (3.0) |
+// |-------|----------|------------------|-----------------|-----------------|
+// | hub   | #ef7a11  | **2.81:1**       | ❌              | ❌              |
+// | water | #026cc7  | 5.29:1           | ✅              | ✅              |
+// | waste | #0b8154  | 4.90:1           | ✅              | ✅              |
+//
+// O que o comentário anterior dizia e por que não se sustenta:
+//   • afirmava "Water ~7.0:1" — o medido é 5.29:1 (ainda passa, mas o número era falso);
+//   • afirmava que os 2.8:1 do Hub "atendem WCAG AA para texto grande". **Não atendem**:
+//     AA para texto grande exige 3:1, e 2.81 < 3. A exceção EXC-02 não cumpria o
+//     critério que ela mesma citava — não havia patamar em que o Hub passasse.
+//   • e transferia o dever ao consumidor ("deve garantir texto grande ou bold"), o que
+//     não é exceção: é a11y terceirizada para quem não tem como saber disso.
+//
+// 🔴 EM ABERTO — Hub reprova AA e o conserto é mudança de CONTRATO VISUAL, que não se
+// faz sem aval: trocar o fundo da barra Hub de `--dss-hub-600` (#ef7a11 · 2.81:1) por
+// `--dss-hub-700` (#bf590f · **4.52:1** ✅ AA normal). Registrado em DEBITO_ABERTO.md;
+// até o aval, o valor permanece e a reprovação fica DECLARADA aqui, não mascarada.
 // ==========================================================================
+
+// --------------------------------------------------------------------------
+// Por que cada bloco remapeia `--dss-action-primary`
+//
+// Definir só `color: var(--dss-text-inverse)` na barra NÃO basta, e a adequação
+// mediu o porquê: `color` é herdado, mas um filho que pinta a PRÓPRIA cor não
+// herda nada. O DssButton flat aplica a utilitária `.text-primary`, isto é
+// `color: var(--dss-action-primary)` — e como a barra põe [data-brand] no root,
+// esse token foi remapeado para a cor da marca. Resultado medido:
+//
+//   hub   → texto #ef7a11 sobre fundo #ef7a11 = **1:1, invisível**
+//   waste → texto #0b8154 sobre fundo #0b8154 = **1:1, invisível**
+//   water → 1.43:1, ilegível
+//
+// A barra de marca é uma superfície INVERSA: dentro dela, a cor de ação tem de
+// ser a inversa também. Remapear o token no escopo é o padrão que o DS já usa
+// (ver DssButton/4-output/_brands.scss) — e é o que faz o filho acertar sozinho,
+// sem o consumidor saber que precisa de um caso especial.
+// --------------------------------------------------------------------------
 
 // ------------------------------------------------------------------
 // Hub (laranja)
@@ -30,6 +64,9 @@
 .dss-toolbar.dss-toolbar--brand-hub {
   background-color: var(--dss-hub-600);
   color: var(--dss-text-inverse);
+
+  /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
+  --dss-action-primary: var(--dss-text-inverse);
 }
 
 // ------------------------------------------------------------------
@@ -39,6 +76,9 @@
 .dss-toolbar.dss-toolbar--brand-water {
   background-color: var(--dss-water-600);
   color: var(--dss-text-inverse);
+
+  /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
+  --dss-action-primary: var(--dss-text-inverse);
 }
 
 // ------------------------------------------------------------------
@@ -48,4 +88,7 @@
 .dss-toolbar.dss-toolbar--brand-waste {
   background-color: var(--dss-waste-600);
   color: var(--dss-text-inverse);
+
+  /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
+  --dss-action-primary: var(--dss-text-inverse);
 }

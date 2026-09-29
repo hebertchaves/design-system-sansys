@@ -372,6 +372,14 @@
                 <span class="nav-icon"><span class="material-icons">grid_on</span></span>
                 <span class="nav-label">DssGrid</span>
               </button>
+
+              <button
+                @click="activeComponent = 'toolbar'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'toolbar' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">horizontal_split</span></span>
+                <span class="nav-label">DssToolbar</span>
+              </button>
             </div>
 
             <!-- Navigation -->
@@ -567,6 +575,10 @@
       <div v-else-if="activeComponent === 'menu'" class="component-view">
         <TestMenu />
       </div>
+
+      <div v-else-if="activeComponent === 'toolbar'" class="component-view">
+        <TestToolbar />
+      </div>
       <div v-else-if="activeComponent === 'btn-toggle'" class="component-view">
         <TestBtnToggle />
       </div>
@@ -734,6 +746,7 @@ import TestParcelamento from './TestParcelamento.vue'
 import TestParcelamentoClaude from './TestParcelamentoClaude.vue'
 import TestAtenderSolicitacoes from './TestAtenderSolicitacoes.vue'
 import TestMenu from './TestMenu.vue'
+import TestToolbar from './TestToolbar.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')
