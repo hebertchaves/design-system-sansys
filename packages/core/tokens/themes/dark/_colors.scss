@@ -75,7 +75,20 @@
      =========================================== */
 
   --dss-border-default: var(--dss-gray-600);       /* #737373 · 3.19:1 */
-  --dss-border-subtle: var(--dss-gray-700);        /* #525252 · 1.94:1 — decorativo */
+  /* BRANCO+ALPHA, não cinza fixo — decidido em set/2026, na adequação do DssList.
+     Um valor fixo colide: `--dss-surface-subtle` no escuro é o MESMO #525252 que
+     `--dss-gray-700`, então toda borda sutil sobre superfície sutil ficava
+     INVISÍVEL (1,00:1) — foi assim que a borda inferior do DssToolbar desaparecia.
+     Alpha compõe com o fundo, então acompanha a superfície. Medido:
+       sobre #262626 (surface-default) → #515151 · 1,91:1  (o fixo dava 1,94 — empate)
+       sobre #525252 (surface-subtle)  → #757575 · 1,70:1  (o fixo dava 1,00 ✗)
+     Isto também permitiu ao DssList abandonar EXC-01/EXC-02, que eram exatamente
+     este rgba hardcoded no componente por falta deste token. */
+  --dss-border-subtle: rgba(255, 255, 255, 0.2);
+
+  /* Separador entre irmãos — mais leve que a borda do container, para a moldura
+     não competir com as divisões internas. Era o EXC-02 do DssList. */
+  --dss-border-separator: rgba(255, 255, 255, 0.12);
   --dss-border-strong: var(--dss-gray-500);        /* #a3a3a3 · 6.00:1 ✅ contorno de controle */
 
   /* Hover do contorno de controle. No escuro a ênfase sobe CLAREANDO — o

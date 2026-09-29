@@ -45,6 +45,16 @@
    * mantém constante é o PAPEL (linha discreta), não o passo.
    */
   --dss-border-subtle: var(--dss-gray-200);    /* #f5f5f5 · 1.09:1 — decorativo, isento */
+
+  /* Separador entre irmãos. Definido AQUI também, e não só no tema escuro, para
+     não ser token fantasma no claro. O valor é o que o DssList já renderizava
+     antes de tokenizar (#f5f5f5), portanto a aparência no claro não muda.
+     🟡 O claro tem a MESMA colisão do escuro, um degrau acima:
+     `--dss-surface-muted` é #f5f5f5, igual a `--dss-border-subtle` → borda sutil
+     sobre superfície rebaixada é invisível. O conserto simétrico seria preto+alpha
+     (rgba(0,0,0,.06) → #f0f0f0 sobre branco, #e6e6e6 sobre muted). Registrado em
+     DEBITO_ABERTO.md: muda a aparência do claro em todo o DS, então pede aval. */
+  --dss-border-separator: var(--dss-gray-200);
   --dss-border-default: var(--dss-gray-300);   /* #e5e5e5 · 1.26:1 — decorativo, isento */
   --dss-border-strong: var(--dss-gray-600);    /* #737373 · 4.74:1 ✅ contorno de controle */
 
