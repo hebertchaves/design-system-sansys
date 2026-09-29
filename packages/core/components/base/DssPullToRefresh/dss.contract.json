@@ -38,7 +38,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Ícone Material exibido no indicador de pull. Padrão: 'refresh' (Quasar)",
         "category": "Conteúdo",
         "categorySource": "quasar"

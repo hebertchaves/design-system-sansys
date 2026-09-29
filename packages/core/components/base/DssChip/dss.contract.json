@@ -31,7 +31,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Icone a esquerda (Material Icons)",
         "category": "Conteúdo",
         "categorySource": "quasar"
@@ -39,7 +39,7 @@
       {
         "name": "iconRight",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Icone a direita (Material Icons)",
         "category": "Conteúdo",
         "categorySource": "quasar"
@@ -47,7 +47,7 @@
       {
         "name": "iconRemove",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Icone customizado para o botao de remover",
         "category": "Conteúdo",
         "categorySource": "quasar"
@@ -55,7 +55,7 @@
       {
         "name": "iconSelected",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Icone customizado para estado selecionado",
         "category": "Conteúdo",
         "categorySource": "quasar"

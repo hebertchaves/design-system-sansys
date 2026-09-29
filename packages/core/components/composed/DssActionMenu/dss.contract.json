@@ -148,7 +148,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Ícone à esquerda (nome do glifo).",
         "category": "Conteúdo",
         "categorySource": "excecao"
@@ -298,6 +298,48 @@
           "property": "flex",
           "token": null,
           "value": "0 0 auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "top",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "left",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "z-index",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-top",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
           "source": "2-composition/_base.scss"
         },
         {

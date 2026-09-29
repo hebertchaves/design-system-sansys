@@ -31,7 +31,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Nome do ícone Material Icons exibido antes do conteúdo",
         "category": "Conteúdo",
         "categorySource": "quasar"

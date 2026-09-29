@@ -144,9 +144,9 @@
         },
         {
           "property": "color",
-          "token": "--dss-border-subtle",
+          "token": "--dss-border-separator",
           "value": null,
-          "source": "3-variants/_colors.scss"
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "border-top-style",
@@ -231,6 +231,12 @@
           "token": null,
           "value": "currentColor",
           "source": "3-variants/_vertical.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-border-subtle",
+          "value": null,
+          "source": "3-variants/_colors.scss"
         },
         {
           "property": "color",
@@ -425,7 +431,7 @@
     ],
     "instances": [
       {
-        "name": "--dss-border-subtle",
+        "name": "--dss-border-separator",
         "usedIn": [
           "default"
         ]
@@ -445,6 +451,12 @@
       },
       {
         "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-subtle",
         "usedIn": [
           "default"
         ]

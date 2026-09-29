@@ -760,11 +760,22 @@
             "picker-color",
             "picker-feedback",
             "picker-brand",
+            "picker-icon",
             "stepper",
             "text",
             "textarea"
           ],
-          "description": "DERIVADO (§4.1.1) do type/validValues — campo de SAÍDA, nunca autorado. Governa o widget do knob no playground."
+          "description": "DERIVADO (§4.1.1) do type/validValues/descrição — campo de SAÍDA, nunca autorado. Governa o widget do knob no playground. `picker-icon` cobre string livre que é nome de ícone: deriva do identificador (icon, iconRight) OU da descrição, porque o DssIcon chama a prop de `name` e ficava sem autocomplete."
+        },
+        "inertWhen": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["prop", "value"],
+          "properties": {
+            "prop": { "type": "string" },
+            "value": {}
+          },
+          "description": "DERIVADO da tag JSDoc `@inertWhen outraProp=valor`: esta prop não tem efeito enquanto a outra estiver naquele valor. O playground marca o knob como inerte em vez de oferecer um controle morto."
         },
         "validValues": {
           "type": "array",

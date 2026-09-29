@@ -348,7 +348,39 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
    default, TODOS os variants ficam distintos (filled=fundo sutil, standout=chip,
    outlined=borda) e o dark segue calibrável (standout gray-900 e filled gray-600
    distintos do stage gray-800). */
-.pv-stage { padding: 32px; min-height: 100vh; box-sizing: border-box; background: var(--dss-surface-default); }
+.pv-stage {
+  padding: 32px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: var(--dss-surface-default);
+
+  /* Centraliza o sujeito no palco (set/2026). Antes era bloco com o conteúdo
+     encostado no topo-esquerda, o que serve a tabela e cartão e some com
+     primitivo pequeno: medido, o DssIcon renderizava 24x24 na posição (32,32)
+     de um palco 463x456 — 0,27% da área. Renderizava certo e parecia ausente.
+
+     `margin: auto` em item de flex, NÃO `justify-content: center`. A diferença
+     importa: auto margin absorve a folga que existe e resolve para 0 quando não
+     há nenhuma, então conteúdo maior que o palco transborda só para o fim e
+     continua alcançável. `justify-content: center` transbordaria dos DOIS lados
+     e esconderia a borda inicial atrás do começo do palco — exatamente o defeito
+     de conteúdo inalcançável que esta onda consertou no DssMenu e no DssToolbar.
+
+     EFEITO COLATERAL MEDIDO, e aceito conscientemente: item de flex dimensiona
+     pelo conteúdo, então componente que enchia a largura por ser BLOCO passa a
+     ter a largura do próprio conteúdo. Medido nos dois lados:
+       • DssToolbar/DssActionMenu — declara `width: 100%` → 1216x56 ANTES e DEPOIS,
+         idêntico. Quem pede largura cheia continua com ela.
+       • DssCard — não declara largura → era 1216x50, agora 50x50.
+     O segundo caso não é perda: o cartão enchia 1216px porque o palco era um
+     bloco largo, não porque o componente queira isso. Largura de conteúdo é a
+     renderização FIEL, que é o que o palco existe para mostrar. */
+  display: flex;
+}
+
+.pv-stage > * {
+  margin: auto;
+}
 .pv-missing { color: #b00020; font-family: system-ui, sans-serif; }
 /* Semente citando componente que não resolve. Visível de propósito: é o único
    lugar onde esse erro aparece — nenhum gate lê o conteúdo do demoSlots. */

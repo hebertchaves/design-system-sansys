@@ -23,7 +23,7 @@
       {
         "name": "name",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "required": true,
         "description": "Nome do icone Material Icons",
         "category": "Conteúdo",
@@ -34,6 +34,10 @@
         "type": "IconSize",
         "controlHint": "select",
         "default": "md",
+        "inertWhen": {
+          "prop": "inline",
+          "value": true
+        },
         "description": "Tamanho do icone via tokens DSS",
         "validValues": [
           "xs",
@@ -127,7 +131,6 @@
       {
         "name": "default",
         "scope": null,
-        "required": true,
         "description": "Slot default - Permite conteudo customizado dentro do wrapper do icone"
       }
     ]
@@ -136,7 +139,8 @@
     "defaultPreview": {
       "props": {
         "name": "star",
-        "size": "md"
+        "size": "md",
+        "decorative": true
       }
     },
     "dimensions": {

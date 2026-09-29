@@ -125,6 +125,11 @@ function parseTypes(typesFile) {
             type: m.type ? m.type.getText(sf) : '',
             required: !m.questionToken,
             default: jsDocTag(m, sf, 'default'),
+            // `@inertWhen outraProp=valor` — declara que ESTA prop não tem efeito
+            // enquanto a outra estiver naquele valor. O Preview Frame usa para
+            // marcar o knob como inerte em vez de deixar o usuário girar um
+            // controle morto (adequação set/2026).
+            inertWhen: jsDocTag(m, sf, 'inertWhen'),
             desc: jsDocFirst(m, sf),
           })
         }
@@ -169,7 +174,14 @@ function parseTypes(typesFile) {
 
 // controlHint derivado do type/validValues (§4.1.1) — campo de SAÍDA, nunca autorado
 const BRANDY = /brand/i, COLORY = /color|feedback/i
-function deriveControlHint(type, validValues, unionName) {
+// Prop que carrega NOME DE ÍCONE: ou o identificador já diz (icon, iconRight…),
+// ou a descrição do tipo diz. O segundo caso existe porque o DssIcon chama a prop
+// de `name` — e o consumidor, que adivinhava pelo identificador, caía no campo de
+// texto livre. Foi assim que o Preview Frame do DssIcon ficou sem autocomplete
+// enquanto Select e Autocomplete tinham (adequação set/2026).
+const ICONY = /(^|[^a-z])icon([^a-z]|$)|iconRight|iconLeft/i
+const ICON_DESC = /\b[íi]cone?\b|material icons/i
+function deriveControlHint(type, validValues, unionName, propName, desc) {
   const t = (type || '').trim()
   if (/^boolean$/.test(t)) return 'toggle'
   if (/^number$/.test(t)) return 'stepper'
@@ -178,6 +190,8 @@ function deriveControlHint(type, validValues, unionName) {
     if (COLORY.test(unionName || '')) return t.includes('feedback') ? 'picker-feedback' : 'picker-color'
     return validValues.length <= 4 ? 'segmented' : 'select'
   }
+  // string livre que é nome de ícone → autocomplete, não campo aberto
+  if (/string/.test(t) && (ICONY.test(propName || '') || ICON_DESC.test(desc || ''))) return 'picker-icon'
   return 'text'
 }
 
@@ -219,9 +233,16 @@ function buildApi(types, { nome, compDir } = {}) {
     const bare = p.type.replace(/\s*\|\s*null$/, '').trim()
     if (types.unions[bare]) { unionName = bare; validValues = types.unions[bare] }
     else if (/'([^']+)'/.test(p.type)) { validValues = [...p.type.matchAll(/'([^']+)'/g)].map(m => m[1]) }
-    const out = { name: p.name, type: p.type, controlHint: deriveControlHint(p.type, validValues, unionName) }
+    const out = { name: p.name, type: p.type, controlHint: deriveControlHint(p.type, validValues, unionName, p.name, p.desc) }
     if (p.default != null) out.default = /^(true|false)$/.test(p.default) ? p.default === 'true' : p.default.replace(/^['"]|['"]$/g, '')
     if (p.required) out.required = true
+    if (p.inertWhen) {
+      const mm = /^\s*([A-Za-z_$][\w$]*)\s*=\s*(.+?)\s*$/.exec(p.inertWhen)
+      if (mm) {
+        const bruto = mm[2].replace(/^['"]|['"]$/g, '')
+        out.inertWhen = { prop: mm[1], value: bruto === 'true' ? true : bruto === 'false' ? false : bruto }
+      }
+    }
     if (p.desc) out.description = p.desc
     if (validValues) out.validValues = validValues
     // Categoria de PAPEL — agrupa o painel do Preview Frame. Derivada, não

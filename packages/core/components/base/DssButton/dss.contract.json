@@ -30,7 +30,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Ícone à esquerda (Material Icons)",
         "category": "Conteúdo",
         "categorySource": "quasar"
@@ -38,7 +38,7 @@
       {
         "name": "iconRight",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Ícone à direita (Material Icons)",
         "category": "Conteúdo",
         "categorySource": "quasar"

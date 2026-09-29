@@ -37,7 +37,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Nome do ícone Material Icons (opcional; se omitido, usa ícone padrão da variante)",
         "category": "Conteúdo",
         "categorySource": "excecao"

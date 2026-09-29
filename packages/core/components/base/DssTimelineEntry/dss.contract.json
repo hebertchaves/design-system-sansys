@@ -68,7 +68,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "category": "Conteúdo",
         "categorySource": "quasar"
       },

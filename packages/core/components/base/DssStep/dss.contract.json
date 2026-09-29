@@ -48,7 +48,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Ícone customizado (Material Icons name).",
         "category": "Conteúdo",
         "categorySource": "quasar"

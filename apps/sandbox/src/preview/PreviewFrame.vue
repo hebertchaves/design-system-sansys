@@ -293,7 +293,13 @@ const iconSuggestions = (() => {
 // recebe o autocomplete (datalist) em vez do texto livre. Só é avaliado para knobs
 // de texto livre — toggle/stepper e enums (k.options → <select>) têm precedência no
 // template. Evita nomes fora do icon-set carregado (o glifo renderiza em branco).
-const isIconKnob = (k) => /icon/i.test(k.name)
+// O contrato decide, não o palpite do consumidor. Era `/icon/i.test(k.name)` — um
+// regex sobre o IDENTIFICADOR da prop —, então a prop `name` do DssIcon não casava
+// e caía no campo de texto livre, enquanto Select e Autocomplete tinham autocomplete.
+// O emissor agora deriva `picker-icon` (do identificador OU da descrição do tipo) e
+// aqui se consome o hint. O teste antigo fica como rede, para contrato ainda não
+// reemitido não perder o autocomplete que já tinha.
+const isIconKnob = (k) => k.controlHint === 'picker-icon' || /icon/i.test(k.name)
 const emitDefs = ref([])          // api.emits do contrato
 const methodDefs = ref([])        // api.exposedRefs do contrato
 const eventLog = ref([])          // eventos recebidos do sujeito (ao vivo)
@@ -373,6 +379,17 @@ const frameEl = ref(null)
  * Diz só o que sabe: "sem efeito agora", não "sem efeito".
  */
 function inerte(k) {
+  // (a) prop anulada por OUTRA PROP — `inertWhen` do contrato, derivado da tag
+  // JSDoc `@inertWhen outraProp=valor`. Acrescentado em set/2026: o knob `size`
+  // do DssIcon ficava girando sem reação nenhuma com `inline` ligado (medido:
+  // `sm` e `xl` rendem os dois 14x14, a font-size do host), e nada na interface
+  // dizia por quê. O comportamento é normativo (CCI §2.2) — o que faltava era
+  // o playground CONTAR isso em vez de oferecer um controle morto.
+  if (k.inertWhen && state[k.inertWhen.prop] === k.inertWhen.value) {
+    return { label: k.inertWhen.prop, valor: String(k.inertWhen.value) }
+  }
+
+  // (b) prop anulada pelo CONTEXTO (tema/marca) — caso original
   if (!k.description) return null
   for (const ct of contextTokens.value) {
     if (!k.description.includes(ct.name)) continue
@@ -395,6 +412,7 @@ function load() {
       name: p.name,
       category: p.category || 'Outros',
       controlHint: p.controlHint,
+      inertWhen: p.inertWhen || null,
       description: p.description || '',
       default: p.default,
       options: p.validValues ? (/\bnull\b/.test(p.type) ? [null, ...p.validValues] : p.validValues) : null,

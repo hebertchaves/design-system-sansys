@@ -56,7 +56,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "default": "add",
         "description": "Ícone exibido quando o FAB está fechado.",
         "category": "Conteúdo",

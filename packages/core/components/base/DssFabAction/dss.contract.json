@@ -39,7 +39,7 @@
       {
         "name": "icon",
         "type": "string",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Ícone exibido no centro do botão de ação.",
         "category": "Conteúdo",
         "categorySource": "quasar"

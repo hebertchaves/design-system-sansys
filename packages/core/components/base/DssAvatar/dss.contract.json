@@ -80,7 +80,7 @@
       {
         "name": "icon",
         "type": "string | null",
-        "controlHint": "text",
+        "controlHint": "picker-icon",
         "description": "Nome do ícone Material Icons",
         "category": "Conteúdo",
         "categorySource": "quasar"
