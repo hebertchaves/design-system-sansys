@@ -60,9 +60,26 @@
       class="dss-button__icon dss-button__icon--left"
     />
 
-    <!-- Label/Content -->
-    <span v-if="label || $slots.default" class="dss-button__label">
-      <slot>{{ label }}</slot>
+    <!-- Label/Content — espelha o QBtn em DOIS pontos, e cada um consertou um defeito
+         encontrado na adequação do DssMenu (set/2026):
+
+         1. `label` E slot, não `label` COMO FALLBACK do slot.
+            Antes: <slot>{{ label }}</slot> — a prop era só fallback, então qualquer
+            conteúdo no slot DESCARTAVA o label em silêncio. Com um overlay no slot
+            (DssMenu, DssPopupProxy) ou um DssBadge flutuante — que não renderizam
+            texto — o botão ficava SEM NOME ACESSÍVEL. Medidos 54 usos nesse estado.
+            O QBtn nunca fez isso: `inner.push(label)` e depois
+            `hMergeSlot(slots.default, inner)` — ele MESCLA (QBtn.js:356-359).
+
+         2. `q-anchor--skip` no wrapper.
+            O QMenu ancora em `proxy.$el.parentNode`, subindo apenas por
+            `.q-anchor--skip` (use-anchor.js:148-164). Sem a classe, a âncora virava
+            este span — inline e de largura zero — e o clique no <button> nunca a
+            alcançava: o idioma `<DssButton><DssMenu/></DssButton>` NÃO ABRIA.
+            O QBtn põe a classe no próprio `q-btn__content` (QBtn.js:402). -->
+    <span v-if="label || $slots.default" class="dss-button__label q-anchor--skip">
+      <template v-if="label">{{ label }}</template>
+      <slot />
     </span>
 
     <!-- Icon Right — composto via DssIcon (CCI §3.1 / §3.2).

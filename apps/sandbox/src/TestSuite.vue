@@ -563,6 +563,10 @@
       <div v-else-if="activeComponent === 'item'" class="component-view">
         <TestItem />
       </div>
+
+      <div v-else-if="activeComponent === 'menu'" class="component-view">
+        <TestMenu />
+      </div>
       <div v-else-if="activeComponent === 'btn-toggle'" class="component-view">
         <TestBtnToggle />
       </div>
@@ -729,6 +733,7 @@ import TestPageComplexity from './TestPageComplexity.vue'
 import TestParcelamento from './TestParcelamento.vue'
 import TestParcelamentoClaude from './TestParcelamentoClaude.vue'
 import TestAtenderSolicitacoes from './TestAtenderSolicitacoes.vue'
+import TestMenu from './TestMenu.vue'
 
 // Active component state
 const activeComponent = ref('defaults-preview')

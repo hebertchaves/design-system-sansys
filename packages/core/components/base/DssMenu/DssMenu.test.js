@@ -36,8 +36,20 @@ describe('DssMenu', () => {
   // 2. Props expostas
   // =========================================================================
 
-  it('aceita prop modelValue false por padrão', () => {
+  // REGRESSÃO (adequação set/2026). Este teste afirmava `toBe(false)` e, com isso,
+  // cristalizava o defeito: o default `false` era repassado ao QMenu em TODA
+  // renderização, pondo o overlay em modo controlado permanente (o QMenu usa `null`
+  // para "não controlado"). O idioma <DssButton><DssMenu/></DssButton> não abria.
+  // O default correto é `undefined` — ausência de opinião — e o v-model é OPCIONAL.
+  it('não tem opinião sobre modelValue por padrão (v-model é opcional)', () => {
     const wrapper = mount(DssMenu)
+    expect(wrapper.props('modelValue')).toBeUndefined()
+  })
+
+  it('aceita controle externo via v-model quando o consumidor quer', async () => {
+    const wrapper = mount(DssMenu, { props: { modelValue: true } })
+    expect(wrapper.props('modelValue')).toBe(true)
+    await wrapper.setProps({ modelValue: false })
     expect(wrapper.props('modelValue')).toBe(false)
   })
 

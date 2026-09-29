@@ -18,6 +18,7 @@
 | `anchor` | `MenuPosition` | `undefined` | Não | Ponto de ancoragem no elemento trigger |
 | `self` | `MenuPosition` | `undefined` | Não | Ponto de alinhamento do próprio menu |
 | `offset` | `[number, number]` | `undefined` | Não | Deslocamento `[x, y]` em pixels |
+| `noParentEvent` | `boolean` | `undefined` | Não | Impede o QMenu de instalar tratadores no elemento âncora. Use quando o consumidor já dirige a abertura (`v-model` + handler próprio) — sem isto o mesmo clique é tratado duas vezes e o menu abre e fecha no mesmo gesto |
 
 ### Tipo MenuPosition
 

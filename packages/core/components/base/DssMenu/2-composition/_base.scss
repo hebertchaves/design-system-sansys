@@ -34,7 +34,14 @@
 
 .dss-menu {
   min-width: var(--dss-min-w-md);  /* 208px — largura mínima de overlay para legibilidade */
-  min-height: var(--dss-min-h-lg); /* 192px — previne menu colapsado quando itens são poucos */
+
+  /* min-height REMOVIDO na adequação (set/2026).
+     Era `var(--dss-min-h-lg)` (192px) com a justificativa de "previne menu
+     colapsado quando itens são poucos". Medido no Playground: um menu de 2 itens
+     tem 96px de conteúdo e era esticado a 192px — 96px de vazio reservado, metade
+     do painel. O menu é overlay dirigido por conteúdo (o QMenu não tem min-height);
+     quem decide a altura é a lista. Menu vazio é erro do consumidor, não algo a
+     mascarar com altura fantasma. `min-width` fica: largura mínima é legibilidade. */
 
   /* ==========================================================================
      Superfície
@@ -60,10 +67,19 @@
 
   /* ==========================================================================
      Overflow
-     Garante que border-radius seja respeitado pelos filhos (DssList, DssItem).
-     Sem overflow: hidden, os cantos dos filhos ultrapassariam o container.
+     Eixo X oculto: garante que o border-radius seja respeitado pelos filhos
+     (DssList, DssItem) — sem isso os cantos dos filhos ultrapassariam o container.
+
+     Eixo Y rolável — CORRIGIDO na adequação (set/2026). Era `overflow: hidden`
+     nos dois eixos, combinado com o `max-height: 300px` de 3-variants. Medido:
+     menu de 12 itens = 576px de conteúdo em painel de 300px → 277px CORTADOS E
+     INALCANÇÁVEIS. "Opção 12" não aparecia nem rolava; 6 das 12 opções
+     simplesmente não existiam para quem usa mouse. Qualquer valor de overflow
+     diferente de `visible` já recorta no border-radius, então `auto` no eixo Y
+     preserva o recorte dos cantos E devolve o acesso ao conteúdo.
      ========================================================================== */
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   /* ==========================================================================
      Tipografia — herança de contexto

@@ -37,6 +37,7 @@ Overlay de navegação flutuante para exibição de ações e opções contextua
 | `anchor` | `MenuPosition` | — | Ponto de ancoragem no trigger |
 | `self` | `MenuPosition` | — | Ponto de alinhamento do menu |
 | `offset` | `[number, number]` | — | Deslocamento `[x, y]` em pixels |
+| `noParentEvent` | `boolean` | — | Impede o QMenu de instalar tratadores no elemento âncora. Use quando o consumidor já dirige a abertura |
 
 ## Props Bloqueadas
 

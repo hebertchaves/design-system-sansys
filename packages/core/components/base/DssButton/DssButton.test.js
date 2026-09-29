@@ -824,3 +824,51 @@ describe('DssButton — Teclado (WCAG 2.1.1)', () => {
     ).toBe(true)
   })
 })
+
+// ==========================================================================
+// Label + slot default — REGRESSÃO da adequação do DssMenu (set/2026)
+//
+// O template era `<slot>{{ label }}</slot>`: a prop `label` funcionava apenas
+// como FALLBACK do slot. Qualquer conteúdo no slot descartava o label em
+// silêncio — e quando esse conteúdo é um overlay (DssMenu, DssPopupProxy) ou um
+// DssBadge flutuante, que não renderizam texto, o botão ficava SEM NOME
+// ACESSÍVEL. Medidos 54 usos nesse estado no repositório.
+//
+// O QBtn nunca fez isso: empilha o label e depois MESCLA o slot
+// (hMergeSlot — QBtn.js:356-359). O DssButton agora espelha esse contrato.
+// ==========================================================================
+describe('DssButton — label + slot default (WCAG 4.1.2)', () => {
+  it('preserva o label quando o slot default traz conteúdo que não renderiza texto', () => {
+    const wrapper = mount(DssButton, {
+      props: { label: 'Ações' },
+      // um overlay no slot rende um comentário/placeholder, não texto
+      slots: { default: '<!-- overlay -->' },
+    })
+    expect(wrapper.text()).toContain('Ações')
+  })
+
+  it('renderiza label E slot juntos, em vez de um substituir o outro', () => {
+    const wrapper = mount(DssButton, {
+      props: { label: 'Notificações' },
+      slots: { default: '<span class="marcador">5</span>' },
+    })
+    expect(wrapper.text()).toContain('Notificações')
+    expect(wrapper.find('.marcador').exists()).toBe(true)
+  })
+
+  it('mantém o slot como único conteúdo quando não há label', () => {
+    const wrapper = mount(DssButton, { slots: { default: 'Somente slot' } })
+    expect(wrapper.text().trim()).toBe('Somente slot')
+  })
+
+  // O QMenu ancora em `proxy.$el.parentNode`, subindo apenas por
+  // `.q-anchor--skip` (use-anchor.js:148-164). Sem a classe no wrapper do
+  // conteúdo, a âncora virava o span inline de largura zero e o clique no
+  // <button> nunca a alcançava — o menu simplesmente não abria.
+  it('marca o wrapper de conteúdo com q-anchor--skip para overlays ancorarem no <button>', () => {
+    const wrapper = mount(DssButton, { props: { label: 'Ações' } })
+    const span = wrapper.find('.dss-button__label')
+    expect(span.exists()).toBe(true)
+    expect(span.classes()).toContain('q-anchor--skip')
+  })
+})

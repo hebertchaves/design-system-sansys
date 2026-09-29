@@ -104,6 +104,14 @@
         "description": "Deslocamento [x, y] em pixels a partir do ponto de ancoragem",
         "category": "Aparência",
         "categorySource": "override"
+      },
+      {
+        "name": "noParentEvent",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Impede o QMenu de instalar os proprios tratadores no elemento ancora.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [
@@ -200,12 +208,6 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "min-height",
-          "token": "--dss-min-h-lg",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
           "property": "background-color",
           "token": "--dss-surface-default",
           "value": null,
@@ -224,9 +226,15 @@
           "source": "2-composition/_base.scss"
         },
         {
-          "property": "overflow",
+          "property": "overflow-x",
           "token": null,
           "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow-y",
+          "token": null,
+          "value": "auto",
           "source": "2-composition/_base.scss"
         },
         {
@@ -297,7 +305,6 @@
       "border",
       "color",
       "elevation",
-      "other",
       "spacing",
       "typography"
     ],
@@ -307,12 +314,6 @@
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-min-h-lg",
-        "usedIn": [
-          "default"
         ]
       },
       {

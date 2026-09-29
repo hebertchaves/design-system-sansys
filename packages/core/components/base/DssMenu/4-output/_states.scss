@@ -33,7 +33,15 @@
 
 [data-theme='dark'] {
   .dss-menu {
-    border: var(--dss-border-width-thin) solid var(--dss-gray-200);
+    /* CORRIGIDO na adequação (set/2026): era `--dss-gray-200`, um cinza CRU.
+       Primitivo não vira com o tema, então o "detalhe sutil" pretendido aqui
+       renderizava #f5f5f5 — medido: contorno branco de 1px sobre o painel
+       #262626, a 13,88:1. O oposto de sutil.
+       `--dss-border-subtle` é semântico e dark-aware: #f5f5f5 no claro,
+       #525252 no escuro (1,94:1 sobre o painel) — a compensação de
+       profundidade que a regra queria. Instância da frente (e) do débito
+       (cinzas crus) encontrada em componente. */
+    border: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   }
 }
 

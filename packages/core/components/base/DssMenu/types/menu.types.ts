@@ -105,6 +105,22 @@ export interface MenuProps {
    * @example [0, 8]
    */
   offset?: [number, number]
+
+  /**
+   * Impede o QMenu de instalar os proprios tratadores no elemento ancora.
+   *
+   * Use quando o CONSUMIDOR ja dirige a abertura (v-model + handler proprio).
+   * Sem isto, um unico clique real e tratado DUAS vezes — o QMenu abre e o
+   * handler do consumidor alterna de volta —, e o menu abre e fecha no mesmo
+   * gesto. Foi o defeito medido no DssActionMenu (set/2026), invisivel em
+   * teste unitario: jsdom dispara o @click do Vue mas nao os tratadores de
+   * ponteiro do QMenu, entao no teste so existia UM dos dois donos do gesto.
+   *
+   * Declarado na API de proposito: chegava ao QMenu por `$attrs` e funcionava
+   * por acidente — o gate `validate:dss-props` reprovou, com razao. O que nao
+   * aparece na API nao e escolhido por quem le a documentacao.
+   */
+  noParentEvent?: boolean
 }
 
 /**

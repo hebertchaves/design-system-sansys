@@ -1,14 +1,15 @@
 <template>
   <q-menu
     :class="menuClasses"
-    :model-value="props.modelValue"
+    :model-value="aberto"
     :fit="props.fit"
     :cover="props.cover"
     :anchor="props.anchor"
     :self="props.self"
     :offset="props.offset"
+    :no-parent-event="props.noParentEvent"
     v-bind="$attrs"
-    @update:model-value="emit('update:modelValue', $event)"
+    @update:model-value="onToggle"
     @show="emit('show', $event)"
     @hide="emit('hide', $event)"
   >
@@ -63,6 +64,7 @@
  * @version 1.0.0
  */
 
+import { ref, watch } from 'vue'
 import type { MenuProps, MenuEmits, MenuSlots } from '../types/menu.types'
 import { useMenuClasses } from '../composables'
 
@@ -80,7 +82,20 @@ defineOptions({
 // ==========================================================================
 
 const props = withDefaults(defineProps<MenuProps>(), {
-  modelValue: false,
+  /**
+   * `undefined`, não `false`, e a diferença é funcional.
+   *
+   * ACHADO DA ADEQUAÇÃO (set/2026): com o default `false`, o wrapper passava
+   * `:model-value="false"` SEMPRE, pondo o QMenu em modo controlado permanente.
+   * O idioma do Quasar — <q-menu> dentro de um botão abre no clique — deixava de
+   * funcionar: medido no Playground, o menu não abria nem com `v-model` ligado,
+   * porque faltava alguém alternar o modelo no clique.
+   *
+   * Com `undefined` + estado interno espelhado (abaixo), o componente funciona
+   * NÃO CONTROLADO (o QMenu governa e o consumidor só escuta) e CONTROLADO
+   * (o consumidor dirige) — sem o consumidor escolher nada.
+   */
+  modelValue: undefined,
   fit: false,
   cover: false,
   anchor: undefined,
@@ -93,6 +108,23 @@ const props = withDefaults(defineProps<MenuProps>(), {
 // ==========================================================================
 
 const emit = defineEmits<MenuEmits>()
+
+/**
+ * Espelho local do estado. Existe para o v-model ser OPCIONAL:
+ *  - sem binding → o QMenu governa, e isto apenas acompanha
+ *  - com binding → o watcher abaixo traz o valor do consumidor
+ * Emitir continua acontecendo nos dois casos, para quem quiser só escutar.
+ */
+const aberto = ref(props.modelValue ?? false)
+
+watch(() => props.modelValue, (v) => {
+  if (v !== undefined) aberto.value = v
+})
+
+function onToggle(v: boolean) {
+  aberto.value = v
+  emit('update:modelValue', v)
+}
 
 // ==========================================================================
 // SLOTS
