@@ -13,20 +13,20 @@
 [data-theme="dark"] .dss-list {
   color: var(--dss-text-inverse);
 
-  /* Borda em dark mode
-     EXC-01: rgba(255, 255, 255, 0.2) — Dark mode border.
-     Justificativa: Bordas em dark mode requerem white com alpha.
-     Nenhum token DSS fornece white com alpha parcial equivalente. */
+  /* EXC-01 e EXC-02 REMOVIDAS em set/2026.
+     A justificativa das duas era verdadeira — "nenhum token DSS fornece white com
+     alpha" — e deixou de ser: o tema escuro agora define `--dss-border-subtle` e
+     `--dss-border-separator` como branco+alpha, com os mesmos valores que estavam
+     hardcoded aqui. A medição que motivou a mudança está em tokens/themes/dark/_colors.scss:
+     alpha acompanha a superfície, cinza fixo colide com ela.
+     Estas duas regras existem apenas para trocar a COR no escuro; espessura, estilo
+     e geometria continuam em 2-composition. */
   &.dss-list--bordered {
-    border-color: rgba(255, 255, 255, 0.2); /* EXC-01 */
+    border-color: var(--dss-border-subtle);
   }
 
-  /* Separadores em dark mode
-     EXC-02: rgba(255, 255, 255, 0.12) — Dark mode separator.
-     Justificativa: Divisores em dark = white 12% opacity (Material Design).
-     Nenhum token DSS fornece white com alpha parcial para separadores. */
   &.dss-list--separator > * + * {
-    border-top-color: rgba(255, 255, 255, 0.12); /* EXC-02 */
+    border-top-color: var(--dss-border-separator);
   }
 }
 

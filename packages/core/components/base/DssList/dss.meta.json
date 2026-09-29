@@ -99,18 +99,6 @@
   ],
   "exceptions": [
     {
-      "id": "EXC-01",
-      "value": "rgba(255, 255, 255, 0.2)",
-      "location": "4-output/_states.scss",
-      "justification": "Dark mode border. Bordas em dark mode requerem white com alpha. Nenhum token DSS fornece white com alpha parcial equivalente. Padrao identico ao DssCard EXC-02."
-    },
-    {
-      "id": "EXC-02",
-      "value": "rgba(255, 255, 255, 0.12)",
-      "location": "4-output/_states.scss",
-      "justification": "Dark mode separator. Divisores em dark = white 12% opacity (Material Design). Sem token DSS equivalente. Padrao identico ao DssCard EXC-01."
-    },
-    {
       "id": "EXC-03",
       "value": "2px solid ButtonText",
       "location": "4-output/_states.scss",

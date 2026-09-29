@@ -2214,7 +2214,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssFooter | layout | — | minHeight:44px | Rodapé com informações do sistema |
 | DssForm | contextuais | — | gap:16px (via --dss-form-gap → --dss-spacing-4) | DssForm com DssInput e DssButton — container estrutural com gap semântico entre campos |
 | DssHeader | layout | — | minHeight:44px | Cabeçalho com logo e ações |
-| DssIcon | indicadores | name:star, size:md | minHeight:24px, minWidth:24px | Ícone 'star' tamanho md |
+| DssIcon | indicadores | name:star, size:md, decorative | minHeight:24px, minWidth:24px | Ícone 'star' tamanho md |
 | DssImg | midia | src:https://placehold.co/200x120, alt:Imagem demonstrativa, fit:cover, loading:lazy, width:200px | minHeight:150px, minWidth:200px | Imagem com alt text acessível |
 | DssInfiniteScroll | contextuais | offset:500, debounce:100 | — | Lista com carregamento infinito |
 | DssInnerLoading | progresso | showing, label:Carregando... | minHeight:48px | Overlay de carregamento interno |
@@ -2273,5 +2273,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-09-28T13:57:15.226Z_
+_Gerado em: 2026-09-29T02:09:35.738Z_
 <!-- END:AUTO-GENERATED -->

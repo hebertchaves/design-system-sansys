@@ -1,7 +1,21 @@
 <template>
+  <!-- SEMPRE `listitem`, mesmo clicável — espelha o QItem (QItem.js:152), que
+         nunca troca o papel e apenas acrescenta `tabindex` quando clicável.
+
+         CORRIGIDO na adequação (set/2026). Era `clickable ? 'button' : 'listitem'`,
+         e o efeito medido é que a composição MAIS COMUM do DS produzia ARIA inválida:
+         `DssList` fixa role="list", então uma lista de itens clicáveis tinha **zero
+         `listitem`** — o leitor de tela anuncia lista sem item algum. Eram 139 usos
+         clicáveis em 16 arquivos nesse estado.
+
+         Custo aceito e declarado: o item clicável anuncia "listitem", não "button",
+         então a acionabilidade fica sub-anunciada (o `tabindex` a mantém alcançável
+         pelo teclado). É a mesma limitação que o Quasar aceita. O alvo ideal —
+         `listitem` contendo um elemento interativo — muda a estrutura do DOM e foi
+         registrado como onda própria, por causa do risco nos 139 usos. -->
   <div
     :class="itemClasses"
-    :role="clickable ? 'button' : 'listitem'"
+    role="listitem"
     :tabindex="computedTabindex"
     :aria-label="ariaLabel"
     :aria-disabled="clickable && disabled ? 'true' : undefined"

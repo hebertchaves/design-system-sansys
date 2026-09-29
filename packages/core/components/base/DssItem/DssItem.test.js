@@ -108,11 +108,34 @@ describe('DssItem', () => {
         expect(wrapper.attributes('role')).toBe('listitem')
       })
 
-      it('clickable=true aplica role="button"', () => {
+      // REGRESSÃO (adequação set/2026). Esta asserção era `toBe('button')` e
+      // cristalizava o defeito: com role="button", uma DssList (role="list") de itens
+      // clicáveis ficava com ZERO listitem — lista que o leitor de tela anuncia sem
+      // item algum. Eram 139 usos clicáveis em 16 arquivos nesse estado.
+      // O QItem nunca troca o papel (QItem.js:152): mantém listitem e só acrescenta
+      // tabindex. O DssItem agora espelha isso.
+      it('clickable=true MANTÉM role="listitem" (espelha o QItem)', () => {
         const wrapper = mount(DssItem, {
           props: { clickable: true }
         })
-        expect(wrapper.attributes('role')).toBe('button')
+        expect(wrapper.attributes('role')).toBe('listitem')
+      })
+
+      it('clickable=true torna o item alcançável pelo teclado via tabindex', () => {
+        const wrapper = mount(DssItem, {
+          props: { clickable: true }
+        })
+        expect(wrapper.attributes('tabindex')).toBe('0')
+      })
+
+      it('uma lista de itens clicáveis tem listitem em TODOS os filhos', () => {
+        // o contrato que o role="button" quebrava: role=list exige listitem
+        const wrappers = [true, false, true].map((clickable) =>
+          mount(DssItem, { props: { clickable } })
+        )
+        expect(wrappers.map((w) => w.attributes('role'))).toEqual([
+          'listitem', 'listitem', 'listitem',
+        ])
       })
 
       it('clickable=true aplica classe dss-item--clickable', () => {

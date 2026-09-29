@@ -234,8 +234,8 @@ Nenhum. Componente não-interativo.
 
 | ID | Valor | Local | Justificativa |
 |----|-------|-------|---------------|
-| EXC-01 | `rgba(255,255,255,0.2)` | `4-output/_states.scss` | Dark mode border. Sem token DSS com white+alpha. |
-| EXC-02 | `rgba(255,255,255,0.12)` | `4-output/_states.scss` | Dark mode separator. Padrão Material Design. |
+| ~~EXC-01~~ | ~~`rgba(255,255,255,0.2)`~~ | — | **RESOLVIDA (set/2026)** — `--dss-border-subtle` virou branco+alpha no escuro. |
+| ~~EXC-02~~ | ~~`rgba(255,255,255,0.12)`~~ | — | **RESOLVIDA (set/2026)** — virou `--dss-border-separator`. |
 | EXC-03 | `2px solid ButtonText` | `4-output/_states.scss` | Forced-colors. System keywords obrigatórios. |
 | EXC-04 | `1px solid ButtonText` | `4-output/_states.scss` | Forced-colors separator. Obrigatório. |
 | EXC-05 | `4px solid Highlight` | `4-output/_states.scss` | Forced-colors brand accent. Obrigatório. |
