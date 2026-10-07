@@ -14,8 +14,28 @@
     esta div, o atributo não alcançava o conteúdo TELEPORTADO para o <body> —
     dropdowns, menus, dialogs ficavam claros dentro de uma página escura.
   -->
-  <div class="pv-stage">
-    <component :is="Comp" v-if="Comp" ref="subjectRef" v-bind="allBindings">
+  <div class="pv-stage" :class="{ 'pv-stage--hospedado': hospedeiro }">
+    <!--
+      HOSPEDEIRO MÍNIMO (set/2026).
+
+      Alguns componentes NÃO podem ser montados soltos: o Quasar exige ancestral.
+      `QHeader`/`QFooter`/`QDrawer`/`QPageContainer` precisam de `QLayout`;
+      `QPage` precisa, além do layout, de um `QPageContainer`. Montados no palco
+      nu, eles não renderizam NADA e o Quasar registra o erro só no console do
+      iframe — então o frame atestava "o componente monta" sobre uma moldura
+      vazia. Medido nesta onda: o frame do DssPage logava
+      "QPage needs to be a deep child of QLayout" a cada montagem.
+
+      O hospedeiro é decidido por componente, não por heurística, e envolve
+      SOMENTE quem precisa: para todo o resto o palco segue nu.
+    -->
+    <component
+      :is="hospedeiro ? LayoutHost : Passthrough"
+      v-if="Comp"
+      v-bind="hospedeiro ? { view: 'hHh lpR fFf', container: true, class: 'pv-host' } : {}"
+    >
+      <component :is="hospedeiro === 'page' ? PageContainerHost : Passthrough">
+    <component :is="Comp" ref="subjectRef" v-bind="allBindings">
       <!-- Slots ligados no parent recebem conteúdo de demo, para exercitar
            prepend/append/hint/error (que não são props e não apareciam). -->
       <template v-for="s in renderedSlots" :key="s" #[s]="scope">
@@ -61,7 +81,9 @@
         <span v-else class="pv-slot-demo">{{ slotDemo(s) }}</span>
       </template>
     </component>
-    <p v-else class="pv-missing">Componente "{{ name }}" não encontrado no registry de preview.</p>
+      </component>
+    </component>
+    <p v-if="!Comp" class="pv-missing">Componente "{{ name }}" não encontrado no registry de preview.</p>
   </div>
 </template>
 
@@ -76,6 +98,32 @@ const name = new URLSearchParams(location.search).get('frame') || ''
 const modules = import.meta.glob('../../../../packages/core/components/{base,composed}/*/*.vue')
 const key = Object.keys(modules).find(k => k.endsWith(`/${name}/${name}.vue`))
 const Comp = key ? defineAsyncComponent(modules[key]) : null
+
+// ── HOSPEDEIRO MÍNIMO ────────────────────────────────────────────────────────
+// Componentes que o Quasar recusa montar fora de um ancestral. A lista é
+// explícita de propósito: heurística aqui erra em silêncio, e o sintoma do erro
+// (nada renderiza) é idêntico ao de um componente que realmente não existe.
+// Passthrough: devolve só o slot, sem elemento no DOM. Usar a string 'template'
+// aqui renderizaria um <template> literal e o palco ficaria vazio para TODOS os
+// componentes — o hospedeiro não pode custar nada a quem não precisa dele.
+const Passthrough = { name: 'PvPassthrough', setup: (_, { slots }) => () => slots.default?.() }
+
+// `DssAppBar` entra aqui porque COMPÕE o DssHeader: sem QLayout ancestral o
+// Quasar aborta com "QHeader needs to be child of QLayout" e o frame fica
+// branco. Medido no Bloco 3.3 — era o único erro de console do playground.
+const EXIGE_LAYOUT = ['DssHeader', 'DssFooter', 'DssDrawer', 'DssPageContainer', 'DssAppBar']
+const EXIGE_PAGE_CONTAINER = ['DssPage', 'DssPageSticky', 'DssPageScroller']
+
+const hospedeiro = EXIGE_PAGE_CONTAINER.includes(name)
+  ? 'page'
+  : (EXIGE_LAYOUT.includes(name) ? 'layout' : null)
+
+const LayoutHost = hospedeiro
+  ? defineAsyncComponent(() => import('../../../../packages/core/components/base/DssLayout/DssLayout.vue'))
+  : null
+const PageContainerHost = hospedeiro === 'page'
+  ? defineAsyncComponent(() => import('../../../../packages/core/components/base/DssPageContainer/DssPageContainer.vue'))
+  : null
 
 // ── SEMENTE DE FILHOS (visual.defaultPreview.slots do contrato) ──────────────
 // Um container montado VAZIO não prova nada: nenhum knob de layout tem efeito
@@ -258,7 +306,24 @@ const eventHandlers = computed(() => {
 
 // Bindings finais: props + valor do vModel + handlers de eventos.
 const allBindings = computed(() => {
-  const value = modelProp.value ? { [modelProp.value]: model.value } : {}
+  // O v-model só é LIGADO quando há valor de verdade.
+  //
+  // `model` nasce `null` — o "vazio universal" — e o contrato nem sempre
+  // declara um default para a prop do v-model. Ligar `null` mesmo assim não é
+  // neutro: em Vue, prop passada EXPLICITAMENTE como `null` é um valor
+  // fornecido, e portanto ANULA o default do próprio componente.
+  //
+  // Medido no DssTable (set/2026): `modelValue` não tem default no contrato, o
+  // frame mandava `modelValue: null`, isso vencia o `modelValue: () => []` do
+  // componente, o QTable recebia `selected=null` e o render estourava —
+  // "Unhandled error during execution of render function at <QTable>", com o
+  // palco em branco e nenhuma mensagem legível.
+  //
+  // Não ligar enquanto o valor é `null` devolve a decisão a quem tem
+  // autoridade: o default declarado pelo componente. Na primeira interação o
+  // `@update:` preenche o model e o binding passa a valer normalmente.
+  const temValor = modelProp.value && model.value !== null
+  const value = temValor ? { [modelProp.value]: model.value } : {}
   return { ...props, ...value, ...eventHandlers.value }
 })
 

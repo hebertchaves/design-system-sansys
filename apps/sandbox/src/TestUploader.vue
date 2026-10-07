@@ -100,7 +100,7 @@
     <PgSection id="api" index="07" title="API Imperativa & Eventos" :count="EXPOSED.length"
       desc="O componente NÃO expõe slots públicos (EXC-01: header e list do QUploader são internos, para garantir conformidade DSS). A composição é por props, eventos e os 4 métodos expostos via ref."
     >
-      <PgGrid>
+      <PgGrid :cols="1">
         <PgTile code="ref.pickFiles() · upload() · abort() · reset()" align="stretch">
           <div class="pg-api-stack">
             <DssUploader

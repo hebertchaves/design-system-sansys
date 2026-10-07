@@ -369,20 +369,77 @@
 }
 .pg-section__badge span { font-weight: var(--dss-font-weight-regular); color: var(--dss-text-subtle); }
 
+/* ── Headings do CONTEÚDO de seção ──────────────────────────────────────────
+   O Quasar declara h1..h6 na escala Material por SELETOR DE TIPO (h2 = 3.75rem
+   com line-height igual). Como o quasar-layered.css mora em `@layer quasar`,
+   qualquer regra unlayered o vence — inclusive com especificidade ZERO. Daí o
+   `:where()` dos dois lados: normaliza os headings que chegam pelo <slot>
+   (os .example.vue dos componentes, que usam <h2> nu) sem tirar o comando de
+   NENHUMA classe — .pg-section__title (0,1,0) e as classes dos próprios
+   exemplos continuam vencendo esta regra (0,0,0). */
+:where(.pg-section) :where(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 var(--dss-spacing-2);
+  font-weight: var(--dss-font-weight-semibold);
+  line-height: var(--dss-line-height-snug);
+  letter-spacing: normal;
+  color: var(--dss-text-primary);
+}
+:where(.pg-section) :where(h1) { font-size: var(--dss-font-size-2xl); }
+:where(.pg-section) :where(h2) { font-size: var(--dss-font-size-xl); }
+:where(.pg-section) :where(h3) { font-size: var(--dss-font-size-lg); }
+:where(.pg-section) :where(h4),
+:where(.pg-section) :where(h5),
+:where(.pg-section) :where(h6) { font-size: var(--dss-font-size-md); }
+
 /* Grid de tiles */
 /* .dss-ex* = boxes dos .example.vue (core) renderizados na seção "Exemplos de uso".
    Compartilham as MESMAS regras do PgTile aqui (apresentação mora no sandbox, não
    no arquivo de exemplo do componente — que fica só com conteúdo/estrutura). */
 .pg-grid,
 .dss-ex {
+  /* O piso e o gap viram variáveis porque a conta de `cols` precisa dos dois
+     (ver .pg-grid[data-cols] abaixo). Antes eram literais e a densidade
+     "confortável" os trocava — o que deixava a conta sem como acompanhar. */
+  --pg-grid-floor: 280px;
+  --pg-grid-gap: var(--dss-spacing-3);
+
   display: grid;
-  gap: var(--dss-spacing-3);
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--pg-grid-gap);
+  grid-template-columns: repeat(auto-fill, minmax(var(--pg-grid-floor), 1fr));
 }
 .pg-main[data-density="comfortable"] .pg-grid,
 .pg-main[data-density="comfortable"] .dss-ex {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--dss-spacing-4);
+  --pg-grid-floor: 320px;
+  --pg-grid-gap: var(--dss-spacing-4);
+}
+
+/* TETO de colunas — `<PgGrid :cols="N">`.
+
+   A prop ERA INERTE: o PgGrid não a declarava, `cols` caía como atributo HTML
+   e o grid seguia em auto-fill de 280px. Num `:cols="1"` dentro de uma área de
+   1250px, o único tile ocupava a PRIMEIRA faixa de ~290px e o resto da linha
+   ficava vazio — era o cartão espremido que se via.
+
+   A conta: o piso da faixa passa a ser 1/N do contêiner, mas NUNCA abaixo do
+   piso de legibilidade. Numa faixa larga isso entrega exatamente N colunas;
+   numa estreita, o `max()` devolve o piso e o `auto-fill` entrega menos que N
+   em vez de espremer. É o que mantém o grid responsivo com um teto declarado.
+
+   `100%` aqui é a largura do PRÓPRIO grid — por isso a conta mora no CSS e não
+   no componente, que não conhece a largura de nada. */
+.pg-grid[data-cols] {
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      max(
+        var(--pg-grid-floor),
+        calc(
+          (100% - (var(--pg-cols) - 1) * var(--pg-grid-gap)) / var(--pg-cols)
+        )
+      ),
+      1fr
+    )
+  );
 }
 
 /* Faixa inteira — para componentes que SÃO um bloco de largura total e não
@@ -392,6 +449,7 @@
    automático, que é o que permite comparar variantes lado a lado.
    Uso: <PgGrid class="pg-grid--full">. */
 .pg-grid--full,
+.pg-grid--full[data-cols],
 .pg-main[data-density="comfortable"] .pg-grid--full {
   grid-template-columns: 1fr;
 }

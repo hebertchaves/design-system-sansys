@@ -115,11 +115,35 @@ app.use(Quasar, {
 
 app.mount('#app')
 
-// Grid Inspector — apenas em desenvolvimento e SÓ no host (nunca no realm do
-// iframe do Preview Frame: lá é o sujeito isolado, o float React seria chrome
-// que só atrasa o boot do iframe).
-const isPreviewFrame = new URLSearchParams(window.location.search).has('frame')
-if (import.meta.env.DEV && !isPreviewFrame) {
+// Grid Inspector — SOB DEMANDA, nunca por padrão.
+//
+// Era injetado automaticamente em todo boot de desenvolvimento, e o float dele
+// ficava permanente sobre o canto da tela. Isso é chrome de ferramenta
+// sobreposto ao que está sendo avaliado: atrapalha a leitura do componente e
+// disputa o mesmo canto que elementos flutuantes do próprio DS.
+//
+// Agora precisa ser pedido, de duas formas que valem o mesmo:
+//
+//   1. `?inspector` na URL — explícito e COMPARTILHÁVEL: a URL carrega o
+//      estado, então "abre aí com o inspector" é um link, não uma instrução.
+//   2. `localStorage.dssGridInspector = '1'` — para quem trabalha com ele
+//      ligado por uma sessão inteira e não quer repetir o parâmetro.
+//
+// Segue fora do realm do iframe do Preview Frame mesmo quando pedido: lá o
+// sujeito é o componente isolado, e o float só atrasaria o boot.
+const params = new URLSearchParams(window.location.search)
+const isPreviewFrame = params.has('frame')
+
+let inspectorPedido = false
+try {
+  inspectorPedido = params.has('inspector') || localStorage.getItem('dssGridInspector') === '1'
+} catch {
+  // localStorage pode lançar (janela privada, cookies bloqueados). O parâmetro
+  // de URL continua valendo; o inspector é ferramenta, não pode derrubar a app.
+  inspectorPedido = params.has('inspector')
+}
+
+if (import.meta.env.DEV && !isPreviewFrame && inspectorPedido) {
   Promise.all([
     import('@sansys/grid-inspector'),
     import('@sansys/grid-inspector/styles').catch(() => {}),

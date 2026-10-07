@@ -49,16 +49,6 @@
              sobrou aqui, mova o item para baixo dela e APAGUE esta seção.
              (set/2026: o DssUploader saiu daqui — ganhou TestUploader.vue e o
              frame dele foi aninhado sob o componente, em Campos.) -->
-        <div class="nav-section">
-          <button
-            @click="activeComponent = 'preview-frame-multiselect'"
-            :class="['nav-item', { active: activeComponent === 'preview-frame-multiselect' }]"
-          >
-            <span class="nav-icon"><span class="material-icons">dvr</span></span>
-            <span class="nav-label">Preview Frame · DssMultiselectAutocomplete</span>
-          </button>
-        </div>
-
         <!-- Foundation -->
         <div class="nav-section">
           <button
@@ -78,30 +68,6 @@
               <span class="nav-icon"><span class="material-icons">style</span></span>
               <span class="nav-label">Design Tokens</span>
               <span class="nav-badge">112</span>
-            </button>
-
-            <button
-              @click="activeComponent = 'colors'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'colors' }]"
-            >
-              <span class="nav-icon"><span class="material-icons">gradient</span></span>
-              <span class="nav-label">Colors</span>
-            </button>
-
-            <button
-              @click="activeComponent = 'typography'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'typography' }]"
-            >
-              <span class="nav-icon"><span class="material-icons">title</span></span>
-              <span class="nav-label">Typography</span>
-            </button>
-
-            <button
-              @click="activeComponent = 'spacing'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'spacing' }]"
-            >
-              <span class="nav-icon"><span class="material-icons">space_bar</span></span>
-              <span class="nav-label">Spacing</span>
             </button>
           </div>
         </div>
@@ -132,14 +98,6 @@
                 <span class="nav-icon"><span class="material-icons">smart_button</span></span>
                 <span class="nav-label">DssButton</span>
                 <span class="nav-badge">20</span>
-              </button>
-
-              <button
-                @click="activeComponent = 'icon-button'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'icon-button' }]"
-              >
-                <span class="nav-icon"><span class="material-icons">radio_button_unchecked</span></span>
-                <span class="nav-label">IconButton</span>
               </button>
             </div>
 
@@ -194,15 +152,6 @@
                 <span class="nav-label">DssBtnToggle</span>
               </button>
 
-
-              <button
-                @click="activeComponent = 'alert'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'alert' }]"
-              >
-                <span class="nav-icon"><span class="material-icons">warning_amber</span></span>
-                <span class="nav-label">DssAlert</span>
-              </button>
-
               <button
                 @click="activeComponent = 'icon'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'icon' }]"
@@ -212,11 +161,107 @@
               </button>
 
               <button
-                @click="activeComponent = 'septip'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'septip' }]"
+                @click="activeComponent = 'linearprogress'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'linearprogress' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">linear_scale</span></span>
+                <span class="nav-label">DssLinearProgress</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'banner'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'banner' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">campaign</span></span>
+                <span class="nav-label">DssBanner</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'breadcrumbsel'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'breadcrumbsel' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">chevron_right</span></span>
+                <span class="nav-label">DssBreadcrumbsEl</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'markuptable'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'markuptable' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">table_rows</span></span>
+                <span class="nav-label">DssMarkupTable</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'expansionitem'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'expansionitem' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">unfold_more</span></span>
+                <span class="nav-label">DssExpansionItem</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'separator'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'separator' }]"
               >
                 <span class="nav-icon"><span class="material-icons">horizontal_rule</span></span>
-                <span class="nav-label">Separator &amp; Tooltip</span>
+                <span class="nav-label">DssSeparator</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'tooltip'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'tooltip' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">chat_bubble_outline</span></span>
+                <span class="nav-label">DssTooltip</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'sectiontitle'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'sectiontitle' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">title</span></span>
+                <span class="nav-label">DssSectionTitle</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'brandlogo'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'brandlogo' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">workspace_premium</span></span>
+                <span class="nav-label">DssBrandLogo</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'container'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'container' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">crop_din</span></span>
+                <span class="nav-label">DssContainer</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'layout'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'layout' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">dashboard</span></span>
+                <span class="nav-label">DssLayout</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'pagecontainer'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'pagecontainer' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">crop_free</span></span>
+                <span class="nav-label">DssPageContainer</span>
+              </button>
+
+              <button
+                @click="activeComponent = 'page'"
+                :class="['nav-item nav-subsubitem', { active: activeComponent === 'page' }]"
+              >
+                <span class="nav-icon"><span class="material-icons">article</span></span>
+                <span class="nav-label">DssPage</span>
               </button>
             </div>
 
@@ -234,14 +279,6 @@
                 <span class="nav-icon"><span class="material-icons">account_circle</span></span>
                 <span class="nav-label">DssAvatar</span>
                 <span class="nav-badge">24</span>
-              </button>
-
-              <button
-                @click="activeComponent = 'table'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'table' }]"
-              >
-                <span class="nav-icon"><span class="material-icons">table_chart</span></span>
-                <span class="nav-label">DssTable</span>
               </button>
 
               <button
@@ -269,6 +306,7 @@
             </button>
 
             <div v-show="expandedCategories.formsInput" class="nav-subsubmenu">
+
               <button
                 @click="activeComponent = 'input'"
                 :class="['nav-item nav-subsubitem', { active: activeComponent === 'input' }]"
@@ -313,14 +351,6 @@
                 <span class="nav-label">DssField</span>
               </button>
 
-
-              <button
-                @click="activeComponent = 'uploader'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'uploader' }]"
-              >
-                <span class="nav-icon"><span class="material-icons">cloud_upload</span></span>
-                <span class="nav-label">DssUploader</span>
-              </button>
 
             </div>
 
@@ -371,22 +401,6 @@
                 <span class="nav-icon"><span class="material-icons">crop_portrait</span></span>
                 <span class="nav-label">DssCard</span>
                 <span class="nav-badge">11</span>
-              </button>
-
-              <button
-                @click="activeComponent = 'container'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'container' }]"
-              >
-                <span class="nav-icon"><span class="material-icons">inbox</span></span>
-                <span class="nav-label">DssContainer</span>
-              </button>
-
-              <button
-                @click="activeComponent = 'grid'"
-                :class="['nav-item nav-subsubitem', { active: activeComponent === 'grid' }]"
-              >
-                <span class="nav-icon"><span class="material-icons">grid_on</span></span>
-                <span class="nav-label">DssGrid</span>
               </button>
 
               <button
@@ -463,15 +477,6 @@
 
           <div v-show="expandedCategories.phase3" class="nav-submenu">
             <button
-              @click="activeComponent = 'datacard'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'datacard' }]"
-            >
-              <span class="nav-icon"><span class="material-icons">view_agenda</span></span>
-              <span class="nav-label">DssDataCard</span>
-              <span class="nav-badge stress">stress</span>
-            </button>
-
-            <button
               @click="activeComponent = 'actionmenu'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'actionmenu' }]"
             >
@@ -480,22 +485,77 @@
             </button>
 
             <button
-              @click="activeComponent = 'cadriscard'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'cadriscard' }]"
+              @click="activeComponent = 'datacard'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'datacard' }]"
             >
-              <span class="nav-icon"><span class="material-icons">article</span></span>
-              <span class="nav-label">DssCadrisCard</span>
-              <span class="nav-badge stress">stress</span>
+              <span class="nav-icon"><span class="material-icons">dashboard</span></span>
+              <span class="nav-label">DssDataCard</span>
             </button>
 
             <button
-              @click="activeComponent = 'pagecomplexity'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'pagecomplexity' }]"
+              @click="activeComponent = 'contextheader'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'contextheader' }]"
             >
-              <span class="nav-icon"><span class="material-icons">schema</span></span>
-              <span class="nav-label">PageComplexity</span>
-              <span class="nav-badge stress">stress</span>
+              <span class="nav-icon"><span class="material-icons">badge</span></span>
+              <span class="nav-label">DssContextHeader</span>
             </button>
+
+            <button
+              @click="activeComponent = 'appbar'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'appbar' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">web</span></span>
+              <span class="nav-label">DssAppBar</span>
+            </button>
+
+            <button
+              @click="activeComponent = 'dialog'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'dialog' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">web_asset</span></span>
+              <span class="nav-label">DssDialog</span>
+            </button>
+
+            <button
+              @click="activeComponent = 'form'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'form' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">dynamic_form</span></span>
+              <span class="nav-label">DssForm</span>
+            </button>
+
+            <button
+              @click="activeComponent = 'pageshell'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'pageshell' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">space_dashboard</span></span>
+              <span class="nav-label">DssPageShell</span>
+            </button>
+
+            <button
+              @click="activeComponent = 'table'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'table' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">table_chart</span></span>
+              <span class="nav-label">DssTable</span>
+            </button>
+
+            <button
+              @click="activeComponent = 'uploader'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'uploader' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">cloud_upload</span></span>
+              <span class="nav-label">DssUploader</span>
+            </button>
+
+            <button
+              @click="activeComponent = 'preview-frame-multiselect'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'preview-frame-multiselect' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">checklist</span></span>
+              <span class="nav-label">DssMultiselectAutocomplete</span>
+            </button>
+
           </div>
         </div>
 
@@ -512,47 +572,32 @@
 
           <div v-show="expandedCategories.patterns" class="nav-submenu">
             <button
-              @click="activeComponent = 'parcelamento'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'parcelamento' }]"
+              @click="activeComponent = 'grid-master'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'grid-master' }]"
             >
-              <span class="nav-icon"><span class="material-icons">receipt_long</span></span>
-              <span class="nav-label">Parcelamento</span>
-              <span class="nav-badge stress">real</span>
+              <span class="nav-icon"><span class="material-icons">grid_view</span></span>
+              <span class="nav-label">Grid Master</span>
+              <span class="nav-badge stress">shell</span>
             </button>
 
             <button
-              @click="activeComponent = 'parcelamento-claude'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'parcelamento-claude' }]"
+              @click="activeComponent = 'solicitacoes'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'solicitacoes' }]"
             >
-              <span class="nav-icon"><span class="material-icons">receipt_long</span></span>
-              <span class="nav-label">Parcelamento Claude</span>
-              <span class="nav-badge stress">pixel</span>
+              <span class="nav-icon"><span class="material-icons">filter_alt</span></span>
+              <span class="nav-label">Solicitações</span>
+              <span class="nav-badge stress">board</span>
             </button>
 
             <button
-              @click="activeComponent = 'login'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'login' }]"
+              @click="activeComponent = 'checkin-nfag'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'checkin-nfag' }]"
             >
-              <span class="nav-icon"><span class="material-icons">lock</span></span>
-              <span class="nav-label">Login Forms</span>
+              <span class="nav-icon"><span class="material-icons">fact_check</span></span>
+              <span class="nav-label">Check-in NFAg</span>
+              <span class="nav-badge stress">fluxo</span>
             </button>
 
-            <button
-              @click="activeComponent = 'dashboards'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'dashboards' }]"
-            >
-              <span class="nav-icon"><span class="material-icons">dashboard</span></span>
-              <span class="nav-label">Dashboards</span>
-            </button>
-
-            <button
-              @click="activeComponent = 'atender-solicitacoes'"
-              :class="['nav-item nav-subitem', { active: activeComponent === 'atender-solicitacoes' }]"
-            >
-              <span class="nav-icon"><span class="material-icons">support_agent</span></span>
-              <span class="nav-label">Atender Solicitações</span>
-              <span class="nav-badge stress">real</span>
-            </button>
           </div>
         </div>
       </nav>
@@ -612,8 +657,76 @@
         <TestIcon />
       </div>
 
-      <div v-else-if="activeComponent === 'septip'" class="component-view">
-        <TestSeparatorTooltip />
+      <div v-else-if="activeComponent === 'linearprogress'" class="component-view">
+        <TestLinearProgress />
+      </div>
+
+      <div v-else-if="activeComponent === 'banner'" class="component-view">
+        <TestBanner />
+      </div>
+
+      <div v-else-if="activeComponent === 'breadcrumbsel'" class="component-view">
+        <TestBreadcrumbsEl />
+      </div>
+
+      <div v-else-if="activeComponent === 'markuptable'" class="component-view">
+        <TestMarkupTable />
+      </div>
+
+      <div v-else-if="activeComponent === 'table'" class="component-view">
+        <TestTable />
+      </div>
+
+      <div v-else-if="activeComponent === 'container'" class="component-view">
+        <TestContainer />
+      </div>
+
+      <div v-else-if="activeComponent === 'form'" class="component-view">
+        <TestForm />
+      </div>
+
+      <div v-else-if="activeComponent === 'dialog'" class="component-view">
+        <TestDialog />
+      </div>
+
+      <div v-else-if="activeComponent === 'brandlogo'" class="component-view">
+        <TestBrandLogo />
+      </div>
+
+      <div v-else-if="activeComponent === 'appbar'" class="component-view">
+        <TestAppBar />
+      </div>
+
+      <div v-else-if="activeComponent === 'sectiontitle'" class="component-view">
+        <TestSectionTitle />
+      </div>
+
+      <div v-else-if="activeComponent === 'pageshell'" class="component-view">
+        <TestPageShell />
+      </div>
+
+      <div v-else-if="activeComponent === 'expansionitem'" class="component-view">
+        <TestExpansionItem />
+      </div>
+
+      <div v-else-if="activeComponent === 'separator'" class="component-view">
+        <TestSeparator />
+      </div>
+
+      <div v-else-if="activeComponent === 'tooltip'" class="component-view">
+        <TestTooltip />
+      </div>
+
+      <div v-else-if="activeComponent === 'layout'" class="component-view">
+        <TestLayout />
+      </div>
+
+      <div v-else-if="activeComponent === 'pagecontainer'" class="component-view">
+        <TestPageContainer />
+      </div>
+
+      <div v-else-if="activeComponent === 'page'" class="component-view">
+        <TestPage />
       </div>
 
       <div v-else-if="activeComponent === 'actionmenu'" class="component-view">
@@ -699,34 +812,29 @@
         <TestCard />
       </div>
 
-      <!-- DssDataCard Stress Test View -->
+      <!-- Check-in de Configuração NFAg (Sansys Water · Faturamento › NFAg) -->
+      <div v-else-if="activeComponent === 'checkin-nfag'" class="component-view">
+        <TestCheckinNFAg />
+      </div>
+
+      <!-- Grid master — esqueleto canônico de página do Sansys Water -->
+      <div v-else-if="activeComponent === 'grid-master'" class="component-view">
+        <TestGridMasterDashboard />
+      </div>
+
+      <!-- Solicitações — DssDataBoard com vínculo real à tabela -->
+      <div v-else-if="activeComponent === 'solicitacoes'" class="component-view">
+        <TestSolicitacoes />
+      </div>
+
+      <!-- DssDataCard — Golden Context da Fase 3 -->
       <div v-else-if="activeComponent === 'datacard'" class="component-view">
         <TestDataCard />
       </div>
 
-      <!-- DssCadrisCard Stress Test View -->
-      <div v-else-if="activeComponent === 'cadriscard'" class="component-view">
-        <TestCadrisCard />
-      </div>
-
-      <!-- DssTestPageComplexity Stress Test View -->
-      <div v-else-if="activeComponent === 'pagecomplexity'" class="component-view">
-        <TestPageComplexity />
-      </div>
-
-      <!-- Parcelamento (Sansys Water) — pattern real -->
-      <div v-else-if="activeComponent === 'parcelamento'" class="component-view">
-        <TestParcelamento />
-      </div>
-
-      <!-- Parcelamento Claude — pixel-love fidelity -->
-      <div v-else-if="activeComponent === 'parcelamento-claude'" class="component-view">
-        <TestParcelamentoClaude />
-      </div>
-
-      <!-- Atender Solicitações -->
-      <div v-else-if="activeComponent === 'atender-solicitacoes'" class="component-view">
-        <TestAtenderSolicitacoes />
+      <!-- DssContextHeader — o cabeçalho de contexto do atendimento -->
+      <div v-else-if="activeComponent === 'contextheader'" class="component-view">
+        <TestContextHeader />
       </div>
 
       <!-- Defaults Preview View -->
@@ -779,17 +887,33 @@ import TestField from './TestField.vue'
 import TestUploader from './TestUploader.vue'
 import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
+import TestCheckinNFAg from './TestCheckinNFAg.vue'
+import TestGridMasterDashboard from './TestGridMasterDashboard.vue'
+import TestSolicitacoes from './TestSolicitacoes.vue'
 import TestDataCard from './TestDataCard.vue'
-import TestCadrisCard from './TestCadrisCard.vue'
-import TestPageComplexity from './TestPageComplexity.vue'
-import TestParcelamento from './TestParcelamento.vue'
-import TestParcelamentoClaude from './TestParcelamentoClaude.vue'
-import TestAtenderSolicitacoes from './TestAtenderSolicitacoes.vue'
+import TestContextHeader from './TestContextHeader.vue'
 import TestMenu from './TestMenu.vue'
 import TestToolbar from './TestToolbar.vue'
 import TestList from './TestList.vue'
 import TestIcon from './TestIcon.vue'
-import TestSeparatorTooltip from './TestSeparatorTooltip.vue'
+import TestLinearProgress from './TestLinearProgress.vue'
+import TestBanner from './TestBanner.vue'
+import TestBreadcrumbsEl from './TestBreadcrumbsEl.vue'
+import TestMarkupTable from './TestMarkupTable.vue'
+import TestTable from './TestTable.vue'
+import TestContainer from './TestContainer.vue'
+import TestForm from './TestForm.vue'
+import TestDialog from './TestDialog.vue'
+import TestBrandLogo from './TestBrandLogo.vue'
+import TestAppBar from './TestAppBar.vue'
+import TestSectionTitle from './TestSectionTitle.vue'
+import TestPageShell from './TestPageShell.vue'
+import TestExpansionItem from './TestExpansionItem.vue'
+import TestSeparator from './TestSeparator.vue'
+import TestTooltip from './TestTooltip.vue'
+import TestLayout from './TestLayout.vue'
+import TestPageContainer from './TestPageContainer.vue'
+import TestPage from './TestPage.vue'
 import TestActionMenu from './TestActionMenu.vue'
 
 // Active component state
@@ -1261,6 +1385,27 @@ function onNavOut(e) {
   height: 100%;
   overflow-y: auto;
   animation: fadeIn 0.3s ease;
+
+  /* A barra flutua em vez de empurrar.
+
+     `scrollbar-gutter: stable` reserva a calha SEMPRE, então o conteúdo não
+     salta de largura quando a barra aparece ou some. Combinado com a barra
+     fina e sem trilho (abaixo), ela deixa de disputar espaço com o conteúdo. */
+  scrollbar-gutter: stable;
+}
+
+/* Página que monta o PRÓPRIO layout (DssLayout → QLayout) já tem rolagem
+   interna: o `.q-layout-container > .scroll` do Quasar.
+
+   Sem esta regra havia DUAS rolagens aninhadas na mesma caixa — medido em
+   1192×1000, `.component-view` e `.scroll` ambos com `overflow: auto`. Duas
+   barras para o mesmo eixo é desorientador: a roda do mouse rola uma, a barra
+   de fora não se move, e o usuário não sabe qual está arrastando.
+
+   Quem tem layout próprio manda na própria rolagem; o hospedeiro só segura a
+   caixa. */
+.component-view:has(.q-layout-container) {
+  overflow: hidden;
 }
 
 @keyframes fadeIn {
@@ -1294,21 +1439,24 @@ function onNavOut(e) {
   background: rgba(255, 255, 255, 0.4);
 }
 
+/* Barra discreta: 6px em vez de 10px, trilho transparente em vez do cinza
+   sólido. O trilho opaco desenhava uma faixa permanente na borda direita que
+   lia como parte do layout da página — e não é: é chrome do hospedeiro. */
 .component-view::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 
 .component-view::-webkit-scrollbar-track {
-  background: #e0e0e0;
+  background: transparent;
 }
 
 .component-view::-webkit-scrollbar-thumb {
-  background: #999;
-  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.24);
+  border-radius: 3px;
 }
 
 .component-view::-webkit-scrollbar-thumb:hover {
-  background: #777;
+  background: rgba(0, 0, 0, 0.4);
 }
 
 /* ========================================
