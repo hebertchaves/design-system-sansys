@@ -165,6 +165,43 @@
   }
 
   // ------------------------------------------------------------------
+  // Grupo VERTICAL — conteúdo centrado, ícones em coluna
+  // ------------------------------------------------------------------
+  // EXC-01 — seletores Quasar. Na barra vertical o Quasar alinha a aba ao
+  // INÍCIO (`justify-content: flex-start`), ao contrário da horizontal, que
+  // centra. Medido: aba de 128px com centro em 1297, conteúdo de 75px com
+  // centro em 1286 — o par ícone+rótulo mais curto ficava 11px à esquerda do
+  // eixo, e o grupo lia-se torto.
+  //
+  // Centrar o par resolveria o eixo e QUEBRARIA outra coisa: pares de larguras
+  // diferentes centrados põem os ícones em x diferentes, e a coluna de ícones
+  // — que é o que se varre com o olho num trilho — desaparece.
+  //
+  // A saída é não centrar o par, e sim fazer a CAIXA ocupar a área útil
+  // inteira. Isso é possível porque a largura da aba já é ditada pelo item
+  // mais largo do grupo: com `inline-size: 100%`, a caixa de conteúdo fica
+  // idêntica em todas as abas, a faixa do ícone (`auto`) é a mesma, e a faixa
+  // do rótulo (`1fr`) recebe o resto — também igual. Ícones em coluna, rótulos
+  // centrados na própria faixa, bloco preenchendo o eixo.
+  //
+  // A regra exige ícone E rótulo: numa aba só de ícone a faixa `1fr` vazia
+  // empurraria o glifo para a borda esquerda.
+  .q-tabs--vertical & {
+    justify-content: center;
+
+    &.dss-tab--has-icon.dss-tab--has-label .q-tab__content {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      inline-size: 100%;
+    }
+
+    .q-tab__label {
+      text-align: center;
+    }
+  }
+
+  // ------------------------------------------------------------------
   // Estado desabilitado
   // ------------------------------------------------------------------
   &.dss-tab--disable {

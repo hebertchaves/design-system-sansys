@@ -271,6 +271,42 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "grid",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "auto 1fr",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "opacity",
           "token": "--dss-opacity-disabled",
           "value": null,
