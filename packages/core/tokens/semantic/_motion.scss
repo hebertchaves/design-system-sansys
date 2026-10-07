@@ -37,6 +37,24 @@
   --dss-duration-tooltip: var(--dss-duration-150);
 
   /* ===========================================
+     2b. RETRAÇÃO COORDENADA
+     A "sanfona" dos compostos que trocam de arranjo ao retrair
+     (DssDataBoard, DssContextHeader).
+
+     Mora AQUI, e não no root de cada componente, por uma razão medida: uma
+     custom property declarada no próprio elemento VENCE a que vem do
+     ancestral, e o componente deixaria de ser afinável de fora — um contêiner
+     que pedia 500ms continuava em 250ms. Com o valor no `:root`, qualquer
+     contêiner da tela redeclara e a herança manda.
+
+     Os dois governam as TRÊS camadas da transição de uma vez: a altura (lida
+     em JS por getComputedStyle, em `useCollapseHeight`), o esmaecimento do
+     conteúdo e o giro do chevron.
+     =========================================== */
+  --dss-collapse-duration: var(--dss-duration-base);
+  --dss-collapse-easing: var(--dss-easing-standard);
+
+  /* ===========================================
      ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 4)
      =========================================== */
   /*

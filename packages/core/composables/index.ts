@@ -14,6 +14,15 @@
  * ```
  */
 
+// Input Modality — de onde veio o foco (teclado x ponteiro).
+// Complementa `:focus-visible`, que não separa as duas em campo de TEXTO.
+export { useInputModality } from './useInputModality'
+
+// Altura que acompanha a retração — a sanfona medida, porque `auto → auto`
+// não interpola e o arranjo do bloco muda junto com o estado.
+export { useCollapseHeight } from './useCollapseHeight'
+export type { CollapseHeightOptions } from './useCollapseHeight'
+
 // Color Management
 export { useColorClasses } from './useColorClasses'
 export type { DssColor, ColorClassesOptions } from './useColorClasses'
@@ -29,6 +38,15 @@ export type { ComponentStateOptions } from './useComponentState'
 // Brand Management
 export { useBrand, getBrandColor, BRAND_COLORS } from './useBrand'
 export type { SansysBrand } from './useBrand'
+
+// Validação de campo — registro no motor do QForm (set/2026)
+export { useFieldValidation } from './useFieldValidation'
+export type {
+  DssFieldRule,
+  DssLazyRules,
+  FieldValidationOptions,
+  FieldValidationReturn,
+} from './useFieldValidation'
 
 // Brand para conteúdo teleportado (overlays — Onda P0/T4)
 export { useTeleportedBrand } from './useTeleportedBrand'
