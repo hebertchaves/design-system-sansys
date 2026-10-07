@@ -1,0 +1,44 @@
+// ==========================================================================
+// DssContextHeader — Layer 3: Variants (Retraído)
+// ==========================================================================
+//
+// Retrair NÃO é "o mesmo conteúdo menor". O que acontece é uma mudança de
+// EIXO: as colunas verticais viram uma linha única, e a estrutura inteira
+// passa a caber na altura de um controle.
+//
+// A escolha de QUAIS informações sobrevivem é da camada 1 (`summary`); aqui
+// só mora o arranjo.
+// ==========================================================================
+
+.dss-context-header.dss-context-header--collapsed {
+  // A identidade deita: ícone, matrícula e detalhes lado a lado.
+  .dss-context-header__identity {
+    flex-direction: row;
+    gap: var(--dss-spacing-2);
+    padding-block: var(--dss-spacing-1);
+  }
+
+  .dss-context-header__groups {
+    padding-block: var(--dss-spacing-1);
+  }
+
+  // O grupo sintético do resumo também deita. É o mesmo `<dl>` do estado
+  // expandido — o que muda é a direção, não a marcação.
+  .dss-context-header__group {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--dss-spacing-6);
+
+    // Sem `flex-basis: 0` aqui: no resumo os dois itens têm larguras naturais
+    // muito diferentes (um nome e um endereço inteiro), e reparti-los em
+    // frações iguais truncaria o endereço com espaço sobrando ao lado.
+    flex-basis: auto;
+  }
+
+  // O item do resumo não encolhe até sumir: o rótulo e o começo do valor
+  // precisam continuar legíveis. O endereço, que é o longo, continua
+  // truncando pelo `__value-text`.
+  .dss-context-header__item {
+    flex: 0 1 auto;
+  }
+}

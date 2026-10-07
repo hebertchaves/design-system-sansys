@@ -1,0 +1,117 @@
+// ==========================================================================
+// DssContextHeader — Layer 4: Output (Estados)
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// HOVER / ACTIVE — controles sobre a superfície clara
+// --------------------------------------------------------------------------
+
+.dss-context-header__records:hover,
+.dss-context-header__item-action:hover {
+  background: var(--dss-surface-hover);
+}
+
+.dss-context-header__records:active,
+.dss-context-header__item-action:active {
+  background: var(--dss-surface-active);
+}
+
+// --------------------------------------------------------------------------
+// HOVER / ACTIVE — ladrilhos do trilho
+// --------------------------------------------------------------------------
+
+.dss-context-header__rail-btn:hover {
+  background: var(--dss-action-primary-hover);
+}
+
+.dss-context-header__rail-btn:active {
+  background: var(--dss-action-primary-focus);
+}
+
+// --------------------------------------------------------------------------
+// FOCO VISÍVEL (WCAG 2.4.7 / 2.4.11)
+// --------------------------------------------------------------------------
+
+.dss-context-header__records:focus-visible,
+.dss-context-header__item-action:focus-visible {
+  outline: var(--dss-focus-ring-width) var(--dss-focus-ring-style)
+    var(--dss-focus-primary);
+  outline-offset: var(--dss-focus-ring-offset);
+}
+
+// O anel do trilho NÃO pode ser `--dss-focus-primary`.
+//
+// Esse token é remapeado por marca com a premissa "anel sobre fundo branco",
+// e o ladrilho é pintado com a própria cor da marca — anel e fundo ficam a
+// 1,00:1 e o foco some. É o mesmo defeito já medido no `DssToolbar`.
+//
+// O anel aqui é a cor do TEXTO sobre a ação (o mesmo branco do ícone), e o
+// deslocamento é zero: para fora, o anel cairia sobre o ladrilho vizinho.
+.dss-context-header__rail-btn:focus-visible {
+  outline: var(--dss-focus-ring-width) var(--dss-focus-ring-style)
+    var(--dss-action-primary-text);
+  outline-offset: calc(var(--dss-focus-ring-width) * -1);
+}
+
+// --------------------------------------------------------------------------
+// TEMA ESCURO
+// --------------------------------------------------------------------------
+//
+// Os canais de tom NÃO são remapeados aqui, e isso é resultado: a família
+// `--dss-feedback-*-text` já inverte no `themes/dark/_colors.scss`, então o
+// contraste acompanha o tema sozinho (medido: 11,75 · 7,83 · 11,80 sobre
+// #262626). A versão anterior repetia o remapeamento dentro do componente,
+// o que prendia a correção a esta peça.
+
+// O badge de "adicionar" é um glifo vazado com fundo próprio: no escuro, o
+// fundo precisa acompanhar a superfície, ou fica um disco branco na peça.
+[data-theme='dark'] .dss-context-header__records-badge--add,
+[data-theme='hcdark'] .dss-context-header__records-badge--add {
+  background: var(--dss-surface-default);
+}
+
+// --------------------------------------------------------------------------
+// ALTO CONTRASTE FORÇADO (Windows High Contrast)
+// --------------------------------------------------------------------------
+//
+// O modo forçado descarta cores de fundo. Sem borda explícita, o trilho e o
+// contêiner desaparecem e a peça vira texto solto.
+
+@media (forced-colors: active) {
+  .dss-context-header {
+    border-color: CanvasText;
+  }
+
+  .dss-context-header__rail-btn {
+    border: var(--dss-border-width-thin) solid ButtonText;
+    forced-color-adjust: none;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+
+  .dss-context-header__rail-btn:focus-visible,
+  .dss-context-header__records:focus-visible,
+  .dss-context-header__item-action:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+// --------------------------------------------------------------------------
+// MOVIMENTO REDUZIDO
+// --------------------------------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-context-header__records,
+  .dss-context-header__rail-btn,
+  .dss-context-header__rail-icon--gatilho {
+    transition: none;
+  }
+
+  // O esmaecimento do conteúdo também cai. A altura já é desligada no próprio
+  // composable, que consulta a mesma preferência — com ela ligada, a retração
+  // volta a ser instantânea, que é o que a norma pede.
+  .dss-context-header[data-dss-collapsing] .dss-context-header__identity,
+  .dss-context-header[data-dss-collapsing] .dss-context-header__groups {
+    animation: none;
+  }
+}

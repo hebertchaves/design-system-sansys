@@ -1,0 +1,428 @@
+// ==========================================================================
+// DssContextHeader — Layer 2: Composition (Base)
+// ==========================================================================
+//
+// Três colunas que não negociam entre si:
+//
+//   IDENTIDADE  │  INFORMAÇÕES (n grupos)  │  TRILHO
+//   fixa           elástica                   fixo
+//
+// A do meio é a única que encolhe. As das pontas carregam alvos de toque de
+// 44px e perderiam a WCAG 2.5.5 se cedessem largura.
+// ==========================================================================
+
+.dss-context-header {
+  // ── Canais de tom ──────────────────────────────────────────────────────
+  // Os valores de status ("Ativa", "Inativa") são TEXTO colorido, e texto
+  // colorido responde à WCAG 1.4.3 (4,5:1). Os tokens de feedback PUROS não
+  // servem: `--dss-feedback-success` (#4dd228) dá 1,9:1 sobre branco — eles
+  // são cor de fundo e de ícone.
+  //
+  // Daí a família `-text`, que nasceu desta medição e mora na camada de
+  // tokens. A primeira versão descia ao PRIMITIVO aqui (`--dss-positive-deep`)
+  // e o gate §L reprovou, com razão: primitivo não acompanha tema, e o
+  // remapeamento do escuro ficava preso dentro do componente em vez de valer
+  // para quem mais precisasse de status legível.
+  --dss-context-header-tone-positive: var(--dss-feedback-success-text);
+  --dss-context-header-tone-negative: var(--dss-feedback-error-text);
+  --dss-context-header-tone-info: var(--dss-feedback-info-text);
+
+  display: flex;
+  // `stretch`: o trilho vai do topo à base. Sem isto ele teria a altura do
+  // próprio conteúdo e a faixa azul pararia no meio da peça.
+  align-items: stretch;
+
+  background: var(--dss-surface-default);
+  border: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  border-radius: var(--dss-radius-md);
+
+  // O trilho é retangular e pinta até a borda; sem o recorte, o canto azul
+  // vaza por cima do arredondamento do contêiner.
+  overflow: hidden;
+}
+
+// --------------------------------------------------------------------------
+// IDENTIDADE
+// --------------------------------------------------------------------------
+
+.dss-context-header__identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dss-spacing-1);
+
+  // Não encolhe: carrega dois alvos de toque.
+  flex: 0 0 auto;
+
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+  border-inline-end: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+}
+
+// Botão de registros — o ícone do imóvel com o badge.
+.dss-context-header__records {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  // O alvo É a caixa visual: este botão não estende área por pseudo-elemento.
+  inline-size: var(--dss-touch-target-md);
+  block-size: var(--dss-touch-target-md);
+
+  padding: var(--dss-spacing-0);
+  border: 0;
+  border-radius: var(--dss-radius-md);
+  background: transparent;
+  color: var(--dss-text-body);
+  cursor: pointer;
+
+  transition: background-color var(--dss-duration-fast) var(--dss-easing-standard);
+}
+
+// CCI §2.2: o `DssIcon` com `inline` NÃO emite classe de tamanho — quem manda
+// é o `font-size` do hospedeiro. `size` aqui seria contraditório e silencioso.
+.dss-context-header__records-icon {
+  font-size: var(--dss-icon-size-lg);
+}
+
+// O badge sobreposto ao canto do ícone.
+//
+// `pointer-events: none` é o que mantém UM alvo: o clique atravessa o badge e
+// chega ao botão por baixo. Sem isso, acertar o número não abriria o modal —
+// e o número é justamente a parte que chama o olho.
+.dss-context-header__records-badge {
+  position: absolute;
+  inset-block-start: var(--dss-spacing-1);
+  inset-inline-end: var(--dss-spacing-0);
+  pointer-events: none;
+
+  // O `DssBadge` nasce com 24px de altura mínima (um badge de barra). Sobre um
+  // ícone de 32px ele cobriria um terço do glifo; 20px deixa o imóvel legível.
+  min-inline-size: var(--dss-compact-control-height-xs);
+  min-block-size: var(--dss-compact-control-height-xs);
+  padding: var(--dss-spacing-0) var(--dss-spacing-1);
+}
+
+// Estado SEM registros: o badge é o `add_circle`, não um número.
+.dss-context-header__records-badge--add {
+  font-size: var(--dss-icon-size-sm);
+  color: var(--dss-feedback-error);
+  // O glifo é vazado no meio; sem fundo próprio o ícone do imóvel aparece
+  // dentro do anel e o sinal perde a leitura.
+  background: var(--dss-surface-default);
+  border-radius: var(--dss-radius-circle);
+}
+
+.dss-context-header__identifier {
+  margin: var(--dss-spacing-0);
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-sm-tight);
+  font-weight: var(--dss-font-weight-bold);
+  color: var(--dss-text-body);
+  white-space: nowrap;
+}
+
+// --------------------------------------------------------------------------
+// INFORMAÇÕES
+// --------------------------------------------------------------------------
+
+.dss-context-header__groups {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-6);
+
+  // A ÚNICA coluna elástica. `min-inline-size: 0` é o que permite ao texto
+  // truncar: sem isso o item de flex não encolhe abaixo do conteúdo e empurra
+  // o trilho para fora da peça.
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  // Medido no playground: numa faixa de 280px as três colunas eram espremidas
+  // abaixo do próprio conteúdo e os textos se SOBREPUNHAM — o item de flex não
+  // encolhe abaixo do min-content por padrão, então ele vazava do grupo em vez
+  // de caber nele. O recorte é o cinto de segurança; quem de fato resolve é o
+  // piso de largura do grupo, logo abaixo.
+  overflow: hidden;
+
+  padding: var(--dss-spacing-2) var(--dss-spacing-3);
+}
+
+// Cada grupo é um `<dl>` — daí o reset de margem.
+.dss-context-header__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--dss-spacing-1);
+
+  flex-shrink: 1;
+  flex-basis: 0;
+  // Piso de largura: abaixo disto a coluna não carrega nem o rótulo mais curto,
+  // e deixar que ela encolha até zero foi exatamente o que produziu a
+  // sobreposição. Com o piso, o que falta vira recorte — visível e honesto —,
+  // não texto em cima de texto.
+  min-inline-size: var(--dss-spacing-32);
+  overflow: hidden;
+
+  margin: var(--dss-spacing-0);
+}
+
+// GRID, e não flex, e a diferença é a ORDEM em que as duas partes cedem.
+//
+// O certo é o valor truncar primeiro e o rótulo ficar inteiro: "Proprie…" não
+// diz nada, "(CPF: 000…" ainda diz. Em flex isso não se exprime — a redução é
+// proporcional à base, e o rótulo, que é o texto mais longo, encolhia MAIS que
+// o valor. Medido: `Proprie… Mora… End… Localiz… Tipo de Cobr…`.
+//
+// Em grid, a faixa `minmax(0, 1fr)` do valor absorve a falta de espaço até
+// chegar a zero, e só então a faixa `auto` do rótulo é comprimida. A prioridade
+// vira propriedade do layout, não uma aritmética de `flex-shrink`.
+.dss-context-header__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--dss-spacing-2);
+  min-inline-size: 0;
+}
+
+.dss-context-header__label {
+  // Último recurso: só entra quando nem a faixa do rótulo coube.
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-sm-tight);
+  color: var(--dss-text-secondary);
+}
+
+.dss-context-header__value {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-1);
+
+  min-inline-size: 0;
+  // `<dd>` nasce com recuo de 40px no UA stylesheet.
+  margin: var(--dss-spacing-0);
+
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-sm-tight);
+  color: var(--dss-text-body);
+}
+
+// Trunca em UMA linha. A altura da faixa é o recurso escasso aqui — quebrar
+// linha empurraria o conteúdo da tela para baixo a cada endereço longo. O
+// valor inteiro continua no `title` e na árvore de acessibilidade.
+.dss-context-header__value-text {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dss-context-header__value[data-tone='positive'] {
+  color: var(--dss-context-header-tone-positive);
+  // A WCAG 1.4.1 proíbe informação transmitida SÓ por cor. O peso é o segundo
+  // canal: "Ativa" e "Inativa" continuam distinguíveis em escala de cinza.
+  font-weight: var(--dss-font-weight-semibold);
+}
+
+.dss-context-header__value[data-tone='negative'] {
+  color: var(--dss-context-header-tone-negative);
+  font-weight: var(--dss-font-weight-semibold);
+}
+
+.dss-context-header__value[data-tone='info'] {
+  color: var(--dss-context-header-tone-info);
+  font-weight: var(--dss-font-weight-semibold);
+}
+
+// Ação de linha — o ícone à direita do valor.
+.dss-context-header__item-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+
+  // Altura VISUAL de 20px; o alvo de toque de 44px vem do `::before`, que o
+  // Cartão Base reserva exatamente para isto. Uma caixa de 44px aqui abriria
+  // um rombo entre as linhas de 4 informações empilhadas.
+  position: relative;
+  inline-size: var(--dss-icon-size-sm);
+  block-size: var(--dss-icon-size-sm);
+
+  padding: var(--dss-spacing-0);
+  border: 0;
+  border-radius: var(--dss-radius-sm);
+  background: transparent;
+  color: var(--dss-text-action);
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    inline-size: var(--dss-touch-target-md);
+    block-size: var(--dss-touch-target-md);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.dss-context-header__item-action-icon {
+  font-size: var(--dss-icon-size-sm);
+}
+
+// --------------------------------------------------------------------------
+// TRILHO
+// --------------------------------------------------------------------------
+
+.dss-context-header__rail {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+
+  // O fio entre os ladrilhos é o fundo do trilho aparecendo pelo `gap`.
+  gap: var(--dss-border-width-thin);
+  background: var(--dss-border-subtle);
+}
+
+.dss-context-header__rail-slot {
+  // Os ladrilhos dividem a altura da peça em partes iguais. `flex-basis: 0`
+  // com `flex-grow: 1` reparte o espaço, e o `min-block-size` impede que a
+  // divisão leve algum deles abaixo do mínimo da WCAG 2.5.5.
+  flex: 1 1 0;
+  min-block-size: var(--dss-touch-target-md);
+}
+
+.dss-context-header__rail-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  inline-size: var(--dss-touch-target-md);
+  block-size: 100%;
+  min-block-size: var(--dss-touch-target-md);
+
+  padding: var(--dss-spacing-0);
+  border: 0;
+  background: var(--dss-action-primary);
+  color: var(--dss-action-primary-text);
+  cursor: pointer;
+
+  transition: background-color var(--dss-duration-fast) var(--dss-easing-standard);
+}
+
+.dss-context-header__rail-icon {
+  font-size: var(--dss-icon-size-md);
+}
+
+// --------------------------------------------------------------------------
+// MOVIMENTO
+// --------------------------------------------------------------------------
+//
+// `--dss-collapse-duration` e `--dss-collapse-easing` vêm do `:root`
+// (tokens/semantic/_motion.scss) e NÃO são declarados aqui de propósito: uma
+// custom property declarada no próprio elemento vence a que vem do ancestral,
+// e o cabeçalho deixaria de ser afinável de fora — medido, um contêiner que
+// pedia 500ms continuava em 250ms.
+
+// O chevron do gatilho GIRA; não troca de glifo.
+.dss-context-header__rail-icon--gatilho {
+  transition: transform var(--dss-collapse-duration) var(--dss-collapse-easing);
+}
+
+.dss-context-header--collapsed .dss-context-header__rail-icon--gatilho {
+  transform: rotate(180deg);
+}
+
+.dss-context-header__rail-badge {
+  position: absolute;
+  inset-block-start: var(--dss-spacing-0);
+  inset-inline-end: var(--dss-spacing-0);
+  pointer-events: none;
+
+  min-inline-size: var(--dss-compact-control-height-xs);
+  min-block-size: var(--dss-compact-control-height-xs);
+  padding: var(--dss-spacing-0) var(--dss-spacing-1);
+}
+
+// --------------------------------------------------------------------------
+// O esmaecimento que suaviza a TROCA DE ARRANJO
+// --------------------------------------------------------------------------
+//
+// A altura é medida em JS; o conteúdo é assunto do CSS. `data-dss-collapsing`
+// é ligado pelo composable no instante zero e desligado no fim — o conteúdo
+// novo, que já nasceu no arranjo novo (identidade deitada, resumo no lugar da
+// lista), entra esmaecendo em vez de aparecer pronto sobre a caixa ainda em
+// movimento.
+//
+// O TRILHO fica de fora: esmaecer o botão que a pessoa acabou de clicar é
+// perder o único ponto fixo da cena.
+.dss-context-header[data-dss-collapsing] .dss-context-header__identity,
+.dss-context-header[data-dss-collapsing] .dss-context-header__groups {
+  animation: dss-context-header-surgir var(--dss-collapse-duration)
+    var(--dss-easing-decelerate);
+}
+
+@keyframes dss-context-header-surgir {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+// --------------------------------------------------------------------------
+// DICAS
+// --------------------------------------------------------------------------
+
+// Âncora de posicionamento. O `DssTooltip` declara posicionamento FORA DE
+// ESCOPO — quem posiciona é o host, e o host é este composto. A regra vive
+// aqui, na camada do PAI, nunca injetada no filho com `:deep()`.
+.dss-context-header__hint-anchor {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dss-context-header__hint {
+  position: absolute;
+  z-index: var(--dss-z-index-20);
+  white-space: nowrap;
+  // Fora do fluxo e sem alvo: a dica não pode roubar o ponteiro do controle
+  // que a abriu — o `mouseleave` dispararia ao entrar nela.
+  pointer-events: none;
+}
+
+.dss-context-header__hint--below {
+  inset-block-start: 100%;
+  inset-inline-start: var(--dss-spacing-0);
+  margin-block-start: var(--dss-spacing-1);
+}
+
+// As dicas do trilho abrem para DENTRO da peça: o trilho encosta na borda
+// direita da tela em telas estreitas, e uma dica à direita sairia do viewport.
+.dss-context-header__hint--before {
+  inset-inline-end: 100%;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  margin-inline-end: var(--dss-spacing-2);
+}
+
+// --------------------------------------------------------------------------
+// UTILITÁRIO LOCAL
+// --------------------------------------------------------------------------
+
+// Visualmente oculto, NÃO `display: none`: o texto precisa existir na árvore
+// de acessibilidade para o leitor de tela dizer o que o número é.
+.dss-context-header__sr-only {
+  position: absolute;
+  inline-size: var(--dss-spacing-px);
+  block-size: var(--dss-spacing-px);
+  padding: var(--dss-spacing-0);
+  margin: calc(var(--dss-spacing-px) * -1);
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

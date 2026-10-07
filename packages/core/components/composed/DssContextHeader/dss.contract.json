@@ -1,0 +1,1354 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssContextHeader",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Context Header",
+    "tagline": "O cabeçalho que acompanha o atendente: quem está sendo atendido e o que fazer com a sessão.",
+    "category": "Casca da aplicação — contexto do atendimento",
+    "classification": "Action",
+    "phase": 3,
+    "status": "draft",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssPageShell"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "identifier",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Identificação do registro em atendimento (matrícula, protocolo, contrato).",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "identifierLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Matrícula",
+        "description": "Nome acessível do identificador, lido ANTES dele.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "identityIcon",
+        "type": "string",
+        "controlHint": "text",
+        "default": "domain",
+        "description": "Ícone da coluna de identidade. @default 'domain'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "recordsCount",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Quantas informações estão cadastradas no modal de registros.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "recordsAddLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Adicionar informações do imóvel",
+        "description": "Nome acessível do botão de registros, no estado SEM registros.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "recordsLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Ver {n} informações do imóvel",
+        "description": "Nome acessível do botão de registros, no estado COM registros.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "detailsLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Detalhes",
+        "description": "Rótulo do botão de detalhes.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "detailsIcon",
+        "type": "string",
+        "controlHint": "text",
+        "default": "add",
+        "description": "Ícone do botão de detalhes. @default 'add'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "detailsTooltip",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Ver detalhes do cadastro",
+        "description": "Dica do botão de detalhes. @default 'Ver detalhes do cadastro'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "groups",
+        "type": "ContextHeaderGroup[]",
+        "controlHint": "text",
+        "description": "As informações do registro, agrupadas em colunas.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "summary",
+        "type": "string[]",
+        "controlHint": "text",
+        "description": "Quais informações continuam visíveis quando o cabeçalho RETRAI.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Cabeçalho retraído (`v-model:collapsed`).",
+        "category": "Aparência",
+        "categorySource": "css-variants"
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Mostra o gatilho de retrair/expandir. @default true",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "openCount",
+        "type": "number",
+        "controlHint": "stepper",
+        "description": "Quantos atendimentos estão em aberto — badge do botão de alternar.",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "switchable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Mostra o botão de alternar atendimento. @default true",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "creatable",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Mostra o botão de iniciar novo atendimento. @default true",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "switchIcon",
+        "type": "string",
+        "controlHint": "text",
+        "default": "switch_account",
+        "description": "Ícone do botão de alternar. @default 'switch_account'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "switchLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Alterar atendimento",
+        "description": "Dica do botão de alternar. @default 'Alterar atendimento'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "createIcon",
+        "type": "string",
+        "controlHint": "text",
+        "default": "add",
+        "description": "Ícone do botão de novo atendimento. @default 'add'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "createLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Iniciar novo atendimento",
+        "description": "Dica do botão de novo atendimento. @default 'Iniciar novo atendimento'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "collapseLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Minimizar cabeçalho",
+        "description": "Dica do gatilho quando EXPANDIDO. @default 'Minimizar cabeçalho'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "expandLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Maximizar cabeçalho",
+        "description": "Dica do gatilho quando RETRAÍDO. @default 'Maximizar cabeçalho'",
+        "category": "Outros",
+        "categorySource": "nenhuma"
+      },
+      {
+        "name": "brand",
+        "type": "ContextHeaderBrand | null",
+        "controlHint": "picker-brand",
+        "description": "Marca aplicada localmente; emite `data-brand` no root.",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Contexto do atendimento",
+        "description": "Nome acessível da região. @default 'Contexto do atendimento'",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:collapsed",
+        "payload": "boolean"
+      },
+      {
+        "name": "open-records",
+        "description": "O botão de identidade (ícone + badge) foi acionado."
+      },
+      {
+        "name": "open-details",
+        "description": "O botão de detalhes foi acionado."
+      },
+      {
+        "name": "switch",
+        "description": "Alternar entre atendimentos em aberto."
+      },
+      {
+        "name": "create",
+        "description": "Iniciar um novo atendimento."
+      },
+      {
+        "name": "item-action",
+        "payload": "string",
+        "description": "A ação de uma linha foi acionada; o payload é o `name` da informação."
+      }
+    ],
+    "slots": [
+      {
+        "name": "identity",
+        "scope": null,
+        "description": "Conteúdo da coluna de identidade, no lugar do identificador."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "identifier": "652701-9",
+        "recordsCount": 2,
+        "openCount": 2,
+        "summary": [
+          "morador",
+          "endereco"
+        ],
+        "groups": [
+          {
+            "name": "pessoas",
+            "label": "Pessoas e endereço",
+            "span": 2,
+            "items": [
+              {
+                "name": "proprietario",
+                "label": "Proprietário",
+                "value": "(CPF: 000.000.000-00) - Nome e Sobrenome Proprietário",
+                "action": {
+                  "icon": "badge",
+                  "label": "Visualizar cliente"
+                }
+              },
+              {
+                "name": "morador",
+                "label": "Morador",
+                "value": "(CPF: 000.000.000-00) - Nome e Sobrenome Morador",
+                "action": {
+                  "icon": "badge",
+                  "label": "Visualizar cliente"
+                }
+              },
+              {
+                "name": "endereco",
+                "label": "Endereço",
+                "value": "Rua logradouro do Usuário, 123 - 00000-000 - Bairro, Cidade - UF"
+              }
+            ]
+          },
+          {
+            "name": "cadastro",
+            "label": "Dados técnicos",
+            "items": [
+              {
+                "name": "rota",
+                "label": "Rota Leitura",
+                "value": "0000.00.00"
+              },
+              {
+                "name": "localizacao",
+                "label": "Localização",
+                "value": "00.00.0000.0000.0000"
+              },
+              {
+                "name": "cobranca",
+                "label": "Tipo de Cobrança",
+                "value": "Pagamento Caixa"
+              }
+            ]
+          },
+          {
+            "name": "situacao",
+            "label": "Situação das ligações",
+            "items": [
+              {
+                "name": "agua",
+                "label": "Ligação água",
+                "value": "Ativa",
+                "tone": "positive"
+              },
+              {
+                "name": "esgoto",
+                "label": "Ligação esgoto",
+                "value": "Inativa",
+                "tone": "negative"
+              },
+              {
+                "name": "lixo",
+                "label": "Situação Lixo",
+                "value": "Ativa (Cobrança na Fatura)"
+              }
+            ]
+          }
+        ]
+      },
+      "slots": {}
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "stretch",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "3-variants/_collapsed.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-inline-end",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "block-size",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "transparent",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "pointer",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-fast",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-block-start",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-inline-end",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-inline-size",
+          "token": "--dss-compact-control-height-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-block-size",
+          "token": "--dss-compact-control-height-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-circle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-sm-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-bold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "3-variants/_collapsed.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1 1 auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-inline-size",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-basis",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-inline-size",
+          "token": "--dss-spacing-32",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "grid",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "auto minmax(0, 1fr)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "3-variants/_collapsed.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "ellipsis",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-secondary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-context-header-tone-positive",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-context-header-tone-negative",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-context-header-tone-info",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "relative",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "block-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-action",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "\"\"",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-inline-start",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-block-start",
+          "token": null,
+          "value": "50%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translate(-50%, -50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-border-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1 1 0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-block-size",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "block-size",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary-text",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-collapse-duration",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "rotate(180deg)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-block-start",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "animation",
+          "token": "--dss-collapse-duration",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "z-index",
+          "token": "--dss-z-index-20",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-block-start",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-inline-start",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-block-start",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-inline-end",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transform",
+          "token": null,
+          "value": "translateY(-50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-inline-end",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "block-size",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "clip-path",
+          "token": null,
+          "value": "inset(50%)",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "row",
+          "source": "3-variants/_collapsed.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "3-variants/_collapsed.scss"
+        },
+        {
+          "property": "flex-basis",
+          "token": null,
+          "value": "auto",
+          "source": "3-variants/_collapsed.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 1 auto",
+          "source": "3-variants/_collapsed.scss"
+        },
+        {
+          "property": "border-color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "ButtonFace",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "animation",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background",
+          "token": "--dss-surface-hover",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-action-primary-hover",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-focus-ring-width",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-focus-ring-offset",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-focus-ring-width",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "active": [
+        {
+          "property": "background",
+          "token": "--dss-surface-active",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-action-primary-focus",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography",
+      "z-index"
+    ],
+    "instances": [
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-fast",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-compact-control-height-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-circle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-sm-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-bold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-32",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-secondary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-context-header-tone-positive",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-context-header-tone-negative",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-context-header-tone-info",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-action",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary-text",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-collapse-duration",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-z-index-20",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-px",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-action-primary-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-focus-ring-width",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-ring-offset",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-surface-active",
+        "usedIn": [
+          "active"
+        ]
+      },
+      {
+        "name": "--dss-action-primary-focus",
+        "usedIn": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Todo botão sem rótulo visível declara aria-label, e as contagens entram no nome porque os badges são aria-hidden: 'Ver {n} informações do imóvel', 'Alterar atendimento (2 em aberto)'. Âncoras em DssContextHeader.test.js: \"a contagem está no NOME do botão — o badge é aria-hidden\" e \"os três botões têm nome acessível\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Cada grupo é um <dl> e cada informação um par <dt>/<dd>: a relação rótulo↔valor é semântica, não um alinhamento. O leitor de tela anuncia 'Ligação água, Ativa' em vez de dois textos soltos. Âncora em DssContextHeader.test.js: \"cada grupo vira um <dl> e cada informação um par dt/dd\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Os tons de status usam canais remapeados por tema — --dss-positive-deep / --dss-negative-hover / --dss-info-deep no claro (6,94:1 · 8,01:1 · 5,35:1 medidos sobre --dss-surface-default) e os níveis -light no escuro (11,75:1 · 7,83:1 · 11,80:1 sobre #262626). Os tokens de feedback puros reprovariam: --dss-positive dá 1,9:1 sobre branco. 2-composition/_base.scss e 4-output/_states.scss.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "O tom nunca é o único canal: --dss-font-weight-semibold acompanha a cor, então 'Ativa' e 'Inativa' continuam distinguíveis em escala de cinza. 2-composition/_base.scss, seletores .dss-context-header__value[data-tone].",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "O botão de registros e os ladrilhos do trilho declaram inline-size/block-size de var(--dss-touch-target-md) — 44px nos dois eixos, porque não estendem área por pseudo-elemento. A ação de linha tem 20px visuais e o alvo de 44px no ::before. 2-composition/_base.scss.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Todo controle tem anel em :focus-visible. O anel do trilho NÃO usa --dss-focus-primary: esse token é remapeado por marca com a premissa 'anel sobre fundo branco', e o ladrilho é pintado com a cor da marca — anel e fundo ficariam a 1,00:1, o mesmo defeito já medido no DssToolbar. Lá o anel é --dss-action-primary-text com deslocamento negativo. 4-output/_states.scss.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.13",
+        "level": "AA",
+        "implementation": "As dicas abrem por mouseenter E focusin, e fecham por mouseleave/focusout — quem navega por teclado vê a mesma dica. O DssTooltip não governa a própria visibilidade: quem liga o gatilho é o host. Âncora em DssContextHeader.test.js: \"a dica também abre por foco — WCAG 1.4.13 vale para teclado\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Todos os controles são <button type=\"button\"> nativos: Enter e Espaço acionam sem código próprio, e não há handler de teclado customizado que pudesse engolir a tecla.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "2.3.3",
+        "level": "AAA",
+        "implementation": "A animação de retração é desligada por `prefers-reduced-motion: reduce` em três frentes: o `useCollapseHeight` consulta a preferência e não trava altura nenhuma; `4-output/_states.scss` zera o esmaecimento do conteúdo e o giro do chevron. Nenhuma informação depende da animação — o estado também é anunciado por `aria-expanded`.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "region",
+      "states": [
+        "aria-label",
+        "aria-expanded",
+        "aria-controls",
+        "aria-hidden"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "percorre registros, detalhes, ações de linha e o trilho, na ordem do DOM"
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "aciona o controle focado"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssContextHeader.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_collapsed.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/context-header.types.ts",
+    "docs": {
+      "normative": "DssContextHeader.md",
+      "api": "DSSCONTEXTHEADER_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssContextHeader.example.vue",
+    "tests": "DssContextHeader.test.js"
+  }
+}

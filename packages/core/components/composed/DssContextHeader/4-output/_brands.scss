@@ -1,0 +1,18 @@
+// ==========================================================================
+// DssContextHeader — Layer 4: Brands
+// ==========================================================================
+//
+// VAZIO POR DESIGN, e isso é resultado, não omissão.
+//
+// O cabeçalho consome `--dss-action-primary`, `--dss-action-primary-hover`,
+// `--dss-action-primary-focus` e `--dss-action-primary-text` (o trilho) e
+// `--dss-text-action` (as ações de linha). Todos são remapeados por
+// `[data-brand]` na camada de tokens, então a marca chega sozinha.
+//
+// A prop `brand` emite `data-brand` no root e REMAPEIA o token; ela não pinta
+// elemento nenhum. É o §K5 do checklist de composto.
+//
+// As classes `.dss-context-header--brand-*` existem como ponto de ancoragem
+// para teste e para um eventual ajuste por marca — hoje nenhuma precisa de
+// regra, e inventar uma seria pintar o primitivo.
+// ==========================================================================

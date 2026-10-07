@@ -1,0 +1,8 @@
+// ==========================================================================
+// DssContextHeader — ORQUESTRADOR
+// Ordem obrigatória: L2 (base) → L3 (variantes) → L4 (saída)
+// ==========================================================================
+
+@use './2-composition/base';
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;

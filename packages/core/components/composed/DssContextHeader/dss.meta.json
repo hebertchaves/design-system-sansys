@@ -1,0 +1,328 @@
+{
+  "component": "DssContextHeader",
+  "dssVersion": "2.2",
+  "status": "draft",
+  "goldenReference": "DssChip",
+  "goldenReferenceJustification": "DssChip é o Golden Reference interativo global. O cabeçalho é uma superfície, mas carrega cinco controles próprios e precisa cumprir defineOptions, inheritAttrs e repasse explícito de $attrs.",
+  "goldenContext": "DssPageShell",
+  "goldenContextJustification": "DssPageShell é o outro composto de CASCA do DSS — ambos fixam um arranjo de colunas com um trilho de alvos de toque de 44px numa delas, e ambos existem para hospedar conteúdo que não conhecem.",
+  "category": "Casca da aplicação — contexto do atendimento",
+  "classification": "Action",
+  "classificationNote": "A superfície é passiva, mas o componente existe para oferecer cinco ações: dois modais, duas ações de sessão e a retração.",
+  "tagline": "O cabeçalho que acompanha o atendente: quem está sendo atendido e o que fazer com a sessão.",
+  "phase": 3,
+  "phaseDescription": "Fase 3 — Composto. Fixa o arranjo identidade + informações + trilho; compõe DssIcon, DssBadge, DssButton e DssTooltip.",
+  "previewGroup": "layout",
+  "hasReservations": false,
+  "subcomponents": [],
+  "compositionRequirements": [],
+  "compositionRecommendations": [
+    "DssDialog nos handlers de open-records e open-details",
+    "DssPageShell abaixo, para o conteúdo da tela",
+    "DssAppBar acima, dentro do mesmo DssLayout"
+  ],
+  "propsExposed": [
+    "identifier",
+    "identifierLabel",
+    "identityIcon",
+    "recordsCount",
+    "recordsAddLabel",
+    "recordsLabel",
+    "detailsLabel",
+    "detailsIcon",
+    "detailsTooltip",
+    "groups",
+    "summary",
+    "collapsed",
+    "collapsible",
+    "openCount",
+    "switchable",
+    "creatable",
+    "switchIcon",
+    "switchLabel",
+    "createIcon",
+    "createLabel",
+    "collapseLabel",
+    "expandLabel",
+    "brand",
+    "ariaLabel"
+  ],
+  "propsBlocked": [
+    "rows",
+    "openAttendances",
+    "columns",
+    "tone:warning"
+  ],
+  "propsBlockedJustification": "Não recebe dados nem a lista de atendimentos abertos: buscar ou hospedar dados o tornaria um componente de DADOS e o acoplaria à API de um produto — ele emite `switch` e informa a contagem, e a página resolve. Não há `columns`: o número de colunas é o número de grupos, e declarar os dois criaria duas fontes para o mesmo fato. Não há tom `warning`: a regra de a11y de tokens/globals.scss declara que não existe contraste seguro entre o amarelo da paleta e fundo claro — nem --dss-warning-deep fecha 4,5:1 (máx. 4,36).",
+  "emitsExposed": [
+    "update:collapsed",
+    "open-records",
+    "open-details",
+    "switch",
+    "create",
+    "item-action"
+  ],
+  "slotsExposed": [
+    "identity",
+    "item-[name]"
+  ],
+  "statesApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "collapsed",
+    "collapsing",
+    "forced-colors",
+    "reduced-motion"
+  ],
+  "statesNotApplicable": [
+    "disabled",
+    "loading"
+  ],
+  "statesNotApplicableJustification": "O cabeçalho é contexto permanente da jornada: desabilitá-lo esconderia de quem o operador está atendendo. Carregamento é estado de quem serve os dados — enquanto eles não chegam, `groups` é uma lista vazia e a coluna renderiza sem itens.",
+  "accessibility": {
+    "role": "region nomeada; os controles são <button> nativos",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Botão de registros e os três ladrilhos do trilho: --dss-touch-target-md (44px), a caixa visual É o alvo. A ação de linha tem 20px de altura VISUAL e o alvo de 44px vem do ::before, que o Cartão Base reserva para isso.",
+    "keyboardNavigation": "Tab percorre registros → detalhes → ações de linha → trilho, na ordem do DOM. Todos são <button> nativos: Enter e Espaço acionam sem código próprio.",
+    "nomeDosBotoes": "Nenhum controle tem rótulo visível além do botão de detalhes. Todos declaram aria-label, e as contagens entram no NOME porque os badges são aria-hidden.",
+    "badgesDecorativos": "Os dois badges são aria-hidden: a contagem já está no aria-label do botão. Sem isso o leitor de tela anuncia o número duas vezes, na segunda sem dizer de que ele é contagem.",
+    "tomNuncaSozinho": "Os tons mudam cor E peso da fonte. Informação transmitida só por cor reprova a WCAG 1.4.1.",
+    "movimento": "A retração é animada: a altura da peça transita entre os dois arranjos (useCollapseHeight) e o conteúdo novo entra esmaecendo. `prefers-reduced-motion: reduce` desliga as três camadas — altura, esmaecimento e giro do chevron — e a troca volta a ser instantânea."
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Todo botão sem rótulo visível declara aria-label, e as contagens entram no nome porque os badges são aria-hidden: 'Ver {n} informações do imóvel', 'Alterar atendimento (2 em aberto)'. Âncoras em DssContextHeader.test.js: \"a contagem está no NOME do botão — o badge é aria-hidden\" e \"os três botões têm nome acessível\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "Cada grupo é um <dl> e cada informação um par <dt>/<dd>: a relação rótulo↔valor é semântica, não um alinhamento. O leitor de tela anuncia 'Ligação água, Ativa' em vez de dois textos soltos. Âncora em DssContextHeader.test.js: \"cada grupo vira um <dl> e cada informação um par dt/dd\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Os tons de status usam canais remapeados por tema — --dss-positive-deep / --dss-negative-hover / --dss-info-deep no claro (6,94:1 · 8,01:1 · 5,35:1 medidos sobre --dss-surface-default) e os níveis -light no escuro (11,75:1 · 7,83:1 · 11,80:1 sobre #262626). Os tokens de feedback puros reprovariam: --dss-positive dá 1,9:1 sobre branco. 2-composition/_base.scss e 4-output/_states.scss.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "O tom nunca é o único canal: --dss-font-weight-semibold acompanha a cor, então 'Ativa' e 'Inativa' continuam distinguíveis em escala de cinza. 2-composition/_base.scss, seletores .dss-context-header__value[data-tone].",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "O botão de registros e os ladrilhos do trilho declaram inline-size/block-size de var(--dss-touch-target-md) — 44px nos dois eixos, porque não estendem área por pseudo-elemento. A ação de linha tem 20px visuais e o alvo de 44px no ::before. 2-composition/_base.scss.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "2.4.7",
+        "level": "AA",
+        "implementation": "Todo controle tem anel em :focus-visible. O anel do trilho NÃO usa --dss-focus-primary: esse token é remapeado por marca com a premissa 'anel sobre fundo branco', e o ladrilho é pintado com a cor da marca — anel e fundo ficariam a 1,00:1, o mesmo defeito já medido no DssToolbar. Lá o anel é --dss-action-primary-text com deslocamento negativo. 4-output/_states.scss.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.13",
+        "level": "AA",
+        "implementation": "As dicas abrem por mouseenter E focusin, e fecham por mouseleave/focusout — quem navega por teclado vê a mesma dica. O DssTooltip não governa a própria visibilidade: quem liga o gatilho é o host. Âncora em DssContextHeader.test.js: \"a dica também abre por foco — WCAG 1.4.13 vale para teclado\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.1.1",
+        "level": "A",
+        "implementation": "Todos os controles são <button type=\"button\"> nativos: Enter e Espaço acionam sem código próprio, e não há handler de teclado customizado que pudesse engolir a tecla.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "2.3.3",
+        "level": "AAA",
+        "implementation": "A animação de retração é desligada por `prefers-reduced-motion: reduce` em três frentes: o `useCollapseHeight` consulta a preferência e não trava altura nenhuma; `4-output/_states.scss` zera o esmaecimento do conteúdo e o giro do chevron. Nenhuma informação depende da animação — o estado também é anunciado por `aria-expanded`.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "region",
+      "states": [
+        "aria-label",
+        "aria-expanded",
+        "aria-controls",
+        "aria-hidden"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "percorre registros, detalhes, ações de linha e o trilho, na ordem do DOM"
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "aciona o controle focado"
+      }
+    ]
+  },
+  "tokens": [
+    "--dss-touch-target-md",
+    "--dss-icon-size-lg",
+    "--dss-icon-size-md",
+    "--dss-icon-size-sm",
+    "--dss-compact-control-height-xs",
+    "--dss-surface-default",
+    "--dss-surface-hover",
+    "--dss-surface-active",
+    "--dss-action-primary",
+    "--dss-action-primary-hover",
+    "--dss-action-primary-focus",
+    "--dss-action-primary-text",
+    "--dss-text-body",
+    "--dss-text-secondary",
+    "--dss-text-action",
+    "--dss-feedback-error",
+    "--dss-positive-deep",
+    "--dss-positive-light",
+    "--dss-negative-hover",
+    "--dss-negative-light",
+    "--dss-info-deep",
+    "--dss-info-light",
+    "--dss-border-width-thin",
+    "--dss-border-subtle",
+    "--dss-radius-md",
+    "--dss-radius-sm",
+    "--dss-radius-circle",
+    "--dss-spacing-0",
+    "--dss-spacing-1",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-6",
+    "--dss-spacing-32",
+    "--dss-spacing-px",
+    "--dss-font-size-sm",
+    "--dss-font-weight-bold",
+    "--dss-font-weight-semibold",
+    "--dss-line-height-sm-tight",
+    "--dss-focus-ring-width",
+    "--dss-focus-ring-style",
+    "--dss-focus-ring-offset",
+    "--dss-focus-primary",
+    "--dss-z-index-20",
+    "--dss-duration-fast",
+    "--dss-easing-standard",
+    "--dss-duration-base",
+    "--dss-easing-decelerate"
+  ],
+  "defaultPreview": {
+    "props": {
+      "identifier": "652701-9",
+      "recordsCount": 2,
+      "openCount": 2,
+      "summary": [
+        "morador",
+        "endereco"
+      ],
+      "groups": [
+        {
+          "name": "pessoas",
+          "label": "Pessoas e endereço",
+          "span": 2,
+          "items": [
+            {
+              "name": "proprietario",
+              "label": "Proprietário",
+              "value": "(CPF: 000.000.000-00) - Nome e Sobrenome Proprietário",
+              "action": {
+                "icon": "badge",
+                "label": "Visualizar cliente"
+              }
+            },
+            {
+              "name": "morador",
+              "label": "Morador",
+              "value": "(CPF: 000.000.000-00) - Nome e Sobrenome Morador",
+              "action": {
+                "icon": "badge",
+                "label": "Visualizar cliente"
+              }
+            },
+            {
+              "name": "endereco",
+              "label": "Endereço",
+              "value": "Rua logradouro do Usuário, 123 - 00000-000 - Bairro, Cidade - UF"
+            }
+          ]
+        },
+        {
+          "name": "cadastro",
+          "label": "Dados técnicos",
+          "items": [
+            {
+              "name": "rota",
+              "label": "Rota Leitura",
+              "value": "0000.00.00"
+            },
+            {
+              "name": "localizacao",
+              "label": "Localização",
+              "value": "00.00.0000.0000.0000"
+            },
+            {
+              "name": "cobranca",
+              "label": "Tipo de Cobrança",
+              "value": "Pagamento Caixa"
+            }
+          ]
+        },
+        {
+          "name": "situacao",
+          "label": "Situação das ligações",
+          "items": [
+            {
+              "name": "agua",
+              "label": "Ligação água",
+              "value": "Ativa",
+              "tone": "positive"
+            },
+            {
+              "name": "esgoto",
+              "label": "Ligação esgoto",
+              "value": "Inativa",
+              "tone": "negative"
+            },
+            {
+              "name": "lixo",
+              "label": "Situação Lixo",
+              "value": "Ativa (Cobrança na Fatura)"
+            }
+          ]
+        }
+      ]
+    },
+    "demoSlots": {},
+    "demoContent": "Cabeçalho de atendimento com identidade, três grupos de informação e o trilho de sessão",
+    "visualProperties": [
+      {
+        "property": "inline-size (ladrilho do trilho)",
+        "token": "--dss-touch-target-md",
+        "value": "44px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-default",
+        "value": "#ffffff",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "border-radius",
+        "token": "--dss-radius-md",
+        "value": "8px",
+        "source": "2-composition/_base.scss"
+      }
+    ]
+  }
+}
