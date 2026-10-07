@@ -51,6 +51,8 @@
 @forward 'base/DssAjaxBar/DssAjaxBar.module';
 
 /* ── Banners e Barras ───────────────────────────────────────────────────── */
+@forward 'base/DssBrandLogo/DssBrandLogo.module';
+@forward 'base/DssSectionTitle/DssSectionTitle.module';
 @forward 'base/DssBanner/DssBanner.module';
 @forward 'base/DssEmptyState/DssEmptyState.module';
 @forward 'base/DssBar/DssBar.module';
@@ -82,6 +84,7 @@
 
 /* ── Cartões e Superfícies ──────────────────────────────────────────────── */
 @forward 'base/DssCard/DssCard.module';
+@forward 'base/DssContainer/DssContainer.module';
 @forward 'base/DssToolbar/DssToolbar.module';
 @forward 'base/DssToolbarTitle/DssToolbarTitle.module';
 @forward 'base/DssMarkupTable/DssMarkupTable.module';
@@ -125,6 +128,10 @@
 @forward 'composed/DssTimePicker/DssTimePicker.module';
 @forward 'composed/DssDatePicker/DssDatePicker.module';
 @forward 'composed/DssColorPicker/DssColorPicker.module';
+@forward 'composed/DssAppBar/DssAppBar.module';
+@forward 'composed/DssPageShell/DssPageShell.module';
+@forward 'composed/DssDataBoard/DssDataBoard.module';
+@forward 'composed/DssContextHeader/DssContextHeader.module';
 @forward 'composed/DssActionMenu/DssActionMenu.module';
 @forward 'composed/DssMultiselectAutocomplete/DssMultiselectAutocomplete.module';
 @forward 'composed/DssCarousel/DssCarousel.module';

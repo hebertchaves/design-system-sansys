@@ -56,10 +56,13 @@ export { DssFile } from './base/DssFile'
 
 export { DssChip } from './base/DssChip'
 export { DssBadge } from './base/DssBadge'
+export { DssBrandLogo } from './base/DssBrandLogo'
+export { DssSectionTitle } from './base/DssSectionTitle'
 export { DssAvatar } from './base/DssAvatar'
 export { DssIcon } from './base/DssIcon'
 export { DssImg } from './base/DssImg'
 export { DssCard, DssCardSection, DssCardActions } from './base/DssCard'
+export { DssContainer } from './base/DssContainer'
 export { DssList } from './base/DssList'
 export { DssItem } from './base/DssItem'
 export { DssItemLabel } from './base/DssItemLabel'
@@ -146,6 +149,10 @@ export { DssEmptyState } from './base/DssEmptyState'
 // COMPONENTES COMPOSTOS
 // ============================================================================
 
+export { DssAppBar } from './composed/DssAppBar'
+export { DssPageShell, DssPageShellRailItem } from './composed/DssPageShell'
+export { DssDataBoard, DssDataBoardPanel } from './composed/DssDataBoard'
+export { DssContextHeader, useContextHeader } from './composed/DssContextHeader'
 export { DssDialog } from './composed/DssDialog'
 export { DssTable } from './composed/DssTable'
 export { DssCarousel, DssCarouselSlide } from './composed/DssCarousel'
@@ -189,6 +196,7 @@ import DssAvatar from './base/DssAvatar/DssAvatar.vue'
 import DssIcon from './base/DssIcon/DssIcon.vue'
 import DssImg from './base/DssImg/DssImg.vue'
 import DssCard from './base/DssCard/DssCard.vue'
+import DssContainer from './base/DssContainer/DssContainer.vue'
 import DssCardSection from './base/DssCard/1-structure/DssCardSection.ts.vue'
 import DssCardActions from './base/DssCard/1-structure/DssCardActions.ts.vue'
 import DssList from './base/DssList/DssList.vue'
@@ -270,6 +278,7 @@ const allComponents = [
   // Exibição de dados
   DssChip, DssBadge, DssAvatar, DssIcon, DssImg,
   DssCard, DssCardSection, DssCardActions,
+  DssContainer,
   DssList, DssItem, DssItemLabel, DssItemSection,
   DssMarkupTable, DssTree,
   // Feedback e progresso

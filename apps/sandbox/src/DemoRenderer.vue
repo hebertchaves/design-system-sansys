@@ -28,6 +28,15 @@ import DssFab           from '@components/base/DssFab/DssFab.vue'
 import DssFabAction     from '@components/base/DssFabAction/DssFabAction.vue'
 
 import DssBadge         from '@components/base/DssBadge/DssBadge.vue'
+import DssBrandLogo     from '@components/base/DssBrandLogo/DssBrandLogo.vue'
+import DssSectionTitle  from '@components/base/DssSectionTitle/DssSectionTitle.vue'
+import DssPageShell     from '@components/composed/DssPageShell/DssPageShell.vue'
+import DssPageShellRailItem from '@components/composed/DssPageShell/1-structure/DssPageShellRailItem.ts.vue'
+import DssDataBoard     from '@components/composed/DssDataBoard/DssDataBoard.vue'
+import DssDataBoardPanel from '@components/composed/DssDataBoard/DssDataBoardPanel.vue'
+import DssContextHeader from '@components/composed/DssContextHeader/DssContextHeader.vue'
+import DssAppBar        from '@components/composed/DssAppBar/DssAppBar.vue'
+import DssContainer     from '@components/base/DssContainer/DssContainer.vue'
 import DssAvatar        from '@components/base/DssAvatar/DssAvatar.vue'
 import DssIcon          from '@components/base/DssIcon/DssIcon.vue'
 import DssSpinner       from '@components/base/DssSpinner/DssSpinner.vue'
@@ -123,6 +132,15 @@ const REGISTRY = {
   DssFab,
   DssFabAction,
   DssBadge,
+  DssBrandLogo,
+  DssSectionTitle,
+  DssPageShell,
+  DssPageShellRailItem,
+  DssDataBoard,
+  DssDataBoardPanel,
+  DssContextHeader,
+  DssAppBar,
+  DssContainer,
   DssAvatar,
   DssIcon,
   DssSpinner,
