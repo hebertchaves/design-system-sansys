@@ -58,13 +58,16 @@
 | `--dss-padding-4` | L2 | Padding header/footer |
 | `--dss-padding-6` | L2 | Padding body, padding lateral |
 | `--dss-spacing-2` | L2 | Gap footer buttons |
-| `--dss-gray-100` | L2 | Dividers header/footer |
+| `--dss-border-subtle` | L2 | Divider color header/footer |
+| `--dss-border-width-thin` | L2 | Divider width |
 | `--dss-font-family-sans` | L2 | Typography |
 | `--dss-text-body` | L2 | Text color |
 | `--dss-elevation-3` | L3 | Seamless variant shadow |
-| `--dss-hub-primary` | L4 | Brand Hub border |
-| `--dss-water-primary` | L4 | Brand Water border |
-| `--dss-waste-primary` | L4 | Brand Waste border |
+| `--dss-action-primary` | L4 | Brand accent on the header border |
+
+> **Corrigido em set/2026.** A tabela listava `--dss-hub-primary`, `--dss-water-primary` e
+> `--dss-waste-primary` — três tokens **inexistentes** —, e `--dss-gray-100` no lugar de
+> `--dss-border-subtle`. Ver o README para o detalhe.
 
 ## Gate Exceptions
 

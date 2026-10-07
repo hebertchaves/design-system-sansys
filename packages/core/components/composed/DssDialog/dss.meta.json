@@ -6,12 +6,7 @@
   "dssVersion": "2.2",
   "goldenReference": "DssChip",
   "goldenContext": "DssCard",
-  "classification": {
-    "type": "Overlay Modal",
-    "category": "Overlays e Dialogs",
-    "interactive": true,
-    "note": "Interativo via v-model:open; interatividade interna pertence aos filhos (DssButton, DssInput)"
-  },
+  "classification": "Visual",
   "phaseDescription": "Fase 2 — Nível 1 (Independente). Overlay modal baseado em QDialog do Quasar. Fornece estrutura header/body/footer via slots para composição pelo consumidor.",
   "quasarBase": "QDialog",
   "dependencies": [],
@@ -26,21 +21,19 @@
   ],
   "tokens": [
     "--dss-surface-default",
-    "--dss-shadow-modal",
+    "--dss-elevation-5",
+    "--dss-elevation-3",
     "--dss-radius-lg",
     "--dss-padding-4",
     "--dss-padding-6",
     "--dss-spacing-2",
-    "--dss-gray-100",
-    "--dss-gray-200",
+    "--dss-border-subtle",
     "--dss-border-width-thin",
     "--dss-border-width-md",
+    "--dss-gray-200",
     "--dss-font-family-sans",
     "--dss-text-body",
-    "--dss-elevation-3",
-    "--dss-hub-primary",
-    "--dss-water-primary",
-    "--dss-waste-primary"
+    "--dss-action-primary"
   ],
   "statesApplicable": [
     "open",
@@ -136,9 +129,50 @@
   ],
   "previewGroup": "contextuais",
   "defaultPreview": {
-    "props": {},
-    "demoSlots": null,
-    "previewHtml": "<div style='width:100%;max-width:320px;background:var(--dss-surface-default);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.18);padding:20px;display:flex;flex-direction:column;gap:12px'><div style='font-size:13px;font-weight:600;color:var(--dss-text-body)'>Confirmar ação</div><div style='font-size:12px;color:var(--dss-text-subtle)'>Esta operação não pode ser desfeita. Deseja continuar?</div><div style='display:flex;gap:8px;justify-content:flex-end'><button style='border:1px solid var(--dss-action-primary);background:transparent;color:var(--dss-action-primary);padding:5px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit'>Cancelar</button><button style='background:var(--dss-action-primary);color:white;border:none;padding:5px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit'>Confirmar</button></div></div>",
+    "props": {
+      "open": true
+    },
+    "demoSlots": {
+      "header": [
+        {
+          "component": "DssButton",
+          "props": {
+            "icon": "close",
+            "variant": "flat",
+            "size": "sm",
+            "round": true,
+            "ariaLabel": "Fechar"
+          }
+        }
+      ],
+      "default": [
+        {
+          "component": "DssBanner",
+          "props": {
+            "variant": "info"
+          },
+          "children": "Esta operação não pode ser desfeita."
+        }
+      ],
+      "footer": [
+        {
+          "component": "DssButton",
+          "props": {
+            "label": "Cancelar",
+            "variant": "flat",
+            "size": "sm"
+          }
+        },
+        {
+          "component": "DssButton",
+          "props": {
+            "label": "Confirmar",
+            "color": "primary",
+            "size": "sm"
+          }
+        }
+      ]
+    },
     "visualProperties": [
       {
         "property": "background-color",
@@ -163,6 +197,52 @@
         "token": "--dss-text-body",
         "value": "#454545",
         "source": "2-composition/_base.scss"
+      }
+    ],
+    "demoContent": "DssDialog aberto, com as três regiões: título e fechar no header, texto no corpo, ações no footer",
+    "previewHtml": "<div style='width:100%;max-width:320px;background:var(--dss-surface-default);border-radius:var(--dss-radius-lg);box-shadow:var(--dss-elevation-5);padding:var(--dss-padding-6);display:flex;flex-direction:column;gap:var(--dss-spacing-3)'><div style='font-size:var(--dss-font-size-sm);font-weight:var(--dss-font-weight-semibold);color:var(--dss-text-body)'>Confirmar ação</div><div style='font-size:var(--dss-font-size-xs);color:var(--dss-text-subtle)'>Esta operação não pode ser desfeita. Deseja continuar?</div><div style='display:flex;gap:var(--dss-spacing-2);justify-content:flex-end'><span style='border:var(--dss-border-width-thin) solid var(--dss-action-primary);color:var(--dss-action-primary);padding:var(--dss-padding-1) var(--dss-padding-4);border-radius:var(--dss-radius-sm);font-size:var(--dss-font-size-xs)'>Cancelar</span><span style='background:var(--dss-action-primary);color:var(--dss-text-on-primary);padding:var(--dss-padding-1) var(--dss-padding-4);border-radius:var(--dss-radius-sm);font-size:var(--dss-font-size-xs)'>Confirmar</span></div></div>"
+  },
+  "classificationNote": "{\"type\":\"Overlay Modal\",\"category\":\"Overlays e Dialogs\",\"interactive\":true,\"note\":\"Interativo via v-model:open; interatividade interna pertence aos filhos (DssButton, DssInput)\"}",
+  "tagline": "Overlay modal teleportado, com header, corpo e footer entregues por slot.",
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "2.1.2",
+        "level": "A",
+        "implementation": "Não é armadilha de teclado: ESC fecha o overlay e devolve o foco. O consumidor pode desligar por disableEsc — decisão explícita, para fluxo que exige confirmação — e nesse caso a saída passa a ser obrigação do footer. Âncoras em DssDialog.test.js: \"ESC fecha o dialog aberto (update:open false)\" e \"disableEsc bloqueia o fechamento por ESC (no-esc-dismiss no motor)\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "O texto do overlay usa --dss-text-body sobre a superfície --dss-surface-default declarada em 2-composition/_base.scss; a razão é calculada pelo emissor a partir dos tokens reais.",
+        "verifiedBy": "css",
+        "contrast": {
+          "fg": "--dss-text-body",
+          "bg": "--dss-surface-default"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "As três regiões (header, corpo, footer) só existem no DOM quando o slot correspondente é fornecido — overlay sem título não renderiza um cabeçalho vazio que o leitor de tela anunciaria como região sem conteúdo. Âncoras em DssDialog.test.js: \"renderiza header apenas quando slot é fornecido\" e \"renderiza footer apenas quando slot é fornecido\".",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "dialog",
+      "states": [
+        "aria-modal"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Esc",
+        "action": "fecha o overlay — salvo disableEsc, quando a saída passa a ser do footer"
+      },
+      {
+        "key": "Tab / Shift+Tab",
+        "action": "percorre os controles DENTRO do overlay; o foco é contido pelo QDialog"
       }
     ]
   }

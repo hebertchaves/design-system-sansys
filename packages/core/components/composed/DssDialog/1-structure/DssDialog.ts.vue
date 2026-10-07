@@ -20,7 +20,7 @@
   >
     <div :class="dialogClasses" :data-brand="effectiveBrand">
       <!-- Slot Header: título, botão fechar — responsabilidade do consumidor -->
-      <div v-if="hasHeader" class="dss-dialog__header">
+      <div v-if="$slots.header" class="dss-dialog__header">
         <slot name="header" />
       </div>
 
@@ -30,7 +30,7 @@
       </div>
 
       <!-- Slot Footer: botões de ação — responsabilidade do consumidor -->
-      <div v-if="hasFooter" class="dss-dialog__footer">
+      <div v-if="$slots.footer" class="dss-dialog__footer">
         <slot name="footer" />
       </div>
     </div>
@@ -86,7 +86,6 @@
  * @version 1.0.0
  */
 
-import { computed, useSlots } from 'vue'
 import type { DssDialogProps, DssDialogEmits, DssDialogSlots } from '../types/dialog.types'
 import { useDialogClasses } from '../composables/useDialogClasses'
 import { useTeleportedBrand } from '../../../../composables/useTeleportedBrand'
@@ -122,7 +121,6 @@ const emit = defineEmits<DssDialogEmits>()
 
 defineSlots<DssDialogSlots>()
 
-const slots = useSlots()
 
 // ==========================================================================
 // COMPOSABLES
@@ -137,8 +135,21 @@ const { effectiveBrand } = useTeleportedBrand()
 // COMPUTED
 // ==========================================================================
 
-const hasHeader = computed(() => !!slots.header)
-const hasFooter = computed(() => !!slots.footer)
+// As regiões opcionais são decididas por `$slots` DIRETO no template, e não por
+// um computed sobre o `useSlots()`.
+//
+// Por quê: `computed(() => !!slots.header)` não rastreia o objeto de slots —
+// ele não é um proxy reativo. O computed resolve na primeira renderização e
+// congela. Consequência medida (set/2026, no Preview Frame): um slot que passa
+// a existir DEPOIS da montagem nunca aparece, e um que deixa de existir nunca
+// some. Isso alcança uso real, não só o frame:
+//
+//   <DssDialog>
+//     <template v-if="temTitulo" #header>…</template>   <!-- nunca aparecia -->
+//   </DssDialog>
+//
+// `$slots` no template é lido dentro da função de render, que é reavaliada a
+// cada renderização — é o canal certo para uma decisão que pode mudar.
 </script>
 
 <!-- Estilos carregados globalmente via components/index.scss -->

@@ -159,13 +159,18 @@ QDialog usa `@show`/`@hide`; DssDialog expõe `@open`/`@close` para clareza sem�
 | `--dss-padding-4` | L2 | Padding header/footer (16px) |
 | `--dss-padding-6` | L2 | Padding body e padding lateral (24px) |
 | `--dss-spacing-2` | L2 | Gap entre botões no footer (8px) |
-| `--dss-gray-100` | L2 | Bordas divisórias header/footer |
+| `--dss-border-subtle` | L2 | Cor das bordas divisórias header/footer |
+| `--dss-border-width-thin` | L2 | Espessura das divisórias |
 | `--dss-font-family-sans` | L2 | Tipografia |
 | `--dss-text-body` | L2 | Cor de texto |
 | `--dss-elevation-3` | L3 | Elevação variante seamless |
-| `--dss-hub-primary` | L4 brands | Border header brand Hub |
-| `--dss-water-primary` | L4 brands | Border header brand Water |
-| `--dss-waste-primary` | L4 brands | Border header brand Waste |
+| `--dss-action-primary` | L4 brands | Acento de marca na borda do header |
+
+> **Corrigido em set/2026.** Esta tabela listava `--dss-hub-primary`, `--dss-water-primary` e
+> `--dss-waste-primary` — três tokens **inexistentes**. O `4-output/_brands.scss` foi
+> colapsado (os três blocos por marca eram idênticos, porque `--dss-action-primary` já é
+> remapeado por `[data-brand]`) e a tabela não acompanhou. `--dss-gray-100` também não era o
+> token real dos divisores: é `--dss-border-subtle`.
 
 ---
 

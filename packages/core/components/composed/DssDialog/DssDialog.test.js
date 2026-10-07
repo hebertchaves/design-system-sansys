@@ -9,6 +9,7 @@
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import { installQuasar } from '@quasar/quasar-app-extension-testing-unit-vitest'
 import DssDialog from './1-structure/DssDialog.ts.vue'
 
@@ -262,6 +263,68 @@ describe('DssDialog — Teclado (WCAG 2.1.1)', () => {
     window.dispatchEvent(new KeyboardEvent('keyup', { keyCode: 27 }))
     await wrapper.vm.$nextTick()
     expect(wrapper.emitted('update:open')).toBeUndefined()
+    wrapper.unmount()
+  })
+})
+
+
+// ==========================================================================
+// REGIÕES DINÂMICAS — trava de regressão (set/2026)
+// ==========================================================================
+//
+// As regiões opcionais eram decididas por `computed(() => !!slots.header)`. O
+// computed não rastreia o objeto de slots — ele resolvia na primeira
+// renderização e congelava. Um slot que passava a existir DEPOIS da montagem
+// nunca aparecia, e um que deixava de existir nunca sumia. Medido no Preview
+// Frame, mas alcança uso real: `<template v-if="temTitulo" #header>`.
+//
+// A correção lê `$slots` direto no template, dentro da função de render.
+
+describe('DssDialog — regiões que aparecem e somem em tempo de execução', () => {
+  const Hospedeiro = {
+    components: { DssDialog },
+    props: { comHeader: Boolean, comFooter: Boolean },
+    template: `
+      <DssDialog open>
+        <template v-if="comHeader" #header><span class="t-header">Título</span></template>
+        <p>Corpo</p>
+        <template v-if="comFooter" #footer><span class="t-footer">Ações</span></template>
+      </DssDialog>
+    `,
+  }
+
+  const regioes = () => ({
+    header: document.querySelectorAll('.dss-dialog__header').length > 0,
+    footer: document.querySelectorAll('.dss-dialog__footer').length > 0,
+  })
+
+  it('a região APARECE quando o slot passa a existir depois da montagem', async () => {
+    const wrapper = mount(Hospedeiro, {
+      props: { comHeader: false, comFooter: false },
+      attachTo: document.body,
+    })
+    await nextTick()
+    expect(regioes().header).toBe(false)
+
+    await wrapper.setProps({ comHeader: true })
+    await nextTick()
+    expect(regioes().header).toBe(true)
+
+    wrapper.unmount()
+  })
+
+  it('a região SOME quando o slot deixa de existir', async () => {
+    const wrapper = mount(Hospedeiro, {
+      props: { comHeader: false, comFooter: true },
+      attachTo: document.body,
+    })
+    await nextTick()
+    expect(regioes().footer).toBe(true)
+
+    await wrapper.setProps({ comFooter: false })
+    await nextTick()
+    expect(regioes().footer).toBe(false)
+
     wrapper.unmount()
   })
 })

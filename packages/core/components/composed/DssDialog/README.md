@@ -142,19 +142,67 @@ function handleConfirm() { isOpen.value = false }
 | `--dss-padding-4` | L2 | Padding header/footer |
 | `--dss-padding-6` | L2 | Padding body |
 | `--dss-spacing-2` | L2 | Gap entre botões do footer |
-| `--dss-gray-100` | L2 | Divisores header/footer |
+| `--dss-border-subtle` | L2 | Cor dos divisores de header/footer |
+| `--dss-border-width-thin` | L2 | Espessura dos divisores |
 | `--dss-font-family-sans` | L2 | Tipografia |
 | `--dss-text-body` | L2 | Cor do texto |
-| `--dss-hub-primary` | L4 | Borda brand Hub |
-| `--dss-water-primary` | L4 | Borda brand Water |
-| `--dss-waste-primary` | L4 | Borda brand Waste |
+| `--dss-action-primary` | L4 | Acento de marca na borda do header |
+
+> **Corrigido em set/2026.** Esta tabela listava `--dss-hub-primary`,
+> `--dss-water-primary` e `--dss-waste-primary` — **três tokens que não existem**. O
+> `4-output/_brands.scss` foi colapsado (os três blocos por marca eram idênticos, porque
+> `--dss-action-primary` já é remapeado por `[data-brand]`) e a tabela não acompanhou.
+> Também listava `--dss-gray-100` para os divisores, que na verdade usam
+> `--dss-border-subtle`.
+
+## A marca do overlay é a do DOCUMENTO
+
+O conteúdo do diálogo é **teleportado** para fora da árvore do componente. A cascata de CSS
+que carrega `[data-brand]` não chega lá por herança — é o risco 2.1 do
+[guia de composição de Fase 3](../../../../docs/governance/DSS_GUIA_COMPOSICAO_FASE3.md).
+
+O `DssDialog` mitiga repassando a marca explicitamente ao nó teleportado, via o composable
+`useTeleportedBrand`. Mas **a marca que ele repassa é a do documento**, resolvida em duas
+etapas:
+
+1. **Caminho normativo** — `data-brand` no `<body>` ou no `<html>`. É assim que uma
+   aplicação Sansys deve declarar a marca.
+2. **Fallback legado** — na falta do primeiro, o **primeiro** elemento com `[data-brand]`
+   do documento inteiro.
+
+```vue
+<!-- ✅ a aplicação declara a marca no documento -->
+<script setup>
+document.body.dataset.brand = 'water'
+</script>
+```
+
+**A armadilha, e ela é silenciosa.** O ancestral do gatilho **não manda**. Numa tela Sansys
+isso nunca aparece, porque a página toda tem uma marca só. Em página de marca **mista**,
+todo overlay sai com a marca do primeiro bloco do DOM — não com a do bloco que o abriu, e
+sem um aviso. Se a sua tela mistura marcas, ponha a marca no `<body>` antes de abrir.
+
+Medido (set/2026) na seção 03 da página de Playground: com `<body data-brand="water">` o nó
+teleportado recebe `data-brand="water"` e o botão do footer sai `rgb(14, 136, 228)`.
 
 ## Acessibilidade
 
 - Foco preso dentro do diálogo enquanto aberto (focus trap nativo do QDialog)
-- Fechamento via ESC por padrão (desabilitar apenas quando necessário com `disableEsc`)
+- Fechamento via ESC por padrão. `disableEsc` e `persistent` desligam isso — e passam a
+  **exigir** que o footer ofereça a saída: modal do qual não se sai é armadilha de teclado
+  (WCAG 2.1.2). Um overlay persistente sem cancelar no footer é defeito, não escolha
 - Role `dialog` e `aria-modal` aplicados automaticamente pelo Quasar
 - Header deve conter o título identificador do diálogo
+
+## Quem é dono do scroll
+
+Aninhar container dentro de container gera barra de rolagem dupla quando ninguém declara
+quem rola — risco 2.2 do guia de Fase 3. No `DssDialog` a resposta é: **o corpo rola**. O
+header e o footer ficam parados, e o filho (uma tabela, um formulário) não declara altura
+própria.
+
+Medido com 60 linhas de `DssTable` dentro: 2307px de conteúdo numa caixa de 762px, com o
+corpo rolando e o overlay não.
 
 ## Documentação
 
