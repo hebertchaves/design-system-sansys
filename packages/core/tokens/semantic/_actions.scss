@@ -16,6 +16,19 @@
   --dss-action-primary-deep: var(--dss-primary-deep);
   --dss-action-primary-focus: var(--dss-primary-focus);
 
+  /* Texto SOBRE a superfície de ação primária.
+     Diferente de `--dss-text-inverse`, que é "o inverso do texto do TEMA" e
+     por isso vira quase preto no escuro: este diz respeito a uma superfície
+     que NÃO acompanha o tema — a barra de marca continua azul/laranja/verde
+     nos dois. Medido no Bloco 3.3: a barra Water no escuro entregava 3,74:1
+     com `--dss-text-inverse` (a 1.4.3 pede 4,5:1) e 5,29:1 com este.
+
+     As marcas o sobrescrevem em `tokens/brand/_hub|_water|_waste.scss`; esta
+     é a definição default, sem a qual o token só resolveria dentro de
+     `[data-brand]` (o que o gate `validate:scss-tokens` reprova, e com razão:
+     fora da marca o `var()` cairia para vazio). */
+  --dss-action-primary-text: var(--dss-gray-50);
+
 
   /* Secondary Action - Verde (#26A69A) */
   --dss-action-secondary: var(--dss-secondary);

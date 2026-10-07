@@ -82,4 +82,77 @@
   --dss-min-h-lg: var(--dss-spacing-48);   /* 192px — containers overlay (menus, scroll areas, parallax) */
   --dss-min-h-xl: var(--dss-spacing-80);   /* 320px — painéis laterais e seções de conteúdo */
   --dss-min-h-2xl: var(--dss-spacing-120);                  /* 480px — seções de altura completa */
+
+  /* ===========================================
+     6. BRAND LOGO HEIGHT
+     Usado em: DssBrandLogo.
+
+     O logo tem proporção fixa e três desenhos de largura diferente
+     (Water 154×42, Hub 120×42, Waste 156×42), então quem manda é a ALTURA — a
+     largura acompanha. Os degraus saem dos contextos reais onde a marca aparece,
+     e não de uma escala inventada.
+     =========================================== */
+  --dss-brand-logo-height-sm: var(--dss-spacing-4);   /* 16px — rail retraído, rodapé */
+  --dss-brand-logo-height-md: var(--dss-spacing-5);   /* 20px — barra densa, rail expandido */
+  /* 28px — a app bar do Sansys, nas DUAS densidades. Era o degrau do header de
+     64px; passou a servir também a barra compacta quando ela subiu de 40px para
+     48px (WCAG 2.5.5). 28 em 48 é 58% — verificado na tela, set/2026. */
+  --dss-brand-logo-height-lg: var(--dss-spacing-7);
+  --dss-brand-logo-height-xl: var(--dss-spacing-10);  /* 40px — login, splash, tela de abertura */
+
+  /* ===========================================
+     7. SECTION TITLE RULE
+     Usado em: DssSectionTitle.
+
+     Distância entre o texto e o traço de marca. É o MENOR valor da escala que
+     ainda separa em TODOS os tamanhos — medido, não arbitrado.
+
+     Medição ótica (distância entre o fim da TINTA do descendente e o topo do
+     traço; linha de base obtida por marcador inline de altura zero, fonte real
+     Roboto, `line-height: tight`):
+
+       tamanho │ fonte │ padding 0 │ padding 2px
+       ────────┼───────┼───────────┼────────────
+       sm      │ 14px  │   0,5px   │   2,5px
+       md      │ 16px  │   1,0px   │   3,0px
+       lg      │ 18px  │   1,5px   │   3,5px
+
+     Com padding 0 o traço NÃO encosta — mas em `sm` sobra meio pixel, que na
+     prática é colisão de subpixel. A folga que resta vem só da meia-entrelinha,
+     e ela encolhe junto com a fonte: quanto menor o título, mais apertado.
+
+     2px é o degrau seguinte da escala e devolve 2,5–3,5px em todos os
+     tamanhos: mínimo e estável. As telas atuais usam 4px, que rende 4,5–5,5px
+     — cerca do dobro do necessário.
+     =========================================== */
+  --dss-section-title-rule-gap: var(--dss-spacing-0_5);  /* 2px */
+
+  /* ===========================================
+     8. BAR ICON SIZE
+     Usado em: DssToolbar (e, por composição, DssAppBar).
+
+     A escala de ícone DENTRO de uma barra: a mesma do sistema, deslocada um
+     degrau para cima.
+
+     Por que existe: numa barra só cabe botão pequeno — o `md` tem 44px e
+     estoura até a toolbar densa, de 40px. E o `sm` consome
+     `--dss-icon-size-xs`, 16px, que é 40% de uma barra de 40px. A referência
+     de uma barra de aplicação é ~50%.
+
+     Por que a escala INTEIRA, e não só o degrau que falta: remapear um token
+     só colapsa a escala na fronteira. Medido — com apenas `xs` deslocado,
+     botão `sm` e botão `md` passavam a render o MESMO ícone de 20px, e a prop
+     `size` deixava de ter efeito visível dentro da barra. Deslocar todos
+     mantém a escala monotônica e a prop continua valendo.
+
+     Por que tokens próprios, e não `--dss-icon-size-xs: var(--dss-icon-size-sm)`
+     no escopo da barra: encadeado, o `xs` resolveria para o `sm` JÁ remapeado,
+     e os dois virariam o mesmo valor. Estes vivem no `:root` e não são
+     remapeados lá dentro, então a origem é estável.
+     =========================================== */
+  --dss-bar-icon-size-2xs: var(--dss-icon-size-xs);   /* 12px → 16px */
+  --dss-bar-icon-size-xs: var(--dss-icon-size-sm);    /* 16px → 20px */
+  --dss-bar-icon-size-sm: var(--dss-icon-size-md);    /* 20px → 24px */
+  --dss-bar-icon-size-md: var(--dss-icon-size-lg);    /* 24px → 32px */
+  --dss-bar-icon-size-lg: var(--dss-icon-size-xl);    /* 32px → 48px */
 }

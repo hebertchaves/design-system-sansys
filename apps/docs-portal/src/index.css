@@ -8,7 +8,7 @@
    copiadas à mão, 13 delas divergentes do core (drift de paleta).
    ========================================================================== */
 /* BEGIN:DSS-TOKENS-AUTO-GENERATED */
-/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-09-29. */
+/* Fonte: packages/core/tokens/index.scss — sincronizado em 2026-10-07. */
 /* @layer base: paridade com a estratégia Tailwind v4 do portal. */
 @layer base {
 @charset "UTF-8";
@@ -163,6 +163,18 @@
   --dss-action-primary-hover: var(--dss-primary-hover);
   --dss-action-primary-deep: var(--dss-primary-deep);
   --dss-action-primary-focus: var(--dss-primary-focus);
+  /* Texto SOBRE a superfície de ação primária.
+     Diferente de `--dss-text-inverse`, que é "o inverso do texto do TEMA" e
+     por isso vira quase preto no escuro: este diz respeito a uma superfície
+     que NÃO acompanha o tema — a barra de marca continua azul/laranja/verde
+     nos dois. Medido no Bloco 3.3: a barra Water no escuro entregava 3,74:1
+     com `--dss-text-inverse` (a 1.4.3 pede 4,5:1) e 5,29:1 com este.
+
+     As marcas o sobrescrevem em `tokens/brand/_hub|_water|_waste.scss`; esta
+     é a definição default, sem a qual o token só resolveria dentro de
+     `[data-brand]` (o que o gate `validate:scss-tokens` reprova, e com razão:
+     fora da marca o `var()` cairia para vazio). */
+  --dss-action-primary-text: var(--dss-gray-50);
   /* Secondary Action - Verde (#26A69A) */
   --dss-action-secondary: var(--dss-secondary);
   --dss-action-secondary-light: var(--dss-secondary-light);
@@ -371,7 +383,14 @@
      DEBITO_ABERTO.md: muda a aparência do claro em todo o DS, então pede aval. */
   --dss-border-separator: var(--dss-gray-200);
   --dss-border-default: var(--dss-gray-300); /* #e5e5e5 · 1.26:1 — decorativo, isento */
-  --dss-border-strong: var(--dss-gray-600); /* #737373 · 4.74:1 ✅ contorno de controle */
+  /* #262626 · 15.13:1 — contorno de controle.
+     Era `gray-600` (#737373 · 4.74:1), que passa na 1.4.11 contra a superfície
+     mas reprova a leitura estrita da 2.4.11: o salto do repouso para o azul do
+     foco (#0e88e4) dava 1,28:1, e a norma pede 3:1 entre focado e não-focado.
+     O cinza e o azul têm luminância parecida, então CLAREAR piora — medido:
+     gray-500 dá 1,47:1. Só escurecendo o salto aparece: gray-800 → 4,08:1
+     contra o azul do foco, mantendo 15,13:1 contra a superfície. */
+  --dss-border-strong: var(--dss-gray-800);
   /* ⚠️ NÃO existe `--dss-border-disabled` COR aqui, de propósito. Esse nome já
      está ocupado na linha ~189 por um SHORTHAND (`1px solid …`), e o tema dark
      o define como COR — dois tipos sob um nome só, colisão que antecede esta
@@ -768,6 +787,30 @@
   --dss-feedback-info-disable: var(--dss-info-disable);
   --dss-feedback-info-hover: var(--dss-info-hover);
   --dss-feedback-info-deep: var(--dss-info-deep);
+  /* Feedback como TEXTO — níveis que fecham a WCAG 1.4.3 (4,5:1).
+
+     Existem porque os tokens de feedback "puros" são cores de FUNDO e de
+     ÍCONE, não de texto: `--dss-feedback-success` (#4dd228) dá 1,9:1 sobre
+     branco. Quem precisava de "Ativa" em verde legível vinha descendo ao
+     PRIMITIVO (--dss-positive-deep), que é exatamente o que o gate §L proíbe —
+     e com razão, porque primitivo não acompanha tema.
+
+     Medido sobre `--dss-surface-default` no tema claro (#ffffff):
+       success #246714 → 6,94:1 ✓
+       error   #a01424 → 8,01:1 ✓
+       info    #0D7491 → 5,35:1 ✓
+
+     O tema escuro os remapeia (themes/dark/_colors.scss) porque a superfície
+     inverte e estes níveis escuros deixariam de ter contraste — é a diferença
+     entre eles e os tokens de feedback puros, que o dark mantém.
+
+     NÃO existe `--dss-feedback-warning-text`: a regra de a11y em globals.scss
+     declara que não há contraste seguro entre o amarelo da paleta e fundo
+     claro — nem --dss-warning-deep fecha 4,5:1 (máx. 4,36). Oferecer o token
+     seria oferecer um valor que reprova. */
+  --dss-feedback-success-text: var(--dss-positive-deep);
+  --dss-feedback-error-text: var(--dss-negative-hover);
+  --dss-feedback-info-text: var(--dss-info-deep);
   /* Feedback Surfaces (para fundos de alertas) — tintado a 10%.
      DERIVADO do token SEMÂNTICO via color-mix: acompanha tema automaticamente.
      (Antes eram rgba() com o hex CONGELADO dentro.) */
@@ -1593,6 +1636,78 @@ sobre o fundo em vez de descartá-lo. Reproduza antes de confiar:
   descent-override: 22.53%;
   line-gap-override: 0%;
 }
+/* --------------------------------------------------------------------------
+   3. Material Icons — a fonte de ÍCONE do DS
+
+   POR QUE ISTO EXISTE (set/2026). A onda que internalizou o Inter resolveu
+   metade do problema: a fonte de TEXTO virou nossa, a de ÍCONE não. O
+   `apps/sandbox/index.html` carregava
+   `https://fonts.googleapis.com/css2?family=Material+Icons`, e a requisição
+   medida resolvia para `fonts.gstatic.com/s/materialicons/v145/…` — note o v145.
+
+   O `v145` é um contador que o Google incrementa. Um endpoint de CSS sem versão
+   fixada significa que a renderização dos ícones pode mudar SEM NENHUM COMMIT
+   neste repositório — e foi exatamente assim que o relato
+   chegou: os glifos redondos voltaram a parecer cortados, sem motivo visível
+   no repositório. Sem o arquivo no
+   repositório não há como comparar antes e depois, nem reproduzir o que uma
+   máquina renderizou ontem.
+
+   Mesma razão do Inter, e as mesmas três que o bloco 1 já lista: `local()` casa
+   por NOME e não garante versão; CDN exige liberar `fonts.gstatic.com` na CSP
+   de uma app corporativa e cria requisição externa em runtime; e nenhum dos
+   dois dá determinismo. São 128KB, em cache, sem rede.
+
+   `font-display: block` e NÃO `swap`: ícone não tem substituto legível. Com
+   `swap` o navegador pinta a LIGADURA em fonte de texto durante o carregamento
+   — a tela mostra a palavra check_circle por escrito antes do glifo aparecer.
+   `block` segura invisível até a fonte chegar, que é o comportamento correto
+   para fonte de símbolo.
+
+   Sem `unicode-range`: a fonte é acessada por LIGADURA (o texto check_circle
+   vira um glifo), não por codepoint. Restringir a faixa quebraria a resolução.
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("@core/assets/fonts/material-icons.woff2") format("woff2");
+}
+/* --------------------------------------------------------------------------
+   3b. A CLASSE que liga o glifo à fonte
+
+   O `@font-face` acima só DECLARA a fonte; quem a aplica ao elemento é a classe
+   `.material-icons`, que o Quasar emite no `<i>` do QIcon. Essa classe vinha no
+   mesmo CSS do Google que foi removido — e removê-la sem repor derrubou todos
+   os ícones: medido, o `<i>` passou a renderizar a LIGADURA COMO TEXTO em
+   `DSS Sans`, recortada na caixa de 1em. Defeito mudo clássico: nenhum erro de
+   console, a fonte carregada, e nada aparecendo.
+
+   O QUE ESTA DECLARAÇÃO NÃO TRAZ, de propósito. O CSS do Google também definia
+   `font-size: 24px`, `line-height: 1` e `display: inline-block`. Nada disso
+   entra aqui: GEOMETRIA de ícone é do DSS (`.dss-icon--*` e a `font-size` do
+   host no modo inline — CCI §2.2). Repetir `font-size` criaria uma segunda
+   fonte de verdade com a MESMA especificidade (0,1,0) das regras do DssIcon,
+   e o empate se resolveria por ordem de bundle — a armadilha que o
+   `.dss-chip__icon` já paga.
+
+   Fica só o que a FONTE precisa para funcionar: família, peso, estilo,
+   ligadura e as normalizações que impedem o texto de ser tratado como texto.
+   -------------------------------------------------------------------------- */
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
 /*
 # Importar Tokens de Acessibilidade
 
@@ -1709,6 +1824,76 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-min-h-lg: var(--dss-spacing-48); /* 192px — containers overlay (menus, scroll areas, parallax) */
   --dss-min-h-xl: var(--dss-spacing-80); /* 320px — painéis laterais e seções de conteúdo */
   --dss-min-h-2xl: var(--dss-spacing-120); /* 480px — seções de altura completa */
+  /* ===========================================
+     6. BRAND LOGO HEIGHT
+     Usado em: DssBrandLogo.
+
+     O logo tem proporção fixa e três desenhos de largura diferente
+     (Water 154×42, Hub 120×42, Waste 156×42), então quem manda é a ALTURA — a
+     largura acompanha. Os degraus saem dos contextos reais onde a marca aparece,
+     e não de uma escala inventada.
+     =========================================== */
+  --dss-brand-logo-height-sm: var(--dss-spacing-4); /* 16px — rail retraído, rodapé */
+  --dss-brand-logo-height-md: var(--dss-spacing-5); /* 20px — barra densa, rail expandido */
+  /* 28px — a app bar do Sansys, nas DUAS densidades. Era o degrau do header de
+     64px; passou a servir também a barra compacta quando ela subiu de 40px para
+     48px (WCAG 2.5.5). 28 em 48 é 58% — verificado na tela, set/2026. */
+  --dss-brand-logo-height-lg: var(--dss-spacing-7);
+  --dss-brand-logo-height-xl: var(--dss-spacing-10); /* 40px — login, splash, tela de abertura */
+  /* ===========================================
+     7. SECTION TITLE RULE
+     Usado em: DssSectionTitle.
+
+     Distância entre o texto e o traço de marca. É o MENOR valor da escala que
+     ainda separa em TODOS os tamanhos — medido, não arbitrado.
+
+     Medição ótica (distância entre o fim da TINTA do descendente e o topo do
+     traço; linha de base obtida por marcador inline de altura zero, fonte real
+     Roboto, `line-height: tight`):
+
+       tamanho │ fonte │ padding 0 │ padding 2px
+       ────────┼───────┼───────────┼────────────
+       sm      │ 14px  │   0,5px   │   2,5px
+       md      │ 16px  │   1,0px   │   3,0px
+       lg      │ 18px  │   1,5px   │   3,5px
+
+     Com padding 0 o traço NÃO encosta — mas em `sm` sobra meio pixel, que na
+     prática é colisão de subpixel. A folga que resta vem só da meia-entrelinha,
+     e ela encolhe junto com a fonte: quanto menor o título, mais apertado.
+
+     2px é o degrau seguinte da escala e devolve 2,5–3,5px em todos os
+     tamanhos: mínimo e estável. As telas atuais usam 4px, que rende 4,5–5,5px
+     — cerca do dobro do necessário.
+     =========================================== */
+  --dss-section-title-rule-gap: var(--dss-spacing-0_5); /* 2px */
+  /* ===========================================
+     8. BAR ICON SIZE
+     Usado em: DssToolbar (e, por composição, DssAppBar).
+
+     A escala de ícone DENTRO de uma barra: a mesma do sistema, deslocada um
+     degrau para cima.
+
+     Por que existe: numa barra só cabe botão pequeno — o `md` tem 44px e
+     estoura até a toolbar densa, de 40px. E o `sm` consome
+     `--dss-icon-size-xs`, 16px, que é 40% de uma barra de 40px. A referência
+     de uma barra de aplicação é ~50%.
+
+     Por que a escala INTEIRA, e não só o degrau que falta: remapear um token
+     só colapsa a escala na fronteira. Medido — com apenas `xs` deslocado,
+     botão `sm` e botão `md` passavam a render o MESMO ícone de 20px, e a prop
+     `size` deixava de ter efeito visível dentro da barra. Deslocar todos
+     mantém a escala monotônica e a prop continua valendo.
+
+     Por que tokens próprios, e não `--dss-icon-size-xs: var(--dss-icon-size-sm)`
+     no escopo da barra: encadeado, o `xs` resolveria para o `sm` JÁ remapeado,
+     e os dois virariam o mesmo valor. Estes vivem no `:root` e não são
+     remapeados lá dentro, então a origem é estável.
+     =========================================== */
+  --dss-bar-icon-size-2xs: var(--dss-icon-size-xs); /* 12px → 16px */
+  --dss-bar-icon-size-xs: var(--dss-icon-size-sm); /* 16px → 20px */
+  --dss-bar-icon-size-sm: var(--dss-icon-size-md); /* 20px → 24px */
+  --dss-bar-icon-size-md: var(--dss-icon-size-lg); /* 24px → 32px */
+  --dss-bar-icon-size-lg: var(--dss-icon-size-xl); /* 32px → 48px */
 }
 
 /* ==========================================================================
@@ -2018,6 +2203,23 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   --dss-duration-active: var(--dss-duration-100);
   --dss-duration-tooltip: var(--dss-duration-150);
   /* ===========================================
+     2b. RETRAÇÃO COORDENADA
+     A "sanfona" dos compostos que trocam de arranjo ao retrair
+     (DssDataBoard, DssContextHeader).
+
+     Mora AQUI, e não no root de cada componente, por uma razão medida: uma
+     custom property declarada no próprio elemento VENCE a que vem do
+     ancestral, e o componente deixaria de ser afinável de fora — um contêiner
+     que pedia 500ms continuava em 250ms. Com o valor no `:root`, qualquer
+     contêiner da tela redeclara e a herança manda.
+
+     Os dois governam as TRÊS camadas da transição de uma vez: a altura (lida
+     em JS por getComputedStyle, em `useCollapseHeight`), o esmaecimento do
+     conteúdo e o giro do chevron.
+     =========================================== */
+  --dss-collapse-duration: var(--dss-duration-base);
+  --dss-collapse-easing: var(--dss-easing-standard);
+  /* ===========================================
      ⚠️ TOKENS COMPONENT-SPECIFIC REMOVIDOS (JAN 2025 - SPRINT 4)
      =========================================== */
   /*
@@ -2226,6 +2428,19 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   /* Header */
   --dss-layout-header-height: 64px;
   --dss-layout-header-height-dense: 48px;
+  /* 48px — a app bar do Sansys.
+
+     Era 40px, MEDIDA no grid master em produção (Figma 1813:1328), e assim
+     ficou até a norma cobrar. Numa barra de 40px só cabe o botão `sm`, de
+     36×36 — e o DssButton NÃO estende o alvo de toque por pseudo-elemento, de
+     modo que o tamanho visual É a área de clique. 36px reprova a WCAG 2.5.5,
+     que pede 44×44.
+
+     48px é o menor degrau que resolve: comporta o botão `md` (44px, o alvo
+     mínimo) e ainda os 2px de anel de foco de cada lado — 44 + 2×2 = 48,
+     exato. Decisão de produto (set/2026): a fidelidade ao Figma cedeu à
+     norma, e não o contrário. Segue derivada do spacing scale. */
+  --dss-layout-header-height-compact: var(--dss-spacing-12);
   /* Footer */
   --dss-layout-footer-height: 64px;
   --dss-layout-footer-padding: var(--dss-spacing-10);
@@ -3212,6 +3427,18 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
   /* --dss-feedback-warning-hover: mantém valor original */
   /* Info (Azul Claro) - NÃO MUDA */
   /* --dss-feedback-info: mantém valor original */
+  /* Feedback como TEXTO — ESTES MUDAM, e é a diferença deles para os de cima.
+     Os puros são fundo/ícone e funcionam nos dois temas; os de texto são
+     níveis ESCUROS, escolhidos para contrastar com superfície clara, e sobre
+     --dss-surface-default do escuro (#262626) perderiam a legibilidade.
+
+     Medido sobre #262626:
+       --dss-positive-light #b9f2a4 → 11,75:1 ✓
+       --dss-negative-light #ffa0ab →  7,83:1 ✓
+       --dss-info-light     #a7effa → 11,80:1 ✓ */
+  --dss-feedback-success-text: var(--dss-positive-light);
+  --dss-feedback-error-text: var(--dss-negative-light);
+  --dss-feedback-info-text: var(--dss-info-light);
   /* --dss-feedback-info-hover: mantém valor original */
   /* ===========================================
      SHADOWS (mais sutis em dark mode)

@@ -224,6 +224,7 @@ Sistema de escala para margins, paddings e gaps. Baseado em rem (1rem = 16px).
 | `--dss-layout-sidebar-width-wide` | `320px` | `320px` | — |
 | `--dss-layout-header-height` | `64px` | `64px` | — |
 | `--dss-layout-header-height-dense` | `48px` | `48px` | — |
+| `--dss-layout-header-height-compact` | `var(--dss-spacing-12)` | — | — |
 | `--dss-layout-footer-height` | `64px` | `64px` | — |
 | `--dss-layout-footer-padding` | `var(--dss-spacing-10)` | — | — |
 | `--dss-layout-content-max-width` | `720px` | `720px` | Largura máxima para leitura confortável |
@@ -722,6 +723,7 @@ Cores para ações primárias, secundárias, terciárias e de destaque.
 | `--dss-action-primary-hover` | `var(--dss-primary-hover)` | — | — |
 | `--dss-action-primary-deep` | `var(--dss-primary-deep)` | — | — |
 | `--dss-action-primary-focus` | `var(--dss-primary-focus)` | — | — |
+| `--dss-action-primary-text` | `var(--dss-gray-50)` | — | — |
 | `--dss-action-primary-surface` | `color-mix(in srgb, var(--dss-action-primary)   8%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:actions-primary -->
 
@@ -825,6 +827,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 | `--dss-feedback-success-disable` | `var(--dss-positive-disable)` | — | — |
 | `--dss-feedback-success-hover` | `var(--dss-positive-hover)` | — | — |
 | `--dss-feedback-success-deep` | `var(--dss-positive-deep)` | — | — |
+| `--dss-feedback-success-text` | `var(--dss-positive-deep)` | — | — |
 | `--dss-feedback-success-surface` | `color-mix(in srgb, var(--dss-feedback-success) 10%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:feedback-success -->
 
@@ -840,6 +843,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 | `--dss-feedback-error-disable` | `var(--dss-negative-disable)` | — | — |
 | `--dss-feedback-error-hover` | `var(--dss-negative-hover)` | — | — |
 | `--dss-feedback-error-deep` | `var(--dss-negative-deep)` | — | — |
+| `--dss-feedback-error-text` | `var(--dss-negative-hover)` | — | — |
 | `--dss-feedback-error-surface` | `color-mix(in srgb, var(--dss-feedback-error)   10%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:feedback-error -->
 
@@ -870,6 +874,7 @@ Cores para estados e alertas (sucesso, erro, aviso, informação).
 | `--dss-feedback-info-disable` | `var(--dss-info-disable)` | — | — |
 | `--dss-feedback-info-hover` | `var(--dss-info-hover)` | — | — |
 | `--dss-feedback-info-deep` | `var(--dss-info-deep)` | — | — |
+| `--dss-feedback-info-text` | `var(--dss-info-deep)` | — | — |
 | `--dss-feedback-info-surface` | `color-mix(in srgb, var(--dss-feedback-info)    10%, transparent)` | — | — |
 <!-- END:TOKEN-TABLE:feedback-info -->
 

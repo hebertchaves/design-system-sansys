@@ -148,6 +148,19 @@
 
   /* Info (Azul Claro) - NÃO MUDA */
   /* --dss-feedback-info: mantém valor original */
+
+  /* Feedback como TEXTO — ESTES MUDAM, e é a diferença deles para os de cima.
+     Os puros são fundo/ícone e funcionam nos dois temas; os de texto são
+     níveis ESCUROS, escolhidos para contrastar com superfície clara, e sobre
+     --dss-surface-default do escuro (#262626) perderiam a legibilidade.
+
+     Medido sobre #262626:
+       --dss-positive-light #b9f2a4 → 11,75:1 ✓
+       --dss-negative-light #ffa0ab →  7,83:1 ✓
+       --dss-info-light     #a7effa → 11,80:1 ✓ */
+  --dss-feedback-success-text: var(--dss-positive-light);
+  --dss-feedback-error-text: var(--dss-negative-light);
+  --dss-feedback-info-text: var(--dss-info-light);
   /* --dss-feedback-info-hover: mantém valor original */
 
   /* ===========================================

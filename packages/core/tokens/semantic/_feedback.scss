@@ -32,6 +32,31 @@
   --dss-feedback-info-hover: var(--dss-info-hover);
   --dss-feedback-info-deep: var(--dss-info-deep);
   
+  /* Feedback como TEXTO — níveis que fecham a WCAG 1.4.3 (4,5:1).
+
+     Existem porque os tokens de feedback "puros" são cores de FUNDO e de
+     ÍCONE, não de texto: `--dss-feedback-success` (#4dd228) dá 1,9:1 sobre
+     branco. Quem precisava de "Ativa" em verde legível vinha descendo ao
+     PRIMITIVO (--dss-positive-deep), que é exatamente o que o gate §L proíbe —
+     e com razão, porque primitivo não acompanha tema.
+
+     Medido sobre `--dss-surface-default` no tema claro (#ffffff):
+       success #246714 → 6,94:1 ✓
+       error   #a01424 → 8,01:1 ✓
+       info    #0D7491 → 5,35:1 ✓
+
+     O tema escuro os remapeia (themes/dark/_colors.scss) porque a superfície
+     inverte e estes níveis escuros deixariam de ter contraste — é a diferença
+     entre eles e os tokens de feedback puros, que o dark mantém.
+
+     NÃO existe `--dss-feedback-warning-text`: a regra de a11y em globals.scss
+     declara que não há contraste seguro entre o amarelo da paleta e fundo
+     claro — nem --dss-warning-deep fecha 4,5:1 (máx. 4,36). Oferecer o token
+     seria oferecer um valor que reprova. */
+  --dss-feedback-success-text: var(--dss-positive-deep);
+  --dss-feedback-error-text: var(--dss-negative-hover);
+  --dss-feedback-info-text: var(--dss-info-deep);
+
   /* Feedback Surfaces (para fundos de alertas) — tintado a 10%.
      DERIVADO do token SEMÂNTICO via color-mix: acompanha tema automaticamente.
      (Antes eram rgba() com o hex CONGELADO dentro.) */

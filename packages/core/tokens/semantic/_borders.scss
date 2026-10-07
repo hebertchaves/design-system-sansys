@@ -56,7 +56,14 @@
      DEBITO_ABERTO.md: muda a aparência do claro em todo o DS, então pede aval. */
   --dss-border-separator: var(--dss-gray-200);
   --dss-border-default: var(--dss-gray-300);   /* #e5e5e5 · 1.26:1 — decorativo, isento */
-  --dss-border-strong: var(--dss-gray-600);    /* #737373 · 4.74:1 ✅ contorno de controle */
+  /* #262626 · 15.13:1 — contorno de controle.
+     Era `gray-600` (#737373 · 4.74:1), que passa na 1.4.11 contra a superfície
+     mas reprova a leitura estrita da 2.4.11: o salto do repouso para o azul do
+     foco (#0e88e4) dava 1,28:1, e a norma pede 3:1 entre focado e não-focado.
+     O cinza e o azul têm luminância parecida, então CLAREAR piora — medido:
+     gray-500 dá 1,47:1. Só escurecendo o salto aparece: gray-800 → 4,08:1
+     contra o azul do foco, mantendo 15,13:1 contra a superfície. */
+  --dss-border-strong: var(--dss-gray-800);
 
   /* ⚠️ NÃO existe `--dss-border-disabled` COR aqui, de propósito. Esse nome já
      está ocupado na linha ~189 por um SHORTHAND (`1px solid …`), e o tema dark

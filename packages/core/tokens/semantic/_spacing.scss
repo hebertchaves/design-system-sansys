@@ -72,6 +72,19 @@
   /* Header */
   --dss-layout-header-height: 64px;
   --dss-layout-header-height-dense: 48px;
+  /* 48px — a app bar do Sansys.
+
+     Era 40px, MEDIDA no grid master em produção (Figma 1813:1328), e assim
+     ficou até a norma cobrar. Numa barra de 40px só cabe o botão `sm`, de
+     36×36 — e o DssButton NÃO estende o alvo de toque por pseudo-elemento, de
+     modo que o tamanho visual É a área de clique. 36px reprova a WCAG 2.5.5,
+     que pede 44×44.
+
+     48px é o menor degrau que resolve: comporta o botão `md` (44px, o alvo
+     mínimo) e ainda os 2px de anel de foco de cada lado — 44 + 2×2 = 48,
+     exato. Decisão de produto (set/2026): a fidelidade ao Figma cedeu à
+     norma, e não o contrário. Segue derivada do spacing scale. */
+  --dss-layout-header-height-compact: var(--dss-spacing-12);
 
   /* Footer */
   --dss-layout-footer-height: 64px;
