@@ -174,7 +174,7 @@ A lista abaixo está ordenada para garantir que componentes base sejam criados a
 
 ### Diferencial arquitetural da Fase 3
 
-Componentes da Fase 3 **obrigatoriamente** implementam os 5 padrões do Guia de Composição:
+Componentes da Fase 3 **obrigatoriamente** implementam os 6 padrões do Guia de Composição:
 
 | # | Padrão | Regra |
 |---|---|---|

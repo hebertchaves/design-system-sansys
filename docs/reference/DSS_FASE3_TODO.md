@@ -8,7 +8,7 @@
 
 ## O que é a Fase 3
 
-A Fase 3 não é guiada por cobertura de API Quasar, mas por necessidades de produto. Componentes da Fase 3 **orquestram três ou mais componentes DSS** de Fase 1/2, gerenciam estado global interno via `provide/inject`, e implementam os 5 padrões obrigatórios do Guia de Composição.
+A Fase 3 não é guiada por cobertura de API Quasar, mas por necessidades de produto. Componentes da Fase 3 **orquestram três ou mais componentes DSS** de Fase 1/2, gerenciam estado global interno via `provide/inject`, e implementam os 6 padrões obrigatórios do Guia de Composição.
 
 **Fonte normativa:** `DSS_GUIA_COMPOSICAO_FASE3.md` · `prompt_criacao_v3.0.txt` · `TEMPLATE_FASE3.md`
 

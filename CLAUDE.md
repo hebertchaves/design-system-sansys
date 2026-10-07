@@ -160,7 +160,7 @@ Ao criar/adequar composto, os invariantes de composição são (detalhe integral
 - **Não reimplementar primitivos** — compor DSS; nunca QComponent cru no template.
 - Adequação: rodar o checklist de composto **por peça interna**.
 
-📖 `docs/governance/DSS_GUIA_COMPOSICAO_FASE3.md` (5 padrões + riscos overlay/overflow) · `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md` (delta por peça) · `DSS_ESTRATEGIA_FASE3_COMPLEXIDADE_IA.md` (visão) · **`DSS_ROTEIRO_FECHAMENTO_FASE3.md`** (como FECHAR: o que é provado por comando e o que sobra para julgamento).
+📖 `docs/governance/DSS_GUIA_COMPOSICAO_FASE3.md` (6 padrões + riscos overlay/overflow) · `DSS_UI_ADEQUACAO_CHECKLIST_COMPOSTOS.md` (delta por peça) · `DSS_ESTRATEGIA_FASE3_COMPLEXIDADE_IA.md` (visão) · **`DSS_ROTEIRO_FECHAMENTO_FASE3.md`** (como FECHAR: o que é provado por comando e o que sobra para julgamento).
 
 ---
 

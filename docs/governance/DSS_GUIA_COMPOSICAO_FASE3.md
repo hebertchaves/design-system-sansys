@@ -2,9 +2,9 @@
 
 Este documento estabelece as regras arquiteturais obrigatórias para a criação de componentes compostos complexos (Fase 3) no Design System Sansys. Ele foi forjado a partir dos aprendizados do stress test do `DssDataCard` e visa garantir que componentes aninhados em profundidade funcionem sem quebras, vazamentos de CSS ou prop drilling excessivo.
 
-## 1. Os 5 Padrões Obrigatórios de Composição
+## 1. Os 6 Padrões Obrigatórios de Composição
 
-Qualquer componente que orquestre múltiplos componentes DSS internamente deve seguir estritamente estes 5 padrões.
+Qualquer componente que orquestre múltiplos componentes DSS internamente deve seguir estritamente estes 6 padrões.
 
 ### 1.1. `inheritAttrs: false` e Repasse Explícito
 
@@ -100,6 +100,37 @@ Componentes complexos frequentemente precisam expor slots de seus componentes in
   </DssTabPanel>
 </DssTabPanels>
 ```
+
+### 1.6. O Eixo de Variação decide: composto, token ou slot
+
+A pergunta recorrente ao montar tela é *"crio um componente específico mais completo, ou
+deixo o default com variações por prop?"*. **Não se decide por gosto — decide-se pelo que
+varia.**
+
+| O que varia entre Water / Hub / Waste | Mecanismo | Por quê |
+|---|---|---|
+| **Pele** — cor, marca | token, via `[data-brand]` **e** prop `brand` | A marca é remapeamento de token, não estrutura nova |
+| **Conteúdo** — quais ícones, qual título, qual logo | **slot** | Conteúdo em prop vira reimplementação de slot, sempre pior |
+| **Estrutura** — a ordem e a composição das peças | **composto novo** (`components/composed/`) | Estrutura invariante é exatamente o que um composto é |
+
+**Evidência que fixou a regra (set/2026).** No Grid Master, o app bar azul do Sansys Water
+saiu de `DssToolbar brand="water"` — **sem uma linha de override na página**: o
+`4-output/_brands.scss` do componente pinta com `--dss-water-600` e remapeia
+`--dss-action-primary` para os filhos. Pele por token funciona e não pede componente novo.
+
+No sentido oposto, o `DssButton` já pagou o preço de tratar conteúdo como prop: `label` era
+*fallback* do slot e **descartava conteúdo em silêncio** — 54 usos ficaram sem nome acessível.
+A correção foi mesclar, como o QBtn sempre fez.
+
+E a estrutura é o caso em que o composto se justifica: a app bar do Sansys é sempre
+`burger → logo → divisor → título → espaçador → ações`. Expressar essa ordem como props
+(`burgerIcon`, `logoSrc`, `actions[]`) seria reimplementar slots mal — e reimplementar
+primitivo é vedado pelo Cartão Composto do `CLAUDE.md`.
+
+**Cláusula obrigatória.** Composto novo só nasce com a cadeia fechada: contrato emitido,
+página Playground, Preview Frame com semente e `validate:sandbox-nav` verde. Sem isso o que
+nasce é promessa — foi assim que o menu do sandbox ganhou um item `IconButton` para um
+componente que nunca existiu, e que a doc do próprio `DssButton` passou a recomendar.
 
 ## 2. Riscos Conhecidos e Mitigações
 

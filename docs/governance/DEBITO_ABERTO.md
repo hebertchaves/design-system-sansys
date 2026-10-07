@@ -293,7 +293,7 @@ Gates: `scss-tokens`, `field-conventions`, `css-meta`, `theme-scopes`, `scale`,
 foi **resolvida em seguida** (set/2026), junto com o fundo de rótulo no escuro —
 ver "Resolvidos nesta onda".
 
-### 2. Reemissão de selo v2.2 — 11 componentes selados que mudaram
+### 2. Reemissão de selo v2.2 — 17 componentes selados que mudaram
 
 Enquanto a reemissão não acontece, o `CERTIFIED_COMPONENTS` afirma qualidade sobre um
 comportamento que **não é mais o auditado**. É o custo de governança desta onda, e está
@@ -307,13 +307,28 @@ alterado. Em ordem de peso:
 
 | componente | o que mudou | por que pesa |
 |---|---|---|
-| **`DssButton`** | `label` e slot default agora **mesclam**; wrapper leva `q-anchor--skip` | Selado **e** Golden Sample de documentação. **54 usos** mudam de comportamento |
+| **`DssButton`** | `label` e slot default agora **mesclam**; wrapper leva `q-anchor--skip`; dois canais de contexto novos (`--dss-button-state-layer-inset`, `--dss-button-focus-ring-offset`), **ambos com default igual ao comportamento atual** | Selado **e** Golden Sample de documentação. **54 usos** mudam de comportamento |
 | **`DssItem`** | `role` deixa de alternar para `button`: agora é sempre `listitem` + `tabindex` | **139 usos** clicáveis. Muda o que o leitor de tela anuncia |
 | **`DssMenu`** | `v-model` virou opcional; `min-height` removido; `overflow-y: auto`; borda do dark tokenizada | Seis defeitos, dois deles bloqueadores funcionais |
-| **`DssToolbar`** | `overflow-x: auto`; brand remapeia `--dss-action-primary` no escopo | Barra com marca deixou de tornar o filho invisível (1:1) |
+| **`DssToolbar`** | `overflow-x: auto`; brand remapeia `--dss-action-primary` no escopo; **escala de ícone deslocada um degrau** (`--dss-bar-icon-size-*`); **texto da marca saiu de `--dss-text-inverse` para `--dss-action-primary-text`**; **remapeia `--dss-focus-primary`** e a geometria de estado dos filhos (`--dss-button-state-layer-inset`, `--dss-button-focus-ring-offset`) | Barra com marca deixou de tornar o filho invisível (1:1) — e, no escuro, deixou de reprovar a WCAG 1.4.3 (3,74:1 → 5,29:1) |
 | **`DssList`** | EXC-01/02 removidas (cores cruas → token) | `dss.meta.json` foi de 6 para 4 exceções |
 | **`DssSeparator`** | EXC-01 removida; override cego de dark que matava as variantes de `color` | A prop `color` voltou a valer no escuro |
 | **`DssIcon`** | adverte em DEV nas três contradições e cai para fallback seguro; slot default virou opcional | Muda o ARIA emitido em **62 usos** que não declaravam intenção |
+
+**Onda de validação de campo, set/2026 (5):** os quatro campos de construção explícita
+deixaram de mentir no `validate()` do formulário, e o container que os abriga ganhou contrato.
+
+| componente | o que mudou | por que pesa |
+|---|---|---|
+| **`DssInput`** | props `rules`/`lazyRules`; registro no QForm via `useFieldValidation`; `error`/`errorMessage` agora somam o erro interno; expõe `validate`/`resetValidation` | O campo mais usado do sistema. `rules` saiu da tabela de "fora de escopo" do `DSSINPUT_API.md` — é reversão de decisão documentada |
+| **`DssCheckbox`** | idem | O aceite obrigatório (`v => v === true`) passava como válido |
+| **`DssToggle`** | idem | idem |
+| **`DssRadio`** | idem | idem |
+| **`DssForm`** | contrato emitido; `classification` virou enum; `tagline` e bloco `a11y` backfillados | Sem alteração de comportamento próprio — mudou o que o contrato AFIRMA |
+| **`DssDialog`** | região opcional deixou de congelar (`$slots` no template); contrato emitido; `classification` virou enum; `tagline` e `a11y` backfillados; `previewHtml` tokenizado | Slot dinâmico passou a funcionar — muda o DOM renderizado de quem usa `<template v-if>` |
+
+> O `DssField` foi avaliado e **deliberadamente não alterado**: é moldura sem `modelValue`.
+> Não entra na fila.
 
 > ⚠️ **NÃO entram na fila, e a distinção importa:** `DssTooltip`, `DssItemSection` e
 > `DssItemLabel` são selados mas **não foram alterados** — ganharam só página de teste.
@@ -377,6 +392,923 @@ teste no ar.
 
 **Como usar:** ao começar a adequação de um componente, procure o nome dele nesta seção ANTES de
 rodar o checklist. O que estiver aqui entra no escopo daquela rodada.
+
+### 🚨 RESOLVIDO — contêineres ENGOLIAM o Space dos filhos (WCAG 2.1.1) (set/2026)
+
+Relato: *"consigo transitar entre checkbox, toggle e radio por teclado, mas nenhum botão faz a
+seleção, como o clique do mouse faz"*. É falha de **WCAG 2.1.1 (Keyboard)** — bloqueante.
+
+**Causa:** `@keydown.space.prevent` no template. O modificador `.prevent` do Vue chama
+`preventDefault()` **INCONDICIONALMENTE**, antes de o handler rodar. O handler checava
+`clickable`, mas o bloqueio já tinha acontecido — então o contêiner engolia o Space de
+**qualquer descendente**, mesmo quando ele próprio não era clicável.
+
+Sem a ação default, o navegador não gera o clique sintético, e o controle simplesmente não
+responde. A assinatura, medida comparando com um `<input type="checkbox">` nativo na mesma
+página:
+
+| | sequência de eventos no Space |
+|---|---|
+| nativo (controle) | keydown → keypress → keyup → **click → input → change** ✓ |
+| dentro de um DssCard | keydown → keyup → **nada** ✗ |
+
+Note a ausência de `keypress`: é o sinal de que a ação default foi suprimida. E
+`defaultPrevented` lido no próprio input dizia `false` — o `preventDefault` acontecia mais
+acima, durante o bubbling. Localizado instrumentando os 27 ancestrais: virava `true` entre
+`.q-table__container` e `.dss-card`.
+
+**Quatro componentes tinham o padrão** — todos corrigidos:
+
+| componente | gravidade |
+|---|---|
+| **`DssCard`** | a pior: é contêiner, tudo vive dentro dele |
+| **`DssItem`** | o slot `leading` é documentado para *"ícone, avatar, **checkbox**"* — o caso de uso previsto era o quebrado |
+| `DssChip` | tem botão de remover dentro |
+| `DssActionMenuSubItem` | o `.prevent` cobria também o Enter |
+
+**Correção — duas guardas, nesta ordem:**
+
+1. `event.target !== event.currentTarget` → ignora. O Space digitado num controle **dentro**
+   do contêiner pertence a ELE. É esta guarda que conserta o defeito, e vale mesmo para
+   contêiner clicável.
+2. `!clickable` → ignora. Sem ação, não há o que ativar nem o que previnir.
+
+O `preventDefault` passou a ser condicional e só no **Space**, onde serve para impedir a
+rolagem. O Enter não rola, então não precisa — o `DssActionMenuSubItem` prevenia os dois.
+
+**Medido depois:** o checkbox da tabela do Grid Master volta a fazer keydown → keypress →
+keyup → click → input → change, com a linha selecionada. E a ativação legítima do card
+clicável continua: Space no próprio card emite `click` e previne a rolagem; num descendente,
+não previne; em card não-clicável, não previne.
+
+**Teste de regressão** em `DssCard.test.js` (4 casos). Verificado que reprova sem a correção:
+restaurei o `.prevent`, 2 testes falharam, revertí.
+
+> **O que NÃO era, e eu cheguei a suspeitar:** os três controles (`DssCheckbox`, `DssRadio`,
+> `DssToggle`) estão **corretos** — testados isolados nas próprias páginas de Playground, os
+> três alternam por Space com a sequência completa. O defeito nunca esteve neles; estava em
+> quem os continha.
+
+> **Sobra registrado:** `components/base/DssCard/1-structure/DssCard.vue` é **código morto**
+> (o entry point importa o `.ts.vue`; nada referencia o `.vue`). Ele carrega a mesma linha
+> defeituosa e NÃO foi corrigido — remover arquivo é decisão de governança, não desta rodada.
+> O mesmo vale para `DssCardActions.vue` e `DssCardSection.vue`, duplicados ali.
+
+### 🚨 RESOLVIDO — a fonte de ÍCONE não era servida pelo DSS (set/2026)
+
+Relato: *"os glifos redondos voltaram a ficar com o topo e a base cortados, e não sei o motivo
+atual"*. A investigação descartou três causas e achou duas reais.
+
+**O que NÃO era, medido:**
+
+| Hipótese | Medida |
+|---|---|
+| Contorno da fonte | A 48px a tinta é 40×40 e a linha do topo tem 12px contra 40px da central (razão 0,27) — círculo íntegro |
+| Recorte de layout | Os 10 ancestrais do ícone medidos: nenhum tem `overflow` que corte; sobram 5px acima e abaixo dentro do chip |
+| Vazamento de tipografia | `font-size` do `<td>` forçada a 32px e a 8px — o ícone não se moveu |
+
+**O que era — parte 1: tamanho, e é geometria.** A razão "largura da linha do topo ÷ largura da
+linha central" cresce quando o diâmetro cai: 0,27 a 48px · 0,38 a 24px · 0,43 a 16px · **0,42–0,50
+a 14px**. Esses valores batem com a geometria de um círculo PERFEITO em cada diâmetro (a teoria
+dá 0,40 para 12px de diâmetro). A 12px e `devicePixelRatio: 1`, o topo do círculo é uma linha de
+~5px de largura e 1px de altura — e o olho lê isso como corte. **Não havia defeito de
+renderização; havia ícone pequeno demais para um círculo parecer redondo.**
+
+**O que era — parte 2: a fonte de ícone vinha do Google, sem versão fixada.** A onda que
+internalizou o Inter (`packages/core/assets/fonts/inter-var-*.woff2`) não alcançou a fonte de
+ícone: o `apps/sandbox/index.html` carregava
+`https://fonts.googleapis.com/css2?family=Material+Icons`, e a requisição medida resolvia para
+`fonts.gstatic.com/s/materialicons/v145/…`. O `v145` é um contador que o Google incrementa —
+**a renderização dos ícones podia mudar sem nenhum commit neste repositório**, que é exatamente
+o formato do relato. Não dá para provar que foi a causa (não há lockfile de fonte para
+comparar), e é a única entrada não fixada da cadeia.
+
+**Correção:** `material-icons.woff2` (128KB) no repositório, `@font-face` em
+`tokens/semantic/accessibility/_font-face.scss` ao lado do Inter, `font-display: block` (ícone
+não tem substituto legível — com `swap` a tela mostra a palavra `check_circle` por escrito até
+a fonte chegar), e o `<link>` externo removido do sandbox. Medido depois: 48 ícones na tela,
+todos em `Material Icons`, zero requisição a `gstatic`.
+
+> **Defeito que eu mesmo causei e corrigi na mesma rodada:** ao remover o `<link>` levei junto a
+> classe `.material-icons`, que vinha no CSS do Google e é quem aplica a família ao `<i>` do
+> QIcon. Todos os ícones passaram a renderizar a LIGADURA COMO TEXTO em `DSS Sans`, recortada na
+> caixa de 1em — sem erro de console, com a fonte carregada. A classe foi reposta no DSS, com
+> apenas o que a FONTE precisa: família, peso, estilo, ligadura. Sem `font-size`, `line-height`
+> nem `display` — geometria de ícone é do DSS, e repetir `font-size` criaria segunda fonte de
+> verdade com a mesma especificidade das regras do DssIcon.
+
+> **Sobra registrado:** `apps/sandbox/public/test-icons.html` ainda aponta para o Google. É
+> página de diagnóstico avulsa em `public/`, fora do build do app — mantida como sonda de
+> comparação.
+
+### ✅ RESOLVIDO — `DssChip` dimensionava ícone com token de TIPOGRAFIA (set/2026)
+
+Achado investigando o relato acima, e **metade dessa migração já estava feita no repositório**:
+a nota do `.dss-chip__remove` dizia, com todas as letras, *"Token de ÍCONE, não de texto: antes o
+ícone caía em 14px por herança da tipografia do chip — 2px abaixo do menor token de ícone que
+existia, e a 14px o traço circular do `cancel` não resolve em 1px"*. O `--remove` foi corrigido;
+os ícones de CONTEÚDO não.
+
+| chip | altura | área útil | ícone antes | ícone depois |
+|---|---|---|---|---|
+| `xs` | 20px | 16px | 14px (`--dss-font-size-sm`) | **12px** (`--dss-icon-size-2xs`) |
+| `sm` | 24px | 20px | 16px (`--dss-font-size-md`) | **16px** (`--dss-icon-size-xs`) |
+| `md` | 28px | 20px | 18px (`--dss-font-size-lg`) | **20px** (`--dss-icon-size-sm`) |
+| `lg` | 32px | 24px | 20px (`--dss-font-size-xl`) | **24px** (`--dss-icon-size-md`) |
+
+Os glifos caíam em 14 e 18px — degraus que a escala de ícone (12·16·20·24·32·48) não tem.
+
+**Não mudou altura de chip nenhum, e isso foi verificado, não assumido:** a área útil é
+`min-height` menos o padding, e o `min-height` de cada tamanho foi desenhado como conteúdo +
+padding. Medido na página de Playground: chip `md` **sem ícone nenhum** tem a mesma altura de um
+`md` com ícone de 20px. O ícone não dirige a altura.
+
+**O que quase me fez colapsar um degrau:** `sm` e `md` têm a MESMA área útil de 20px — o `md` é
+4px mais alto mas tem o padding vertical dobrado (4+4 contra 2+2). Qualquer mapeamento baseado
+em "o maior token que cabe" faria `sm` e `md` empatarem em 20px, que é o defeito de escala
+colapsada corrigido dias atrás nos ícones de barra. O mapeamento acima escapa porque usa os
+quatro primeiros degraus da escala em ordem, não o máximo que cabe.
+
+> **Fica aberto:** o padding vertical do `md` (4+4) contra o do `sm` (2+2) é a anomalia que
+> produz áreas úteis 16·20·20·24 numa escala de alturas 20·24·28·32. E chips `--outline` `md`
+> medem 32px contra os 28 do token — pré-existente, causa não investigada, fora desta rodada.
+
+### ✅ RESOLVIDO — densidade do pattern Grid Master: 3 linhas de tabela devolvidas (set/2026)
+
+Pedido do usuário, e a reclamação por trás dele é antiga: **quantidade de informação útil por
+tela**. Medido no grid master a 1000px de viewport, a tabela começava em 634px — e 153px disso
+eram sobrecarga fixa acima da faixa de dashboard, respiro e não conteúdo.
+
+A unidade da conta é a linha de tabela: **49px**.
+
+| | Antes | Depois |
+|---|---|---|
+| Topo da trilha | 65px | 53px |
+| Topo do board | 94px | 78px |
+| Altura da faixa de dashboard | 272px | **195px** |
+| Topo do card da tabela | 577px | **432px** |
+| Primeira linha da tabela | ~683px | **511px** |
+| **Linhas antes da dobra** | **6** | **10** |
+
+**Onde a gordura estava**, em degraus de token:
+
+| Onde | Propriedade | Antes | Depois |
+|---|---|---|---|
+| `DssPageShell` | `__content` padding | 16/24/24 | 4/12/12 |
+| `DssPageShell` | `__content` gap | 8 | 4 |
+| `DssPageShell` | `__board` padding | 12/24/24 | 8/16/16 |
+| `DssPageShell` | `__board` gap | 20 | **12** |
+| página | `.gm-panel` padding e gap | 16 | 8 |
+| página | `.gm-band` gap | 20 | 12 |
+| página | `.gm-grid` gap | 20 | 16 (linhas: 12) |
+
+O `gap` do board é o que mais pesa: repete entre todos os cards (cinco vezes nesta tela), e um
+degrau a menos vale 40px sozinho.
+
+**A fronteira, declarada:** a densidade saiu de `padding`, `margin` e `gap`. **Não** saiu de
+altura de campo (37px), alvo de toque (44px), entrelinha nem tamanho de fonte — nada do que a
+WCAG mede. Reduzir espaço ENTRE elementos é layout; reduzir o elemento é regressão de
+acessibilidade, e esta rodada não encostou nisso.
+
+### ✅ RESOLVIDO — chips de filtro em UMA linha, excedente atrás do "+N filtros" (set/2026)
+
+Pedido do usuário. Com 10 filtros a lista quebrava em três linhas dentro do card mais alto da
+faixa — e era a faixa inteira que empurrava a tabela para baixo.
+
+Agora a lista ocupa uma linha; o que não couber sai do DOM e volta pelo gatilho "+N filtros",
+que alterna com `aria-expanded` e `aria-controls`. Medido: 530px → 4 chips + "+6 filtros";
+1072px → os 10, sem gatilho; 627px → 5 + "+5 filtros"; 202px → só o gatilho, "+10 filtros".
+
+**`hidden`, não `overflow: hidden`.** Recorte de CSS esconde da vista, não do DOM: o chip
+recortado continua tabulável e continua sendo lido pelo leitor de tela — armadilha de teclado
+em cima de algo invisível. Verificado no que sobrou escondido: `display: none`, zero caixas,
+`focus()` não pega, `checkVisibility()` falso.
+
+**Três defeitos meus no caminho, todos achados medindo:**
+
+1. **Largura em cache não é largura.** A primeira versão media os chips uma vez e reusava os
+   números. Estreitar recalculava; **alargar não** — o gatilho ficava preso em "+9 filtros" num
+   card que já comportava sete chips. Trocado por medir o LAYOUT a cada recálculo: renderiza
+   tudo com `wrap` por um tick e pergunta ao navegador quem ficou na primeira linha. Quem
+   encaixa é o motor de layout.
+2. **`ref` de `v-for` guarda nó defasado.** Medir nó solto devolve zero sem avisar — a mesma
+   armadilha que já tinha custado uma investigação nesta onda. Agora consulta o DOM na hora.
+3. **Reentrância.** O `ResizeObserver` dispara DURANTE o passo de medição (que mexe no DOM), e
+   duas execuções concorrentes se corrompem: a primeira desliga `medindo` enquanto a segunda
+   ainda mede, e a segunda passa a medir a lista **já recolhida**. Medido: o número caía um
+   degrau a cada redimensionamento até chegar a 1. Serializado com guarda + pendência.
+
+**Degradação extrema declarada:** abaixo de ~210px nem um chip mais o gatilho cabem. Ali o
+**chip** cede, não o gatilho — manter um chip fazia a linha transbordar e o recorte comia
+justamente o "+N filtros", que é o único caminho até os escondidos.
+
+> O `Filtros` vira composto de Fase 3 mais à frente. Esta implementação é de página e o
+> comportamento está medido — serve de contrato quando o composto nascer.
+
+### 🚨 RESOLVIDO — o ícone do rail era dimensionado pela PÁGINA, não pelo componente (set/2026)
+
+Relatado pelo usuário como "os ícones do `DssPageShell` também estão pequenos". Medidos: **14px
+num item de 44px — 32%**, contra os ~50% de referência de um rail de navegação.
+
+**Mas o tamanho pequeno era o sintoma, não o defeito.** O `DssPageShellRailItem` renderizava
+`<DssIcon :name="icon" size="sm" inline decorative />`, e esse `size="sm"` **nunca valeu**: no
+modo `inline` o `DssIcon` não emite classe de tamanho (CCI §2.2 — ele usa `1em` e
+`font-size: inherit`, e quem dimensiona é a `font-size` do host). O rail item não declarava
+`font-size` nenhuma.
+
+Resultado: o ícone herdava a tipografia **de quem montasse a tela**. Os 14px medidos eram o
+`font-size: var(--dss-font-size-sm)` da `.gm-page` vazando para dentro do componente. **O mesmo
+rail renderizaria em outro tamanho em cada página** — e nada avisaria.
+
+**Correção:** classe própria (`dss-page-shell__rail-icon`) e `font-size: var(--dss-icon-size-md)`
+na Layer 2; o `size` inerte saiu. Mesmo padrão do `DssButton`, que dimensiona o próprio
+`.dss-button__icon` em vez de repassar `size` ao ícone.
+
+| | Antes | Depois |
+|---|---|---|
+| Ícone | 14px, variável | **20px, fixo** |
+| % do item (44px) | 32% | **45%** |
+| % da coluna (52px) | 27% | **38%** |
+| Com `font-size` da página em 28px | 28px | **20px** |
+| Com `font-size` da página em 9px | 9px | **20px** |
+
+> O valor foi a `--dss-icon-size-md` (24px) na primeira correção e desceu um degrau para
+> `--dss-icon-size-sm` (20px) por decisão de produto na mesma rodada. O que importava — e o
+> que o teste tranca — é o tamanho ser **do rail**, não da página; o degrau em si é escolha
+> visual.
+
+As duas últimas linhas são o teste do vazamento: forçei a tipografia da página para 28px e 9px
+e o ícone não se mexeu.
+
+**Teste de regressão** em `DssPageShell.test.js` — tranca que o ícone é `inline`, que carrega a
+classe de gancho, e que nenhuma classe `dss-icon--<size>` sai de lá. Verificado que reprova sem
+a correção (restaurei o `size="sm"`, o teste falhou, revertí).
+
+**Família auditada na mesma rodada — e o `DssPageShell` era o único furo.** Varri os 12
+consumidores de `<DssIcon inline>` nos componentes:
+
+| Verificação | Resultado |
+|---|---|
+| `size` + `inline` juntos (prop inerte) | **0** depois da correção; o rail era o único |
+| `inline` com `font-size` declarada no host | **12 de 12** |
+
+Os outros 11 já faziam certo, por dois caminhos igualmente válidos: dez declaram a `font-size`
+no próprio gancho do ícone (`.dss-button__icon`, `.dss-chip__icon`, `.dss-radio__icon`…) e o
+`DssEmptyState` declara no **wrapper** `.dss-empty-state__icon`, que o ícone inline herda.
+
+Fica o princípio, que vale para o próximo componente: **`inline` transfere a decisão de tamanho
+para o host, então o host é obrigado a declará-la.** Não declarar não dá erro — dá o tamanho de
+quem estiver por perto.
+
+### 🚨 RESOLVIDO — o anel de foco era INVISÍVEL dentro da barra de marca (set/2026)
+
+Achado ao investigar um relato do usuário sobre o ícone da `DssAppBar`. Medido no botão de
+menu, dentro da barra Water:
+
+| | Valor | Norma |
+|---|---|---|
+| Cor do anel | `rgb(2,108,199)` | — |
+| Fundo da barra | `rgb(2,108,199)` | — |
+| **Contraste** | **1,00:1** | 1.4.11 pede **3:1** |
+
+O indicador de foco **existia no CSS e não existia na tela**. Quem navega por teclado não
+tinha como saber onde estava dentro da barra de aplicação (WCAG 2.4.7).
+
+**Causa — a premissa estava escrita e ninguém a conferiu no lugar errado.**
+`tokens/semantic/accessibility/_focus.scss` remapeia `--dss-focus-primary` por marca, e os
+comentários de lá declaram o valor: `--dss-water-600` → *"5.29:1 **vs branco**"*. A premissa é
+que o elemento focado está sobre superfície clara — verdade em formulário, falsa dentro da
+barra, onde a superfície **é** `--dss-water-600`. Mesma cor nos dois lados.
+
+É o terceiro caso da mesma família nesta onda: um token semântico cuja definição assume o
+tema/superfície default, aplicado numa superfície que não acompanha o tema. Os outros dois
+foram `--dss-text-inverse` no texto da barra (3,74:1 no escuro) e no remap de
+`--dss-action-primary` para os filhos.
+
+**Correção:** a barra remapeia `--dss-focus-primary` para `--dss-action-primary-text`, ao lado
+dos outros dois remaps que já estavam lá. **Medido depois: 5,29:1 no claro e no escuro.**
+
+### 🟡 RESOLVIDO — o anel de foco TRANSBORDAVA a barra compacta (set/2026)
+
+Mesmo botão, outro eixo. `outline-offset` do `DssButton` é 4px e o anel tem 2px, então o botão
+`sm` estende **36 + 2×4 + 2×2 = 48px** — numa barra de **40px**. O anel era recortado em cima e
+embaixo pela própria barra.
+
+**Correção:** `--dss-button-focus-ring-offset`, canal declarado pelo `DssButton` com default
+`--dss-spacing-1` (4px, o de sempre). A barra o zera: o anel fecha em 40px e cabe inteiro.
+Fora da barra, nada muda.
+
+### ✅ RESOLVIDO — o disco de hover pesava mais que o ícone na barra (set/2026)
+
+Relatado pelo usuário: *"o hover/touch target muito grande, essa diferença precisa diminuir
+para que o ícone ganhe mais visibilidade; a sombra clara está ganhando mais destaque que o
+próprio ícone"*.
+
+Medido: botão `sm` de 36px desenhando o overlay de estado na caixa inteira, em volta de um
+ícone de 20px.
+
+| | Antes | Depois |
+|---|---|---|
+| Alvo de toque | 36px | **36px** (inalterado) |
+| Disco de estado | 36px | **28px** |
+| Ícone / disco | 56% | **71%** |
+| Área do disco / área do glifo | 3,2× | **2,0×** |
+
+**O que NÃO foi feito, e por quê.** Não encolhi o alvo de toque: ele já está em 36px, abaixo
+dos 44 da WCAG 2.5.5 (débito registrado em separado), e reduzi-lo pioraria a norma para
+resolver estética. Disco de estado e alvo de toque são caixas diferentes — essa separação é a
+mesma razão de o `::before` ser reservado ao alvo e o `::after` ao efeito.
+
+Também não aumentei o glifo: a escala de ícone da barra já subiu um degrau inteiro nesta onda,
+e subir outro colapsaria degraus de novo (`sm` alcançaria `md`), que é exatamente o defeito
+corrigido dias atrás. **Se 20px ainda for pequeno, o caminho honesto é a barra usar outro
+degrau de botão — não torcer a escala.**
+
+**Correção:** `--dss-button-state-layer-inset`, canal declarado pelo `DssButton` com default
+`0` (o de sempre). A barra o põe em 4px. Fora da barra, nada muda — verificado num botão
+`flat` do board: inset `0px`, offset `4px`, anel azul, idênticos ao anterior.
+
+### 🚨 RESOLVIDO — `DssToolbar` reprovava a WCAG 1.4.3 no tema ESCURO (set/2026)
+
+Achado no Bloco 3.3, medindo as duas telas em LIGHT e DARK. O defeito estava no DSS desde
+sempre e **nenhum gate o pegava** — nem podia: o contraste só existe depois que o navegador
+resolve a cascata, e `jsdom` não carrega folha externa.
+
+| Tema | Fundo da barra | Cor do texto | Contraste |
+|---|---|---|---|
+| claro | `#026cc7` | `#ffffff` | 5,29:1 ✅ |
+| escuro | `#026cc7` | `#0a0a0a` | **3,74:1** ❌ (a 1.4.3 pede 4,5:1) |
+
+**Causa.** O `_brands.scss` e o `_states.scss` pintavam o texto da barra de marca com
+`--dss-text-inverse`. Esse token significa *"o inverso do texto do TEMA"*, e por isso vira
+`#0a0a0a` no escuro — o que é correto para uma superfície que escurece junto. **A barra de
+marca não escurece**: ela continua `--dss-water-600` nos dois temas. O token certo é
+`--dss-action-primary-text`, *"texto sobre a superfície de ação"*, branco nos dois.
+
+**Era mudo, e pior: era mudo com um comentário afirmando o contrário.** O `_states.scss`
+dizia, em cima da regra, *"Brands mantêm suas cores no dark mode — contraste preservado"*.
+Não estava.
+
+**Alcance.** A mesma regra remapeia `--dss-action-primary` para os filhos (§K5), então o
+defeito valia para **todo** ícone e botão `flat` dentro de uma barra de marca no escuro — não
+só para o título.
+
+**Correção:** `--dss-text-inverse` → `--dss-action-primary-text` nos dois arquivos, e o token
+ganhou definição default em `tokens/semantic/_actions.scss`. Essa parte não foi opcional: ele
+só existia dentro de `tokens/brand/_hub|_water|_waste.scss`, e o `validate:scss-tokens:gate`
+reprovou na hora — *"definido APENAS em escopo condicional"*, que é um fantasma disfarçado
+(fora de `[data-brand]`, o `var()` cairia para vazio). O gate estava certo.
+
+**Medido depois:** 5,29:1 nos dois temas, nas duas telas.
+
+### ✅ RESOLVIDO — `DssAppBar` era invisível na galeria E no Preview Frame (set/2026)
+
+`QHeader needs to be child of QLayout` era o **único erro de console** do playground, e vinha
+da galeria de defaults ao carregar. O `DssAppBar` compõe o `DssHeader`, que o Quasar aborta
+fora de um `QLayout` — e o sintoma é o de sempre nesta família: **nada renderiza, nada avisa**.
+
+Dois consumidores, dois lugares para ensinar a mesma coisa:
+
+- **Galeria de defaults** (`DemoRenderer`): lê `defaultPreview.wrapIn` do `dss.meta.json`. O
+  `DssHeader` já declarava `wrapIn: DssLayout`; o `DssAppBar` não herdou isso por compor —
+  meta é por componente. Declarado.
+- **Preview Frame** (`PreviewSubject`): tem a lista `EXIGE_LAYOUT`, com `DssHeader`,
+  `DssFooter`, `DssDrawer` e `DssPageContainer`. `DssAppBar` entrou nela.
+
+**A lição é de composição, não de configuração:** um composto **não herda os pré-requisitos de
+contexto** das peças que usa. Quem criar o próximo composto sobre `DssHeader`/`DssDrawer`
+precisa declarar o host nos dois lugares — e o único jeito de perceber que esqueceu é abrir a
+galeria e ver o cartão vazio.
+
+### 🟡 `DssTable`: pôr componente DSS numa célula custa `<td>` cru + classe do Quasar (set/2026)
+
+Levantado pelo usuário ao revisar o Grid Master: *"a tabela não está aplicando DssTable, apenas
+qTable"*.
+
+**A premissa estava errada, e o achado por trás dela não.** A tabela usa `DssTable` — medido no
+DOM, o nó raiz tem `dss-table dss-table--compact` ao lado das classes do QTable. É assim que um
+wrapper governado se apresenta: ele não cria um nó próprio, repassa props e classes ao QTable, e
+as duas famílias somam no mesmo elemento. No Grid Master são 8 classes do Quasar contra 2 do
+DSS, e é isso que faz parecer QTable cru numa inspeção rápida.
+
+**O que é defeito de verdade:** quem usa o slot `body-cell-*` escreve marcação do vendor na
+página.
+
+```vue
+<template #body-cell-equipe="{ value }">
+  <td class="text-left">     <!-- ← `<td>` cru + classe utilitária do QUASAR -->
+    <DssChip … />
+  </td>
+</template>
+```
+
+Dois vazamentos: o `<td>` (contrato do QTable — o slot **substitui** a célula inteira, então
+fornecê-la é obrigação de quem usa o slot) e as classes `text-left`/`text-right`, que são do
+Quasar, não do DSS.
+
+**E a classe não é redundante** — medido apagando-a:
+
+| | `text-align` resultante |
+|---|---|
+| com `class="text-right"` | `right` |
+| sem a classe | **`start`** |
+
+O `align` declarado na coluna só alcança o `<td>` que o **QTable** desenha; no `<td>` do slot,
+não. Quem usa o slot replica à mão o que o componente faz sozinho nas demais colunas.
+
+É a mesma família do item anterior (caixa de seleção sem nome acessível): **as duas lacunas só
+aparecem quando se põe componente DSS dentro da tabela**, que é justamente o que o Bloco 3.1 fez
+pela primeira vez.
+
+#### Esforço de um `DssTableCell` — avaliado, NÃO executado
+
+| Medida | Valor |
+|---|---|
+| Consumidores reais de `body-cell-*` | **2 arquivos** (`TestGridMasterDashboard`, `TestTable`) |
+| `<td>` crus sob `DssTable` | **~9** |
+| `<td>` crus no repositório (total) | 112 — mas a quase totalidade é de `DssMarkupTable`, **onde escrever a tabela à mão É o contrato**; não contam |
+| Custo em arquivos, pelo precedente | `DssPageShellRailItem`: 2 arquivos (estrutura + wrapper). `DssCardSection`: 2 + composable de classes |
+| Custo em governança | o subcomponente entra no `dss.meta.json` e no `dss.contract.json` do pai (o `DssPageShell` referencia o RailItem 5× e 4×) |
+
+**Leitura honesta:** o custo por arquivo é baixo — subcomponente é barato no DSS, há dois
+precedentes recentes. O que pesa contra é a **base de consumo**: 9 ocorrências em 2 arquivos, e
+os dois são de sandbox, não de produto. Criar componente para isso hoje é a tentação do
+`IconButton` que o próprio plano das frentes nomeia como anti-padrão — componente escrito para
+um catálogo planejado que nunca existiu.
+
+**Recomendação:** não criar agora. Reavaliar quando uma tela de produto usar `DssTable` com
+componente em célula. Até lá, a saída barata é **documentar o padrão no README do `DssTable`**,
+que hoje mostra `<td class="text-center">` num exemplo sem explicar que a classe é obrigatória
+e por quê.
+
+### 🟡 `DssTable`: a caixa de seleção do QTable não tem NOME ACESSÍVEL (set/2026)
+
+Descoberto no 3.1, convertendo a tabela do Grid Master de `DssMarkupTable` + `<table>` à mão
+para `DssTable`. A tabela antiga trazia `aria-label="Selecionar protocolo 65665262"` em cada
+linha e `"Selecionar todos os registros"` no cabeçalho. Depois da conversão: **5
+`<input type="checkbox">` sem `id`, sem `name` e sem `aria-label`** — a seleção passou a ser
+do componente, e o nome foi junto.
+
+É uma **regressão de acessibilidade que a troca para o composto introduz em silêncio**: a
+tabela fica mais correta em tudo (grade, cabeçalho, densidade, separador) e perde os nomes.
+
+**Contornado na tela** com os slots `header-selection` / `body-selection`, que devolvem o
+controle e ainda trocam a caixa do Quasar por `DssCheckbox`:
+
+```vue
+<template #body-selection="scope">
+  <DssCheckbox v-model="scope.selected" dense size="xs"
+               :aria-label="`Selecionar protocolo ${scope.row.protocolo}`" />
+</template>
+```
+
+**A lacuna do componente continua aberta:** hoje todo consumidor precisa *saber* disso. As
+saídas possíveis — o `DssTable` emitir um nome default a partir do `rowKey`; ou uma prop
+`selectionLabel`; ou, no mínimo, a nota no README e um teste que reprove a ausência. Decisão
+pertence à rodada de adequação do `DssTable`.
+
+### 🟡 Cabeçalho de tabela SÓLIDO da marca não existe no DSS (set/2026)
+
+As duas telas Sansys pintam o `<thead>` com a cor cheia da marca e texto branco. Nenhum dos
+dois componentes de tabela oferece isso:
+
+| Componente | O que entrega sob `[data-brand]` |
+|---|---|
+| `DssTable` | cabeçalho **tingido** — fundo `--dss-water-50`, texto `--dss-water-700` |
+| `DssMarkupTable` | nada — cabeçalho neutro |
+
+Por isso as duas telas reimplementavam o cabeçalho na própria folha: **43 linhas** em
+`.gm-table` e **45** em `.cn-table`, ~88 somadas. É o maior bloco de CSS de página que o
+Bloco 3 **não** conseguiu absorver, e o motivo é só esse.
+
+No Grid Master a conversão para `DssTable` levou as 43 linhas embora **ao preço do visual**: o
+cabeçalho agora é o tingido do DSS, não o azul sólido do Figma. Está declarado no cabeçalho do
+arquivo como divergência deliberada — Constituição #6, o árbitro visual é o CSS do DSS. No
+Check-in as 45 linhas continuam lá, porque aquelas tabelas são estáticas e seguem em
+`DssMarkupTable`.
+
+**A decisão é de produto:** ou o Sansys adota o cabeçalho tingido, ou o DSS ganha um
+tratamento sólido (variante, não prop de cor) nos dois componentes de tabela. Enquanto não
+houver decisão, a terceira tela vai reimplementar as mesmas ~44 linhas.
+
+### 🟡 `DssField` emite `label[for]` apontando para um `id` que não existe (set/2026)
+
+Visto no 3.3 pelo painel de *issues* do DevTools, na galeria de defaults:
+`<label for="dss-field-ctrl-sbphzzm">` sem elemento correspondente no documento. Um `for`
+órfão **não associa nada** — o rótulo deixa de nomear o controle para leitor de tela, e o
+clique no rótulo não foca o campo.
+
+Não é da onda do Bloco 3; fica para a rodada de adequação do `DssField`.
+
+### ✅ RESOLVIDO — `DssContainer` invisível na galeria por uma chave de meta (set/2026)
+
+O `dss.meta.json` do `DssContainer` usava `name` onde os outros 92 metas usam `component`. A
+galeria de defaults filtra por `component` — resultado: **nenhum cartão, nenhum erro, nenhum
+aviso**. O componente existia, montava, tinha página e contrato, e simplesmente não aparecia.
+
+Já existia a correção em `scripts/update-meta-preview.cjs` (normaliza `name` → `component`,
+pulando as duas fixtures de stress-test). Este meta só nunca passou por ele. Corrigido à mão:
+a galeria foi de 92 para 93 cartões.
+
+**Também fora do `DemoRenderer`:** `DssContainer` e `DssBrandLogo` não estavam no registry da
+galeria. O gate `validate:demo-registry` pegou — mas só depois de o `catalog.json` ser
+reconstruído, porque o catálogo desatualizado escondia os dois. Registrados.
+
+> **O padrão, de novo.** Três defeitos num componente que nasceu há poucas sessões, todos
+> mudos: CSS que não embarcava (Bloco 0), ausência do registry, e a chave do meta. Nenhum
+> deu erro. Componente novo precisa de uma lista de verificação de REGISTRO — hoje ela
+> existe espalhada por três gates, e dois deles dependem de o catálogo estar fresco.
+
+### ✅ RESOLVIDO — ícone pequeno demais nos componentes de barra (set/2026)
+
+**Era:** numa barra só cabe botão `sm` — o `md` tem 44px e estoura até a toolbar densa, de
+40px. E o botão `sm` consome `--dss-icon-size-xs`, que são 16px.
+
+| Barra | Altura | Ícone antes | Proporção |
+|---|---|---|---|
+| `DssAppBar` (compact) | 40px | 16px | **40%** |
+| `DssToolbar` (padrão) | 56px | 16px | **29%** |
+
+A proporção de referência de uma barra de aplicação é ~50%.
+
+**Correção:** o `DssToolbar` — que é A barra, e que o `DssAppBar` compõe — **remapeia a
+escala de ícone** no próprio escopo, um degrau acima, a partir da família
+`--dss-bar-icon-size-*` (nova, em `tokens/semantic/_dimensions.scss`).
+
+Remapear o token, e não escrever `font-size` em `.dss-button__icon`, é o §K5 aplicado a
+dimensão: o Cartão Composto proíbe injetar CSS no filho, e a regra tem razão prática — no dia
+em que o `DssButton` trocar a classe interna, a injeção quebra calada. O token é o canal
+declarado; quem o consome segue sendo a regra do botão.
+
+**A primeira versão desta correção estava errada, e o usuário pegou no DevTools.** Ela
+remapeava **só** `--dss-icon-size-xs`. Medido dentro de uma `.dss-toolbar`:
+
+| `size` | botão | ícone (remap parcial) |
+|---|---|---|
+| xs | 32px | 12px |
+| sm | 36px | **20px** |
+| md | 44px | **20px** ← igual ao `sm` |
+| lg | 52px | 24px |
+| xl | 64px | 32px |
+
+Dentro da barra, `dss-button--md` crescia o container e **não** o ícone: a prop `size` deixava
+de ter efeito visível entre dois degraus. Todo remap **parcial** colapsa em alguma fronteira —
+deslocar xs/sm/md igualaria `md` e `lg`. O único remap monotônico é o da escala **inteira**.
+
+E a origem precisa ser uma família própria, não `var(--dss-icon-size-<próximo>)`: encadeado no
+mesmo bloco, cada token resolveria para o vizinho **já remapeado** e a escala colapsaria de
+novo — a mesma armadilha que o `DssAppBar` pagou na densidade `standard`.
+
+**Medido depois** (dentro de `.dss-toolbar`, escala estritamente crescente):
+
+| `size` | fora da barra | na barra |
+|---|---|---|
+| xs | 12px | 16px |
+| sm | 16px | **20px** |
+| md | 20px | **24px** |
+| lg | 24px | 32px |
+| xl | 32px | 48px |
+
+E nas barras reais: `DssAppBar` compact 40px → botão `sm` → ícone 20px (**50%**); `DssAppBar`
+standard 64px → botão `md` → ícone 24px (**38%**); Grid Master 50%; Check-in 56px → botão `sm`
+→ 36%. 174 testes das três peças passam, 22 gates verdes.
+
+**Efeito colateral corrigido junto:** o `DssAppBar` fixava `size="sm"` no botão de menu e
+compensava com um remap próprio na densidade `standard`, que forçava 24px **também** no `sm` —
+o mesmo colapso, de outro jeito. Agora o botão segue a densidade
+(`:size="density === 'compact' ? 'sm' : 'md'"`) e o remap do `standard` foi removido: um dono
+por decisão, e a prop volta a decidir. Teste novo cobre os dois degraus.
+
+**Sobra para o Bloco 3.1:** a tela de Check-in usa botão `sm` numa toolbar de 56px, o que dá
+36%. O `md` (44px) cabe em 56px e levaria o ícone a 24px (43%). É escolha **da tela**, não do
+componente — e as duas telas vão ser reconstruídas sobre os compostos no 3.1, então a troca
+pertence àquela rodada.
+
+**Fronteira declarada:** o topo da escala (botão `xl` em barra → 48px) é nominal. Um botão de
+64px não cabe em barra nenhuma — a padrão tem 56px. Deslocar também esse degrau mantém a
+escala monotônica em vez de colapsar em cima.
+
+**Alcance:** o remapeamento vale para qualquer ícone da barra, não só o dos botões — e é o
+certo: chip, avatar e ícone solto numa barra também são do tamanho da barra. `DssToolbar` é
+**selado** e usado em 20 arquivos (17 com ícone); já estava na fila de reemissão desde a onda
+de adequação.
+
+### ✅ RESOLVIDO — alvo de toque da barra abaixo do mínimo da WCAG (set/2026)
+
+Descoberto ao medir o tamanho do ícone. O `DssButton` **não estende** o alvo de toque por
+pseudo-elemento: o tamanho visual **é** a área de clique. Numa barra de 40px só cabe o botão
+`sm`, que tem **36×36px** — abaixo dos 44×44 que a WCAG 2.5.5 pede.
+
+Não era defeito de componente: era consequência da barra de 40px, que veio medida do grid
+master em produção. As saídas eram de produto, não de código:
+
+1. aceitar e registrar a exceção (o alvo fica em 36px);
+2. **a barra passar a 44px+, perdendo a fidelidade ao Figma;**
+3. o `DssButton` ganhar extensão de alvo por `::before` — que o Cartão Base já reserva
+   exatamente para isso, e que hoje nenhum tamanho usa.
+
+**Decisão de produto (set/2026): a (2).** A barra compacta foi de **40px para 48px** e os
+botões de ícone passaram de `sm` para `md`. 48 é o menor degrau que comporta o alvo de 44px
+**mais** os 2px de anel de foco de cada lado — 44 + 2×2 = 48, exato.
+
+| | Antes | Depois |
+|---|---|---|
+| Barra compacta | 40px | **48px** |
+| Alvo de toque | 36×36 ❌ | **44×44 ✅** |
+| Ícone | 20px | **24px** (55% do alvo) |
+| Disco de estado | — | 36px (ícone = 67% dele) |
+| Anel de foco | 48px, transbordava | **48px, cabe exato** |
+
+A (3) continua sendo a saída mais elegante *em tese* — resolve sem mexer no desenho —, mas
+deixou de ser necessária aqui. Fica anotada para quando algum outro contexto precisar de alvo
+maior que a caixa visual.
+
+**O título do módulo também mudou na mesma rodada:** `--dss-font-size-xl` (20px) →
+`--dss-font-size-lg` (18px), a pedido. Decisão estética, sem implicação de norma.
+
+### 🟡 Preview Frame envia prop numérica como STRING (set/2026)
+
+Visto na página do `DssHeader`: `revealOffset="250"` chega como `String`, e o Vue reprova —
+`Invalid prop: type check failed for prop "revealOffset". Expected Number with value 250, got
+String with value "250"`. O aviso aparece duas vezes (no `DssHeader` e no `QHeader` abaixo).
+
+O knob de texto do frame não converte pelo tipo declarado no contrato. Há conversão para
+array (`coerceKnobValue`) e para `toggle`, mas não para `Number`. Fica no mesmo lugar e tem o
+mesmo formato de correção.
+
+### 🟡 O template de Playground não tem view para componente INTRINSECAMENTE LARGO (set/2026)
+
+O grid de tiles é `repeat(auto-fill, minmax(280px, 1fr))` — numa tela de 1108px dá **3 colunas
+de 347px**. Serve bem para chip, botão, campo. **Deturpa** o componente que só existe em
+largura de tela.
+
+**Medido nas páginas novas do Bloco 2:**
+
+| Componente | Largura no tile | Largura real | O que acontece |
+|---|---|---|---|
+| `DssAppBar` | 311px | ~1600px | **o título já renderiza truncado** — a reticência aparece na demonstração, não no componente |
+| `DssPageShell` | 311px | ~1600px | o rail de 52px ocupa **17% da largura**, contra ~3% numa tela real: a proporção sai **5× distorcida** |
+
+No `DssPageShell` o efeito é o pior possível para um componente de layout: ele parece uma
+barra lateral dominante quando é uma tira fina. Quem olha a página tira a conclusão errada
+sobre o próprio componente.
+
+**O mecanismo existe pela metade.** `.pg-grid--full` (`grid-template-columns: 1fr`) está no
+`playground.scss` desde antes, e `TestBreadcrumbs` e `TestHeader` o aplicam — mas **por classe
+crua** (`<PgGrid class="pg-grid--full">`), porque o `PgGrid.vue` não expõe prop nenhuma. Quem
+escreve página nova não descobre: não está na API do componente. Eu mesmo não achei ao
+escrever as quatro páginas do Bloco 2.
+
+**O que falta, e é mais do que expor a classe:**
+
+1. **Prop no `PgGrid`** — algo como `layout="full"`, para o mecanismo entrar na API em vez de
+   depender de quem conhece o CSS.
+2. **Uma view de "1 linha por variação"**, que é o pedido concreto: hoje `--full` põe UM tile
+   por linha, mas o tile continua sendo a célula de um grid. Para componente largo o arranjo
+   útil é **uma linha por combinação componente × prop**, com o rótulo da variação ao lado
+   e não embaixo — senão a página vira uma coluna de blocos altos sem comparação possível.
+3. **Decidir onde mora a escolha.** Candidato: o `previewGroup` ou a `classification` do meta
+   já sabem que `DssAppBar`, `DssPageShell`, `DssHeader`, `DssLayout` e `DssToolbar` são de
+   largura de tela — o template poderia escolher sozinho em vez de cada página lembrar.
+
+**Páginas que já pedem isso hoje:** `TestAppBar`, `TestPageShell`, e provavelmente
+`TestLayout`, `TestPageContainer` e `TestToolbar`.
+
+### 🚨 `--dss-border-*` são SHORTHANDS, e usá-los como cor descarta a declaração (set/2026)
+
+Descoberto no Bloco 2, ao criar o `DssPageShell`.
+
+`--dss-border-water-700` não é uma cor: vale `1px solid var(--dss-water-700)` — a borda
+inteira. Escrever
+
+```scss
+border-bottom: var(--dss-border-width-thin) solid var(--dss-border-water-700);
+```
+
+produz `1px solid 1px solid #0356a1`, que é **inválido**. O navegador descarta a declaração
+toda, sem erro e sem aviso. **Medido no `TestGridMasterDashboard.vue`:
+`border-bottom-width: 0px`, `border-bottom-style: none` — os separadores do rail
+simplesmente não existiam.**
+
+O nome é a armadilha: `--dss-border-*` parece da mesma família de `--dss-border-subtle` e
+`--dss-border-default`, que **são** cores. A diferença só aparece abrindo o arquivo de tokens.
+
+**Não auditei os outros usos.** Vale varrer: qualquer `solid var(--dss-border-<marca>-<n>)`
+no repositório está na mesma situação, e o sintoma é mudo.
+
+**Saídas possíveis, nenhuma escolhida:**
+1. renomear os shorthands para `--dss-border-rule-*` (ou similar), separando-os das cores;
+2. um gate que reprove `solid var(--dss-border-*)` quando o token for shorthand.
+
+### 🟡 O quadro de adequação não enxerga componente NOVO (set/2026)
+
+`build-adequacao-status.cjs` monta a lista de componentes de Fase 1/2 lendo
+`CERTIFIED_COMPONENTS.md` — o índice de **selos**. Por construção, ali só existe componente
+já selado. Logo: **todo componente criado depois das ondas de selagem é invisível ao quadro.**
+
+Hoje são três: `DssContainer` (Bloco 0), `DssBrandLogo` (Bloco 2) e `DssActionMenu` (draft
+anterior). Os três têm página de Playground e Preview Frame; o quadro os reporta como
+"Preview Frames fora de Fase 1/2" e não os conta em lugar nenhum.
+
+**Não dá para consertar escrevendo no índice de selos.** Aquela tabela tem coluna "Data do
+Selo" e cabeçalho "20/20 — 100%": acrescentar linha sem selo falsifica o registro do que foi
+auditado, e selo é de outro agente (`CLAUDE.md` — quem constrói não sela).
+
+**As duas saídas, nenhuma escolhida:**
+1. o quadro passa a derivar a lista do **catálogo** (`catalog.json`, 95 componentes, gerado do
+   disco) em vez do índice de selos, e usa o índice só para a coluna de selo;
+2. nasce um índice separado de "componentes existentes por fase", e o de selos fica só para
+   selos.
+
+A (1) é mais barata e elimina a classe toda: o disco já é a fonte de verdade do resto da
+cadeia.
+
+### ✅ RESOLVIDO — Preview Frame ligava o v-model como `null` e quebrava o render (set/2026)
+
+**Era:** o `PreviewSubject` mantém `model = ref(null)` e ligava o v-model do componente
+**sempre**, mesmo sem valor. Em Vue, prop passada EXPLICITAMENTE como `null` é um valor
+fornecido — e portanto **anula o default do próprio componente**.
+
+Medido no `DssTable`: o contrato não declara default para `modelValue`, o frame mandava
+`modelValue: null`, isso vencia o `modelValue: () => []` do componente, o QTable recebia
+`selected = null` e o render estourava. O sintoma no navegador era um palco em branco e
+`Unhandled error during execution of render function at <QTable>` — sem mensagem legível
+sobre a causa.
+
+**Correção:** ligar o v-model só quando há valor (`model.value !== null`). Enquanto não há,
+quem decide é o default declarado pelo componente, que é quem tem autoridade. Na primeira
+interação o `@update:` preenche o model e o binding volta a valer.
+
+**Verificado:** `DssTable` monta com 3 linhas e 3 colunas; `DssInput`, `DssCheckbox`,
+`DssSelect`, `DssToggle` e `DssForm` seguem montando, console limpo.
+
+**Por que passou despercebido:** o `validate:demo-seeds` confere que a semente cita
+componentes e props que EXISTEM — não que o componente monte. Um frame que estoura no render
+é verde para o gate. Candidato a evolução do gate: montar e conferir que o palco não ficou
+vazio.
+
+### 🟢 MEDIDO — `DssTable`: a coluna de ações custa 8px por linha (set/2026)
+
+Não é defeito; é número que faltava. A altura da linha **não é declarada** — não existe
+`height` em `td` nenhum. Ela é o padding da densidade mais o que for **mais alto** na célula.
+
+| Densidade | Só texto | Com `DssChip` + `DssButton` | Custo |
+|---|---|---|---|
+| `compact` | 38px | 46px | **+8px** |
+| `standard` | 50px | 58px | **+8px** |
+| `comfortable` | 58px | 66px | **+8px** |
+
+Decomposto no `compact`: 6px + 24px de *line-height* + 6px + 1px de borda = 37,5px. O botão
+de 32px toma o lugar dos 24px do texto — daí os +8px, iguais nas três densidades (o que muda
+entre elas é o padding, não o teto do conteúdo).
+
+**Por que importa:** o grid master do Sansys Water pede 36px de linha, e uma coluna de ações
+não cabe nisso. Encolher o botão quebraria a WCAG 2.5.5. É escolha de quem monta a tela, e o
+item 3.1 do plano de contêineres vai esbarrar nela — agora com o número na mão.
+
+Medição ao vivo na seção 08 de `apps/sandbox/src/TestTable.vue`. Documentado no README do
+componente.
+
+### 🟡 Exemplos de uso montando Quasar cru — 2 de 4 corrigidos (set/2026)
+
+`DssDialog.example.vue` e `DssTable.example.vue` montavam `<button>` cru, `<q-input>`,
+`<q-btn-toggle>` e `<q-icon>` DENTRO do componente DSS, com `style` inline — o anti-padrão que
+o Cartão Composto proíbe nominalmente ("não reimplementar primitivos"). Somados: **49
+atributos de estilo inline e 4 componentes Quasar crus**, agora zero nos dois.
+
+O arquivo de exemplo é a superfície de uso **documentada**: se ele mostra `<button>` cru, é
+isso que o consumidor copia. Nenhum gate cobre isso — o `validate:sandbox-tags` varre o
+sandbox, não o core. Candidato ao mesmo gate do débito das tags sem import.
+
+**Não auditei os outros 76 exemplos.** Os dois que abri estavam assim; é provável que não
+sejam os únicos.
+
+### ✅ RESOLVIDO — `DssDialog`: região opcional congelava na 1ª renderização (set/2026)
+
+**Era:** header e footer eram decididos por `computed(() => !!slots.header)`. O computed **não
+rastreia** o objeto de slots — resolvia uma vez e congelava. Slot que passava a existir depois
+da montagem nunca aparecia; slot que deixava de existir nunca sumia.
+
+Alcança uso real, não só o Preview Frame onde foi descoberto:
+
+```vue
+<DssDialog>
+  <template v-if="temTitulo" #header>…</template>   <!-- nunca aparecia -->
+</DssDialog>
+```
+
+**Correção:** `$slots` lido direto no template, dentro da função de render, que é reavaliada a
+cada renderização. `useSlots()` e `computed` saíram do arquivo — código morto.
+
+**Trava:** 2 casos em `DssDialog.test.js`, provados a reprovar (com o computed de volta, os
+dois ficam vermelhos).
+
+**Pendente:** o `DssDialog` está **selado** e mudou — entra na fila de reemissão.
+
+### 🟡 A marca de um overlay é a do DOCUMENTO, não a do ancestral (set/2026)
+
+Não é defeito: é o que o `useTeleportedBrand` declara. Mas é armadilha silenciosa e precisa
+estar num lugar que alguém leia antes de se machucar.
+
+A resolução tem duas etapas: `data-brand` no `<body>`/`<html>` (norma), e na falta dele **o
+primeiro `[data-brand]` do documento inteiro** (fallback legado). O ancestral do gatilho
+**não participa**. Numa tela Sansys isso nunca aparece — a página toda tem uma marca só. Em
+página de marca **mista**, todo overlay sai com a marca do primeiro bloco do DOM, sem aviso.
+
+Vale para `DssDialog`, `DssBottomSheet`, `DssPopupEdit` e qualquer composto que teleporte.
+Documentado no README do `DssDialog` e medido na seção 03 de `apps/sandbox/src/TestDialog.vue`.
+
+### 🟡 `validate:token-values`: 42 divergências que são só NOTAÇÃO (set/2026)
+
+O gate compara o valor gravado no `dss.meta.json` com o valor resolvido a partir do token. Em
+42 dos 91 componentes ele acusa divergência — e, nas que inspecionei, **o valor é o mesmo**, só
+que escrito em unidade diferente:
+
+```
+DssDialog › "border-radius" [--dss-radius-lg]
+    meta: "0.75rem"   →   resolvido: "12px"
+DssForm  › "gap"          [--dss-form-gap]
+    meta: "1rem"      →   resolvido: "16px"
+```
+
+Não é dívida de valor, é de **notação**: o meta guarda `rem` e o resolvedor devolve `px`. Some
+o eixo `minHeight`, onde o meta guarda `"44px"` e o resolvedor discorda por outro motivo.
+
+Atinge componentes que ninguém tocou nesta onda (`DssDatePicker`, `DssVideo`,
+`DssVirtualScroll`), então é anterior. O gate **não está no pre-commit**, e por isso não
+bloqueia — mas também não é lido por ninguém.
+
+**Decisão pendente:** ou o `--fix` normaliza os 42 de uma vez (e aí o gate entra no
+pre-commit), ou o resolvedor passa a comparar valores COMPUTADOS em vez de strings. A primeira
+é uma rodada de verificação inteira; a segunda conserta a causa. Nenhuma cabe dentro de um
+item do Bloco 1.
+
+### 🟡 `previewHtml` é uma imitação escrita à mão (set/2026)
+
+Dois componentes usam `defaultPreview.previewHtml` — `DssDialog` e `DssBottomSheet` —, uma
+representação ESTÁTICA em HTML para a galeria de defaults. Existe porque a galeria não
+hospeda um modal: **medido**, ao remover o `previewHtml` do `DssDialog` o cartão cai para
+`⚠ DssDialog`, porque o componente nem está no `REGISTRY` do `DemoRenderer`.
+
+O do `DssDialog` foi tokenizado em set/2026 (os `8px`/`20px`/`rgba(0,0,0,.18)`/`white` viraram
+`var(--dss-*)`), então não diverge mais em cor e forma. **O do `DssBottomSheet` não foi.**
+Continua sendo uma imitação: a estrutura interna pode divergir do componente sem que nada
+avise. Candidato a gate — ou a registrar `DssDialog`/`DssBottomSheet` no `REGISTRY` com um
+modo de render não-teleportado.
+
+### ✅ RESOLVIDO — `DssForm.validate()` reprovava ABERTO em metade dos campos (set/2026)
+
+**Era:** o motor de validação é o do QForm, que só valida componentes REGISTRADOS nele. Os
+campos do DSS não são todos wrappers de Quasar — `DssInput`, `DssCheckbox`, `DssToggle` e
+`DssRadio` renderizam `<input>` nativo e não se registravam. `validate()` respondia **`true`**
+para campo com regra que sempre reprova: formulário com obrigatório vazio se declarava válido
+e submetia, sem um aviso de console.
+
+**Correção:** composable global `packages/core/composables/useFieldValidation.ts`, sobre o
+ponto de extensão PÚBLICO do Quasar (`useFormChild`) — não um motor paralelo. Semântica de
+regra em paridade com o QField. Aplicado nos 4 campos; `DssSelect`/`DssTextarea`/`DssFile` já
+se registravam sozinhos.
+
+| Campo | Antes | Depois |
+|---|---|---|
+| `DssInput`, `DssCheckbox`, `DssToggle`, `DssRadio` | `true` (regra ignorada) | `false` (regra aplicada) |
+| `DssSelect`, `DssTextarea` | `false` | `false` |
+
+**`DssField` ficou de fora, e é correto:** é moldura, não tem `modelValue` — quem guarda o
+valor é o controle que o consumidor monta no slot.
+
+**Travas:** 9 casos novos em `DssForm.test.js` (seção "alcance da validação"), provados a
+reprovar — com o `useFormChild` desligado, os 4 campos nativos ficam vermelhos. Mais a seção
+03 de `apps/sandbox/src/TestForm.vue`, que mede os 6 no navegador.
+
+**Pendente:** os 5 componentes tocados (`DssInput`, `DssCheckbox`, `DssToggle`, `DssRadio`,
+`DssForm`) estão SELADOS e mudaram — entram na fila de reemissão de selo.
+
+### 🟡 Dev server serve transform velho quando só o `.types.ts` muda (set/2026)
+
+`import type { … } from './types/x.types'` não cria aresta no grafo de módulos do Vite. Mudar
+só o arquivo de tipos NÃO invalida o transform do SFC — e como o compilador de `<script setup>`
+deriva os props de runtime desse tipo, **o prop novo não existe na página** enquanto o
+servidor não reiniciar.
+
+O sintoma é mudo e enganoso: o prop cai em `$attrs`, o componente monta, nada avisa. Custou
+três reinícios nesta rodada até o padrão ficar claro. O árbitro é o compilador isolado, não o
+módulo servido:
+
+```bash
+node -e "const {parse,compileScript}=require('vue/compiler-sfc'),fs=require('fs');
+const f='<caminho>.ts.vue';const {descriptor}=parse(fs.readFileSync(f,'utf8'),{filename:f});
+console.log(compileScript(descriptor,{id:'x'}).content.match(/props: \{[\s\S]*?\n  \},/)[0])"
+```
+
+**Ao mexer em `types/*.types.ts`: reinicie o dev server antes de concluir que não funcionou.**
+
+### 🟡 `validate:sandbox-tags` não varre os `.example.vue` do core (set/2026)
+
+O gate escaneia `apps/sandbox`, e por isso `DssForm.example.vue` conviveu com **8 tags `Dss*`
+sem nenhum import** — renderizava vazio. Corrigido no arquivo; o buraco do gate continua, e
+ainda há 3 exemplos no mesmo estado (`DssList`, `DssScrollArea`, `DssSplitter`). Estender o
+escaneamento ao core fecha a classe inteira.
 
 ### ✅ PARCIAL — `DssSeparator` + `DssTooltip`: a prop `color` era inerte no escuro (set/2026)
 

@@ -76,7 +76,7 @@ O `DssBanner` utilizará exclusivamente tokens do Design System para garantir co
 
 ### Dependências Internas do DSS
 *   `DssIcon`: Para exibir ícones contextuais (e.g., `info`, `check`, `warning`, `error`).
-*   `DssButton` (ou `DssIconButton`): Para o botão de descarte (`dismissible`) ou outras ações dentro do banner.
+*   `DssButton` (com `icon` e sem `label` — não existe `DssIconButton`): Para o botão de descarte (`dismissible`) ou outras ações dentro do banner.
 *   `DssTypography`: Para garantir a consistência do texto.
 
 ### Composição

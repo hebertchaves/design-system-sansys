@@ -75,7 +75,7 @@
     },
     "DssToolbar": {
       "module": "02_HEADERS_FOOTERS",
-      "allowed_children": ["DssButton", "DssIcon", "DssTabs", "DssBreadcrumbs", "text"],
+      "allowed_children": ["DssButton", "DssBrandLogo", "DssIcon", "DssTabs", "DssBreadcrumbs", "text"],
       "forbidden_children": ["DssCard", "DssForm", "DssInput"],
       "actions_position": "right",
       "spacing_rules": {
