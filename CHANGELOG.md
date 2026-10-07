@@ -7,6 +7,48 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [Não publicado]
+
+### Corrigido
+
+- **`DssButton`: botão de ícone com dica/menu deixou de renderizar como elipse.**
+  A detecção de `icon-only` era `!!slots.default` — qualquer conteúdo no slot
+  contava como rótulo, inclusive o que **não desenha texto**: `DssTooltip`,
+  `DssMenu`, `DssPopupProxy`, `DssBadge` flutuante. O idioma mais comum de app bar,
+  `<DssButton icon="help"><DssTooltip/></DssButton>`, perdia a classe `--icon-only`,
+  caía no `min-width` do tamanho (56px no `sm`) e o botão redondo virava uma elipse
+  de 56×36. A detecção passa a inspecionar os vnodes do slot e ignorar anexos.
+  É a mesma observação que já motivara a mescla de `label` com o slot (set/2026);
+  lá o sintoma foi nome acessível ausente, aqui é geometria.
+  *Medido: 17 ocorrências em 5 arquivos, além das duas telas da onda Check-in NFAg.*
+- **`DssButton`: `icon-only` não zerava o padding horizontal do tamanho.**
+  `.dss-button--icon-only { padding: var(--dss-spacing-2) }` tem a mesma
+  especificidade de `.dss-button--sm`, que declara `padding: … var(--dss-spacing-3)`
+  depois no arquivo e vencia por ordem. Resultado: o botão de ícone `sm` media
+  **40×36** mesmo com a classe correta. O `padding-inline` foi reposto nos cinco
+  pares `.dss-button--icon-only.dss-button--{xs,sm,md,lg,xl}`, que já existiam.
+- **`DssButton`: o `gap` do conteúdo empurrava o rótulo vazio.** O `<span>` que
+  carrega `q-anchor--skip` (necessário para o `DssMenu` ancorar) continua sendo
+  renderizado quando há slot, e o `gap: 8px` da base o separava do ícone mesmo
+  vazio. `icon-only` passa a zerar o gap. *Sem rótulo não há o que separar.*
+
+- **`DssButton`: botão redondo era achatado pelo container.** Um flex container com
+  `align-items: stretch` esticava o botão no eixo cruzado — medido em
+  `TestAtenderSolicitacoes`: célula de ações de 40px deixava o botão `sm` em 36×40,
+  elipse pelo eixo vertical. É a mesma falha do padding horizontal, só que imposta
+  pelo HOST. `.dss-button--round:not(.dss-button--stretch)` passa a declarar
+  `align-self: center`; quem quer o botão preenchendo o eixo continua com a prop
+  `stretch`, declarada depois e ainda vencendo.
+
+  **Efeito combinado, medido:** os botões de ícone da app bar passaram de 40×36 e
+  56×36 para **36×36**; no tamanho `md`, para **44×44** — que é o alvo de toque
+  do WCAG 2.5.5. Varridas 5 páginas do sandbox: **Atender Solicitações 18/18,
+  Parcelamento 26/26, Check-in NFAg 3/3 e Grid Master 10/10 quadrados** (antes,
+  nenhuma delas). Botões com rótulo de verdade não mudaram (medidos 113/72/105/138 × 44).
+  Nenhuma prop, slot ou evento mudou: `dss.contract.json` diverge só nos tokens de CSS.
+
+---
+
 ## [2.5.0] - 2026-08-14 — Adequação de UI, Cadeia de Contrato e Higiene
 
 > 269 commits desde a 2.4.0. As três frentes: **adequação visual** dos componentes

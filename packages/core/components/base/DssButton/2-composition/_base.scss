@@ -158,6 +158,11 @@
 .dss-button--icon-only {
   min-width: var(--dss-touch-target-md); /* 44px - ✅ WCAG 2.1 AA */
   padding: var(--dss-spacing-2);
+
+  /* O gap separa ícone de RÓTULO. Sem rótulo ele some — senão o <span> vazio
+     que carrega o `q-anchor--skip` (necessário para DssMenu ancorar) ainda
+     empurra 8px e o botão redondo não fecha como círculo. */
+  gap: var(--dss-spacing-0);
 }
 
 /* ==========================================================================
@@ -306,22 +311,52 @@
 /* Icon-only size adjustments */
 .dss-button--icon-only.dss-button--xs {
   min-width: var(--dss-touch-target-xs); /* 32px */
+
+  /* A regra de tamanho (.dss-button--xs) declara o padding horizontal com a
+     MESMA especificidade de `.dss-button--icon-only` e vence por ordem de
+     arquivo. Sem repor aqui, o ícone ficava com o padding de botão COM rótulo
+     e a caixa não fechava quadrada (medido no `sm`: 40×36 — elipse). */
+  padding-inline: var(--dss-spacing-2);
 }
 
 .dss-button--icon-only.dss-button--sm {
   min-width: var(--dss-touch-target-sm); /* 36px */
+
+  /* A regra de tamanho (.dss-button--sm) declara o padding horizontal com a
+     MESMA especificidade de `.dss-button--icon-only` e vence por ordem de
+     arquivo. Sem repor aqui, o ícone ficava com o padding de botão COM rótulo
+     e a caixa não fechava quadrada (medido no `sm`: 40×36 — elipse). */
+  padding-inline: var(--dss-spacing-2);
 }
 
 .dss-button--icon-only.dss-button--md {
   min-width: var(--dss-touch-target-md); /* 44px */
+
+  /* A regra de tamanho (.dss-button--md) declara o padding horizontal com a
+     MESMA especificidade de `.dss-button--icon-only` e vence por ordem de
+     arquivo. Sem repor aqui, o ícone ficava com o padding de botão COM rótulo
+     e a caixa não fechava quadrada (medido no `sm`: 40×36 — elipse). */
+  padding-inline: var(--dss-spacing-2);
 }
 
 .dss-button--icon-only.dss-button--lg {
   min-width: var(--dss-touch-target-lg); /* 52px */
+
+  /* A regra de tamanho (.dss-button--lg) declara o padding horizontal com a
+     MESMA especificidade de `.dss-button--icon-only` e vence por ordem de
+     arquivo. Sem repor aqui, o ícone ficava com o padding de botão COM rótulo
+     e a caixa não fechava quadrada (medido no `sm`: 40×36 — elipse). */
+  padding-inline: var(--dss-spacing-2);
 }
 
 .dss-button--icon-only.dss-button--xl {
   min-width: var(--dss-touch-target-xl); /* 64px */
+
+  /* A regra de tamanho (.dss-button--xl) declara o padding horizontal com a
+     MESMA especificidade de `.dss-button--icon-only` e vence por ordem de
+     arquivo. Sem repor aqui, o ícone ficava com o padding de botão COM rótulo
+     e a caixa não fechava quadrada (medido no `sm`: 40×36 — elipse). */
+  padding-inline: var(--dss-spacing-2);
 }
 
 /* ==========================================================================
@@ -352,7 +387,13 @@
 
 .dss-button:focus-visible {
   outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
-  outline-offset: var(--dss-spacing-1);
+
+  /* Canal de contexto — o default é o de sempre (4px), então isto não muda
+     nada em lugar nenhum. Existe porque o afastamento do anel é decisão do
+     CONTINENTE, não do botão: medido numa barra de 40px, o botão `sm` com 4px
+     de offset e 2px de anel estende 48px e TRANSBORDA a barra em 8px, sendo
+     recortado. Quem sabe que a barra tem 40px é a barra. */
+  outline-offset: var(--dss-button-focus-ring-offset, var(--dss-spacing-1));
 }
 
 /* ==========================================================================
@@ -486,6 +527,18 @@
 .dss-button--stretch {
   width: 100%;
   max-width: none;
+}
+
+/* Redondo: o container não pode achatar o círculo.
+   Medido em TestAtenderSolicitacoes (set/2026): a célula de ações é
+   `display: flex` com `align-items: stretch` e 40px de altura; o botão
+   redondo `sm` esticava para 36×40 — elipse pelo eixo vertical, a mesma
+   falha do padding horizontal, só que imposta pelo HOST.
+   `align-self: center` devolve o dimensionamento ao próprio botão.
+   Quem quiser o botão preenchendo o eixo tem a prop `stretch`, que é
+   declarada depois e continua vencendo. */
+.dss-button--round:not(.dss-button--stretch) {
+  align-self: center;
 }
 
 /* No wrap - previne quebra de texto */

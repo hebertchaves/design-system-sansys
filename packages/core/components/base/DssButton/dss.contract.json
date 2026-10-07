@@ -499,6 +499,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "gap",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "position",
           "token": null,
           "value": "absolute",
@@ -679,6 +685,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "padding-inline",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "min-width",
           "token": "--dss-touch-target-sm",
           "value": null,
@@ -845,6 +857,12 @@
           "token": null,
           "value": "none",
           "source": "_layout-helpers.scss"
+        },
+        {
+          "property": "align-self",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "text-overflow",
@@ -3606,6 +3624,12 @@
       },
       {
         "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
         "usedIn": [
           "default"
         ]

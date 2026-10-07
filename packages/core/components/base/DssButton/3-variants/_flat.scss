@@ -21,10 +21,19 @@
      Dois ganhos: é sutil, e segue a marca de graça — `currentColor` vem da
      classe utilitária `.text-*`, que já resolve o token semântico.
      `::before` continua RESERVADO ao touch target (WCAG 2.5.5). */
+
+  /* O INSET é canal de contexto, e o default (`0`) é o comportamento de
+     sempre — nada muda fora de quem o remapeia. Existe porque a proporção
+     entre o disco de estado e o glifo é decisão do CONTINENTE: numa barra, o
+     botão `sm` desenha 36px de disco em volta de um ícone de 20px (56%), e o
+     disco pálido pesa mais que o ícone.
+     Encolher o DISCO, e não o alvo de toque, é o que mantém a WCAG 2.5.5
+     intacta — são duas caixas diferentes, e é por isso que o `::before` segue
+     reservado ao alvo. */
   &:hover:not(.dss-button--disabled):not(.dss-button--loading)::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: var(--dss-button-state-layer-inset, 0);
     background-color: currentColor;
     opacity: var(--dss-opacity-hover);
     border-radius: inherit;

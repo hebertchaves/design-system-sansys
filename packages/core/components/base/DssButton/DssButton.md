@@ -42,13 +42,26 @@ Componente de botão completo com suporte a acessibilidade WCAG 2.1 AA, brandabi
 - **Formulários**: Submit, Reset
 - **Upload/Download**: Com estados de loading e progresso
 
+### Botão de ícone: é este componente
+
+Não existe `DssIconButton`. Um botão só de ícone é o **próprio `DssButton`** com a
+prop `icon` e sem `label` — o composable emite `--icon-only` e a geometria fecha
+no alvo de toque do tamanho (36px no `sm`, 44px no `md`):
+
+```vue
+<DssButton icon="delete" variant="flat" size="sm" aria-label="Excluir registro" />
+```
+
+`aria-label` é obrigatório aí: sem rótulo visível, é ele que dá nome ao botão.
+Para a dica, ponha um `DssTooltip` dentro — ele não conta como rótulo e o botão
+continua `--icon-only`.
+
 ### ❌ Quando Não Usar
 
 - **Links de navegação simples**: Use `<router-link>` ou `<a>` nativo
 - **Textos clicáveis em parágrafos**: Use links de texto padrão
 - **Menus de navegação**: Use `DssMenu` ou `DssTabs`
-- **Ações inline em tabelas**: Considere `DssIconButton` para economizar espaço
-- **Mais de 3 botões juntos**: Considere `DssButtonGroup` ou redesenhe a interface
+- **Mais de 3 botões juntos**: Considere `DssBtnGroup` ou redesenhe a interface
 - **Ações que não fazem nada**: Não crie botões decorativos sem função
 
 ---

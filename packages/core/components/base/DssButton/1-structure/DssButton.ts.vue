@@ -132,7 +132,7 @@
  * @author Hebert Daniel Oliveira Chaves
  */
 
-import { computed, useSlots } from 'vue'
+import { computed, useSlots, Comment, Text, Fragment } from 'vue'
 import type { ButtonProps, ButtonEmits } from '../types/button.types'
 import {
   useButtonClasses,
@@ -216,8 +216,47 @@ const slots = useSlots()
 // COMPOSABLES
 // ==========================================================================
 
-// Detecta se slot default tem conteúdo
-const hasDefaultSlot = computed(() => !!slots.default)
+/**
+ * Detecta se o slot default renderiza RÓTULO — não apenas se o slot existe.
+ *
+ * `!!slots.default` contava qualquer conteúdo como rótulo, inclusive o que não
+ * desenha texto nenhum: DssTooltip, DssMenu, DssPopupProxy, DssBadge flutuante.
+ * É a MESMA observação que motivou a mescla de `label` com o slot logo acima no
+ * template (set/2026) — lá o sintoma foi botão sem nome acessível; aqui é
+ * geometria: `<DssButton icon="help"><DssTooltip/></DssButton>` perdia a classe
+ * `--icon-only`, caía no `min-width: 56px` do tamanho e o botão redondo virava
+ * uma elipse de 56×36. O idioma "ícone + dica" é o mais comum na app bar, então
+ * o defeito se repetia em toda tela.
+ *
+ * Anexos são reconhecidos pelo NOME do componente — inspecionar o vnode é o
+ * único jeito de distinguir "slot com overlay" de "slot com texto".
+ */
+const ANEXOS_SEM_ROTULO = new Set([
+  'DssTooltip', 'DssMenu', 'DssPopupProxy', 'DssBadge',
+  'QTooltip', 'QMenu', 'QPopupProxy', 'QBadge',
+])
+
+function renderizaRotulo(nodes: unknown[]): boolean {
+  return nodes.some((n) => {
+    const node = n as { type?: unknown; children?: unknown }
+    if (node.type === Comment) return false               // v-if falso
+    if (node.type === Text) return String(node.children ?? '').trim().length > 0
+    if (node.type === Fragment) return renderizaRotulo((node.children as unknown[]) ?? [])
+    const tipo = node.type as { name?: string; __name?: string } | undefined
+    const nome = tipo?.name ?? tipo?.__name
+    if (nome && ANEXOS_SEM_ROTULO.has(nome)) return false
+    return true
+  })
+}
+
+const hasDefaultSlot = computed(() => {
+  const slot = slots.default
+  if (!slot) return false
+  // Fail-safe: se a inspeção falhar, tratar como rótulo (comportamento anterior)
+  // — errar para "tem rótulo" só deixa o botão largo; errar para o contrário
+  // esconderia um rótulo de verdade.
+  try { return renderizaRotulo(slot()) } catch { return true }
+})
 
 // Tipo de componente (button ou router-link)
 const { componentType, nativeType } = useButtonComponent(props)
