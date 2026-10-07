@@ -1,0 +1,122 @@
+[
+  {
+    "id": "01",
+    "title": "DSS",
+    "sourceNotes": "**Tempo:** 1min  \n**Mensagem:** qualidade de interface precisa ser repetível, não ocasional.\n\n**Texto na tela**\n\n> **DSS**  \n> Qualidade que se repete. Evolução que escala.\n\n**Visual:** composição com recortes reais de interfaces Sansys e sinais das três marcas. O produto precisa ser reconhecível; evitar imagens genéricas de tecnologia.\n\n**Fala sugerida:** “O que construímos não é apenas uma coleção de botões. É uma base para que equipes diferentes consigam produzir interfaces coerentes e evoluí-las com segurança, inclusive com IA.”\n\n**Transição:** “Para entender o valor dessa base, precisamos olhar o custo de não tê-la.”",
+    "support": false
+  },
+  {
+    "id": "02",
+    "title": "O custo de reinventar o que já existe",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** decisões recorrentes refeitas localmente geram divergência e retrabalho.\n\n**Texto na tela**\n\n> Mesma necessidade. Soluções diferentes.\n\n- Inconsistência para quem usa.\n- Retrabalho para quem constrói.\n- Mais esforço para manter.\n\n**Visual:** três representações esquemáticas da mesma tarefa, com estruturas divergentes, convergindo para uma base comum. Rotular como ilustração, não como levantamento de defeitos em produção.\n\n**Fala sugerida:** “Quando cada entrega decide novamente como organizar ações, dados e estados, o custo não fica só no desenho. Ele reaparece na revisão, na manutenção e na experiência de quem utiliza o sistema.”\n\n**Transição:** “Nosso aprendizado foi que disponibilizar componentes não basta.”",
+    "support": false
+  },
+  {
+    "id": "03",
+    "title": "O aprendizado que mudou o DSS",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** a camada de consumo também precisa ser governada.\n\n**Texto na tela**\n\n> Ter componentes não basta. É preciso preservar o modo de usá-los.\n\n- Consultar a fonte oficial.\n- Compor dentro dos contratos.\n- Conferir o resultado real.\n\n**Visual:** componente oficial ao centro; à esquerda, consumo por reconstrução; à direita, consumo por composição. Destacar a diferença sem exibir uma lista de falhas antigas.\n\n**Fala sugerida:** “Aprendemos que uma representação parecida com o componente real não é necessariamente o componente real. Recriar aparência ou interpretar documentação livremente abre espaço para divergência. A cadeia de fonte única busca reduzir esse risco.”\n\n**Ressalva para a fala:** a mesma versão e as mesmas propriedades não garantem pixels idênticos em qualquer ambiente; conteúdo, fontes, contexto de estilos, viewport e estado também interferem.\n\n**Transição:** “Por isso, a evolução foi além do catálogo: ela alcançou o processo.”",
+    "support": false
+  },
+  {
+    "id": "04",
+    "title": "Da experiência à regra verificável",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** falhas e aprendizados podem virar proteção para as próximas entregas.\n\n**Texto na tela**\n\n> Aprendizado → regra → ferramenta → evidência\n\n**Visual:** ciclo de quatro etapas, retornando da evidência ao aprendizado. Um único exemplo acompanha o ciclo: uso de valor visual fora da base oficial.\n\n**Fala sugerida:** “A qualidade avançou porque transformamos aprendizados em regras e parte das regras em verificações. As ferramentas não substituem arquitetura nem julgamento humano. Elas tornam o conhecimento mais fácil de consultar, aplicar e conferir.”\n\n**Transição:** “Esse processo tem quatro funções — não dezenas de siglas.”",
+    "support": false
+  },
+  {
+    "id": "05",
+    "title": "Quatro funções para proteger a qualidade",
+    "sourceNotes": "**Tempo:** 2min  \n**Mensagem:** as ferramentas se complementam ao longo da entrega.\n\n**Texto na tela**\n\n1. **Orientar** antes de construir.\n2. **Verificar** durante a construção.\n3. **Controlar** a entrada de mudanças.\n4. **Preservar** coerência e evidências.\n\n**Visual:** linha de entrega com quatro etapas. Subtítulos pequenos: guias e MCP; validadores e testes; pre-commit e gates; contratos, registros e revisão.\n\n**Fala sugerida:** “Guias ajudam a escolher o caminho. Ferramentas consultam e verificam regras. Controles locais e de integração detectam problemas em momentos diferentes. Contratos e evidências ajudam a manter o que foi combinado ao longo da evolução.”\n\n**Nota:** posicionar pre-commit como proteção local, não barreira inviolável; ele depende de instalação e pode ser contornado. A efetividade de bloqueios centrais depende da configuração do repositório e do pipeline efetivamente utilizado.\n\n**Transição:** “O MCP conecta esse conhecimento ao trabalho assistido por IA.”",
+    "support": false
+  },
+  {
+    "id": "06",
+    "title": "A IA consulta o DSS antes de construir",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** a referência institucional deve entrar no contexto da IA, em vez de depender de seus padrões genéricos.\n\n**Texto na tela**\n\n> Consultar → compor → verificar\n\n- Componentes e recursos oficiais.\n- Regras de composição e uso.\n- Retorno sobre desvios identificados.\n\n**Visual:** pedido de produto → IA ↔ DSS via MCP → proposta de interface. A aprovação humana aparece fora da seta de consulta, como decisão explícita.\n\n**Fala sugerida:** “O MCP oferece uma forma estruturada de consultar componentes, tokens e verificações. Mas a ferramenta precisa ser acionada e seu retorno precisa ser respeitado. Ela não torna qualquer resposta da IA automaticamente correta.”\n\n**Exemplos para mencionar, sem despejar nomes na tela:** consulta de componente; consulta de token; validação de composição; validação de especificação; inspeção de código e grid.\n\n**Transição:** “E a informação apresentada precisa vir da mesma base que orienta a implementação.”",
+    "support": false
+  },
+  {
+    "id": "07",
+    "title": "Uma cadeia de informação, menos versões da verdade",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** derivar informação reduz a necessidade de sincronização manual.\n\n**Texto na tela**\n\n> Fontes oficiais → contrato derivado → consumidores\n\n- Cada informação tem um dono.\n- O contrato reúne o que pode ser derivado ou verificado.\n- Orientação editorial continua identificada como orientação.\n\n**Visual:** fontes paralelas — visual, API e evidências — alimentam um contrato, que abastece consulta, documentação e preview. Usar traço pontilhado para qualquer consumidor cuja integração ainda não tenha sido comprovada.\n\n**Fala sugerida:** “A proposta é evitar que cada página ou ferramenta redigite sua própria versão dos mesmos dados. O contrato é derivado das fontes, não uma nova verdade escrita à mão. O que depende de orientação e julgamento permanece separado.”\n\n**Nota de precisão:** apresentar a cadeia como arquitetura e direção de consolidação; distinguir os trechos já implementados da cobertura ainda em expansão. Não desenhar o portal inteiro como migrado sem evidência.\n\n**Transição:** “O valor fica mais claro quando uma checagem identifica um problema concreto.”",
+    "support": false
+  },
+  {
+    "id": "08",
+    "title": "Uma falha identificada antes de seguir",
+    "sourceNotes": "**Tempo:** 2min30s  \n**Mensagem:** uma regra só vira proteção operacional quando existe uma verificação utilizável.\n\n**Texto na tela**\n\n> Proposta → desvio identificado → correção → nova verificação\n\n**Visual:** demonstração curta, com destaque para o retorno da ferramenta e o componente real após a correção. Não mostrar terminal inteiro nem logs extensos.\n\n**Roteiro da demonstração a preparar**\n\n1. Selecionar um componente e uma regra efetivamente coberta pelo verificador atual.\n2. Em ambiente isolado, introduzir um valor visual fora dos recursos oficiais.\n3. Executar a checagem apropriada e mostrar o desvio realmente identificado.\n4. Consultar o recurso oficial, corrigir e repetir a mesma checagem.\n5. Conferir a renderização real e a interação relevante.\n\n**Fala sugerida:** “Não pedimos apenas que a pessoa ou a IA se lembre da regra. Criamos uma forma de encontrar este tipo de desvio e orientar sua correção. É essa repetibilidade que interessa.”\n\n**Plano de contingência:** gravação do mesmo fluxo com resultado legível. A demonstração ainda precisa ser produzida e validada; este roteiro não afirma que ela já foi executada.\n\n**Honestidade:** se for uma falha introduzida para a apresentação, dizer “exemplo controlado”. Só chamá-la de ocorrência histórica se houver registro concreto correspondente.\n\n**Transição:** “A próxima oportunidade é aplicar essa disciplina às estruturas completas que se repetem no Sansys.”",
+    "support": false
+  },
+  {
+    "id": "09",
+    "title": "O próximo passo: reutilizar estruturas, não só peças",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** patterns preservam soluções recorrentes sem congelar necessidades de produto.\n\n**Texto na tela**\n\n> Adaptar uma base conhecida, em vez de reconstruí-la.\n\n- Estrutura recorrente.\n- Variações permitidas.\n- Estados e limites explícitos.\n\n**Visual:** componentes → blocos compostos → pattern de página → interface de produto. Bases com contrato localizado: `DssPageShell`, `DssAppBar` e `DssContextHeader`. Mostrar `DssDataBoard` como bloco em construção, não como base com governança fechada.\n\n**Fala sugerida:** “A estratégia é transformar padrões já existentes no Sansys em bases reutilizáveis. A IA passa a adaptar estrutura, conteúdo e regras dentro de limites conhecidos, em vez de redesenhar a mesma solução a cada pedido.”\n\n**Ressalva:** a existência desses blocos não comprova que todos os padrões Sansys estejam cobertos. Não confundir componente composto com catálogo completo de patterns.\n\n**Transição:** “Isso muda a divisão do trabalho, não elimina a responsabilidade de ninguém.”",
+    "support": false
+  },
+  {
+    "id": "10",
+    "title": "Quem decide o quê",
+    "sourceNotes": "**Tempo:** 2min  \n**Mensagem:** a IA executa dentro de uma intenção e de critérios definidos por pessoas.\n\n**Texto na tela**\n\n- **Produto:** necessidade, regras e sucesso.\n- **UX/UI:** composição, estados e experiência.\n- **IA + engenharia:** implementação e verificação.\n\n**Visual:** três faixas convergindo para uma interface, com revisão conjunta no final. Não desenhar a IA como aprovadora do próprio trabalho.\n\n**Fala sugerida:** “Produto define a tarefa, os dados, as permissões e os critérios de aceite. UX/UI escolhe a base adequada, organiza a informação e trata estados e exceções. IA e engenharia implementam, verificam e explicam desvios. A revisão humana decide se a solução resolve a necessidade.”\n\n**Complemento:** Figma pode apoiar exploração e comunicação, mas não substitui as fontes oficiais do DSS para comportamento e implementação.\n\n**Transição:** “Esse trabalho pode ser organizado em um fluxo simples.”",
+    "support": false
+  },
+  {
+    "id": "11",
+    "title": "Um fluxo recomendado para criar interfaces",
+    "sourceNotes": "**Tempo:** 2min  \n**Mensagem:** a unidade de trabalho deve ser pequena, específica e verificável.\n\n**Texto na tela**\n\n> Definir → localizar → compor → adaptar → validar → revisar\n\n**Visual:** seis etapas em uma linha. Um retorno da revisão para a definição mostra evolução; uma saída lateral em “localizar” mostra lacuna de pattern a avaliar.\n\n**Fala sugerida:** “Começamos com uma necessidade concreta. Procuramos o pattern existente, aprovamos a composição e pedimos à IA uma adaptação delimitada. Validamos contratos e comportamento, depois revisamos com pessoas. Quando falta uma base, a lacuna vira uma decisão explícita — não uma invenção silenciosa.”\n\n**Práticas de trabalho com LLMs, nas notas**\n\n- Contexto específico: objetivo, base existente, versão, estados, restrições e critérios de aceite.\n- Consultar fontes e ferramentas; não tratar memória do chat como catálogo oficial.\n- Adaptar um fluxo ou estado por vez, com mudanças pequenas.\n- Pedir evidências do que foi verificado e declarar o que ficou sem verificação.\n- Não contornar falhas das checagens para concluir a tarefa.\n- Revisar integração, comportamento e acessibilidade no resultado real.\n\n**Natureza da recomendação:** orientação operacional, não promessa de ganho quantificado nem certificação de um método universal.\n\n**Transição:** “Vamos aplicar esse fluxo a uma tarefa reconhecível do Sansys.”",
+    "support": false
+  },
+  {
+    "id": "12",
+    "title": "Uma necessidade Sansys, uma base reaproveitada",
+    "sourceNotes": "**Tempo:** 2min30s  \n**Mensagem:** reutilização libera atenção para decisões específicas da tarefa.\n\n**Texto na tela**\n\n> Atender solicitações: preservar a base, resolver a tarefa.\n\n- Reutilizar a estrutura conhecida.\n- Adaptar dados, ações e permissões.\n- Conferir os estados relevantes.\n\n**Visual:** interface real de “Atender Solicitações”, com três marcações: estrutura compartilhada, área variável e estados. Se não houver captura atual validada, usar wireframe identificado como proposta.\n\n**Fala sugerida:** “A estrutura da página, o contexto do cliente e a organização dos dados podem partir de bases compartilhadas. O trabalho de produto e design se concentra nas ações, na ordem das informações e nas exceções da tarefa.”\n\n**Estados a preparar para a revisão:** carregamento, ausência de resultados, erro, falta de permissão e contexto com dados. Confirmar quais são aplicáveis; não afirmar que já estão todos implementados.\n\n**Limite:** os blocos recentes são candidatos a essa composição; validar seus contratos antes de apresentar o encaixe como uma solução pronta. O caso não promete reproduzir regras de negócio ainda não documentadas.\n\n**Transição:** “Isso aumenta a capacidade de entregar, mas não encerra o trabalho de qualidade.”",
+    "support": false
+  },
+  {
+    "id": "13",
+    "title": "Checagens ajudam. Não substituem julgamento.",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** maturidade inclui conhecer os limites das próprias evidências.\n\n**Texto na tela**\n\n- **Automação:** verifica regras cobertas.\n- **Pessoas:** avaliam contexto e experiência.\n- **Uso real:** revela novas necessidades.\n\n**Visual:** três perspectivas complementares sobre a mesma interface. Sem selo genérico de “100% pronto”.\n\n**Fala sugerida:** “Uma checagem aprovada comprova aquilo que ela mediu, não tudo o que importa. Usabilidade, clareza da informação, integração, comportamento real e acessibilidade exigem validação compatível com cada contexto. Governança madura explicita esses limites.”\n\n**Ponto de atenção:** âncoras de acessibilidade verificadas no contrato não equivalem, isoladamente, a comprovação integral de conformidade WCAG na aplicação.\n\n**Transição:** “A continuidade precisa ter prioridades e indicadores, não apenas mais regras.”",
+    "support": false
+  },
+  {
+    "id": "14",
+    "title": "Evoluir com prioridades e evidências",
+    "sourceNotes": "**Tempo:** 1min30s  \n**Mensagem:** governança deve acompanhar adoção e reduzir atrito, não crescer por acúmulo documental.\n\n**Texto na tela**\n\n1. Ampliar patterns com base no uso.\n2. Fortalecer verificações e integração.\n3. Medir resultados e ajustar o processo.\n\n**Visual:** três trilhas paralelas — repertório, confiança e adoção. Evitar roadmap com datas ainda não combinadas.\n\n**Fala sugerida:** “Precisamos ampliar a cobertura das estruturas recorrentes, fortalecer as verificações úteis e acompanhar como as equipes realmente usam o DSS. A governança também precisa ser lapidada: regras claras, consulta simples e menos duplicação.”\n\n**Indicadores propostos, não números existentes:** reutilização de patterns; retrabalho por divergência; tempo até aceite; falhas que escapam das checagens. Definir responsáveis, denominadores e linha de base antes de fazer comparações.\n\n**Transição:** “A decisão é preservar e ampliar uma capacidade construída, não apenas manter uma biblioteca.”",
+    "support": false
+  },
+  {
+    "id": "15",
+    "title": "DSS: uma capacidade estratégica em evolução",
+    "sourceNotes": "**Tempo:** 30s  \n**Mensagem:** continuidade e adoção precisam de compromisso compartilhado.\n\n**Texto na tela**\n\n> Reutilizar o que funciona.  \n> Verificar o que muda.  \n> Evoluir com evidências.\n\n**Visual:** retorno à interface Sansys da abertura, agora ligada a produto, design e engenharia.\n\n**Fechamento sugerido:** “O DSS reúne conhecimento de produto, arquitetura e ferramentas para produzir qualidade de forma mais repetível. A proposta é sustentar essa evolução, adotar patterns progressivamente e acompanhar resultados com responsáveis claros.”\n\n**Pedido à liderança:** patrocinar continuidade da governança, adoção progressiva dos patterns e acompanhamento de resultados. Não propor orçamento ou prazo sem alinhamento.",
+    "support": false
+  },
+  {
+    "id": "A1",
+    "title": "Mapa das ferramentas por função",
+    "sourceNotes": "**Consulta:** `query_component`, `query_token`.  \n**Preparação:** `validate_pre_prompt`, `generate_pre_prompt_template`, `generate_component_scaffold`.  \n**Verificação:** `validate_component_code`, `validate_composition`, `validate_spec_readiness`, `validate_grid_layout`, `validate_visual_contract`.  \n**Apoio à correção:** `suggest_token_replacement`.  \n**Inspeção e rastreabilidade:** `describe_grid_inspector`, `record_audit_event`.\n\n**Nota:** os nomes aparecem na implementação do MCP; isso não comprova que cada ferramenta esteja acessível em toda instalação nem que suas verificações cubram todas as falhas possíveis. Geração de scaffold devolve conteúdo; não significa aplicar nem aprovar os arquivos automaticamente. `record_audit_event` é uma exceção de escrita controlada: altera campos de auditoria no `dss.meta.json` e exige solicitação humana explícita. O registro não deve ser apresentado como prova independente de execução nem de conformidade.",
+    "support": true
+  },
+  {
+    "id": "A2",
+    "title": "Camadas de controle da mudança",
+    "sourceNotes": "**Visual:** controles locais → checagens de integração → revisão → aceite.\n\nExplicar pre-commit, gates e testes com a evidência do repositório. Separar configuração disponível, execução comprovada e política de bloqueio efetiva. Mostrar nomes e comandos apenas aqui.\n\n**Controles encontrados no código:** estrutura e higiene dos componentes; existência de tokens; regras de estados interativos; paridade de API e documentação; referências do sandbox e portal; tipos; contratos derivados. O arquivo `.gitlab-ci.yml` configura checagens centrais de estrutura, tokens, API, testes e contratos. Não foi consultada uma execução desse pipeline nem confirmada uma política de merge no repositório utilizado.\n\n**Propagação automática encontrada no hook:** mudanças em tokens disparam atualização da referência e do portal; mudanças no meta disparam atualização da referência visual; mudanças em meta ou selos disparam reconstrução e validação do catálogo. Esses são exemplos concretos de preservar coerência sem redigitar informação; sua execução depende dos gatilhos e do hook instalado.\n\n**Limites importantes:** alguns validadores usam baseline, bloqueando desvios novos e tolerando dívida conhecida. O gate de contratos tem adoção incremental: atua nos componentes que já possuem contrato. A validação de tokens em `meta.visualProperties` verifica existência no catálogo, não prova que o CSS utiliza os mesmos tokens; essa diferença está explicitada no próprio hook.",
+    "support": true
+  },
+  {
+    "id": "A3",
+    "title": "Fonte única: donos e consumidores",
+    "sourceNotes": "**Visual:** matriz com dono do aspecto visual, da API, da prosa normativa e das evidências de auditoria. Contrato derivado como superfície estruturada; conteúdo orientativo identificado separadamente.\n\nExplicar o que é derivado, o que é verificado e o que depende de julgamento; distinguir implementação atual de direção arquitetural.\n\n**Situação dos blocos do caso:** foram localizados contratos de `DssPageShell`, `DssAppBar` e `DssContextHeader`, mas não executados seus gates nesta preparação. Em `DssDataBoard`, existem estrutura e tipos, mas não foram encontrados `dss.meta.json` ou `dss.contract.json` na pasta do componente. Tratar seu uso no caso como proposta sujeita a fechamento, não como entrega já validada.",
+    "support": true
+  },
+  {
+    "id": "A4",
+    "title": "Briefing mínimo para uma tarefa assistida por IA",
+    "sourceNotes": "**Modelo de pedido**\n\n> Adaptar [base/pattern oficial e versão] para [tarefa e usuário]. Preservar [estrutura e restrições]. Usar [dados e ações confirmados]. Considerar [estados, permissões e exceções]. Consultar o DSS antes de propor componentes ou recursos. Explicitar lacunas. Implementar uma mudança delimitada e apresentar evidências das verificações, incluindo o que não foi verificado. Critérios de aceite: [critérios observáveis].\n\nNão deixar placeholders no pedido final e não colar informação sensível sem necessidade. Este briefing orienta a tarefa; não substitui contratos nem revisão.",
+    "support": true
+  },
+  {
+    "id": "A5",
+    "title": "O que medir na adoção",
+    "sourceNotes": "| Indicador proposto | Definição inicial a acordar | Cuidado |\n|---|---|---|\n| Reutilização | Entregas elegíveis que usam pattern oficial / entregas elegíveis | Definir elegibilidade; não penalizar lacunas do catálogo |\n| Retrabalho | Correções por divergência do DSS no período | Distinguir correção de interface de mudança de escopo |\n| Tempo até aceite | Intervalo entre tarefa pronta para desenvolvimento e aceite | Comparar complexidades semelhantes |\n| Falhas que escapam | Desvios descobertos após verificações e revisão | Classificar quais verificações deveriam cobrir cada desvio |\n\nNão prometer melhora percentual antes de estabelecer a linha de base.",
+    "support": true
+  }
+]
