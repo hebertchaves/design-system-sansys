@@ -1,10 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest'
-import { QForm } from 'quasar'
+import { QForm, QInput, QSelect } from 'quasar'
 import DssForm from './DssForm.vue'
+import DssInput from '../../base/DssInput/DssInput.vue'
+import DssCheckbox from '../../base/DssCheckbox/DssCheckbox.vue'
+import DssToggle from '../../base/DssToggle/DssToggle.vue'
+import DssRadio from '../../base/DssRadio/DssRadio.vue'
+import DssSelect from '../../base/DssSelect/DssSelect.vue'
+import DssTextarea from '../../base/DssTextarea/DssTextarea.vue'
 
-installQuasarPlugin({ components: { QForm } })
+installQuasarPlugin({ components: { QForm, QInput, QSelect } })
 
 // ==========================================================================
 // Helpers
@@ -319,5 +326,121 @@ describe('DssForm — CSS Classes', () => {
     const classes = wrapper.find('form').classes()
     expect(classes).not.toContain('dss-form--greedy')
     expect(classes).not.toContain('dss-form--autofocus')
+  })
+})
+
+
+// ==========================================================================
+// ALCANCE DA VALIDAÇÃO — trava de regressão (set/2026)
+// ==========================================================================
+//
+// O motor de validação é o do QForm, e o QForm só valida os componentes
+// REGISTRADOS nele. Os campos do DSS não são todos wrappers de Quasar:
+// DssInput, DssCheckbox, DssToggle e DssRadio renderizam <input> nativo e não
+// se registravam sozinhos. O efeito medido era o pior possível — validate()
+// respondia `true` para um campo com regra que SEMPRE reprova, e formulário
+// com obrigatório vazio se declarava válido e submetia, sem aviso de console.
+//
+// O registro agora vem do composable global useFieldValidation, via o ponto de
+// extensão público do Quasar (useFormChild). Cada caso abaixo monta UM campo
+// com uma regra que nunca aprova: o veredito do formulário tem de ser `false`.
+// Um `true` aqui é a regressão voltando.
+
+const SEMPRE_REPROVA = [() => 'regra que nunca aprova']
+
+const CAMPOS_DO_FORMULARIO = [
+  { nome: 'DssInput', componente: DssInput, props: { label: 'Campo' }, modelo: '' },
+  { nome: 'DssCheckbox', componente: DssCheckbox, props: { label: 'Campo' }, modelo: false },
+  { nome: 'DssToggle', componente: DssToggle, props: { label: 'Campo' }, modelo: false },
+  { nome: 'DssRadio', componente: DssRadio, props: { label: 'Campo', val: 'a' }, modelo: null },
+  { nome: 'DssSelect', componente: DssSelect, props: { label: 'Campo', options: ['a', 'b'] }, modelo: null },
+  { nome: 'DssTextarea', componente: DssTextarea, props: { label: 'Campo' }, modelo: '' },
+]
+
+function montarComCampo({ componente, props, modelo }) {
+  return mount(
+    {
+      components: { DssForm, CampoSobTeste: componente },
+      template: `
+        <DssForm ref="formulario">
+          <CampoSobTeste v-bind="props" :rules="regras" v-model="valor" />
+        </DssForm>
+      `,
+      data: () => ({ props, regras: SEMPRE_REPROVA, valor: modelo }),
+    },
+    { attachTo: document.body }
+  )
+}
+
+describe('DssForm — alcance da validação sobre os campos DSS', () => {
+  for (const campo of CAMPOS_DO_FORMULARIO) {
+    it(`${campo.nome}: validate() do formulário REPROVA quando a regra do campo reprova`, async () => {
+      const wrapper = montarComCampo(campo)
+      await nextTick()
+
+      const valido = await wrapper.vm.$refs.formulario.validate()
+
+      expect(valido).toBe(false)
+      wrapper.unmount()
+    })
+  }
+
+  it('aprova quando nenhuma regra reprova — o falso negativo também é defeito', async () => {
+    const wrapper = mount(
+      {
+        components: { DssForm, DssInput },
+        template: `
+          <DssForm ref="formulario">
+            <DssInput v-model="valor" label="Campo" :rules="regras" />
+          </DssForm>
+        `,
+        data: () => ({ regras: [() => true], valor: 'preenchido' }),
+      },
+      { attachTo: document.body }
+    )
+    await nextTick()
+
+    expect(await wrapper.vm.$refs.formulario.validate()).toBe(true)
+    wrapper.unmount()
+  })
+
+  it('campo DESABILITADO não trava a submissão, mesmo com regra que reprova', async () => {
+    // Paridade QField: obrigatório desabilitado responde aprovado. Sem isto, um
+    // campo inerte na tela impediria o envio sem o usuário ter como consertar.
+    const wrapper = mount(
+      {
+        components: { DssForm, DssInput },
+        template: `
+          <DssForm ref="formulario">
+            <DssInput v-model="valor" label="Campo" disabled :rules="regras" />
+          </DssForm>
+        `,
+        data: () => ({ regras: SEMPRE_REPROVA, valor: '' }),
+      },
+      { attachTo: document.body }
+    )
+    await nextTick()
+
+    expect(await wrapper.vm.$refs.formulario.validate()).toBe(true)
+    wrapper.unmount()
+  })
+
+  it('campo SEM rules continua fora do formulário (paridade QField)', async () => {
+    const wrapper = mount(
+      {
+        components: { DssForm, DssInput },
+        template: `
+          <DssForm ref="formulario">
+            <DssInput v-model="valor" label="Campo" />
+          </DssForm>
+        `,
+        data: () => ({ valor: '' }),
+      },
+      { attachTo: document.body }
+    )
+    await nextTick()
+
+    expect(await wrapper.vm.$refs.formulario.validate()).toBe(true)
+    wrapper.unmount()
   })
 })

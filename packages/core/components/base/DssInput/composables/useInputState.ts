@@ -12,13 +12,29 @@
  * ```
  */
 
-import { ref, computed, type Slots } from 'vue'
+import { ref, computed, type ComputedRef, type Slots } from 'vue'
 import type { InputProps } from '../types/input.types'
+
+/**
+ * Estado de validação vindo do `useFieldValidation` global.
+ *
+ * É opcional para o composable continuar utilizável isoladamente (testes), mas
+ * o SFC SEMPRE passa: sem ele o rodapé consultaria apenas `props.error` e a
+ * mensagem apurada por uma regra nunca abriria a área de erro.
+ */
+export interface InputValidationState {
+  temErro: ComputedRef<boolean>
+  mensagemDeErro: ComputedRef<string | undefined>
+}
 
 /**
  * Composable para estado do input
  */
-export function useInputState(props: Readonly<InputProps>, slots: Slots) {
+export function useInputState(
+  props: Readonly<InputProps>,
+  slots: Slots,
+  validacao?: InputValidationState
+) {
   /**
    * Estado de foco do input
    */
@@ -50,9 +66,15 @@ export function useInputState(props: Readonly<InputProps>, slots: Slots) {
    * - Tem slot hint customizado
    */
   const hasBottomSlot = computed(() => {
+    // O erro e a mensagem vêm do estado de validação quando ele existe: ali já
+    // está resolvida a soma "prop error + erro de regra" e a precedência
+    // "errorMessage da prop vence a mensagem da regra".
+    const emErro = validacao ? validacao.temErro.value : props.error
+    const mensagem = validacao ? validacao.mensagemDeErro.value : props.errorMessage
+
     return (
-      // Área de erro (paridade Quasar getBottom): em erro, com errorMessage OU slot.
-      (props.error && (props.errorMessage || !!slots.error)) ||
+      // Área de erro (paridade Quasar getBottom): em erro, com mensagem OU slot.
+      (emErro && (mensagem || !!slots.error)) ||
       props.hint ||
       !!slots.hint
     )

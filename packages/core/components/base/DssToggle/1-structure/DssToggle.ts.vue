@@ -24,12 +24,12 @@
       :aria-label="ariaLabel"
       :aria-checked="isChecked"
       :aria-disabled="disable || undefined"
-      :aria-invalid="error || undefined"
+      :aria-invalid="temErro || undefined"
       :aria-describedby="errorDescribedBy"
       :value="val"
       @change="handleChange"
       @focus="isFocused = true"
-      @blur="isFocused = false"
+      @blur="onBlur"
     />
 
     <!-- Visual toggle track (decorative) -->
@@ -66,12 +66,12 @@
 
     <!-- Error message -->
     <span
-      v-if="error && errorMessage"
+      v-if="temErro && mensagemDeErro"
       :id="errorId"
       class="dss-toggle__error"
       role="alert"
       aria-live="assertive"
-    >{{ errorMessage }}</span>
+    >{{ mensagemDeErro }}</span>
   </label>
 </template>
 
@@ -111,6 +111,7 @@
 import { computed, ref, useSlots } from 'vue'
 import type { ToggleProps, ToggleEmits } from '../types/toggle.types'
 import { useToggleClasses } from '../composables'
+import { useFieldValidation } from '../../../../composables/useFieldValidation'
 import DssIcon from '../../DssIcon/DssIcon.vue'
 
 // ==========================================================================
@@ -241,6 +242,23 @@ const errorDescribedBy = computed(() => {
 // COMPOSABLES
 // ==========================================================================
 
+// Registro no motor de validacao do QForm — sem isto o `DssForm.validate()`
+// respondia `true` para um toggle com regra que sempre reprova.
+const { temErro, mensagemDeErro, validar, resetarValidacao, aoPerderFoco } = useFieldValidation({
+  rules: () => props.rules,
+  modelValue: () => props.modelValue,
+  disabled: () => props.disable === true,
+  error: () => props.error,
+  errorMessage: () => props.errorMessage,
+  lazyRules: () => props.lazyRules,
+})
+
+/** Blur do input nativo: comportamento original mais o gatilho de `lazyRules: true`. */
+function onBlur() {
+  isFocused.value = false
+  aoPerderFoco()
+}
+
 const { toggleClasses, trackColorClasses } = useToggleClasses(
   props,
   { isChecked }
@@ -304,7 +322,11 @@ defineExpose({
   /** Foca o input nativo */
   focus: () => inputRef.value?.focus(),
   /** Remove foco do input nativo */
-  blur: () => inputRef.value?.blur()
+  blur: () => inputRef.value?.blur(),
+  /** Roda as regras do campo. E o metodo que o `DssForm` chama. */
+  validate: validar,
+  /** Limpa o estado de validacao (o valor NAO e alterado). */
+  resetValidation: resetarValidacao
 })
 </script>
 

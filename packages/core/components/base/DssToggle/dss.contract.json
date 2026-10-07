@@ -125,11 +125,30 @@
         "categorySource": "quasar"
       },
       {
+        "name": "rules",
+        "type": "ToggleRule[]",
+        "controlHint": "text",
+        "default": false,
+        "description": "Desabilita o toggle",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "lazyRules",
+        "type": "ToggleLazyRules",
+        "controlHint": "segmented",
+        "default": false,
+        "description": "Quando as regras rodam sozinhas.",
+        "validValues": [
+          "ondemand"
+        ],
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "default": false,
-        "description": "Desabilita o toggle",
         "category": "Estado",
         "categorySource": "quasar"
       },
@@ -178,8 +197,8 @@
         "type": "number | string | null",
         "controlHint": "text",
         "description": "Tabindex customizado para o input nativo",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",

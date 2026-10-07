@@ -22,7 +22,7 @@
   &.dss-input--focused .dss-input__field {
     background-color: var(--dss-surface-muted);
     border-bottom-color: var(--dss-action-primary);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-action-primary);
   }
 
   /* Label em primary quando focused */

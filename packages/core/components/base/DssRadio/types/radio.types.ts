@@ -9,6 +9,30 @@
  * Este componente NAO replica a API completa do q-radio.
  */
 
+import type { DssFieldRule, DssLazyRules } from '../../../../composables/useFieldValidation'
+
+// ==========================================================================
+// TIPOS DE VALIDACAO — declarados ESTRUTURALMENTE de proposito
+// ==========================================================================
+//
+// O compilador de `<script setup>` deriva os props de RUNTIME do tipo. Alias
+// importado de OUTRO arquivo dentro do tipo de um prop faz o prop sumir da
+// lista compilada, em silencio (medido no DssInput, set/2026). A forma abaixo
+// e estrutural; a trava logo adiante impede divergencia com o canonico.
+
+/** Regra de validacao do DssRadio. Forma canonica: `DssFieldRule`. */
+export type RadioRule = (
+  val: unknown,
+) => boolean | string | void | Promise<boolean | string | void>
+
+/** Momento em que as regras rodam sozinhas. Forma canonica: `DssLazyRules`. */
+export type RadioLazyRules = boolean | 'ondemand'
+
+type _ParidadeRegra = RadioRule extends DssFieldRule<unknown> ? true : never
+type _ParidadeLazy = RadioLazyRules extends DssLazyRules ? true : never
+const _paridade: [_ParidadeRegra, _ParidadeLazy] = [true, true]
+void _paridade
+
 // ---------------------------------------------------------------------------
 // Cores semanticas (governadas pelo DSS)
 // ---------------------------------------------------------------------------
@@ -87,6 +111,23 @@ export interface RadioProps {
   checkedIcon?: string
 
   /** Estado desabilitado */
+  /**
+   * Regras de validacao do campo.
+   *
+   * Declarar `rules` REGISTRA o campo no `DssForm` ancestral — a partir dai ele
+   * entra no `validate()` e no `submit()` do formulario.
+   */
+  rules?: RadioRule[]
+
+  /**
+   * Quando as regras rodam sozinhas.
+   * - `false` (padrao) — a cada mudanca do valor, depois da primeira interacao
+   * - `true` — apenas ao perder o foco
+   * - `'ondemand'` — so via `validate()`
+   * @default false
+   */
+  lazyRules?: RadioLazyRules
+
   disable?: boolean
 
   /** Modo compacto: reduz gap, altura e tamanho da fonte, e remove touch target expandido */

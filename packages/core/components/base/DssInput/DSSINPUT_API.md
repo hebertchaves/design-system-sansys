@@ -398,11 +398,15 @@ Props aprovadas e mantidas pelo Design System:
 ### ⛔ Props do QInput FORA do Escopo DSS
 
 > Estas props existem no QInput mas **não são governadas pelo DSS**. Se necessárias, implemente via wrappers ou diretivas externas.
+>
+> **`rules` saiu desta tabela em set/2026.** A decisão anterior era "validação deve ser externa"
+> (vee-validate, vuelidate), mas o `DssInput` continuava dentro de um `DssForm` que prometia
+> `validate()` — e respondia `true` sem consultar regra nenhuma. `rules` agora é prop governada
+> e registra o campo no formulário. Ver a seção "Validação dentro de um `DssForm`" no README.
 
 | Prop QInput | Por que fora de escopo | Alternativa |
 |-------------|------------------------|-------------|
 | `mask` | Complexidade de manutenção | Diretiva `v-maska` |
-| `rules` | Validação deve ser externa | `vee-validate`, `vuelidate` |
 | `autogrow` | Comportamento de textarea | Use `DssTextarea` |
 | `prefix` / `suffix` | Slots resolvem | `#prepend` / `#append` |
 | `input-class` / `input-style` | Evitar CSS inline | Tokens ou slots |

@@ -22,6 +22,7 @@ import { ref, computed, useSlots } from 'vue'
 import DssIcon from '../../DssIcon/DssIcon.vue'
 import type { RadioProps, RadioEmits } from '../types/radio.types'
 import { useRadioClasses } from '../composables/useRadioClasses'
+import { useFieldValidation } from '../../../../composables/useFieldValidation'
 
 // ---------------------------------------------------------------------------
 // Component Options
@@ -109,6 +110,17 @@ const errorId = computed(() => {
 // ---------------------------------------------------------------------------
 // Composable de classes
 // ---------------------------------------------------------------------------
+// Registro no motor de validacao do QForm — sem isto o `DssForm.validate()`
+// respondia `true` para um radio com regra que sempre reprova.
+const { temErro, mensagemDeErro, validar, resetarValidacao, aoPerderFoco } = useFieldValidation({
+  rules: () => props.rules,
+  modelValue: () => props.modelValue,
+  disabled: () => props.disable === true,
+  error: () => props.error,
+  errorMessage: () => props.errorMessage,
+  lazyRules: () => props.lazyRules,
+})
+
 const { radioClasses, controlClasses, controlColorClasses } = useRadioClasses(
   props,
   { isChecked, isFocused }
@@ -128,6 +140,8 @@ function onFocus() {
 
 function onBlur() {
   isFocused.value = false
+  // Gatilho do modo `lazyRules: true`: a regra so roda ao perder o foco.
+  aoPerderFoco()
 }
 
 // ---------------------------------------------------------------------------
@@ -140,6 +154,10 @@ defineExpose({
   focus: () => inputRef.value?.focus(),
   /** Remove o foco do input programaticamente */
   blur: () => inputRef.value?.blur(),
+  /** Roda as regras do campo. E o metodo que o `DssForm` chama. */
+  validate: validar,
+  /** Limpa o estado de validacao (o valor NAO e alterado). */
+  resetValidation: resetarValidacao,
 })
 </script>
 
@@ -170,7 +188,7 @@ defineExpose({
       :aria-label="ariaLabel"
       :aria-checked="isChecked"
       :aria-disabled="disable || undefined"
-      :aria-invalid="error || undefined"
+      :aria-invalid="temErro || undefined"
       :aria-describedby="errorId"
       @change="onChange"
       @focus="onFocus"
@@ -207,13 +225,13 @@ defineExpose({
 
     <!-- MENSAGEM DE ERRO -->
     <span
-      v-if="error && errorMessage"
+      v-if="temErro && mensagemDeErro"
       :id="errorId"
       class="dss-radio__error"
       role="alert"
       aria-live="assertive"
     >
-      {{ errorMessage }}
+      {{ mensagemDeErro }}
     </span>
   </label>
 </template>

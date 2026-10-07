@@ -146,10 +146,29 @@
         "categorySource": "quasar"
       },
       {
+        "name": "rules",
+        "type": "CheckboxRule[]",
+        "controlHint": "text",
+        "description": "Estado desabilitado",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "lazyRules",
+        "type": "CheckboxLazyRules",
+        "controlHint": "segmented",
+        "default": false,
+        "description": "Quando as regras rodam sozinhas.",
+        "validValues": [
+          "ondemand"
+        ],
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado desabilitado",
         "category": "Estado",
         "categorySource": "quasar"
       },
@@ -196,8 +215,8 @@
         "type": "number | string | null",
         "controlHint": "text",
         "description": "Tabindex customizado para o input nativo",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",
@@ -243,6 +262,16 @@
         "name": "inputRef",
         "type": "Ref<HTMLInputElement | null>",
         "description": "Referencia direta ao elemento <input type=\"checkbox\"> nativo"
+      },
+      {
+        "name": "validate",
+        "type": "(val?: unknown) => boolean | Promise<boolean>",
+        "description": "Roda as regras do campo. E o metodo que o `DssForm` chama."
+      },
+      {
+        "name": "resetValidation",
+        "type": "() => void",
+        "description": "Limpa o estado de validacao (o valor NAO e alterado)."
       }
     ],
     "vModel": {

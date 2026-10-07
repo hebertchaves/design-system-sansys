@@ -11,6 +11,39 @@
  */
 
 import type { Ref } from 'vue'
+import type { DssFieldRule, DssLazyRules } from '../../../../composables/useFieldValidation'
+
+// ==========================================================================
+// TIPOS DE VALIDAÇÃO — declarados ESTRUTURALMENTE de propósito
+// ==========================================================================
+//
+// O compilador de `<script setup>` deriva os props de RUNTIME do tipo passado a
+// `defineProps<InputProps>()`. Ele resolve o tipo importado `InputProps`, mas
+// NÃO resolveu os aliases importados de outro arquivo usados DENTRO dele:
+// `rules` e `lazyRules` simplesmente sumiam da lista de props compilada —
+// medido no módulo servido pelo Vite. O sintoma era mudo: o campo montava, o
+// consumidor passava `:rules`, e o valor caía em `$attrs` como atributo de DOM.
+//
+// Por isso a forma abaixo é estrutural (sem alias): é o que o compilador
+// consegue converter em `Array` e `[Boolean, String]`.
+//
+// A trava contra divergência vem logo em seguida — se estes tipos deixarem de
+// casar com os canônicos do composable, o `validate:type-check` reprova.
+
+/** Regra de validação do DssInput. Forma canônica: `DssFieldRule` do `useFieldValidation`. */
+export type InputRule = (
+  val: string | number | undefined,
+) => boolean | string | void | Promise<boolean | string | void>
+
+/** Momento em que as regras rodam sozinhas. Forma canônica: `DssLazyRules`. */
+export type InputLazyRules = boolean | 'ondemand'
+
+// Trava de paridade com os tipos canônicos do composable global. Não é
+// documentação: é erro de compilação se um lado mudar sem o outro.
+type _ParidadeRegra = InputRule extends DssFieldRule<string | number | undefined> ? true : never
+type _ParidadeLazy = InputLazyRules extends DssLazyRules ? true : never
+const _paridade: [_ParidadeRegra, _ParidadeLazy] = [true, true]
+void _paridade
 
 // ==========================================================================
 // ENUMS E LITERAIS
@@ -128,11 +161,47 @@ export interface InputProps {
   errorMessage?: string
 
   // ========================================
+  // Validação
+  // ========================================
+
+  /**
+   * Regras de validação do campo.
+   *
+   * Cada regra recebe o valor e devolve `true`/`undefined` (aprovado),
+   * `false` (reprovado sem mensagem), uma `string` (reprovado, e a string é a
+   * mensagem) ou uma `Promise` dessas (validação assíncrona).
+   *
+   * Declarar `rules` REGISTRA o campo no `DssForm` ancestral: a partir daí ele
+   * entra no `validate()` e no `submit()` do formulário. Sem `rules`, o campo
+   * continua fora — é o comportamento do QField e vale igual aqui.
+   *
+   * @example
+   * ```vue
+   * <DssInput v-model="email" :rules="[v => !!v || 'Obrigatório']" />
+   * ```
+   */
+  rules?: InputRule[]
+
+  /**
+   * Quando as regras rodam sozinhas, sem ninguém chamar `validate()`.
+   *
+   * - `false` (padrão) — a cada mudança do valor, depois da primeira interação
+   * - `true` — apenas ao perder o foco
+   * - `'ondemand'` — nunca sozinhas; só via `validate()` do campo ou do form
+   *
+   * @default false
+   */
+  lazyRules?: InputLazyRules
+
+  // ========================================
   // State
   // ========================================
 
   /**
-   * Estado de erro (muda cor para negativo)
+   * Estado de erro imposto de FORA (muda cor para negativo).
+   *
+   * Soma-se ao erro apurado pelas `rules` — não o substitui: o campo fica em
+   * erro se QUALQUER um dos dois for verdadeiro.
    * @default false
    */
   error?: boolean
@@ -283,6 +352,17 @@ export interface InputExpose {
    * Referência direta ao elemento input nativo
    */
   inputRef: Ref<HTMLInputElement | null>
+
+  /**
+   * Roda as regras do campo. É o método que o `DssForm` chama.
+   * @returns `true` se aprovado — ou a `Promise` do veredito, se alguma regra for assíncrona
+   */
+  validate: (val?: unknown) => boolean | Promise<boolean>
+
+  /**
+   * Limpa o estado de validação (o valor do campo NÃO é alterado).
+   */
+  resetValidation: () => void
 }
 
 // ==========================================================================

@@ -2183,11 +2183,13 @@ Em caso de conflito entre fontes de informação visual:
 |---|---|---|---|---|
 | DssActionMenu | acoes | ariaLabel:Ações do registro, variant:flat, color:primary, size:md | minHeight:44px | Quatro ações, a última com sub-ações |
 | DssAjaxBar | progresso | position:top, color:primary | minHeight:3px | Barra de progresso de requisições AJAX |
+| DssAppBar | layout | brand:water, title:Nome do Módulo | — | DssAppBar da marca Water com título de módulo e as 4 ações típicas da casca Sansys |
 | DssAvatar | indicadores | size:md, icon:person | minHeight:44px, minWidth:44px | Iniciais 'AB' |
 | DssBadge | indicadores | color:primary | minHeight:24px, minWidth:24px | Label '99+' |
-| DssBanner | banners | variant:default, inline | minHeight:48px | Mensagem informativa com ação |
+| DssBanner | banners | variant:info | minHeight:48px | Mensagem informativa com ação |
 | DssBar | layout | rounded | minHeight:44px | Barra de sistema com conteúdo |
 | DssBottomSheet | contextuais | — | — | — |
+| DssBrandLogo | indicadores | brand:water, size:lg | — | DssBrandLogo da marca Water no tamanho lg, herdando a cor do contexto |
 | DssBreadcrumbs | navegacao | — | minHeight:21px | Home / Produtos / Detalhe |
 | DssBreadcrumbsEl | navegacao | label:Página | minHeight:17px | Item de breadcrumb 'Home' |
 | DssBtnDropdown | acoes | label:Opções | minHeight:44px | Botão 'Opções' com menu dropdown |
@@ -2201,9 +2203,11 @@ Em caso de conflito entre fontes de informação visual:
 | DssChip | acoes | variant:filled, color:primary, size:md, label:Chip | minHeight:28px | Label 'Chip' |
 | DssCircularProgress | progresso | value:70, size:md, color:primary | minHeight:56px, minWidth:56px | Progresso circular 70% |
 | DssColorPicker | contextuais | formatModel:hex | — | — |
+| DssContainer | layout | size:md, padding:md, gap:md, centered | — | — |
+| DssContextHeader | layout | identifier:652701-9, recordsCount:2, openCount:2, summary:[…], groups:[…] | — | Cabeçalho de atendimento com identidade, três grupos de informação e o trilho de sessão |
 | DssDataCard | contextuais | — | — | — |
 | DssDatePicker | contextuais | modelValue:2026/05/22 | — | — |
-| DssDialog | contextuais | — | — | — |
+| DssDialog | contextuais | open | — | DssDialog aberto, com as três regiões: título e fechar no header, texto no corpo, ações no footer |
 | DssDrawer | layout | persistent, width:150 | minHeight:100vh, minWidth:300px | Painel lateral com navegação |
 | DssEmptyState | indicadores | icon:inbox, title:Nenhuma solicitacao encontrada, description:Ajuste os filtros ou limpe a busca para ver todos os registros., size:md, variant:plain | padding:32px 16px, gap:12px | Icone inbox + titulo + descricao |
 | DssExpansionItem | navegacao | label:Expansível, icon:expand_more, modelValue | minHeight:44px | Item expansível com conteúdo |
@@ -2233,6 +2237,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssPage | layout | — | — | Área de conteúdo principal da página |
 | DssPageContainer | layout | — | — | Container com largura máxima de conteúdo |
 | DssPageScroller | layout | — | — | Botão de scroll para o topo |
+| DssPageShell | layout | — | — | DssPageShell com rail de 3 módulos e o board |
 | DssPageSticky | layout | position:bottom-right, offset:[…] | — | Elemento fixo na página |
 | DssPagination | navegacao | modelValue:1, max:10 | minHeight:44px | Página 1 de 10 |
 | DssParallax | contextuais | src:https://placehold.co/600x200, height:100, speed:0.5, alt:Imagem decorativa de fundo, decorative | minHeight:200px | Seção com efeito parallax |
@@ -2245,8 +2250,9 @@ Em caso de conflito entre fontes de informação visual:
 | DssResponsive | contextuais | show:sm | — | Wrapper condicional por breakpoint |
 | DssRouteTab | contextuais | label:Início, to:/, name:inicio | minHeight:44px | Tab de rota 'Início' |
 | DssScrollArea | midia | visible:auto, style:height:100px;width:200px | minHeight:200px | Área com scrollbar customizada |
+| DssSectionTitle | listas | label:Verificações, level:2, size:lg | — | DssSectionTitle no tamanho lg com o traço da marca |
 | DssSelect | form-campos | variant:outlined, label:Seleção, options:[…] | minHeight:44px, minWidth:240px | Placeholder 'Selecione uma opção' |
-| DssSeparator | listas | — | minHeight:1px | Linha divisória horizontal |
+| DssSeparator | listas | color:strong, size:md, spaced | minHeight:1px | Linha divisória horizontal |
 | DssSkeleton | progresso | type:text, width:200px | minHeight:24px, minWidth:200px | Bloco de texto esqueleto (placeholder de carregamento) |
 | DssSlideItem | listas | — | minHeight:56px | Item com ações deslizáveis (esquerda/direita) |
 | DssSlider | form-controles | min:0, max:100, modelValue:50, aria-label:Seleção de valor | minHeight:44px, minWidth:200px | Slider com valor 50 |
@@ -2256,7 +2262,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssStep | stepper | name:passo1, title:Passo 1 | minHeight:44px | Etapa 1 — Informações básicas |
 | DssStepper | stepper | modelValue:passo1 | — | Fluxo com 3 etapas: Dados, Revisão, Confirmação |
 | DssTab | navegacao | label:Aba, name:tab1 | minHeight:44px | Tab 'Início' |
-| DssTable | contextuais | — | — | — |
+| DssTable | contextuais | rows:[…], columns:[…], rowKey:protocolo, density:compact, flat, hideBottom | — | — |
 | DssTabPanel | navegacao | name:inicio | minHeight:48px | Conteúdo do painel de aba |
 | DssTabPanels | navegacao | modelValue:inicio | minHeight:48px | Container de painéis de abas |
 | DssTabs | navegacao | modelValue:inicio | minHeight:44px | 3 abas com ícone e rótulo; a última com alert |
@@ -2267,11 +2273,11 @@ Em caso de conflito entre fontes de informação visual:
 | DssToggle | form-controles | color:primary, size:md, label:Ativar | minHeight:44px | Label 'Ativar' |
 | DssToolbar | layout | — | minHeight:44px | Toolbar com título e ações |
 | DssToolbarTitle | layout | — | minHeight:24px | Título da barra de ferramentas |
-| DssTooltip | indicadores | — | minHeight:24px | Tooltip 'Informação adicional' |
+| DssTooltip | indicadores | visible, color:dark | minHeight:24px | Tooltip 'Informação adicional' |
 | DssTree | arvore | nodeKey:id, labelKey:label, nodes:[…] | — | Árvore hierárquica com nós expansíveis |
 | DssUploader | contextuais | — | — | — |
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-09-29T02:26:33.484Z_
+_Gerado em: 2026-10-07T11:48:02.570Z_
 <!-- END:AUTO-GENERATED -->

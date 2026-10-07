@@ -21,12 +21,12 @@
       :disabled="disable"
       :tabindex="computedTabindex"
       :aria-label="ariaLabel"
-      :aria-invalid="error || undefined"
+      :aria-invalid="temErro || undefined"
       :aria-describedby="errorId"
       :value="val"
       @change="handleChange"
       @focus="isFocused = true"
-      @blur="isFocused = false"
+      @blur="onBlur"
     />
 
     <!-- Visual control indicator -->
@@ -64,13 +64,13 @@
 
     <!-- Mensagem de erro (paridade com DssRadio/DssToggle) -->
     <span
-      v-if="error && errorMessage"
+      v-if="temErro && mensagemDeErro"
       :id="errorId"
       class="dss-checkbox__error"
       role="alert"
       aria-live="assertive"
     >
-      {{ errorMessage }}
+      {{ mensagemDeErro }}
     </span>
   </label>
 </template>
@@ -104,6 +104,7 @@
 import { computed, ref, useSlots, watchEffect } from 'vue'
 import type { CheckboxProps, CheckboxEmits, CheckboxExpose } from '../types/checkbox.types'
 import { useCheckboxClasses } from '../composables'
+import { useFieldValidation } from '../../../../composables/useFieldValidation'
 import DssIcon from '../../DssIcon/DssIcon.vue'
 
 // ==========================================================================
@@ -241,6 +242,23 @@ const computedTabindex = computed(() => {
 // COMPOSABLES
 // ==========================================================================
 
+// Registro no motor de validacao do QForm — sem isto o `DssForm.validate()`
+// respondia `true` para um checkbox com regra que sempre reprova.
+const { temErro, mensagemDeErro, validar, resetarValidacao, aoPerderFoco } = useFieldValidation({
+  rules: () => props.rules,
+  modelValue: () => props.modelValue,
+  disabled: () => props.disable === true,
+  error: () => props.error,
+  errorMessage: () => props.errorMessage,
+  lazyRules: () => props.lazyRules,
+})
+
+/** Blur do input nativo: o comportamento original mais o gatilho de `lazyRules: true`. */
+function onBlur() {
+  isFocused.value = false
+  aoPerderFoco()
+}
+
 const { checkboxClasses, controlColorClasses } = useCheckboxClasses(
   props,
   { isChecked, isIndeterminate }
@@ -356,7 +374,9 @@ defineExpose<CheckboxExpose>({
   focus,
   blur,
   toggle,
-  inputRef
+  inputRef,
+  validate: validar,
+  resetValidation: resetarValidacao
 })
 </script>
 

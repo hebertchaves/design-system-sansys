@@ -348,7 +348,9 @@ const focusInput = () => {
 | `stackLabel` | Boolean | `false` | - | Label sempre no topo |
 | `placeholder` | String | `''` | - | Placeholder text |
 | `hint` | String | `''` | - | Helper text |
-| `error` | Boolean | `false` | - | Estado de erro |
+| `rules` | Array | `undefined` | - | Regras de validação. Declarar `rules` REGISTRA o campo no `DssForm` ancestral |
+| `lazyRules` | Boolean \| `'ondemand'` | `false` | - | Quando as regras rodam sozinhas |
+| `error` | Boolean | `false` | - | Estado de erro imposto de fora (soma-se ao erro das `rules`) |
 | `errorMessage` | String | `''` | - | Mensagem de erro |
 | `disabled` | Boolean | `false` | - | Desabilita input |
 | `readonly` | Boolean | `false` | - | Somente leitura |
@@ -608,3 +610,33 @@ vs ANTES:
 **Arquitetura:** 4 Camadas DSS v2.0
 **Filosofia:** Tokens = Provedores, Componentes = Consumidores
 **Baseado em:** Quasar q-input API oficial
+
+## Validação dentro de um `DssForm`
+
+Declarar `rules` **registra** este campo no `DssForm` ancestral: a partir daí ele entra no
+`validate()` e no `submit()` do formulário. Sem `rules`, o campo continua fora — é o
+comportamento do QField e vale igual aqui.
+
+```vue
+<DssForm ref="form" @submit.prevent="enviar">
+  <DssInput v-model="email" label="E-mail" :rules="[v => !!v || 'Obrigatório']" />
+  <DssButton type="submit" label="Enviar" color="primary" />
+</DssForm>
+```
+
+Cada regra recebe o valor e devolve `true`/`undefined` (aprovado), `false` (reprovado sem
+mensagem), uma `string` (reprovado, e a string é a mensagem) ou uma `Promise` dessas. A
+primeira regra síncrona que reprova interrompe as demais — paridade com o QField.
+
+**`lazyRules`** decide quando a regra roda sozinha: `false` (padrão) a cada mudança do valor
+depois da primeira interação, `true` só ao perder o foco, `'ondemand'` apenas via
+`validate()`.
+
+**Campo desabilitado não valida** e responde aprovado — um obrigatório inerte na tela não
+pode travar o envio.
+
+O componente expõe `validate()` e `resetValidation()` para quem guarda um `ref` do campo.
+
+> Histórico: até set/2026 este campo não se registrava no formulário, e o `DssForm.validate()`
+> respondia `true` mesmo com regra que sempre reprova. O registro vem do composable global
+> `useFieldValidation`, sobre o `useFormChild` do Quasar.

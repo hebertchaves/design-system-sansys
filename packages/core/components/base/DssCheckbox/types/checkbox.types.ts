@@ -10,6 +10,29 @@
  */
 
 import type { Ref } from 'vue'
+import type { DssFieldRule, DssLazyRules } from '../../../../composables/useFieldValidation'
+
+// ==========================================================================
+// TIPOS DE VALIDACAO — declarados ESTRUTURALMENTE de proposito
+// ==========================================================================
+//
+// O compilador de `<script setup>` deriva os props de RUNTIME do tipo. Alias
+// importado de OUTRO arquivo dentro do tipo de um prop faz o prop sumir da
+// lista compilada, em silencio (medido no DssInput, set/2026). A forma abaixo
+// e estrutural; a trava logo adiante impede divergencia com o canonico.
+
+/** Regra de validacao do DssCheckbox. Forma canonica: `DssFieldRule`. */
+export type CheckboxRule = (
+  val: unknown,
+) => boolean | string | void | Promise<boolean | string | void>
+
+/** Momento em que as regras rodam sozinhas. Forma canonica: `DssLazyRules`. */
+export type CheckboxLazyRules = boolean | 'ondemand'
+
+type _ParidadeRegra = CheckboxRule extends DssFieldRule<unknown> ? true : never
+type _ParidadeLazy = CheckboxLazyRules extends DssLazyRules ? true : never
+const _paridade: [_ParidadeRegra, _ParidadeLazy] = [true, true]
+void _paridade
 
 // ==========================================================================
 // ENUMS E LITERAIS
@@ -158,6 +181,24 @@ export interface CheckboxProps {
   // ========================================
 
   /** Estado desabilitado */
+  /**
+   * Regras de validacao do campo.
+   *
+   * Declarar `rules` REGISTRA o checkbox no `DssForm` ancestral — a partir dai
+   * ele entra no `validate()` e no `submit()` do formulario. O caso tipico e o
+   * aceite obrigatorio: `[v => v === true || 'E preciso aceitar os termos']`.
+   */
+  rules?: CheckboxRule[]
+
+  /**
+   * Quando as regras rodam sozinhas.
+   * - `false` (padrao) — a cada mudanca do valor, depois da primeira interacao
+   * - `true` — apenas ao perder o foco
+   * - `'ondemand'` — so via `validate()`
+   * @default false
+   */
+  lazyRules?: CheckboxLazyRules
+
   disable?: boolean
 
   /** Modo compacto (reduz espacamento) */
@@ -251,4 +292,14 @@ export interface CheckboxExpose {
    * Referencia direta ao elemento <input type="checkbox"> nativo
    */
   inputRef: Ref<HTMLInputElement | null>
+
+  /**
+   * Roda as regras do campo. E o metodo que o `DssForm` chama.
+   */
+  validate: (val?: unknown) => boolean | Promise<boolean>
+
+  /**
+   * Limpa o estado de validacao (o valor NAO e alterado).
+   */
+  resetValidation: () => void
 }

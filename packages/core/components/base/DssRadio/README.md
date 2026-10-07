@@ -59,7 +59,9 @@ const selected = ref('a')
 | `checkedIcon` | `string` | — | Glifo que SUBSTITUI o ponto no estado marcado. Omitido = ponto preenchido (padrao do radio) |
 | `disable` | `boolean` | `false` | Desabilitado |
 | `dense` | `boolean` | `false` | Modo compacto |
-| `error` | `boolean` | `false` | Estado de erro |
+| `rules` | `RadioRule[]` | `undefined` | Regras de validação. Declarar `rules` REGISTRA o campo no `DssForm` ancestral |
+| `lazyRules` | `boolean \| 'ondemand'` | `false` | Quando as regras rodam sozinhas |
+| `error` | `boolean` | `false` | Estado de erro imposto de fora — soma-se ao erro das `rules` |
 | `errorMessage` | `string` | — | Mensagem de erro |
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Brand Sansys |
 | `tabindex` | `number \| string \| null` | `null` | Indice de tabulacao |
@@ -314,3 +316,33 @@ Cores devem usar o sistema DSS (`color` prop ou `brand`). CSS inline ignora bran
 ---
 
 **Subset controlado da API do Quasar q-radio.** Este componente NAO replica a API completa do q-radio. Diferencias documentadas em DssRadio.md secao 1.
+
+## Validação dentro de um `DssForm`
+
+Declarar `rules` **registra** este campo no `DssForm` ancestral: a partir daí ele entra no
+`validate()` e no `submit()` do formulário. Sem `rules`, o campo continua fora — é o
+comportamento do QField e vale igual aqui.
+
+```vue
+<DssForm ref="form" @submit.prevent="enviar">
+  <DssRadio v-model="plano" val="mensal" label="Mensal" :rules="[v => !!v || 'Escolha um plano']" />
+  <DssButton type="submit" label="Enviar" color="primary" />
+</DssForm>
+```
+
+Cada regra recebe o valor e devolve `true`/`undefined` (aprovado), `false` (reprovado sem
+mensagem), uma `string` (reprovado, e a string é a mensagem) ou uma `Promise` dessas. A
+primeira regra síncrona que reprova interrompe as demais — paridade com o QField.
+
+**`lazyRules`** decide quando a regra roda sozinha: `false` (padrão) a cada mudança do valor
+depois da primeira interação, `true` só ao perder o foco, `'ondemand'` apenas via
+`validate()`.
+
+**Campo desabilitado não valida** e responde aprovado — um obrigatório inerte na tela não
+pode travar o envio.
+
+O componente expõe `validate()` e `resetValidation()` para quem guarda um `ref` do campo.
+
+> Histórico: até set/2026 este campo não se registrava no formulário, e o `DssForm.validate()`
+> respondia `true` mesmo com regra que sempre reprova. O registro vem do composable global
+> `useFieldValidation`, sobre o `useFormChild` do Quasar.

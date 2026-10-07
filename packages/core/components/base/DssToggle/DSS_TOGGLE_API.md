@@ -32,6 +32,8 @@
 | `brand` | `'hub' \| 'water' \| 'waste' \| null` | `null` | Marca do produto. Ativa tokens semanticos de brand. |
 | `tabindex` | `number \| string \| null` | `null` | Tabindex customizado para o input nativo. |
 | `ariaLabel` | `string` | — | Label de acessibilidade para screen readers. |
+| `rules` | `ToggleRule[]` | Desabilita o toggle |
+| `lazyRules` | `ToggleLazyRules` | Quando as regras rodam sozinhas. |
 
 ---
 

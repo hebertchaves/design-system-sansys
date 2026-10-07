@@ -41,7 +41,7 @@
           :aria-label="ariaLabel"
           :aria-labelledby="label ? labelId : undefined"
           :aria-describedby="ariaDescribedBy"
-          :aria-invalid="error ? 'true' : undefined"
+          :aria-invalid="temErro ? 'true' : undefined"
           :aria-busy="loading ? 'true' : undefined"
           :aria-disabled="disabled ? 'true' : undefined"
           :aria-readonly="readonly ? 'true' : undefined"
@@ -49,7 +49,7 @@
           v-bind="$attrs"
           @input="handleInput"
           @focus="handleFocus"
-          @blur="handleBlur"
+          @blur="onBlur"
         />
       </div>
 
@@ -91,15 +91,16 @@
     <!-- Bottom slots (hint/error) -->
     <div v-if="hasBottomSlot" class="dss-input__bottom">
       <div
-        v-if="error && (errorMessage || slots.error)"
+        v-if="temErro && (mensagemDeErro || slots.error)"
         :id="errorId"
         class="dss-input__error"
         role="alert"
         aria-live="assertive"
       >
-        <!-- Paridade Quasar (getBottom): errorMessage tem prioridade; o slot é o
-             fallback quando não há errorMessage. -->
-        <template v-if="errorMessage">{{ errorMessage }}</template>
+        <!-- Paridade Quasar (getBottom): a mensagem tem prioridade; o slot é o
+             fallback quando não há mensagem. `mensagemDeErro` já resolve a
+             precedência entre a prop errorMessage e a mensagem da regra. -->
+        <template v-if="mensagemDeErro">{{ mensagemDeErro }}</template>
         <slot v-else name="error" />
       </div>
       <div
@@ -142,6 +143,8 @@
 import { ref, computed, useSlots } from 'vue'
 import type { InputProps, InputEmits, InputExpose } from '../types/input.types'
 import { useInputClasses, useInputState, useInputActions } from '../composables'
+import { useInputModality } from '../../../../composables/useInputModality'
+import { useFieldValidation } from '../../../../composables/useFieldValidation'
 
 // ==========================================================================
 // COMPONENT NAME
@@ -221,13 +224,47 @@ const errorId = computed(() => `dss-input-error-${uniqueId}`)
 // COMPOSABLES
 // ==========================================================================
 
-const { isFocused, hasValue, hasBottomSlot } = useInputState(props, slots)
+// Registro no motor de validação do QForm. Precisa vir ANTES do useInputState:
+// o rodapé (hint/erro) consulta este estado para decidir se abre a área de erro.
+const { temErro, mensagemDeErro, validar, resetarValidacao, aoPerderFoco } = useFieldValidation({
+  rules: () => props.rules,
+  modelValue: () => props.modelValue,
+  // Paridade QField: campo inerte não valida. `loading` entra junto porque o
+  // input já fica não-focável nesse estado (ver computedTabindex).
+  disabled: () => props.disabled === true || props.readonly === true || props.loading === true,
+  error: () => props.error,
+  errorMessage: () => props.errorMessage,
+  lazyRules: () => props.lazyRules,
+})
+
+const { isFocused, hasValue, hasBottomSlot } = useInputState(props, slots, {
+  temErro,
+  mensagemDeErro,
+})
 const { wrapperClasses, labelClasses, inputClasses } = useInputClasses(props, { isFocused, hasValue })
+
+// Anel de foco só no teclado: `:focus-visible` não separa mouse de teclado em
+// campo de TEXTO (é da especificação). O composable marca a modalidade no
+// `<html>` e o CSS condiciona o anel a ela. Global e idempotente — chamar aqui,
+// e não no entry point, mantém o listener preso a quem precisa dele.
+useInputModality()
+
 const { handleInput, handleFocus, handleBlur, handleClear, focus, blur } = useInputActions(
   emit,
   inputRef,
   isFocused
 )
+
+/**
+ * Blur do input: o comportamento original mais o gatilho da validação.
+ *
+ * É aqui que mora o modo `lazyRules: true` — a regra só roda quando o campo
+ * perde o foco, para o usuário não ver "obrigatório" enquanto ainda digita.
+ */
+function onBlur(event: FocusEvent) {
+  handleBlur(event)
+  aoPerderFoco()
+}
 
 // ==========================================================================
 // COMPUTED PROPERTIES
@@ -265,7 +302,7 @@ const computedTabindex = computed(() => {
 const ariaDescribedBy = computed(() => {
   const ids: string[] = []
 
-  if (props.error && props.errorMessage) {
+  if (temErro.value && mensagemDeErro.value) {
     ids.push(errorId.value)
   } else if (props.hint) {
     ids.push(hintId.value)
@@ -281,7 +318,11 @@ const ariaDescribedBy = computed(() => {
 defineExpose<InputExpose>({
   focus,
   blur,
-  inputRef
+  inputRef,
+  // O QForm chama estes métodos pelo proxy da instância (via useFormChild);
+  // expor aqui é para o CONSUMIDOR que guarda um ref do campo.
+  validate: validar,
+  resetValidation: resetarValidacao
 })
 </script>
 

@@ -12,7 +12,7 @@
   "category": "Container de Formulário — wrapper governado sobre QForm do Quasar",
   "phase": 2,
   "phaseDescription": "Fase 2 — Nível 2 (Composed). Wrapper DSS governado sobre QForm do Quasar. Gerencia validação, submissão e reset de formulários. Delega conteúdo via slot default.",
-  "classification": "Container Estrutural Interativo — orquestrador de campos de formulário",
+  "classification": "Action",
   "hasReservations": false,
   "subcomponents": [],
   "compositionRequirements": [],
@@ -142,7 +142,7 @@
           "props": {
             "label": "Nome completo",
             "dense": true,
-            "outlined": true
+            "variant": "outlined"
           }
         },
         {
@@ -150,11 +150,11 @@
           "props": {
             "label": "Tipo",
             "dense": true,
-            "outlined": true,
             "options": [
               "Pessoa Física",
               "Pessoa Jurídica"
-            ]
+            ],
+            "variant": "outlined"
           }
         },
         {
@@ -176,5 +176,37 @@
       }
     ]
   },
-  "previewGroup": "contextuais"
+  "previewGroup": "contextuais",
+  "classificationNote": "Container Estrutural Interativo — orquestrador de campos de formulário",
+  "tagline": "Container de formulário que governa submissão, validação e reset dos campos aninhados.",
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "A semântica de <form> nativo é preservada: o QForm é o nó raiz (EXC-Gate-01), sem wrapper DSS em volta — envolver quebraria a relação form↔campos. O nome acessível do landmark vem de aria-label repassado por $attrs. Âncoras em DssForm.test.js: \"renderiza um elemento <form> nativo\", \"não renderiza elementos visuais além do <form>\" e \"repassa aria-label ao elemento <form>\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "3.3.1",
+        "level": "A",
+        "implementation": "Falha de validação é identificada programaticamente: o QForm move o foco para o primeiro campo inválido (comportamento desligável por noErrorFocus) e o DssForm reemite validationError carregando a ref do campo reprovado. A MENSAGEM de erro é do campo, não do formulário. Âncoras em DssForm.test.js: \"emite validationError encaminhando a ref do componente do QForm\" e \"repassa noErrorFocus=true ao QForm quando definido\".",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "form",
+      "states": []
+    },
+    "keyboard": [
+      {
+        "key": "Tab / Shift+Tab",
+        "action": "percorrer os campos — ordem nativa do <form>, não reimplementada"
+      },
+      {
+        "key": "Enter",
+        "action": "submeter a partir de um campo de texto de linha única — comportamento nativo do browser, preservado por o nó raiz ser <form>"
+      }
+    ]
+  }
 }

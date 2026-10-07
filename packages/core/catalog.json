@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-29",
-  "total": 93,
+  "generated": "2026-10-07",
+  "total": 99,
   "sealed": 89,
   "components": [
     {
@@ -30,6 +30,20 @@
       "previewGroup": "progresso",
       "goldenReference": "DssBadge",
       "goldenContext": "DssLinearProgress"
+    },
+    {
+      "component": "DssAppBar",
+      "dir": "packages/core/components/composed/DssAppBar",
+      "phase": 3,
+      "category": "Casca da aplicação — barra superior",
+      "status": "draft",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "layout",
+      "goldenReference": "DssChip",
+      "goldenContext": "DssToolbar"
     },
     {
       "component": "DssAvatar",
@@ -100,6 +114,20 @@
       "previewGroup": "contextuais",
       "goldenReference": "DssChip",
       "goldenContext": "DssDialog"
+    },
+    {
+      "component": "DssBrandLogo",
+      "dir": "packages/core/components/base/DssBrandLogo",
+      "phase": 1,
+      "category": "Marca — identidade visual do produto",
+      "status": "draft",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "indicadores",
+      "goldenReference": "DssBadge",
+      "goldenContext": "DssIcon"
     },
     {
       "component": "DssBreadcrumbs",
@@ -296,6 +324,34 @@
       "previewGroup": "contextuais",
       "goldenReference": "DssChip",
       "goldenContext": "DssDatePicker"
+    },
+    {
+      "component": "DssContainer",
+      "dir": "packages/core/components/base/DssContainer",
+      "phase": 1,
+      "category": "Superfície e Layout",
+      "status": null,
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "layout",
+      "goldenReference": "DssCard",
+      "goldenContext": "DssPageContainer"
+    },
+    {
+      "component": "DssContextHeader",
+      "dir": "packages/core/components/composed/DssContextHeader",
+      "phase": 3,
+      "category": "Casca da aplicação — contexto do atendimento",
+      "status": "draft",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "layout",
+      "goldenReference": "DssChip",
+      "goldenContext": "DssPageShell"
     },
     {
       "component": "DssDataCard",
@@ -746,6 +802,20 @@
       "goldenContext": "DssPageSticky"
     },
     {
+      "component": "DssPageShell",
+      "dir": "packages/core/components/composed/DssPageShell",
+      "phase": 3,
+      "category": "Casca da aplicação — miolo da página",
+      "status": "draft",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "layout",
+      "goldenReference": "DssChip",
+      "goldenContext": "DssCard"
+    },
+    {
       "component": "DssPageSticky",
       "dir": "packages/core/components/base/DssPageSticky",
       "phase": 2,
@@ -912,6 +982,20 @@
       "previewGroup": "midia",
       "goldenReference": "DssBadge",
       "goldenContext": "DssVirtualScroll"
+    },
+    {
+      "component": "DssSectionTitle",
+      "dir": "packages/core/components/base/DssSectionTitle",
+      "phase": 1,
+      "category": "Tipografia — título de seção",
+      "status": "draft",
+      "sealDate": null,
+      "sealField": null,
+      "sealed": false,
+      "sealFile": null,
+      "previewGroup": "listas",
+      "goldenReference": "DssBadge",
+      "goldenContext": "DssItemLabel"
     },
     {
       "component": "DssSelect",

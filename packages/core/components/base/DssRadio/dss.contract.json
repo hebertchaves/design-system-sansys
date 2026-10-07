@@ -111,10 +111,29 @@
         "categorySource": "quasar"
       },
       {
+        "name": "rules",
+        "type": "RadioRule[]",
+        "controlHint": "text",
+        "description": "Estado desabilitado",
+        "category": "Estado",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "lazyRules",
+        "type": "RadioLazyRules",
+        "controlHint": "segmented",
+        "default": false,
+        "description": "Quando as regras rodam sozinhas.",
+        "validValues": [
+          "ondemand"
+        ],
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
         "name": "disable",
         "type": "boolean",
         "controlHint": "toggle",
-        "description": "Estado desabilitado",
         "category": "Estado",
         "categorySource": "quasar"
       },
@@ -160,8 +179,8 @@
         "type": "number | string | null",
         "controlHint": "text",
         "description": "Indice de tabulacao",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",

@@ -129,11 +129,31 @@
         "categorySource": "quasar"
       },
       {
+        "name": "rules",
+        "type": "InputRule[]",
+        "controlHint": "text",
+        "description": "Regras de validação do campo.",
+        "category": "Estado",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "lazyRules",
+        "type": "InputLazyRules",
+        "controlHint": "segmented",
+        "default": false,
+        "description": "Quando as regras rodam sozinhas, sem ninguém chamar `validate()`.",
+        "validValues": [
+          "ondemand"
+        ],
+        "category": "Estado",
+        "categorySource": "quasar"
+      },
+      {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
         "default": false,
-        "description": "Estado de erro (muda cor para negativo)",
+        "description": "Estado de erro imposto de FORA (muda cor para negativo).",
         "category": "Estado",
         "categorySource": "quasar"
       },
@@ -282,6 +302,16 @@
         "name": "inputRef",
         "type": "Ref<HTMLInputElement | null>",
         "description": "Referência direta ao elemento input nativo"
+      },
+      {
+        "name": "validate",
+        "type": "(val?: unknown) => boolean | Promise<boolean>",
+        "description": "Roda as regras do campo. É o método que o `DssForm` chama."
+      },
+      {
+        "name": "resetValidation",
+        "type": "() => void",
+        "description": "Limpa o estado de validação (o valor do campo NÃO é alterado)."
       }
     ],
     "vModel": {
@@ -963,7 +993,7 @@
         },
         {
           "property": "box-shadow",
-          "token": "--dss-border-width-thin",
+          "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -992,12 +1022,6 @@
           "source": "3-variants/_standout.scss"
         },
         {
-          "property": "box-shadow",
-          "token": "--dss-border-width-md",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
           "property": "outline",
           "token": "--dss-border-width-thick",
           "value": null,
@@ -1018,6 +1042,12 @@
         {
           "property": "border-color",
           "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
           "value": null,
           "source": "4-output/_brands.scss"
         },

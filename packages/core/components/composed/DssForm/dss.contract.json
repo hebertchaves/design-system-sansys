@@ -1,0 +1,240 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssForm",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Form",
+    "tagline": "Container de formulário que governa submissão, validação e reset dos campos aninhados.",
+    "category": "Container de Formulário — wrapper governado sobre QForm do Quasar",
+    "classification": "Action",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssDialog"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-05-22",
+    "mode": "prompt_auditoria_v2.5",
+    "sealPath": "docs/Compliance/seals/DssForm/DSSFORM_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "autofocus",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Foca automaticamente o primeiro campo do formulário na montagem.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "greedy",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Valida todos os campos, mesmo após encontrar o primeiro inválido.",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "noErrorFocus",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita o comportamento padrão de mover o foco para o campo",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      }
+    ],
+    "emits": [
+      {
+        "name": "submit",
+        "payload": "SubmitEvent",
+        "description": "Disparado quando o formulário é submetido e a validação é bem-sucedida."
+      },
+      {
+        "name": "reset",
+        "description": "Disparado quando o formulário é resetado. O QForm não fornece payload."
+      },
+      {
+        "name": "validationError",
+        "payload": "Component",
+        "description": "Disparado quando a validação falha."
+      },
+      {
+        "name": "validationSuccess",
+        "description": "Disparado quando todos os campos passam na validação."
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "required": true,
+        "description": "Campos e controles do formulário — responsabilidade do consumidor."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "default": [
+          {
+            "component": "DssInput",
+            "props": {
+              "label": "Nome completo",
+              "dense": true,
+              "variant": "outlined"
+            }
+          },
+          {
+            "component": "DssSelect",
+            "props": {
+              "label": "Tipo",
+              "dense": true,
+              "options": [
+                "Pessoa Física",
+                "Pessoa Jurídica"
+              ],
+              "variant": "outlined"
+            }
+          },
+          {
+            "component": "DssButton",
+            "props": {
+              "color": "primary",
+              "label": "Enviar",
+              "size": "sm"
+            }
+          }
+        ]
+      }
+    },
+    "dimensions": {
+      "gap": {
+        "value": "16px (via --dss-form-gap → --dss-spacing-4)"
+      }
+    },
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-form-gap",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-gap-0",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "other",
+      "spacing"
+    ],
+    "instances": [
+      {
+        "name": "--dss-form-gap",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-gap-0",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "A semântica de <form> nativo é preservada: o QForm é o nó raiz (EXC-Gate-01), sem wrapper DSS em volta — envolver quebraria a relação form↔campos. O nome acessível do landmark vem de aria-label repassado por $attrs. Âncoras em DssForm.test.js: \"renderiza um elemento <form> nativo\", \"não renderiza elementos visuais além do <form>\" e \"repassa aria-label ao elemento <form>\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "3.3.1",
+        "level": "A",
+        "implementation": "Falha de validação é identificada programaticamente: o QForm move o foco para o primeiro campo inválido (comportamento desligável por noErrorFocus) e o DssForm reemite validationError carregando a ref do campo reprovado. A MENSAGEM de erro é do campo, não do formulário. Âncoras em DssForm.test.js: \"emite validationError encaminhando a ref do componente do QForm\" e \"repassa noErrorFocus=true ao QForm quando definido\".",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "form",
+      "states": []
+    },
+    "keyboard": [
+      {
+        "key": "Tab / Shift+Tab",
+        "action": "percorrer os campos — ordem nativa do <form>, não reimplementada"
+      },
+      {
+        "key": "Enter",
+        "action": "submeter a partir de um campo de texto de linha única — comportamento nativo do browser, preservado por o nó raiz ser <form>"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssForm.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/form.types.ts",
+    "docs": {
+      "normative": "DssForm.md",
+      "api": "DSSFORM_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssForm.example.vue",
+    "tests": "DssForm.test.js",
+    "seal": "docs/Compliance/seals/DssForm/DSSFORM_SELO_v2.2.md"
+  }
+}

@@ -44,7 +44,7 @@
           <DssButton
             type="reset"
             label="Limpar"
-            flat
+            variant="flat"
           />
         </div>
       </DssForm>
@@ -104,12 +104,12 @@
           />
           <DssButton
             label="Validar"
-            outline
+            variant="outline"
             @click="validateRegistration"
           />
           <DssButton
             label="Resetar"
-            flat
+            variant="flat"
             @click="resetRegistration"
           />
         </div>
@@ -146,9 +146,9 @@
 
       <!-- Botões FORA do DssForm — controle via API imperativa -->
       <div class="row q-gutter-sm q-mt-md">
-        <DssButton label="Validar (ref)" outline @click="imperativeValidate" />
+        <DssButton label="Validar (ref)" variant="outline" @click="imperativeValidate" />
         <DssButton label="Enviar (ref)" color="primary" @click="imperativeSubmit" />
-        <DssButton label="Resetar (ref)" flat @click="imperativeReset" />
+        <DssButton label="Resetar (ref)" variant="flat" @click="imperativeReset" />
       </div>
 
       <div v-if="imperativeResult" class="q-mt-sm text-body2 text-italic">
@@ -175,7 +175,7 @@
         <template #header>
           <div class="row items-center justify-between full-width q-pa-md">
             <span class="text-subtitle1">Editar Perfil</span>
-            <DssButton icon="close" flat round dense @click="closeModal" />
+            <DssButton icon="close" variant="flat" round dense @click="closeModal" />
           </div>
         </template>
 
@@ -209,7 +209,7 @@
 
         <template #footer>
           <div class="row q-gutter-sm q-pa-md justify-end">
-            <DssButton label="Cancelar" flat @click="closeModal" />
+            <DssButton label="Cancelar" variant="flat" @click="closeModal" />
             <DssButton label="Salvar" color="primary" @click="saveModal" />
           </div>
         </template>
@@ -220,6 +220,14 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import DssForm from './DssForm.vue'
+import DssDialog from '../DssDialog/DssDialog.vue'
+import DssButton from '../../base/DssButton/DssButton.vue'
+import DssCheckbox from '../../base/DssCheckbox/DssCheckbox.vue'
+import DssInput from '../../base/DssInput/DssInput.vue'
+import DssSelect from '../../base/DssSelect/DssSelect.vue'
+import DssTextarea from '../../base/DssTextarea/DssTextarea.vue'
+import DssToggle from '../../base/DssToggle/DssToggle.vue'
 
 // ============================================================
 // EXEMPLO 1 — Login
