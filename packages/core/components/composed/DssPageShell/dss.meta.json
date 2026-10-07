@@ -1,0 +1,129 @@
+{
+  "component": "DssPageShell",
+  "dssVersion": "2.2",
+  "status": "draft",
+  "goldenReference": "DssChip",
+  "goldenReferenceJustification": "DssChip é o Golden Reference interativo global. O shell não é interativo, mas o rail dentro dele é, e precisa cumprir os padrões de defineOptions, inheritAttrs e repasse explícito de $attrs.",
+  "goldenContext": "DssCard",
+  "goldenContextJustification": "DssCard é o outro componente de SUPERFÍCIE estrutural do DSS — ambos dão fundo e respiro a conteúdo de terceiros sem decidir o que entra.",
+  "category": "Casca da aplicação — miolo da página",
+  "classification": "Visual",
+  "classificationNote": "Container estrutural. O shell posiciona; quem age são os itens do rail.",
+  "tagline": "O miolo da tela Sansys: rail de módulos, trilha de navegação e board.",
+  "phase": 3,
+  "phaseDescription": "Fase 3 — Composto. Fixa o arranjo rail + conteúdo; compõe DssIcon no subcomponente de item.",
+  "previewGroup": "layout",
+  "hasReservations": false,
+  "subcomponents": ["DssPageShellRailItem"],
+  "compositionRequirements": [],
+  "compositionRecommendations": [
+    "DssPageShellRailItem no slot rail",
+    "DssBreadcrumbs no slot breadcrumb",
+    "DssAppBar acima, dentro do mesmo DssLayout"
+  ],
+  "propsExposed": ["board", "railAriaLabel"],
+  "propsBlocked": ["railWidth", "modules", "railBrand"],
+  "propsBlockedJustification": "Não há largura de rail: 52px é a medida da casca Sansys e sai de --dss-touch-target-lg, porque o rail É feito de alvos de toque. Não há lista de módulos como dados — seria reimplementar slot, mal (§1.6). Não há marca própria: o rail consome os tokens de ação, que [data-brand] já remapeia.",
+  "emitsExposed": [],
+  "slotsExposed": ["rail", "breadcrumb", "default"],
+  "statesApplicable": ["hover", "focus", "active", "disabled", "forced-colors", "reduced-motion", "print"],
+  "statesNotApplicable": ["loading"],
+  "statesNotApplicableJustification": "O shell é arranjo; carregamento é estado do conteúdo que ele hospeda.",
+  "accessibility": {
+    "role": "navigation no rail; o shell em si é um container sem papel",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Itens do rail: --dss-touch-target-md (44px), o mínimo da WCAG 2.5.5. A largura do rail é --dss-touch-target-lg (52px).",
+    "keyboardNavigation": "Tab percorre os itens do rail na ordem do DOM. O anel de foco é interno (outline-offset negativo), porque o item ocupa a largura inteira da coluna e um anel externo seria cortado.",
+    "nomeDoRail": "O rail é um <nav> e exige nome: numa página com a trilha de navegação também em <nav>, dois sem nome viram 'navegação' e 'navegação' no leitor de tela.",
+    "nomeDosItens": "O rail só mostra ícones. O label vira um <span> visualmente oculto — botão com ícone decorativo e nada mais é um botão sem nome."
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Cada item do rail é um botão COM NOME: o label obrigatório vira um <span> visualmente oculto e o title. Sem ele o botão teria apenas um DssIcon decorativo e não existiria para leitor de tela. Âncoras em DssPageShell.test.js: \"o label vira nome acessível E dica de mouse\" e \"o ícone é decorativo — quem nomeia é o label\".",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "O módulo atual não é indicado só pela cor: `active` pinta o item E marca aria-current=\"page\". Em forced-colors, onde o fundo vira cor do sistema e a distinção pelo fundo some, 4-output/_states.scss acrescenta um outline. Âncora em DssPageShell.test.js: \"active marca aria-current=page\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Os itens do rail usam min-block-size: var(--dss-touch-target-md) — 44px, o mínimo da WCAG 2.5.5 — e ocupam a largura inteira da coluna de 52px.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "O rail é um <nav> nomeado contendo uma <ul> de itens: a relação lista↔item é semântica, não visual. As regiões são condicionais — sem slot não há <nav> vazio nem container de trilha vazio. Âncoras em DssPageShell.test.js: \"o rail é um <nav> com nome\" e \"a trilha só existe quando o slot é fornecido\".",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "navigation",
+      "states": ["aria-label", "aria-current"]
+    },
+    "keyboard": [
+      { "key": "Tab", "action": "percorre os módulos do rail na ordem do DOM" },
+      { "key": "Enter / Espaço", "action": "aciona o módulo focado" }
+    ]
+  },
+  "tokens": [
+    "--dss-touch-target-lg",
+    "--dss-touch-target-md",
+    "--dss-surface-muted",
+    "--dss-surface-default",
+    "--dss-action-primary",
+    "--dss-action-primary-deep",
+    "--dss-action-primary-hover",
+    "--dss-text-inverse",
+    "--dss-border-width-thin",
+    "--dss-border-width-md",
+    "--dss-border-subtle",
+    "--dss-radius-md",
+    "--dss-spacing-0",
+    "--dss-spacing-2",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-5",
+    "--dss-spacing-6",
+    "--dss-spacing-px",
+    "--dss-font-size-xs",
+    "--dss-opacity-disabled",
+    "--dss-duration-fast",
+    "--dss-easing-standard"
+  ],
+  "defaultPreview": {
+    "props": {},
+    "demoSlots": {
+      "rail": [
+        { "component": "DssPageShellRailItem", "props": { "icon": "dashboard", "label": "Painel", "active": true } },
+        { "component": "DssPageShellRailItem", "props": { "icon": "description", "label": "Solicitações" } },
+        { "component": "DssPageShellRailItem", "props": { "icon": "settings", "label": "Configurações" } }
+      ],
+      "default": [
+        { "component": "DssSectionTitle", "props": { "label": "Conteúdo da página", "size": "lg" } }
+      ]
+    },
+    "demoContent": "DssPageShell com rail de 3 módulos e o board",
+    "visualProperties": [
+      {
+        "property": "inline-size",
+        "token": "--dss-touch-target-lg",
+        "value": "52px",
+        "source": "2-composition/_base.scss"
+      },
+      {
+        "property": "background",
+        "token": "--dss-surface-muted",
+        "value": "#f5f5f5",
+        "source": "2-composition/_base.scss"
+      }
+    ]
+  }
+}

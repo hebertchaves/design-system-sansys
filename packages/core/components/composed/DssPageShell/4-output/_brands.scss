@@ -1,0 +1,14 @@
+// ==========================================================================
+// DssPageShell — Layer 4: Brands
+// ==========================================================================
+//
+// VAZIO POR DECISÃO.
+//
+// O rail consome `--dss-action-primary-deep`, `--dss-action-primary-hover` e
+// `--dss-action-primary` — os três são remapeados por `[data-brand]`, então o
+// rail acompanha a marca da página sem uma regra sequer aqui.
+//
+// Foi o que a tela de origem não fez: ela cravou `--dss-border-water-700` no
+// separador dos itens, prendendo o rail à marca Water. Numa tela Hub ou Waste
+// o traço sairia azul.
+// ==========================================================================

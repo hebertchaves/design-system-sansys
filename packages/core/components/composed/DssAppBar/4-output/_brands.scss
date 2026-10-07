@@ -1,0 +1,15 @@
+// ==========================================================================
+// DssAppBar — Layer 4: Brands
+// ==========================================================================
+//
+// VAZIO POR DECISÃO.
+//
+// A marca não é pintada aqui: ela vai inteira para o `DssToolbar`, que já
+// pinta o fundo e remapeia `--dss-action-primary` para os filhos. Repetir a
+// regra neste arquivo criaria dois donos para a mesma cor — e o segundo
+// venceria por ordem de bundle, que é exatamente a armadilha que o
+// `DssContainer` pagou no Bloco 0.
+//
+// O divisor e o título usam `currentColor`: a cor desce do toolbar, e a barra
+// não precisa saber qual é.
+// ==========================================================================

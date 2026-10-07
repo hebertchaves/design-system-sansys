@@ -1,0 +1,32 @@
+// ==========================================================================
+// DssAppBar — Layer 4: States
+// ==========================================================================
+//
+// A barra não é interativa: quem recebe hover, foco e clique são os botões
+// dentro dela, que trazem os próprios estados. Restam dois estados de mídia.
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// forced-colors
+// --------------------------------------------------------------------------
+// Em alto contraste o sistema substitui as cores do autor, e o fundo da marca
+// vira uma cor do sistema. O divisor, que era `currentColor` com opacidade,
+// sumiria contra esse fundo — opacidade não sobrevive a forced-colors.
+// `CanvasText` devolve um traço visível na cor que o usuário escolheu.
+@media (forced-colors: active) {
+  .dss-app-bar__divider {
+    background: CanvasText;
+    opacity: 1;
+  }
+}
+
+// --------------------------------------------------------------------------
+// @media print
+// --------------------------------------------------------------------------
+// A barra de aplicação não existe no papel: ela é navegação, e navegação não
+// se imprime. O que importa na folha é o conteúdo da tela.
+@media print {
+  .dss-app-bar {
+    display: none;
+  }
+}

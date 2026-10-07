@@ -1,0 +1,97 @@
+// ==========================================================================
+// DssAppBar — Layer 2: Composition (Base)
+// ==========================================================================
+//
+// O layout mora AQUI, no pai — não injetado nos filhos.
+//
+// O Cartão Composto proíbe `:deep()` para layout, e a proibição tem razão
+// prática: o `DssButton` e o `DssBrandLogo` lá dentro não sabem que estão numa
+// barra, e não deveriam saber. O que esta camada faz é posicionar os três
+// blocos (início, espaço, fim) e nada mais.
+//
+// A ALTURA é o número que esta barra existe para fixar: 40px no `compact`,
+// medidos no grid master do Sansys em produção.
+// ==========================================================================
+
+.dss-app-bar {
+  // A barra não encolhe quando o conteúdo da página cresce.
+  flex-shrink: 0;
+}
+
+.dss-app-bar__bar {
+  display: flex;
+  align-items: center;
+  // `space-between` empurra as ações para a direita sem um espaçador vazio no
+  // meio. O "espaço" da estrutura (menu → logo → … → espaço → ações) é este.
+  justify-content: space-between;
+  gap: var(--dss-spacing-4);
+  // O respiro é menor à esquerda: o botão de menu já traz a própria área de
+  // toque (44px desde que a barra subiu para 48px), e somar padding ao alvo
+  // afastaria o menu demais da borda. Em 4px o alvo quase encosta na margem,
+  // que é o comportamento de barra de aplicação — o botão redondo tem o
+  // próprio respiro visual dentro da caixa de toque.
+  padding-inline: var(--dss-spacing-1) var(--dss-spacing-5);
+  padding-block: var(--dss-spacing-0);
+}
+
+.dss-app-bar__start,
+.dss-app-bar__end {
+  display: flex;
+  align-items: center;
+  // Permite que o título encolha antes de transbordar a barra.
+  min-width: 0;
+}
+
+.dss-app-bar__start {
+  gap: var(--dss-spacing-5);
+}
+
+.dss-app-bar__end {
+  gap: var(--dss-spacing-4);
+  // As ações nunca encolhem: um ícone cortado pela metade é pior que uma barra
+  // com rolagem.
+  flex-shrink: 0;
+}
+
+// --------------------------------------------------------------------------
+// Divisor entre a marca e o título
+// --------------------------------------------------------------------------
+// NÃO é um DssSeparator, e a escolha é deliberada: a regra R3 do ui-rules não
+// admite DssSeparator dentro de DssToolbar, e com razão — aqui o traço é
+// decoração de barra, não separação semântica entre grupos. Quem precisa saber
+// que marca e módulo são coisas distintas já tem a estrutura do DOM.
+.dss-app-bar__divider {
+  flex-shrink: 0;
+  inline-size: var(--dss-border-width-thin);
+  block-size: var(--dss-spacing-5);
+  background: currentColor;
+  opacity: var(--dss-opacity-brand-medium);
+}
+
+// --------------------------------------------------------------------------
+// Marca e título
+// --------------------------------------------------------------------------
+
+.dss-app-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  // A cor desce daqui para o logo, que a herda por `currentColor`.
+  color: inherit;
+}
+
+.dss-app-bar__title {
+  // `<h1>` porque o nome do módulo É o título da tela. Sem isto ele cairia na
+  // escala Material do Quasar (6rem) — o `h1` do vendor é seletor de tipo e
+  // vence qualquer coisa que não seja declarada aqui.
+  margin: 0;
+  font-size: var(--dss-font-size-lg);
+  font-weight: var(--dss-font-weight-medium);
+  line-height: var(--dss-line-height-snug);
+  letter-spacing: normal;
+  color: inherit;
+  // Título longo corta com reticências em vez de empurrar as ações para fora.
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

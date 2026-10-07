@@ -1,0 +1,24 @@
+// ==========================================================================
+// DssPageShell — Layer 3: Variants (Board)
+// ==========================================================================
+//
+// A superfície do board é VARIANTE porque `board={false}` a desliga — a tela
+// que monta a própria superfície recebe a coluna nua.
+//
+// Seletor duplo (0,2,0) para a disputa se resolver por especificidade e não
+// por ordem de bundle. Mesmo padrão do DssContainer, onde a ordem rendeu
+// 1280px em lugar de 608.
+// ==========================================================================
+
+.dss-page-shell.dss-page-shell--board .dss-page-shell__board {
+  display: flex;
+  flex-direction: column;
+  // Densidade — ver a nota em `2-composition/_base.scss`. O `gap` do board é o
+  // que mais pesa: ele se repete entre TODOS os cards da tela (5 vezes no grid
+  // master), então um degrau a menos aqui vale 40px — quase uma linha inteira.
+  gap: var(--dss-spacing-3);
+  padding: var(--dss-spacing-2) var(--dss-spacing-4) var(--dss-spacing-4);
+  background: var(--dss-surface-default);
+  border: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+  border-radius: var(--dss-radius-md);
+}

@@ -1,0 +1,490 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssAppBar",
+  "version": "2.2",
+  "identity": {
+    "displayName": "App Bar",
+    "tagline": "A barra de aplicação do Sansys: menu, marca, título do módulo e ações.",
+    "category": "Casca da aplicação — barra superior",
+    "classification": "Visual",
+    "phase": 3,
+    "status": "draft",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssToolbar"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "brand",
+        "type": "BrandKey",
+        "controlHint": "text",
+        "description": "Marca do produto. Uma prop, dois efeitos — e é de propósito:",
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Nome do módulo, à direita do divisor.",
+        "category": "Conteúdo",
+        "categorySource": "override"
+      },
+      {
+        "name": "density",
+        "type": "AppBarDensity",
+        "controlHint": "segmented",
+        "default": "compact",
+        "description": "Altura da barra.",
+        "validValues": [
+          "compact",
+          "standard"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "menu",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Mostra o botão de menu à esquerda.",
+        "category": "Comportamento",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "menuAriaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Abrir menu principal",
+        "description": "Nome acessível do botão de menu. Obrigatório quando `menu` está ligado:",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
+      },
+      {
+        "name": "elevated",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Sombra sob a barra.",
+        "category": "Aparência",
+        "categorySource": "excecao"
+      }
+    ],
+    "emits": [
+      {
+        "name": "menu",
+        "description": "Clique no botão de menu. A barra não sabe o que abrir — quem monta a tela sabe."
+      }
+    ],
+    "slots": [
+      {
+        "name": "brand",
+        "scope": null,
+        "description": "Substitui o logo. Raro — serve a marca que não está nos dados do DSS."
+      },
+      {
+        "name": "title",
+        "scope": null,
+        "description": "Substitui o título. Para título que não é texto simples."
+      },
+      {
+        "name": "actions",
+        "scope": null,
+        "description": "Ações da direita. Na prática, 4 `DssButton` de ícone."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "brand": "water",
+        "title": "Nome do Módulo"
+      },
+      "slots": {
+        "actions": [
+          {
+            "component": "DssButton",
+            "props": {
+              "icon": "help_outline",
+              "variant": "flat",
+              "round": true,
+              "size": "md",
+              "ariaLabel": "Ajuda"
+            }
+          },
+          {
+            "component": "DssButton",
+            "props": {
+              "icon": "notifications",
+              "variant": "flat",
+              "round": true,
+              "size": "md",
+              "ariaLabel": "Notificações"
+            }
+          },
+          {
+            "component": "DssButton",
+            "props": {
+              "icon": "apps",
+              "variant": "flat",
+              "round": true,
+              "size": "md",
+              "ariaLabel": "Aplicativos"
+            }
+          },
+          {
+            "component": "DssButton",
+            "props": {
+              "icon": "account_circle",
+              "variant": "flat",
+              "round": true,
+              "size": "md",
+              "ariaLabel": "Minha conta"
+            }
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "space-between",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-inline",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-width",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "block-size",
+          "token": "--dss-spacing-5",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "currentColor",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-brand-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "inline-flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "inherit",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-medium",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-snug",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "letter-spacing",
+          "token": null,
+          "value": "normal",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-overflow",
+          "token": null,
+          "value": "ellipsis",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-block-size",
+          "token": "--dss-layout-header-height-compact",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "min-block-size",
+          "token": "--dss-layout-header-height",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "padding-inline",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_density.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-opacity-brand-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-snug",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-layout-header-height-compact",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-layout-header-height",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "A estrutura é semântica e condicional: o nome do módulo é <h1> (é o título da tela), e o divisor — que é decoração — sai com aria-hidden. As regiões só existem quando há conteúdo: sem título não há divisor nem <h1> vazio, e sem slot actions não há container de ações. Âncoras em DssAppBar.test.js: \"o título é um <h1>\", \"sem título, não há divisor\" e \"as ações só existem quando o slot é fornecido\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "O botão de menu é um controle com nome: menuAriaLabel tem padrão e vai ao aria-label do DssButton, que sem ele seria um botão só de ícone — sem nome acessível. Âncora em DssAppBar.test.js: \"emite menu ao clicar no botão de menu\" exercita o controle nomeado.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.11",
+        "level": "AA",
+        "implementation": "O divisor entre marca e título usa currentColor com --dss-opacity-brand-medium sobre o fundo da marca. Em forced-colors a opacidade não sobrevive, e 4-output/_states.scss troca por CanvasText com opacidade 1 — senão o traço sumiria contra o fundo do sistema.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "banner",
+      "states": [
+        "aria-hidden"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "menu → ações, na ordem de leitura da barra"
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "aciona o botão de menu ou a ação focada"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssAppBar.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_density.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/app-bar.types.ts",
+    "docs": {
+      "normative": "DssAppBar.md",
+      "api": "DSSAPPBAR_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssAppBar.example.vue",
+    "tests": "DssAppBar.test.js"
+  }
+}

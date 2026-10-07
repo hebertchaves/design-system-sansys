@@ -1,0 +1,37 @@
+// ==========================================================================
+// DssAppBar — Layer 3: Variants (Densidade)
+// ==========================================================================
+//
+// Os dois degraus de altura. O `compact` é o do Sansys em produção — 40px,
+// medidos no grid master (Figma 1813:1328) — e é o padrão.
+//
+// `min-height` e não `height`: a barra pode crescer se o consumidor puser algo
+// mais alto nas ações. Travar a altura cortaria o conteúdo em silêncio.
+// ==========================================================================
+
+.dss-app-bar.dss-app-bar--compact .dss-app-bar__bar {
+  min-block-size: var(--dss-layout-header-height-compact);
+
+  // 48px, e não os 40px medidos no Figma: o botão `md` (44px) é o mínimo da
+  // WCAG 2.5.5, e 44 + 2×2 de anel de foco fecha exatamente em 48. Ver a nota
+  // do token em `tokens/semantic/_spacing.scss`.
+  //
+  // O ícone de barra (24px) vem do DssToolbar, que é quem define o contexto.
+  // Repetir a regra aqui criaria dois donos para a mesma decisão — e o segundo
+  // venceria por ordem de bundle, que é a armadilha que o DssContainer pagou
+  // no Bloco 0.
+}
+
+.dss-app-bar.dss-app-bar--standard .dss-app-bar__bar {
+  min-block-size: var(--dss-layout-header-height);
+
+  // Mais altura pede mais respiro lateral — senão o conteúdo fica colado nas
+  // bordas de uma barra que tem espaço de sobra.
+  padding-inline: var(--dss-spacing-4) var(--dss-spacing-6);
+
+  // Sem remap de ícone aqui. A barra de 64px comporta o botão `md` (44px), e o
+  // deslocamento de escala do DssToolbar já entrega 24px para ele — pela prop
+  // `size`, que é quem deve decidir. A versão anterior desta regra forçava
+  // 24px também no botão `sm`, igualando os dois degraus dentro da barra alta:
+  // o mesmo colapso que o remap parcial causava na toolbar.
+}

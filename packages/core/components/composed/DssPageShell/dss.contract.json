@@ -1,0 +1,733 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssPageShell",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Page Shell",
+    "tagline": "O miolo da tela Sansys: rail de módulos, trilha de navegação e board.",
+    "category": "Casca da aplicação — miolo da página",
+    "classification": "Visual",
+    "phase": 3,
+    "status": "draft",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssCard"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "board",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": true,
+        "description": "Envolve o conteúdo na SUPERFÍCIE do board — o cartão branco sobre o fundo",
+        "category": "Aparência",
+        "categorySource": "css-variants"
+      },
+      {
+        "name": "railAriaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "default": "Módulos do sistema",
+        "description": "Nome acessível do rail.",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "controlHint": "picker-icon",
+        "required": true,
+        "description": "Ícone do módulo.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "required": true,
+        "description": "Nome do módulo.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Item do módulo atual.",
+        "category": "Estado",
+        "categorySource": "css-states"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Desabilita o item.",
+        "category": "Estado",
+        "categorySource": "excecao"
+      }
+    ],
+    "emits": [
+      {
+        "name": "click",
+        "payload": "MouseEvent"
+      }
+    ],
+    "slots": [
+      {
+        "name": "rail",
+        "scope": null,
+        "description": "Itens do rail. Use `DssPageShellRailItem`."
+      },
+      {
+        "name": "breadcrumb",
+        "scope": null,
+        "description": "Trilha de navegação. Use `DssBreadcrumbs`."
+      },
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo da página — o board."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {},
+      "slots": {
+        "rail": [
+          {
+            "component": "DssPageShellRailItem",
+            "props": {
+              "icon": "dashboard",
+              "label": "Painel",
+              "active": true
+            }
+          },
+          {
+            "component": "DssPageShellRailItem",
+            "props": {
+              "icon": "description",
+              "label": "Solicitações"
+            }
+          },
+          {
+            "component": "DssPageShellRailItem",
+            "props": {
+              "icon": "settings",
+              "label": "Configurações"
+            }
+          }
+        ],
+        "default": [
+          {
+            "component": "DssSectionTitle",
+            "props": {
+              "label": "Conteúdo da página",
+              "size": "lg"
+            }
+          }
+        ]
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "3-variants/_board.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "stretch",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-surface-muted",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-block-size",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": "--dss-touch-target-lg",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-action-primary-deep",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow-y",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "list-style",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "sticky",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inset-block-start",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-block-size",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "0",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "border-block-end",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background",
+          "token": null,
+          "value": "transparent",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-inverse",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "pointer",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-fast",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "position",
+          "token": null,
+          "value": "absolute",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "1px",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "1px",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "padding",
+          "token": null,
+          "value": "0",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "margin",
+          "token": null,
+          "value": "-1px",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "rect(0, 0, 0, 0)",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-inline-size",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex-direction",
+          "token": null,
+          "value": "column",
+          "source": "3-variants/_board.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_board.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "3-variants/_board.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "3-variants/_board.scss"
+        },
+        {
+          "property": "border",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "3-variants/_board.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "3-variants/_board.scss"
+        },
+        {
+          "property": "background",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background",
+          "token": "--dss-action-primary-hover",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "position",
+          "token": null,
+          "value": "static",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "auto",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "height",
+          "token": null,
+          "value": "auto",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "clip",
+          "token": null,
+          "value": "auto",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "normal",
+          "source": "_mixins.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": "--dss-spacing-px",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "disabled": [
+        {
+          "property": "opacity",
+          "token": "--dss-opacity-disabled",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "cursor",
+          "token": null,
+          "value": "not-allowed",
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-surface-muted",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-lg",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-action-primary-deep",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-inverse",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-duration-fast",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-spacing-px",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-action-primary-hover",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-opacity-disabled",
+        "usedIn": [
+          "disabled"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "Cada item do rail é um botão COM NOME: o label obrigatório vira um <span> visualmente oculto e o title. Sem ele o botão teria apenas um DssIcon decorativo e não existiria para leitor de tela. Âncoras em DssPageShell.test.js: \"o label vira nome acessível E dica de mouse\" e \"o ícone é decorativo — quem nomeia é o label\".",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "O módulo atual não é indicado só pela cor: `active` pinta o item E marca aria-current=\"page\". Em forced-colors, onde o fundo vira cor do sistema e a distinção pelo fundo some, 4-output/_states.scss acrescenta um outline. Âncora em DssPageShell.test.js: \"active marca aria-current=page\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "2.5.5",
+        "level": "AAA",
+        "implementation": "Os itens do rail usam min-block-size: var(--dss-touch-target-md) — 44px, o mínimo da WCAG 2.5.5 — e ocupam a largura inteira da coluna de 52px.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "O rail é um <nav> nomeado contendo uma <ul> de itens: a relação lista↔item é semântica, não visual. As regiões são condicionais — sem slot não há <nav> vazio nem container de trilha vazio. Âncoras em DssPageShell.test.js: \"o rail é um <nav> com nome\" e \"a trilha só existe quando o slot é fornecido\".",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "navigation",
+      "states": [
+        "aria-label",
+        "aria-current"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "percorre os módulos do rail na ordem do DOM"
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "aciona o módulo focado"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssPageShell.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_board.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/page-shell.types.ts",
+    "docs": {
+      "normative": "DssPageShell.md",
+      "api": "DSSPAGESHELL_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssPageShell.example.vue",
+    "tests": "DssPageShell.test.js"
+  }
+}

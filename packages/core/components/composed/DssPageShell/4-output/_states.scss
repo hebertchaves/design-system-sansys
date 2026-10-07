@@ -1,0 +1,88 @@
+// ==========================================================================
+// DssPageShell — Layer 4: States
+// ==========================================================================
+//
+// O shell não é interativo; os itens do RAIL são, e os estados deles moram
+// aqui.
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Hover
+// --------------------------------------------------------------------------
+
+.dss-page-shell__rail-item:hover:not(:disabled) {
+  background: var(--dss-action-primary-hover);
+}
+
+// --------------------------------------------------------------------------
+// Foco
+// --------------------------------------------------------------------------
+// O anel é INTERNO (`outline-offset` negativo): o item ocupa a largura inteira
+// do rail, e um anel externo seria cortado pela borda da coluna.
+//
+// A cor é `--dss-text-inverse` porque o fundo do rail é a marca escura —
+// `--dss-action-primary` ali seria azul sobre azul.
+
+.dss-page-shell__rail-item:focus-visible {
+  outline: var(--dss-border-width-md) solid var(--dss-text-inverse);
+  outline-offset: calc(var(--dss-spacing-px) * -2);
+}
+
+// --------------------------------------------------------------------------
+// Ativo — o módulo atual
+// --------------------------------------------------------------------------
+// Acompanhado de `aria-current="page"` no SFC: o estado visual sozinho
+// deixaria a informação só na cor, que é o que a WCAG 1.4.1 proíbe.
+
+.dss-page-shell__rail-item--active {
+  background: var(--dss-action-primary);
+}
+
+// --------------------------------------------------------------------------
+// Desabilitado
+// --------------------------------------------------------------------------
+
+.dss-page-shell__rail-item:disabled {
+  opacity: var(--dss-opacity-disabled);
+  cursor: not-allowed;
+}
+
+// --------------------------------------------------------------------------
+// prefers-reduced-motion
+// --------------------------------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-page-shell__rail-item {
+    transition: none;
+  }
+}
+
+// --------------------------------------------------------------------------
+// forced-colors
+// --------------------------------------------------------------------------
+// Em alto contraste o fundo do rail vira cor do sistema, e o item ativo —
+// que se distinguia só pelo fundo — sumiria. A borda devolve a distinção na
+// cor que o usuário escolheu.
+
+@media (forced-colors: active) {
+  .dss-page-shell__rail-item--active {
+    outline: var(--dss-border-width-md) solid CanvasText;
+    outline-offset: calc(var(--dss-spacing-px) * -2);
+  }
+}
+
+// --------------------------------------------------------------------------
+// @media print
+// --------------------------------------------------------------------------
+// O rail é navegação, e navegação não se imprime. O fundo rebaixado da página
+// também sai: no papel ele vira cinza que gasta tinta sem informar.
+
+@media print {
+  .dss-page-shell__rail {
+    display: none;
+  }
+
+  .dss-page-shell {
+    background: transparent;
+  }
+}

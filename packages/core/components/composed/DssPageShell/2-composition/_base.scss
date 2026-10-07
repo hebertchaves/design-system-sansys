@@ -1,0 +1,139 @@
+// ==========================================================================
+// DssPageShell — Layer 2: Composition (Base)
+// ==========================================================================
+
+@use '../../../../utils/mixins' as dss;
+
+// --------------------------------------------------------------------------
+// O arranjo
+// --------------------------------------------------------------------------
+
+.dss-page-shell {
+  display: flex;
+  align-items: stretch;
+  // O fundo REBAIXADO é o que faz o board parecer uma superfície elevada. Sem
+  // ele, cartão branco sobre fundo branco não é cartão — é um retângulo com
+  // borda.
+  background: var(--dss-surface-muted);
+  min-block-size: 100%;
+}
+
+// --------------------------------------------------------------------------
+// Rail
+// --------------------------------------------------------------------------
+
+.dss-page-shell__rail {
+  flex-shrink: 0;
+  // 52px. O mesmo valor do alvo de toque grande — não por coincidência: o rail
+  // é feito de botões, e a largura dele É a largura do alvo.
+  inline-size: var(--dss-touch-target-lg);
+  background: var(--dss-action-primary-deep);
+
+  // O FUNDO vai do topo à base; os ÍCONES é que acompanham a rolagem.
+  //
+  // Antes era `align-self: flex-start` + `position: sticky` no próprio rail.
+  // Isso mantinha os ícones visíveis, mas dava ao rail a altura do CONTEÚDO —
+  // medido no grid master, 308px (7 itens) dentro de um shell de 968px: o azul
+  // parava no meio da tela e faltavam 660px até a base. O protótipo mostra a
+  // coluna inteira pintada, de ponta a ponta.
+  //
+  // A separação resolve os dois: o rail estica (`stretch` é o default do flex,
+  // por isso não precisa ser declarado) e quem fica grudado é a LISTA. Continua
+  // sem `height: 100vh` — a viewport ignoraria a barra de aplicação acima e o
+  // rail transbordaria exatamente a altura dela.
+  overflow-y: auto;
+}
+
+.dss-page-shell__rail-list {
+  list-style: none;
+  margin: var(--dss-spacing-0);
+  padding: var(--dss-spacing-0);
+
+  // Os ícones acompanham a rolagem; o fundo do rail não precisa, porque já
+  // cobre a coluna inteira.
+  position: sticky;
+  inset-block-start: var(--dss-spacing-0);
+}
+
+.dss-page-shell__rail-cell {
+  display: block;
+}
+
+.dss-page-shell__rail-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  // Alvo de toque: 44px é o mínimo da WCAG 2.5.5.
+  min-block-size: var(--dss-touch-target-md);
+  padding: var(--dss-spacing-0);
+  border: 0;
+  // Separador entre módulos.
+  //
+  // A cor sai de `--dss-action-primary-hover`, que acompanha a marca. A tela
+  // que originou este componente escrevia
+  // `border-bottom: 1px solid var(--dss-border-water-700)` — e
+  // `--dss-border-water-700` é um SHORTHAND COMPLETO (`1px solid <cor>`), não
+  // uma cor. A declaração virava `1px solid 1px solid #0356a1`, inválida, e o
+  // navegador a descartava: medido, os separadores não existiam. Além disso
+  // prendia o rail à marca Water.
+  border-block-end: var(--dss-border-width-thin) solid var(--dss-action-primary-hover);
+  background: transparent;
+  color: var(--dss-text-inverse);
+  cursor: pointer;
+  transition: background-color var(--dss-duration-fast) var(--dss-easing-standard);
+}
+
+// O ÍCONE DO RAIL — dimensionado aqui, e não pela prop `size`.
+//
+// No modo `inline` o DssIcon não emite classe de tamanho (CCI §2.2): ele usa
+// `width/height: 1em` e `font-size: inherit`, e quem decide é a `font-size` do
+// host. O rail item não declarava nenhuma, então o ícone herdava a tipografia
+// de quem montasse a tela — medido no grid master, **14px**, que é o
+// `font-size` da PÁGINA vazando para dentro do componente.
+//
+// 14px num item de 44px era 32%, e variava com a página. `--dss-icon-size-sm`
+// (20px) dá 45% do item e 38% da coluna de 52px — decisão de produto
+// (set/2026), um degrau abaixo dos 24px da primeira correção.
+//
+// Declarar aqui fecha o vazamento: o tamanho passa a ser decisão do rail,
+// igual em qualquer página. Mesmo padrão do DssButton, que dimensiona o
+// próprio `.dss-button__icon` por regra de tamanho.
+.dss-page-shell__rail-icon {
+  font-size: var(--dss-icon-size-sm);
+}
+
+.dss-page-shell__rail-label {
+  @include dss.dss-visually-hidden;
+}
+
+// --------------------------------------------------------------------------
+// Conteúdo
+// --------------------------------------------------------------------------
+
+.dss-page-shell__content {
+  flex: 1;
+  // Sem isto, conteúdo largo (uma tabela) empurra a coluna e o rail some da
+  // tela em vez de o conteúdo rolar.
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+
+  // DENSIDADE (set/2026) — medida em linhas de tabela, não em gosto.
+  //
+  // A reclamação recorrente dos usuários é quantidade de informação útil por
+  // tela. Medido no grid master a 1000px de viewport: a tabela começava em
+  // 634px, e 153px disso eram sobrecarga fixa ACIMA da faixa de dashboard —
+  // respiro, não conteúdo. Uma linha de tabela custa 49px, então cada ~50px
+  // devolvidos aqui é uma linha a mais antes da dobra.
+  //
+  // O que NÃO encolheu, e é a fronteira desta rodada: altura de campo (37px),
+  // alvo de toque (44px), entrelinha e tamanho de fonte. A densidade sai de
+  // padding, margin e gap — nunca do que a WCAG mede.
+  gap: var(--dss-spacing-1);
+  padding: var(--dss-spacing-1) var(--dss-spacing-3) var(--dss-spacing-3);
+}
+
+.dss-page-shell__breadcrumb {
+  font-size: var(--dss-font-size-xs);
+}

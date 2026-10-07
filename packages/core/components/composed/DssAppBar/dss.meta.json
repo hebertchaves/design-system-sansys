@@ -1,0 +1,184 @@
+{
+  "component": "DssAppBar",
+  "dssVersion": "2.2",
+  "status": "draft",
+  "goldenReference": "DssChip",
+  "goldenReferenceJustification": "DssChip é o Golden Reference interativo global do DSS. O DssAppBar não é interativo por si, mas hospeda controles que são, e precisa cumprir os padrões de defineOptions, inheritAttrs e repasse explícito de $attrs.",
+  "goldenContext": "DssToolbar",
+  "goldenContextJustification": "O DssToolbar é a peça que o DssAppBar compõe e de quem herda a pele: é ele que pinta o fundo da marca, remapeia --dss-action-primary para os filhos e propaga [data-brand] no próprio root. O DssAppBar não repete nenhuma dessas responsabilidades.",
+  "category": "Casca da aplicação — barra superior",
+  "classification": "Visual",
+  "classificationNote": "Container estrutural não-interativo. A barra posiciona; quem age são os botões dentro dela.",
+  "tagline": "A barra de aplicação do Sansys: menu, marca, título do módulo e ações.",
+  "phase": 3,
+  "phaseDescription": "Fase 3 — Composto. Fixa a estrutura invariante da casca; compõe DssHeader, DssToolbar, DssButton e DssBrandLogo.",
+  "previewGroup": "layout",
+  "hasReservations": false,
+  "subcomponents": [],
+  "compositionRequirements": [
+    "QLayout ancestral — o DssHeader não renderiza fora de um (não-use documentada dele)"
+  ],
+  "compositionRecommendations": [
+    "DssButton de ícone no slot actions (média de 4 na casca Sansys)",
+    "DssBrandLogo no slot brand, quando o padrão não serve"
+  ],
+  "propsExposed": [
+    "brand",
+    "title",
+    "density",
+    "menu",
+    "menuAriaLabel",
+    "elevated"
+  ],
+  "propsBlocked": [
+    "color",
+    "logoSrc",
+    "actions"
+  ],
+  "propsBlockedJustification": "Não há prop de cor (a pele é do DssToolbar, via brand), nem de logo por URL (o desenho vive nos dados), nem de lista de ações. Ações como array de objetos seria reimplementar slot, mal — e é exatamente o que o §1.6 do guia de Fase 3 manda não fazer: conteúdo vai por slot.",
+  "emitsExposed": [
+    "menu"
+  ],
+  "slotsExposed": [
+    "brand",
+    "title",
+    "actions"
+  ],
+  "statesApplicable": [
+    "forced-colors",
+    "print"
+  ],
+  "statesNotApplicable": [
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading"
+  ],
+  "statesNotApplicableJustification": "A barra não é alvo de interação; os botões dentro dela trazem os próprios estados.",
+  "accessibility": {
+    "role": "banner — do QHeader, não reimplementado",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Dos filhos. O botão de menu é um DssButton round size=sm, que traz o próprio alvo.",
+    "keyboardNavigation": "Tab percorre o menu e as ações na ordem do DOM: menu primeiro, ações por último — que é a ordem de leitura da barra.",
+    "ariaLabel": "O botão de menu exige nome (menuAriaLabel, padrão 'Abrir menu principal'): botão só de ícone sem nome não existe para leitor de tela.",
+    "logoDecorativo": "O logo é decorative por padrão porque o nome do produto já é anunciado pelo título do módulo e pelo <title> da página. Informativo aqui faria o leitor ler a marca duas vezes."
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "A estrutura é semântica e condicional: o nome do módulo é <h1> (é o título da tela), e o divisor — que é decoração — sai com aria-hidden. As regiões só existem quando há conteúdo: sem título não há divisor nem <h1> vazio, e sem slot actions não há container de ações. Âncoras em DssAppBar.test.js: \"o título é um <h1>\", \"sem título, não há divisor\" e \"as ações só existem quando o slot é fornecido\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "4.1.2",
+        "level": "A",
+        "implementation": "O botão de menu é um controle com nome: menuAriaLabel tem padrão e vai ao aria-label do DssButton, que sem ele seria um botão só de ícone — sem nome acessível. Âncora em DssAppBar.test.js: \"emite menu ao clicar no botão de menu\" exercita o controle nomeado.",
+        "verifiedBy": "aria"
+      },
+      {
+        "criterion": "1.4.11",
+        "level": "AA",
+        "implementation": "O divisor entre marca e título usa currentColor com --dss-opacity-brand-medium sobre o fundo da marca. Em forced-colors a opacidade não sobrevive, e 4-output/_states.scss troca por CanvasText com opacidade 1 — senão o traço sumiria contra o fundo do sistema.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "banner",
+      "states": [
+        "aria-hidden"
+      ]
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "menu → ações, na ordem de leitura da barra"
+      },
+      {
+        "key": "Enter / Espaço",
+        "action": "aciona o botão de menu ou a ação focada"
+      }
+    ]
+  },
+  "tokens": [
+    "--dss-layout-header-height-compact",
+    "--dss-layout-header-height",
+    "--dss-spacing-0",
+    "--dss-spacing-3",
+    "--dss-spacing-4",
+    "--dss-spacing-5",
+    "--dss-spacing-6",
+    "--dss-border-width-thin",
+    "--dss-opacity-brand-medium",
+    "--dss-font-size-xl",
+    "--dss-font-weight-medium",
+    "--dss-line-height-snug"
+  ],
+  "defaultPreview": {
+    "props": {
+      "brand": "water",
+      "title": "Nome do Módulo"
+    },
+    "wrapIn": {
+      "component": "DssLayout",
+      "props": {
+        "style": "height:80px;position:relative;overflow:hidden"
+      }
+    },
+    "demoSlots": {
+      "actions": [
+        {
+          "component": "DssButton",
+          "props": {
+            "icon": "help_outline",
+            "variant": "flat",
+            "round": true,
+            "size": "md",
+            "ariaLabel": "Ajuda"
+          }
+        },
+        {
+          "component": "DssButton",
+          "props": {
+            "icon": "notifications",
+            "variant": "flat",
+            "round": true,
+            "size": "md",
+            "ariaLabel": "Notificações"
+          }
+        },
+        {
+          "component": "DssButton",
+          "props": {
+            "icon": "apps",
+            "variant": "flat",
+            "round": true,
+            "size": "md",
+            "ariaLabel": "Aplicativos"
+          }
+        },
+        {
+          "component": "DssButton",
+          "props": {
+            "icon": "account_circle",
+            "variant": "flat",
+            "round": true,
+            "size": "md",
+            "ariaLabel": "Minha conta"
+          }
+        }
+      ]
+    },
+    "demoContent": "DssAppBar da marca Water com título de módulo e as 4 ações típicas da casca Sansys",
+    "visualProperties": [
+      {
+        "property": "min-height",
+        "token": "--dss-layout-header-height-compact",
+        "value": "48px",
+        "source": "3-variants/_density.scss"
+      }
+    ]
+  }
+}

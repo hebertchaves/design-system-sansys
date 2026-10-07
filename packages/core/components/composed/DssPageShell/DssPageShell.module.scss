@@ -1,0 +1,9 @@
+// ==========================================================================
+// DssPageShell — SCSS Orchestrator
+// ==========================================================================
+// Ordem obrigatória: L2 (base) → L3 (variants) → L4 (output).
+// ==========================================================================
+
+@use './2-composition/base' as base;
+@use './3-variants/index' as variants;
+@use './4-output/index' as output;
