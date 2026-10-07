@@ -1,0 +1,30 @@
+/* ==========================================================================
+   DssContainer — Layer 4: States
+
+   Container é estrutura, não controle: não tem hover, focus, active nem
+   disabled. O que resta é o que o MEIO impõe.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPRESSÃO
+   Teto de largura de tela não se aplica a papel: a folha já é o limite, e
+   manter o `max-width` desperdiçaria a margem útil do A4.
+   ========================================================================== */
+@media print {
+  .dss-container {
+    max-width: none;
+  }
+}
+
+/* ==========================================================================
+   2. TELAS ESTREITAS
+   Abaixo do breakpoint `sm` o respiro grande come a largura útil. Os dois
+   degraus maiores caem para `--dss-gutter-sm` (16px) — o trilho continua
+   respirando sem espremer o conteúdo.
+   ========================================================================== */
+@media (max-width: 639px) {
+  .dss-container--padding-lg,
+  .dss-container--padding-xl {
+    padding: var(--dss-gutter-sm);
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "component": "DssBrandLogo",
+  "dssVersion": "2.2",
+  "status": "draft",
+  "goldenReference": "DssBadge",
+  "goldenReferenceJustification": "DssBadge é o Golden Reference não-interativo do DSS. O DssBrandLogo não recebe foco, não tem hover e desliga pointer-events: é superfície visual pura.",
+  "goldenContext": "DssIcon",
+  "goldenContextJustification": "DssIcon é o outro primitivo de glifo do DSS: desenha SVG, herda cor por currentColor e governa a própria entrada na árvore de acessibilidade por `decorative`. O DssBrandLogo segue os três, com UMA diferença declarada — o logo tem nome natural (vem dos dados da marca), então o padrão é informativo e nomeado, enquanto o ícone exige ariaLabel explícito.",
+  "category": "Marca — identidade visual do produto",
+  "classification": "Visual",
+  "classificationNote": "Primitivo visual não-interativo. Desenha a marca; não decide cor nem recebe interação.",
+  "tagline": "A marca Sansys em SVG inline, que herda a cor de quem a hospeda.",
+  "phase": 1,
+  "phaseDescription": "Fase 1 — Nível 1 (Base). Primitivo nativo do DSS: não envolve componente Quasar.",
+  "previewGroup": "indicadores",
+  "hasReservations": false,
+  "subcomponents": [],
+  "propsExposed": ["brand", "size", "variant", "decorative", "ariaLabel"],
+  "propsBlocked": ["color"],
+  "propsBlockedJustification": "Não existe prop de cor, e a ausência é a decisão central do componente. A cor sai de `currentColor`: quem hospeda decide. É o que permite o mesmo desenho sair branco sobre a barra de marca e escuro sobre fundo claro, sem variante por tema. Uma prop de cor prenderia o logo a um valor e quebraria o uso sobre fundo colorido, que é o mais comum no Sansys.",
+  "emitsExposed": [],
+  "slotsExposed": [],
+  "statesApplicable": ["forced-colors", "print"],
+  "statesNotApplicable": ["hover", "focus", "active", "disabled", "loading"],
+  "statesNotApplicableJustification": "O logo não é alvo de interação: a Layer 2 desliga pointer-events, e quem recebe clique e foco é quem o embrulha (um link para a home, por exemplo).",
+  "accessibility": {
+    "role": "img quando informativo; fora da árvore quando decorative",
+    "wcagLevel": "2.1 AA",
+    "touchTarget": "Não aplicável — não é controle interativo.",
+    "keyboardNavigation": "Não recebe foco. `focusable=\"false\"` no <svg> evita que o IE/Edge legado o inclua na ordem de tabulação.",
+    "ariaLabel": "Padrão: o nome da marca, vindo dos dados (ex.: \"Sansys Water\"). `ariaLabel` substitui quando o contexto pede outra coisa; `decorative` remove.",
+    "decorativeCase": "Numa barra onde o nome do produto já aparece em texto ao lado, o logo anunciado duplicaria a leitura — aí `decorative` é o certo."
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Conteúdo não-textual com nome: o <svg> recebe role=\"img\" e aria-label com o nome da marca, que vem dos dados (assets/brand/logos.ts) e não de o consumidor lembrar de escrever. `decorative` tira o logo da árvore com aria-hidden, para o caso em que o nome do produto já está em texto ao lado. Âncoras em DssBrandLogo.test.js: \"nomeia o logo com o nome da marca por padrão\" e \"decorative tira o logo da árvore de acessibilidade\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "O componente NÃO declara cor: `fill: currentColor` em 2-composition/_base.scss faz o logo herdar a cor do host, e portanto o contraste é o do contexto — que é quem sabe qual é o fundo. Uma cor fixa aqui quebraria o contraste sobre fundo colorido.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "A marca não é transmitida só por cor: o DESENHO muda entre Water, Hub e Waste, não apenas o matiz. Em forced-colors o logo herda a cor do texto (4-output/_states.scss) em vez de forçar a cor da marca.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "img",
+      "states": ["aria-label", "aria-hidden"]
+    },
+    "keyboard": []
+  },
+  "tokens": [
+    "--dss-brand-logo-height-sm",
+    "--dss-brand-logo-height-md",
+    "--dss-brand-logo-height-lg",
+    "--dss-brand-logo-height-xl",
+    "--dss-text-body"
+  ],
+  "defaultPreview": {
+    "props": {
+      "brand": "water",
+      "size": "lg"
+    },
+    "demoSlots": null,
+    "demoContent": "DssBrandLogo da marca Water no tamanho lg, herdando a cor do contexto",
+    "visualProperties": [
+      {
+        "property": "height",
+        "token": "--dss-brand-logo-height-lg",
+        "value": "28px",
+        "source": "3-variants/_size.scss"
+      },
+      {
+        "property": "fill",
+        "token": "currentColor",
+        "value": "herdado do host",
+        "source": "2-composition/_base.scss"
+      }
+    ]
+  }
+}

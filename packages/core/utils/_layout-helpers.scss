@@ -16,6 +16,21 @@
      CONTAINER RESPONSIVO
      Alinhado com --dss-container-* tokens
      =========================================== */
+  /* ⚠️ SUPERSEDED (set/2026) — `.dss-container` agora também é a classe raiz do
+     componente `DssContainer` (packages/core/components/base/DssContainer).
+
+     Dois donos para um nome. O componente venceu porque faz mais: além do teto
+     de largura, governa respiro, ritmo vertical, semântica (`tag`) e marca, e
+     tem contrato, testes e página. A variante `size="responsive"` dele
+     REPRODUZ exatamente o comportamento desta utilitária.
+
+     Não foi removida: este monorepo não é o único consumidor do DSS, e apagar
+     classe pública sem medir uso nos repositórios de produto seria quebrar às
+     cegas. Varredura aqui (set/2026): nenhum consumidor usa a classe.
+
+     Migração: `<div class="dss-container">` → `<DssContainer size="responsive">`.
+     Ao confirmar que nenhum produto usa, esta seção sai.
+     Ver a nota de colisão em DssContainer/3-variants/_size.scss. */
   &-container {
     width: 100%;
     margin-left: auto;

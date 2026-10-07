@@ -1,0 +1,35 @@
+// ==========================================================================
+// DssSectionTitle — Layer 4: States
+// ==========================================================================
+//
+// O título não é interativo: não recebe foco, hover nem clique. Restam os
+// estados de mídia, e os dois importam para o traço.
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// forced-colors
+// --------------------------------------------------------------------------
+// Em alto contraste o sistema substitui as cores do autor. O traço, que é o
+// acento de marca, sumiria — a cor dele vem de um token que deixa de valer.
+// `CanvasText` devolve um traço visível na cor que o usuário escolheu para ler.
+//
+// É a decisão certa pela WCAG: preservar a cor da marca contra a escolha de
+// contraste do usuário é exatamente o que 1.4.3 e 1.4.11 não querem.
+@media (forced-colors: active) {
+  .dss-section-title {
+    border-block-end-color: CanvasText;
+  }
+}
+
+// --------------------------------------------------------------------------
+// @media print
+// --------------------------------------------------------------------------
+// No papel o traço colorido não ajuda a ler — e em impressão monocromática
+// vira cinza claro, quase invisível. Preto mantém a hierarquia visual que o
+// traço existe para marcar.
+@media print {
+  .dss-section-title {
+    color: var(--dss-text-body);
+    border-block-end-color: var(--dss-text-body);
+  }
+}

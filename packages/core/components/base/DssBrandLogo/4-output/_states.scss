@@ -1,0 +1,36 @@
+// ==========================================================================
+// DssBrandLogo — Layer 4: States
+// ==========================================================================
+//
+// O logo não tem estado interativo: não recebe foco, não tem hover, e a
+// Layer 2 desliga `pointer-events`. Quem interage é quem o embrulha.
+//
+// Restam dois estados de MÍDIA, e os dois importam para a marca.
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// forced-colors — modo de alto contraste do sistema
+// --------------------------------------------------------------------------
+// Em forced-colors o sistema substitui as cores do autor. Um logo que herdou
+// `currentColor` acompanha o texto do contexto, que é o comportamento certo:
+// a marca continua legível na cor que o usuário escolheu para ler.
+//
+// `forced-color-adjust: auto` é o padrão; declarar é registrar a DECISÃO de
+// não usar `none` aqui. Preservar a cor da marca contra a escolha de contraste
+// do usuário é exatamente o que a WCAG 1.4.3/1.4.11 não quer.
+@media (forced-colors: active) {
+  .dss-brand-logo {
+    forced-color-adjust: auto;
+  }
+}
+
+// --------------------------------------------------------------------------
+// @media print
+// --------------------------------------------------------------------------
+// Impresso, o logo herda a cor do texto — que no papel é preto. Sem isto, um
+// logo que estava branco sobre a barra de marca sairia branco no papel: some.
+@media print {
+  .dss-brand-logo {
+    color: var(--dss-text-body);
+  }
+}

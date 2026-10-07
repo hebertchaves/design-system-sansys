@@ -1,0 +1,60 @@
+/* ==========================================================================
+   DssContainer — Layer 3: Size
+
+   Os tetos vêm da família `--dss-container-*`, que é a escala de grade do
+   sistema (breakpoints), não de `--dss-layout-content-max-width` (720/960),
+   que mira leitura de texto corrido. Trilho de aplicação é mais largo.
+
+   SELETOR DUPLO (.dss-container.dss-container--size-*) — e não é estética.
+   A classe utilitária `.dss-container` de `utils/_layout-helpers.scss` declara
+   `max-width` na MESMA especificidade (0,1,0). Empate resolvido por ordem é
+   refém de qual bundle carrega por último — e o sandbox carrega dois: o
+   `dss-full.css` pré-construído do index.html e o `index.scss` compilado pelo
+   Vite. Medido: as variantes perdiam para a utilitária, e `size="sm"` rendia
+   1280px. Com (0,2,0) o componente vence de forma determinística, seja qual
+   for a ordem. Mesmo padrão do DssToolbar (`.dss-toolbar.dss-toolbar--brand-*`).
+   ========================================================================== */
+
+.dss-container.dss-container--size-sm    { max-width: var(--dss-container-sm); }   /* 608px  */
+.dss-container.dss-container--size-md    { max-width: var(--dss-container-md); }   /* 960px  */
+.dss-container.dss-container--size-lg    { max-width: var(--dss-container-lg); }   /* 1280px */
+.dss-container.dss-container--size-xl    { max-width: var(--dss-container-xl); }   /* 1600px */
+
+/* Sem teto: ocupa o que o pai der. É o caso do trilho dentro de um shell que
+   já limita a largura, onde um segundo teto criaria margem dupla. */
+.dss-container.dss-container--size-fluid { max-width: none; }
+
+/* ==========================================================================
+   COLISÃO DE NOME — resolvida aqui, não por sorte de ordem
+
+   `.dss-container` JÁ EXISTE como classe utilitária em
+   `utils/_layout-helpers.scss`, com teto que acompanha o BREAKPOINT. É
+   literalmente a "classe CSS suficiente" que motivou o adiamento deste
+   componente em abr/2026 (PLANO_ACAO_GRID_LAYOUT §12.6).
+
+   Dois donos para um nome é defeito. A resolução:
+
+   1. `packages/core/index.scss` carrega `utils` (linha 10) ANTES de
+      `components` (linha 16). Com especificidade igual, as regras deste
+      componente vencem por ordem — mas isso é consequência, não plano.
+   2. `size="responsive"` abaixo REPRODUZ o comportamento da utilitária, de
+      modo que o componente a torna redundante em vez de competir com ela.
+      Quem usava a classe migra para o componente sem mudar de comportamento.
+   3. A utilitária NÃO foi removida: este monorepo não é o único consumidor do
+      DSS, e apagar classe pública sem medir uso nos repositórios de produto
+      seria quebrar às cegas. Ficou marcada como superseded no arquivo dela.
+
+   Varredura em `apps/` e `packages/` (set/2026): nenhum consumidor usa a
+   classe — os usos de "dss-container" são todos do TOKEN `--dss-container-*`.
+   ========================================================================== */
+
+/* Teto que acompanha o breakpoint — espelha a utilitária.
+   Os valores são os mesmos de `--dss-container-*`, e os pontos de corte os
+   mesmos de `--dss-breakpoint-*`. */
+.dss-container.dss-container--size-responsive {
+  max-width: var(--dss-container-sm);
+
+  @media (min-width: 1024px) { max-width: var(--dss-container-md); }
+  @media (min-width: 1440px) { max-width: var(--dss-container-lg); }
+  @media (min-width: 1920px) { max-width: var(--dss-container-xl); }
+}

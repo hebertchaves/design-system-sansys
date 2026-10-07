@@ -1,0 +1,19 @@
+/* ==========================================================================
+   DssContainer — Layer 2: Composition
+
+   O mínimo que faz um trilho: caixa previsível e largura que não estoura.
+   Tudo o que varia (largura, respiro, ritmo) vive na Layer 3.
+   ========================================================================== */
+
+.dss-container {
+  /* `border-box` para o padding entrar na largura declarada — sem isto o
+     `max-width` deixa de ser o que a página vê. */
+  box-sizing: border-box;
+
+  /* 100% garante que o trilho encolha em telas menores que o teto. Sem ele,
+     `max-width` sozinho não impede o estouro quando o pai é estreito. */
+  width: 100%;
+
+  /* Tipografia herda. Container não é superfície nem texto — não declara
+     `background` nem `color`: quem pinta é o card ou a página. */
+}

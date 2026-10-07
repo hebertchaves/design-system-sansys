@@ -1,0 +1,438 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssSectionTitle",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Section Title",
+    "tagline": "Título de seção com o traço da marca embaixo, a uma distância mínima do texto.",
+    "category": "Tipografia — título de seção",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "draft",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssItemLabel"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto do título. Ignorado quando o slot default é fornecido.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "level",
+        "type": "SectionTitleLevel",
+        "controlHint": "text",
+        "default": "2",
+        "description": "Nível semântico do cabeçalho.",
+        "category": "Conteúdo",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "size",
+        "type": "SectionTitleSize",
+        "controlHint": "segmented",
+        "default": "md",
+        "description": "Tamanho visual, independente do nível.",
+        "validValues": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "accent",
+        "type": "SectionTitleAccent",
+        "controlHint": "select",
+        "default": "brand",
+        "description": "Cor do traço.",
+        "validValues": [
+          "brand",
+          "info",
+          "success",
+          "warning",
+          "error"
+        ],
+        "category": "Aparência",
+        "categorySource": "css-variants"
+      },
+      {
+        "name": "brand",
+        "type": "'hub' | 'water' | 'waste'",
+        "controlHint": "segmented",
+        "description": "Marca aplicada localmente.",
+        "validValues": [
+          "hub",
+          "water",
+          "waste"
+        ],
+        "category": "Aparência",
+        "categorySource": "override"
+      }
+    ],
+    "emits": [],
+    "slots": [
+      {
+        "name": "default",
+        "scope": null,
+        "description": "Conteúdo do título. Tem precedência sobre `label`."
+      }
+    ]
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "label": "Verificações",
+        "level": 2,
+        "size": "lg"
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "inline-size",
+          "token": null,
+          "value": "fit-content",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "max-inline-size",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-tight",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "letter-spacing",
+          "token": null,
+          "value": "normal",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-block-end",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-block-end",
+          "token": "--dss-section-title-rule-gap",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-sm-tight",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-md-tight",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-lg",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "line-height",
+          "token": "--dss-line-height-lg-tight",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "border-block-end-color",
+          "token": "--dss-feedback-info",
+          "value": null,
+          "source": "3-variants/_accent.scss"
+        },
+        {
+          "property": "border-block-end-color",
+          "token": "--dss-feedback-success",
+          "value": null,
+          "source": "3-variants/_accent.scss"
+        },
+        {
+          "property": "border-block-end-color",
+          "token": "--dss-feedback-warning",
+          "value": null,
+          "source": "3-variants/_accent.scss"
+        },
+        {
+          "property": "border-block-end-color",
+          "token": "--dss-feedback-error",
+          "value": null,
+          "source": "3-variants/_accent.scss"
+        },
+        {
+          "property": "border-block-end-color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-block-end-color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-spacing-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-section-title-rule-gap",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-sm-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-md-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-lg",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-line-height-lg-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-info",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-success",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-warning",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-feedback-error",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "defaultPreview"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "O título é um cabeçalho real (h1..h4), e o nível é independente do tamanho visual: level decide a tag, size decide a aparência. Sem essa separação, quem precisa de um h3 grande escreve h1, e a hierarquia de cabeçalhos do documento passa a mentir. Âncoras em DssSectionTitle.test.js: \"o tamanho NÃO muda a tag\" e \"a tag NÃO muda o tamanho\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.11",
+        "level": "AA",
+        "implementation": "O traço é o acento visual do título, e em forced-colors a cor do token deixa de valer — ele sumiria. 4-output/_states.scss troca por CanvasText, que é a cor que o usuário escolheu para ler. Preservar a cor da marca contra essa escolha é o que a WCAG não quer.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "A hierarquia não depende só da cor do traço: o nível do cabeçalho é semântico e o tamanho é tipográfico, e os dois sobrevivem à impressão monocromática — onde @media print leva o traço para --dss-text-body.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "heading",
+      "states": []
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssSectionTitle.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_accent.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/section-title.types.ts",
+    "docs": {
+      "normative": "DssSectionTitle.md",
+      "api": "DSSSECTIONTITLE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssSectionTitle.example.vue",
+    "tests": "DssSectionTitle.test.js"
+  }
+}

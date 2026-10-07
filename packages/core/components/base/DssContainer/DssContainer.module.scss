@@ -1,0 +1,19 @@
+/* ==========================================================================
+   DssContainer — Module Orchestrator
+
+   ARQUITETURA DE 4 CAMADAS (ordem obrigatória L2 → L3 → L4):
+   - Layer 2: Composition (caixa e largura base)
+   - Layer 3: Variants (size, padding, gap, centered)
+   - Layer 4: Output (states — impressão e telas estreitas; brands)
+
+   @version 1.0.0
+   ========================================================================== */
+
+/* Layer 2: Composition */
+@use './2-composition/base' as composition;
+
+/* Layer 3: Variants */
+@use './3-variants' as variants;
+
+/* Layer 4: Output */
+@use './4-output' as output;

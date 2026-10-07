@@ -1,0 +1,28 @@
+// ==========================================================================
+// DssSectionTitle — Layer 4: Brands
+// ==========================================================================
+//
+// A prop `brand` REMAPEIA o token semântico no escopo local. Ela NÃO pinta a
+// borda.
+//
+// A diferença não é estilística — é o §K5 do checklist de adequação, e custou
+// um defeito medido: o `DssLinearProgress` pintava o elemento do Quasar direto,
+// com especificidade (0,3,0), e vencia a própria regra de cor (0,2,0). Dentro
+// de qualquer `[data-brand]` — e toda tela Sansys é brandeada — a prop `color`
+// virava inerte: `color="error"` renderizava azul.
+//
+// Remapeando o token, quem pinta continua sendo a regra da Layer 2, e a prop
+// `accent` segue valendo por cima.
+// ==========================================================================
+
+.dss-section-title--brand-hub {
+  --dss-action-primary: var(--dss-hub-600);
+}
+
+.dss-section-title--brand-water {
+  --dss-action-primary: var(--dss-water-500);
+}
+
+.dss-section-title--brand-waste {
+  --dss-action-primary: var(--dss-waste-600);
+}

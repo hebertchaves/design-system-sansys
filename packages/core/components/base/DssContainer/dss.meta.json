@@ -1,0 +1,48 @@
+{
+  "component": "DssContainer",
+  "name": "DssContainer",
+  "phase": 1,
+  "category": "Superfície e Layout",
+  "classification": "Visual",
+  "tagline": "Trilho de conteúdo da página: largura máxima, respiro, centragem e ritmo vertical.",
+  "description": "Caixa de conteúdo da página. Governa largura máxima, respiro interno, centragem e o ritmo vertical entre os filhos. Não é superfície: não pinta fundo nem borda. A grade de colunas é responsabilidade do DssGrid.",
+  "quasarEquivalent": null,
+  "goldenReference": "DssCard",
+  "goldenContext": "DssPageContainer",
+  "previewGroup": "layout",
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.10",
+        "level": "AA",
+        "implementation": "O trilho encolhe com o pai (width:100% + max-width) e o respiro dos dois degraus maiores cai para --dss-gutter-sm abaixo de 640px — conteúdo não exige rolagem horizontal em tela estreita. Âncora: regra de reflow em 4-output/_states.scss.",
+        "verifiedBy": "css",
+        "cssRule": {
+          "file": "4-output/_states.scss",
+          "contains": "max-width: 639px"
+        }
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "A prop `tag` deixa o consumidor escolher o elemento semântico (main/section/article) em vez de impor uma div — a estrutura do documento não é decidida pelo componente. Âncora: DssContainer.test.js cobre a renderização por tag.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "generic"
+    },
+    "keyboard": []
+  },
+  "defaultPreview": {
+    "props": {
+      "size": "md",
+      "padding": "md",
+      "gap": "md",
+      "centered": true
+    },
+    "demoSlots": {
+      "default": "Conteúdo do trilho."
+    }
+  }
+}

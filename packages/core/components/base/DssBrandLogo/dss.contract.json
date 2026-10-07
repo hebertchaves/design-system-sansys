@@ -1,0 +1,275 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssBrandLogo",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Brand Logo",
+    "tagline": "A marca Sansys em SVG inline, que herda a cor de quem a hospeda.",
+    "category": "Marca — identidade visual do produto",
+    "classification": "Visual",
+    "phase": 1,
+    "status": "draft",
+    "goldenReference": "DssBadge",
+    "goldenContext": "DssIcon"
+  },
+  "audit": {
+    "status": "draft",
+    "date": "1970-01-01",
+    "sealPath": "docs/Compliance/seals/__MISSING__"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "brand",
+        "type": "BrandKey",
+        "controlHint": "text",
+        "description": "Marca a exibir.",
+        "category": "Aparência",
+        "categorySource": "override"
+      },
+      {
+        "name": "size",
+        "type": "BrandLogoSize",
+        "controlHint": "picker-brand",
+        "default": "md",
+        "description": "Altura do logo. A largura acompanha a proporção do desenho.",
+        "validValues": [
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "variant",
+        "type": "BrandLogoVariant",
+        "controlHint": "picker-brand",
+        "default": "full",
+        "description": "Que parte do desenho exibir.",
+        "validValues": [
+          "full",
+          "icon",
+          "wordmark"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "decorative",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "default": false,
+        "description": "Marca o logo como decoração: sai da árvore de acessibilidade.",
+        "category": "Acessibilidade",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Substitui o nome acessível natural (ex.: \"Sansys Water\").",
+        "category": "Acessibilidade",
+        "categorySource": "nome-a11y"
+      }
+    ],
+    "emits": [],
+    "slots": []
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "brand": "water",
+        "size": "lg"
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "inherit",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "fill",
+          "token": null,
+          "value": "currentColor",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "pointer-events",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "flex",
+          "token": null,
+          "value": "0 0 auto",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-brand-logo-height-sm",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-brand-logo-height-md",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-brand-logo-height-lg",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-brand-logo-height-xl",
+          "value": null,
+          "source": "3-variants/_size.scss"
+        },
+        {
+          "property": "forced-color-adjust",
+          "token": null,
+          "value": "auto",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "4-output/_states.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "color",
+      "other"
+    ],
+    "instances": [
+      {
+        "name": "--dss-brand-logo-height-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-brand-logo-height-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-brand-logo-height-lg",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-brand-logo-height-xl",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.1.1",
+        "level": "A",
+        "implementation": "Conteúdo não-textual com nome: o <svg> recebe role=\"img\" e aria-label com o nome da marca, que vem dos dados (assets/brand/logos.ts) e não de o consumidor lembrar de escrever. `decorative` tira o logo da árvore com aria-hidden, para o caso em que o nome do produto já está em texto ao lado. Âncoras em DssBrandLogo.test.js: \"nomeia o logo com o nome da marca por padrão\" e \"decorative tira o logo da árvore de acessibilidade\".",
+        "verifiedBy": "test"
+      },
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "O componente NÃO declara cor: `fill: currentColor` em 2-composition/_base.scss faz o logo herdar a cor do host, e portanto o contraste é o do contexto — que é quem sabe qual é o fundo. Uma cor fixa aqui quebraria o contraste sobre fundo colorido.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.4.1",
+        "level": "A",
+        "implementation": "A marca não é transmitida só por cor: o DESENHO muda entre Water, Hub e Waste, não apenas o matiz. Em forced-colors o logo herda a cor do texto (4-output/_states.scss) em vez de forçar a cor da marca.",
+        "verifiedBy": "css"
+      }
+    ],
+    "aria": {
+      "role": "img",
+      "states": [
+        "aria-label",
+        "aria-hidden"
+      ]
+    },
+    "keyboard": []
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssBrandLogo.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_size.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/brand-logo.types.ts",
+    "docs": {
+      "normative": "DssBrandLogo.md",
+      "api": "DSSBRANDLOGO_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssBrandLogo.example.vue",
+    "tests": "DssBrandLogo.test.js"
+  }
+}

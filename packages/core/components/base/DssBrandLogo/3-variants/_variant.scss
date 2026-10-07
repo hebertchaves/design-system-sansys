@@ -1,0 +1,15 @@
+// ==========================================================================
+// DssBrandLogo — Layer 3: Variants (Recorte do desenho)
+// ==========================================================================
+//
+// O recorte (`full` / `icon` / `wordmark`) é decidido em JS: ele FILTRA os
+// paths por `role`, e CSS não filtra elemento por atributo de dado.
+//
+// As classes existem como gancho de contexto — para o consumidor mirar um
+// recorte específico a partir de fora ("no rail retraído, o logo é o ícone").
+// Não há declaração aqui porque não há nada que o CSS precise fazer: o
+// `viewBox` continua o do desenho completo, e o `width: auto` da Layer 2 já
+// dá ao recorte a largura que ele ocupa.
+//
+// Arquivo mantido para conformidade com a arquitetura de 4 camadas do DSS.
+// ==========================================================================

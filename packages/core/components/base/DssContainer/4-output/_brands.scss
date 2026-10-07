@@ -1,0 +1,17 @@
+/* ==========================================================================
+   DssContainer — Layer 4: Brands
+
+   Container NÃO PINTA. Não é superfície: não tem fundo, borda nem texto
+   próprio — quem pinta é o card, o banner ou a página dentro dele.
+
+   A marca chega pela prop como `:data-brand` no root (1-structure), e isso
+   basta: o atributo remapeia `--dss-action-primary` e a rampa inteira na
+   subárvore, via `tokens/brand/_*.scss`. Os filhos brandeiam sozinhos.
+
+   Forma canônica do §K5 do checklist: a marca remapeia TOKEN, não pinta
+   elemento. Uma regra aqui declarando `background-color` por marca seria
+   exatamente o defeito que o DssLinearProgress carregava — pintar o primitivo
+   direto, com especificidade alta, vencendo a cor semântica do consumidor.
+
+   Por isso este arquivo existe e está deliberadamente vazio de regras.
+   ========================================================================== */

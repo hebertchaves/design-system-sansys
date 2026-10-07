@@ -1,0 +1,20 @@
+// ==========================================================================
+// DssBrandLogo — Layer 4: Brands
+// ==========================================================================
+//
+// VAZIO POR DECISÃO, e a decisão é o ponto do componente.
+//
+// A brandabilidade do DSS é de PELE: `[data-brand]` remapeia tokens e a cor
+// desce por cascata. Aqui a marca não é pele — é CONTEÚDO: ela decide quais
+// `<path>` existem no DOM, e CSS não troca o `d` de um path. Por isso a
+// resolução mora em JS (`useResolvedBrand`), e não neste arquivo.
+//
+// A COR, essa sim, continua sendo pele — e o componente não a toca: sai de
+// `currentColor` (Layer 2). Quem hospeda o logo decide. É o que permite o
+// mesmo desenho sair branco sobre a barra Water e escuro sobre fundo claro,
+// sem uma variante por tema.
+//
+// Declarar aqui `.dss-brand-logo--brand-water { color: var(--dss-water-600) }`
+// seria o erro: prenderia o logo a uma cor e quebraria o uso sobre fundo
+// colorido, que é o caso mais comum no Sansys.
+// ==========================================================================

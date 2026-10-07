@@ -1,0 +1,34 @@
+// ==========================================================================
+// DssBrandLogo — Layer 2: Composition (Base)
+// ==========================================================================
+//
+// O logo é um <svg> e nada mais. Não tem superfície, borda nem estado: ele
+// desenha a marca e herda a cor de quem o hospeda.
+//
+// QUEM MANDA É A ALTURA. Os três desenhos têm proporções diferentes (Water
+// 154×42, Hub 120×42, Waste 156×42), então fixar largura deformaria dois dos
+// três. A altura vem do token da variante (3-variants) e a largura acompanha.
+// ==========================================================================
+
+.dss-brand-logo {
+  // `block` e não `inline`: como inline, o <svg> ganharia o espaço de descida
+  // da linha de texto e a barra ficaria alguns px mais alta que a conta.
+  display: block;
+
+  // A largura ACOMPANHA a altura, pela proporção do viewBox.
+  width: auto;
+
+  // A cor é do HOST. O componente não pinta — é o que permite o mesmo logo
+  // sair branco sobre a barra de marca e escuro sobre fundo claro, sem prop
+  // de cor e sem variante por tema.
+  color: inherit;
+  fill: currentColor;
+
+  // O SVG não é alvo de interação: cliques pertencem a quem o embrulha (um
+  // link para a home, por exemplo). Sem isto, o logo roubaria o alvo do pai.
+  pointer-events: none;
+
+  // Proporção travada: o desenho nunca estica, mesmo dentro de um flex que
+  // tente esticá-lo.
+  flex: 0 0 auto;
+}

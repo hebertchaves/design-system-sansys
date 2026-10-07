@@ -1,0 +1,29 @@
+// ==========================================================================
+// DssSectionTitle — Layer 3: Variants (Cor do traço)
+// ==========================================================================
+//
+// `brand` é o padrão e NÃO tem regra aqui: ele já é o `--dss-action-primary`
+// declarado na Layer 2. Escrever `--accent-brand { border-color: var(--dss-action-primary) }`
+// seria repetir a mesma declaração num seletor mais específico — e criar um
+// segundo dono para a cor, que é como a prop `color` do DssLinearProgress
+// virou inerte dentro de página brandeada.
+//
+// As cores de estado abaixo NÃO são brandeáveis, e é correto: erro é vermelho
+// em Water, Hub e Waste. Significado não muda com a marca.
+// ==========================================================================
+
+.dss-section-title.dss-section-title--accent-info {
+  border-block-end-color: var(--dss-feedback-info);
+}
+
+.dss-section-title.dss-section-title--accent-success {
+  border-block-end-color: var(--dss-feedback-success);
+}
+
+.dss-section-title.dss-section-title--accent-warning {
+  border-block-end-color: var(--dss-feedback-warning);
+}
+
+.dss-section-title.dss-section-title--accent-error {
+  border-block-end-color: var(--dss-feedback-error);
+}

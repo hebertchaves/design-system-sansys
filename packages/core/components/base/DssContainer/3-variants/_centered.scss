@@ -1,0 +1,9 @@
+/* ==========================================================================
+   DssContainer — Layer 3: Centered
+
+   `margin-inline` e não `margin: 0 auto`: o atalho zeraria a margem vertical
+   que o consumidor tenha posto por fora, e centrar no eixo horizontal não tem
+   nada a dizer sobre o vertical.
+   ========================================================================== */
+
+.dss-container--centered { margin-inline: auto; }

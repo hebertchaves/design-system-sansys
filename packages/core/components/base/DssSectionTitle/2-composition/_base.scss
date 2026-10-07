@@ -1,0 +1,32 @@
+// ==========================================================================
+// DssSectionTitle — Layer 2: Composition (Base)
+// ==========================================================================
+//
+// O traço é `border-bottom`, e a distância até o texto é o menor valor que não
+// encosta no glifo. Ver `--dss-section-title-rule-gap` para a medição.
+//
+// `line-height: tight` NÃO é escolha estética: é o que faz a caixa de conteúdo
+// terminar exatamente onde termina a caixa da fonte. Entrelinha maior
+// empurraria o traço para baixo por meia-entrelinha, e o respiro deixaria de
+// ser governado pelo token — passaria a depender do tamanho da fonte.
+// ==========================================================================
+
+.dss-section-title {
+  // `fit-content` faz o traço ter a largura do TEXTO, não a do container.
+  // É o que diferencia um acento de marca de uma régua divisória de seção.
+  inline-size: fit-content;
+  max-inline-size: 100%;
+
+  margin: var(--dss-spacing-0);
+  font-family: var(--dss-font-family-sans);
+  font-weight: var(--dss-font-weight-semibold);
+  // Ver acima: a entrelinha é parte da conta do respiro.
+  line-height: var(--dss-line-height-tight);
+  // O `h1`…`h4` do Quasar traz `letter-spacing` da escala Material. Sem zerar,
+  // o título de seção herdaria o espacejamento de um display de 6rem.
+  letter-spacing: normal;
+  color: var(--dss-text-primary);
+
+  border-block-end: var(--dss-border-width-md) solid var(--dss-action-primary);
+  padding-block-end: var(--dss-section-title-rule-gap);
+}

@@ -1,0 +1,14 @@
+/* ==========================================================================
+   DssContainer — Layer 3: Padding
+
+   Escala `--dss-gutter-*` (8 · 16 · 24 · 32 · 40px). É a mesma família que o
+   sistema de grade usa para calha — o respiro do trilho e a calha entre
+   colunas precisam sair da mesma régua, senão a página tem dois ritmos.
+   ========================================================================== */
+
+.dss-container.dss-container--padding-none { padding: var(--dss-spacing-0); }
+.dss-container.dss-container--padding-xs   { padding: var(--dss-gutter-xs); }   /* 8px  */
+.dss-container.dss-container--padding-sm   { padding: var(--dss-gutter-sm); }   /* 16px */
+.dss-container.dss-container--padding-md   { padding: var(--dss-gutter-md); }   /* 24px */
+.dss-container.dss-container--padding-lg   { padding: var(--dss-gutter-lg); }   /* 32px */
+.dss-container.dss-container--padding-xl   { padding: var(--dss-gutter-xl); }   /* 40px */

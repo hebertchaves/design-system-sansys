@@ -1,0 +1,24 @@
+/* ==========================================================================
+   DssContainer — Layer 3: Gap (ritmo vertical)
+
+   Acima de `none` o container vira COLUNA FLEX. É deliberado e documentado:
+   `gap` só existe em contexto flex ou grid, e o empilhamento com respiro
+   constante é justamente o que as telas reimplementavam — `.cn-main` e
+   `.gm-content` eram, as duas, `display:flex; flex-direction:column; gap:…`.
+
+   Em `none` o container NÃO impõe display: continua um bloco comum, e quem
+   quiser outro arranjo (grid, flex em linha) declara por fora sem brigar.
+   ========================================================================== */
+
+.dss-container--gap-sm,
+.dss-container--gap-md,
+.dss-container--gap-lg,
+.dss-container--gap-xl {
+  display: flex;
+  flex-direction: column;
+}
+
+.dss-container--gap-sm { gap: var(--dss-grid-gap-sm); }   /* 8px  */
+.dss-container--gap-md { gap: var(--dss-grid-gap-md); }   /* 16px */
+.dss-container--gap-lg { gap: var(--dss-grid-gap-lg); }   /* 24px */
+.dss-container--gap-xl { gap: var(--dss-grid-gap-xl); }   /* 32px */

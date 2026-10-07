@@ -1,0 +1,23 @@
+// ==========================================================================
+// DssBrandLogo — Layer 3: Variants (Size)
+// ==========================================================================
+//
+// Os degraus saem dos contextos REAIS onde a marca aparece, e não de uma
+// escala inventada. Ver tokens/semantic/_dimensions.scss §6.
+// ==========================================================================
+
+.dss-brand-logo--sm {
+  height: var(--dss-brand-logo-height-sm);
+}
+
+.dss-brand-logo--md {
+  height: var(--dss-brand-logo-height-md);
+}
+
+.dss-brand-logo--lg {
+  height: var(--dss-brand-logo-height-lg);
+}
+
+.dss-brand-logo--xl {
+  height: var(--dss-brand-logo-height-xl);
+}

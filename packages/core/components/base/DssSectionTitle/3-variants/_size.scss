@@ -1,0 +1,45 @@
+// ==========================================================================
+// DssSectionTitle — Layer 3: Variants (Tamanho)
+// ==========================================================================
+//
+// O tamanho é independente do NÍVEL semântico: `size` muda a aparência,
+// `level` muda a tag. Ver o SFC para o porquê.
+//
+// Seletor duplo (0,2,0) de propósito: o `h1`…`h4` do Quasar é seletor de tipo
+// dentro de `@layer quasar`, e o `font-size` dele perderia para qualquer regra
+// unlayered — mas a classe única empataria com outras regras de componente que
+// também mirem `.dss-section-title`. Dobrar resolve por especificidade em vez
+// de por ordem de bundle, que é refém de quem carrega por último. Mesmo padrão
+// do DssContainer, onde a disputa por ordem rendeu 1280px em lugar de 608.
+// ==========================================================================
+
+// A ENTRELINHA ACOMPANHA O TAMANHO, em PIXEL INTEIRO.
+//
+// A base declara `--dss-line-height-tight`, que é uma RAZÃO (1,25). Com 18px
+// isso dá 22,5px — meio pixel —, e a altura do título saía 26,5px (22,5 + 2 de
+// padding + 2 de borda).
+//
+// Meio pixel não fica contido: medido na tela de Solicitações, ele propagou do
+// título para o board (796,5), para o conteúdo (837,5), e colocou a tabela numa
+// posição fracionária (top 333,5). Ali as linhas caem em meio pixel, o
+// `scrollHeight` as arredonda PARA CIMA uma a uma e o `clientHeight` não — a
+// tabela passou a relatar 3px de conteúdo excedente que não existe, e o Quasar
+// desenhou uma barra de rolagem para esses 3px fantasmas.
+//
+// A família `--dss-line-height-*-tight` existe exatamente para isto e já traz a
+// conta feita: o comentário do token diz `23px /* 18px — era 22,5 */`. Este
+// componente simplesmente não a usava.
+.dss-section-title.dss-section-title--sm {
+  font-size: var(--dss-font-size-sm);
+  line-height: var(--dss-line-height-sm-tight);
+}
+
+.dss-section-title.dss-section-title--md {
+  font-size: var(--dss-font-size-md);
+  line-height: var(--dss-line-height-md-tight);
+}
+
+.dss-section-title.dss-section-title--lg {
+  font-size: var(--dss-font-size-lg);
+  line-height: var(--dss-line-height-lg-tight);
+}
