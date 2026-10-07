@@ -77,6 +77,76 @@ const rows = [
 | `loading` | Overlay de carregamento customizado |
 | `pagination` | Área de paginação customizada |
 
+Os slots são repassados **dinamicamente**: o `DssTable` reenvia ao QTable todo slot que
+receber, inclusive os de nome derivado (`body-cell-[coluna]`, `header-cell-[coluna]`). Não há
+lista fixa — se o QTable aceita, o `DssTable` repassa.
+
+É por eles que componente DSS entra na tabela:
+
+```vue
+<DssTable :rows="linhas" :columns="colunas" row-key="protocolo" density="compact">
+  <!-- barra de ferramentas -->
+  <template #top-right>
+    <DssInput v-model="filtro" dense label="Filtrar" clearable />
+  </template>
+
+  <!-- uma coluna vira chip; o resto da linha segue igual -->
+  <template #body-cell-situacao="props">
+    <td class="text-center">
+      <DssChip :color="props.row.situacao === 'Ativo' ? 'positive' : 'negative'" size="xs" dense
+               :label="props.row.situacao" />
+    </td>
+  </template>
+</DssTable>
+```
+
+### O `<td>` é seu, e a classe de alinhamento também
+
+Repare nos dois detalhes do exemplo acima — os dois são **contrato do QTable**, não descuido:
+
+**1. O slot entrega o `<td>`, não o conteúdo dele.** `body-cell-*` **substitui a célula
+inteira**. Quem usa o slot é obrigado a fornecer o `<td>`; sem ele, a linha quebra.
+
+**2. `class="text-center"` é obrigatória, não decorativa.** O `align` declarado na coluna só
+alcança o `<td>` que o **QTable** desenha. No `<td>` do slot, não — medido:
+
+| | `text-align` resultante |
+|---|---|
+| `<td class="text-right">` | `right` |
+| `<td>` sem classe | **`start`** |
+
+Então a coluna com `align: 'right'` e uma célula via slot **sem** a classe saem desalinhadas
+entre si. Repita o alinhamento da coluna na classe do `<td>`.
+
+> **Lacuna conhecida.** `text-left` / `text-center` / `text-right` são classes utilitárias do
+> **Quasar**, não do DSS — é vendor vazando para a página do consumidor. Um `DssTableCell` que
+> lesse o `align` da coluna fecharia isso; a avaliação de esforço está em
+> `DEBITO_ABERTO.md`, e a recomendação hoje é **não** criar o componente: são 9 ocorrências em
+> 2 arquivos, e criar componente para essa base é o anti-padrão do `IconButton`.
+
+## Altura de linha: o que custa pôr um componente na célula
+
+A altura da linha **não é declarada** — não existe `height` em `td` nenhum. Ela é o padding da
+densidade mais o que for **mais alto** dentro da célula. Medido em set/2026:
+
+| Densidade | Só texto | Com `DssChip` + `DssButton` | Custo |
+|---|---|---|---|
+| `compact` | 38px | 46px | **+8px** |
+| `standard` | 50px | 58px | **+8px** |
+| `comfortable` | 58px | 66px | **+8px** |
+
+Decomposto no `compact`: 6px de padding + 24px de *line-height* + 6px + 1px de borda = 37,5px.
+Troque o texto por um `DssButton` e os 24px do *line-height* dão lugar aos 32px do botão — daí
+os +8px. **O custo é o mesmo nas três densidades**, porque o que muda entre elas é o padding, e
+não o teto do conteúdo.
+
+**Não é defeito.** Encolher o botão para caber quebraria o alvo de toque (WCAG 2.5.5), e a
+linha crescer é o comportamento certo. Mas é uma decisão de layout, não uma descoberta: o grid
+master do Sansys Water pede linha de 36px, e uma coluna de ações não cabe nisso. Quem monta a
+tela escolhe entre a coluna de ações e a altura da linha — o componente não escolhe por ela.
+
+Medição ao vivo na seção 08 da página de Playground (`apps/sandbox/src/TestTable.vue`).
+
 ## Events
 
 | Evento | Payload | Descrição |

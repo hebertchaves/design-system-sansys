@@ -1,0 +1,1047 @@
+{
+  "schemaId": "dss-component-contract@1",
+  "name": "DssTable",
+  "version": "2.2",
+  "identity": {
+    "displayName": "Table",
+    "tagline": "Tabela de dados com ordenação, seleção, paginação e estados de vazio e carregamento.",
+    "category": "",
+    "classification": "Visual",
+    "phase": 2,
+    "status": "sealed",
+    "goldenReference": "DssChip",
+    "goldenContext": "DssMarkupTable"
+  },
+  "audit": {
+    "status": "sealed",
+    "date": "2026-05-22",
+    "sealPath": "docs/Compliance/seals/DssTable/DSSTABLE_SELO_v2.2.md"
+  },
+  "api": {
+    "props": [
+      {
+        "name": "rows",
+        "type": "Record<string, unknown>[]",
+        "controlHint": "text",
+        "required": true,
+        "description": "Linhas de dados da tabela (obrigatório)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "columns",
+        "type": "DssTableColumn[]",
+        "controlHint": "text",
+        "required": true,
+        "description": "Definição das colunas (obrigatório)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "rowKey",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Chave única de cada linha",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Título exibido na área top da tabela",
+        "category": "Conteúdo",
+        "categorySource": "override"
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Estado de carregamento — exibe DssSpinner interno do QTable",
+        "category": "Estado",
+        "categorySource": "override"
+      },
+      {
+        "name": "filter",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto de filtro global (case-insensitive)",
+        "category": "Estado",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "selection",
+        "type": "DssTableSelection",
+        "controlHint": "segmented",
+        "description": "Tipo de seleção de linhas",
+        "validValues": [
+          "single",
+          "multiple",
+          "none"
+        ],
+        "category": "Estado",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "modelValue",
+        "type": "Record<string, unknown>[]",
+        "controlHint": "text",
+        "description": "Linhas selecionadas (v-model)",
+        "category": "Conteúdo",
+        "categorySource": "vmodel"
+      },
+      {
+        "name": "pagination",
+        "type": "DssTablePagination",
+        "controlHint": "text",
+        "description": "Estado de paginação (v-model:pagination)",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "density",
+        "type": "DssTableDensity",
+        "controlHint": "segmented",
+        "description": "Densidade da tabela — compact: menor espaçamento, comfortable: maior",
+        "validValues": [
+          "compact",
+          "standard",
+          "comfortable"
+        ],
+        "category": "Aparência",
+        "categorySource": "excecao"
+      },
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Borda ao redor da tabela",
+        "category": "Aparência",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "flat",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Remove a elevação (flat = sem sombra)",
+        "category": "Aparência",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "wrapCells",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Permite quebra de linha nas células",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "separator",
+        "type": "DssTableSeparator",
+        "controlHint": "segmented",
+        "description": "Tipo de separador entre células",
+        "validValues": [
+          "horizontal",
+          "vertical",
+          "cell",
+          "none"
+        ],
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "virtualScroll",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Ativa virtualização de linhas para grandes conjuntos de dados",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "noDataLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto exibido quando rows está vazio",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "noResultsLabel",
+        "type": "string",
+        "controlHint": "text",
+        "description": "Texto exibido quando filter não encontra resultados",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "hideBottom",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Oculta a área bottom (paginação + itens por página)",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "hideHeader",
+        "type": "boolean",
+        "controlHint": "toggle",
+        "description": "Oculta o cabeçalho da tabela",
+        "category": "Conteúdo",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "rowsPerPageOptions",
+        "type": "number[]",
+        "controlHint": "text",
+        "description": "Opções de linhas por página na paginação",
+        "category": "Comportamento",
+        "categorySource": "quasar"
+      }
+    ],
+    "emits": [
+      {
+        "name": "update:modelValue",
+        "payload": "Record<string, unknown>[]",
+        "description": "Sincronização de linhas selecionadas (v-model)"
+      },
+      {
+        "name": "update:pagination",
+        "payload": "DssTablePagination",
+        "description": "Sincronização do estado de paginação"
+      },
+      {
+        "name": "request",
+        "payload": "{\r\n      pagination: DssTablePagination\r\n      filter?: string\r\n      getCellValue: (col: DssTableColumn, row: Record<string, unknown>) => unknown\r\n    }",
+        "description": "Evento de requisição server-side (quando @request é necessário)"
+      },
+      {
+        "name": "selection",
+        "payload": "{\r\n      rows: Record<string, unknown>[]\r\n      keys: unknown[]\r\n      added: boolean\r\n      evt: Event\r\n    }",
+        "description": "Evento de mudança de seleção"
+      },
+      {
+        "name": "row-click",
+        "payload": "Event",
+        "description": "Clique em linha"
+      },
+      {
+        "name": "row-dblclick",
+        "payload": "Event",
+        "description": "Duplo-clique em linha"
+      },
+      {
+        "name": "row-contextmenu",
+        "payload": "Event",
+        "description": "Clique-direito em linha"
+      }
+    ],
+    "slots": [
+      {
+        "name": "top",
+        "scope": null,
+        "description": "Área top completa (quando usado, substitui top-left e top-right)"
+      },
+      {
+        "name": "top-left",
+        "scope": null,
+        "description": "Lado esquerdo da área top (título, ações em massa)"
+      },
+      {
+        "name": "top-right",
+        "scope": null,
+        "description": "Lado direito da área top (campo de filtro, configurações)"
+      },
+      {
+        "name": "top-row",
+        "scope": null,
+        "description": "Linha adicional na área top"
+      },
+      {
+        "name": "top-selection",
+        "scope": "selected",
+        "description": "Ações exibidas quando linhas estão selecionadas"
+      },
+      {
+        "name": "header",
+        "scope": "cols, colsMap",
+        "description": "Cabeçalho completo (substitui renderização padrão do thead)"
+      },
+      {
+        "name": "header-cell",
+        "scope": "col, colIndex",
+        "description": "Célula de cabeçalho individual"
+      },
+      {
+        "name": "body",
+        "scope": "key, row, rowIndex, cols, selected, pageIndex",
+        "description": "Body completo (substitui renderização padrão do tbody)"
+      },
+      {
+        "name": "body-row",
+        "scope": "key, row, rowIndex, cols, selected, pageIndex",
+        "description": "Linha de body individual"
+      },
+      {
+        "name": "body-cell",
+        "scope": "key, row, col, value, selected, rowIndex, pageIndex",
+        "description": "Célula de body individual"
+      },
+      {
+        "name": "no-data",
+        "scope": "icon, message, filter",
+        "description": "Estado vazio — sem dados ou sem resultados de filtro"
+      },
+      {
+        "name": "loading",
+        "scope": null,
+        "description": "Overlay de carregamento customizado"
+      },
+      {
+        "name": "pagination",
+        "scope": "scope",
+        "description": "Área de paginação customizada"
+      },
+      {
+        "name": "bottom",
+        "scope": null,
+        "description": "Área bottom completa (quando usado, substitui paginação padrão)"
+      },
+      {
+        "name": "bottom-row",
+        "scope": null,
+        "description": "Linha adicional no rodapé da tabela"
+      }
+    ],
+    "vModel": {
+      "prop": "modelValue",
+      "event": "update:modelValue"
+    }
+  },
+  "visual": {
+    "defaultPreview": {
+      "props": {
+        "rows": [
+          {
+            "protocolo": "65665262",
+            "servico": "Religação de água",
+            "equipe": "CL250"
+          },
+          {
+            "protocolo": "65665263",
+            "servico": "Aferição de hidrômetro",
+            "equipe": "CL251"
+          },
+          {
+            "protocolo": "65665264",
+            "servico": "Taxa de vistoria",
+            "equipe": "CL250"
+          }
+        ],
+        "columns": [
+          {
+            "name": "protocolo",
+            "label": "Protocolo",
+            "field": "protocolo",
+            "align": "left",
+            "sortable": true
+          },
+          {
+            "name": "servico",
+            "label": "Serviço",
+            "field": "servico",
+            "align": "left",
+            "sortable": true
+          },
+          {
+            "name": "equipe",
+            "label": "Equipe",
+            "field": "equipe",
+            "align": "left"
+          }
+        ],
+        "rowKey": "protocolo",
+        "density": "compact",
+        "flat": true,
+        "hideBottom": true
+      }
+    },
+    "dimensions": {},
+    "states": {
+      "default": [
+        {
+          "property": "box-sizing",
+          "token": null,
+          "value": "border-box",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "width",
+          "token": null,
+          "value": "100%",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-radius",
+          "token": "--dss-radius-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-family",
+          "token": "--dss-font-family-sans",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-text-body",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "overflow-y",
+          "token": null,
+          "value": "hidden",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-collapse",
+          "token": null,
+          "value": "collapse",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-font-size-sm",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "font-weight",
+          "token": "--dss-font-weight-semibold",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "left",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "nowrap",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": "--dss-duration-250",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "0.6",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "opacity",
+          "token": null,
+          "value": "1",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-action-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "vertical-align",
+          "token": null,
+          "value": "middle",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": null,
+          "value": "none",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-surface-subtle",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "border-top",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "white-space",
+          "token": null,
+          "value": "normal",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "min-height",
+          "token": "--dss-touch-target-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "flex",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "gap",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-1_5",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-top",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "height",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding",
+          "token": "--dss-spacing-4",
+          "value": null,
+          "source": "3-variants/_variant.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom-width",
+          "token": "--dss-border-width-thin",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": null,
+          "value": "-2px",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-bottom",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "CanvasText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline",
+          "token": null,
+          "value": "2px solid Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "color",
+          "token": null,
+          "value": "HighlightText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border-top",
+          "token": null,
+          "value": "1px solid ButtonText",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "transition",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "block",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "overflow",
+          "token": null,
+          "value": "visible",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "break-inside",
+          "token": null,
+          "value": "avoid",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "border",
+          "token": null,
+          "value": "1px solid currentColor",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-hub-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-hub-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-water-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-water-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-water-500",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "background-color",
+          "token": "--dss-waste-50",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-700",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "border-bottom-color",
+          "token": "--dss-waste-200",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "color",
+          "token": "--dss-waste-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        }
+      ],
+      "hover": [
+        {
+          "property": "background-color",
+          "token": "--dss-surface-default",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "background-color",
+          "token": null,
+          "value": "Canvas",
+          "source": "4-output/_states.scss"
+        }
+      ],
+      "focus": [
+        {
+          "property": "outline",
+          "token": "--dss-border-width-md",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": null,
+          "value": "-2px",
+          "source": "2-composition/_base.scss"
+        }
+      ]
+    }
+  },
+  "tokens": {
+    "categories": [
+      "border",
+      "color",
+      "motion",
+      "other",
+      "spacing",
+      "typography"
+    ],
+    "instances": [
+      {
+        "name": "--dss-radius-md",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-family-sans",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-text-body",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-font-size-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-default",
+        "usedIn": [
+          "default",
+          "hover"
+        ]
+      },
+      {
+        "name": "--dss-spacing-3",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-size-sm",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-font-weight-semibold",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-md",
+        "usedIn": [
+          "default",
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-duration-250",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-border-width-thin",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-surface-subtle",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-touch-target-md",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-1_5",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-4",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-hub-600",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-water-500",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-50",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-700",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-200",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-waste-600",
+        "usedIn": [
+          "default"
+        ]
+      }
+    ]
+  },
+  "a11y": {
+    "wcag": [
+      {
+        "criterion": "1.4.3",
+        "level": "AA",
+        "implementation": "Texto das células usa --dss-text-body sobre --dss-surface-default; a razão é calculada pelo emissor a partir dos tokens reais do componente.",
+        "verifiedBy": "css"
+      },
+      {
+        "criterion": "1.3.1",
+        "level": "A",
+        "implementation": "A semântica de tabela (thead/th/td e associação cabeçalho-célula) é a do QTable, não reimplementada. Âncora: DssTable.test.js cobre render, colunas e seleção.",
+        "verifiedBy": "test"
+      }
+    ],
+    "aria": {
+      "role": "table"
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "percorrer controles da régua e caixas de seleção"
+      },
+      {
+        "key": "Espaço",
+        "action": "alternar a seleção da linha focada quando selection != none"
+      }
+    ]
+  },
+  "antiPatterns": [
+    {
+      "rule": "P01"
+    }
+  ],
+  "bindingRules": [
+    {
+      "id": "P01",
+      "name": "Token First",
+      "appliesTo": [
+        "visual.states"
+      ]
+    }
+  ],
+  "dependencies": {
+    "dss": [
+      "DssIcon"
+    ],
+    "quasar": [
+      "QInput"
+    ]
+  },
+  "sources": {
+    "structure": "1-structure/DssTable.ts.vue",
+    "scss": {
+      "L2": "2-composition/_base.scss",
+      "L3": "3-variants/_variant.scss",
+      "L4": [
+        "4-output/_brands.scss",
+        "4-output/_states.scss"
+      ]
+    },
+    "types": "types/table.types.ts",
+    "docs": {
+      "normative": "DssTable.md",
+      "api": "DSSTABLE_API.md",
+      "readme": "README.md"
+    },
+    "examples": "DssTable.example.vue",
+    "tests": "DssTable.test.js",
+    "seal": "docs/Compliance/seals/DssTable/DSSTABLE_SELO_v2.2.md"
+  }
+}

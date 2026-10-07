@@ -43,6 +43,48 @@
      EXC-Gate-01: seletor descendente obrigatório
      ========================================================================== */
 
+  /* ==========================================================================
+     O CORPO NÃO ROLA SOZINHO
+     ==========================================================================
+
+     O Quasar põe `overflow: auto` no `.q-table__middle`. Com
+     `border-collapse: collapse` cada linha fica com MEIO PIXEL (a borda de 1px
+     é compartilhada entre linhas adjacentes), e o `scrollHeight` compõe o
+     conteúdo arredondando cada linha PARA CIMA enquanto o `clientHeight` mede
+     a caixa. O resultado é uma barra de rolagem para conteúdo que não existe.
+
+     Medido: 4 linhas → 1px de excesso fantasma; 10 linhas → 3px. O erro é
+     proporcional ao NÚMERO DE LINHAS, não ao conteúdo — por isso paginar
+     reduz, mas não elimina. Verificado que nada é cortado: a tabela termina
+     exatamente na borda do corpo (0px de transbordo).
+
+     Sem rolagem interna a tabela cresce e quem rola é a PÁGINA, que é o
+     comportamento certo: rolagem aninhada desorienta (a roda rola uma caixa, a
+     barra de fora não se move).
+
+     `--virtual-scroll` é a exceção nomeada: ali a rolagem interna é o mecanismo
+     do componente, não efeito colateral. Mesma lógica vale para quem fixa
+     altura — e por isso a regra cede a qualquer `height` declarada no corpo. */
+  &:not(.dss-table--virtual-scroll) .q-table__middle {
+    /* `hidden`, e NÃO `visible` — medido: `visible` não pega.
+       Pela especificação, quando um eixo é `auto` e o outro `visible`, o
+       `visible` é computado como `auto`. Como o corpo precisa de
+       `overflow-x: auto` (tabela larga rola na horizontal), pedir
+       `overflow-y: visible` devolvia `auto` e a barra continuava.
+
+       `hidden` não sofre essa conversão e não corta nada aqui: o transbordo
+       vertical real é 0px — medido com a tabela terminando exatamente na borda
+       do corpo. O que se corta é o fantasma do arredondamento.
+
+       `!important` é EXCEÇÃO NECESSÁRIA, não preguiça: o Quasar declara este
+       overflow com `!important` dentro de `@layer quasar`, e declaração
+       `!important` em layer NÃO é sobrescrita por CSS unlayered do DSS — a
+       ordem de precedência se inverte para `!important`. Verificado: sem ele,
+       nem regra de autor nem `@layer quasar` vencem. (Mesma exceção já
+       registrada em DEBITO_ABERTO.md para a família Quasar.) */
+    overflow-y: hidden !important;
+  }
+
   .q-table {
     border-collapse: collapse;
     width: 100%;
