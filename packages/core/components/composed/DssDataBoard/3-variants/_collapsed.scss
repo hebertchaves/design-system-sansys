@@ -1,0 +1,50 @@
+// ==========================================================================
+// DssDataBoard — Layer 3: Variants (Retraído)
+// ==========================================================================
+//
+// Retraído, o board vira UMA faixa horizontal: o título, os chips e os resumos
+// dos painéis lado a lado. Não é o mesmo layout menor — é outro arranjo, e por
+// isso é variante e não um ajuste de espaçamento.
+//
+// Seletor duplo (0,2,0) para a disputa se resolver por ESPECIFICIDADE e não
+// por ordem de bundle. Mesmo padrão do DssPageShell, onde a ordem já rendeu
+// um defeito.
+// ==========================================================================
+
+.dss-data-board.dss-data-board--collapsed {
+  align-items: center;
+  padding-block: var(--dss-spacing-1);
+
+  // O filtro deixa de ser coluna e passa a dividir a linha com os painéis.
+  .dss-data-board__filter {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--dss-spacing-3);
+  }
+
+  // O cabeçalho encolhe para o título: as ações pertencem ao modo expandido.
+  .dss-data-board__head {
+    flex: 0 0 auto;
+  }
+
+  .dss-data-board__actions {
+    display: none;
+  }
+
+  // Os chips assumem o espaço: no retraído eles SÃO o resumo do filtro.
+  .dss-data-board__chips {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  .dss-data-board__panels,
+  .dss-data-board__panel {
+    align-items: center;
+  }
+
+  .dss-data-board__panel-content {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--dss-spacing-2);
+  }
+}

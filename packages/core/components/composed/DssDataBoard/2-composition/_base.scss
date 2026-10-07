@@ -1,0 +1,284 @@
+// ==========================================================================
+// DssDataBoard — Layer 2: Composition (Base)
+// ==========================================================================
+//
+// A faixa de filtro acima da tabela. Fundo rebaixado próprio, painéis
+// transparentes por cima — o inverso do padrão "cartão branco sobre cinza",
+// e é o que o protótipo mostra: o cinza claro é do CONTÊINER, e os painéis
+// internos são flat, sem fundo.
+// ==========================================================================
+
+.dss-data-board {
+  display: grid;
+  // Colunas IMPLÍCITAS depois da primeira, e isso corrige um defeito medido:
+  // com `grid-template-columns: minmax(0,1fr) auto auto` FIXO, uma tela sem
+  // painéis deixava a terceira coluna existindo com 0px — mas o `gap` ANTES
+  // dela continuava contando, e o expansor ficava 9px longe da borda em vez de
+  // colado (8px de gap + 1px de borda). Coluna sem conteúdo não deve reservar
+  // espaço nem gap.
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  align-items: stretch;
+  gap: var(--dss-spacing-2);
+
+  padding: var(--dss-spacing-2);
+
+  // Âncora do expansor flutuante. `relative` aqui e `absolute` nele é o que o
+  // tira do fluxo: ele deixa de ocupar coluna no grid, e por isso o padding
+  // volta a ser simétrico — não há mais o que colar na borda.
+  position: relative;
+
+  background: var(--dss-surface-muted);
+  border: var(--dss-border-width-thin) solid var(--dss-border-subtle);
+}
+
+// --------------------------------------------------------------------------
+// Filtro — o núcleo
+// --------------------------------------------------------------------------
+
+.dss-data-board__filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+  // Sem isto, campo largo empurra a coluna e os painéis sao espremidos.
+  min-inline-size: 0;
+}
+
+.dss-data-board__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dss-spacing-3);
+  flex-wrap: wrap;
+}
+
+.dss-data-board__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+}
+
+// --------------------------------------------------------------------------
+// Campos
+// --------------------------------------------------------------------------
+
+.dss-data-board__fields {
+  display: grid;
+  // Seis colunas é o contrato do protótipo (grade Bootstrap), mas com
+  // `auto-fit` + `minmax` em vez de `repeat(6, 1fr)` fixo: numa faixa estreita
+  // seis colunas de 1fr produziriam campos ilegíveis. O `span` por campo
+  // continua valendo.
+  grid-template-columns: repeat(auto-fit, minmax(var(--dss-spacing-36), 1fr));
+  gap: var(--dss-spacing-3);
+
+  // Item de grade não encolhe abaixo do conteúdo sem isto: o campo tem largura
+  // natural maior que a coluna e vaza.
+  > * {
+    min-inline-size: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Chips dos filtros aplicados — uma linha
+// --------------------------------------------------------------------------
+
+.dss-data-board__chips {
+  list-style: none;
+  margin: var(--dss-spacing-0);
+  padding: var(--dss-spacing-0);
+  display: flex;
+  align-items: center;
+  gap: var(--dss-spacing-2);
+
+  // Recolhida: UMA linha. O recorte é cinto de segurança — quem de fato tira
+  // o excedente é o `hidden` no template, que o remove do DOM (chip invisível
+  // mas tabulável é armadilha de teclado).
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+  // Chip NÃO encolhe. Num flex `nowrap` o padrão é `flex-shrink: 1`, e com a
+  // lista cheia os chips eram espremidos: o rótulo truncava e a largura MEDIDA
+  // deixava de ser a natural — justamente a entrada da conta de encaixe.
+  > li {
+    flex: 0 0 auto;
+  }
+
+  &--expandido {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  // Durante a medição, além de quebrar linha, os itens alinham pelo TOPO — é o
+  // que faz `offsetTop` identificar a linha. Com `center` (o alinhamento
+  // normal) itens de alturas diferentes na mesma linha têm topos diferentes.
+  &--medindo {
+    flex-wrap: wrap;
+    overflow: visible;
+    align-items: flex-start;
+  }
+}
+
+.dss-data-board__submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-block-start: var(--dss-spacing-1);
+}
+
+// O aviso de "filtro mudou" para leitor de tela.
+//
+// Visualmente oculto, NÃO `display: none`: o conteúdo precisa existir na
+// árvore de acessibilidade para o `aria-live` anunciar e para o
+// `aria-describedby` resolver. `display: none` apaga das duas coisas.
+//
+// A dica visual equivalente é o DssTooltip; este span é o canal do leitor de
+// tela, porque tooltip não é anunciado de forma confiável.
+.dss-data-board__notice {
+  position: absolute;
+  inline-size: var(--dss-spacing-px);
+  block-size: var(--dss-spacing-px);
+  padding: var(--dss-spacing-0);
+  margin: calc(var(--dss-spacing-px) * -1);
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// --------------------------------------------------------------------------
+// Painéis complementares
+// --------------------------------------------------------------------------
+
+.dss-data-board__panels {
+  display: flex;
+  align-items: stretch;
+  gap: var(--dss-spacing-3);
+}
+
+.dss-data-board__panel {
+  display: flex;
+  align-items: stretch;
+  gap: var(--dss-spacing-3);
+  // Sem fundo: o cinza é do board. Painel flat é o contrato do protótipo.
+  background: transparent;
+}
+
+.dss-data-board__panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dss-spacing-2);
+  min-inline-size: 0;
+}
+
+// O separador é suprimido no primeiro painel — a linha divide, não delimita.
+.dss-data-board__panels > .dss-data-board__panel:first-child
+  .dss-data-board__panel-divider {
+  display: none;
+}
+
+// --------------------------------------------------------------------------
+// Gatilho de retração
+// --------------------------------------------------------------------------
+
+// Expansor — badge redondo FLUTUANTE no canto superior direito.
+//
+// `absolute` o tira do fluxo: ele não ocupa coluna no grid, não empurra o
+// conteúdo e não muda a altura do board. É o que permite dar a ele os 44px da
+// WCAG 2.5.5 sem custar um milímetro de layout — a versão anterior, como aba
+// no fluxo, tinha 24px de largura e reprovava a norma.
+//
+// O deslocamento negativo o faz MORDER o canto: metade sobre o board, metade
+// fora. Sobreposição mínima, como um badge de notificação.
+.dss-data-board__toggle {
+  position: absolute;
+  // Canto inferior direito, metade para fora em cada eixo (22px de 44px).
+  //
+  // Na BASE e não no topo: em cima ele sobrevoava o slot `actions`, e medido
+  // colidia 28×28px com o botão "Opções filtro". Afastar o badge resolvia esta
+  // tela mas não o caso geral — qualquer conteúdo no slot colidiria de novo —,
+  // e reservar espaço no cabeçalho deslocava os botões internos de um jeito
+  // que se lia como desalinho.
+  //
+  // Embaixo o quadrante está livre: o botão de busca é centralizado, e o canto
+  // direito da base não é usado por conteúdo nenhum.
+  inset-block-end: calc(var(--dss-touch-target-md) / -2);
+  inset-inline-end: calc(var(--dss-touch-target-md) / -2);
+  z-index: var(--dss-z-index-10);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // 44px nos DOIS eixos: o alvo é a caixa visual, porque o botão não estende
+  // área por pseudo-elemento.
+  inline-size: var(--dss-touch-target-md);
+  block-size: var(--dss-touch-target-md);
+
+  padding: var(--dss-spacing-0);
+  border: 0;
+  border-radius: var(--dss-radius-circle);
+  background: var(--dss-action-primary);
+  color: var(--dss-action-primary-text);
+  cursor: pointer;
+
+  // A sombra é o que o lê como FLUTUANTE, e não como um furo no board.
+  box-shadow: var(--dss-elevation-2);
+
+  transition: background-color var(--dss-duration-fast) var(--dss-easing-standard);
+
+  &:hover {
+    background: var(--dss-action-primary-hover);
+  }
+}
+
+// --------------------------------------------------------------------------
+// MOVIMENTO
+// --------------------------------------------------------------------------
+//
+// `--dss-collapse-duration` e `--dss-collapse-easing` vêm do `:root`
+// (tokens/semantic/_motion.scss) e NÃO são declarados aqui de propósito: uma
+// custom property declarada no próprio elemento vence a que vem do ancestral,
+// e o board deixaria de ser afinável de fora — medido, um contêiner que pedia
+// 500ms continuava em 250ms.
+
+// O chevron GIRA; não troca de glifo.
+//
+// A versão anterior alternava `keyboard_arrow_up` e `keyboard_arrow_down`: uma
+// troca instantânea no meio de uma transição contínua. O que se via era o
+// ícone pulando enquanto o resto deslizava.
+.dss-data-board__toggle-icon {
+  font-size: var(--dss-icon-size-md);
+  transition: transform var(--dss-collapse-duration) var(--dss-collapse-easing);
+}
+
+.dss-data-board--collapsed .dss-data-board__toggle-icon {
+  transform: rotate(180deg);
+}
+
+// --------------------------------------------------------------------------
+// O esmaecimento que suaviza a TROCA DE ARRANJO
+// --------------------------------------------------------------------------
+//
+// A altura é medida em JS; o conteúdo é assunto do CSS. `data-dss-collapsing`
+// é ligado pelo composable no instante zero e desligado no fim — o conteúdo
+// novo, que já nasceu no arranjo novo, entra esmaecendo em vez de aparecer
+// pronto sobre a caixa ainda em movimento.
+//
+// O gatilho fica DE FORA: esmaecer o botão que a pessoa acabou de clicar é
+// perder o único ponto fixo da cena.
+.dss-data-board[data-dss-collapsing] .dss-data-board__filter,
+.dss-data-board[data-dss-collapsing] .dss-data-board__panels {
+  animation: dss-data-board-surgir var(--dss-collapse-duration)
+    var(--dss-easing-decelerate);
+}
+
+@keyframes dss-data-board-surgir {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,88 @@
+// ==========================================================================
+// DssDataBoard — Layer 4: Estados Adaptativos
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Dark mode
+//
+// O board é superfície REBAIXADA: no claro ele é mais escuro que a página, no
+// escuro precisa continuar legível como "o nível abaixo". `--dss-surface-muted`
+// já faz essa inversão por token, então não há override de COR aqui — só a
+// borda, que no escuro precisa de mais presença para separar do fundo.
+// --------------------------------------------------------------------------
+
+[data-theme='dark'] {
+  .dss-data-board {
+    border-color: var(--dss-border-default);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Foco do gatilho
+//
+// Anel por `:focus-visible`, e aqui NÃO vale a exceção de campo de texto: o
+// gatilho é um botão, e a pseudo-classe separa mouse de teclado corretamente.
+// Por isso ele não precisa de `[data-dss-modality]`, ao contrário da família
+// de campos.
+// --------------------------------------------------------------------------
+
+.dss-data-board__toggle:focus-visible {
+  outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
+  outline-offset: var(--dss-spacing-0_5);
+}
+
+// --------------------------------------------------------------------------
+// Movimento reduzido
+// --------------------------------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .dss-data-board__toggle {
+    transition: none;
+  }
+
+  // O giro do chevron e o esmaecimento do conteúdo também caem. A altura já
+  // é desligada no próprio composable, que consulta a mesma preferência — com
+  // ela ligada, a retração volta a ser instantânea, que é o que a norma pede.
+  .dss-data-board__toggle-icon {
+    transition: none;
+  }
+
+  .dss-data-board[data-dss-collapsing] .dss-data-board__filter,
+  .dss-data-board[data-dss-collapsing] .dss-data-board__panels {
+    animation: none;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Forced colors (Windows High Contrast)
+// EXC: system color keywords obrigatórios — tokens sao ignorados pelo navegador
+// --------------------------------------------------------------------------
+
+@media (forced-colors: active) {
+  .dss-data-board {
+    border: var(--dss-border-width-thin) solid CanvasText;
+  }
+
+  .dss-data-board__toggle {
+    background: ButtonFace;
+    color: ButtonText;
+    border: var(--dss-border-width-thin) solid ButtonText;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Impressão
+//
+// O gatilho sai (não se clica em papel). O fundo rebaixado também: cinza no
+// papel gasta tinta sem informar.
+// --------------------------------------------------------------------------
+
+@media print {
+  .dss-data-board {
+    background: transparent;
+  }
+
+  .dss-data-board__toggle {
+    display: none;
+  }
+}

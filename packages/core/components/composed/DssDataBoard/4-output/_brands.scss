@@ -1,0 +1,16 @@
+// ==========================================================================
+// DssDataBoard — Layer 4: Brands
+// ==========================================================================
+//
+// VAZIO POR DESIGN, e isso é resultado, não omissão.
+//
+// O board consome `--dss-action-primary` (gatilho), `--dss-action-primary-hover`
+// e `--dss-action-primary-text`. Os três são remapeados por `[data-brand]` na
+// camada de tokens, então a marca chega sozinha — sem uma única regra aqui.
+//
+// A prop `brand` emite `data-brand` no root e REMAPEIA o token; ela não pinta
+// elemento nenhum. É o §K5 do checklist, e custou um defeito medido: o
+// DssLinearProgress pintava o elemento do Quasar direto e vencia a própria
+// regra de cor por especificidade — dentro de qualquer `[data-brand]` a prop
+// `color` virava inerte.
+// ==========================================================================
