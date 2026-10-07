@@ -55,17 +55,50 @@ function findCompDir(name) {
   return null
 }
 
-// Rollout incremental: o gate só enforça componentes que JÁ têm dss.contract.json
-// (à medida que o backfill escala, cada componente entra no gate automaticamente).
-function findComponentsWithContract() {
+// Rollout incremental: o gate enforça quem JÁ tem dss.contract.json — cada
+// componente entra no gate à medida que o backfill escala.
+//
+// O BURACO QUE ISSO ABRIA (fechado em set/2026). "Quem não tem contrato não é
+// cobrado" significa que a AUSÊNCIA de contrato era isenção, não falha: um
+// componente novo nascia fora do gate e ninguém percebia. Descoberto ao ligar a
+// view do DssTable, que não tinha contrato — e por isso passava pelo --strict
+// sem aparecer. Havia outros 10 compostos no mesmo estado.
+//
+// O ratchet fecha sem quebrar a rampa: o débito conhecido fica no baseline e não
+// trava; qualquer componente FORA do baseline e sem contrato reprova. Mesmo
+// mecanismo do validate-scss-tokens (scss-token-ghost-baseline.json).
+const BASELINE_SEM_CONTRATO = path.join(ROOT, 'scripts', 'contract-missing-baseline.json')
+
+function lerBaseline() {
+  try { return new Set(JSON.parse(fs.readFileSync(BASELINE_SEM_CONTRATO, 'utf8')).semContrato || []) }
+  catch { return new Set() }
+}
+
+/** Toda pasta de componente — tenha contrato ou não. */
+function findAllComponentDirs() {
   const out = []
   for (const base of BASE_DIRS) {
     if (!fs.existsSync(base)) continue
     for (const e of fs.readdirSync(base, { withFileTypes: true })) {
-      if (e.isDirectory() && exists(path.join(base, e.name, 'dss.contract.json'))) out.push(e.name)
+      if (e.isDirectory() && exists(path.join(base, e.name, 'dss.meta.json'))) out.push(e.name)
     }
   }
   return out.sort()
+}
+
+function findComponentsWithContract() {
+  return findAllComponentDirs()
+    .filter(n => exists(path.join(findCompDir(n), 'dss.contract.json')))
+    .sort()
+}
+
+/** Componentes sem contrato que NÃO estão no baseline — débito novo. */
+function findContratosAusentesNovos() {
+  const baseline = lerBaseline()
+  return findAllComponentDirs()
+    .filter(n => !exists(path.join(findCompDir(n), 'dss.contract.json')))
+    .filter(n => !baseline.has(n))
+    .sort()
 }
 
 // ── API ← types.ts (TS compiler) ─────────────────────────────────────────────
@@ -482,4 +515,30 @@ for (const name of names) {
 }
 
 console.log(`\n${anyFail ? '❌' : '✅'} ${names.length} componente(s) processado(s)${anyFail ? ' — há contrato inválido / âncora reprovada' : ''}.`)
+
+// ── Ratchet: ausência de contrato é FALHA, não isenção ───────────────────────
+// Só faz sentido no varrimento completo; num componente nomeado o usuário já
+// sabe o que pediu.
+if (all) {
+  const baseline = lerBaseline()
+  const novos = findContratosAusentesNovos()
+  const conhecidos = findAllComponentDirs()
+    .filter(n => !exists(path.join(findCompDir(n), 'dss.contract.json')))
+    .filter(n => baseline.has(n))
+
+  if (conhecidos.length) {
+    console.log(`\n⚠️  Débito conhecido (baseline): ${conhecidos.length} componente(s) sem dss.contract.json — a zerar.`)
+    console.log(`   ${conhecidos.join(', ')}`)
+  }
+  if (novos.length) {
+    anyFail = true
+    console.log(`\n❌ ${novos.length} componente(s) SEM contrato e FORA do baseline:`)
+    for (const n of novos) console.log(`   · ${n}`)
+    console.log('\n   Ausência de contrato não é isenção do gate. Emita com')
+    console.log('   `node scripts/emit-contract.mjs <Comp> --write`, ou — se for débito')
+    console.log('   legado aceito — acrescente ao scripts/contract-missing-baseline.json')
+    console.log('   conscientemente.')
+  }
+}
+
 if (strict && anyFail) process.exit(1)

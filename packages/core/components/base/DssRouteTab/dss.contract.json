@@ -27,7 +27,7 @@
         "required": true,
         "description": "Identificador único da aba.",
         "category": "Comportamento",
-        "categorySource": "excecao"
+        "categorySource": "quasar"
       },
       {
         "name": "label",
@@ -114,8 +114,8 @@
         "type": "number | string",
         "controlHint": "text",
         "description": "Posição na ordem de tabulação.",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [],

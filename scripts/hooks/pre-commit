@@ -247,6 +247,20 @@ if [ -n "$SANDBOX_VUE" ]; then
   echo "✅ Tags DSS do sandbox: OK."
 fi
 
+# ── 6a. Sandbox: menu fantasma (item sem view / componente inexistente) ──────
+# O menu do TestSuite.vue é mantido à MÃO. Em set/2026 tinha 59 itens para 49
+# views: dez clicavam e não renderizavam nada, e quatro nomeavam componentes
+# que nunca existiram (DssAlert, DssContainer, DssGrid, IconButton).
+if echo "$STAGED" | grep -qE 'apps/sandbox/src/TestSuite\.vue|packages/core/components/'; then
+  echo "🔍 Validando menu do sandbox (item ↔ view ↔ catálogo)..."
+  node scripts/validate-sandbox-nav.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Menu do sandbox promete o que o disco não cumpre."
+    exit 1
+  fi
+  echo "✅ Menu do sandbox: OK."
+fi
+
 # ── 6b. DemoRenderer registry ↔ componentes base (drift de registry) ─────────
 # Componente base novo/selado esquecido no registry manual não aparece no sandbox.
 if echo "$STAGED" | grep -qE 'apps/sandbox/src/DemoRenderer\.vue|packages/core/catalog\.json|dss\.meta\.json'; then

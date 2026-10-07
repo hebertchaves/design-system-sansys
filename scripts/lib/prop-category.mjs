@@ -66,6 +66,13 @@ export const DE_QUASAR = {
   state: 'Estado', validation: 'Estado', selection: 'Estado', filter: 'Estado',
   behavior: 'Comportamento', navigation: 'Comportamento', router: 'Comportamento', upload: 'Comportamento',
   accessibility: 'Acessibilidade',
+  // Categorias que só o QTable usa (set/2026). Sem elas, `columns`, `row-key`,
+  // `pagination`, `virtual-scroll` e `rows-per-page-options` caíam em "Outros"
+  // mesmo tendo categoria no api.json do Quasar — a ponte é que faltava.
+  column: 'Conteúdo',          // a definição de coluna É o conteúdo da tabela
+  pagination: 'Comportamento', // quantas linhas por vez, e como navegar entre elas
+  'virtual-scroll': 'Comportamento',
+  general: 'Comportamento',    // row-key: como a tabela identifica a linha
 }
 
 /**
@@ -177,6 +184,30 @@ export const EXCECOES = {
   // 'content'. Debounce é quando a busca dispara, não o que ela mostra — quem
   // procura por ele vai a Comportamento.
   inputDebounce: 'Comportamento',
+  // Validação de campo (set/2026). `rules` é Estado porque o que ela governa é
+  // o estado de erro do campo — é o par de `error`/`errorMessage`, já em Estado.
+  // `lazyRules` é Comportamento: não muda o veredito, muda QUANDO ele é apurado.
+  rules: 'Estado',
+  lazyRules: 'Comportamento',
+  // DssDialog: props RENOMEADAS em relação ao QDialog, e por isso invisíveis
+  // para a âncora do Quasar — `transition-show`/`transition-hide` viraram
+  // `transitionEnter`/`transitionLeave`, e `no-esc-dismiss`/`no-backdrop-dismiss`
+  // viraram `disableEsc`/`disableBackdropClick`. A categoria é a mesma do
+  // original: transição é Comportamento, e desligar uma saída também.
+  // DssSectionTitle: `level` decide a TAG do cabeçalho — é ESTRUTURA do
+  // documento, não aparência. Fica em Conteúdo porque é o que o título É, e
+  // não como ele se parece: `size` é que é Aparência, e os dois são eixos
+  // separados justamente para não se confundirem.
+  'DssSectionTitle.level': 'Conteúdo',
+  // DssAppBar: props próprias do composto, sem equivalente no Quasar.
+  // `menu` liga/desliga uma PEÇA da estrutura (o botão), e `elevated` é a
+  // sombra — uma é comportamento da barra, a outra é aparência.
+  'DssAppBar.menu': 'Comportamento',
+  'DssAppBar.elevated': 'Aparência',
+  transitionEnter: 'Comportamento',
+  transitionLeave: 'Comportamento',
+  disableEsc: 'Comportamento',
+  disableBackdropClick: 'Comportamento',
   // ── Acessibilidade ─────────────────────────────────────────────────────────
   decorative: 'Acessibilidade',            // controla aria-hidden
   leadingDecorative: 'Acessibilidade', trailingDecorative: 'Acessibilidade',

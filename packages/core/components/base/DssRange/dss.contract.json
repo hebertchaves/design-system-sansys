@@ -157,8 +157,8 @@
         "controlHint": "text",
         "default": "null",
         "description": "Tabindex customizado.",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",

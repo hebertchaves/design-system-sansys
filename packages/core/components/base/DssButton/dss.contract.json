@@ -259,8 +259,8 @@
         "type": "number | string | null",
         "controlHint": "text",
         "description": "Tabindex customizado",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",
@@ -3046,9 +3046,9 @@
         },
         {
           "property": "inset",
-          "token": null,
-          "value": "0",
-          "source": "3-variants/_outline.scss"
+          "token": "--dss-button-state-layer-inset",
+          "value": null,
+          "source": "3-variants/_flat.scss"
         },
         {
           "property": "background-color",
@@ -3078,6 +3078,12 @@
           "property": "z-index",
           "token": null,
           "value": "-1",
+          "source": "3-variants/_outline.scss"
+        },
+        {
+          "property": "inset",
+          "token": null,
+          "value": "0",
           "source": "3-variants/_outline.scss"
         },
         {
@@ -3258,7 +3264,7 @@
         },
         {
           "property": "outline-offset",
-          "token": "--dss-spacing-1",
+          "token": "--dss-button-focus-ring-offset",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -3662,8 +3668,7 @@
       {
         "name": "--dss-spacing-1",
         "usedIn": [
-          "default",
-          "focus"
+          "default"
         ]
       },
       {
@@ -4626,6 +4631,12 @@
         ]
       },
       {
+        "name": "--dss-button-state-layer-inset",
+        "usedIn": [
+          "hover"
+        ]
+      },
+      {
         "name": "--dss-action-primary-hover",
         "usedIn": [
           "hover"
@@ -4731,6 +4742,12 @@
         "name": "--dss-action-tertiary-hover",
         "usedIn": [
           "hover"
+        ]
+      },
+      {
+        "name": "--dss-button-focus-ring-offset",
+        "usedIn": [
+          "focus"
         ]
       },
       {

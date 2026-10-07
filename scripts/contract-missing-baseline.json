@@ -1,0 +1,21 @@
+{
+  "_comentario": [
+    "Débito conhecido do gate de contrato (set/2026).",
+    "Estes componentes não têm dss.contract.json. Até aqui a AUSÊNCIA era isenção:",
+    "`emit-contract --all` só varria pastas que já tinham contrato, então componente",
+    "sem contrato não reprovava — era invisível. Descoberto ao ligar a view do DssTable.",
+    "O ratchet fecha o buraco sem travar a rampa: estes ficam registrados e não",
+    "bloqueiam; qualquer componente FORA desta lista e sem contrato reprova.",
+    "A lista só ENCOLHE. Para tirar um: emita o contrato e remova daqui."
+  ],
+  "semContrato": [
+    "DssBottomSheet",
+    "DssCarousel",
+    "DssChatMessage",
+    "DssColorPicker",
+    "DssDatePicker",
+    "DssPopupEdit",
+    "DssTestPageComplexity",
+    "DssTimePicker"
+  ]
+}

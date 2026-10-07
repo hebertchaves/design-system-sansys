@@ -129,8 +129,8 @@
         "type": "number | string",
         "controlHint": "text",
         "description": "Índice de tabulação para navegação por teclado",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "size",

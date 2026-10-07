@@ -190,8 +190,8 @@
         "type": "number | string | null",
         "controlHint": "text",
         "description": "Tabindex customizado para o QSlider",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "ariaLabel",
