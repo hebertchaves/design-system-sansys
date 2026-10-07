@@ -1,0 +1,5 @@
+{
+  "extends": "./apps/docs-portal/tsconfig.json",
+  "include": ["apps/docs-portal/src"],
+  "exclude": ["node_modules", "apps/docs-portal/dist", "packages/*/dist"]
+}
