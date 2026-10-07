@@ -167,7 +167,7 @@
         "source": "2-composition/_base.scss"
       }
     ],
-    "demoContent": "3 abas com ícone e rótulo; a última com alert",
+    "demoContent": "10 abas com os módulos reais do Sansys (uma com alert). O número e o comprimento dos rótulos são deliberados: o grupo precisa TRANSBORDAR, que é a única condição em que outsideArrows, mobileArrows e as setas de navegação têm efeito visível. Com 3 abas curtas o Quasar marcava q-tabs--not-scrollable e esses knobs mudavam a classe no DOM sem mudar nada na tela — o que se lia como 'o preview não aplica a opção selecionada'.",
     "demoSlots": {
       "default": [
         {
@@ -181,18 +181,74 @@
         {
           "component": "DssTab",
           "props": {
-            "name": "perfil",
-            "label": "Perfil",
+            "name": "cadastro",
+            "label": "Informações de cadastro",
             "icon": "person"
           }
         },
         {
           "component": "DssTab",
           "props": {
-            "name": "config",
-            "label": "Config",
-            "icon": "settings",
+            "name": "financeiro",
+            "label": "Financeiro",
+            "icon": "attach_money"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "ordens",
+            "label": "Ordens de serviço",
+            "icon": "build"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "leituras",
+            "label": "Leituras e consumo",
+            "icon": "speed"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "cobrancas",
+            "label": "Cobranças e negociações",
+            "icon": "receipt_long"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "atendimentos",
+            "label": "Atendimentos",
+            "icon": "support_agent",
             "alert": true
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "relatorios",
+            "label": "Relatórios gerenciais",
+            "icon": "bar_chart"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "historico",
+            "label": "Histórico",
+            "icon": "history"
+          }
+        },
+        {
+          "component": "DssTab",
+          "props": {
+            "name": "config",
+            "label": "Configurações",
+            "icon": "settings"
           }
         }
       ]

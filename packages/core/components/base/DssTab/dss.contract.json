@@ -247,6 +247,30 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "margin-block-end",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "margin-inline-end",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-inline-end",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "padding-inline-end",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "opacity",
           "token": "--dss-opacity-disabled",
           "value": null,
@@ -506,6 +530,24 @@
         "usedIn": [
           "default",
           "defaultPreview"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
+        "usedIn": [
+          "default"
         ]
       },
       {

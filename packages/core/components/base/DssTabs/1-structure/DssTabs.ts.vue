@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<TabsProps>(), {
   dense: false,
   brand: null,
   ariaLabel: undefined,
-  inlineLabel: false,
+  inlineLabel: true,
   narrowIndicator: false,
   switchIndicator: false,
   shrink: false,

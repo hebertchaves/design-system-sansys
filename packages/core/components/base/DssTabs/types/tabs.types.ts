@@ -120,10 +120,17 @@ export interface TabsProps {
   /**
    * Coloca ícone e rótulo LADO A LADO, em vez de empilhados.
    *
-   * O empilhado é o padrão Material e ocupa mais altura; inline é o formato de
-   * barra de navegação densa. Sem esta prop, só existia o empilhado.
+   * DEFAULT `true` — e é um DESVIO DELIBERADO do Quasar, que empilha.
    *
-   * @default false
+   * O empilhado é o padrão do Material para navegação móvel: ele gasta uma
+   * linha inteira de altura por aba, e numa tela densa de operação essa linha
+   * sai das linhas de dado. Pior que o custo de altura é o ALERTA: o
+   * `.q-tab__alert` é posicionado em `absolute`, e no arranjo empilhado ele
+   * cai SOBRE o rótulo — medido, o ponto cobria o fim de "PENDENTES".
+   *
+   * Quem quiser o empilhado pede `:inline-label="false"` explicitamente.
+   *
+   * @default true
    */
   inlineLabel?: boolean
 

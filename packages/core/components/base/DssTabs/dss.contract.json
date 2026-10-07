@@ -96,7 +96,7 @@
         "name": "inlineLabel",
         "type": "boolean",
         "controlHint": "toggle",
-        "default": false,
+        "default": true,
         "description": "Coloca ícone e rótulo LADO A LADO, em vez de empilhados.",
         "category": "Conteúdo",
         "categorySource": "quasar"
@@ -194,18 +194,74 @@
           {
             "component": "DssTab",
             "props": {
-              "name": "perfil",
-              "label": "Perfil",
+              "name": "cadastro",
+              "label": "Informações de cadastro",
               "icon": "person"
             }
           },
           {
             "component": "DssTab",
             "props": {
-              "name": "config",
-              "label": "Config",
-              "icon": "settings",
+              "name": "financeiro",
+              "label": "Financeiro",
+              "icon": "attach_money"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "ordens",
+              "label": "Ordens de serviço",
+              "icon": "build"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "leituras",
+              "label": "Leituras e consumo",
+              "icon": "speed"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "cobrancas",
+              "label": "Cobranças e negociações",
+              "icon": "receipt_long"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "atendimentos",
+              "label": "Atendimentos",
+              "icon": "support_agent",
               "alert": true
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "relatorios",
+              "label": "Relatórios gerenciais",
+              "icon": "bar_chart"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "historico",
+              "label": "Histórico",
+              "icon": "history"
+            }
+          },
+          {
+            "component": "DssTab",
+            "props": {
+              "name": "config",
+              "label": "Configurações",
+              "icon": "settings"
             }
           }
         ]

@@ -123,6 +123,48 @@
   }
 
   // ------------------------------------------------------------------
+  // Ícone ao lado do rótulo — o respiro que o Quasar não dá na horizontal
+  // ------------------------------------------------------------------
+  // EXC-01 — seletor Quasar. Com `inline-label`, o Quasar troca a direção do
+  // conteúdo para linha mas MANTÉM a margem do arranjo empilhado no ícone
+  // (`margin-bottom: 4px`), sem nenhuma margem horizontal. Medido numa barra
+  // horizontal: 0px entre o glifo e a primeira letra — ícone colado no texto.
+  //
+  // Na barra VERTICAL o Quasar acerta sozinho (margem à direita de 8px); aqui
+  // a regra apenas torna o comportamento igual nos dois eixos.
+  //
+  // O valor é o mesmo que o `dss.meta.json` já declarava como "gap (ícone +
+  // label)" — a declaração existia e o CSS não a cumpria.
+  .q-tab__content--inline .q-tab__icon {
+    margin-block-end: var(--dss-spacing-0);
+    margin-inline-end: var(--dss-spacing-2);
+  }
+
+  // ------------------------------------------------------------------
+  // Marca de alerta — o espaço que o Quasar não reserva
+  // ------------------------------------------------------------------
+  // EXC-01 — seletor Quasar. O `.q-tab__alert` é posicionado em `absolute`
+  // com `right: -9px` RELATIVO AO CONTEÚDO, e o Quasar não reserva espaço
+  // nenhum para ele. No arranjo empilhado isso quase funciona, porque o
+  // conteúdo é mais largo que o rótulo; com ícone e rótulo LADO A LADO —
+  // que passou a ser o default do DSS — o conteúdo termina na última letra
+  // e o ponto encosta nela. Medido: 2px de sobreposição sobre o "S" de
+  // "PENDENTES", e visualmente o ponto colado à palavra.
+  //
+  // O respiro é dado por padding no CONTEÚDO, não deslocando o ponto: mexer
+  // no `right` o empurraria para cima do padding da aba e, na última aba de
+  // um grupo que rola, para fora da área visível.
+  &.dss-tab--alert .q-tab__content {
+    padding-inline-end: var(--dss-spacing-3);
+  }
+
+  // A variante `alert-icon` é um glifo de 24px, não um ponto de 10px — o
+  // dobro de reserva, pela mesma conta.
+  &.dss-tab--alert:has(.q-tab__alert-icon) .q-tab__content {
+    padding-inline-end: var(--dss-spacing-6);
+  }
+
+  // ------------------------------------------------------------------
   // Estado desabilitado
   // ------------------------------------------------------------------
   &.dss-tab--disable {

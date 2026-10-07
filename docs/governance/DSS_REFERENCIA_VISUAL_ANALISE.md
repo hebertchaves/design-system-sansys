@@ -2265,7 +2265,7 @@ Em caso de conflito entre fontes de informação visual:
 | DssTable | contextuais | rows:[…], columns:[…], rowKey:protocolo, density:compact, flat, hideBottom | — | — |
 | DssTabPanel | navegacao | name:inicio | minHeight:48px | Conteúdo do painel de aba |
 | DssTabPanels | navegacao | modelValue:inicio | minHeight:48px | Container de painéis de abas |
-| DssTabs | navegacao | modelValue:inicio | minHeight:44px | 3 abas com ícone e rótulo; a última com alert |
+| DssTabs | navegacao | modelValue:inicio | minHeight:44px | 10 abas com os módulos reais do Sansys (uma com alert). O número e o comprimento dos rótulos são deliberados: o grupo precisa TRANSBORDAR, que é a única condição em que outsideArrows, mobileArrows e as setas de navegação têm efeito visível. Com 3 abas curtas o Quasar marcava q-tabs--not-scrollable e esses knobs mudavam a classe no DOM sem mudar nada na tela — o que se lia como 'o preview não aplica a opção selecionada'. |
 | DssTextarea | form-campos | variant:outlined, label:Mensagem, placeholder:Escreva aqui | minHeight:88px, minWidth:240px | Placeholder 'Escreva sua mensagem aqui' |
 | DssTimeline | timeline | side:right | — | 3 eventos na linha do tempo, com cor semântica no marcador |
 | DssTimelineEntry | timeline | title:Evento, subtitle:Data, icon:check | minHeight:44px | Entrada de timeline com ícone e conteúdo |
@@ -2279,5 +2279,5 @@ Em caso de conflito entre fontes de informação visual:
 | DssVideo | contextuais | src:, title:[Descrição], ratio:1.78 | minHeight:180px | Vídeo 16:9 incorporado |
 | DssVirtualScroll | contextuais | items:[…], itemSize:48, type:list | minHeight:200px | Lista virtualizada com 1000 itens |
 
-_Gerado em: 2026-10-07T15:33:04.625Z_
+_Gerado em: 2026-10-07T15:56:49.060Z_
 <!-- END:AUTO-GENERATED -->
