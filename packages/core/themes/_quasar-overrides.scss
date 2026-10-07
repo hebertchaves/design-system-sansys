@@ -761,7 +761,12 @@
       td {
         padding: var(--dss-spacing-3);
         color: var(--dss-text-body);
-        font-size: var(--dss-font-size-base);
+        /* `sm` (14px) e não `base` (16px): o degrau menor da escala.
+           Medido no grid master — o CORPO saía 16px contra 14px do CABEÇALHO,
+           ou seja, o dado pesava mais que o rótulo da coluna. Numa tabela
+           densa isso rouba linhas da dobra sem informar nada a mais, e o
+           cabeçalho (que já era `sm`) fica agora na mesma escala do corpo. */
+        font-size: var(--dss-font-size-sm);
         line-height: var(--dss-line-height-base);
         border-bottom: var(--dss-border-gray-200);
       }

@@ -113,12 +113,11 @@
   "visual": {
     "defaultPreview": {
       "props": {
-        "variant": "default",
-        "inline": true
+        "variant": "info"
       },
       "slots": {
         "default": "Mensagem informativa do sistema.",
-        "action": [
+        "actions": [
           {
             "component": "DssButton",
             "props": {

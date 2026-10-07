@@ -79,7 +79,10 @@
 /* Focus-visible — ring de foco acessível */
 .dss-expansion-item .q-item:focus-visible {
   outline: var(--dss-focus-ring-width) var(--dss-focus-ring-style) var(--dss-focus-primary);
-  outline-offset: -2px;
+  /* Anel POR DENTRO: o header é a superfície clicável e ocupa a largura toda;
+     um offset positivo sairia do card. Valor = --dss-focus-ring-offset negado,
+     não o -2px cru que estava aqui (Constituição #1). */
+  outline-offset: calc(var(--dss-focus-ring-offset) * -1);
 }
 
 /* Active — feedback tátil */

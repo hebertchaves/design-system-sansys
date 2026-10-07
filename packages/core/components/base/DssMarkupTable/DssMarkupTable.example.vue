@@ -3,6 +3,10 @@
 // Composition API + TypeScript — padrão DSS v2.2
 
 import { ref } from 'vue'
+// Sem estes imports as tags caem como custom-element desconhecido e o
+// componente não renderiza (mesma regressão que o gate de sandbox-tags cobre).
+import DssMarkupTable from './DssMarkupTable.vue'
+import DssBadge from '../DssBadge/DssBadge.vue'
 
 const selectedDensity = ref<'compact' | 'standard' | 'comfortable'>('standard')
 const selectedSeparator = ref<'horizontal' | 'vertical' | 'cell' | 'none'>('horizontal')

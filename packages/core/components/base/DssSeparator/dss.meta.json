@@ -51,7 +51,11 @@
     "Using arbitrary color strings — only the 5 governed values are supported"
   ],
   "defaultPreview": {
-    "props": {},
+    "props": {
+      "color": "strong",
+      "size": "md",
+      "spaced": true
+    },
     "computedDimensions": {
       "minHeight": "1px"
     },

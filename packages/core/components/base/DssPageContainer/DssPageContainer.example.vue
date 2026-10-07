@@ -5,7 +5,9 @@
          Cenário 1: Layout Completo (Header + Footer + Drawer)
          Demonstra o recálculo dinâmico de offsets em todos os eixos.
          Valores fixos — independente dos controles do Cenário 3.
-         EXC-02: <q-page> nativo usado — DssPage ainda não existe (compositionFuture).
+         O conteúdo é um DssPage. (Até set/2026 esta seção usava <q-page> cru sob a
+         exceção EXC-02, "DssPage ainda não existe" — premissa vencida: o DssPage é
+         componente selado das Fases 1/2.)
          ===================================================================== -->
     <section>
       <h2>1. Layout Completo — offsets em todos os eixos</h2>
@@ -23,12 +25,11 @@
 
           <!-- DssPageContainer: recebe offsets via --q-header-offset etc. -->
           <dss-page-container>
-            <!-- EXC-02: q-page nativo — DssPage é compositionFuture -->
-            <q-page style="padding: var(--dss-spacing-4)">
+            <dss-page style="padding: var(--dss-spacing-4)">
               <p>Conteúdo principal. O padding deste container é calculado
               automaticamente pelo Quasar com base na presença de Header,
               Footer e Drawer.</p>
-            </q-page>
+            </dss-page>
           </dss-page-container>
 
           <dss-footer>
@@ -50,10 +51,10 @@
       <div style="height: 200px; position: relative; overflow: hidden; border: 1px solid currentColor;">
         <dss-layout view="hHh LpR fFf">
           <dss-page-container>
-            <q-page style="padding: var(--dss-spacing-4)">
+            <dss-page style="padding: var(--dss-spacing-4)">
               <p>Sem Header, Footer ou Drawer — DssPageContainer ocupa
               100% do espaço disponível sem padding adicional.</p>
-            </q-page>
+            </dss-page>
           </dss-page-container>
         </dss-layout>
       </div>
@@ -96,7 +97,7 @@
           </dss-drawer>
 
           <dss-page-container>
-            <q-page style="padding: var(--dss-spacing-4)">
+            <dss-page style="padding: var(--dss-spacing-4)">
               <p>O padding do DssPageContainer é recalculado automaticamente
               ao ativar/desativar os elementos ao redor.</p>
               <p style="margin-top: var(--dss-spacing-2)">
@@ -104,7 +105,7 @@
                 Footer: <strong>{{ showFooter ? 'Ativo' : 'Inativo' }}</strong> |
                 Drawer: <strong>{{ showDrawer ? 'Ativo' : 'Inativo' }}</strong>
               </p>
-            </q-page>
+            </dss-page>
           </dss-page-container>
 
           <dss-footer v-if="showFooter">
@@ -128,6 +129,7 @@ import DssDrawer from '../DssDrawer/DssDrawer.vue'
 import DssToolbar from '../DssToolbar/DssToolbar.vue'
 import DssToolbarTitle from '../DssToolbarTitle/DssToolbarTitle.vue'
 import DssPageContainer from './DssPageContainer.vue'
+import DssPage from '../DssPage/DssPage.vue'
 
 const showHeader = ref(true)
 const showFooter = ref(true)

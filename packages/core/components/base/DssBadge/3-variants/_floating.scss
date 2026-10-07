@@ -27,8 +27,9 @@
    * - Desktop: -8px (badge padrão)
    * - Mobile: -6px (badge ligeiramente maior)
    */
-  top: -8px;
-  right: -8px;
+  /* Metade do menor alvo compacto, negada — era -8px cru (Constituição #1). */
+  top: calc(var(--dss-spacing-2) * -1);
+  right: calc(var(--dss-spacing-2) * -1);
   z-index: 10;
 
   /* Badge floating é menor */

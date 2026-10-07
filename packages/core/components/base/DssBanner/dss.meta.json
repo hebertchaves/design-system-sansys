@@ -102,8 +102,7 @@
   "auditHistory": [],
   "defaultPreview": {
     "props": {
-      "variant": "default",
-      "inline": true
+      "variant": "info"
     },
     "computedDimensions": {
       "minHeight": "48px"
@@ -149,7 +148,7 @@
     "demoContent": "Mensagem informativa com ação",
     "demoSlots": {
       "default": "Mensagem informativa do sistema.",
-      "action": [
+      "actions": [
         {
           "component": "DssButton",
           "props": {

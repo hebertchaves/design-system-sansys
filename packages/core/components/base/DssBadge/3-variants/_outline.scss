@@ -27,10 +27,10 @@
    *
    * Fórmula: padding = token_original - (border_width / 2)
    */
-  padding: calc(var(--dss-spacing-0_5) - 1px) calc(var(--dss-spacing-1) - 1px);
+  padding: calc(var(--dss-spacing-0_5) - var(--dss-border-width-thin)) calc(var(--dss-spacing-1) - var(--dss-border-width-thin));
 
   /* Outline + floating */
   &.dss-badge--floating {
-    padding: calc(var(--dss-spacing-0_5) - 1px) calc(var(--dss-spacing-0_5) - 1px);
+    padding: calc(var(--dss-spacing-0_5) - var(--dss-border-width-thin)) calc(var(--dss-spacing-0_5) - var(--dss-border-width-thin));
   }
 }

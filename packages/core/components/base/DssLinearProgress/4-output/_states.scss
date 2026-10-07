@@ -22,22 +22,31 @@
   // Tokens semânticos de ação e feedback também têm overrides de dark mode.
   // Nenhum override adicional necessário para cores semânticas.
 
-  // Brand dark: tokens ~500/400 para contraste em fundo escuro
-  // Padrão idêntico ao DssSpinner (Golden Context)
+  // Brand dark: um degrau mais claro para contraste sobre fundo escuro
+  // (padrão idêntico ao DssSpinner — Golden Context).
+  //
+  // REMAPEIA O TOKEN, não pinta o model (§K5). Pintar o model direto dava
+  // especificidade (0,3,0) e vencia a regra de cor (0,2,0) — era o que tornava
+  // a prop `color` inerte sob brand. Consumindo `--dss-action-primary`, a
+  // variante `color="error"` segue com `--dss-feedback-error` também no dark.
+  //
+  // Aqui a rota ancestral É necessária: `themes/dark/_colors.scss` mantém
+  // `--dss-action-primary` no valor do claro ("mantém valor original"), então
+  // o clareamento é decisão deste componente, não do tema.
 
-  .dss-linear-progress--brand-hub.dss-linear-progress,
+  .dss-linear-progress--brand-hub,
   [data-brand="hub"] .dss-linear-progress {
-    .q-linear-progress__model { background-color: var(--dss-hub-500); }
+    --dss-action-primary: var(--dss-hub-500);
   }
 
-  .dss-linear-progress--brand-water.dss-linear-progress,
+  .dss-linear-progress--brand-water,
   [data-brand="water"] .dss-linear-progress {
-    .q-linear-progress__model { background-color: var(--dss-water-400); }
+    --dss-action-primary: var(--dss-water-400);
   }
 
-  .dss-linear-progress--brand-waste.dss-linear-progress,
+  .dss-linear-progress--brand-waste,
   [data-brand="waste"] .dss-linear-progress {
-    .q-linear-progress__model { background-color: var(--dss-waste-500); }
+    --dss-action-primary: var(--dss-waste-500);
   }
 }
 

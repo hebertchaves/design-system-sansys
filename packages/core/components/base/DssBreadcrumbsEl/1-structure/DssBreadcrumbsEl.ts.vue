@@ -69,7 +69,7 @@ const { breadcrumbsElClasses } = useBreadcrumbsElClasses(props)
   >
     <!--
       DssIcon: elemento decorativo quando usado junto ao label.
-      aria-hidden="true" — o label (slot/prop) fornece a alternativa textual.
+      `decorative` — o label (slot/prop) fornece a alternativa textual.
       Nota: Se o consumidor usar APENAS o ícone (sem label e sem slot com texto),
       deve fornecer aria-label no DssBreadcrumbsEl via $attrs.
       Ver RES-02 em dss.meta.json.
@@ -78,7 +78,7 @@ const { breadcrumbsElClasses } = useBreadcrumbsElClasses(props)
       v-if="icon"
       :name="icon"
       size="sm"
-      aria-hidden="true"
+      decorative
     />
     <!--
       Slot com fallback para prop `label`.

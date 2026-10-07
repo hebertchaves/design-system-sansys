@@ -4,10 +4,21 @@
    Responsabilidade: Variações de marca (Hub, Water, Waste).
    Aplica identidade visual ao cabeçalho (thead) da tabela.
 
-   Padrão DSS: seletor duplo [data-brand] + .dss-markup-table--brand-*
-   para suportar:
-   1. Herança de contexto: <div data-brand="hub"> ... <DssMarkupTable>
-   2. Prop explícita: <DssMarkupTable brand="hub">
+   Brandabilidade é pela PROP, não por herança de contexto — e isso é
+   deliberado: tabela dentro de página brandeada não deve virar colorida
+   sozinha. Mesmo padrão do DssToolbar (superfície, não campo).
+
+   O seletor é duplo, mas AS DUAS alternativas exigem a classe
+   `.dss-markup-table--brand-*`, que só existe quando a prop é passada:
+     [data-brand="hub"] .dss-markup-table--brand-hub  → prop + ancestral
+     .dss-markup-table--brand-hub                     → prop sozinha
+   `[data-brand="hub"]` sem a prop NÃO pinta nada.
+
+   (Correção de comentário, set/2026: este bloco afirmava suportar
+   "1. Herança de contexto: <div data-brand="hub"> ... <DssMarkupTable>".
+   Não suporta, e nunca suportou — o seletor sempre exigiu a classe. O
+   comentário era a única fonte que dizia o contrário; verificável na
+   seção 04 do TestMarkupTable.vue, que põe as duas rotas lado a lado.)
    ========================================================================== */
 
 /* ==========================================================================

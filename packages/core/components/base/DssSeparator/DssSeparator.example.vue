@@ -111,7 +111,7 @@
           Quando o separador é puramente visual e não agrega semântica
           ao fluxo de leitura do screen reader, use aria-hidden="true".
         -->
-        <DssSeparator aria-hidden="true" color="subtle" />
+        <DssSeparator :aria-hidden="true" color="subtle" />
       </div>
     </section>
 

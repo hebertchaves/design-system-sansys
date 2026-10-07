@@ -1,60 +1,45 @@
 // =============================================================================
-// DssLinearProgress — LAYER 4: OUTPUT — Brands
+// DssLinearProgress — Layer 4: Brands
+// =============================================================================
 //
-// Brandability: Hub (laranja), Water (azul), Waste (verde).
+// FORMA CANÔNICA: a rota de brand REMAPEIA O TOKEN SEMÂNTICO; quem pinta é a
+// regra de cor (`3-variants/_colors.scss`), que consome `--dss-action-primary`.
+// Ver DSS_UI_ADEQUACAO_CHECKLIST §K5.
 //
-// PADRÃO: Idêntico ao DssSpinner/DssIcon (Golden Reference).
-//   - Seletor via prop (.dss-linear-progress--brand-*): mesmo elemento
-//   - Seletor via [data-brand] ancestral: descendente
+// POR QUE NÃO PINTAR O MODEL DIRETO (defeito corrigido em set/2026):
+//   A forma anterior era `[data-brand="water"] .dss-linear-progress
+//   { .q-linear-progress__model { background-color: var(--dss-water-500) } }`.
+//   Especificidade (0,3,0) — vencia `&--color-error .q-linear-progress__model`
+//   (0,2,0). Resultado: dentro de QUALQUER página brandeada (isto é, toda tela
+//   Sansys), a prop `color` era INERTE: `color="error"` renderizava azul-marca.
+//   Medido no navegador: rgb(14,136,228) onde se esperava #d8182e.
+//   Remapeando o token, `color="error"` continua pintando com
+//   `--dss-feedback-error` — brand troca a cor DE AÇÃO, não a cor semântica.
 //
-// Brand sobrescreve a cor do model, mas NÃO o track (--dss-surface-muted
-// continua válido para manter a hierarquia visual).
-//
-// TOKENS: Numéricos de brand (precedente DssSpinner, DssIcon, DssCard).
-//   hub-600/water-500/waste-600 → light mode
-//   hub-500/water-400/waste-500 → dark mode (em _states.scss)
-//
-// EXC-Gate-01: seletor .q-linear-progress__model necessário para override de cor.
+// ROTA ANCESTRAL (`[data-brand]`) NÃO PRECISA DE REGRA AQUI:
+//   `tokens/brand/_water.scss` já faz `--dss-action-primary: var(--dss-water-500)`
+//   no próprio `[data-brand]`, e o valor desce por herança. A regra do componente
+//   era redundante no claro — e era ela que quebrava a prop `color`.
+//   No DARK a rota ancestral volta a ser necessária: ver `4-output/_states.scss`.
 // =============================================================================
 
-// =============================================================================
-// HUB BRAND (Laranja)
-// =============================================================================
-
-/* Via prop: <DssLinearProgress brand="hub" /> */
-.dss-linear-progress--brand-hub.dss-linear-progress {
-  .q-linear-progress__model { background-color: var(--dss-hub-600); }
+// ------------------------------------------------------------------
+// Via prop: <DssLinearProgress brand="hub" />
+// ------------------------------------------------------------------
+.dss-linear-progress--brand-hub {
+  --dss-action-primary: var(--dss-hub-600);
 }
 
-/* Via herança contextual: <div data-brand="hub"><DssLinearProgress /></div> */
-[data-brand="hub"] .dss-linear-progress {
-  .q-linear-progress__model { background-color: var(--dss-hub-600); }
+// ------------------------------------------------------------------
+// Via prop: <DssLinearProgress brand="water" />
+// ------------------------------------------------------------------
+.dss-linear-progress--brand-water {
+  --dss-action-primary: var(--dss-water-500);
 }
 
-// =============================================================================
-// WATER BRAND (Azul)
-// =============================================================================
-
-/* Via prop: <DssLinearProgress brand="water" /> */
-.dss-linear-progress--brand-water.dss-linear-progress {
-  .q-linear-progress__model { background-color: var(--dss-water-500); }
-}
-
-/* Via herança contextual: <div data-brand="water"><DssLinearProgress /></div> */
-[data-brand="water"] .dss-linear-progress {
-  .q-linear-progress__model { background-color: var(--dss-water-500); }
-}
-
-// =============================================================================
-// WASTE BRAND (Verde)
-// =============================================================================
-
-/* Via prop: <DssLinearProgress brand="waste" /> */
-.dss-linear-progress--brand-waste.dss-linear-progress {
-  .q-linear-progress__model { background-color: var(--dss-waste-600); }
-}
-
-/* Via herança contextual: <div data-brand="waste"><DssLinearProgress /></div> */
-[data-brand="waste"] .dss-linear-progress {
-  .q-linear-progress__model { background-color: var(--dss-waste-600); }
+// ------------------------------------------------------------------
+// Via prop: <DssLinearProgress brand="waste" />
+// ------------------------------------------------------------------
+.dss-linear-progress--brand-waste {
+  --dss-action-primary: var(--dss-waste-600);
 }

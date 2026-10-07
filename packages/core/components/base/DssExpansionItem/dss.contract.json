@@ -2772,9 +2772,9 @@
         },
         {
           "property": "outline-offset",
-          "token": null,
-          "value": "-2px",
-          "source": "4-output/_states.scss"
+          "token": "--dss-focus-ring-offset",
+          "value": null,
+          "source": "2-composition/_base.scss"
         },
         {
           "property": "outline-width",
@@ -2792,6 +2792,12 @@
           "property": "outline",
           "token": null,
           "value": "2px solid Highlight",
+          "source": "4-output/_states.scss"
+        },
+        {
+          "property": "outline-offset",
+          "token": null,
+          "value": "-2px",
           "source": "4-output/_states.scss"
         }
       ],
@@ -3950,6 +3956,12 @@
       },
       {
         "name": "--dss-focus-ring-width",
+        "usedIn": [
+          "focus"
+        ]
+      },
+      {
+        "name": "--dss-focus-ring-offset",
         "usedIn": [
           "focus"
         ]

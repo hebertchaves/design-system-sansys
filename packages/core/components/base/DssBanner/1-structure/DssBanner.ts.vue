@@ -56,7 +56,7 @@ function handleDismiss() {
           :name="resolvedIcon"
           size="md"
           class="dss-banner__icon"
-          aria-hidden="true"
+          decorative
         />
       </slot>
     </template>

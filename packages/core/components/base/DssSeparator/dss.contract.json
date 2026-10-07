@@ -91,7 +91,11 @@
   },
   "visual": {
     "defaultPreview": {
-      "props": {}
+      "props": {
+        "color": "strong",
+        "size": "md",
+        "spaced": true
+      }
     },
     "dimensions": {
       "minHeight": {

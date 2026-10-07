@@ -188,19 +188,22 @@
         {
           "component": "DssBreadcrumbsEl",
           "props": {
-            "label": "Home"
+            "label": "Home",
+            "icon": "looks_one"
           }
         },
         {
           "component": "DssBreadcrumbsEl",
           "props": {
-            "label": "Produtos"
+            "label": "Produtos",
+            "icon": "looks_two"
           }
         },
         {
           "component": "DssBreadcrumbsEl",
           "props": {
-            "label": "Detalhe"
+            "label": "Detalhe",
+            "icon": "looks_3"
           }
         }
       ]

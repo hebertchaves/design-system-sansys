@@ -304,14 +304,14 @@
         },
         {
           "property": "top",
-          "token": null,
-          "value": "-8px",
+          "token": "--dss-spacing-2",
+          "value": null,
           "source": "3-variants/_floating.scss"
         },
         {
           "property": "right",
-          "token": null,
-          "value": "-8px",
+          "token": "--dss-spacing-2",
+          "value": null,
           "source": "3-variants/_floating.scss"
         },
         {
@@ -631,6 +631,12 @@
         ]
       },
       {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-2_5",
         "usedIn": [
           "default"
@@ -692,12 +698,6 @@
       },
       {
         "name": "--dss-spacing-1_5",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-spacing-2",
         "usedIn": [
           "default"
         ]

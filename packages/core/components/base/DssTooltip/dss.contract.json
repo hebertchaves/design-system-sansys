@@ -105,7 +105,10 @@
   },
   "visual": {
     "defaultPreview": {
-      "props": {},
+      "props": {
+        "visible": true,
+        "color": "dark"
+      },
       "slots": {
         "default": "Informação adicional"
       }

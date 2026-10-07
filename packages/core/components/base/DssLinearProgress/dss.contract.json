@@ -246,24 +246,6 @@
           "source": "3-variants/_colors.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-waste-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
           "property": "outline",
           "token": null,
           "value": "1px solid currentColor",
@@ -439,24 +421,6 @@
       },
       {
         "name": "--dss-feedback-info",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-500",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
         "usedIn": [
           "default"
         ]
