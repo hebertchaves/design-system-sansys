@@ -334,8 +334,20 @@
      ícone), não pela tipografia do chip. Sem a exclusão esta regra (0,2,0)
      vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
 
+  /* Token de ÍCONE, não de tipografia. Esta era a metade que faltava da mesma
+     migração já feita no `--remove` (ver a nota dele): os ícones de CONTEÚDO
+     seguiam dimensionados por `--dss-font-size-*`, caindo em 14 e 18px —
+     degraus que a escala de ícone (12·16·20·24·32·48) não tem.
+
+     14px é onde o traço circular deixa de resolver: medido varrendo os pixels
+     do `check_circle`, a linha do topo tem 42% da largura da linha central a
+     14px contra 27% a 48px, e o olho lê isso como um círculo com topo e base
+     cortados. Foi assim que o relato chegou.
+
+     Não muda altura: a área útil é `min-height` menos o padding, e o
+     `min-height` de cada tamanho foi desenhado como conteúdo + padding. */
   .dss-chip__icon:not(.dss-chip__icon--remove) {
-    font-size: var(--dss-font-size-sm);
+    font-size: var(--dss-icon-size-2xs); /* 12px — área útil 16px */
   }
 
   .dss-chip__remove {
@@ -363,8 +375,20 @@
      ícone), não pela tipografia do chip. Sem a exclusão esta regra (0,2,0)
      vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
 
+  /* Token de ÍCONE, não de tipografia. Esta era a metade que faltava da mesma
+     migração já feita no `--remove` (ver a nota dele): os ícones de CONTEÚDO
+     seguiam dimensionados por `--dss-font-size-*`, caindo em 14 e 18px —
+     degraus que a escala de ícone (12·16·20·24·32·48) não tem.
+
+     14px é onde o traço circular deixa de resolver: medido varrendo os pixels
+     do `check_circle`, a linha do topo tem 42% da largura da linha central a
+     14px contra 27% a 48px, e o olho lê isso como um círculo com topo e base
+     cortados. Foi assim que o relato chegou.
+
+     Não muda altura: a área útil é `min-height` menos o padding, e o
+     `min-height` de cada tamanho foi desenhado como conteúdo + padding. */
   .dss-chip__icon:not(.dss-chip__icon--remove) {
-    font-size: var(--dss-font-size-md);
+    font-size: var(--dss-icon-size-xs); /* 16px — área útil 20px */
   }
 }
 
@@ -376,8 +400,20 @@
      `md` caía na tipografia do chip e saía 1,00× o texto. Os outros tamanhos já
      escapam disso com o seletor (0,2,0) abaixo; o `md` era o único sem, e por
      isso o único defasado. Mesmo defeito, mesma solução do DssButton. */
+  /* Token de ÍCONE, não de tipografia. Esta era a metade que faltava da mesma
+     migração já feita no `--remove` (ver a nota dele): os ícones de CONTEÚDO
+     seguiam dimensionados por `--dss-font-size-*`, caindo em 14 e 18px —
+     degraus que a escala de ícone (12·16·20·24·32·48) não tem.
+
+     14px é onde o traço circular deixa de resolver: medido varrendo os pixels
+     do `check_circle`, a linha do topo tem 42% da largura da linha central a
+     14px contra 27% a 48px, e o olho lê isso como um círculo com topo e base
+     cortados. Foi assim que o relato chegou.
+
+     Não muda altura: a área útil é `min-height` menos o padding, e o
+     `min-height` de cada tamanho foi desenhado como conteúdo + padding. */
   .dss-chip__icon:not(.dss-chip__icon--remove) {
-    font-size: var(--dss-font-size-lg);
+    font-size: var(--dss-icon-size-sm); /* 20px — área útil 20px */
   }
 }
 
@@ -395,8 +431,20 @@
      ícone), não pela tipografia do chip. Sem a exclusão esta regra (0,2,0)
      vencia o `.dss-icon--inline` (0,1,0) e puxava o remove junto. */
 
+  /* Token de ÍCONE, não de tipografia. Esta era a metade que faltava da mesma
+     migração já feita no `--remove` (ver a nota dele): os ícones de CONTEÚDO
+     seguiam dimensionados por `--dss-font-size-*`, caindo em 14 e 18px —
+     degraus que a escala de ícone (12·16·20·24·32·48) não tem.
+
+     14px é onde o traço circular deixa de resolver: medido varrendo os pixels
+     do `check_circle`, a linha do topo tem 42% da largura da linha central a
+     14px contra 27% a 48px, e o olho lê isso como um círculo com topo e base
+     cortados. Foi assim que o relato chegou.
+
+     Não muda altura: a área útil é `min-height` menos o padding, e o
+     `min-height` de cada tamanho foi desenhado como conteúdo + padding. */
   .dss-chip__icon:not(.dss-chip__icon--remove) {
-    font-size: var(--dss-font-size-xl);
+    font-size: var(--dss-icon-size-md); /* 24px — área útil 24px */
   }
 
   .dss-chip__remove {

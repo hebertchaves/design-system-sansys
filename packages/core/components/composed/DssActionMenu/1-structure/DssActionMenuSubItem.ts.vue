@@ -22,8 +22,8 @@
     :aria-disabled="disabled ? 'true' : undefined"
     v-bind="$attrs"
     @click="onClick"
-    @keydown.enter.prevent="onClick"
-    @keydown.space.prevent="onClick"
+    @keydown.enter="onKeydown"
+    @keydown.space="onKeydown"
   >
     <slot />
   </DssItem>
@@ -52,6 +52,24 @@ defineSlots<{
 /** Fecha o menu do item-pai depois de acionar. Injetado pelo DssActionMenuItem. */
 const fecharMenu = inject<() => void>('dss-action-menu-fechar', () => {})
 const emitirAcao = inject<(name: string) => void>('dss-action-menu-emit', () => {})
+
+/**
+ * Teclado: Enter e Space acionam — mas SÓ quando este item é o alvo.
+ *
+ * CORREÇÃO (set/2026), mesma família de defeito do DssCard/DssChip/DssItem:
+ * `@keydown.space.prevent` chamava `preventDefault()` INCONDICIONALMENTE, pelo
+ * modificador do Vue, antes de qualquer guarda — engolindo o Space de qualquer
+ * controle dentro do item. Aqui o `.prevent` cobria também o Enter.
+ *
+ * O `preventDefault` fica condicional e só no Space (impedir rolagem); o Enter
+ * não rola a página e não precisa dele.
+ */
+function onKeydown(event: KeyboardEvent) {
+  if (event.target !== event.currentTarget) return
+  if (props.disabled) return
+  if (event.key === ' ') event.preventDefault()
+  onClick()
+}
 
 function onClick() {
   if (props.disabled) return

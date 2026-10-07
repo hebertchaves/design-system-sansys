@@ -180,8 +180,8 @@
         "type": "number | string | null",
         "controlHint": "text",
         "description": "Tabindex customizado",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       },
       {
         "name": "role",
@@ -573,6 +573,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "font-size",
+          "token": "--dss-icon-size-2xs",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "width",
           "token": "--dss-spacing-3",
           "value": null,
@@ -581,12 +587,6 @@
         {
           "property": "height",
           "token": "--dss-spacing-3",
-          "value": null,
-          "source": "2-composition/_base.scss"
-        },
-        {
-          "property": "font-size",
-          "token": "--dss-icon-size-2xs",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -605,6 +605,12 @@
         {
           "property": "gap",
           "token": "--dss-spacing-1",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
+          "property": "font-size",
+          "token": "--dss-icon-size-sm",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -628,7 +634,7 @@
         },
         {
           "property": "font-size",
-          "token": "--dss-font-size-xl",
+          "token": "--dss-icon-size-md",
           "value": null,
           "source": "2-composition/_base.scss"
         },
@@ -1398,16 +1404,16 @@
         ]
       },
       {
+        "name": "--dss-icon-size-2xs",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-spacing-3",
         "usedIn": [
           "default",
           "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-icon-size-2xs",
-        "usedIn": [
-          "default"
         ]
       },
       {
@@ -1418,6 +1424,12 @@
       },
       {
         "name": "--dss-line-height-sm-tight",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-icon-size-sm",
         "usedIn": [
           "default"
         ]
@@ -1442,7 +1454,7 @@
         ]
       },
       {
-        "name": "--dss-font-size-xl",
+        "name": "--dss-icon-size-md",
         "usedIn": [
           "default"
         ]

@@ -14,8 +14,8 @@
     :role="computedRole"
     v-bind="$attrs"
     @click="handleClick"
-    @keydown.enter="handleClick"
-    @keydown.space.prevent="handleClick"
+    @keydown.enter="handleKeydown"
+    @keydown.space="handleKeydown"
   >
     <!-- Selected icon (decorative - hidden from screen readers) -->
     <!--
@@ -279,6 +279,30 @@ const computedTabindex = computed(() => {
  * - Esta clickable
  * - Nao esta disabled
  */
+/**
+ * Teclado: Enter e Space ativam — mas SÓ quando este nó é o alvo.
+ *
+ * CORREÇÃO (set/2026) de um defeito de WCAG 2.1.1. O template usava
+ * `@keydown.space.prevent`, e o `.prevent` do Vue chama `preventDefault()`
+ * INCONDICIONALMENTE, antes de o handler rodar — então o componente engolia o
+ * Space de qualquer descendente, mesmo quando não era clicável.
+ *
+ * Medido num DssCheckbox dentro de um DssCard: o nativo faz keydown →
+ * keypress → keyup → click → input → change; ali parava em keydown → keyup,
+ * porque sem a ação default o navegador não gera o clique sintético. O
+ * controle recebia foco e não respondia, sem erro nem aviso.
+ *
+ * `target !== currentTarget`: o Space digitado num controle DENTRO deste nó
+ * pertence a ELE. O `preventDefault` vira condicional e só no Space, onde
+ * serve para impedir a rolagem da página.
+ */
+function handleKeydown(event: KeyboardEvent) {
+  if (event.target !== event.currentTarget) return
+  if (!props.clickable || props.disable) return
+  if (event.key === ' ') event.preventDefault()
+  handleClick(event)
+}
+
 function handleClick(event: MouseEvent | KeyboardEvent) {
   if (props.clickable && !props.disable) {
     emit('click', event as MouseEvent)

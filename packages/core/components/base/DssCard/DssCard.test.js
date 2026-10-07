@@ -273,4 +273,60 @@ describe('DssCard', () => {
       expect(wrapper.attributes('data-testid')).toBe('meu-card')
     })
   })
+
+  // ==========================================================================
+  // Teclado: o card NÃO pode engolir o Space dos filhos (WCAG 2.1.1)
+  // ==========================================================================
+
+  describe('O card não engole o Space de quem vive dentro dele', () => {
+    it('Space vindo de um DESCENDENTE não é prevenido', async () => {
+      // O defeito: `@keydown.space.prevent` no template chamava
+      // preventDefault() INCONDICIONALMENTE — o modificador do Vue roda antes
+      // de qualquer guarda. Resultado medido: um DssCheckbox dentro de um
+      // DssCard não alternava por teclado, porque sem a ação default o
+      // navegador não gera o clique sintético. Nenhum erro, nenhum aviso.
+      const wrapper = mount(DssCard, {
+        props: { clickable: true },
+        slots: { default: '<button class="filho">ação</button>' }
+      })
+      const filho = wrapper.find('.filho')
+      const evento = new KeyboardEvent('keydown', {
+        key: ' ', bubbles: true, cancelable: true
+      })
+      filho.element.dispatchEvent(evento)
+      expect(evento.defaultPrevented).toBe(false)
+    })
+
+    it('card NÃO clicável não previne Space nem no próprio alvo', async () => {
+      const wrapper = mount(DssCard)
+      const evento = new KeyboardEvent('keydown', {
+        key: ' ', bubbles: true, cancelable: true
+      })
+      wrapper.element.dispatchEvent(evento)
+      expect(evento.defaultPrevented).toBe(false)
+      expect(wrapper.emitted('click')).toBeFalsy()
+    })
+
+    it('card clicável AINDA ativa por Space quando ele é o alvo', async () => {
+      // A correção não pode custar a ativação legítima: o Space no próprio
+      // card segue emitindo `click` e prevenindo a rolagem da página.
+      const wrapper = mount(DssCard, { props: { clickable: true } })
+      const evento = new KeyboardEvent('keydown', {
+        key: ' ', bubbles: true, cancelable: true
+      })
+      wrapper.element.dispatchEvent(evento)
+      expect(evento.defaultPrevented).toBe(true)
+      expect(wrapper.emitted('click')).toBeTruthy()
+    })
+
+    it('Enter ativa sem prevenir — Enter não rola a página', async () => {
+      const wrapper = mount(DssCard, { props: { clickable: true } })
+      const evento = new KeyboardEvent('keydown', {
+        key: 'Enter', bubbles: true, cancelable: true
+      })
+      wrapper.element.dispatchEvent(evento)
+      expect(evento.defaultPrevented).toBe(false)
+      expect(wrapper.emitted('click')).toBeTruthy()
+    })
+  })
 })

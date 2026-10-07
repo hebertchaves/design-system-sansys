@@ -5,7 +5,7 @@
     v-bind="cardAttrs"
     @click="handleClick"
     @keydown.enter="handleKeydown"
-    @keydown.space.prevent="handleKeydown"
+    @keydown.space="handleKeydown"
   >
     <!-- Card content slot -->
     <slot />
