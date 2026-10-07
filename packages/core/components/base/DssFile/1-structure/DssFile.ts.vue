@@ -176,6 +176,7 @@ import { ref, computed, useSlots } from 'vue'
 import { QFile } from 'quasar'
 import type { FileProps, FileEmits, FileExpose } from '../types/file.types'
 import { useFileState, useFileClasses, useFileActions } from '../composables'
+import { useInputModality } from '../../../../composables/useInputModality'
 
 // ==========================================================================
 // COMPONENT NAME
@@ -263,6 +264,13 @@ const errorId = computed(() => `dss-file-error-${uniqueId}`)
 const { isFocused, isDragging, hasValue, hasBottomSlot } = useFileState(props, slots)
 const hasLabelSlot = computed(() => !!slots.label)
 const { wrapperClasses, labelClasses } = useFileClasses(props, { isFocused, hasValue, isDragging, hasLabelSlot })
+
+// Anel de foco só no teclado: `:focus-visible` não separa mouse de teclado em
+// campo de TEXTO (é da especificação). O composable marca a modalidade no
+// `<html>` e o CSS condiciona o anel a ela. Global e idempotente — chamar aqui,
+// e não no entry point, mantém o listener preso a quem precisa dele.
+useInputModality()
+
 const {
   handleFocus,
   handleBlur,

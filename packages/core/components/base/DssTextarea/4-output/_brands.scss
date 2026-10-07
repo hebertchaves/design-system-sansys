@@ -20,7 +20,7 @@
   &.dss-textarea--filled.dss-textarea--focused .q-field__control,
   &.dss-textarea--filled.q-field--focused .q-field__control {
     border-bottom-color: var(--dss-hub-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-hub-600);
   }
 
   &.dss-textarea--outlined.dss-textarea--focused .q-field__control,
@@ -37,7 +37,7 @@
   &.dss-textarea--borderless.dss-textarea--focused .q-field__control,
   &.dss-textarea--borderless.q-field--focused .q-field__control {
     border-bottom-color: var(--dss-hub-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-hub-600);
   }
 
   /* Label color no foco */
@@ -63,7 +63,7 @@
   &.dss-textarea--filled.dss-textarea--focused .q-field__control,
   &.dss-textarea--filled.q-field--focused .q-field__control {
     border-bottom-color: var(--dss-water-500);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-water-500);
   }
 
   &.dss-textarea--outlined.dss-textarea--focused .q-field__control,
@@ -80,7 +80,7 @@
   &.dss-textarea--borderless.dss-textarea--focused .q-field__control,
   &.dss-textarea--borderless.q-field--focused .q-field__control {
     border-bottom-color: var(--dss-water-500);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-water-500);
   }
 
   /* Label color no foco */
@@ -100,7 +100,7 @@
   &.dss-textarea--filled.dss-textarea--focused .q-field__control,
   &.dss-textarea--filled.q-field--focused .q-field__control {
     border-bottom-color: var(--dss-waste-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-waste-600);
   }
 
   &.dss-textarea--outlined.dss-textarea--focused .q-field__control,
@@ -117,7 +117,7 @@
   &.dss-textarea--borderless.dss-textarea--focused .q-field__control,
   &.dss-textarea--borderless.q-field--focused .q-field__control {
     border-bottom-color: var(--dss-waste-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-waste-600);
   }
 
   /* Label color no foco */

@@ -219,8 +219,8 @@
         "controlHint": "text",
         "default": "null",
         "description": "Tabindex customizado",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [
@@ -1165,7 +1165,7 @@
         },
         {
           "property": "box-shadow",
-          "token": "--dss-border-width-thin",
+          "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -1176,14 +1176,14 @@
           "source": "3-variants/_standout.scss"
         },
         {
-          "property": "box-shadow",
-          "token": "--dss-border-width-md",
+          "property": "border-color",
+          "token": "--dss-hub-600",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
-          "property": "border-color",
-          "token": "--dss-hub-600",
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
           "value": null,
           "source": "4-output/_brands.scss"
         },

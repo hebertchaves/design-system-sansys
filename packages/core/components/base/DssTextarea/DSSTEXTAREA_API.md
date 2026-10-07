@@ -31,6 +31,8 @@
 | `ariaLabel` | `string` | `undefined` | Label de acessibilidade para screen readers |
 | `clearAriaLabel` | `string` | `'Clear textarea'` | Label acessível do botão clear |
 | `tabindex` | `number \| string \| null` | `null` | Tabindex customizado |
+| `rules` | `TextareaRule[]` | Estado de erro (muda cor para negativo) |
+| `lazyRules` | `TextareaLazyRules` | Quando as regras rodam sozinhas. |
 
 ### Tipos
 

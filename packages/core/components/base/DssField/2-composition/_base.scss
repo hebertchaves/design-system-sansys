@@ -68,10 +68,28 @@
    família evita.
    ========================================================================== */
 
-.dss-field:has(:focus-visible) .dss-field__field {
+/* ANEL DE FOCO — só quando a navegação é de TECLADO (set/2026).
+
+   `:focus-visible` sozinho não serve aqui: por especificação ele casa em campo
+   de TEXTO mesmo no foco por clique. Com o anel incondicional, clicar no campo
+   mostrava a borda de 2px `action-primary` E este anel por cima — dois azuis
+   que dão 1,43:1 entre si, lendo como um halo grosso. Sem o anel, a navegação
+   por teclado perdia a afordância: sobrava a borda engrossando 1px→2px no
+   mesmo lugar, que num formulário denso quase não se percebe.
+
+   `[data-dss-modality]` resolve o que a pseudo-classe não alcança — o atributo
+   é emitido por `useInputModality` (composables/), chamado pelo componente.
+   O seletor CONTINUA pedindo `:focus-visible`; a modalidade só acrescenta a
+   condição que faltava.
+
+   Sem o atributo, nenhum anel: degradação segura, porque a borda de 2px é
+   indicador válido nas duas modalidades (4,08:1 entre focado e não-focado). */
+
+[data-dss-modality='keyboard'] .dss-field:has(:focus-visible) .dss-field__field {
   outline: var(--dss-border-width-md) solid var(--dss-focus-primary);
   outline-offset: var(--dss-spacing-0_5);
 }
+
 
 /* ==========================================================================
    ÁREA DE CONTROLE (label + slot do controle interno)

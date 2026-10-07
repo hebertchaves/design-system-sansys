@@ -57,6 +57,7 @@ import { ref, computed, useSlots } from 'vue'
 import { QInput } from 'quasar'
 import type { TextareaProps, TextareaEmits, TextareaExpose } from '../types/textarea.types'
 import { useTextareaClasses, useTextareaState, useTextareaActions } from '../composables'
+import { useInputModality } from '../../../../composables/useInputModality'
 
 // ==========================================================================
 // COMPONENT NAME
@@ -128,6 +129,13 @@ const qInputRef = ref<InstanceType<typeof QInput> | null>(null)
 
 const { isFocused, hasValue } = useTextareaState(props)
 const { wrapperClasses } = useTextareaClasses(props, { isFocused, hasValue })
+
+// Anel de foco só no teclado: `:focus-visible` não separa mouse de teclado em
+// campo de TEXTO (é da especificação). O composable marca a modalidade no
+// `<html>` e o CSS condiciona o anel a ela. Global e idempotente — chamar aqui,
+// e não no entry point, mantém o listener preso a quem precisa dele.
+useInputModality()
+
 const { handleFocus, handleBlur, focus, blur, getNativeEl } = useTextareaActions(
   emit,
   qInputRef,
@@ -206,6 +214,8 @@ defineExpose<TextareaExpose>({
     :hint="hint"
     :error="error"
     :error-message="errorMessage"
+    :rules="rules"
+    :lazy-rules="lazyRules"
     :disabled="disabled"
     :readonly="readonly"
     :loading="loading"

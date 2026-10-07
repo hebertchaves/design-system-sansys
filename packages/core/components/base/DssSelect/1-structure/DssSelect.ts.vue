@@ -54,6 +54,7 @@ import { ref, computed, useSlots, onBeforeUnmount, onMounted, watch, nextTick } 
 import { QSelect } from 'quasar'
 import type { SelectProps, SelectEmits, SelectExpose } from '../types/select.types'
 import { useSelectClasses, useSelectState, useSelectActions } from '../composables'
+import { useInputModality } from '../../../../composables/useInputModality'
 import DssChip from '../../DssChip/DssChip.vue'
 
 // ==========================================================================
@@ -132,6 +133,13 @@ const qSelectRef = ref<InstanceType<typeof QSelect> | null>(null)
 
 const { isFocused } = useSelectState(props)
 const { wrapperClasses } = useSelectClasses(props, { isFocused })
+
+// Anel de foco só no teclado: `:focus-visible` não separa mouse de teclado em
+// campo de TEXTO (é da especificação). O composable marca a modalidade no
+// `<html>` e o CSS condiciona o anel a ela. Global e idempotente — chamar aqui,
+// e não no entry point, mantém o listener preso a quem precisa dele.
+useInputModality()
+
 const { handleFocus, handleBlur, focus, blur, showPopup, hidePopup, getNativeEl } =
   useSelectActions(emit, qSelectRef, isFocused)
 
@@ -340,6 +348,8 @@ defineExpose<SelectExpose>({
     :hint="hint"
     :error="error"
     :error-message="errorMessage"
+    :rules="rules"
+    :lazy-rules="lazyRules"
     :disabled="disabled"
     :readonly="readonly"
     :loading="loading"

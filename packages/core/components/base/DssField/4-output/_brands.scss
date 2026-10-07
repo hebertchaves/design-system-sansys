@@ -21,7 +21,7 @@
   &.dss-field--filled.dss-field--focused .dss-field__field,
   &.dss-field--borderless.dss-field--focused .dss-field__field {
     border-bottom-color: var(--dss-hub-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-hub-600);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-hub-600);
   }
 
   &.dss-field--standout.dss-field--focused .dss-field__field {
@@ -53,7 +53,7 @@
   &.dss-field--filled.dss-field--focused .dss-field__field,
   &.dss-field--borderless.dss-field--focused .dss-field__field {
     border-bottom-color: var(--dss-water-500);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-water-500);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-water-500);
   }
 
   &.dss-field--standout.dss-field--focused .dss-field__field {
@@ -83,7 +83,7 @@
   &.dss-field--filled.dss-field--focused .dss-field__field,
   &.dss-field--borderless.dss-field--focused .dss-field__field {
     border-bottom-color: var(--dss-waste-600);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-waste-600);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-waste-600);
   }
 
   &.dss-field--standout.dss-field--focused .dss-field__field {

@@ -30,7 +30,7 @@
   &.q-field--focused .q-field__control {
     border-bottom-color: var(--dss-action-primary);
     border-bottom-width: var(--dss-border-width-md);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-action-primary);
   }
 
   /* Focus: label color */

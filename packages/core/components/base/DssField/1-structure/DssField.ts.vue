@@ -2,6 +2,7 @@
 import { ref, computed, useSlots } from 'vue'
 import type { FieldProps } from '../types/field.types'
 import { useFieldClasses } from '../composables/useFieldClasses'
+import { useInputModality } from '../../../../composables/useInputModality'
 
 defineOptions({ name: 'DssField', inheritAttrs: false })
 
@@ -38,6 +39,13 @@ const computedFieldId = computed(() => props.fieldId ?? generatedFieldId)
 
 // ── Classes ───────────────────────────────────────────────────────────────────
 const { rootClasses, labelClasses } = useFieldClasses(props, isFocused)
+
+// Anel de foco só no teclado: `:focus-visible` não separa mouse de teclado em
+// campo de TEXTO (é da especificação). O composable marca a modalidade no
+// `<html>` e o CSS condiciona o anel a ela. Global e idempotente — chamar aqui,
+// e não no entry point, mantém o listener preso a quem precisa dele.
+useInputModality()
+
 
 // ── Bottom area ───────────────────────────────────────────────────────────────
 const hasBottomContent = computed(

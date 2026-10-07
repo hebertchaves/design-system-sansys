@@ -153,11 +153,30 @@
         "categorySource": "quasar"
       },
       {
+        "name": "rules",
+        "type": "SelectRule[]",
+        "controlHint": "text",
+        "default": false,
+        "description": "Estado de erro (muda cor para --dss-error-600)",
+        "category": "Estado",
+        "categorySource": "quasar"
+      },
+      {
+        "name": "lazyRules",
+        "type": "SelectLazyRules",
+        "controlHint": "segmented",
+        "default": false,
+        "description": "Quando as regras rodam sozinhas.",
+        "validValues": [
+          "ondemand"
+        ],
+        "category": "Estado",
+        "categorySource": "quasar"
+      },
+      {
         "name": "error",
         "type": "boolean",
         "controlHint": "toggle",
-        "default": false,
-        "description": "Estado de erro (muda cor para --dss-error-600)",
         "category": "Estado",
         "categorySource": "quasar"
       },
@@ -238,8 +257,8 @@
         "controlHint": "text",
         "default": "null",
         "description": "Tabindex customizado",
-        "category": "Acessibilidade",
-        "categorySource": "nome-a11y"
+        "category": "Comportamento",
+        "categorySource": "quasar"
       }
     ],
     "emits": [

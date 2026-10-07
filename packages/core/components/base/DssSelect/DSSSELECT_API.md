@@ -32,6 +32,8 @@
 | `clearable` | `boolean` | `false` | Exibe botão de limpar a seleção. |
 | `ariaLabel` | `string` | — | Label de acessibilidade para screen readers. |
 | `tabindex` | `number \| string \| null` | `null` | Tabindex customizado. |
+| `rules` | `SelectRule[]` | Estado de erro (muda cor para --dss-error-600) |
+| `lazyRules` | `SelectLazyRules` | Quando as regras rodam sozinhas. |
 
 ---
 

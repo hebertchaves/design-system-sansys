@@ -81,6 +81,29 @@ import { DssSelect } from '@dss/components/base/DssSelect'
 <DssSelect v-model="val" :options="opts" brand="waste" label="Waste" />
 ```
 
+## Validação dentro de um `DssForm`
+
+Declarar `rules` faz este campo entrar no `validate()` e no `submit()` do `DssForm` ancestral.
+O motor é o do QSelect que este componente encapsula — as regras já funcionavam por `$attrs`,
+mas **fora da API declarada**: quem lia a documentação não tinha como saber que existiam.
+Desde set/2026 o canal é explícito, tipado e repassado no template.
+
+```vue
+<DssForm ref="form" @submit.prevent="enviar">
+  <DssSelect v-model="perfil" label="Perfil" :options="perfis"
+             :rules="[v => !!v || 'Selecione um perfil']" />
+  <DssButton type="submit" label="Enviar" color="primary" />
+</DssForm>
+```
+
+Cada regra recebe o valor e devolve `true` (aprovado), `false` (reprovado sem mensagem) ou uma
+`string` (reprovado, e a string é a mensagem) — ou uma `Promise` dessas. O tipo é mais estreito
+que o dos campos de construção explícita (`DssInput`, `DssCheckbox`…): aqui a regra vai direto
+ao Quasar, cujo `ValidationRule` não admite retorno vazio.
+
+`lazyRules` decide quando a regra roda sozinha: `false` (padrão) a cada mudança do valor,
+`true` só ao perder o foco, `'ondemand'` apenas via `validate()`.
+
 ## Links
 
 - [API Reference](./DSSSELECT_API.md)

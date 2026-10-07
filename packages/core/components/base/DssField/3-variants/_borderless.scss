@@ -15,7 +15,7 @@
   /* Focus: indicador visual mínimo (border-bottom) */
   &.dss-field--focused .dss-field__field {
     border-bottom: var(--dss-border-width-md) solid var(--dss-action-primary);
-    box-shadow: 0 var(--dss-border-width-thin) 0 0 var(--dss-action-primary);
+    box-shadow: 0 var(--dss-border-width-md) 0 0 var(--dss-action-primary);
   }
 
   &.dss-field--focused .dss-field__label {

@@ -818,7 +818,7 @@
         },
         {
           "property": "box-shadow",
-          "token": "--dss-border-width-thin",
+          "token": "--dss-border-width-md",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -827,12 +827,6 @@
           "token": "--dss-border-width-md",
           "value": null,
           "source": "3-variants/_borderless.scss"
-        },
-        {
-          "property": "box-shadow",
-          "token": "--dss-border-width-md",
-          "value": null,
-          "source": "4-output/_brands.scss"
         },
         {
           "property": "outline",
@@ -861,6 +855,12 @@
         {
           "property": "border-color",
           "token": "--dss-hub-600",
+          "value": null,
+          "source": "4-output/_brands.scss"
+        },
+        {
+          "property": "box-shadow",
+          "token": "--dss-border-width-thin",
           "value": null,
           "source": "4-output/_brands.scss"
         },

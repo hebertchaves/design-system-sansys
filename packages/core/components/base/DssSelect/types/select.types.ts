@@ -10,6 +10,37 @@
  * @version 1.0.0
  */
 
+import type { DssFieldRule, DssLazyRules } from '../../../../composables/useFieldValidation'
+
+// ==========================================================================
+// TIPOS DE VALIDACAO — declarados ESTRUTURALMENTE de proposito
+// ==========================================================================
+//
+// Ver DssInput: alias importado de outro arquivo dentro do tipo de um prop faz
+// o prop sumir da lista compilada, em silencio. A trava abaixo impede
+// divergencia com o tipo canonico do composable global.
+
+/**
+ * Regra de validacao do DssSelect.
+ *
+ * MAIS ESTREITA que a `DssFieldRule` canonica de proposito: este componente
+ * repassa as regras DIRETO ao QInput/QSelect, e o `ValidationRule` do Quasar
+ * nao admite retorno `void`. O wrapper espelha o motor que encapsula — quem
+ * escreve a regra aqui devolve `true`/`false`/`string`, nunca nada.
+ */
+export type SelectRule = (
+  val: unknown,
+) => boolean | string | Promise<boolean | string>
+
+/** Momento em que as regras rodam sozinhas. Forma canonica: `DssLazyRules`. */
+export type SelectLazyRules = boolean | 'ondemand'
+
+type _ParidadeRegra = SelectRule extends DssFieldRule<unknown> ? true : never
+type _ParidadeLazy = SelectLazyRules extends DssLazyRules ? true : never
+const _paridade: [_ParidadeRegra, _ParidadeLazy] = [true, true]
+void _paridade
+
+
 
 // ==========================================================================
 // ENUMS E LITERAIS
@@ -153,6 +184,25 @@ export interface SelectProps {
    * Estado de erro (muda cor para --dss-error-600)
    * @default false
    */
+  /**
+   * Regras de validacao do campo.
+   *
+   * O motor e o do QField que este componente encapsula — as regras ja
+   * funcionavam por `$attrs`, mas fora da API declarada: quem lia a
+   * documentacao nao tinha como saber que existiam. Declarar aqui torna o
+   * canal explicito, tipado e repassado no template (nao mais por acidente).
+   */
+  rules?: SelectRule[]
+
+  /**
+   * Quando as regras rodam sozinhas.
+   * - `false` (padrao) — a cada mudanca do valor
+   * - `true` — apenas ao perder o foco
+   * - `'ondemand'` — so via `validate()`
+   * @default false
+   */
+  lazyRules?: SelectLazyRules
+
   error?: boolean
 
   /**
