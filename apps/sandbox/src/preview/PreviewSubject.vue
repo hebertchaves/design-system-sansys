@@ -445,6 +445,21 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 
 .pv-stage > * {
   margin: auto;
+
+  /* `min-inline-size: 0` — sem isto o seletor "Largura" do palco era DECORATIVO
+     para todo componente largo.
+
+     Item de flex nasce com `min-width: auto`, que o impede de encolher abaixo
+     do próprio min-content. Medido no DssTabs: palco em 480px, iframe em 480px
+     e o `.q-tabs` em 1900px — o sujeito ignorava a coluna estreita e vazava,
+     então o QTabs continuava marcando `q-tabs--not-scrollable` e as props de
+     seta (outsideArrows, mobileArrows) não tinham o que mostrar. Lia-se como
+     "o preview não aplica a opção".
+
+     O mesmo valia, em silêncio, para tabela, barra de ferramentas e qualquer
+     peça cujo min-content passe da largura escolhida — justamente as que o
+     controle de largura existe para avaliar. */
+  min-inline-size: 0;
 }
 .pv-missing { color: #b00020; font-family: system-ui, sans-serif; }
 /* Semente citando componente que não resolve. Visível de propósito: é o único
