@@ -109,3 +109,78 @@
   descent-override: 22.53%;
   line-gap-override: 0%;
 }
+
+/* --------------------------------------------------------------------------
+   3. Material Icons — a fonte de ÍCONE do DS
+
+   POR QUE ISTO EXISTE (set/2026). A onda que internalizou o Inter resolveu
+   metade do problema: a fonte de TEXTO virou nossa, a de ÍCONE não. O
+   `apps/sandbox/index.html` carregava
+   `https://fonts.googleapis.com/css2?family=Material+Icons`, e a requisição
+   medida resolvia para `fonts.gstatic.com/s/materialicons/v145/…` — note o v145.
+
+   O `v145` é um contador que o Google incrementa. Um endpoint de CSS sem versão
+   fixada significa que a renderização dos ícones pode mudar SEM NENHUM COMMIT
+   neste repositório — e foi exatamente assim que o relato
+   chegou: os glifos redondos voltaram a parecer cortados, sem motivo visível
+   no repositório. Sem o arquivo no
+   repositório não há como comparar antes e depois, nem reproduzir o que uma
+   máquina renderizou ontem.
+
+   Mesma razão do Inter, e as mesmas três que o bloco 1 já lista: `local()` casa
+   por NOME e não garante versão; CDN exige liberar `fonts.gstatic.com` na CSP
+   de uma app corporativa e cria requisição externa em runtime; e nenhum dos
+   dois dá determinismo. São 128KB, em cache, sem rede.
+
+   `font-display: block` e NÃO `swap`: ícone não tem substituto legível. Com
+   `swap` o navegador pinta a LIGADURA em fonte de texto durante o carregamento
+   — a tela mostra a palavra check_circle por escrito antes do glifo aparecer.
+   `block` segura invisível até a fonte chegar, que é o comportamento correto
+   para fonte de símbolo.
+
+   Sem `unicode-range`: a fonte é acessada por LIGADURA (o texto check_circle
+   vira um glifo), não por codepoint. Restringir a faixa quebraria a resolução.
+   -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('@core/assets/fonts/material-icons.woff2') format('woff2');
+}
+
+/* --------------------------------------------------------------------------
+   3b. A CLASSE que liga o glifo à fonte
+
+   O `@font-face` acima só DECLARA a fonte; quem a aplica ao elemento é a classe
+   `.material-icons`, que o Quasar emite no `<i>` do QIcon. Essa classe vinha no
+   mesmo CSS do Google que foi removido — e removê-la sem repor derrubou todos
+   os ícones: medido, o `<i>` passou a renderizar a LIGADURA COMO TEXTO em
+   `DSS Sans`, recortada na caixa de 1em. Defeito mudo clássico: nenhum erro de
+   console, a fonte carregada, e nada aparecendo.
+
+   O QUE ESTA DECLARAÇÃO NÃO TRAZ, de propósito. O CSS do Google também definia
+   `font-size: 24px`, `line-height: 1` e `display: inline-block`. Nada disso
+   entra aqui: GEOMETRIA de ícone é do DSS (`.dss-icon--*` e a `font-size` do
+   host no modo inline — CCI §2.2). Repetir `font-size` criaria uma segunda
+   fonte de verdade com a MESMA especificidade (0,1,0) das regras do DssIcon,
+   e o empate se resolveria por ordem de bundle — a armadilha que o
+   `.dss-chip__icon` já paga.
+
+   Fica só o que a FONTE precisa para funcionar: família, peso, estilo,
+   ligadura e as normalizações que impedem o texto de ser tratado como texto.
+   -------------------------------------------------------------------------- */
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

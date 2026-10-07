@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Design System Sansys - Exemplo de Uso</title>
 
-  <!-- Material Icons (Fonte de Ícones) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
+  <!-- Material Icons: SERVIDA PELO DSS, não pelo Google.
+       O @font-face vive em packages/core/tokens/semantic/accessibility/_font-face.scss
+       e o arquivo em packages/core/assets/fonts/material-icons.woff2.
+       O <link> para fonts.googleapis.com que estava aqui apontava para um
+       endpoint SEM VERSÃO FIXADA — a renderização dos ícones podia mudar sem
+       nenhum commit neste repositório. -->
 
   <!-- CSS do Quasar encapsulado via @layer quasar — DSS ganha precedência absoluta na cascata -->
   <link rel="stylesheet" href="/quasar-layered.css">
