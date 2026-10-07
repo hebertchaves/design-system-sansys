@@ -129,6 +129,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "flex-shrink",
+          "token": null,
+          "value": "0",
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "background-color",
           "token": null,
           "value": "transparent",

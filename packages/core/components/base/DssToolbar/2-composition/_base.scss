@@ -119,6 +119,26 @@
   overflow-y: hidden;
 
   // ------------------------------------------------------------------
+  // O filho NÃO encolhe — sem isto a rolagem acima era inútil
+  // ------------------------------------------------------------------
+  // `overflow-x: auto` devolveu o ACESSO ao conteúdo transbordado, mas não
+  // impediu o transbordo de acontecer DENTRO de cada filho. Item de flex nasce
+  // com `flex-shrink: 1`: numa barra estreita os botões se espremiam até o
+  // piso do próprio tamanho (`min-width`, 56px no `sm`) e o rótulo VAZAVA da
+  // caixa por cima do vizinho.
+  //
+  // Medido numa barra de 206px com 14 ações: todos os botões em 56px, com
+  // conteúdo de 56 a 84px — "Duplicar" precisava de 64, "Renomear" de 68,
+  // "Exportar" de 102. O que se via era texto sobre texto, não transbordo.
+  //
+  // `flex-shrink: 0` preserva a largura natural e devolve o trabalho à rolagem,
+  // que é o contrato declarado logo acima: a barra não encolhe conteúdo nem
+  // empurra a página — ela rola.
+  > * {
+    flex-shrink: 0;
+  }
+
+  // ------------------------------------------------------------------
   // Cores padrão (sem brand)
   // ------------------------------------------------------------------
   background-color: transparent;
