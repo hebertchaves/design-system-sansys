@@ -56,6 +56,26 @@
 // sem o consumidor saber que precisa de um caso especial.
 // --------------------------------------------------------------------------
 
+// --------------------------------------------------------------------------
+// Por que `--dss-action-primary-text`, e não `--dss-text-inverse`
+//
+// Corrigido no Bloco 3.3 (set/2026), com medição no escuro. `--dss-text-inverse`
+// significa "o inverso do texto do TEMA", e por isso vira `#0a0a0a` no escuro —
+// o que é certo para uma superfície que escurece junto. A barra de marca NÃO
+// escurece: ela continua `--dss-water-600` nos dois temas. Medido:
+//
+//   claro  → #ffffff sobre #026cc7 = 5.28:1 ✅
+//   escuro → #0a0a0a sobre #026cc7 = **3.74:1** ❌ (WCAG 1.4.3 pede 4.5:1)
+//
+// E o defeito era mudo: o comentário do `_states.scss` afirmava "contraste
+// preservado" e o CSS dizia o contrário.
+//
+// `--dss-action-primary-text` significa "texto SOBRE a superfície de ação" —
+// branco nos dois temas, que é exatamente o contrato desta barra. Ele existe
+// por marca (`tokens/brand/_hub|_water|_waste.scss`) e resolve porque a barra
+// põe `[data-brand]` no próprio root.
+// --------------------------------------------------------------------------
+
 // ------------------------------------------------------------------
 // Hub (laranja)
 // EXC-02 — Contraste Hub: 2.8:1 aceitável para texto grande/bold em toolbar
@@ -63,10 +83,21 @@
 [data-brand='hub'] .dss-toolbar--brand-hub,
 .dss-toolbar.dss-toolbar--brand-hub {
   background-color: var(--dss-hub-600);
-  color: var(--dss-text-inverse);
+  color: var(--dss-action-primary-text);
 
   /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
-  --dss-action-primary: var(--dss-text-inverse);
+  --dss-action-primary: var(--dss-action-primary-text);
+
+  /* O ANEL DE FOCO também — e aqui era defeito de acessibilidade, não estética.
+     `--dss-focus-primary` é remapeado por marca em
+     `tokens/semantic/accessibility/_focus.scss`, e os comentários de lá dizem
+     o valor exato da premissa: "5.29:1 **vs branco**". A premissa é que o que
+     recebe foco está sobre superfície clara. Dentro desta barra a superfície É
+     a cor da marca, então o anel saía da MESMA cor do fundo — medido,
+     **1,00:1**: o indicador de foco existia no CSS e não existia na tela
+     (WCAG 2.4.7, e a 1.4.11 pede 3:1 para elemento não-textual).
+     Com a cor de texto sobre marca, sobe para 5,29:1 no Water. */
+  --dss-focus-primary: var(--dss-action-primary-text);
 }
 
 // ------------------------------------------------------------------
@@ -75,10 +106,21 @@
 [data-brand='water'] .dss-toolbar--brand-water,
 .dss-toolbar.dss-toolbar--brand-water {
   background-color: var(--dss-water-600);
-  color: var(--dss-text-inverse);
+  color: var(--dss-action-primary-text);
 
   /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
-  --dss-action-primary: var(--dss-text-inverse);
+  --dss-action-primary: var(--dss-action-primary-text);
+
+  /* O ANEL DE FOCO também — e aqui era defeito de acessibilidade, não estética.
+     `--dss-focus-primary` é remapeado por marca em
+     `tokens/semantic/accessibility/_focus.scss`, e os comentários de lá dizem
+     o valor exato da premissa: "5.29:1 **vs branco**". A premissa é que o que
+     recebe foco está sobre superfície clara. Dentro desta barra a superfície É
+     a cor da marca, então o anel saía da MESMA cor do fundo — medido,
+     **1,00:1**: o indicador de foco existia no CSS e não existia na tela
+     (WCAG 2.4.7, e a 1.4.11 pede 3:1 para elemento não-textual).
+     Com a cor de texto sobre marca, sobe para 5,29:1 no Water. */
+  --dss-focus-primary: var(--dss-action-primary-text);
 }
 
 // ------------------------------------------------------------------
@@ -87,8 +129,19 @@
 [data-brand='waste'] .dss-toolbar--brand-waste,
 .dss-toolbar.dss-toolbar--brand-waste {
   background-color: var(--dss-waste-600);
-  color: var(--dss-text-inverse);
+  color: var(--dss-action-primary-text);
 
   /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
-  --dss-action-primary: var(--dss-text-inverse);
+  --dss-action-primary: var(--dss-action-primary-text);
+
+  /* O ANEL DE FOCO também — e aqui era defeito de acessibilidade, não estética.
+     `--dss-focus-primary` é remapeado por marca em
+     `tokens/semantic/accessibility/_focus.scss`, e os comentários de lá dizem
+     o valor exato da premissa: "5.29:1 **vs branco**". A premissa é que o que
+     recebe foco está sobre superfície clara. Dentro desta barra a superfície É
+     a cor da marca, então o anel saía da MESMA cor do fundo — medido,
+     **1,00:1**: o indicador de foco existia no CSS e não existia na tela
+     (WCAG 2.4.7, e a 1.4.11 pede 3:1 para elemento não-textual).
+     Com a cor de texto sobre marca, sobe para 5,29:1 no Water. */
+  --dss-focus-primary: var(--dss-action-primary-text);
 }

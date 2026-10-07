@@ -18,20 +18,26 @@
   .dss-toolbar {
     color: var(--dss-text-body);
 
-    // Brands mantêm suas cores no dark mode — contraste preservado
+    // A barra de marca NÃO escurece: o fundo continua o mesmo dos dois temas.
+    // Por isso o texto não pode sair de `--dss-text-inverse`, que vira #0a0a0a
+    // no escuro — medido em 3.74:1 sobre o azul, reprovando a 1.4.3. O token
+    // certo é `--dss-action-primary-text` (branco nos dois temas). Nota longa
+    // em `_brands.scss`.
+    //
+    // O comentário anterior aqui dizia "contraste preservado". Não estava.
     &.dss-toolbar--brand-hub {
       background-color: var(--dss-hub-600);
-      color: var(--dss-text-inverse);
+      color: var(--dss-action-primary-text);
     }
 
     &.dss-toolbar--brand-water {
       background-color: var(--dss-water-600);
-      color: var(--dss-text-inverse);
+      color: var(--dss-action-primary-text);
     }
 
     &.dss-toolbar--brand-waste {
       background-color: var(--dss-waste-600);
-      color: var(--dss-text-inverse);
+      color: var(--dss-action-primary-text);
     }
   }
 }

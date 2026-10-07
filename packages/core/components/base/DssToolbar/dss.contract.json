@@ -178,7 +178,7 @@
         },
         {
           "property": "color",
-          "token": "--dss-text-inverse",
+          "token": "--dss-action-primary-text",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -287,7 +287,7 @@
         ]
       },
       {
-        "name": "--dss-text-inverse",
+        "name": "--dss-action-primary-text",
         "usedIn": [
           "default"
         ]

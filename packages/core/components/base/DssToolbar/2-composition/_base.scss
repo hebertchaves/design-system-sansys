@@ -31,6 +31,68 @@
   padding-inline: var(--dss-spacing-4);    // 16px — sobrescreve padding: 0 12px do QToolbar
 
   // ------------------------------------------------------------------
+  // Ícone de BARRA — remapeia a ESCALA, não dimensiona o filho
+  // ------------------------------------------------------------------
+  // Barra é contexto, e contexto dimensiona o que vive nele.
+  //
+  // O problema (medido set/2026): numa barra só cabe botão `sm` — o `md` tem
+  // 44px e estoura até a toolbar densa, de 40px. E o botão `sm` consome
+  // `--dss-icon-size-xs`, que são 16px: 29% da barra padrão de 56px e 40% da
+  // densa de 40px. A proporção de referência de uma barra de aplicação é ~50%.
+  //
+  // A correção remapeia o TOKEN no escopo da barra, em vez de escrever
+  // `font-size` em `.dss-button__icon` daqui. A diferença não é estilística: o
+  // Cartão Composto proíbe injetar CSS no filho, e a regra tem razão prática —
+  // no dia em que o DssButton trocar a classe interna, a injeção quebra calada.
+  // O token é o canal declarado; quem o consome segue sendo a regra do botão.
+  //
+  // A escala INTEIRA, e não só o degrau que faltava: a primeira versão desta
+  // regra remapeava só o `xs`, e o efeito colateral foi medido — o botão `sm`
+  // subia para 20px e ALCANÇAVA o `md`, que já era 20px. Dentro da barra a prop
+  // `size` deixava de ter efeito visível entre esses dois degraus: o container
+  // crescia, o ícone não. Deslocar todos os degraus mantém a escala monotônica
+  // e a prop continua decidindo.
+  //
+  // A origem é a família `--dss-bar-icon-size-*`, do :root, e não
+  // `var(--dss-icon-size-<próximo>)`: encadeado aqui dentro, cada token
+  // resolveria para o vizinho JÁ remapeado e a escala colapsaria de novo — a
+  // mesma armadilha que o DssAppBar pagou na densidade `standard`.
+  //
+  // Alcança qualquer ícone da barra, não só o dos botões — e é o certo: chip,
+  // avatar e ícone solto numa barra também são do tamanho da barra.
+  --dss-icon-size-2xs: var(--dss-bar-icon-size-2xs);   // 12px → 16px
+  --dss-icon-size-xs: var(--dss-bar-icon-size-xs);     // 16px → 20px
+  --dss-icon-size-sm: var(--dss-bar-icon-size-sm);     // 20px → 24px
+  --dss-icon-size-md: var(--dss-bar-icon-size-md);     // 24px → 32px
+  --dss-icon-size-lg: var(--dss-bar-icon-size-lg);     // 32px → 48px
+  // O topo da escala (botão `xl`, 64px → ícone de 48px) é nominal: um botão de
+  // 64px não cabe em barra nenhuma — a padrão tem 56px. Deslocar também esse
+  // degrau mantém a escala monotônica em vez de colapsar na fronteira de cima.
+
+  // ------------------------------------------------------------------
+  // Geometria de ESTADO — o disco de hover e o anel de foco
+  // ------------------------------------------------------------------
+  // Mesma lógica do bloco acima, outro eixo: a barra é o continente e sabe
+  // coisas que o botão não sabe — a própria altura, e o quanto sobra em volta.
+  //
+  // DISCO DE HOVER. O botão `sm` desenha o overlay de estado na caixa inteira,
+  // 36px, em volta de um ícone de 20px. Medido: o disco cobre 4,2× a área do
+  // glifo, e numa barra cheia de ícones o que se lê primeiro é o disco pálido,
+  // não o ícone. O inset de 4px fecha o disco em 28px — o ícone passa de 56%
+  // para 71% dele.
+  //
+  // O ALVO DE TOQUE NÃO ENCOLHE: continua os 36px da caixa do botão. Disco de
+  // estado e alvo de toque são caixas diferentes — é exatamente por isso que o
+  // `::before` segue reservado ao alvo (WCAG 2.5.5) e o `::after` ao efeito.
+  //
+  // ANEL DE FOCO. Com os 4px de offset default, o anel do botão `sm` estende
+  // 48px (36 + 2×4 + 2×2) e TRANSBORDA a barra compacta de 40px — medido, era
+  // recortado em cima e embaixo. Com offset zero fecha em 40px e cabe inteiro.
+  // O anel não some: ele encosta no botão em vez de flutuar fora da barra.
+  --dss-button-state-layer-inset: var(--dss-spacing-1);   // 4px
+  --dss-button-focus-ring-offset: var(--dss-spacing-0);   // 0
+
+  // ------------------------------------------------------------------
   // Layout
   // ------------------------------------------------------------------
   display: flex;

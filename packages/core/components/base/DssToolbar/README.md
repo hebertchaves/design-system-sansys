@@ -79,6 +79,45 @@ import { DssToolbar } from '@dss/components'
 </DssToolbar>
 ```
 
+## Tamanho de ícone dentro da barra
+
+A barra é contexto, e contexto dimensiona o que vive nele. Dentro de `.dss-toolbar` a escala de
+ícone do sistema sobe **um degrau**, remapeada a partir da família `--dss-bar-icon-size-*`:
+
+| `size` do `DssButton` | altura do botão | ícone fora da barra | ícone **na barra** |
+|---|---|---|---|
+| `xs` | 32px | 12px | 16px |
+| `sm` | 36px | 16px | **20px** |
+| `md` | 44px | 20px | **24px** |
+| `lg` | 52px | 24px | 32px |
+| `xl` | 64px | 32px | 48px |
+
+Por que existe: numa barra de 40px só cabe o botão `sm`, e os 16px do `--dss-icon-size-xs` são
+40% da barra — a referência de uma barra de aplicação é ~50%.
+
+**A prop `size` continua decidindo.** O remap desloca a escala inteira justamente para não
+colapsar degraus: a primeira versão desta regra remapeava só um token, e botão `sm` e `md`
+passavam a renderizar o mesmo ícone de 20px dentro da barra.
+
+O alcance é **qualquer** ícone da barra, não só o dos botões — chip, avatar e ícone solto numa
+barra também são do tamanho da barra.
+
+## Geometria de estado dentro da barra
+
+A barra também dimensiona o **disco de hover** e o **anel de foco** dos botões que vivem
+nela, por dois canais que o `DssButton` declara e cuja origem é o continente:
+
+| Token | Fora da barra | Na barra | Por quê |
+|---|---|---|---|
+| `--dss-button-state-layer-inset` | `0` | `4px` | O disco de estado fecha em 28px em vez de 36px. O ícone passa de **56% para 71%** do disco, e a área do disco cai de 3,2× para 2,0× a do glifo |
+| `--dss-button-focus-ring-offset` | `4px` | `0` | O anel do botão `sm` estendia **48px** numa barra de **40px** e era recortado. Com offset zero fecha em 40px e cabe inteiro |
+
+**O alvo de toque não encolhe.** Ele continua a caixa do botão — 36px no `sm`. Disco de
+estado e alvo de toque são caixas diferentes, e é exatamente por isso que o `::before` segue
+reservado ao alvo (WCAG 2.5.5) e o `::after` ao efeito visual.
+
+**Fora da barra nada muda:** os dois defaults são o comportamento de sempre.
+
 ## Herança de Brand
 
 Quando `brand` é definida, o elemento recebe automaticamente `data-brand`, permitindo que filhos como `DssButton` e `DssIcon` herdem a brand via tokens CSS:
