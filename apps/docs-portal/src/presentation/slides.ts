@@ -23,7 +23,7 @@ export const slideContent = [
   { headline: 'Medir para evoluir.', subtitle: 'Indicadores propostos · estabelecer primeiro a linha de base', kind: 'metrics', points: ['Reutilização|Patterns oficiais / entregas elegíveis', 'Retrabalho|Correções por divergência do DSS', 'Tempo até aceite|Comparar complexidades semelhantes', 'Falhas que escapam|Desvios após verificações e revisão'] },
 ] as const;
 
-export const slides = storyboard.map((item, index) => ({ ...item, ...slideContent[index] }));
+export const slides = storyboard.map((item, index) => ({ dark: false, ...item, ...slideContent[index] }));
 
 export function readSlideIndex(search: string, total: number) {
   const parsed = Number(new URLSearchParams(search).get('slide') || 1);
