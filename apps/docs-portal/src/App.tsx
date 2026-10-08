@@ -113,6 +113,7 @@ import FigmaPage from "./pages/resources/FigmaPage";
 import InstallationPage from "./pages/resources/InstallationPage";
 import FAQPage from "./pages/resources/FAQPage";
 import NotFound from "./pages/NotFound";
+import PresentationPage from "./presentation/PresentationPage";
 
 const queryClient = new QueryClient();
 
@@ -123,6 +124,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/apresentacao" element={<PresentationPage />} />
           <Route element={<DSSLayout />}>
             {/* Início */}
             <Route path="/" element={<HomePage />} />

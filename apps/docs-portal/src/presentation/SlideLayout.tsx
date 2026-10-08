@@ -1,0 +1,46 @@
+import { ArrowRight as ArrowRightIcon, Check as CheckIcon, ShieldCheck as ShieldCheckIcon, Layers as LayersIcon, Search as SearchIcon, Users as UsersIcon, Code2 as CodeIcon, GitBranch as GitBranchIcon, AlertTriangle as AlertIcon } from 'lucide-react';
+import { slides } from './slides';
+
+type Slide = (typeof slides)[number];
+function Wireframe({ variant = 0, detailed = false }: { variant?: number; detailed?: boolean }) {
+  return <div className={`deck-wireframe variant-${variant}`} aria-label="Wireframe ilustrativo de interface Sansys">
+    <div className="wire-appbar"><span>sansys <strong>water</strong></span><span>Atendimento</span><span>•••</span></div>
+    <div className="wire-body"><div className="wire-rail"><span>◫</span><span>≡</span><span>◇</span><span>⚙</span></div><div className="wire-main">
+      <div className="wire-breadcrumb">Atendimento / Solicitações</div><h3>{detailed ? 'Atender solicitações' : 'Solicitações'}</h3>
+      <div className="wire-context"><span>Contexto do cliente</span><span>Identificação · Unidade · Situação</span></div>
+      <div className="wire-tabs"><span>Solicitações</span><span>Histórico</span><span>Documentos</span></div>
+      <div className="wire-row wire-row-head"><span>Solicitação</span><span>Categoria</span><span>Situação</span></div>
+      {['Revisão de cadastro', 'Consulta de atendimento', 'Atualização de dados'].map((label, i) => <div className="wire-row" key={label}><span>{label}</span><span>Atendimento</span><span className={i === 1 ? 'wire-status' : ''}>{i === 1 ? 'Em análise' : '—'}</span></div>)}
+      <div className="wire-bottom"><span>Conteúdo ilustrativo · sem dados de clientes</span><span>Continuar →</span></div>
+    </div></div>
+  </div>;
+}
+function Flow({ items, compact = false }: { items: readonly string[]; compact?: boolean }) {
+  return <div className={`deck-flow ${compact ? 'compact' : ''}`}>{items.map((text, i) => <div className="deck-flow-unit" key={text}><span className="deck-step">{String(i + 1).padStart(2, '0')}</span><h3>{text.split('|')[0]}</h3>{text.includes('|') && <p>{text.split('|')[1]}</p>}{i < items.length - 1 && <ArrowRightIcon className="flow-arrow" />}</div>)}</div>;
+}
+function Visual({ slide }: { slide: Slide }) {
+  const { kind, points } = slide;
+  if (kind === 'cover') return <><div className="cover-visual"><Wireframe detailed /></div><div className="deck-brands"><span className="brand-water">Sansys Water</span><span className="brand-waste">Sansys Waste</span><span className="brand-hub">Sansys Hub</span></div></>;
+  if (kind === 'divergence') return <><div className="divergence-frames">{[0, 1, 2].map(v => <Wireframe key={v} variant={v} />)}</div><div className="deck-three-labels">{points.map(p => <p key={p}>{p}</p>)}</div><p className="visual-caption">Ilustração conceitual · não representa um levantamento de defeitos em produção.</p></>;
+  if (kind === 'compare') return <div className="deck-compare"><div><span className="deck-label">RECONSTRUIR</span><LayersIcon /><h3>Aparência parecida.</h3><p>Uma nova interpretação a cada consumo.</p></div><div className="preferred"><span className="deck-label">COMPOR</span><ShieldCheckIcon /><h3>Referência oficial.</h3>{points.map(p => <p key={p}><CheckIcon />{p}</p>)}</div></div>;
+  if (kind === 'cycle' || kind === 'four' || kind === 'validation' || kind === 'controls') return <><Flow items={points} />{kind === 'cycle' && <p className="deck-callout">A evidência alimenta o próximo aprendizado. ↻</p>}{kind === 'validation' && <div className="validation-note"><AlertIcon /><p>Roteiro de demonstração controlada<br /><span>Falha, correção e nova checagem ainda precisam ser executadas e gravadas.</span></p></div>}{kind === 'controls' && <p className="visual-caption">Hooks dependem de instalação. Baselines e contratos têm adoção incremental. Pipeline não executado nesta preparação.</p>}</>;
+  if (kind === 'mcp') return <><div className="mcp-flow"><div><UsersIcon /><h3>Pedido de produto</h3></div><ArrowRightIcon /><div className="mcp-core"><CodeIcon /><h3>IA ↔ DSS</h3><span>Consulta via MCP</span></div><ArrowRightIcon /><div><LayersIcon /><h3>Proposta de interface</h3></div></div><div className="deck-three-labels">{points.map(p => <p key={p}>{p}</p>)}</div><p className="deck-callout">Aprovação humana é uma decisão explícita, não uma resposta da IA.</p></>;
+  if (kind === 'source' || kind === 'owners') return <><div className="source-flow"><div className="source-inputs">{points.map(p => <div key={p}><span>{p.split('|')[0]}</span>{p.includes('|') && <strong>{p.split('|')[1]}</strong>}</div>)}</div><ArrowRightIcon /><div className="contract-block"><GitBranchIcon /><h3>Contrato<br />derivado</h3><p>Verdade derivável<br />ou verificável</p></div><ArrowRightIcon /><div className="source-output"><h3>Consulta</h3><h3>Documentação</h3><h3>Preview real</h3><span>Integrações em consolidação</span></div></div><p className="visual-caption">Direção arquitetural · orientação editorial identificada separadamente · não implica migração integral do portal.</p></>;
+  if (kind === 'patterns') return <><div className="pattern-stack"><div><span>01</span><h3>Componentes</h3><p>Peças oficiais</p></div><ArrowRightIcon /><div><span>02</span><h3>Blocos compostos</h3><p>PageShell · AppBar<br />ContextHeader</p></div><ArrowRightIcon /><div><span>03</span><h3>Pattern de página</h3><p>Estrutura + variações</p></div><ArrowRightIcon /><div><span>04</span><h3>Interface</h3><p>Necessidade de produto</p></div></div><div className="deck-three-labels">{points.map(p => <p key={p}>{p}</p>)}</div><p className="visual-caption">DssDataBoard: bloco em construção. A cobertura completa de patterns ainda precisa ser demonstrada.</p></>;
+  if (kind === 'roles' || kind === 'limits' || kind === 'priorities') return <><div className="deck-columns">{points.map((p, i) => <div key={p}><span className={`deck-column-icon tone-${i}`}>{kind === 'roles' ? [<UsersIcon />, <LayersIcon />, <CodeIcon />][i] : kind === 'limits' ? [<ShieldCheckIcon />, <UsersIcon />, <SearchIcon />][i] : String(i + 1).padStart(2, '0')}</span><h3>{p.split('|')[0]}</h3><p>{p.split('|')[1]}</p></div>)}</div><p className="deck-callout">{kind === 'roles' ? 'Revisão conjunta: a solução resolve a necessidade?' : kind === 'limits' ? 'Uma checagem aprovada comprova aquilo que ela mediu.' : 'Responsáveis claros. Linha de base. Aprendizado contínuo.'}</p></>;
+  if (kind === 'workflow') return <><Flow items={points} compact /><div className="workflow-feedback"><span>↳ Sem pattern adequado? Explicitar a lacuna.</span><span>↶ Revisão devolve aprendizado ao início.</span></div><p className="deck-callout">A memória do chat não substitui o catálogo oficial.</p></>;
+  if (kind === 'case') return <div className="case-layout"><div><Wireframe detailed /><p className="visual-caption">Wireframe de proposta · encaixe dos blocos sujeito à validação.</p></div><div className="case-annotations">{points.map((p,i) => <div key={p}><span>{String(i+1).padStart(2,'0')}</span><h3>{p}</h3><p>{['Página, navegação e contexto', 'Área variável da tarefa', 'Carregamento, vazio, erro e permissão'][i]}</p></div>)}</div></div>;
+  if (kind === 'closing') return <><div className="closing-lockup"><span>DSS</span><div>{points.map(p => <p key={p}>{p}</p>)}</div></div><p className="deck-callout">Continuidade da governança · adoção progressiva · resultados acompanhados</p></>;
+  if (kind === 'tools') return <div className="deck-tool-grid">{points.map(p => <div key={p}><h3>{p.split('|')[0]}</h3><p>{p.split('|')[1]}</p></div>)}</div>;
+  if (kind === 'brief') return <><div className="brief-grid">{points.map((p,i) => <div key={p}><span>{String(i+1).padStart(2,'0')}</span><h3>{p}</h3></div>)}</div><p className="deck-callout">Consultar o DSS. Explicitar lacunas. Declarar o que não foi verificado.</p></>;
+  return <div className="metrics-table">{points.map((p,i) => <div key={p}><span>{String(i+1).padStart(2,'0')}</span><h3>{p.split('|')[0]}</h3><p>{p.split('|')[1]}</p></div>)}<p className="visual-caption">Sem promessa percentual antes de medir · acordar elegibilidade, denominadores e responsáveis.</p></div>;
+}
+
+export function SlideLayout({ slide }: { slide: Slide }) {
+  return <article className={`slide-content ${slide.dark ? 'slide-dark' : 'slide-light'} kind-${slide.kind}`} data-slide-id={slide.id}>
+    <header className="slide-top"><span>DSS <span className="slide-top-divider">/</span> DESIGN SYSTEM SANSYS</span><span>{slide.support ? 'APOIO · APROFUNDAMENTO' : Number(slide.id) <= 3 ? '01 · POR QUE IMPORTA' : Number(slide.id) <= 8 ? '02 · QUALIDADE COMO PROCESSO' : Number(slide.id) <= 12 ? '03 · PRODUTO, DESIGN E IA' : '04 · CONTINUIDADE E DECISÃO'}</span></header>
+    <div className="slide-heading"><h1 className={slide.kind === 'cover' ? 'slide-title-lg' : 'slide-title'}>{slide.headline}</h1><p className="slide-body-lg">{slide.subtitle}</p></div>
+    <div className="slide-visual"><Visual slide={slide} /></div>
+    <footer className="slide-footer"><span>QUALIDADE QUE SE REPETE. EVOLUÇÃO QUE ESCALA.</span><span>{slide.support ? slide.id : `${slide.id} / 15`}</span></footer>
+  </article>;
+}
