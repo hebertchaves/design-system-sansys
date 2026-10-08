@@ -4264,10 +4264,12 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
 .kind-divergence .wire-main { padding:var(--dss-spacing-3); }
 .kind-divergence .wire-context { padding:var(--dss-spacing-2); }
 .kind-divergence .wire-tabs { margin:var(--dss-spacing-3) 0; }
-.kind-divergence .slide-visual { margin-top:var(--dss-spacing-8); }
-.kind-case .wire-row { padding:var(--dss-spacing-3) 0; }
+.kind-divergence .slide-visual { margin-top:var(--dss-spacing-4); }
+.kind-case .wire-row { padding:var(--dss-spacing-2) 0; }
 .kind-case .wire-body { min-height:0; }
 .kind-case .wire-main { padding:var(--dss-spacing-5); }
+.kind-case .wire-tabs { margin:var(--dss-spacing-2) 0; }
+.kind-case .wire-context { padding:var(--dss-spacing-2); }
 .kind-case .wire-bottom { margin-top:var(--dss-spacing-3); }
 .kind-owners .source-inputs>div { padding:var(--dss-spacing-3) 0; }
 .kind-owners .slide-visual { margin-top:var(--dss-spacing-10); }
