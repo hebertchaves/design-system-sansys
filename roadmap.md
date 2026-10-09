@@ -1,5 +1,9 @@
 # Current delivery — NFAg parallel Check-in
 
+- [ ] Mount the real parallel screen directly in the sandbox with the original sandbox · estado selector.
+- [ ] Align layout and card hierarchy with current Grid Master / DSS composed patterns; remove dark-theme selection.
+- [ ] Verify scenario switching and the complete execution flow; update delivery documentation.
+
 - [x] Build a separate Vue/DSS Check-in using revision 02 and preserve the existing page.
 - [x] Add isolated frame and sandbox scenarios with eleven checks and no technical queries.
 - [x] Run applicable gates, MCP checks and interaction tests; document unavailable integrations.
