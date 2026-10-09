@@ -14,6 +14,15 @@ Authority: shared requirements, September 17 revision 02, §§5.1–5.2.
 Eight scenarios: empty, loading, error, apt, alerts, mixed, timeout and stale.
 Only the light theme is available for this pattern. All companies, identifiers and findings are fictional.
 
+## Direct sandbox/layout revision evidence
+
+- All 43 sandbox static tests and the sandbox-navigation gate passed.
+- Chromium verified direct mounting without an iframe, the actual DssPageShell, all eight
+  state buttons and eleven checks, in the sandbox's Patterns navigation.
+- Execution → result → failure filter (three rows) → expansion → correction dialog →
+  report dialog → history readback passed with no page errors.
+- The screenshot of the actual sandbox was inspected; the original pattern remains unchanged.
+
 ## Evidence from the initial delivery (before direct sandbox/layout revision)
 
 - Sandbox static regression: **43 tests passed**, including seven NFAg rule tests.
