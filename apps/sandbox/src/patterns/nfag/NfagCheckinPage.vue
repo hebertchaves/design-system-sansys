@@ -19,7 +19,7 @@
 <DssLinearProgress v-if="running || (scenario==='loading' && !history.length)" :value="completed/11" :indeterminate="scenario==='loading' && !running && !history.length" color="info" aria-label="Progresso da verificação"/>
 <span v-if="hasResult" class="nf-meta">{{ history[0]?.time || 'Última execução demonstrativa' }}</span>
 </DssCard>
-<DssCard variant="flat" class="nf-panel nf-situations bg-surface-muted"><DssSectionTitle :level="2" label="Situação das verificações"/>
+<DssCard variant="flat" class="nf-panel nf-situations dss-bg-muted"><DssSectionTitle :level="2" label="Situação das verificações"/>
 <div class="nf-kpis" role="group" aria-label="Filtrar verificações por situação">
 <div v-for="kpi in kpis" :key="kpi.id" class="nf-kpi" :class="[`nf-tone--${kpi.tone}`,{'nf-kpi--selected':filter===kpi.id}]">
 <div class="nf-between nf-kpi__head"><DssSectionTitle :level="3" size="sm" :accent="kpi.tone" :label="kpi.label"/><DssIcon :name="kpi.icon" size="sm" :color="kpi.color" decorative/></div>
