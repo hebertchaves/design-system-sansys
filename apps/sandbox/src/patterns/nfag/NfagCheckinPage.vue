@@ -128,7 +128,7 @@ onBeforeUnmount(()=>{
 .nf-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-2)}
 .nf-band{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:var(--dss-spacing-3);align-items:stretch}
 .nf-panel{display:flex;flex-direction:column;gap:var(--dss-spacing-3);padding:var(--dss-spacing-4);min-width:0}
-.nf-situations{padding:var(--dss-spacing-0)}
+.nf-situations.dss-bg-muted{padding:var(--dss-spacing-0);background:var(--dss-surface-muted)}
 .nf-checks{display:flex;flex-direction:column;gap:var(--dss-spacing-1)}
 .nf-tone--info{--nf-color:var(--dss-feedback-info);--nf-tint:var(--dss-feedback-info-surface);--nf-text:var(--dss-feedback-info-text)}
 .nf-tone--success{--nf-color:var(--dss-feedback-success);--nf-tint:var(--dss-feedback-success-surface);--nf-text:var(--dss-feedback-success-text)}
