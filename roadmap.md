@@ -1,5 +1,9 @@
 # Current delivery — NFAg parallel Check-in
 
+- [ ] Absorb the original expansion hierarchy; remove the issuer card and give the result semantic feedback.
+- [ ] Merge all/failure/warning/approved filters into compact interactive KPIs with inline feedback and semantic hover.
+- [ ] Verify the integrated KPI → expansion → execution flow and regression tests.
+
 - [x] Mount the real parallel screen directly in the sandbox with the original sandbox · estado selector.
 - [x] Align layout and card hierarchy with current Grid Master / DSS composed patterns; remove dark-theme selection.
 - [x] Verify scenario switching and the complete execution flow; update delivery documentation.
