@@ -1,6 +1,13 @@
 <template>
 <DssLayout v-bind="$attrs" view="hHh lpR fFf" container class="nf-layout" data-brand="water" data-theme="light">
-<DssAppBar brand="water" title="Faturamento · NFAg" menu-aria-label="Abrir menu principal" />
+<DssAppBar brand="water" title="Faturamento · NFAg" menu-aria-label="Abrir menu principal">
+<template #actions>
+<DssButton variant="flat" round size="md" icon="help_outline" aria-label="Ajuda" />
+<DssButton variant="flat" round size="md" icon="notifications" aria-label="Notificações" />
+<DssButton variant="flat" round size="md" icon="apps" aria-label="Aplicativos Sansys" />
+<DssButton variant="flat" round size="md" icon="account_circle" aria-label="Minha conta" />
+</template>
+</DssAppBar>
 <DssPageContainer><DssPage><DssPageShell rail-aria-label="Módulos do sistema">
 <template #rail><DssPageShellRailItem v-for="m in modules" :key="m.label" :icon="m.icon" :label="m.label" :active="m.label==='Financeiro'" /></template>
 <template #breadcrumb><DssBreadcrumbs separator="›" gutter="sm"><DssBreadcrumbsEl label="Faturamento"/><DssBreadcrumbsEl label="NFAg"/><DssBreadcrumbsEl label="Check-in de Configuração"/></DssBreadcrumbs></template>
@@ -12,7 +19,7 @@
 <DssLinearProgress v-if="running || (scenario==='loading' && !history.length)" :value="completed/11" :indeterminate="scenario==='loading' && !running && !history.length" color="info" aria-label="Progresso da verificação"/>
 <span v-if="hasResult" class="nf-meta">{{ history[0]?.time || 'Última execução demonstrativa' }}</span>
 </DssCard>
-<DssCard variant="outlined" class="nf-panel"><DssSectionTitle :level="2" label="Situação das verificações"/>
+<DssCard variant="flat" class="nf-panel nf-situations bg-surface-muted"><DssSectionTitle :level="2" label="Situação das verificações"/>
 <div class="nf-kpis" role="group" aria-label="Filtrar verificações por situação">
 <div v-for="kpi in kpis" :key="kpi.id" class="nf-kpi" :class="[`nf-tone--${kpi.tone}`,{'nf-kpi--selected':filter===kpi.id}]">
 <div class="nf-between nf-kpi__head"><DssSectionTitle :level="3" size="sm" :accent="kpi.tone" :label="kpi.label"/><DssIcon :name="kpi.icon" size="sm" :color="kpi.color" decorative/></div>
@@ -23,6 +30,7 @@
 <DssBanner v-if="scenario==='stale' && !history.length" variant="warning">Resultado desatualizado. Execute novamente antes de emitir.</DssBanner>
 <DssCard id="nf-verifications" variant="outlined" class="nf-panel">
 <div class="nf-between"><div class="nf-actions"><DssSectionTitle :level="2" label="Verificações de configuração"/><span class="nf-meta" aria-live="polite">{{ filtered.length }} de {{ totals.all }}</span><DssChip v-if="filter!=='all'" :label="filters.find(f=>f.id===filter)?.label" variant="outline" color="primary" size="xs" removable @remove="filter='all'"/></div><div class="nf-actions"><DssButton label="Expandir tudo" icon="unfold_more" variant="flat" @click="expandAll(true)"/><DssButton label="Recolher tudo" icon="unfold_less" variant="flat" @click="expandAll(false)"/></div></div>
+<div class="nf-checks">
 <DssExpansionItem v-for="row in filtered" :key="row.id" v-model="expanded[row.id]" :aria-label="`Verificação ${row.id} — ${row.title} — ${labels[row.status]}`" class="nf-check">
 <template #header><div class="nf-check__header">
 <span class="nf-check__number" :class="`nf-tone--${tones[row.status]}`">{{ String(row.id).padStart(2,'0') }}</span>
@@ -33,6 +41,7 @@
 <DssMarkupTable v-if="row.findings.length" density="compact" flat wrap-cells><thead><tr><th scope="col">Item verificado</th><th scope="col">Resultado</th><th scope="col">Situação</th></tr></thead><tbody><tr v-for="finding in row.findings" :key="finding.item"><td>{{ finding.item }}</td><td>{{ finding.result }}</td><td><DssChip :label="row.blocking?'Falha bloqueante':labels[row.status]" :color="colors[row.status]" size="xs"/></td></tr></tbody></DssMarkupTable>
 <div v-if="row.findings.length" class="nf-detail__actions"><DssButton :label="row.destination" icon="open_in_new" variant="outline" @click="correction=row"/></div>
 </div></DssExpansionItem>
+</div>
 <DssEmptyState v-if="!filtered.length" title="Nenhuma verificação neste filtro" description="As demais verificações estão disponíveis em Todas."><template #action><DssButton label="Limpar filtro" variant="outline" @click="filter='all'"/></template></DssEmptyState>
 </DssCard>
 <DssCard variant="outlined" class="nf-panel"><DssSectionTitle :level="2" label="Histórico de execuções"/><DssEmptyState v-if="!history.length" title="Nenhuma execução nesta sessão" description="Execute o check-in para consultar o resultado demonstrativo."/><DssMarkupTable v-else density="compact" flat><thead><tr><th scope="col">Empresa</th><th scope="col">Situação</th><th scope="col">Conclusão</th><th scope="col">Detalhes</th></tr></thead><tbody><tr v-for="h in history" :key="h.id"><td>{{ h.company }}</td><td>{{ h.result }}</td><td>{{ h.time }}</td><td><DssButton label="Consultar" variant="flat" icon="visibility" @click="selectedHistory=h"/></td></tr></tbody></DssMarkupTable></DssCard>
@@ -119,6 +128,8 @@ onBeforeUnmount(()=>{
 .nf-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-2)}
 .nf-band{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:var(--dss-spacing-3);align-items:stretch}
 .nf-panel{display:flex;flex-direction:column;gap:var(--dss-spacing-3);padding:var(--dss-spacing-4);min-width:0}
+.nf-situations{padding:var(--dss-spacing-0)}
+.nf-checks{display:flex;flex-direction:column;gap:var(--dss-spacing-1)}
 .nf-tone--info{--nf-color:var(--dss-feedback-info);--nf-tint:var(--dss-feedback-info-surface);--nf-text:var(--dss-feedback-info-text)}
 .nf-tone--success{--nf-color:var(--dss-feedback-success);--nf-tint:var(--dss-feedback-success-surface);--nf-text:var(--dss-feedback-success-text)}
 .nf-tone--warning{--nf-color:var(--dss-feedback-warning);--nf-tint:var(--dss-feedback-warning-surface);--nf-text:var(--dss-text-body)}
