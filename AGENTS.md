@@ -1,5 +1,7 @@
 # Architecture rules
 
+- Table hover is owned by component layers, not global Quasar overrides; DssMarkupTable suppresses the engine's row overlay because it is informational, while DssTable retains its canonical interactive hover and selection.
+
 - Global Quasar helpers must not style the DssCard container or its variants; the component's four layers own them to prevent legacy border, padding and hover leakage.
 
 - The parallel NFAg screen shares one Vue/DSS SFC between its isolated screen query and direct sandbox mount; this verifies the actual pattern without an iframe or an invented core component contract.
