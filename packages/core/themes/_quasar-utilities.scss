@@ -311,7 +311,9 @@
    =========================================== */
 
 .dss-card {
-  @include dss-card;
+  /* O container e suas variantes pertencem exclusivamente às camadas do
+     componente DssCard. Não aplicar o mixin legado aqui: ele impunha borda
+     e padding a todas as variantes, inclusive flat. */
   
   &-header {
     padding: var(--dss-spacing-6); /* refatoração Jan 2025 Sprint 1 */
@@ -343,28 +345,6 @@
     gap: var(--dss-spacing-2);
   }
   
-  /* Variantes */
-  &--brand-hub {
-    border-color: var(--dss-border-hub-100);
-    background-color: var(--dss-surface-brand-subtle);
-  }
-  
-  &--brand-water {
-    border-color: var(--dss-border-water-100);
-  }
-  
-  &--brand-waste {
-    border-color: var(--dss-border-waste-100);
-  }
-  
-  &--elevated {
-    box-shadow: var(--dss-elevation-2); /* refatoração Jan 2025 Sprint 3 */
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--dss-elevation-3);
-    }
-  }
 }
 
 /* ===========================================
