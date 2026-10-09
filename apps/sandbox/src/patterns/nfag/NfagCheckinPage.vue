@@ -176,7 +176,8 @@ onBeforeUnmount(()=>{
 .nf-detail__actions{display:flex;justify-content:flex-end}
 p{margin:var(--dss-spacing-1) 0 0}
 p,td,th,span,strong{overflow-wrap:anywhere}
-@media(max-width:1439px){.nf-band--feedback .nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-summary__body--feedback{grid-template-columns:minmax(0,1fr)}.nf-feedback{border-inline-start:none;padding-inline-start:0;border-top:var(--dss-border-width-thin) solid var(--dss-border-subtle);padding-top:var(--dss-spacing-2)}}
+@media(max-width:1439px){.nf-band--feedback .nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1023px){.nf-summary__body--feedback{grid-template-columns:minmax(0,1fr)}.nf-feedback{border-inline-start:none;padding-inline-start:0;border-top:var(--dss-border-width-thin) solid var(--dss-border-subtle);padding-top:var(--dss-spacing-2)}}
 @media(max-width:767px){.nf-band{grid-template-columns:minmax(0,1fr)}.nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-check__header{grid-template-columns:var(--dss-spacing-8) minmax(0,1fr)}.nf-check__aside{grid-column:2;justify-content:flex-start;text-align:left;flex-wrap:wrap}.nf-detail__columns{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.nf-kpi{transition:none}}
 </style>
