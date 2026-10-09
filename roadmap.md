@@ -1,6 +1,14 @@
-# Presentation delivery
+# Current delivery — NFAg parallel Check-in
 
-- [ ] Convert the approved storyboard into 15 main slides and 5 supporting slides.
-- [ ] Preserve complete speaking notes, visual suggestions, caveats and transitions.
-- [ ] Add slide navigation, overview, presenting, presenter notes and print export.
-- [ ] Verify every slide and the central presentation flow.
+- [x] Build a separate Vue/DSS Check-in using revision 02 and preserve the existing page.
+- [x] Add isolated frame and sandbox scenarios with eleven checks and no technical queries.
+- [x] Run applicable gates, MCP checks and interaction tests; document unavailable integrations.
+
+Validation boundary: visual-test delivery only; production integrations and final DSS visual/a11y acceptance are not certified. See the parallel screen README.
+
+## Previous presentation delivery (completed in prior delivery)
+
+- [x] Convert the approved storyboard into 15 main slides and 5 supporting slides.
+- [x] Preserve complete speaking notes, visual suggestions, caveats and transitions.
+- [x] Add slide navigation, overview, presenting, presenter notes and print export.
+- [x] Verify every slide and the central presentation flow.
