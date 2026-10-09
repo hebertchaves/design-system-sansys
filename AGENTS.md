@@ -5,6 +5,7 @@
 - Global Quasar helpers must not style the DssCard container or its variants; the component's four layers own them to prevent legacy border, padding and hover leakage.
 
 - The parallel NFAg screen shares one Vue/DSS SFC between its isolated screen query and direct sandbox mount; this verifies the actual pattern without an iframe or an invented core component contract.
+- The parallel NFAg result card is the sole execution-state feedback surface across all scenarios and retries; this prevents duplicate banners as new states are introduced.
 
 - The root TypeScript configuration extends the documentation portal configuration and scopes preview checking to portal sources; independent workspace checks remain responsible for Vue core, sandbox, and MCP validation.
 - The governance presentation is an isolated documentation route with one slide registry and one fixed-resolution scaling component; original storyboard notes remain separate from concise on-screen content to preserve provenance without crowding slides.

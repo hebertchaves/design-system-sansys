@@ -1,5 +1,35 @@
 import { test, expect } from '@playwright/test'
 
+const executionStates = [
+  ['empty', 'info'], ['loading', 'info'], ['error', 'error'], ['apt', 'success'],
+  ['alerts', 'warning'], ['mixed', 'error'], ['timeout', 'warning'], ['stale', 'warning'],
+] as const
+
+for (const [scenario, tone] of executionStates) {
+  test(`execution feedback has one owner in ${scenario}`, async ({ page }) => {
+    await page.goto(`/?screen=nfag-parallel&scenario=${scenario}`)
+    const result = page.locator('.nf-summary')
+    await expect(result).toHaveCount(1)
+    await expect(result).toHaveClass(new RegExp(`nf-tone--${tone}`))
+    await expect(page.locator('.nf-layout .dss-banner')).toHaveCount(0)
+  })
+}
+
+test('read error retry transitions through running to a completed result without a duplicate banner', async ({ page }) => {
+  await page.goto('/?screen=nfag-parallel&scenario=error')
+  const result = page.locator('.nf-summary')
+  await expect(result).toHaveClass(/nf-tone--error/)
+  await page.getByRole('button', { name: 'Executar verificação', exact: true }).click()
+  await expect(result).toHaveAttribute('aria-busy', 'true')
+  await expect(result).toHaveClass(/nf-tone--info/)
+  await expect(page.locator('.nf-layout .dss-banner')).toHaveCount(0)
+  await expect(result).toHaveAttribute('aria-busy', 'false')
+  await expect(result).toHaveClass(/nf-tone--error/)
+  await expect(page.locator('.nf-layout .dss-banner')).toHaveCount(0)
+  await page.getByRole('button', { name: 'Consultar', exact: true }).click()
+  await expect(page.getByRole('dialog')).toBeVisible()
+})
+
 test('bulk expansion follows visible checks, including individual changes and KPI filtering', async ({ page }) => {
   await page.goto('/?screen=nfag-parallel&scenario=mixed')
   const checks = page.locator('.nf-check')

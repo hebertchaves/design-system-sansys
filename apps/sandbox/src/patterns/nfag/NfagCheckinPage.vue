@@ -28,7 +28,6 @@
 <div class="nf-kpi__values"><strong class="nf-kpi__count">{{ kpi.value }}</strong><span v-if="kpi.hint" class="nf-kpi__hint">{{ kpi.hint }}</span></div>
 <DssButton variant="flat" :color="kpi.color" class="nf-kpi__control" :aria-label="`Filtrar ${kpi.label.toLowerCase()}`" :aria-pressed="filter===kpi.id" aria-controls="nf-verifications" @click="filter=kpi.id"/>
 </div></div></DssCard></div>
-<DssBanner v-if="scenario==='error' && !running && !history.length" variant="error">Não foi possível recuperar a última execução. Execute novamente em alguns minutos.</DssBanner>
 <DssCard id="nf-verifications" variant="outlined" class="nf-panel">
 <div class="nf-between"><div class="nf-actions"><DssSectionTitle :level="2" label="Verificações de configuração"/><span class="nf-meta" aria-live="polite">{{ filtered.length }} de {{ totals.all }}</span><DssChip v-if="filter!=='all'" :label="filters.find(f=>f.id===filter)?.label" variant="outline" color="primary" size="xs" removable @remove="filter='all'"/></div><DssButton :label="allExpanded?'Recolher tudo':'Expandir tudo'" :icon="allExpanded?'unfold_less':'unfold_more'" variant="flat" :disabled="!filtered.length" :aria-expanded="allExpanded" aria-controls="nf-checks" @click="expandAll(!allExpanded)"/></div>
 <div id="nf-checks" class="nf-checks">
@@ -68,7 +67,6 @@ import DssSectionTitle from '@dss/DssSectionTitle/DssSectionTitle.vue'
 import DssButton from '@dss/DssButton/DssButton.vue'
 import DssIcon from '@dss/DssIcon/DssIcon.vue'
 import DssTooltip from '@dss/DssTooltip/DssTooltip.vue'
-import DssBanner from '@dss/DssBanner/DssBanner.vue'
 import DssChip from '@dss/DssChip/DssChip.vue'
 import DssLinearProgress from '@dss/DssLinearProgress/DssLinearProgress.vue'
 import DssExpansionItem from '@dss/DssExpansionItem/DssExpansionItem.vue'
