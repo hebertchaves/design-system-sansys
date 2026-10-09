@@ -1,6 +1,7 @@
 <template>
   <!-- PREVIEW FRAME (durável): /?frame=<Componente> monta o SFC real dentro do iframe -->
-  <PreviewSubject v-if="isFrame" />
+  <NfagCheckinPage v-if="isNfagScreen" :scenario="scenario" :theme="theme" />
+  <PreviewSubject v-else-if="isFrame" />
   <TestSuite v-else />
 </template>
 
@@ -8,6 +9,10 @@
 import { defineAsyncComponent } from 'vue'
 const sp = new URLSearchParams(window.location.search)
 const isFrame = sp.has('frame')
+const isNfagScreen = sp.get('screen') === 'nfag-parallel'
+const scenario = sp.get('scenario') || 'mixed'
+const theme = sp.get('theme') === 'dark' ? 'dark' : 'light'
+const NfagCheckinPage = defineAsyncComponent(() => import('./patterns/nfag/NfagCheckinPage.vue'))
 // TestSuite é lazy: ele importa TODAS as Test*.vue (grafo de ~200 módulos do
 // core). Sem lazy, o realm do iframe (isFrame=true) baixava esse grafo inteiro
 // só para renderizar UM componente — era a causa dos ~4s de primeira pintura.

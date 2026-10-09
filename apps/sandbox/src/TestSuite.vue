@@ -571,6 +571,7 @@
           </button>
 
           <div v-show="expandedCategories.patterns" class="nav-submenu">
+            <button @click="activeComponent = 'checkin-nfag-parallel'" :class="['nav-item nav-subitem', { active: activeComponent === 'checkin-nfag-parallel' }]"><span class="nav-label">Check-in NFAg · paralelo</span></button>
             <button
               @click="activeComponent = 'grid-master'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'grid-master' }]"
@@ -818,6 +819,11 @@
       </div>
 
       <!-- Grid master — esqueleto canônico de página do Sansys Water -->
+      <div v-else-if="activeComponent === 'checkin-nfag-parallel'" class="component-view">
+        <TestCheckinNFAgParallel />
+      </div>
+
+      <!-- Grid master — esqueleto canônico de página do Sansys Water -->
       <div v-else-if="activeComponent === 'grid-master'" class="component-view">
         <TestGridMasterDashboard />
       </div>
@@ -888,6 +894,7 @@ import TestUploader from './TestUploader.vue'
 import TestCard from './TestCard.vue'
 import TestTokens from './TestTokens.vue'
 import TestCheckinNFAg from './TestCheckinNFAg.vue'
+import TestCheckinNFAgParallel from './TestCheckinNFAgParallel.vue'
 import TestGridMasterDashboard from './TestGridMasterDashboard.vue'
 import TestSolicitacoes from './TestSolicitacoes.vue'
 import TestDataCard from './TestDataCard.vue'
