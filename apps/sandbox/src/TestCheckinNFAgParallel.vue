@@ -1,5 +1,5 @@
 <template>
-  <div class="nf-test" data-brand="water" data-theme="light">
+  <div class="nf-test">
     <div class="nf-devbar" role="group" aria-label="Sandbox — estado de dados">
       <span class="nf-devbar__label">sandbox · estado</span>
       <DssButton v-for="s in scenarios" :key="s.value" :label="s.label" size="xs"
@@ -13,7 +13,7 @@
 import { ref } from 'vue'
 import DssButton from '@dss/DssButton/DssButton.vue'
 import NfagCheckinPage from './patterns/nfag/NfagCheckinPage.vue'
-const scenario = ref('mixed')
+const scenario = ref('empty')
 const scenarios = [
   { value: 'empty', label: 'Sem execução' }, { value: 'loading', label: 'Carregando' },
   { value: 'error', label: 'Erro de leitura' }, { value: 'apt', label: 'Apto' },

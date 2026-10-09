@@ -10,7 +10,7 @@ import { defineAsyncComponent } from 'vue'
 const sp = new URLSearchParams(window.location.search)
 const isFrame = sp.has('frame')
 const isNfagScreen = sp.get('screen') === 'nfag-parallel'
-const scenario = sp.get('scenario') || 'mixed'
+const scenario = sp.get('scenario') || 'empty'
 const NfagCheckinPage = defineAsyncComponent(() => import('./patterns/nfag/NfagCheckinPage.vue'))
 // TestSuite é lazy: ele importa TODAS as Test*.vue (grafo de ~200 módulos do
 // core). Sem lazy, o realm do iframe (isFrame=true) baixava esse grafo inteiro
