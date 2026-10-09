@@ -3,15 +3,18 @@
 ## Open and validate
 
 In the Vue sandbox, choose **Patterns → Check-in NFAg · paralelo**.
-The isolated page is also available at `/?screen=nfag-parallel&scenario=mixed&theme=light`.
-The wrapper embeds this actual SFC; it does not generate a fictitious core-component contract.
+The isolated page is also available at `/?screen=nfag-parallel&scenario=mixed`.
+The sandbox mounts this actual SFC directly, with the original **sandbox · estado** button bar;
+there is no iframe or fictitious core-component contract.
+The layout follows current Grid Master: DssLayout → DssAppBar → DssPageContainer → DssPage
+→ DssPageShell (rail, breadcrumb and board), containing compact outlined information cards.
 The original `TestCheckinNFAg.vue` was preserved.
 
 Authority: shared requirements, September 17 revision 02, §§5.1–5.2.
 Eight scenarios: empty, loading, error, apt, alerts, mixed, timeout and stale.
-Both themes are selectable. All companies, identifiers and findings are fictional.
+Only the light theme is available for this pattern. All companies, identifiers and findings are fictional.
 
-## Evidence from this delivery
+## Evidence from the initial delivery (before direct sandbox/layout revision)
 
 - Sandbox static regression: **43 tests passed**, including seven NFAg rule tests.
 - `node scripts/validate-sandbox-nav.cjs --gate`: passed, 55 items and 55 views.
@@ -45,6 +48,5 @@ Vue 2 host integration, permissions, real fiscal checks, 24-month audit retentio
 6-month finding retention, PDF/A, production observability and performance remain unimplemented.
 No credentials, SQL or database identifiers are displayed.
 
-Visual review exposed low-contrast caption/secondary-text combinations in the canonical dark
-appearance. The consumer does not override component internals to hide that issue; WCAG AA
-and final visual acceptance are **not certified** and require DSS-level review plus user validation.
+The revised screen uses only the canonical light appearance. This does not certify WCAG AA
+or final visual acceptance; those still require DSS-level review plus user validation.

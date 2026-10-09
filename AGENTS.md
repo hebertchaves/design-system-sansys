@@ -1,6 +1,6 @@
 # Architecture rules
 
-- The parallel NFAg screen shares one Vue/DSS SFC between its isolated screen query and sandbox iframe; this verifies the actual page without impersonating a core component contract.
+- The parallel NFAg screen shares one Vue/DSS SFC between its isolated screen query and direct sandbox mount; this verifies the actual pattern without an iframe or an invented core component contract.
 
 - The root TypeScript configuration extends the documentation portal configuration and scopes preview checking to portal sources; independent workspace checks remain responsible for Vue core, sandbox, and MCP validation.
 - The governance presentation is an isolated documentation route with one slide registry and one fixed-resolution scaling component; original storyboard notes remain separate from concise on-screen content to preserve provenance without crowding slides.
