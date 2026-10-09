@@ -5,18 +5,35 @@
 <template #rail><DssPageShellRailItem v-for="m in modules" :key="m.label" :icon="m.icon" :label="m.label" :active="m.label==='Financeiro'" /></template>
 <template #breadcrumb><DssBreadcrumbs separator="›" gutter="sm"><DssBreadcrumbsEl label="Faturamento"/><DssBreadcrumbsEl label="NFAg"/><DssBreadcrumbsEl label="Check-in de Configuração"/></DssBreadcrumbs></template>
 <header class="nf-between"><div><DssSectionTitle :level="1" size="lg" label="Check-in de configuração NFAg"/><p class="text-secondary">Prontidão cadastral e tributária para a emissão.</p></div><div class="nf-actions"><DssButton label="Relatório PDF" icon="description" variant="outline" :disabled="running || !hasResult" @click="reportOpen=true"/><DssButton label="Executar verificação" icon="play_arrow" color="primary" :loading="running" :disabled="running" @click="execute"/></div></header>
-<div class="nf-band"><DssCard variant="outlined" class="nf-panel"><DssSectionTitle :level="2" label="Empresa emitente"/><div class="nf-company"><DssSelect v-model="companyId" :options="COMPANIES" emit-value map-options label="Empresa emitente" variant="outlined" dense :disabled="running"/></div><div class="nf-actions"><span>CNPJ {{ company.cnpj }}</span><span>{{ company.city }}</span><span>IBGE {{ company.ibge }}</span></div></DssCard>
-<DssCard variant="outlined" class="nf-panel nf-summary" aria-live="polite" :aria-busy="running"><DssSectionTitle :level="2" label="Resultado da verificação"/><strong>{{ running?'Verificação em andamento':scenario==='loading'&&!history.length?'Carregando última execução':scenario==='stale'&&!history.length?'Resultado desatualizado':hasResult?verdict(rows):'Aguardando primeira verificação' }}</strong><p>{{ running?`${completed} de 11 verificações concluídas`:hasResult?'Última execução demonstrativa · agora':'Selecione a empresa e inicie o check-in.' }}</p><DssLinearProgress v-if="running || (scenario==='loading' && !history.length)" :value="completed/11" :indeterminate="scenario==='loading' && !running && !history.length" color="primary"/></DssCard>
-<DssCard variant="outlined" class="nf-panel"><DssSectionTitle :level="2" label="Situação das verificações"/><DssChip :label="`${totals.ok} aprovadas`" color="positive"/><DssChip :label="`${totals.warning} alertas`" color="warning"/><DssChip :label="`${totals.failure} falhas`" color="negative"/></DssCard></div>
+<div class="nf-band">
+<DssCard variant="outlined" class="nf-panel nf-summary" :class="`nf-tone--${result.tone}`" aria-live="polite" :aria-busy="running">
+<DssSectionTitle :level="2" label="Resultado da verificação" :accent="result.tone"/>
+<div class="nf-result"><span class="nf-result__signal"><DssIcon :name="result.icon" size="lg" :color="result.color" decorative/></span><div><strong class="nf-result__title">{{ result.label }}</strong><p>{{ result.description }}</p></div></div>
+<DssLinearProgress v-if="running || (scenario==='loading' && !history.length)" :value="completed/11" :indeterminate="scenario==='loading' && !running && !history.length" color="info" aria-label="Progresso da verificação"/>
+<span v-if="hasResult" class="nf-meta">{{ history[0]?.time || 'Última execução demonstrativa' }}</span>
+</DssCard>
+<DssCard variant="outlined" class="nf-panel"><DssSectionTitle :level="2" label="Situação das verificações"/>
+<div class="nf-kpis" role="group" aria-label="Filtrar verificações por situação">
+<div v-for="kpi in kpis" :key="kpi.id" class="nf-kpi" :class="[`nf-tone--${kpi.tone}`,{'nf-kpi--selected':filter===kpi.id}]">
+<div class="nf-between nf-kpi__head"><DssSectionTitle :level="3" size="sm" :accent="kpi.tone" :label="kpi.label"/><DssIcon :name="kpi.icon" size="sm" :color="kpi.color" decorative/></div>
+<div class="nf-kpi__values"><strong class="nf-kpi__count">{{ kpi.value }}</strong><span v-if="kpi.hint" class="nf-kpi__hint">{{ kpi.hint }}</span></div>
+<DssButton variant="flat" :color="kpi.color" class="nf-kpi__control" :aria-label="`Filtrar ${kpi.label.toLowerCase()}`" :aria-pressed="filter===kpi.id" aria-controls="nf-verifications" @click="filter=kpi.id"/>
+</div></div></DssCard></div>
 <DssBanner v-if="scenario==='error' && !running && !history.length" variant="error">Não foi possível recuperar a última execução. Execute novamente em alguns minutos.</DssBanner>
 <DssBanner v-if="scenario==='stale' && !history.length" variant="warning">Resultado desatualizado. Execute novamente antes de emitir.</DssBanner>
-<DssCard variant="outlined" class="nf-panel"><div class="nf-between"><DssSectionTitle :level="2" label="Verificações de configuração"/><div class="nf-actions"><DssButton v-for="f in filters" :key="f.id" :label="f.label" :variant="filter===f.id?'unelevated':'flat'" color="primary" @click="filter=f.id"/></div></div>
-<DssExpansionItem v-for="row in filtered" :key="row.id" :label="`${String(row.id).padStart(2,'0')} · ${row.title} — ${labels[row.status]}`" :caption="row.summary" :icon="icons[row.status]" class="nf-check">
-<div class="nf-detail"><DssChip :label="row.blocking?'Falha bloqueante':labels[row.status]" :color="colors[row.status]"/><p>{{ row.rule }}</p><p>{{ row.impact }}</p><p class="text-secondary">Funcionalidade para correção: {{ row.destination }}</p>
-<DssMarkupTable v-if="row.findings.length" density="compact" flat><thead><tr><th scope="col">Cadastro</th><th scope="col">Inconsistência</th></tr></thead><tbody><tr v-for="finding in row.findings" :key="finding.item"><td>{{ finding.item }}</td><td>{{ finding.result }}</td></tr></tbody></DssMarkupTable>
-<DssButton v-if="row.findings.length" :label="row.destination" icon="open_in_new" variant="outline" @click="correction=row"/>
+<DssCard id="nf-verifications" variant="outlined" class="nf-panel">
+<div class="nf-between"><div class="nf-actions"><DssSectionTitle :level="2" label="Verificações de configuração"/><span class="nf-meta" aria-live="polite">{{ filtered.length }} de {{ totals.all }}</span><DssChip v-if="filter!=='all'" :label="filters.find(f=>f.id===filter)?.label" variant="outline" color="primary" size="xs" removable @remove="filter='all'"/></div><div class="nf-actions"><DssButton label="Expandir tudo" icon="unfold_more" variant="flat" @click="expandAll(true)"/><DssButton label="Recolher tudo" icon="unfold_less" variant="flat" @click="expandAll(false)"/></div></div>
+<DssExpansionItem v-for="row in filtered" :key="row.id" v-model="expanded[row.id]" :aria-label="`Verificação ${row.id} — ${row.title} — ${labels[row.status]}`" class="nf-check">
+<template #header><div class="nf-check__header">
+<span class="nf-check__number" :class="`nf-tone--${tones[row.status]}`">{{ String(row.id).padStart(2,'0') }}</span>
+<div class="nf-check__identity"><div class="nf-actions"><strong>{{ row.title }}</strong><span v-if="row.blocking" class="nf-check__blocking">Bloqueia emissão</span></div><span class="nf-meta">Funcionalidade: {{ row.destination }}</span></div>
+<div class="nf-check__aside"><span class="nf-meta">{{ row.summary }}</span><DssChip :label="labels[row.status]" :color="colors[row.status]" :icon="icons[row.status]" size="xs"/></div>
+</div></template>
+<div class="nf-detail"><div class="nf-detail__columns"><section><DssSectionTitle :level="3" size="sm" label="O que é verificado"/><p>{{ row.rule }}</p></section><section><DssSectionTitle :level="3" size="sm" label="Impacto na emissão"/><p>{{ row.impact }}</p></section></div>
+<DssMarkupTable v-if="row.findings.length" density="compact" flat wrap-cells><thead><tr><th scope="col">Item verificado</th><th scope="col">Resultado</th><th scope="col">Situação</th></tr></thead><tbody><tr v-for="finding in row.findings" :key="finding.item"><td>{{ finding.item }}</td><td>{{ finding.result }}</td><td><DssChip :label="row.blocking?'Falha bloqueante':labels[row.status]" :color="colors[row.status]" size="xs"/></td></tr></tbody></DssMarkupTable>
+<div v-if="row.findings.length" class="nf-detail__actions"><DssButton :label="row.destination" icon="open_in_new" variant="outline" @click="correction=row"/></div>
 </div></DssExpansionItem>
-<DssEmptyState v-if="!filtered.length" title="Nenhuma verificação neste filtro" description="As demais verificações estão disponíveis em Todas."/>
+<DssEmptyState v-if="!filtered.length" title="Nenhuma verificação neste filtro" description="As demais verificações estão disponíveis em Todas."><template #action><DssButton label="Limpar filtro" variant="outline" @click="filter='all'"/></template></DssEmptyState>
 </DssCard>
 <DssCard variant="outlined" class="nf-panel"><DssSectionTitle :level="2" label="Histórico de execuções"/><DssEmptyState v-if="!history.length" title="Nenhuma execução nesta sessão" description="Execute o check-in para consultar o resultado demonstrativo."/><DssMarkupTable v-else density="compact" flat><thead><tr><th scope="col">Empresa</th><th scope="col">Situação</th><th scope="col">Conclusão</th><th scope="col">Detalhes</th></tr></thead><tbody><tr v-for="h in history" :key="h.id"><td>{{ h.company }}</td><td>{{ h.result }}</td><td>{{ h.time }}</td><td><DssButton label="Consultar" variant="flat" icon="visibility" @click="selectedHistory=h"/></td></tr></tbody></DssMarkupTable></DssCard>
 </DssPageShell></DssPage></DssPageContainer>
@@ -27,7 +44,7 @@
 </template>
 <script setup>
 import { ref, computed, watch, onBeforeUnmount, onMounted } from 'vue'
-import { CHECKS, COMPANIES, makeRows, verdict, counts } from './checkin-model.js'
+import { CHECKS, COMPANIES, makeRows, verdict, counts, filterRows } from './checkin-model.js'
 import DssLayout from '@dss/DssLayout/DssLayout.vue'
 import DssPageContainer from '@dss/DssPageContainer/DssPageContainer.vue'
 import DssPage from '@dss/DssPage/DssPage.vue'
@@ -39,7 +56,7 @@ import DssCard from '@dss/DssCard/DssCard.vue'
 import DssAppBar from '@components/composed/DssAppBar/DssAppBar.vue'
 import DssSectionTitle from '@dss/DssSectionTitle/DssSectionTitle.vue'
 import DssButton from '@dss/DssButton/DssButton.vue'
-import DssSelect from '@dss/DssSelect/DssSelect.vue'
+import DssIcon from '@dss/DssIcon/DssIcon.vue'
 import DssBanner from '@dss/DssBanner/DssBanner.vue'
 import DssChip from '@dss/DssChip/DssChip.vue'
 import DssLinearProgress from '@dss/DssLinearProgress/DssLinearProgress.vue'
@@ -49,20 +66,40 @@ import DssEmptyState from '@dss/DssEmptyState/DssEmptyState.vue'
 import DssDialog from '@components/composed/DssDialog/DssDialog.vue'
 defineOptions({inheritAttrs:false})
 const props=defineProps({scenario:{type:String,default:'mixed'}})
-const companyId=ref(COMPANIES[0].value), rows=ref(makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)), running=ref(false), completed=ref(0), filter=ref('all'), history=ref([]), reportOpen=ref(false), correction=ref(null), selectedHistory=ref(null)
-const company=computed(()=>COMPANIES.find(c=>c.value===companyId.value)||COMPANIES[0])
+const expanded=ref({})
+const rows=ref(makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)), running=ref(false), completed=ref(0), filter=ref('all'), history=ref([]), reportOpen=ref(false), correction=ref(null), selectedHistory=ref(null)
+const company=COMPANIES[0]
 const hasResult=computed(()=>rows.value.some(r=>r.status!=='waiting') && !running.value)
 const totals=computed(()=>counts(rows.value))
 const labels={waiting:'Aguardando',ok:'Aprovada',warning:'Alerta',failure:'Falha',incomplete:'Incompleta',running:'Em andamento'}
 const icons={waiting:'schedule',ok:'check_circle',warning:'warning_amber',failure:'error_outline',incomplete:'timer_off',running:'sync'}
 const colors={waiting:'info',ok:'positive',warning:'warning',failure:'negative',incomplete:'warning',running:'info'}
 const filters=[{id:'all',label:'Todas'},{id:'failure',label:'Falhas'},{id:'warning',label:'Alertas'},{id:'ok',label:'Aprovadas'}]
-const filtered=computed(()=>rows.value.filter(r=>filter.value==='all'||r.status===filter.value||(filter.value==='warning'&&r.status==='incomplete')))
+const tones={waiting:'info',ok:'success',warning:'warning',failure:'error',incomplete:'warning',running:'info'}
+const filtered=computed(()=>filterRows(rows.value,filter.value))
+const blocking=computed(()=>rows.value.filter(r=>r.status==='failure'&&r.blocking).length)
+const kpis=computed(()=>[
+ {id:'all',label:'Todas',value:totals.value.all,tone:'info',color:'info',icon:'fact_check'},
+ {id:'ok',label:'Aprovadas',value:totals.value.ok,tone:'success',color:'positive',icon:'check_circle'},
+ {id:'warning',label:'Alertas',value:totals.value.warning,tone:'warning',color:'warning',icon:'warning_amber'},
+ {id:'failure',label:'Falhas',value:totals.value.failure,tone:'error',color:'negative',icon:'error_outline',hint:blocking.value?`${blocking.value} ${blocking.value===1?'bloqueia':'bloqueiam'} a emissão`:''},
+])
+const result=computed(()=>{
+ if(running.value)return {tone:'info',color:'info',icon:'sync',label:'Verificação em andamento',description:`${completed.value} de 11 verificações concluídas.`}
+ if(!history.value.length&&props.scenario==='loading')return {tone:'info',color:'info',icon:'sync',label:'Carregando última execução',description:'Aguardando o resultado da leitura.'}
+ if(!history.value.length&&props.scenario==='error')return {tone:'error',color:'negative',icon:'cloud_off',label:'Resultado indisponível',description:'Não foi possível recuperar a execução. Execute novamente.'}
+ if(!history.value.length&&props.scenario==='stale')return {tone:'warning',color:'warning',icon:'schedule',label:'Resultado desatualizado',description:'Execute novamente antes de emitir.'}
+ if(!hasResult.value)return {tone:'info',color:'info',icon:'fact_check',label:'Aguardando primeira verificação',description:'Inicie o check-in para conferir as configurações.'}
+ if(blocking.value)return {tone:'error',color:'negative',icon:'block',label:verdict(rows.value),description:`${blocking.value} ${blocking.value===1?'falha bloqueia':'falhas bloqueiam'} a emissão. Corrija os cadastros e repita a verificação.`}
+ if(totals.value.warning||totals.value.failure)return {tone:'warning',color:'warning',icon:'warning_amber',label:verdict(rows.value),description:'Revise as pendências indicadas nas verificações.'}
+ return {tone:'success',color:'positive',icon:'check_circle',label:verdict(rows.value),description:'Todas as configurações foram conferidas, sem inconsistências.'}
+})
+function expandAll(value){for(const row of filtered.value)expanded.value[row.id]=value}
 const modules=[{icon:'public',label:'Mapa'},{icon:'shopping_cart',label:'Comercial'},{icon:'paid',label:'Financeiro'},{icon:'bar_chart',label:'Relatórios'},{icon:'smartphone',label:'Mobile'},{icon:'settings',label:'Configurações'},{icon:'account_tree',label:'Estrutura'}]
 let timer, generation=0
-function reset(){generation++;clearInterval(timer);running.value=false;completed.value=0;filter.value='all';history.value=[];rows.value=makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)}
-watch(()=>props.scenario,reset);watch(companyId,()=>{reset();rows.value=makeRows('empty')})
-function execute(){if(running.value)return;running.value=true;completed.value=0;filter.value='all';const final=makeRows(['empty','loading','error','stale'].includes(props.scenario)?'mixed':props.scenario);rows.value=makeRows('empty');const token=++generation;timer=setInterval(()=>{if(token!==generation)return;const index=completed.value;if(index<CHECKS.length){rows.value[index]=final[index];completed.value++}if(completed.value===11){clearInterval(timer);running.value=false;history.value.unshift({id:Date.now(),company:company.value.label,result:verdict(rows.value),time:new Date().toLocaleString('pt-BR')})}},180)}
+function reset(){expanded.value={};generation++;clearInterval(timer);running.value=false;completed.value=0;filter.value='all';history.value=[];rows.value=makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)}
+watch(()=>props.scenario,reset)
+function execute(){if(running.value)return;running.value=true;completed.value=0;expanded.value={};const final=makeRows(['empty','loading','error','stale'].includes(props.scenario)?'mixed':props.scenario);rows.value=makeRows('empty');const token=++generation;timer=setInterval(()=>{if(token!==generation)return;const index=completed.value;if(index<CHECKS.length){rows.value[index]=final[index];completed.value++}if(completed.value===11){clearInterval(timer);running.value=false;history.value.unshift({id:Date.now(),company:company.label,result:verdict(rows.value),time:new Date().toLocaleString('pt-BR')})}},180)}
 let previousTheme, previousBrand
 onMounted(()=>{
  previousTheme=document.documentElement.getAttribute('data-theme')
@@ -80,11 +117,39 @@ onBeforeUnmount(()=>{
 .nf-layout{flex:1;min-height:0;color:var(--dss-text-body);font-family:var(--dss-font-family-sans);font-size:var(--dss-font-size-sm)}
 .nf-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-4)}
 .nf-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-2)}
-.nf-band{display:grid;grid-template-columns:minmax(0,5fr) minmax(var(--dss-spacing-48),2fr) minmax(var(--dss-spacing-64),2fr);gap:var(--dss-spacing-3);align-items:stretch}
-.nf-panel{display:flex;flex-direction:column;gap:var(--dss-spacing-2);padding:var(--dss-spacing-2);min-width:0}
-.nf-check{min-width:0}
-.nf-detail{display:flex;flex-direction:column;align-items:flex-start;gap:var(--dss-spacing-4);padding:var(--dss-spacing-4);overflow:auto}
-.nf-company{min-width:0}
+.nf-band{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:var(--dss-spacing-3);align-items:stretch}
+.nf-panel{display:flex;flex-direction:column;gap:var(--dss-spacing-3);padding:var(--dss-spacing-4);min-width:0}
+.nf-tone--info{--nf-color:var(--dss-feedback-info);--nf-tint:var(--dss-feedback-info-surface);--nf-text:var(--dss-feedback-info-text)}
+.nf-tone--success{--nf-color:var(--dss-feedback-success);--nf-tint:var(--dss-feedback-success-surface);--nf-text:var(--dss-feedback-success-text)}
+.nf-tone--warning{--nf-color:var(--dss-feedback-warning);--nf-tint:var(--dss-feedback-warning-surface);--nf-text:var(--dss-text-body)}
+.nf-tone--error{--nf-color:var(--dss-feedback-error);--nf-tint:var(--dss-feedback-error-surface);--nf-text:var(--dss-feedback-error-text)}
+.nf-summary{background:var(--nf-tint);border-inline-start:var(--dss-spacing-1) solid var(--nf-color)}
+.nf-result{display:flex;align-items:center;gap:var(--dss-spacing-3);flex:1}
+.nf-result__signal{flex-shrink:0;display:flex;align-items:center;justify-content:center;inline-size:var(--dss-touch-target-lg);block-size:var(--dss-touch-target-lg);border-radius:var(--dss-radius-circle);background:var(--nf-tint)}
+.nf-result__title{font-size:var(--dss-font-size-lg);font-weight:var(--dss-font-weight-semibold);color:var(--nf-text)}
+.nf-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--dss-spacing-2);flex:1}
+.nf-kpi{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:var(--dss-spacing-2);padding:var(--dss-spacing-2);min-width:0;min-height:var(--dss-touch-target-lg);border:var(--dss-border-width-thin) solid var(--dss-border-default);border-radius:var(--dss-radius-md);transition:background-color var(--dss-duration-fast) var(--dss-easing-standard)}
+.nf-kpi--selected,.nf-kpi:has(.nf-kpi__control:hover){background:var(--nf-tint);border-color:var(--nf-color)}
+.nf-kpi:has(.nf-kpi__control:focus-visible){outline:var(--dss-border-width-md) solid var(--dss-border-focus);outline-offset:var(--dss-spacing-px)}
+.nf-kpi__control{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit}
+.nf-kpi__head,.nf-kpi__values{pointer-events:none;position:relative;z-index:1}
+.nf-kpi__head{gap:var(--dss-spacing-1);flex-wrap:nowrap;align-items:flex-start}
+.nf-kpi__values{display:flex;align-items:center;gap:var(--dss-spacing-2);flex-wrap:wrap;min-height:var(--dss-spacing-10)}
+.nf-kpi__count{font-size:var(--dss-font-size-2xl);line-height:var(--dss-line-height-tight);font-weight:var(--dss-font-weight-semibold);font-variant-numeric:tabular-nums;color:var(--nf-text)}
+.nf-kpi__hint{font-size:var(--dss-font-size-xs);color:var(--nf-text);flex:1;min-width:var(--dss-spacing-16)}
+.nf-meta{font-size:var(--dss-font-size-xs);color:var(--dss-text-subtle)}
+.nf-check{min-width:0;border:var(--dss-border-width-thin) solid var(--dss-border-subtle);border-radius:var(--dss-radius-md)}
+.nf-check__header{display:grid;grid-template-columns:var(--dss-spacing-8) minmax(0,3fr) minmax(0,2fr);align-items:center;gap:var(--dss-spacing-3);width:100%;min-width:0}
+.nf-check__number{display:flex;align-items:center;justify-content:center;width:var(--dss-spacing-8);height:var(--dss-spacing-8);border-radius:var(--dss-radius-circle);background:var(--nf-tint);color:var(--nf-text);font-weight:var(--dss-font-weight-semibold);font-variant-numeric:tabular-nums}
+.nf-check__identity{display:flex;flex-direction:column;gap:var(--dss-spacing-1);min-width:0}
+.nf-check__blocking{font-size:var(--dss-font-size-xs);color:var(--dss-feedback-error-text);font-weight:var(--dss-font-weight-semibold)}
+.nf-check__aside{display:flex;justify-content:flex-end;align-items:center;gap:var(--dss-spacing-2);min-width:0;text-align:right}
+.nf-detail{display:flex;flex-direction:column;gap:var(--dss-spacing-4);padding:var(--dss-spacing-4);overflow:auto;background:var(--dss-surface-subtle)}
+.nf-detail__columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--dss-spacing-4)}
+.nf-detail__actions{display:flex;justify-content:flex-end}
+p{margin:var(--dss-spacing-1) 0 0}
 p,td,th,span,strong{overflow-wrap:anywhere}
 @media(max-width:1439px){.nf-band{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:767px){.nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-check__header{grid-template-columns:var(--dss-spacing-8) minmax(0,1fr)}.nf-check__aside{grid-column:2;justify-content:flex-start;text-align:left;flex-wrap:wrap}.nf-detail__columns{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.nf-kpi{transition:none}}
 </style>
