@@ -1,5 +1,7 @@
 # Architecture rules
 
+- Global Quasar helpers must not style the DssCard container or its variants; the component's four layers own them to prevent legacy border, padding and hover leakage.
+
 - The parallel NFAg screen shares one Vue/DSS SFC between its isolated screen query and direct sandbox mount; this verifies the actual pattern without an iframe or an invented core component contract.
 
 - The root TypeScript configuration extends the documentation portal configuration and scopes preview checking to portal sources; independent workspace checks remain responsible for Vue core, sandbox, and MCP validation.

@@ -1,5 +1,9 @@
 # Current delivery — NFAg parallel Check-in
 
+- [x] Remove page subtitle and move latest execution to the result heading.
+- [x] Remove global legacy card styling that overrides canonical flat appearance.
+- [x] Verify real sandbox rendering and relevant regression tests (48 sandbox + 40 DssCard tests; flat border 0px, padding 8px, execution timestamp in heading).
+
 - [x] Remove situations background, preserve KPI corners and apply 8px main-card padding.
 - [x] Mirror original expansion tables and adapt result/KPI widths and contextual feedback.
 - [x] Verify scenario changes, filters and execution in the real sandbox.

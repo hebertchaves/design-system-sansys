@@ -11,16 +11,15 @@
 <DssPageContainer><DssPage><DssPageShell rail-aria-label="Módulos do sistema">
 <template #rail><DssPageShellRailItem v-for="m in modules" :key="m.label" :icon="m.icon" :label="m.label" :active="m.label==='Financeiro'" /></template>
 <template #breadcrumb><DssBreadcrumbs separator="›" gutter="sm"><DssBreadcrumbsEl label="Faturamento"/><DssBreadcrumbsEl label="NFAg"/><DssBreadcrumbsEl label="Check-in de Configuração"/></DssBreadcrumbs></template>
-<header class="nf-between"><div><DssSectionTitle :level="1" size="lg" label="Check-in de configuração NFAg"/><p class="text-secondary">Prontidão cadastral e tributária para a emissão.</p></div><div class="nf-actions"><DssButton label="Relatório PDF" icon="description" variant="outline" :disabled="running || !hasResult" @click="reportOpen=true"/><DssButton label="Executar verificação" icon="play_arrow" color="primary" :loading="running" :disabled="running" @click="execute"/></div></header>
+<header class="nf-between"><DssSectionTitle :level="1" size="lg" label="Check-in de configuração NFAg"/><div class="nf-actions"><DssButton label="Relatório PDF" icon="description" variant="outline" :disabled="running || !hasResult" @click="reportOpen=true"/><DssButton label="Executar verificação" icon="play_arrow" color="primary" :loading="running" :disabled="running" @click="execute"/></div></header>
 <div class="nf-band" :class="{'nf-band--feedback':feedbackRows.length}">
 <DssCard variant="outlined" class="nf-panel nf-summary" :class="`nf-tone--${result.tone}`" aria-live="polite" :aria-busy="running">
-<DssSectionTitle :level="2" label="Resultado da verificação" :accent="result.tone"/>
+<div class="nf-between"><DssSectionTitle :level="2" label="Resultado da verificação" :accent="result.tone"/><span v-if="hasResult" class="nf-meta">{{ history[0]?.time || 'Última execução demonstrativa' }}</span></div>
 <div class="nf-summary__body" :class="{'nf-summary__body--feedback':feedbackRows.length}"><div class="nf-result"><span class="nf-result__signal"><DssIcon :name="result.icon" size="lg" :color="result.color" decorative/></span><div><strong class="nf-result__title">{{ result.label }}</strong><p>{{ result.description }}</p></div></div>
 <ul v-if="feedbackRows.length" class="nf-feedback" aria-label="Pendências da verificação">
 <li v-for="row in feedbackRows" :key="row.id" class="nf-feedback__item" :class="`nf-tone--${tones[row.status]}`"><DssIcon :name="icons[row.status]" :color="colors[row.status]" size="sm" decorative/><div class="nf-feedback__content" @mouseenter="showFeedback($event, row.id)" @mouseleave="activeFeedback=null"><span class="nf-feedback__text" tabindex="0" :aria-describedby="activeFeedback===row.id ? `nf-feedback-${row.id}` : undefined" @focus="showFeedback($event, row.id)" @blur="activeFeedback=null" @keydown.esc="activeFeedback=null">{{ row.summary }}</span><DssTooltip :id="`nf-feedback-${row.id}`" :label="row.summary" :visible="activeFeedback===row.id" multi-line class="nf-feedback__tooltip"/></div></li>
 </ul></div>
 <DssLinearProgress v-if="running || (scenario==='loading' && !history.length)" :value="completed/11" :indeterminate="scenario==='loading' && !running && !history.length" color="info" aria-label="Progresso da verificação"/>
-<span v-if="hasResult" class="nf-meta">{{ history[0]?.time || 'Última execução demonstrativa' }}</span>
 </DssCard>
 <DssCard variant="flat" class="nf-panel nf-situations"><DssSectionTitle :level="2" label="Situação das verificações"/>
 <div class="nf-kpis" role="group" aria-label="Filtrar verificações por situação">
