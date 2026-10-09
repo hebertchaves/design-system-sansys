@@ -1,8 +1,10 @@
 # Current delivery — NFAg parallel Check-in
 
-- [ ] Remove duplicate stale banner and use one state-aware expand/collapse action.
-- [ ] Fix table hover at its owner; compare Grid Master and both NFAg patterns.
-- [ ] Verify expansion/filter interactions and relevant regressions in the sandbox.
+- [x] Remove duplicate stale banner and use one state-aware expand/collapse action.
+- [x] Fix table hover at its owner; compare Grid Master and both NFAg patterns.
+- [x] Verify expansion/filter interactions and relevant regressions in the sandbox.
+- [x] Centralize execution-state feedback in the result card for every scenario and verify retries (eight states and retry/history in real Chromium; 48 static tests passed).
+- [x] Deliver the final report on pattern replication, DSS reuse and the initial references.
 
 - [x] Remove page subtitle and move latest execution to the result heading.
 - [x] Remove global legacy card styling that overrides canonical flat appearance.

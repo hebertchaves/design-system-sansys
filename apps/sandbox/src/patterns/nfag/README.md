@@ -18,7 +18,9 @@ Only the light theme is available for this pattern. All companies, identifiers a
 
 ### Integrated result, KPIs and expansions
 
-- Stale feedback appears only in the result card. One bulk action derives its label/icon from all visible expanders; partial expansion offers expand-all and filtering reevaluates the action.
+- Execution-state feedback has one owner: the result card, across all eight scenarios (including read errors and stale results) and retries; no separate state banner is mounted. One bulk action derives its label/icon from all visible expanders; partial expansion offers expand-all and filtering reevaluates the action.
+- Final verification (2026-10-09): Python Playwright/Chromium verified all eight semantic states without duplicate banners, then read-error → execution → three failed checks → bulk expansion → history dialog readback, without page errors. Screenshots of the error and stale result were inspected. All 48 static tests passed, including 12 NFAg tests.
+- Ten permanent browser tests now cover scenario feedback, read-error retry and bulk expansion. The repository E2E runner was attempted but could not launch: its Playwright version requires Chromium headless shell revision 1223, while the environment supplies revision 1194. These tests are not reported as passed; the independent Python browser verification above did run successfully.
 - Static DssMarkupTable findings keep header/body surfaces on hover through the canonical component guard and removal of legacy global hover. Grid Master's DssTable keeps its interactive selection/hover.
 - Main cards use `--dss-spacing-2` (8px) on both axes. The flat situations card has no applied background override and does not clip KPI corners.
 - Contextual pending rows drive equal result/KPI widths; the result separates its corrective instruction from the findings list. KPI feedback omits repeated numerals.
