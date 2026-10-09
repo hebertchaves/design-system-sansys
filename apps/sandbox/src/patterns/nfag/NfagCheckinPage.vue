@@ -29,10 +29,9 @@
 <DssButton variant="flat" :color="kpi.color" class="nf-kpi__control" :aria-label="`Filtrar ${kpi.label.toLowerCase()}`" :aria-pressed="filter===kpi.id" aria-controls="nf-verifications" @click="filter=kpi.id"/>
 </div></div></DssCard></div>
 <DssBanner v-if="scenario==='error' && !running && !history.length" variant="error">Não foi possível recuperar a última execução. Execute novamente em alguns minutos.</DssBanner>
-<DssBanner v-if="scenario==='stale' && !history.length" variant="warning">Resultado desatualizado. Execute novamente antes de emitir.</DssBanner>
 <DssCard id="nf-verifications" variant="outlined" class="nf-panel">
-<div class="nf-between"><div class="nf-actions"><DssSectionTitle :level="2" label="Verificações de configuração"/><span class="nf-meta" aria-live="polite">{{ filtered.length }} de {{ totals.all }}</span><DssChip v-if="filter!=='all'" :label="filters.find(f=>f.id===filter)?.label" variant="outline" color="primary" size="xs" removable @remove="filter='all'"/></div><div class="nf-actions"><DssButton label="Expandir tudo" icon="unfold_more" variant="flat" @click="expandAll(true)"/><DssButton label="Recolher tudo" icon="unfold_less" variant="flat" @click="expandAll(false)"/></div></div>
-<div class="nf-checks">
+<div class="nf-between"><div class="nf-actions"><DssSectionTitle :level="2" label="Verificações de configuração"/><span class="nf-meta" aria-live="polite">{{ filtered.length }} de {{ totals.all }}</span><DssChip v-if="filter!=='all'" :label="filters.find(f=>f.id===filter)?.label" variant="outline" color="primary" size="xs" removable @remove="filter='all'"/></div><DssButton :label="allExpanded?'Recolher tudo':'Expandir tudo'" :icon="allExpanded?'unfold_less':'unfold_more'" variant="flat" :disabled="!filtered.length" :aria-expanded="allExpanded" aria-controls="nf-checks" @click="expandAll(!allExpanded)"/></div>
+<div id="nf-checks" class="nf-checks">
 <DssExpansionItem v-for="row in filtered" :key="row.id" v-model="expanded[row.id]" :aria-label="`Verificação ${row.id} — ${row.title} — ${labels[row.status]}`" class="nf-check">
 <template #header><div class="nf-check__header">
 <span class="nf-check__number" :class="`nf-tone--${tones[row.status]}`">{{ String(row.id).padStart(2,'0') }}</span>
@@ -91,6 +90,7 @@ const colors={waiting:'info',ok:'positive',warning:'warning',failure:'negative',
 const filters=[{id:'all',label:'Todas'},{id:'failure',label:'Falhas'},{id:'warning',label:'Alertas'},{id:'ok',label:'Aprovadas'}]
 const tones={waiting:'info',ok:'success',warning:'warning',failure:'error',incomplete:'warning',running:'info'}
 const filtered=computed(()=>filterRows(rows.value,filter.value))
+const allExpanded=computed(()=>filtered.value.length>0 && filtered.value.every(row=>expanded.value[row.id]))
 const blocking=computed(()=>rows.value.filter(r=>r.status==='failure'&&r.blocking).length)
 const feedbackRows=computed(()=>rows.value.filter(row=>['failure','warning','incomplete'].includes(row.status)))
 const kpis=computed(()=>[

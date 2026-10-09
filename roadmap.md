@@ -1,5 +1,9 @@
 # Current delivery — NFAg parallel Check-in
 
+- [ ] Remove duplicate stale banner and use one state-aware expand/collapse action.
+- [ ] Fix table hover at its owner; compare Grid Master and both NFAg patterns.
+- [ ] Verify expansion/filter interactions and relevant regressions in the sandbox.
+
 - [x] Remove page subtitle and move latest execution to the result heading.
 - [x] Remove global legacy card styling that overrides canonical flat appearance.
 - [x] Verify real sandbox rendering and relevant regression tests (48 sandbox + 40 DssCard tests; flat border 0px, padding 8px, execution timestamp in heading).
