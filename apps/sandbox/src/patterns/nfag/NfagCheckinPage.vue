@@ -18,3 +18,27 @@
 <section><DssSectionTitle :level="2" label="Histórico de execuções"/><DssEmptyState v-if="!history.length" title="Nenhuma execução nesta sessão" description="Execute o check-in para consultar o resultado demonstrativo."/><DssMarkupTable v-else flat><thead><tr><th>Empresa</th><th>Situação</th><th>Conclusão</th><th>Detalhes</th></tr></thead><tbody><tr v-for="h in history" :key="h.id"><td>{{ h.company }}</td><td>{{ h.result }}</td><td>{{ h.time }}</td><td><DssButton label="Consultar" variant="flat" icon="visibility" @click="selectedHistory=h"/></td></tr></tbody></DssMarkupTable></section>
 </DssContainer></DssPage></DssPageContainer>
 <DssDialog v-model:open="reportOpen" aria-label="Relatório demonstrativo" data-brand="water" :data-theme="theme"><template #header>Relatório de verificação</template><p>Prévia demonstrativa: {{ company.label }}.</p><p>{{ verdict(rows) }} · {{ totals.all }} verificações.</p><p>A geração de PDF/A depende da integração com o Sansys Water e não está disponível neste teste.</p><template #footer><DssButton label="Fechar" @click="reportOpen=false"/></template></DssDialog>
+<DssDialog :open="Boolean(correction)" @update:open="v=>{if(!v) correction=null}" aria-label="Destino da correção" data-brand="water" :data-theme="theme"><template #header>{{ correction?.title }}</template><p>{{ correction?.destination }}</p><p>O atalho será conectado à funcionalidade do Sansys Water. Nenhuma navegação de produção é executada neste teste.</p><template #footer><DssButton label="Fechar" @click="correction=null"/></template></DssDialog>
+<DssDialog :open="Boolean(selectedHistory)" @update:open="v=>{if(!v) selectedHistory=null}" aria-label="Detalhes da execução" data-brand="water" :data-theme="theme"><template #header>Execução demonstrativa</template><p>{{ selectedHistory?.company }}</p><p>{{ selectedHistory?.result }}</p><p>{{ selectedHistory?.time }}</p><template #footer><DssButton label="Fechar" @click="selectedHistory=null"/></template></DssDialog>
+</DssLayout>
+</template>
+<script setup>
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { CHECKS, COMPANIES, makeRows, verdict, counts } from './checkin-model.js'
+import DssLayout from '@dss/DssLayout/DssLayout.vue'
+import DssPageContainer from '@dss/DssPageContainer/DssPageContainer.vue'
+import DssPage from '@dss/DssPage/DssPage.vue'
+import DssContainer from '@dss/DssContainer/DssContainer.vue'
+import DssAppBar from '@components/composed/DssAppBar/DssAppBar.vue'
+import DssSectionTitle from '@dss/DssSectionTitle/DssSectionTitle.vue'
+import DssButton from '@dss/DssButton/DssButton.vue'
+import DssSelect from '@dss/DssSelect/DssSelect.vue'
+import DssBanner from '@dss/DssBanner/DssBanner.vue'
+import DssChip from '@dss/DssChip/DssChip.vue'
+import DssLinearProgress from '@dss/DssLinearProgress/DssLinearProgress.vue'
+import DssExpansionItem from '@dss/DssExpansionItem/DssExpansionItem.vue'
+import DssMarkupTable from '@dss/DssMarkupTable/DssMarkupTable.vue'
+import DssEmptyState from '@dss/DssEmptyState/DssEmptyState.vue'
+import DssDialog from '@components/composed/DssDialog/DssDialog.vue'
+defineOptions({inheritAttrs:false})
+const props=defineProps({scenario:{type:String,default:'mixed'},theme:{type:String,default:'light'}})
