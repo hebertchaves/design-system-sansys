@@ -6,4 +6,4 @@
 - The governance presentation is an isolated documentation route with one slide registry and one fixed-resolution scaling component; original storyboard notes remain separate from concise on-screen content to preserve provenance without crowding slides.
 - Root preview scripts invoke Vite directly with the portal root and configuration, avoiding workspace-script recursion under the sandbox's Bun runner; workspace build commands remain available for independent checks.
 - The documentation portal emits its production assets to the repository-root dist directory because the preview and deployment harness consume that location.
-- The parallel NFAg derives KPI counts, result feedback and expansion filtering from the same reactive rows; shared filtering includes incomplete checks as alerts to prevent summary/list divergence.
+- The parallel NFAg derives KPI counts, contextual feedback lists, adaptive summary layout and expansion filtering from the same reactive rows; shared filtering includes incomplete checks as alerts to prevent summary/list divergence.

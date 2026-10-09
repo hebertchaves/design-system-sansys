@@ -18,6 +18,11 @@ Only the light theme is available for this pattern. All companies, identifiers a
 
 ### Integrated result, KPIs and expansions
 
+- Main cards use `--dss-spacing-2` (8px) on both axes. The flat situations card has no applied background override and does not clip KPI corners.
+- Contextual pending rows drive equal result/KPI widths; the result separates its corrective instruction from the findings list. KPI feedback omits repeated numerals.
+- Expansion tables mirror the original primary header, right-aligned status chips and accessible captions.
+- Chromium verified five mixed findings, equal card widths, 8px padding, failure filtering retained after execution, history readback and apt/alerts/timeout/empty feedback states without page errors; all 12 NFAg tests passed.
+
 - The issuer card was removed; the session uses the central demo company.
 - Result feedback follows the full execution context (info, success, warning or error),
   independently of the active list filter.
