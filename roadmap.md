@@ -1,5 +1,9 @@
 # Current delivery — NFAg parallel Check-in
 
+- [x] Start without execution and add page-top theme/brand controls without resetting the demonstration.
+- [x] Verify themes, brands, dialogs and execution in the real sandbox.
+- [x] Deliver a measured DSS reuse/local implementation report with explicit denominators and gaps.
+
 - [x] Remove duplicate stale banner and use one state-aware expand/collapse action.
 - [x] Fix table hover at its owner; compare Grid Master and both NFAg patterns.
 - [x] Verify expansion/filter interactions and relevant regressions in the sandbox.

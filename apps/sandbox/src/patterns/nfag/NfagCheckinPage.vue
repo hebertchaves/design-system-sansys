@@ -1,7 +1,9 @@
 <template>
-<DssLayout v-bind="$attrs" view="hHh lpR fFf" container class="nf-layout" data-brand="water" data-theme="light">
-<DssAppBar brand="water" title="Faturamento · NFAg" menu-aria-label="Abrir menu principal">
+<DssLayout v-bind="$attrs" view="hHh lpR fFf" container class="nf-layout" :data-brand="brand" :data-theme="theme">
+<DssAppBar :brand="brand" title="Faturamento · NFAg" menu-aria-label="Abrir menu principal">
 <template #actions>
+<DssButton variant="flat" round size="md" :icon="theme==='dark'?'light_mode':'dark_mode'" :aria-label="theme==='dark'?'Ativar modo claro':'Ativar modo escuro'" :title="theme==='dark'?'Ativar modo claro':'Ativar modo escuro'" @click="theme=theme==='dark'?'light':'dark'"/>
+<DssBtnToggle v-model="brand" :options="brandOptions" variant="flat" size="md" aria-label="Marca da demonstração"/>
 <DssButton variant="flat" round size="md" icon="help_outline" aria-label="Ajuda" />
 <DssButton variant="flat" round size="md" icon="notifications" aria-label="Notificações" />
 <DssButton variant="flat" round size="md" icon="apps" aria-label="Aplicativos Sansys" />
@@ -46,13 +48,14 @@
 </DssCard>
 <DssCard variant="outlined" class="nf-panel"><DssSectionTitle :level="2" label="Histórico de execuções"/><DssEmptyState v-if="!history.length" title="Nenhuma execução nesta sessão" description="Execute o check-in para consultar o resultado demonstrativo."/><DssMarkupTable v-else density="compact" flat><thead><tr><th scope="col">Empresa</th><th scope="col">Situação</th><th scope="col">Conclusão</th><th scope="col">Detalhes</th></tr></thead><tbody><tr v-for="h in history" :key="h.id"><td>{{ h.company }}</td><td>{{ h.result }}</td><td>{{ h.time }}</td><td><DssButton label="Consultar" variant="flat" icon="visibility" @click="selectedHistory=h"/></td></tr></tbody></DssMarkupTable></DssCard>
 </DssPageShell></DssPage></DssPageContainer>
-<DssDialog v-model:open="reportOpen" aria-label="Relatório demonstrativo" data-brand="water" data-theme="light"><template #header>Relatório de verificação</template><p>Prévia demonstrativa: {{ company.label }}.</p><p>{{ verdict(rows) }} · {{ totals.all }} verificações.</p><p>A geração de PDF/A depende da integração com o Sansys Water e não está disponível neste teste.</p><template #footer><DssButton label="Fechar" @click="reportOpen=false"/></template></DssDialog>
-<DssDialog :open="Boolean(correction)" @update:open="v=>{if(!v) correction=null}" aria-label="Destino da correção" data-brand="water" data-theme="light"><template #header>{{ correction?.title }}</template><p>{{ correction?.destination }}</p><p>O atalho será conectado à funcionalidade do Sansys Water. Nenhuma navegação de produção é executada neste teste.</p><template #footer><DssButton label="Fechar" @click="correction=null"/></template></DssDialog>
-<DssDialog :open="Boolean(selectedHistory)" @update:open="v=>{if(!v) selectedHistory=null}" aria-label="Detalhes da execução" data-brand="water" data-theme="light"><template #header>Execução demonstrativa</template><p>{{ selectedHistory?.company }}</p><p>{{ selectedHistory?.result }}</p><p>{{ selectedHistory?.time }}</p><template #footer><DssButton label="Fechar" @click="selectedHistory=null"/></template></DssDialog>
+<DssDialog v-model:open="reportOpen" aria-label="Relatório demonstrativo" :data-brand="brand" :data-theme="theme"><template #header>Relatório de verificação</template><p>Prévia demonstrativa: {{ company.label }}.</p><p>{{ verdict(rows) }} · {{ totals.all }} verificações.</p><p>A geração de PDF/A depende da integração com o Sansys Water e não está disponível neste teste.</p><template #footer><DssButton label="Fechar" @click="reportOpen=false"/></template></DssDialog>
+<DssDialog :open="Boolean(correction)" @update:open="v=>{if(!v) correction=null}" aria-label="Destino da correção" :data-brand="brand" :data-theme="theme"><template #header>{{ correction?.title }}</template><p>{{ correction?.destination }}</p><p>O atalho será conectado à funcionalidade do Sansys Water. Nenhuma navegação de produção é executada neste teste.</p><template #footer><DssButton label="Fechar" @click="correction=null"/></template></DssDialog>
+<DssDialog :open="Boolean(selectedHistory)" @update:open="v=>{if(!v) selectedHistory=null}" aria-label="Detalhes da execução" :data-brand="brand" :data-theme="theme"><template #header>Execução demonstrativa</template><p>{{ selectedHistory?.company }}</p><p>{{ selectedHistory?.result }}</p><p>{{ selectedHistory?.time }}</p><template #footer><DssButton label="Fechar" @click="selectedHistory=null"/></template></DssDialog>
 </DssLayout>
 </template>
 <script setup>
 import { ref, computed, watch, onBeforeUnmount, onMounted } from 'vue'
+import DssBtnToggle from '@dss/DssBtnToggle/DssBtnToggle.vue'
 import { CHECKS, COMPANIES, makeRows, verdict, counts, filterRows } from './checkin-model.js'
 import DssLayout from '@dss/DssLayout/DssLayout.vue'
 import DssPageContainer from '@dss/DssPageContainer/DssPageContainer.vue'
@@ -74,7 +77,9 @@ import DssMarkupTable from '@dss/DssMarkupTable/DssMarkupTable.vue'
 import DssEmptyState from '@dss/DssEmptyState/DssEmptyState.vue'
 import DssDialog from '@components/composed/DssDialog/DssDialog.vue'
 defineOptions({inheritAttrs:false})
-const props=defineProps({scenario:{type:String,default:'mixed'}})
+const props=defineProps({scenario:{type:String,default:'empty'}})
+const theme=ref('light'), brand=ref('water')
+const brandOptions=[{label:'Hub',value:'hub',attrs:{'aria-label':'Marca Hub'}},{label:'Water',value:'water',attrs:{'aria-label':'Marca Water'}},{label:'Waste',value:'waste',attrs:{'aria-label':'Marca Waste'}}]
 const expanded=ref({})
 const activeFeedback=ref(null)
 function showFeedback(event,id){const target=event.currentTarget;const text=target.querySelector('.nf-feedback__text') || target;activeFeedback.value=text.scrollWidth>text.clientWidth?id:null}
@@ -114,11 +119,15 @@ function reset(){activeFeedback.value=null;expanded.value={};generation++;clearI
 watch(()=>props.scenario,reset)
 function execute(){if(running.value)return;running.value=true;completed.value=0;expanded.value={};const final=makeRows(['empty','loading','error','stale'].includes(props.scenario)?'mixed':props.scenario);rows.value=makeRows('empty');const token=++generation;timer=setInterval(()=>{if(token!==generation)return;const index=completed.value;if(index<CHECKS.length){rows.value[index]=final[index];completed.value++}if(completed.value===11){clearInterval(timer);running.value=false;history.value.unshift({id:Date.now(),company:company.label,result:verdict(rows.value),time:new Date().toLocaleString('pt-BR')})}},180)}
 let previousTheme, previousBrand
+function applyContext(){
+ document.documentElement.setAttribute('data-theme',theme.value)
+ document.documentElement.setAttribute('data-brand',brand.value)
+}
+watch([theme,brand],applyContext)
 onMounted(()=>{
  previousTheme=document.documentElement.getAttribute('data-theme')
  previousBrand=document.documentElement.getAttribute('data-brand')
- document.documentElement.setAttribute('data-theme','light')
- document.documentElement.setAttribute('data-brand','water')
+ applyContext()
 })
 onBeforeUnmount(()=>{
  generation++;clearInterval(timer)
