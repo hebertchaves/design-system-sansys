@@ -42,3 +42,18 @@ import DssEmptyState from '@dss/DssEmptyState/DssEmptyState.vue'
 import DssDialog from '@components/composed/DssDialog/DssDialog.vue'
 defineOptions({inheritAttrs:false})
 const props=defineProps({scenario:{type:String,default:'mixed'},theme:{type:String,default:'light'}})
+const companyId=ref(COMPANIES[0].value), rows=ref(makeRows(props.scenario)), running=ref(false), completed=ref(0), filter=ref('all'), history=ref([]), reportOpen=ref(false), correction=ref(null), selectedHistory=ref(null)
+const company=computed(()=>COMPANIES.find(c=>c.value===companyId.value)||COMPANIES[0])
+const hasResult=computed(()=>!['empty','loading','error'].includes(props.scenario) && rows.value.some(r=>r.status!=='waiting') || history.value.length>0)
+const totals=computed(()=>counts(rows.value))
+const labels={waiting:'Aguardando',ok:'Aprovada',warning:'Alerta',failure:'Falha',incomplete:'Incompleta',running:'Em andamento'}
+const icons={waiting:'schedule',ok:'check_circle',warning:'warning_amber',failure:'error_outline',incomplete:'timer_off',running:'sync'}
+const colors={waiting:'info',ok:'positive',warning:'warning',failure:'negative',incomplete:'warning',running:'info'}
+const filters=[{id:'all',label:'Todas'},{id:'failure',label:'Falhas'},{id:'warning',label:'Alertas'},{id:'ok',label:'Aprovadas'}]
+const filtered=computed(()=>rows.value.filter(r=>filter.value==='all'||r.status===filter.value||(filter.value==='warning'&&r.status==='incomplete')))
+let timer, generation=0
+function reset(){generation++;clearInterval(timer);running.value=false;completed.value=0;filter.value='all';history.value=[];rows.value=makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)}
+watch(()=>props.scenario,reset);watch(companyId,reset)
+function execute(){if(running.value)return;running.value=true;completed.value=0;filter.value='all';const final=makeRows(['empty','loading','error','stale'].includes(props.scenario)?'mixed':props.scenario);rows.value=makeRows('empty');const token=++generation;timer=setInterval(()=>{if(token!==generation)return;const index=completed.value;if(index<CHECKS.length){rows.value[index]=final[index];completed.value++}if(completed.value===11){clearInterval(timer);running.value=false;history.value.unshift({id:Date.now(),company:company.value.label,result:verdict(rows.value),time:new Date().toLocaleString('pt-BR')})}},180)}
+onBeforeUnmount(()=>{generation++;clearInterval(timer)})
+</script>
