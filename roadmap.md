@@ -1,8 +1,10 @@
 # Current delivery — NFAg parallel Check-in
 
-- [ ] Build a separate Vue/DSS Check-in using revision 02 and preserve the existing page.
-- [ ] Add isolated frame and sandbox scenarios with eleven checks and no technical queries.
-- [ ] Run applicable gates, MCP checks and interaction tests; document unavailable integrations.
+- [x] Build a separate Vue/DSS Check-in using revision 02 and preserve the existing page.
+- [x] Add isolated frame and sandbox scenarios with eleven checks and no technical queries.
+- [x] Run applicable gates, MCP checks and interaction tests; document unavailable integrations.
+
+Validation boundary: visual-test delivery only; production integrations and final DSS visual/a11y acceptance are not certified. See the parallel screen README.
 
 ## Previous presentation delivery (completed in prior delivery)
 
