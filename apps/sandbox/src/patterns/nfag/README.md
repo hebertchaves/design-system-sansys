@@ -3,7 +3,7 @@
 ## Open and validate
 
 In the Vue sandbox, choose **Patterns → Check-in NFAg · paralelo**.
-The isolated page is also available at `/?screen=nfag-parallel&scenario=mixed`.
+The isolated page is also available at `/?screen=nfag-parallel` (starts without execution); add `&scenario=mixed` for populated data.
 The sandbox mounts this actual SFC directly, with the original **sandbox · estado** button bar;
 there is no iframe or fictitious core-component contract.
 The layout follows current Grid Master: DssLayout → DssAppBar → DssPageContainer → DssPage
@@ -12,7 +12,7 @@ The original `TestCheckinNFAg.vue` was preserved.
 
 Authority: shared requirements, September 17 revision 02, §§5.1–5.2.
 Eight scenarios: empty, loading, error, apt, alerts, mixed, timeout and stale.
-Only the light theme is available for this pattern. All companies, identifiers and findings are fictional.
+The default is light/Water. Header controls offer light/dark and Hub/Water/Waste without clearing execution or filtering. All companies, identifiers and findings are fictional.
 
 ## Direct sandbox/layout revision evidence
 
@@ -79,5 +79,9 @@ Vue 2 host integration, permissions, real fiscal checks, 24-month audit retentio
 6-month finding retention, PDF/A, production observability and performance remain unimplemented.
 No credentials, SQL or database identifiers are displayed.
 
-The revised screen uses only the canonical light appearance. This does not certify WCAG AA
+The revised screen exposes canonical light/dark appearances and three brands. This does not certify WCAG AA
 or final visual acceptance; those still require DSS-level review plus user validation.
+
+## Stakeholder verification — 2026-10-09
+
+Independent Python Chromium checked six theme/brand combinations, initial empty history, execution, three-failure filtering, bulk expansion and report/history dialogs with inherited dark/Waste context. Returning to light/Water preserved result and filter. Captured states were inspected; no page errors occurred. The 48 static tests, navigation and SFC hygiene gates passed. This is not a WCAG contrast certification.
