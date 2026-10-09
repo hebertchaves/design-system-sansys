@@ -17,7 +17,7 @@
 <DssSectionTitle :level="2" label="Resultado da verificação" :accent="result.tone"/>
 <div class="nf-summary__body" :class="{'nf-summary__body--feedback':feedbackRows.length}"><div class="nf-result"><span class="nf-result__signal"><DssIcon :name="result.icon" size="lg" :color="result.color" decorative/></span><div><strong class="nf-result__title">{{ result.label }}</strong><p>{{ result.description }}</p></div></div>
 <ul v-if="feedbackRows.length" class="nf-feedback" aria-label="Pendências da verificação">
-<li v-for="row in feedbackRows" :key="row.id" class="nf-feedback__item" :class="`nf-tone--${tones[row.status]}`"><DssIcon :name="icons[row.status]" :color="colors[row.status]" size="sm" decorative/><div><strong>{{ row.title }}</strong><p>{{ row.summary }}</p><span class="nf-feedback__status">{{ row.blocking ? 'Bloqueia emissão' : labels[row.status] }}</span></div></li>
+<li v-for="row in feedbackRows" :key="row.id" class="nf-feedback__item" :class="`nf-tone--${tones[row.status]}`"><DssIcon :name="icons[row.status]" :color="colors[row.status]" size="sm" decorative/><div class="nf-feedback__content" @mouseenter="showFeedback($event, row.id)" @mouseleave="activeFeedback=null"><span class="nf-feedback__text" tabindex="0" :aria-describedby="activeFeedback===row.id ? `nf-feedback-${row.id}` : undefined" @focus="showFeedback($event, row.id)" @blur="activeFeedback=null" @keydown.esc="activeFeedback=null">{{ row.summary }}</span><DssTooltip :id="`nf-feedback-${row.id}`" :label="row.summary" :visible="activeFeedback===row.id" multi-line class="nf-feedback__tooltip"/></div></li>
 </ul></div>
 <DssLinearProgress v-if="running || (scenario==='loading' && !history.length)" :value="completed/11" :indeterminate="scenario==='loading' && !running && !history.length" color="info" aria-label="Progresso da verificação"/>
 <span v-if="hasResult" class="nf-meta">{{ history[0]?.time || 'Última execução demonstrativa' }}</span>
@@ -69,6 +69,7 @@ import DssAppBar from '@components/composed/DssAppBar/DssAppBar.vue'
 import DssSectionTitle from '@dss/DssSectionTitle/DssSectionTitle.vue'
 import DssButton from '@dss/DssButton/DssButton.vue'
 import DssIcon from '@dss/DssIcon/DssIcon.vue'
+import DssTooltip from '@dss/DssTooltip/DssTooltip.vue'
 import DssBanner from '@dss/DssBanner/DssBanner.vue'
 import DssChip from '@dss/DssChip/DssChip.vue'
 import DssLinearProgress from '@dss/DssLinearProgress/DssLinearProgress.vue'
@@ -79,6 +80,8 @@ import DssDialog from '@components/composed/DssDialog/DssDialog.vue'
 defineOptions({inheritAttrs:false})
 const props=defineProps({scenario:{type:String,default:'mixed'}})
 const expanded=ref({})
+const activeFeedback=ref(null)
+function showFeedback(event,id){const target=event.currentTarget;const text=target.querySelector('.nf-feedback__text') || target;activeFeedback.value=text.scrollWidth>text.clientWidth?id:null}
 const rows=ref(makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)), running=ref(false), completed=ref(0), filter=ref('all'), history=ref([]), reportOpen=ref(false), correction=ref(null), selectedHistory=ref(null)
 const company=COMPANIES[0]
 const hasResult=computed(()=>rows.value.some(r=>r.status!=='waiting') && !running.value)
@@ -110,7 +113,7 @@ const result=computed(()=>{
 function expandAll(value){for(const row of filtered.value)expanded.value[row.id]=value}
 const modules=[{icon:'public',label:'Mapa'},{icon:'shopping_cart',label:'Comercial'},{icon:'paid',label:'Financeiro'},{icon:'bar_chart',label:'Relatórios'},{icon:'smartphone',label:'Mobile'},{icon:'settings',label:'Configurações'},{icon:'account_tree',label:'Estrutura'}]
 let timer, generation=0
-function reset(){expanded.value={};generation++;clearInterval(timer);running.value=false;completed.value=0;filter.value='all';history.value=[];rows.value=makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)}
+function reset(){activeFeedback.value=null;expanded.value={};generation++;clearInterval(timer);running.value=false;completed.value=0;filter.value='all';history.value=[];rows.value=makeRows(['empty','loading','error'].includes(props.scenario)?'empty':props.scenario)}
 watch(()=>props.scenario,reset)
 function execute(){if(running.value)return;running.value=true;completed.value=0;expanded.value={};const final=makeRows(['empty','loading','error','stale'].includes(props.scenario)?'mixed':props.scenario);rows.value=makeRows('empty');const token=++generation;timer=setInterval(()=>{if(token!==generation)return;const index=completed.value;if(index<CHECKS.length){rows.value[index]=final[index];completed.value++}if(completed.value===11){clearInterval(timer);running.value=false;history.value.unshift({id:Date.now(),company:company.label,result:verdict(rows.value),time:new Date().toLocaleString('pt-BR')})}},180)}
 let previousTheme, previousBrand
@@ -137,8 +140,12 @@ onBeforeUnmount(()=>{
 .nf-summary__body{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--dss-spacing-3);flex:1}
 .nf-summary__body--feedback{grid-template-columns:repeat(2,minmax(0,1fr))}
 .nf-feedback{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--dss-spacing-2);border-inline-start:var(--dss-border-width-thin) solid var(--dss-border-subtle);padding-inline-start:var(--dss-spacing-3)}
-.nf-feedback__item{display:flex;align-items:flex-start;gap:var(--dss-spacing-2);font-size:var(--dss-font-size-xs)}
-.nf-feedback__status{color:var(--nf-text);font-weight:var(--dss-font-weight-semibold)}
+.nf-feedback__item{display:flex;align-items:center;gap:var(--dss-spacing-2);min-width:0;font-size:var(--dss-font-size-xs)}
+.nf-feedback__item>.dss-icon{flex-shrink:0}
+.nf-feedback__content{position:relative;flex:1;min-width:0}
+.nf-feedback__text{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nf-feedback__text:focus-visible{outline:var(--dss-border-width-md) solid var(--dss-border-focus);outline-offset:var(--dss-spacing-px)}
+.nf-feedback__tooltip{position:absolute;inset-inline-end:0;top:100%;margin-top:var(--dss-spacing-1);width:max-content}
 .nf-table{border-radius:var(--dss-radius-sm);overflow:hidden}
 .nf-table table{width:100%;border-collapse:collapse}
 .nf-table thead th{background:var(--dss-action-primary);color:var(--dss-text-inverse);font-size:var(--dss-font-size-xs);text-transform:uppercase;font-weight:var(--dss-font-weight-semibold);text-align:left;padding:var(--dss-spacing-2) var(--dss-spacing-3)}
@@ -150,7 +157,7 @@ onBeforeUnmount(()=>{
 .nf-tone--success{--nf-color:var(--dss-feedback-success);--nf-tint:var(--dss-feedback-success-surface);--nf-text:var(--dss-feedback-success-text)}
 .nf-tone--warning{--nf-color:var(--dss-feedback-warning);--nf-tint:var(--dss-feedback-warning-surface);--nf-text:var(--dss-text-body)}
 .nf-tone--error{--nf-color:var(--dss-feedback-error);--nf-tint:var(--dss-feedback-error-surface);--nf-text:var(--dss-feedback-error-text)}
-.nf-summary{background:var(--nf-tint);border-inline-start:var(--dss-spacing-1) solid var(--nf-color)}
+.nf-summary{background:var(--nf-tint);border-inline-start:var(--dss-spacing-1) solid var(--nf-color);overflow:visible}
 .nf-result{display:flex;align-items:center;gap:var(--dss-spacing-3);flex:1}
 .nf-result__signal{flex-shrink:0;display:flex;align-items:center;justify-content:center;inline-size:var(--dss-touch-target-lg);block-size:var(--dss-touch-target-lg);border-radius:var(--dss-radius-circle);background:var(--nf-tint)}
 .nf-result__title{font-size:var(--dss-font-size-lg);font-weight:var(--dss-font-weight-semibold);color:var(--nf-text)}
