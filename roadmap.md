@@ -1,6 +1,6 @@
 # Current delivery — NFAg parallel Check-in
 
-- [ ] Move theme/brand controls to the right of sandbox · estado and verify state preservation.
+- [x] Move theme/brand controls to the right of sandbox · estado and verify state preservation (real Chromium; 48 static tests passed).
 
 - [x] Start without execution and add page-top theme/brand controls without resetting the demonstration.
 - [x] Verify themes, brands, dialogs and execution in the real sandbox.
