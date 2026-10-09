@@ -18,6 +18,8 @@ Only the light theme is available for this pattern. All companies, identifiers a
 
 ### Integrated result, KPIs and expansions
 
+- Stale feedback appears only in the result card. One bulk action derives its label/icon from all visible expanders; partial expansion offers expand-all and filtering reevaluates the action.
+- Static DssMarkupTable findings keep header/body surfaces on hover through the canonical component guard and removal of legacy global hover. Grid Master's DssTable keeps its interactive selection/hover.
 - Main cards use `--dss-spacing-2` (8px) on both axes. The flat situations card has no applied background override and does not clip KPI corners.
 - Contextual pending rows drive equal result/KPI widths; the result separates its corrective instruction from the findings list. KPI feedback omits repeated numerals.
 - Expansion tables mirror the original primary header, right-aligned status chips and accessible captions.

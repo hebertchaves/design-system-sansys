@@ -11,6 +11,17 @@
    ========================================================================== */
 
 /* ==========================================================================
+   ISOLAMENTO DO HOVER DO MOTOR QUASAR
+   QMarkupTable gera .q-table e herda o overlay de hover do QTable em td::before.
+   A tabela estática não é uma ação: suprimir somente esse overlay, preservando
+   superfícies, seleção e interações explícitas do conteúdo fornecido por slot.
+   ========================================================================== */
+
+.dss-markup-table .q-table > tbody > tr:hover > td::before {
+  content: none;
+}
+
+/* ==========================================================================
    DARK MODE
    ========================================================================== */
 

@@ -279,7 +279,10 @@
       }
       
       &:hover {
-        background-color: var(--dss-surface-hover);
+        /* Helper legado apenas para tabelas Quasar sem wrapper DSS. */
+        .q-table__container:not(.dss-table):not(.dss-markup-table) & {
+          background-color: var(--dss-surface-hover);
+        }
       }
       
       &.selected {

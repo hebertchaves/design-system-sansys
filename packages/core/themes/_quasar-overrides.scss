@@ -731,10 +731,8 @@
           }
         }
         
-        /* Hover no cabeçalho */
-        &:hover {
-          background-color: var(--dss-surface-hover);
-        }
+        /* Sem hover global: cabeçalhos informativos mantêm sua superfície.
+           Ordenação e seus indicadores pertencem ao componente. */
       }
     }
   }
@@ -747,10 +745,8 @@
         background-color: var(--dss-surface-subtle);
       }
       
-      /* Hover na linha */
-      &:hover {
-        background-color: var(--dss-surface-hover);
-      }
+      /* Hover de linha pertence ao componente: DssTable governa interação;
+         DssMarkupTable é estático. Não sobrepor suas camadas aqui. */
       
       /* Linha selecionada */
       &.selected {
