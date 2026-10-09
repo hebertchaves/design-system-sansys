@@ -47,7 +47,8 @@ test('bulk expansion follows visible checks, including individual changes and KP
   await expect(page.locator('.nf-detail:visible')).toHaveCount(3)
 })
 test('stakeholder context preserves execution and filtering', async ({ page }) => {
-  await page.goto('/?screen=nfag-parallel')
+  await page.goto('/')
+  await page.getByText('Check-in NFAg · paralelo', { exact: true }).click()
   await expect(page.locator('.nf-layout')).toHaveAttribute('data-theme', 'light')
   await expect(page.locator('.nf-layout')).toHaveAttribute('data-brand', 'water')
   await expect(page.getByRole('button', { name: 'Consultar', exact: true })).toHaveCount(0)
