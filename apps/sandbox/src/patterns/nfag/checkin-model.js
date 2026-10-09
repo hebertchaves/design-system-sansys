@@ -34,3 +34,8 @@ export function makeRows(scenario='mixed') {
     return {...c,status,blocking:status==='failure' && [1,2,3,4,5,6,8,9,11].includes(c.id),duration:180+c.id*73,summary:status==='waiting'?'Aguardando verificação':status==='ok'?'Configuração conferida, sem inconsistências.':status==='incomplete'?'Tempo excedido — repita a verificação fora do horário de pico.':finding,findings:['warning','failure'].includes(status)?[{item: c.title,result:finding}]:[]};
   });
 }
+
+// Shared presentation filtering: incomplete results belong to the alerts KPI.
+export function filterRows(rows, filter = 'all') {
+  return rows.filter(row => filter === 'all' || row.status === filter || (filter === 'warning' && row.status === 'incomplete'));
+}

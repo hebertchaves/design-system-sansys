@@ -16,6 +16,19 @@ Only the light theme is available for this pattern. All companies, identifiers a
 
 ## Direct sandbox/layout revision evidence
 
+### Integrated result, KPIs and expansions
+
+- The issuer card was removed; the session uses the central demo company.
+- Result feedback follows the full execution context (info, success, warning or error),
+  independently of the active list filter.
+- Four compact KPI controls filter the same reactive rows, include incomplete checks in alerts,
+  retain the selected filter during execution and show blocking feedback beside the failure count.
+- The original Check-in header hierarchy, rule/impact columns, findings and bulk expansion
+  controls were absorbed without changing the original page or core components.
+- All **48 static tests** passed (including **12 NFAg tests**); sandbox navigation passed.
+- Chromium verified all four KPI counts, filter retention after execution, correction/report
+  dialogs, history readback and all eight context tones, with no page errors.
+
 - All 43 sandbox static tests and the sandbox-navigation gate passed.
 - Chromium verified direct mounting without an iframe, the actual DssPageShell, all eight
   state buttons and eleven checks, in the sandbox's Patterns navigation.
@@ -48,7 +61,7 @@ independently. Core contract emission and four-layer creation do not apply to a 
 
 No hosted services were added. Execution is a short, sequential local animation, **not** proof of
 four-way concurrency, ten-second deadlines or production performance. History lasts only for
-this session and is cleared when switching company. Correction destinations are displayed in
+this session and is cleared when switching sandbox scenario. Correction destinations are displayed in
 an explanatory dialog, not connected routes. PDF is a preview dialog, not a PDF/A export.
 The timeout scenario treats an incomplete check as an alert for demonstration; production
 verdict handling for incomplete checks requires confirmation and an actual service contract.
