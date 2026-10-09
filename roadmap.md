@@ -1,5 +1,9 @@
 # Current delivery — NFAg parallel Check-in
 
+- [x] Remove situations background, preserve KPI corners and apply 8px main-card padding.
+- [x] Mirror original expansion tables and adapt result/KPI widths and contextual feedback.
+- [x] Verify scenario changes, filters and execution in the real sandbox.
+
 - [x] Absorb the original expansion hierarchy; remove the issuer card and give the result semantic feedback.
 - [x] Merge all/failure/warning/approved filters into compact interactive KPIs with inline feedback and semantic hover.
 - [x] Verify the integrated KPI → expansion → execution flow and regression tests.

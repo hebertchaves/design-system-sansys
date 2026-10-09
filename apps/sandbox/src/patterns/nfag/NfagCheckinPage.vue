@@ -12,14 +12,17 @@
 <template #rail><DssPageShellRailItem v-for="m in modules" :key="m.label" :icon="m.icon" :label="m.label" :active="m.label==='Financeiro'" /></template>
 <template #breadcrumb><DssBreadcrumbs separator="›" gutter="sm"><DssBreadcrumbsEl label="Faturamento"/><DssBreadcrumbsEl label="NFAg"/><DssBreadcrumbsEl label="Check-in de Configuração"/></DssBreadcrumbs></template>
 <header class="nf-between"><div><DssSectionTitle :level="1" size="lg" label="Check-in de configuração NFAg"/><p class="text-secondary">Prontidão cadastral e tributária para a emissão.</p></div><div class="nf-actions"><DssButton label="Relatório PDF" icon="description" variant="outline" :disabled="running || !hasResult" @click="reportOpen=true"/><DssButton label="Executar verificação" icon="play_arrow" color="primary" :loading="running" :disabled="running" @click="execute"/></div></header>
-<div class="nf-band">
+<div class="nf-band" :class="{'nf-band--feedback':feedbackRows.length}">
 <DssCard variant="outlined" class="nf-panel nf-summary" :class="`nf-tone--${result.tone}`" aria-live="polite" :aria-busy="running">
 <DssSectionTitle :level="2" label="Resultado da verificação" :accent="result.tone"/>
-<div class="nf-result"><span class="nf-result__signal"><DssIcon :name="result.icon" size="lg" :color="result.color" decorative/></span><div><strong class="nf-result__title">{{ result.label }}</strong><p>{{ result.description }}</p></div></div>
+<div class="nf-summary__body" :class="{'nf-summary__body--feedback':feedbackRows.length}"><div class="nf-result"><span class="nf-result__signal"><DssIcon :name="result.icon" size="lg" :color="result.color" decorative/></span><div><strong class="nf-result__title">{{ result.label }}</strong><p>{{ result.description }}</p></div></div>
+<ul v-if="feedbackRows.length" class="nf-feedback" aria-label="Pendências da verificação">
+<li v-for="row in feedbackRows" :key="row.id" class="nf-feedback__item" :class="`nf-tone--${tones[row.status]}`"><DssIcon :name="icons[row.status]" :color="colors[row.status]" size="sm" decorative/><div><strong>{{ row.title }}</strong><p>{{ row.summary }}</p><span class="nf-feedback__status">{{ row.blocking ? 'Bloqueia emissão' : labels[row.status] }}</span></div></li>
+</ul></div>
 <DssLinearProgress v-if="running || (scenario==='loading' && !history.length)" :value="completed/11" :indeterminate="scenario==='loading' && !running && !history.length" color="info" aria-label="Progresso da verificação"/>
 <span v-if="hasResult" class="nf-meta">{{ history[0]?.time || 'Última execução demonstrativa' }}</span>
 </DssCard>
-<DssCard variant="flat" class="nf-panel nf-situations dss-bg-muted"><DssSectionTitle :level="2" label="Situação das verificações"/>
+<DssCard variant="flat" class="nf-panel nf-situations"><DssSectionTitle :level="2" label="Situação das verificações"/>
 <div class="nf-kpis" role="group" aria-label="Filtrar verificações por situação">
 <div v-for="kpi in kpis" :key="kpi.id" class="nf-kpi" :class="[`nf-tone--${kpi.tone}`,{'nf-kpi--selected':filter===kpi.id}]">
 <div class="nf-between nf-kpi__head"><DssSectionTitle :level="3" size="sm" :accent="kpi.tone" :label="kpi.label"/><DssIcon :name="kpi.icon" size="sm" :color="kpi.color" decorative/></div>
@@ -38,7 +41,7 @@
 <div class="nf-check__aside"><span class="nf-meta">{{ row.summary }}</span><DssChip :label="labels[row.status]" :color="colors[row.status]" :icon="icons[row.status]" size="xs"/></div>
 </div></template>
 <div class="nf-detail"><div class="nf-detail__columns"><section><DssSectionTitle :level="3" size="sm" label="O que é verificado"/><p>{{ row.rule }}</p></section><section><DssSectionTitle :level="3" size="sm" label="Impacto na emissão"/><p>{{ row.impact }}</p></section></div>
-<DssMarkupTable v-if="row.findings.length" density="compact" flat wrap-cells><thead><tr><th scope="col">Item verificado</th><th scope="col">Resultado</th><th scope="col">Situação</th></tr></thead><tbody><tr v-for="finding in row.findings" :key="finding.item"><td>{{ finding.item }}</td><td>{{ finding.result }}</td><td><DssChip :label="row.blocking?'Falha bloqueante':labels[row.status]" :color="colors[row.status]" size="xs"/></td></tr></tbody></DssMarkupTable>
+<DssMarkupTable v-if="row.findings.length" density="compact" flat wrap-cells class="nf-table"><table><caption class="dss-visually-hidden">Achados da verificação {{ row.id }} — {{ row.title }}</caption><thead><tr><th scope="col">Item verificado</th><th scope="col">Resultado</th><th scope="col" class="nf-table__right">Situação</th></tr></thead><tbody><tr v-for="finding in row.findings" :key="finding.item"><td>{{ finding.item }}</td><td>{{ finding.result }}</td><td class="nf-table__right"><DssChip :label="row.blocking?'Falha bloqueante':labels[row.status]" :color="colors[row.status]" :icon="icons[row.status]" size="xs"/></td></tr></tbody></table></DssMarkupTable>
 <div v-if="row.findings.length" class="nf-detail__actions"><DssButton :label="row.destination" icon="open_in_new" variant="outline" @click="correction=row"/></div>
 </div></DssExpansionItem>
 </div>
@@ -87,11 +90,12 @@ const filters=[{id:'all',label:'Todas'},{id:'failure',label:'Falhas'},{id:'warni
 const tones={waiting:'info',ok:'success',warning:'warning',failure:'error',incomplete:'warning',running:'info'}
 const filtered=computed(()=>filterRows(rows.value,filter.value))
 const blocking=computed(()=>rows.value.filter(r=>r.status==='failure'&&r.blocking).length)
+const feedbackRows=computed(()=>rows.value.filter(row=>['failure','warning','incomplete'].includes(row.status)))
 const kpis=computed(()=>[
  {id:'all',label:'Todas',value:totals.value.all,tone:'info',color:'info',icon:'fact_check'},
  {id:'ok',label:'Aprovadas',value:totals.value.ok,tone:'success',color:'positive',icon:'check_circle'},
- {id:'warning',label:'Alertas',value:totals.value.warning,tone:'warning',color:'warning',icon:'warning_amber'},
- {id:'failure',label:'Falhas',value:totals.value.failure,tone:'error',color:'negative',icon:'error_outline',hint:blocking.value?`${blocking.value} ${blocking.value===1?'bloqueia':'bloqueiam'} a emissão`:''},
+ {id:'warning',label:'Alertas',value:totals.value.warning,tone:'warning',color:'warning',icon:'warning_amber',hint:totals.value.warning?'Revise as pendências':''},
+ {id:'failure',label:'Falhas',value:totals.value.failure,tone:'error',color:'negative',icon:'error_outline',hint:blocking.value?'Bloqueiam a emissão':''},
 ])
 const result=computed(()=>{
  if(running.value)return {tone:'info',color:'info',icon:'sync',label:'Verificação em andamento',description:`${completed.value} de 11 verificações concluídas.`}
@@ -99,7 +103,7 @@ const result=computed(()=>{
  if(!history.value.length&&props.scenario==='error')return {tone:'error',color:'negative',icon:'cloud_off',label:'Resultado indisponível',description:'Não foi possível recuperar a execução. Execute novamente.'}
  if(!history.value.length&&props.scenario==='stale')return {tone:'warning',color:'warning',icon:'schedule',label:'Resultado desatualizado',description:'Execute novamente antes de emitir.'}
  if(!hasResult.value)return {tone:'info',color:'info',icon:'fact_check',label:'Aguardando primeira verificação',description:'Inicie o check-in para conferir as configurações.'}
- if(blocking.value)return {tone:'error',color:'negative',icon:'block',label:verdict(rows.value),description:`${blocking.value} ${blocking.value===1?'falha bloqueia':'falhas bloqueiam'} a emissão. Corrija os cadastros e repita a verificação.`}
+ if(blocking.value)return {tone:'error',color:'negative',icon:'block',label:verdict(rows.value),description:'Corrija os cadastros e repita a verificação.'}
  if(totals.value.warning||totals.value.failure)return {tone:'warning',color:'warning',icon:'warning_amber',label:verdict(rows.value),description:'Revise as pendências indicadas nas verificações.'}
  return {tone:'success',color:'positive',icon:'check_circle',label:verdict(rows.value),description:'Todas as configurações foram conferidas, sem inconsistências.'}
 })
@@ -127,8 +131,20 @@ onBeforeUnmount(()=>{
 .nf-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-4)}
 .nf-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-2)}
 .nf-band{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:var(--dss-spacing-3);align-items:stretch}
-.nf-panel{display:flex;flex-direction:column;gap:var(--dss-spacing-3);padding:var(--dss-spacing-4);min-width:0}
-.nf-situations.dss-bg-muted{padding:var(--dss-spacing-0);background:var(--dss-surface-muted)}
+.nf-panel{display:flex;flex-direction:column;gap:var(--dss-spacing-3);padding:var(--dss-spacing-2);min-width:0}
+.nf-band--feedback{grid-template-columns:repeat(2,minmax(0,1fr))}
+.nf-situations{overflow:visible}
+.nf-summary__body{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--dss-spacing-3);flex:1}
+.nf-summary__body--feedback{grid-template-columns:repeat(2,minmax(0,1fr))}
+.nf-feedback{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--dss-spacing-2);border-inline-start:var(--dss-border-width-thin) solid var(--dss-border-subtle);padding-inline-start:var(--dss-spacing-3)}
+.nf-feedback__item{display:flex;align-items:flex-start;gap:var(--dss-spacing-2);font-size:var(--dss-font-size-xs)}
+.nf-feedback__status{color:var(--nf-text);font-weight:var(--dss-font-weight-semibold)}
+.nf-table{border-radius:var(--dss-radius-sm);overflow:hidden}
+.nf-table table{width:100%;border-collapse:collapse}
+.nf-table thead th{background:var(--dss-action-primary);color:var(--dss-text-inverse);font-size:var(--dss-font-size-xs);text-transform:uppercase;font-weight:var(--dss-font-weight-semibold);text-align:left;padding:var(--dss-spacing-2) var(--dss-spacing-3)}
+.nf-table tbody td{padding:var(--dss-spacing-2) var(--dss-spacing-3);border-bottom:var(--dss-border-width-thin) solid var(--dss-border-subtle);vertical-align:middle}
+.nf-table tbody tr:last-child td{border-bottom:none}
+.nf-table .nf-table__right{text-align:right}
 .nf-checks{display:flex;flex-direction:column;gap:var(--dss-spacing-1)}
 .nf-tone--info{--nf-color:var(--dss-feedback-info);--nf-tint:var(--dss-feedback-info-surface);--nf-text:var(--dss-feedback-info-text)}
 .nf-tone--success{--nf-color:var(--dss-feedback-success);--nf-tint:var(--dss-feedback-success-surface);--nf-text:var(--dss-feedback-success-text)}
@@ -160,7 +176,8 @@ onBeforeUnmount(()=>{
 .nf-detail__actions{display:flex;justify-content:flex-end}
 p{margin:var(--dss-spacing-1) 0 0}
 p,td,th,span,strong{overflow-wrap:anywhere}
-@media(max-width:1439px){.nf-band{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:767px){.nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-check__header{grid-template-columns:var(--dss-spacing-8) minmax(0,1fr)}.nf-check__aside{grid-column:2;justify-content:flex-start;text-align:left;flex-wrap:wrap}.nf-detail__columns{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:1439px){.nf-band--feedback .nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1023px){.nf-summary__body--feedback{grid-template-columns:minmax(0,1fr)}.nf-feedback{border-inline-start:none;padding-inline-start:0;border-top:var(--dss-border-width-thin) solid var(--dss-border-subtle);padding-top:var(--dss-spacing-2)}}
+@media(max-width:767px){.nf-band{grid-template-columns:minmax(0,1fr)}.nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-check__header{grid-template-columns:var(--dss-spacing-8) minmax(0,1fr)}.nf-check__aside{grid-column:2;justify-content:flex-start;text-align:left;flex-wrap:wrap}.nf-detail__columns{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.nf-kpi{transition:none}}
 </style>
