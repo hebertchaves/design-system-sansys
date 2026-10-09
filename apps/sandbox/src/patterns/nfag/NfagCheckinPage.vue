@@ -57,3 +57,13 @@ watch(()=>props.scenario,reset);watch(companyId,reset)
 function execute(){if(running.value)return;running.value=true;completed.value=0;filter.value='all';const final=makeRows(['empty','loading','error','stale'].includes(props.scenario)?'mixed':props.scenario);rows.value=makeRows('empty');const token=++generation;timer=setInterval(()=>{if(token!==generation)return;const index=completed.value;if(index<CHECKS.length){rows.value[index]=final[index];completed.value++}if(completed.value===11){clearInterval(timer);running.value=false;history.value.unshift({id:Date.now(),company:company.value.label,result:verdict(rows.value),time:new Date().toLocaleString('pt-BR')})}},180)}
 onBeforeUnmount(()=>{generation++;clearInterval(timer)})
 </script>
+<style scoped>
+.nf-layout{height:100%;min-height:var(--dss-spacing-192)}
+.nf-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-4)}
+.nf-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--dss-spacing-3)}
+.nf-summary{display:flex;flex-direction:column;gap:var(--dss-spacing-3);padding-block:var(--dss-spacing-6);border-block:var(--dss-border-width-thin) solid var(--dss-border-default)}
+.nf-summary h2{font-size:var(--dss-font-size-2xl);margin:0}
+.nf-check{margin-top:var(--dss-spacing-3)}
+.nf-detail{display:flex;flex-direction:column;align-items:flex-start;gap:var(--dss-spacing-4);padding:var(--dss-spacing-4);overflow:auto}
+p,td,th,span{overflow-wrap:anywhere}
+</style>
