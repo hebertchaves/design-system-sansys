@@ -571,7 +571,15 @@
           </button>
 
           <div v-show="expandedCategories.patterns" class="nav-submenu">
-            <button @click="activeComponent = 'checkin-nfag-parallel'" :class="['nav-item nav-subitem', { active: activeComponent === 'checkin-nfag-parallel' }]"><span class="nav-label">Check-in NFAg · paralelo</span></button>
+            <button
+              @click="activeComponent = 'checkin-nfag-parallel'"
+              :class="['nav-item nav-subitem', { active: activeComponent === 'checkin-nfag-parallel' }]"
+            >
+              <span class="nav-icon"><span class="material-icons">splitscreen</span></span>
+              <span class="nav-label">Check-in NFAg · paralelo</span>
+              <span class="nav-badge stress">paralelo</span>
+            </button>
+
             <button
               @click="activeComponent = 'grid-master'"
               :class="['nav-item nav-subitem', { active: activeComponent === 'grid-master' }]"
