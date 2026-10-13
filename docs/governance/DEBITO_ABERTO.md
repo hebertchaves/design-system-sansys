@@ -11,7 +11,7 @@
 
 ## Frentes desta onda (cadeia de fonte única / contraste)
 
-- 🔴 **(d) Brandabilidade passa por fora da camada de token** — **etapa 1 de 4 FECHADA (out/2026).**
+- 🔴 **(d) Brandabilidade passa por fora da camada de token** — **etapas 1–3 de 4 FECHADAS (out/2026).**
   Componentes pintam marca com o primitivo cru (`var(--dss-hub-600)`) no
   `4-output/_brands.scss`, em vez do semântico. Consequência medida: o alto contraste
   alcança o atributo `[data-brand]` (texto branco 2.81 → 8.88) e **não** alcança a prop
@@ -32,9 +32,22 @@
   93 `_brands.scss` que pintam em vez de remapear · 17 props `brand` que não emitem
   `data-brand`. As três listas **só podem encolher**.
 
-  **Etapas 2–4 abertas:** `brandZone` no meta · barreira nas superfícies de conteúdo
-  (+ e2e da ponte `--q-*`, risco técnico #1) · prop tri-estado com `"none"` e migração
-  em ondas (piloto Badge/Button/Chip). Não bloqueia o HC.
+  **Etapas 2 e 3 (feitas, saíram juntas para não deixar estado inerte):** barreira em
+  `semantic/_brand-barrier.scss` · as duas zonas na ponte `--q-*` (`scopes.$marcas`) ·
+  `brandZone` no meta e `data-brand-zone` no template de **12 estabelecedores**
+  (`DssPageShell` tem as duas: rail=casca, board=conteúdo) · regras **B4** (completude
+  da barreira) e **B5** (meta ≠ código) no gate, sem baseline porque são invariantes.
+  Verificado em browser real: `brand-barrier.spec.ts`, **11/11**, incluindo a tela do
+  print — AppBar na marca, conteúdo semântico, rail reentrando a marca de dentro do
+  conteúdo.
+
+  Descoberta no caminho: `tokens/semantic/index.scss` era **código morto desde jan/2025**
+  (o entry point real é `tokens/index.scss`, que enumera os arquivos um a um). O
+  `validate:scss-tokens` dava verde porque faz varredura ESTÁTICA DE FONTE — ele vê a
+  declaração e não sabe se o arquivo é importado. **Falso verde.** Arquivo removido.
+
+  **Etapa 4 aberta:** prop tri-estado com `"none"` + migração dos **93** `_brands.scss`
+  que pintam, em ondas (piloto Badge/Button/Chip). Não bloqueia o HC.
 
 - 🟡 **(e) Cinzas crus → camada semântica** — **fatia mecânica FECHADA, resíduo triado.**
   Frente tocada na worktree isolada `work/dss-a11y-contraste` (commits `c261609`, `8fab0cf`,
