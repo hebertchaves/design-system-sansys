@@ -85,15 +85,25 @@ describe('DssSectionTitle — cor do traço', () => {
 // ==========================================================================
 
 describe('DssSectionTitle — a prop brand remapeia o token', () => {
+  // out/2026 — a rota mudou de CLASSE para ATRIBUTO (piloto da etapa 4 do modelo
+  // de propagação de marca). Antes a prop gerava `.dss-section-title--brand-hub`
+  // e o `_brands.scss` remapeava ali; agora emite `data-brand` no root e quem
+  // remapeia é `tokens/brand/*`. Mesma cor, mas pela camada de token — logo
+  // alcançável por tema, alto contraste e override local, o que a classe não era.
   for (const b of ['hub', 'water', 'waste']) {
-    it(`brand="${b}" aplica a classe de remapeamento`, () => {
+    it(`brand="${b}" emite data-brand no root`, () => {
       const w = mount(DssSectionTitle, { props: { label: 'T', brand: b } })
-      expect(w.classes()).toContain(`dss-section-title--brand-${b}`)
+      expect(w.attributes('data-brand')).toBe(b)
     })
   }
 
-  it('sem brand, nenhuma classe de marca é aplicada', () => {
+  it('sem brand, o atributo não é emitido (não cria escopo de marca à toa)', () => {
     const w = mount(DssSectionTitle, { props: { label: 'T' } })
+    expect(w.attributes('data-brand')).toBeUndefined()
+  })
+
+  it('não sobrou classe de marca — ela não tinha mais nenhuma regra', () => {
+    const w = mount(DssSectionTitle, { props: { label: 'T', brand: 'hub' } })
     expect(w.classes().some((c) => c.startsWith('dss-section-title--brand-'))).toBe(false)
   })
 

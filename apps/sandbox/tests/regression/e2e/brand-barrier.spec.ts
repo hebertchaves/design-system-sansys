@@ -189,7 +189,63 @@ test.describe('Barreira de marca — casca aninhada', () => {
   })
 })
 
+test.describe('Rota canônica da prop brand — piloto da etapa 4', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/')
+  })
+
+  test('a prop pela ROTA DE ATRIBUTO entrega a cor da marca, dentro do conteúdo', async ({
+    page,
+  }) => {
+    // O DssSectionTitle saiu da rota por CLASSE (com `_brands.scss` pintando a
+    // partir do primitivo) para a rota por ATRIBUTO. O teste unitário prova que o
+    // atributo é emitido; só o browser prova que a COR chega — e, principalmente,
+    // que chega mesmo DENTRO de uma zona de conteúdo, que é onde a rota por
+    // classe teria continuado funcionando e a por atributo poderia falhar.
+    const r = await page.evaluate(() => {
+      const zona = document.createElement('div')
+      zona.setAttribute('data-brand-zone', 'content')
+
+      // mesma régua, com e sem o atributo que a prop emite
+      const comMarca = document.createElement('h2')
+      comMarca.className = 'dss-section-title dss-section-title--accent-brand'
+      comMarca.setAttribute('data-brand', 'hub')
+
+      const semMarca = document.createElement('h2')
+      semMarca.className = 'dss-section-title dss-section-title--accent-brand'
+
+      zona.append(comMarca, semMarca)
+      document.body.appendChild(zona)
+
+      const ler = (el: Element) => ({
+        borda: getComputedStyle(el).borderBottomColor,
+        identidade: getComputedStyle(el).getPropertyValue('--dss-brand-primary').trim(),
+      })
+      const out = { com: ler(comMarca), sem: ler(semMarca) }
+      document.body.removeChild(zona)
+      return out
+    })
+
+    const paraRgb = (hex: string) => {
+      const n = parseInt(hex.replace('#', ''), 16)
+      return `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`
+    }
+
+    // com a prop: a régua pega a marca, mesmo dentro da zona de conteúdo
+    expect(r.com.borda).toBe(paraRgb(r.com.identidade))
+    // e é DIFERENTE do default sem marca — ou seja, a prop realmente age
+    expect(r.com.borda).not.toBe(r.sem.borda)
+  })
+})
+
 test.describe('Barreira de marca — a tela real do print', () => {
+  // Estes montam a página NFAg inteira: ~19s contra ~10s dos sintéticos. Com 6
+  // workers disputando um dev server em /mnt/c (WSL2), o default de 30s estourava
+  // de forma intermitente — sempre em `waitFor`/`querySelector`, nunca numa
+  // asserção de cor. É lentidão de ambiente, não defeito; o teto sobe para 60s em
+  // vez de a suíte conviver com "às vezes falha".
+  test.describe.configure({ timeout: 60_000 })
+
   // Os testes acima medem probes sintéticos. Estes medem a página NFAg, que é
   // exatamente a composição do print que originou o modelo:
   //   DssLayout[data-brand=water]

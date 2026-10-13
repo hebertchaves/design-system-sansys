@@ -2,31 +2,24 @@
 // DssSectionTitle — Layer 4: Brands
 // ==========================================================================
 //
-// A prop `brand` REMAPEIA o token semântico no escopo local. Ela NÃO pinta a
-// borda.
+// SEM REGRA, E ISSO É O ESTADO CORRETO.
 //
-// A diferença não é estilística — é o §K5 do checklist de adequação, e custou
-// um defeito medido: o `DssLinearProgress` pintava o elemento do Quasar direto,
-// com especificidade (0,3,0), e vencia a própria regra de cor (0,2,0). Dentro
-// de qualquer `[data-brand]` — e toda tela Sansys é brandeada — a prop `color`
-// virava inerte: `color="error"` renderizava azul.
+// A prop `brand` emite `data-brand` no elemento raiz (rota canônica do §K5).
+// A partir daí quem trabalha é `tokens/brand/_{hub,water,waste}.scss`:
+// `[data-brand="hub"]` remapeia `--dss-brand-primary` NO PRÓPRIO elemento, e a
+// régua desenhada na Layer 2 já consome esse token. Não sobra nada para o
+// componente fazer.
 //
-// Remapeando o token, quem pinta continua sendo a regra da Layer 2, e a prop
-// `accent` segue valendo por cima.
+// O QUE ESTAVA AQUI ANTES, E POR QUE SAIU
 //
-// out/2026 — o token remapeado passou de `--dss-action-primary` para
-// `--dss-brand-primary`: a regua e ornamento de IDENTIDADE, e so o eixo de
-// identidade atravessa a barreira de marca. Ver §3 do modelo de propagacao.
+// Três blocos `.dss-section-title--brand-{marca} { --dss-brand-primary:
+// var(--dss-{marca}-NNN) }`. Funcionavam — mas pintavam o eixo a partir do
+// PRIMITIVO de marca dentro do componente, o que põe a cor fora do alcance de
+// tema, alto contraste e override local. Era a dívida B1 do gate.
+//
+// Pelo atributo, a mesma cor chega pela camada de token e acompanha tudo que
+// ela acompanha. Este componente é o PILOTO da etapa 4: saiu de B1 e de B3 de
+// uma vez só.
+//
+// 📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
 // ==========================================================================
-
-.dss-section-title--brand-hub {
-  --dss-brand-primary: var(--dss-hub-600);
-}
-
-.dss-section-title--brand-water {
-  --dss-brand-primary: var(--dss-water-500);
-}
-
-.dss-section-title--brand-waste {
-  --dss-brand-primary: var(--dss-waste-600);
-}

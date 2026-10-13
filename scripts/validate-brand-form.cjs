@@ -130,10 +130,23 @@ function analisarScss() {
       while ((m = re.exec(linha))) b1.push({ arquivo: rel(arquivo), linha: i + 1, token: m[1] });
     });
 
-    // B2 — _brands.scss que não declara nenhuma custom property
+    // B2 — _brands.scss que PINTA em vez de remapear.
+    //
+    // Pintar = declarar propriedade CSS comum (`background-color: …`).
+    // Remapear = declarar custom property (`--dss-action-primary: …`).
+    //
+    // Um arquivo SEM declaração NENHUMA não é violação — é o ESTADO FINAL da
+    // migração: quando a prop `brand` emite `data-brand` no root, a camada de
+    // token faz todo o trabalho e o componente não precisa de regra de marca
+    // alguma. A primeira versão desta regra reprovava exatamente esse caso, o
+    // que teria produzido 93 falsos positivos à medida que a migração andasse.
     if (/4-output\/_brands\.scss$/.test(rel(arquivo))) {
       const remapeia = /^\s*--dss-[a-z0-9-]+\s*:/m.test(src);
-      if (!remapeia) b2.push(rel(arquivo));
+      // Linha que ABRE declaracao de propriedade comum. Nao exige `;` na mesma
+      // linha — valor multi-linha (`background: linear-gradient(\n …\n);`) tambem
+      // conta. Exclui seletor: `&:hover {` contem `{`, `@media …` comeca com `@`.
+      const pinta = /^\s*(?!--)[a-z][a-z0-9-]*\s*:[^{]*$/m.test(src);
+      if (pinta && !remapeia) b2.push(rel(arquivo));
     }
   }
   return { b1, b2 };

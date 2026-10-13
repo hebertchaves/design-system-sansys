@@ -1,5 +1,10 @@
 <template>
-  <component :is="tag" :class="titleClasses" v-bind="$attrs">
+  <component
+    :is="tag"
+    :class="titleClasses"
+    :data-brand="brand || undefined"
+    v-bind="$attrs"
+  >
     <slot>{{ label }}</slot>
   </component>
 </template>
