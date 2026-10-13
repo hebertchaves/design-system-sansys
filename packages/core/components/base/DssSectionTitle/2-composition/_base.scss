@@ -27,6 +27,12 @@
   letter-spacing: normal;
   color: var(--dss-text-primary);
 
-  border-block-end: var(--dss-border-width-md) solid var(--dss-action-primary);
+  /* Eixo de IDENTIDADE, nao de acao. A regua e ORNAMENTO — assina o produto,
+     nao convida a clicar. Com `--dss-action-primary` ela perdia a marca dentro
+     de qualquer zona de conteudo (medido: #1f86de neutro onde devia ser #0e88e4
+     water), porque a barreira reseta a acao e NAO a identidade. Fora de marca os
+     dois caem no mesmo `--dss-primary`, entao nada muda no default.
+     docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §3 */
+  border-block-end: var(--dss-border-width-md) solid var(--dss-brand-primary);
   padding-block-end: var(--dss-section-title-rule-gap);
 }

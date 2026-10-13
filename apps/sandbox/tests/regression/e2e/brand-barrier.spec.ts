@@ -248,6 +248,32 @@ test.describe('Barreira de marca — a tela real do print', () => {
     expect(conteudo).toBe(neutro)
   })
 
+  test('ornamento de identidade NÃO perde a marca dentro do conteúdo', async ({ page }) => {
+    // A régua do DssSectionTitle é ORNAMENTO: assina o produto, não convida a
+    // clicar. Quando consumia `--dss-action-primary`, a barreira a levava junto —
+    // medido #1f86de (neutro) onde devia ser #0e88e4 (water). É o caso que prova
+    // por que o modelo tem DOIS eixos e não um interruptor.
+    const { regua, identidade, acao } = await page.evaluate(() => {
+      const st = document.querySelector('.dss-section-title')!
+      const cs = getComputedStyle(st)
+      return {
+        regua: cs.borderBottomColor,
+        identidade: cs.getPropertyValue('--dss-brand-primary').trim(),
+        acao: cs.getPropertyValue('--dss-action-primary').trim(),
+      }
+    })
+
+    const paraRgb = (hex: string) => {
+      const n = parseInt(hex.replace('#', ''), 16)
+      return `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`
+    }
+
+    // a régua segue a IDENTIDADE…
+    expect(regua).toBe(paraRgb(identidade))
+    // …e a ação, ali dentro, está resetada — ou seja, não é ela que pinta.
+    expect(identidade).not.toBe(acao)
+  })
+
   test('o rail segue a marca mesmo estando dentro do conteúdo', async ({ page }) => {
     // O rail vive dentro de DssPage[zone=content]: é o caso de casca ANINHADA,
     // e só funciona porque a barreira preserva o eixo de identidade.

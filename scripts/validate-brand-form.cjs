@@ -153,7 +153,11 @@ function analisarProps() {
     if (!estrutura.length) continue;
 
     const rota = estrutura.some((f) => {
-      const vue = fs.readFileSync(f, 'utf8');
+      // stripComments TAMBEM aqui. Sem isto o gate dava FALSO PASSE: o
+      // DssSectionTitle cita `[data-brand]` no comentario que explica a rota, e
+      // o detector casava o comentario em vez do template. Gate que passa por
+      // engano e pior que gate nenhum — ele certifica o defeito.
+      const vue = stripComments(fs.readFileSync(f, 'utf8'));
       return (
         /['"\s:[]data-brand['"\s\]=]/.test(vue) || // emite o atributo
         /\bv-bind:brand\b|:brand\s*=|\bbrand\s*=\s*"/.test(vue) // delega a um filho

@@ -160,7 +160,9 @@
   ],
   "propSemRota": [
     "base/DssAjaxBar",
+    "base/DssAvatar",
     "base/DssBadge",
+    "base/DssBrandLogo",
     "base/DssBreadcrumbs",
     "base/DssBtnDropdown",
     "base/DssBtnGroup",
@@ -172,7 +174,9 @@
     "base/DssFabAction",
     "base/DssIcon",
     "base/DssKnob",
+    "base/DssMarkupTable",
     "base/DssRating",
+    "base/DssSectionTitle",
     "base/DssSelect",
     "base/DssTextarea",
     "base/DssTooltip"
