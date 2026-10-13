@@ -2,7 +2,6 @@
   "note": "Debito conhecido de FORMA DA MARCA, congelado. O gate bloqueia NOVOS fora destas listas. Ao migrar um componente (DSS_MODELO_PROPAGACAO_MARCA.md §9), remova-o daqui. As listas so podem encolher.",
   "primitivoDeMarca": [
     "base/DssAjaxBar/4-output/_brands.scss",
-    "base/DssAvatar/4-output/_brands.scss",
     "base/DssBadge/4-output/_states.scss",
     "base/DssBanner/4-output/_brands.scss",
     "base/DssBar/4-output/_brands.scss",
@@ -32,14 +31,11 @@
     "base/DssSlider/4-output/_brands.scss",
     "base/DssSpinner/4-output/_brands.scss",
     "base/DssSpinner/4-output/_states.scss",
-    "base/DssTab/4-output/_brands.scss",
     "base/DssTabPanel/4-output/_brands.scss",
     "base/DssTabs/4-output/_brands.scss",
     "base/DssTextarea/4-output/_brands.scss",
     "base/DssTimeline/4-output/_brands.scss",
     "base/DssTimeline/4-output/_states.scss",
-    "base/DssToolbar/4-output/_brands.scss",
-    "base/DssToolbar/4-output/_states.scss",
     "base/DssTree/4-output/_brands.scss",
     "composed/DssBottomSheet/4-output/_brands.scss",
     "composed/DssCarousel/4-output/_brands.scss",
@@ -53,7 +49,6 @@
     "stress-test/DssDataCard/4-output/_brands.scss"
   ],
   "brandsSemRemap": [
-    "base/DssAvatar/4-output/_brands.scss",
     "base/DssBar/4-output/_brands.scss",
     "base/DssBreadcrumbsEl/4-output/_brands.scss",
     "base/DssBtnToggle/4-output/_brands.scss",
@@ -73,7 +68,6 @@
     "base/DssSkeleton/4-output/_brands.scss",
     "base/DssSlider/4-output/_brands.scss",
     "base/DssSpinner/4-output/_brands.scss",
-    "base/DssTab/4-output/_brands.scss",
     "base/DssTabPanel/4-output/_brands.scss",
     "base/DssTabs/4-output/_brands.scss",
     "base/DssTextarea/4-output/_brands.scss",
@@ -88,7 +82,6 @@
   ],
   "propSemRota": [
     "base/DssAjaxBar",
-    "base/DssAvatar",
     "base/DssBreadcrumbs",
     "base/DssBtnToggle",
     "base/DssKnob",

@@ -66,9 +66,7 @@ describe('DssToolbar — Estrutura base', () => {
 
   it('não possui brand class por padrão', () => {
     const wrapper = mountToolbar()
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-hub')
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-water')
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-waste')
+    expect(wrapper.attributes('data-brand')).toBeUndefined()
   })
 
   it('não possui data-brand por padrão', () => {
@@ -104,37 +102,37 @@ describe('DssToolbar — Prop: inset', () => {
 })
 
 // ---------------------------------------------------------------------------
-// 3. Prop: brand — classes CSS
+// 3. Prop: brand — atributo data-brand (rota canônica, out/2026)
 // ---------------------------------------------------------------------------
 
-describe('DssToolbar — Prop: brand (classes)', () => {
-  it('adiciona classe dss-toolbar--brand-hub quando brand="hub"', () => {
+describe('DssToolbar — Prop: brand (atributo)', () => {
+  // out/2026 — DECISÃO A2. A prop `brand` não gera mais classe: emite
+  // `data-brand` no root, e a cor vem de `--dss-brand-solid` (600 uniforme).
+  it('emite data-brand=hub quando brand="hub"', () => {
     const wrapper = mountToolbar({ brand: 'hub' })
-    expect(wrapper.element.classList).toContain('dss-toolbar--brand-hub')
+    expect(wrapper.attributes('data-brand')).toBe('hub')
   })
 
-  it('adiciona classe dss-toolbar--brand-water quando brand="water"', () => {
+  it('emite data-brand=water quando brand="water"', () => {
     const wrapper = mountToolbar({ brand: 'water' })
-    expect(wrapper.element.classList).toContain('dss-toolbar--brand-water')
+    expect(wrapper.attributes('data-brand')).toBe('water')
   })
 
-  it('adiciona classe dss-toolbar--brand-waste quando brand="waste"', () => {
+  it('emite data-brand=waste quando brand="waste"', () => {
     const wrapper = mountToolbar({ brand: 'waste' })
-    expect(wrapper.element.classList).toContain('dss-toolbar--brand-waste')
+    expect(wrapper.attributes('data-brand')).toBe('waste')
   })
 
   it('não adiciona classe brand quando brand não fornecido', () => {
     const wrapper = mountToolbar()
     const classList = wrapper.element.classList
-    expect(classList).not.toContain('dss-toolbar--brand-hub')
-    expect(classList).not.toContain('dss-toolbar--brand-water')
-    expect(classList).not.toContain('dss-toolbar--brand-waste')
+    expect(wrapper.attributes('data-brand')).toBeUndefined()
   })
 
-  it('não adiciona classe brand-hub quando brand="water"', () => {
+  it('o atributo carrega a marca pedida, não outra', () => {
     const wrapper = mountToolbar({ brand: 'water' })
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-hub')
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-waste')
+    expect(wrapper.attributes('data-brand')).toBe('water')
+    expect(wrapper.attributes('data-brand')).not.toBe('hub')
   })
 })
 
@@ -239,30 +237,29 @@ describe('DssToolbar — Slots', () => {
 // ---------------------------------------------------------------------------
 
 describe('DssToolbar — Combinações de props', () => {
-  it('aplica inset e brand-hub simultaneamente', () => {
+  it('aplica inset e marca hub simultaneamente', () => {
     const wrapper = mountToolbar({ inset: true, brand: 'hub' })
     const classList = wrapper.element.classList
 
     expect(classList).toContain('dss-toolbar')
     expect(classList).toContain('dss-toolbar--inset')
-    expect(classList).toContain('dss-toolbar--brand-hub')
     expect(wrapper.attributes('data-brand')).toBe('hub')
   })
 
-  it('aplica inset e brand-water simultaneamente', () => {
+  it('aplica inset e marca water simultaneamente', () => {
     const wrapper = mountToolbar({ inset: true, brand: 'water' })
     const classList = wrapper.element.classList
 
     expect(classList).toContain('dss-toolbar--inset')
-    expect(classList).toContain('dss-toolbar--brand-water')
+    expect(wrapper.attributes('data-brand')).toBe('water')
   })
 
-  it('aplica inset e brand-waste simultaneamente', () => {
+  it('aplica inset e marca waste simultaneamente', () => {
     const wrapper = mountToolbar({ inset: true, brand: 'waste' })
     const classList = wrapper.element.classList
 
     expect(classList).toContain('dss-toolbar--inset')
-    expect(classList).toContain('dss-toolbar--brand-waste')
+    expect(wrapper.attributes('data-brand')).toBe('waste')
   })
 })
 
@@ -295,34 +292,29 @@ describe('DssToolbar — Props bloqueadas (não propagadas)', () => {
 // ---------------------------------------------------------------------------
 
 describe('DssToolbar — Reatividade', () => {
-  it('adiciona classe brand quando brand muda de undefined para "hub"', async () => {
+  it('emite data-brand quando brand muda de undefined para "hub"', async () => {
     const wrapper = mountToolbar({ brand: undefined })
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-hub')
+    expect(wrapper.attributes('data-brand')).toBeUndefined()
 
     await wrapper.setProps({ brand: 'hub' })
 
-    expect(wrapper.element.classList).toContain('dss-toolbar--brand-hub')
     expect(wrapper.attributes('data-brand')).toBe('hub')
   })
 
-  it('remove classe brand quando brand muda de "hub" para undefined', async () => {
+  it('remove data-brand quando brand muda de "hub" para undefined', async () => {
     const wrapper = mountToolbar({ brand: 'hub' })
-    expect(wrapper.element.classList).toContain('dss-toolbar--brand-hub')
+    expect(wrapper.attributes('data-brand')).toBe('hub')
 
     await wrapper.setProps({ brand: undefined })
-
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-hub')
+    expect(wrapper.attributes('data-brand')).toBeUndefined()
     expect(wrapper.attributes('data-brand')).toBeUndefined()
   })
 
-  it('troca corretamente de brand-hub para brand-water', async () => {
+  it('troca de hub para water no atributo', async () => {
     const wrapper = mountToolbar({ brand: 'hub' })
-    expect(wrapper.element.classList).toContain('dss-toolbar--brand-hub')
+    expect(wrapper.attributes('data-brand')).toBe('hub')
 
     await wrapper.setProps({ brand: 'water' })
-
-    expect(wrapper.element.classList).not.toContain('dss-toolbar--brand-hub')
-    expect(wrapper.element.classList).toContain('dss-toolbar--brand-water')
     expect(wrapper.attributes('data-brand')).toBe('water')
   })
 

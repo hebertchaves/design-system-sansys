@@ -2,6 +2,7 @@
   <div
     ref="rootRef"
     :class="avatarClasses"
+    :data-brand="brand || undefined"
     :style="avatarStyle"
     :role="ariaLabel ? 'img' : undefined"
     :aria-label="ariaLabel"

@@ -80,9 +80,14 @@
 // Hub (laranja)
 // EXC-02 — Contraste Hub: 2.8:1 aceitável para texto grande/bold em toolbar
 // ------------------------------------------------------------------
-[data-brand='hub'] .dss-toolbar--brand-hub,
-.dss-toolbar.dss-toolbar--brand-hub {
-  background-color: var(--dss-hub-600);
+/* out/2026 — DECISÃO A2. Eram três blocos idênticos exceto pelo primitivo de
+   cada marca. Com `--dss-brand-solid` (600 uniforme) viraram UM, casando
+   qualquer `[data-brand]` no próprio root — que a barra já emitia.
+   Zero mudança visual: hub, water e waste usavam 600 e continuam em 600.
+   NÃO use `--dss-brand-primary` aqui: ele alivia o water para 500 e clarearia
+   a barra. 📖 DSS_MODELO_PROPAGACAO_MARCA.md §9.1 */
+[data-brand].dss-toolbar {
+  background-color: var(--dss-brand-solid);
   color: var(--dss-action-primary-text);
 
   /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
@@ -103,45 +108,8 @@
 // ------------------------------------------------------------------
 // Water (azul) — contraste 7.0:1 (passes WCAG AA e AAA)
 // ------------------------------------------------------------------
-[data-brand='water'] .dss-toolbar--brand-water,
-.dss-toolbar.dss-toolbar--brand-water {
-  background-color: var(--dss-water-600);
-  color: var(--dss-action-primary-text);
-
-  /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
-  --dss-action-primary: var(--dss-action-primary-text);
-
-  /* O ANEL DE FOCO também — e aqui era defeito de acessibilidade, não estética.
-     `--dss-focus-primary` é remapeado por marca em
-     `tokens/semantic/accessibility/_focus.scss`, e os comentários de lá dizem
-     o valor exato da premissa: "5.29:1 **vs branco**". A premissa é que o que
-     recebe foco está sobre superfície clara. Dentro desta barra a superfície É
-     a cor da marca, então o anel saía da MESMA cor do fundo — medido,
-     **1,00:1**: o indicador de foco existia no CSS e não existia na tela
-     (WCAG 2.4.7, e a 1.4.11 pede 3:1 para elemento não-textual).
-     Com a cor de texto sobre marca, sobe para 5,29:1 no Water. */
-  --dss-focus-primary: var(--dss-action-primary-text);
-}
 
 // ------------------------------------------------------------------
 // Waste (verde) — contraste 5.0:1 (passes WCAG AA)
 // ------------------------------------------------------------------
-[data-brand='waste'] .dss-toolbar--brand-waste,
-.dss-toolbar.dss-toolbar--brand-waste {
-  background-color: var(--dss-waste-600);
-  color: var(--dss-action-primary-text);
 
-  /* Superfície inversa: a cor de ação dos filhos acompanha (ver nota no topo). */
-  --dss-action-primary: var(--dss-action-primary-text);
-
-  /* O ANEL DE FOCO também — e aqui era defeito de acessibilidade, não estética.
-     `--dss-focus-primary` é remapeado por marca em
-     `tokens/semantic/accessibility/_focus.scss`, e os comentários de lá dizem
-     o valor exato da premissa: "5.29:1 **vs branco**". A premissa é que o que
-     recebe foco está sobre superfície clara. Dentro desta barra a superfície É
-     a cor da marca, então o anel saía da MESMA cor do fundo — medido,
-     **1,00:1**: o indicador de foco existia no CSS e não existia na tela
-     (WCAG 2.4.7, e a 1.4.11 pede 3:1 para elemento não-textual).
-     Com a cor de texto sobre marca, sobe para 5,29:1 no Water. */
-  --dss-focus-primary: var(--dss-action-primary-text);
-}

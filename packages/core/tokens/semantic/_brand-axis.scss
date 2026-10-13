@@ -37,6 +37,9 @@
      A marca usa uma rampa de um só matiz (water: 500/300/700/400). O neutro
      equivalente é a rampa `--dss-primary-*`, nos degraus de mesmo papel. */
   --dss-brand-primary: var(--dss-primary);
+  /* `-solid` é o 600 uniforme; fora de marca cai no mesmo neutro de `-primary`
+     (a rampa neutra não tem um degrau entre base e hover). */
+  --dss-brand-solid: var(--dss-primary);
   --dss-brand-secondary: var(--dss-primary-light);
   --dss-brand-tertiary: var(--dss-primary-hover);
   --dss-brand-accent: var(--dss-primary-light); /* ~400: sem degrau neutro exato */

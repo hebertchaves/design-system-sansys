@@ -178,26 +178,28 @@ describe('DssAvatar', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it('applies hub brand class', () => {
+  // out/2026 — DECISÃO A2. A prop `brand` não gera mais classe: emite
+  // `data-brand` no root, e a cor vem de `--dss-brand-solid` (600 uniforme).
+    it('emite data-brand="hub" no root', () => {
       const wrapper = mount(DssAvatar, { props: { brand: 'hub' } })
-      expect(wrapper.classes()).toContain('dss-avatar--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
-    it('applies water brand class', () => {
+    it('emite data-brand="water" no root', () => {
       const wrapper = mount(DssAvatar, { props: { brand: 'water' } })
-      expect(wrapper.classes()).toContain('dss-avatar--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
-    it('applies waste brand class', () => {
+    it('emite data-brand="waste" no root', () => {
       const wrapper = mount(DssAvatar, { props: { brand: 'waste' } })
-      expect(wrapper.classes()).toContain('dss-avatar--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
     it('does not apply any brand class when brand is null', () => {
       const wrapper = mount(DssAvatar)
-      expect(wrapper.classes()).not.toContain('dss-avatar--brand-hub')
-      expect(wrapper.classes()).not.toContain('dss-avatar--brand-water')
-      expect(wrapper.classes()).not.toContain('dss-avatar--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.attributes('data-brand')).toBeUndefined()
+      expect(wrapper.attributes('data-brand')).toBeUndefined()
     })
   })
 

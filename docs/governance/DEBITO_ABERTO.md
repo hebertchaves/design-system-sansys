@@ -68,11 +68,24 @@
   arquivo que pinta com TOKEN. Corrigida duas vezes. ² o 17 inicial também estava
   errado — o B3 casava `data-brand` dentro de comentário.
 
-  🔴 **DUAS DECISÕES DE VALOR BLOQUEIAM O RESTO** (hex e contraste medidos no
+  ✅ **DECISÃO A RESOLVIDA (A2, out/2026)** — sem deslocar cor. Medindo o alcance,
+  não era sobre o Avatar: o trio uniforme-600 tinha **5 usos em 3 componentes**,
+  incluindo o `DssToolbar` (a barra de marca). Criado `--dss-brand-solid`
+  (600 uniforme), preenchendo a lacuna mais usada de um padrão que já existia
+  (uniforme em 50/100/200/300/400/800). Zero mudança visual, provada em browser.
+
+  📌 Achado colateral, decisão de DESIGN separada: no Water a barra de marca
+  (`water-600` #026cc7) e o botão primário (`water-500` #0e88e4) usam tons
+  diferentes — e só no Water. Anterior à migração; unificar é escolha de design.
+
+  📌 Sobre C: verificado que o `DssCard` **não tem estado selecionado próprio** e
+  que a seleção, onde existe, é pintada com `--dss-surface-selected` (tinte a 12%
+  da ação primária) no FUNDO. A borda de marca é ornamento, não indicador — o
+  argumento de 1.4.11 não se aplica a ela. C segue pendente só por ser mudança
+  de cor visível.
+
+  🔴 **UMA DECISÃO DE VALOR AINDA BLOQUEIA PARTE DO RESTO** (hex e contraste medidos no
   `DSS_MODELO_PROPAGACAO_MARCA.md` §9.1):
-  - **(A)** `DssAvatar` borda/fundo — water `600→500`, contraste 5,29 → 3,71 (ainda
-    passa 1.4.11, mas perde margem). Alternativa: criar um degrau uniforme-600 no
-    eixo de identidade.
   - **(C)** `DssCard` `border-color` — hub `400→300`, 1,94 → 1,51. **Os dois
     reprovam** a 1.4.11; tratar junto com o "fundo Hub 2,81:1" desta mesma lista.
 

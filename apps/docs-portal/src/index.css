@@ -867,6 +867,9 @@
      A marca usa uma rampa de um só matiz (water: 500/300/700/400). O neutro
      equivalente é a rampa `--dss-primary-*`, nos degraus de mesmo papel. */
   --dss-brand-primary: var(--dss-primary);
+  /* `-solid` é o 600 uniforme; fora de marca cai no mesmo neutro de `-primary`
+     (a rampa neutra não tem um degrau entre base e hover). */
+  --dss-brand-solid: var(--dss-primary);
   --dss-brand-secondary: var(--dss-primary-light);
   --dss-brand-tertiary: var(--dss-primary-hover);
   --dss-brand-accent: var(--dss-primary-light); /* ~400: sem degrau neutro exato */
@@ -2997,6 +3000,14 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      2. TOKENS DE MARCA ESPECÍFICOS
      =========================================== */
   --dss-brand-primary: var(--dss-hub-600);
+  /* Preenchimento SÓLIDO da marca — uniforme nas três marcas (600).
+     Diferente de `--dss-brand-primary`, que alivia o water em um degrau (500)
+     por espelhar o eixo de AÇÃO, onde o tom mais claro lê melhor como botão.
+     Para SUPERFÍCIE sólida — a barra de marca, a borda do avatar, a aba ativa —
+     as três marcas usam 600, e era isso que estava escrito à mão em cada uma.
+     O eixo já tinha uniforme em 50/100/200/300/400/800; 600 era a lacuna mais
+     usada. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.1 (decisão A2). */
+  --dss-brand-solid: var(--dss-hub-600);
   --dss-brand-secondary: var(--dss-hub-300);
   --dss-brand-tertiary: var(--dss-hub-800);
   --dss-brand-accent: var(--dss-hub-400);
@@ -3136,6 +3147,14 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      2. TOKENS DE MARCA ESPECÍFICOS
      =========================================== */
   --dss-brand-primary: var(--dss-water-500);
+  /* Preenchimento SÓLIDO da marca — uniforme nas três marcas (600).
+     Diferente de `--dss-brand-primary`, que alivia o water em um degrau (500)
+     por espelhar o eixo de AÇÃO, onde o tom mais claro lê melhor como botão.
+     Para SUPERFÍCIE sólida — a barra de marca, a borda do avatar, a aba ativa —
+     as três marcas usam 600, e era isso que estava escrito à mão em cada uma.
+     O eixo já tinha uniforme em 50/100/200/300/400/800; 600 era a lacuna mais
+     usada. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.1 (decisão A2). */
+  --dss-brand-solid: var(--dss-water-600);
   --dss-brand-secondary: var(--dss-water-300);
   --dss-brand-tertiary: var(--dss-water-700);
   --dss-brand-accent: var(--dss-water-400);
@@ -3274,6 +3293,14 @@ Ver: ARQUITETURA_TOKENS_ACCESSIBILITY.md
      2. TOKENS DE MARCA ESPECÍFICOS
      =========================================== */
   --dss-brand-primary: var(--dss-waste-600);
+  /* Preenchimento SÓLIDO da marca — uniforme nas três marcas (600).
+     Diferente de `--dss-brand-primary`, que alivia o water em um degrau (500)
+     por espelhar o eixo de AÇÃO, onde o tom mais claro lê melhor como botão.
+     Para SUPERFÍCIE sólida — a barra de marca, a borda do avatar, a aba ativa —
+     as três marcas usam 600, e era isso que estava escrito à mão em cada uma.
+     O eixo já tinha uniforme em 50/100/200/300/400/800; 600 era a lacuna mais
+     usada. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.1 (decisão A2). */
+  --dss-brand-solid: var(--dss-waste-600);
   --dss-brand-secondary: var(--dss-waste-300);
   --dss-brand-tertiary: var(--dss-waste-800);
   --dss-brand-accent: var(--dss-waste-400);

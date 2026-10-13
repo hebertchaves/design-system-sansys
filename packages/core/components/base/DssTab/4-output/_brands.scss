@@ -1,59 +1,32 @@
-// ==========================================================================
-// DssTab — Layer 4: Brands
-// ==========================================================================
-//
-// Sobrescreve a cor de ação primária para cada produto DSS.
-// A cor de seleção (active) herda automaticamente via --dss-action-primary.
-//
-// Nota: o indicador (.q-tab__indicator) usa currentColor — herda da cor
-// da aba ativa. Nenhuma sobrescrita adicional é necessária.
-//
-// Padrão dual de seletor (paridade com DssButton Golden Reference e DssItem
-// Golden Context): suporta herança contextual [data-brand] no pai E
-// modificador de classe direto .dss-tab--brand-* aplicado no DssTab.
-// ==========================================================================
+/* ==========================================================================
+   DssTab - LAYER 4: OUTPUT - Brands
 
-// ------------------------------------------------------------------
-// Hub (laranja)
-// ------------------------------------------------------------------
-[data-brand='hub'] .dss-tab,
-.dss-tab.dss-tab--brand-hub {
+   out/2026 — DECISÃO A2: `--dss-brand-solid` (600 uniforme nas três marcas)
+
+   Eram três blocos com o primitivo de cada marca escrito à mão. O token novo
+   preenche a lacuna do 600 no eixo de identidade — que já tinha uniforme em
+   50/100/200/300/400/800 — e os três blocos viram um.
+
+   Por que NÃO `--dss-brand-primary`: ele alivia o water em um degrau (500),
+   por espelhar o eixo de AÇÃO. Para superfície sólida as três marcas usam 600.
+   Usá-lo aqui CLAREARIA o water. `-solid` existe exatamente para isso.
+
+   ZERO MUDANÇA VISUAL: mesmos valores, uma regra só.
+
+   ⚠️ CÓDIGO MORTO REMOVIDO: os seletores `.dss-tab--brand-*` não casavam com
+   nada. O DssTab NÃO TEM prop `brand` — nada gerava essa classe. Só a metade
+   descendente (`[data-brand] .dss-tab`) estava viva, e é ela que faz sentido:
+   a aba herda a marca do contexto, não a recebe por prop.
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md §9.1
+   ========================================================================== */
+
+[data-brand] .dss-tab {
   &.q-tab--active,
   &[aria-selected='true'] {
-    color: var(--dss-hub-600);
+    color: var(--dss-brand-solid);
   }
 
   &:focus-visible {
-    outline-color: var(--dss-hub-600);
-  }
-}
-
-// ------------------------------------------------------------------
-// Water (azul)
-// ------------------------------------------------------------------
-[data-brand='water'] .dss-tab,
-.dss-tab.dss-tab--brand-water {
-  &.q-tab--active,
-  &[aria-selected='true'] {
-    color: var(--dss-water-600);
-  }
-
-  &:focus-visible {
-    outline-color: var(--dss-water-600);
-  }
-}
-
-// ------------------------------------------------------------------
-// Waste (verde)
-// ------------------------------------------------------------------
-[data-brand='waste'] .dss-tab,
-.dss-tab.dss-tab--brand-waste {
-  &.q-tab--active,
-  &[aria-selected='true'] {
-    color: var(--dss-waste-600);
-  }
-
-  &:focus-visible {
-    outline-color: var(--dss-waste-600);
+    outline-color: var(--dss-brand-solid);
   }
 }

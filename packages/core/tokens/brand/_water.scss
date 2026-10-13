@@ -26,6 +26,15 @@
      2. TOKENS DE MARCA ESPECÍFICOS
      =========================================== */
   --dss-brand-primary: var(--dss-water-500);
+
+  /* Preenchimento SÓLIDO da marca — uniforme nas três marcas (600).
+     Diferente de `--dss-brand-primary`, que alivia o water em um degrau (500)
+     por espelhar o eixo de AÇÃO, onde o tom mais claro lê melhor como botão.
+     Para SUPERFÍCIE sólida — a barra de marca, a borda do avatar, a aba ativa —
+     as três marcas usam 600, e era isso que estava escrito à mão em cada uma.
+     O eixo já tinha uniforme em 50/100/200/300/400/800; 600 era a lacuna mais
+     usada. Ver DSS_MODELO_PROPAGACAO_MARCA.md §9.1 (decisão A2). */
+  --dss-brand-solid: var(--dss-water-600);
   --dss-brand-secondary: var(--dss-water-300);
   --dss-brand-tertiary: var(--dss-water-700);
   --dss-brand-accent: var(--dss-water-400);

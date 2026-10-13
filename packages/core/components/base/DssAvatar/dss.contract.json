@@ -675,19 +675,7 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-hub-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-waste-600",
+          "token": "--dss-brand-solid",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -952,19 +940,7 @@
         ]
       },
       {
-        "name": "--dss-hub-600",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-water-600",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
+        "name": "--dss-brand-solid",
         "usedIn": [
           "default"
         ]

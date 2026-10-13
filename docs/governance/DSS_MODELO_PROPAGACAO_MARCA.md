@@ -232,9 +232,43 @@ viraram três decisões, apresentadas com hex e contraste medidos:
 
 | | regras | deslocamento | contraste (1.4.11) | status |
 |---|---|---|---|---|
-| **A** Avatar borda/fundo | 2 | water 600→500 | 5,29 → 3,71 | **pendente** |
+| **A** trio uniforme-600 | 5 | — | — | ✅ **A2**: token novo, zero mudança |
 | **B** sombras no dark | 5 | waste 500→400 | 5,46 → **7,29** | ✅ aprovada |
-| **C** Card `border-color` | 1 | hub 400→300 | 1,94 → 1,51 (ambos reprovam) | **pendente** |
+| **C** Card `border-color` | 2 | hub 1 degrau | 1,94 → 1,51 | **pendente** |
+
+#### A — resolvida criando o degrau que faltava, não deslocando cor
+
+A pergunta parecia ser "o Avatar pode clarear no water?". Medindo o alcance, não
+era sobre o Avatar: o trio uniforme-600 tem **5 usos em 3 componentes** —
+`DssAvatar` (borda + ponto de status), `DssTab` (cor + outline) e **`DssToolbar`
+(a barra de marca)**. Deslocar teria clareado a barra de marca do Water.
+
+O eixo de identidade já tinha token uniforme em 50/100/200/300/400/800. O **600
+era a lacuna mais usada**. Criado `--dss-brand-solid`:
+
+```
+--dss-brand-solid: hub-600 · water-600 · waste-600
+```
+
+Diferente de `--dss-brand-primary`, que alivia o water para 500 por espelhar o
+eixo de AÇÃO (tom mais claro lê melhor como botão). Para **superfície sólida**
+as três marcas usam 600.
+
+> ⚠️ Dado que apareceu no caminho: no Water, a **barra de marca** (`water-600`,
+> `#026cc7`) e o **botão primário** (`water-500`, `#0e88e4`) usam tons
+> diferentes — e só no Water. Não é consequência da migração, é um estado
+> anterior. Unificá-los é decisão de DESIGN, separada desta frente.
+
+#### C — a borda do card é decoração, não indicador de estado
+
+A dúvida era se a borda carregava significado (aí a reprovação na 1.4.11
+importaria). Verificado no código: o `DssCard` **não tem estado selecionado
+próprio**, e onde a seleção existe nas telas ela é pintada com
+`--dss-surface-selected` — uma mistura a 12% da ação primária, no FUNDO. A borda
+de marca é ornamento de identidade; quem carrega o estado é o tinte.
+
+Isso libera a decisão C do argumento de acessibilidade. Segue pendente só por
+ser mudança de cor visível.
 
 **Ordem que funciona, por componente:**
 1. inspecionar a topologia do seletor (compilar e olhar, não supor)

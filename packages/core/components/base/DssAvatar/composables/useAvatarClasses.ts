@@ -27,7 +27,7 @@ export function useAvatarClasses(props: Readonly<AvatarProps>) {
    * Lógica de cores seguindo padrão DSS:
    * - color: usa bg-{color} + text-white (fundo colorido, texto branco)
    * - textColor: sobrescreve cor do texto se fornecido
-   * - brand: adiciona classe de brand para customização visual
+   * - brand: NÃO gera classe — emite `data-brand` no root (ver 1-structure)
    */
   const avatarClasses = computed(() => {
     // Lógica de cores
@@ -65,12 +65,6 @@ export function useAvatarClasses(props: Readonly<AvatarProps>) {
         'dss-avatar--rounded': props.rounded
       },
 
-      // Classes de brand (Sansys)
-      {
-        'dss-avatar--brand-hub': props.brand === 'hub',
-        'dss-avatar--brand-water': props.brand === 'water',
-        'dss-avatar--brand-waste': props.brand === 'waste'
-      },
 
       // Classes de status
       {
