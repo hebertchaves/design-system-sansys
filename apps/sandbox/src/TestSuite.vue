@@ -818,7 +818,7 @@
         <TestCheckinNFAg />
       </div>
 
-      <!-- Grid master — esqueleto canônico de página do Sansys Water -->
+      <!-- Check-in NFAg · paralelo — o mesmo SFC do pattern, montado direto -->
       <div v-else-if="activeComponent === 'checkin-nfag-parallel'" class="component-view">
         <TestCheckinNFAgParallel />
       </div>

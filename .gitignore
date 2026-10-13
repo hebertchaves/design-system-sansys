@@ -37,3 +37,11 @@ storybook-static
 # Claude Code — config local/pessoal (allowlist de permissões por máquina)
 # settings.json (compartilhado) permanece versionado; .local é por máquina
 .claude/settings.local.json
+
+# Artefatos de execução do Playwright (sandbox).
+# Estavam RASTREADOS e causavam dois problemas: rodar a suíte sujava a árvore de
+# quem desenvolve, e o `.last-run.json` ficou commitado afirmando "failed" num
+# momento em que a suíte passava 40/40 — artefato versionado mente sobre o
+# estado assim que alguém roda o teste e não commita de volta.
+apps/sandbox/test-results/
+apps/sandbox/playwright-report/

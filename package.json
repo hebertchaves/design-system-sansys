@@ -8,7 +8,7 @@
   "scripts": {
     "bootstrap": "npm install",
     "dev": "vite --config apps/docs-portal/vite.config.ts apps/docs-portal",
-    "build": "vite build --config apps/docs-portal/vite.config.ts apps/docs-portal",
+    "build": "tsc -b apps/docs-portal && vite build --config apps/docs-portal/vite.config.ts apps/docs-portal",
     "build:dev": "vite build --config apps/docs-portal/vite.config.ts apps/docs-portal --mode development",
     "core:build": "npm run build:lib --workspace=@sansys/design-system",
     "core:dev": "npm run dev --workspace=@sansys/design-system",

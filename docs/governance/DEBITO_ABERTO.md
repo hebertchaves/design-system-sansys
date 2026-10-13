@@ -236,6 +236,32 @@ CAIXA EXTERNA contra os 44px que os quatro `dss.meta.json` declaram:
 (controle 32, `align-self: auto`, pai `align-items: center`) — a analogia estava certa, mas
 confirmá-la custou uma medição e evitou repetir o erro de consertar por semelhança.
 
+## 🟡 CONDIÇÃO ESTRUTURAL — commit feito por ferramenta externa NÃO roda os gates (out/2026)
+
+72 commits de `gpt-engineer-app[bot]` (Lovable) entraram na `main` entre 7 e 9/10. Eles são
+feitos na nuvem da ferramenta e **não executam o hook de pre-commit**, ou seja, os 14 gates
+(estrutura, higiene de SFC, tokens fantasma, contrato, type-check, regressão estática) não
+olharam para nenhum deles no momento do commit.
+
+**Nesta leva não houve dano** — a verificação foi feita depois, e passou: 12/12 gates,
+type-check do core e do portal em 0, 48/48 estáticos, 40/40 e2e em Chromium real. As 3
+mudanças em `packages/core` estavam corretas, inclusive devolvendo à camada do componente o
+hover de tabela e as variantes de card que a camada de utilitários legada usurpava.
+
+**O que fica como condição permanente:** toda vez que a ferramenta externa commitar, a
+verificação tem de ser feita DEPOIS e à mão. O gate não é rede nesse caminho. Registrar aqui
+para que isso seja uma condição conhecida, e não uma surpresa numa revisão futura.
+
+Dois efeitos colaterais dessa leva já corrigidos:
+- `test-results/` e `playwright-report/` eram **rastreados** (desde `9f6b68f4`, anterior ao
+  Lovable). O `.last-run.json` ficou commitado afirmando `"failed"` num momento em que a
+  suíte passava 40/40, e rodar os testes sujava a árvore. Desrastreados e no `.gitignore`.
+- O `build` da raiz perdeu o `tsc -b` ao deixar de delegar ao workspace — o portal passou a
+  construir sem type-check. Restaurado sem voltar à delegação, porque o formato direto existe
+  para evitar recursão de script sob o runner Bun da ferramenta.
+
+---
+
 ## 🔜 ONDE PARAMOS — decisões já tomadas, execução pendente (set/2026)
 
 Itens que o dono do DS **já decidiu** e que não chegaram a ser executados. Não são

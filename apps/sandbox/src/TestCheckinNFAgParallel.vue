@@ -9,7 +9,7 @@
       </div>
       <div class="nf-devbar__presentation" role="group" aria-label="Apresentação da demonstração">
         <DssButton variant="flat" round size="md" :icon="theme==='dark'?'light_mode':'dark_mode'" :aria-label="theme==='dark'?'Ativar modo claro':'Ativar modo escuro'" :title="theme==='dark'?'Ativar modo claro':'Ativar modo escuro'" @click="theme=theme==='dark'?'light':'dark'" />
-        <DssBtnToggle v-model="brand" :options="brandOptions" variant="flat" size="md" aria-label="Marca da demonstração" />
+        <DssBtnToggle v-model="brand" :options="brandOptions" variant="flat" aria-label="Marca da demonstração" />
       </div>
     </div>
     <NfagCheckinPage :scenario="scenario" :theme="theme" :brand="brand" />
