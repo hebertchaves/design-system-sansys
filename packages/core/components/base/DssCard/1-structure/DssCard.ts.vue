@@ -1,6 +1,7 @@
 <template>
   <div
     :class="cardClasses"
+    :data-brand="brand || undefined"
     :style="cardStyles"
     data-brand-zone="content"
     v-bind="cardAttrs"

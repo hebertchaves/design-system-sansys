@@ -140,11 +140,19 @@ describe('DssTabs — Props de apresentação (de-para QTabs, set/2026)', () => 
     expect(wrapper.findComponent(QTabs).props(qprop)).toBe(true)
   })
 
-  it('default de todas é false — apresentação é opt-in', () => {
+  it('default de todas é false — exceto `inlineLabel`, desvio deliberado', () => {
+    // `inlineLabel` default `true` NÃO é regressão: é o desvio documentado nos
+    // types (commit 1031a5f1). O Quasar empilha ícone sobre rótulo; o DSS põe
+    // lado a lado porque, empilhado, o `.q-tab__alert` é `absolute` e cai SOBRE
+    // o rótulo — medido, o ponto cobria o fim de "PENDENTES". E gasta uma linha
+    // de altura por aba numa tela densa de operação.
+    //
+    // O teste ficou para trás quando o default mudou; esta é a correção.
+    const DESVIOS = { inlineLabel: true }
     const wrapper = mount(DssTabs)
     const q = wrapper.findComponent(QTabs)
     for (const [, qprop] of APRESENTACAO) {
-      expect(q.props(qprop)).toBe(false)
+      expect(q.props(qprop)).toBe(qprop in DESVIOS ? DESVIOS[qprop] : false)
     }
   })
 

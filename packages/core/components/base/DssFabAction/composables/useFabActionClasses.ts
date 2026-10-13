@@ -42,7 +42,6 @@ export function useFabActionClasses(props: FabActionProps) {
 
     // Brand
     if (props.brand) {
-      classes.push(`dss-fab-action--brand-${props.brand}`)
     }
 
     return classes

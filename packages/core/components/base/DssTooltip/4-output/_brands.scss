@@ -13,42 +13,28 @@
    - Aplica fundo da brand com texto claro
    - NÃO usa tokens numericos proprietarios
 
-   TOKENS DE BRAND UTILIZADOS:
-   - --dss-hub-600 (Hub: laranja)
-   - --dss-water-500 (Water: azul)
-   - --dss-waste-600 (Waste: verde)
-   - --dss-gray-50 (texto claro sobre fundo de brand)
+   TOKENS UTILIZADOS (out/2026 — eram os primitivos por marca; agora é o eixo
+   de identidade, que resolve a marca sozinho):
+   - --dss-brand-primary     (hub-600 · water-500 · waste-600)
+   - --dss-text-brand-tertiary (dark: hub-500 · water-400 · waste-500)
+   - --dss-text-on-primary   (texto sobre o fundo de marca)
    ========================================================================== */
 
 /* ==========================================================================
-   HUB BRAND (Orange)
+   AS TRÊS MARCAS, UMA REGRA SÓ
    ========================================================================== */
 
-[data-brand="hub"] {
+/* `--dss-brand-primary` vale hub-600 · water-500 · waste-600 — exatamente os
+   três valores que estavam escritos um a um aqui. O token é declarado pelo
+   `tokens/brand/*` NO PRÓPRIO elemento que carrega `data-brand`, então a regra
+   não precisa saber de que marca se trata.
+
+   Além de tirar 3 primitivos do componente (dívida B1), isto põe o fundo do
+   tooltip dentro do alcance do tema: antes o primitivo cru ignorava o alto
+   contraste. */
+[data-brand] {
   &.dss-tooltip {
-    background-color: var(--dss-hub-600);
-    color: var(--dss-text-on-primary);
-  }
-}
-
-/* ==========================================================================
-   WATER BRAND (Blue)
-   ========================================================================== */
-
-[data-brand="water"] {
-  &.dss-tooltip {
-    background-color: var(--dss-water-500);
-    color: var(--dss-text-on-primary);
-  }
-}
-
-/* ==========================================================================
-   WASTE BRAND (Green)
-   ========================================================================== */
-
-[data-brand="waste"] {
-  &.dss-tooltip {
-    background-color: var(--dss-waste-600);
+    background-color: var(--dss-brand-primary);
     color: var(--dss-text-on-primary);
   }
 }

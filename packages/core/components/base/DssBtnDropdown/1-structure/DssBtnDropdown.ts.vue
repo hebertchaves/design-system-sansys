@@ -16,6 +16,7 @@
   -->
   <div
     :class="btnDropdownClasses"
+    :data-brand="brand || undefined"
     v-bind="$attrs"
   >
     <q-btn-dropdown

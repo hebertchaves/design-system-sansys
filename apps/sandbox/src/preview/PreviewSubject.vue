@@ -398,10 +398,22 @@ watch(contextTokens, (map) => {
   }
 }, { deep: true, immediate: true })
 
+// Avisa o parent que o SUJEITO montou — é o que tira o skeleton do palco.
+// `__frameReady` não serve para isso: ele sai quando ESTE componente monta, e o
+// SFC alvo é assíncrono — ainda falta o módulo dele chegar. O `ref` num
+// componente assíncrono só é preenchido quando o componente real monta.
+function avisarMontado() {
+  window.parent?.postMessage({ __frameMounted: true, frame: name }, '*')
+}
+watch(subjectRef, (inst) => { if (inst) avisarMontado() })
+
 onMounted(() => {
   window.addEventListener('message', onMsg)
   // avisa o parent que o realm está pronto para receber o estado inicial
   window.parent?.postMessage({ __frameReady: true, frame: name }, '*')
+  // Sem componente no registry não há sujeito para montar: o palco mostra o
+  // aviso de "não encontrado", e o skeleton por cima o esconderia para sempre.
+  if (!Comp) avisarMontado()
 })
 onUnmounted(() => window.removeEventListener('message', onMsg))
 </script>

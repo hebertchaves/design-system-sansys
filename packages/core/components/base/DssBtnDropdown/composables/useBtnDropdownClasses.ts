@@ -84,7 +84,6 @@ export function useBtnDropdownClasses(props: BtnDropdownProps) {
 
     // Brand
     if (props.brand) {
-      classes.push(`dss-btn-dropdown--brand-${props.brand}`)
     }
 
     return classes

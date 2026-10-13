@@ -36,16 +36,15 @@
    ========================================================================== */
 
 /* Via prop: <DssIcon brand="hub" /> */
-[data-brand="hub"].dss-icon {
-  color: var(--dss-hub-600);
+/* `--dss-brand-primary` vale hub-600 · water-500 · waste-600 — os três valores
+   que estavam escritos um a um. CO-LOCALIZADO, nunca descendente: a decisão do
+   selo v2.2 continua valendo (ícone embutido não herda marca do contexto). */
+[data-brand].dss-icon {
+  color: var(--dss-brand-primary);
 }
 
 /* Via prop: <DssIcon brand="water" /> */
-[data-brand="water"].dss-icon {
-  color: var(--dss-water-500);
-}
+
 
 /* Via prop: <DssIcon brand="waste" /> */
-[data-brand="waste"].dss-icon {
-  color: var(--dss-waste-600);
-}
+

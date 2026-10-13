@@ -33,16 +33,9 @@
   }
 
   /* Brands em dark mode podem precisar de ajustes de brilho */
-  [data-brand="hub"].dss-icon {
-    color: var(--dss-hub-500);
-  }
-
-  [data-brand="water"].dss-icon {
-    color: var(--dss-water-400);
-  }
-
-  [data-brand="waste"].dss-icon {
-    color: var(--dss-waste-500);
+  /* hub-500 · water-400 · waste-500 = `--dss-text-brand-tertiary`. */
+  .dss-icon[data-brand] {
+    color: var(--dss-text-brand-tertiary);
   }
 }
 

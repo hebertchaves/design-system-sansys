@@ -47,16 +47,10 @@
   }
 
   /* Brands em dark mode podem precisar de ajustes de contraste */
-  [data-brand="hub"].dss-tooltip {
-    background-color: var(--dss-hub-500);
-  }
-
-  [data-brand="water"].dss-tooltip {
-    background-color: var(--dss-water-400);
-  }
-
-  [data-brand="waste"].dss-tooltip {
-    background-color: var(--dss-waste-500);
+  /* hub-500 · water-400 · waste-500 — o trio exato de `--dss-text-brand-tertiary`.
+     Uma regra no lugar de três, e sem primitivo. */
+  .dss-tooltip[data-brand] {
+    background-color: var(--dss-text-brand-tertiary);
   }
 }
 

@@ -1,90 +1,90 @@
 /* ==========================================================================
-   DssCard - LAYER 4: OUTPUT (Brands)
+   DssCard - LAYER 4: OUTPUT - Brands
 
-   Responsabilidade: Variações de marca (Hub, Water, Waste)
-   Usa tokens genéricos de brand
+   out/2026 — ETAPA 4 DO MODELO DE PROPAGAÇÃO DE MARCA (migração PARCIAL)
+
+   A rota mudou: a prop `brand` emite `data-brand` no root em vez de gerar a
+   classe `--brand-*`. O seletor antigo carregava uma metade morta —
+   `[data-brand="hub"] .dss-card--brand-hub` exigia atributo ANCESTRAL *e*
+   classe, sendo subconjunto estrito da metade só-classe ao lado.
+
+   MIGRADO PARA TOKEN (valores idênticos, conferidos degrau a degrau):
+     border-left / border-left-color   → --dss-brand-primary
+                                         (hub-600 · water-500 · waste-600)
+     hover border-left-color           → --dss-brand-hover
+                                         (hub-700 · water-600 · waste-700)
+
+   ⚠️ NÃO MIGRADO — `border-color` continua com primitivo, de propósito.
+   Os trios são hub-300/water-200/waste-200 e, no hover, hub-400/water-300/
+   waste-300. Nenhum casa com token existente: o mais perto desloca o HUB em um
+   degrau, e o contraste dessa borda já reprova a 1.4.11 hoje (1,94:1). Mexer
+   nela aprofunda um defeito que já existe, então fica aguardando a decisão de
+   valor junto com o "fundo Hub 2,81:1" do DEBITO_ABERTO. É dívida B1 conhecida.
+
+   ⚠️ UMA COR MUDA NO DARK, E CORRIGE UMA OMISSÃO: o bloco de waste estava
+   LITERALMENTE VAZIO (`.dss-card--brand-waste { }`) — hub e water clareavam a
+   borda no escuro e o waste não, provavelmente por esquecimento. Com
+   `--dss-brand-accent` ele passa a clarear junto: #0b8154 → #3ccb8d, e o
+   contraste contra #262626 sobe de 3,09:1 (raspando o mínimo de 3:1) para
+   7,29:1, alinhado com hub (7,79) e water (5,75).
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
    ========================================================================== */
+
+.dss-card[data-brand] {
+  border-left: var(--dss-border-width-thick) solid var(--dss-brand-primary);
+
+  &.dss-card--bordered,
+  &.dss-card--outlined {
+    border-left-color: var(--dss-brand-primary);
+
+    &.dss-card--clickable:hover {
+      border-left-color: var(--dss-brand-hover);
+    }
+  }
+}
 
 /* ==========================================================================
-   HUB BRAND (Laranja)
+   AGUARDANDO DECISÃO DE VALOR — ver o aviso no cabeçalho
    ========================================================================== */
 
-[data-brand="hub"] .dss-card--brand-hub,
-.dss-card--brand-hub {
-  /* Borda com cor da marca */
-  border-left: var(--dss-border-width-thick) solid var(--dss-hub-600);
-
-  /* Variante bordered */
+[data-brand="hub"].dss-card {
   &.dss-card--bordered,
   &.dss-card--outlined {
     border-color: var(--dss-hub-300);
-    border-left-color: var(--dss-hub-600);
 
     &.dss-card--clickable:hover {
       border-color: var(--dss-hub-400);
-      border-left-color: var(--dss-hub-700);
     }
   }
 }
 
-/* ==========================================================================
-   WATER BRAND (Azul)
-   ========================================================================== */
-
-[data-brand="water"] .dss-card--brand-water,
-.dss-card--brand-water {
-  /* Borda com cor da marca */
-  border-left: var(--dss-border-width-thick) solid var(--dss-water-500);
-
-  /* Variante bordered */
+[data-brand="water"].dss-card {
   &.dss-card--bordered,
   &.dss-card--outlined {
     border-color: var(--dss-water-200);
-    border-left-color: var(--dss-water-500);
 
     &.dss-card--clickable:hover {
       border-color: var(--dss-water-300);
-      border-left-color: var(--dss-water-600);
     }
   }
 }
 
-/* ==========================================================================
-   WASTE BRAND (Verde)
-   ========================================================================== */
-
-[data-brand="waste"] .dss-card--brand-waste,
-.dss-card--brand-waste {
-  /* Borda com cor da marca */
-  border-left: var(--dss-border-width-thick) solid var(--dss-waste-600);
-
-  /* Variante bordered */
+[data-brand="waste"].dss-card {
   &.dss-card--bordered,
   &.dss-card--outlined {
     border-color: var(--dss-waste-200);
-    border-left-color: var(--dss-waste-600);
 
     &.dss-card--clickable:hover {
       border-color: var(--dss-waste-300);
-      border-left-color: var(--dss-waste-700);
     }
   }
 }
 
 /* ==========================================================================
-   DARK MODE - BRAND ADJUSTMENTS
+   DARK MODE
    ========================================================================== */
 
-[data-theme="dark"] {
-  .dss-card--brand-hub {
-    border-left-color: var(--dss-hub-400);
-  }
-
-  .dss-card--brand-water {
-    border-left-color: var(--dss-water-400);
-  }
-
-  .dss-card--brand-waste {
-    border-left-color: var(--dss-waste-500); /* Mais claro em dark mode */
-  }
+[data-theme="dark"] .dss-card[data-brand] {
+  border-left-color: var(--dss-brand-accent);
 }

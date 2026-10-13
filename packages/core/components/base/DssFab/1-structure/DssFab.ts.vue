@@ -26,6 +26,7 @@
   -->
   <div
     :class="fabClasses"
+    :data-brand="brand || undefined"
     v-bind="$attrs"
   >
     <q-fab

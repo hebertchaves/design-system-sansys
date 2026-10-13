@@ -14,6 +14,7 @@
   -->
   <div
     :class="btnGroupClasses"
+    :data-brand="brand || undefined"
     role="group"
     :aria-label="ariaLabel || undefined"
     v-bind="$attrs"

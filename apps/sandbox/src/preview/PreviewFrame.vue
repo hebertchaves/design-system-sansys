@@ -76,8 +76,22 @@
     </header>
 
     <div class="pv__body">
-      <div class="pv__stage">
+      <div class="pv__stage" :aria-busy="String(!sujeitoMontado)">
         <iframe ref="frameEl" class="pv__frame" :style="stageStyle" :src="frameSrc" @load="postState" />
+        <!--
+          Espera COM forma. O iframe é um documento à parte: até o realm dele
+          subir (HTML → main.js → SFC alvo) o palco é um retângulo branco, e
+          branco não distingue "carregando" de "o componente não renderiza" —
+          justamente a pergunta que o frame existe para responder.
+          Cobre o palco até o sujeito avisar que montou (`__frameMounted`).
+        -->
+        <div v-if="!sujeitoMontado" class="pv__loading" aria-hidden="true">
+          <div class="pv__loading-inner">
+            <DssSkeleton type="heading" width="60%" />
+            <DssSkeleton type="text" :lines="2" />
+            <DssSkeleton type="rect" height="44px" />
+          </div>
+        </div>
       </div>
       <aside class="pv__knobs" :class="{ 'is-collapsed': knobsCollapsed }">
         <button
@@ -204,6 +218,7 @@
 
 <script setup>
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
+import DssSkeleton from '@components/base/DssSkeleton/DssSkeleton.vue'
 
 const props = defineProps({
   component: { type: String, default: 'DssInput' },
@@ -401,6 +416,10 @@ function inerte(k) {
 
 const frameSrc = computed(() => `${location.pathname}?frame=${props.component}`)
 
+// O sujeito já montou dentro do iframe? Enquanto não, o palco mostra o skeleton.
+// Volta a `false` quando o componente muda: o `src` muda e o realm sobe de novo.
+const sujeitoMontado = ref(false)
+
 function load() {
   const key = Object.keys(contracts).find((k) => k.endsWith(`/${props.component}/dss.contract.json`))
   if (!key) { contract.value = null; knobs.value = []; return }
@@ -534,6 +553,7 @@ function onMsg(e) {
   const d = e.data
   if (!d) return
   if (d.__frameReady) { postState(); return }
+  if (d.__frameMounted) { sujeitoMontado.value = true; return }
   if (d.__frameEvent) {
     eventLog.value.unshift({ t: new Date().toLocaleTimeString(), name: d.name, payload: d.payload })
     if (eventLog.value.length > 50) eventLog.value.pop()
@@ -584,7 +604,7 @@ const snippet = computed(() => {
 })
 
 watch(() => JSON.stringify({ s: state, t: temaEfetivo.value, b: brandEfetivo.value, ct: contextState, sl: activeSlots, si: slotIcons }), postState)
-watch(() => props.component, load)
+watch(() => props.component, () => { sujeitoMontado.value = false; load() })
 onMounted(() => { window.addEventListener('message', onMsg); load() })
 onUnmounted(() => window.removeEventListener('message', onMsg))
 </script>
@@ -660,11 +680,26 @@ onUnmounted(() => window.removeEventListener('message', onMsg))
 /* Palco: hospeda o iframe e o centraliza quando a largura é restrita. O fundo
    demarca a área FORA do sujeito (deixa a largura escolhida evidente). */
 .pv__stage {
+  position: relative;
   flex: 1; display: flex; justify-content: center; min-width: 0; min-height: 0;
   border-right: var(--dss-border-width-thin) solid var(--dss-border-subtle);
   background: var(--dss-surface-muted);
 }
 .pv__frame { flex: 1; min-width: 0; border: 0; background: var(--dss-surface-default); }
+
+/* Skeleton de espera: cobre o palco inteiro, na mesma superfície do stage do
+   iframe, para a troca skeleton → sujeito não piscar fundo. O bloco fica
+   centralizado porque é onde o sujeito vai aparecer (`.pv-stage > * { margin: auto }`). */
+.pv__loading {
+  position: absolute; inset: 0;
+  display: flex;
+  padding: var(--dss-spacing-8);
+  background: var(--dss-surface-default);
+}
+.pv__loading-inner {
+  display: flex; flex-direction: column; gap: var(--dss-spacing-3);
+  width: 100%; max-width: 320px; margin: auto;
+}
 
 /* O painel é o irmão do aside de "Seções" e passa a ter a MESMA casca: cartão
    branco com borda fina e cantos do template. Antes era uma coluna cinza chapada

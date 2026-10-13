@@ -245,25 +245,28 @@ describe('DssFab', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it('aplica classe dss-fab--brand-hub quando brand="hub"', () => {
+  // out/2026 — rota de CLASSE → ATRIBUTO (etapa 4 do modelo de propagação de
+  // marca). A prop `brand` emite `data-brand` no root; a cor vem do eixo de
+  // identidade (`--dss-brand-*`), que a camada de token resolve por marca.
+    it('emite data-brand="hub" no root quando brand="hub"', () => {
       const wrapper = mount(DssFab, {
         props: { brand: 'hub' }
       })
-      expect(wrapper.classes()).toContain('dss-fab--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
-    it('aplica classe dss-fab--brand-water quando brand="water"', () => {
+    it('emite data-brand="water" no root quando brand="water"', () => {
       const wrapper = mount(DssFab, {
         props: { brand: 'water' }
       })
-      expect(wrapper.classes()).toContain('dss-fab--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
-    it('aplica classe dss-fab--brand-waste quando brand="waste"', () => {
+    it('emite data-brand="waste" no root quando brand="waste"', () => {
       const wrapper = mount(DssFab, {
         props: { brand: 'waste' }
       })
-      expect(wrapper.classes()).toContain('dss-fab--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
     it('nao aplica classe de brand quando brand=null (padrao)', () => {
@@ -277,7 +280,7 @@ describe('DssFab', () => {
         props: { brand: 'hub' }
       })
       // Classe de brand deve estar no wrapper raiz
-      expect(wrapper.classes()).toContain('dss-fab--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
       // QFab interno nao deve ter a classe de brand diretamente
       const qfab = wrapper.find('.dss-fab__qfab')
       expect(qfab.classes()).not.toContain('dss-fab--brand-hub')
@@ -295,7 +298,7 @@ describe('DssFab', () => {
       })
       expect(wrapper.classes()).toContain('dss-fab--extended')
       expect(wrapper.classes()).toContain('dss-fab--disabled')
-      expect(wrapper.classes()).toContain('dss-fab--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
     it('combina direction com brand', () => {
@@ -303,7 +306,7 @@ describe('DssFab', () => {
         props: { direction: 'right', brand: 'waste' }
       })
       expect(wrapper.classes()).toContain('dss-fab--direction-right')
-      expect(wrapper.classes()).toContain('dss-fab--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
   })
 })

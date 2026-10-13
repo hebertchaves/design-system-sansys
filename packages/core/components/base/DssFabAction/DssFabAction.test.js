@@ -234,25 +234,28 @@ describe('DssFabAction', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it('aplica classe dss-fab-action--brand-hub quando brand="hub"', () => {
+  // out/2026 — rota de CLASSE → ATRIBUTO (etapa 4 do modelo de propagação de
+  // marca). A prop `brand` emite `data-brand` no root; a cor vem do eixo de
+  // identidade (`--dss-brand-*`), que a camada de token resolve por marca.
+    it('emite data-brand="hub" no root quando brand="hub"', () => {
       const wrapper = mountFabAction({
         props: { brand: 'hub' }
       })
-      expect(wrapper.classes()).toContain('dss-fab-action--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
-    it('aplica classe dss-fab-action--brand-water quando brand="water"', () => {
+    it('emite data-brand="water" no root quando brand="water"', () => {
       const wrapper = mountFabAction({
         props: { brand: 'water' }
       })
-      expect(wrapper.classes()).toContain('dss-fab-action--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
-    it('aplica classe dss-fab-action--brand-waste quando brand="waste"', () => {
+    it('emite data-brand="waste" no root quando brand="waste"', () => {
       const wrapper = mountFabAction({
         props: { brand: 'waste' }
       })
-      expect(wrapper.classes()).toContain('dss-fab-action--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
     it('nao aplica classe de brand quando brand=null (padrao)', () => {
@@ -266,7 +269,7 @@ describe('DssFabAction', () => {
         props: { brand: 'hub' }
       })
       // Classe de brand deve estar no wrapper raiz
-      expect(wrapper.classes()).toContain('dss-fab-action--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
       // QFabAction interno nao deve ter a classe de brand diretamente
       const qaction = wrapper.find('.dss-fab-action__qaction')
       expect(qaction.classes()).not.toContain('dss-fab-action--brand-hub')
@@ -284,7 +287,7 @@ describe('DssFabAction', () => {
       })
       expect(wrapper.classes()).toContain('dss-fab-action--extended')
       expect(wrapper.classes()).toContain('dss-fab-action--disabled')
-      expect(wrapper.classes()).toContain('dss-fab-action--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
     it('combina externalLabel com brand', () => {
@@ -292,7 +295,7 @@ describe('DssFabAction', () => {
         props: { externalLabel: 'Compartilhar', brand: 'waste' }
       })
       expect(wrapper.classes()).toContain('dss-fab-action--has-external-label')
-      expect(wrapper.classes()).toContain('dss-fab-action--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
     it('label e externalLabel podem ser definidos juntos (externalLabel tem precedência no texto)', () => {

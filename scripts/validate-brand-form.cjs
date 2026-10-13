@@ -26,10 +26,16 @@
  *     fundo de marca no tema `hc`: 8,88:1 pelo atributo, 2,81:1 pela tinta.
  *     O alto contraste corrige um caminho e não o outro.
  *
- * B2) `_brands.scss` QUE NÃO REMAPEIA — BLOQUEIA (baseline por arquivo)
- *     Um `4-output/_brands.scss` sem nenhuma declaração de custom property está
- *     pintando, não remapeando. É a forma proibida pelo §K5. Hoje: 5 de 100
- *     remapeiam.
+ * B2) `_brands.scss` QUE PINTA O PRIMITIVO DE MARCA — BLOQUEIA (baseline)
+ *     A forma proibida pelo §K5 é pintar a cor CRUA da marca em vez de passar
+ *     pela camada de token.
+ *
+ *     ⚠️ A regra já foi mais burra, e a migração expôs isso. Ela dizia "paga
+ *     quem pinta e não remapeia" — o que reprovava o ESTADO FINAL CORRETO:
+ *     depois de migrado, o componente não remapeia nada (quem remapeia é
+ *     `tokens/brand/*`, alcançado pelo `data-brand` no root) e apenas CONSOME
+ *     o token, pintando com `var(--dss-brand-primary)`. Isso é certo e passava
+ *     a ser reprovado. Agora o gate olha o que importa: pintar com PRIMITIVO.
  *
  * B3) PROP `brand` QUE NÃO EMITE `data-brand` — BLOQUEIA (baseline por componente)
  *     Prop declarada em `types/` cuja estrutura não emite o atributo nem repassa
@@ -156,11 +162,12 @@ function analisarScss() {
     // que teria produzido 93 falsos positivos à medida que a migração andasse.
     if (/4-output\/_brands\.scss$/.test(rel(arquivo))) {
       const remapeia = /^\s*--dss-[a-z0-9-]+\s*:/m.test(src);
+      const temPrimitivo = new RegExp(`var\\(\\s*--dss-(?:${MARCAS})-\\d+`).test(src);
       // Linha que ABRE declaracao de propriedade comum. Nao exige `;` na mesma
       // linha — valor multi-linha (`background: linear-gradient(\n …\n);`) tambem
       // conta. Exclui seletor: `&:hover {` contem `{`, `@media …` comeca com `@`.
       const pinta = /^\s*(?!--)[a-z][a-z0-9-]*\s*:[^{]*$/m.test(src);
-      if (pinta && !remapeia) b2.push(rel(arquivo));
+      if (pinta && temPrimitivo && !remapeia) b2.push(rel(arquivo));
     }
   }
   return { b1, b2 };
@@ -322,11 +329,12 @@ function main() {
     }
   }
 
-  console.log(`\n   B2. _brands.scss que pinta em vez de remapear: ${b2.length}`);
+  console.log(`\n   B2. _brands.scss que pinta o PRIMITIVO de marca: ${b2.length}`);
   if (base.brandsSemRemap?.length) console.log(`       (${base.brandsSemRemap.length} no baseline)`);
   for (const f of novoB2) {
     console.log(`       ❌ NOVO: ${f}`);
-    console.log('            O bloco precisa declarar `--dss-action-*` / `--dss-brand-*`, não pintar a propriedade.');
+    console.log('            Consuma o eixo de identidade (`--dss-brand-*`) ou remapeie o semântico —');
+    console.log('            primitivo de marca passa por fora do tema e do alto contraste.');
   }
 
   console.log(

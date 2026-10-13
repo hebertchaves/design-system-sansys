@@ -53,8 +53,34 @@
   ⚠️ O doc daquela auditoria se chama `CORRECOES_CRITICAS_JAN_2025.md` mas foi commitado em
   **2026-01-15**. Data no nome de arquivo não é evidência; conferir no `git log`.
 
-  **Etapa 4 aberta:** prop tri-estado com `"none"` + migração dos **93** `_brands.scss`
-  que pintam, em ondas (piloto Badge/Button/Chip). Não bloqueia o HC.
+  **Etapa 4 em curso (out/2026).** Migrados até aqui: `DssSectionTitle` (piloto),
+  `DssBadge`, `DssButton` (`DssChip` já estava pronto de uma onda anterior),
+  `DssTooltip`, `DssIcon`, `DssExpansionItem`, `DssFab`, `DssFabAction`,
+  `DssBtnDropdown`, `DssBtnGroup` e `DssCard` (parcial).
+
+  | | início | agora |
+  |---|---|---|
+  | B1 arquivos com primitivo de marca | 61 (553 refs) | **50 (466 refs)** |
+  | B2 `_brands.scss` que pinta primitivo | 93¹ | **32** |
+  | B3 prop sem `data-brand` | 21² | **7** (+3 exceções declaradas) |
+
+  ¹ o 93 estava errado: a regra do gate reprovava arquivo vazio (estado final) e
+  arquivo que pinta com TOKEN. Corrigida duas vezes. ² o 17 inicial também estava
+  errado — o B3 casava `data-brand` dentro de comentário.
+
+  🔴 **DUAS DECISÕES DE VALOR BLOQUEIAM O RESTO** (hex e contraste medidos no
+  `DSS_MODELO_PROPAGACAO_MARCA.md` §9.1):
+  - **(A)** `DssAvatar` borda/fundo — water `600→500`, contraste 5,29 → 3,71 (ainda
+    passa 1.4.11, mas perde margem). Alternativa: criar um degrau uniforme-600 no
+    eixo de identidade.
+  - **(C)** `DssCard` `border-color` — hub `400→300`, 1,94 → 1,51. **Os dois
+    reprovam** a 1.4.11; tratar junto com o "fundo Hub 2,81:1" desta mesma lista.
+
+  Aprovada e aplicada: **(B)** sombras no dark, waste `500→400`, contraste 5,46 →
+  7,29. De quebra corrigiu uma omissão no `DssCard` — o bloco dark do waste estava
+  LITERALMENTE VAZIO, e a borda ficava em 3,09:1 contra 7,79 do hub.
+
+  Falta também a prop tri-estado com `"none"`. Não bloqueia o HC.
 
 - 🟡 **(e) Cinzas crus → camada semântica** — **fatia mecânica FECHADA, resíduo triado.**
   Frente tocada na worktree isolada `work/dss-a11y-contraste` (commits `c261609`, `8fab0cf`,

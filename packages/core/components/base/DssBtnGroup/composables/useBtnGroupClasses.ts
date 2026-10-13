@@ -33,7 +33,7 @@ export function useBtnGroupClasses(props: Readonly<BtnGroupProps>) {
    * - dss-btn-group--square: sem border-radius
    * - dss-btn-group--spread: distribui largura disponível
    * - dss-btn-group--stretch: estica para preencher altura do pai
-   * - dss-btn-group--brand-{brand}: acento visual de marca
+   * - data-brand no root: acento visual de marca (via eixo de identidade)
    */
   const btnGroupClasses = computed(() => {
     return [
@@ -63,7 +63,6 @@ export function useBtnGroupClasses(props: Readonly<BtnGroupProps>) {
 
       // Brand
       {
-        [`dss-btn-group--brand-${props.brand}`]: props.brand,
       },
     ]
   })

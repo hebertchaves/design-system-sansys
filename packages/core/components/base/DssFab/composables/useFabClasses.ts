@@ -39,7 +39,6 @@ export function useFabClasses(props: FabProps) {
 
     // Brand
     if (props.brand) {
-      classes.push(`dss-fab--brand-${props.brand}`)
     }
 
     return classes

@@ -885,6 +885,21 @@
   --dss-brand-surface: var(--dss-surface-muted);
   --dss-brand-border: var(--dss-border-subtle);
   --dss-brand-text: var(--dss-text-primary);
+  /* --- Texto de marca ------------------------------------------------------
+     Mesma história do bloco acima: `tokens/brand/*` define a família inteira e
+     NENHUM deles tinha default — todos resolviam só dentro de `[data-brand]`.
+     Apareceu quando o `validate:scss-tokens` barrou o commit que passou a
+     consumir `--dss-text-brand-tertiary` no dark de DssIcon e DssTooltip.
+
+     Naquele uso o token sempre resolve (as regras são `[data-brand]`-guardadas),
+     mas um token que só existe sob condição é uma armadilha para o próximo: o
+     `var()` cai para vazio sem erro. O gate está certo em não deixar passar. */
+  --dss-text-brand-primary: var(--dss-primary-hover);
+  --dss-text-brand-secondary: var(--dss-primary);
+  --dss-text-brand-tertiary: var(--dss-primary);
+  --dss-text-brand-accent: var(--dss-primary-light);
+  --dss-text-brand-on-dark: var(--dss-gray-50);
+  --dss-text-brand-on-light: var(--dss-primary-deep);
 }
 
 /* ⚠️ TRÊS DEFAULTS SÃO APROXIMAÇÃO, não equivalência — estão marcados acima

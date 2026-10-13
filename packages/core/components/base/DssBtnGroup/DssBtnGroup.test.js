@@ -207,25 +207,28 @@ describe('DssBtnGroup', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it('aplica classe dss-btn-group--brand-hub quando brand="hub"', () => {
+  // out/2026 — rota de CLASSE → ATRIBUTO (etapa 4 do modelo de propagação de
+  // marca). A prop `brand` emite `data-brand` no root; a cor vem do eixo de
+  // identidade (`--dss-brand-*`), que a camada de token resolve por marca.
+    it('emite data-brand="hub" no root quando brand="hub"', () => {
       const wrapper = mount(DssBtnGroup, {
         props: { brand: 'hub' }
       })
-      expect(wrapper.classes()).toContain('dss-btn-group--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
-    it('aplica classe dss-btn-group--brand-water quando brand="water"', () => {
+    it('emite data-brand="water" no root quando brand="water"', () => {
       const wrapper = mount(DssBtnGroup, {
         props: { brand: 'water' }
       })
-      expect(wrapper.classes()).toContain('dss-btn-group--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
-    it('aplica classe dss-btn-group--brand-waste quando brand="waste"', () => {
+    it('emite data-brand="waste" no root quando brand="waste"', () => {
       const wrapper = mount(DssBtnGroup, {
         props: { brand: 'waste' }
       })
-      expect(wrapper.classes()).toContain('dss-btn-group--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
     it('nao aplica classe de brand quando brand=null (padrao)', () => {
@@ -255,7 +258,7 @@ describe('DssBtnGroup', () => {
         props: { outline: true, brand: 'hub' }
       })
       expect(wrapper.classes()).toContain('dss-btn-group--outline')
-      expect(wrapper.classes()).toContain('dss-btn-group--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
   })
 })

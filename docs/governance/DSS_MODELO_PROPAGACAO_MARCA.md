@@ -215,7 +215,40 @@ A ordem importa — migrar antes de fixar o alvo é refazer depois.
 | **1** | este doc + gate com baseline + fallback `:root` do eixo de identidade | — |
 | **2 ✅** | `brandZone` no meta + emissão do atributo nos 12 estabelecedores + B4/B5 | 1 |
 | **3 ✅** | barreira ligada + ponte `--q-*` + e2e (11 testes, browser real) | 1, 2 |
-| **4** | prop tri-estado com `"none"` + migração dos 93 `_brands.scss` que pintam, em ondas | 1, 3 |
+| **4** | prop tri-estado com `"none"` + migração dos `_brands.scss`, em ondas | 1, 3 |
+
+### 9.1 Etapa 4 — o que a execução ensinou
+
+**Migração em lote mecânico não existe.** Medi antes de tentar e dois fatos barram o `sed`:
+
+1. **Os degraus nem sempre casam com token.** Das 18 regras de marca dos 8 componentes
+   analisados, **10 são exatas** (`--dss-brand-primary`, `--dss-brand-hover`,
+   `--dss-text-brand-tertiary`) e 8 diferem — sempre em **uma única marca**.
+2. **A topologia dos seletores difere por componente** — co-localizado, só-classe,
+   descendente, tema+classe. Um transform cego mata regras.
+
+**Decisões de valor são do dono do produto, não do agente.** As 8 divergentes
+viraram três decisões, apresentadas com hex e contraste medidos:
+
+| | regras | deslocamento | contraste (1.4.11) | status |
+|---|---|---|---|---|
+| **A** Avatar borda/fundo | 2 | water 600→500 | 5,29 → 3,71 | **pendente** |
+| **B** sombras no dark | 5 | waste 500→400 | 5,46 → **7,29** | ✅ aprovada |
+| **C** Card `border-color` | 1 | hub 400→300 | 1,94 → 1,51 (ambos reprovam) | **pendente** |
+
+**Ordem que funciona, por componente:**
+1. inspecionar a topologia do seletor (compilar e olhar, não supor)
+2. migrar a ROTA (classe → atributo) mantendo valores — não exige decisão nenhuma
+3. converter PRIMITIVO → token, só onde o trio casa ou a decisão está aprovada
+4. provar por CSS compilado (declarações por seletor) e por medição em browser
+
+**O gate precisou ser corrigido três vezes pela própria migração** — cada vez que a
+realidade andou, a regra que a descrevia ficou para trás:
+- **B2** reprovava o estado final (arquivo sem declaração nenhuma)
+- **B2** reprovava quem pinta com TOKEN (só primitivo é violação)
+- **B3** casava `data-brand` dentro de comentário (faltava `stripComments` no `.vue`)
+
+> Gate que passa por engano é pior que gate nenhum: ele **certifica o defeito**.
 
 As etapas 2 e 3 saíram juntas de propósito: separadas, produziriam um estado intermediário **inerte** — metadado que nada lê, ou atributo que nada consome. Inércia é a doença que esta frente inteira está tratando.
 

@@ -27,6 +27,7 @@
   -->
   <div
     :class="fabActionClasses"
+    :data-brand="brand || undefined"
     v-bind="$attrs"
   >
     <q-fab-action

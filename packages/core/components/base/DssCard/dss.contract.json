@@ -2507,14 +2507,14 @@
           "source": "4-output/_brands.scss"
         },
         {
-          "property": "border-color",
-          "token": "--dss-hub-300",
+          "property": "border-left-color",
+          "token": "--dss-brand-primary",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
-          "property": "border-left-color",
-          "token": "--dss-hub-600",
+          "property": "border-color",
+          "token": "--dss-hub-300",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -2525,20 +2525,8 @@
           "source": "4-output/_brands.scss"
         },
         {
-          "property": "border-left-color",
-          "token": "--dss-water-500",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
           "property": "border-color",
           "token": "--dss-waste-200",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-left-color",
-          "token": "--dss-waste-600",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -2731,14 +2719,14 @@
           "source": "4-output/_states.scss"
         },
         {
-          "property": "border-color",
-          "token": "--dss-hub-400",
+          "property": "border-left-color",
+          "token": "--dss-brand-hover",
           "value": null,
           "source": "4-output/_brands.scss"
         },
         {
-          "property": "border-left-color",
-          "token": "--dss-hub-700",
+          "property": "border-color",
+          "token": "--dss-hub-400",
           "value": null,
           "source": "4-output/_brands.scss"
         },
@@ -2749,20 +2737,8 @@
           "source": "4-output/_brands.scss"
         },
         {
-          "property": "border-left-color",
-          "token": "--dss-water-600",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
           "property": "border-color",
           "token": "--dss-waste-300",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "border-left-color",
-          "token": "--dss-waste-700",
           "value": null,
           "source": "4-output/_brands.scss"
         }
@@ -3851,13 +3827,13 @@
         ]
       },
       {
-        "name": "--dss-hub-300",
+        "name": "--dss-brand-primary",
         "usedIn": [
           "default"
         ]
       },
       {
-        "name": "--dss-hub-600",
+        "name": "--dss-hub-300",
         "usedIn": [
           "default"
         ]
@@ -3869,19 +3845,7 @@
         ]
       },
       {
-        "name": "--dss-water-500",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
         "name": "--dss-waste-200",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-waste-600",
         "usedIn": [
           "default"
         ]
@@ -3995,13 +3959,13 @@
         ]
       },
       {
-        "name": "--dss-hub-400",
+        "name": "--dss-brand-hover",
         "usedIn": [
           "hover"
         ]
       },
       {
-        "name": "--dss-hub-700",
+        "name": "--dss-hub-400",
         "usedIn": [
           "hover"
         ]
@@ -4013,19 +3977,7 @@
         ]
       },
       {
-        "name": "--dss-water-600",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
         "name": "--dss-waste-300",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-waste-700",
         "usedIn": [
           "hover"
         ]

@@ -43,7 +43,6 @@ export function useCardClasses(props: Readonly<CardProps>) {
         'dss-card--square': props.square,
         'dss-card--clickable': props.clickable,
         'dss-card--dark': props.dark,
-        [`dss-card--brand-${props.brand}`]: props.brand
       }
     ]
   })

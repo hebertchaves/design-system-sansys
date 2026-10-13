@@ -204,19 +204,22 @@ describe('DssCard', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it('aplica dss-card--brand-hub quando brand="hub"', () => {
+  // out/2026 — rota de CLASSE → ATRIBUTO (etapa 4 do modelo de propagação de
+  // marca). A prop `brand` emite `data-brand` no root; a cor vem do eixo de
+  // identidade (`--dss-brand-*`), que a camada de token resolve por marca.
+    it('emite data-brand="hub" no root quando brand="hub"', () => {
       const wrapper = mount(DssCard, { props: { brand: 'hub' } })
-      expect(wrapper.classes()).toContain('dss-card--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
-    it('aplica dss-card--brand-water quando brand="water"', () => {
+    it('emite data-brand="water" no root quando brand="water"', () => {
       const wrapper = mount(DssCard, { props: { brand: 'water' } })
-      expect(wrapper.classes()).toContain('dss-card--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
-    it('aplica dss-card--brand-waste quando brand="waste"', () => {
+    it('emite data-brand="waste" no root quando brand="waste"', () => {
       const wrapper = mount(DssCard, { props: { brand: 'waste' } })
-      expect(wrapper.classes()).toContain('dss-card--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
     it('não aplica classe de brand quando brand=null', () => {
@@ -254,7 +257,7 @@ describe('DssCard', () => {
       })
       expect(wrapper.classes()).toContain('dss-card--flat')
       expect(wrapper.classes()).toContain('dss-card--square')
-      expect(wrapper.classes()).toContain('dss-card--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
     it('combina clickable + brand corretamente', () => {
@@ -262,7 +265,7 @@ describe('DssCard', () => {
         props: { clickable: true, brand: 'water' }
       })
       expect(wrapper.classes()).toContain('dss-card--clickable')
-      expect(wrapper.classes()).toContain('dss-card--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
       expect(wrapper.attributes('tabindex')).toBe('0')
     })
 
