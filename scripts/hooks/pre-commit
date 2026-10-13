@@ -4,6 +4,30 @@
 
 STAGED=$(git diff --cached --name-only)
 
+# ── 0z. PARIDADE DO PROPRIO HOOK: o instalado e' o versionado? ───────────────
+# `npm run setup:hooks` instala por `cp`. Copia nao avisa quando o original
+# anda: editar `scripts/hooks/pre-commit` NAO liga gate nenhum, e o arquivo
+# versionado passa a descrever um hook que nao existe na maquina.
+#
+# Nao e' hipotese. Em out/2026, ao ligar o gate de marca, medimos a deriva:
+#   - rodando mas AUSENTE do versionado: validate-scale, validate-dss-props
+#   - versionado mas NUNCA rodando:      validate-sandbox-nav
+# Em ambos os sentidos, em silencio. O `validate-dss-props` chegou a ser dado
+# como "nao existe" numa auditoria por nao estar no arquivo versionado — ele
+# rodava o tempo todo.
+#
+# E' o mesmo defeito que este hook cobra dos componentes: o mecanismo existe e
+# nada verifica. Entao ele passa a se cobrar primeiro.
+HOOK_FONTE="scripts/hooks/pre-commit"
+HOOK_VIVO="$(git rev-parse --git-dir)/hooks/pre-commit"
+if [ -f "$HOOK_FONTE" ] && ! cmp -s "$HOOK_FONTE" "$HOOK_VIVO"; then
+  echo "❌ O hook instalado DIVERGE do versionado ($HOOK_FONTE)."
+  echo "   Gates podem estar rodando a mais, a menos, ou em versao antiga."
+  echo "   Corrija com:  npm run setup:hooks"
+  echo "   (para pular pontualmente:  DSS_SKIP_HOOK_PARITY=1 git commit ...)"
+  [ "$DSS_SKIP_HOOK_PARITY" = "1" ] || exit 1
+fi
+
 # ── 0. Barrel export = index.ts (sem index.js novo em packages/core) ─────────
 if echo "$STAGED" | grep -qE 'packages/core/.+/index\.js$|packages/core/index\.js$'; then
   echo "🔍 Validando extensão de barrel (index.ts canônico)..."
@@ -112,6 +136,25 @@ if echo "$STAGED" | grep -qE 'packages/core/components/.+\.(scss|ts|vue)$|script
     exit 1
   fi
 fi
+
+# ── 0c-quater. Escala dimensional por tamanho: sem empate, sem inversao ──────
+# O MESMO defeito mordeu TRES vezes no DssButton numa unica onda (tamanho de
+# icone, padding horizontal, font-size) sem nenhum dos 18 validadores piscar —
+# nao ha o que piscar: o CSS e valido e compila; a escala so e "errada" contra a
+# INTENCAO. A raiz: o `md` costuma ser o unico sem regra propria (e o default,
+# "ja esta na base"), o que e saudavel ENQUANTO a base declarar o valor dele.
+# Quando declara o de outro degrau, o md some da escala em silencio.
+# Cruza com a API de tamanhos do types/*.types.ts — "sem regra propria" e inocuo
+# num tamanho que o componente nao expoe. Baseline: bloqueia NOVO.
+if echo "$STAGED" | grep -qE 'packages/core/(components|tokens)/.+\.scss$|scripts/validate-scale\.mjs|scripts/scale-baseline\.json'; then
+  echo "🔍 Validando escala dimensional por tamanho (empate/inversao — §N)..."
+  node scripts/validate-scale.mjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Escala com empate ou inversao NOVA. Ver §N do DSS_UI_ADEQUACAO_CHECKLIST.md."
+    exit 1
+  fi
+fi
+
 
 # ── 0c-bis. Escopo de tema: quem re-aponta PRIMITIVO recomputa o SEMANTICO ────
 # Custom property substitui seu var() onde e' DECLARADA. Um tema que redefine
@@ -250,6 +293,20 @@ if [ -n "$API_COMPS" ]; then
   fi
   echo "✅ Paridade de API: OK."
 fi
+
+# Atributo passado a componente DSS precisa existir na API declarada.
+# Nasceu de quatro falhas silenciosas seguidas (`flat` no DssButton, `ripple` no
+# QTabs, slot `#icon` na timeline): o Vue não reclama, o valor cai em $attrs e o
+# componente renderiza com o padrão. Baseline em scripts/dss-props-baseline.json.
+if echo "$STAGED" | grep -qE '\.vue$|scripts/validate-dss-props\.cjs|scripts/dss-props-baseline\.json'; then
+  echo "🔍 Validando atributos de componentes DSS (existem na API?)..."
+  node scripts/validate-dss-props.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Atributo que o componente NÃO lê — confira a API em types/*.types.ts."
+    exit 1
+  fi
+fi
+
 
 # ── 6. Sandbox: tag <Dss*> usada sem import (regressão Avatar/Badge) ─────────
 # O sandbox registra globalmente só Quasar; cada DSS precisa de import local.
