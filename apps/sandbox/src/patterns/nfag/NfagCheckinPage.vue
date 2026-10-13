@@ -31,7 +31,7 @@
 <DssCard id="nf-verifications" variant="outlined" class="nf-panel">
 <div class="nf-between"><div class="nf-actions"><DssSectionTitle :level="2" label="Verificações de configuração"/><span class="nf-meta" aria-live="polite">{{ filtered.length }} de {{ totals.all }}</span><DssChip v-if="filter!=='all'" :label="filters.find(f=>f.id===filter)?.label" variant="outline" color="primary" size="xs" removable @remove="filter='all'"/></div><DssButton :label="allExpanded?'Recolher tudo':'Expandir tudo'" :icon="allExpanded?'unfold_less':'unfold_more'" variant="flat" :disabled="!filtered.length" :aria-expanded="allExpanded" aria-controls="nf-checks" @click="expandAll(!allExpanded)"/></div>
 <div id="nf-checks" class="nf-checks">
-<DssExpansionItem v-for="row in filtered" :key="row.id" v-model="expanded[row.id]" :aria-label="`Verificação ${row.id} — ${row.title} — ${labels[row.status]}`" class="nf-check">
+<DssExpansionItem v-for="row in filtered" :key="row.id" v-model="expanded[row.id]" dense :aria-label="`Verificação ${row.id} — ${row.title} — ${labels[row.status]}`" class="nf-check">
 <template #header><div class="nf-check__header">
 <span class="nf-check__number" :class="`nf-tone--${tones[row.status]}`">{{ String(row.id).padStart(2,'0') }}</span>
 <div class="nf-check__identity"><div class="nf-actions"><strong>{{ row.title }}</strong><span v-if="row.blocking" class="nf-check__blocking">Bloqueia emissão</span></div><span class="nf-meta">Funcionalidade: {{ row.destination }}</span></div>
@@ -164,7 +164,7 @@ onBeforeUnmount(()=>{
 .nf-table tbody td{padding:var(--dss-spacing-2) var(--dss-spacing-3);border-bottom:var(--dss-border-width-thin) solid var(--dss-border-subtle);vertical-align:middle}
 .nf-table tbody tr:last-child td{border-bottom:none}
 .nf-table .nf-table__right{text-align:right}
-.nf-checks{display:flex;flex-direction:column;gap:var(--dss-spacing-1)}
+.nf-checks{display:flex;flex-direction:column;gap:var(--dss-spacing-0_5)}
 .nf-tone--info{--nf-color:var(--dss-feedback-info);--nf-tint:var(--dss-feedback-info-surface);--nf-text:var(--dss-feedback-info-text)}
 .nf-tone--success{--nf-color:var(--dss-feedback-success);--nf-tint:var(--dss-feedback-success-surface);--nf-text:var(--dss-feedback-success-text)}
 .nf-tone--warning{--nf-color:var(--dss-feedback-warning);--nf-tint:var(--dss-feedback-warning-surface);--nf-text:var(--dss-text-body)}
@@ -185,18 +185,18 @@ onBeforeUnmount(()=>{
 .nf-kpi__hint{font-size:var(--dss-font-size-xs);color:var(--nf-text);flex:1;min-width:var(--dss-spacing-16)}
 .nf-meta{font-size:var(--dss-font-size-xs);color:var(--dss-text-subtle)}
 .nf-check{min-width:0;border:var(--dss-border-width-thin) solid var(--dss-border-subtle);border-radius:var(--dss-radius-md)}
-.nf-check__header{display:grid;grid-template-columns:var(--dss-spacing-8) minmax(0,3fr) minmax(0,2fr);align-items:center;gap:var(--dss-spacing-3);width:100%;min-width:0}
-.nf-check__number{display:flex;align-items:center;justify-content:center;width:var(--dss-spacing-8);height:var(--dss-spacing-8);border-radius:var(--dss-radius-circle);background:var(--nf-tint);color:var(--nf-text);font-weight:var(--dss-font-weight-semibold);font-variant-numeric:tabular-nums}
-.nf-check__identity{display:flex;flex-direction:column;gap:var(--dss-spacing-1);min-width:0}
+.nf-check__header{display:grid;grid-template-columns:var(--dss-spacing-7) minmax(0,3fr) minmax(0,2fr);align-items:center;gap:var(--dss-spacing-2);width:100%;min-width:0}
+.nf-check__number{display:flex;align-items:center;justify-content:center;width:var(--dss-spacing-7);height:var(--dss-spacing-7);border-radius:var(--dss-radius-circle);background:var(--nf-tint);color:var(--nf-text);font-weight:var(--dss-font-weight-semibold);font-variant-numeric:tabular-nums}
+.nf-check__identity{display:flex;flex-direction:column;gap:var(--dss-spacing-0_5);min-width:0}
 .nf-check__blocking{font-size:var(--dss-font-size-xs);color:var(--dss-feedback-error-text);font-weight:var(--dss-font-weight-semibold)}
-.nf-check__aside{display:flex;justify-content:flex-end;align-items:center;gap:var(--dss-spacing-2);min-width:0;text-align:right}
-.nf-detail{display:flex;flex-direction:column;gap:var(--dss-spacing-4);padding:var(--dss-spacing-4);overflow:auto;background:var(--dss-surface-subtle)}
-.nf-detail__columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--dss-spacing-4)}
+.nf-check__aside{display:flex;justify-content:flex-end;align-items:center;gap:var(--dss-spacing-1_5);min-width:0;text-align:right}
+.nf-detail{display:flex;flex-direction:column;gap:var(--dss-spacing-3);padding:var(--dss-spacing-3);overflow:auto;background:var(--dss-surface-subtle)}
+.nf-detail__columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--dss-spacing-3)}
 .nf-detail__actions{display:flex;justify-content:flex-end}
 p{margin:var(--dss-spacing-1) 0 0}
 p,td,th,span,strong{overflow-wrap:anywhere}
 @media(max-width:1439px){.nf-band--feedback .nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:1023px){.nf-summary__body--feedback{grid-template-columns:minmax(0,1fr)}.nf-feedback{border-inline-start:none;padding-inline-start:0;border-top:var(--dss-border-width-thin) solid var(--dss-border-subtle);padding-top:var(--dss-spacing-2)}}
-@media(max-width:767px){.nf-band{grid-template-columns:minmax(0,1fr)}.nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-check__header{grid-template-columns:var(--dss-spacing-8) minmax(0,1fr)}.nf-check__aside{grid-column:2;justify-content:flex-start;text-align:left;flex-wrap:wrap}.nf-detail__columns{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:767px){.nf-band{grid-template-columns:minmax(0,1fr)}.nf-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.nf-check__header{grid-template-columns:var(--dss-spacing-7) minmax(0,1fr)}.nf-check__aside{grid-column:2;justify-content:flex-start;text-align:left;flex-wrap:wrap}.nf-detail__columns{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.nf-kpi{transition:none}}
 </style>
