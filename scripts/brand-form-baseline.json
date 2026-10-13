@@ -112,21 +112,15 @@
   "propSemRota": [
     "base/DssAjaxBar",
     "base/DssAvatar",
-    "base/DssBrandLogo",
     "base/DssBreadcrumbs",
     "base/DssBtnDropdown",
     "base/DssBtnGroup",
     "base/DssBtnToggle",
     "base/DssCard",
-    "base/DssExpansionItem",
     "base/DssFab",
     "base/DssFabAction",
-    "base/DssIcon",
     "base/DssKnob",
     "base/DssMarkupTable",
-    "base/DssRating",
-    "base/DssSelect",
-    "base/DssTextarea",
-    "base/DssTooltip"
+    "base/DssRating"
   ]
 }

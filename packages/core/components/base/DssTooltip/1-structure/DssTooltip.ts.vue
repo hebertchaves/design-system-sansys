@@ -2,6 +2,7 @@
   <div
     v-show="visible"
     :class="tooltipClasses"
+    :data-brand="brand || undefined"
     role="tooltip"
     :aria-label="ariaLabel"
   >

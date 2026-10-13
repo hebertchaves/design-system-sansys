@@ -1,3 +1,8 @@
+/* out/2026 — a rota da prop `brand` migrou de CLASSE para ATRIBUTO (etapa 4 do
+   modelo de propagação de marca). A classe `--brand-*` deixou de ser emitida;
+   estas regras ficariam MORTAS em silêncio se não fossem portadas. Valores
+   inalterados: a troca é só de rota.
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md */
 /* ==========================================================================
    DssExpansionItem - LAYER 4: BRANDS
 
@@ -24,11 +29,11 @@
    HUB
    ========================================================================== */
 
-.dss-expansion-item--brand-hub .q-expansion-item--expanded .q-item {
+[data-brand="hub"].dss-expansion-item .q-expansion-item--expanded .q-item {
   border-left: var(--dss-border-width-thick) solid var(--dss-hub-600);
 }
 
-[data-theme="dark"] .dss-expansion-item--brand-hub .q-expansion-item--expanded .q-item {
+[data-theme="dark"] [data-brand="hub"].dss-expansion-item .q-expansion-item--expanded .q-item {
   border-left-color: var(--dss-hub-400);
 }
 
@@ -36,11 +41,11 @@
    WATER
    ========================================================================== */
 
-.dss-expansion-item--brand-water .q-expansion-item--expanded .q-item {
+[data-brand="water"].dss-expansion-item .q-expansion-item--expanded .q-item {
   border-left: var(--dss-border-width-thick) solid var(--dss-water-500);
 }
 
-[data-theme="dark"] .dss-expansion-item--brand-water .q-expansion-item--expanded .q-item {
+[data-theme="dark"] [data-brand="water"].dss-expansion-item .q-expansion-item--expanded .q-item {
   border-left-color: var(--dss-water-400);
 }
 
@@ -48,10 +53,10 @@
    WASTE
    ========================================================================== */
 
-.dss-expansion-item--brand-waste .q-expansion-item--expanded .q-item {
+[data-brand="waste"].dss-expansion-item .q-expansion-item--expanded .q-item {
   border-left: var(--dss-border-width-thick) solid var(--dss-waste-600);
 }
 
-[data-theme="dark"] .dss-expansion-item--brand-waste .q-expansion-item--expanded .q-item {
+[data-theme="dark"] [data-brand="waste"].dss-expansion-item .q-expansion-item--expanded .q-item {
   border-left-color: var(--dss-waste-500);
 }

@@ -36,16 +36,16 @@
    ========================================================================== */
 
 /* Via prop: <DssIcon brand="hub" /> */
-.dss-icon--brand-hub.dss-icon {
+[data-brand="hub"].dss-icon {
   color: var(--dss-hub-600);
 }
 
 /* Via prop: <DssIcon brand="water" /> */
-.dss-icon--brand-water.dss-icon {
+[data-brand="water"].dss-icon {
   color: var(--dss-water-500);
 }
 
 /* Via prop: <DssIcon brand="waste" /> */
-.dss-icon--brand-waste.dss-icon {
+[data-brand="waste"].dss-icon {
   color: var(--dss-waste-600);
 }

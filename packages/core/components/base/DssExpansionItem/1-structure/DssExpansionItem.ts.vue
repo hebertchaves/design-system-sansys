@@ -26,6 +26,7 @@
   -->
   <div
     :class="expansionItemClasses"
+    :data-brand="brand || undefined"
     v-bind="$attrs"
   >
     <q-expansion-item

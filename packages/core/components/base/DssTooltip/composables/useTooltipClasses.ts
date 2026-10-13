@@ -59,7 +59,6 @@ export function useTooltipClasses(props: Readonly<TooltipProps>) {
         'dss-tooltip--multi-line': props.multiLine,
 
         // Brand
-        [`dss-tooltip--brand-${props.brand}`]: !!props.brand
       }
     ]
   })

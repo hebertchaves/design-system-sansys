@@ -215,11 +215,16 @@ describe('DssExpansionItem', () => {
   // ===========================================================================
 
   describe('Brand', () => {
+    // out/2026 — rota de CLASSE → ATRIBUTO (etapa 4 do modelo de propagação de
+    // marca). A classe `--brand-*` não é mais emitida; quem dá a cor é a camada
+    // de token, alcançada pelo `data-brand` no root. Equivalência provada no CSS
+    // compilado: zero declarações diferentes antes/depois.
+
     it.each(['hub', 'water', 'waste'])(
-      'aplica dss-expansion-item--brand-%s quando brand="%s"',
+      'emite data-brand="%s" no root quando brand="%s"',
       (brand) => {
         const wrapper = mount(DssExpansionItem, { props: { brand } })
-        expect(wrapper.classes()).toContain(`dss-expansion-item--brand-${brand}`)
+        expect(wrapper.attributes('data-brand')).toBe(brand)
       }
     )
 
@@ -282,7 +287,7 @@ describe('DssExpansionItem', () => {
       })
       expect(wrapper.classes()).toContain('dss-expansion-item--disabled')
       expect(wrapper.classes()).toContain('dss-expansion-item--dense')
-      expect(wrapper.classes()).toContain('dss-expansion-item--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
   })
 })

@@ -204,19 +204,27 @@ describe('DssIcon', () => {
   // ===========================================================================
 
   describe('Brand', () => {
-    it('applies hub brand class', () => {
+    // out/2026 — rota de CLASSE → ATRIBUTO (etapa 4 do modelo de propagação de
+    // marca). A classe `--brand-*` não é mais emitida; quem dá a cor é a camada
+    // de token, alcançada pelo `data-brand` no root. Equivalência provada no CSS
+    // compilado: zero declarações diferentes antes/depois.
+    // A regra segue CO-LOCALIZADA (`[data-brand=x].dss-icon`), nunca descendente:
+    // a decisão do selo v2.2 — ícone embutido não herda marca do contexto, senão
+    // sequestra a cor do host (medido 1,00:1 num botão preenchido) — continua valendo.
+
+    it('emite data-brand="hub" no root', () => {
       const wrapper = mount(DssIcon, { props: { name: 'home', brand: 'hub' } })
-      expect(wrapper.classes()).toContain('dss-icon--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
-    it('applies water brand class', () => {
+    it('emite data-brand="water" no root', () => {
       const wrapper = mount(DssIcon, { props: { name: 'home', brand: 'water' } })
-      expect(wrapper.classes()).toContain('dss-icon--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
-    it('applies waste brand class', () => {
+    it('emite data-brand="waste" no root', () => {
       const wrapper = mount(DssIcon, { props: { name: 'home', brand: 'waste' } })
-      expect(wrapper.classes()).toContain('dss-icon--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
     it('does not apply brand class when brand is null', () => {

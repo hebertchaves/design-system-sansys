@@ -7,7 +7,6 @@ export function useExpansionItemClasses(props: ExpansionItemProps) {
       'dss-expansion-item',
       props.dense && 'dss-expansion-item--dense',
       props.disable && 'dss-expansion-item--disabled',
-      props.brand && `dss-expansion-item--brand-${props.brand}`,
     ].filter(Boolean)
   )
 

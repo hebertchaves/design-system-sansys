@@ -204,34 +204,38 @@ describe('DssTooltip', () => {
   // ==========================================================================
 
   describe('Brand', () => {
-    it('applies brand hub class', () => {
+    // out/2026 — rota de CLASSE → ATRIBUTO (etapa 4 do modelo de propagação de
+    // marca). A classe `--brand-*` não é mais emitida; quem dá a cor é a camada
+    // de token, alcançada pelo `data-brand` no root. Equivalência provada no CSS
+    // compilado: zero declarações diferentes antes/depois.
+
+    it('emite data-brand="hub" no root', () => {
       const wrapper = mount(DssTooltip, {
         props: { visible: true, brand: 'hub' }
       })
-      expect(wrapper.classes()).toContain('dss-tooltip--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
     })
 
-    it('applies brand water class', () => {
+    it('emite data-brand="water" no root', () => {
       const wrapper = mount(DssTooltip, {
         props: { visible: true, brand: 'water' }
       })
-      expect(wrapper.classes()).toContain('dss-tooltip--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
     })
 
-    it('applies brand waste class', () => {
+    it('emite data-brand="waste" no root', () => {
       const wrapper = mount(DssTooltip, {
         props: { visible: true, brand: 'waste' }
       })
-      expect(wrapper.classes()).toContain('dss-tooltip--brand-waste')
+      expect(wrapper.attributes('data-brand')).toBe('waste')
     })
 
-    it('does not apply color utility classes when brand is set', () => {
+    it('com brand, as utilitárias CONTINUAM — é por elas que a marca pinta', () => {
       const wrapper = mount(DssTooltip, {
         props: { visible: true, brand: 'hub', color: 'primary' }
       })
-      // Brand overrides color utility classes
-      expect(wrapper.classes()).not.toContain('bg-primary')
-      expect(wrapper.classes()).toContain('dss-tooltip--brand-hub')
+      expect(wrapper.attributes('data-brand')).toBe('hub')
+      expect(wrapper.classes().some((c) => c.startsWith('dss-tooltip--brand-'))).toBe(false)
     })
 
     it('does not apply brand class when brand is null', () => {

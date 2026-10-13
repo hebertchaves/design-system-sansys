@@ -1,6 +1,7 @@
 <template>
   <span
     :class="iconClasses"
+    :data-brand="brand || undefined"
     :aria-hidden="a11yEfetiva.oculto ? 'true' : undefined"
     :aria-label="a11yEfetiva.nome"
     :role="a11yEfetiva.papel"

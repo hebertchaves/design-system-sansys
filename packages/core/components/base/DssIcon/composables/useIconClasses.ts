@@ -56,7 +56,6 @@ export function useIconClasses(props: Readonly<IconProps>) {
         'dss-icon--decorative': props.decorative,
 
         // Brand
-        [`dss-icon--brand-${props.brand}`]: !!props.brand
       }
     ]
   })

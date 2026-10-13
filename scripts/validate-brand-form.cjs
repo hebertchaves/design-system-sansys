@@ -84,6 +84,20 @@ const DIR_MARCA = path.join(ROOT, 'packages', 'core', 'tokens', 'brand');
 const BARREIRA = path.join(ROOT, 'packages', 'core', 'tokens', 'semantic', '_brand-barrier.scss');
 const FOCO = path.join(ROOT, 'packages', 'core', 'tokens', 'semantic', 'accessibility', '_focus.scss');
 
+/** Componentes cuja prop `brand` NAO deve emitir `data-brand` — com o motivo.
+ *  Nao sao divida: sao desenhos em que a cascata CSS nao e o canal certo. */
+const B3_EXCECOES = {
+  'base/DssBrandLogo':
+    'troca o SVG inteiro, nao a cor: a marca e resolvida em JS por useResolvedBrand ' +
+    '(prop ou ancestral [data-brand] mais proximo). Geometria nao viaja por cascata.',
+  'base/DssSelect':
+    'Quasar-rooted: o QSelect roteia data-brand para o <input> nativo interno, que nao ' +
+    'fica ancestral do .q-field__control que desenha a borda. Usa a rota B — a classe ' +
+    'aliasada em tokens/semantic/accessibility/_focus.scss. Medido em jul/2026.',
+  'base/DssTextarea':
+    'mesmo caso do DssSelect (QInput). Ver a mesma nota.',
+};
+
 /** Remapeados por marca que NAO precisam de reset — cada um com o motivo. */
 const B4_DISPENSADOS = {
   '--dss-action-secondary': 'as 3 marcas ja apontam para var(--dss-secondary)',
@@ -176,7 +190,7 @@ function analisarProps() {
         /\bv-bind:brand\b|:brand\s*=|\bbrand\s*=\s*"/.test(vue) // delega a um filho
       );
     });
-    if (!rota) semRota.push(comp);
+    if (!rota && !(comp in B3_EXCECOES)) semRota.push(comp);
   }
   return [...new Set(semRota)].sort();
 }
@@ -315,7 +329,10 @@ function main() {
     console.log('            O bloco precisa declarar `--dss-action-*` / `--dss-brand-*`, não pintar a propriedade.');
   }
 
-  console.log(`\n   B3. Prop \`brand\` que não emite \`data-brand\`: ${b3.length}`);
+  console.log(
+    `\n   B3. Prop \`brand\` que não emite \`data-brand\`: ${b3.length}` +
+      ` (+${Object.keys(B3_EXCECOES).length} exceção(ões) com motivo declarado)`
+  );
   if (base.propSemRota?.length) console.log(`       (${base.propSemRota.length} no baseline)`);
   for (const c of novoB3) {
     console.log(`       ❌ NOVO: ${c}`);

@@ -1,3 +1,8 @@
+/* out/2026 — a rota da prop `brand` migrou de CLASSE para ATRIBUTO (etapa 4 do
+   modelo de propagação de marca). A classe `--brand-*` deixou de ser emitida;
+   estas regras ficariam MORTAS em silêncio se não fossem portadas. Valores
+   inalterados: a troca é só de rota.
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md */
 /* ==========================================================================
    DssTooltip - LAYER 4: OUTPUT - States
 
@@ -42,15 +47,15 @@
   }
 
   /* Brands em dark mode podem precisar de ajustes de contraste */
-  .dss-tooltip--brand-hub {
+  [data-brand="hub"].dss-tooltip {
     background-color: var(--dss-hub-500);
   }
 
-  .dss-tooltip--brand-water {
+  [data-brand="water"].dss-tooltip {
     background-color: var(--dss-water-400);
   }
 
-  .dss-tooltip--brand-waste {
+  [data-brand="waste"].dss-tooltip {
     background-color: var(--dss-waste-500);
   }
 }
@@ -121,9 +126,7 @@
   }
 
   /* Brands nao se aplicam em forced-colors — sistema controla cores */
-  .dss-tooltip--brand-hub,
-  .dss-tooltip--brand-water,
-  .dss-tooltip--brand-waste {
+  .dss-tooltip[data-brand] {
     background-color: ButtonFace;
     color: ButtonText;
   }
