@@ -7,6 +7,7 @@
     "tagline": "Região de conteúdo principal da página dentro do layout.",
     "category": "Layout Global — Container de conteúdo principal com min-height dinâmica",
     "classification": "Visual",
+    "brandZone": "content",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssBadge",

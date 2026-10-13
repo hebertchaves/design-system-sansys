@@ -2742,6 +2742,12 @@
           "token": "--dss-info-hover",
           "value": null,
           "source": "_colors-hover.scss"
+        },
+        {
+          "property": "content",
+          "token": null,
+          "value": "none",
+          "source": "4-output/_states.scss"
         }
       ],
       "focus": [

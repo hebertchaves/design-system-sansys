@@ -76,6 +76,15 @@
           ],
           "description": "meta.classification — taxonomia de PAGE_STRUCTURE §9. ENUM enforçado (gate, não disciplina): valor prosa/objeto/null reprova. Prosa/racional original preservado em meta.classificationNote. É well-formedness (o valor é 1 dos 3), não verificação da escolha do balde — mapeamentos ambíguos vão p/ revisão humana via classificationNote."
         },
+        "brandZone": {
+          "type": "string",
+          "enum": [
+            "shell",
+            "content",
+            "both"
+          ],
+          "description": "Zona de marca que este componente ESTABELECE para o que estiver dentro dele. Ausente = nao estabelece zona (herda). shell: o eixo de acao segue a marca. content: o eixo de acao volta ao semantico. both: o componente contem as duas (DssPageShell: rail=shell, board=content). Ver docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md"
+        },
         "phase": {
           "type": "integer",
           "minimum": 1,
@@ -770,9 +779,14 @@
         "inertWhen": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["prop", "value"],
+          "required": [
+            "prop",
+            "value"
+          ],
           "properties": {
-            "prop": { "type": "string" },
+            "prop": {
+              "type": "string"
+            },
             "value": {}
           },
           "description": "DERIVADO da tag JSDoc `@inertWhen outraProp=valor`: esta prop não tem efeito enquanto a outra estiver naquele valor. O playground marca o knob como inerte em vez de oferecer um controle morto."

@@ -7,6 +7,7 @@
     "tagline": "Rodapé de layout ancorado à base da página.",
     "category": "Container estrutural de layout de página — footer fixo na base",
     "classification": "Visual",
+    "brandZone": "shell",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssCard",

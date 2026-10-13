@@ -41,10 +41,17 @@
   print — AppBar na marca, conteúdo semântico, rail reentrando a marca de dentro do
   conteúdo.
 
-  Descoberta no caminho: `tokens/semantic/index.scss` era **código morto desde jan/2025**
-  (o entry point real é `tokens/index.scss`, que enumera os arquivos um a um). O
-  `validate:scss-tokens` dava verde porque faz varredura ESTÁTICA DE FONTE — ele vê a
-  declaração e não sabe se o arquivo é importado. **Falso verde.** Arquivo removido.
+  Descoberta no caminho: `tokens/semantic/index.scss` era **código morto** (o entry point
+  real é `tokens/index.scss`, que enumera os arquivos um a um e **nunca** usou agregador —
+  verificado com `git log -S --follow`, inclusive nos caminhos antigos: zero ocorrências).
+  A auditoria de **jan/2026** chegou a registrar a "inconsistência entre `tokens/index.scss`
+  e `tokens/semantic/index.scss`", corrigiu só um import recursivo *dentro* do próprio
+  arquivo e o deixou órfão por mais nove meses. O `validate:scss-tokens` dava verde porque
+  faz varredura ESTÁTICA DE FONTE — vê a declaração e não sabe se o arquivo é importado.
+  **Falso verde.** Arquivo removido.
+
+  ⚠️ O doc daquela auditoria se chama `CORRECOES_CRITICAS_JAN_2025.md` mas foi commitado em
+  **2026-01-15**. Data no nome de arquivo não é evidência; conferir no `git log`.
 
   **Etapa 4 aberta:** prop tri-estado com `"none"` + migração dos **93** `_brands.scss`
   que pintam, em ondas (piloto Badge/Button/Chip). Não bloqueia o HC.

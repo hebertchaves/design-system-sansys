@@ -453,6 +453,10 @@ function emit(name) {
       tagline: meta.tagline || '',
       category: meta.category || '',
       classification: meta.classification || '',
+      // Zona de marca que o componente ESTABELECE. Omitido quando ausente: a
+      // maioria dos componentes nao estabelece zona, apenas herda.
+      // docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
+      ...(meta.brandZone ? { brandZone: meta.brandZone } : {}),
       phase: coercePhase(meta.phase),
       status,
       goldenReference: meta.goldenReference || '',

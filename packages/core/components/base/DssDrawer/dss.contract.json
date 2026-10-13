@@ -7,6 +7,7 @@
     "tagline": "Painel lateral de layout, fixo ou sobreposto, para navegação ou conteúdo auxiliar.",
     "category": "Container estrutural lateral de layout de página — painel de navegação",
     "classification": "Visual",
+    "brandZone": "shell",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssHeader",

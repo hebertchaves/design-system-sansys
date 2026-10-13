@@ -152,6 +152,19 @@ function buildSummary(
     `- **Has Documentation:** ${hasDoc ? "yes" : "no"}`,
   ];
 
+  // Zona de marca — so quando o componente ESTABELECE uma. E o campo que diz a um
+  // agente se colocar algo dentro deste componente muda a cor de acao do conteudo.
+  // docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
+  if (meta.brandZone) {
+    const explica: Record<string, string> = {
+      shell: "casca — o eixo de acao (--dss-action-*) SEGUE a marca aqui dentro",
+      content: "conteudo — o eixo de acao VOLTA ao semantico aqui dentro; a identidade (--dss-brand-*) segue a marca",
+      both: "as duas — este componente contem uma regiao de casca e uma de conteudo",
+    };
+    const z = String(meta.brandZone);
+    lines.push(`- **Brand Zone:** \`${z}\` — ${explica[z] ?? "zona desconhecida"}`);
+  }
+
   if (meta.hasReservations) {
     lines.push(`- **Reservations:** present (see dss.meta.json for details)`);
   }

@@ -7,6 +7,7 @@
     "tagline": "Wrapper que aplica offsets de layout à região de página.",
     "category": "Layout Global — Container de página com offset automático",
     "classification": "Visual",
+    "brandZone": "content",
     "phase": 2,
     "status": "sealed",
     "goldenReference": "DssBadge",

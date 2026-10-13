@@ -139,6 +139,31 @@ Doze componentes, com o campo `brandZone` no `dss.meta.json` e o atributo no tem
 
 Os quatro que **teleportam** (`DssDialog`, `DssMenu`, `DssPopupProxy`, `DssBottomSheet`) escapam da cascata — renderizam no `body`, fora da subárvore da página. Por isso declaram a zona eles próprios, em vez de herdá-la. A marca, nesses, continua chegando por `:data-brand` via `$attrs`.
 
+### 6.3 A cadeia de propagação do `brandZone`
+
+A cadeia do DSS é `código → meta.json → derivados` (Constituição #6), e os scripts da
+cadeia usam **whitelist de campos** — um campo novo no meta **não viaja sozinho**. O
+`brandZone` precisou ser ligado elo a elo:
+
+| elo | estado | como |
+|---|---|---|
+| `1-structure/*.ts.vue` | **fonte** | `data-brand-zone` no template, antes do `v-bind="$attrs"` |
+| `dss.meta.json` | ✅ | campo `brandZone` (`shell` \| `content` \| `both`) |
+| `dss.contract.schema.json` | ✅ | `identity.brandZone`, enum, **opcional** — o schema é `additionalProperties:false`, sem isto o contrato seria rejeitado |
+| `dss.contract.json` | ✅ | emitido por `emit-contract.mjs`, só quando presente |
+| MCP `query_component` | ✅ | linha **Brand Zone** com a explicação do efeito — é o canal que responde ao agente |
+| gate B5 | ✅ | mantém meta ↔ template honestos, nos dois sentidos |
+
+**Não propagados, de propósito:** `catalog.json` (seus consumidores são validadores de
+portal/demo, que não decidem cor) e `DSS_REFERENCIA_VISUAL_ANALISE.md` (aquele doc é
+tabela de *preview*, não índice de metadado — só consome `component`, `defaultPreview` e
+`previewGroup`).
+
+> ⚠️ **Lacuna conhecida:** `DssBottomSheet` tem `brandZone` no meta mas está na lista dos
+> 8 componentes **sem `dss.contract.json`** (baseline de dívida pré-existente). A zona
+> dele funciona — o atributo está no template —, mas não chega ao contrato até aquele
+> débito ser zerado.
+
 `DssExpansionItem` e `DssContextHeader` foram **deliberadamente deixados de fora**: o primeiro aparece dentro de drawers de navegação, onde marcá-lo como conteúdo quebraria a casca; o segundo herda bem de `DssPage`.
 
 ## 7. A prop `brand` passa a ser tri-estado

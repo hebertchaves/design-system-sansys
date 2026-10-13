@@ -288,6 +288,66 @@
           "source": "_base.scss"
         },
         {
+          "property": "margin-block-end",
+          "token": "--dss-spacing-0",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "margin-inline-end",
+          "token": "--dss-spacing-2",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "padding-inline-end",
+          "token": "--dss-spacing-3",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "padding-inline-end",
+          "token": "--dss-spacing-6",
+          "value": null,
+          "source": "_base.scss"
+        },
+        {
+          "property": "justify-content",
+          "token": null,
+          "value": "center",
+          "source": "_base.scss"
+        },
+        {
+          "property": "display",
+          "token": null,
+          "value": "grid",
+          "source": "_base.scss"
+        },
+        {
+          "property": "grid-template-columns",
+          "token": null,
+          "value": "auto 1fr",
+          "source": "_base.scss"
+        },
+        {
+          "property": "align-items",
+          "token": null,
+          "value": "center",
+          "source": "_base.scss"
+        },
+        {
+          "property": "inline-size",
+          "token": null,
+          "value": "100%",
+          "source": "_base.scss"
+        },
+        {
+          "property": "text-align",
+          "token": null,
+          "value": "center",
+          "source": "_base.scss"
+        },
+        {
           "property": "opacity",
           "token": "--dss-opacity-disabled",
           "value": null,
@@ -542,6 +602,24 @@
       },
       {
         "name": "--dss-font-weight-medium",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-0",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-2",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
+        "name": "--dss-spacing-6",
         "usedIn": [
           "default"
         ]
