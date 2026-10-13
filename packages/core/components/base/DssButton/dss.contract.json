@@ -871,6 +871,12 @@
           "source": "2-composition/_base.scss"
         },
         {
+          "property": "color",
+          "token": "--dss-text-on-primary",
+          "value": null,
+          "source": "2-composition/_base.scss"
+        },
+        {
           "property": "box-shadow",
           "token": "--dss-elevation-2",
           "value": null,
@@ -880,7 +886,7 @@
           "property": "background-color",
           "token": null,
           "value": "transparent",
-          "source": "4-output/_brands.scss"
+          "source": "3-variants/_outline.scss"
         },
         {
           "property": "box-shadow",
@@ -892,7 +898,7 @@
           "property": "border-width",
           "token": "--dss-border-width-thin",
           "value": null,
-          "source": "4-output/_brands.scss"
+          "source": "3-variants/_outline.scss"
         },
         {
           "property": "border-style",
@@ -904,7 +910,7 @@
           "property": "border-color",
           "token": null,
           "value": "currentColor",
-          "source": "4-output/_brands.scss"
+          "source": "3-variants/_outline.scss"
         },
         {
           "property": "box-shadow",
@@ -941,24 +947,6 @@
           "token": null,
           "value": "-1",
           "source": "3-variants/_glossy.scss"
-        },
-        {
-          "property": "background-color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-text-on-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "color",
-          "token": "--dss-action-primary",
-          "value": null,
-          "source": "4-output/_brands.scss"
         },
         {
           "property": "display",
@@ -3099,12 +3087,6 @@
           "source": "3-variants/_push.scss"
         },
         {
-          "property": "background-color",
-          "token": "--dss-action-primary-hover",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
           "property": "background",
           "token": "--dss-primary-hover",
           "value": null,
@@ -3452,12 +3434,6 @@
         },
         {
           "property": "background-color",
-          "token": "--dss-action-primary-deep",
-          "value": null,
-          "source": "4-output/_brands.scss"
-        },
-        {
-          "property": "background-color",
           "token": "--dss-action-tertiary-deep",
           "value": null,
           "source": "_hover-ramp.scss"
@@ -3787,6 +3763,12 @@
         ]
       },
       {
+        "name": "--dss-text-on-primary",
+        "usedIn": [
+          "default"
+        ]
+      },
+      {
         "name": "--dss-elevation-2",
         "usedIn": [
           "default"
@@ -3808,19 +3790,6 @@
       },
       {
         "name": "--dss-gradient-glossy",
-        "usedIn": [
-          "default"
-        ]
-      },
-      {
-        "name": "--dss-action-primary",
-        "usedIn": [
-          "default",
-          "defaultPreview"
-        ]
-      },
-      {
-        "name": "--dss-text-on-primary",
         "usedIn": [
           "default"
         ]
@@ -4545,6 +4514,13 @@
         ]
       },
       {
+        "name": "--dss-action-primary",
+        "usedIn": [
+          "default",
+          "defaultPreview"
+        ]
+      },
+      {
         "name": "--dss-negative",
         "usedIn": [
           "default"
@@ -4632,12 +4608,6 @@
       },
       {
         "name": "--dss-button-state-layer-inset",
-        "usedIn": [
-          "hover"
-        ]
-      },
-      {
-        "name": "--dss-action-primary-hover",
         "usedIn": [
           "hover"
         ]
@@ -4788,12 +4758,6 @@
       },
       {
         "name": "--dss-gradient-glossy-active",
-        "usedIn": [
-          "active"
-        ]
-      },
-      {
-        "name": "--dss-action-primary-deep",
         "usedIn": [
           "active"
         ]

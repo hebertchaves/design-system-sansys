@@ -67,3 +67,17 @@
 .dss-badge[style*="vertical-align: bottom"] {
   vertical-align: baseline;
 }
+
+
+/* Texto da variante SÓLIDA.
+   Vivia só no `_brands.scss`, aplicado quando havia marca; fora da marca quem
+   mandava era a utilitária `.text-white`. Trazido para cá porque não é regra de
+   marca: é a cor de texto sobre a superfície de ação, qualquer que seja ela.
+
+   Sem marca, `.text-white` (utilitária do Quasar, `!important` em @layer quasar)
+   continua vencendo — comportamento preservado. Com marca, a utilitária não é
+   emitida e esta regra governa, que é o que importa no `hcdark`, onde
+   `--dss-text-on-primary` vira texto ESCURO. */
+.dss-badge:not(.dss-badge--outline):not(.dss-badge--transparent) {
+  color: var(--dss-text-on-primary);
+}

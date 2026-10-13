@@ -31,12 +31,27 @@ export function useBadgeClasses(props: Readonly<BadgeProps>) {
     // Lógica de cores seguindo padrão Quasar QBadge:
     // - outline/transparent: usa text-{color} (texto colorido, fundo transparente)
     // - normal: usa bg-{color} + text-white (fundo colorido, texto branco)
-    // - brand: NÃO usa classes utilitárias (CSS próprio)
+    // - brand: utilitárias + data-brand no root (a marca vem do token)
     let colorClasses = ''
 
-    // Se tem brand, NÃO aplicar classes utilitárias
-    // (brand usa CSS próprio sem !important)
-    if (!props.brand) {
+    if (props.brand) {
+      // COM MARCA — a cor vem da camada de token, não de CSS próprio.
+      //
+      // O root emite `data-brand`, e `tokens/brand/*` remapeia ali mesmo
+      // `--dss-action-primary` (e, via `scopes.$marcas`, a ponte `--q-primary`
+      // que alimenta as utilitárias do Quasar). Então `bg-primary` já pinta a
+      // cor da marca, sem o componente saber que marca é.
+      //
+      // Sempre `primary`, nunca `bg-${props.color}`: marca é instrução de
+      // IDENTIDADE e vence a prop `color` — comportamento que já era o de antes,
+      // quando o `_brands.scss` pintava por cima.
+      //
+      // `text-white` NÃO é emitido de propósito: sem ele, a regra da Layer 2
+      // (`--dss-text-on-primary`) governa o texto da variante sólida. Importa
+      // no `hcdark`, onde esse token vira texto ESCURO — `text-white` deixaria
+      // branco sobre fundo claro.
+      colorClasses = props.outline || props.transparent ? 'text-primary' : 'bg-primary'
+    } else {
       if (props.outline || props.transparent) {
         // Variantes transparentes: apenas cor de texto
         colorClasses = `text-${props.color}`
@@ -65,9 +80,6 @@ export function useBadgeClasses(props: Readonly<BadgeProps>) {
         'dss-badge--multi-line': props.multiLine,
         'dss-badge--outline': props.outline,
         'dss-badge--rounded': props.rounded,
-
-        // Brand
-        [`dss-badge--brand-${props.brand}`]: !!props.brand
       }
     ]
   })

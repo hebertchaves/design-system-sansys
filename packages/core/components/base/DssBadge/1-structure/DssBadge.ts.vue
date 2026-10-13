@@ -2,6 +2,7 @@
   <div
     :class="badgeClasses"
     :style="badgeStyle"
+    :data-brand="brand || undefined"
     role="status"
     :aria-label="ariaLabel"
     aria-live="polite"

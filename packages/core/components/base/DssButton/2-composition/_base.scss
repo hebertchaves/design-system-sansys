@@ -551,3 +551,16 @@
     text-overflow: ellipsis;
   }
 }
+
+/* Texto das variantes SÓLIDAS.
+   Vivia só no `4-output/_brands.scss`, e só quando havia marca; fora dela quem
+   mandava era a utilitária `.text-white`. Veio para cá porque não é regra de
+   marca — é a cor de texto sobre a superfície de ação, seja ela qual for.
+
+   Sem marca, `.text-white` (utilitária do Quasar, `!important` em @layer quasar)
+   continua vencendo: comportamento preservado. Com marca ela não é emitida e
+   esta regra governa — o que importa no `hcdark`, onde `--dss-text-on-primary`
+   vira texto ESCURO e `text-white` deixaria branco sobre fundo claro. */
+.dss-button:not(.dss-button--flat):not(.dss-button--outline) {
+  color: var(--dss-text-on-primary);
+}

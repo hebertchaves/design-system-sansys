@@ -150,23 +150,50 @@ describe('DssBadge', () => {
    * ==========================================================================
    */
   describe('Props - Brands', () => {
+    // out/2026 — a rota mudou de CLASSE para ATRIBUTO (etapa 4 do modelo de
+    // propagação de marca). Antes: a prop gerava `.dss-badge--brand-hub`, as
+    // utilitárias eram SUPRIMIDAS e o `_brands.scss` pintava com o primitivo.
+    // Agora: o root emite `data-brand`, as utilitárias voltam, e quem dá a cor é
+    // a camada de token. Medido no hcdark — o fundo de marca saiu do primitivo
+    // cru (#ef7a11) para o valor ajustado de alto contraste (#f8aa3f), levando o
+    // contraste do texto de 7,03:1 para 10,19:1. Pela classe isso era impossível.
     const brands = ['hub', 'water', 'waste']
 
     brands.forEach(brand => {
-      it(`aplica classe .dss-badge--brand-${brand} quando brand="${brand}"`, () => {
-        const wrapper = mount(DssBadge, {
-          props: { brand }
-        })
-        expect(wrapper.classes()).toContain(`dss-badge--brand-${brand}`)
+      it(`emite data-brand="${brand}" no root quando brand="${brand}"`, () => {
+        const wrapper = mount(DssBadge, { props: { brand } })
+        expect(wrapper.attributes('data-brand')).toBe(brand)
       })
     })
 
-    it('NÃO aplica classes utilitárias quando brand está definido', () => {
-      const wrapper = mount(DssBadge, {
-        props: { brand: 'hub', color: 'primary' }
-      })
-      expect(wrapper.classes()).toContain('dss-badge--brand-hub')
-      expect(wrapper.classes()).not.toContain('bg-primary')
+    it('sem brand, não emite o atributo (não cria escopo de marca à toa)', () => {
+      const wrapper = mount(DssBadge, {})
+      expect(wrapper.attributes('data-brand')).toBeUndefined()
+    })
+
+    it('com brand, as utilitárias CONTINUAM — é por elas que a marca pinta', () => {
+      const wrapper = mount(DssBadge, { props: { brand: 'hub', color: 'primary' } })
+      expect(wrapper.classes()).toContain('bg-primary')
+    })
+
+    it('marca vence a prop color: sempre `primary`, que é o token remapeado', () => {
+      // Comportamento preservado da rota antiga, onde o `_brands.scss` pintava
+      // por cima de qualquer `color`. Marca é instrução de IDENTIDADE.
+      const wrapper = mount(DssBadge, { props: { brand: 'hub', color: 'negative' } })
+      expect(wrapper.classes()).toContain('bg-primary')
+      expect(wrapper.classes()).not.toContain('bg-negative')
+    })
+
+    it('na variante sólida com marca, `text-white` NÃO é emitido', () => {
+      // Para a regra da Layer 2 (`--dss-text-on-primary`) governar. No hcdark
+      // esse token é texto ESCURO; `text-white` deixaria branco sobre fundo claro.
+      const wrapper = mount(DssBadge, { props: { brand: 'hub' } })
+      expect(wrapper.classes()).not.toContain('text-white')
+    })
+
+    it('não sobrou classe de marca — ela não tinha mais nenhuma regra', () => {
+      const wrapper = mount(DssBadge, { props: { brand: 'hub' } })
+      expect(wrapper.classes().some(c => c.startsWith('dss-badge--brand-'))).toBe(false)
     })
   })
 
@@ -336,11 +363,12 @@ describe('DssBadge', () => {
         }
       })
 
-      // Brand class presente
-      expect(wrapper.classes()).toContain('dss-badge--brand-hub')
+      // Marca pelo atributo, no root
+      expect(wrapper.attributes('data-brand')).toBe('hub')
       expect(wrapper.classes()).toContain('dss-badge--outline')
 
-      // Sem classes utilitárias de cor (brand override)
+      // Variante vazada: a cor vem de `text-primary`, e a borda é currentColor
+      expect(wrapper.classes()).toContain('text-primary')
       expect(wrapper.classes()).not.toContain('bg-primary')
 
       // Content

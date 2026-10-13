@@ -1,88 +1,25 @@
-/* ==========================================================================
-   DssBadge - LAYER 4: OUTPUT - Brands
-
-   RESPONSABILIDADE: Brandability (Hub, Water, Waste)
-
-   CARACTERÍSTICAS:
-   - Usa tokens genéricos de brand
-   - Aplica cor da brand ao badge
-   - Suporta variantes outline e transparent
-   ========================================================================== */
-
-/* ==========================================================================
-   HUB BRAND (Orange)
-   ========================================================================== */
-
-[data-brand="hub"],
-.dss-badge--brand-hub {
-  &.dss-badge {
-    background-color: var(--dss-hub-600);
-    color: var(--dss-text-on-primary);
-
-    /* Variante outline */
-    &.dss-badge--outline {
-      background-color: transparent;
-      border-color: var(--dss-hub-600);
-      color: var(--dss-hub-600);
-    }
-
-    /* Variante transparent */
-    &.dss-badge--transparent {
-      background-color: transparent;
-      border-color: var(--dss-hub-600);
-      color: var(--dss-hub-600);
-    }
-  }
-}
-
-/* ==========================================================================
-   WATER BRAND (Blue)
-   ========================================================================== */
-
-[data-brand="water"],
-.dss-badge--brand-water {
-  &.dss-badge {
-    background-color: var(--dss-water-500);
-    color: var(--dss-text-on-primary);
-
-    /* Variante outline */
-    &.dss-badge--outline {
-      background-color: transparent;
-      border-color: var(--dss-water-500);
-      color: var(--dss-water-500);
-    }
-
-    /* Variante transparent */
-    &.dss-badge--transparent {
-      background-color: transparent;
-      border-color: var(--dss-water-500);
-      color: var(--dss-water-500);
-    }
-  }
-}
-
-/* ==========================================================================
-   WASTE BRAND (Green)
-   ========================================================================== */
-
-[data-brand="waste"],
-.dss-badge--brand-waste {
-  &.dss-badge {
-    background-color: var(--dss-waste-600);
-    color: var(--dss-text-on-primary);
-
-    /* Variante outline */
-    &.dss-badge--outline {
-      background-color: transparent;
-      border-color: var(--dss-waste-600);
-      color: var(--dss-waste-600);
-    }
-
-    /* Variante transparent */
-    &.dss-badge--transparent {
-      background-color: transparent;
-      border-color: var(--dss-waste-600);
-      color: var(--dss-waste-600);
-    }
-  }
-}
+// ==========================================================================
+// DssBadge — Layer 4: Brands
+// ==========================================================================
+//
+// SEM REGRA, E ESSE É O ESTADO CORRETO.
+//
+// A prop `brand` emite `data-brand` no root. A partir daí `tokens/brand/*`
+// remapeia `--dss-action-primary` NO PRÓPRIO elemento e, via `scopes.$marcas`,
+// a ponte `--q-primary` recomputa junto — então as utilitárias `bg-primary` /
+// `text-primary` já pintam a cor da marca. O componente não precisa saber qual.
+//
+// O QUE SAIU DAQUI
+//
+// Três blocos que PINTAVAM com o primitivo cru (`var(--dss-hub-600)` etc.),
+// cobrindo fundo, borda e texto de cada variante. Funcionavam — e passavam por
+// FORA da camada de token, o que deixava o fundo de marca fora do alcance do
+// tema. Medido no `hcdark` antes desta migração: fundo `#ef7a11`, o primitivo
+// cru, enquanto o mesmo badge sem marca recebia `#79b7ec`, ajustado para alto
+// contraste. Agora os dois seguem o tema.
+//
+// A borda da variante `outline` some daqui sem perda: ela é `currentColor`
+// (3-variants/_outline.scss), então acompanha a cor do texto sozinha.
+//
+// 📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
+// ==========================================================================

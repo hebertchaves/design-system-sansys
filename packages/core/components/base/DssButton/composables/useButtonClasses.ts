@@ -33,15 +33,31 @@ export function useButtonClasses(
    * Lógica de cores seguindo padrão Quasar:
    * - flat/outline: usa text-{color} (texto colorido, fundo transparente)
    * - outros: usa bg-{color} + text-white (fundo colorido, texto branco)
-   * - brand: NÃO usa classes utilitárias (CSS próprio)
+   * - brand: utilitárias + data-brand no root (a marca vem do token)
    */
   const buttonClasses = computed(() => {
     // Classes de cor (utilitárias do DSS)
     let colorClasses = ''
 
-    // Se tem brand, NÃO aplicar classes utilitárias
-    // (brand usa CSS próprio sem !important)
-    if (!props.brand) {
+    if (props.brand) {
+      // COM MARCA — a cor vem da camada de token, não de CSS próprio.
+      //
+      // O root emite `data-brand`; `tokens/brand/*` remapeia a rampa
+      // `--dss-action-primary*` ali mesmo e, por `scopes.$marcas`, a ponte
+      // `--q-primary` recomputa junto. Então `bg-primary` já pinta a marca, e o
+      // hover de `4-output/_states.scss` (que redefine `--q-primary`) passa a
+      // valer também neste caminho — antes não valia, e era por isso que o
+      // `_brands.scss` precisava reimplementar hover e active.
+      //
+      // Sempre `primary`: marca é instrução de IDENTIDADE e vence a prop
+      // `color`, como já era quando o `_brands.scss` pintava por cima.
+      //
+      // `text-white` NÃO é emitido de propósito — ver o bloco de cor sólida em
+      // `2-composition/_base.scss`.
+      colorClasses = props.variant === 'flat' || props.variant === 'outline'
+        ? 'text-primary'
+        : 'bg-primary'
+    } else {
       if (props.variant === 'flat' || props.variant === 'outline') {
         // Variantes transparentes: apenas cor de texto
         colorClasses = `text-${props.color}`
@@ -80,7 +96,6 @@ export function useButtonClasses(
         'dss-button--icon-only': isIconOnly,
 
         // Brand
-        [`dss-button--brand-${props.brand}`]: !!props.brand,
 
         // Layout
         [`dss-button--align-${props.align}`]: props.align !== 'center',

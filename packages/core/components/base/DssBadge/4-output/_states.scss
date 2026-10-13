@@ -26,16 +26,27 @@
     /* Tokens semânticos já fazem a maior parte do trabalho */
   }
 
-  /* Brands em dark mode podem precisar de ajustes */
-  .dss-badge--brand-hub {
+  /* Brands em dark mode podem precisar de ajustes.
+
+     out/2026 — o seletor era `.dss-badge--brand-*`, a classe que a prop gerava.
+     Com a migração da prop para `data-brand` no root (etapa 4), aquela classe
+     deixou de existir e estas regras ficariam MORTAS em silêncio. Portadas para
+     o atributo, com o mesmo valor, para não mudar o dark de carona numa troca
+     de rota.
+
+     Nota para quem for zerar o B1 aqui: estes três primitivos continuam sendo
+     dívida, e há uma pergunta de VALOR por trás — `themes/dark/_colors.scss`
+     diz que a cor de marca NÃO muda no escuro em componentes com fundo, o que
+     contradiz este clareamento. Resolver junto, não de passagem. */
+  .dss-badge[data-brand='hub'] {
     background-color: var(--dss-hub-500);
   }
 
-  .dss-badge--brand-water {
+  .dss-badge[data-brand='water'] {
     background-color: var(--dss-water-400);
   }
 
-  .dss-badge--brand-waste {
+  .dss-badge[data-brand='waste'] {
     background-color: var(--dss-waste-500);
   }
 }
@@ -112,10 +123,11 @@
     outline: 3px solid Highlight;
   }
 
-  /* Brands não se aplicam em forced-colors - sistema controla cores */
-  .dss-badge--brand-hub,
-  .dss-badge--brand-water,
-  .dss-badge--brand-waste {
+  /* Brands não se aplicam em forced-colors - sistema controla cores.
+     Portado de `.dss-badge--brand-*` para o atributo na etapa 4 — era a regra
+     mais crítica a ficar órfã: sem ela, em forced-colors o badge de marca
+     voltaria a pintar cor própria em vez de ceder ao sistema. */
+  .dss-badge[data-brand] {
     background-color: ButtonFace;
     color: ButtonText;
   }

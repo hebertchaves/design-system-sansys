@@ -3,7 +3,6 @@
   "primitivoDeMarca": [
     "base/DssAjaxBar/4-output/_brands.scss",
     "base/DssAvatar/4-output/_brands.scss",
-    "base/DssBadge/4-output/_brands.scss",
     "base/DssBadge/4-output/_states.scss",
     "base/DssBanner/4-output/_brands.scss",
     "base/DssBar/4-output/_brands.scss",
@@ -12,7 +11,6 @@
     "base/DssBtnDropdown/4-output/_brands.scss",
     "base/DssBtnGroup/4-output/_brands.scss",
     "base/DssBtnToggle/4-output/_brands.scss",
-    "base/DssButton/4-output/_brands.scss",
     "base/DssCard/4-output/_brands.scss",
     "base/DssCircularProgress/4-output/_brands.scss",
     "base/DssCircularProgress/4-output/_states.scss",
@@ -64,7 +62,6 @@
   ],
   "brandsSemRemap": [
     "base/DssAvatar/4-output/_brands.scss",
-    "base/DssBadge/4-output/_brands.scss",
     "base/DssBar/4-output/_brands.scss",
     "base/DssBreadcrumbsEl/4-output/_brands.scss",
     "base/DssBtnDropdown/4-output/_brands.scss",
@@ -115,13 +112,11 @@
   "propSemRota": [
     "base/DssAjaxBar",
     "base/DssAvatar",
-    "base/DssBadge",
     "base/DssBrandLogo",
     "base/DssBreadcrumbs",
     "base/DssBtnDropdown",
     "base/DssBtnGroup",
     "base/DssBtnToggle",
-    "base/DssButton",
     "base/DssCard",
     "base/DssExpansionItem",
     "base/DssFab",

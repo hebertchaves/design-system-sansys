@@ -7,6 +7,7 @@
     :disabled="disabled || loading"
     :class="buttonClasses"
     :style="buttonStyle"
+    :data-brand="brand || undefined"
     :tabindex="computedTabindex"
     :aria-label="ariaLabel"
     :aria-busy="loading ? 'true' : undefined"

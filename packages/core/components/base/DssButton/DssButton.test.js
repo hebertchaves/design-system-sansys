@@ -139,13 +139,25 @@ describe('DssButton', () => {
       expect(Object.keys(DssButton.props)).toContain('color')
     })
 
-    it('não aplica classes utilitárias de cor quando brand está definido', () => {
+    it('com brand, as utilitárias CONTINUAM — é por elas que a marca pinta', () => {
+      // out/2026 — rota de CLASSE → ATRIBUTO. Antes as utilitárias eram
+      // suprimidas e o `_brands.scss` pintava; agora o root emite `data-brand`,
+      // o token é remapeado ali e `bg-primary` já entrega a cor da marca.
       const wrapper = mount(DssButton, {
         props: { color: 'primary', brand: 'hub' }
       })
-      expect(wrapper.classes()).not.toContain('bg-primary')
-      expect(wrapper.classes()).not.toContain('text-primary')
+      expect(wrapper.classes()).toContain('bg-primary')
+      // `text-white` segue fora: a cor do texto vem de `--dss-text-on-primary`
+      // (Layer 2), que no hcdark é ESCURO.
       expect(wrapper.classes()).not.toContain('text-white')
+    })
+
+    it('marca vence a prop color: sempre `primary`, o token remapeado', () => {
+      const wrapper = mount(DssButton, {
+        props: { color: 'negative', brand: 'hub' }
+      })
+      expect(wrapper.classes()).toContain('bg-primary')
+      expect(wrapper.classes()).not.toContain('bg-negative')
     })
   })
 
@@ -181,12 +193,20 @@ describe('DssButton', () => {
     const brands = ['hub', 'water', 'waste']
 
     brands.forEach(brand => {
-      it(`aplica classe .dss-button--brand-${brand} quando brand="${brand}"`, () => {
-        const wrapper = mount(DssButton, {
-          props: { brand }
-        })
-        expect(wrapper.classes()).toContain(`dss-button--brand-${brand}`)
+      it(`emite data-brand="${brand}" no root quando brand="${brand}"`, () => {
+        const wrapper = mount(DssButton, { props: { brand } })
+        expect(wrapper.attributes('data-brand')).toBe(brand)
       })
+    })
+
+    it('sem brand, não emite o atributo (não cria escopo de marca à toa)', () => {
+      const wrapper = mount(DssButton, {})
+      expect(wrapper.attributes('data-brand')).toBeUndefined()
+    })
+
+    it('não sobrou classe de marca — ela não tinha mais nenhuma regra', () => {
+      const wrapper = mount(DssButton, { props: { brand: 'hub' } })
+      expect(wrapper.classes().some(c => c.startsWith('dss-button--brand-'))).toBe(false)
     })
 
     it('não aplica classe de brand quando brand é null', () => {
@@ -748,8 +768,10 @@ describe('DssButton', () => {
           variant: 'outline'
         }
       })
-      expect(wrapper.classes()).toContain('dss-button--brand-water')
+      expect(wrapper.attributes('data-brand')).toBe('water')
       expect(wrapper.classes()).toContain('dss-button--outline')
+      // Variante vazada: cor por `text-primary`; a borda é currentColor
+      expect(wrapper.classes()).toContain('text-primary')
       expect(wrapper.classes()).not.toContain('bg-primary')
     })
 
