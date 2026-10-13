@@ -33,8 +33,7 @@
       "--dss-opacity-8"
     ],
     "condicional": [
-      "--dss-border-brand-primary",
-      "--dss-brand-primary"
+      "--dss-border-brand-primary"
     ]
   }
 }

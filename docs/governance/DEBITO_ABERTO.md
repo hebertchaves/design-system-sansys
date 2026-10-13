@@ -11,15 +11,30 @@
 
 ## Frentes desta onda (cadeia de fonte única / contraste)
 
-- 🔲 **(d) Brandabilidade passa por fora da camada de token** — **medida, não iniciada.**
-  92 componentes pintam marca com o primitivo cru (`var(--dss-hub-600)`) no
-  `4-output/_brands.scss`, em vez do semântico. **577 usos** contra 175 do
-  `--dss-action-primary`. Consequência medida: o alto contraste alcança o atributo
-  `[data-brand]` (texto branco 2.81 → 8.88) e **não** alcança a prop `brand`
-  (fica em 2.81) — que é o caminho que os produtos usam. Mesma raiz já registrada
-  em "prop brand não remapeia action-primary", agora com número.
-  Tamanho, riscos, forma da correção e piloto sugerido (Badge/Button/Chip):
-  **`DSS_FRENTE_MARCA_PRIMITIVOS.md`**. Não bloqueia o HC.
+- 🔴 **(d) Brandabilidade passa por fora da camada de token** — **etapa 1 de 4 FECHADA (out/2026).**
+  Componentes pintam marca com o primitivo cru (`var(--dss-hub-600)`) no
+  `4-output/_brands.scss`, em vez do semântico. Consequência medida: o alto contraste
+  alcança o atributo `[data-brand]` (texto branco 2.81 → 8.88) e **não** alcança a prop
+  `brand` (fica em 2.81) — que é o caminho que os produtos usam.
+
+  **Por que não ficou superado antes:** a intenção estava comunicada desde o início,
+  escrita no §K5 e **medida inteira** em `DSS_FRENTE_MARCA_PRIMITIVOS.md`. Faltava gate.
+  A falta é medível — quando a frente foi escrita eram **92** componentes com
+  `_brands.scss`; viraram **100**. Oito entraram *depois* de a dívida estar documentada.
+
+  **Etapa 1 (feita):** modelo normativo de dois eixos + três zonas em
+  **`DSS_MODELO_PROPAGACAO_MARCA.md`**; gate `validate:brand-form` no pre-commit, com
+  baseline-catraca; eixo de identidade (`--dss-brand-*`, 15 tokens por marca que
+  existiam e tinham **zero** consumidores) ganhou default em `:root` — isso zerou
+  `condicional/--dss-brand-primary` do baseline de tokens fantasma.
+
+  **Placar congelado pelo gate:** 61 arquivos com primitivo de marca (553 refs) ·
+  93 `_brands.scss` que pintam em vez de remapear · 17 props `brand` que não emitem
+  `data-brand`. As três listas **só podem encolher**.
+
+  **Etapas 2–4 abertas:** `brandZone` no meta · barreira nas superfícies de conteúdo
+  (+ e2e da ponte `--q-*`, risco técnico #1) · prop tri-estado com `"none"` e migração
+  em ondas (piloto Badge/Button/Chip). Não bloqueia o HC.
 
 - 🟡 **(e) Cinzas crus → camada semântica** — **fatia mecânica FECHADA, resíduo triado.**
   Frente tocada na worktree isolada `work/dss-a11y-contraste` (commits `c261609`, `8fab0cf`,

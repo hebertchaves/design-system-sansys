@@ -84,6 +84,7 @@ Leia o **NÚCLEO** sempre; consulte o **CONDICIONAL** só pelo que a tarefa exig
 | Usar/citar tokens | `docs/reference/DSS_TOKEN_REFERENCE.md` |
 | Importar SCSS/JS entre pacotes | `docs/governance/DSS_MONOREPO_PATH_MAP.md` |
 | Mexer no aspecto visual default | `docs/governance/DSS_REFERENCIA_VISUAL_ANALISE.md` |
+| Aplicar marca / mexer em `_brands.scss` / prop `brand` | `docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md` *(dois eixos + três zonas; gate `validate:brand-form`)* |
 | Mexer em preview / sandbox | `docs/governance/DSS_DEFAULT_PREVIEW_WORKFLOW.md` |
 | Renderizar/alterar ícone | `docs/governance/DSS_ICON_COMPOSITION_CONTRACT.md` |
 | Nomear/citar variante `outline`/`outlined` | `docs/governance/DSS_VARIANT_NAMING.md` *(espelha o Quasar; gate `validate:variant-naming`)* |

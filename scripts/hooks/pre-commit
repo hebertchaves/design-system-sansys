@@ -95,6 +95,24 @@ if echo "$STAGED" | grep -qE 'packages/core/(components|utils|themes)/.+\.scss$|
   fi
 fi
 
+# ── 0c-ter. Forma da marca: chega pelo TOKEN, nunca pela tinta ───────────────
+# A regra e antiga (§K5: a prop `brand` REMAPEIA o semantico, nao pinta o
+# primitivo) e a divida foi medida inteira em DSS_FRENTE_MARCA_PRIMITIVOS.md.
+# Faltava o gate — e a falta e medivel: quando a frente foi escrita eram 92
+# componentes com `4-output/_brands.scss`; viraram 100. Oito entraram DEPOIS de
+# a divida estar documentada, pintando, porque documentacao nao barra commit.
+# Marca era o ultimo eixo grande do DSS sem gate.
+# Baseline por arquivo/componente: bloqueia NOVO, tolera o debito conhecido, e
+# so pode encolher. Modelo: docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md
+if echo "$STAGED" | grep -qE 'packages/core/components/.+\.(scss|ts|vue)$|scripts/validate-brand-form\.cjs|scripts/brand-form-baseline\.json'; then
+  echo "🔍 Validando forma da marca (token vs tinta — §K5)..."
+  node scripts/validate-brand-form.cjs --gate
+  if [ $? -ne 0 ]; then
+    echo "❌ Forma de marca NOVA fora do padrao. Ver docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md."
+    exit 1
+  fi
+fi
+
 # ── 0c-bis. Escopo de tema: quem re-aponta PRIMITIVO recomputa o SEMANTICO ────
 # Custom property substitui seu var() onde e' DECLARADA. Um tema que redefine
 # --dss-primary sem que a camada semantica seja redeclarada no escopo dele

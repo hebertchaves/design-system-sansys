@@ -67,6 +67,8 @@
     "validate:theme-scopes": "node scripts/validate-theme-scopes.mjs",
     "build:adequacao-status": "node scripts/build-adequacao-status.cjs",
     "validate:adequacao-status": "node scripts/build-adequacao-status.cjs --check",
+    "validate:brand-form": "node scripts/validate-brand-form.cjs",
+    "validate:brand-form:gate": "node scripts/validate-brand-form.cjs --gate",
     "validate:hover-tokens": "node scripts/validate-hover-tokens.cjs",
     "validate:hover-tokens:gate": "node scripts/validate-hover-tokens.cjs --gate",
     "validate:scale": "node scripts/validate-scale.mjs",

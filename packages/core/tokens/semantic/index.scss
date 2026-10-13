@@ -25,6 +25,10 @@
 /* Feedback e estados */
 @use 'feedback';
 
+/* Eixo de IDENTIDADE — default fora de [data-brand].
+   O par de `tokens/brand/*`: a marca sobrescreve, isto garante que resolva. */
+@use 'brand-axis';
+
 /* ===========================================
    2. TOKENS DE LAYOUT E UTILIDADE
    =========================================== */

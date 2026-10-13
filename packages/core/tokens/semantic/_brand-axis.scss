@@ -1,0 +1,69 @@
+/* ==========================================================================
+   DSS - EIXO DE IDENTIDADE — DEFAULT FORA DE MARCA
+   ========================================================================== */
+
+/* POR QUE ESTE ARQUIVO EXISTE
+
+   O DSS tem DOIS eixos de cor, e eles respondem a perguntas diferentes:
+
+     --dss-action-*  "qual o peso desta ação?"      → semântico
+     --dss-brand-*   "de que produto é esta tela?"  → identidade
+
+   Colapsar os dois é a causa do defeito que originou o modelo: componentes
+   alcançavam `--dss-action-primary` sempre que queriam "a cor da marca", mesmo
+   quando o elemento NÃO era uma ação. A régua decorativa do DssSectionTitle é
+   o caso exemplar — ornamento de identidade pintado com token de ação.
+
+   O eixo de identidade já estava construído em `tokens/brand/_{hub,water,
+   waste}.scss`: 15 tokens por marca, completos. Faltava o default.
+
+   Sem este arquivo, `--dss-brand-*` só resolve DENTRO de `[data-brand]`. Fora
+   dele o `var()` cai para vazio, a declaração vira inválida e a propriedade
+   volta ao herdado — em silêncio. É exatamente o defeito que o
+   `validate:scss-tokens` reprova, e o mesmo que `_actions.scss` já documenta
+   para `--dss-action-primary-text`.
+
+   Com o default, o eixo passa a ser consumível em qualquer contexto: fora de
+   marca entrega o neutro, dentro de `[data-brand]` a marca sobrescreve.
+
+   📖 docs/governance/DSS_MODELO_PROPAGACAO_MARCA.md */
+
+@use 'scopes' as scopes;
+
+/* Escopos: além de :root, os temas que re-apontam PRIMITIVOS — sem isso estes
+   tokens não recomputam em contexto ANINHADO. Ver semantic/_scopes.scss. */
+#{scopes.$primitivos} {
+  /* --- Rampa de hue -------------------------------------------------------
+     A marca usa uma rampa de um só matiz (water: 500/300/700/400). O neutro
+     equivalente é a rampa `--dss-primary-*`, nos degraus de mesmo papel. */
+  --dss-brand-primary: var(--dss-primary);
+  --dss-brand-secondary: var(--dss-primary-light);
+  --dss-brand-tertiary: var(--dss-primary-hover);
+  --dss-brand-accent: var(--dss-primary-light); /* ~400: sem degrau neutro exato */
+
+  --dss-brand-light: var(--dss-primary-disable); /* ~100: degrau neutro mais claro disponível */
+  --dss-brand-lighter: var(--dss-surface-subtle);
+  --dss-brand-dark: var(--dss-primary-deep);
+  --dss-brand-darker: var(--dss-primary-deep); /* ~900: não há neutro mais profundo */
+
+  /* --- Degraus de estado -------------------------------------------------- */
+  --dss-brand-hover: var(--dss-primary-hover);
+  --dss-brand-disable: var(--dss-primary-disable);
+  --dss-brand-deep: var(--dss-primary-deep);
+
+  /* --- Papéis de superfície e texto ---------------------------------------
+     Aqui o fallback é por PAPEL, não por degrau: fora de marca, "fundo de
+     identidade" é simplesmente o fundo sutil do tema. */
+  --dss-brand-background: var(--dss-surface-subtle);
+  --dss-brand-surface: var(--dss-surface-muted);
+  --dss-brand-border: var(--dss-border-subtle);
+  --dss-brand-text: var(--dss-text-primary);
+}
+
+/* ⚠️ TRÊS DEFAULTS SÃO APROXIMAÇÃO, não equivalência — estão marcados acima
+   (`-accent`, `-light`, `-darker`). A rampa neutra tem 6 degraus
+   (disable→light→base→focus→hover→deep) e a de marca tem 9 níveis de primitivo,
+   então nem todo degrau de marca tem contraparte exata. Como os consumidores
+   hoje são ZERO, nenhuma tela muda com estes valores; eles passam a importar
+   quando a etapa 4 da migração começar a mover ornamento para este eixo. Um
+   designer pode refiná-los sem risco de regressão até lá. */

@@ -1,6 +1,12 @@
 # Frente: a brandabilidade passa por fora da camada de token
 
-**Status:** medido, **não iniciado** — aguardando decisão de escopo
+**Status:** medido · **§4 e §6 SUPERSEDIDOS** por `DSS_MODELO_PROPAGACAO_MARCA.md` (out/2026)
+
+> Este documento continua valendo como a **medição de origem** e o registro do raciocínio.
+> A parte prescritiva (§4 forma da correção, §6 escopo) foi absorvida e refinada pelo modelo
+> normativo, que acrescenta o que faltava aqui: a distinção entre o eixo de AÇÃO e o eixo de
+> IDENTIDADE, as três zonas, e o gate. Os números abaixo são de quando foi escrito — o placar
+> atual vive no gate (`npm run validate:brand-form`) e no DEBITO_ABERTO.
 **Origem:** descoberto ao verificar o alcance do alto contraste (`DSS_ALTO_CONTRASTE_SPIKE.md`)
 **Raiz já conhecida:** é a mesma causa registrada em *"prop `brand` não remapeia `--dss-action-primary`"* — agora com consequência medida
 
